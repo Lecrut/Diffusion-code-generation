@@ -15,9 +15,9 @@ Repozytorium do budowy wieloagentowego systemu dyfuzyjnego generowania kodu.
 - - https://arxiv.org/pdf/2506.20639
 - CodeFusion: A Pre-trained Diffusion Model for Code Generation
 - - https://openreview.net/forum?id=I9DVeu8XKa
-  - Rozwiązanie Googla
+- Rozwiązanie Googla
 - - https://deepmind.google/models/gemini-diffusion/
-  - Discrete Diffusion do tekstu
+- Discrete Diffusion do tekstu
 - - https://github.com/ash80/diffusion-gpt/blob/master/The_Annotated_Discrete_Diffusion_Models.ipynb
 
 
