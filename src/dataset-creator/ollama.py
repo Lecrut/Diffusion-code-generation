@@ -75,9 +75,16 @@ def ensure_model():
         return
 
 
+REQUEST_TIMEOUT = 120
+
+
+REQUEST_TIMEOUT = 30
+
+
 def ollama_generate(prompt, temperature=0.7):
-    if prompt in CACHE:
-        return CACHE[prompt]
+    cache_key = f"{prompt}|||{temperature}"
+    if cache_key in CACHE:
+        return CACHE[cache_key]
 
     try:
         r = requests.post(
@@ -91,7 +98,7 @@ def ollama_generate(prompt, temperature=0.7):
                     "num_predict": 500,
                 },
             },
-            timeout=6000,
+            timeout=REQUEST_TIMEOUT,
         )
         r.raise_for_status()
 
@@ -99,8 +106,9 @@ def ollama_generate(prompt, temperature=0.7):
         if not result:
             return None
 
-        CACHE[prompt] = result
+        CACHE[cache_key] = result
         return result
 
-    except Exception:
+    except Exception as exc:
+        print(f"OLLAMA ERROR: {exc}", flush=True)
         return None
