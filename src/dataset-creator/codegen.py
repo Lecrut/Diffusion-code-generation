@@ -14,7 +14,7 @@ random.shuffle(CODE_TEMPERATURES)
 
 CODE_PROMPT_TEMPLATE = (
     "Implement the task: {instruction}\nRequirements:\n"
-    "- Return ONLY working Python code. No markdown formatting blocks (do not use ```python).\n" # Wzmocniony zakaz
+    "- Return ONLY working Python code. No markdown formatting blocks (do not use ```python).\n" 
     "- Code must be self-contained and runnable without interactive input (no input(), no CLI args).\n"
     "- ALWAYS include an `if __name__ == '__main__':` block at the bottom, calling your functions with hard-coded, specific sample data and printing the result.\n"
     "- Use concise variable names and concise print output: prefer result, area, value, count, output, total. Do not print long descriptions, story text, or labels such as 'history of the world:'.\n"
@@ -30,7 +30,24 @@ CODE_PROMPT_TEMPLATE = (
 def _clean_code_output(text: str) -> str:
     text = re.sub(r"^```[a-zA-Z]*\n", "", text, flags=re.MULTILINE)
     text = re.sub(r"^```\s*$", "", text, flags=re.MULTILINE)
-    return text.strip()
+    text = text.strip()
+
+    try:
+        tree = ast.parse(text)
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef, ast.Module)):
+                if (node.body and 
+                    isinstance(node.body[0], ast.Expr) and 
+                    isinstance(node.body[0].value, ast.Constant) and 
+                    isinstance(node.body[0].value.value, str)):
+                    
+                    node.body.pop(0)  
+
+        text = ast.unparse(tree)
+    except Exception:
+        pass
+
+    return text
 
 def is_valid(code, timeout=3.0):
     with tempfile.NamedTemporaryFile("w", suffix=".py", encoding="utf-8", delete=False) as tmp_file:
