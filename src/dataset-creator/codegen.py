@@ -30,24 +30,12 @@ CODE_PROMPT_TEMPLATE = (
 def _clean_code_output(text: str) -> str:
     text = re.sub(r"^```[a-zA-Z]*\n", "", text, flags=re.MULTILINE)
     text = re.sub(r"^```\s*$", "", text, flags=re.MULTILINE)
-    text = text.strip()
+    text = re.sub(r'\"\"\"[\s\S]*?\"\"\"', '', text)
+    text = re.sub(r"\'\'\'[\s\S]*?\'\'\'", '', text)
+    text = re.sub(r'#.*', '', text)
+    text = re.sub(r'\n\s*\n', '\n', text)
 
-    try:
-        tree = ast.parse(text)
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef, ast.Module)):
-                if (node.body and 
-                    isinstance(node.body[0], ast.Expr) and 
-                    isinstance(node.body[0].value, ast.Constant) and 
-                    isinstance(node.body[0].value.value, str)):
-                    
-                    node.body.pop(0)  
-
-        text = ast.unparse(tree)
-    except Exception:
-        pass
-
-    return text
+    return text.strip()
 
 def is_valid(code, timeout=3.0):
     with tempfile.NamedTemporaryFile("w", suffix=".py", encoding="utf-8", delete=False) as tmp_file:
