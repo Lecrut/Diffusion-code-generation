@@ -45,6 +45,10 @@ def is_valid(code, timeout=3.0):
     try:
         py_compile.compile(tmp_path, doraise=True)
         proc = subprocess.run([sys.executable, tmp_path], capture_output=True, timeout=timeout)
+
+        if "if __name__ == '__main__':" not in code:
+            return False
+
         return proc.returncode == 0
     except Exception:
         return False
