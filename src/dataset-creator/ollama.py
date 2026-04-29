@@ -13,6 +13,7 @@ DATA_DIR = "data"
 CACHE_FILE = "cache.json"
 
 os.makedirs(DATA_DIR, exist_ok=True)
+session = requests.Session()
 
 
 if os.path.exists(CACHE_FILE):
@@ -75,7 +76,7 @@ def ensure_model():
         return
 
 
-REQUEST_TIMEOUT = 30
+REQUEST_TIMEOUT = 120
 
 
 def ollama_generate(prompt, temperature=0.7):
@@ -84,16 +85,18 @@ def ollama_generate(prompt, temperature=0.7):
         return CACHE[cache_key]
 
     try:
-        r = requests.post(
+        r = session.post(
             f"{OLLAMA_URL}/api/generate",
             json={
                 "model": MODEL,
                 "prompt": prompt,
                 "stream": False,
+                "keep_alive": "1h",
                 "options": {
                     "temperature": temperature,
-                    "num_predict": 1500,
-                    "max_tokens": 1500,
+                    "num_predict": 768,
+                    "max_tokens": 768,
+                    "num_ctx": 4096,
                 },
             },
             timeout=REQUEST_TIMEOUT,
@@ -105,6 +108,7 @@ def ollama_generate(prompt, temperature=0.7):
             return None
 
         CACHE[cache_key] = result
+        save_cache() 
         return result
 
     except Exception as exc:
