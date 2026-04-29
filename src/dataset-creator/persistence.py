@@ -3,7 +3,9 @@ import pandas as pd
 
 
 def save_dataset(records, path):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    dirname = os.path.dirname(path)
+    if dirname:
+        os.makedirs(dirname, exist_ok=True)
     pd.DataFrame(records).to_csv(path, index=False)
 
 

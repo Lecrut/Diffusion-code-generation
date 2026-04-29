@@ -75,9 +75,6 @@ def ensure_model():
         return
 
 
-REQUEST_TIMEOUT = 120
-
-
 REQUEST_TIMEOUT = 30
 
 
@@ -95,7 +92,8 @@ def ollama_generate(prompt, temperature=0.7):
                 "stream": False,
                 "options": {
                     "temperature": temperature,
-                    "num_predict": 500,
+                    "num_predict": 1500,
+                    "max_tokens": 1500,
                 },
             },
             timeout=REQUEST_TIMEOUT,
