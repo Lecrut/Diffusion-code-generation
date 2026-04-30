@@ -4,6 +4,7 @@ import time
 import json
 import subprocess
 import platform
+from threading import Lock
 
 
 OLLAMA_URL = "http://localhost:11434"
@@ -14,6 +15,7 @@ CACHE_FILE = "cache.json"
 
 os.makedirs(DATA_DIR, exist_ok=True)
 session = requests.Session()
+ollama_lock = Lock()
 
 
 if os.path.exists(CACHE_FILE):
@@ -76,41 +78,43 @@ def ensure_model():
         return
 
 
-REQUEST_TIMEOUT = 120
+REQUEST_TIMEOUT = 60
 
 
 def ollama_generate(prompt, temperature=0.7):
     cache_key = f"{prompt}|||{temperature}"
-    if cache_key in CACHE:
-        return CACHE[cache_key]
+    
+    with ollama_lock:
+        if cache_key in CACHE:
+            return CACHE[cache_key]
 
-    try:
-        r = session.post(
-            f"{OLLAMA_URL}/api/generate",
-            json={
-                "model": MODEL,
-                "prompt": prompt,
-                "stream": False,
-                "keep_alive": "1h",
-                "options": {
-                    "temperature": temperature,
-                    "num_predict": 768,
-                    "max_tokens": 768,
-                    "num_ctx": 4096,
+        try:
+            r = session.post(
+                f"{OLLAMA_URL}/api/generate",
+                json={
+                    "model": MODEL,
+                    "prompt": prompt,
+                    "stream": False,
+                    "keep_alive": "1h",
+                    "options": {
+                        "temperature": temperature,
+                        "num_predict": 512,
+                        "max_tokens": 512,
+                        "num_ctx": 2048,
+                    },
                 },
-            },
-            timeout=REQUEST_TIMEOUT,
-        )
-        r.raise_for_status()
+                timeout=REQUEST_TIMEOUT,
+            )
+            r.raise_for_status()
 
-        result = r.json().get("response", "").strip()
-        if not result:
+            result = r.json().get("response", "").strip()
+            if not result:
+                return None
+
+            CACHE[cache_key] = result
+            save_cache() 
+            return result
+
+        except Exception as exc:
+            print(f"OLLAMA ERROR: {exc}", flush=True)
             return None
-
-        CACHE[cache_key] = result
-        save_cache() 
-        return result
-
-    except Exception as exc:
-        print(f"OLLAMA ERROR: {exc}", flush=True)
-        return None

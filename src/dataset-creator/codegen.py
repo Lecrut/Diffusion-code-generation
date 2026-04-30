@@ -8,6 +8,7 @@ import tempfile
 import time
 import py_compile
 from ollama import ollama_generate
+from datetime import datetime
 
 CODE_TEMPERATURES = [i * 0.05 for i in range(21)]
 random.shuffle(CODE_TEMPERATURES)
@@ -43,14 +44,27 @@ def is_valid(code, timeout=3.0):
         tmp_path = tmp_file.name
 
     try:
+        start = time.time()
         py_compile.compile(tmp_path, doraise=True)
+        compile_time = time.time() - start
+        
+        start = time.time()
         proc = subprocess.run([sys.executable, tmp_path], capture_output=True, timeout=timeout)
+        exec_time = time.time() - start
 
         if "if __name__ == '__main__':" not in code:
+            print(f"[VALIDATE] No main block (compile={compile_time:.2f}s, exec={exec_time:.2f}s)", flush=True)
             return False
 
-        return proc.returncode == 0
-    except Exception:
+        is_ok = proc.returncode == 0
+        status = "OK" if is_ok else "FAILED"
+        print(f"[VALIDATE] {status} (compile={compile_time:.2f}s, exec={exec_time:.2f}s, rc={proc.returncode})", flush=True)
+        return is_ok
+    except subprocess.TimeoutExpired:
+        print(f"[VALIDATE] TIMEOUT after {timeout}s", flush=True)
+        return False
+    except Exception as e:
+        print(f"[VALIDATE] ERROR: {type(e).__name__}", flush=True)
         return False
     finally:
         try:
@@ -60,9 +74,14 @@ def is_valid(code, timeout=3.0):
 
 def generate_code(instruction, temperature):
     prompt = CODE_PROMPT_TEMPLATE.format(instruction=instruction)
+    start = time.time()
     raw_output = ollama_generate(prompt, temperature)
+    elapsed = time.time() - start
     if raw_output:
-        return _clean_code_output(raw_output)
+        result = _clean_code_output(raw_output)
+        print(f"[OLLAMA] Generated in {elapsed:.2f}s (temp={temperature:.2f})", flush=True)
+        return result
+    print(f"[OLLAMA] Failed after {elapsed:.2f}s (temp={temperature:.2f})", flush=True)
     return None
 
 def normalize_variant(code_text):
@@ -76,32 +95,48 @@ def generate_variants(instruction, min_unique=10, max_attempts=100, max_rounds=3
     seen = set()
     variants = []
     round_count = 0
+    start_time = time.time()
+    total_gen_attempts = 0
+    total_norm_attempts = 0
+    total_valid_attempts = 0
+
+    print(f"[VARIANTS] Starting (target={min_unique}, max_attempts={max_attempts})", flush=True)
 
     while len(variants) < min_unique:
         round_count += 1
+        print(f"[VARIANTS] Round {round_count}/{max_rounds} (have {len(variants)}/{min_unique})", flush=True)
+        
         for attempt in range(max_attempts):
             temperature = random.choice(CODE_TEMPERATURES)
             code_text = generate_code(instruction, temperature)
+            total_gen_attempts += 1
 
             if not code_text:
                 continue
 
             variant_key = normalize_variant(code_text)
+            total_norm_attempts += 1
             if not variant_key or variant_key in seen:
                 continue
 
             if not is_valid(code_text):
+                total_valid_attempts += 1
                 continue
 
+            total_valid_attempts += 1
             seen.add(variant_key)
             variants.append(code_text)
+            print(f"[VARIANTS] Got variant {len(variants)}/{min_unique}", flush=True)
 
         if len(variants) >= min_unique:
             break
 
         if max_rounds is not None and round_count >= max_rounds:
+            print(f"[VARIANTS] Max rounds reached, got {len(variants)}/{min_unique}", flush=True)
             break
 
+    elapsed = time.time() - start_time
+    print(f"[VARIANTS] Done in {elapsed:.1f}s: generated={total_gen_attempts}, normalized={total_norm_attempts}, validated={total_valid_attempts}, final={len(variants)}", flush=True)
     return variants
 
 def generate_one_fallback(instruction, extra_attempts=5, max_seconds=60):
