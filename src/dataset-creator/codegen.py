@@ -114,7 +114,7 @@ def generate_variants(instruction: str, min_unique: int = 10, max_attempts: int 
 
     print(f"[VARIANTS] start target={min_unique} batch={max_attempts}", flush=True)
 
-    while len(variants) < min_unique and batch_index < max_rounds:
+    for round_number in range(max_rounds):
         batch_index += 1
         print(f"[VARIANTS] batch={batch_index} have={len(variants)}/{min_unique}", flush=True)
 
@@ -135,8 +135,11 @@ def generate_variants(instruction: str, min_unique: int = 10, max_attempts: int 
             variants.append(code_text)
             print(f"[VARIANTS] {len(variants)}/{min_unique}", flush=True)
 
-            if len(variants) >= min_unique:
+            if len(variants) >= min_unique and round_number != 0:
                 break
+        
+        if len(variants) >= min_unique:
+            break
 
     print(f"[VARIANTS] done batches={batch_index} found={len(variants)}/{min_unique}", flush=True)
     return variants
