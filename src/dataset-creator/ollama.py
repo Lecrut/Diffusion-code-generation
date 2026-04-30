@@ -96,10 +96,10 @@ def ollama_generate(prompt, temperature=0.7):
                     "prompt": prompt,
                     "stream": False,
                     "keep_alive": "1h",
+                    "think": False,
                     "options": {
                         "temperature": temperature,
-                        "num_predict": 512,
-                        "max_tokens": 512,
+                        "num_predict": 256,
                         "num_ctx": 2048,
                     },
                 },

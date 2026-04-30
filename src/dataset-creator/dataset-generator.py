@@ -8,7 +8,6 @@ from ollama import ensure_ollama, ensure_model, save_cache
 import instructions
 import persistence
 import topics
-import validator
 import codegen as code
 
 NUM_TOPICS = 100
@@ -62,10 +61,6 @@ def build_variants(row):
     task_label = f"{row['topic_id']}_{row['instruction_id']}"
     print(f"Starting generation for {task_label}", flush=True)
     variants = code.generate_variants(row["instruction"], min_unique=VARIANTS_PER_INSTR, max_attempts=ATTEMPTS_PER_INSTR)
-    if not variants:
-        fallback = code.generate_one_fallback(row["instruction"], extra_attempts=ATTEMPTS_PER_INSTR)
-        if fallback:
-            variants = [fallback]
     records = []
     if variants:
         for variant_index, variant in enumerate(variants):
@@ -91,23 +86,6 @@ def build_variants(row):
 
     print(f"Finished generation for {task_label}, variants={len(records)}", flush=True)
     return records
-
-
-def validate_codes(df):
-    errors = []
-    for _, row in df.iterrows():
-        file_path = os.path.join(CODE_DIR, row["code_file"])
-        try:
-            validator.compile_source(file_path)
-            if validator.EXECUTE_DEMOS:
-                return_code, stderr = validator.execute_source(file_path, validator.EXEC_TIMEOUT)
-                if return_code != 0:
-                    errors.append((row["code_file"], f"runtime_error: {stderr[:2000]}"))
-                    df.loc[df.code_file == row["code_file"], "valid"] = False
-        except Exception as exc:
-            errors.append((row["code_file"], f"compile_error: {exc}"))
-            df.loc[df.code_file == row["code_file"], "valid"] = False
-    return errors
 
 
 def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
@@ -162,18 +140,14 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     else:
         print("Brak instrukcji do wygenerowania.", flush=True)
 
-    print("Generowanie kodu zakończone. Waliduję pliki...")
+    print("Generowanie kodu zakończone. Zapisuję wynik...")
     df = pd.DataFrame(partial_results)
-    errors = validate_codes(df)
     df.to_csv(DATASET_FILE, index=False)
 
     save_cache()
 
     print("Gotowe!")
     print(df["valid"].value_counts())
-    if errors:
-        for error in errors[:10]:
-            print(error)
 
 
 if __name__ == "__main__":
