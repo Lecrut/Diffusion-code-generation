@@ -47,9 +47,7 @@ def _clean_code_output(text: str) -> str:
 def _ensure_main_block(text: str) -> str:
     if "if __name__ == '__main__':" in text:
         return text
-    if text.endswith("\n"):
-        return text + "if __name__ == '__main__':\n    pass\n"
-    return text + "\n\nif __name__ == '__main__':\n    pass\n"
+    return text + "\n\nif __name__ == '__main__':\n  raise EnvironmentError('No skip for testing')\n"
 
 
 def is_valid(code: str, timeout: float = 3.0) -> bool:

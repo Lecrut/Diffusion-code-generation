@@ -98,9 +98,9 @@ def ollama_generate(prompt, temperature=0.7):
                     "keep_alive": "1h",
                     "think": False,
                     "options": {
-                        "temperature": temperature,
-                        "num_predict": 256,
-                        "num_ctx": 2048,
+                            "temperature": temperature,
+                            "num_predict": 2048,
+                            "num_ctx": 2048,
                     },
                 },
                 timeout=REQUEST_TIMEOUT,

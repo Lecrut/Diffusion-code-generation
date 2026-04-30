@@ -10,8 +10,8 @@ import persistence
 import topics
 import codegen as code
 
-NUM_TOPICS = 100
-INSTR_PER_TOPIC = 10
+NUM_TOPICS = 250
+INSTR_PER_TOPIC = 15
 VARIANTS_PER_INSTR = 20
 ATTEMPTS_PER_INSTR = 200
 MAX_WORKERS = 3
