@@ -1,0 +1,16 @@
+def find_min_max_temp(temperatures):
+    if not temperatures:
+        return None, None
+    min_temp = temperatures[0]
+    max_temp = temperatures[0]
+    for temp in temperatures[1:]:
+        if temp < min_temp:
+            min_temp = temp
+        if temp > max_temp:
+            max_temp = temp
+    return max_temp, min_temp
+if __name__ == '__main__':
+    sample_temps = [25.5, 18.2, 30.1, 15.0, 22.8, 29.9]
+    maximum, minimum = find_min_max_temp(sample_temps)
+    print(f"Maximum temperature: {maximum}")
+    print(f"Minimum temperature: {minimum}")
