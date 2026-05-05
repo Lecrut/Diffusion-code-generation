@@ -1,0 +1,23 @@
+def find_middle_value(data):
+    n = len(data)
+    if n == 0:
+        return None
+    elif n % 2 == 1:
+        return data[n // 2]
+    else:
+        middle1 = data[n // 2 - 1]
+        middle2 = data[n // 2]
+        return (middle1 + middle2) / 2
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    middle = find_middle_value(sample_list)
+    print(middle)
+    sample_list_even = [10, 20, 30, 40]
+    middle_even = find_middle_value(sample_list_even)
+    print(middle_even)
+    sample_list_odd = [1, 2, 3, 4, 5]
+    middle_odd = find_middle_value(sample_list_odd)
+    print(middle_odd)
+    sample_list_single = [42]
+    middle_single = find_middle_value(sample_list_single)
+    print(middle_single)

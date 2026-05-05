@@ -1,0 +1,22 @@
+import datetime
+def time_difference(date1_str, date2_str):
+    date1 = datetime.datetime.strptime(date1_str, "%Y-%m-%d %H:%M:%S")
+    date2 = datetime.datetime.strptime(date2_str, "%Y-%m-%d %H:%M:%S")
+    if date1 > date2:
+        date1, date2 = date2, date1
+    time_difference_td = date1 - date2
+    total_seconds = int(time_difference_td.total_seconds())
+    hours = total_seconds // 3600
+    remaining_seconds = total_seconds % 3600
+    minutes = remaining_seconds // 60
+    seconds = remaining_seconds % 60
+    return hours, minutes, seconds
+if __name__ == '__main__':
+    date_a = "2023-10-27 10:00:00"
+    date_b = "2023-10-27 12:30:45"
+    hours, minutes, seconds = time_difference(date_a, date_b)
+    print(f"Date 1: {date_a}")
+    print(f"Date 2: {date_b}")
+    print(f"Difference in hours: {hours}")
+    print(f"Difference in minutes: {minutes}")
+    print(f"Difference in seconds: {seconds}")
