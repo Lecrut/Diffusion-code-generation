@@ -100,7 +100,7 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     ensure_ollama()
     ensure_model()
 
-    autoCommit.start_scheduler(1)
+    autoCommit.start_scheduler(20)
 
     print(f"Ładuję lub generuję {num_topics} tematów...")
     topics_df = topics.load_or_generate_topics(num_topics=num_topics, force=False)
