@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import math
 
 class AdaLN(nn.Module):
-    """Adaptacyjna normalizacja warstwy (AdaLN) inspirowana artykułem[cite: 519, 521]."""
+    """Adaptacyjna normalizacja warstwy (AdaLN)."""
     def __init__(self, channels):
         super().__init__()
         self.norm = nn.LayerNorm(channels, elementwise_affine=False)
@@ -30,7 +30,6 @@ class CNNBlock(nn.Module):
         )
 
     def forward(self, x, t_emb):
-        # Przejście przez CNN (wymaga zamiany wymiarów dla Conv1d)
         res = x
         x = x.transpose(1, 2)
         x = self.conv(x).transpose(1, 2)
@@ -42,23 +41,22 @@ class CNNBlock(nn.Module):
         return x
 
 class LocalConvDiffCoder(nn.Module):
-    def __init__(self, vocab_size, mask_token_id, hidden_dim=512, num_blocks=6, max_seq_len=1024):
+    def __init__(self, vocab_size, mask_token_id, pad_token_id, hidden_dim=512, num_blocks=6, max_seq_len=1024):
         super().__init__()
         self.vocab_size = vocab_size
         self.mask_token_id = mask_token_id
+        self.pad_token_id = pad_token_id
         self.max_seq_len = max_seq_len
         
         self.token_embedding = nn.Embedding(vocab_size, hidden_dim)
         self.pos_emb = nn.Parameter(torch.zeros(1, max_seq_len, hidden_dim))
-        
-        # MLP przetwarzający krok czasowy t
+                
         self.time_mlp = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim),
             nn.SiLU(),
             nn.Linear(hidden_dim, hidden_dim)
         )
         
-        # Stos nakładających się bloków CNN
         self.blocks = nn.ModuleList([
             CNNBlock(hidden_dim, kernel_size=5 + (i * 2)) for i in range(num_blocks)
         ])
@@ -73,39 +71,71 @@ class LocalConvDiffCoder(nn.Module):
         emb = timesteps[:, None] * emb[None, :]
         return torch.cat([emb.sin(), emb.cos()], dim=-1)
 
-    def forward(self, x, t):
-        # 1. Embeddings i czas
-        t_emb = self.time_mlp(self._get_timestep_embedding(t, x.size(-1) if hasattr(x, 'size') else 512))
-        x = self.token_embedding(x) + self.pos_emb[:, :x.size(1), :]
+
+    def forward(self, x, prompt_ids, t):
+        code_len = x.size(1)
+        prompt_len = prompt_ids.size(1)
+        if prompt_len + code_len > self.max_seq_len:
+            available_prompt_len = self.max_seq_len - code_len
+            if available_prompt_len <= 0:
+                prompt_ids = prompt_ids[:, :0]
+            else:
+                prompt_ids = prompt_ids[:, :available_prompt_len]
+            prompt_len = prompt_ids.size(1)
+
+        # 2. Embeddingi promptu i kodu + pozycje
+        if prompt_len > 0:
+            prompt_emb = self.token_embedding(prompt_ids)
+            code_emb = self.token_embedding(x)
+            x_emb = torch.cat([prompt_emb, code_emb], dim=1)
+        else:
+            x_emb = self.token_embedding(x)
+        x_emb = x_emb + self.pos_emb[:, :x_emb.size(1), :]
+
+
+        # zerowanie paddingow by nie wpływały na wynik splotu
+        if prompt_len > 0:
+            prompt_mask = (prompt_ids != self.pad_token_id).float().unsqueeze(-1)
+            code_mask = (x != self.pad_token_id).float().unsqueeze(-1)
+            seq_mask = torch.cat([prompt_mask, code_mask], dim=1)
+        else:
+            seq_mask = (x != self.pad_token_id).float().unsqueeze(-1)
+        x_emb = x_emb * seq_mask
         
-        # 2. Przetwarzanie przez Overlapping CNN Blocks
+        
+        # 3. Czas t
+        t_emb = self.time_mlp(self._get_timestep_embedding(t, x_emb.size(-1)))
+        
+        # 4. Przetwarzanie CNN
         features = []
         for block in self.blocks:
-            x = block(x, t_emb)
-            features.append(x)
-        
-        # 3. Aggregation Layer (ze schematu - proste uśrednienie cech z różnych poziomów)
-        x = torch.stack(features).mean(dim=0)
-        
-        # 4. Classification Head
-        return self.lm_head(self.ln_final(x))
+            x_emb = block(x_emb, t_emb)
+            features.append(x_emb)
+            
+        x_out = torch.stack(features).mean(dim=0)
+        logits = self.lm_head(self.ln_final(x_out))
+        return logits[:, prompt_len:, :]
 
     @torch.no_grad()
-    def generate(self, steps=50, device="cuda"):
-        # Start: 100% masked sequence [cite: 78, 84]
-        seq = torch.full((1, self.max_seq_len), self.mask_token_id, dtype=torch.long, device=device)
+    def generate(self, prompt_ids, steps=50, device="cuda"):
+        if prompt_ids.dim() == 1:
+            prompt_ids = prompt_ids.unsqueeze(0)
+        prompt_ids = prompt_ids.to(device)
+        prompt_len = prompt_ids.size(1)
+        code_len = max(self.max_seq_len - prompt_len, 1)
+            
+        seq = torch.full((1, code_len), self.mask_token_id, dtype=torch.long, device=device)
         
         for step in range(steps):
             t = torch.full((1,), (steps - step) / steps, device=device)
-            logits = self.forward(seq, t)
             
-            # Próbkowanie (Porcjowanie)
+            logits = self.forward(seq, prompt_ids, t)
+            
             probs = F.softmax(logits, dim=-1)
             conf, pred = probs.max(dim=-1)
             
-            # Strategia odmaskowywania: zostawiamy tylko najbardziej pewne tokeny 
             ratio = 1.0 - (step + 1) / steps
-            num_to_mask = int(self.max_seq_len * ratio)
+            num_to_mask = int(code_len * ratio)
             
             if num_to_mask > 0:
                 _, mask_idx = torch.topk(conf, k=num_to_mask, largest=False)

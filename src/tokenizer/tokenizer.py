@@ -5,6 +5,33 @@ from transformers import AutoTokenizer
 class CodeTokenizer:
     def __init__(self, model_name: str = "Qwen/Qwen2.5-Coder-7B") -> None:
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self._ensure_special_tokens()
+
+    def _ensure_special_tokens(self) -> None:
+        added = {}
+        if self.tokenizer.pad_token_id is None:
+            if self.tokenizer.eos_token is not None:
+                self.tokenizer.pad_token = self.tokenizer.eos_token
+            else:
+                added["pad_token"] = "[PAD]"
+
+        if self.tokenizer.mask_token_id is None:
+            added["mask_token"] = "[MASK]"
+
+        if added:
+            self.tokenizer.add_special_tokens(added)
+
+    @property
+    def vocab_size(self) -> int:
+        return int(len(self.tokenizer))
+
+    @property
+    def pad_token_id(self) -> int:
+        return int(self.tokenizer.pad_token_id)
+
+    @property
+    def mask_token_id(self) -> int:
+        return int(self.tokenizer.mask_token_id)
 
     @staticmethod
     def normalize_text(text: str) -> str:
