@@ -9,6 +9,10 @@ import instructions
 import persistence
 import topics
 import codegen as code
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'tools'))
+from tools import autoCommit
 
 NUM_TOPICS = 250
 INSTR_PER_TOPIC = 15
@@ -94,6 +98,8 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     ensure_ollama()
     ensure_model()
 
+    autoCommit.start_scheduler(15)
+
     print(f"Ładuję lub generuję {num_topics} tematów...")
     topics_df = topics.load_or_generate_topics(num_topics=num_topics, force=False)
     print(f"Załadowano {len(topics_df)} tematów.")
@@ -145,6 +151,8 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     df.to_csv(DATASET_FILE, index=False)
 
     save_cache()
+
+    autoCommit.stop_scheduler()
 
     print("Gotowe!")
     print(df["valid"].value_counts())
