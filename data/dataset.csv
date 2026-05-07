@@ -106511,3 +106511,1889 @@ if __name__ == '__main__':
     result3 = compare_booleans(list3[0], list3[1])
     print(result3)",True,0,5376,86_3.py
 86,0,Simple true false comparison,"Write a complete, robust Python script that takes two boolean inputs and prints the true/false comparison result using only direct comparison operators.",,False,0,5377,86_0.py
+86,5,Simple true false comparison,"Implement a generator function that yields the result of comparing pairs of boolean values from an input iterable, focusing on memory efficiency.","def compare_pairs(iterable):
+    for i in range(len(iterable) - 1):
+        yield iterable[i] == iterable[i+1]
+if __name__ == '__main__':
+    data = [True, False, True, True, False]
+    generator = compare_pairs(data)
+    results = list(generator)
+    print(results)",True,0,5378,86_5.py
+86,5,Simple true false comparison,"Implement a generator function that yields the result of comparing pairs of boolean values from an input iterable, focusing on memory efficiency.","def compare_pairs(iterable):
+    it = iter(iterable)
+    while True:
+        try:
+            a = next(it)
+            b = next(it)
+            yield a == b
+        except StopIteration:
+            break
+if __name__ == '__main__':
+    data = [True, False, True, True, False, False]
+    generator = compare_pairs(data)
+    results = list(generator)
+    print(results)",True,1,5379,86_5_1.py
+86,5,Simple true false comparison,"Implement a generator function that yields the result of comparing pairs of boolean values from an input iterable, focusing on memory efficiency.","def compare_pairs(iterable):
+    for i in range(len(iterable) - 1):
+        yield iterable[i] == iterable[i+1]
+if __name__ == '__main__':
+    data = [True, True, False, False, True, True]
+    generator = compare_pairs(data)
+    results = list(generator)
+    print(results)",True,2,5380,86_5_2.py
+86,6,Simple true false comparison,"Write a testable Python function that takes two boolean inputs and returns a tuple containing the result of the comparison and the comparison operation itself (e.g., using `==`).","def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+    result = a == b
+    operation = ""==""
+    return result, operation
+if __name__ == '__main__':
+    bool1 = True
+    bool2 = True
+    result1, op1 = compare_booleans(bool1, bool2)
+    print(f""Comparing {bool1} and {bool2}: Result={result1}, Operation={op1}"")
+    bool3 = True
+    bool4 = False
+    result2, op2 = compare_booleans(bool3, bool4)
+    print(f""Comparing {bool3} and {bool4}: Result={result2}, Operation={op2}"")
+    bool5 = False
+    bool6 = False
+    result3, op3 = compare_booleans(bool5, bool6)
+    print(f""Comparing {bool5} and {bool6}: Result={result3}, Operation={op3}"")",True,0,5381,86_6.py
+86,6,Simple true false comparison,"Write a testable Python function that takes two boolean inputs and returns a tuple containing the result of the comparison and the comparison operation itself (e.g., using `==`).","def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+    result = a == b
+    operation = ""==""
+    return (result, operation)
+if __name__ == '__main__':
+    print(compare_booleans(True, True))
+    print(compare_booleans(True, False))
+    print(compare_booleans(False, False))
+    print(compare_booleans(False, True))",True,1,5382,86_6_1.py
+86,6,Simple true false comparison,"Write a testable Python function that takes two boolean inputs and returns a tuple containing the result of the comparison and the comparison operation itself (e.g., using `==`).","def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+    result = a == b
+    operation = ""==""
+    return (result, operation)
+if __name__ == '__main__':
+    a_val = True
+    b_val = False
+    result, operation = compare_booleans(a_val, b_val)
+    print(f""a: {a_val}, b: {b_val}"")
+    print(f""Result: {result}"")
+    print(f""Operation: {operation}"")
+    a_val = True
+    b_val = True
+    result, operation = compare_booleans(a_val, b_val)
+    print(f""a: {a_val}, b: {b_val}"")
+    print(f""Result: {result}"")
+    print(f""Operation: {operation}"")
+    a_val = False
+    b_val = False
+    result, operation = compare_booleans(a_val, b_val)
+    print(f""a: {a_val}, b: {b_val}"")
+    print(f""Result: {result}"")
+    print(f""Operation: {operation}"")",True,2,5383,86_6_2.py
+86,6,Simple true false comparison,"Write a testable Python function that takes two boolean inputs and returns a tuple containing the result of the comparison and the comparison operation itself (e.g., using `==`).","def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+    result = a == b
+    operation = ""==""
+    return (result, operation)
+if __name__ == '__main__':
+    bool1 = True
+    bool2 = True
+    result1, op1 = compare_booleans(bool1, bool2)
+    print(f""Comparing {bool1} and {bool2}: Result={result1}, Operation='{op1}'"")
+    bool3 = False
+    bool4 = True
+    result2, op2 = compare_booleans(bool3, bool4)
+    print(f""Comparing {bool3} and {bool4}: Result={result2}, Operation='{op2}'"")
+    bool5 = True
+    bool6 = False
+    result3, op3 = compare_booleans(bool5, bool6)
+    print(f""Comparing {bool5} and {bool6}: Result={result3}, Operation='{op3}'"")",True,3,5384,86_6_3.py
+86,7,Simple true false comparison,"Design and implement a simple comparison utility that handles the direct true/false comparison for any two boolean inputs, adhering strictly to Python best practices.","def compare_booleans(a: bool, b: bool) -> bool:
+    return a == b
+if __name__ == '__main__':
+    val1 = True
+    val2 = True
+    result1 = compare_booleans(val1, val2)
+    print(f""Comparing {val1} and {val2}: {result1}"")
+    val3 = False
+    val4 = True
+    result2 = compare_booleans(val3, val4)
+    print(f""Comparing {val3} and {val4}: {result2}"")
+    val5 = False
+    val6 = False
+    result3 = compare_booleans(val5, val6)
+    print(f""Comparing {val5} and {val6}: {result3}"")",True,0,5385,86_7.py
+86,4,Simple true false comparison,Create a command-line interface script using Python that prompts the user to enter two boolean values and displays the direct comparison result clearly.,,False,0,5386,86_4.py
+86,8,Simple true false comparison,"Generate a complete, runnable Python program that demonstrates the simple true/false comparison between various combinations of boolean variables.",,False,0,5387,86_8.py
+86,9,Simple true false comparison,Write an optimized one-line expression that directly compares two boolean variables and assigns the result to a new boolean variable.,"if __name__ == '__main__':
+    a = True
+    b = False
+    result = a == b
+    print(result)",True,0,5388,86_9.py
+67,4,Find the sum of two elements,"Create a Python script that reads two integers from standard input, validates that the input is numeric, and calculates their sum, printing the result clearly.",,False,0,5389,67_4.py
+86,11,Simple true false comparison,"Implement an optimized function named 'compare_booleans' that accepts two boolean arguments and returns a string indicating whether they are equal (True/True, False/False) or different (True/False, False/True).","def compare_booleans(a, b):
+    if a == b:
+        if a:
+            return ""True/True""
+        else:
+            return ""False/False""
+    else:
+        if a:
+            return ""True/False""
+        else:
+            return ""False/True""
+if __name__ == '__main__':
+    print(compare_booleans(True, True))
+    print(compare_booleans(False, False))
+    print(compare_booleans(True, False))
+    print(compare_booleans(False, True))",True,0,5390,86_11.py
+86,12,Simple true false comparison,Develop a class named 'BooleanComparator' with a method 'check_equality' that efficiently compares two boolean values and returns a descriptive string ('Equal' or 'Not Equal'). Ensure the implementation is highly efficient.,"class BooleanComparator:
+    def check_equality(self, a: bool, b: bool) -> str:
+        if a == b:
+            return 'Equal'
+        else:
+            return 'Not Equal'
+if __name__ == '__main__':
+    comparator = BooleanComparator()
+    val1_a = True
+    val1_b = True
+    result1 = comparator.check_equality(val1_a, val1_b)
+    print(f""Comparing {val1_a} and {val1_b}: {result1}"")
+    val2_a = True
+    val2_b = False
+    result2 = comparator.check_equality(val2_a, val2_b)
+    print(f""Comparing {val2_a} and {val2_b}: {result2}"")
+    val3_a = False
+    val3_b = True
+    result3 = comparator.check_equality(val3_a, val3_b)
+    print(f""Comparing {val3_a} and {val3_b}: {result3}"")
+    val4_a = False
+    val4_b = False
+    result4 = comparator.check_equality(val4_a, val4_b)
+    print(f""Comparing {val4_a} and {val4_b}: {result4}"")",True,0,5391,86_12.py
+86,12,Simple true false comparison,Develop a class named 'BooleanComparator' with a method 'check_equality' that efficiently compares two boolean values and returns a descriptive string ('Equal' or 'Not Equal'). Ensure the implementation is highly efficient.,"class BooleanComparator:
+    def check_equality(self, a: bool, b: bool) -> str:
+        if a == b:
+            return 'Equal'
+        else:
+            return 'Not Equal'
+if __name__ == '__main__':
+    comparator = BooleanComparator()
+    val1 = True
+    val2 = True
+    result1 = comparator.check_equality(val1, val2)
+    print(f""Comparing {val1} and {val2}: {result1}"")
+    val3 = False
+    val4 = True
+    result2 = comparator.check_equality(val3, val4)
+    print(f""Comparing {val3} and {val4}: {result2}"")
+    val5 = False
+    val6 = False
+    result3 = comparator.check_equality(val5, val6)
+    print(f""Comparing {val5} and {val6}: {result3}"")",True,1,5392,86_12_1.py
+86,14,Simple true false comparison,"Create a single, self-contained Python function that accepts two boolean arguments and returns the result of a direct logical comparison (e.g., using the equality operator) and prints the result to the console.","def logical_comparison_printer(a: bool, b: bool):
+    result = a == b
+    print(result)
+if __name__ == '__main__':
+    logical_comparison_printer(True, True)
+    logical_comparison_printer(True, False)
+    logical_comparison_printer(False, False)
+    logical_comparison_printer(False, True)",True,0,5393,86_14.py
+86,14,Simple true false comparison,"Create a single, self-contained Python function that accepts two boolean arguments and returns the result of a direct logical comparison (e.g., using the equality operator) and prints the result to the console.","def compare_and_print(a, b):
+    result = a == b
+    print(result)
+if __name__ == '__main__':
+    compare_and_print(True, True)
+    compare_and_print(True, False)
+    compare_and_print(False, False)
+    compare_and_print(True, False)",True,1,5394,86_14_1.py
+87,0,Combine two boolean conditions,"Write a complete, high-quality Python script that combines two boolean conditions using the logical AND operator for a list of numbers.","def combine_conditions(numbers, condition1, condition2):
+    result = []
+    for num in numbers:
+        if condition1(num) and condition2(num):
+            result.append(num)
+    return result
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    condition_a = lambda x: x % 2 == 0
+    condition_b = lambda x: x > 5
+    combined_list = combine_conditions(data, condition_a, condition_b)
+    print(combined_list)",True,0,5395,87_0.py
+87,0,Combine two boolean conditions,"Write a complete, high-quality Python script that combines two boolean conditions using the logical AND operator for a list of numbers.","def combine_conditions(numbers, condition1, condition2):
+    result = []
+    for num in numbers:
+        if condition1(num) and condition2(num):
+            result.append(num)
+    return result
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    def is_greater_than_five(n):
+        return n > 5
+    combined_list = combine_conditions(data, is_even, is_greater_than_five)
+    print(combined_list)",True,1,5396,87_0_1.py
+87,0,Combine two boolean conditions,"Write a complete, high-quality Python script that combines two boolean conditions using the logical AND operator for a list of numbers.","def combine_conditions(numbers, condition1, condition2):
+    result = []
+    for num in numbers:
+        if condition1(num) and condition2(num):
+            result.append(num)
+    return result
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    is_even = lambda x: x % 2 == 0
+    is_greater_than_five = lambda x: x > 5
+    combined_list = combine_conditions(data, is_even, is_greater_than_five)
+    print(combined_list)",True,2,5397,87_0_2.py
+87,0,Combine two boolean conditions,"Write a complete, high-quality Python script that combines two boolean conditions using the logical AND operator for a list of numbers.","def combine_conditions(numbers, condition_a, condition_b):
+    result = []
+    for num in numbers:
+        if num > condition_a and num < condition_b:
+            result.append(num)
+    return result
+if __name__ == '__main__':
+    data = [1, 5, 10, 15, 20, 25, 30]
+    lower_bound = 4
+    upper_bound = 22
+    filtered_numbers = combine_conditions(data, lower_bound, upper_bound)
+    print(filtered_numbers)",True,3,5398,87_0_3.py
+87,1,Combine two boolean conditions,Implement an optimized Python function named `check_combined_conditions` that accepts two boolean arguments and returns the result of combining them using the logical OR operator.,"def check_combined_conditions(bool1, bool2):
+    return bool1 or bool2
+if __name__ == '__main__':
+    result1 = check_combined_conditions(True, False)
+    print(f""check_combined_conditions(True, False): {result1}"")
+    result2 = check_combined_conditions(False, True)
+    print(f""check_combined_conditions(False, True): {result2}"")
+    result3 = check_combined_conditions(True, True)
+    print(f""check_combined_conditions(True, True): {result3}"")
+    result4 = check_combined_conditions(False, False)
+    print(f""check_combined_conditions(False, False): {result4}"")",True,0,5399,87_1.py
+87,1,Combine two boolean conditions,Implement an optimized Python function named `check_combined_conditions` that accepts two boolean arguments and returns the result of combining them using the logical OR operator.,"def check_combined_conditions(condition1, condition2):
+    return condition1 or condition2
+if __name__ == '__main__':
+    result1 = check_combined_conditions(True, False)
+    print(f""check_combined_conditions(True, False): {result1}"")
+    result2 = check_combined_conditions(False, True)
+    print(f""check_combined_conditions(False, True): {result2}"")
+    result3 = check_combined_conditions(True, True)
+    print(f""check_combined_conditions(True, True): {result3}"")
+    result4 = check_combined_conditions(False, False)
+    print(f""check_combined_conditions(False, False): {result4}"")",True,1,5400,87_1_1.py
+87,1,Combine two boolean conditions,Implement an optimized Python function named `check_combined_conditions` that accepts two boolean arguments and returns the result of combining them using the logical OR operator.,"def check_combined_conditions(bool1, bool2):
+    return bool1 or bool2
+if __name__ == '__main__':
+    result1 = check_combined_conditions(True, False)
+    print(result1)
+    result2 = check_combined_conditions(False, True)
+    print(result2)
+    result3 = check_combined_conditions(True, True)
+    print(result3)
+    result4 = check_combined_conditions(False, False)
+    print(result4)",True,2,5401,87_1_2.py
+87,2,Combine two boolean conditions,Write a robust Python function that takes two boolean inputs and returns `True` only if both conditions are met (using logical AND). Ensure the function is well-documented.,"def check_both_true(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    value1 = True
+    value2 = True
+    result1 = check_both_true(value1, value2)
+    print(f""check_both_true({value1}, {value2}) is: {result1}"")
+    value3 = True
+    value4 = False
+    result2 = check_both_true(value3, value4)
+    print(f""check_both_true({value3}, {value4}) is: {result2}"")
+    value5 = False
+    value6 = False
+    result3 = check_both_true(value5, value6)
+    print(f""check_both_true({value5}, {value6}) is: {result3}"")
+    value7 = True
+    value8 = True
+    result4 = check_both_true(value7, value8)
+    print(f""check_both_true({value7}, {value8}) is: {result4}"")",True,0,5402,87_2.py
+87,2,Combine two boolean conditions,Write a robust Python function that takes two boolean inputs and returns `True` only if both conditions are met (using logical AND). Ensure the function is well-documented.,"def check_both_true(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    value1 = True
+    value2 = True
+    result1 = check_both_true(value1, value2)
+    print(f""check_both_true({value1}, {value2}) is: {result1}"")
+    value3 = True
+    value4 = False
+    result2 = check_both_true(value3, value4)
+    print(f""check_both_true({value3}, {value4}) is: {result2}"")
+    value5 = False
+    value6 = False
+    result3 = check_both_true(value5, value6)
+    print(f""check_both_true({value5}, {value6}) is: {result3}"")",True,1,5403,87_2_1.py
+87,2,Combine two boolean conditions,Write a robust Python function that takes two boolean inputs and returns `True` only if both conditions are met (using logical AND). Ensure the function is well-documented.,"def check_both_true(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    result1 = check_both_true(True, True)
+    print(f""check_both_true(True, True): {result1}"")
+    result2 = check_both_true(True, False)
+    print(f""check_both_true(True, False): {result2}"")
+    result3 = check_both_true(False, True)
+    print(f""check_both_true(False, True): {result3}"")
+    result4 = check_both_true(False, False)
+    print(f""check_both_true(False, False): {result4}"")",True,2,5404,87_2_2.py
+87,2,Combine two boolean conditions,Write a robust Python function that takes two boolean inputs and returns `True` only if both conditions are met (using logical AND). Ensure the function is well-documented.,"def check_both(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    result1 = check_both(True, True)
+    print(f""check_both(True, True): {result1}"")
+    result2 = check_both(True, False)
+    print(f""check_both(True, False): {result2}"")
+    result3 = check_both(False, True)
+    print(f""check_both(False, True): {result3}"")
+    result4 = check_both(False, False)
+    print(f""check_both(False, False): {result4}"")",True,3,5405,87_2_3.py
+87,3,Combine two boolean conditions,"Develop an efficient Python method to check if a variable is both positive and less than 100, combining these two conditions with AND logic.","def check_value(x):
+    return x > 0 and x < 100
+if __name__ == '__main__':
+    value1 = 50
+    value2 = -10
+    value3 = 100
+    value4 = 101
+    print(f""Checking {value1}: {check_value(value1)}"")
+    print(f""Checking {value2}: {check_value(value2)}"")
+    print(f""Checking {value3}: {check_value(value3)}"")
+    print(f""Checking {value4}: {check_value(value4)}"")",True,0,5406,87_3.py
+87,3,Combine two boolean conditions,"Develop an efficient Python method to check if a variable is both positive and less than 100, combining these two conditions with AND logic.","def check_condition(x):
+    return x > 0 and x < 100
+if __name__ == '__main__':
+    value1 = 50
+    value2 = 100
+    value3 = -10
+    value4 = 1000
+    print(f""Checking {value1}: {check_condition(value1)}"")
+    print(f""Checking {value2}: {check_condition(value2)}"")
+    print(f""Checking {value3}: {check_condition(value3)}"")
+    print(f""Checking {value4}: {check_condition(value4)}"")",True,1,5407,87_3_1.py
+87,3,Combine two boolean conditions,"Develop an efficient Python method to check if a variable is both positive and less than 100, combining these two conditions with AND logic.","def check_variable(x):
+    return x > 0 and x < 100
+if __name__ == '__main__':
+    value1 = 50
+    value2 = 100
+    value3 = -10
+    value4 = 1000
+    print(f""Checking {value1}: {check_variable(value1)}"")
+    print(f""Checking {value2}: {check_variable(value2)}"")
+    print(f""Checking {value3}: {check_variable(value3)}"")
+    print(f""Checking {value4}: {check_variable(value4)}"")",True,2,5408,87_3_2.py
+87,3,Combine two boolean conditions,"Develop an efficient Python method to check if a variable is both positive and less than 100, combining these two conditions with AND logic.","def check_value(x):
+    return x > 0 and x < 100
+if __name__ == '__main__':
+    value1 = 50
+    value2 = -10
+    value3 = 100
+    value4 = 200
+    print(f""Checking {value1}: {check_value(value1)}"")
+    print(f""Checking {value2}: {check_value(value2)}"")
+    print(f""Checking {value3}: {check_value(value3)}"")
+    print(f""Checking {value4}: {check_value(value4)}"")",True,3,5409,87_3_3.py
+86,13,Simple true false comparison,Write a simple command-line interface (CLI) script using Python that prompts the user to enter two boolean values and then performs and displays a direct true/false comparison.,,False,0,5410,86_13.py
+87,5,Combine two boolean conditions,"Implement a class method that checks if an item is eligible, requiring that the item is active AND has sufficient permissions.","class ItemChecker:
+    def __init__(self, active, permissions):
+        self.active = active
+        self.permissions = permissions
+    def is_eligible(self):
+        return self.active and self.permissions
+if __name__ == '__main__':
+    item1 = ItemChecker(active=True, permissions=True)
+    item2 = ItemChecker(active=False, permissions=True)
+    item3 = ItemChecker(active=True, permissions=False)
+    item4 = ItemChecker(active=False, permissions=False)
+    print(f""Item 1 eligible: {item1.is_eligible()}"")
+    print(f""Item 2 eligible: {item2.is_eligible()}"")
+    print(f""Item 3 eligible: {item3.is_eligible()}"")
+    print(f""Item 4 eligible: {item4.is_eligible()}"")",True,0,5411,87_5.py
+87,5,Combine two boolean conditions,"Implement a class method that checks if an item is eligible, requiring that the item is active AND has sufficient permissions.","class Item:
+    def __init__(self, active, permissions):
+        self.active = active
+        self.permissions = permissions
+    @classmethod
+    def is_eligible(cls, item):
+        return item.active and item.permissions
+if __name__ == '__main__':
+    item1 = Item(True, True)
+    item2 = Item(False, True)
+    item3 = Item(True, False)
+    item4 = Item(False, False)
+    print(f""Item 1 eligible: {Item.is_eligible(item1)}"")
+    print(f""Item 2 eligible: {Item.is_eligible(item2)}"")
+    print(f""Item 3 eligible: {Item.is_eligible(item3)}"")
+    print(f""Item 4 eligible: {Item.is_eligible(item4)}"")",True,1,5412,87_5_1.py
+87,5,Combine two boolean conditions,"Implement a class method that checks if an item is eligible, requiring that the item is active AND has sufficient permissions.","class Item:
+    def __init__(self, active, permissions):
+        self.active = active
+        self.permissions = permissions
+    @classmethod
+    def is_eligible(cls, item):
+        return item.active and item.permissions
+if __name__ == '__main__':
+    item1 = Item(active=True, permissions=10)
+    item2 = Item(active=False, permissions=10)
+    item3 = Item(active=True, permissions=5)
+    print(f""Item 1 eligible: {Item.is_eligible(item1)}"")
+    print(f""Item 2 eligible: {Item.is_eligible(item2)}"")
+    print(f""Item 3 eligible: {Item.is_eligible(item3)}"")",True,2,5413,87_5_2.py
+87,6,Combine two boolean conditions,Write an optimized script that iterates through a list and sets a flag to True if the current element is both even AND greater than 50.,"def process_list(data):
+    for item in data:
+        if item % 2 == 0 and item > 50:
+            item = True
+    return data
+if __name__ == '__main__':
+    sample_list = [10, 55, 60, 49, 100, 33]
+    result = process_list(sample_list)
+    print(result)",True,0,5414,87_6.py
+87,6,Combine two boolean conditions,Write an optimized script that iterates through a list and sets a flag to True if the current element is both even AND greater than 50.,"def process_list(data):
+    for item in data:
+        if item % 2 == 0 and item > 50:
+            item = True
+    return data
+if __name__ == '__main__':
+    sample_list = [10, 55, 60, 48, 100, 33]
+    result = process_list(sample_list)
+    print(result)",True,1,5415,87_6_1.py
+87,6,Combine two boolean conditions,Write an optimized script that iterates through a list and sets a flag to True if the current element is both even AND greater than 50.,"if __name__ == '__main__':
+    data = [10, 55, 48, 100, 33, 60]
+    flag = False
+    for item in data:
+        if item % 2 == 0 and item > 50:
+            flag = True
+            break
+    print(flag)",True,2,5416,87_6_2.py
+87,6,Combine two boolean conditions,Write an optimized script that iterates through a list and sets a flag to True if the current element is both even AND greater than 50.,"if __name__ == '__main__':
+    data = [10, 55, 48, 60, 33, 72]
+    flag_set = False
+    for item in data:
+        if item % 2 == 0 and item > 50:
+            flag_set = True
+            break
+    print(flag_set)",True,3,5417,87_6_3.py
+87,6,Combine two boolean conditions,Write an optimized script that iterates through a list and sets a flag to True if the current element is both even AND greater than 50.,"def process_list(data):
+    for item in data:
+        if item % 2 == 0 and item > 50:
+            item = True
+    return data
+if __name__ == '__main__':
+    sample_list = [10, 51, 60, 49, 100, 50]
+    result = process_list(sample_list)
+    print(result)",True,4,5418,87_6_4.py
+87,7,Combine two boolean conditions,"Create a Python function that accepts two boolean flags and returns the combined result, prioritizing the logical AND operation.","def combine_booleans(flag1, flag2):
+    return flag1 and flag2
+if __name__ == '__main__':
+    a = True
+    b = False
+    result = combine_booleans(a, b)
+    print(result)
+    a = True
+    b = True
+    result = combine_booleans(a, b)
+    print(result)
+    a = False
+    b = True
+    result = combine_booleans(a, b)
+    print(result)",True,0,5419,87_7.py
+86,10,Simple true false comparison,"Write a complete, robust Python script that takes two boolean inputs and prints the true/false comparison result in a clear, human-readable format.",,False,0,5420,86_10.py
+87,9,Combine two boolean conditions,Write a testable Python function that demonstrates combining two independent boolean checks using the logical XOR operator.,"def combine_xor(a: bool, b: bool) -> bool:
+    return a ^ b
+if __name__ == '__main__':
+    check1 = True
+    check2 = False
+    result1 = combine_xor(check1, check2)
+    print(f""XOR of {check1} and {check2}: {result1}"")
+    check3 = True
+    check4 = True
+    result2 = combine_xor(check3, check4)
+    print(f""XOR of {check3} and {check4}: {result2}"")
+    check5 = False
+    check6 = False
+    result3 = combine_xor(check5, check6)
+    print(f""XOR of {check5} and {check6}: {result3}"")",True,0,5421,87_9.py
+87,9,Combine two boolean conditions,Write a testable Python function that demonstrates combining two independent boolean checks using the logical XOR operator.,"def combine_xor(a: bool, b: bool) -> bool:
+    return a ^ b
+if __name__ == '__main__':
+    check1 = True
+    check2 = False
+    result1 = combine_xor(check1, check2)
+    print(f""Check 1: {check1}, Check 2: {check2}, Result: {result1}"")
+    check3 = True
+    check4 = True
+    result2 = combine_xor(check3, check4)
+    print(f""Check 3: {check3}, Check 4: {check4}, Result: {result2}"")
+    check5 = False
+    check6 = False
+    result3 = combine_xor(check5, check6)
+    print(f""Check 5: {check5}, Check 6: {check6}, Result: {result3}"")",True,1,5422,87_9_1.py
+87,9,Combine two boolean conditions,Write a testable Python function that demonstrates combining two independent boolean checks using the logical XOR operator.,"def combine_xor(a: bool, b: bool) -> bool:
+    return a ^ b
+if __name__ == '__main__':
+    check1 = True
+    check2 = False
+    result1 = combine_xor(check1, check2)
+    print(f""check1: {check1}, check2: {check2}, result: {result1}"")
+    check3 = True
+    check4 = True
+    result2 = combine_xor(check3, check4)
+    print(f""check3: {check3}, check4: {check4}, result: {result2}"")
+    check5 = False
+    check6 = False
+    result3 = combine_xor(check5, check6)
+    print(f""check5: {check5}, check6: {check6}, result: {result3}"")",True,2,5423,87_9_2.py
+87,9,Combine two boolean conditions,Write a testable Python function that demonstrates combining two independent boolean checks using the logical XOR operator.,"def combine_xor(a: bool, b: bool) -> bool:
+    return a ^ b
+if __name__ == '__main__':
+    check1 = True
+    check2 = False
+    result1 = combine_xor(check1, check2)
+    print(f""XOR({check1}, {check2}) = {result1}"")
+    check3 = True
+    check4 = True
+    result2 = combine_xor(check3, check4)
+    print(f""XOR({check3}, {check4}) = {result2}"")
+    check5 = False
+    check6 = False
+    result3 = combine_xor(check5, check6)
+    print(f""XOR({check5}, {check6}) = {result3}"")",True,3,5424,87_9_3.py
+87,10,Combine two boolean conditions,"Write a robust Python function named `check_conditions` that accepts two boolean arguments, `condition_a` and `condition_b`, and returns `True` only if both conditions are true (logical AND). Ensure the function is highly readable and includes clear docstrings.","def check_conditions(condition_a: bool, condition_b: bool) -> bool:
+    return condition_a and condition_b
+if __name__ == '__main__':
+    result1 = check_conditions(True, True)
+    print(f""check_conditions(True, True): {result1}"")
+    result2 = check_conditions(True, False)
+    print(f""check_conditions(True, False): {result2}"")
+    result3 = check_conditions(False, True)
+    print(f""check_conditions(False, True): {result3}"")
+    result4 = check_conditions(False, False)
+    print(f""check_conditions(False, False): {result4}"")",True,0,5425,87_10.py
+87,11,Combine two boolean conditions,"Implement an optimized Python script that takes two boolean variables, `is_active` and `has_permission`, and determines if a user can proceed. The logic must combine these two conditions using the appropriate boolean operator and demonstrate the most efficient way to write the combined check.","if __name__ == '__main__':
+    is_active = True
+    has_permission = False
+    can_proceed = is_active and has_permission
+    print(can_proceed)",True,0,5426,87_11.py
+87,12,Combine two boolean conditions,"Develop a class method within a class called `LogicCombiner` that contains a method named `evaluate` which accepts two boolean inputs. The method should return the result of combining these two booleans using the logical OR operator, and the implementation must be thread-safe if contextually necessary (though for simple booleans, standard operation is fine).","class LogicCombiner:
+    @staticmethod
+    def evaluate(a: bool, b: bool) -> bool:
+        return a or b
+if __name__ == '__main__':
+    result1 = LogicCombiner.evaluate(True, False)
+    print(f""evaluate(True, False): {result1}"")
+    result2 = LogicCombiner.evaluate(False, True)
+    print(f""evaluate(False, True): {result2}"")
+    result3 = LogicCombiner.evaluate(True, True)
+    print(f""evaluate(True, True): {result3}"")
+    result4 = LogicCombiner.evaluate(False, False)
+    print(f""evaluate(False, False): {result4}"")",True,0,5427,87_12.py
+87,4,Combine two boolean conditions,"Write the necessary Python code to evaluate the combined boolean expression: (condition_a AND condition_b) OR condition_c, given sample boolean values.",,False,0,5428,87_4.py
+87,14,Combine two boolean conditions,"Create a complete, production-ready Python function that accepts two boolean flags, `data_valid` and `source_ok`, and returns a single boolean indicating that the operation is permitted only if *both* flags are True. Focus on clean, professional code structure.","def check_permission(data_valid: bool, source_ok: bool) -> bool:
+    return data_valid and source_ok
+if __name__ == '__main__':
+    result1 = check_permission(True, True)
+    print(f""Test 1 (True, True): {result1}"")
+    result2 = check_permission(True, False)
+    print(f""Test 2 (True, False): {result2}"")
+    result3 = check_permission(False, True)
+    print(f""Test 3 (False, True): {result3}"")
+    result4 = check_permission(False, False)
+    print(f""Test 4 (False, False): {result4}"")",True,0,5429,87_14.py
+88,0,Check if both are true,"Write a robust Python function named 'check_both_true' that accepts two boolean arguments and returns True only if both are True, otherwise return False. Ensure the implementation is highly efficient.","def check_both_true(a, b):
+    return a and b
+if __name__ == '__main__':
+    print(check_both_true(True, True))
+    print(check_both_true(True, False))
+    print(check_both_true(False, True))
+    print(check_both_true(False, False))",True,0,5430,88_0.py
+88,0,Check if both are true,"Write a robust Python function named 'check_both_true' that accepts two boolean arguments and returns True only if both are True, otherwise return False. Ensure the implementation is highly efficient.","def check_both_true(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    result1 = check_both_true(True, True)
+    print(f""check_both_true(True, True): {result1}"")
+    result2 = check_both_true(True, False)
+    print(f""check_both_true(True, False): {result2}"")
+    result3 = check_both_true(False, True)
+    print(f""check_both_true(False, True): {result3}"")
+    result4 = check_both_true(False, False)
+    print(f""check_both_true(False, False): {result4}"")",True,1,5431,88_0_1.py
+88,1,Check if both are true,"Implement a class named 'BooleanChecker' with a method 'is_both_true(self, a: bool, b: bool) -> bool' that checks if both input booleans are True. Provide docstrings explaining the method's purpose and complexity.","class BooleanChecker:
+    def is_both_true(self, a: bool, b: bool) -> bool:
+        return a and b
+if __name__ == '__main__':
+    checker = BooleanChecker()
+    print(f""is_both_true(True, True): {checker.is_both_true(True, True)}"")
+    print(f""is_both_true(True, False): {checker.is_both_true(True, False)}"")
+    print(f""is_both_true(False, True): {checker.is_both_true(False, True)}"")
+    print(f""is_both_true(False, False): {checker.is_both_true(False, False)}"")",True,0,5432,88_1.py
+87,8,Combine two boolean conditions,"Generate the complete, best-practice Python code for combining two complex boolean expressions using nested parentheses for clarity and correctness.",,False,0,5433,87_8.py
+88,3,Check if both are true,"Write a concise, single-line Python expression to check if both variables `condition_a` and `condition_b` are true. Assume these variables are defined.","if __name__ == '__main__':
+    condition_a = True
+    condition_b = False
+    if condition_a and condition_b:
+        print(""Both are true"")
+    else:
+        print(""At least one is false"")",True,0,5434,88_3.py
+88,4,Check if both are true,"Create an optimized function that takes two inputs, `val1` and `val2`, and returns True if both inputs are logically true (i.e., both are True), and False otherwise. Prioritize speed.","def check_both_true(val1, val2):
+    return val1 and val2
+if __name__ == '__main__':
+    print(check_both_true(True, True))
+    print(check_both_true(True, False))
+    print(check_both_true(False, True))
+    print(check_both_true(False, False))",True,0,5435,88_4.py
+88,5,Check if both are true,"Write a testable function, `check_conjunction(a: bool, b: bool)`, that returns the result of the logical AND operation between `a` and `b`. Rename the function to clearly indicate it checks if both conditions are met.","def check_both_true(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    print(check_both_true(True, True))
+    print(check_both_true(True, False))
+    print(check_both_true(False, True))
+    print(check_both_true(False, False))",True,0,5436,88_5.py
+88,5,Check if both are true,"Write a testable function, `check_conjunction(a: bool, b: bool)`, that returns the result of the logical AND operation between `a` and `b`. Rename the function to clearly indicate it checks if both conditions are met.","def check_both_conditions(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    print(check_both_conditions(True, True))
+    print(check_both_conditions(True, False))
+    print(check_both_conditions(False, True))
+    print(check_both_conditions(False, False))",True,1,5437,88_5_1.py
+88,5,Check if both are true,"Write a testable function, `check_conjunction(a: bool, b: bool)`, that returns the result of the logical AND operation between `a` and `b`. Rename the function to clearly indicate it checks if both conditions are met.","def check_both_conditions(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    result1 = check_both_conditions(True, True)
+    print(f""check_both_conditions(True, True): {result1}"")
+    result2 = check_both_conditions(True, False)
+    print(f""check_both_conditions(True, False): {result2}"")
+    result3 = check_both_conditions(False, True)
+    print(f""check_both_conditions(False, True): {result3}"")
+    result4 = check_both_conditions(False, False)
+    print(f""check_both_conditions(False, False): {result4}"")",True,2,5438,88_5_2.py
+88,6,Check if both are true,Design and implement a Python function that takes two boolean parameters and returns True if and only if the logical AND of the two parameters is True. Include type hinting for all parameters and the return value.,"def logical_and(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    result1 = logical_and(True, True)
+    print(f""logical_and(True, True): {result1}"")
+    result2 = logical_and(True, False)
+    print(f""logical_and(True, False): {result2}"")
+    result3 = logical_and(False, True)
+    print(f""logical_and(False, True): {result3}"")
+    result4 = logical_and(False, False)
+    print(f""logical_and(False, False): {result4}"")",True,0,5439,88_6.py
+88,7,Check if both are true,"Generate a complete, runnable Python program that prompts the user to enter two boolean values (using appropriate input parsing) and prints a clear message indicating whether both entered values are True.","if __name__ == '__main__':
+    value1 = True
+    value2 = True
+    if value1 and value2:
+        print(""Both values are True"")
+    else:
+        print(""At least one value is False"")",True,0,5440,88_7.py
+88,7,Check if both are true,"Generate a complete, runnable Python program that prompts the user to enter two boolean values (using appropriate input parsing) and prints a clear message indicating whether both entered values are True.","if __name__ == '__main__':
+    a = True
+    b = True
+    if a and b:
+        print(""Both values are True"")
+    else:
+        print(""At least one value is False"")",True,1,5441,88_7_1.py
+88,8,Check if both are true,"Implement a method within a simple class designed for validation, which checks if two provided boolean states are simultaneously true. Ensure this implementation adheres to Python best practices.","class Validator:
+    def are_both_true(self, a: bool, b: bool) -> bool:
+        return a and b
+if __name__ == '__main__':
+    validator = Validator()
+    print(validator.are_both_true(True, True))
+    print(validator.are_both_true(True, False))
+    print(validator.are_both_true(False, True))
+    print(validator.are_both_true(False, False))",True,0,5442,88_8.py
+88,9,Check if both are true,"Write a highly efficient bitwise operation approach to check if two given integer flags, when interpreted as booleans, are both true. Assume the input integers represent the truth states.","def check_both_true(flag1, flag2):
+    return (flag1 & flag2) == flag1
+if __name__ == '__main__':
+    a = 1
+    b = 1
+    print(check_both_true(a, b))
+    a = 1
+    b = 0
+    print(check_both_true(a, b))
+    a = 0
+    b = 1
+    print(check_both_true(a, b))
+    a = 0
+    b = 0
+    print(check_both_true(a, b))
+    a = 1
+    b = 10
+    print(check_both_true(a, b))",True,0,5443,88_9.py
+88,9,Check if both are true,"Write a highly efficient bitwise operation approach to check if two given integer flags, when interpreted as booleans, are both true. Assume the input integers represent the truth states.","def check_both_true(flag1, flag2):
+    return (flag1 & flag2) == flag1
+if __name__ == '__main__':
+    a = 1
+    b = 1
+    print(check_both_true(a, b))
+    a = 1
+    b = 0
+    print(check_both_true(a, b))
+    a = 0
+    b = 1
+    print(check_both_true(a, b))
+    a = 0
+    b = 0
+    print(check_both_true(a, b))
+    a = 5       
+    b = 5       
+    print(check_both_true(a, b))
+    a = 6       
+    b = 3       
+    print(check_both_true(a, b))",True,1,5444,88_9_1.py
+88,9,Check if both are true,"Write a highly efficient bitwise operation approach to check if two given integer flags, when interpreted as booleans, are both true. Assume the input integers represent the truth states.","def check_both_true(flag1, flag2):
+    return (flag1 & flag2) == flag1
+if __name__ == '__main__':
+    a = 1
+    b = 1
+    print(check_both_true(a, b))
+    a = 1
+    b = 0
+    print(check_both_true(a, b))
+    a = 0
+    b = 1
+    print(check_both_true(a, b))
+    a = 0
+    b = 0
+    print(check_both_true(a, b))
+    a = 3                
+    b = 3                
+    print(check_both_true(a, b))",True,2,5445,88_9_2.py
+88,9,Check if both are true,"Write a highly efficient bitwise operation approach to check if two given integer flags, when interpreted as booleans, are both true. Assume the input integers represent the truth states.","def check_both_true(flag1, flag2):
+    return (flag1 & flag2) == flag1
+if __name__ == '__main__':
+    flag_a = 3
+    flag_b = 3
+    result_ab = check_both_true(flag_a, flag_b)
+    print(result_ab)
+    flag_c = 1
+    flag_d = 2
+    result_cd = check_both_true(flag_c, flag_d)
+    print(result_cd)
+    flag_e = 0
+    flag_f = 1
+    result_ef = check_both_true(flag_e, flag_f)
+    print(result_ef)",True,3,5446,88_9_3.py
+87,13,Combine two boolean conditions,Write a concise and idiomatic Python snippet to test the combination of two boolean expressions: `x > 5` and `y < 10`. The code must print the result of the combined condition and use descriptive variable names.,,False,0,5447,87_13.py
+88,11,Check if both are true,"Implement an optimized function named `check_both_true` that accepts two boolean arguments and returns `True` only if both inputs are true, ensuring O(1) time complexity.","def check_both_true(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    print(check_both_true(True, True))
+    print(check_both_true(True, False))
+    print(check_both_true(False, True))
+    print(check_both_true(False, False))",True,0,5448,88_11.py
+88,11,Check if both are true,"Implement an optimized function named `check_both_true` that accepts two boolean arguments and returns `True` only if both inputs are true, ensuring O(1) time complexity.","def check_both_true(a, b):
+    return a and b
+if __name__ == '__main__':
+    print(check_both_true(True, True))
+    print(check_both_true(True, False))
+    print(check_both_true(False, True))
+    print(check_both_true(False, False))",True,1,5449,88_11_1.py
+88,12,Check if both are true,"Develop a class named `BooleanChecker` with a method `is_both_true(self, a: bool, b: bool)` that efficiently determines if both provided boolean values are true.","class BooleanChecker:
+    def is_both_true(self, a: bool, b: bool) -> bool:
+        return a and b
+if __name__ == '__main__':
+    checker = BooleanChecker()
+    print(f""is_both_true(True, True): {checker.is_both_true(True, True)}"")
+    print(f""is_both_true(True, False): {checker.is_both_true(True, False)}"")
+    print(f""is_both_true(False, True): {checker.is_both_true(False, True)}"")
+    print(f""is_both_true(False, False): {checker.is_both_true(False, False)}"")",True,0,5450,88_12.py
+88,13,Check if both are true,"Write a concise and idiomatic Python expression to check if two variables, `condition_a` and `condition_b`, are simultaneously true, and store the result in a new variable.","if __name__ == '__main__':
+    condition_a = True
+    condition_b = False
+    result = condition_a and condition_b
+    print(result)",True,0,5451,88_13.py
+88,14,Check if both are true,"Create a function that validates two boolean flags and raises a ValueError if at least one of them is false, otherwise return True.","def validate_flags(flag1, flag2):
+    if not flag1 or not flag2:
+        raise ValueError(""At least one flag must be True"")
+    return True
+if __name__ == '__main__':
+    try:
+        print(validate_flags(True, True))
+        print(validate_flags(True, False))
+        print(validate_flags(False, True))
+        print(validate_flags(False, False))
+    except ValueError as e:
+        print(f""Caught error: {e}"")",True,0,5452,88_14.py
+88,14,Check if both are true,"Create a function that validates two boolean flags and raises a ValueError if at least one of them is false, otherwise return True.","def validate_flags(flag1, flag2):
+    if not flag1 or not flag2:
+        raise ValueError(""At least one flag must be true"")
+    return True
+if __name__ == '__main__':
+    try:
+        print(validate_flags(True, True))
+        print(validate_flags(True, False))
+        print(validate_flags(False, True))
+        print(validate_flags(False, False))
+    except ValueError as e:
+        print(f""Caught error: {e}"")",True,1,5453,88_14_1.py
+88,14,Check if both are true,"Create a function that validates two boolean flags and raises a ValueError if at least one of them is false, otherwise return True.","def validate_flags(flag1, flag2):
+    if not flag1 or not flag2:
+        raise ValueError(""At least one flag must be True"")
+    return True
+if __name__ == '__main__':
+    try:
+        print(validate_flags(True, True))
+        print(validate_flags(True, False))
+        print(validate_flags(False, True))
+        print(validate_flags(False, False))
+    except ValueError as e:
+        print(f""Caught an error: {e}"")",True,2,5454,88_14_2.py
+88,14,Check if both are true,"Create a function that validates two boolean flags and raises a ValueError if at least one of them is false, otherwise return True.","def validate_flags(flag1, flag2):
+    if not flag1 or not flag2:
+        raise ValueError(""At least one flag must be true"")
+    return True
+if __name__ == '__main__':
+    try:
+        print(validate_flags(True, True))
+        print(validate_flags(True, False))
+        print(validate_flags(False, True))
+        print(validate_flags(False, False))
+    except ValueError as e:
+        print(f""Caught an error: {e}"")",True,3,5455,88_14_3.py
+89,0,Evaluate an and operation,"Write a complete, well-documented Python script that evaluates a binary operation (addition, subtraction, multiplication, division) between two user-inputted numbers, handling potential division by zero errors gracefully.","import sys
+def evaluate_binary_operation(num1, num2, operation):
+    if operation == '+':
+        return num1 + num2
+    elif operation == '-':
+        return num1 - num2
+    elif operation == '*':
+        return num1 * num2
+    elif operation == '/':
+        if num2 == 0:
+            return ""Error: Division by zero""
+        else:
+            return num1 / num2
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 20
+    b = 0
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 12
+    b = 4
+    op = '*'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 15
+    b = 7
+    op = '-'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")",True,0,5456,89_0.py
+89,0,Evaluate an and operation,"Write a complete, well-documented Python script that evaluates a binary operation (addition, subtraction, multiplication, division) between two user-inputted numbers, handling potential division by zero errors gracefully.","import sys
+def evaluate_binary_operation(num1, num2, operation):
+    if operation == '+':
+        return num1 + num2
+    elif operation == '-':
+        return num1 - num2
+    elif operation == '*':
+        return num1 * num2
+    elif operation == '/':
+        if num2 == 0:
+            return ""Error: Division by zero""
+        else:
+            return num1 / num2
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 10
+    b = 0
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 10
+    b = 3
+    op = '*'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 20
+    b = 4
+    op = '-'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")",True,1,5457,89_0_1.py
+89,0,Evaluate an and operation,"Write a complete, well-documented Python script that evaluates a binary operation (addition, subtraction, multiplication, division) between two user-inputted numbers, handling potential division by zero errors gracefully.","import sys
+def evaluate_binary_operation(num1, num2, operation):
+    if operation == '+':
+        return num1 + num2
+    elif operation == '-':
+        return num1 - num2
+    elif operation == '*':
+        return num1 * num2
+    elif operation == '/':
+        if num2 == 0:
+            return ""Error: Division by zero""
+        else:
+            return num1 / num2
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 20
+    b = 0
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 15
+    b = 7
+    op = '*'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")
+    a = 100
+    b = 30
+    op = '-'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""Evaluating {a} {op} {b}: {result}"")",True,2,5458,89_0_2.py
+89,0,Evaluate an and operation,"Write a complete, well-documented Python script that evaluates a binary operation (addition, subtraction, multiplication, division) between two user-inputted numbers, handling potential division by zero errors gracefully.","import sys
+def evaluate_binary_operation(num1, num2, operation):
+    if operation == '+':
+        return num1 + num2
+    elif operation == '-':
+        return num1 - num2
+    elif operation == '*':
+        return num1 * num2
+    elif operation == '/':
+        if num2 == 0:
+            return ""Error: Division by zero""
+        else:
+            return num1 / num2
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""First number: {a}"")
+    print(f""Second number: {b}"")
+    print(f""Operation: {op}"")
+    print(f""Result: {result}"")
+    a = 10
+    b = 0
+    op = '/'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""First number: {a}"")
+    print(f""Second number: {b}"")
+    print(f""Operation: {op}"")
+    print(f""Result: {result}"")
+    a = 10
+    b = 5
+    op = '*'
+    result = evaluate_binary_operation(a, b, op)
+    print(f""First number: {a}"")
+    print(f""Second number: {b}"")
+    print(f""Operation: {op}"")
+    print(f""Result: {result}"")",True,3,5459,89_0_3.py
+89,0,Evaluate an and operation,"Write a complete, well-documented Python script that evaluates a binary operation (addition, subtraction, multiplication, division) between two user-inputted numbers, handling potential division by zero errors gracefully.","import sys
+def evaluate_binary_operation(num1, num2, operation):
+    if operation == '+':
+        return num1 + num2
+    elif operation == '-':
+        return num1 - num2
+    elif operation == '*':
+        return num1 * num2
+    elif operation == '/':
+        if num2 == 0:
+            return ""Error: Division by zero""
+        else:
+            return num1 / num2
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    number1 = 10
+    number2 = 0
+    operation = '/'
+    result = evaluate_binary_operation(number1, number2, operation)
+    print(result)
+    number1 = 10
+    number2 = 5
+    operation = '*'
+    result = evaluate_binary_operation(number1, number2, operation)
+    print(result)
+    number1 = 20
+    number2 = 0
+    operation = '/'
+    result = evaluate_binary_operation(number1, number2, operation)
+    print(result)
+    number1 = 15
+    number2 = 7
+    operation = '-'
+    result = evaluate_binary_operation(number1, number2, operation)
+    print(result)",True,4,5460,89_0_4.py
+89,1,Evaluate an and operation,"Implement an optimized Python function named 'evaluate_binary_op' that takes two numbers and an operation symbol (e.g., '+', '-', '*', '/') and returns the result. The function must use conditional logic to select the correct mathematical operation.","def evaluate_binary_op(num1, num2, op):
+    if op == '+':
+        return num1 + num2
+    elif op == '-':
+        return num1 - num2
+    elif op == '*':
+        return num1 * num2
+    elif op == '/':
+        if num2 != 0:
+            return num1 / num2
+        else:
+            return ""Error: Division by zero""
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    print(evaluate_binary_op(10, 5, '+'))
+    print(evaluate_binary_op(10, 5, '-'))
+    print(evaluate_binary_op(10, 5, '*'))
+    print(evaluate_binary_op(10, 5, '/'))
+    print(evaluate_binary_op(10, 0, '/'))
+    print(evaluate_binary_op(10, 5, '%'))",True,0,5461,89_1.py
+89,1,Evaluate an and operation,"Implement an optimized Python function named 'evaluate_binary_op' that takes two numbers and an operation symbol (e.g., '+', '-', '*', '/') and returns the result. The function must use conditional logic to select the correct mathematical operation.","def evaluate_binary_op(num1, num2, op):
+    if op == '+':
+        return num1 + num2
+    elif op == '-':
+        return num1 - num2
+    elif op == '*':
+        return num1 * num2
+    elif op == '/':
+        return num1 / num2
+    else:
+        raise ValueError(""Invalid operation symbol"")
+if __name__ == '__main__':
+    print(evaluate_binary_op(10, 5, '+'))
+    print(evaluate_binary_op(10, 5, '-'))
+    print(evaluate_binary_op(10, 5, '*'))
+    print(evaluate_binary_op(10, 5, '/'))
+    try:
+        print(evaluate_binary_op(10, 5, '%'))
+    except ValueError as e:
+        print(e)",True,1,5462,89_1_1.py
+89,1,Evaluate an and operation,"Implement an optimized Python function named 'evaluate_binary_op' that takes two numbers and an operation symbol (e.g., '+', '-', '*', '/') and returns the result. The function must use conditional logic to select the correct mathematical operation.","def evaluate_binary_op(num1, num2, op):
+    if op == '+':
+        return num1 + num2
+    elif op == '-':
+        return num1 - num2
+    elif op == '*':
+        return num1 * num2
+    elif op == '/':
+        if num2 != 0:
+            return num1 / num2
+        else:
+            return ""Error: Division by zero""
+    else:
+        return ""Error: Invalid operation""
+if __name__ == '__main__':
+    result1 = evaluate_binary_op(10, 5, '+')
+    print(f""10 + 5 = {result1}"")
+    result2 = evaluate_binary_op(10, 5, '-')
+    print(f""10 - 5 = {result2}"")
+    result3 = evaluate_binary_op(10, 5, '*')
+    print(f""10 * 5 = {result3}"")
+    result4 = evaluate_binary_op(10, 5, '/')
+    print(f""10 / 5 = {result4}"")
+    result5 = evaluate_binary_op(10, 0, '/')
+    print(f""10 / 0 = {result5}"")
+    result6 = evaluate_binary_op(10, 3, '%')
+    print(f""10 % 3 = {result6}"")",True,2,5463,89_1_2.py
+89,2,Evaluate an and operation,"Develop a class named 'ExpressionEvaluator' with a method 'evaluate' that accepts two operands and an operator string, performing the calculation and raising a specific custom exception for invalid operations.","class InvalidOperationError(Exception):
+    pass
+class ExpressionEvaluator:
+    def evaluate(self, operand1, operand2, operator):
+        if operator == '+':
+            return operand1 + operand2
+        elif operator == '-':
+            return operand1 - operand2
+        elif operator == '*':
+            return operand1 * operand2
+        elif operator == '/':
+            if operand2 == 0:
+                raise InvalidOperationError(""Division by zero is not allowed"")
+            return operand1 / operand2
+        else:
+            raise InvalidOperationError(f""Invalid operator: {operator}"")
+if __name__ == '__main__':
+    evaluator = ExpressionEvaluator()
+    try:
+        result1 = evaluator.evaluate(10, 5, '+')
+        print(f""10 + 5 = {result1}"")
+        result2 = evaluator.evaluate(20, 4, '*')
+        print(f""20 * 4 = {result2}"")
+        result3 = evaluator.evaluate(100, 0, '/')
+        print(f""100 / 0 = {result3}"")
+        result4 = evaluator.evaluate(10, 3, '%')
+        print(f""10 % 3 = {result4}"")
+    except InvalidOperationError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,5464,89_2.py
+89,2,Evaluate an and operation,"Develop a class named 'ExpressionEvaluator' with a method 'evaluate' that accepts two operands and an operator string, performing the calculation and raising a specific custom exception for invalid operations.","class InvalidOperationError(Exception):
+    pass
+class ExpressionEvaluator:
+    def evaluate(self, operand1, operand2, operator):
+        if operator == '+':
+            return operand1 + operand2
+        elif operator == '-':
+            return operand1 - operand2
+        elif operator == '*':
+            return operand1 * operand2
+        elif operator == '/':
+            if operand2 == 0:
+                raise InvalidOperationError(""Division by zero is not allowed"")
+            return operand1 / operand2
+        else:
+            raise InvalidOperationError(f""Invalid operator: {operator}"")
+if __name__ == '__main__':
+    evaluator = ExpressionEvaluator()
+    try:
+        result1 = evaluator.evaluate(10, 5, '+')
+        print(f""10 + 5 = {result1}"")
+        result2 = evaluator.evaluate(20, 4, '*')
+        print(f""20 * 4 = {result2}"")
+        result3 = evaluator.evaluate(100, 0, '/')
+        print(f""100 / 0 = {result3}"")
+        result4 = evaluator.evaluate(10, 5, '%')
+        print(f""10 % 5 = {result4}"")
+    except InvalidOperationError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,5465,89_2_1.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","def evaluate_simple_expression(expression_string):
+    parts = expression_string.split()
+    if len(parts) != 3:
+        raise ValueError(""Expression must contain exactly two numbers and one operator."")
+    try:
+        num1 = float(parts[0])
+        operator = parts[1]
+        num2 = float(parts[2])
+    except ValueError:
+        raise ValueError(""All parts must be valid numbers."")
+    if operator not in ['+', '-', '*', '/']:
+        raise ValueError(""Invalid operator. Must be one of +, -, *, /."")
+    if operator == '+':
+        result = num1 + num2
+    elif operator == '-':
+        result = num1 - num2
+    elif operator == '*':
+        result = num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Cannot divide by zero."")
+        result = num1 / num2
+    else:
+        raise ValueError(""Unknown operator."")
+    return result
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15.0),
+        (""20 - 8"", 12.0),
+        (""6 * 7"", 42.0),
+        (""100 / 4"", 25.0),
+        (""3.5 * 2"", 7.0),
+        (""10 / 3"", 3.3333333333333335)
+    ]
+    for expression, expected in test_cases:
+        try:
+            actual = evaluate_simple_expression(expression)
+            assert abs(actual - expected) < 1e-9, f""Input: '{expression}', Expected: {expected}, Got: {actual}""
+            print(f""PASS: '{expression}' -> {actual}"")
+        except Exception as e:
+            print(f""FAIL: '{expression}' raised an exception: {e}"")
+    error_cases = [
+        (""10 + 5 + 2"", None),
+        (""10 / 0"", None),
+        (""a + 5"", None),
+        (""10 $ 5"", None)
+    ]
+    for expression in error_cases:
+        try:
+            evaluate_simple_expression(expression)
+            print(f""FAIL: '{expression}' should have raised an error but passed."")
+        except Exception as e:
+            print(f""PASS: '{expression}' correctly raised an error: {e}"")",True,0,5466,89_3.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression.strip())
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15),
+        (""20 - 8"", 12),
+        (""6 * 7"", 42),
+        (""100 / 4"", 25),
+        (""15 - 3"", 12),
+        (""5 * 10"", 50),
+        (""100 / 0"", ""Error"")                                              
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_simple_expression(expression)
+            print(f""Expression: '{expression}', Result: {result}, Expected: {expected}"")
+            assert result == expected
+        except Exception as e:
+            print(f""Expression: '{expression}', Error encountered: {e}"")
+        print(""-"" * 20)
+    print(""Testing error handling for division by zero:"")
+    try:
+        evaluate_simple_expression(""10 / 0"")
+    except ZeroDivisionError as e:
+        print(f""Successfully caught expected error: {e}"")
+    except Exception as e:
+        print(f""Caught unexpected error: {e}"")",True,1,5467,89_3_1.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15),
+        (""20 - 8"", 12),
+        (""6 * 7"", 42),
+        (""100 / 4"", 25),
+        (""12 / 3"", 4),
+        (""50 - 15"", 35),
+        (""9 * 2"", 18)
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_simple_expression(expression)
+            assert result == expected, f""Expression: {expression}, Expected: {expected}, Got: {result}""
+            print(f""PASS: {expression} = {result}"")
+        except Exception as e:
+            print(f""FAIL: {expression} raised an exception: {e}"")
+    try:
+        evaluate_simple_expression(""10 / 0"")
+    except ZeroDivisionError as e:
+        print(""PASS: Division by zero handled correctly."")
+    except Exception as e:
+        print(f""FAIL: Division by zero raised unexpected error: {e}"")
+    try:
+        evaluate_simple_expression(""10 $ 5"")
+    except ValueError as e:
+        print(""PASS: Invalid operator handled correctly."")
+    except Exception as e:
+        print(f""FAIL: Invalid operator raised unexpected error: {e}"")",True,2,5468,89_3_2.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15),
+        (""20 - 8"", 12),
+        (""6 * 7"", 42),
+        (""100 / 4"", 25),
+        (""15 - 3"", 12),
+        (""5 * 10"", 50),
+        (""100 / 0"", ""Error"")                               
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_simple_expression(expression)
+            print(f""Expression: '{expression}', Result: {result}, Expected: {expected}"")
+            assert result == expected
+        except (ValueError, ZeroDivisionError) as e:
+            print(f""Expression: '{expression}', Error encountered: {e}"")
+        except Exception as e:
+            print(f""Expression: '{expression}', Unexpected Error: {e}"")
+        print(""-"" * 20)",True,3,5469,89_3_3.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression.strip())
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    expressions = [
+        ""10 + 5"",
+        ""20 - 8"",
+        ""6 * 7"",
+        ""100 / 4"",
+        ""15 - 3"",
+        ""50 / 10""
+    ]
+    for expr in expressions:
+        try:
+            result = evaluate_simple_expression(expr)
+            print(f""Expression: {expr}, Result: {result}"")
+        except Exception as e:
+            print(f""Error evaluating {expr}: {e}"")",True,4,5470,89_3_4.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15),
+        (""20 - 8"", 12),
+        (""6 * 7"", 42),
+        (""100 / 4"", 25),
+        (""15 - 3"", 12),
+        (""5 * 10"", 50),
+        (""100 / 2"", 50),
+        (""10 / 0"", ""Error"")                                               
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_simple_expression(expression)
+            print(f""Expression: '{expression}', Result: {result}, Expected: {expected}, Status: {'PASS' if result == expected else 'FAIL'}"")
+        except Exception as e:
+            print(f""Expression: '{expression}', Error: {e}, Status: 'ERROR'"")
+        print(""-"" * 20)",True,5,5471,89_3_5.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        result = num1 + num2
+    elif operator == '-':
+        result = num1 - num2
+    elif operator == '*':
+        result = num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        result = num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+    return result
+if __name__ == '__main__':
+    expression1 = ""10 + 5""
+    expression2 = ""20 - 8""
+    expression3 = ""6 * 7""
+    expression4 = ""100 / 4""
+    expression5 = ""50 / 0""
+    print(f""Result of '{expression1}': {evaluate_simple_expression(expression1)}"")
+    print(f""Result of '{expression2}': {evaluate_simple_expression(expression2)}"")
+    print(f""Result of '{expression3}': {evaluate_simple_expression(expression3)}"")
+    print(f""Result of '{expression4}': {evaluate_simple_expression(expression4)}"")
+    try:
+        evaluate_simple_expression(expression5)
+    except ZeroDivisionError as e:
+        print(f""Error for '{expression5}': {e}"")
+    try:
+        evaluate_simple_expression(""10 % 5"")
+    except ValueError as e:
+        print(f""Error for '10 % 5': {e}"")",True,6,5472,89_3_6.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15),
+        (""20 - 8"", 12),
+        (""6 * 7"", 42),
+        (""100 / 4"", 25),
+        (""15 - 3"", 12),
+        (""5 * 10"", 50),
+        (""100 / 0"", ""Error"")                                              
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_simple_expression(expression)
+            print(f""Expression: '{expression}', Result: {result}, Expected: {expected}"")
+            assert result == expected
+        except Exception as e:
+            print(f""Expression: '{expression}', Error encountered: {e}"")
+            if expression == ""100 / 0"":
+                print(""Test passed (Caught expected ZeroDivisionError)"")
+            else:
+                assert False, f""Unexpected error for {expression}: {e}""
+        print(""-"" * 20)",True,7,5473,89_3_7.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        return num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+if __name__ == '__main__':
+    test_cases = [
+        (""10 + 5"", 15),
+        (""20 - 8"", 12),
+        (""6 * 7"", 42),
+        (""100 / 4"", 25),
+        (""15 - 3"", 12),
+        (""5 * 10"", 50),
+        (""100 / 0"", ""Error"")                               
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_simple_expression(expression)
+            print(f""Expression: '{expression}', Result: {result}, Expected: {expected}"")
+            assert result == expected
+        except Exception as e:
+            print(f""Expression: '{expression}', Error: {e}"")
+            if expression == ""100 / 0"":
+                if ""ZeroDivisionError"" in str(e):
+                    print(""Test passed for expected error."")
+                else:
+                    print(""Test failed: Expected ZeroDivisionError but got something else."")
+            else:
+                print(f""Test failed unexpectedly: {e}"")",True,8,5474,89_3_8.py
+89,3,Evaluate an and operation,"Write a robust Python function that evaluates an expression string containing two numbers and a single operator, parsing the input string and ensuring all arithmetic operations are performed correctly and safely.","import re
+def evaluate_simple_expression(expression):
+    match = re.match(r""(\d+)\s*([+\-*/])\s*(\d+)"", expression)
+    if not match:
+        raise ValueError(""Invalid expression format"")
+    num1 = int(match.group(1))
+    operator = match.group(2)
+    num2 = int(match.group(3))
+    if operator == '+':
+        result = num1 + num2
+    elif operator == '-':
+        result = num1 - num2
+    elif operator == '*':
+        result = num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Division by zero"")
+        result = num1 // num2
+    else:
+        raise ValueError(""Unsupported operator"")
+    return result
+if __name__ == '__main__':
+    expression1 = ""10 + 5""
+    expression2 = ""20 - 8""
+    expression3 = ""6 * 7""
+    expression4 = ""100 / 4""
+    expression5 = ""50 / 0""
+    expression6 = ""12 / 3""
+    print(f""Expression: '{expression1}', Result: {evaluate_simple_expression(expression1)}"")
+    print(f""Expression: '{expression2}', Result: {evaluate_simple_expression(expression2)}"")
+    print(f""Expression: '{expression3}', Result: {evaluate_simple_expression(expression3)}"")
+    print(f""Expression: '{expression4}', Result: {evaluate_simple_expression(expression4)}"")
+    try:
+        print(f""Expression: '{expression5}', Result: {evaluate_simple_expression(expression5)}"")
+    except ZeroDivisionError as e:
+        print(f""Expression: '{expression5}', Error: {e}"")
+    print(f""Expression: '{expression6}', Result: {evaluate_simple_expression(expression6)}"")",True,9,5475,89_3_9.py
+89,4,Evaluate an and operation,Create a flexible Python solution that uses a dictionary to map string operators to corresponding lambda functions for safe and dynamic evaluation of two input numbers.,"def evaluate(num1, num2, operator):
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 != 0:
+            return num1 / num2
+        else:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+    elif operator == '%':
+        if num2 != 0:
+            return num1 % num2
+        else:
+            raise ZeroDivisionError(""Cannot perform modulo by zero"")
+    else:
+        raise ValueError(f""Unsupported operator: {operator}"")
+OPERATORS = {
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: a / b,
+    '%': lambda a, b: a % b
+}
+if __name__ == '__main__':
+    num_a = 20
+    num_b = 5
+    operators_to_test = ['+', '-', '*', '/', '%']
+    for op in operators_to_test:
+        if op in OPERATORS:
+            result = OPERATORS[op](num_a, num_b)
+            print(f""{num_a} {op} {num_b} = {result}"")
+        else:
+            print(f""Operator {op} is not supported."")",True,0,5476,89_4.py
+89,4,Evaluate an and operation,Create a flexible Python solution that uses a dictionary to map string operators to corresponding lambda functions for safe and dynamic evaluation of two input numbers.,"def evaluate(num1, num2, operator):
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 != 0:
+            return num1 / num2
+        else:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+    else:
+        raise ValueError(f""Unsupported operator: {operator}"")
+OPERATORS = {
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: a / b
+}
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    operators_to_test = ['+', '-', '*', '/']
+    for op in operators_to_test:
+        if op in OPERATORS:
+            result = OPERATORS[op](a, b)
+            print(f""{a} {op} {b} = {result}"")
+        else:
+            print(f""Operator {op} is not supported."")",True,1,5477,89_4_1.py
+89,4,Evaluate an and operation,Create a flexible Python solution that uses a dictionary to map string operators to corresponding lambda functions for safe and dynamic evaluation of two input numbers.,"def evaluate(num1, num2, operator):
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 != 0:
+            return num1 / num2
+        else:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+    else:
+        raise ValueError(f""Unsupported operator: {operator}"")
+OPERATORS = {
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: a / b
+}
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    operators_to_test = ['+', '-', '*', '/']
+    for op in operators_to_test:
+        if op in OPERATORS:
+            result = OPERATORS[op](a, b)
+            print(f""{a} {op} {b} = {result}"")
+        else:
+            print(f""Operator {op} not supported."")",True,2,5478,89_4_2.py
+89,4,Evaluate an and operation,Create a flexible Python solution that uses a dictionary to map string operators to corresponding lambda functions for safe and dynamic evaluation of two input numbers.,"def evaluate(num1, num2, operator):
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 == 0:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+        return num1 / num2
+    else:
+        raise ValueError(f""Unsupported operator: {operator}"")
+OPERATORS = {
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: a / b
+}
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    operators_to_test = ['+', '-', '*', '/']
+    for op in operators_to_test:
+        if op in OPERATORS:
+            result = OPERATORS[op](a, b)
+            print(f""{a} {op} {b} = {result}"")
+        else:
+            print(f""Operator {op} is not supported."")",True,3,5479,89_4_3.py
+89,4,Evaluate an and operation,Create a flexible Python solution that uses a dictionary to map string operators to corresponding lambda functions for safe and dynamic evaluation of two input numbers.,"def evaluate(num1, num2, operator):
+    if operator == '+':
+        return num1 + num2
+    elif operator == '-':
+        return num1 - num2
+    elif operator == '*':
+        return num1 * num2
+    elif operator == '/':
+        if num2 != 0:
+            return num1 / num2
+        else:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+    else:
+        raise ValueError(f""Unsupported operator: {operator}"")
+OPERATORS = {
+    '+': lambda a, b: a + b,
+    '-': lambda a, b: a - b,
+    '*': lambda a, b: a * b,
+    '/': lambda a, b: a / b
+}
+if __name__ == '__main__':
+    numbers1 = 20
+    numbers2 = 5
+    operators_to_test = ['+', '-', '*', '/']
+    for op in operators_to_test:
+        if op in OPERATORS:
+            result = OPERATORS[op](numbers1, numbers2)
+            print(f""{numbers1} {op} {numbers2} = {result}"")
+        else:
+            print(f""Operator {op} is not supported."")",True,4,5480,89_4_4.py
+89,5,Evaluate an and operation,"Implement an efficient function using the `operator` module to evaluate the result of an operation between two provided numbers, demonstrating best practices for mathematical evaluation.","import operator
+def evaluate_operation(op, a, b):
+    return op(a, b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    addition_result = evaluate_operation(operator.add, num1, num2)
+    multiplication_result = evaluate_operation(operator.mul, num1, num2)
+    division_result = evaluate_operation(operator.truediv, num1, num2)
+    floor_division_result = evaluate_operation(operator.floordiv, num1, num2)
+    modulo_result = evaluate_operation(operator.mod, num1, num2)
+    print(f""Addition of {num1} and {num2}: {addition_result}"")
+    print(f""Multiplication of {num1} and {num2}: {multiplication_result}"")
+    print(f""True division of {num1} by {num2}: {division_result}"")
+    print(f""Floor division of {num1} by {num2}: {floor_division_result}"")
+    print(f""Modulo of {num1} by {num2}: {modulo_result}"")",True,0,5481,89_5.py
+89,5,Evaluate an and operation,"Implement an efficient function using the `operator` module to evaluate the result of an operation between two provided numbers, demonstrating best practices for mathematical evaluation.","import operator
+def evaluate_operation(op_symbol, a, b):
+    op_map = {
+        '+': operator.add,
+        '-': operator.sub,
+        '*': operator.mul,
+        '/': operator.truediv,
+        '**': operator.pow
+    }
+    if op_symbol not in op_map:
+        raise ValueError(f""Unsupported operation: {op_symbol}"")
+    return op_map[op_symbol](a, b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    op1 = '+'
+    result1 = evaluate_operation(op1, num1, num2)
+    print(f""Result of {num1} {op1} {num2}: {result1}"")
+    num3 = 20
+    num4 = 4
+    op2 = '*'
+    result2 = evaluate_operation(op2, num3, num4)
+    print(f""Result of {num3} {op2} {num4}: {result2}"")
+    num5 = 16
+    num6 = 2
+    op3 = '**'
+    result3 = evaluate_operation(op3, num5, num6)
+    print(f""Result of {num5} {op3} {num6}: {result3}"")
+    num7 = 17
+    num8 = 3
+    op4 = '-'
+    result4 = evaluate_operation(op4, num7, num8)
+    print(f""Result of {num7} {op4} {num8}: {result4}"")
+    num9 = 100
+    num10 = 15
+    op5 = '/'
+    result5 = evaluate_operation(op5, num9, num10)
+    print(f""Result of {num9} {op5} {num10}: {result5}"")",True,1,5482,89_5_1.py
+89,5,Evaluate an and operation,"Implement an efficient function using the `operator` module to evaluate the result of an operation between two provided numbers, demonstrating best practices for mathematical evaluation.","import operator
+def evaluate_operation(op, a, b):
+    return op(a, b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    addition = evaluate_operation(operator.add, num1, num2)
+    subtraction = evaluate_operation(operator.sub, num1, num2)
+    multiplication = evaluate_operation(operator.mul, num1, num2)
+    division = evaluate_operation(operator.truediv, num1, num2)
+    floor_division = evaluate_operation(operator.floordiv, num1, num2)
+    modulus = evaluate_operation(operator.mod, num1, num2)
+    print(f""10 + 5 = {addition}"")
+    print(f""10 - 5 = {subtraction}"")
+    print(f""10 * 5 = {multiplication}"")
+    print(f""10 / 5 = {division}"")
+    print(f""10 // 5 = {floor_division}"")
+    print(f""10 % 5 = {modulus}"")",True,2,5483,89_5_2.py
+89,5,Evaluate an and operation,"Implement an efficient function using the `operator` module to evaluate the result of an operation between two provided numbers, demonstrating best practices for mathematical evaluation.","import operator
+def evaluate_operation(op_symbol, a, b):
+    op_map = {
+        '+': operator.add,
+        '-': operator.sub,
+        '*': operator.mul,
+        '/': operator.truediv,
+        '**': operator.pow
+    }
+    if op_symbol in op_map:
+        return op_map[op_symbol](a, b)
+    else:
+        raise ValueError(f""Unsupported operation: {op_symbol}"")
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    op1 = '+'
+    result1 = evaluate_operation(op1, num1, num2)
+    print(f""Result of {num1} {op1} {num2}: {result1}"")
+    num3 = 20
+    num4 = 4
+    op2 = '*'
+    result2 = evaluate_operation(op2, num3, num4)
+    print(f""Result of {num3} {op2} {num4}: {result2}"")
+    num5 = 16
+    num6 = 2
+    op3 = '/'
+    result3 = evaluate_operation(op3, num5, num6)
+    print(f""Result of {num5} {op3} {num6}: {result3}"")
+    num7 = 3
+    num8 = 4
+    op4 = '**'
+    result4 = evaluate_operation(op4, num7, num8)
+    print(f""Result of {num7} {op4} {num8}: {result4}"")",True,3,5484,89_5_3.py
+89,5,Evaluate an and operation,"Implement an efficient function using the `operator` module to evaluate the result of an operation between two provided numbers, demonstrating best practices for mathematical evaluation.","import operator
+def evaluate_operation(op_symbol, a, b):
+    op_map = {
+        '+': operator.add,
+        '-': operator.sub,
+        '*': operator.mul,
+        '/': operator.truediv,
+        '**': operator.pow
+    }
+    if op_symbol in op_map:
+        return op_map[op_symbol](a, b)
+    else:
+        raise ValueError(f""Unsupported operation: {op_symbol}"")
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    op1 = '+'
+    result1 = evaluate_operation(op1, num1, num2)
+    print(f""Result of {num1} {op1} {num2}: {result1}"")
+    num3 = 20
+    num4 = 4
+    op2 = '*'
+    result2 = evaluate_operation(op2, num3, num4)
+    print(f""Result of {num3} {op2} {num4}: {result2}"")
+    num5 = 16
+    num6 = 2
+    op3 = '**'
+    result3 = evaluate_operation(op3, num5, num6)
+    print(f""Result of {num5} {op3} {num6}: {result3}"")
+    num7 = 17
+    num8 = 3
+    op4 = '-'
+    result4 = evaluate_operation(op4, num7, num8)
+    print(f""Result of {num7} {op4} {num8}: {result4}"")
+    num9 = 100
+    num10 = 15
+    op5 = '/'
+    result5 = evaluate_operation(op5, num9, num10)
+    print(f""Result of {num9} {op5} {num10}: {result5}"")",True,4,5485,89_5_4.py
+89,5,Evaluate an and operation,"Implement an efficient function using the `operator` module to evaluate the result of an operation between two provided numbers, demonstrating best practices for mathematical evaluation.","import operator
+def evaluate_operation(op, a, b):
+    return op(a, b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    addition = evaluate_operation(operator.add, num1, num2)
+    subtraction = evaluate_operation(operator.sub, num1, num2)
+    multiplication = evaluate_operation(operator.mul, num1, num2)
+    division = evaluate_operation(operator.truediv, num1, num2)
+    floor_division = evaluate_operation(operator.floordiv, num1, num2)
+    print(f""10 + 5 = {addition}"")
+    print(f""10 - 5 = {subtraction}"")
+    print(f""10 * 5 = {multiplication}"")
+    print(f""10 / 5 = {division}"")
+    print(f""10 // 5 = {floor_division}"")",True,5,5486,89_5_5.py
