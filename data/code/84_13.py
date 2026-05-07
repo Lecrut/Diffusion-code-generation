@@ -1,0 +1,3 @@
+day_of_year = lambda y, m, d: 31 + 28 + (1 if m > 2 else 0) + (1 if m > 3 else 0) + (1 if m > 4 else 0) + (1 if m > 5 else 0) + (1 if m > 6 else 0) + (1 if m > 7 else 0) + (1 if m > 8 else 0) + (1 if m > 9 else 0) + (1 if m > 10 else 0) + (1 if m > 11 else 0) + d if m <= 2 else d - 31 + 31 + (1 if m > 2 else 0) + (1 if m > 3 else 0) + (1 if m > 4 else 0) + (1 if m > 5 else 0) + (1 if m > 6 else 0) + (1 if m > 7 else 0) + (1 if m > 8 else 0) + (1 if m > 9 else 0) + (1 if m > 10 else 0) + (1 if m > 11 else 0)
+if __name__ == '__main__':
+    print(day_of_year(2023, 10, 27))
