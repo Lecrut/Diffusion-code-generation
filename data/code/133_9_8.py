@@ -1,0 +1,33 @@
+import unittest
+def evaluate_statement(statement):
+    if not statement:
+        return False
+    return statement.lower() == "true"
+class TestEvaluateStatement(unittest.TestCase):
+    def test_true_case(self):
+        self.assertTrue(evaluate_statement("True"))
+        self.assertTrue(evaluate_statement("true"))
+        self.assertTrue(evaluate_statement("TRUE"))
+    def test_false_case(self):
+        self.assertFalse(evaluate_statement("False"))
+        self.assertFalse(evaluate_statement("false"))
+        self.assertFalse(evaluate_statement("FALSE"))
+    def test_mixed_case_false(self):
+        self.assertFalse(evaluate_statement("tRuE"))
+        self.assertFalse(evaluate_statement("TrUe"))
+    def test_edge_case_empty_string(self):
+        self.assertFalse(evaluate_statement(""))
+    def test_edge_case_whitespace_only(self):
+        self.assertFalse(evaluate_statement("  "))
+        self.assertFalse(evaluate_statement("\t\n"))
+    def test_misspelled_inputs(self):
+        self.assertFalse(evaluate_statement("tru"))
+        self.assertFalse(evaluate_statement("fals"))
+        self.assertFalse(evaluate_statement("truue"))
+        self.assertFalse(evaluate_statement("tru"))
+    def test_other_strings(self):
+        self.assertFalse(evaluate_statement("yes"))
+        self.assertFalse(evaluate_statement("1"))
+        self.assertFalse(evaluate_statement("anything else"))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
