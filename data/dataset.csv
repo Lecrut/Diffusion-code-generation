@@ -204622,3 +204622,819 @@ if __name__ == '__main__':
         print(average)
     else:
         print(""Error: One or more inputs were not valid numbers."")",True,4,9668,156_5_4.py
+156,6,Find the average of a list,"Implement a function that calculates the average of a list, prioritizing memory efficiency. Consider the use of the `statistics` module if it provides a more idiomatic solution, but provide a manual implementation as a fallback.","def calculate_average(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    average = calculate_average(sample_list)
+    print(average)
+    sample_list_empty = []
+    average_empty = calculate_average(sample_list_empty)
+    print(average_empty)
+    sample_list_floats = [1.5, 2.5, 3.0]
+    average_floats = calculate_average(sample_list_floats)
+    print(average_floats)",True,0,9669,156_6.py
+156,6,Find the average of a list,"Implement a function that calculates the average of a list, prioritizing memory efficiency. Consider the use of the `statistics` module if it provides a more idiomatic solution, but provide a manual implementation as a fallback.","def calculate_average(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    average = calculate_average(sample_list)
+    print(average)",True,1,9670,156_6_1.py
+156,6,Find the average of a list,"Implement a function that calculates the average of a list, prioritizing memory efficiency. Consider the use of the `statistics` module if it provides a more idiomatic solution, but provide a manual implementation as a fallback.","import sys
+def calculate_average_memory_efficient(data):
+    if not data:
+        return 0
+    total = 0
+    count = 0
+    for x in data:
+        total += x
+        count += 1
+    return total / count
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    average = calculate_average_memory_efficient(sample_list)
+    print(average)",True,2,9671,156_6_2.py
+156,6,Find the average of a list,"Implement a function that calculates the average of a list, prioritizing memory efficiency. Consider the use of the `statistics` module if it provides a more idiomatic solution, but provide a manual implementation as a fallback.","import sys
+def calculate_average_memory_efficient(data):
+    if not data:
+        return 0
+    total = 0
+    count = 0
+    for x in data:
+        total += x
+        count += 1
+    return total / count
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    average = calculate_average_memory_efficient(sample_list)
+    print(average)
+    sample_list_empty = []
+    average_empty = calculate_average_memory_efficient(sample_list_empty)
+    print(average_empty)
+    sample_list_floats = [3.5, 7.2, 1.1]
+    average_floats = calculate_average_memory_efficient(sample_list_floats)
+    print(average_floats)",True,3,9672,156_6_3.py
+156,6,Find the average of a list,"Implement a function that calculates the average of a list, prioritizing memory efficiency. Consider the use of the `statistics` module if it provides a more idiomatic solution, but provide a manual implementation as a fallback.","def calculate_average(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    average = calculate_average(sample_list)
+    print(average)
+    sample_list_empty = []
+    average_empty = calculate_average(sample_list_empty)
+    print(average_empty)
+    sample_list_floats = [3.5, 7.2, 1.1]
+    average_floats = calculate_average(sample_list_floats)
+    print(average_floats)",True,4,9673,156_6_4.py
+156,7,Find the average of a list,"Write a testable Python function for finding the average of a list. Include docstrings explaining the parameters, return value, and potential exceptions.","def find_average(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    empty_list = []
+    try:
+        avg1 = find_average(list1)
+        print(f""The average of {list1} is: {avg1}"")
+        avg2 = find_average(list2)
+        print(f""The average of {list2} is: {avg2}"")
+        find_average(empty_list)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,9674,156_7.py
+156,7,Find the average of a list,"Write a testable Python function for finding the average of a list. Include docstrings explaining the parameters, return value, and potential exceptions.","def calculate_average(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    test_list_1 = [1, 2, 3, 4, 5]
+    test_list_2 = [10, 20, 30]
+    test_list_3 = []
+    test_list_4 = [-1, 0, 1]
+    try:
+        avg1 = calculate_average(test_list_1)
+        print(f""Average of {test_list_1}: {avg1}"")
+        avg2 = calculate_average(test_list_2)
+        print(f""Average of {test_list_2}: {avg2}"")
+        avg4 = calculate_average(test_list_4)
+        print(f""Average of {test_list_4}: {avg4}"")
+        try:
+            calculate_average(test_list_3)
+        except ValueError as e:
+            print(f""Caught expected error for empty list: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,9675,156_7_1.py
+156,7,Find the average of a list,"Write a testable Python function for finding the average of a list. Include docstrings explaining the parameters, return value, and potential exceptions.","def find_average(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20.5, 30.5]
+    list3 = []
+    list4 = [-1, 5, 10]
+    print(f""Average of {list1}: {find_average(list1)}"")
+    print(f""Average of {list2}: {find_average(list2)}"")
+    try:
+        print(f""Average of {list3}: {find_average(list3)}"")
+    except ValueError as e:
+        print(f""Error for {list3}: {e}"")
+    print(f""Average of {list4}: {find_average(list4)}"")",True,2,9676,156_7_2.py
+156,7,Find the average of a list,"Write a testable Python function for finding the average of a list. Include docstrings explaining the parameters, return value, and potential exceptions.","def find_average(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    empty_list = []
+    try:
+        avg1 = find_average(list1)
+        print(f""The average of {list1} is: {avg1}"")
+        avg2 = find_average(list2)
+        print(f""The average of {list2} is: {avg2}"")
+        try:
+            find_average(empty_list)
+        except ValueError as e:
+            print(f""Caught expected error for empty list: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,3,9677,156_7_3.py
+156,8,Find the average of a list,"Develop an optimized solution to find the average of a potentially very large list of numbers, focusing on minimizing intermediate storage.","def find_average(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    large_list = [1, 2, 3, 4, 5, 10, 20, 30, 40, 50]
+    average = find_average(large_list)
+    print(average)",True,0,9678,156_8.py
+156,8,Find the average of a list,"Develop an optimized solution to find the average of a potentially very large list of numbers, focusing on minimizing intermediate storage.","def find_average(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    average = find_average(large_list)
+    print(average)",True,1,9679,156_8_1.py
+156,8,Find the average of a list,"Develop an optimized solution to find the average of a potentially very large list of numbers, focusing on minimizing intermediate storage.","def find_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    average = find_average(large_list)
+    print(average)",True,2,9680,156_8_2.py
+156,8,Find the average of a list,"Develop an optimized solution to find the average of a potentially very large list of numbers, focusing on minimizing intermediate storage.","def find_average_optimized(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    average = find_average_optimized(sample_list)
+    print(average)",True,3,9681,156_8_3.py
+156,8,Find the average of a list,"Develop an optimized solution to find the average of a potentially very large list of numbers, focusing on minimizing intermediate storage.","def find_average_optimized(data):
+    if not data:
+        return 0
+    total = 0
+    for x in data:
+        total += x
+    return total / len(data)
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    average = find_average_optimized(large_list)
+    print(average)",True,4,9682,156_8_4.py
+156,9,Find the average of a list,"Generate a complete, production-ready Python module containing a single function, `find_list_average(data)`, which calculates the average of the input list and handles all potential runtime errors gracefully.","def find_list_average(data):
+    if not isinstance(data, list):
+        return None
+    if not data:
+        return 0
+    try:
+        total = sum(data)
+        average = total / len(data)
+        return average
+    except TypeError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [""a"", ""b"", ""c""]
+    list4 = [10, 20, ""error""]
+    list5 = None
+    list6 = [5.5, 10.5]
+    print(f""Average of {list1}: {find_list_average(list1)}"")
+    print(f""Average of {list2}: {find_list_average(list2)}"")
+    print(f""Average of {list3}: {find_list_average(list3)}"")
+    print(f""Average of {list4}: {find_list_average(list4)}"")
+    print(f""Average of {list5}: {find_list_average(list5)}"")
+    print(f""Average of {list6}: {find_list_average(list6)}"")",True,0,9683,156_9.py
+156,9,Find the average of a list,"Generate a complete, production-ready Python module containing a single function, `find_list_average(data)`, which calculates the average of the input list and handles all potential runtime errors gracefully.","def find_list_average(data):
+    if not isinstance(data, list):
+        return None
+    if not data:
+        return 0
+    try:
+        return sum(data) / len(data)
+    except TypeError:
+        return None
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    list4 = ""not a list""
+    list5 = [1, 2, ""three""]
+    list6 = []
+    print(f""Average of {list1}: {find_list_average(list1)}"")
+    print(f""Average of {list2}: {find_list_average(list2)}"")
+    print(f""Average of {list3}: {find_list_average(list3)}"")
+    print(f""Average of {list4}: {find_list_average(list4)}"")
+    print(f""Average of {list5}: {find_list_average(list5)}"")
+    print(f""Average of {list6}: {find_list_average(list6)}"")",True,1,9684,156_9_1.py
+156,9,Find the average of a list,"Generate a complete, production-ready Python module containing a single function, `find_list_average(data)`, which calculates the average of the input list and handles all potential runtime errors gracefully.","def find_list_average(data):
+    if not isinstance(data, list):
+        return None
+    if not data:
+        return 0
+    try:
+        return sum(data) / len(data)
+    except TypeError:
+        return None
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    list4 = ""not a list""
+    list5 = [1, 2, ""three""]
+    list6 = []
+    list7 = None
+    print(f""Average of {list1}: {find_list_average(list1)}"")
+    print(f""Average of {list2}: {find_list_average(list2)}"")
+    print(f""Average of {list3}: {find_list_average(list3)}"")
+    print(f""Average of {list4}: {find_list_average(list4)}"")
+    print(f""Average of {list5}: {find_list_average(list5)}"")
+    print(f""Average of {list6}: {find_list_average(list6)}"")
+    print(f""Average of {list7}: {find_list_average(list7)}"")",True,2,9685,156_9_2.py
+156,9,Find the average of a list,"Generate a complete, production-ready Python module containing a single function, `find_list_average(data)`, which calculates the average of the input list and handles all potential runtime errors gracefully.","def find_list_average(data):
+    if not isinstance(data, list):
+        return None
+    if not data:
+        return 0
+    try:
+        return sum(data) / len(data)
+    except TypeError:
+        return None
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    list4 = ""not a list""
+    list5 = [1, 2, ""a"", 4]
+    list6 = []
+    print(f""Average of {list1}: {find_list_average(list1)}"")
+    print(f""Average of {list2}: {find_list_average(list2)}"")
+    print(f""Average of {list3}: {find_list_average(list3)}"")
+    print(f""Average of {list4}: {find_list_average(list4)}"")
+    print(f""Average of {list5}: {find_list_average(list5)}"")
+    print(f""Average of {list6}: {find_list_average(list6)}"")",True,3,9686,156_9_3.py
+156,10,Find the average of a list,"Write a complete, robust Python script that takes a list of numbers as input and calculates their arithmetic mean. The script must handle empty lists gracefully and use the most efficient built-in functions.","def calculate_arithmetic_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    empty_list = []
+    single_element_list = [99]
+    mean1 = calculate_arithmetic_mean(sample_list)
+    mean2 = calculate_arithmetic_mean(empty_list)
+    mean3 = calculate_arithmetic_mean(single_element_list)
+    print(f""Mean of {sample_list}: {mean1}"")
+    print(f""Mean of {empty_list}: {mean2}"")
+    print(f""Mean of {single_element_list}: {mean3}"")",True,0,9687,156_10.py
+156,10,Find the average of a list,"Write a complete, robust Python script that takes a list of numbers as input and calculates their arithmetic mean. The script must handle empty lists gracefully and use the most efficient built-in functions.","import statistics
+def calculate_arithmetic_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    empty_list = []
+    single_element_list = [99]
+    mean1 = calculate_arithmetic_mean(sample_list)
+    mean2 = calculate_arithmetic_mean(empty_list)
+    mean3 = calculate_arithmetic_mean(single_element_list)
+    print(f""Mean of {sample_list}: {mean1}"")
+    print(f""Mean of {empty_list}: {mean2}"")
+    print(f""Mean of {single_element_list}: {mean3}"")",True,1,9688,156_10_1.py
+156,10,Find the average of a list,"Write a complete, robust Python script that takes a list of numbers as input and calculates their arithmetic mean. The script must handle empty lists gracefully and use the most efficient built-in functions.","def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    empty_list = []
+    mean1 = calculate_mean(sample_list)
+    mean2 = calculate_mean(empty_list)
+    print(f""The mean of {sample_list} is: {mean1}"")
+    print(f""The mean of {empty_list} is: {mean2}"")",True,2,9689,156_10_2.py
+156,11,Find the average of a list,Implement an optimized function named `calculate_average` that accepts a list of floats or integers and returns their average. The function must be highly efficient and handle the edge case of an empty list by returning 0.,"def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    list1 = [1.0, 2.5, 3.5, 4.0]
+    list2 = [10, 20, 30, 40, 50]
+    list3 = []
+    list4 = [7.0]
+    print(calculate_average(list1))
+    print(calculate_average(list2))
+    print(calculate_average(list3))
+    print(calculate_average(list4))",True,0,9690,156_11.py
+156,11,Find the average of a list,Implement an optimized function named `calculate_average` that accepts a list of floats or integers and returns their average. The function must be highly efficient and handle the edge case of an empty list by returning 0.,"def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    list1 = [1.0, 2.5, 3.5]
+    list2 = [10, 20, 30, 40]
+    list3 = []
+    list4 = [5]
+    list5 = [-1, 1, 3]
+    print(f""Average of {list1}: {calculate_average(list1)}"")
+    print(f""Average of {list2}: {calculate_average(list2)}"")
+    print(f""Average of {list3}: {calculate_average(list3)}"")
+    print(f""Average of {list4}: {calculate_average(list4)}"")
+    print(f""Average of {list5}: {calculate_average(list5)}"")",True,1,9691,156_11_1.py
+156,11,Find the average of a list,Implement an optimized function named `calculate_average` that accepts a list of floats or integers and returns their average. The function must be highly efficient and handle the edge case of an empty list by returning 0.,"def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    list1 = [10, 20, 30, 40, 50]
+    list2 = [5, 15, 25]
+    list3 = []
+    list4 = [7.5, 8.5, 9.5]
+    print(f""Average of {list1}: {calculate_average(list1)}"")
+    print(f""Average of {list2}: {calculate_average(list2)}"")
+    print(f""Average of {list3}: {calculate_average(list3)}"")
+    print(f""Average of {list4}: {calculate_average(list4)}"")",True,2,9692,156_11_2.py
+156,11,Find the average of a list,Implement an optimized function named `calculate_average` that accepts a list of floats or integers and returns their average. The function must be highly efficient and handle the edge case of an empty list by returning 0.,"def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    list1 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    list2 = [10, 20, 30]
+    list3 = []
+    list4 = [7.5, 12.5, 15.0]
+    print(f""Average of {list1}: {calculate_average(list1)}"")
+    print(f""Average of {list2}: {calculate_average(list2)}"")
+    print(f""Average of {list3}: {calculate_average(list3)}"")
+    print(f""Average of {list4}: {calculate_average(list4)}"")",True,3,9693,156_11_3.py
+156,11,Find the average of a list,Implement an optimized function named `calculate_average` that accepts a list of floats or integers and returns their average. The function must be highly efficient and handle the edge case of an empty list by returning 0.,"def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    list1 = [1.0, 2.5, 3.5, 4.0]
+    list2 = [10, 20, 30, 40, 50]
+    list3 = []
+    list4 = [7.0]
+    print(f""Average of {list1}: {calculate_average(list1)}"")
+    print(f""Average of {list2}: {calculate_average(list2)}"")
+    print(f""Average of {list3}: {calculate_average(list3)}"")
+    print(f""Average of {list4}: {calculate_average(list4)}"")",True,4,9694,156_11_4.py
+156,12,Find the average of a list,"Develop a class named `ListAnalyzer` with a method `get_average` that calculates and returns the average of the numbers stored in an internal list. Ensure the implementation is clean, object-oriented, and follows Python best practices.","class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def get_average(self):
+        if not self._data:
+            return 0
+        return sum(self._data) / len(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    analyzer = ListAnalyzer(sample_list)
+    average = analyzer.get_average()
+    print(average)",True,0,9695,156_12.py
+156,13,Find the average of a list,"Write a concise and highly readable Python expression or one-line function to compute the average of a given list of numbers, assuming the list is non-empty. Provide an example usage.","if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    average = sum(numbers) / len(numbers)
+    print(average)",True,0,9696,156_13.py
+156,14,Find the average of a list,Create a function that takes an iterable (like a list or tuple) of numbers and calculates the average. The solution must prioritize time complexity and be suitable for large datasets.,"def calculate_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    data2 = [10, 20, 30, 40, 50, 60]
+    data3 = []
+    data4 = [1.5, 2.5, 3.5]
+    avg1 = calculate_average(data1)
+    avg2 = calculate_average(data2)
+    avg3 = calculate_average(data3)
+    avg4 = calculate_average(data4)
+    print(f""Average of {data1}: {avg1}"")
+    print(f""Average of {data2}: {avg2}"")
+    print(f""Average of {data3}: {avg3}"")
+    print(f""Average of {data4}: {avg4}"")",True,0,9697,156_14.py
+156,14,Find the average of a list,Create a function that takes an iterable (like a list or tuple) of numbers and calculates the average. The solution must prioritize time complexity and be suitable for large datasets.,"def calculate_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = calculate_average(data1)
+    print(f""Average of {data1}: {result1}"")
+    data2 = [10, 20, 30, 40, 50, 60]
+    result2 = calculate_average(data2)
+    print(f""Average of {data2}: {result2}"")
+    data3 = []
+    result3 = calculate_average(data3)
+    print(f""Average of {data3}: {result3}"")
+    data4 = [3.5, 7.2, 1.1]
+    result4 = calculate_average(data4)
+    print(f""Average of {data4}: {result4}"")",True,1,9698,156_14_1.py
+156,14,Find the average of a list,Create a function that takes an iterable (like a list or tuple) of numbers and calculates the average. The solution must prioritize time complexity and be suitable for large datasets.,"def calculate_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    data2 = [10, 20, 30, 40]
+    data3 = []
+    data4 = [5.5, 6.5, 7.5]
+    avg1 = calculate_average(data1)
+    avg2 = calculate_average(data2)
+    avg3 = calculate_average(data3)
+    avg4 = calculate_average(data4)
+    print(f""Average of {data1}: {avg1}"")
+    print(f""Average of {data2}: {avg2}"")
+    print(f""Average of {data3}: {avg3}"")
+    print(f""Average of {data4}: {avg4}"")",True,2,9699,156_14_2.py
+156,14,Find the average of a list,Create a function that takes an iterable (like a list or tuple) of numbers and calculates the average. The solution must prioritize time complexity and be suitable for large datasets.,"def calculate_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    avg1 = calculate_average(data1)
+    print(f""Average of {data1}: {avg1}"")
+    data2 = [10, 20, 30, 40, 50, 60]
+    avg2 = calculate_average(data2)
+    print(f""Average of {data2}: {avg2}"")
+    data3 = [5, 15, 25]
+    avg3 = calculate_average(data3)
+    print(f""Average of {data3}: {avg3}"")
+    data4 = []
+    avg4 = calculate_average(data4)
+    print(f""Average of {data4}: {avg4}"")",True,3,9700,156_14_3.py
+156,14,Find the average of a list,Create a function that takes an iterable (like a list or tuple) of numbers and calculates the average. The solution must prioritize time complexity and be suitable for large datasets.,"def calculate_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    avg1 = calculate_average(data1)
+    print(f""Average of {data1}: {avg1}"")
+    data2 = [10, 20, 30, 40, 50, 60]
+    avg2 = calculate_average(data2)
+    print(f""Average of {data2}: {avg2}"")
+    data3 = [1.5, 2.5, 3.5]
+    avg3 = calculate_average(data3)
+    print(f""Average of {data3}: {avg3}"")
+    data4 = []
+    avg4 = calculate_average(data4)
+    print(f""Average of {data4}: {avg4}"")",True,4,9701,156_14_4.py
+156,14,Find the average of a list,Create a function that takes an iterable (like a list or tuple) of numbers and calculates the average. The solution must prioritize time complexity and be suitable for large datasets.,"def calculate_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = calculate_average(data1)
+    print(f""Average of {data1}: {result1}"")
+    data2 = [10, 20, 30, 40, 50, 60]
+    result2 = calculate_average(data2)
+    print(f""Average of {data2}: {result2}"")
+    data3 = [1.5, 2.5, 3.5]
+    result3 = calculate_average(data3)
+    print(f""Average of {data3}: {result3}"")
+    data4 = []
+    result4 = calculate_average(data4)
+    print(f""Average of {data4}: {result4}"")",True,5,9702,156_14_5.py
+157,0,Find the smallest value list,"Write a complete, optimized Python script to find the smallest value in a given list of integers. Use the most efficient built-in functions or algorithms.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return min(data)
+if __name__ == '__main__':
+    numbers = [42, 15, 89, 3, 77, 101]
+    smallest = find_smallest(numbers)
+    print(smallest)",True,0,9703,157_0.py
+157,0,Find the smallest value list,"Write a complete, optimized Python script to find the smallest value in a given list of integers. Use the most efficient built-in functions or algorithms.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return min(data)
+if __name__ == '__main__':
+    numbers = [3, 1, 4, 1, 5, 9, 2]
+    smallest = find_smallest(numbers)
+    print(smallest)",True,1,9704,157_0_1.py
+157,0,Find the smallest value list,"Write a complete, optimized Python script to find the smallest value in a given list of integers. Use the most efficient built-in functions or algorithms.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return min(data)
+if __name__ == '__main__':
+    numbers = [42, 15, 89, 3, 55, 9]
+    smallest = find_smallest(numbers)
+    print(smallest)",True,2,9705,157_0_2.py
+157,0,Find the smallest value list,"Write a complete, optimized Python script to find the smallest value in a given list of integers. Use the most efficient built-in functions or algorithms.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return min(data)
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 99, 7]
+    smallest = find_smallest(sample_list)
+    print(smallest)",True,3,9706,157_0_3.py
+157,0,Find the smallest value list,"Write a complete, optimized Python script to find the smallest value in a given list of integers. Use the most efficient built-in functions or algorithms.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return min(data)
+if __name__ == '__main__':
+    numbers = [42, 15, 89, 3, 77, 21]
+    smallest = find_smallest(numbers)
+    print(smallest)",True,4,9707,157_0_4.py
+157,2,Find the smallest value list,"Develop an optimized method to determine the smallest element in a list of floating-point numbers, ensuring the solution is time-efficient (O(n)).","def find_smallest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = numbers[0]
+    for number in numbers[1:]:
+        if number < smallest:
+            smallest = number
+    return smallest
+if __name__ == '__main__':
+    data1 = [3.14, 1.618, 2.718, 0.577, 9.81]
+    data2 = [-10.5, 5.2, -3.1, 0.0, 1.1]
+    data3 = [42.0]
+    data4 = [7.777, 7.778, 7.7770]
+    data5 = []
+    print(f""Smallest in {data1}: {find_smallest(data1)}"")
+    print(f""Smallest in {data2}: {find_smallest(data2)}"")
+    print(f""Smallest in {data3}: {find_smallest(data3)}"")
+    print(f""Smallest in {data4}: {find_smallest(data4)}"")
+    try:
+        print(f""Smallest in {data5}: {find_smallest(data5)}"")
+    except ValueError as e:
+        print(f""Error for {data5}: {e}"")",True,0,9708,157_2.py
+157,2,Find the smallest value list,"Develop an optimized method to determine the smallest element in a list of floating-point numbers, ensuring the solution is time-efficient (O(n)).","def find_smallest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = numbers[0]
+    for number in numbers[1:]:
+        if number < smallest:
+            smallest = number
+    return smallest
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, 0.577, -1.0]
+    result = find_smallest(sample_list)
+    print(result)",True,1,9709,157_2_1.py
+157,1,Find the smallest value list,Implement a robust Python function named `find_smallest` that accepts a list of numbers and returns the minimum value. The function must handle empty lists gracefully by raising a ValueError.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 0, 5, -20, 100]
+    list3 = [7]
+    empty_list = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    try:
+        find_smallest(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,9710,157_1.py
+157,1,Find the smallest value list,Implement a robust Python function named `find_smallest` that accepts a list of numbers and returns the minimum value. The function must handle empty lists gracefully by raising a ValueError.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 0, 5, -20, 3]
+    list3 = [7]
+    empty_list = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    try:
+        find_smallest(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,9711,157_1_1.py
+157,1,Find the smallest value list,Implement a robust Python function named `find_smallest` that accepts a list of numbers and returns the minimum value. The function must handle empty lists gracefully by raising a ValueError.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 0, 5, -20, 3]
+    list3 = [7]
+    empty_list = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    try:
+        find_smallest(empty_list)
+    except ValueError as e:
+        print(f""Handling empty list error: {e}"")",True,2,9712,157_1_2.py
+157,1,Find the smallest value list,Implement a robust Python function named `find_smallest` that accepts a list of numbers and returns the minimum value. The function must handle empty lists gracefully by raising a ValueError.,"def find_smallest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = numbers[0]
+    for number in numbers:
+        if number < smallest:
+            smallest = number
+    return smallest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 0, 5, -20, 3]
+    list3 = [7]
+    empty_list = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    try:
+        find_smallest(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,9713,157_1_3.py
+157,1,Find the smallest value list,Implement a robust Python function named `find_smallest` that accepts a list of numbers and returns the minimum value. The function must handle empty lists gracefully by raising a ValueError.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -5]
+    list3 = [3.14, 1.618, 2.718]
+    empty_list = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    try:
+        find_smallest(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,9714,157_1_4.py
+157,1,Find the smallest value list,Implement a robust Python function named `find_smallest` that accepts a list of numbers and returns the minimum value. The function must handle empty lists gracefully by raising a ValueError.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -5]
+    empty_list = []
+    list3 = [42]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    try:
+        print(f""Smallest in {empty_list}: {find_smallest(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for {empty_list}: {e}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")",True,5,9715,157_1_5.py
+157,3,Find the smallest value list,Write a class named `ListAnalyzer` with a method `get_minimum` that finds and returns the smallest value from an input list. Ensure the implementation is clean and adheres to object-oriented principles.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 5, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,9716,157_3.py
+157,3,Find the smallest value list,Write a class named `ListAnalyzer` with a method `get_minimum` that finds and returns the smallest value from an input list. Ensure the implementation is clean and adheres to object-oriented principles.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -5]
+    list3 = [33, 11, 44, 22]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,9717,157_3_1.py
+157,5,Find the smallest value list,"Implement a generator function that yields the smallest element encountered so far while iterating through an input list, optimizing for memory efficiency.","def smallest_so_far(data):
+    if not data:
+        return
+    smallest = data[0]
+    yield smallest
+    for x in data[1:]:
+        if x < smallest:
+            smallest = x
+        yield smallest
+if __name__ == '__main__':
+    input_list = [5, 2, 8, 1, 9, 3]
+    generator = smallest_so_far(input_list)
+    result_list = list(generator)
+    print(result_list)",True,0,9718,157_5.py
+157,5,Find the smallest value list,"Implement a generator function that yields the smallest element encountered so far while iterating through an input list, optimizing for memory efficiency.","def smallest_so_far(data):
+    if not data:
+        return
+    smallest = data[0]
+    yield smallest
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+        yield smallest
+if __name__ == '__main__':
+    input_list = [5, 2, 8, 1, 9, 3]
+    generator = smallest_so_far(input_list)
+    result = list(generator)
+    print(result)",True,1,9719,157_5_1.py
+157,5,Find the smallest value list,"Implement a generator function that yields the smallest element encountered so far while iterating through an input list, optimizing for memory efficiency.","def find_smallest_generator(data):
+    if not data:
+        return
+    smallest = data[0]
+    yield smallest
+    for element in data[1:]:
+        if element < smallest:
+            smallest = element
+        yield smallest
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 3, 15, 2]
+    generator = find_smallest_generator(sample_list)
+    results = list(generator)
+    print(results)",True,2,9720,157_5_2.py
+157,6,Find the smallest value list,Write a highly efficient one-liner using Python's built-in functions to find the minimum value in a provided list. Provide a brief explanation of its time complexity.,"if __name__ == '__main__':
+    data = [5, 1, 9, 3, 7]
+    minimum = min(data)
+    print(minimum)",True,0,9721,157_6.py
+157,6,Find the smallest value list,Write a highly efficient one-liner using Python's built-in functions to find the minimum value in a provided list. Provide a brief explanation of its time complexity.,"if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2]
+    minimum = min(data)
+    print(minimum)",True,1,9722,157_6_1.py
