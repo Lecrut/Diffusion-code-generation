@@ -140202,3 +140202,2710 @@ if __name__ == '__main__':
     ]
     sorted_list = sort_dates(sample_dates)
     print(sorted_list)",True,6,6846,110_1_6.py
+110,3,Sort dates chronologically simply,Write a concise and efficient Python snippet to take an unsorted list of date objects and sort them in reverse chronological order. Assume the input is already a list of `datetime` objects.,"from datetime import datetime
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 1, 15),
+        datetime(2022, 12, 31),
+        datetime(2023, 5, 20),
+        datetime(2021, 10, 10)
+    ]
+    dates.sort(reverse=True)
+    print(dates)",True,0,6847,110_3.py
+110,3,Sort dates chronologically simply,Write a concise and efficient Python snippet to take an unsorted list of date objects and sort them in reverse chronological order. Assume the input is already a list of `datetime` objects.,"from datetime import datetime
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 1, 15),
+        datetime(2022, 12, 31),
+        datetime(2023, 5, 10),
+        datetime(2021, 10, 25)
+    ]
+    dates.sort(reverse=True)
+    print(dates)",True,1,6848,110_3_1.py
+110,3,Sort dates chronologically simply,Write a concise and efficient Python snippet to take an unsorted list of date objects and sort them in reverse chronological order. Assume the input is already a list of `datetime` objects.,"from datetime import datetime
+if __name__ == '__main__':
+    dates = [datetime(2023, 1, 15), datetime(2022, 12, 31), datetime(2023, 5, 20), datetime(2021, 7, 7)]
+    dates.sort(reverse=True)
+    print(dates)",True,2,6849,110_3_2.py
+110,3,Sort dates chronologically simply,Write a concise and efficient Python snippet to take an unsorted list of date objects and sort them in reverse chronological order. Assume the input is already a list of `datetime` objects.,"from datetime import datetime
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 1, 15),
+        datetime(2022, 12, 31),
+        datetime(2023, 5, 20),
+        datetime(2021, 7, 4)
+    ]
+    dates.sort(reverse=True)
+    print(dates)",True,3,6850,110_3_3.py
+110,3,Sort dates chronologically simply,Write a concise and efficient Python snippet to take an unsorted list of date objects and sort them in reverse chronological order. Assume the input is already a list of `datetime` objects.,"from datetime import datetime
+if __name__ == '__main__':
+    dates = [datetime(2023, 1, 15), datetime(2022, 12, 31), datetime(2023, 5, 10), datetime(2021, 7, 20)]
+    dates.sort(reverse=True)
+    print(dates)",True,4,6851,110_3_4.py
+110,3,Sort dates chronologically simply,Write a concise and efficient Python snippet to take an unsorted list of date objects and sort them in reverse chronological order. Assume the input is already a list of `datetime` objects.,"from datetime import datetime
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 1, 15),
+        datetime(2022, 12, 31),
+        datetime(2023, 5, 1),
+        datetime(2021, 10, 20)
+    ]
+    dates.sort(reverse=True)
+    print(dates)",True,5,6852,110_3_5.py
+110,5,Sort dates chronologically simply,Implement a generator function that yields dates from an input list only after they have been successfully parsed and sorted chronologically. This should be memory-efficient.,"from datetime import datetime
+def date_generator(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            continue
+    parsed_dates.sort()
+    for date_obj in parsed_dates:
+        yield date_obj
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24"",
+        ""invalid-date"",
+        ""2023-10-26""
+    ]
+    date_gen = date_generator(sample_dates)
+    print(""Dates yielded by generator:"")
+    for date_obj in date_gen:
+        print(date_obj.strftime('%Y-%m-%d'))",True,0,6853,110_5.py
+110,5,Sort dates chronologically simply,Implement a generator function that yields dates from an input list only after they have been successfully parsed and sorted chronologically. This should be memory-efficient.,"from datetime import datetime
+def date_generator(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            continue
+    parsed_dates.sort()
+    for date_obj in parsed_dates:
+        yield date_obj
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24"",
+        ""invalid-date"",
+        ""2023-10-26""
+    ]
+    date_gen = date_generator(sample_dates)
+    print(""Dates yielded by the generator:"")
+    for date_obj in date_gen:
+        print(date_obj.strftime('%Y-%m-%d'))",True,1,6854,110_5_1.py
+110,5,Sort dates chronologically simply,Implement a generator function that yields dates from an input list only after they have been successfully parsed and sorted chronologically. This should be memory-efficient.,"from datetime import datetime
+def date_generator(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            continue
+    parsed_dates.sort()
+    for date_obj in parsed_dates:
+        yield date_obj
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24"",
+        ""invalid-date""
+    ]
+    date_gen = date_generator(sample_dates)
+    print(""Dates yielded by the generator:"")
+    for date_obj in date_gen:
+        print(date_obj.strftime('%Y-%m-%d'))",True,2,6855,110_5_2.py
+110,0,Sort dates chronologically simply,"Write a complete, robust Python script that reads a list of date strings from a file, parses them, and sorts them chronologically in ascending order. Use the `datetime` module.",,False,0,6856,110_0.py
+110,6,Sort dates chronologically simply,"Write a function that takes a list of date strings and sorts them. If two dates are identical, maintain their original relative order (stable sort). Use the `sorted()` function.","def sort_dates(date_list):
+    return sorted(date_list)
+if __name__ == '__main__':
+    dates = [""2023-01-15"", ""2023-01-01"", ""2023-01-15"", ""2023-02-20""]
+    sorted_dates = sort_dates(dates)
+    print(sorted_dates)",True,0,6857,110_6.py
+110,6,Sort dates chronologically simply,"Write a function that takes a list of date strings and sorts them. If two dates are identical, maintain their original relative order (stable sort). Use the `sorted()` function.","def sort_dates(date_list):
+    return sorted(date_list)
+if __name__ == '__main__':
+    dates = [""2023-01-15"", ""2023-01-01"", ""2023-01-15"", ""2023-02-20"", ""2023-01-01""]
+    sorted_dates = sort_dates(dates)
+    print(sorted_dates)",True,1,6858,110_6_1.py
+110,8,Sort dates chronologically simply,"Write a highly optimized function that sorts a list of `datetime` objects based on their year, then month, and finally the day. Ensure the sorting logic is clean and adheres to best practices.","from datetime import datetime
+def sort_datetimes(dt_list):
+    return sorted(dt_list, key=lambda dt: (dt.year, dt.month, dt.day))
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 10, 25),
+        datetime(2022, 5, 15),
+        datetime(2023, 10, 1),
+        datetime(2022, 1, 30),
+        datetime(2023, 10, 25),
+        datetime(2022, 5, 1),
+    ]
+    sorted_dates = sort_datetimes(dates)
+    for dt in sorted_dates:
+        print(dt)",True,0,6859,110_8.py
+110,8,Sort dates chronologically simply,"Write a highly optimized function that sorts a list of `datetime` objects based on their year, then month, and finally the day. Ensure the sorting logic is clean and adheres to best practices.","from datetime import datetime
+def sort_datetimes(dt_list):
+    return sorted(dt_list)
+if __name__ == '__main__':
+    dt_list = [
+        datetime(2023, 10, 25),
+        datetime(2022, 1, 15),
+        datetime(2023, 10, 1),
+        datetime(2022, 1, 1),
+        datetime(2023, 10, 25),
+        datetime(2022, 1, 1),
+    ]
+    sorted_list = sort_datetimes(dt_list)
+    for dt in sorted_list:
+        print(dt)",True,1,6860,110_8_1.py
+110,8,Sort dates chronologically simply,"Write a highly optimized function that sorts a list of `datetime` objects based on their year, then month, and finally the day. Ensure the sorting logic is clean and adheres to best practices.","from datetime import datetime
+def sort_datetimes(dt_list):
+    return sorted(dt_list, key=lambda dt: (dt.year, dt.month, dt.day))
+if __name__ == '__main__':
+    date1 = datetime(2023, 10, 25)
+    date2 = datetime(2022, 1, 1)
+    date3 = datetime(2023, 10, 15)
+    date4 = datetime(2022, 1, 15)
+    date5 = datetime(2023, 10, 25)
+    date6 = datetime(2022, 1, 10)
+    unsorted_list = [date1, date2, date3, date4, date5, date6]
+    sorted_list = sort_datetimes(unsorted_list)
+    print(sorted_list)",True,2,6861,110_8_2.py
+110,8,Sort dates chronologically simply,"Write a highly optimized function that sorts a list of `datetime` objects based on their year, then month, and finally the day. Ensure the sorting logic is clean and adheres to best practices.","from datetime import datetime
+def sort_datetimes(dt_list):
+    return sorted(dt_list, key=lambda dt: (dt.year, dt.month, dt.day))
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 10, 25),
+        datetime(2022, 5, 15),
+        datetime(2023, 10, 1),
+        datetime(2022, 1, 1),
+        datetime(2023, 10, 31),
+        datetime(2022, 5, 1),
+    ]
+    sorted_dates = sort_datetimes(dates)
+    for dt in sorted_dates:
+        print(dt)",True,3,6862,110_8_3.py
+110,8,Sort dates chronologically simply,"Write a highly optimized function that sorts a list of `datetime` objects based on their year, then month, and finally the day. Ensure the sorting logic is clean and adheres to best practices.","from datetime import datetime
+def sort_datetimes(dt_list):
+    return sorted(dt_list, key=lambda dt: (dt.year, dt.month, dt.day))
+if __name__ == '__main__':
+    dates = [
+        datetime(2023, 10, 25),
+        datetime(2022, 1, 15),
+        datetime(2023, 10, 1),
+        datetime(2022, 1, 1),
+        datetime(2023, 10, 25),
+        datetime(2022, 1, 1),
+    ]
+    sorted_dates = sort_datetimes(dates)
+    for dt in sorted_dates:
+        print(dt)",True,4,6863,110_8_4.py
+110,8,Sort dates chronologically simply,"Write a highly optimized function that sorts a list of `datetime` objects based on their year, then month, and finally the day. Ensure the sorting logic is clean and adheres to best practices.","from datetime import datetime
+def sort_datetimes(dt_list):
+    return sorted(dt_list, key=lambda dt: (dt.year, dt.month, dt.day))
+if __name__ == '__main__':
+    date1 = datetime(2023, 10, 25)
+    date2 = datetime(2022, 1, 15)
+    date3 = datetime(2023, 10, 25)
+    date4 = datetime(2023, 10, 1)
+    date5 = datetime(2022, 10, 31)
+    unsorted_list = [date1, date2, date3, date4, date5]
+    sorted_list = sort_datetimes(unsorted_list)
+    print(sorted_list)",True,5,6864,110_8_5.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed is not None:
+            parsed_dates.append(parsed)
+        else:
+            print(f""Warning: Could not parse date string: {date_str}"")
+    if not parsed_dates:
+        return []
+    parsed_dates.sort()
+    return [d.strftime('%Y-%m-%d') for d in parsed_dates]
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-10-01',
+        '31-12-2023',
+        '01/01/2024'
+    ]
+    sorted_dates = sort_inconsistent_dates(sample_dates)
+    print(sorted_dates)",True,0,6865,110_7.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y',
+            '%Y/%m/%d'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    return sorted(parsed_dates)
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023/11/01',
+        '10-25-2024',
+        '01/01/2024'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        for date in sorted_dates:
+            print(date.strftime('%Y-%m-%d'))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,6866,110_7_1.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def parse_date_string(date_str):
+    formats = [
+        '%m/%d/%Y',
+        '%Y-%m-%d',
+        '%m-%d-%Y',
+        '%d/%m/%Y',
+        '%d-%m-%Y'
+    ]
+    for fmt in formats:
+        try:
+            dt_obj = datetime.datetime.strptime(date_str, fmt)
+            return dt_obj
+        except ValueError:
+            continue
+    return None
+def sort_date_strings(date_list):
+    parsed_dates = []
+    for date_str in date_list:
+        dt_obj = parse_date_string(date_str)
+        if dt_obj:
+            parsed_dates.append(dt_obj)
+        else:
+            pass
+    parsed_dates.sort()
+    sortable_list = []
+    for date_str in date_list:
+        dt_obj = parse_date_string(date_str)
+        if dt_obj:
+            sortable_list.append((dt_obj, date_str))
+        else:
+            pass
+    sortable_list.sort(key=lambda x: x[0])
+    return [item[1] for item in sortable_list]
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-11-01',
+        '01-01-2024',
+        '31/12/2023',
+        '2022-05-20'
+    ]
+    sorted_dates = sort_date_strings(sample_dates)
+    print(sorted_dates)",True,2,6867,110_7_2.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y',
+            '%Y/%m/%d'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    return sorted(parsed_dates)
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-11-01',
+        '10/10/2024',
+        '2022/05/20'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        for date in sorted_dates:
+            print(date.strftime('%Y-%m-%d'))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,6868,110_7_3.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y',
+            '%Y/%m/%d'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed is not None:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    return sorted(parsed_dates)
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-10-01',
+        '11-15-2023',
+        '2022/05/20'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        for date in sorted_dates:
+            print(date.strftime('%Y-%m-%d'))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,6869,110_7_4.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y',
+            '%Y/%m/%d'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    return sorted(parsed_dates)
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023/11/01',
+        '10-10-2023',
+        '2024-02-29'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        for date in sorted_dates:
+            print(date.strftime('%Y-%m-%d'))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,5,6870,110_7_5.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    return sorted(parsed_dates)
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-10-01',
+        '11-05-2023',
+        '2022/12/31'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        for dt in sorted_dates:
+            print(dt.strftime('%Y-%m-%d'))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,6,6871,110_7_6.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def parse_date_string(date_str):
+    formats = [
+        '%m/%d/%Y',
+        '%Y-%m-%d',
+        '%m-%d-%Y',
+        '%d/%m/%Y',
+        '%d-%m-%Y'
+    ]
+    for fmt in formats:
+        try:
+            dt_obj = datetime.datetime.strptime(date_str, fmt)
+            return dt_obj
+        except ValueError:
+            continue
+    return None
+def sort_inconsistent_dates(date_list):
+    parsed_dates = []
+    for date_str in date_list:
+        dt_obj = parse_date_string(date_str)
+        if dt_obj:
+            parsed_dates.append(dt_obj)
+        else:
+            print(f""Warning: Could not parse date string: {date_str}"")
+    if not parsed_dates:
+        return []
+    parsed_dates.sort()
+    return [d.strftime('%Y-%m-%d') for d in parsed_dates]
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-11-01',
+        '10-10-2023',
+        '2022-05-20'
+    ]
+    sorted_dates = sort_inconsistent_dates(sample_dates)
+    print(sorted_dates)",True,7,6872,110_7_7.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y',
+            '%Y/%m/%d'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    return sorted(parsed_dates)
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-10-01',
+        '11-15-2023',
+        '2022/05/20'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        for date in sorted_dates:
+            print(date.strftime('%Y-%m-%d'))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,8,6873,110_7_8.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def sort_inconsistent_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        formats_to_try = [
+            '%m/%d/%Y',
+            '%Y-%m-%d',
+            '%m-%d-%Y',
+            '%d/%m/%Y',
+            '%d-%m-%Y'
+        ]
+        parsed = None
+        for fmt in formats_to_try:
+            try:
+                parsed = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed is not None:
+            parsed_dates.append(parsed)
+        else:
+            raise ValueError(f""Could not parse date string: {date_str}"")
+    parsed_dates.sort()
+    return [d.strftime('%Y-%m-%d') for d in parsed_dates]
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-11-01',
+        '01/01/2024',
+        '2022-05-10'
+    ]
+    try:
+        sorted_dates = sort_inconsistent_dates(sample_dates)
+        print(sorted_dates)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,9,6874,110_7_9.py
+110,7,Sort dates chronologically simply,"Design and implement a solution to sort a list of date strings where the format is inconsistent (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD'). The solution must dynamically attempt to parse all formats before sorting them chronologically.","import datetime
+def parse_date_string(date_str):
+    formats = [
+        '%m/%d/%Y',
+        '%Y-%m-%d',
+        '%m-%d-%Y',
+        '%d/%m/%Y',
+        '%d-%m-%Y'
+    ]
+    for fmt in formats:
+        try:
+            dt_obj = datetime.datetime.strptime(date_str, fmt)
+            return dt_obj
+        except ValueError:
+            continue
+    return None
+def sort_date_strings(date_list):
+    parsed_dates = []
+    for date_str in date_list:
+        dt_obj = parse_date_string(date_str)
+        if dt_obj:
+            parsed_dates.append(dt_obj)
+        else:
+            pass
+    sortable_list = []
+    for date_str in date_list:
+        dt_obj = parse_date_string(date_str)
+        if dt_obj:
+            sortable_list.append((dt_obj, date_str))
+    sortable_list.sort(key=lambda x: x[0])
+    sorted_dates = [item[1] for item in sortable_list]
+    return sorted_dates
+if __name__ == '__main__':
+    sample_dates = [
+        '12/31/2023',
+        '2024-01-15',
+        '05/20/2022',
+        '2023-11-01',
+        '01/01/2024',
+        '31/12/2022',
+        'invalid-date'
+    ]
+    sorted_result = sort_date_strings(sample_dates)
+    print(sorted_result)",True,10,6875,110_7_10.py
+110,9,Sort dates chronologically simply,"Develop a complete, production-ready script that reads dates from standard input, sorts them chronologically, and prints the result formatted as ISO 8601 strings.","import sys
+from datetime import datetime
+if __name__ == '__main__':
+    input_data = [
+        ""2023-10-26"",
+        ""2024-01-15"",
+        ""2023-05-01"",
+        ""2024-01-01""
+    ]
+    date_objects = []
+    for date_str in input_data:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            pass
+    date_objects.sort()
+    iso_dates = [date.isoformat() for date in date_objects]
+    for iso_date in iso_dates:
+        print(iso_date)",True,0,6876,110_9.py
+110,9,Sort dates chronologically simply,"Develop a complete, production-ready script that reads dates from standard input, sorts them chronologically, and prints the result formatted as ISO 8601 strings.","import sys
+from datetime import datetime
+if __name__ == '__main__':
+    input_data = [
+        ""2023-10-26"",
+        ""2024-01-15"",
+        ""2023-05-01"",
+        ""2024-03-10""
+    ]
+    date_objects = []
+    for date_str in input_data:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            pass
+    date_objects.sort()
+    iso_dates = [date.isoformat() for date in date_objects]
+    for iso_date in iso_dates:
+        print(iso_date)",True,1,6877,110_9_1.py
+110,9,Sort dates chronologically simply,"Develop a complete, production-ready script that reads dates from standard input, sorts them chronologically, and prints the result formatted as ISO 8601 strings.","import sys
+from datetime import datetime
+if __name__ == '__main__':
+    input_data = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24""
+    ]
+    date_objects = []
+    for date_str in input_data:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            pass
+    date_objects.sort()
+    for dt in date_objects:
+        print(dt.isoformat())",True,2,6878,110_9_2.py
+110,9,Sort dates chronologically simply,"Develop a complete, production-ready script that reads dates from standard input, sorts them chronologically, and prints the result formatted as ISO 8601 strings.","import sys
+from datetime import datetime
+if __name__ == '__main__':
+    input_data = [
+        ""2023-10-26"",
+        ""2022-01-15"",
+        ""2024-05-01"",
+        ""2021-12-31""
+    ]
+    date_objects = []
+    for date_str in input_data:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            pass
+    date_objects.sort()
+    iso_dates = [date.isoformat() for date in date_objects]
+    for iso_date in iso_dates:
+        print(iso_date)",True,3,6879,110_9_3.py
+110,9,Sort dates chronologically simply,"Develop a complete, production-ready script that reads dates from standard input, sorts them chronologically, and prints the result formatted as ISO 8601 strings.","import sys
+from datetime import datetime
+if __name__ == '__main__':
+    input_data = [
+        ""2023-10-26"",
+        ""2023-01-15"",
+        ""2024-05-01"",
+        ""2023-12-31"",
+        ""2023-03-10""
+    ]
+    date_objects = []
+    for date_str in input_data:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            pass
+    date_objects.sort()
+    iso_dates = [date.isoformat() for date in date_objects]
+    for iso_date in iso_dates:
+        print(iso_date)",True,4,6880,110_9_4.py
+110,9,Sort dates chronologically simply,"Develop a complete, production-ready script that reads dates from standard input, sorts them chronologically, and prints the result formatted as ISO 8601 strings.","import sys
+from datetime import datetime
+if __name__ == '__main__':
+    input_data = [
+        ""2023-10-26"",
+        ""2022-01-15"",
+        ""2024-05-01"",
+        ""2023-03-10""
+    ]
+    date_objects = []
+    for date_str in input_data:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            pass
+    date_objects.sort()
+    iso_dates = [date.isoformat() for date in date_objects]
+    for iso_date in iso_dates:
+        print(iso_date)",True,5,6881,110_9_5.py
+110,10,Sort dates chronologically simply,"Write a complete, robust Python script that reads a list of date strings from a file, parses them, and sorts them chronologically in ascending order. Use the `datetime` module and handle potential `ValueError` exceptions gracefully.","import datetime
+def sort_dates_from_file(filename):
+    dates = []
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                date_str = line.strip()
+                if date_str:
+                    try:
+                        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+                        dates.append(date_obj)
+                    except ValueError:
+                        print(f""Skipping invalid date format: {date_str}"")
+        dates.sort()
+        return dates
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return []
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+        return []
+if __name__ == '__main__':
+    sample_filename = ""dates.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""2023-10-25\n"")
+        f.write(""2023-01-01\n"")
+        f.write(""2024-05-15\n"")
+        f.write(""invalid-date\n"")
+        f.write(""2023-12-31\n"")
+    sorted_dates = sort_dates_from_file(sample_filename)
+    if sorted_dates:
+        print(""Sorted dates:"")
+        for dt in sorted_dates:
+            print(dt.strftime('%Y-%m-%d'))
+    else:
+        print(""No dates were successfully processed."")",True,0,6882,110_10.py
+110,10,Sort dates chronologically simply,"Write a complete, robust Python script that reads a list of date strings from a file, parses them, and sorts them chronologically in ascending order. Use the `datetime` module and handle potential `ValueError` exceptions gracefully.","import datetime
+def sort_dates_from_file(filename):
+    dates = []
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                date_str = line.strip()
+                if date_str:
+                    try:
+                        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+                        dates.append(date_obj)
+                    except ValueError:
+                        print(f""Skipping invalid date format: {date_str}"")
+        dates.sort()
+        return dates
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return []
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+        return []
+if __name__ == '__main__':
+    sample_filename = ""dates.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""2023-10-26\n"")
+        f.write(""2023-01-01\n"")
+        f.write(""2024-05-15\n"")
+        f.write(""2023-12-31\n"")
+        f.write(""invalid-date\n"")
+    sorted_dates = sort_dates_from_file(sample_filename)
+    if sorted_dates:
+        print(""Sorted dates:"")
+        for dt in sorted_dates:
+            print(dt.strftime('%Y-%m-%d'))",True,1,6883,110_10_1.py
+110,11,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list containing those dates sorted chronologically. The function must use Python's built-in sorting capabilities for efficiency.,"def sort_dates(date_strings):
+    return sorted(date_strings)
+if __name__ == '__main__':
+    sample_dates = [""2023-01-15"", ""2022-12-31"", ""2023-05-20"", ""2022-11-01""]
+    sorted_dates = sort_dates(sample_dates)
+    print(sorted_dates)",True,0,6884,110_11.py
+110,11,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list containing those dates sorted chronologically. The function must use Python's built-in sorting capabilities for efficiency.,"import datetime
+def sort_dates(date_strings):
+    date_objects = [datetime.datetime.strptime(date_str, '%Y-%m-%d') for date_str in date_strings]
+    sorted_date_objects = sorted(date_objects)
+    sorted_date_strings = [dt.strftime('%Y-%m-%d') for dt in sorted_date_objects]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [""2023-10-26"", ""2023-10-25"", ""2023-10-27"", ""2023-10-24""]
+    sorted_result = sort_dates(sample_dates)
+    print(sorted_result)",True,1,6885,110_11_1.py
+110,11,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list containing those dates sorted chronologically. The function must use Python's built-in sorting capabilities for efficiency.,"import datetime
+def sort_dates(date_strings):
+    date_objects = [datetime.datetime.strptime(date_str, '%Y-%m-%d') for date_str in date_strings]
+    sorted_date_objects = sorted(date_objects)
+    sorted_date_strings = [dt.strftime('%Y-%m-%d') for dt in sorted_date_objects]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [""2023-10-26"", ""2023-10-25"", ""2023-10-27"", ""2023-10-24""]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,2,6886,110_11_2.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2023-01-15"",
+        ""2024-05-01"",
+        ""2023-12-31"",
+        ""2023-03-10""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,0,6887,110_12.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [d.strftime('%Y-%m-%d') for d in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2023-01-15"",
+        ""2024-05-01"",
+        ""2023-12-31"",
+        ""2023-03-10""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,1,6888,110_12_1.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2023-01-15"",
+        ""2024-03-01"",
+        ""2023-11-30"",
+        ""2023-01-01""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,2,6889,110_12_2.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2022-12-31"",
+        ""2023-01-01"",
+        ""2022-11-15""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,3,6890,110_12_3.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2023-10-24"",
+        ""2023-10-25"",
+        ""2023-10-27""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,4,6891,110_12_4.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,5,6892,110_12_5.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2022-12-31"",
+        ""2023-01-01"",
+        ""2021-05-15""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,6,6893,110_12_6.py
+110,12,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates` that takes an unsorted list of date strings, converts them to `datetime` objects internally, sorts them chronologically, and returns the sorted list of date strings. Ensure the implementation is highly efficient.","from datetime import datetime
+class DateSorter:
+    def sort_dates(self, date_strings):
+        date_objects = []
+        for date_str in date_strings:
+            try:
+                date_objects.append(datetime.strptime(date_str, '%Y-%m-%d'))
+            except ValueError:
+                pass
+        date_objects.sort()
+        sorted_date_strings = [date.strftime('%Y-%m-%d') for date in date_objects]
+        return sorted_date_strings
+if __name__ == '__main__':
+    sorter = DateSorter()
+    unsorted_dates = [
+        ""2023-10-26"",
+        ""2023-01-15"",
+        ""2024-05-01"",
+        ""2023-12-31"",
+        ""2023-01-01""
+    ]
+    sorted_dates = sorter.sort_dates(unsorted_dates)
+    print(sorted_dates)",True,7,6894,110_12_7.py
+110,13,Sort dates chronologically simply,Write a concise and efficient one-line lambda expression or generator expression to sort a given list of date strings chronologically. Assume the input list is valid and contains only standard ISO format dates.,"if __name__ == '__main__':
+    dates = [""2023-01-15"", ""2022-12-31"", ""2023-01-01""]
+    sorted_dates = sorted(dates)
+    print(sorted_dates)",True,0,6895,110_13.py
+110,13,Sort dates chronologically simply,Write a concise and efficient one-line lambda expression or generator expression to sort a given list of date strings chronologically. Assume the input list is valid and contains only standard ISO format dates.,"if __name__ == '__main__':
+    dates = [""2023-01-15"", ""2022-12-31"", ""2023-01-01"", ""2022-11-20""]
+    sorted_dates = sorted(dates, key=lambda d: d)
+    print(sorted_dates)",True,1,6896,110_13_1.py
+110,13,Sort dates chronologically simply,Write a concise and efficient one-line lambda expression or generator expression to sort a given list of date strings chronologically. Assume the input list is valid and contains only standard ISO format dates.,"if __name__ == '__main__':
+    dates = [""2023-01-15"", ""2022-12-31"", ""2023-05-20"", ""2022-11-10""]
+    sorted_dates = sorted(dates, key=lambda d: d)
+    print(sorted_dates)",True,2,6897,110_13_2.py
+110,14,Sort dates chronologically simply,"Create a full program that prompts the user to input multiple dates, stores them in a list, sorts this list chronologically, and then prints the sorted dates to the console in a clean, readable format.","import datetime
+if __name__ == '__main__':
+    date_strings = [
+        ""2023-10-26"",
+        ""2022-11-15"",
+        ""2024-01-01"",
+        ""2023-05-10""
+    ]
+    date_objects = []
+    for date_str in date_strings:
+        try:
+            date_objects.append(datetime.datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            print(f""Error parsing date: {date_str}"")
+    date_objects.sort()
+    print(""Sorted Dates:"")
+    for dt in date_objects:
+        print(dt.strftime(""%Y-%m-%d""))",True,0,6898,110_14.py
+110,14,Sort dates chronologically simply,"Create a full program that prompts the user to input multiple dates, stores them in a list, sorts this list chronologically, and then prints the sorted dates to the console in a clean, readable format.","import datetime
+if __name__ == '__main__':
+    date_strings = [
+        ""2023-10-26"",
+        ""2022-05-15"",
+        ""2024-01-01"",
+        ""2023-12-31"",
+        ""2022-01-01""
+    ]
+    date_objects = []
+    for date_str in date_strings:
+        try:
+            date_objects.append(datetime.datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            print(f""Error parsing date: {date_str}"")
+    date_objects.sort()
+    print(""Sorted Dates:"")
+    for dt in date_objects:
+        print(dt.strftime(""%Y-%m-%d""))",True,1,6899,110_14_1.py
+110,14,Sort dates chronologically simply,"Create a full program that prompts the user to input multiple dates, stores them in a list, sorts this list chronologically, and then prints the sorted dates to the console in a clean, readable format.","import datetime
+if __name__ == '__main__':
+    date_strings = [
+        ""2023-10-26"",
+        ""2022-05-15"",
+        ""2024-01-01"",
+        ""2021-12-31""
+    ]
+    date_objects = []
+    for date_str in date_strings:
+        try:
+            date_objects.append(datetime.datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            print(f""Error parsing date: {date_str}"")
+    date_objects.sort()
+    print(""Sorted Dates:"")
+    for date in date_objects:
+        print(date.strftime(""%Y-%m-%d""))",True,2,6900,110_14_2.py
+110,14,Sort dates chronologically simply,"Create a full program that prompts the user to input multiple dates, stores them in a list, sorts this list chronologically, and then prints the sorted dates to the console in a clean, readable format.","import datetime
+if __name__ == '__main__':
+    date_strings = [
+        ""2023-10-26"",
+        ""2022-01-15"",
+        ""2024-05-01"",
+        ""2023-03-10""
+    ]
+    date_objects = []
+    for date_str in date_strings:
+        try:
+            date_objects.append(datetime.datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            print(f""Error parsing date: {date_str}"")
+    date_objects.sort()
+    print(""Sorted Dates:"")
+    for dt in date_objects:
+        print(dt.strftime(""%Y-%m-%d""))",True,3,6901,110_14_3.py
+110,14,Sort dates chronologically simply,"Create a full program that prompts the user to input multiple dates, stores them in a list, sorts this list chronologically, and then prints the sorted dates to the console in a clean, readable format.","from datetime import datetime
+if __name__ == '__main__':
+    date_strings = [
+        ""2023-10-26"",
+        ""2022-11-15"",
+        ""2023-01-01"",
+        ""2022-12-31""
+    ]
+    date_objects = []
+    for date_str in date_strings:
+        try:
+            date_objects.append(datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            print(f""Error parsing date: {date_str}"")
+    date_objects.sort()
+    print(""Sorted Dates:"")
+    for date in date_objects:
+        print(date.strftime(""%Y-%m-%d""))",True,4,6902,110_14_4.py
+110,14,Sort dates chronologically simply,"Create a full program that prompts the user to input multiple dates, stores them in a list, sorts this list chronologically, and then prints the sorted dates to the console in a clean, readable format.","import datetime
+if __name__ == '__main__':
+    date_strings = [
+        ""2023-10-26"",
+        ""2022-05-15"",
+        ""2024-01-01"",
+        ""2021-12-31""
+    ]
+    date_objects = []
+    for date_str in date_strings:
+        try:
+            date_objects.append(datetime.datetime.strptime(date_str, ""%Y-%m-%d""))
+        except ValueError:
+            print(f""Error parsing date: {date_str}"")
+    date_objects.sort()
+    print(""Sorted Dates:"")
+    for dt in date_objects:
+        print(dt.strftime(""%Y-%m-%d""))",True,5,6903,110_14_5.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_object):
+    year = date_object.year
+    month = date_object.month
+    day = date_object.day
+    new_year = year + 1
+    new_month = month + 1
+    new_day = day - 5
+    return datetime.date(new_year, new_month, new_day)
+if __name__ == '__main__':
+    initial_date = datetime.date(2023, 10, 25)
+    print(f""Initial Date: {initial_date}"")
+    manipulated_date = manipulate_date(initial_date)
+    print(f""Manipulated Date: {manipulated_date}"")",True,0,6904,111_0.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_object):
+    year = date_object.year
+    month = date_object.month
+    day = date_object.day
+    new_year = year + 1
+    new_month = month + 1
+    new_day = day - 5
+    return datetime.date(new_year, new_month, new_day)
+if __name__ == '__main__':
+    original_date = datetime.date(2023, 10, 25)
+    print(f""Original Date: {original_date}"")
+    manipulated_date = manipulate_date(original_date)
+    print(f""Manipulated Date: {manipulated_date}"")",True,1,6905,111_0_1.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_obj, year, month, day):
+    new_date = date_obj.replace(year=year, month=month, day=day)
+    return new_date
+if __name__ == '__main__':
+    original_date = datetime.date(2023, 10, 26)
+    print(f""Original Date: {original_date}"")
+    new_year = 2024
+    new_month = 1
+    new_day = 15
+    modified_date = manipulate_date(original_date, new_year, new_month, new_day)
+    print(f""Manipulated Date (Year={new_year}, Month={new_month}, Day={new_day}): {modified_date}"")",True,2,6906,111_0_2.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_object, year, month, day):
+    new_date = date_object.replace(year=year, month=month, day=day)
+    return new_date
+if __name__ == '__main__':
+    original_date = datetime.date(2023, 10, 26)
+    print(f""Original Date: {original_date}"")
+    new_year = 2024
+    new_month = 1
+    new_day = 15
+    modified_date = manipulate_date(original_date, new_year, new_month, new_day)
+    print(f""New Date: {modified_date}"")",True,3,6907,111_0_3.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_object):
+    year = date_object.year
+    month = date_object.month
+    day = date_object.day
+    new_year = year + 1
+    new_month = month + 1
+    new_day = day - 5
+    return datetime.date(new_year, new_month, new_day)
+if __name__ == '__main__':
+    initial_date = datetime.date(2023, 10, 25)
+    print(f""Initial Date: {initial_date}"")
+    manipulated_date = manipulate_date(initial_date)
+    print(f""Manipulated Date (Year+1, Month+1, Day-5): {manipulated_date}"")",True,4,6908,111_0_4.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_object, year, month, day):
+    new_date = date_object.replace(year=year, month=month, day=day)
+    return new_date
+if __name__ == '__main__':
+    original_date = datetime.date(2023, 10, 26)
+    print(f""Original Date: {original_date}"")
+    new_year = 2024
+    new_month = 1
+    new_day = 15
+    modified_date = manipulate_date(original_date, new_year, new_month, new_day)
+    print(f""Modified Date: {modified_date}"")",True,5,6909,111_0_5.py
+111,0,Manipulate simple date components,"Write a complete, high-quality Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. Include clear comments and example usage.","import datetime
+def manipulate_date(date_obj):
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
+    new_year = year + 1
+    new_month = month + 1
+    new_day = day - 5
+    return datetime.date(new_year, new_month, new_day)
+if __name__ == '__main__':
+    initial_date = datetime.date(2023, 10, 25)
+    print(f""Initial Date: {initial_date}"")
+    manipulated_date = manipulate_date(initial_date)
+    print(f""Manipulated Date: {manipulated_date}"")",True,6,6910,111_0_6.py
+111,1,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new date object where the month is incremented by one, handling year rollovers correctly.","import datetime
+def manipulate_date_components(date_obj):
+    if date_obj.month == 12:
+        new_month = 1
+        new_year = date_obj.year + 1
+    else:
+        new_month = date_obj.month + 1
+        new_year = date_obj.year
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    result1 = manipulate_date_components(date1)
+    print(f""Original: {date1}, Result: {result1}"")
+    date2 = datetime.date(2023, 12, 31)
+    result2 = manipulate_date_components(date2)
+    print(f""Original: {date2}, Result: {result2}"")
+    date3 = datetime.date(2024, 1, 5)
+    result3 = manipulate_date_components(date3)
+    print(f""Original: {date3}, Result: {result3}"")
+    date4 = datetime.date(2025, 5, 20)
+    result4 = manipulate_date_components(date4)
+    print(f""Original: {date4}, Result: {result4}"")",True,0,6911,111_1.py
+111,1,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new date object where the month is incremented by one, handling year rollovers correctly.","import datetime
+def manipulate_date_components(date_obj):
+    if date_obj.month == 12:
+        new_month = 1
+        new_year = date_obj.year + 1
+    else:
+        new_month = date_obj.month + 1
+        new_year = date_obj.year
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    result1 = manipulate_date_components(date1)
+    print(f""Original: {date1}, Result: {result1}"")
+    date2 = datetime.date(2023, 12, 31)
+    result2 = manipulate_date_components(date2)
+    print(f""Original: {date2}, Result: {result2}"")
+    date3 = datetime.date(2024, 1, 5)
+    result3 = manipulate_date_components(date3)
+    print(f""Original: {date3}, Result: {result3}"")
+    date4 = datetime.date(2022, 5, 20)
+    result4 = manipulate_date_components(date4)
+    print(f""Original: {date4}, Result: {result4}"")",True,1,6912,111_1_1.py
+111,1,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new date object where the month is incremented by one, handling year rollovers correctly.","import datetime
+def manipulate_date_components(date_obj):
+    if date_obj.month == 12:
+        new_month = 1
+        new_year = date_obj.year + 1
+    else:
+        new_month = date_obj.month + 1
+        new_year = date_obj.year
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    result1 = manipulate_date_components(date1)
+    print(f""Original: {date1}, Result: {result1}"")
+    date2 = datetime.date(2023, 12, 31)
+    result2 = manipulate_date_components(date2)
+    print(f""Original: {date2}, Result: {result2}"")
+    date3 = datetime.date(2024, 1, 5)
+    result3 = manipulate_date_components(date3)
+    print(f""Original: {date3}, Result: {result3}"")
+    date4 = datetime.date(2022, 7, 20)
+    result4 = manipulate_date_components(date4)
+    print(f""Original: {date4}, Result: {result4}"")",True,2,6913,111_1_2.py
+111,1,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new date object where the month is incremented by one, handling year rollovers correctly.","import datetime
+def manipulate_date_components(date_obj):
+    if date_obj.month == 12:
+        new_month = 1
+        new_year = date_obj.year + 1
+    else:
+        new_month = date_obj.month + 1
+        new_year = date_obj.year
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    result1 = manipulate_date_components(date1)
+    print(f""Original: {date1}, Result: {result1}"")
+    date2 = datetime.date(2023, 12, 25)
+    result2 = manipulate_date_components(date2)
+    print(f""Original: {date2}, Result: {result2}"")
+    date3 = datetime.date(2024, 1, 5)
+    result3 = manipulate_date_components(date3)
+    print(f""Original: {date3}, Result: {result3}"")",True,3,6914,111_1_3.py
+111,2,Manipulate simple date components,"Develop a function that takes a full date string in 'YYYY-MM-DD' format and extracts the year, month, and day as separate integers. Ensure the function handles potential `ValueError` exceptions for invalid date formats.","def extract_date_parts(date_string):
+    try:
+        year, month, day = map(int, date_string.split('-'))
+        return year, month, day
+    except ValueError:
+        raise ValueError(""Invalid date format. Expected 'YYYY-MM-DD'."")
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024/05/15""
+    date4 = ""2023-13-01""
+    print(f""Processing {date1}:"")
+    try:
+        year, month, day = extract_date_parts(date1)
+        print(f""Year: {year}, Month: {month}, Day: {day}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(f""\nProcessing {date2}:"")
+    try:
+        year, month, day = extract_date_parts(date2)
+        print(f""Year: {year}, Month: {month}, Day: {day}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(f""\nProcessing {date3}:"")
+    try:
+        year, month, day = extract_date_parts(date3)
+        print(f""Year: {year}, Month: {month}, Day: {day}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(f""\nProcessing {date4}:"")
+    try:
+        year, month, day = extract_date_parts(date4)
+        print(f""Year: {year}, Month: {month}, Day: {day}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,6915,111_2.py
+111,2,Manipulate simple date components,"Develop a function that takes a full date string in 'YYYY-MM-DD' format and extracts the year, month, and day as separate integers. Ensure the function handles potential `ValueError` exceptions for invalid date formats.","def extract_date_parts(date_string):
+    try:
+        year, month, day = map(int, date_string.split('-'))
+        return year, month, day
+    except ValueError:
+        raise ValueError(""Invalid date format. Expected 'YYYY-MM-DD'."")
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024-02-29""
+    invalid_date1 = ""2023/10/27""
+    invalid_date2 = ""2023-10-32""
+    print(f""Processing {date1}: {extract_date_parts(date1)}"")
+    print(f""Processing {date2}: {extract_date_parts(date2)}"")
+    print(f""Processing {date3}: {extract_date_parts(date3)}"")
+    try:
+        extract_date_parts(invalid_date1)
+    except ValueError as e:
+        print(f""Error processing {invalid_date1}: {e}"")
+    try:
+        extract_date_parts(invalid_date2)
+    except ValueError as e:
+        print(f""Error processing {invalid_date2}: {e}"")",True,1,6916,111_2_1.py
+111,2,Manipulate simple date components,"Develop a function that takes a full date string in 'YYYY-MM-DD' format and extracts the year, month, and day as separate integers. Ensure the function handles potential `ValueError` exceptions for invalid date formats.","def extract_date_parts(date_string):
+    try:
+        year, month, day = map(int, date_string.split('-'))
+        return year, month, day
+    except ValueError:
+        raise ValueError(""Invalid date format. Expected 'YYYY-MM-DD'."")
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024/05/15""
+    date4 = ""2023-13-01""
+    print(f""Processing {date1}:"")
+    try:
+        y, m, d = extract_date_parts(date1)
+        print(f""Year: {y}, Month: {m}, Day: {d}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(f""\nProcessing {date2}:"")
+    try:
+        y, m, d = extract_date_parts(date2)
+        print(f""Year: {y}, Month: {m}, Day: {d}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(f""\nProcessing {date3}:"")
+    try:
+        y, m, d = extract_date_parts(date3)
+        print(f""Year: {y}, Month: {m}, Day: {d}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(f""\nProcessing {date4}:"")
+    try:
+        y, m, d = extract_date_parts(date4)
+        print(f""Year: {y}, Month: {m}, Day: {d}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,6917,111_2_2.py
+111,3,Manipulate simple date components,"Write a class named `DateManipulator` with a method to perform arithmetic operations on the year, month, and day components of an input date, ensuring immutability of the original object.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+    def get_year(self):
+        return self._year
+    def get_month(self):
+        return self._month
+    def get_day(self):
+        return self._day
+    def add_days(self, days):
+        new_year = self._year
+        new_month = self._month
+        new_day = self._day + days
+        if new_day > 31:
+            new_month += (new_day - 31) // 30
+            new_day = new_day % 30
+            if new_day == 0:
+                new_day = 30
+            if new_day > 30:
+                new_day = 30
+            if new_day > 31:
+                new_day = 31
+            if new_day == 31:
+                new_month += 1
+                new_day = 1
+            if new_month > 12:
+                new_month = 1
+                new_year += 1
+        if new_month > 12:
+            new_month -= 12
+            new_year += 1
+        self._year = new_year
+        self._month = new_month
+        self._day = new_day
+if __name__ == '__main__':
+    original_year = 2023
+    original_month = 10
+    original_day = 25
+    date1 = DateManipulator(original_year, original_month, original_day)
+    print(f""Original Date: {date1.get_year()}-{date1.get_month()}-{date1.get_day()}"")
+    date1.add_days(10)
+    print(f""Date after adding 10 days: {date1.get_year()}-{date1.get_month()}-{date1.get_day()}"")
+    date2 = DateManipulator(2024, 1, 31)
+    print(f""Original Date 2: {date2.get_year()}-{date2.get_month()}-{date2.get_day()}"")
+    date2.add_days(1)
+    print(f""Date 2 after adding 1 day: {date2.get_year()}-{date2.get_month()}-{date2.get_day()}"")",True,0,6918,111_3.py
+111,3,Manipulate simple date components,"Write a class named `DateManipulator` with a method to perform arithmetic operations on the year, month, and day components of an input date, ensuring immutability of the original object.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+    def get_year(self):
+        return self._year
+    def get_month(self):
+        return self._month
+    def get_day(self):
+        return self._day
+    def add_days(self, days):
+        new_day = self._day + days
+        if 1 <= new_day <= 31:
+            self._day = new_day
+        else:
+            raise ValueError(""Day out of range for the current month"")
+    def add_months(self, months):
+        new_month = self._month + months
+        new_year = self._year + (new_month - 12) // 12
+        new_month = (new_month - 1) % 12 + 1
+        self._year = new_year
+        self._month = new_month
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month out of range"")
+        self._day = self._day
+    def __repr__(self):
+        return f""DateManipulator(year={self._year}, month={self._month}, day={self._day})""
+if __name__ == '__main__':
+    initial_year = 2023
+    initial_month = 10
+    initial_day = 25
+    date1 = DateManipulator(initial_year, initial_month, initial_day)
+    print(f""Original Date: {date1}"")
+    print(""\n--- Adding Days ---"")
+    date1.add_days(5)
+    print(f""After adding 5 days: {date1}"")
+    date2 = DateManipulator(2024, 1, 15)
+    print(f""Original Date 2: {date2}"")
+    print(""\n--- Adding Months ---"")
+    date2.add_months(3)
+    print(f""After adding 3 months to Date 2: {date2}"")
+    date3 = DateManipulator(2025, 12, 31)
+    print(f""Original Date 3: {date3}"")
+    date3.add_months(1)
+    print(f""After adding 1 month to Date 3: {date3}"")
+    print(""\nVerifying Immutability (Original object remains unchanged):"")
+    print(f""Date 1 after operations: {date1}"")
+    print(f""Date 2 after operations: {date2}"")
+    print(f""Date 3 after operations: {date3}"")",True,1,6919,111_3_1.py
+111,3,Manipulate simple date components,"Write a class named `DateManipulator` with a method to perform arithmetic operations on the year, month, and day components of an input date, ensuring immutability of the original object.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+    def get_year(self):
+        return self._year
+    def get_month(self):
+        return self._month
+    def get_day(self):
+        return self._day
+    def add_days(self, days):
+        new_year = self._year
+        new_month = self._month
+        new_day = self._day + days
+        if new_day > 31:
+            new_month += (new_day - 31) // 30
+            new_day = new_day % 30
+            if new_day == 0:
+                new_day = 30
+            if new_day > 30:
+                new_day = 30
+            if new_day > 31:
+                new_day = 31
+            if new_day == 31:
+                new_month += 1
+                new_day = 1
+        elif new_day < 1:
+            new_month -= 1
+            new_day += (31 - abs(new_day - 1))
+            if new_month == 0:
+                new_year -= 1
+                new_month = 1
+                new_day = 31
+        self._year = new_year
+        self._month = new_month
+        self._day = new_day
+if __name__ == '__main__':
+    original_year = 2023
+    original_month = 10
+    original_day = 25
+    date1 = DateManipulator(original_year, original_month, original_day)
+    print(f""Original Date: Year={date1.get_year()}, Month={date1.get_month()}, Day={date1.get_day()}"")
+    print(""-"" * 20)
+    date2 = DateManipulator(original_year, original_month, original_day)
+    date2.add_days(10)
+    print(f""Date after adding 10 days: Year={date2.get_year()}, Month={date2.get_month()}, Day={date2.get_day()}"")
+    print(""-"" * 20)
+    date3 = DateManipulator(2023, 12, 31)
+    date3.add_days(1)
+    print(f""Date after adding 1 day to Dec 31st: Year={date3.get_year()}, Month={date3.get_month()}, Day={date3.get_day()}"")
+    date4 = DateManipulator(2023, 1, 1)
+    date4.add_days(-5)
+    print(f""Date after subtracting 5 days from Jan 1st: Year={date4.get_year()}, Month={date4.get_month()}, Day={date4.get_day()}"")",True,2,6920,111_3_2.py
+111,3,Manipulate simple date components,"Write a class named `DateManipulator` with a method to perform arithmetic operations on the year, month, and day components of an input date, ensuring immutability of the original object.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+    def get_year(self):
+        return self._year
+    def get_month(self):
+        return self._month
+    def get_day(self):
+        return self._day
+    def add_days(self, days):
+        new_day = self._day + days
+        if 1 <= new_day <= 31:
+            self._day = new_day
+        else:
+            raise ValueError(""Invalid day after addition"")
+    def add_months(self, months):
+        new_month = self._month + months
+        new_year = self._year + (new_month - 12) // 12
+        new_month = (new_month - 1) % 12 + 1
+        self._year = new_year
+        self._month = new_month
+        self._day = self._day
+if __name__ == '__main__':
+    initial_year = 2023
+    initial_month = 10
+    initial_day = 25
+    date1 = DateManipulator(initial_year, initial_month, initial_day)
+    print(f""Original Date: Year={date1.get_year()}, Month={date1.get_month()}, Day={date1.get_day()}"")
+    print(""-"" * 20)
+    date2 = DateManipulator(2024, 1, 15)
+    print(f""Original Date: Year={date2.get_year()}, Month={date2.get_month()}, Day={date2.get_day()}"")
+    date2.add_days(10)
+    print(f""After adding 10 days: Year={date2.get_year()}, Month={date2.get_month()}, Day={date2.get_day()}"")
+    print(""-"" * 20)
+    date3 = DateManipulator(2023, 12, 31)
+    print(f""Original Date: Year={date3.get_year()}, Month={date3.get_month()}, Day={date3.get_day()}"")
+    date3.add_months(1)
+    print(f""After adding 1 month: Year={date3.get_year()}, Month={date3.get_month()}, Day={date3.get_day()}"")
+    date4 = DateManipulator(2023, 1, 1)
+    print(f""Original Date: Year={date4.get_year()}, Month={date4.get_month()}, Day={date4.get_day()}"")
+    try:
+        date4.add_days(-5)
+        print(f""After subtracting 5 days: Year={date4.get_year()}, Month={date4.get_month()}, Day={date4.get_day()}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,6921,111_3_3.py
+111,3,Manipulate simple date components,"Write a class named `DateManipulator` with a method to perform arithmetic operations on the year, month, and day components of an input date, ensuring immutability of the original object.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+    def get_year(self):
+        return self._year
+    def get_month(self):
+        return self._month
+    def get_day(self):
+        return self._day
+    def add_days(self, days):
+        new_year = self._year
+        new_month = self._month
+        new_day = self._day + days
+        if new_day > 31:
+            new_month += (new_day - 31) // 30
+            new_day = new_day % 30
+            if new_day == 0:
+                new_day = 30
+            if new_day > 30:
+                new_day = 30
+            if new_day > 31:
+                new_day = 31
+            if new_day == 31 and new_month > 12:
+                new_month += 1
+                new_day = 1
+            if new_month > 12:
+                new_month = 1
+                new_year += 1
+        if new_month > 12:
+            new_month = 1
+            new_year += 1
+        if new_month > 12:
+            new_month = 1
+            new_year += 1
+        self._year = new_year
+        self._month = new_month
+        self._day = new_day
+    def add_months(self, months):
+        new_year = self._year + (self._month + months - 1) // 12
+        new_month = (self._month + months - 1) % 12 + 1
+        self._year = new_year
+        self._month = new_month
+        self._day = self._day
+if __name__ == '__main__':
+    original_year = 2023
+    original_month = 10
+    original_day = 25
+    date1 = DateManipulator(original_year, original_month, original_day)
+    print(f""Original Date: {date1.get_year()}-{date1.get_month()}-{date1.get_day()}"")
+    print(""-"" * 20)
+    date2 = DateManipulator(original_year, original_month, original_day)
+    date2.add_days(10)
+    print(f""Date after adding 10 days: {date2.get_year()}-{date2.get_month()}-{date2.get_day()}"")
+    print(""-"" * 20)
+    date3 = DateManipulator(2023, 12, 31)
+    date3.add_days(1)
+    print(f""Date after adding 1 day to Dec 31: {date3.get_year()}-{date3.get_month()}-{date3.get_day()}"")
+    print(""-"" * 20)
+    date4 = DateManipulator(2023, 1, 30)
+    date4.add_months(2)
+    print(f""Date after adding 2 months to Jan 30: {date4.get_year()}-{date4.get_month()}-{date4.get_day()}"")
+    print(""-"" * 20)
+    date5 = DateManipulator(2023, 1, 30)
+    date5.add_months(13)
+    print(f""Date after adding 13 months to Jan 30: {date5.get_year()}-{date5.get_month()}-{date5.get_day()}"")",True,4,6922,111_3_4.py
+111,3,Manipulate simple date components,"Write a class named `DateManipulator` with a method to perform arithmetic operations on the year, month, and day components of an input date, ensuring immutability of the original object.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+    def get_year(self):
+        return self._year
+    def get_month(self):
+        return self._month
+    def get_day(self):
+        return self._day
+    def add_days(self, days):
+        new_year = self._year
+        new_month = self._month
+        new_day = self._day + days
+        if new_day > 31:
+            new_month += (new_day - 31) // 30
+            new_day = new_day % 30
+            if new_day == 0:
+                new_day = 30
+            if new_day > 30:
+                new_day = 30
+            if new_day == 31:
+                new_day = 31
+            if new_day > 31:
+                new_month += 1
+                new_day = new_day - 31
+                if new_day == 0:
+                    new_day = 30
+        if new_month > 12:
+            new_year += (new_month - 1) // 12
+            new_month = (new_month - 1) % 12 + 1
+        self._year = new_year
+        self._month = new_month
+        self._day = new_day
+if __name__ == '__main__':
+    original_year = 2023
+    original_month = 10
+    original_day = 25
+    date1 = DateManipulator(original_year, original_month, original_day)
+    print(f""Original Date: Year={date1.get_year()}, Month={date1.get_month()}, Day={date1.get_day()}"")
+    date1.add_days(10)
+    print(f""After adding 10 days: Year={date1.get_year()}, Month={date1.get_month()}, Day={date1.get_day()}"")
+    date2 = DateManipulator(2024, 1, 31)
+    print(f""Original Date 2: Year={date2.get_year()}, Month={date2.get_month()}, Day={date2.get_day()}"")
+    date2.add_days(1)
+    print(f""After adding 1 day: Year={date2.get_year()}, Month={date2.get_month()}, Day={date2.get_day()}"")",True,5,6923,111_3_5.py
+111,5,Manipulate simple date components,"Implement a function that takes a date and returns a tuple containing the year, the day of the month, and the day of the week (as a string). Use only efficient built-in methods.","import datetime
+def date_to_components(date_obj):
+    year = date_obj.year
+    day = date_obj.day
+    day_of_week = date_obj.strftime('%A')
+    return (year, day, day_of_week)
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 10, 26)
+    result = date_to_components(sample_date)
+    print(result)",True,0,6924,111_5.py
+111,5,Manipulate simple date components,"Implement a function that takes a date and returns a tuple containing the year, the day of the month, and the day of the week (as a string). Use only efficient built-in methods.","import datetime
+def date_to_components(date_obj):
+    year = date_obj.year
+    day = date_obj.day
+    day_of_week = date_obj.strftime(""%A"")
+    return (year, day, day_of_week)
+if __name__ == '__main__':
+    sample_date_str = ""2023-10-27""
+    date_obj = datetime.datetime.strptime(sample_date_str, ""%Y-%m-%d"").date()
+    result = date_to_components(date_obj)
+    print(result)",True,1,6925,111_5_1.py
+111,5,Manipulate simple date components,"Implement a function that takes a date and returns a tuple containing the year, the day of the month, and the day of the week (as a string). Use only efficient built-in methods.","from datetime import date
+def date_to_components(dt):
+    year = dt.year
+    day = dt.day
+    day_of_week = dt.strftime(""%A"")
+    return (year, day, day_of_week)
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 26)
+    result = date_to_components(sample_date)
+    print(result)",True,2,6926,111_5_2.py
+110,4,Sort dates chronologically simply,"Create a standalone Python program that prompts the user to input multiple dates, stores them as strings, and then prints the sorted list of dates to the console, ensuring the sorting is strictly chronological.","import datetime
+if __name__ == '__main__':
+    date_strings = [""2023-10-26"", ""2023-01-15"", ""2024-05-01"", ""2023-11-30""]
+    date_objects = []
+    for date_str in date_strings:
+        date_objects.append(datetime.datetime.strptime(date_str, ""%Y-%m-%d""))
+    date_objects.sort()
+    sorted_date_strings = [dt.strftime(""%Y-%m-%d"") for dt in date_objects]
+    print(""Sorted Dates:"")
+    for date_str in sorted_date_strings:
+        print(date_str)",True,0,6927,110_4.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if not (1 <= new_month <= 12):
+            return False
+        if new_month == 2:
+            is_leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+            if not is_leap:
+                if not (1 <= new_day <= 28):
+                    return False
+                new_day = 28
+            elif not (1 <= new_day <= 29):
+                return False
+        else:
+            days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][new_month]
+            if not (1 <= new_day <= days_in_month):
+                return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-20):"")
+    result1 = date1.set_month_day(""10"", ""20"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 1)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-02-30):"")
+    result3 = date1.set_month_day(""2"", ""30"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 3, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to invalid month (13):"")
+    result4 = date3.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 3 remains: {date3.year}-{date3.month}-{date3.day}"")",True,0,6928,111_7.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if not (1 <= new_month <= 12):
+            return False
+        if new_month == 2:
+            is_leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+            if not is_leap:
+                if not (1 <= new_day <= 28):
+                    return False
+                new_day = 28
+            elif not (1 <= new_day <= 29):
+                return False
+        else:
+            days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][new_month]
+            if not (1 <= new_day <= days_in_month):
+                return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-20):"")
+    result1 = date1.set_month_day(""10"", ""20"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 1)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap year date (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-02-30):"")
+    result3 = date1.set_month_day(""2"", ""30"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to valid date (2023-1-31):"")
+    result5 = date3.set_month_day(""1"", ""31"")
+    print(f""Result 5: {result5}"")
+    print(f""New Date 3: {date3.year}-{date3.month}-{date3.day}"")",True,1,6929,111_7_1.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if new_month < 1 or new_month > 12:
+            return False
+        import calendar
+        if new_month == 2:
+            is_leap = self.year % 4 == 0 and (self.year % 100 != 0 or self.year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        elif new_month in [4, 6, 9, 11]:
+            max_days = 30
+        else:
+            max_days = 31
+        if new_day > max_days:
+            return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-25):"")
+    result1 = date1.set_month_day(""10"", ""25"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 29)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-02-30):"")
+    result3 = date1.set_month_day(""2"", ""30"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to invalid day (2023-01-32):"")
+    result5 = date3.set_month_day(""1"", ""32"")
+    print(f""Result 5: {result5}"")
+    print(f""Date 3 remains: {date3.year}-{date3.month}-{date3.day}"")",True,2,6930,111_7_2.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if not (1 <= new_month <= 12):
+            return False
+        if new_month == 2:
+            is_leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+            if not is_leap:
+                if not (1 <= new_day <= 28):
+                    return False
+                new_day = 28
+            elif not (1 <= new_day <= 29):
+                return False
+        else:
+            days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][new_month]
+            if not (1 <= new_day <= days_in_month):
+                return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-20):"")
+    result1 = date1.set_month_day(""10"", ""20"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 1)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-10-32):"")
+    result3 = date1.set_month_day(""10"", ""32"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13-1):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 31)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to valid 31-day month (2023-01-31):"")
+    result5 = date3.set_month_day(""1"", ""31"")
+    print(f""Result 5: {result5}"")
+    print(f""New Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to invalid day in 30-day month (2023-04-31):"")
+    result6 = date3.set_month_day(""4"", ""31"")
+    print(f""Result 6: {result6}"")
+    print(f""Date 3 remains: {date3.year}-{date3.month}-{date3.day}"")",True,3,6931,111_7_3.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if new_month < 1 or new_month > 12:
+            return False
+        import calendar
+        if new_month == 2:
+            is_leap = self.year % 4 == 0 and (self.year % 100 != 0 or self.year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        elif new_month in [4, 6, 9, 11]:
+            max_days = 30
+        else:
+            max_days = 31
+        if new_day > max_days:
+            return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-25):"")
+    result1 = date1.set_month_day(""10"", ""25"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 29)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-02-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-02-30):"")
+    result3 = date1.set_month_day(""2"", ""30"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to valid date (2023-01-31):"")
+    result5 = date3.set_month_day(""1"", ""31"")
+    print(f""Result 5: {result5}"")
+    print(f""New Date 3: {date3.year}-{date3.month}-{date3.day}"")",True,4,6932,111_7_4.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if new_month < 1 or new_month > 12:
+            return False
+        import calendar
+        if new_month == 2:
+            is_leap = self.year % 4 == 0 and (self.year % 100 != 0 or self.year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        elif new_month in [4, 6, 9, 11]:
+            max_days = 30
+        else:
+            max_days = 31
+        if new_day > max_days:
+            return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-25):"")
+    result1 = date1.set_month_day(""10"", ""25"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 29)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-10-32):"")
+    result3 = date1.set_month_day(""10"", ""32"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13-1):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to valid date (2023-1-31):"")
+    result5 = date3.set_month_day(""1"", ""31"")
+    print(f""Result 5: {result5}"")
+    print(f""New Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to invalid day (2023-1-30):"")
+    result6 = date3.set_month_day(""1"", ""30"")
+    print(f""Result 6: {result6}"")
+    print(f""Date 3 remains: {date3.year}-{date3.month}-{date3.day}"")",True,5,6933,111_7_5.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if new_month < 1 or new_month > 12:
+            return False
+        import calendar
+        if new_month == 2:
+            is_leap = self.year % 4 == 0 and (self.year % 100 != 0 or self.year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        elif new_month in [4, 6, 9, 11]:
+            max_days = 30
+        else:
+            max_days = 31
+        if new_day > max_days:
+            return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-25):"")
+    result1 = date1.set_month_day(""10"", ""25"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 29)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-10-32):"")
+    result3 = date1.set_month_day(""10"", ""32"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13-1):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to valid date (2023-01-31):"")
+    result5 = date3.set_month_day(""1"", ""31"")
+    print(f""Result 5: {result5}"")
+    print(f""New Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to invalid day (2023-01-30):"")
+    result6 = date3.set_month_day(""1"", ""30"")
+    print(f""Result 6: {result6}"")
+    print(f""Date 3 remains: {date3.year}-{date3.month}-{date3.day}"")",True,6,6934,111_7_6.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if not (1 <= new_month <= 12):
+            return False
+        if new_month == 2:
+            is_leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+            if not is_leap:
+                if not (1 <= new_day <= 28):
+                    return False
+                new_day = 28
+            elif not (1 <= new_day <= 29):
+                return False
+        else:
+            days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][new_month]
+            if not (1 <= new_day <= days_in_month):
+                return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\n--- Test Case 1: Valid Change ---"")
+    result1 = date1.set_month_day(11, 30)
+    print(f""Set to Month 11, Day 30: {result1}"")
+    print(f""Date 1 after change: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\n--- Test Case 2: Invalid Day (31 in April) ---"")
+    date2 = Date(2023, 4, 1)
+    result2 = date2.set_month_day(4, 31)
+    print(f""Set to Month 4, Day 31: {result2}"")
+    print(f""Date 2 after change: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\n--- Test Case 3: Leap Year Validation (Feb 29) ---"")
+    date3 = Date(2024, 2, 1)
+    result3 = date3.set_month_day(2, 29)
+    print(f""Set to Month 2, Day 29 (Leap Year): {result3}"")
+    print(f""Date 3 after change: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\n--- Test Case 4: Non-existent Month ---"")
+    date4 = Date(2023, 1, 1)
+    result4 = date4.set_month_day(13, 1)
+    print(f""Set to Month 13, Day 1: {result4}"")
+    print(f""Date 4 after change: {date4.year}-{date4.month}-{date4.day}"")
+    print(""\n--- Test Case 5: Invalid Day (Feb 29 in Non-Leap Year) ---"")
+    date5 = Date(2023, 2, 1)
+    result5 = date5.set_month_day(2, 29)
+    print(f""Set to Month 2, Day 29 (Non-Leap Year): {result5}"")
+    print(f""Date 5 after change: {date5.year}-{date5.month}-{date5.day}"")
+    print(""\n--- Test Case 6: Valid Day (Feb 28 in Non-Leap Year) ---"")
+    date6 = Date(2023, 2, 1)
+    result6 = date6.set_month_day(2, 28)
+    print(f""Set to Month 2, Day 28 (Non-Leap Year): {result6}"")
+    print(f""Date 6 after change: {date6.year}-{date6.month}-{date6.day}"")",True,7,6935,111_7_7.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if new_month < 1 or new_month > 12:
+            return False
+        if new_day < 1:
+            return False
+        import calendar
+        year = self.year
+        month = new_month
+        day = new_day
+        days_in_month = calendar.monthrange(year, month)[1]
+        if new_day > days_in_month:
+            return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-25):"")
+    result1 = date1.set_month_day(""10"", ""25"")
+    print(f""Success: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 29)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-02-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Success: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-02-30):"")
+    result3 = date1.set_month_day(""2"", ""30"")
+    print(f""Success: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid month (13):"")
+    result4 = date1.set_month_day(""13"", ""1"")
+    print(f""Success: {result4}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to invalid day (0):"")
+    result5 = date1.set_month_day(""10"", ""0"")
+    print(f""Success: {result5}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")",True,8,6936,111_7_8.py
+111,7,Manipulate simple date components,"Develop an optimized method within a `date` object class to set the month and day components, validating that the resulting date is still valid (e.g., handling month lengths and leap years).","class Date:
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+    def set_month_day(self, new_month, new_day):
+        try:
+            new_month = int(new_month)
+            new_day = int(new_day)
+        except ValueError:
+            return False
+        if not (1 <= new_month <= 12):
+            return False
+        if new_month == 2:
+            is_leap = (self.year % 4 == 0 and self.year % 100 != 0) or (self.year % 400 == 0)
+            if not is_leap:
+                if not (1 <= new_day <= 28):
+                    return False
+                new_day = 28
+            elif not (1 <= new_day <= 29):
+                return False
+        else:
+            days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][new_month]
+            if not (1 <= new_day <= days_in_month):
+                return False
+        self.month = new_month
+        self.day = new_day
+        return True
+if __name__ == '__main__':
+    date1 = Date(2023, 10, 15)
+    print(f""Original Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    print(""\nAttempting to set to valid date (2023-10-20):"")
+    result1 = date1.set_month_day(""10"", ""20"")
+    print(f""Result 1: {result1}"")
+    print(f""New Date 1: {date1.year}-{date1.month}-{date1.day}"")
+    date2 = Date(2024, 2, 1)
+    print(f""\nOriginal Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to valid leap day (2024-2-29):"")
+    result2 = date2.set_month_day(""2"", ""29"")
+    print(f""Result 2: {result2}"")
+    print(f""New Date 2: {date2.year}-{date2.month}-{date2.day}"")
+    print(""\nAttempting to set to invalid day (2023-02-30):"")
+    result3 = date1.set_month_day(""2"", ""30"")
+    print(f""Result 3: {result3}"")
+    print(f""Date 1 remains: {date1.year}-{date1.month}-{date1.day}"")
+    date3 = Date(2023, 1, 1)
+    print(f""\nOriginal Date 3: {date3.year}-{date3.month}-{date3.day}"")
+    print(""\nAttempting to set to invalid month (13-15):"")
+    result4 = date3.set_month_day(""13"", ""15"")
+    print(f""Result 4: {result4}"")
+    print(f""Date 3 remains: {date3.year}-{date3.month}-{date3.day}"")",True,9,6937,111_7_9.py
+111,6,Manipulate simple date components,"Write a robust function that takes a date and returns the date shifted forward by a specified number of months, correctly managing month boundaries (e.g., moving from March to February of the next year).","from datetime import date
+import calendar
+def shift_date_by_months(start_date, months_to_add):
+    if months_to_add == 0:
+        return start_date
+    year = start_date.year
+    month = start_date.month
+    total_months = month + months_to_add
+    new_year = year + (total_months - 1) // 12
+    new_month = (total_months - 1) % 12 + 1
+    try:
+        new_date = date(new_year, new_month, start_date.day)
+        return new_date
+    except ValueError:
+        return date(new_year, new_month, 1)                                                          
+if __name__ == '__main__':
+    date1 = date(2023, 3, 15)
+    months1 = 3
+    result1 = shift_date_by_months(date1, months1)
+    print(f""Start Date: {date1}, Add Months: {months1}, Result: {result1}"")
+    date2 = date(2023, 10, 20)
+    months2 = 5
+    result2 = shift_date_by_months(date2, months2)
+    print(f""Start Date: {date2}, Add Months: {months2}, Result: {result2}"")
+    date3 = date(2024, 1, 31)
+    months3 = 1
+    result3 = shift_date_by_months(date3, months3)
+    print(f""Start Date: {date3}, Add Months: {months3}, Result: {result3}"")
+    date4 = date(2024, 12, 10)
+    months4 = 2
+    result4 = shift_date_by_months(date4, months4)
+    print(f""Start Date: {date4}, Add Months: {months4}, Result: {result4}"")
+    date5 = date(2023, 11, 1)
+    months5 = 12
+    result5 = shift_date_by_months(date5, months5)
+    print(f""Start Date: {date5}, Add Months: {months5}, Result: {result5}"")",True,0,6938,111_6.py
+111,6,Manipulate simple date components,"Write a robust function that takes a date and returns the date shifted forward by a specified number of months, correctly managing month boundaries (e.g., moving from March to February of the next year).","from datetime import date
+import calendar
+def shift_date_by_months(start_date, months_to_add):
+    if months_to_add == 0:
+        return start_date
+    year = start_date.year
+    month = start_date.month
+    total_months = month + months_to_add
+    new_year = year + (total_months - 1) // 12
+    new_month = (total_months - 1) % 12 + 1
+    try:
+        new_date = date(new_year, new_month, start_date.day)
+        return new_date
+    except ValueError:
+        if new_month > 12:
+            new_month -= 12
+            new_year += 1
+        try:
+            new_date = date(new_year, new_month, start_date.day)
+            return new_date
+        except ValueError:
+            raise
+if __name__ == '__main__':
+    date1 = date(2023, 3, 15)
+    months1 = 1
+    result1 = shift_date_by_months(date1, months1)
+    print(f""Start Date: {date1}, Add Months: {months1}, Result: {result1}"")
+    date2 = date(2023, 10, 1)
+    months2 = 5
+    result2 = shift_date_by_months(date2, months2)
+    print(f""Start Date: {date2}, Add Months: {months2}, Result: {result2}"")
+    date3 = date(2024, 1, 31)
+    months3 = 2
+    result3 = shift_date_by_months(date3, months3)
+    print(f""Start Date: {date3}, Add Months: {months3}, Result: {result3}"")
+    date4 = date(2024, 12, 10)
+    months4 = 3
+    result4 = shift_date_by_months(date4, months4)
+    print(f""Start Date: {date4}, Add Months: {months4}, Result: {result4}"")
+    date5 = date(2024, 5, 20)
+    months5 = -4
+    result5 = shift_date_by_months(date5, months5)
+    print(f""Start Date: {date5}, Add Months: {months5}, Result: {result5}"")",True,1,6939,111_6_1.py
+111,6,Manipulate simple date components,"Write a robust function that takes a date and returns the date shifted forward by a specified number of months, correctly managing month boundaries (e.g., moving from March to February of the next year).","import datetime
+def shift_date_by_months(date_obj, months):
+    year = date_obj.year
+    month = date_obj.month
+    total_months = month + months
+    new_year = year + (total_months - 1) // 12
+    new_month = (total_months - 1) % 12 + 1
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 3, 15)
+    months1 = 3
+    result1 = shift_date_by_months(date1, months1)
+    print(f""Original Date: {date1}, Shift: +{months1} months, Result: {result1}"")
+    date2 = datetime.date(2023, 10, 1)
+    months2 = 5
+    result2 = shift_date_by_months(date2, months2)
+    print(f""Original Date: {date2}, Shift: +{months2} months, Result: {result2}"")
+    date3 = datetime.date(2024, 1, 10)
+    months3 = 13
+    result3 = shift_date_by_months(date3, months3)
+    print(f""Original Date: {date3}, Shift: +{months3} months, Result: {result3}"")
+    date4 = datetime.date(2024, 12, 25)
+    months4 = 1
+    result4 = shift_date_by_months(date4, months4)
+    print(f""Original Date: {date4}, Shift: +{months4} months, Result: {result4}"")",True,2,6940,111_6_2.py
+111,6,Manipulate simple date components,"Write a robust function that takes a date and returns the date shifted forward by a specified number of months, correctly managing month boundaries (e.g., moving from March to February of the next year).","import datetime
+def shift_date_by_months(date_obj, months):
+    year = date_obj.year
+    month = date_obj.month
+    total_months = month + months
+    new_year = year + (total_months - 1) // 12
+    new_month = (total_months - 1) % 12 + 1
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 3, 15)
+    months1 = 5
+    result1 = shift_date_by_months(date1, months1)
+    print(f""Original Date: {date1}, Shift: +{months1} months"")
+    print(f""Result: {result1}"")
+    date2 = datetime.date(2023, 10, 1)
+    months2 = 8
+    result2 = shift_date_by_months(date2, months2)
+    print(f""Original Date: {date2}, Shift: +{months2} months"")
+    print(f""Result: {result2}"")
+    date3 = datetime.date(2024, 1, 20)
+    months3 = 13
+    result3 = shift_date_by_months(date3, months3)
+    print(f""Original Date: {date3}, Shift: +{months3} months"")
+    print(f""Result: {result3}"")
+    date4 = datetime.date(2023, 12, 31)
+    months4 = 1
+    result4 = shift_date_by_months(date4, months4)
+    print(f""Original Date: {date4}, Shift: +{months4} months"")
+    print(f""Result: {result4}"")",True,3,6941,111_6_3.py
+111,6,Manipulate simple date components,"Write a robust function that takes a date and returns the date shifted forward by a specified number of months, correctly managing month boundaries (e.g., moving from March to February of the next year).","import datetime
+def shift_date_by_months(date_obj, months):
+    year = date_obj.year
+    month = date_obj.month
+    total_months = month + months
+    new_year = year + (total_months - 1) // 12
+    new_month = (total_months - 1) % 12 + 1
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 3, 15)
+    months1 = 5
+    result1 = shift_date_by_months(date1, months1)
+    print(f""Original Date: {date1}, Shift: +{months1} months"")
+    print(f""Result: {result1}"")
+    date2 = datetime.date(2023, 10, 1)
+    months2 = 8
+    result2 = shift_date_by_months(date2, months2)
+    print(f""Original Date: {date2}, Shift: +{months2} months"")
+    print(f""Result: {result2}"")
+    date3 = datetime.date(2024, 1, 1)
+    months3 = 13
+    result3 = shift_date_by_months(date3, months3)
+    print(f""Original Date: {date3}, Shift: +{months3} months"")
+    print(f""Result: {result3}"")
+    date4 = datetime.date(2024, 12, 31)
+    months4 = 1
+    result4 = shift_date_by_months(date4, months4)
+    print(f""Original Date: {date4}, Shift: +{months4} months"")
+    print(f""Result: {result4}"")",True,4,6942,111_6_4.py
+111,6,Manipulate simple date components,"Write a robust function that takes a date and returns the date shifted forward by a specified number of months, correctly managing month boundaries (e.g., moving from March to February of the next year).","from datetime import date
+import calendar
+def shift_date_by_months(start_date, months_to_add):
+    if months_to_add == 0:
+        return start_date
+    year = start_date.year
+    month = start_date.month
+    total_months = month + months_to_add
+    new_year = year + (total_months - 1) // 12
+    new_month = (total_months - 1) % 12 + 1
+    try:
+        new_date = date(new_year, new_month, start_date.day)
+        return new_date
+    except ValueError:
+        raise
+if __name__ == '__main__':
+    date1 = date(2023, 3, 15)
+    months1 = 1
+    result1 = shift_date_by_months(date1, months1)
+    print(f""Start Date: {date1}, Add Months: {months1}, Result: {result1}"")
+    date2 = date(2023, 10, 5)
+    months2 = 6
+    result2 = shift_date_by_months(date2, months2)
+    print(f""Start Date: {date2}, Add Months: {months2}, Result: {result2}"")
+    date3 = date(2024, 1, 31)
+    months3 = 2
+    result3 = shift_date_by_months(date3, months3)
+    print(f""Start Date: {date3}, Add Months: {months3}, Result: {result3}"")
+    date4 = date(2024, 12, 10)
+    months4 = 3
+    result4 = shift_date_by_months(date4, months4)
+    print(f""Start Date: {date4}, Add Months: {months4}, Result: {result4}"")
+    date5 = date(2023, 11, 1)
+    months5 = 12
+    result5 = shift_date_by_months(date5, months5)
+    print(f""Start Date: {date5}, Add Months: {months5}, Result: {result5}"")",True,5,6943,111_6_5.py
+111,9,Manipulate simple date components,"Implement a utility function that takes a date and returns a dictionary containing the extracted year, month, and day as integer values, ensuring the output is clean and efficient.","import datetime
+def extract_date_components(date_str):
+    date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+    return {
+        ""year"": date_obj.year,
+        ""month"": date_obj.month,
+        ""day"": date_obj.day
+    }
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    result = extract_date_components(sample_date)
+    print(result)",True,0,6944,111_9.py
+111,9,Manipulate simple date components,"Implement a utility function that takes a date and returns a dictionary containing the extracted year, month, and day as integer values, ensuring the output is clean and efficient.","from datetime import date
+def extract_date_components(date_obj):
+    return {
+        ""year"": date_obj.year,
+        ""month"": date_obj.month,
+        ""day"": date_obj.day
+    }
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 27)
+    result = extract_date_components(sample_date)
+    print(result)",True,1,6945,111_9_1.py
+111,9,Manipulate simple date components,"Implement a utility function that takes a date and returns a dictionary containing the extracted year, month, and day as integer values, ensuring the output is clean and efficient.","import datetime
+def extract_date_components(date_obj):
+    return {
+        ""year"": date_obj.year,
+        ""month"": date_obj.month,
+        ""day"": date_obj.day
+    }
+if __name__ == '__main__':
+    sample_date_str = ""2023-10-27""
+    date_obj = datetime.datetime.strptime(sample_date_str, ""%Y-%m-%d"").date()
+    result = extract_date_components(date_obj)
+    print(result)",True,2,6946,111_9_2.py
+111,9,Manipulate simple date components,"Implement a utility function that takes a date and returns a dictionary containing the extracted year, month, and day as integer values, ensuring the output is clean and efficient.","import datetime
+def extract_date_components(date_obj):
+    return {
+        ""year"": date_obj.year,
+        ""month"": date_obj.month,
+        ""day"": date_obj.day
+    }
+if __name__ == '__main__':
+    sample_date_str = ""2023-10-27""
+    date_object = datetime.datetime.strptime(sample_date_str, ""%Y-%m-%d"").date()
+    result = extract_date_components(date_object)
+    print(result)",True,3,6947,111_9_3.py
+111,9,Manipulate simple date components,"Implement a utility function that takes a date and returns a dictionary containing the extracted year, month, and day as integer values, ensuring the output is clean and efficient.","from datetime import date
+def extract_date_parts(date_obj):
+    return {
+        ""year"": date_obj.year,
+        ""month"": date_obj.month,
+        ""day"": date_obj.day
+    }
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 27)
+    result = extract_date_parts(sample_date)
+    print(result)",True,4,6948,111_9_4.py
+111,10,Manipulate simple date components,"Write a complete, well-documented Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. The script must include examples for incrementing and decrementing the date.","import datetime
+def manipulate_date(start_date, days_to_change):
+    new_date = start_date + datetime.timedelta(days=days_to_change)
+    return new_date
+start_date = datetime.date(2023, 10, 26)
+print(f""Original Date: {start_date}"")
+print(""\n--- Incrementing Date ---"")
+increment_days = 10
+new_date_increment = manipulate_date(start_date, increment_days)
+print(f""Date after adding {increment_days} days: {new_date_increment}"")
+print(""\n--- Decrementing Date ---"")
+decrement_days = -5
+new_date_decrement = manipulate_date(start_date, decrement_days)
+print(f""Date after subtracting {abs(decrement_days)} days: {new_date_decrement}"")
+print(""\n--- Manipulating Month and Year Directly (Demonstration) ---"")
+current_year = start_date.year
+current_month = start_date.month
+current_day = start_date.day
+new_year = current_year + 1
+new_month = current_month + 1
+new_day = current_day
+if new_month > 12:
+    new_month = 1
+    new_year += 1
+print(f""Original components: Year={current_year}, Month={current_month}, Day={current_day}"")
+print(f""New components (incremented by one month): Year={new_year}, Month={new_month}, Day={new_day}"")
+if __name__ == '__main__':
+    pass",True,0,6949,111_10.py
+111,10,Manipulate simple date components,"Write a complete, well-documented Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. The script must include examples for incrementing and decrementing the date.","import datetime
+def manipulate_date(start_date, days_to_change):
+    new_date = start_date + datetime.timedelta(days=days_to_change)
+    return new_date
+start_date = datetime.date(2023, 10, 27)
+print(f""Original Date: {start_date}"")
+future_date = manipulate_date(start_date, 30)
+print(f""Date after adding 30 days: {future_date}"")
+past_date = manipulate_date(start_date, -15)
+print(f""Date after subtracting 15 days: {past_date}"")
+print(""-"" * 20)
+start_date_month = datetime.date(2024, 1, 15)
+print(f""Original Date (Month focus): {start_date_month}"")
+future_month = manipulate_date(start_date_month, 60)
+print(f""Date after adding 60 days: {future_month}"")
+past_month = manipulate_date(start_date_month, -30)
+print(f""Date after subtracting 30 days: {past_month}"")
+if __name__ == '__main__':
+    pass",True,1,6950,111_10_1.py
+111,10,Manipulate simple date components,"Write a complete, well-documented Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. The script must include examples for incrementing and decrementing the date.","import datetime
+def manipulate_date(date_str, operation):
+    date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+    if operation == 'increment':
+        new_date = date_obj + datetime.timedelta(days=1)
+    elif operation == 'decrement':
+        new_date = date_obj - datetime.timedelta(days=1)
+    else:
+        return None
+    return new_date
+if __name__ == '__main__':
+    initial_date_str = ""2023-10-26""
+    print(f""Initial Date: {initial_date_str}"")
+    incremented_date = manipulate_date(initial_date_str, 'increment')
+    if incremented_date:
+        print(f""Incremented Date: {incremented_date.strftime('%Y-%m-%d')}"")
+    decremented_date = manipulate_date(initial_date_str, 'decrement')
+    if decremented_date:
+        print(f""Decremented Date: {decremented_date.strftime('%Y-%m-%d')}"")
+    print(""\n--- Further Examples ---"")
+    date_to_test = ""2024-01-01""
+    print(f""Testing with {date_to_test}"")
+    incremented_date_2 = manipulate_date(date_to_test, 'increment')
+    if incremented_date_2:
+        print(f""Incremented: {incremented_date_2.strftime('%Y-%m-%d')}"")
+    decremented_date_2 = manipulate_date(date_to_test, 'decrement')
+    if decremented_date_2:
+        print(f""Decremented: {decremented_date_2.strftime('%Y-%m-%d')}"")",True,2,6951,111_10_2.py
+111,10,Manipulate simple date components,"Write a complete, well-documented Python script that demonstrates how to manipulate the year, month, and day components of a given date object using the `datetime` module. The script must include examples for incrementing and decrementing the date.","import datetime
+def manipulate_date(start_date, days_to_change):
+    new_date = start_date + datetime.timedelta(days=days_to_change)
+    return new_date
+start_date = datetime.date(2023, 10, 25)
+print(f""Original Date: {start_date}"")
+print(""\n--- Incrementing Date ---"")
+increment_days = 10
+new_date_increment = manipulate_date(start_date, increment_days)
+print(f""Date after adding {increment_days} days: {new_date_increment}"")
+print(""\n--- Decrementing Date ---"")
+decrement_days = -5
+new_date_decrement = manipulate_date(start_date, decrement_days)
+print(f""Date after subtracting {abs(decrement_days)} days: {new_date_decrement}"")
+print(""\n--- Manipulating Month and Year (Manual Demonstration) ---"")
+current_year = start_date.year
+current_month = start_date.month
+current_day = start_date.day
+new_year = current_year + 1
+new_month = current_month + 1
+new_day = current_day
+if new_month > 12:
+    new_month = 1
+    new_year += 1
+print(f""Original components: Year={current_year}, Month={current_month}, Day={current_day}"")
+print(f""New components (incrementing month): Year={new_year}, Month={new_month}, Day={new_day}"")
+if __name__ == '__main__':
+    pass",True,3,6952,111_10_3.py
+111,8,Manipulate simple date components,"Generate a program that iterates through a list of dates and prints the year and month for each date, demonstrating direct component access from the `datetime` objects.","from datetime import date
+if __name__ == '__main__':
+    date_list = [date(2023, 10, 26), date(2024, 1, 15), date(2022, 12, 31)]
+    for dt in date_list:
+        year = dt.year
+        month = dt.month
+        print(f""Year: {year}, Month: {month}"")",True,0,6953,111_8.py
