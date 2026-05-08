@@ -200336,3 +200336,751 @@ if __name__ == '__main__':
     value_to_remove = 'active'
     result = filter_list_of_dicts(sample_data, key_to_check, value_to_remove)
     print(result)",True,1,9376,150_9_1.py
+150,11,Remove a specific item list,"Implement an optimized function named 'remove_item_from_list' that takes a list and an item to remove, and returns a new list without modifying the original list. The function must use list comprehension for efficiency.","def remove_item_from_list(input_list, item_to_remove):
+    new_list = [item for item in input_list if item != item_to_remove]
+    return new_list
+if __name__ == '__main__':
+    original_list = [1, 2, 3, 4, 2, 5]
+    item = 2
+    new_list = remove_item_from_list(original_list, item)
+    print(f""Original list: {original_list}"")
+    print(f""Item to remove: {item}"")
+    print(f""New list: {new_list}"")",True,0,9377,150_11.py
+150,12,Remove a specific item list,"Develop a class named 'ItemListManager' with a method 'remove_item(self, item_to_remove)' that manages a list of strings and removes the first occurrence of the specified string. The implementation must follow object-oriented best practices.","class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item):
+        self.items.append(item)
+    def remove_item(self, item_to_remove):
+        try:
+            index = self.items.index(item_to_remove)
+            self.items.pop(index)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemListManager()
+    manager.add_item(""apple"")
+    manager.add_item(""banana"")
+    manager.add_item(""apple"")
+    manager.add_item(""orange"")
+    print(""Initial list:"", manager.items)
+    manager.remove_item(""apple"")
+    print(""After removing first 'apple':"", manager.items)
+    manager.remove_item(""grape"")
+    print(""After attempting to remove 'grape':"", manager.items)
+    manager.remove_item(""banana"")
+    print(""After removing 'banana':"", manager.items)",True,0,9378,150_12.py
+150,12,Remove a specific item list,"Develop a class named 'ItemListManager' with a method 'remove_item(self, item_to_remove)' that manages a list of strings and removes the first occurrence of the specified string. The implementation must follow object-oriented best practices.","class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item):
+        self.items.append(item)
+    def remove_item(self, item_to_remove):
+        try:
+            index = self.items.index(item_to_remove)
+            self.items.pop(index)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemListManager()
+    manager.add_item(""apple"")
+    manager.add_item(""banana"")
+    manager.add_item(""apple"")
+    manager.add_item(""orange"")
+    print(""Initial list:"", manager.items)
+    manager.remove_item(""apple"")
+    print(""After removing first 'apple':"", manager.items)
+    manager.remove_item(""grape"")
+    print(""After attempting to remove 'grape' (not found):"", manager.items)
+    manager.remove_item(""banana"")
+    print(""After removing 'banana':"", manager.items)",True,1,9379,150_12_1.py
+150,12,Remove a specific item list,"Develop a class named 'ItemListManager' with a method 'remove_item(self, item_to_remove)' that manages a list of strings and removes the first occurrence of the specified string. The implementation must follow object-oriented best practices.","class ItemListManager:
+    def __init__(self, initial_list):
+        self.items = list(initial_list)
+    def remove_item(self, item_to_remove):
+        if item_to_remove in self.items:
+            self.items.remove(item_to_remove)
+if __name__ == '__main__':
+    initial_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana""]
+    manager = ItemListManager(initial_data)
+    print(""Initial list:"", manager.items)
+    item_to_remove_1 = ""apple""
+    manager.remove_item(item_to_remove_1)
+    print(f""After removing first '{item_to_remove_1}':"", manager.items)
+    item_to_remove_2 = ""banana""
+    manager.remove_item(item_to_remove_2)
+    print(f""After removing first '{item_to_remove_2}':"", manager.items)
+    item_to_remove_3 = ""grape""
+    manager.remove_item(item_to_remove_3)
+    print(f""After attempting to remove '{item_to_remove_3}':"", manager.items)
+    item_to_remove_4 = ""orange""
+    manager.remove_item(item_to_remove_4)
+    print(f""After removing '{item_to_remove_4}':"", manager.items)",True,2,9380,150_12_2.py
+150,12,Remove a specific item list,"Develop a class named 'ItemListManager' with a method 'remove_item(self, item_to_remove)' that manages a list of strings and removes the first occurrence of the specified string. The implementation must follow object-oriented best practices.","class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item):
+        self.items.append(item)
+    def remove_item(self, item_to_remove):
+        try:
+            index = self.items.index(item_to_remove)
+            self.items.pop(index)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemListManager()
+    manager.add_item(""apple"")
+    manager.add_item(""banana"")
+    manager.add_item(""apple"")
+    manager.add_item(""cherry"")
+    print(""Initial list:"", manager.items)
+    manager.remove_item(""apple"")
+    print(""After removing first 'apple':"", manager.items)
+    manager.remove_item(""grape"")
+    print(""After attempting to remove 'grape':"", manager.items)
+    manager.remove_item(""banana"")
+    print(""After removing 'banana':"", manager.items)",True,3,9381,150_12_3.py
+150,13,Remove a specific item list,"Write a complete, well-documented Python program that takes an initial list of integers and a target integer, and removes all instances of the target integer from the list in-place. Use an efficient algorithm.","def remove_target_in_place(data, target):
+    i = 0
+    while i < len(data):
+        if data[i] == target:
+            data.pop(i)
+        else:
+            i += 1
+    return data
+if __name__ == '__main__':
+    initial_list = [1, 5, 2, 5, 8, 5, 3]
+    target_integer = 5
+    result_list = remove_target_in_place(initial_list, target_integer)
+    print(result_list)",True,0,9382,150_13.py
+150,13,Remove a specific item list,"Write a complete, well-documented Python program that takes an initial list of integers and a target integer, and removes all instances of the target integer from the list in-place. Use an efficient algorithm.","def remove_target_in_place(data, target):
+    i = 0
+    while i < len(data):
+        if data[i] == target:
+            data.pop(i)
+        else:
+            i += 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 2, 5, 2, 6]
+    target_value = 2
+    print(""Original list:"", my_list)
+    remove_target_in_place(my_list, target_value)
+    print(""List after removal:"", my_list)",True,1,9383,150_13_1.py
+150,13,Remove a specific item list,"Write a complete, well-documented Python program that takes an initial list of integers and a target integer, and removes all instances of the target integer from the list in-place. Use an efficient algorithm.","def remove_target_in_place(data, target):
+    i = 0
+    while i < len(data):
+        if data[i] == target:
+            data.pop(i)
+        else:
+            i += 1
+    return data
+if __name__ == '__main__':
+    initial_list = [1, 2, 3, 4, 2, 5, 2, 6]
+    target_integer = 2
+    print(""Initial list:"", initial_list)
+    modified_list = remove_target_in_place(initial_list, target_integer)
+    print(""List after removal:"", modified_list)",True,2,9384,150_13_2.py
+150,13,Remove a specific item list,"Write a complete, well-documented Python program that takes an initial list of integers and a target integer, and removes all instances of the target integer from the list in-place. Use an efficient algorithm.","def remove_target_in_place(data, target):
+    i = 0
+    while i < len(data):
+        if data[i] == target:
+            data.pop(i)
+        else:
+            i += 1
+    return data
+if __name__ == '__main__':
+    initial_list = [1, 2, 3, 4, 2, 5, 2, 6]
+    target_integer = 2
+    print(""Initial list:"", initial_list)
+    modified_list = remove_target_in_place(initial_list, target_integer)
+    print(""List after removing instances of"", target_integer, "":"", modified_list)",True,3,9385,150_13_3.py
+150,13,Remove a specific item list,"Write a complete, well-documented Python program that takes an initial list of integers and a target integer, and removes all instances of the target integer from the list in-place. Use an efficient algorithm.","def remove_target_in_place(data, target):
+    i = 0
+    while i < len(data):
+        if data[i] == target:
+            data.pop(i)
+        else:
+            i += 1
+    return data
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 2, 5, 2, 6]
+    target_value = 2
+    print(""Original list:"", my_list)
+    result_list = remove_target_in_place(my_list, target_value)
+    print(""List after removal:"", result_list)",True,4,9386,150_13_4.py
+149,5,Reverse the order of a list,Create a generator function that yields the elements of an input iterable in reverse order. Optimize this for memory efficiency.,,False,0,9387,149_5.py
+150,14,Remove a specific item list,"Generate an efficient Python function that takes a mutable list and an item, and removes the item from the list. The function should handle edge cases where the item might not exist and return a boolean indicating success.","def remove_item(data_list, item_to_remove):
+    try:
+        data_list.remove(item_to_remove)
+        return True
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    item1 = 3
+    success1 = remove_item(list1, item1)
+    print(f""List: {list1}, Item: {item1}, Success: {success1}"")
+    list2 = [10, 20, 30]
+    item2 = 99
+    success2 = remove_item(list2, item2)
+    print(f""List: {list2}, Item: {item2}, Success: {success2}"")
+    list3 = ['a', 'b', 'c']
+    item3 = 'd'
+    success3 = remove_item(list3, item3)
+    print(f""List: {list3}, Item: {item3}, Success: {success3}"")
+    list4 = [5]
+    item4 = 5
+    success4 = remove_item(list4, item4)
+    print(f""List: {list4}, Item: {item4}, Success: {success4}"")",True,0,9388,150_14.py
+150,14,Remove a specific item list,"Generate an efficient Python function that takes a mutable list and an item, and removes the item from the list. The function should handle edge cases where the item might not exist and return a boolean indicating success.","def remove_item(data_list, item):
+    try:
+        data_list.remove(item)
+        return True
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    item1 = 3
+    success1 = remove_item(list1, item1)
+    print(f""List: {list1}, Item: {item1}, Success: {success1}"")
+    list2 = [10, 20, 30]
+    item2 = 99
+    success2 = remove_item(list2, item2)
+    print(f""List: {list2}, Item: {item2}, Success: {success2}"")
+    list3 = ['a', 'b', 'c']
+    item3 = 'd'
+    success3 = remove_item(list3, item3)
+    print(f""List: {list3}, Item: {item3}, Success: {success3}"")
+    list4 = [5, 5, 5]
+    item4 = 5
+    success4 = remove_item(list4, item4)
+    print(f""List: {list4}, Item: {item4}, Success: {success4}"")",True,1,9389,150_14_1.py
+150,14,Remove a specific item list,"Generate an efficient Python function that takes a mutable list and an item, and removes the item from the list. The function should handle edge cases where the item might not exist and return a boolean indicating success.","def remove_item(data, item):
+    try:
+        data.remove(item)
+        return True
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    item1 = 3
+    success1 = remove_item(list1, item1)
+    print(f""List: {list1}, Item: {item1}, Success: {success1}"")
+    list2 = [10, 20, 30]
+    item2 = 99
+    success2 = remove_item(list2, item2)
+    print(f""List: {list2}, Item: {item2}, Success: {success2}"")
+    list3 = ['a', 'b', 'c']
+    item3 = 'd'
+    success3 = remove_item(list3, item3)
+    print(f""List: {list3}, Item: {item3}, Success: {success3}"")
+    list4 = [5, 5, 5]
+    item4 = 5
+    success4 = remove_item(list4, item4)
+    print(f""List: {list4}, Item: {item4}, Success: {success4}"")",True,2,9390,150_14_2.py
+150,14,Remove a specific item list,"Generate an efficient Python function that takes a mutable list and an item, and removes the item from the list. The function should handle edge cases where the item might not exist and return a boolean indicating success.","def remove_item(data_list, item_to_remove):
+    try:
+        data_list.remove(item_to_remove)
+        return True
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    item1 = 3
+    success1 = remove_item(list1, item1)
+    print(f""List: {list1}, Item to remove: {item1}, Success: {success1}"")
+    list2 = [10, 20, 30]
+    item2 = 99
+    success2 = remove_item(list2, item2)
+    print(f""List: {list2}, Item to remove: {item2}, Success: {success2}"")
+    list3 = ['a', 'b', 'c']
+    item3 = 'd'
+    success3 = remove_item(list3, item3)
+    print(f""List: {list3}, Item to remove: {item3}, Success: {success3}"")
+    list4 = [5]
+    item4 = 5
+    success4 = remove_item(list4, item4)
+    print(f""List: {list4}, Item to remove: {item4}, Success: {success4}"")",True,3,9391,150_14_3.py
+150,14,Remove a specific item list,"Generate an efficient Python function that takes a mutable list and an item, and removes the item from the list. The function should handle edge cases where the item might not exist and return a boolean indicating success.","def remove_item(data, item):
+    try:
+        data.remove(item)
+        return True
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    item1 = 3
+    success1 = remove_item(list1, item1)
+    print(f""List: {list1}, Item: {item1}, Success: {success1}"")
+    list2 = [10, 20, 30]
+    item2 = 50
+    success2 = remove_item(list2, item2)
+    print(f""List: {list2}, Item: {item2}, Success: {success2}"")
+    list3 = ['a', 'b', 'c']
+    item3 = 'd'
+    success3 = remove_item(list3, item3)
+    print(f""List: {list3}, Item: {item3}, Success: {success3}"")
+    list4 = [1, 1, 2]
+    item4 = 1
+    success4 = remove_item(list4, item4)
+    print(f""List: {list4}, Item: {item4}, Success: {success4}"")",True,4,9392,150_14_4.py
+151,0,Combine two lists easily,"Write a robust Python function named 'combine_lists' that takes two lists as input and returns a new list containing all elements from both, ensuring no duplicates are present if the input lists have overlapping elements.","def combine_lists(list1, list2):
+    combined = set(list1)
+    combined.update(list2)
+    return list(combined)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = combine_lists(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Combined List (no duplicates): {result1}"")
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['cherry', 'date', 'elderberry']
+    result2 = combine_lists(list_c, list_d)
+    print(f""List C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Combined List (no duplicates): {result2}"")",True,0,9393,151_0.py
+151,0,Combine two lists easily,"Write a robust Python function named 'combine_lists' that takes two lists as input and returns a new list containing all elements from both, ensuring no duplicates are present if the input lists have overlapping elements.","def combine_lists(list1, list2):
+    combined = set(list1)
+    combined.update(list2)
+    return list(combined)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = combine_lists(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Combined List (no duplicates): {result1}"")
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['cherry', 'date', 'elderberry']
+    result2 = combine_lists(list_c, list_d)
+    print(f""\nList C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Combined List (no duplicates): {result2}"")",True,1,9394,151_0_1.py
+151,0,Combine two lists easily,"Write a robust Python function named 'combine_lists' that takes two lists as input and returns a new list containing all elements from both, ensuring no duplicates are present if the input lists have overlapping elements.","def combine_lists(list1, list2):
+    combined = set(list1)
+    combined.update(list2)
+    return list(combined)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = combine_lists(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Combined List (no duplicates): {result1}"")
+    list_c = [10, 20, 30]
+    list_d = [30, 40, 50]
+    result2 = combine_lists(list_c, list_d)
+    print(f""List C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Combined List (no duplicates): {result2}"")",True,2,9395,151_0_2.py
+151,0,Combine two lists easily,"Write a robust Python function named 'combine_lists' that takes two lists as input and returns a new list containing all elements from both, ensuring no duplicates are present if the input lists have overlapping elements.","def combine_lists(list1, list2):
+    combined_set = set(list1)
+    combined_set.update(list2)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = combine_lists(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Combined List (no duplicates): {result1}"")
+    list_c = [10, 20, 30]
+    list_d = [30, 40, 50]
+    result2 = combine_lists(list_c, list_d)
+    print(f""List C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Combined List (no duplicates): {result2}"")",True,3,9396,151_0_3.py
+151,1,Combine two lists easily,"Implement an optimized function using set operations to combine two lists, 'list_a' and 'list_b', returning a single list that contains the union of elements from both, prioritizing time efficiency.","def combine_lists(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    union_set = set_a.union(set_b)
+    return list(union_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 8]
+    result = combine_lists(list_a, list_b)
+    print(result)",True,0,9397,151_1.py
+151,1,Combine two lists easily,"Implement an optimized function using set operations to combine two lists, 'list_a' and 'list_b', returning a single list that contains the union of elements from both, prioritizing time efficiency.","def union_of_lists(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    union_set = set_a.union(set_b)
+    return list(union_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 1]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = union_of_lists(list_a, list_b)
+    print(result)",True,1,9398,151_1_1.py
+151,1,Combine two lists easily,"Implement an optimized function using set operations to combine two lists, 'list_a' and 'list_b', returning a single list that contains the union of elements from both, prioritizing time efficiency.","def union_optimized(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    union_set = set_a.union(set_b)
+    return list(union_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 8]
+    result = union_optimized(list_a, list_b)
+    print(result)",True,2,9399,151_1_2.py
+151,1,Combine two lists easily,"Implement an optimized function using set operations to combine two lists, 'list_a' and 'list_b', returning a single list that contains the union of elements from both, prioritizing time efficiency.","def union_of_lists(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    union_set = set_a.union(set_b)
+    return list(union_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 8]
+    result = union_of_lists(list_a, list_b)
+    print(result)",True,3,9400,151_1_3.py
+151,1,Combine two lists easily,"Implement an optimized function using set operations to combine two lists, 'list_a' and 'list_b', returning a single list that contains the union of elements from both, prioritizing time efficiency.","def combine_lists_optimized(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    union_set = set_a.union(set_b)
+    return list(union_set)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 2]
+    list_b_sample = [4, 5, 6, 7, 8, 1]
+    result = combine_lists_optimized(list_a_sample, list_b_sample)
+    print(result)",True,4,9401,151_1_4.py
+151,1,Combine two lists easily,"Implement an optimized function using set operations to combine two lists, 'list_a' and 'list_b', returning a single list that contains the union of elements from both, prioritizing time efficiency.","def union_optimized(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    union_set = set_a.union(set_b)
+    return list(union_set)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 1]
+    list_b_sample = [4, 5, 6, 7, 8, 4]
+    result = union_optimized(list_a_sample, list_b_sample)
+    print(result)",True,5,9402,151_1_5.py
+151,3,Combine two lists easily,"Develop a function that combines two lists, 'list_x' and 'list_y', ensuring the resulting list maintains the order of elements from 'list_x' followed by 'list_y'. Use list concatenation.","def combine_lists(list_x, list_y):
+    return list_x + list_y
+if __name__ == '__main__':
+    list_x = [1, 2, 3]
+    list_y = [4, 5, 6]
+    result = combine_lists(list_x, list_y)
+    print(result)",True,0,9403,151_3.py
+151,3,Combine two lists easily,"Develop a function that combines two lists, 'list_x' and 'list_y', ensuring the resulting list maintains the order of elements from 'list_x' followed by 'list_y'. Use list concatenation.","def combine_lists(list_x, list_y):
+    return list_x + list_y
+if __name__ == '__main__':
+    list_x = [1, 2, 3]
+    list_y = ['a', 'b', 'c']
+    result = combine_lists(list_x, list_y)
+    print(result)",True,1,9404,151_3_1.py
+151,4,Combine two lists easily,"Write a class method within a 'ListCombiner' class that has a method 'merge(self, list1, list2)' which combines the two input lists into a single list, handling potential type errors gracefully.","class ListCombiner:
+    def merge(self, list1, list2):
+        try:
+            if not isinstance(list1, list) or not isinstance(list2, list):
+                raise TypeError(""Both inputs must be lists."")
+            return list1 + list2
+        except TypeError as e:
+            return [f""Error: {e}""]
+if __name__ == '__main__':
+    combiner = ListCombiner()
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    list_c = ""not a list""
+    list_d = [7, 8]
+    result1 = combiner.merge(list_a, list_b)
+    print(f""Merge of {list_a} and {list_b}: {result1}"")
+    result2 = combiner.merge(list_a, list_c)
+    print(f""Merge of {list_a} and {list_c}: {result2}"")
+    result3 = combiner.merge(list_d, list_b)
+    print(f""Merge of {list_d} and {list_b}: {result3}"")
+    result4 = combiner.merge(list_c, list_d)
+    print(f""Merge of {list_c} and {list_d}: {result4}"")",True,0,9405,151_4.py
+151,4,Combine two lists easily,"Write a class method within a 'ListCombiner' class that has a method 'merge(self, list1, list2)' which combines the two input lists into a single list, handling potential type errors gracefully.","class ListCombiner:
+    def merge(self, list1, list2):
+        try:
+            if not isinstance(list1, list) or not isinstance(list2, list):
+                raise TypeError(""Both inputs must be lists."")
+            return list1 + list2
+        except TypeError as e:
+            return [f""Error: {e}""]
+if __name__ == '__main__':
+    combiner = ListCombiner()
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    list_c = ""not a list""
+    list_d = [7, 8]
+    result1 = combiner.merge(list_a, list_b)
+    print(f""Merge of {list_a} and {list_b}: {result1}"")
+    result2 = combiner.merge(list_a, list_c)
+    print(f""Merge of {list_a} and {list_c}: {result2}"")
+    result3 = combiner.merge(list_d, [9, 10])
+    print(f""Merge of {list_d} and [9, 10]: {result3}"")
+    result4 = combiner.merge(10, list_b)
+    print(f""Merge of 10 and {list_b}: {result4}"")",True,1,9406,151_4_1.py
+151,4,Combine two lists easily,"Write a class method within a 'ListCombiner' class that has a method 'merge(self, list1, list2)' which combines the two input lists into a single list, handling potential type errors gracefully.","class ListCombiner:
+    def merge(self, list1, list2):
+        try:
+            if not isinstance(list1, list) or not isinstance(list2, list):
+                raise TypeError(""Both inputs must be lists."")
+            return list1 + list2
+        except TypeError as e:
+            return [f""Error: {e}""]
+if __name__ == '__main__':
+    combiner = ListCombiner()
+    list_a = [1, 2, 3]
+    list_b = ['a', 'b', 'c']
+    list_c = ""not a list""
+    list_d = [4, 5]
+    result1 = combiner.merge(list_a, list_b)
+    print(f""Merge of {list_a} and {list_b}: {result1}"")
+    result2 = combiner.merge(list_a, list_c)
+    print(f""Merge of {list_a} and {list_c}: {result2}"")
+    result3 = combiner.merge(list_d, list_a)
+    print(f""Merge of {list_d} and {list_a}: {result3}"")
+    result4 = combiner.merge(list_c, list_d)
+    print(f""Merge of {list_c} and {list_d}: {result4}"")",True,2,9407,151_4_2.py
+151,4,Combine two lists easily,"Write a class method within a 'ListCombiner' class that has a method 'merge(self, list1, list2)' which combines the two input lists into a single list, handling potential type errors gracefully.","class ListCombiner:
+    def merge(self, list1, list2):
+        try:
+            combined_list = list1 + list2
+            return combined_list
+        except TypeError:
+            return ""Error: One or both inputs are not list-like.""
+if __name__ == '__main__':
+    combiner = ListCombiner()
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    list_c = ""not a list""
+    list_d = [7, 8]
+    result1 = combiner.merge(list_a, list_b)
+    print(f""Merge of {list_a} and {list_b}: {result1}"")
+    result2 = combiner.merge(list_a, list_c)
+    print(f""Merge of {list_a} and {list_c}: {result2}"")
+    result3 = combiner.merge(list_d, list_a)
+    print(f""Merge of {list_d} and {list_a}: {result3}"")",True,3,9408,151_4_3.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(large_list_a, large_list_b):
+    it_a = iter(large_list_a)
+    it_b = iter(large_list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    result_list = []
+    for item in combined_generator:
+        result_list.append(item)
+    print(f""First 10 elements of the combined sequence:"")
+    for i in range(10):
+        print(result_list[i])
+    print(f""\nTotal elements combined: {len(result_list)}"")",True,0,9409,151_5.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(large_list_a, large_list_b):
+    it_a = iter(large_list_a)
+    it_b = iter(large_list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    print(""First 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))
+    print(""\nNext 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))",True,1,9410,151_5_1.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(large_list_a, large_list_b):
+    it_a = iter(large_list_a)
+    it_b = iter(large_list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    result_list = []
+    for item in combined_generator:
+        result_list.append(item)
+    print(f""First 10 elements of the combined sequence:"")
+    for i in range(10):
+        print(result_list[i])
+    print(f""\nLast 10 elements of the combined sequence:"")
+    for i in range(999990, 1000000 + 9):
+        print(result_list[i])",True,2,9411,151_5_2.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(large_list_a, large_list_b):
+    it_a = iter(large_list_a)
+    it_b = iter(large_list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    print(""First 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))
+    print(""\nNext 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))
+    print(""\nLast 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))",True,3,9412,151_5_3.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(list_a, list_b):
+    it_a = iter(list_a)
+    it_b = iter(list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    result_list = []
+    for item in combined_generator:
+        result_list.append(item)
+    print(f""First 10 elements of the combined sequence:"")
+    for i in range(10):
+        try:
+            print(combined_generator.__next__())
+        except StopIteration:
+            break
+    print(""\nFirst 10 elements stored in result_list:"")
+    print(result_list[:10])",True,4,9413,151_5_4.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(large_list_a, large_list_b):
+    for item in large_list_a:
+        yield item
+    for item in large_list_b:
+        yield item
+if __name__ == '__main__':
+    list_a = list(range(1000000))
+    list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(list_a, list_b)
+    print(""First 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))
+    print(""\nNext 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))
+    print(""\nLast 10 elements:"")
+    for i in range(10):
+        print(next(combined_generator))",True,5,9414,151_5_5.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(list_a, list_b):
+    it_a = iter(list_a)
+    it_b = iter(list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    result_list = []
+    for item in combined_generator:
+        result_list.append(item)
+    print(f""First 10 elements of the combined sequence:"")
+    for i in range(10):
+        try:
+            print(combined_generator.__next__())
+        except StopIteration:
+            break
+    print(f""\nTotal elements collected: {len(result_list)}"")",True,6,9415,151_5_6.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(list_a, list_b):
+    it_a = iter(list_a)
+    it_b = iter(list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(1000000, 2000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    result_list = []
+    for item in combined_generator:
+        result_list.append(item)
+    print(f""First 10 elements of the combined sequence:"")
+    for i in range(10):
+        try:
+            print(combined_generator.__next__())
+        except StopIteration:
+            break
+    print(""\nFirst 10 elements collected:"")
+    print(result_list[:10])",True,7,9416,151_5_7.py
+151,5,Combine two lists easily,"Implement a generator function to efficiently combine two potentially very large lists, 'large_list_a' and 'large_list_b', yielding elements sequentially without loading the entire result into memory at once.","def combine_lists(list_a, list_b):
+    it_a = iter(list_a)
+    it_b = iter(list_b)
+    while True:
+        try:
+            item_a = next(it_a)
+            yield item_a
+        except StopIteration:
+            try:
+                item_b = next(it_b)
+                yield item_b
+            except StopIteration:
+                break
+if __name__ == '__main__':
+    large_list_a = list(range(1000000))
+    large_list_b = list(range(2000000, 3000000))
+    combined_generator = combine_lists(large_list_a, large_list_b)
+    result_list = []
+    for item in combined_generator:
+        result_list.append(item)
+    print(f""First 10 elements of the combined sequence:"")
+    for i in range(10):
+        try:
+            print(combined_generator.__next__())
+        except StopIteration:
+            break
+    print(""\nFirst 10 elements collected:"")
+    print(result_list[:10])",True,8,9417,151_5_8.py
+151,2,Combine two lists easily,"Write a concise and Pythonic one-liner expression to combine two lists, 'list1' and 'list2', using the unpacking operator or the `+` operator, and explain the time complexity.","list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+combined_list = [x for lst in [list1, list2] for x in lst]
+if __name__ == '__main__':
+    print(combined_list)",True,0,9418,151_2.py
