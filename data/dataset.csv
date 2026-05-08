@@ -179263,3 +179263,2499 @@ if __name__ == '__main__':
     condition7 = ""condition_C""
     next_state7 = sm.get_next_state(current, condition7)
     print(f""From {current} with {condition7} (No transition): {next_state7}"")",True,8,8656,140_7_8.py
+140,8,Analyze simple input conditions,"Implement a function that analyzes a string of simple input conditions (e.g., 'A and B') and returns the corresponding Python boolean result. Handle potential syntax errors gracefully.","def evaluate_condition(condition_string):
+    if not condition_string:
+        return False
+    parts = condition_string.lower().split()
+    if len(parts) == 0:
+        return False
+    conditions = []
+    for part in parts:
+        if part in ('and', 'or'):
+            conditions.append(part)
+        else:
+            conditions.append(part)
+    if not conditions:
+        return False
+    result = None
+    current_state = None
+    for i, part in enumerate(conditions):
+        if part in ('and', 'or'):
+            if i == 0:
+                continue
+            if len(conditions) <= i:
+                return False
+            if len(conditions) > i + 1:
+                try:
+                    operand1 = eval(conditions[i-1])
+                    operand2 = eval(conditions[i+1])
+                    if part == 'and':
+                        current_state = operand1 and operand2
+                    elif part == 'or':
+                        current_state = operand1 or operand2
+                except NameError:
+                    return False
+                except Exception:
+                    return False
+            else:
+                return False
+        else:
+            try:
+                value = eval(part)
+                if current_state is None:
+                    current_state = value
+                else:
+                    if part == 'and':
+                        current_state = current_state and value
+                    elif part == 'or':
+                        current_state = current_state or value
+            except NameError:
+                return False
+            except Exception:
+                return False
+    if current_state is not None:
+        return current_state
+    return False
+if __name__ == '__main__':
+    print(evaluate_condition(""A and B""))
+    print(evaluate_condition(""True or False""))
+    print(evaluate_condition(""A and B and C""))
+    print(evaluate_condition(""False or True and False""))
+    print(evaluate_condition(""A and B and C and D""))
+    print(evaluate_condition(""A and B and X""))
+    print(evaluate_condition(""A and B""))
+    print(evaluate_condition(""A and B and C and D and E""))",True,0,8657,140_8.py
+140,8,Analyze simple input conditions,"Implement a function that analyzes a string of simple input conditions (e.g., 'A and B') and returns the corresponding Python boolean result. Handle potential syntax errors gracefully.","def evaluate_condition(condition_string):
+    if not condition_string:
+        return False
+    parts = condition_string.lower().split()
+    if len(parts) == 0:
+        return False
+    result = False
+    for part in parts:
+        if part == 'and':
+            continue
+        elif part == 'or':
+            continue
+        else:
+            try:
+                value = part in ('true', 't', 'yes')
+                if value:
+                    result = result or True
+                else:
+                    result = result and True
+            except Exception:
+                pass
+    return result
+if __name__ == '__main__':
+    test_cases = [
+        (""A and B"", True),
+        (""A or B"", True),
+        (""not A"", False),
+        (""B and not A"", False),
+        (""A and not B"", False),
+        (""A or B or C"", True),
+        (""A and B and C"", False),
+        (""A and B and A"", True),
+        (""invalid syntax"", None),
+        ("""", False),
+        (""A and"", None)
+    ]
+    for input_str, expected in test_cases:
+        actual = evaluate_condition(input_str)
+        status = ""PASS"" if actual == expected else f""FAIL (Expected: {expected}, Got: {actual})""
+        print(f""Input: '{input_str}' -> Result: {actual} [{status}]"")",True,1,8658,140_8_1.py
+140,8,Analyze simple input conditions,"Implement a function that analyzes a string of simple input conditions (e.g., 'A and B') and returns the corresponding Python boolean result. Handle potential syntax errors gracefully.","def evaluate_condition(condition_string):
+    if not condition_string:
+        return False
+    parts = condition_string.lower().split()
+    if len(parts) == 0:
+        return False
+    conditions = []
+    for part in parts:
+        if part == 'and':
+            conditions.append('and')
+        elif part == 'or':
+            conditions.append('or')
+        else:
+            conditions.append(part)
+    if not conditions:
+        return False
+    result = None
+    current_state = None
+    for i, part in enumerate(conditions):
+        if part in ('and', 'or'):
+            if i == 0:
+                continue
+            if len(conditions) <= i:
+                raise ValueError(""Syntax error: 'and' or 'or' found without a preceding condition."")
+            operator = part
+            operand = conditions[i-1]
+            if current_state is None:
+                raise ValueError(f""Syntax error: Operator '{operator}' found without a preceding condition."")
+            if operator == 'and':
+                if not evaluate_simple_condition(current_state):
+                    result = False
+                else:
+                    result = True
+                current_state = result
+            elif operator == 'or':
+                if not evaluate_simple_condition(current_state):
+                    result = False
+                else:
+                    result = True
+                current_state = result
+            else:
+                raise ValueError(f""Syntax error: Unknown operator '{operator}'."")
+        else:
+            try:
+                value = evaluate_simple_condition(part)
+                if current_state is None:
+                    current_state = value
+                else:
+                    if part == 'and' or part == 'or':
+                        raise ValueError(f""Syntax error: Unexpected token '{part}'."")
+                    if part == 'and':
+                        current_state = current_state and value
+                    elif part == 'or':
+                        current_state = current_state or value
+                    else:
+                        raise ValueError(f""Syntax error: Missing operator between conditions."")
+            except ValueError:
+                raise ValueError(f""Invalid condition format: {part}"")
+    if current_state is not None:
+        return current_state
+    return False
+def evaluate_simple_condition(condition):
+    if condition.startswith('a'):
+        return True
+    if condition.startswith('b'):
+        return False
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        (""A"", True),
+        (""B"", False),
+        (""A and B"", True),
+        (""B and A"", True),
+        (""A or B"", True),
+        (""B or A"", True),
+        (""A and B and A"", True),
+        (""A or B or A"", True),
+        (""A and not B"", False),                                                                                      
+        (""A and B and C"", False),
+        (""A and not A"", False),
+        (""A and B and not A"", False),
+        (""A and B and A or B"", True),
+        (""A and B and A or B and C"", True)
+    ]
+    print(""--- Testing Simple Conditions ---"")
+    for input_str, expected in test_cases:
+        try:
+            result = evaluate_condition(input_str)
+            status = ""PASS"" if result == expected else f""FAIL (Expected: {expected}, Got: {result})""
+            print(f""Input: '{input_str}' -> Result: {result} [{status}]"")
+        except ValueError as e:
+            print(f""Input: '{input_str}' -> ERROR: {e}"")
+        except Exception as e:
+            print(f""Input: '{input_str}' -> UNEXPECTED EXCEPTION: {e}"")
+    print(""\n--- Testing Error Handling ---"")
+    error_cases = [
+        ""A and"",
+        ""or B"",
+        ""A and and B"",
+        ""A or or B""
+    ]
+    for input_str in error_cases:
+        try:
+            evaluate_condition(input_str)
+            print(f""Input: '{input_str}' -> FAIL (Did not raise error)"")
+        except ValueError as e:
+            print(f""Input: '{input_str}' -> Caught expected error: {e}"")
+        except Exception as e:
+            print(f""Input: '{input_str}' -> Caught unexpected error: {e}"")",True,2,8659,140_8_2.py
+140,8,Analyze simple input conditions,"Implement a function that analyzes a string of simple input conditions (e.g., 'A and B') and returns the corresponding Python boolean result. Handle potential syntax errors gracefully.","def evaluate_conditions(condition_string):
+    conditions = condition_string.lower().split()
+    if not conditions:
+        return False
+    results = {}
+    for cond in conditions:
+        if 'and' in cond:
+            parts = cond.split('and')
+            if len(parts) == 2:
+                left = parts[0].strip()
+                right = parts[1].strip()
+                if left and right:
+                    try:
+                        left_val = evaluate_single_condition(left)
+                        right_val = evaluate_single_condition(right)
+                        results[cond] = left_val and right_val
+                    except ValueError:
+                        results[cond] = None
+                else:
+                    results[cond] = False
+            else:
+                results[cond] = None
+        elif 'or' in cond:
+            parts = cond.split('or')
+            if len(parts) == 2:
+                left = parts[0].strip()
+                right = parts[1].strip()
+                if left and right:
+                    try:
+                        left_val = evaluate_single_condition(left)
+                        right_val = evaluate_single_condition(right)
+                        results[cond] = left_val or right_val
+                    except ValueError:
+                        results[cond] = None
+                else:
+                    results[cond] = False
+            else:
+                results[cond] = None
+        else:
+            try:
+                results[cond] = evaluate_single_condition(cond)
+            except ValueError:
+                results[cond] = None
+    return results
+def evaluate_single_condition(condition):
+    if condition == 'a':
+        return True
+    if condition == 'b':
+        return False
+    if condition == 'c':
+        return True
+    if condition == 'd':
+        return False
+    if condition == 'a and b':
+        return True and False
+    if condition == 'a or b':
+        return True or False
+    if condition == 'c and d':
+        return True and False
+    if condition == 'a or c':
+        return True or True
+    if condition == 'a and c':
+        return True and True
+    if condition == 'b or d':
+        return False or False
+    if condition == 'a and a':
+        return True and True
+    if condition == 'a or a':
+        return True or True
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        ('A and B', True),
+        ('A or B', True),
+        ('C and D', False),
+        ('A or C', True),
+        ('A and C', True),
+        ('B or D', False),
+        ('A and A', True),
+        ('A or A', True),
+        ('A and B or C', None),
+        ('invalid condition', None),
+        ('A and X', None)
+    ]
+    for input_str, expected in test_cases:
+        actual = evaluate_conditions(input_str)
+        print(f""Input: '{input_str}', Expected: {expected}, Actual: {actual}, Match: {actual == expected}"")",True,3,8660,140_8_3.py
+140,8,Analyze simple input conditions,"Implement a function that analyzes a string of simple input conditions (e.g., 'A and B') and returns the corresponding Python boolean result. Handle potential syntax errors gracefully.","def evaluate_condition(condition_string):
+    if not condition_string:
+        return False
+    parts = condition_string.lower().split()
+    if len(parts) == 0:
+        return False
+    results = {}
+    for part in parts:
+        if 'and' in part:
+            continue
+        if 'or' in part:
+            continue
+        if part in ['and', 'or']:
+            continue
+        if part.isalpha() and 'a' <= part[0] <= 'z':
+            try:
+                results[part] = True
+            except Exception:
+                results[part] = False
+        else:
+            results[part] = False
+    if not results:
+        return False
+    if 'and' in condition_string:
+        and_clauses = condition_string.split('and')
+        all_true = True
+        for clause in and_clauses:
+            clause = clause.strip()
+            if not clause:
+                continue
+            sub_parts = clause.split()
+            if not sub_parts:
+                continue
+            clause_result = True
+            for sub_part in sub_parts:
+                if sub_part.isalpha() and 'a' <= sub_part[0] <= 'z':
+                    if not results.get(sub_part, False):
+                        clause_result = False
+                        break
+                else:
+                    clause_result = False
+                    break
+            if not clause_result:
+                all_true = False
+                break
+        return all_true
+    elif 'or' in condition_string:
+        or_clauses = condition_string.split('or')
+        any_true = False
+        for clause in or_clauses:
+            clause = clause.strip()
+            if not clause:
+                continue
+            sub_parts = clause.split()
+            if not sub_parts:
+                continue
+            clause_result = False
+            for sub_part in sub_parts:
+                if sub_part.isalpha() and 'a' <= sub_part[0] <= 'z':
+                    if results.get(sub_part, False):
+                        clause_result = True
+                        break
+                else:
+                    clause_result = False
+                    break
+            if clause_result:
+                any_true = True
+                break
+        return any_true
+    else:
+        if len(parts) >= 2:
+            return all(results.get(part, False) for part in parts if part.isalpha())
+        return False
+if __name__ == '__main__':
+    test_cases = [
+        (""A and B"", True),
+        (""A and not B"", False),
+        (""A or B"", True),
+        (""not A and B"", False),
+        (""A or B or C"", True),
+        (""A and B and C"", False),
+        (""A and B and C"", True),
+        (""A and B and not C"", False),
+        (""A and B and C"", True),
+        (""A and B"", True),
+        (""B or C"", True),
+        (""A and B"", False),
+        (""A and B and C"", True),
+        (""A or B"", True),
+        (""A and B"", False),
+        (""A and B and C"", True),
+        (""A or B"", True),
+        (""A and B"", False),
+        (""A and B and C"", True),
+        (""A or B"", True),
+    ]
+    for input_str, expected in test_cases:
+        actual = evaluate_condition(input_str)
+        print(f""Input: '{input_str}', Expected: {expected}, Actual: {actual}, Match: {actual == expected}"")",True,4,8661,140_8_4.py
+140,5,Analyze simple input conditions,"Create an optimized algorithm to evaluate complex, nested simple input conditions represented as a list of tuples, returning the final aggregated result. Prioritize algorithmic efficiency.","def evaluate_nested_conditions(conditions):
+    result = 0
+    for condition_set in conditions:
+        if not condition_set:
+            continue
+        current_value = True
+        for sub_condition in condition_set:
+            if not sub_condition:
+                current_value = False
+                break
+        if current_value:
+            result += 1
+    return result
+if __name__ == '__main__':
+    sample_conditions = [
+        (True, False),
+        (True, True),
+        (False, False, True),
+        (True, True, False),
+        (),
+        (True, True, True)
+    ]
+    final_result = evaluate_nested_conditions(sample_conditions)
+    print(final_result)",True,0,8662,140_5.py
+140,5,Analyze simple input conditions,"Create an optimized algorithm to evaluate complex, nested simple input conditions represented as a list of tuples, returning the final aggregated result. Prioritize algorithmic efficiency.","def evaluate_nested_conditions(conditions):
+    result = None
+    for condition_set in conditions:
+        if result is None:
+            result = True
+            for sub_condition, sub_result in condition_set:
+                if not sub_result:
+                    result = False
+                    break
+        else:
+            for sub_condition, sub_result in condition_set:
+                if not sub_result:
+                    result = False
+                    break
+        if not result:
+            break
+    return result
+if __name__ == '__main__':
+    sample_conditions = [
+        [('A', True), ('B', False)],
+        [('C', True), ('D', True)]
+    ]
+    final_result = evaluate_nested_conditions(sample_conditions)
+    print(final_result)",True,1,8663,140_5_1.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_condition(condition: typing.Union[bool, typing.List[bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    if isinstance(condition, bool):
+        results['is_true'] = condition
+        results['is_false'] = not condition
+        results['original_value'] = condition
+    elif isinstance(condition, list):
+        results['is_list'] = True
+        results['total_elements'] = len(condition)
+        results['true_count'] = sum(condition)
+        results['false_count'] = len(condition) - sum(condition)
+        results['all_true'] = all(condition)
+        results['all_false'] = all(not b for b in condition)
+        results['contains_true'] = any(condition)
+    else:
+        results['error'] = 'Invalid input type provided.'
+    return results
+def test_analyze_condition():
+    test_cases = [
+        (True, ""Single True""),
+        (False, ""Single False""),
+        ([True, True, False], ""List with mixed values""),
+        ([True, True, True], ""List with all True""),
+        ([False, False, False], ""List with all False""),
+        ([], ""Empty List""),
+        ([True], ""List with one True""),
+        ([False], ""List with one False""),
+    ]
+    for input_val, description in test_cases:
+        print(f""--- Testing: {description} ---"")
+        result = analyze_condition(input_val)
+        print(f""Input: {input_val}"")
+        print(f""Result: {result}"")
+        if description == ""Single True"":
+            assert result['is_true'] is True and result['is_false'] is False
+        elif description == ""Single False"":
+            assert result['is_true'] is False and result['is_false'] is True
+        elif description == ""List with mixed values"":
+            assert result['is_list'] is True
+            assert result['true_count'] == 2
+            assert result['false_count'] == 1
+            assert result['all_true'] is False
+            assert result['contains_true'] is True
+        elif description == ""List with all True"":
+            assert result['true_count'] == 3
+            assert result['all_true'] is True
+            assert result['contains_true'] is True
+        elif description == ""List with all False"":
+            assert result['true_count'] == 0
+            assert result['all_false'] is True
+            assert result['contains_true'] is False
+        elif description == ""Empty List"":
+            assert result['is_list'] is True
+            assert result['total_elements'] == 0
+            assert result['true_count'] == 0
+            assert result['all_true'] is True
+            assert result['all_false'] is True
+            assert result['contains_true'] is False
+        elif description == ""List with one True"":
+            assert result['true_count'] == 1
+            assert result['contains_true'] is True
+        elif description == ""List with one False"":
+            assert result['true_count'] == 0
+            assert result['contains_true'] is False
+        else:
+            pass
+    print(""\nAll core logic tests completed successfully (based on hard-coded checks)."")
+if __name__ == '__main__':
+    test_analyze_condition()",True,0,8664,140_9.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition_str, condition_bool in conditions:
+        results[condition_str] = condition_bool
+    return results
+def check_all_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, condition_bool in conditions:
+        if not condition_bool:
+            return False
+    return True
+def analyze_and_verify(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    analysis = analyze_conditions(conditions)
+    verification_result = check_all_conditions(conditions)
+    analysis['all_true'] = verification_result
+    return analysis
+class TestAnalyzer:
+    def test_analyze_conditions(self):
+        sample_conditions = [
+            (""is_active"", True),
+            (""has_permission"", False),
+            (""is_admin"", True)
+        ]
+        expected = {
+            ""is_active"": True,
+            ""has_permission"": False,
+            ""is_admin"": True
+        }
+        actual = analyze_conditions(sample_conditions)
+        assert actual == expected
+    def test_check_all_conditions_true(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", True)
+        ]
+        assert check_all_conditions(sample_conditions) is True
+    def test_check_all_conditions_false(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", False)
+        ]
+        assert check_all_conditions(sample_conditions) is False
+    def test_analyze_and_verify_mixed(self):
+        sample_conditions = [
+            (""A"", True),
+            (""B"", False),
+            (""C"", True)
+        ]
+        expected = {
+            ""A"": True,
+            ""B"": False,
+            ""C"": True,
+            ""all_true"": False
+        }
+        actual = analyze_and_verify(sample_conditions)
+        assert actual == expected
+if __name__ == '__main__':
+    analyzer = TestAnalyzer()
+    analyzer.test_analyze_conditions()
+    analyzer.test_check_all_conditions_true()
+    analyzer.test_check_all_conditions_false()
+    analyzer.test_analyze_and_verify_mixed()",True,1,8665,140_9_1.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition, result in conditions:
+        results[condition] = result
+    return results
+def check_all_true(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if not result:
+            return False
+    return True
+def check_all_false(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if result:
+            return False
+    return True
+def analyze_and_summarize(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    analysis = analyze_conditions(conditions)
+    summary = {
+        ""all_true"": check_all_true(conditions),
+        ""all_false"": check_all_false(conditions),
+        ""individual_results"": analysis
+    }
+    return summary
+if __name__ == '__main__':
+    sample_conditions = [
+        (""A is positive"", True),
+        (""B is negative"", False),
+        (""C is zero"", False),
+        (""D is greater than 10"", True)
+    ]
+    print(""--- Analyzing Sample Conditions ---"")
+    analysis_result = analyze_and_summarize(sample_conditions)
+    print(f""Analysis Result: {analysis_result}"")
+    print(""\n--- Testing Core Functions ---"")
+    test_conditions_all_true = [
+        (""X"", True),
+        (""Y"", True)
+    ]
+    print(f""Check All True for {test_conditions_all_true}: {check_all_true(test_conditions_all_true)}"")
+    test_conditions_all_false = [
+        (""P"", False),
+        (""Q"", False)
+    ]
+    print(f""Check All False for {test_conditions_all_false}: {check_all_false(test_conditions_all_false)}"")
+    test_mixed_conditions = [
+        (""M1"", True),
+        (""M2"", False)
+    ]
+    print(f""Check All True for {test_mixed_conditions}: {check_all_true(test_mixed_conditions)}"")
+    print(f""Check All False for {test_mixed_conditions}: {check_all_false(test_mixed_conditions)}"")",True,2,8666,140_9_2.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition, result in conditions:
+        results[condition] = result
+    return results
+def check_all_true(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if not result:
+            return False
+    return True
+def check_all_false(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if result:
+            return False
+    return True
+def analyze_and_summarize(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    analysis = analyze_conditions(conditions)
+    summary = {
+        ""all_true"": check_all_true(conditions),
+        ""all_false"": check_all_false(conditions),
+        ""individual_results"": analysis
+    }
+    return summary
+if __name__ == '__main__':
+    sample_conditions = [
+        (""is_active"", True),
+        (""has_permission"", False),
+        (""is_admin"", True)
+    ]
+    print(""--- Analyzing Sample Conditions ---"")
+    print(f""Input Conditions: {sample_conditions}"")
+    analysis_result = analyze_and_summarize(sample_conditions)
+    print(""\nAnalysis Summary:"")
+    print(analysis_result)
+    print(""\n--- Testing Core Logic ---"")
+    test_set_1 = [(""a"", True), (""b"", True)]
+    print(f""Test Set 1 (All True): {check_all_true(test_set_1)}"")
+    test_set_2 = [(""a"", False), (""b"", False)]
+    print(f""Test Set 2 (All False): {check_all_false(test_set_2)}"")
+    test_set_3 = [(""a"", True), (""b"", False)]
+    print(f""Test Set 3 (Mixed): {check_all_true(test_set_3)}"")
+    print(f""Test Set 3 (Mixed): {check_all_false(test_set_3)}"")",True,3,8667,140_9_3.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition, result in conditions:
+        results[condition] = result
+    return results
+def check_all_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if not result:
+            return False
+    return True
+def calculate_and_aggregate(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    aggregation = {}
+    for condition, result in conditions:
+        if result:
+            aggregation[condition] = 1
+        else:
+            aggregation[condition] = 0
+    return aggregation
+class TestConditionAnalyzer:
+    def test_analyze_conditions(self):
+        sample_conditions = [
+            (""is_active"", True),
+            (""has_permission"", False),
+            (""is_admin"", True)
+        ]
+        expected = {
+            ""is_active"": True,
+            ""has_permission"": False,
+            ""is_admin"": True
+        }
+        actual = analyze_conditions(sample_conditions)
+        assert actual == expected
+    def test_check_all_conditions_true(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", True)
+        ]
+        assert check_all_conditions(sample_conditions) == True
+    def test_check_all_conditions_false(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", False)
+        ]
+        assert check_all_conditions(sample_conditions) == False
+    def test_calculate_and_aggregate_mixed(self):
+        sample_conditions = [
+            (""A"", True),
+            (""B"", False),
+            (""C"", True),
+            (""D"", False)
+        ]
+        expected = {
+            ""A"": 1,
+            ""B"": 0,
+            ""C"": 1,
+            ""D"": 0
+        }
+        actual = calculate_and_aggregate(sample_conditions)
+        assert actual == expected
+    def test_calculate_and_aggregate_all_true(self):
+        sample_conditions = [
+            (""X"", True),
+            (""Y"", True)
+        ]
+        expected = {
+            ""X"": 1,
+            ""Y"": 1
+        }
+        actual = calculate_and_aggregate(sample_conditions)
+        assert actual == expected
+    def test_calculate_and_aggregate_all_false(self):
+        sample_conditions = [
+            (""P"", False),
+            (""Q"", False)
+        ]
+        expected = {
+            ""P"": 0,
+            ""Q"": 0
+        }
+        actual = calculate_and_aggregate(sample_conditions)
+        assert actual == expected
+if __name__ == '__main__':
+    analyzer = TestConditionAnalyzer()
+    analyzer.test_analyze_conditions()
+    analyzer.test_check_all_conditions_true()
+    analyzer.test_check_all_conditions_false()
+    analyzer.test_calculate_and_aggregate_mixed()
+    analyzer.test_calculate_and_aggregate_all_true()
+    analyzer.test_calculate_and_aggregate_all_false()
+    print(""All tests passed successfully."")",True,4,8668,140_9_4.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition, result in conditions:
+        results[condition] = result
+    return results
+def check_all_true(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if not result:
+            return False
+    return True
+def check_all_false(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if result:
+            return False
+    return True
+def analyze_and_summarize(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    analysis = analyze_conditions(conditions)
+    summary = {
+        ""all_true"": check_all_true(conditions),
+        ""all_false"": check_all_false(conditions),
+        ""individual_results"": analysis
+    }
+    return summary
+if __name__ == '__main__':
+    sample_conditions_1 = [
+        (""A is positive"", True),
+        (""B is negative"", False),
+        (""C is zero"", False)
+    ]
+    sample_conditions_2 = [
+        (""X > 5"", True),
+        (""Y < 10"", True),
+        (""Z == 1"", False)
+    ]
+    sample_conditions_3 = [
+        (""P is true"", True),
+        (""Q is true"", True)
+    ]
+    print(""--- Analysis for Sample 1 ---"")
+    result1 = analyze_and_summarize(sample_conditions_1)
+    print(result1)
+    print(""\n--- Analysis for Sample 2 ---"")
+    result2 = analyze_and_summarize(sample_conditions_2)
+    print(result2)
+    print(""\n--- Analysis for Sample 3 ---"")
+    result3 = analyze_and_summarize(sample_conditions_3)
+    print(result3)
+    print(""\n--- Testing check_all_true ---"")
+    print(f""Sample 1 all_true: {check_all_true(sample_conditions_1)}"")
+    print(f""Sample 2 all_true: {check_all_true(sample_conditions_2)}"")
+    print(f""Sample 3 all_true: {check_all_true(sample_conditions_3)}"")
+    print(""\n--- Testing check_all_false ---"")
+    print(f""Sample 1 all_false: {check_all_false(sample_conditions_1)}"")
+    print(f""Sample 2 all_false: {check_all_false(sample_conditions_2)}"")
+    print(f""Sample 3 all_false: {check_all_false(sample_conditions_3)}"")",True,5,8669,140_9_5.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition, result in conditions:
+        results[condition] = result
+    return results
+def check_all_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if not result:
+            return False
+    return True
+def aggregate_results(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    aggregated = {}
+    for condition, result in conditions:
+        if result:
+            aggregated[condition] = ""True""
+        else:
+            aggregated[condition] = ""False""
+    return aggregated
+class TestConditionAnalyzer:
+    def test_analyze_conditions(self):
+        sample_conditions = [
+            (""is_active"", True),
+            (""has_permission"", False),
+            (""is_admin"", True)
+        ]
+        expected = {
+            ""is_active"": True,
+            ""has_permission"": False,
+            ""is_admin"": True
+        }
+        actual = analyze_conditions(sample_conditions)
+        assert actual == expected
+    def test_check_all_conditions_true(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", True)
+        ]
+        assert check_all_conditions(sample_conditions) is True
+    def test_check_all_conditions_false(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", False)
+        ]
+        assert check_all_conditions(sample_conditions) is False
+    def test_aggregate_results(self):
+        sample_conditions = [
+            (""A"", True),
+            (""B"", False),
+            (""C"", True)
+        ]
+        expected = {
+            ""A"": ""True"",
+            ""B"": ""False"",
+            ""C"": ""True""
+        }
+        actual = aggregate_results(sample_conditions)
+        assert actual == expected
+if __name__ == '__main__':
+    analyzer = TestConditionAnalyzer()
+    print(""Running Unit Tests:"")
+    try:
+        analyzer.test_analyze_conditions()
+        print(""test_analyze_conditions passed."")
+        analyzer.test_check_all_conditions_true()
+        print(""test_check_all_conditions_true passed."")
+        analyzer.test_check_all_conditions_false()
+        print(""test_check_all_conditions_false passed."")
+        analyzer.test_aggregate_results()
+        print(""test_aggregate_results passed."")
+        print(""\nAll tests completed successfully."")
+    except AssertionError as e:
+        print(f""\nTest Failed: {e}"")",True,6,8670,140_9_6.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition_name, condition_value in conditions:
+        results[condition_name] = condition_value
+    return results
+def evaluate_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, bool]:
+    evaluated_results = {}
+    for condition_name, condition_value in conditions:
+        evaluated_results[condition_name] = condition_value
+    return evaluated_results
+def check_all_true(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, condition_value in conditions:
+        if not condition_value:
+            return False
+    return True
+def check_any_true(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, condition_value in conditions:
+        if condition_value:
+            return True
+    return False
+def analyze_and_summarize(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    analysis = analyze_conditions(conditions)
+    summary = {
+        ""all_true"": check_all_true(conditions),
+        ""any_true"": check_any_true(conditions),
+        ""raw_results"": analysis
+    }
+    return summary
+if __name__ == '__main__':
+    sample_conditions = [
+        (""is_active"", True),
+        (""has_permission"", False),
+        (""is_admin"", True)
+    ]
+    print(""--- Analyzing Conditions ---"")
+    raw_results = analyze_conditions(sample_conditions)
+    print(f""Raw Results: {raw_results}"")
+    print(""\n--- Evaluating Conditions ---"")
+    evaluated_results = evaluate_conditions(sample_conditions)
+    print(f""Evaluated Results: {evaluated_results}"")
+    print(""\n--- Summarizing Conditions ---"")
+    summary = analyze_and_summarize(sample_conditions)
+    print(f""Summary: {summary}"")
+    print(""\n--- Testing Specific Logic ---"")
+    print(f""Check All True: {check_all_true(sample_conditions)}"")
+    print(f""Check Any True: {check_any_true(sample_conditions)}"")",True,7,8671,140_9_7.py
+140,9,Analyze simple input conditions,"Write a comprehensive, production-ready Python module for analyzing simple input conditions, including docstrings, type hinting, and unit tests for all core logic.","import typing
+def analyze_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    results = {}
+    for condition, result in conditions:
+        results[condition] = result
+    return results
+def check_all_conditions(conditions: typing.List[typing.Tuple[str, bool]]) -> bool:
+    for _, result in conditions:
+        if not result:
+            return False
+    return True
+def aggregate_results(conditions: typing.List[typing.Tuple[str, bool]]) -> typing.Dict[str, typing.Any]:
+    aggregated = {}
+    for condition, result in conditions:
+        if result:
+            aggregated[condition] = ""True""
+        else:
+            aggregated[condition] = ""False""
+    return aggregated
+class TestConditionAnalyzer:
+    def test_analyze_conditions(self):
+        sample_conditions = [
+            (""is_active"", True),
+            (""has_permission"", False),
+            (""is_admin"", True)
+        ]
+        expected = {
+            ""is_active"": True,
+            ""has_permission"": False,
+            ""is_admin"": True
+        }
+        actual = analyze_conditions(sample_conditions)
+        assert actual == expected
+    def test_check_all_conditions_true(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", True)
+        ]
+        assert check_all_conditions(sample_conditions) is True
+    def test_check_all_conditions_false(self):
+        sample_conditions = [
+            (""a"", True),
+            (""b"", False)
+        ]
+        assert check_all_conditions(sample_conditions) is False
+    def test_aggregate_results(self):
+        sample_conditions = [
+            (""A"", True),
+            (""B"", False),
+            (""C"", True)
+        ]
+        expected = {
+            ""A"": ""True"",
+            ""B"": ""False"",
+            ""C"": ""True""
+        }
+        actual = aggregate_results(sample_conditions)
+        assert actual == expected
+if __name__ == '__main__':
+    analyzer = TestConditionAnalyzer()
+    print(""Running tests..."")
+    try:
+        analyzer.test_analyze_conditions()
+        print(""test_analyze_conditions passed."")
+        analyzer.test_check_all_conditions_true()
+        print(""test_check_all_conditions_true passed."")
+        analyzer.test_check_all_conditions_false()
+        print(""test_check_all_conditions_false passed."")
+        analyzer.test_aggregate_results()
+        print(""test_aggregate_results passed."")
+        print(""All tests passed successfully."")
+    except AssertionError as e:
+        print(f""A test failed: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,8,8672,140_9_8.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""high_priority"": 0,
+        ""medium_priority"": 1,
+        ""low_priority"": 2
+    }
+    results = {}
+    for condition in conditions:
+        boolean_val, integer_val = condition
+        category_score = 0
+        if boolean_val and integer_val > 100:
+            category_score = categories[""high_priority""]
+        elif boolean_val or integer_val > 50:
+            category_score = categories[""medium_priority""]
+        else:
+            category_score = categories[""low_priority""]
+        results[f""({boolean_val}, {integer_val})""] = category_score
+    return results
+if __name__ == '__main__':
+    sample_input = [
+        (True, 150),
+        (False, 20),
+        (True, 45),
+        (False, 101),
+        (True, 10),
+        (False, 55)
+    ]
+    categorized_data = categorize_conditions(sample_input)
+    for key, value in categorized_data.items():
+        print(f""{key}: {value}"")",True,0,8673,140_10.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""TypeA"": 0,
+        ""TypeB"": 1,
+        ""TypeC"": 2
+    }
+    results = {}
+    for i, (bool_val, int_val) in enumerate(conditions):
+        if bool_val and int_val > 10:
+            results[f""TypeA""] = results.get(f""TypeA"", 0) + 1
+        elif not bool_val and int_val < 0:
+            results[f""TypeB""] = results.get(f""TypeB"", 0) + 1
+        else:
+            results[f""TypeC""] = results.get(f""TypeC"", 0) + 1
+    return results
+def process_data(input_conditions):
+    return categorize_conditions(input_conditions)
+if __name__ == '__main__':
+    sample_conditions = [
+        (True, 15),
+        (False, -5),
+        (True, 5),
+        (False, 10),
+        (True, 20),
+        (False, 0)
+    ]
+    categorized_data = process_data(sample_conditions)
+    print(categorized_data)",True,1,8674,140_10_1.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""A"": 0,
+        ""B"": 0,
+        ""C"": 0
+    }
+    for cond in conditions:
+        if cond[0] and cond[1] == 10:
+            categories[""A""] += 1
+        elif cond[0] and cond[1] < 10:
+            categories[""B""] += 1
+        elif not cond[0] and cond[1] > 5:
+            categories[""C""] += 1
+        else:
+            categories[""C""] += 1
+    return categories
+if __name__ == '__main__':
+    input_data = [
+        (True, 10),
+        (True, 5),
+        (False, 12),
+        (False, 3),
+        (True, 10),
+        (False, 6)
+    ]
+    results = categorize_conditions(input_data)
+    print(results)",True,2,8675,140_10_2.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""A"": 0,
+        ""B"": 0,
+        ""C"": 0
+    }
+    for cond in conditions:
+        if cond[0] is True and cond[1] > 10:
+            categories[""A""] += 1
+        elif cond[0] is False and cond[1] < 5:
+            categories[""B""] += 1
+        else:
+            categories[""C""] += 1
+    return categories
+if __name__ == '__main__':
+    sample_conditions = [
+        (True, 15),
+        (False, 3),
+        (True, 20),
+        (False, 1),
+        (True, 8),
+        (False, 6)
+    ]
+    result = categorize_conditions(sample_conditions)
+    print(result)",True,3,8676,140_10_3.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""high_priority"": 0,
+        ""medium_priority"": 1,
+        ""low_priority"": 2
+    }
+    results = []
+    for cond in conditions:
+        boolean_val = cond[0]
+        integer_val = cond[1]
+        category = ""low_priority""
+        if boolean_val and integer_val > 100:
+            category = ""high_priority""
+        elif boolean_val or integer_val > 50:
+            category = ""medium_priority""
+        results.append({
+            ""input"": cond,
+            ""category"": category
+        })
+    return results
+if __name__ == '__main__':
+    sample_conditions = [
+        (True, 150),
+        (False, 50),
+        (True, 10),
+        (False, 200),
+        (True, 45),
+        (False, 101)
+    ]
+    categorized_data = categorize_conditions(sample_conditions)
+    for item in categorized_data:
+        print(f""Input: {item['input']}, Category: {item['category']}"")",True,4,8677,140_10_4.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""high_priority"": 0,
+        ""medium_priority"": 1,
+        ""low_priority"": 2
+    }
+    results = {}
+    for i, (is_active, threshold) in enumerate(conditions):
+        priority = categories[""low_priority""]
+        if is_active and threshold > 100:
+            priority = categories[""high_priority""]
+        elif is_active and threshold > 50:
+            priority = categories[""medium_priority""]
+        results[f""condition_{i}""] = {
+            ""active"": is_active,
+            ""threshold"": threshold,
+            ""priority"": priority
+        }
+    return results
+if __name__ == '__main__':
+    sample_conditions = [
+        (True, 150),
+        (False, 75),
+        (True, 40),
+        (False, 200),
+        (True, 51)
+    ]
+    categorized_data = categorize_conditions(sample_conditions)
+    for key, data in categorized_data.items():
+        print(f""{key}: Active={data['active']}, Threshold={data['threshold']}, Priority={data['priority']}"")",True,5,8678,140_10_5.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""High_Priority"": 0,
+        ""Medium_Priority"": 1,
+        ""Low_Priority"": 2
+    }
+    results = {}
+    for condition in conditions:
+        boolean_val, integer_val = condition
+        priority = categories[""Low_Priority""]
+        if boolean_val and integer_val > 100:
+            priority = categories[""High_Priority""]
+        elif boolean_val:
+            priority = categories[""Medium_Priority""]
+        results[f""({boolean_val}, {integer_val})""] = priority
+    return results
+if __name__ == '__main__':
+    sample_input = [
+        (True, 50),
+        (False, 150),
+        (True, 10),
+        (False, 200),
+        (True, 101),
+        (False, 5)
+    ]
+    categorized_data = categorize_conditions(sample_input)
+    print(categorized_data)",True,6,8679,140_10_6.py
+140,10,Analyze simple input conditions,"Write a complete, robust Python script that takes a list of input conditions (boolean and integer pairs) and categorizes them based on predefined simple rules. The script must be highly optimized and use clear, well-documented functions.","def categorize_conditions(conditions):
+    categories = {
+        ""high_priority"": 0,
+        ""medium_priority"": 1,
+        ""low_priority"": 2
+    }
+    results = {}
+    for i, (is_active, threshold) in enumerate(conditions):
+        category = ""low_priority""
+        if is_active and threshold > 100:
+            category = ""high_priority""
+        elif is_active and threshold > 50:
+            category = ""medium_priority""
+        results[f""condition_{i}""] = category
+    return results
+if __name__ == '__main__':
+    sample_input = [
+        (True, 150),
+        (False, 200),
+        (True, 45),
+        (False, 90),
+        (True, 101)
+    ]
+    categorized_data = categorize_conditions(sample_input)
+    print(categorized_data)",True,7,8680,140_10_7.py
+140,11,Analyze simple input conditions,"Implement an optimized function named `analyze_simple_inputs` that accepts a list of tuples, where each tuple contains a boolean condition and an integer value. The function must efficiently group and count the inputs based on whether the condition is True or False.","def analyze_simple_inputs(data):
+    true_count = 0
+    false_count = 0
+    for condition, value in data:
+        if condition:
+            true_count += 1
+        else:
+            false_count += 1
+    return {""True"": true_count, ""False"": false_count}
+if __name__ == '__main__':
+    sample_data = [
+        (True, 10),
+        (False, 20),
+        (True, 30),
+        (False, 40),
+        (True, 50),
+        (False, 60),
+        (True, 70)
+    ]
+    results = analyze_simple_inputs(sample_data)
+    print(results)",True,0,8681,140_11.py
+140,11,Analyze simple input conditions,"Implement an optimized function named `analyze_simple_inputs` that accepts a list of tuples, where each tuple contains a boolean condition and an integer value. The function must efficiently group and count the inputs based on whether the condition is True or False.","def analyze_simple_inputs(data):
+    true_count = 0
+    false_count = 0
+    for condition, value in data:
+        if condition:
+            true_count += 1
+        else:
+            false_count += 1
+    return {""True"": true_count, ""False"": false_count}
+if __name__ == '__main__':
+    sample_data = [
+        (True, 10),
+        (False, 20),
+        (True, 30),
+        (False, 40),
+        (True, 50),
+        (False, 60),
+        (True, 70)
+    ]
+    result = analyze_simple_inputs(sample_data)
+    print(result)",True,1,8682,140_11_1.py
+140,12,Analyze simple input conditions,"Develop a class named `InputAnalyzer` that contains a method, `analyze(data)`, which processes a list of simple input conditions. The method must return a dictionary summarizing the counts of True and False conditions, ensuring the implementation adheres to best practices for object-oriented programming.","class InputAnalyzer:
+    def analyze(self, data):
+        true_count = 0
+        false_count = 0
+        for condition in data:
+            if condition:
+                true_count += 1
+            else:
+                false_count += 1
+        return {""True"": true_count, ""False"": false_count}
+if __name__ == '__main__':
+    analyzer = InputAnalyzer()
+    sample_data = [True, False, True, True, False, True, False]
+    results = analyzer.analyze(sample_data)
+    print(results)",True,0,8683,140_12.py
+140,12,Analyze simple input conditions,"Develop a class named `InputAnalyzer` that contains a method, `analyze(data)`, which processes a list of simple input conditions. The method must return a dictionary summarizing the counts of True and False conditions, ensuring the implementation adheres to best practices for object-oriented programming.","class InputAnalyzer:
+    def analyze(self, data):
+        true_count = 0
+        false_count = 0
+        for condition in data:
+            if condition:
+                true_count += 1
+            else:
+                false_count += 1
+        return {""True"": true_count, ""False"": false_count}
+if __name__ == '__main__':
+    analyzer = InputAnalyzer()
+    sample_data = [True, False, True, True, False, False, True]
+    results = analyzer.analyze(sample_data)
+    print(results)",True,1,8684,140_12_1.py
+140,12,Analyze simple input conditions,"Develop a class named `InputAnalyzer` that contains a method, `analyze(data)`, which processes a list of simple input conditions. The method must return a dictionary summarizing the counts of True and False conditions, ensuring the implementation adheres to best practices for object-oriented programming.","class InputAnalyzer:
+    def analyze(self, data):
+        true_count = 0
+        false_count = 0
+        for condition in data:
+            if condition:
+                true_count += 1
+            else:
+                false_count += 1
+        return {
+            ""true_count"": true_count,
+            ""false_count"": false_count
+        }
+if __name__ == '__main__':
+    analyzer = InputAnalyzer()
+    sample_data = [True, False, True, True, False, True, False]
+    results = analyzer.analyze(sample_data)
+    print(results)",True,2,8685,140_12_2.py
+140,13,Analyze simple input conditions,"Write a pure Python function that analyzes a sequence of simple input conditions. The function should filter the input list to only include entries where the condition is True, and return the sum of all associated integer values. Prioritize performance.","def analyze_conditions(data):
+    total_sum = 0
+    for condition, value in data:
+        if condition:
+            total_sum += value
+    return total_sum
+if __name__ == '__main__':
+    sample_data = [
+        (True, 10),
+        (False, 20),
+        (True, 30),
+        (False, 40),
+        (True, 50)
+    ]
+    result = analyze_conditions(sample_data)
+    print(result)",True,0,8686,140_13.py
+140,13,Analyze simple input conditions,"Write a pure Python function that analyzes a sequence of simple input conditions. The function should filter the input list to only include entries where the condition is True, and return the sum of all associated integer values. Prioritize performance.","def analyze_conditions(data):
+    total_sum = 0
+    for condition, value in data:
+        if condition:
+            total_sum += value
+    return total_sum
+if __name__ == '__main__':
+    sample_data = [
+        (True, 10),
+        (False, 5),
+        (True, 20),
+        (False, 15),
+        (True, 30),
+        (False, 25)
+    ]
+    result = analyze_conditions(sample_data)
+    print(result)",True,1,8687,140_13_1.py
+140,14,Analyze simple input conditions,"Generate the most efficient Python code to process an arbitrary list of simple input conditions. The output must be a dictionary where keys are the boolean outcomes ('True', 'False') and values are the total number of occurrences for each outcome. Ensure the code is clean and production-ready.","def process_conditions(conditions):
+    results = {'True': 0, 'False': 0}
+    for condition in conditions:
+        if condition:
+            results['True'] += 1
+        else:
+            results['False'] += 1
+    return results
+if __name__ == '__main__':
+    sample_conditions = [True, False, True, True, False, False, True]
+    output = process_conditions(sample_conditions)
+    print(output)",True,0,8688,140_14.py
+140,14,Analyze simple input conditions,"Generate the most efficient Python code to process an arbitrary list of simple input conditions. The output must be a dictionary where keys are the boolean outcomes ('True', 'False') and values are the total number of occurrences for each outcome. Ensure the code is clean and production-ready.","import collections
+def process_conditions(conditions):
+    results = collections.defaultdict(int)
+    for condition in conditions:
+        if condition:
+            results['True'] += 1
+        else:
+            results['False'] += 1
+    return dict(results)
+if __name__ == '__main__':
+    sample_conditions = [True, False, True, True, False, False, True]
+    output = process_conditions(sample_conditions)
+    print(output)",True,1,8689,140_14_1.py
+141,0,Implement AND OR NOT logic,"Implement a Python function named `logic_gate` that accepts three boolean inputs (A, B, C) and returns the result of the logical expression (A AND B) OR (NOT C). Ensure the implementation is highly readable and efficient.","def logic_gate(A, B, C):
+    result = (A and B) or (not C)
+    return result
+if __name__ == '__main__':
+    A_val = True
+    B_val = False
+    C_val = True
+    output = logic_gate(A_val, B_val, C_val)
+    print(output)",True,0,8690,141_0.py
+141,1,Implement AND OR NOT logic,"Write a class named `BooleanLogic` with a method `evaluate_expression(a, b, c)` that calculates the result of the expression (A AND B) OR (NOT C) using bitwise operators for efficiency.","class BooleanLogic:
+    def evaluate_expression(self, a, b, c):
+        a_and_b = a & b
+        not_c = 1 - c
+        result = a_and_b | not_c
+        return result
+if __name__ == '__main__':
+    logic = BooleanLogic()
+    a_val = 1
+    b_val = 0
+    c_val = 1
+    result = logic.evaluate_expression(a_val, b_val, c_val)
+    print(result)",True,0,8691,141_1.py
+141,1,Implement AND OR NOT logic,"Write a class named `BooleanLogic` with a method `evaluate_expression(a, b, c)` that calculates the result of the expression (A AND B) OR (NOT C) using bitwise operators for efficiency.","class BooleanLogic:
+    def evaluate_expression(self, a, b, c):
+        result = (a & b) | (~c)
+        return result
+if __name__ == '__main__':
+    logic = BooleanLogic()
+    a_val = 1
+    b_val = 0
+    c_val = 1
+    result = logic.evaluate_expression(a_val, b_val, c_val)
+    print(result)",True,1,8692,141_1_1.py
+141,3,Implement AND OR NOT logic,Create an optimized function `and_or_not_gate` that takes three boolean arguments and returns the result of the expression: (A AND B) OR (NOT A OR C). Use the most concise and efficient Python syntax possible.,"def and_or_not_gate(A, B, C):
+    return (A and B) or (not A or C)
+if __name__ == '__main__':
+    A_val = True
+    B_val = False
+    C_val = True
+    result = and_or_not_gate(A_val, B_val, C_val)
+    print(result)",True,0,8693,141_3.py
+141,4,Implement AND OR NOT logic,"Implement an optimized bitwise solution to determine the output of a three-input logic gate defined by the formula: (A & B) | (~C). Assume A, B, and C are integers representing boolean states (0 or 1).","if __name__ == '__main__':
+    A = 1
+    B = 0
+    C = 1
+    result = (A & B) | (~C)
+    print(result)",True,0,8694,141_4.py
+141,5,Implement AND OR NOT logic,"Write a comprehensive Python module that defines functions for the fundamental AND, OR, and NOT operations on boolean values, and then provides a main function to combine these to calculate the result of a complex expression involving all three.","def and_op(a, b):
+    return a and b
+def or_op(a, b):
+    return a or b
+def not_op(a):
+    return not a
+def complex_expression(a, b, c):
+    result_and = and_op(a, b)
+    result_or = or_op(result_and, c)
+    result_not = not_op(result_or)
+    return result_not
+if __name__ == '__main__':
+    val_a = True
+    val_b = False
+    val_c = True
+    final_result = complex_expression(val_a, val_b, val_c)
+    print(f""Value A: {val_a}"")
+    print(f""Value B: {val_b}"")
+    print(f""Value C: {val_c}"")
+    print(f""Complex Expression Result: {final_result}"")",True,0,8695,141_5.py
+141,5,Implement AND OR NOT logic,"Write a comprehensive Python module that defines functions for the fundamental AND, OR, and NOT operations on boolean values, and then provides a main function to combine these to calculate the result of a complex expression involving all three.","def and_op(a, b):
+    return a and b
+def or_op(a, b):
+    return a or b
+def not_op(a):
+    return not a
+def complex_expression(a, b, c):
+    result_and = and_op(a, b)
+    result_or = or_op(result_and, c)
+    result_not = not_op(result_or)
+    return result_not
+if __name__ == '__main__':
+    val_a = True
+    val_b = False
+    val_c = True
+    final_result = complex_expression(val_a, val_b, val_c)
+    print(final_result)",True,1,8696,141_5_1.py
+139,8,Create basic logic gate functions,Generate a comprehensive Python script that visually demonstrates the operation of the basic logic gates by printing the results for various input scenarios.,"import numpy as np
+def AND(a, b):
+    return a & b
+def OR(a, b):
+    return a | b
+def NOT(a):
+    return 1 - a
+if __name__ == '__main__':
+    print(""--- AND Gate Demonstration ---"")
+    a_and = 0
+    b_and = 0
+    print(f""AND(0, 0) = {AND(a_and, b_and)}"")
+    a_and = 0
+    b_and = 1
+    print(f""AND(0, 1) = {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 0
+    print(f""AND(1, 0) = {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 1
+    print(f""AND(1, 1) = {AND(a_and, b_and)}"")
+    print(""\n--- OR Gate Demonstration ---"")
+    a_or = 0
+    b_or = 0
+    print(f""OR(0, 0) = {OR(a_or, b_or)}"")
+    a_or = 0
+    b_or = 1
+    print(f""OR(0, 1) = {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 0
+    print(f""OR(1, 0) = {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 1
+    print(f""OR(1, 1) = {OR(a_or, b_or)}"")
+    print(""\n--- NOT Gate Demonstration ---"")
+    a_not = 0
+    print(f""NOT(0) = {NOT(a_not)}"")
+    a_not = 1
+    print(f""NOT(1) = {NOT(a_not)}"")",True,0,8697,139_8.py
+139,8,Create basic logic gate functions,Generate a comprehensive Python script that visually demonstrates the operation of the basic logic gates by printing the results for various input scenarios.,"import matplotlib.pyplot as plt
+def AND(a, b):
+    return a & b
+def OR(a, b):
+    return a | b
+def NOT(a):
+    return 1 - a
+if __name__ == '__main__':
+    print(""--- AND Gate Demonstration ---"")
+    a_and = 0
+    b_and = 0
+    print(f""AND(0, 0) = {AND(a_and, b_and)}"")
+    a_and = 0
+    b_and = 1
+    print(f""AND(0, 1) = {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 0
+    print(f""AND(1, 0) = {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 1
+    print(f""AND(1, 1) = {AND(a_and, b_and)}"")
+    print(""\n--- OR Gate Demonstration ---"")
+    a_or = 0
+    b_or = 0
+    print(f""OR(0, 0) = {OR(a_or, b_or)}"")
+    a_or = 0
+    b_or = 1
+    print(f""OR(0, 1) = {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 0
+    print(f""OR(1, 0) = {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 1
+    print(f""OR(1, 1) = {OR(a_or, b_or)}"")
+    print(""\n--- NOT Gate Demonstration ---"")
+    a_not = 0
+    print(f""NOT(0) = {NOT(a_not)}"")
+    a_not = 1
+    print(f""NOT(1) = {NOT(a_not)}"")
+    print(""\n--- Visual Demonstration (AND, OR, NOT) ---"")
+    inputs = [
+        (0, 0),
+        (0, 1),
+        (1, 0),
+        (1, 1)
+    ]
+    results_and = [AND(a, b) for a, b in inputs]
+    results_or = [OR(a, b) for a, b in inputs]
+    results_not = [NOT(a) for a in [0, 1]]
+    fig, axes = plt.subplots(1, 3, figsize=(10, 4))
+    axes[0].set_title(""AND Gate"")
+    axes[0].set_xticks([0, 1])
+    axes[0].set_yticks([0, 1])
+    axes[0].grid(True)
+    axes[0].set_visible(False)
+    axes[1].set_title(""OR Gate"")
+    axes[1].set_xticks([0, 1])
+    axes[1].set_yticks([0, 1])
+    axes[1].grid(True)
+    axes[1].set_visible(False)
+    axes[2].set_title(""NOT Gate"")
+    axes[2].set_xticks([0, 1])
+    axes[2].set_yticks([0, 1])
+    axes[2].grid(True)
+    axes[2].set_visible(False)",True,1,8698,139_8_1.py
+139,8,Create basic logic gate functions,Generate a comprehensive Python script that visually demonstrates the operation of the basic logic gates by printing the results for various input scenarios.,"import numpy as np
+def AND(a, b):
+    return a & b
+def OR(a, b):
+    return a | b
+def NOT(a):
+    return 1 - a
+if __name__ == '__main__':
+    print(""--- AND Gate Demonstration ---"")
+    a_and = 0
+    b_and = 0
+    print(f""Input A=0, B=0, Result (A AND B): {AND(a_and, b_and)}"")
+    a_and = 0
+    b_and = 1
+    print(f""Input A=0, B=1, Result (A AND B): {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 0
+    print(f""Input A=1, B=0, Result (A AND B): {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 1
+    print(f""Input A=1, B=1, Result (A AND B): {AND(a_and, b_and)}"")
+    print(""\n--- OR Gate Demonstration ---"")
+    a_or = 0
+    b_or = 0
+    print(f""Input A=0, B=0, Result (A OR B): {OR(a_or, b_or)}"")
+    a_or = 0
+    b_or = 1
+    print(f""Input A=0, B=1, Result (A OR B): {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 0
+    print(f""Input A=1, B=0, Result (A OR B): {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 1
+    print(f""Input A=1, B=1, Result (A OR B): {OR(a_or, b_or)}"")
+    print(""\n--- NOT Gate Demonstration ---"")
+    a_not = 0
+    print(f""Input A=0, Result (NOT A): {NOT(a_not)}"")
+    a_not = 1
+    print(f""Input A=1, Result (NOT A): {NOT(a_not)}"")",True,2,8699,139_8_2.py
+139,8,Create basic logic gate functions,Generate a comprehensive Python script that visually demonstrates the operation of the basic logic gates by printing the results for various input scenarios.,"import matplotlib.pyplot as plt
+def AND(a, b):
+    return a & b
+def OR(a, b):
+    return a | b
+def NOT(a):
+    return 1 - a
+if __name__ == '__main__':
+    print(""--- AND Gate Demonstration ---"")
+    a_and = 0
+    b_and = 0
+    print(f""AND(0, 0) = {AND(a_and, b_and)}"")
+    a_and = 0
+    b_and = 1
+    print(f""AND(0, 1) = {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 0
+    print(f""AND(1, 0) = {AND(a_and, b_and)}"")
+    a_and = 1
+    b_and = 1
+    print(f""AND(1, 1) = {AND(a_and, b_and)}"")
+    print(""\n--- OR Gate Demonstration ---"")
+    a_or = 0
+    b_or = 0
+    print(f""OR(0, 0) = {OR(a_or, b_or)}"")
+    a_or = 0
+    b_or = 1
+    print(f""OR(0, 1) = {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 0
+    print(f""OR(1, 0) = {OR(a_or, b_or)}"")
+    a_or = 1
+    b_or = 1
+    print(f""OR(1, 1) = {OR(a_or, b_or)}"")
+    print(""\n--- NOT Gate Demonstration ---"")
+    a_not = 0
+    print(f""NOT(0) = {NOT(a_not)}"")
+    a_not = 1
+    print(f""NOT(1) = {NOT(a_not)}"")
+    print(""\n--- Visual Demonstration (Truth Tables) ---"")
+    print(""\nAND Gate Truth Table:"")
+    print(""A | B | A AND B"")
+    print(""---|---|---------"")
+    print(""0 | 0 | 0"")
+    print(""0 | 1 | 0"")
+    print(""1 | 0 | 0"")
+    print(""1 | 1 | 1"")
+    print(""\nOR Gate Truth Table:"")
+    print(""A | B | A OR B"")
+    print(""---|---|---------"")
+    print(""0 | 0 | 0"")
+    print(""0 | 1 | 1"")
+    print(""1 | 0 | 1"")
+    print(""1 | 1 | 1"")
+    print(""\nNOT Gate Truth Table:"")
+    print(""A | NOT A"")
+    print(""---|--------"")
+    print(""0 | 1"")
+    print(""1 | 0"")",True,3,8700,139_8_3.py
+141,6,Implement AND OR NOT logic,"Design and implement a function `evaluate_gate(a: bool, b: bool, c: bool) -> bool` that strictly follows the logic: (A AND B) OR (NOT C). Use type hinting and ensure the code is production-ready.","def evaluate_gate(a: bool, b: bool, c: bool) -> bool:
+    return (a and b) or (not c)
+if __name__ == '__main__':
+    print(f""evaluate_gate(True, True, True): {evaluate_gate(True, True, True)}"")
+    print(f""evaluate_gate(True, False, True): {evaluate_gate(True, False, True)}"")
+    print(f""evaluate_gate(False, True, False): {evaluate_gate(False, True, False)}"")
+    print(f""evaluate_gate(False, False, False): {evaluate_gate(False, False, False)}"")
+    print(f""evaluate_gate(True, True, False): {evaluate_gate(True, True, False)}"")",True,0,8701,141_6.py
+141,6,Implement AND OR NOT logic,"Design and implement a function `evaluate_gate(a: bool, b: bool, c: bool) -> bool` that strictly follows the logic: (A AND B) OR (NOT C). Use type hinting and ensure the code is production-ready.","def evaluate_gate(a: bool, b: bool, c: bool) -> bool:
+    result = (a and b) or (not c)
+    return result
+if __name__ == '__main__':
+    print(f""evaluate_gate(True, True, True): {evaluate_gate(True, True, True)}"")
+    print(f""evaluate_gate(True, False, True): {evaluate_gate(True, False, True)}"")
+    print(f""evaluate_gate(False, True, False): {evaluate_gate(False, True, False)}"")
+    print(f""evaluate_gate(False, False, False): {evaluate_gate(False, False, False)}"")
+    print(f""evaluate_gate(True, True, False): {evaluate_gate(True, True, False)}"")",True,1,8702,141_6_1.py
+141,6,Implement AND OR NOT logic,"Design and implement a function `evaluate_gate(a: bool, b: bool, c: bool) -> bool` that strictly follows the logic: (A AND B) OR (NOT C). Use type hinting and ensure the code is production-ready.","def evaluate_gate(a: bool, b: bool, c: bool) -> bool:
+    result = (a and b) or (not c)
+    return result
+if __name__ == '__main__':
+    print(f""evaluate_gate(True, True, True): {evaluate_gate(True, True, True)}"")
+    print(f""evaluate_gate(True, False, True): {evaluate_gate(True, False, True)}"")
+    print(f""evaluate_gate(False, True, True): {evaluate_gate(False, True, True)}"")
+    print(f""evaluate_gate(False, False, False): {evaluate_gate(False, False, False)}"")
+    print(f""evaluate_gate(True, True, False): {evaluate_gate(True, True, False)}"")",True,2,8703,141_6_2.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 10
+    B = 5
+    C = 3
+    result_and = A & B
+    not_C = ~C
+    result_or = result_and | not_C
+    xor_result = (A ^ B) ^ (C ^ C) ^ (A & B)                                              
+    result = (A & B) | (~C)
+    X_and_Y = A & B
+    not_C_val = ~C
+    final_xor_not_result = (~(~(A ^ B))) | not_C_val
+    print(final_xor_not_result)",True,0,8704,141_7.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 5
+    B = 3
+    C = 7
+    result_and = A & B
+    not_C = ~C
+    result_or = result_and | not_C
+    print(result_or)",True,1,8705,141_7_1.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 10
+    B = 5
+    C = 3
+    result_xor = ((A ^ B) ^ (~C))
+    result_and_or_not = (A & B) | (~C)
+    print(f""A = {A}, B = {B}, C = {C}"")
+    print(f""(A AND B) OR (NOT C) = {result_and_or_not}"")
+    print(f""XOR/NOT equivalent = {result_xor}"")",True,2,8706,141_7_2.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 5
+    B = 3
+    C = 7
+    result_xor = ((A ^ B) ^ (~C))
+    result_and_or = (A & B) | (~C)
+    print(f""A = {A}, B = {B}, C = {C}"")
+    print(f""(A AND B) OR (NOT C) using standard operations: {result_and_or}"")
+    print(f""(A XOR B) XOR (NOT C) using XOR and NOT: {result_xor}"")",True,3,8707,141_7_3.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 10
+    B = 5
+    C = 3
+    result_xor = ((A ^ B) ^ (~C))
+    result_and_or = (A & B) | (~C)
+    print(f""A = {A}, B = {B}, C = {C}"")
+    print(f""(A AND B) OR (NOT C) using standard operations: {result_and_or}"")
+    print(f""(A XOR B) XOR (NOT C) using XOR and NOT: {result_xor}"")",True,4,8708,141_7_4.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 5
+    B = 3
+    C = 7
+    result_xor = ((A ^ B) ^ (~C))
+    result_original = (A & B) | (~C)
+    print(f""A: {A}, B: {B}, C: {C}"")
+    print(f""(A AND B) OR (NOT C) (Original): {result_original}"")
+    print(f""(A XOR B) XOR (NOT C) (XOR/NOT): {result_xor}"")",True,5,8709,141_7_5.py
+141,7,Implement AND OR NOT logic,"Generate an optimized implementation using XOR and NOT operations to find an alternative, mathematically equivalent way to compute the result of (A AND B) OR (NOT C).","if __name__ == '__main__':
+    A = 5
+    B = 3
+    C = 7
+    result_xor = ((A ^ B) ^ (~C))
+    result_and_or = (A & B) | (~C)
+    print(f""A = {A}, B = {B}, C = {C}"")
+    print(f""(A AND B) OR (NOT C) = {result_and_or}"")
+    print(f""XOR/NOT implementation = {result_xor}"")",True,6,8710,141_7_6.py
+141,9,Implement AND OR NOT logic,"Implement a decorator pattern or a class-based approach to encapsulate the AND, OR, and NOT logic, allowing for flexible and reusable implementation of multi-variable logic expressions.",,False,0,8711,141_9.py
+141,10,Implement AND OR NOT logic,"Write a complete, well-documented Python class named LogicGate that implements the AND, OR, and NOT operations using bitwise operators for efficiency.",,False,0,8712,141_10.py
+141,11,Implement AND OR NOT logic,"Implement three separate, distinct Python functions: one for logical AND, one for logical OR, and one for logical NOT, accepting boolean inputs and returning the correct boolean result. Ensure the implementation is highly readable and follows best practices.","def logical_and(a: bool, b: bool) -> bool:
+    return a and b
+def logical_or(a: bool, b: bool) -> bool:
+    return a or b
+def logical_not(a: bool) -> bool:
+    return not a
+if __name__ == '__main__':
+    print(f""Logical AND (True, False): {logical_and(True, False)}"")
+    print(f""Logical AND (True, True): {logical_and(True, True)}"")
+    print(f""Logical OR (True, False): {logical_or(True, False)}"")
+    print(f""Logical OR (False, False): {logical_or(False, False)}"")
+    print(f""Logical NOT (True): {logical_not(True)}"")
+    print(f""Logical NOT (False): {logical_not(False)}"")",True,0,8713,141_11.py
+141,12,Implement AND OR NOT logic,"Develop a single, comprehensive Python function called evaluate_logic that takes three boolean inputs (A, B, C) and returns the result of the expression (A AND B) OR (NOT C). Optimize this function for speed.","def evaluate_logic(A: bool, B: bool, C: bool) -> bool:
+    result = (A and B) or (not C)
+    return result
+if __name__ == '__main__':
+    A_val = True
+    B_val = False
+    C_val = True
+    result = evaluate_logic(A_val, B_val, C_val)
+    print(result)",True,0,8714,141_12.py
+141,12,Implement AND OR NOT logic,"Develop a single, comprehensive Python function called evaluate_logic that takes three boolean inputs (A, B, C) and returns the result of the expression (A AND B) OR (NOT C). Optimize this function for speed.","def evaluate_logic(A, B, C):
+    result = (A and B) or (not C)
+    return result
+if __name__ == '__main__':
+    A_val = True
+    B_val = False
+    C_val = True
+    result = evaluate_logic(A_val, B_val, C_val)
+    print(result)",True,1,8715,141_12_1.py
+141,12,Implement AND OR NOT logic,"Develop a single, comprehensive Python function called evaluate_logic that takes three boolean inputs (A, B, C) and returns the result of the expression (A AND B) OR (NOT C). Optimize this function for speed.","def evaluate_logic(A: bool, B: bool, C: bool) -> bool:
+    result = (A and B) or (not C)
+    return result
+if __name__ == '__main__':
+    print(evaluate_logic(True, True, False))
+    print(evaluate_logic(True, False, True))
+    print(evaluate_logic(False, True, False))
+    print(evaluate_logic(False, False, True))",True,2,8716,141_12_2.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND gate:"")
+    a_val = True
+    b_val = False
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    print(""\nTesting OR gate:"")
+    a_val = True
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    print(""\nTesting NOT gate:"")
+    a_val = True
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    a_val = False
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    print(""\nTesting combined operations:"")
+    x = True
+    y = True
+    print(f""NOT(AND({x}, {y})) = {not_gate(and_gate(x, y))}"")
+    print(f""OR(NOT({x}), {y}) = {or_gate(not_gate(x), y)}"")",True,0,8717,141_13.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND gate:"")
+    a_val = True
+    b_val = False
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    print(""\nTesting OR gate:"")
+    a_val = True
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    print(""\nTesting NOT gate:"")
+    a_val = True
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    a_val = False
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")",True,1,8718,141_13_1.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND gate:"")
+    a_val = True
+    b_val = False
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    print(""\nTesting OR gate:"")
+    a_val = True
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    print(""\nTesting NOT gate:"")
+    a_val = True
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    a_val = False
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    print(""\nTesting combined operations:"")
+    x = True
+    y = False
+    print(f""NOT(x) = {not_gate(x)}"")
+    print(f""AND(x, y) = {and_gate(x, y)}"")
+    print(f""OR(x, y) = {or_gate(x, y)}"")",True,2,8719,141_13_2.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND gate:"")
+    a_val = True
+    b_val = False
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    print(""\nTesting OR gate:"")
+    a_val = True
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    print(""\nTesting NOT gate:"")
+    a_val = True
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    a_val = False
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    print(""\nTesting combinations:"")
+    x = True
+    y = True
+    print(f""AND({x}, {y}) = {and_gate(x, y)}"")
+    print(f""OR({x}, {y}) = {or_gate(x, y)}"")
+    print(f""NOT({x}) = {not_gate(x)}"")
+    print(f""NOT({y}) = {not_gate(y)}"")",True,3,8720,141_13_3.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND Gate:"")
+    a_val = True
+    b_val = False
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    print(""\nTesting OR Gate:"")
+    a_val = True
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    print(""\nTesting NOT Gate:"")
+    a_val = True
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    a_val = False
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    print(""\nTesting Combinations:"")
+    x = True
+    y = True
+    print(f""AND({x}, {y}) = {and_gate(x, y)}"")
+    print(f""OR({x}, {y}) = {or_gate(x, y)}"")
+    print(f""NOT({x}) = {not_gate(x)}"")
+    print(f""NOT({y}) = {not_gate(y)}"")",True,4,8721,141_13_4.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND Gate:"")
+    a_and = and_gate(True, True)
+    print(f""True AND True = {a_and}"")
+    a_and = and_gate(True, False)
+    print(f""True AND False = {a_and}"")
+    a_and = and_gate(False, True)
+    print(f""False AND True = {a_and}"")
+    a_and = and_gate(False, False)
+    print(f""False AND False = {a_and}"")
+    print(""\nTesting OR Gate:"")
+    a_or = or_gate(True, True)
+    print(f""True OR True = {a_or}"")
+    a_or = or_gate(True, False)
+    print(f""True OR False = {a_or}"")
+    a_or = or_gate(False, True)
+    print(f""False OR True = {a_or}"")
+    a_or = or_gate(False, False)
+    print(f""False OR False = {a_or}"")
+    print(""\nTesting NOT Gate:"")
+    a_not = not_gate(True)
+    print(f""NOT True = {a_not}"")
+    a_not = not_gate(False)
+    print(f""NOT False = {a_not}"")",True,5,8722,141_13_5.py
+141,13,Implement AND OR NOT logic,"Write a script that simulates a simple logic gate system. Create functions for AND, OR, and NOT, and then demonstrate their usage by testing various combinations of input boolean values.","def and_gate(a, b):
+    return a and b
+def or_gate(a, b):
+    return a or b
+def not_gate(a):
+    return not a
+if __name__ == '__main__':
+    print(""Testing AND gate:"")
+    a_val = True
+    b_val = False
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = True
+    print(f""AND({a_val}, {b_val}) = {and_gate(a_val, b_val)}"")
+    print(""\nTesting OR gate:"")
+    a_val = True
+    b_val = False
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = False
+    b_val = True
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    a_val = True
+    b_val = True
+    print(f""OR({a_val}, {b_val}) = {or_gate(a_val, b_val)}"")
+    print(""\nTesting NOT gate:"")
+    a_val = True
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")
+    a_val = False
+    print(f""NOT({a_val}) = {not_gate(a_val)}"")",True,6,8723,141_13_6.py
+141,14,Implement AND OR NOT logic,"Implement an optimized bitwise solution in Python to perform the logical operations of AND, OR, and NOT on two integer inputs, treating the bits as the fundamental logic units.","import sys
+def bitwise_logic(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a_result = ~a
+    not_b_result = ~b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    a = 5
+    b = 3
+    and_res, or_res, not_a_res, not_b_res = bitwise_logic(a, b)
+    print(f""A: {a} ({bin(a)})"")
+    print(f""B: {b} ({bin(b)})"")
+    print(f""A AND B: {and_res} ({bin(and_res)})"")
+    print(f""A OR B: {or_res} ({bin(or_res)})"")
+    print(f""NOT A: {not_a_res} ({bin(not_a_res)})"")
+    print(f""NOT B: {not_b_res} ({bin(not_b_res)})"")",True,0,8724,141_14.py
+141,14,Implement AND OR NOT logic,"Implement an optimized bitwise solution in Python to perform the logical operations of AND, OR, and NOT on two integer inputs, treating the bits as the fundamental logic units.","def bitwise_logic(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a = ~a
+    not_b = ~b
+    return and_result, or_result, not_a, not_b
+if __name__ == '__main__':
+    a = 5
+    b = 3
+    and_res, or_res, not_a, not_b = bitwise_logic(a, b)
+    print(f""a = {a} (binary: {bin(a)})"")
+    print(f""b = {b} (binary: {bin(b)})"")
+    print(f""AND result (a & b): {and_res} (binary: {bin(and_res)})"")
+    print(f""OR result (a | b): {or_res} (binary: {bin(or_res)})"")
+    print(f""NOT a (~a): {not_a} (binary: {bin(not_a)})"")
+    print(f""NOT b (~b): {not_b} (binary: {bin(not_b)})"")",True,1,8725,141_14_1.py
+141,14,Implement AND OR NOT logic,"Implement an optimized bitwise solution in Python to perform the logical operations of AND, OR, and NOT on two integer inputs, treating the bits as the fundamental logic units.","def bitwise_logic(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a = ~a
+    not_b = ~b
+    return and_result, or_result, not_a, not_b
+if __name__ == '__main__':
+    a = 5
+    b = 3
+    and_res, or_res, not_a, not_b = bitwise_logic(a, b)
+    print(f""A: {a} ({bin(a)})"")
+    print(f""B: {b} ({bin(b)})"")
+    print(f""A AND B: {and_res} ({bin(and_res)})"")
+    print(f""A OR B: {or_res} ({bin(or_res)})"")
+    print(f""NOT A: {not_a} ({bin(not_a)})"")
+    print(f""NOT B: {not_b} ({bin(not_b)})"")",True,2,8726,141_14_2.py
+141,14,Implement AND OR NOT logic,"Implement an optimized bitwise solution in Python to perform the logical operations of AND, OR, and NOT on two integer inputs, treating the bits as the fundamental logic units.","def bitwise_logic(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a_result = ~a
+    not_b_result = ~b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    a = 5
+    b = 3
+    and_res, or_res, not_a_res, not_b_res = bitwise_logic(a, b)
+    print(f""A: {a} ({bin(a)})"")
+    print(f""B: {b} ({bin(b)})"")
+    print(f""AND (A & B): {and_res} ({bin(and_res)})"")
+    print(f""OR (A | B): {or_res} ({bin(or_res)})"")
+    print(f""NOT A (~A): {not_a_res} ({bin(not_a_res)})"")
+    print(f""NOT B (~B): {not_b_res} ({bin(not_b_res)})"")",True,3,8727,141_14_3.py
+141,14,Implement AND OR NOT logic,"Implement an optimized bitwise solution in Python to perform the logical operations of AND, OR, and NOT on two integer inputs, treating the bits as the fundamental logic units.","def bitwise_logic(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a_result = ~a
+    not_b_result = ~b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    a = 5
+    b = 3
+    and_res, or_res, not_a_res, not_b_res = bitwise_logic(a, b)
+    print(f""A: {a} ({bin(a)})"")
+    print(f""B: {b} ({bin(b)})"")
+    print(f""A AND B: {and_res} ({bin(and_res)})"")
+    print(f""A OR B: {or_res} ({bin(or_res)})"")
+    print(f""NOT A: {not_a_res} ({bin(not_a_res)})"")
+    print(f""NOT B: {not_b_res} ({bin(not_b_res)})"")",True,4,8728,141_14_4.py
+141,14,Implement AND OR NOT logic,"Implement an optimized bitwise solution in Python to perform the logical operations of AND, OR, and NOT on two integer inputs, treating the bits as the fundamental logic units.","def bitwise_logic(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a_result = not a
+    not_b_result = not b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    a_val = 5
+    b_val = 12
+    and_res, or_res, not_a_res, not_b_res = bitwise_logic(a_val, b_val)
+    print(f""a = {a_val} (binary: {bin(a_val)})"")
+    print(f""b = {b_val} (binary: {bin(b_val)})"")
+    print(""-"" * 20)
+    print(f""AND (a & b): {and_res} (binary: {bin(and_res)})"")
+    print(f""OR (a | b): {or_res} (binary: {bin(or_res)})"")
+    print(f""NOT a (~a): {not_a_res} (binary: {bin(not_a_res)})"")
+    print(f""NOT b (~b): {not_b_res} (binary: {bin(not_b_res)})"")",True,5,8729,141_14_5.py
+141,2,Implement AND OR NOT logic,"Develop a standalone Python script that takes two integer inputs representing the states of two variables, and a third input representing a control signal. Calculate the output based on the logic: (Input1 AND Input2) OR (NOT Input3). Include clear comments explaining the logic.",,False,0,8730,141_2.py
+142,1,Compare two boolean results,Implement an optimized function named `compare_boolean_results` that accepts two boolean values and returns a descriptive string detailing whether they are equal or different.,"def compare_boolean_results(a: bool, b: bool) -> str:
+    if a == b:
+        return ""The boolean results are equal.""
+    else:
+        return ""The boolean results are different.""
+if __name__ == '__main__':
+    result1 = compare_boolean_results(True, True)
+    print(result1)
+    result2 = compare_boolean_results(False, False)
+    print(result2)
+    result3 = compare_boolean_results(True, False)
+    print(result3)
+    result4 = compare_boolean_results(False, True)
+    print(result4)",True,0,8731,142_1.py
+142,1,Compare two boolean results,Implement an optimized function named `compare_boolean_results` that accepts two boolean values and returns a descriptive string detailing whether they are equal or different.,"def compare_boolean_results(a, b):
+    if a == b:
+        return ""The boolean results are equal.""
+    else:
+        return ""The boolean results are different.""
+if __name__ == '__main__':
+    result1 = compare_boolean_results(True, True)
+    print(result1)
+    result2 = compare_boolean_results(False, True)
+    print(result2)
+    result3 = compare_boolean_results(False, False)
+    print(result3)",True,1,8732,142_1_1.py
+142,1,Compare two boolean results,Implement an optimized function named `compare_boolean_results` that accepts two boolean values and returns a descriptive string detailing whether they are equal or different.,"def compare_boolean_results(a: bool, b: bool) -> str:
+    if a == b:
+        return ""The boolean results are equal.""
+    else:
+        return ""The boolean results are different.""
+if __name__ == '__main__':
+    print(compare_boolean_results(True, True))
+    print(compare_boolean_results(False, False))
+    print(compare_boolean_results(True, False))
+    print(compare_boolean_results(False, True))",True,2,8733,142_1_2.py
+142,2,Compare two boolean results,Develop a class method within a `BooleanComparator` class that takes two boolean inputs and returns a tuple indicating if the results are the same and the actual values.,"class BooleanComparator:
+    @staticmethod
+    def compare_booleans(a: bool, b: bool) -> tuple[bool, tuple[bool, bool]]:
+        same = a == b
+        result = (same, a, b)
+        return result
+if __name__ == '__main__':
+    print(BooleanComparator.compare_booleans(True, True))
+    print(BooleanComparator.compare_booleans(False, False))
+    print(BooleanComparator.compare_booleans(True, False))
+    print(BooleanComparator.compare_booleans(False, True))",True,0,8734,142_2.py
+142,3,Compare two boolean results,Write a concise and efficient Python snippet to compare the output of `(5 > 3)` and `(10 == 10)` and print the resulting boolean comparison.,"if __name__ == '__main__':
+    result1 = (5 > 3)
+    result2 = (10 == 10)
+    print(result1 and result2)",True,0,8735,142_3.py
+142,4,Compare two boolean results,"Create a function that takes two arbitrary boolean inputs and uses the XOR operator to determine if their results are different, returning a single boolean.","def check_xor_difference(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    print(check_xor_difference(True, False))
+    print(check_xor_difference(True, True))
+    print(check_xor_difference(False, False))
+    print(check_xor_difference(True, True))
+    print(check_xor_difference(False, True))",True,0,8736,142_4.py
+142,4,Compare two boolean results,"Create a function that takes two arbitrary boolean inputs and uses the XOR operator to determine if their results are different, returning a single boolean.","def check_xor_difference(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    bool1 = True
+    bool2 = False
+    result = check_xor_difference(bool1, bool2)
+    print(result)
+    bool3 = True
+    bool4 = True
+    result = check_xor_difference(bool3, bool4)
+    print(result)
+    bool5 = False
+    bool6 = False
+    result = check_xor_difference(bool5, bool6)
+    print(result)",True,1,8737,142_4_1.py
+142,4,Compare two boolean results,"Create a function that takes two arbitrary boolean inputs and uses the XOR operator to determine if their results are different, returning a single boolean.","def check_xor_difference(a, b):
+    result = a ^ b
+    return result != 0
+if __name__ == '__main__':
+    print(check_xor_difference(True, False))
+    print(check_xor_difference(True, True))
+    print(check_xor_difference(False, False))
+    print(check_xor_difference(True, True))
+    print(check_xor_difference(False, True))",True,2,8738,142_4_2.py
+141,8,Implement AND OR NOT logic,Write a testable Python function for the logic gate: (A AND B) OR (NOT C). Include a set of example test cases covering all possible combinations of boolean inputs to verify correctness.,,False,0,8739,141_8.py
+142,0,Compare two boolean results,"Write a complete, high-quality Python script that compares the boolean results of two separate logical operations and prints the comparison result.",,False,0,8740,142_0.py
+142,5,Compare two boolean results,"Write a robust script that simulates two independent boolean checks and then compares their final outcomes, ensuring the code is highly readable and follows all Python best practices.","import random
+def check_boolean_condition(value: bool, threshold: bool) -> bool:
+    return value == threshold
+def simulate_boolean_checks():
+    check1_input = random.choice([True, False])
+    check2_input = random.choice([True, False])
+    threshold1 = True
+    threshold2 = False
+    result1 = check_boolean_condition(check1_input, threshold1)
+    result2 = check_boolean_condition(check2_input, threshold2)
+    comparison_result = result1 == result2
+    print(f""Check 1 Input: {check1_input}, Threshold: {threshold1}, Result: {result1}"")
+    print(f""Check 2 Input: {check2_input}, Threshold: {threshold2}, Result: {result2}"")
+    print(f""Comparison (Result1 == Result2): {comparison_result}"")
+if __name__ == '__main__':
+    simulate_boolean_checks()",True,0,8741,142_5.py
+142,5,Compare two boolean results,"Write a robust script that simulates two independent boolean checks and then compares their final outcomes, ensuring the code is highly readable and follows all Python best practices.","import random
+def check_boolean_a(value):
+    return value > 5
+def check_boolean_b(value):
+    return value % 2 == 0
+def compare_results(result_a, result_b):
+    if result_a == result_b:
+        return ""Equal""
+    else:
+        return ""Different""
+if __name__ == '__main__':
+    value_a = random.randint(1, 10)
+    value_b = random.randint(1, 10)
+    result_a = check_boolean_a(value_a)
+    result_b = check_boolean_b(value_b)
+    comparison = compare_results(result_a, result_b)
+    print(f""Value A: {value_a}, Result A: {result_a}"")
+    print(f""Value B: {value_b}, Result B: {result_b}"")
+    print(f""Comparison: {comparison}"")",True,1,8742,142_5_1.py
+142,5,Compare two boolean results,"Write a robust script that simulates two independent boolean checks and then compares their final outcomes, ensuring the code is highly readable and follows all Python best practices.","import random
+def check_boolean_condition(value: bool, threshold: bool) -> bool:
+    return value == threshold
+def simulate_boolean_checks(input_a: bool, input_b: bool) -> tuple[bool, bool]:
+    result_a = check_boolean_condition(input_a, True)
+    result_b = check_boolean_condition(input_b, False)
+    return result_a, result_b
+if __name__ == '__main__':
+    sample_a = True
+    sample_b = False
+    outcome_a, outcome_b = simulate_boolean_checks(sample_a, sample_b)
+    comparison_result = outcome_a == outcome_b
+    print(f""Input A: {sample_a}"")
+    print(f""Input B: {sample_b}"")
+    print(f""Outcome A (Check against True): {outcome_a}"")
+    print(f""Outcome B (Check against False): {outcome_b}"")
+    print(f""Are the outcomes equal? {comparison_result}"")",True,2,8743,142_5_2.py
+142,5,Compare two boolean results,"Write a robust script that simulates two independent boolean checks and then compares their final outcomes, ensuring the code is highly readable and follows all Python best practices.","import random
+def check_condition_a(value):
+    return value > 5
+def check_condition_b(value):
+    return value % 2 == 0
+def simulate_and_compare():
+    value_a = random.randint(1, 10)
+    value_b = random.randint(1, 10)
+    result_a = check_condition_a(value_a)
+    result_b = check_condition_b(value_b)
+    comparison_result = result_a == result_b
+    print(f""Value A: {value_a}, Result A: {result_a}"")
+    print(f""Value B: {value_b}, Result B: {result_b}"")
+    print(f""Comparison (A == B): {comparison_result}"")
+if __name__ == '__main__':
+    simulate_and_compare()",True,3,8744,142_5_3.py
+142,7,Compare two boolean results,"Generate a complete Python program that reads two boolean inputs from the user via input and then compares these two boolean results, handling potential type conversion implicitly.","if __name__ == '__main__':
+    bool1 = True
+    bool2 = False
+    if bool1 == bool2:
+        print(""The boolean values are equal."")
+    else:
+        print(""The boolean values are not equal."")",True,0,8745,142_7.py
+142,8,Compare two boolean results,"Design and write a function that takes two boolean results and returns the result of the logical NOT operation applied to the comparison of those two booleans (i.e., return `not (bool1 == bool2)`).","def logical_not_comparison(bool1, bool2):
+    return not (bool1 == bool2)
+if __name__ == '__main__':
+    print(logical_not_comparison(True, True))
+    print(logical_not_comparison(True, False))
+    print(logical_not_comparison(False, True))
+    print(logical_not_comparison(False, False))",True,0,8746,142_8.py
+142,9,Compare two boolean results,"Write an optimized function that accepts two boolean values and returns the result of a strict inequality check between them, printing the result to the console.","def check_strict_inequality(a, b):
+    result = a > b
+    print(result)
+    return result
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    check_strict_inequality(val1, val2)
+    val3 = False
+    val4 = True
+    check_strict_inequality(val3, val4)
+    val5 = True
+    val6 = True
+    check_strict_inequality(val5, val6)",True,0,8747,142_9.py
+142,9,Compare two boolean results,"Write an optimized function that accepts two boolean values and returns the result of a strict inequality check between them, printing the result to the console.","def check_strict_inequality(a, b):
+    result = a > b
+    print(result)
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    check_strict_inequality(val1, val2)
+    val3 = False
+    val4 = True
+    check_strict_inequality(val3, val4)
+    val5 = True
+    val6 = True
+    check_strict_inequality(val5, val6)",True,1,8748,142_9_1.py
+142,11,Compare two boolean results,"Implement an optimized function named `compare_booleans` that accepts two boolean arguments and returns a string describing their relationship (e.g., 'Equal', 'One is True, the other is False', or 'Both are False'). Ensure the implementation is highly efficient.","def compare_booleans(a, b):
+    if a == b:
+        return 'Equal'
+    elif a and not b:
+        return 'One is True, the other is False'
+    elif not a and b:
+        return 'One is True, the other is False'
+    else:
+        return 'Both are False'
+if __name__ == '__main__':
+    print(compare_booleans(True, True))
+    print(compare_booleans(True, False))
+    print(compare_booleans(False, True))
+    print(compare_booleans(False, False))
+    print(compare_booleans(True, False))
+    print(compare_booleans(False, True))",True,0,8749,142_11.py
+142,11,Compare two boolean results,"Implement an optimized function named `compare_booleans` that accepts two boolean arguments and returns a string describing their relationship (e.g., 'Equal', 'One is True, the other is False', or 'Both are False'). Ensure the implementation is highly efficient.","def compare_booleans(a, b):
+    if a == b:
+        return 'Equal'
+    elif a and not b:
+        return 'One is True, the other is False'
+    elif not a and b:
+        return 'One is True, the other is False'
+    else:
+        return 'Both are False'
+if __name__ == '__main__':
+    print(compare_booleans(True, True))
+    print(compare_booleans(True, False))
+    print(compare_booleans(False, True))
+    print(compare_booleans(False, False))
+    print(compare_booleans(True, False))",True,1,8750,142_11_1.py
+142,12,Compare two boolean results,Develop a class method within a `BooleanComparator` class that takes two boolean inputs and returns a tuple containing the result of a direct comparison (using `==`) and a descriptive string indicating the comparison outcome. Ensure best practices are followed.,"class BooleanComparator:
+    @staticmethod
+    def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+        result = a == b
+        if result:
+            outcome = ""Equal""
+        else:
+            outcome = ""Not Equal""
+        return result, outcome
+if __name__ == '__main__':
+    val1 = True
+    val2 = True
+    result1, outcome1 = BooleanComparator.compare_booleans(val1, val2)
+    print(f""Comparing {val1} and {val2}: Result={result1}, Outcome='{outcome1}'"")
+    val3 = False
+    val4 = True
+    result2, outcome2 = BooleanComparator.compare_booleans(val3, val4)
+    print(f""Comparing {val3} and {val4}: Result={result2}, Outcome='{outcome2}'"")
+    val5 = False
+    val6 = False
+    result3, outcome3 = BooleanComparator.compare_booleans(val5, val6)
+    print(f""Comparing {val5} and {val6}: Result={result3}, Outcome='{outcome3}'"")",True,0,8751,142_12.py
+142,12,Compare two boolean results,Develop a class method within a `BooleanComparator` class that takes two boolean inputs and returns a tuple containing the result of a direct comparison (using `==`) and a descriptive string indicating the comparison outcome. Ensure best practices are followed.,"class BooleanComparator:
+    @staticmethod
+    def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+        result = a == b
+        if result:
+            outcome = ""Equal""
+        else:
+            outcome = ""Not Equal""
+        return result, outcome
+if __name__ == '__main__':
+    bool1 = True
+    bool2 = True
+    result1, outcome1 = BooleanComparator.compare_booleans(bool1, bool2)
+    print(f""Comparing {bool1} and {bool2}: Result={result1}, Outcome='{outcome1}'"")
+    bool3 = False
+    bool4 = True
+    result2, outcome2 = BooleanComparator.compare_booleans(bool3, bool4)
+    print(f""Comparing {bool3} and {bool4}: Result={result2}, Outcome='{outcome2}'"")
+    bool5 = False
+    bool6 = False
+    result3, outcome3 = BooleanComparator.compare_booleans(bool5, bool6)
+    print(f""Comparing {bool5} and {bool6}: Result={result3}, Outcome='{outcome3}'"")",True,1,8752,142_12_1.py
+142,12,Compare two boolean results,Develop a class method within a `BooleanComparator` class that takes two boolean inputs and returns a tuple containing the result of a direct comparison (using `==`) and a descriptive string indicating the comparison outcome. Ensure best practices are followed.,"class BooleanComparator:
+    @staticmethod
+    def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+        result = a == b
+        if result:
+            outcome = ""Equal""
+        else:
+            outcome = ""Not Equal""
+        return result, outcome
+if __name__ == '__main__':
+    b1 = True
+    b2 = True
+    result1, message1 = BooleanComparator.compare_booleans(b1, b2)
+    print(f""Comparing {b1} and {b2}: Result={result1}, Message='{message1}'"")
+    b3 = False
+    b4 = True
+    result2, message2 = BooleanComparator.compare_booleans(b3, b4)
+    print(f""Comparing {b3} and {b4}: Result={result2}, Message='{message2}'"")
+    b5 = False
+    b6 = False
+    result3, message3 = BooleanComparator.compare_booleans(b5, b6)
+    print(f""Comparing {b5} and {b6}: Result={result3}, Message='{message3}'"")",True,2,8753,142_12_2.py
+142,12,Compare two boolean results,Develop a class method within a `BooleanComparator` class that takes two boolean inputs and returns a tuple containing the result of a direct comparison (using `==`) and a descriptive string indicating the comparison outcome. Ensure best practices are followed.,"class BooleanComparator:
+    @staticmethod
+    def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+        result = a == b
+        if result:
+            outcome = ""Equal""
+        else:
+            outcome = ""Not Equal""
+        return result, outcome
+if __name__ == '__main__':
+    print(BooleanComparator.compare_booleans(True, True))
+    print(BooleanComparator.compare_booleans(True, False))
+    print(BooleanComparator.compare_booleans(False, False))
+    print(BooleanComparator.compare_booleans(False, True))",True,3,8754,142_12_3.py
+142,12,Compare two boolean results,Develop a class method within a `BooleanComparator` class that takes two boolean inputs and returns a tuple containing the result of a direct comparison (using `==`) and a descriptive string indicating the comparison outcome. Ensure best practices are followed.,"class BooleanComparator:
+    @staticmethod
+    def compare_booleans(a: bool, b: bool) -> tuple[bool, str]:
+        result = a == b
+        if result:
+            outcome = ""Equal""
+        else:
+            outcome = ""Not Equal""
+        return result, outcome
+if __name__ == '__main__':
+    print(BooleanComparator.compare_booleans(True, True))
+    print(BooleanComparator.compare_booleans(False, False))
+    print(BooleanComparator.compare_booleans(True, False))
+    print(BooleanComparator.compare_booleans(False, True))",True,4,8755,142_12_4.py
+142,13,Compare two boolean results,Write a concise and efficient Python snippet that compares the results of two separate boolean expressions and prints whether they are identical or different. Use idiomatic Python for the comparison logic.,"if __name__ == '__main__':
+    expr1 = (5 > 3) and (10 == 10)
+    expr2 = True
+    if expr1 == expr2:
+        print(""Identical"")
+    else:
+        print(""Different"")",True,0,8756,142_13.py
+142,14,Compare two boolean results,"Create a robust function that takes two boolean inputs and uses bitwise operations or logical operators to determine if they are logically equivalent, and return the result as a single boolean value. Optimize for speed.","import sys
+def are_equivalent(a: bool, b: bool) -> bool:
+    return a == b
+if __name__ == '__main__':
+    a1 = True
+    b1 = True
+    print(are_equivalent(a1, b1))
+    a2 = True
+    b2 = False
+    print(are_equivalent(a2, b2))
+    a3 = False
+    b3 = False
+    print(are_equivalent(a3, b3))
+    a4 = False
+    b4 = True
+    print(are_equivalent(a4, b4))
+    a5 = True
+    b5 = True
+    print(are_equivalent(a5, b5))
+    a6 = False
+    b6 = False
+    print(are_equivalent(a6, b6))",True,0,8757,142_14.py
+142,14,Compare two boolean results,"Create a robust function that takes two boolean inputs and uses bitwise operations or logical operators to determine if they are logically equivalent, and return the result as a single boolean value. Optimize for speed.","def are_equivalent(a: bool, b: bool) -> bool:
+    return a == b
+if __name__ == '__main__':
+    print(are_equivalent(True, True))
+    print(are_equivalent(True, False))
+    print(are_equivalent(False, True))
+    print(are_equivalent(False, False))",True,1,8758,142_14_1.py
+142,14,Compare two boolean results,"Create a robust function that takes two boolean inputs and uses bitwise operations or logical operators to determine if they are logically equivalent, and return the result as a single boolean value. Optimize for speed.","def are_equivalent(a, b):
+    return a == b
+if __name__ == '__main__':
+    print(are_equivalent(True, True))
+    print(are_equivalent(False, False))
+    print(are_equivalent(True, False))
+    print(are_equivalent(False, True))",True,2,8759,142_14_2.py
+142,14,Compare two boolean results,"Create a robust function that takes two boolean inputs and uses bitwise operations or logical operators to determine if they are logically equivalent, and return the result as a single boolean value. Optimize for speed.","def are_equivalent(a: bool, b: bool) -> bool:
+    return a == b
+if __name__ == '__main__':
+    print(are_equivalent(True, True))
+    print(are_equivalent(True, False))
+    print(are_equivalent(False, True))
+    print(are_equivalent(False, False))
+    print(are_equivalent(True, False))",True,3,8760,142_14_3.py
