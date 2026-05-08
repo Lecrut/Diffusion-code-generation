@@ -121813,3 +121813,3500 @@ if __name__ == '__main__':
         except Exception as e:
             print(f""Expression: {expr}"")
             print(f""Error: {e}\n"")",True,8,6133,99_1_8.py
+99,3,Understand boolean operator precedence,"Write an optimized Python function that takes a list of mathematical expressions (as strings) and evaluates each one, explicitly showing how Python's operator precedence dictates the evaluation order for each expression.","import operator
+def evaluate_expression_with_precedence(expressions):
+    results = []
+    for expr in expressions:
+        tokens = expr.split()
+        if not tokens:
+            results.append(None)
+            continue
+        parsed_tokens = []
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                parsed_tokens.append(float(token))
+            elif token in ""+-*/^()"":
+                parsed_tokens.append(token)
+            else:
+                raise ValueError(f""Invalid token in expression: {token}"")
+        if not parsed_tokens:
+            results.append(None)
+            continue
+        def apply_op(op, b, a):
+            if op == '+': return a + b
+            if op == '-': return a - b
+            if op == '*': return a * b
+            if op == '/':
+                if b == 0:
+                    raise ZeroDivisionError(""Division by zero"")
+                return a / b
+            if op == '^': return a ** b
+            raise ValueError(f""Unknown operator: {op}"")
+        def evaluate_tokens(tokens):
+            values = []
+            ops = []
+            i = 0
+            while i < len(tokens):
+                token = tokens[i]
+                if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                    values.append(float(token))
+                elif token in ""+-*/^"":
+                    ops.append(token)
+                i += 1
+            if not values:
+                return None
+            result = values[0]
+            op_index = 0
+            for i in range(1, len(ops)):
+                op = ops[i-1]
+                val2 = values[i]
+                val1 = result
+                if op == '(':
+                    pass
+                elif op == '(':
+                    pass
+                elif op == '(':
+                    pass
+                elif op == '(':
+                    pass
+                if op in ""+-*/^"":
+                    result = apply_op(op, val2, val1)
+                ops.pop()
+                values.append(result)
+            return values[0] if values else None
+        try:
+            result = eval(expr)
+            results.append(result)
+        except Exception as e:
+            results.append(f""Error: {e}"")
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        ""3 + 4 * 2"",
+        ""(3 + 4) * 2"",
+        ""10 / 2 - 3 * 5"",
+        ""2^3 - 1"",
+        ""5 + 6 * (7 - 8)""
+    ]
+    print(""--- Evaluating Expressions with Python's Operator Precedence ---"")
+    for expr in sample_expressions:
+        print(f""\nExpression: {expr}"")
+        try:
+            result = eval(expr)
+            print(f""Result: {result}"")
+        except Exception as e:
+            print(f""Evaluation Error: {e}"")
+        print(""---"")",True,0,6134,99_3.py
+99,3,Understand boolean operator precedence,"Write an optimized Python function that takes a list of mathematical expressions (as strings) and evaluates each one, explicitly showing how Python's operator precedence dictates the evaluation order for each expression.","def evaluate_with_precedence(expressions):
+    results = {}
+    for expr in expressions:
+        try:
+            result = eval(expr)
+            results[expr] = result
+        except Exception as e:
+            results[expr] = f""Error: {e}""
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        ""2 + 3 * 4"",
+        ""(2 + 3) * 4"",
+        ""5 + 6 / 2 - 1"",
+        ""10 / 2 + 5 * 3"",
+        ""8 - 2 * 3 + 4""
+    ]
+    print(""--- Evaluating Expressions based on Python Operator Precedence ---"")
+    evaluated_results = evaluate_with_precedence(sample_expressions)
+    for expression, result in evaluated_results.items():
+        print(f""Expression: '{expression}'"")
+        print(f""Result: {result}\n"")",True,1,6135,99_3_1.py
+99,3,Understand boolean operator precedence,"Write an optimized Python function that takes a list of mathematical expressions (as strings) and evaluates each one, explicitly showing how Python's operator precedence dictates the evaluation order for each expression.","import operator
+def evaluate_expression_with_precedence(expressions):
+    results = {}
+    for expr in expressions:
+        tokens = expr.split()
+        if not tokens:
+            results[expr] = ""Error: Empty expression""
+            continue
+        evaluated_tokens = []
+        for i, token in enumerate(tokens):
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                evaluated_tokens.append(float(token))
+            elif token in ""+-*/^()"":
+                evaluated_tokens.append(token)
+            else:
+                results[expr] = f""Error: Invalid token '{token}'""
+                break
+        else:
+            try:
+                result = eval(expr)
+                results[expr] = result
+            except Exception as e:
+                results[expr] = f""Evaluation Error: {e}""
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        ""3 + 4 * 2"",
+        ""(3 + 4) * 2"",
+        ""5 + 6 - 2"",
+        ""10 / 2 + 5 * 3"",
+        ""2 ^ 3 ^ 2"",
+        ""10 * (2 + 3) / 5""
+    ]
+    evaluation_results = evaluate_expression_with_precedence(sample_expressions)
+    for expr, result in evaluation_results.items():
+        print(f""Expression: '{expr}' -> Result: {result}"")",True,2,6136,99_3_2.py
+99,3,Understand boolean operator precedence,"Write an optimized Python function that takes a list of mathematical expressions (as strings) and evaluates each one, explicitly showing how Python's operator precedence dictates the evaluation order for each expression.","def evaluate_with_precedence(expressions):
+    results = {}
+    for expr in expressions:
+        try:
+            result = eval(expr)
+            results[expr] = result
+        except Exception as e:
+            results[expr] = f""Error: {e}""
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        ""2 + 3 * 4"",
+        ""(2 + 3) * 4"",
+        ""5 + 6 / 2 - 1"",
+        ""10 / 2 + 5 * 3"",
+        ""8 - 2 * 3 + 4""
+    ]
+    evaluation_results = evaluate_with_precedence(sample_expressions)
+    for expression, result in evaluation_results.items():
+        print(f""Expression: '{expression}'"")
+        print(f""Result: {result}\n"")",True,3,6137,99_3_3.py
+99,3,Understand boolean operator precedence,"Write an optimized Python function that takes a list of mathematical expressions (as strings) and evaluates each one, explicitly showing how Python's operator precedence dictates the evaluation order for each expression.","import operator
+def evaluate_expression_with_precedence(expression):
+    tokens = expression.split()
+    results = []
+    for i in range(len(tokens)):
+        token = tokens[i]
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            results.append(float(token))
+        elif token in ""+-*/^()"":
+            results.append(token)
+        else:
+            raise ValueError(f""Invalid token: {token}"")
+    def apply_op(op, b, a):
+        if op == '+': return a + b
+        if op == '-': return a - b
+        if op == '*': return a * b
+        if op == '/': 
+            if b == 0: raise ZeroDivisionError
+            return a / b
+        if op == '^': return a ** b
+        raise ValueError(f""Unknown operator: {op}"")
+    def process_tokens(tokens_list):
+        values = []
+        ops = []
+        for token in tokens_list:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                values.append(float(token))
+            elif token in ""+-*/^"":
+                ops.append(token)
+            else:
+                raise ValueError(f""Invalid token encountered: {token}"")
+        if not values:
+            return None
+        if not ops:
+            return values[-1]
+        temp_values = []
+        temp_ops = []
+        i = 0
+        while i < len(values):
+            if values[i] == '^' and len(values) > i + 1 and values[i+1] in (values[i+2] if i+2 < len(values) else []):
+                pass
+            temp_values.append(values[i])
+            i += 1
+        if not ops:
+            return values[0] if values else None
+        temp_values = [values[0]]
+        temp_ops = []
+        for j in range(len(values)):
+            if values[j] in ('+', '-', '*', '/', '^'):
+                if values[j] == '^':
+                    if len(temp_values) < 2:
+                        raise ValueError(""Syntax error: Missing operand for exponentiation"")
+                    op = temp_ops[-1]
+                    val2 = temp_values.pop()
+                    val1 = temp_values.pop()
+                    temp_values.append(apply_op(op, val1, val2))
+                else:
+                    op = values[j]
+                    if len(temp_values) < 2:
+                        raise ValueError(""Syntax error: Missing operands for binary operator"")
+                    val2 = temp_values.pop()
+                    val1 = temp_values.pop()
+                    temp_values.append(apply_op(op, val1, val2))
+                    temp_ops.append(op)
+            else:
+                temp_values.append(float(values[j]))
+        if not temp_values:
+            return None
+        result = temp_values[0]
+        for k in range(len(temp_ops)):
+            op = temp_ops[k]
+            val2 = temp_values.pop()
+            val1 = temp_values.pop()
+            result = apply_op(op, val1, val2)
+            temp_values.append(result)
+        return result
+    return process_tokens(tokens)
+if __name__ == '__main__':
+    expressions = [
+        ""10 + 5 * 2"",
+        ""3 + 4 * 2 / 3"",
+        ""2^3 * 4"",
+        ""100 / 5 + 20"",
+        ""8 + 2 * 3^2""
+    ]
+    for expr in expressions:
+        print(f""Expression: {expr}"")
+        try:
+            result = evaluate_expression_with_precedence(expr)
+            print(f""Result: {result}\n"")
+        except Exception as e:
+            print(f""Error evaluating {expr}: {e}\n"")",True,4,6138,99_3_4.py
+98,12,Test multiple conditions together,"Develop a complete, best-practice Python program that simulates a scenario where multiple independent conditions must all be true to proceed. Use an example involving user age, access level, and subscription status, and demonstrate the conditional logic clearly.","def check_access(age, access_level, subscription_status):
+    if age >= 18 and access_level == ""premium"" and subscription_status == True:
+        return True
+    else:
+        return False
+if __name__ == '__main__':
+    user_age = 25
+    user_access_level = ""premium""
+    user_subscription = True
+    can_proceed = check_access(user_age, user_access_level, user_subscription)
+    if can_proceed:
+        print(""Access granted. Proceeding with the operation."")
+    else:
+        print(""Access denied. One or more conditions were not met."")",True,0,6139,98_12.py
+98,12,Test multiple conditions together,"Develop a complete, best-practice Python program that simulates a scenario where multiple independent conditions must all be true to proceed. Use an example involving user age, access level, and subscription status, and demonstrate the conditional logic clearly.","def check_access(age, access_level, subscription_status):
+    if age >= 18 and access_level == ""premium"" and subscription_status == True:
+        return True
+    else:
+        return False
+if __name__ == '__main__':
+    user_age = 25
+    access_level = ""premium""
+    subscription_status = True
+    result = check_access(user_age, access_level, subscription_status)
+    if result:
+        print(""Access Granted: User meets all requirements."")
+    else:
+        print(""Access Denied: One or more conditions were not met."")",True,1,6140,98_12_1.py
+99,4,Understand boolean operator precedence,"Create a simulation using Python to test and print the result of complex boolean expressions involving `and`, `or`, `not`, and comparison operators (`==`, `>`, `<`), strictly adhering to precedence rules.",,False,0,6141,99_4.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","def setup_operator_precedence():
+    precedence_map = {
+        '(': 0,
+        ')': 0,
+        '==': 1,
+        '!=': 1,
+        '>': 2,
+        '<': 2,
+        '+': 3,
+        '-': 3,
+        '*': 4,
+        '/': 4,
+        'and': 5,
+        'or': 6
+    }
+    return precedence_map
+def evaluate_expression(expression, precedence_map):
+    tokens = expression.split()
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, values):
+        if len(values) < 2:
+            raise ValueError(""Insufficient operands for operator "" + op)
+        op2 = values.pop()
+        op1 = values.pop()
+        if op in precedence_map:
+            precedence = precedence_map[op]
+            while operator_stack and operator_stack[-1] != '(' and precedence_map.get(operator_stack[-1], 0) >= precedence:
+                op = operator_stack.pop()
+                values.pop()
+                result_stack.append(apply_op(op, result_stack))
+            operator_stack.append(op)
+        else:
+            result_stack.append(op1 + op2 if op == '+' else op1 - op2 if op == '-' else op1 * op2 if op == '*' else op1 if op == '/' else op1)
+    for token in tokens:
+        if token in precedence_map or token in '()':
+            operator_stack.append(token)
+        elif token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            result_stack.append(float(token))
+        elif token == '(':
+            operator_stack.append(token)
+        elif token == ')':
+            while operator_stack and operator_stack[-1] != '(':
+                op = operator_stack.pop()
+                values.pop()
+                result_stack.append(apply_op(op, result_stack))
+            if operator_stack and operator_stack[-1] == '(':
+                operator_stack.pop()
+        else:
+            if token in precedence_map:
+                apply_op(token, result_stack)
+            else:
+                raise ValueError(f""Unknown token: {token}"")
+    while operator_stack:
+        op = operator_stack.pop()
+        values.pop()
+        result_stack.append(apply_op(op, result_stack))
+    return result_stack[0] if result_stack else None
+if __name__ == '__main__':
+    precedence_map = setup_operator_precedence()
+    expression1 = ""10 + 5 * 2""
+    print(f""Expression: {expression1}"")
+    try:
+        result1 = evaluate_expression(expression1, precedence_map)
+        print(f""Result: {result1}\n"")
+    except Exception as e:
+        print(f""Error evaluating {expression1}: {e}\n"")
+    expression2 = ""(10 + 5) * 2""
+    print(f""Expression: {expression2}"")
+    try:
+        result2 = evaluate_expression(expression2, precedence_map)
+        print(f""Result: {result2}\n"")
+    except Exception as e:
+        print(f""Error evaluating {expression2}: {e}\n"")
+    expression3 = ""10 - 5 + 2""
+    print(f""Expression: {expression3}"")
+    try:
+        result3 = evaluate_expression(expression3, precedence_map)
+        print(f""Result: {result3}\n"")
+    except Exception as e:
+        print(f""Error evaluating {expression3}: {e}\n"")
+    expression4 = ""10 and 5 or 3""
+    print(f""Expression: {expression4}"")
+    try:
+        result4 = evaluate_expression(expression4, precedence_map)
+        print(f""Result: {result4}\n"")
+    except Exception as e:
+        print(f""Error evaluating {expression4}: {e}\n"")
+    expression5 = ""10 * 2 / 5""
+    print(f""Expression: {expression5}"")
+    try:
+        result5 = evaluate_expression(expression5, precedence_map)
+        print(f""Result: {result5}\n"")
+    except Exception as e:
+        print(f""Error evaluating {expression5}: {e}\n"")",True,0,6142,99_6.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","import operator
+precedence = {
+    '==': 1,
+    '!=': 1,
+    '>': 2,
+    '<': 2,
+    '>=': 3,
+    '<=': 3,
+    '&&': 4,
+    '||': 4
+}
+def evaluate_expression(expression, values):
+    tokens = expression.split()
+    results = []
+    for i in range(0, len(tokens), 2):
+        op = tokens[i]
+        try:
+            left = values[i]
+            right = values[i+1]
+            if op in precedence:
+                if op == '==':
+                    result = (left == right)
+                elif op == '!=':
+                    result = (left != right)
+                elif op == '>':
+                    result = (left > right)
+                elif op == '<':
+                    result = (left < right)
+                elif op == '>=':
+                    result = (left >= right)
+                elif op == '<=':
+                    result = (left <= right)
+                elif op == '&&':
+                    result = (left and right)
+                elif op == '||':
+                    result = (left or right)
+                results.append(result)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        except IndexError:
+            raise ValueError(""Malformed expression: missing operands"")
+        except TypeError:
+            raise ValueError(f""Type error during evaluation: {op} {left} {right}"")
+    return results
+if __name__ == '__main__':
+    sample_expression = ""5 > 3 && 10 == 10 || 2 < 1""
+    sample_values = [5, 3, 10, 10, 2, 1]
+    print(f""Expression: {sample_expression}"")
+    print(f""Values: {sample_values}"")
+    try:
+        evaluation_results = evaluate_expression(sample_expression, sample_values)
+        print(f""Evaluation Results: {evaluation_results}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""-"" * 20)
+    sample_expression_2 = ""10 >= 5 && 20 < 15""
+    sample_values_2 = [10, 5, 20, 15]
+    print(f""Expression: {sample_expression_2}"")
+    print(f""Values: {sample_values_2}"")
+    try:
+        evaluation_results_2 = evaluate_expression(sample_expression_2, sample_values_2)
+        print(f""Evaluation Results: {evaluation_results_2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,6143,99_6_1.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","import operator
+precedence = {
+    '==': 1,
+    '!=': 1,
+    '>': 2,
+    '<': 2,
+    '>=': 3,
+    '<=': 3,
+    '&&': 4,
+    '||': 4
+}
+def evaluate_expression(expression, values):
+    tokens = expression.split()
+    if not tokens:
+        return None
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, b, a):
+        if op == '==':
+            return a == b
+        elif op == '!=':
+            return a != b
+        elif op == '>':
+            return a > b
+        elif op == '<':
+            return a < b
+        elif op == '>=':
+            return a >= b
+        elif op == '<=':
+            return a <= b
+        elif op == '&&':
+            return a and b
+        elif op == '||':
+            return a or b
+        return None
+    for token in tokens:
+        if token in values:
+            result_stack.append(values[token])
+        elif token in precedence:
+            while (operator_stack and precedence.get(operator_stack[-1], 0) >= precedence.get(token, 0)):
+                op = operator_stack.pop()
+                val2 = result_stack.pop()
+                val1 = result_stack.pop()
+                result_stack.append(apply_op(op, val2, val1))
+            operator_stack.append(token)
+        else:
+            try:
+                result_stack.append(float(token))
+            except ValueError:
+                pass
+    while operator_stack:
+        op = operator_stack.pop()
+        val2 = result_stack.pop()
+        val1 = result_stack.pop()
+        result_stack.append(apply_op(op, val2, val1))
+    if len(result_stack) == 1:
+        return result_stack[0]
+    return None
+if __name__ == '__main__':
+    sample_expression = ""5 > 3 && 10 == 10 || 2 < 1""
+    sample_values = {
+        '5': 5,
+        '3': 3,
+        '10': 10,
+        '2': 2,
+        '1': 1
+    }
+    result = evaluate_expression(sample_expression, sample_values)
+    print(f""Expression: {sample_expression}"")
+    print(f""Values: {sample_values}"")
+    print(f""Result: {result}"")",True,2,6144,99_6_2.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","def setup_operator_precedence():
+    precedence_map = {
+        '(': 0,
+        ')': 0,
+        '==': 1,
+        '!=': 1,
+        '>': 2,
+        '<': 2,
+        '+': 3,
+        '-': 3,
+        '*': 4,
+        '/': 4,
+        'and': 5,
+        'or': 6
+    }
+    return precedence_map
+def evaluate_expression(expression, precedence_map):
+    tokens = expression.split()
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, values):
+        if len(values) < 2:
+            raise ValueError(""Syntax error: insufficient operands"")
+        op2 = values.pop()
+        op1 = values.pop()
+        if op in precedence_map:
+            result = None
+            if op == '+':
+                result = op1 + op2
+            elif op == '-':
+                result = op1 - op2
+            elif op == '*':
+                result = op1 * op2
+            elif op == '/':
+                result = op1 / op2
+            elif op == '==':
+                result = 1 if op1 == op2 else 0
+            elif op == '!=':
+                result = 1 if op1 != op2 else 0
+            elif op == '>':
+                result = 1 if op1 > op2 else 0
+            elif op == '<':
+                result = 1 if op1 < op2 else 0
+            elif op == 'and':
+                result = 1 if op1 and op2 else 0
+            elif op == 'or':
+                result = 1 if op1 or op2 else 0
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+            values.append(result)
+            return
+        else:
+            raise ValueError(f""Unknown operator: {op}"")
+    for token in tokens:
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            values = [float(token)]
+        elif token == '(':
+            operator_stack.append(token)
+        elif token == ')':
+            while operator_stack and operator_stack[-1] != '(':
+                apply_op(operator_stack.pop(), values)
+            if not operator_stack or operator_stack[-1] != '(':
+                raise ValueError(""Mismatched parentheses"")
+            operator_stack.pop()
+        elif token in precedence_map:
+            while (operator_stack and operator_stack[-1] != '(' and
+                   precedence_map.get(operator_stack[-1], 0) >= precedence_map[token]):
+                apply_op(operator_stack.pop(), values)
+            operator_stack.append(token)
+        else:
+            raise ValueError(f""Invalid token: {token}"")
+    while operator_stack:
+        if operator_stack[-1] == '(':
+            raise ValueError(""Mismatched parentheses"")
+        apply_op(operator_stack.pop(), values)
+    if len(values) == 1:
+        return values[0]
+    else:
+        raise ValueError(""Invalid expression structure"")
+if __name__ == '__main__':
+    operator_precedence = setup_operator_precedence()
+    expression1 = ""10 + 5 * 2""
+    print(f""Expression: {expression1}"")
+    try:
+        result1 = evaluate_expression(expression1, operator_precedence)
+        print(f""Result: {result1}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression1}: {e}\n"")
+    expression2 = ""(10 + 5) * 2""
+    print(f""Expression: {expression2}"")
+    try:
+        result2 = evaluate_expression(expression2, operator_precedence)
+        print(f""Result: {result2}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression2}: {e}\n"")
+    expression3 = ""10 > 5 and 3 < 8""
+    print(f""Expression: {expression3}"")
+    try:
+        result3 = evaluate_expression(expression3, operator_precedence)
+        print(f""Result: {result3}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression3}: {e}\n"")
+    expression4 = ""20 - 10 / 2""
+    print(f""Expression: {expression4}"")
+    try:
+        result4 = evaluate_expression(expression4, operator_precedence)
+        print(f""Result: {result4}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression4}: {e}\n"")",True,3,6145,99_6_3.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","import operator
+precedence = {
+    '==': 1,
+    '!=': 1,
+    '>': 2,
+    '<': 2,
+    '>=': 3,
+    '<=': 3,
+    '&&': 4,
+    '||': 4
+}
+def evaluate_expression(expression, values):
+    tokens = expression.split()
+    results = []
+    for i in range(0, len(tokens), 2):
+        op = tokens[i]
+        try:
+            left = values[i]
+            right = values[i+1]
+            if op in precedence:
+                if op == '==':
+                    result = (left == right)
+                elif op == '!=':
+                    result = (left != right)
+                elif op == '>':
+                    result = (left > right)
+                elif op == '<':
+                    result = (left < right)
+                elif op == '>=':
+                    result = (left >= right)
+                elif op == '<=':
+                    result = (left <= right)
+                elif op == '&&':
+                    result = (left and right)
+                elif op == '||':
+                    result = (left or right)
+                results.append(result)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        except IndexError:
+            raise ValueError(""Malformed expression: missing operands"")
+        except TypeError:
+            raise ValueError(f""Type error during evaluation: {op} {left} {right}"")
+    return results
+if __name__ == '__main__':
+    sample_expression = ""5 > 3 && 10 == 10 || 2 < 1""
+    sample_values = [5, 3, 10, 10, 2, 1]
+    print(f""Expression: {sample_expression}"")
+    print(f""Values: {sample_values}"")
+    try:
+        final_result = evaluate_expression(sample_expression, sample_values)
+        print(f""Result: {final_result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""-"" * 20)
+    sample_expression_2 = ""10 >= 5 && 20 < 30""
+    sample_values_2 = [10, 5, 20, 30]
+    print(f""Expression: {sample_expression_2}"")
+    print(f""Values: {sample_values_2}"")
+    try:
+        final_result_2 = evaluate_expression(sample_expression_2, sample_values_2)
+        print(f""Result: {final_result_2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,6146,99_6_4.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","def setup_operator_precedence():
+    precedence_map = {
+        '(': 0,
+        ')': 0,
+        '|': 1,
+        '&': 2,
+        '==': 3,
+        '!=': 3,
+        '>': 4,
+        '<': 4,
+        '+': 5,
+        '-': 5,
+        '*': 6,
+        '/': 6,
+        'not': 7
+    }
+    return precedence_map
+def evaluate_expression(expression, precedence_map):
+    tokens = expression.split()
+    if not tokens:
+        return None
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, values):
+        if len(values) < 2:
+            raise ValueError(""Insufficient operands for operator "" + op)
+        right = values.pop()
+        left = values.pop()
+        if op == '+':
+            values.append(left + right)
+        elif op == '-':
+            values.append(left - right)
+        elif op == '*':
+            values.append(left * right)
+        elif op == '/':
+            if right == 0:
+                raise ZeroDivisionError(""Division by zero"")
+            values.append(left / right)
+        elif op == '==':
+            values.append(left == right)
+        elif op == '!=':
+            values.append(left != right)
+        elif op == '>':
+            values.append(left > right)
+        elif op == '<':
+            values.append(left < right)
+        elif op == '&':
+            values.append(left and right)
+        elif op == '|':
+            values.append(left or right)
+        elif op == 'not':
+            values.append(not left)
+        else:
+            raise ValueError(""Unknown operator: "" + op)
+        values.append(values)
+    for token in tokens:
+        if token in precedence_map:
+            op_precedence = precedence_map[token]
+            if token in '()':
+                if token == '(':
+                    operator_stack.append(token)
+                elif token == ')':
+                    while operator_stack and operator_stack[-1] != '(':
+                        op = operator_stack.pop()
+                        apply_op(op, result_stack)
+                    if not operator_stack or operator_stack[-1] != '(':
+                        raise ValueError(""Mismatched parentheses"")
+                    operator_stack.pop()
+                continue
+            if token == 'not':
+                if len(result_stack) < 1:
+                    raise ValueError(""Not enough operands for 'not'"")
+                operand = result_stack.pop()
+                result_stack.append(not operand)
+                continue
+            while (operator_stack and operator_stack[-1] != '(' and 
+                   precedence_map.get(operator_stack[-1], -1) >= op_precedence):
+                op = operator_stack.pop()
+                apply_op(op, result_stack)
+            operator_stack.append(token)
+        else:
+            try:
+                value = float(token)
+                result_stack.append(value)
+            except ValueError:
+                raise ValueError(f""Invalid token encountered: {token}"")
+    while operator_stack:
+        op = operator_stack.pop()
+        if op == '(':
+            raise ValueError(""Mismatched parentheses"")
+        apply_op(op, result_stack)
+    if len(result_stack) != 1:
+        raise ValueError(""Invalid expression structure"")
+    return result_stack[0]
+if __name__ == '__main__':
+    operator_precedence = setup_operator_precedence()
+    expression1 = ""10 + 5 * 2""
+    expression2 = ""(10 + 5) * 2""
+    expression3 = ""not (10 > 5 & 3 < 8)""
+    expression4 = ""10 / 2 + 3""
+    print(f""Expression 1: {expression1}"")
+    try:
+        result1 = evaluate_expression(expression1, operator_precedence)
+        print(f""Result 1: {result1}\n"")
+    except Exception as e:
+        print(f""Error evaluating Expression 1: {e}\n"")
+    print(f""Expression 2: {expression2}"")
+    try:
+        result2 = evaluate_expression(expression2, operator_precedence)
+        print(f""Result 2: {result2}\n"")
+    except Exception as e:
+        print(f""Error evaluating Expression 2: {e}\n"")
+    print(f""Expression 3: {expression3}"")
+    try:
+        result3 = evaluate_expression(expression3, operator_precedence)
+        print(f""Result 3: {result3}\n"")
+    except Exception as e:
+        print(f""Error evaluating Expression 3: {e}\n"")
+    print(f""Expression 4: {expression4}"")
+    try:
+        result4 = evaluate_expression(expression4, operator_precedence)
+        print(f""Result 4: {result4}\n"")
+    except Exception as e:
+        print(f""Error evaluating Expression 4: {e}\n"")",True,5,6147,99_6_5.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","def setup_operator_precedence():
+    precedence = {
+        '(': 0,
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2,
+        'not': 3,
+        'and': 4,
+        'or': 5
+    }
+    return precedence
+def evaluate_expression(expression, precedence_map):
+    tokens = expression.split()
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, values):
+        if len(values) < 2:
+            raise ValueError(""Insufficient operands for operator "" + op)
+        op2 = values.pop()
+        op1 = values.pop()
+        if op in ('+', '-', '*', '/', '^'):
+            if op == '+':
+                result = op1 + op2
+            elif op == '-':
+                result = op1 - op2
+            elif op == '*':
+                result = op1 * op2
+            elif op == '/':
+                result = op1 / op2
+            elif op == '^':
+                result = op1 ** op2
+            else:
+                raise ValueError(""Unknown arithmetic operation: "" + op)
+            values.append(result)
+        else:
+            raise ValueError(""Unknown operator: "" + op)
+    for token in tokens:
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            result_stack.append(float(token))
+        elif token == '(':
+            operator_stack.append(token)
+        elif token == ')':
+            while operator_stack and operator_stack[-1] != '(':
+                op = operator_stack.pop()
+                apply_op(op, result_stack)
+            if operator_stack and operator_stack[-1] == '(':
+                operator_stack.pop()
+        elif token in precedence_map:
+            current_precedence = precedence_map[token]
+            while (operator_stack and operator_stack[-1] != '(' and
+                   precedence_map.get(operator_stack[-1], 0) >= current_precedence):
+                op = operator_stack.pop()
+                apply_op(op, result_stack)
+            operator_stack.append(token)
+        else:
+            raise ValueError(""Invalid token encountered: "" + token)
+    while operator_stack:
+        op = operator_stack.pop()
+        apply_op(op, result_stack)
+    return result_stack[0] if result_stack else None
+if __name__ == '__main__':
+    precedence_map = setup_operator_precedence()
+    expression1 = ""10 + 5 * 2""
+    print(f""Expression: {expression1}"")
+    try:
+        result1 = evaluate_expression(expression1, precedence_map)
+        print(f""Result: {result1}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression1}: {e}\n"")
+    expression2 = ""(10 + 5) * 2""
+    print(f""Expression: {expression2}"")
+    try:
+        result2 = evaluate_expression(expression2, precedence_map)
+        print(f""Result: {result2}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression2}: {e}\n"")
+    expression3 = ""10 - 5 + 2""
+    print(f""Expression: {expression3}"")
+    try:
+        result3 = evaluate_expression(expression3, precedence_map)
+        print(f""Result: {result3}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression3}: {e}\n"")
+    expression4 = ""10 and 5 or 2""
+    print(f""Expression: {expression4}"")
+    try:
+        print(""Note: Boolean logic evaluation is structural, not arithmetic."")
+        print(f""Structure check: 'and' (4) vs 'or' (5). 'or' should bind less tightly."")
+        result4 = evaluate_expression(expression4, precedence_map)
+        print(f""Result (Arithmetic context): {result4}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression4}: {e}\n"")",True,6,6148,99_6_6.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","def setup_operator_precedence():
+    precedence_map = {
+        '(': 0,
+        ')': 0,
+        '==': 1,
+        '!=': 1,
+        '>': 2,
+        '<': 2,
+        '+': 3,
+        '-': 3,
+        '*': 4,
+        '/': 4,
+        'and': 5,
+        'or': 6
+    }
+    return precedence_map
+def evaluate_expression(expression, precedence_map):
+    tokens = expression.split()
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, values):
+        if len(values) < 2:
+            raise ValueError(""Syntax error: insufficient operands"")
+        op2 = values.pop()
+        op1 = values.pop()
+        if op in precedence_map:
+            result = None
+            if op == '+':
+                result = op1 + op2
+            elif op == '-':
+                result = op1 - op2
+            elif op == '*':
+                result = op1 * op2
+            elif op == '/':
+                result = op1 / op2
+            elif op == '==':
+                result = 1 if op1 == op2 else 0
+            elif op == '!=':
+                result = 1 if op1 != op2 else 0
+            elif op == '>':
+                result = 1 if op1 > op2 else 0
+            elif op == '<':
+                result = 1 if op1 < op2 else 0
+            elif op == 'and':
+                result = 1 if op1 and op2 else 0
+            elif op == 'or':
+                result = 1 if op1 or op2 else 0
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+            values.append(result)
+            return
+        else:
+            raise ValueError(f""Unknown operator: {op}"")
+    for token in tokens:
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            values = [float(token)]
+        elif token == '(':
+            operator_stack.append(token)
+        elif token == ')':
+            while operator_stack and operator_stack[-1] != '(':
+                apply_op(operator_stack.pop(), values)
+            if not operator_stack or operator_stack[-1] != '(':
+                raise ValueError(""Mismatched parentheses"")
+            operator_stack.pop()
+        elif token in precedence_map:
+            while (operator_stack and operator_stack[-1] != '(' and
+                   precedence_map.get(operator_stack[-1], 0) >= precedence_map[token]):
+                apply_op(operator_stack.pop(), values)
+            operator_stack.append(token)
+        else:
+            raise ValueError(f""Invalid token: {token}"")
+    while operator_stack:
+        if operator_stack[-1] == '(':
+            raise ValueError(""Mismatched parentheses"")
+        apply_op(operator_stack.pop(), values)
+    if len(values) != 1:
+        raise ValueError(""Invalid expression structure"")
+    return values[0]
+if __name__ == '__main__':
+    precedence_map = setup_operator_precedence()
+    expression1 = ""10 + 5 * 2""
+    print(f""Expression: {expression1}"")
+    try:
+        result1 = evaluate_expression(expression1, precedence_map)
+        print(f""Result: {result1}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression1}: {e}\n"")
+    expression2 = ""(10 + 5) * 2""
+    print(f""Expression: {expression2}"")
+    try:
+        result2 = evaluate_expression(expression2, precedence_map)
+        print(f""Result: {result2}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression2}: {e}\n"")
+    expression3 = ""20 > 10 and 5 < 3""
+    print(f""Expression: {expression3}"")
+    try:
+        result3 = evaluate_expression(expression3, precedence_map)
+        print(f""Result: {result3}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression3}: {e}\n"")
+    expression4 = ""5 + 3 * (8 - 2) / 4""
+    print(f""Expression: {expression4}"")
+    try:
+        result4 = evaluate_expression(expression4, precedence_map)
+        print(f""Result: {result4}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression4}: {e}\n"")",True,7,6149,99_6_7.py
+99,6,Understand boolean operator precedence,"Write a detailed tutorial script in Python that uses dictionaries to map operators to their relative precedence levels, demonstrating how to structure logic for complex conditional statements.","def setup_operator_precedence():
+    precedence_map = {
+        '(': 0,
+        ')': 0,
+        '==': 1,
+        '!=': 1,
+        '>': 2,
+        '<': 2,
+        '+': 3,
+        '-': 3,
+        '*': 4,
+        '/': 4,
+        'and': 5,
+        'or': 6
+    }
+    return precedence_map
+def evaluate_expression(expression, precedence_map):
+    tokens = expression.split()
+    result_stack = []
+    operator_stack = []
+    def apply_op(op, values):
+        if len(values) < 2:
+            raise ValueError(""Syntax error: insufficient operands"")
+        op2 = values.pop()
+        op1 = values.pop()
+        if op in precedence_map:
+            result = None
+            if op == '+':
+                result = op1 + op2
+            elif op == '-':
+                result = op1 - op2
+            elif op == '*':
+                result = op1 * op2
+            elif op == '/':
+                result = op1 / op2
+            elif op == '==':
+                result = 1 if op1 == op2 else 0
+            elif op == '!=':
+                result = 1 if op1 != op2 else 0
+            elif op == '>':
+                result = 1 if op1 > op2 else 0
+            elif op == '<':
+                result = 1 if op1 < op2 else 0
+            elif op == 'and':
+                result = 1 if op1 and op2 else 0
+            elif op == 'or':
+                result = 1 if op1 or op2 else 0
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+            values.append(result)
+            return
+        else:
+            raise ValueError(f""Unknown operator: {op}"")
+    for token in tokens:
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            values = [float(token)]
+        elif token == '(':
+            operator_stack.append(token)
+        elif token == ')':
+            while operator_stack and operator_stack[-1] != '(':
+                apply_op(operator_stack.pop(), values)
+            if not operator_stack or operator_stack[-1] != '(':
+                raise ValueError(""Mismatched parentheses"")
+            operator_stack.pop()
+        elif token in precedence_map:
+            while (operator_stack and operator_stack[-1] != '(' and
+                   precedence_map.get(operator_stack[-1], 0) >= precedence_map[token]):
+                apply_op(operator_stack.pop(), values)
+            operator_stack.append(token)
+        else:
+            raise ValueError(f""Invalid token: {token}"")
+    while operator_stack:
+        if operator_stack[-1] == '(':
+            raise ValueError(""Mismatched parentheses"")
+        apply_op(operator_stack.pop(), values)
+    if len(values) != 1:
+        raise ValueError(""Invalid expression structure"")
+    return values[0]
+if __name__ == '__main__':
+    operator_precedence = setup_operator_precedence()
+    expression1 = ""10 + 5 * 2""
+    print(f""Expression: {expression1}"")
+    try:
+        result1 = evaluate_expression(expression1, operator_precedence)
+        print(f""Result: {result1}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression1}: {e}\n"")
+    expression2 = ""(10 + 5) * 2""
+    print(f""Expression: {expression2}"")
+    try:
+        result2 = evaluate_expression(expression2, operator_precedence)
+        print(f""Result: {result2}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression2}: {e}\n"")
+    expression3 = ""10 > 5 and 3 < 8""
+    print(f""Expression: {expression3}"")
+    try:
+        result3 = evaluate_expression(expression3, operator_precedence)
+        print(f""Result: {result3}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression3}: {e}\n"")
+    expression4 = ""20 - 10 / 2""
+    print(f""Expression: {expression4}"")
+    try:
+        result4 = evaluate_expression(expression4, operator_precedence)
+        print(f""Result: {result4}\n"")
+    except ValueError as e:
+        print(f""Error evaluating {expression4}: {e}\n"")",True,8,6150,99_6_8.py
+99,5,Understand boolean operator precedence,"Implement a function that uses Python's built-in `eval()` function safely (handling potential errors) to evaluate a string expression, and include a detailed explanation of how precedence affects the result.","def safe_eval_expression(expression):
+    try:
+        result = eval(expression)
+        return result
+    except Exception as e:
+        return f""Error: {e}""
+expression1 = ""10 + 5 * 2""
+expression2 = ""(10 + 5) * 2""
+expression3 = ""10 + 5 * 2 - 1""
+expression4 = ""10 + 5 * (2 - 1)""
+print(f""Evaluating '{expression1}': {safe_eval_expression(expression1)}"")
+print(f""Evaluating '{expression2}': {safe_eval_expression(expression2)}"")
+print(f""Evaluating '{expression3}': {safe_eval_expression(expression3)}"")
+print(f""Evaluating '{expression4}': {safe_eval_expression(expression4)}"")
+print(""\n--- Explanation of Precedence ---"")
+print(""Python's eval() respects standard mathematical operator precedence rules."")
+print(""1. Multiplication (*) and Division (/) have higher precedence than Addition (+) and Subtraction (-)."")
+print(""2. Parentheses () override standard precedence, forcing the operations inside them to be evaluated first."")
+print(""\nExample Breakdown:"")
+print(f""'{expression1}' (10 + 5 * 2): Multiplication (5 * 2 = 10) is performed before addition. Result: 10 + 10 = 20."")
+print(f""'{expression2}' ((10 + 5) * 2): Parentheses force the addition (10 + 5 = 15) to happen first. Then multiplication (15 * 2 = 30)."")
+print(f""'{expression3}' (10 + 5 * 2 - 1): Multiplication (5 * 2 = 10) is done first, then addition and subtraction from left to right. (10 + 10 - 1 = 19)."")
+print(f""'{expression4}' (10 + 5 * (2 - 1)): Parentheses force (2 - 1 = 1) first. Then multiplication (5 * 1 = 5). Finally, addition (10 + 5 = 15)."")
+if __name__ == '__main__':
+    pass",True,0,6151,99_5.py
+99,8,Understand boolean operator precedence,"Implement a function that takes a list of operands and a list of operators, and calculates the result of the sequence, explicitly showing how the order of operations (e.g., multiplication before addition) is handled.","def calculate_expression(operands, operators):
+    if not operands:
+        return None
+    result = operands[0]
+    current_operator_index = 0
+    for i in range(len(operators)):
+        operator = operators[i]
+        operand = operands[i + 1]
+        if operator == '+':
+            result += operand
+        elif operator == '-':
+            result -= operand
+        elif operator == '*':
+            result *= operand
+        elif operator == '/':
+            if operand == 0:
+                raise ZeroDivisionError(""Division by zero"")
+            result /= operand
+        else:
+            raise ValueError(f""Unsupported operator: {operator}"")
+    return result
+if __name__ == '__main__':
+    operands1 = [3, 4, 2]
+    operators1 = ['+', '*']
+    print(f""Operands: {operands1}, Operators: {operators1}"")
+    try:
+        result1 = calculate_expression(operands1, operators1)
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands2 = [10, 5, 2]
+    operators2 = ['-', '/']
+    print(f""\nOperands: {operands2}, Operators: {operators2}"")
+    try:
+        result2 = calculate_expression(operands2, operators2)
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands3 = [2, 3, 4, 5]
+    operators3 = ['+', '-', '*', '/']
+    print(f""\nOperands: {operands3}, Operators: {operators3}"")
+    try:
+        result3 = calculate_expression(operands3, operators3)
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error: {e}"")",True,0,6152,99_8.py
+99,8,Understand boolean operator precedence,"Implement a function that takes a list of operands and a list of operators, and calculates the result of the sequence, explicitly showing how the order of operations (e.g., multiplication before addition) is handled.","def calculate_expression(operands, operators):
+    if not operands:
+        return None
+    result = operands[0]
+    current_operator_index = 0
+    for i in range(len(operators)):
+        operator = operators[i]
+        operand = operands[i + 1]
+        if operator == '+':
+            result += operand
+        elif operator == '-':
+            result -= operand
+        elif operator == '*':
+            result *= operand
+        elif operator == '/':
+            if operand == 0:
+                raise ZeroDivisionError(""Division by zero"")
+            result /= operand
+        else:
+            raise ValueError(f""Unsupported operator: {operator}"")
+    return result
+if __name__ == '__main__':
+    operands1 = [10, 5, 2]
+    operators1 = ['+', '*']
+    print(f""Operands: {operands1}, Operators: {operators1}"")
+    try:
+        result1 = calculate_expression(operands1, operators1)
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands2 = [20, 4, 3]
+    operators2 = ['-', '/']
+    print(f""\nOperands: {operands2}, Operators: {operators2}"")
+    try:
+        result2 = calculate_expression(operands2, operators2)
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands3 = [10, 2, 5, 3]
+    operators3 = ['+', '*', '-', '/']
+    print(f""\nOperands: {operands3}, Operators: {operators3}"")
+    try:
+        result3 = calculate_expression(operands3, operators3)
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error: {e}"")",True,1,6153,99_8_1.py
+99,8,Understand boolean operator precedence,"Implement a function that takes a list of operands and a list of operators, and calculates the result of the sequence, explicitly showing how the order of operations (e.g., multiplication before addition) is handled.","def calculate_expression(operands, operators):
+    if not operands:
+        return None
+    if len(operands) != len(operators) + 1:
+        raise ValueError(""Operands and operators lists must have lengths differing by exactly one."")
+    result = list(operands)
+    i = 0
+    while i < len(operators):
+        operator = operators[i]
+        operand1 = result[i]
+        operand2 = result[i+1]
+        if operator == '+':
+            result[i] = operand1 + operand2
+            result.pop(i+1)
+        elif operator == '-':
+            result[i] = operand1 - operand2
+            result.pop(i+1)
+        elif operator == '*':
+            result[i] = operand1 * operand2
+            result.pop(i+1)
+        elif operator == '/':
+            if operand2 == 0:
+                raise ZeroDivisionError(""Division by zero encountered."")
+            result[i] = operand1 / operand2
+            result.pop(i+1)
+        else:
+            raise ValueError(f""Unknown operator: {operator}"")
+        i = 0                                                                   
+    return result[0]
+if __name__ == '__main__':
+    operands1 = [3, 4, 2]
+    operators1 = ['+', '*']
+    print(f""Operands: {operands1}, Operators: {operators1}"")
+    try:
+        result1 = calculate_expression(operands1, operators1)
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands2 = [10, 5, 2, 3]
+    operators2 = ['-', '+', '*', '/']
+    print(f""\nOperands: {operands2}, Operators: {operators2}"")
+    try:
+        result2 = calculate_expression(operands2, operators2)
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands3 = [10, 20, 30]
+    operators3 = ['+', '+']
+    print(f""\nOperands: {operands3}, Operators: {operators3}"")
+    try:
+        result3 = calculate_expression(operands3, operators3)
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error: {e}"")",True,2,6154,99_8_2.py
+99,8,Understand boolean operator precedence,"Implement a function that takes a list of operands and a list of operators, and calculates the result of the sequence, explicitly showing how the order of operations (e.g., multiplication before addition) is handled.","def calculate_expression(operands, operators):
+    if not operands:
+        return None
+    result = operands[0]
+    current_operator_index = 0
+    for i in range(len(operators)):
+        operator = operators[i]
+        operand = operands[i + 1]
+        if operator == '+':
+            result += operand
+        elif operator == '-':
+            result -= operand
+        elif operator == '*':
+            result *= operand
+        elif operator == '/':
+            if operand == 0:
+                raise ZeroDivisionError(""Division by zero"")
+            result /= operand
+        else:
+            raise ValueError(f""Unsupported operator: {operator}"")
+    return result
+if __name__ == '__main__':
+    operands1 = [5, 3, 2]
+    operators1 = ['+', '*']
+    print(f""Operands: {operands1}, Operators: {operators1}"")
+    try:
+        result1 = calculate_expression(operands1, operators1)
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands2 = [10, 4, 2]
+    operators2 = ['-', '+', '*']
+    print(f""\nOperands: {operands2}, Operators: {operators2}"")
+    try:
+        result2 = calculate_expression(operands2, operators2)
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands3 = [20, 5, 2, 3]
+    operators3 = ['*', '/', '+']
+    print(f""\nOperands: {operands3}, Operators: {operators3}"")
+    try:
+        result3 = calculate_expression(operands3, operators3)
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error: {e}"")",True,3,6155,99_8_3.py
+99,8,Understand boolean operator precedence,"Implement a function that takes a list of operands and a list of operators, and calculates the result of the sequence, explicitly showing how the order of operations (e.g., multiplication before addition) is handled.","def calculate_expression(operands, operators):
+    if not operands:
+        return None
+    if len(operands) != len(operators) + 1:
+        raise ValueError(""Operands and operators lists must have a length difference of exactly one."")
+    result = list(operands)
+    i = 0
+    while i < len(operators):
+        operator = operators[i]
+        operand1 = result[i]
+        operand2 = result[i+1]
+        if operator == '+':
+            result[i] = operand1 + operand2
+            result.pop(i + 1)
+        elif operator == '-':
+            result[i] = operand1 - operand2
+            result.pop(i + 1)
+        elif operator == '*':
+            result[i] = operand1 * operand2
+            result.pop(i + 1)
+        elif operator == '/':
+            if operand2 == 0:
+                raise ZeroDivisionError(""Division by zero encountered"")
+            result[i] = operand1 / operand2
+            result.pop(i + 1)
+        else:
+            raise ValueError(f""Unknown operator: {operator}"")
+        i = 0                                                                   
+    return result[0] if result else None
+if __name__ == '__main__':
+    operands1 = [3, 4, 2]
+    operators1 = ['*', '+']
+    print(f""Operands: {operands1}, Operators: {operators1}"")
+    try:
+        result1 = calculate_expression(operands1, operators1)
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands2 = [10, 5, 2, 3]
+    operators2 = ['-', '*', '/']
+    print(f""\nOperands: {operands2}, Operators: {operators2}"")
+    try:
+        result2 = calculate_expression(operands2, operators2)
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    operands3 = [1, 2, 3, 4, 5]
+    operators3 = ['+', '-', '*', '/']
+    print(f""\nOperands: {operands3}, Operators: {operators3}"")
+    try:
+        result3 = calculate_expression(operands3, operators3)
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error: {e}"")",True,4,6156,99_8_4.py
+99,9,Understand boolean operator precedence,"Write a comprehensive, production-ready Python module that analyzes a user-provided boolean expression string, validates its structure, and returns the evaluated result, clearly documenting the precedence rules applied.","import re
+class BooleanExpressionAnalyzer:
+    def __init__(self):
+        self.precedence = {
+            '(': 0,
+            ')': 0,
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1
+        }
+    def _tokenize(self, expression):
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalpha():
+                if char.upper() == 'NOT':
+                    tokens.append('NOT')
+                    i += 3
+                elif char.upper() == 'AND':
+                    tokens.append('AND')
+                    i += 3
+                elif char.upper() == 'OR':
+                    tokens.append('OR')
+                    i += 2
+                else:
+                    if expression[i:i+4].upper() == 'TRUE':
+                        tokens.append('TRUE')
+                        i += 4
+                    elif expression[i:i+5].upper() == 'FALSE':
+                        tokens.append('FALSE')
+                        i += 5
+                    else:
+                        raise ValueError(f""Unknown token starting at index {i}: {expression[i:]}"")
+            elif char in '()':
+                tokens.append(char)
+                i += 1
+            else:
+                raise ValueError(f""Invalid character in expression: {char} at index {i}"")
+        return tokens
+    def _shunting_yard(self, tokens):
+        output_queue = []
+        operator_stack = []
+        for token in tokens:
+            if token in ('TRUE', 'FALSE'):
+                output_queue.append(token)
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack and operator_stack[-1] != '(':
+                    output_queue.append(operator_stack.pop())
+                if not operator_stack or operator_stack[-1] != '(':
+                    raise ValueError(""Mismatched parentheses"")
+                operator_stack.pop()
+            elif token in self.precedence:
+                while (operator_stack and operator_stack[-1] != '(' and
+                       self.precedence.get(operator_stack[-1], 0) >= self.precedence[token]):
+                    output_queue.append(operator_stack.pop())
+                operator_stack.append(token)
+            else:
+                raise ValueError(f""Unexpected token during Shunting-Yard: {token}"")
+        while operator_stack:
+            top = operator_stack.pop()
+            if top == '(':
+                raise ValueError(""Mismatched parentheses"")
+            output_queue.append(top)
+        return output_queue
+    def _evaluate(self, postfix_tokens, values):
+        stack = []
+        for token in postfix_tokens:
+            if token == 'TRUE':
+                stack.append(True)
+            elif token == 'FALSE':
+                stack.append(False)
+            elif token in ('NOT'):
+                if len(stack) < 1:
+                    raise ValueError(""Syntax error: NOT requires an operand"")
+                operand = stack.pop()
+                stack.append(not operand)
+            elif token in ('AND'):
+                if len(stack) < 2:
+                    raise ValueError(""Syntax error: AND requires two operands"")
+                right = stack.pop()
+                left = stack.pop()
+                stack.append(left and right)
+            elif token in ('OR'):
+                if len(stack) < 2:
+                    raise ValueError(""Syntax error: OR requires two operands"")
+                right = stack.pop()
+                left = stack.pop()
+                stack.append(left or right)
+            else:
+                raise ValueError(f""Unknown token during evaluation: {token}"")
+        if len(stack) != 1:
+            raise ValueError(""Invalid expression structure remaining on stack"")
+        return stack[0]
+    def analyze(self, expression):
+        tokens = self._tokenize(expression)
+        postfix = self._shunting_yard(tokens)
+        result = self._evaluate(postfix, [])
+        return result
+if __name__ == '__main__':
+    analyzer = BooleanExpressionAnalyzer()
+    test_cases = [
+        (""TRUE AND FALSE OR TRUE"", True),
+        (""(TRUE OR FALSE) AND TRUE"", True),
+        (""NOT TRUE"", False),
+        (""NOT (FALSE AND TRUE)"", True),
+        (""TRUE OR (FALSE AND NOT TRUE)"", True),
+        (""FALSE AND FALSE"", False),
+        (""(TRUE OR FALSE) AND (TRUE OR FALSE)"", True),
+        (""NOT (TRUE AND FALSE)"", True),
+        (""TRUE OR NOT FALSE"", True),
+        (""TRUE AND (FALSE OR TRUE)"", True),
+        (""NOT (TRUE AND FALSE OR TRUE)"", False),
+        (""TRUE AND TRUE AND FALSE"", False)
+    ]
+    print(""--- Boolean Expression Analysis ---"")
+    for expression, expected in test_cases:
+        try:
+            result = analyzer.analyze(expression)
+            status = ""PASS"" if result == expected else f""FAIL (Expected: {expected}, Got: {result})""
+            print(f""Expression: '{expression}'"")
+            print(f""Result: {result} | Status: {status}\n"")
+        except ValueError as e:
+            print(f""Expression: '{expression}'"")
+            print(f""ERROR: {e}\n"")
+        except Exception as e:
+            print(f""Expression: '{expression}'"")
+            print(f""UNEXPECTED ERROR: {e}\n"")
+    print(""--- Additional Test Cases ---"")
+    try:
+        result = analyzer.analyze(""NOT (TRUE AND FALSE OR TRUE)"")
+        print(f""Expression: 'NOT (TRUE AND FALSE OR TRUE)'"")
+        print(f""Result: {result}"")
+    except Exception as e:
+        print(f""Error on complex test: {e}"")",True,0,6157,99_9.py
+99,9,Understand boolean operator precedence,"Write a comprehensive, production-ready Python module that analyzes a user-provided boolean expression string, validates its structure, and returns the evaluated result, clearly documenting the precedence rules applied.","import re
+class BooleanExpressionAnalyzer:
+    def __init__(self):
+        self.precedence = {
+            '(': 0,
+            ')': 0,
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1
+        }
+    def _tokenize(self, expression):
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalpha():
+                if char.upper() == 'NOT':
+                    tokens.append('NOT')
+                    i += 3
+                elif char.upper() == 'AND':
+                    tokens.append('AND')
+                    i += 3
+                elif char.upper() == 'OR':
+                    tokens.append('OR')
+                    i += 2
+                else:
+                    tokens.append(char)
+                    i += 1
+            elif char in '()':
+                tokens.append(char)
+                i += 1
+            else:
+                if expression[i:i+4] == 'True':
+                    tokens.append('True')
+                    i += 4
+                elif expression[i:i+5] == 'False':
+                    tokens.append('False')
+                    i += 5
+                else:
+                    raise ValueError(f""Invalid character in expression: {char}"")
+        return tokens
+    def _apply_operator(self, values, operator):
+        if operator == 'NOT':
+            if len(values) < 1:
+                raise ValueError(""Syntax Error: NOT requires an operand."")
+            operand = values.pop()
+            values.append(not operand)
+        elif operator in ('AND', 'OR'):
+            if len(values) < 2:
+                raise ValueError(f""Syntax Error: {operator} requires two operands."")
+            right = values.pop()
+            left = values.pop()
+            if operator == 'AND':
+                values.append(left and right)
+            elif operator == 'OR':
+                values.append(left or right)
+        else:
+            raise ValueError(f""Unknown operator: {operator}"")
+    def _evaluate_tokens(self, tokens):
+        values = []
+        for token in tokens:
+            if token == '(':
+                values.append(token)
+            elif token == ')':
+                while values and values[-1] != '(':
+                    op = values.pop()
+                    self._apply_operator(values, op)
+                if not values or values[-1] != '(':
+                    raise ValueError(""Mismatched parentheses: Missing opening parenthesis."")
+                values.pop()              
+            elif token in ('True', 'False'):
+                values.append(token == 'True')
+            elif token == 'NOT':
+                self._apply_operator(values, 'NOT')
+            elif token in ('AND', 'OR'):
+                self._apply_operator(values, token)
+            else:
+                raise ValueError(f""Unrecognized token during evaluation: {token}"")
+        return values
+    def analyze(self, expression):
+        if not expression:
+            return False
+        tokens = self._tokenize(expression)
+        if not tokens:
+            return False
+        try:
+            result = self._evaluate_tokens(tokens)
+            return result
+        except ValueError as e:
+            raise ValueError(f""Expression Analysis Error: {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred during analysis: {e}"")
+if __name__ == '__main__':
+    analyzer = BooleanExpressionAnalyzer()
+    test_cases = [
+        (""True AND False"", False),
+        (""(True OR False) AND True"", True),
+        (""NOT True"", False),
+        (""NOT (True AND False)"", True),
+        (""True OR (False AND True)"", True),
+        (""NOT (True OR False)"", False),
+        (""True"", True),
+        (""(True OR False)"", True),
+        (""NOT (NOT True)"", True),
+        (""True AND True AND True"", True),
+        (""False OR False"", False),
+        (""NOT True AND False"", False),
+        (""True OR NOT False"", True),
+        (""NOT (True AND False OR True)"", False),
+        (""NOT (True OR False)"", False),
+        (""(True AND False) OR True"", True),
+    ]
+    print(""--- Running Test Cases ---"")
+    for expression, expected in test_cases:
+        try:
+            result = analyzer.analyze(expression)
+            assert result == expected, f""Expression: '{expression}', Expected: {expected}, Got: {result}""
+            print(f""PASS: '{expression}' -> {result}"")
+        except ValueError as e:
+            print(f""FAIL (Error): '{expression}' -> {e}"")
+        except AssertionError as e:
+            print(f""FAIL (Assertion): {e}"")
+    print(""\n--- Additional Complex Test ---"")
+    try:
+        complex_expr = ""NOT (True AND (False OR NOT False))""
+        result = analyzer.analyze(complex_expr)
+        print(f""Expression: '{complex_expr}'"")
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error on complex test: {e}"")",True,1,6158,99_9_1.py
+99,9,Understand boolean operator precedence,"Write a comprehensive, production-ready Python module that analyzes a user-provided boolean expression string, validates its structure, and returns the evaluated result, clearly documenting the precedence rules applied.","import operator
+class BooleanExpressionAnalyzer:
+    def __init__(self):
+        self.precedence = {
+            '(': 0,
+            ')': 0,
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '==': 4,
+            '!=': 4,
+            '>': 5,
+            '<': 5,
+            '>=': 6,
+            '<=': 6,
+        }
+        self.operators = {
+            'AND': operator.and_,
+            'OR': operator.or_,
+            '==': operator.eq,
+            '!=': operator.ne,
+            '>': operator.gt,
+            '<': operator.lt,
+            '>=': operator.ge,
+            '<=': operator.le,
+        }
+    def _tokenize(self, expression):
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalpha() or char == '(':
+                if char == 'N' and expression[i:i+3].upper() == 'NOT':
+                    tokens.append('NOT')
+                    i += 3
+                elif char == 'A' and expression[i:i+3].upper() == 'AND':
+                    tokens.append('AND')
+                    i += 3
+                elif char == 'O' and expression[i:i+2].upper() == 'OR':
+                    tokens.append('OR')
+                    i += 2
+                elif char == '(':
+                    tokens.append('(')
+                    i += 1
+                else:
+                    tokens.append(char)
+                    i += 1
+            elif char in '()':
+                tokens.append(char)
+                i += 1
+            elif char in '=!><':
+                op = char
+                if i + 1 < len(expression) and expression[i+1] == '=':
+                    op += '='
+                    i += 2
+                else:
+                    i += 1
+                tokens.append(op)
+            else:
+                raise ValueError(f""Invalid character encountered: {char}"")
+        return tokens
+    def _apply_operator(self, op, values):
+        if op == 'NOT':
+            if len(values) < 1:
+                raise ValueError(""NOT requires one operand."")
+            return not values[0]
+        elif op in self.operators:
+            if len(values) < 2:
+                raise ValueError(f""{op} requires two operands."")
+            op_func = self.operators[op]
+            return op_func(values[0], values[1])
+        else:
+            raise ValueError(f""Unknown operator: {op}"")
+    def _evaluate_tokens(self, tokens):
+        values = []
+        ops = []
+        for token in tokens:
+            if token in self.precedence:
+                if token == '(':
+                    values.append(token)
+                elif token == ')':
+                    while ops and ops[-1] != '(':
+                        op = ops.pop()
+                        values.append(self._apply_operator(op, values))
+                    if not ops or ops[-1] != '(':
+                        raise ValueError(""Mismatched parentheses."")
+                    ops.pop()              
+                else:
+                    if token == 'NOT':
+                        if len(values) < 1:
+                            raise ValueError(""NOT requires an operand."")
+                        operand = values.pop()
+                        values.append(self._apply_operator('NOT', [operand]))
+                    else:
+                        prec = self.precedence.get(token, 0)
+                        while (ops and ops[-1] != '(' and 
+                                self.precedence.get(ops[-1], -1) >= prec):
+                            op = ops.pop()
+                            values.append(self._apply_operator(op, values))
+                        ops.append(token)
+            else:
+                try:
+                    if token not in ('(', ')', 'NOT', 'AND', 'OR'):
+                        values.append(eval(token))
+                    else:
+                        values.append(token)
+                except Exception:
+                    raise ValueError(f""Invalid operand encountered: {token}"")
+        while ops:
+            op = ops.pop()
+            if op == '(':
+                raise ValueError(""Mismatched parentheses remaining."")
+            values.append(self._apply_operator(op, values))
+        if len(values) != 1:
+            raise ValueError(""Invalid expression structure or too many operands left."")
+        return values[0]
+    def evaluate(self, expression):
+        tokens = self._tokenize(expression)
+        return self._evaluate_tokens(tokens)
+if __name__ == '__main__':
+    analyzer = BooleanExpressionAnalyzer()
+    test_cases = [
+        (""NOT (A AND B)"", True),
+        (""(A OR B) AND C"", True),
+        (""A AND (B OR C)"", True),
+        (""NOT A"", False),
+        (""A == B"", False),
+        (""5 > 3"", True),
+        (""10 <= 10"", True),
+        (""(5 > 3) AND (10 < 20)"", True),
+        (""NOT (A == B)"", True),
+        (""A AND NOT B"", False),
+        (""NOT (A OR B)"", False),
+        (""A == B OR A != B"", True),
+        (""A > 5 AND B < 10"", True),
+        (""(A AND B) OR (C AND D)"", True),
+        (""NOT (A AND (B OR C))"", False),
+        (""A > 10 OR NOT B"", True),
+        (""A == 5 AND B != 5"", False),
+        (""NOT (A AND B AND C)"", False),
+        (""A > 1 AND B < 2"", True),
+    ]
+    print(""--- Boolean Expression Analyzer Test Results ---"")
+    all_passed = True
+    for expression, expected in test_cases:
+        try:
+            result = analyzer.evaluate(expression)
+            status = ""PASS"" if result == expected else f""FAIL (Expected: {expected}, Got: {result})""
+            print(f""Expression: '{expression}'"")
+            print(f""Result: {result} | Expected: {expected} | Status: {status}\n"")
+            if result != expected:
+                all_passed = False
+        except ValueError as e:
+            print(f""Expression: '{expression}'"")
+            print(f""ERROR: {e}\n"")
+            all_passed = False
+        except Exception as e:
+            print(f""Expression: '{expression}'"")
+            print(f""UNEXPECTED ERROR: {e}\n"")
+            all_passed = False
+    if all_passed:
+        print(""All hardcoded tests passed successfully."")
+    else:
+        print(""Some tests failed."")",True,2,6159,99_9_2.py
+99,9,Understand boolean operator precedence,"Write a comprehensive, production-ready Python module that analyzes a user-provided boolean expression string, validates its structure, and returns the evaluated result, clearly documenting the precedence rules applied.","import operator
+class BooleanExpressionAnalyzer:
+    def __init__(self):
+        self.precedence = {
+            '(': 0,
+            ')': 0,
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '==': 4,
+            '!=': 4,
+            '>': 5,
+            '<': 5,
+            '>=': 6,
+            '<=': 6,
+        }
+        self.associativity = {
+            'AND': 'left',
+            'OR': 'left',
+            '==': 'left',
+            '!=': 'left',
+            '>': 'left',
+            '<': 'left',
+            '>=': 'left',
+            '<=': 'left',
+        }
+        self.operators = {
+            'AND': operator.and_,
+            'OR': operator.or_,
+            '==': operator.eq,
+            '!=': operator.ne,
+            '>': operator.gt,
+            '<': operator.lt,
+            '>=': operator.ge,
+            '<=': operator.le,
+        }
+    def _tokenize(self, expression):
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalpha() or char == '(':
+                if char == 'N' and expression[i:i+3].upper() == 'NOT':
+                    tokens.append('NOT')
+                    i += 3
+                elif char == 'A' and expression[i:i+3].upper() == 'AND':
+                    tokens.append('AND')
+                    i += 3
+                elif char == 'O' and expression[i:i+2].upper() == 'OR':
+                    tokens.append('OR')
+                    i += 2
+                elif char == '=' and i + 1 < len(expression) and expression[i+1] == '=':
+                    tokens.append('==')
+                    i += 2
+                elif char == '!' and i + 1 < len(expression) and expression[i+1] == '=':
+                    tokens.append('!=')
+                    i += 2
+                elif char == '>' and i + 1 < len(expression) and expression[i+1] == '=':
+                    tokens.append('>=')
+                    i += 2
+                elif char == '<' and i + 1 < len(expression) and expression[i+1] == '=':
+                    tokens.append('<=')
+                    i += 2
+                elif char == '(':
+                    tokens.append('(')
+                    i += 1
+                elif char == ')':
+                    tokens.append(')')
+                    i += 1
+                else:
+                    tokens.append(char)
+                    i += 1
+            else:
+                tokens.append(char)
+                i += 1
+        return tokens
+    def _parse_to_rpn(self, tokens):
+        output = []
+        op_stack = []
+        for token in tokens:
+            if token in self.operators:
+                op_stack.append(token)
+            elif token == '(':
+                op_stack.append(token)
+            elif token == ')':
+                while op_stack and op_stack[-1] != '(':
+                    output.append(op_stack.pop())
+                if op_stack and op_stack[-1] == '(':
+                    op_stack.pop()
+                else:
+                    raise ValueError(""Mismatched parentheses"")
+            else:
+                output.append(token)
+        while op_stack:
+            if op_stack[-1] == '(':
+                raise ValueError(""Mismatched parentheses"")
+            output.append(op_stack.pop())
+        return output
+    def _apply_operator(self, op, values):
+        if op == 'NOT':
+            if len(values) < 1:
+                raise ValueError(""NOT requires one operand"")
+            result = not values[0]
+            values.pop(0)
+            values.insert(0, result)
+            return
+        if op in ('==', '!=', '>', '<', '>=', '<='):
+            if len(values) < 2:
+                raise ValueError(f""{op} requires two operands"")
+            right = values.pop(0)
+            left = values.pop(0)
+            func = self.operators[op]
+            values.insert(0, func(left, right))
+            return
+        if op in ('AND', 'OR'):
+            if len(values) < 2:
+                raise ValueError(f""{op} requires two operands"")
+            right = values.pop(0)
+            left = values.pop(0)
+            func = self.operators[op]
+            values.insert(0, func(left, right))
+            return
+    def evaluate(self, expression):
+        tokens = self._tokenize(expression)
+        rpn_tokens = self._parse_to_rpn(tokens)
+        if not rpn_tokens:
+            return None
+        stack = []
+        for token in rpn_tokens:
+            if token in self.operators:
+                if token == 'NOT':
+                    self._apply_operator(token, stack)
+                else:
+                    self._apply_operator(token, stack)
+            else:
+                stack.append(token)
+        if len(stack) != 1:
+            raise ValueError(""Invalid expression structure"")
+        return stack[0]
+if __name__ == '__main__':
+    analyzer = BooleanExpressionAnalyzer()
+    test_cases = [
+        (""NOT (A AND B)"", True),
+        (""(A AND B) OR C"", True),
+        (""A OR B AND C"", True),
+        (""A == B"", False),
+        (""10 > 5 AND 2 < 8"", True),
+        (""NOT (A > 5)"", False),
+        (""A == B OR A != B"", True),
+        (""A > 5 AND B < 10"", True),
+        (""(A OR B) AND (C OR D)"", True),
+        (""NOT (A AND (B OR C))"", False),
+        (""A == 10 AND B == 2"", False),
+        (""A > 5 OR B < 10"", True),
+        (""A > 5 AND B > 10"", False),
+        (""A == 5 AND B == 5"", True),
+        (""NOT (A AND B AND C)"", False),
+        (""A > 5 AND NOT B"", False),
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = analyzer.evaluate(expression)
+            assert result == expected, f""Expression: '{expression}', Expected: {expected}, Got: {result}""
+            print(f""PASS: '{expression}' -> {result}"")
+        except Exception as e:
+            print(f""FAIL (Error): '{expression}' raised {e}"")
+    print(""\n--- Additional Complex Test ---"")
+    complex_expr = ""((A == 1) OR B) AND (C != D)""
+    try:
+        result = analyzer.evaluate(complex_expr)
+        print(f""Expression: '{complex_expr}' -> {result}"")
+    except Exception as e:
+        print(f""FAIL (Error): '{complex_expr}' raised {e}"")",True,3,6160,99_9_3.py
+99,9,Understand boolean operator precedence,"Write a comprehensive, production-ready Python module that analyzes a user-provided boolean expression string, validates its structure, and returns the evaluated result, clearly documenting the precedence rules applied.","import operator
+class BooleanExpressionAnalyzer:
+    def __init__(self):
+        self.precedence = {
+            '(': 0,
+            ')': 0,
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '==': 4,
+            '!=': 4,
+            '>': 5,
+            '<': 5,
+            '>=': 6,
+            '<=': 6,
+        }
+        self.operators = {
+            'AND': operator.and_,
+            'OR': operator.or_,
+            '==': operator.eq,
+            '!=': operator.ne,
+            '>': operator.gt,
+            '<': operator.lt,
+            '>=': operator.ge,
+            '<=': operator.le,
+        }
+    def _tokenize(self, expression):
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalpha():
+                op = """"
+                start = i
+                while i < len(expression) and expression[i].isalpha():
+                    i += 1
+                token = expression[start:i]
+                if token in self.operators:
+                    tokens.append(token)
+                else:
+                    tokens.append(token)
+            elif char in '()':
+                tokens.append(char)
+            elif char in '+-*/=!<>':
+                tokens.append(char)
+            else:
+                tokens.append(char)
+            i += 1
+        return tokens
+    def _parse_and_evaluate(self, tokens):
+        values = []
+        ops = []
+        for token in tokens:
+            if token == '(':
+                values.append(token)
+            elif token == ')':
+                balance = 0
+                sub_expression = []
+                while len(values) > 0 and values[-1] != '(':
+                    sub_expression.append(values.pop())
+                if not values or values[-1] != '(':
+                    raise ValueError(""Mismatched parentheses: Missing opening parenthesis."")
+                values.pop()              
+                while values and values[-1] != '(':
+                    op = values.pop()
+                    if op in self.operators:
+                        right = values.pop()
+                        values.append(self.operators[op](right, values[-1]))
+                    else:
+                        raise ValueError(f""Invalid expression structure inside parentheses: {op}"")
+                if values and values[-1] == '(':
+                    pass
+                else:
+                    values.append(values.pop())
+            elif token in self.operators:
+                if token == 'NOT':
+                    if len(values) < 1:
+                        raise ValueError(""NOT requires an operand."")
+                    operand = values.pop()
+                    values.append(not operand)
+                    continue
+                if len(values) < 2:
+                    raise ValueError(f""Insufficient operands for binary operator: {token}"")
+                right = values.pop()
+                left = values.pop()
+                op_func = self.operators[token]
+                values.append(op_func(left, right))
+            else:
+                try:
+                    values.append(eval(token))
+                except Exception:
+                    values.append(token)
+        if not values:
+            return None
+        return values[0]
+    def evaluate(self, expression):
+        tokens = self._tokenize(expression)
+        if not tokens:
+            return None
+        try:
+            result = self._parse_and_evaluate(tokens)
+            return result
+        except ValueError as e:
+            raise ValueError(f""Expression Error: {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred during evaluation: {e}"")
+if __name__ == '__main__':
+    analyzer = BooleanExpressionAnalyzer()
+    test_cases = [
+        (""NOT (A AND B)"", ""True""),
+        (""(A AND B) OR C"", ""True""),
+        (""A OR NOT B"", ""True""),
+        (""A == B"", ""False""),
+        (""5 > 3 AND 10 < 20"", ""True""),
+        (""NOT (5 > 3)"", ""False""),
+        (""(5 > 3) AND (10 < 20)"", ""True""),
+        (""A == B OR C == D"", ""False""),
+        (""NOT (A AND (B OR C))"", ""False""),
+        (""A > 5 AND B < 10"", ""True""),
+        (""NOT (A AND B)"", ""False""),
+        (""NOT (5 > 3)"", ""False""),
+        (""A == B"", ""False""),
+        (""5 > 3"", ""True""),
+        (""A AND B OR C"", ""True""),
+        (""NOT A"", ""False""),
+        (""NOT (A OR B)"", ""False""),
+        (""A == B AND C == D"", ""False""),
+        (""NOT (A AND B)"", ""False""),
+        (""A > 5 AND B < 10"", ""True""),
+        (""NOT (A AND (B OR C))"", ""False""),
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = analyzer.evaluate(expression)
+            assert result == expected, f""Expression: '{expression}', Expected: {expected}, Got: {result}""
+            print(f""PASS: '{expression}' -> {result}"")
+        except ValueError as e:
+            print(f""FAIL (Error): '{expression}' -> {e}"")
+        except AssertionError as e:
+            print(f""FAIL (Assertion): {e}"")
+        print(""-"" * 20)
+    print(""All sample tests completed."")",True,4,6161,99_9_4.py
+99,9,Understand boolean operator precedence,"Write a comprehensive, production-ready Python module that analyzes a user-provided boolean expression string, validates its structure, and returns the evaluated result, clearly documenting the precedence rules applied.","import re
+class BooleanExpressionAnalyzer:
+    def __init__(self):
+        self.precedence = {
+            '(': 0,
+            ')': 0,
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '==': 4,
+            '!=': 4,
+            '>': 5,
+            '<': 5,
+            '>=': 6,
+            '<=': 6,
+        }
+    def _tokenize(self, expression):
+        tokens = []
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalpha():
+                if char.upper() == 'NOT':
+                    tokens.append('NOT')
+                    i += 3
+                elif char.upper() == 'AND':
+                    tokens.append('AND')
+                    i += 3
+                elif char.upper() == 'OR':
+                    tokens.append('OR')
+                    i += 2
+                else:
+                    tokens.append(char)
+                    i += 1
+            elif char in '()':
+                tokens.append(char)
+                i += 1
+            elif re.match(r'[0-9\.\+\-\!\(\)\=\<\>\!\+\-\*]', char):
+                if char == '=':
+                    if i + 1 < len(expression) and expression[i+1] in '><!':
+                        op = expression[i:i+2]
+                        if op in ('==', '!='):
+                            tokens.append(op)
+                            i += 2
+                            continue
+                        elif op in ('>=', '<='):
+                            tokens.append(op)
+                            i += 2
+                            continue
+                tokens.append(char)
+                i += 1
+            else:
+                tokens.append(char)
+                i += 1
+        return tokens
+    def _shunting_yard(self, tokens):
+        output_queue = []
+        operator_stack = []
+        for token in tokens:
+            if token in ('NOT', 'AND', 'OR', '(', ')'):
+                if token == '(':
+                    operator_stack.append(token)
+                elif token == ')':
+                    while operator_stack and operator_stack[-1] != '(':
+                        output_queue.append(operator_stack.pop())
+                    if not operator_stack or operator_stack[-1] != '(':
+                        raise ValueError(""Mismatched parentheses"")
+                    operator_stack.pop()
+                else:
+                    if token in self.precedence:
+                        while (operator_stack and operator_stack[-1] != '(' and
+                               self.precedence.get(operator_stack[-1], -1) >= self.precedence.get(token, -1)):
+                            output_queue.append(operator_stack.pop())
+                        operator_stack.append(token)
+            else:
+                output_queue.append(token)
+        while operator_stack:
+            if operator_stack[-1] == '(':
+                raise ValueError(""Mismatched parentheses"")
+            output_queue.append(operator_stack.pop())
+        return output_queue
+    def _evaluate(self, postfix_tokens, values):
+        stack = []
+        for token in postfix_tokens:
+            if token in ('NOT'):
+                if len(stack) < 1:
+                    raise ValueError(""Insufficient operands for NOT"")
+                operand = stack.pop()
+                result = not operand
+                stack.append(result)
+            elif token in ('AND', 'OR'):
+                if len(stack) < 2:
+                    raise ValueError(f""Insufficient operands for {token}"")
+                right = stack.pop()
+                left = stack.pop()
+                if token == 'AND':
+                    result = left and right
+                elif token == 'OR':
+                    result = left or right
+                stack.append(result)
+            else:
+                try:
+                    value = float(token)
+                    stack.append(value)
+                except ValueError:
+                    raise ValueError(f""Invalid token encountered during evaluation: {token}"")
+        if len(stack) != 1:
+            raise ValueError(""Invalid expression structure or too many operands remaining"")
+        return stack[0]
+    def analyze(self, expression):
+        tokens = self._tokenize(expression)
+        postfix = self._shunting_yard(tokens)
+        result = self._evaluate(postfix, [])
+        return result
+if __name__ == '__main__':
+    analyzer = BooleanExpressionAnalyzer()
+    test_cases = [
+        (""NOT (5 > 3 AND 10 == 10)"", False),
+        (""(5 > 3) AND (10 == 10)"", True),
+        (""NOT (5 > 3)"", False),
+        (""5 > 3 OR 10 < 5"", True),
+        (""NOT (5 > 3 AND 10 != 10)"", True),
+        (""(10 >= 5) AND (2 < 10)"", True),
+        (""5 > 3 AND 10 > 12"", False),
+        (""NOT (5 > 3 AND 10 > 12)"", True),
+        (""NOT (5 > 3 OR 10 < 5)"", False),
+        (""(5 > 3) AND (10 == 10) OR (2 < 10)"", True),
+        (""NOT (5 > 3 AND 10 == 10)"", False),
+        (""5 > 3"", False),
+        (""10 == 10"", True),
+        (""NOT 5"", ""Error""),
+        (""(5 > 3"", ""Error""),
+        (""5 > 3 AND"", ""Error""),
+        (""5 > 3 AND 10"", ""Error""),
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = analyzer.analyze(expression)
+            status = ""PASS"" if result == expected else f""FAIL (Expected: {expected}, Got: {result})""
+            print(f""Expression: '{expression}'"")
+            print(f""Result: {result} | Status: {status}\n"")
+        except ValueError as e:
+            print(f""Expression: '{expression}'"")
+            print(f""Error: {e}\n"")
+        except Exception as e:
+            print(f""Expression: '{expression}'"")
+            print(f""Unexpected Error: {e}\n"")",True,5,6162,99_9_5.py
+99,10,Understand boolean operator precedence,"Write a complete, well-commented Python script that demonstrates the order of operations for boolean operators (and, or, not, not_and, and_not, comparison operators) using nested expressions. The script must clearly show the intermediate results.","def evaluate_boolean_expression(a, b, c, d):
+    result1 = a and b
+    result2 = not c
+    result3 = a or d
+    result4 = result1 and result2
+    result5 = not_and(result3, result4)
+    result6 = and_not(result5, result1)
+    result7 = a == b
+    result8 = c > d
+    result9 = result7 or result8
+    return result9
+def not_and(x, y):
+    return not (x and y)
+def and_not(x, y):
+    return (not x) and y
+if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    d = False
+    print(""--- Input Values ---"")
+    print(f""a: {a}"")
+    print(f""b: {b}"")
+    print(f""c: {c}"")
+    print(f""d: {d}\n"")
+    print(""--- Intermediate Calculations ---"")
+    result1 = a and b
+    print(f""result1 (a and b): {result1}"")
+    result2 = not c
+    print(f""result2 (not c): {result2}"")
+    result3 = a or d
+    print(f""result3 (a or d): {result3}"")
+    result4 = result1 and result2
+    print(f""result4 (result1 and result2): {result4}"")
+    result5 = not_and(result3, result4)
+    print(f""result5 (not_and(result3, result4)): {result5}"")
+    result6 = and_not(result5, result1)
+    print(f""result6 (and_not(result5, result1)): {result6}"")
+    result7 = a == b
+    print(f""result7 (a == b): {result7}"")
+    result8 = c > d
+    print(f""result8 (c > d): {result8}"")
+    result9 = result7 or result8
+    print(f""result9 (result7 or result8): {result9}"")
+    print(""\n--- Final Result ---"")
+    print(f""Final result: {result9}"")",True,0,6163,99_10.py
+99,2,Understand boolean operator precedence,"Develop a class named `OperatorPrecedence` with a method that can parse a string expression and return the correct sequence of operations based on PEMDAS/BODMAS rules, focusing on bitwise and logical operators as well.","class OperatorPrecedence:
+    def parse_expression(self, expression):
+        tokens = []
+        current_token = """"
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalnum() or char in '+-*/&|^!(){}=':
+                current_token += char
+            else:
+                if current_token:
+                    tokens.append(current_token)
+                current_token = """"
+            i += 1
+        if current_token:
+            tokens.append(current_token)
+        return tokens
+    def apply_precedence(self, tokens):
+        if not tokens:
+            return []
+        precedence = {
+            '(': 0, ')': 0,
+            '**': 3,                                                                              
+            '&': 2,
+            '|': 2,
+            '^': 2,
+            '+': 1,
+            '-': 1,
+            '*': 3,
+            '/': 3,
+            '==': 4,
+            '!=': 4,
+            '<=': 4,
+            '>=': 4,
+            '===': 5,
+            '<<': 5,
+            '>>': 5,
+        }
+        output = []
+        stack = []
+        operators = []
+        def process_op(op, values):
+            if op in precedence:
+                pre = precedence[op]
+                while stack and stack[-1] != '(':
+                    top = stack[-1]
+                    if top in precedence:
+                        stack.pop()
+                        values.append(top)
+                        operators.append(top)
+                    else:
+                        break
+                if stack and stack[-1] == '(':
+                    stack.pop()
+                if op not in ['(', ')']:
+                    stack.append(op)
+            else:
+                stack.append(op)
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                stack.append(token)
+            elif token == '(':
+                stack.append(token)
+            elif token == ')':
+                while stack and stack[-1] != '(':
+                    output.append(stack.pop())
+                if stack and stack[-1] == '(':
+                    stack.pop()
+            elif token in precedence:
+                process_op(token, output)
+            else:
+                output.append(token)
+        while stack:
+            if stack[-1] != '(':
+                output.append(stack.pop())
+            else:
+                stack.pop()
+        return output
+if __name__ == '__main__':
+    parser = OperatorPrecedence()
+    expression1 = ""10 + 5 * 2""
+    tokens1 = parser.parse_expression(expression1)
+    result1 = parser.apply_precedence(tokens1)
+    print(f""Expression: {expression1}"")
+    print(f""Tokens: {tokens1}"")
+    print(f""Result: {result1}\n"")
+    expression2 = ""(10 + 5) * 2""
+    tokens2 = parser.parse_expression(expression2)
+    result2 = parser.apply_precedence(tokens2)
+    print(f""Expression: {expression2}"")
+    print(f""Tokens: {tokens2}"")
+    print(f""Result: {result2}\n"")
+    expression3 = ""10 & 5 | 3""
+    tokens3 = parser.parse_expression(expression3)
+    result3 = parser.apply_precedence(tokens3)
+    print(f""Expression: {expression3}"")
+    print(f""Tokens: {tokens3}"")
+    print(f""Result: {result3}\n"")
+    expression4 = ""10 + 5 * 2 - 1""
+    tokens4 = parser.parse_expression(expression4)
+    result4 = parser.apply_precedence(tokens4)
+    print(f""Expression: {expression4}"")
+    print(f""Tokens: {tokens4}"")
+    print(f""Result: {result4}\n"")
+    expression5 = ""10 << 2""
+    tokens5 = parser.parse_expression(expression5)
+    result5 = parser.apply_precedence(tokens5)
+    print(f""Expression: {expression5}"")
+    print(f""Tokens: {tokens5}"")
+    print(f""Result: {result5}\n"")",True,0,6164,99_2.py
+99,2,Understand boolean operator precedence,"Develop a class named `OperatorPrecedence` with a method that can parse a string expression and return the correct sequence of operations based on PEMDAS/BODMAS rules, focusing on bitwise and logical operators as well.","class OperatorPrecedence:
+    def parse_expression(self, expression):
+        tokens = []
+        current_token = """"
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalnum() or char in ""+-*/&|^!<>="":
+                current_token += char
+            else:
+                if current_token:
+                    tokens.append(current_token)
+                current_token = """"
+            i += 1
+        if current_token:
+            tokens.append(current_token)
+        return tokens
+    def get_precedence(self, operator):
+        if operator in ('+', '-'):
+            return 2
+        if operator in ('*', '/', '%'):
+            return 3
+        if operator in ('<<', '>>', '>>>'):
+            return 4
+        if operator in ('&'):
+            return 5
+        if operator in ('|'):
+            return 5
+        if operator in ('^'):
+            return 6
+        if operator in ('==', '!='):
+            return 7
+        if operator in ('<=', '>='):
+            return 8
+        if operator in ('<', '>'):
+            return 9
+        return 10
+    def evaluate_expression(self, expression):
+        tokens = self.parse_expression(expression)
+        if not tokens:
+            return None
+        values = []
+        operators = []
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                values.append(float(token))
+            elif token in ('+', '-', '*', '/', '%', '&', '|', '^', '<<', '>>', '>>>', '==', '!=', '<', '>', '<=', '>='):
+                operators.append(token)
+            else:
+                pass
+        if not values:
+            return None
+        if not operators:
+            return values
+        def apply_op(op, b, a):
+            if op == '+': return a + b
+            if op == '-': return a - b
+            if op == '*': return a * b
+            if op == '/':
+                if b == 0: raise ZeroDivisionError
+                return a / b
+            if op == '%': return a % b
+            if op == '&': return a & b
+            if op == '|': return a | b
+            if op == '^': return a ** b
+            if op == '<<': return a << b
+            if op == '>>': return a >> b
+            if op == '>>>': return a >> b
+            if op == '==': return a == b
+            if op == '!=': return a != b
+            if op == '<': return a < b
+            if op == '>': return a > b
+            if op == '<=': return a <= b
+            if op == '>=': return a >= b
+            return None
+        result = values[0]
+        op_index = 0
+        output_values = []
+        output_ops = []
+        op_stack = []
+        def process_operation():
+            op = op_stack.pop()
+            if len(output_values) < 2:
+                raise ValueError(""Insufficient operands"")
+            b = output_values.pop()
+            a = output_values.pop()
+            result = apply_op(op, b, a)
+            output_values.append(result)
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                output_values.append(float(token))
+            elif token in ('+', '-', '*', '/', '%', '&', '|', '^', '<<', '>>', '>>>', '==', '!=', '<', '>', '<=', '>='):
+                prec1 = self.get_precedence(token)
+                while (op_stack and op_stack[-1] != '(' and 
+                       self.get_precedence(op_stack[-1]) >= prec1):
+                    process_operation()
+                op_stack.append(token)
+        while op_stack:
+            process_operation()
+        return output_values[0] if output_values else None
+if __name__ == '__main__':
+    parser = OperatorPrecedence()
+    expression1 = ""10 + 5 * 2""
+    result1 = parser.evaluate_expression(expression1)
+    print(f""Expression: {expression1}"")
+    print(f""Result: {result1}"")
+    print(""-"" * 20)
+    expression2 = ""10 & 5 | 3""
+    result2 = parser.evaluate_expression(expression2)
+    print(f""Expression: {expression2}"")
+    print(f""Result: {result2}"")
+    print(""-"" * 20)
+    expression3 = ""10 + 2 * 3 - 1""
+    result3 = parser.evaluate_expression(expression3)
+    print(f""Expression: {expression3}"")
+    print(f""Result: {result3}"")
+    print(""-"" * 20)
+    expression4 = ""10 << 2""
+    result4 = parser.evaluate_expression(expression4)
+    print(f""Expression: {expression4}"")
+    print(f""Result: {result4}"")
+    print(""-"" * 20)
+    expression5 = ""100 / 5 + 20 % 3""
+    result5 = parser.evaluate_expression(expression5)
+    print(f""Expression: {expression5}"")
+    print(f""Result: {result5}"")
+    print(""-"" * 20)",True,1,6165,99_2_1.py
+99,2,Understand boolean operator precedence,"Develop a class named `OperatorPrecedence` with a method that can parse a string expression and return the correct sequence of operations based on PEMDAS/BODMAS rules, focusing on bitwise and logical operators as well.","class OperatorPrecedence:
+    def parse_expression(self, expression):
+        tokens = []
+        current_token = """"
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalnum() or char in ""+-*/&|^!<>="":
+                current_token += char
+            else:
+                if current_token:
+                    tokens.append(current_token)
+                current_token = """"
+            i += 1
+        if current_token:
+            tokens.append(current_token)
+        return tokens
+    def apply_precedence(self, tokens):
+        if not tokens:
+            return []
+        precedence = {
+            '(': 0, ')': 0,
+            '**': 3,                                                                            
+            '*': 2, '/': 2, '%': 2,
+            '+': 1, '-': 1,
+            '&': 3,               
+            '|': 3,              
+            '^': 3,               
+            '<<': 4,                      
+            '>>': 4,                       
+            '~': 5,                
+            '==': 6,            
+            '!=': 6,
+            '<=': 6,
+            '>=': 6
+        }
+        def get_precedence(op):
+            return precedence.get(op, -1)
+        def apply_op(op, b, a):
+            if op == '+': return a + b
+            if op == '-': return a - b
+            if op == '*': return a * b
+            if op == '/':
+                if b == 0: raise ZeroDivisionError(""Division by zero"")
+                return a // b if a % b == 0 else a / b
+            if op == '%': return a % b
+            if op == '&': return a & b
+            if op == '|': return a | b
+            if op == '^': return a ^ b
+            if op == '<<': return a << b
+            if op == '>>': return a >> b
+            if op == '~': return ~a
+            if op == '==': return a == b
+            if op == '!=': return a != b
+            if op == '<=': return a <= b
+            if op == '>=': return a >= b
+            raise ValueError(f""Unknown operator: {op}"")
+        def evaluate_tokens(tokens):
+            if not tokens:
+                return None
+            values = []
+            ops = []
+            for token in tokens:
+                if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                    values.append(float(token))
+                elif token == '(':
+                    values.append(token)
+                elif token == ')':
+                    balance = 1
+                    sub_expression = []
+                    for i in range(len(values) - 1):
+                        if values[i] == '(': balance += 1
+                        elif values[i] == ')': balance -= 1
+                        if balance == 0:
+                            sub_expression = values[i+1:i]
+                            break
+                    if balance != 0:
+                        raise ValueError(""Mismatched parentheses"")
+                    pass
+                elif token in precedence:
+                    ops.append(token)
+                else:
+                    raise ValueError(f""Invalid token encountered: {token}"")
+            output_queue = []
+            operator_stack = []
+            for token in tokens:
+                if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                    output_queue.append(token)
+                elif token == '(':
+                    operator_stack.append(token)
+                elif token == ')':
+                    while operator_stack and operator_stack[-1] != '(':
+                        op = operator_stack.pop()
+                        val2 = output_queue.pop()
+                        val1 = output_queue.pop()
+                        output_queue.append(apply_op(op, val2, val1))
+                    if not operator_stack or operator_stack[-1] != '(':
+                        raise ValueError(""Mismatched parentheses"")
+                    operator_stack.pop()
+                elif token in precedence:
+                    while (operator_stack and operator_stack[-1] != '(' and 
+                           get_precedence(operator_stack[-1]) >= get_precedence(token)):
+                        op = operator_stack.pop()
+                        val2 = output_queue.pop()
+                        val1 = output_queue.pop()
+                        output_queue.append(apply_op(op, val2, val1))
+                    operator_stack.append(token)
+                else:
+                    raise ValueError(f""Unknown token: {token}"")
+            while operator_stack:
+                op = operator_stack.pop()
+                if op == '(':
+                    raise ValueError(""Mismatched parentheses"")
+                val2 = output_queue.pop()
+                val1 = output_queue.pop()
+                output_queue.append(apply_op(op, val2, val1))
+            return output_queue[0] if output_queue else None
+        sorted_tokens = []
+        for token in tokens:
+            if token in precedence:
+                sorted_tokens.append((get_precedence(token), token))
+            else:
+                sorted_tokens.append((100, token))                                            
+        sorted_tokens.sort(key=lambda x: (x[0], x[1]))
+        return [t[1] for t in sorted_tokens]
+if __name__ == '__main__':
+    parser = OperatorPrecedence()
+    expression1 = ""10 + 5 * 2 & 3""
+    tokens1 = parser.parse_expression(expression1)
+    sorted_ops1 = parser.apply_precedence(tokens1)
+    print(f""Expression: {expression1}"")
+    print(f""Tokens: {tokens1}"")
+    print(f""Sorted Operations (Precedence Order): {sorted_ops1}\n"")
+    expression2 = ""(10 << 2) + 5 * (8 | 1)""
+    tokens2 = parser.parse_expression(expression2)
+    sorted_ops2 = parser.apply_precedence(tokens2)
+    print(f""Expression: {expression2}"")
+    print(f""Tokens: {tokens2}"")
+    print(f""Sorted Operations (Precedence Order): {sorted_ops2}\n"")
+    expression3 = ""10 > 5 & 2 == 2""
+    tokens3 = parser.parse_expression(expression3)
+    sorted_ops3 = parser.apply_precedence(tokens3)
+    print(f""Expression: {expression3}"")
+    print(f""Tokens: {tokens3}"")
+    print(f""Sorted Operations (Precedence Order): {sorted_ops3}\n"")",True,2,6166,99_2_2.py
+99,2,Understand boolean operator precedence,"Develop a class named `OperatorPrecedence` with a method that can parse a string expression and return the correct sequence of operations based on PEMDAS/BODMAS rules, focusing on bitwise and logical operators as well.","class OperatorPrecedence:
+    def parse_expression(self, expression):
+        tokens = []
+        current_token = """"
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalnum() or char in ""+-*/&|^!<>="":
+                current_token += char
+            else:
+                if current_token:
+                    tokens.append(current_token)
+                current_token = """"
+            i += 1
+        if current_token:
+            tokens.append(current_token)
+        return tokens
+    def apply_precedence(self, tokens):
+        if not tokens:
+            return []
+        precedence = {
+            '(': 0, ')': 0,
+            '**': 3,                  
+            '*': 2, '/': 2, '%': 2,
+            '+': 1, '-': 1,
+            '&': 3,               
+            '|': 3,              
+            '^': 4,               
+            '<<': 5,              
+            '>>': 5,               
+            '~': 4,               
+            '==': 6,            
+            '!=': 6,
+            '<=': 6,
+            '>=': 6
+        }
+        output = []
+        stack = []
+        def process_operation(op, values):
+            if op in ('+', '-', '*', '/', '%', '&', '|', '^'):
+                if len(values) < 2:
+                    raise ValueError(""Insufficient operands for binary operator"")
+                op1 = values.pop()
+                op2 = values.pop()
+                if op == '+':
+                    result = op1 + op2
+                elif op == '-':
+                    result = op1 - op2
+                elif op == '*':
+                    result = op1 * op2
+                elif op == '/':
+                    result = op1 / op2
+                elif op == '%':
+                    result = op1 % op2
+                elif op == '&':
+                    result = op1 & op2
+                elif op == '|':
+                    result = op1 | op2
+                elif op == '^':
+                    result = op1 ^ op2
+                values.append(result)
+            elif op == '**':
+                if len(values) < 2:
+                    raise ValueError(""Insufficient operands for exponentiation"")
+                op1 = values.pop()
+                op2 = values.pop()
+                result = op1 ** op2
+                values.append(result)
+            elif op == '<<':
+                if len(values) < 2:
+                    raise ValueError(""Insufficient operands for left shift"")
+                op1 = values.pop()
+                op2 = values.pop()
+                result = op1 << op2
+                values.append(result)
+            elif op == '>>':
+                if len(values) < 2:
+                    raise ValueError(""Insufficient operands for right shift"")
+                op1 = values.pop()
+                op2 = values.pop()
+                result = op1 >> op2
+                values.append(result)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                stack.append(float(token))
+            elif token == '(':
+                stack.append(token)
+            elif token == ')':
+                if len(stack) < 2:
+                    raise ValueError(""Mismatched parentheses"")
+                result = []
+                while stack[-1] != '(':
+                    op = stack.pop()
+                    operands = []
+                    while op != '(':
+                        operands.append(stack.pop())
+                        op = stack.pop()
+                    if len(operands) > 0:
+                        pass                                                                             
+                    stack.append(operands.pop())                       
+                if stack and stack[-1] == '(':
+                    stack.pop()              
+            elif token in precedence:
+                while (stack and stack[-1] != '(' and 
+                       precedence.get(stack[-1], -1) >= precedence[token]):
+                    op = stack.pop()
+                    if len(stack) > 0:
+                        pass
+                stack.append(token)
+            else:
+                pass
+        if stack:
+            while stack:
+                output.append(stack.pop())
+        return output
+if __name__ == '__main__':
+    parser = OperatorPrecedence()
+    expression1 = ""10 + 5 * 2""
+    tokens1 = parser.parse_expression(expression1)
+    print(f""Expression: {expression1}"")
+    print(f""Tokens: {tokens1}"")
+    expression2 = ""10 + 5 * 2""
+    tokens2 = parser.parse_expression(expression2)
+    print(f""\nExpression: {expression2}"")
+    print(f""Tokens: {tokens2}"")
+    expression3 = ""10 & 5 | 3""
+    tokens3 = parser.parse_expression(expression3)
+    print(f""\nExpression: {expression3}"")
+    print(f""Tokens: {tokens3}"")
+    expression4 = ""(10 + 5) * 2""
+    tokens4 = parser.parse_expression(expression4)
+    print(f""\nExpression: {expression4}"")
+    print(f""Tokens: {tokens4}"")",True,3,6167,99_2_3.py
+99,2,Understand boolean operator precedence,"Develop a class named `OperatorPrecedence` with a method that can parse a string expression and return the correct sequence of operations based on PEMDAS/BODMAS rules, focusing on bitwise and logical operators as well.","class OperatorPrecedence:
+    def parse_expression(self, expression):
+        tokens = []
+        current_token = """"
+        i = 0
+        while i < len(expression):
+            char = expression[i]
+            if char.isspace():
+                i += 1
+                continue
+            if char.isalnum() or char in ""+-*/&|^!<>="":
+                current_token += char
+            else:
+                if current_token:
+                    tokens.append(current_token)
+                current_token = """"
+            i += 1
+        if current_token:
+            tokens.append(current_token)
+        return tokens
+    def apply_precedence(self, tokens):
+        if not tokens:
+            return []
+        precedence = {
+            '(': 0, ')': 0,
+            '**': 3,                                                              
+            '*': 2, '/': 2, '%': 2,
+            '+': 1, '-': 1,
+            '&': 3,               
+            '^': 4,               
+            '|': 4,              
+            '<<': 5,             
+            '>>': 5,              
+            '~': 6,                                             
+            '==': 3,            
+            '!=': 3,
+            '<=': 3,
+            '>=': 3
+        }
+        output = []
+        operator_stack = []
+        operand_stack = []
+        def apply_op(op, b, a):
+            if op == '+':
+                return a + b
+            elif op == '-':
+                return a - b
+            elif op == '*':
+                return a * b
+            elif op == '/':
+                return a / b
+            elif op == '%':
+                return a % b
+            elif op == '&':
+                return a & b
+            elif op == '|':
+                return a | b
+            elif op == '^':
+                return a ** b
+            elif op == '<<':
+                return a << b
+            elif op == '>>':
+                return a >> b
+            elif op == '~':
+                return ~a
+            elif op == '==':
+                return a == b
+            elif op == '!=':
+                return a != b
+            elif op == '<=':
+                return a <= b
+            elif op == '>=':
+                return a >= b
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                operand_stack.append(float(token))
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack and operator_stack[-1] != '(':
+                    op = operator_stack.pop()
+                    b = operand_stack.pop()
+                    a = operand_stack.pop()
+                    output.append(apply_op(op, b, a))
+                if operator_stack and operator_stack[-1] == '(':
+                    operator_stack.pop()
+            elif token in precedence:
+                while (operator_stack and operator_stack[-1] in precedence and
+                       precedence.get(operator_stack[-1], 0) >= precedence.get(token, 0)):
+                    op = operator_stack.pop()
+                    b = operand_stack.pop()
+                    a = operand_stack.pop()
+                    output.append(apply_op(op, b, a))
+                operator_stack.append(token)
+            else:
+                output.append(token)
+        while operator_stack:
+            op = operator_stack.pop()
+            b = operand_stack.pop()
+            a = operand_stack.pop()
+            output.append(apply_op(op, b, a))
+        return output
+if __name__ == '__main__':
+    parser = OperatorPrecedence()
+    expression1 = ""10 + 5 * 2""
+    tokens1 = parser.parse_expression(expression1)
+    result1 = parser.apply_precedence(tokens1)
+    print(f""Expression: {expression1}"")
+    print(f""Tokens: {tokens1}"")
+    print(f""Result: {result1}\n"")
+    expression2 = ""10 + 5 * 2 & 3""
+    tokens2 = parser.parse_expression(expression2)
+    result2 = parser.apply_precedence(tokens2)
+    print(f""Expression: {expression2}"")
+    print(f""Tokens: {tokens2}"")
+    print(f""Result: {result2}\n"")
+    expression3 = ""(10 + 5) * 2""
+    tokens3 = parser.parse_expression(expression3)
+    result3 = parser.apply_precedence(tokens3)
+    print(f""Expression: {expression3}"")
+    print(f""Tokens: {tokens3}"")
+    print(f""Result: {result3}\n"")
+    expression4 = ""10 ^ 3 * 2""
+    tokens4 = parser.parse_expression(expression4)
+    result4 = parser.apply_precedence(tokens4)
+    print(f""Expression: {expression4}"")
+    print(f""Tokens: {tokens4}"")
+    print(f""Result: {result4}\n"")
+    expression5 = ""10 << 2 | 3""
+    tokens5 = parser.parse_expression(expression5)
+    result5 = parser.apply_precedence(tokens5)
+    print(f""Expression: {expression5}"")
+    print(f""Tokens: {tokens5}"")
+    print(f""Result: {result5}\n"")",True,4,6168,99_2_4.py
+99,2,Understand boolean operator precedence,"Develop a class named `OperatorPrecedence` with a method that can parse a string expression and return the correct sequence of operations based on PEMDAS/BODMAS rules, focusing on bitwise and logical operators as well.","class OperatorPrecedence:
+    def parse_expression(self, expression):
+        tokens = expression.split()
+        if not tokens:
+            return []
+        output = []
+        operators = []
+        for token in tokens:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                output.append(token)
+            elif token in ['+', '-', '*', '/', '^', '&', '|', '^']:
+                operators.append(token)
+            else:
+                output.append(token)
+        return output, operators
+    def evaluate_expression(self, expression):
+        output, operators = self.parse_expression(expression)
+        if not output:
+            return None
+        values = []
+        ops = []
+        for token in output:
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                values.append(float(token))
+            elif token in ['+', '-', '*', '/', '^', '&', '|']:
+                ops.append(token)
+        if not values:
+            return None
+        i = 0
+        while i < len(ops):
+            op = ops[i]
+            if i + 1 < len(values):
+                operand1 = values[i]
+                operand2 = values[i+1]
+                values.pop()
+                values.append(operand2)
+                if op == '+':
+                    result = operand1 + operand2
+                elif op == '-':
+                    result = operand1 - operand2
+                elif op == '*':
+                    result = operand1 * operand2
+                elif op == '/':
+                    if operand2 == 0:
+                        raise ZeroDivisionError(""Division by zero"")
+                    result = operand1 / operand2
+                elif op == '^':
+                    result = operand1 ** operand2
+                elif op == '&':
+                    result = operand1 & operand2
+                elif op == '|':
+                    result = operand1 | operand2
+                else:
+                    raise ValueError(f""Unknown operator: {op}"")
+                values.pop()
+                values.append(result)
+            i += 1
+        if len(values) == 1:
+            return values[0]
+        else:
+            raise ValueError(""Invalid expression structure"")
+if __name__ == '__main__':
+    parser = OperatorPrecedence()
+    expression1 = ""10 + 5 * 2""
+    try:
+        result1 = parser.evaluate_expression(expression1)
+        print(f""Expression: {expression1}"")
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error processing {expression1}: {e}"")
+    print(""-"" * 20)
+    expression2 = ""10 + 5 & 3""                                                                              
+    try:
+        expression2_arithmetic = ""10 + 5 * 2""
+        result2_arithmetic = parser.evaluate_expression(expression2_arithmetic)
+        print(f""Expression: {expression2_arithmetic}"")
+        print(f""Result: {result2_arithmetic}"")
+    except Exception as e:
+        print(f""Error processing {expression2_arithmetic}: {e}"")
+    print(""-"" * 20)
+    expression3 = ""10 + 5 * 2""
+    try:
+        result3 = parser.evaluate_expression(expression3)
+        print(f""Expression: {expression3}"")
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error processing {expression3}: {e}"")",True,5,6169,99_2_5.py
+99,7,Understand boolean operator precedence,"Develop a recursive function to parse a fully parenthesized mathematical expression string and calculate its result, implicitly enforcing the correct order of operations through recursion.","def evaluate_fully_parenthesized(expression):
+    if not expression:
+        return None
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            if balance == 0:
+                split_index = i + 1
+                break
+        if split_index != -1:
+            left_expr = content[:split_index]
+            right_expr = content[split_index:]
+            left_val = evaluate_fully_parenthesized(left_expr)
+            right_val = evaluate_fully_parenthesized(right_expr)
+            if left_val is not None and right_val is not None:
+                if expression.startswith('(') and expression.endswith(')'):
+                    if expression.count('(') == expression.count(')'):
+                        if expression.count('(') == 1 and expression.count(')') == 1:
+                            try:
+                                return float(expression)
+                            except ValueError:
+                                return None
+                        balance = 0
+                        op_index = -1
+                        for i in range(1, len(expression) - 1):
+                            char = expression[i]
+                            if char == '(':
+                                balance += 1
+                            elif char == ')':
+                                balance -= 1
+                            elif balance == 0:
+                                if char in '+-*/':
+                                    op_index = i
+                                    break
+                        if op_index != -1:
+                            op = expression[op_index]
+                            left_part = expression[:op_index]
+                            right_part = expression[op_index+1:-1]
+                            left_val = evaluate_fully_parenthesized(left_part)
+                            right_val = evaluate_fully_parenthesized(right_part)
+                            if left_val is not None and right_val is not None:
+                                if op == '+':
+                                    return left_val + right_val
+                                elif op == '-':
+                                    return left_val - right_val
+                                elif op == '*':
+                                    return left_val * right_val
+                                elif op == '/':
+                                    if right_val == 0:
+                                        return ""Error: Division by zero""
+                                    return left_val / right_val
+    return None
+def parse_and_evaluate(expression):
+    if not expression.startswith('(') or not expression.endswith(')'):
+        return None
+    content = expression[1:-1]
+    balance = 0
+    split_index = -1
+    operator = None
+    for i, char in enumerate(content):
+        if char == '(':
+            balance += 1
+        elif char == ')':
+            balance -= 1
+        elif balance == 0:
+            if char in '+-*/':
+                split_index = i
+                operator = char
+                break
+    if split_index != -1:
+        left_expr = expression[1:split_index]
+        right_expr = expression[split_index+1:-1]
+        left_val = evaluate_fully_parenthesized(left_expr)
+        right_val = evaluate_fully_parenthesized(right_expr)
+        if left_val is not None and right_val is not None:
+            if operator == '+':
+                return left_val + right_val
+            elif operator == '-':
+                return left_val - right_val
+            elif operator == '*':
+                return left_val * right_val
+            elif operator == '/':
+                if right_val == 0:
+                    return ""Error: Division by zero""
+                return left_val / right_val
+    if expression.count('(') == 1 and expression.count(')') == 1:
+        try:
+            return float(expression)
+        except ValueError:
+            return None
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        (""((1+2)*3)"", 9.0),
+        (""((10-4)/(2+1))"", 2.0),
+        (""((5* (2+3)) / 4)"", 5.0),
+        (""(10+2)*(5-3)"", 24.0),
+        (""(100)"", 100.0),
+        (""(1.5+2.5)"", 4.0),
+        (""((10/2)*3)"", 15.0),
+        (""(10/0)"", ""Error: Division by zero"")
+    ]
+    for expression, expected in test_cases:
+        result = parse_and_evaluate(expression)
+        print(f""Expression: {expression}"")
+        print(f""Result: {result}"")
+        print(f""Expected: {expected}"")
+        print(""-"" * 20)
+    print(""Test complete."")",True,0,6170,99_7.py
+99,7,Understand boolean operator precedence,"Develop a recursive function to parse a fully parenthesized mathematical expression string and calculate its result, implicitly enforcing the correct order of operations through recursion.","def evaluate_fully_parenthesized(expression):
+    if not expression:
+        return None
+    if len(expression) == 1 and expression.isdigit():
+        return int(expression)
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            else:
+                if balance == 0:
+                    split_index = i
+                    break
+        if split_index != -1:
+            left_expr = content[:split_index]
+            right_expr = content[split_index+1:]
+            left_val = evaluate_fully_parenthesized(left_expr)
+            right_val = evaluate_fully_parenthesized(right_expr)
+            if left_val is not None and right_val is not None:
+                if expression[0] == '(':
+                    return f""({left_val} {right_val})""
+                else:
+                    return left_val + right_val
+    return None
+def parse_and_evaluate(expression):
+    result = evaluate_fully_parenthesized(expression)
+    if result is not None:
+        return result
+    return ""Error""
+if __name__ == '__main__':
+    expression1 = ""((1 + 2) * (3 - 4))""
+    expression2 = ""((5 * (6 + 7)) / 2)""
+    expression3 = ""(10 + (20 * (3 + 4)))""
+    expression4 = ""(1 + 2)""
+    expression5 = ""(10)""
+    print(f""Expression: {expression1}, Result: {parse_and_evaluate(expression1)}"")
+    print(f""Expression: {expression2}, Result: {parse_and_evaluate(expression2)}"")
+    print(f""Expression: {expression3}, Result: {parse_and_evaluate(expression3)}"")
+    print(f""Expression: {expression4}, Result: {parse_and_evaluate(expression4)}"")
+    print(f""Expression: {expression5}, Result: {parse_and_evaluate(expression5)}"")",True,1,6171,99_7_1.py
+99,7,Understand boolean operator precedence,"Develop a recursive function to parse a fully parenthesized mathematical expression string and calculate its result, implicitly enforcing the correct order of operations through recursion.","def evaluate_fully_parenthesized(expression):
+    if not expression:
+        return None
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            if balance == 0:
+                split_index = i + 1
+                break
+        if split_index != -1:
+            left = content[:split_index]
+            right = content[split_index:]
+            left_val = evaluate_fully_parenthesized(left)
+            right_val = evaluate_fully_parenthesized(right)
+            if left_val is not None and right_val is not None:
+                if expression.startswith('(') and expression.endswith(')'):
+                    return eval(f""{left_val} {right_val}"")
+    return None
+def parse_and_evaluate(expression):
+    if not expression:
+        return None
+    expression = expression.strip()
+    if not expression:
+        return None
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            if balance == 0:
+                split_index = i + 1
+                break
+        if split_index != -1:
+            left = content[:split_index]
+            right = content[split_index:]
+            left_val = parse_and_evaluate(left)
+            right_val = parse_and_evaluate(right)
+            if left_val is not None and right_val is not None:
+                return eval(f""{left_val} {right_val}"")
+    return None
+def calculate_expression(expression):
+    return parse_and_evaluate(expression)
+if __name__ == '__main__':
+    expression1 = ""((1 + 2) * (3 - 4))""
+    result1 = calculate_expression(expression1)
+    print(f""Expression: {expression1}, Result: {result1}"")
+    expression2 = ""((10 - (5 + 2)) * 3)""
+    result2 = calculate_expression(expression2)
+    print(f""Expression: {expression2}, Result: {result2}"")
+    expression3 = ""((2 + (3 * (4 - 1))) / 5)""
+    result3 = calculate_expression(expression3)
+    print(f""Expression: {expression3}, Result: {result3}"")
+    expression4 = ""((1 + (2 * (3 + 4))) / 2)""
+    result4 = calculate_expression(expression4)
+    print(f""Expression: {expression4}, Result: {result4}"")",True,2,6172,99_7_2.py
+99,7,Understand boolean operator precedence,"Develop a recursive function to parse a fully parenthesized mathematical expression string and calculate its result, implicitly enforcing the correct order of operations through recursion.","def evaluate_fully_parenthesized(expression):
+    if not expression:
+        return None
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            if balance == 0:
+                split_index = i + 1
+                break
+        if split_index != -1:
+            left_expr = content[:split_index]
+            right_expr = content[split_index:]
+            left_val = evaluate_fully_parenthesized(left_expr)
+            right_val = evaluate_fully_parenthesized(right_expr)
+            if left_val is not None and right_val is not None:
+                if expression.startswith('(') and expression.endswith(')'):
+                    if expression.count('(') == expression.count(')'):
+                        if expression.count('(') == 1 and expression.count(')') == 1:
+                            try:
+                                return float(expression[1:-1])
+                            except ValueError:
+                                return None
+                        else:
+                            balance = 0
+                            op_index = -1
+                            for i, char in enumerate(content):
+                                if char == '(':
+                                    balance += 1
+                                elif char == ')':
+                                    balance -= 1
+                                elif balance == 0 and char in '+-*/':
+                                    op_index = i
+                                    break
+                            if op_index != -1:
+                                op = content[op_index]
+                                left_str = content[:op_index]
+                                right_str = content[op_index+1:]
+                                left_val = evaluate_fully_parenthesized(left_str)
+                                right_val = evaluate_fully_parenthesized(right_str)
+                                if left_val is not None and right_val is not None:
+                                    if op == '+':
+                                        return left_val + right_val
+                                    elif op == '-':
+                                        return left_val - right_val
+                                    elif op == '*':
+                                        return left_val * right_val
+                                    elif op == '/':
+                                        if right_val == 0:
+                                            raise ZeroDivisionError(""Division by zero"")
+                                        return left_val / right_val
+                            return None
+        else:
+            return None
+    try:
+        return float(expression)
+    except ValueError:
+        return None
+def evaluate_fully_parenthesized_recursive(expression):
+    if not expression:
+        return None
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            if balance == 0:
+                split_index = i + 1
+                break
+        if split_index != -1:
+            left_str = content[:split_index]
+            right_str = content[split_index:]
+            left_val = evaluate_fully_parenthesized_recursive(left_str)
+            right_val = evaluate_fully_parenthesized_recursive(right_str)
+            if left_val is not None and right_val is not None:
+                balance = 0
+                op_index = -1
+                for i, char in enumerate(content):
+                    if char == '(':
+                        balance += 1
+                    elif char == ')':
+                        balance -= 1
+                    elif balance == 0 and char in '+-*/':
+                        op_index = i
+                        break
+                if op_index != -1:
+                    op = content[op_index]
+                    left_str = content[:op_index]
+                    right_str = content[op_index+1:]
+                    left_val = evaluate_fully_parenthesized_recursive(left_str)
+                    right_val = evaluate_fully_parenthesized_recursive(right_str)
+                    if left_val is not None and right_val is not None:
+                        if op == '+':
+                            return left_val + right_val
+                        elif op == '-':
+                            return left_val - right_val
+                        elif op == '*':
+                            return left_val * right_val
+                        elif op == '/':
+                            if right_val == 0:
+                                raise ZeroDivisionError(""Division by zero"")
+                            return left_val / right_val
+    try:
+        return float(expression)
+    except ValueError:
+        return None
+def calculate_expression(expression):
+    return evaluate_fully_parenthesized_recursive(expression)
+if __name__ == '__main__':
+    test_cases = [
+        ""((1+2)*3)"",
+        ""((10-5)/2)"",
+        ""(10*(2+3))"",
+        ""((5+5)*2)"",
+        ""(100/5-1)"",
+        ""((2*3)+(4*5))""
+    ]
+    for expr in test_cases:
+        try:
+            result = calculate_expression(expr)
+            print(f""Expression: {expr}, Result: {result}"")
+        except ZeroDivisionError as e:
+            print(f""Expression: {expr}, Error: {e}"")
+        except Exception as e:
+            print(f""Expression: {expr}, Error: {e}"")
+        print(""-"" * 20)",True,3,6173,99_7_3.py
+99,7,Understand boolean operator precedence,"Develop a recursive function to parse a fully parenthesized mathematical expression string and calculate its result, implicitly enforcing the correct order of operations through recursion.","def evaluate_fully_parenthesized(expression):
+    if not expression:
+        return None
+    if len(expression) == 1 and expression.isdigit():
+        return int(expression)
+    if expression.startswith('(') and expression.endswith(')'):
+        content = expression[1:-1]
+        balance = 0
+        split_index = -1
+        for i, char in enumerate(content):
+            if char == '(':
+                balance += 1
+            elif char == ')':
+                balance -= 1
+            if balance == 0:
+                split_index = i + 1
+                break
+        if split_index != -1:
+            left = content[:split_index]
+            right = content[split_index:]
+            left_val = evaluate_fully_parenthesized(left)
+            right_val = evaluate_fully_parenthesized(right)
+            if left_val is not None and right_val is not None:
+                if expression.startswith('(') and expression.endswith(')'):
+                    return left_val + right_val
+    return None
+if __name__ == '__main__':
+    expression1 = ""((3+4)*5)""
+    expression2 = ""((10-2)*(6/3))""
+    expression3 = ""((7+8)*(9-1))""
+    expression4 = ""(1+2)*(3+4)""
+    expression5 = ""(100)""
+    print(f""Expression: {expression1}, Result: {evaluate_fully_parenthesized(expression1)}"")
+    print(f""Expression: {expression2}, Result: {evaluate_fully_parenthesized(expression2)}"")
+    print(f""Expression: {expression3}, Result: {evaluate_fully_parenthesized(expression3)}"")
+    print(f""Expression: {expression4}, Result: {evaluate_fully_parenthesized(expression4)}"")
+    print(f""Expression: {expression5}, Result: {evaluate_fully_parenthesized(expression5)}"")",True,4,6174,99_7_4.py
