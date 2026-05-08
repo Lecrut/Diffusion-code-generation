@@ -201084,3 +201084,648 @@ list2 = [4, 5, 6]
 combined_list = [x for lst in [list1, list2] for x in lst]
 if __name__ == '__main__':
     print(combined_list)",True,0,9418,151_2.py
+151,7,Combine two lists easily,"Create a function that combines two lists, 'list_a' and 'list_b', and sorts the final combined list in ascending order. Use the `sorted()` function for optimal performance.","def combine_and_sort(list_a, list_b):
+    combined_list = list_a + list_b
+    return sorted(combined_list)
+if __name__ == '__main__':
+    list_a = [5, 2, 8, 1]
+    list_b = [9, 3, 4, 6]
+    result = combine_and_sort(list_a, list_b)
+    print(result)",True,0,9419,151_7.py
+151,7,Combine two lists easily,"Create a function that combines two lists, 'list_a' and 'list_b', and sorts the final combined list in ascending order. Use the `sorted()` function for optimal performance.","def combine_and_sort_lists(list_a, list_b):
+    combined_list = list_a + list_b
+    return sorted(combined_list)
+if __name__ == '__main__':
+    list_a = [5, 2, 8, 1]
+    list_b = [9, 3, 4, 6]
+    result = combine_and_sort_lists(list_a, list_b)
+    print(result)",True,1,9420,151_7_1.py
+151,8,Combine two lists easily,"Write a function that combines two lists, 'list_a' and 'list_b', and returns a list containing all unique elements from both, utilizing the properties of Python sets for efficiency.","def combine_unique_lists(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    combined_set = set_a.union(set_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 4, 5]
+    list_b_sample = [4, 5, 6, 7, 8]
+    result = combine_unique_lists(list_a_sample, list_b_sample)
+    print(result)",True,0,9421,151_8.py
+151,8,Combine two lists easily,"Write a function that combines two lists, 'list_a' and 'list_b', and returns a list containing all unique elements from both, utilizing the properties of Python sets for efficiency.","def combine_unique_lists(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    combined_set = set_a.union(set_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 1, 2]
+    list_b = [3, 4, 5, 6, 2]
+    result = combine_unique_lists(list_a, list_b)
+    print(result)",True,1,9422,151_8_1.py
+151,9,Combine two lists easily,"Design and implement a highly efficient method to combine two lists, 'list_alpha' and 'list_beta', ensuring the resulting list is created in $O(n+m)$ time complexity, where $n$ and $m$ are the lengths of the input lists.","def combine_lists(list_alpha, list_beta):
+    result = []
+    i = 0
+    j = 0
+    n = len(list_alpha)
+    m = len(list_beta)
+    while i < n and j < m:
+        if list_alpha[i] < list_beta[j]:
+            result.append(list_alpha[i])
+            i += 1
+        else:
+            result.append(list_beta[j])
+            j += 1
+    result.extend(list_alpha[i:])
+    result.extend(list_beta[j:])
+    return result
+if __name__ == '__main__':
+    list_alpha = [1, 3, 5, 7, 9]
+    list_beta = [2, 4, 6, 8, 10, 12]
+    combined = combine_lists(list_alpha, list_beta)
+    print(combined)",True,0,9423,151_9.py
+151,9,Combine two lists easily,"Design and implement a highly efficient method to combine two lists, 'list_alpha' and 'list_beta', ensuring the resulting list is created in $O(n+m)$ time complexity, where $n$ and $m$ are the lengths of the input lists.","def combine_lists(list_alpha, list_beta):
+    result = []
+    i = 0
+    j = 0
+    n = len(list_alpha)
+    m = len(list_beta)
+    while i < n and j < m:
+        if list_alpha[i] < list_beta[j]:
+            result.append(list_alpha[i])
+            i += 1
+        else:
+            result.append(list_beta[j])
+            j += 1
+    result.extend(list_alpha[i:])
+    result.extend(list_beta[j:])
+    return result
+if __name__ == '__main__':
+    list_alpha = [1, 5, 8, 10]
+    list_beta = [2, 3, 6, 9, 11]
+    combined = combine_lists(list_alpha, list_beta)
+    print(combined)",True,1,9424,151_9_1.py
+151,9,Combine two lists easily,"Design and implement a highly efficient method to combine two lists, 'list_alpha' and 'list_beta', ensuring the resulting list is created in $O(n+m)$ time complexity, where $n$ and $m$ are the lengths of the input lists.","def combine_lists(list_alpha, list_beta):
+    result = []
+    i = 0
+    j = 0
+    n = len(list_alpha)
+    m = len(list_beta)
+    while i < n and j < m:
+        if list_alpha[i] < list_beta[j]:
+            result.append(list_alpha[i])
+            i += 1
+        else:
+            result.append(list_beta[j])
+            j += 1
+    result.extend(list_alpha[i:])
+    result.extend(list_beta[j:])
+    return result
+if __name__ == '__main__':
+    list_alpha = [1, 3, 5, 7, 9]
+    list_beta = [2, 4, 6, 8, 10]
+    combined = combine_lists(list_alpha, list_beta)
+    print(combined)",True,2,9425,151_9_2.py
+151,10,Combine two lists easily,"Write a robust Python function named 'combine_lists' that accepts two lists as arguments and returns a new list containing all elements from both input lists, ensuring no duplicates are present if the input lists contain overlapping elements. Implement this using set operations for optimal performance.","def combine_lists(list1, list2):
+    combined_set = set(list1)
+    combined_set.update(list2)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_lists(list_a, list_b)
+    print(result)",True,0,9426,151_10.py
+151,11,Combine two lists easily,"Implement an optimized function to combine two lists, list_a and list_b, using the `extend()` method. The function must modify list_a in place and return nothing, adhering to best practices for list manipulation.","def combine_lists(list_a, list_b):
+    list_a.extend(list_b)
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = [4, 5, 6]
+    combine_lists(list1, list2)
+    print(list1)",True,0,9427,151_11.py
+151,11,Combine two lists easily,"Implement an optimized function to combine two lists, list_a and list_b, using the `extend()` method. The function must modify list_a in place and return nothing, adhering to best practices for list manipulation.","def combine_lists_extend(list_a, list_b):
+    list_a.extend(list_b)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3]
+    list_b_sample = [4, 5, 6]
+    combine_lists_extend(list_a_sample, list_b_sample)
+    print(list_a_sample)",True,1,9428,151_11_1.py
+151,11,Combine two lists easily,"Implement an optimized function to combine two lists, list_a and list_b, using the `extend()` method. The function must modify list_a in place and return nothing, adhering to best practices for list manipulation.","def combine_lists_extend(list_a, list_b):
+    list_a.extend(list_b)
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = [4, 5, 6]
+    print(""Before combining:"")
+    print(""List A:"", list1)
+    print(""List B:"", list2)
+    combine_lists_extend(list1, list2)
+    print(""After combining (List A modified in place):"")
+    print(""List A:"", list1)",True,2,9429,151_11_2.py
+151,11,Combine two lists easily,"Implement an optimized function to combine two lists, list_a and list_b, using the `extend()` method. The function must modify list_a in place and return nothing, adhering to best practices for list manipulation.","def combine_lists_extend(list_a, list_b):
+    list_a.extend(list_b)
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    combine_lists_extend(list_a, list_b)
+    print(list_a)",True,3,9430,151_11_3.py
+151,11,Combine two lists easily,"Implement an optimized function to combine two lists, list_a and list_b, using the `extend()` method. The function must modify list_a in place and return nothing, adhering to best practices for list manipulation.","def combine_lists_extend(list_a, list_b):
+    list_a.extend(list_b)
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = [4, 5, 6]
+    combine_lists_extend(list1, list2)
+    print(list1)",True,4,9431,151_11_4.py
+151,6,Combine two lists easily,"Write a script that reads two lines of input from the user, treats each line as a list of strings, and combines them into one master list, handling potential empty input lines.",,False,0,9432,151_6.py
+151,13,Combine two lists easily,"Write a class method within a class called 'ListCombiner' that has a method 'merge(self, list1, list2)' which combines the two input lists into a single, sorted list. Ensure the implementation is highly efficient (O(n+m) time complexity) and handles potential duplicate elements gracefully by using a set internally.","class ListCombiner:
+    def merge(self, list1, list2):
+        combined_set = set(list1)
+        combined_set.update(list2)
+        sorted_list = sorted(list(combined_set))
+        return sorted_list
+if __name__ == '__main__':
+    combiner = ListCombiner()
+    list_a = [1, 5, 2, 8, 5]
+    list_b = [8, 3, 1, 9, 2]
+    result = combiner.merge(list_a, list_b)
+    print(result)",True,0,9433,151_13.py
+151,14,Combine two lists easily,"Generate a complete, production-ready Python function that takes two lists of strings, list_a and list_b, and returns a single list containing all unique strings from both lists. The solution must be concise, readable, and utilize Python's built-in features effectively.","def unique_union(list_a: list[str], list_b: list[str]) -> list[str]:
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a_sample = [""apple"", ""banana"", ""cherry"", ""apple""]
+    list_b_sample = [""banana"", ""date"", ""apple"", ""fig""]
+    result = unique_union(list_a_sample, list_b_sample)
+    print(result)",True,0,9434,151_14.py
+151,14,Combine two lists easily,"Generate a complete, production-ready Python function that takes two lists of strings, list_a and list_b, and returns a single list containing all unique strings from both lists. The solution must be concise, readable, and utilize Python's built-in features effectively.","def unique_strings_union(list_a: list[str], list_b: list[str]) -> list[str]:
+    return list(set(list_a) | set(list_b))
+if __name__ == '__main__':
+    list_a_sample = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    list_b_sample = [""banana"", ""elderberry"", ""fig"", ""apple"", ""grape""]
+    result = unique_strings_union(list_a_sample, list_b_sample)
+    print(result)",True,1,9435,151_14_1.py
+151,14,Combine two lists easily,"Generate a complete, production-ready Python function that takes two lists of strings, list_a and list_b, and returns a single list containing all unique strings from both lists. The solution must be concise, readable, and utilize Python's built-in features effectively.","def unique_union(list_a: list[str], list_b: list[str]) -> list[str]:
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a_sample = [""apple"", ""banana"", ""cherry"", ""apple""]
+    list_b_sample = [""banana"", ""date"", ""apple"", ""elderberry""]
+    result = unique_union(list_a_sample, list_b_sample)
+    print(result)",True,2,9436,151_14_2.py
+152,0,Find common elements between lists,"Write a complete, efficient Python function named `find_common_elements` that accepts two lists as input and returns a new list containing only the elements present in both lists. Use set operations for optimal performance.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,0,9437,152_0.py
+152,1,Find common elements between lists,"Implement a function that finds the intersection of two lists, `list_a` and `list_b`. The implementation must prioritize time complexity, aiming for O(n+m) complexity by utilizing hash sets.","def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    return list(intersection)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [4, 5, 6, 7, 8]
+    result1 = find_intersection(list1, list2)
+    print(f""Intersection of {list1} and {list2}: {result1}"")
+    list3 = [10, 20, 30, 40]
+    list4 = [30, 40, 50, 60]
+    result2 = find_intersection(list3, list4)
+    print(f""Intersection of {list3} and {list4}: {result2}"")
+    list5 = ['a', 'b', 'c', 'd']
+    list6 = ['c', 'd', 'e', 'f']
+    result3 = find_intersection(list5, list6)
+    print(f""Intersection of {list5} and {list6}: {result3}"")",True,0,9438,152_1.py
+152,1,Find common elements between lists,"Implement a function that finds the intersection of two lists, `list_a` and `list_b`. The implementation must prioritize time complexity, aiming for O(n+m) complexity by utilizing hash sets.","import time
+def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection_set = set_a.intersection(set_b)
+    return list(intersection_set)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 6]
+    list_b_sample = [5, 6, 7, 8, 9, 1]
+    result = find_intersection(list_a_sample, list_b_sample)
+    print(result)",True,1,9439,152_1_1.py
+152,1,Find common elements between lists,"Implement a function that finds the intersection of two lists, `list_a` and `list_b`. The implementation must prioritize time complexity, aiming for O(n+m) complexity by utilizing hash sets.","import time
+def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    return list(intersection)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 6]
+    list_b_sample = [5, 6, 7, 8, 1, 9]
+    result = find_intersection(list_a_sample, list_b_sample)
+    print(result)",True,2,9440,152_1_2.py
+151,12,Combine two lists easily,"Develop a Python script that demonstrates three different, efficient ways to combine two lists, list1 and list2: using the `+` operator, `extend()`, and list comprehension. Include clear print statements to show the resulting combined list for each method.","import time
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+def combine_with_plus():
+    result = list1 + list2
+    print(""Result using + operator:"", result)
+def combine_with_extend():
+    result = list1[:]
+    result.extend(list2)
+    print(""Result using extend():"", result)
+def combine_with_comprehension():
+    result = [x for x in list1] + [x for x in list2]
+    print(""Result using list comprehension:"", result)
+if __name__ == '__main__':
+    start_time = time.time()
+    combine_with_plus()
+    combine_with_extend()
+    combine_with_comprehension()
+    end_time = time.time()
+    print(f""\nTotal execution time: {end_time - start_time} seconds"")",True,0,9441,151_12.py
+152,3,Find common elements between lists,"Create a class named `ListComparator` with a method `get_intersection(self, list1, list2)` that efficiently determines and returns the common elements between the two input lists.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.get_intersection(list_a, list_b)
+    print(result)",True,0,9442,152_3.py
+152,3,Find common elements between lists,"Create a class named `ListComparator` with a method `get_intersection(self, list1, list2)` that efficiently determines and returns the common elements between the two input lists.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = comparator.get_intersection(list_a, list_b)
+    print(f""Intersection of {list_a} and {list_b}: {result1}"")
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'apple']
+    result2 = comparator.get_intersection(list_c, list_d)
+    print(f""Intersection of {list_c} and {list_d}: {result2}"")
+    list_e = [10, 20, 30]
+    list_f = [40, 50, 60]
+    result3 = comparator.get_intersection(list_e, list_f)
+    print(f""Intersection of {list_e} and {list_f}: {result3}"")",True,1,9443,152_3_1.py
+152,3,Find common elements between lists,"Create a class named `ListComparator` with a method `get_intersection(self, list1, list2)` that efficiently determines and returns the common elements between the two input lists.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.get_intersection(list_a, list_b)
+    print(result)
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'apple']
+    result2 = comparator.get_intersection(list_c, list_d)
+    print(result2)
+    list_e = [10, 20, 30]
+    list_f = [40, 50, 60]
+    result3 = comparator.get_intersection(list_e, list_f)
+    print(result3)",True,2,9444,152_3_2.py
+152,3,Find common elements between lists,"Create a class named `ListComparator` with a method `get_intersection(self, list1, list2)` that efficiently determines and returns the common elements between the two input lists.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.get_intersection(list_a, list_b)
+    print(result)
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'elderberry']
+    result2 = comparator.get_intersection(list_c, list_d)
+    print(result2)",True,3,9445,152_3_3.py
+150,10,Remove a specific item list,"Write a robust Python script that reads a list of items from a file, prompts the user to specify an item to remove, and writes the updated list back to a new file. Ensure the code is highly efficient and handles file I/O errors gracefully.","import os
+def process_list_file(input_filename, output_filename):
+    try:
+        with open(input_filename, 'r') as f:
+            items = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: Input file '{input_filename}' not found."")
+        return None
+    except IOError as e:
+        print(f""Error reading file '{input_filename}': {e}"")
+        return None
+    if not items:
+        print(""Input file is empty."")
+        return []
+    print(""Available items:"")
+    for i, item in enumerate(items):
+        print(f""{i + 1}: {item}"")
+    try:
+        choice = input(""Enter the number of the item to remove: "")
+        if not choice.isdigit():
+            print(""Invalid input. Operation cancelled."")
+            return items
+        index_to_remove = int(choice) - 1
+        if 0 <= index_to_remove < len(items):
+            updated_items = items[:index_to_remove] + items[index_to_remove+1:]
+            with open(output_filename, 'w') as f:
+                for item in updated_items:
+                    f.write(item + '\n')
+            print(f""Successfully removed item at index {index_to_remove}."")
+            print(f""Updated list written to '{output_filename}'."")
+            return updated_items
+        else:
+            print(""Invalid item number selected."")
+            return items
+    except ValueError:
+        print(""Invalid input. Please enter a valid number."")
+        return items
+    except IOError as e:
+        print(f""Error writing to output file '{output_filename}': {e}"")
+        return items
+if __name__ == '__main__':
+    INPUT_FILE = ""input_list.txt""
+    OUTPUT_FILE = ""output_list.txt""
+    sample_data = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    try:
+        with open(INPUT_FILE, 'w') as f:
+            for item in sample_data:
+                f.write(item + '\n')
+        print(f""Created sample input file: {INPUT_FILE}"")
+        print(""\n--- Running demonstration with hardcoded removal (Index 1) ---"")
+        items = sample_data
+        index_to_remove = 1 
+        if 0 <= index_to_remove < len(items):
+            updated_items = items[:index_to_remove] + items[index_to_remove+1:]
+            with open(OUTPUT_FILE, 'w') as f:
+                for item in updated_items:
+                    f.write(item + '\n')
+            print(f""Demonstration: Successfully removed item at index {index_to_remove}."")
+            print(f""Updated list written to '{OUTPUT_FILE}'."")
+        else:
+            print(""Demonstration: Invalid index for sample removal."")
+    except IOError as e:
+        print(f""Fatal error during file setup: {e}"")",True,0,9446,150_10.py
+150,10,Remove a specific item list,"Write a robust Python script that reads a list of items from a file, prompts the user to specify an item to remove, and writes the updated list back to a new file. Ensure the code is highly efficient and handles file I/O errors gracefully.","import os
+def process_list_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            items = [line.strip() for line in infile if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: Input file '{input_filename}' not found."")
+        return
+    except IOError as e:
+        print(f""Error reading file '{input_filename}': {e}"")
+        return
+    if item_to_remove in items:
+        updated_items = [item for item in items if item != item_to_remove]
+    else:
+        updated_items = items
+    try:
+        with open(output_filename, 'w') as outfile:
+            for item in updated_items:
+                outfile.write(item + '\n')
+        print(f""Successfully updated list. Results written to '{output_filename}'."")
+    except IOError as e:
+        print(f""Error writing to file '{output_filename}': {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input_list.txt""
+    OUTPUT_FILE = ""output_list.txt""
+    ITEM_TO_REMOVE = ""remove_me""
+    sample_data = [
+        ""apple"",
+        ""banana"",
+        ""cherry"",
+        ""date"",
+        ""remove_me"",
+        ""elderberry""
+    ]
+    try:
+        with open(INPUT_FILE, 'w') as f:
+            for item in sample_data:
+                f.write(item + '\n')
+        process_list_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    except IOError as e:
+        print(f""Error setting up sample input file: {e}"")",True,1,9447,150_10_1.py
+150,10,Remove a specific item list,"Write a robust Python script that reads a list of items from a file, prompts the user to specify an item to remove, and writes the updated list back to a new file. Ensure the code is highly efficient and handles file I/O errors gracefully.","import os
+def process_list_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            items = [line.strip() for line in infile if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: Input file '{input_filename}' not found."")
+        return
+    except IOError as e:
+        print(f""Error reading file '{input_filename}': {e}"")
+        return
+    if item_to_remove in items:
+        updated_items = [item for item in items if item != item_to_remove]
+    else:
+        updated_items = items
+    try:
+        with open(output_filename, 'w') as outfile:
+            for item in updated_items:
+                outfile.write(item + '\n')
+        print(f""Successfully updated list. Results written to '{output_filename}'."")
+    except IOError as e:
+        print(f""Error writing to file '{output_filename}': {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input_list.txt""
+    OUTPUT_FILE = ""output_list.txt""
+    ITEM_TO_REMOVE = ""apple""
+    sample_data = [
+        ""banana"",
+        ""apple"",
+        ""orange"",
+        ""grape"",
+        ""apple""
+    ]
+    try:
+        with open(INPUT_FILE, 'w') as f:
+            for item in sample_data:
+                f.write(item + '\n')
+        process_list_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    except IOError as e:
+        print(f""Error setting up sample input file: {e}"")",True,2,9448,150_10_2.py
+150,10,Remove a specific item list,"Write a robust Python script that reads a list of items from a file, prompts the user to specify an item to remove, and writes the updated list back to a new file. Ensure the code is highly efficient and handles file I/O errors gracefully.","import os
+def process_file(input_filename, output_filename):
+    try:
+        with open(input_filename, 'r') as f:
+            items = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: Input file '{input_filename}' not found."")
+        return None
+    except IOError as e:
+        print(f""Error reading file '{input_filename}': {e}"")
+        return None
+    if not items:
+        print(""Input file is empty."")
+        return []
+    print(""Available items:"")
+    for i, item in enumerate(items):
+        print(f""{i + 1}: {item}"")
+    try:
+        item_to_remove_input = input(""Enter the number of the item to remove: "")
+        if not item_to_remove_input.isdigit():
+            print(""Invalid input. Operation cancelled."")
+            return items
+        index_to_remove = int(item_to_remove_input) - 1
+        if 0 <= index_to_remove < len(items):
+            updated_items = items[:index_to_remove] + items[index_to_remove+1:]
+            with open(output_filename, 'w') as f:
+                for item in updated_items:
+                    f.write(item + '\n')
+            print(f""Successfully removed item at index {index_to_remove}."")
+            print(f""Updated list written to '{output_filename}'."")
+            return updated_items
+        else:
+            print(""Invalid item number specified."")
+            return items
+    except ValueError:
+        print(""Invalid input. Please enter a valid number."")
+        return items
+    except IOError as e:
+        print(f""Error writing to output file '{output_filename}': {e}"")
+        return items
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    sample_data = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    try:
+        with open(INPUT_FILE, 'w') as f:
+            for item in sample_data:
+                f.write(item + '\n')
+        print(f""Created sample input file: {INPUT_FILE}"")
+        items = sample_data
+        if len(items) > 1:
+            index_to_remove = 1
+            updated_items = items[:index_to_remove] + items[index_to_remove+1:]
+            with open(OUTPUT_FILE, 'w') as f:
+                for item in updated_items:
+                    f.write(item + '\n')
+            print(f""Simulated removal of item at index {index_to_remove}."")
+            print(f""Updated list written to '{OUTPUT_FILE}'."")
+    except IOError as e:
+        print(f""An error occurred during file setup: {e}"")",True,3,9449,150_10_3.py
+152,5,Find common elements between lists,"Implement a function that finds the common elements between two lists, `list_a` and `list_b`, and return the result as a sorted list. Ensure the code is production-ready and follows all Python best practices.","def find_common_elements(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common_elements = set_a.intersection(set_b)
+    sorted_common_elements = sorted(list(common_elements))
+    return sorted_common_elements
+if __name__ == '__main__':
+    list_a_sample = [1, 5, 2, 8, 3, 5, 9]
+    list_b_sample = [8, 3, 1, 9, 4, 5]
+    result = find_common_elements(list_a_sample, list_b_sample)
+    print(result)",True,0,9450,152_5.py
+152,5,Find common elements between lists,"Implement a function that finds the common elements between two lists, `list_a` and `list_b`, and return the result as a sorted list. Ensure the code is production-ready and follows all Python best practices.","def find_common_elements(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common_elements = set_a.intersection(set_b)
+    sorted_common_elements = sorted(list(common_elements))
+    return sorted_common_elements
+if __name__ == '__main__':
+    list_a_sample = [1, 5, 2, 8, 3, 5]
+    list_b_sample = [5, 9, 1, 3, 7, 2]
+    result = find_common_elements(list_a_sample, list_b_sample)
+    print(result)",True,1,9451,152_5_1.py
+152,5,Find common elements between lists,"Implement a function that finds the common elements between two lists, `list_a` and `list_b`, and return the result as a sorted list. Ensure the code is production-ready and follows all Python best practices.","def find_common_elements(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common_elements = set_a.intersection(set_b)
+    sorted_common_elements = sorted(list(common_elements))
+    return sorted_common_elements
+if __name__ == '__main__':
+    list_a_sample = [1, 5, 2, 8, 3, 5, 9]
+    list_b_sample = [5, 8, 1, 9, 4, 3, 10]
+    result = find_common_elements(list_a_sample, list_b_sample)
+    print(result)",True,2,9452,152_5_2.py
+152,5,Find common elements between lists,"Implement a function that finds the common elements between two lists, `list_a` and `list_b`, and return the result as a sorted list. Ensure the code is production-ready and follows all Python best practices.","def find_common_elements(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common_elements = set_a.intersection(set_b)
+    sorted_common_elements = sorted(list(common_elements))
+    return sorted_common_elements
+if __name__ == '__main__':
+    list_a_sample = [1, 5, 2, 8, 3, 5, 9]
+    list_b_sample = [8, 3, 1, 9, 4, 7, 2]
+    result = find_common_elements(list_a_sample, list_b_sample)
+    print(result)",True,3,9453,152_5_3.py
+152,5,Find common elements between lists,"Implement a function that finds the common elements between two lists, `list_a` and `list_b`, and return the result as a sorted list. Ensure the code is production-ready and follows all Python best practices.","def find_common_elements(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common_elements = set_a.intersection(set_b)
+    sorted_common_elements = sorted(list(common_elements))
+    return sorted_common_elements
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 5, 6]
+    list_b_sample = [3, 4, 5, 6, 7, 8]
+    result = find_common_elements(list_a_sample, list_b_sample)
+    print(result)",True,4,9454,152_5_4.py
+152,5,Find common elements between lists,"Implement a function that finds the common elements between two lists, `list_a` and `list_b`, and return the result as a sorted list. Ensure the code is production-ready and follows all Python best practices.","def find_common_elements(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common_elements = set_a.intersection(set_b)
+    sorted_common_elements = sorted(list(common_elements))
+    return sorted_common_elements
+if __name__ == '__main__':
+    list_a_sample = [1, 5, 2, 8, 3, 5]
+    list_b_sample = [5, 9, 2, 1, 4, 8]
+    result = find_common_elements(list_a_sample, list_b_sample)
+    print(result)",True,5,9455,152_5_5.py
+152,4,Find common elements between lists,"Write a concise and highly readable Python expression or one-line function using set intersection to find the common elements between `list1 = [1, 2, 3, 4]` and `list2 = [3, 4, 5, 6]`.","if __name__ == '__main__':
+    list1 = [1, 2, 3, 4]
+    list2 = [3, 4, 5, 6]
+    common_elements = set(list1) & set(list2)
+    print(common_elements)",True,0,9456,152_4.py
+152,6,Find common elements between lists,"Design an optimized algorithm to find the common elements between two potentially very large lists, `list_x` and `list_y`, ensuring the solution minimizes memory usage while maintaining high speed.","def find_common_elements(list_x, list_y):
+    set_x = set(list_x)
+    common = set_x.intersection(set(list_y))
+    return list(common)
+if __name__ == '__main__':
+    list_x = list(range(1, 1000001))
+    list_y = list(range(500001, 1500001))
+    common_elements = find_common_elements(list_x, list_y)
+    print(f""Number of common elements found: {len(common_elements)}"")
+    print(f""First 10 common elements: {common_elements[:10]}"")",True,0,9457,152_6.py
+152,6,Find common elements between lists,"Design an optimized algorithm to find the common elements between two potentially very large lists, `list_x` and `list_y`, ensuring the solution minimizes memory usage while maintaining high speed.","def find_common_elements(list_x, list_y):
+    set_x = set(list_x)
+    common = set_x.intersection(set(list_y))
+    return list(common)
+if __name__ == '__main__':
+    list_x = list(range(1000000))
+    list_y = list(range(500000, 1500000))
+    common_elements = find_common_elements(list_x, list_y)
+    print(common_elements)",True,1,9458,152_6_1.py
+152,6,Find common elements between lists,"Design an optimized algorithm to find the common elements between two potentially very large lists, `list_x` and `list_y`, ensuring the solution minimizes memory usage while maintaining high speed.","def find_common_elements(list_x, list_y):
+    set_x = set(list_x)
+    common = set_x.intersection(set(list_y))
+    return list(common)
+if __name__ == '__main__':
+    list_x = list(range(1000000))
+    list_y = list(range(500000, 1500000))
+    common_elements = find_common_elements(list_x, list_y)
+    print(f""Number of common elements found: {len(common_elements)}"")
+    print(f""First 10 common elements: {common_elements[:10]}"")",True,2,9459,152_6_2.py
+152,6,Find common elements between lists,"Design an optimized algorithm to find the common elements between two potentially very large lists, `list_x` and `list_y`, ensuring the solution minimizes memory usage while maintaining high speed.","def find_common_elements(list_x, list_y):
+    set_x = set(list_x)
+    common_elements = set_x.intersection(set(list_y))
+    return list(common_elements)
+if __name__ == '__main__':
+    list_x = list(range(1000000))
+    list_y = list(range(500000, 1500001))
+    common = find_common_elements(list_x, list_y)
+    print(common)",True,3,9460,152_6_3.py
+152,6,Find common elements between lists,"Design an optimized algorithm to find the common elements between two potentially very large lists, `list_x` and `list_y`, ensuring the solution minimizes memory usage while maintaining high speed.","def find_common_elements(list_x, list_y):
+    set_x = set(list_x)
+    common = set_x.intersection(set(list_y))
+    return list(common)
+if __name__ == '__main__':
+    list_x_sample = list(range(1000000))
+    list_y_sample = list(range(500000, 1500000))
+    common_elements = find_common_elements(list_x_sample, list_y_sample)
+    print(f""Number of common elements found: {len(common_elements)}"")",True,4,9461,152_6_4.py
