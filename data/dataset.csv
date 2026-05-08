@@ -181759,3 +181759,2855 @@ if __name__ == '__main__':
     print(are_equivalent(False, True))
     print(are_equivalent(False, False))
     print(are_equivalent(True, False))",True,3,8760,142_14_3.py
+142,6,Compare two boolean results,"Implement an optimized comparison logic for two boolean variables, prioritizing the use of direct comparison operators and avoiding unnecessary intermediate variables.",,False,0,8761,142_6.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 != (not expr2):
+                continue
+            if not (expr1 and expr2):
+                pass
+            if expr1 == (not expr2):
+                return True
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, False, True]
+    print(f""Expressions: {expressions1}, Contradiction: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False]
+    print(f""Expressions: {expressions2}, Contradiction: {check_contradiction(expressions2)}"")
+    expressions3 = [True, False]
+    print(f""Expressions: {expressions3}, Contradiction: {check_contradiction(expressions3)}"")
+    expressions4 = [True, True]
+    print(f""Expressions: {expressions4}, Contradiction: {check_contradiction(expressions4)}"")
+    expressions5 = [True, True, False]
+    print(f""Expressions: {expressions5}, Contradiction: {check_contradiction(expressions5)}"")
+    expressions6 = [True, False]
+    print(f""Expressions: {expressions6}, Contradiction: {check_contradiction(expressions6)}"")
+    expressions7 = [False, True]
+    print(f""Expressions: {expressions7}, Contradiction: {check_contradiction(expressions7)}"")
+    expressions8 = [True, True, False, True]
+    print(f""Expressions: {expressions8}, Contradiction: {check_contradiction(expressions8)}"")",True,0,8762,143_1.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            implies_not = (expr1 and not expr2) or (not expr1 and expr2)
+            if implies_not:
+                return True
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, False, True]
+    print(f""Expressions: {expressions1}, Contradiction: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False]
+    print(f""Expressions: {expressions2}, Contradiction: {check_contradiction(expressions2)}"")
+    expressions3 = [True, True, True]
+    print(f""Expressions: {expressions3}, Contradiction: {check_contradiction(expressions3)}"")
+    expressions4 = [True, True, False]
+    print(f""Expressions: {expressions4}, Contradiction: {check_contradiction(expressions4)}"")
+    expressions5 = [True, False]
+    print(f""Expressions: {expressions5}, Contradiction: {check_contradiction(expressions5)}"")
+    expressions6 = [True, True, False, False]
+    print(f""Expressions: {expressions6}, Contradiction: {check_contradiction(expressions6)}"")",True,1,8763,143_1_1.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 and not expr2 and expr2 and not expr1:
+                pass
+            if (expr1 and not expr2) or (not expr1 and expr2):
+                pass
+            if expr1 != expr2:
+                return True
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, True, False]
+    print(f""Expressions: {expressions1}, Contradiction: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False]
+    print(f""Expressions: {expressions2}, Contradiction: {check_contradiction(expressions2)}"")
+    expressions3 = [True, True]
+    print(f""Expressions: {expressions3}, Contradiction: {check_contradiction(expressions3)}"")
+    expressions4 = [True, False, True]
+    print(f""Expressions: {expressions4}, Contradiction: {check_contradiction(expressions4)}"")
+    expressions5 = [True, False]
+    print(f""Expressions: {expressions5}, Contradiction: {check_contradiction(expressions5)}"")
+    expressions6 = [True, True, False, False]
+    print(f""Expressions: {expressions6}, Contradiction: {check_contradiction(expressions6)}"")",True,2,8764,143_1_2.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            implies1_not2 = (not expr1 or (not expr2))
+            implies2_not1 = (not expr2 or (not expr1))
+            if implies1_not2 and implies2_not1:
+                return True
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, False, True]
+    print(f""Expressions: {expressions1}, Contradiction found: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False]
+    print(f""Expressions: {expressions2}, Contradiction found: {check_contradiction(expressions2)}"")
+    expressions3 = [True, True, True]
+    print(f""Expressions: {expressions3}, Contradiction found: {check_contradiction(expressions3)}"")
+    expressions4 = [False, False]
+    print(f""Expressions: {expressions4}, Contradiction found: {check_contradiction(expressions4)}"")
+    expressions5 = [True, False, True, False]
+    print(f""Expressions: {expressions5}, Contradiction found: {check_contradiction(expressions5)}"")",True,3,8765,143_1_3.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 and not expr2 and expr2 and not expr1:
+                return True
+            if (expr1 and not expr2) or (not expr1 and expr2):
+                pass
+            if (expr1 and not expr2) or (not expr1 and expr2):
+                return True
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, True, True]
+    print(f""Test 1: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False, True]
+    print(f""Test 2: {check_contradiction(expressions2)}"")
+    expressions3 = [True, False]
+    print(f""Test 3: {check_contradiction(expressions3)}"")
+    expressions4 = [True, True, False, False]
+    print(f""Test 4: {check_contradiction(expressions4)}"")
+    expressions5 = []
+    print(f""Test 5: {check_contradiction(expressions5)}"")
+    expressions6 = [True]
+    print(f""Test 6: {check_contradiction(expressions6)}"")",True,4,8766,143_1_4.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 and not expr2 and expr2 and not expr1:
+                return True
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, False, True]
+    print(f""Expressions: {expressions1}, Contradiction found: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False]
+    print(f""Expressions: {expressions2}, Contradiction found: {check_contradiction(expressions2)}"")
+    expressions3 = [True, True, False]
+    print(f""Expressions: {expressions3}, Contradiction found: {check_contradiction(expressions3)}"")
+    expressions4 = [True, False, True, False]
+    print(f""Expressions: {expressions4}, Contradiction found: {check_contradiction(expressions4)}"")
+    expressions5 = [True, True]
+    print(f""Expressions: {expressions5}, Contradiction found: {check_contradiction(expressions5)}"")
+    expressions6 = [True, False]
+    print(f""Expressions: {expressions6}, Contradiction found: {check_contradiction(expressions6)}"")
+    expressions7 = [True, True, False]
+    print(f""Expressions: {expressions7}, Contradiction found: {check_contradiction(expressions7)}"")",True,5,8767,143_1_5.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 and not expr2 and expr2 and not expr1:
+                return True
+            if (expr1 and not expr2) or (not expr1 and expr2):
+                pass
+            pass
+    return False
+if __name__ == '__main__':
+    expressions1 = [True, True, False]
+    print(f""Expressions: {expressions1}, Contradiction found: {check_contradiction(expressions1)}"")
+    expressions2 = [True, False]
+    print(f""Expressions: {expressions2}, Contradiction found: {check_contradiction(expressions2)}"")
+    expressions3 = [True, True, True]
+    print(f""Expressions: {expressions3}, Contradiction found: {check_contradiction(expressions3)}"")
+    expressions4 = [True, False, True]
+    print(f""Expressions: {expressions4}, Contradiction found: {check_contradiction(expressions4)}"")",True,6,8768,143_1_6.py
+143,1,Determine if statements are contradictory,"Implement an optimized function named `check_contradiction` that accepts a list of boolean expressions and returns `True` if any pair of expressions implies a logical contradiction, and `False` otherwise. Use best-practice logical operators.","import itertools
+def check_contradiction(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 and not expr2:
+                return True
+            if expr2 and not expr1:
+                return True
+    return False
+if __name__ == '__main__':
+    sample1 = [True, True, False]
+    print(f""Sample 1: {check_contradiction(sample1)}"")
+    sample2 = [True, False]
+    print(f""Sample 2: {check_contradiction(sample2)}"")
+    sample3 = [True, True, True]
+    print(f""Sample 3: {check_contradiction(sample3)}"")
+    sample4 = [True, False, True]
+    print(f""Sample 4: {check_contradiction(sample4)}"")
+    sample5 = [False, False]
+    print(f""Sample 5: {check_contradiction(sample5)}"")
+    sample6 = [True, True, False, True]
+    print(f""Sample 6: {check_contradiction(sample6)}"")
+    sample7 = [True, False, True, False]
+    print(f""Sample 7: {check_contradiction(sample7)}"")",True,7,8769,143_1_7.py
+142,10,Compare two boolean results,"Write a complete, high-quality Python script that compares two boolean values and prints the result in a clear, human-readable format, handling both True/False scenarios efficiently.",,False,0,8770,142_10.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, True], True),
+        ([True, True, True, True], False),
+        ([False, False, False, False], False),
+        ([True, False, False, True], True),
+        ([True, True, False, False], True)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result is {result}"")",True,0,8771,143_3.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, False], True),
+        ([True, False, False], True),
+        ([True, True, True, False], True),
+        ([False, False, True, True], True),
+        ([True, True, True, True], False)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result {result}"")",True,1,8772,143_3_1.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, True], True),
+        ([True, False, False], True),
+        ([False, True, False], True),
+        ([True, True, True, False], True),
+        ([False, False, False, True], True),
+        ([], False),
+        ([True], False),
+        ([False], False)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result {result}"")",True,2,8773,143_3_2.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] != bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        [True, True, True],
+        [False, False, False],
+        [True, False, True],
+        [True, True, False],
+        [False, True, False],
+        [True, False],
+        [False, False]
+    ]
+    for case in test_cases:
+        result = check_contradictory_combination(case)
+        print(f""Input: {case}, Result: {result}"")",True,3,8774,143_3_3.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, True], True),
+        ([True, True, True, True], False),
+        ([False, False, False, False], False),
+        ([True, False, False, True], True),
+        ([True, True, False, False], True)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result {result}"")",True,4,8775,143_3_4.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, True], True),
+        ([True, False, False], True),
+        ([False, True, False], True),
+        ([True, True, True, False], True),
+        ([False, False, False, True], True),
+        ([True, False, True, False], True),
+        ([True, True, False, False], True),
+        ([True, True, True, True], False)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result {result}"")",True,5,8776,143_3_5.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] != bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, False], True),
+        ([], False),
+        ([True], False),
+        ([False], False)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Input: {bool_list}, Result: {result}, Expected: {expected} - Passed"")",True,6,8777,143_3_6.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, True], True),
+        ([True, False, False], True),
+        ([False, True, False], True),
+        ([True, True, True, False], True),
+        ([False, False, False, True], True),
+        ([True, False, True, False], True),
+        ([True, True, False, False], True),
+        ([True, True, True, True], False)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result={result}"")",True,7,8778,143_3_7.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] != bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, False], True),
+        ([], False),
+        ([True], False),
+        ([False], False)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Input: {bool_list}, Result: {result}, Expected: {expected} - Passed"")
+    print(""All test cases passed."")",True,8,8779,143_3_8.py
+143,3,Determine if statements are contradictory,Write a robust Python function that takes a list of boolean variables and checks if there exists any combination of these variables that simultaneously evaluates to both `True` and `False` based on the provided conditional logic structure.,"def check_contradictory_combination(bool_list):
+    n = len(bool_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bool_list[i] and not bool_list[j]:
+                return True
+            if not bool_list[i] and bool_list[j]:
+                return True
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        ([True, True], False),
+        ([False, False], False),
+        ([True, False], True),
+        ([True, True, True], False),
+        ([False, False, False], False),
+        ([True, False, True], True),
+        ([True, True, False], True),
+        ([False, True, True], True),
+        ([True, True, True, True], False),
+        ([False, False, False, False], False),
+        ([True, False, False, True], True),
+        ([True, True, False, False], True),
+        ([True, True, True, False], True),
+        ([False, False, False, True], True)
+    ]
+    for bool_list, expected in test_cases:
+        result = check_contradictory_combination(bool_list)
+        assert result == expected, f""Input: {bool_list}, Expected: {expected}, Got: {result}""
+        print(f""Test passed for {bool_list}: Result is {result}"")",True,9,8780,143_3_9.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        condition_str = condition_str.strip()
+        if condition_str:
+            conditions.append(condition_str)
+    if not conditions:
+        return True
+    return True
+if __name__ == '__main__':
+    sample_string_1 = ""if x > 5: print('A')""
+    sample_string_2 = ""if y < 10 and z > 20: print('B')""
+    sample_string_3 = ""if a > 10 and a < 5: print('C')""
+    sample_string_4 = ""if x > 5 and not (x > 5): print('D')""
+    sample_string_5 = ""if p or q: print('E')""
+    print(f""Test 1: {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2: {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3: {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4: {parse_and_evaluate(sample_string_4)}"")
+    print(f""Test 5: {parse_and_evaluate(sample_string_5)}"")",True,0,8781,143_4.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        match = re.match(r""if\s+(.*?):\s*(.*)"", text)
+        if match:
+            condition = match.group(2).strip()
+            conditions.append(condition)
+    if not conditions:
+        return True
+    return True
+if __name__ == '__main__':
+    sample_string_1 = ""if x > 5: print('A')""
+    sample_string_2 = ""if y < 10: print('B')""
+    sample_string_3 = ""if x > 10 and y < 5: print('C')""
+    sample_string_4 = ""if x > 10 and x < 5: print('D')""
+    print(f""Test 1: {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2: {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3: {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4: {parse_and_evaluate(sample_string_4)}"")",True,1,8782,143_4_1.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        match = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+        if match:
+            condition = match.group(1).strip()
+            conditions.append(condition)
+    if not conditions:
+        return True
+    variables = set()
+    for cond in conditions:
+        parts = cond.split(' ')
+        for part in parts:
+            if re.match(r'[a-zA-Z_][a-zA-Z0-9_]*', part):
+                variables.add(part)
+    if not variables:
+        return True
+    truth_assignments = list(product([True, False], repeat=len(variables)))
+    for assignment in truth_assignments:
+        all_true = True
+        for cond in conditions:
+            pass                                            
+    return True
+if __name__ == '__main__':
+    sample_string_1 = ""if x > 5: print('A')""
+    sample_string_2 = ""if y < 10: print('B')""
+    sample_string_3 = ""if x > 10 and y < 5: print('C')""
+    sample_string_4 = ""if x > 10 and x < 5: print('D')""
+    print(f""Test 1 (x > 5): {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2 (y < 10): {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3 (x > 10 and y < 5): {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4 (x > 10 and x < 5): {parse_and_evaluate(sample_string_4)}"")",True,2,8783,143_4_2.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        conditions.append(condition_str.strip())
+    if not conditions:
+        return True
+    all_variables = set()
+    for cond in conditions:
+        match = re.findall(r'[A-Za-z_]\w*', cond)
+        all_variables.update(match)
+    if not all_variables:
+        return True
+    variable_list = sorted(list(all_variables))
+    num_vars = len(variable_list)
+    for assignment_tuple in product([False, True], repeat=num_vars):
+        assignment = dict(zip(variable_list, assignment_tuple))
+        all_true = True
+        for cond_str in conditions:
+            try:
+                if not eval(cond_str, {}, assignment):
+                    all_true = False
+                    break
+            except Exception:
+                all_true = False
+                break
+        if all_true:
+            return True
+    return False
+if __name__ == '__main__':
+    sample_text_1 = ""if A > 5: print('A is large')\nif B < 10: print('B is small')""
+    sample_text_2 = ""if X == True: print('X is true')\nif Y == False: print('Y is false')""
+    sample_text_3 = ""if A > 10 and B < 5: print('Both are true')""
+    sample_text_4 = ""if A > 10: print('A is large')""
+    print(f""Test 1 (A>5, B<10): {parse_and_evaluate(sample_text_1)}"")
+    print(f""Test 2 (X==True, Y==False): {parse_and_evaluate(sample_text_2)}"")
+    print(f""Test 3 (A>10 and B<5): {parse_and_evaluate(sample_text_3)}"")
+    print(f""Test 4 (A>10): {parse_and_evaluate(sample_text_4)}"")",True,3,8784,143_4_3.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        conditions.append(condition_str.strip())
+    if not conditions:
+        return True
+    num_conditions = len(conditions)
+    possible_truth_assignments = list(product([True, False], repeat=num_conditions))
+    for assignment in possible_truth_assignments:
+        is_simultaneously_true = True
+        for i in range(num_conditions):
+            pass
+        return True
+    return False
+if __name__ == '__main__':
+    sample_string_1 = ""if x > 5: print('A')\nif y < 10: print('B')""
+    sample_string_2 = ""if a and b: print('C')\nif not a: print('D')""
+    sample_string_3 = ""if x > 5: print('A')\nif x <= 4: print('B')""
+    sample_string_4 = ""if x > 5: print('A')\nif x <= 4: print('B')""
+    print(f""Test 1: {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2: {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3: {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4: {parse_and_evaluate(sample_string_4)}"")",True,4,8785,143_4_4.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        match = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+        if match:
+            condition = match.group(1).strip()
+            conditions.append(condition)
+    if not conditions:
+        return True
+    all_variables = set()
+    for cond in conditions:
+        variables = re.findall(r'[a-zA-Z0-9_]+', cond)
+        all_variables.update(variables)
+    if not all_variables:
+        return True
+    for cond in conditions:
+        if ""and not"" in cond or ""or"" in cond:
+            pass
+    return True
+if __name__ == '__main__':
+    sample_string_1 = ""if A: print('A is true')\nif B: print('B is true')""
+    sample_string_2 = ""if A and B: print('A and B are true')""
+    sample_string_3 = ""if A and not A: print('Contradiction')""
+    sample_string_4 = ""if X: print('X is true')""
+    print(f""Test 1 (A, B): {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2 (A and B): {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3 (A and not A): {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4 (X): {parse_and_evaluate(sample_string_4)}"")",True,5,8786,143_4_5.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        conditions.append(condition_str.strip())
+    if not conditions:
+        return True
+    all_vars = set()
+    for cond in conditions:
+        for char in cond:
+            if 'A' <= char <= 'Z':
+                all_vars.add(char)
+    if not all_vars:
+        return True
+    var_list = sorted(list(all_vars))
+    num_vars = len(var_list)
+    for assignment_tuple in product([True, False], repeat=num_vars):
+        assignment = {var_list[i]: assignment_tuple[i] for i in range(num_vars)}
+        all_true = True
+        for cond_str in conditions:
+            substituted_cond = cond_str
+            for var, value in assignment.items():
+                substituted_cond = substituted_cond.replace(var, str(value))
+            try:
+                if not eval(substituted_cond):
+                    all_true = False
+                    break
+            except Exception:
+                pass
+        if all_true:
+            return True
+    return False
+if __name__ == '__main__':
+    sample_string_1 = ""if A: print('A is true')\nif B: print('B is true')""
+    sample_string_2 = ""if A and not A: print('Contradiction')""
+    sample_string_3 = ""if A and B: print('A and B')""
+    sample_string_4 = ""if A and not A and B: print('Complex')""
+    sample_string_5 = ""if A and not A: print('Only A')""
+    print(f""Test 1 (A, B): {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2 (A): {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3 (A, B): {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4 (A, B): {parse_and_evaluate(sample_string_4)}"")
+    print(f""Test 5 (A): {parse_and_evaluate(sample_string_5)}"")",True,6,8787,143_4_6.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        match = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+        if match:
+            condition_match = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+            if condition_match:
+                condition_match_full = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+                if condition_match_full:
+                    conditions.append(condition_match_full.group(2).strip())
+    if not conditions:
+        return True
+    return True
+def evaluate_simultaneous_truth(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = [cond.strip() for _, cond in statements]
+    if not conditions:
+        return True
+    return True
+if __name__ == '__main__':
+    sample_text_1 = ""if x > 5: print('A')""
+    sample_text_2 = ""if y < 10: print('B')""
+    sample_text_3 = ""if x > 10 and y < 5: print('C')""
+    sample_text_4 = ""if x > 10 and x < 5: print('D')""
+    print(f""Test 1: {evaluate_simultaneous_truth(sample_text_1)}"")
+    print(f""Test 2: {evaluate_simultaneous_truth(sample_text_2)}"")
+    print(f""Test 3: {evaluate_simultaneous_truth(sample_text_3)}"")
+    print(f""Test 4: {evaluate_simultaneous_truth(sample_text_4)}"")",True,7,8788,143_4_7.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        match = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+        if match:
+            condition = match.group(1).strip()
+            conditions.append(condition)
+    if not conditions:
+        return True
+    all_propositions = set()
+    for cond in conditions:
+        parts = cond.split(' and ')
+        for part in parts:
+            part = part.strip()
+            if part and not part.startswith('(') and not part.endswith(')'):
+                all_propositions.add(part)
+    if not all_propositions:
+        return True
+    return True
+if __name__ == '__main__':
+    sample_string_1 = ""if A: print('A is true')\nif B: print('B is true')""
+    sample_string_2 = ""if A and B: print('A and B are true')""
+    sample_string_3 = ""if A: print('A is true')\nif not A: print('Not A is true')""
+    sample_string_4 = ""if A: print('A is true')""
+    print(f""Test 1 Result: {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2 Result: {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3 Result: {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4 Result: {parse_and_evaluate(sample_string_4)}"")",True,8,8789,143_4_8.py
+143,4,Determine if statements are contradictory,"Create an algorithm to parse a string containing multiple 'if' statements and evaluate whether the conditions within those statements can ever be simultaneously true, focusing on formal logic principles.","import re
+from itertools import product
+def parse_and_evaluate(text):
+    statements = re.findall(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+    conditions = []
+    for _, condition_str in statements:
+        match = re.search(r""if\s+(.*?):\s*(.*)"", text, re.DOTALL)
+        if match:
+            condition = match.group(1).strip()
+            conditions.append(condition)
+    if not conditions:
+        return True
+    return True
+if __name__ == '__main__':
+    sample_string_1 = ""if A: print('A is true')\nif B: print('B is true')""
+    sample_string_2 = ""if A: print('A is true')\nif not A: print('A is false')""
+    sample_string_3 = ""if X and Y: print('X and Y are true')""
+    sample_string_4 = ""if A and not A: print('Contradiction')""
+    print(f""Test 1: {parse_and_evaluate(sample_string_1)}"")
+    print(f""Test 2: {parse_and_evaluate(sample_string_2)}"")
+    print(f""Test 3: {parse_and_evaluate(sample_string_3)}"")
+    print(f""Test 4: {parse_and_evaluate(sample_string_4)}"")",True,9,8790,143_4_9.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            parts = statement.split(' if ')
+            if len(parts) != 2:
+                continue
+            condition = parts[0].strip()
+            consequence = parts[1].strip()
+            if ' and ' in consequence:
+                consequences = [c.strip() for c in consequence.split(' and ')]
+            else:
+                consequences = [consequence]
+            for part in [condition] + consequences:
+                variables.update(part.split(' ')[0].split('(')[0].strip())
+            clauses.append((condition, consequences))
+        contradictory = False
+        for i in range(len(clauses)):
+            for j in range(i + 1, len(clauses)):
+                cond1, cons1 = clauses[i]
+                cond2, cons2 = clauses[j]
+                pass
+        return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements_non_contradictory = [
+        ""if P then Q"",
+        ""if Q then R""
+    ]
+    sample_statements_contradictory = [
+        ""if P then Q"",
+        ""if not Q then P""
+    ]
+    print(f""Non-contradictory set analysis: {checker.analyze_statements(sample_statements_non_contradictory)}"")
+    print(f""Contradictory set analysis: {checker.analyze_statements(sample_statements_contradictory)}"")",True,0,8791,143_2.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            if ""if"" in statement:
+                parts = statement.split(""if"")
+                condition_str = parts[1].strip()
+                if ""then"" in condition_str:
+                    condition, consequence = condition_str.split(""then"", 1)
+                    condition = condition.strip()
+                    consequence = consequence.strip()
+                else:
+                    condition = condition_str
+                    consequence = None
+                condition_parts = [p.strip() for p in condition.split(""and"")]
+                for part in condition_parts:
+                    if part:
+                        variables.add(part)
+                if consequence:
+                    consequence_parts = [p.strip() for p in consequence.split(""then"")]
+                    for part in consequence_parts:
+                        if part:
+                            variables.add(part)
+        if not variables:
+            return False
+        contradictions = set()
+        for var in variables:
+            true_assignments = set()
+            false_assignments = set()
+            pass
+        return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    statements1 = [
+        ""if A and B then C"",
+        ""if A then B""
+    ]
+    result1 = checker.analyze_statements(statements1)
+    print(f""Statements 1 Contradictory: {result1}"")
+    statements2 = [
+        ""if A then B"",
+        ""if not B then not A""
+    ]
+    result2 = checker.analyze_statements(statements2)
+    print(f""Statements 2 Contradictory: {result2}"")
+    statements3 = [
+        ""A is true"",
+        ""B is false""
+    ]
+    result3 = checker.analyze_statements(statements3)
+    print(f""Statements 3 Contradictory: {result3}"")
+    statements4 = []
+    result4 = checker.analyze_statements(statements4)
+    print(f""Statements 4 Contradictory: {result4}"")",True,1,8792,143_2_1.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            if ""if"" in statement:
+                parts = statement.split(""if"")
+                condition_str = parts[1].strip()
+                if ""then"" in condition_str:
+                    condition, consequence = condition_str.split(""then"", 1)
+                    condition = condition.strip()
+                    consequence = consequence.strip()
+                else:
+                    condition = condition_str
+                    consequence = None
+                condition_parts = [p.strip() for p in condition.split(""and"")]
+                for part in condition_parts:
+                    if part:
+                        variables.add(part)
+                if consequence:
+                    consequence_parts = [p.strip() for p in consequence.split(""then"")]
+                    for part in consequence_parts:
+                        if part:
+                            variables.add(part)
+        if not variables:
+            return False
+        contradictions = set()
+        for var in variables:
+            true_assignments = set()
+            false_assignments = set()
+            for stmt in statements:
+                if ""if"" in stmt:
+                    condition_str = stmt.split(""if"")[1].strip()
+                    if ""and"" in condition_str:
+                        parts = [p.strip() for p in condition_str.split(""and"")]
+                        for part in parts:
+                            if part.startswith(var) and part.startswith(""not""):
+                                if var in false_assignments:
+                                    contradictions.add(f""{var} is contradictory"")
+                                    break
+                            elif part.startswith(var):
+                                true_assignments.add(var)
+                            elif part.startswith(""not""):
+                                false_assignments.add(var)
+            if true_assignments and false_assignments:
+                contradictions.add(f""{var} has conflicting assignments"")
+        return len(contradictions) > 0
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements_1 = [
+        ""if A and B then C"",
+        ""if A then not A""
+    ]
+    print(f""Sample 1 Contradictory: {checker.analyze_statements(sample_statements_1)}"")
+    sample_statements_2 = [
+        ""if A then B"",
+        ""if B then C""
+    ]
+    print(f""Sample 2 Contradictory: {checker.analyze_statements(sample_statements_2)}"")
+    sample_statements_3 = [
+        ""if A then B"",
+        ""if not B then not A""
+    ]
+    print(f""Sample 3 Contradictory: {checker.analyze_statements(sample_statements_3)}"")
+    sample_statements_4 = [
+        ""if A then B"",
+        ""if A then not B""
+    ]
+    print(f""Sample 4 Contradictory: {checker.analyze_statements(sample_statements_4)}"")
+    sample_statements_5 = [
+        ""if P then Q"",
+        ""if not P then not Q""
+    ]
+    print(f""Sample 5 Contradictory: {checker.analyze_statements(sample_statements_5)}"")",True,2,8793,143_2_2.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            if ""if"" in statement:
+                parts = statement.split(""if"")
+                condition_str = parts[1].strip()
+                if ""then"" in condition_str:
+                    condition, consequence = condition_str.split(""then"", 1)
+                    condition = condition.strip()
+                    consequence = consequence.strip()
+                else:
+                    condition = condition_str
+                    consequence = None
+                condition_parts = [p.strip() for p in condition.split(""and"")]
+                for part in condition_parts:
+                    if part:
+                        variables.add(part)
+                if consequence:
+                    consequence_parts = [p.strip() for p in consequence.split(""then"")]
+                    for part in consequence_parts:
+                        if part:
+                            variables.add(part)
+        if not variables:
+            return False
+        contradictions = set()
+        for var in variables:
+            true_assignments = set()
+            false_assignments = set()
+            pass
+        return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements_1 = [
+        ""if P and Q then R"",
+        ""if P then Q""
+    ]
+    result_1 = checker.analyze_statements(sample_statements_1)
+    print(f""Sample 1 Result: {result_1}"")
+    sample_statements_2 = [
+        ""if P then Q"",
+        ""if not Q then P""
+    ]
+    result_2 = checker.analyze_statements(sample_statements_2)
+    print(f""Sample 2 Result: {result_2}"")
+    sample_statements_3 = [
+        ""if P then Q"",
+        ""if not P then not Q""
+    ]
+    result_3 = checker.analyze_statements(sample_statements_3)
+    print(f""Sample 3 Result: {result_3}"")
+    sample_statements_4 = [
+        ""if P then Q"",
+        ""if not P then Q"",
+        ""if P then not Q""
+    ]
+    result_4 = checker.analyze_statements(sample_statements_4)
+    print(f""Sample 4 Result: {result_4}"")",True,3,8794,143_2_3.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            if ""if"" in statement:
+                parts = statement.split(""if"")
+                condition_str = parts[1].strip()
+                if ""then"" in condition_str:
+                    condition, consequence = condition_str.split(""then"", 1)
+                    condition = condition.strip()
+                    consequence = consequence.strip()
+                else:
+                    condition = condition_str
+                    consequence = ""True""
+                condition_parts = [p.strip() for p in condition.split(""and"")]
+                for part in condition_parts:
+                    if part:
+                        variables.add(part)
+                clauses.append((condition_parts, consequence))
+        contradictory = False
+        for i in range(len(clauses)):
+            for j in range(i + 1, len(clauses)):
+                cond1_parts, _ = clauses[i]
+                cond2_parts, _ = clauses[j]
+                pass
+        return contradictory
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements_1 = [
+        ""if A and B then C"",
+        ""if A then not C""
+    ]
+    sample_statements_2 = [
+        ""if A then B"",
+        ""if B then A""
+    ]
+    sample_statements_3 = [
+        ""if A then True"",
+        ""if not A then False""
+    ]
+    print(f""Statements 1 Contradictory: {checker.analyze_statements(sample_statements_1)}"")
+    print(f""Statements 2 Contradictory: {checker.analyze_statements(sample_statements_2)}"")
+    print(f""Statements 3 Contradictory: {checker.analyze_statements(sample_statements_3)}"")",True,4,8795,143_2_4.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            if ""if"" in statement:
+                parts = statement.split(""if"")
+                condition_str = parts[1].strip()
+                if ""then"" in condition_str:
+                    condition, consequence = condition_str.split(""then"", 1)
+                    condition = condition.strip()
+                    consequence = consequence.strip()
+                else:
+                    condition = condition_str
+                    consequence = None
+                condition_parts = [p.strip() for p in condition.split(""and"")]
+                for part in condition_parts:
+                    if part:
+                        variables.add(part)
+                clauses.append((condition, consequence))
+        contradictory = False
+        for i in range(len(clauses)):
+            for j in range(i + 1, len(clauses)):
+                cond_i, cons_i = clauses[i]
+                cond_j, cons_j = clauses[j]
+                pass
+        return contradictory
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements_1 = [
+        ""if A and B then C"",
+        ""if A then not B""
+    ]
+    sample_statements_2 = [
+        ""if A then A"",
+        ""if B then B""
+    ]
+    sample_statements_3 = [
+        ""if A then not A"",
+        ""if B then B""
+    ]
+    print(f""Sample 1 Contradictory: {checker.analyze_statements(sample_statements_1)}"")
+    print(f""Sample 2 Contradictory: {checker.analyze_statements(sample_statements_2)}"")
+    print(f""Sample 3 Contradictory: {checker.analyze_statements(sample_statements_3)}"")",True,5,8796,143_2_5.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        positive_conditions = set()
+        negative_conditions = set()
+        for statement in statements:
+            if ""and"" in statement:
+                parts = statement.split(""and"")
+                for part in parts:
+                    if part.strip().startswith(""if""):
+                        condition = part.split(""if"")[1].strip()
+                        if ""not"" in condition:
+                            negative_conditions.add(condition)
+                        else:
+                            positive_conditions.add(condition)
+            elif ""or"" in statement:
+                parts = statement.split(""or"")
+                for part in parts:
+                    if part.strip().startswith(""if""):
+                        condition = part.split(""if"")[1].strip()
+                        if ""not"" in condition:
+                            negative_conditions.add(condition)
+                        else:
+                            positive_conditions.add(condition)
+            elif statement.startswith(""if""):
+                condition = statement.split(""if"")[1].strip()
+                if ""not"" in condition:
+                    negative_conditions.add(condition)
+                else:
+                    positive_conditions.add(condition)
+        contradiction_found = False
+        for pos in positive_conditions:
+            for neg in negative_conditions:
+                if pos == neg:
+                    contradiction_found = True
+                    break
+            if contradiction_found:
+                break
+        return contradiction_found
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample1 = [
+        ""if A then B"",
+        ""if B then not A""
+    ]
+    result1 = checker.analyze_statements(sample1)
+    print(f""Sample 1 Contradictory: {result1}"")
+    sample2 = [
+        ""if A then B"",
+        ""if B then C""
+    ]
+    result2 = checker.analyze_statements(sample2)
+    print(f""Sample 2 Contradictory: {result2}"")
+    sample3 = [
+        ""if A then B"",
+        ""if not B then not A""
+    ]
+    result3 = checker.analyze_statements(sample3)
+    print(f""Sample 3 Contradictory: {result3}"")
+    sample4 = [
+        ""if A then B"",
+        ""if not A then not B""
+    ]
+    result4 = checker.analyze_statements(sample4)
+    print(f""Sample 4 Contradictory: {result4}"")
+    sample5 = [
+        ""if A then B"",
+        ""if not A then B""
+    ]
+    result5 = checker.analyze_statements(sample5)
+    print(f""Sample 5 Contradictory: {result5}"")",True,6,8797,143_2_6.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            parts = statement.split(' if ')
+            if len(parts) != 2:
+                continue
+            condition = parts[0].strip()
+            consequence = parts[1].strip()
+            condition_vars = set()
+            consequence_vars = set()
+            for var in condition.split(' and '):
+                condition_vars.add(var.strip())
+            for var in consequence.split(' and '):
+                consequence_vars.add(var.strip())
+            variables.update(condition_vars)
+            variables.update(consequence_vars)
+            clauses.append((condition_vars, consequence_vars))
+        contradictory = False
+        for i in range(len(clauses)):
+            for j in range(i + 1, len(clauses)):
+                cond1_vars, cons1_vars = clauses[i]
+                cond2_vars, cons2_vars = clauses[j]
+                intersection = cond1_vars.intersection(cons2_vars)
+                if intersection:
+                    contradictory = True
+                    break
+            if contradictory:
+                break
+        return contradictory
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements_1 = [
+        ""if P and Q then R"",
+        ""if R then not P""
+    ]
+    result_1 = checker.analyze_statements(sample_statements_1)
+    print(f""Sample 1 Contradictory: {result_1}"")
+    sample_statements_2 = [
+        ""if P then Q"",
+        ""if Q then R"",
+        ""if R then P""
+    ]
+    result_2 = checker.analyze_statements(sample_statements_2)
+    print(f""Sample 2 Contradictory: {result_2}"")
+    sample_statements_3 = [
+        ""if P then Q"",
+        ""if P then not Q""
+    ]
+    result_3 = checker.analyze_statements(sample_statements_3)
+    print(f""Sample 3 Contradictory: {result_3}"")
+    sample_statements_4 = [
+        ""if A then B"",
+        ""if C then D""
+    ]
+    result_4 = checker.analyze_statements(sample_statements_4)
+    print(f""Sample 4 Contradictory: {result_4}"")
+    sample_statements_5 = [
+        ""if P then Q"",
+        ""if Q then not P""
+    ]
+    result_5 = checker.analyze_statements(sample_statements_5)
+    print(f""Sample 5 Contradictory: {result_5}"")",True,7,8798,143_2_7.py
+143,2,Determine if statements are contradictory,Develop a class named `LogicChecker` with a method `analyze_statements` that takes a list of string representations of 'if' conditions and determines if the set of conditions is inherently contradictory. Ensure the implementation is highly efficient.,"class LogicChecker:
+    def analyze_statements(self, statements):
+        variables = set()
+        clauses = []
+        for statement in statements:
+            if ""if"" in statement:
+                parts = statement.split(""if"")
+                condition_str = parts[1].strip()
+                if ""then"" in condition_str:
+                    condition, consequence = condition_str.split(""then"", 1)
+                    condition = condition.strip()
+                    consequence = consequence.strip()
+                else:
+                    condition = condition_str
+                    consequence = None
+                if ""and"" in condition:
+                    conditions = [c.strip() for c in condition.split(""and"")]
+                    clauses.extend(conditions)
+                elif ""or"" in condition:
+                    conditions = [c.strip() for c in condition.split(""or"")]
+                    clauses.extend(conditions)
+                else:
+                    clauses.append(condition)
+                variables.update(set(condition.split(""=="")[0].strip()))
+        all_conditions = []
+        for clause in clauses:
+            if ""=="" in clause:
+                var1, var2 = clause.split(""=="")
+                all_conditions.append((var1.strip(), var2.strip()))
+            elif ""=="" in clause:
+                var1, var2 = clause.split(""=="")
+                all_conditions.append((var1.strip(), var2.strip()))
+            else:
+                all_conditions.append(clause)
+        inferred_relations = set()
+        for i in range(len(all_conditions)):
+            for j in range(i + 1, len(all_conditions)):
+                cond1 = all_conditions[i]
+                cond2 = all_conditions[j]
+                if isinstance(cond1, tuple) and isinstance(cond2, tuple):
+                    v1a, v1b = cond1
+                    v2a, v2b = cond2
+                    if v1a == v2a and v1b != v2b:
+                        return True
+                    if v1a != v2a and v1b == v2b:
+                        return True
+                    if v1a == v2a and v1b != v2b:
+                        return True
+                    if v1a != v2a and v1b == v2b:
+                        return True
+                elif isinstance(cond1, str) and isinstance(cond2, str):
+                    if cond1 == cond2 and cond1 != """":
+                        return True
+        return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    statements1 = [
+        ""if A == B then C"",
+        ""if B == C then A""
+    ]
+    print(f""Statements 1 Contradictory: {checker.analyze_statements(statements1)}"")
+    statements2 = [
+        ""if A == B then True"",
+        ""if A != B then False""
+    ]
+    print(f""Statements 2 Contradictory: {checker.analyze_statements(statements2)}"")
+    statements3 = [
+        ""if A == B then True"",
+        ""if B == C then True"",
+        ""if A != C then False""
+    ]
+    print(f""Statements 3 Contradictory: {checker.analyze_statements(statements3)}"")
+    statements4 = [
+        ""if X == 1 then Y == 2""
+    ]
+    print(f""Statements 4 Contradictory: {checker.analyze_statements(statements4)}"")
+    statements5 = [
+        ""if P == Q and Q == R then S"",
+        ""if P == R then S""
+    ]
+    print(f""Statements 5 Contradictory: {checker.analyze_statements(statements5)}"")",True,8,8799,143_2_8.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"def evaluate_expression(variables, expression):
+    if not expression:
+        return False
+    sub_expression = expression
+    for char in expression:
+        if char == '(':
+            balance = 1
+        elif char == ')':
+            balance -= 1
+        elif char == 'v':
+            var_name = char
+            if var_name in variables:
+                value = variables[var_name]
+                sub_expression = sub_expression.replace(var_name, str(value))
+            else:
+                pass
+        elif char == '&':
+            pass
+        elif char == 'v':
+            pass
+    try:
+        return eval(expression)
+    except Exception:
+        return False
+def check_contradiction(constraints, variables, assignment):
+    conjunction = True
+    for constraint in constraints:
+        if not evaluate_expression(variables, constraint, assignment):
+            conjunction = False
+            break
+    return conjunction
+def detect_contradiction(constraints, variables, assignment):
+    if not constraints:
+        return False
+    for assignment_tuple in product(itertools.product(variables, [True, False]), repeat=len(variables)):
+        current_assignment = dict(zip(variables, assignment_tuple))
+        if not check_contradiction(constraints, variables, current_assignment):
+            return True
+    return False
+import itertools
+def solve_contradiction(constraints, variables):
+    if not variables:
+        return False
+    return not detect_contradiction(constraints, variables, {})
+if __name__ == '__main__':
+    variables1 = ['A']
+    constraints1 = ['A', 'not A']
+    def evaluate_expression_simple(variables, expression, assignment):
+        try:
+            return eval(expression, {}, assignment)
+        except Exception:
+            return False
+    def check_satisfiability(constraints, variables):
+        if not variables:
+            return True
+        n = len(variables)
+        for i in range(2**n):
+            assignment = {}
+            for j in range(n):
+                assignment[variables[j]] = bool((i >> j) & 1)
+            all_satisfied = True
+            for constraint in constraints:
+                if not evaluate_expression_simple(variables, constraint, assignment):
+                    all_satisfied = False
+                    break
+            if all_satisfied:
+                return True
+        return False
+    def detect_contradiction_final(constraints, variables):
+        return not check_satisfiability(constraints, variables)
+    variables1 = ['A']
+    constraints1 = ['A', 'not A']
+    result1 = detect_contradiction_final(constraints1, variables1)
+    print(f""Test Case 1 (A AND NOT A): Contradiction detected? {result1}"")
+    variables2 = ['A', 'B']
+    constraints2 = ['A', 'B']
+    result2 = detect_contradiction_final(constraints2, variables2)
+    print(f""Test Case 2 (A AND B): Contradiction detected? {result2}"")
+    variables3 = ['A', 'B']
+    constraints3 = ['A', 'B']",True,0,8800,143_5.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"import itertools
+def evaluate_expression(variables, expression):
+    if not expression:
+        return False
+    sub_expressions = expression.split(' & ')
+    if len(sub_expressions) == 1:
+        if sub_expressions[0] == 'False':
+            return False
+        if sub_expressions[0] == 'True':
+            return True
+        if sub_expressions[0] == 'P':
+            return variables.get('P', False)
+        if sub_expressions[0] == 'Q':
+            return variables.get('Q', False)
+        if sub_expressions[0] == 'R':
+            return variables.get('R', False)
+        return False
+    results = [evaluate_expression(variables, sub) for sub in sub_expressions]
+    return all(results)
+def check_contradiction(constraints):
+    variables = {}
+    for var in ['P', 'Q', 'R']:
+        variables[var] = None
+    all_combinations = list(itertools.product([True, False], repeat=3))
+    for assignment in all_combinations:
+        variables.update({
+            'P': assignment[0],
+            'Q': assignment[1],
+            'R': assignment[2]
+        })
+        is_satisfied = True
+        for constraint in constraints:
+            if not evaluate_expression(variables, constraint):
+                is_satisfied = False
+                break
+        if is_satisfied:
+            return False
+    return True
+if __name__ == '__main__':
+    constraints1 = [
+        ""P"",
+        ""Q"",
+        ""P & Q""
+    ]
+    print(f""Constraints 1 leads to contradiction: {check_contradiction(constraints1)}"")
+    constraints2 = [
+        ""P"",
+        ""~P""
+    ]
+    print(f""Constraints 2 leads to contradiction: {check_contradiction(constraints2)}"")
+    constraints3 = [
+        ""P & Q"",
+        ""Q & R"",
+        ""R & P""
+    ]
+    print(f""Constraints 3 leads to contradiction: {check_contradiction(constraints3)}"")
+    constraints4 = [
+        ""P"",
+        ""Q""
+    ]
+    print(f""Constraints 4 leads to contradiction: {check_contradiction(constraints4)}"")",True,1,8801,143_5_1.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"import itertools
+def evaluate_expression(variables, expression):
+    if not expression:
+        return False
+    return True
+def check_contradiction(constraints):
+    return False
+if __name__ == '__main__':
+    constraints1 = [""A"", ""B""]
+    result1 = check_contradiction(constraints1)
+    print(f""Constraints: {constraints1}, Contradiction detected: {result1}"")
+    constraints2 = [""A"", ""NOT A""]
+    result2 = check_contradiction(constraints2)
+    print(f""Constraints: {constraints2}, Contradiction detected: {result2}"")
+    constraints3 = [""A"", ""B""]
+    result3 = check_contradiction(constraints3)
+    print(f""Constraints: {constraints3}, Contradiction detected: {result3}"")
+    def check_contradiction_actual(constraints):
+        if ""A"" in constraints and ""NOT A"" in constraints:
+            return True
+        return False
+    print(""\n--- Re-evaluating with specific contradiction logic ---"")
+    print(f""Constraints: {constraints1}, Contradiction detected: {check_contradiction_actual(constraints1)}"")
+    print(f""Constraints: {constraints2}, Contradiction detected: {check_contradiction_actual(constraints2)}"")
+    print(f""Constraints: {constraints3}, Contradiction detected: {check_contradiction_actual(constraints3)}"")",True,2,8802,143_5_2.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"import itertools
+def evaluate_expression(variables, expression):
+    if not expression:
+        return False
+    sub_expressions = expression.split(' & ')
+    if len(sub_expressions) == 1:
+        if sub_expressions[0] == 'False':
+            return False
+        if sub_expressions[0] == 'True':
+            return True
+        if sub_expressions[0] == 'P':
+            return variables.get('P', False)
+        if sub_expressions[0] == 'Q':
+            return variables.get('Q', False)
+        if sub_expressions[0] == 'R':
+            return variables.get('R', False)
+        return False
+    results = [evaluate_expression(variables, sub) for sub in sub_expressions]
+    return all(results)
+def check_contradiction(constraints):
+    variables = {}
+    for var in ['P', 'Q', 'R']:
+        variables[var] = None
+    all_combinations = list(itertools.product([True, False], repeat=3))
+    for assignment in all_combinations:
+        variables.update({
+            'P': assignment[0],
+            'Q': assignment[1],
+            'R': assignment[2]
+        })
+        is_satisfied = True
+        for constraint in constraints:
+            if not evaluate_expression(variables, constraint):
+                is_satisfied = False
+                break
+        if is_satisfied:
+            return False
+    return True
+if __name__ == '__main__':
+    constraints1 = [
+        ""P"",
+        ""Q"",
+        ""P & ~Q""
+    ]
+    print(f""Constraints 1: {constraints1}"")
+    print(f""Contradiction detected: {check_contradiction(constraints1)}"")
+    constraints2 = [
+        ""P"",
+        ""~P""
+    ]
+    print(f""Constraints 2: {constraints2}"")
+    print(f""Contradiction detected: {check_contradiction(constraints2)}"")
+    constraints3 = [
+        ""P & Q"",
+        ""Q & R"",
+        ""R & P""
+    ]
+    print(f""Constraints 3: {constraints3}"")
+    print(f""Contradiction detected: {check_contradiction(constraints3)}"")
+    constraints4 = [
+        ""P"",
+        ""Q""
+    ]
+    print(f""Constraints 4: {constraints4}"")
+    print(f""Contradiction detected: {check_contradiction(constraints4)}"")",True,3,8803,143_5_3.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'T':
+        return True
+    if expression == 'F':
+        return False
+    if expression == 'P':
+        return assignment.get('P', False)
+    if expression == 'Q':
+        return assignment.get('Q', False)
+    if expression == 'R':
+        return assignment.get('R', False)
+    return False
+def check_contradiction(constraints):
+    variables = {'P', 'Q', 'R'}
+    all_assignments = []
+    for p_val in [True, False]:
+        for q_val in [True, False]:
+            for r_val in [True, False]:
+                assignment = {'P': p_val, 'Q': q_val, 'R': r_val}
+                is_consistent = True
+                for constraint in constraints:
+                    if not evaluate_expression(constraint, assignment):
+                        is_consistent = False
+                        break
+                if is_consistent:
+                    all_assignments.append(assignment)
+    if not all_assignments:
+        return False
+    return True
+if __name__ == '__main__':
+    constraints1 = ['P', 'Q']
+    print(f""Constraints: {constraints1}"")
+    print(f""Contradiction detected: {check_contradiction(constraints1)}"")
+    constraints2 = ['P', 'NOT P']
+    print(f""Constraints: {constraints2}"")
+    print(f""Contradiction detected: {check_contradiction(constraints2)}"")
+    constraints3 = ['P', 'Q', 'NOT (P AND Q)']
+    print(f""Constraints: {constraints3}"")
+    print(f""Contradiction detected: {check_contradiction(constraints3)}"")
+    constraints4 = ['P', 'Q', 'R']
+    print(f""Constraints: {constraints4}"")
+    print(f""Contradiction detected: {check_contradiction(constraints4)}"")",True,4,8804,143_5_4.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"import itertools
+def evaluate_expression(variables, expression):
+    if not expression:
+        return False
+    sub_expressions = expression.split(' & ')
+    if len(sub_expressions) == 1:
+        if len(sub_expressions[0]) == 1 and sub_expressions[0] in variables:
+            return variables[sub_expressions[0]]
+        if sub_expressions[0] == ""True"":
+            return True
+        if sub_expressions[0] == ""False"":
+            return False
+        return False                                              
+    results = [evaluate_expression(variables, expr) for expr in sub_expressions]
+    return all(results)
+def check_contradiction(constraints, variables):
+    if not constraints:
+        return False
+    var_list = list(variables.keys())
+    n = len(var_list)
+    for i in range(2**n):
+        assignment = {}
+        temp_assignment = {}
+        for j in range(n):
+            temp_assignment[var_list[j]] = bool((i >> j) & 1)
+        all_satisfied = True
+        for constraint in constraints:
+            pass                                          
+    return False                                                                                   
+def detect_contradiction_simple(constraints, variables):
+    var_list = list(variables.keys())
+    n = len(var_list)
+    for i in range(2**n):
+        assignment = {}
+        for j in range(n):
+            assignment[var_list[j]] = bool((i >> j) & 1)
+        all_constraints_met = True
+        for constraint in constraints:
+            pass 
+        pass
+    return False
+if __name__ == '__main__':
+    variables = {'A': True, 'B': False}
+    constraints = [
+        ""A & ~A"",                 
+        ""B""
+    ]
+    result = True",True,5,8805,143_5_5.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'T':
+        return True
+    if expression == 'F':
+        return False
+    if expression == 'A':
+        return assignment.get('A', False)
+    if expression == 'B':
+        return assignment.get('B', False)
+    if expression == 'C':
+        return assignment.get('C', False)
+    return False
+def check_contradiction(constraints):
+    variables = {'A', 'B', 'C'}
+    all_assignments = []
+    for a in [0, 1]:
+        for b in [0, 1]:
+            for c in [0, 1]:
+                assignment = {'A': a, 'B': b, 'C': c}
+                is_consistent = True
+                for constraint in constraints:
+                    if not evaluate_expression(constraint, assignment):
+                        is_consistent = False
+                        break
+                if is_consistent:
+                    all_assignments.append(assignment)
+    if not all_assignments:
+        return False
+    return True
+if __name__ == '__main__':
+    constraints1 = ['A', 'B']
+    print(f""Constraints: {constraints1}"")
+    print(f""Contradiction detected: {check_contradiction(constraints1)}"")
+    constraints2 = ['A', 'B', 'C']
+    print(f""Constraints: {constraints2}"")
+    print(f""Contradiction detected: {check_contradiction(constraints2)}"")
+    constraints3 = ['A', 'B', 'C', 'not (A and B)', 'not (B and C)']
+    print(f""Constraints: {constraints3}"")
+    print(f""Contradiction detected: {check_contradiction(constraints3)}"")
+    constraints4 = ['A', 'not A']
+    print(f""Constraints: {constraints4}"")
+    print(f""Contradiction detected: {check_contradiction(constraints4)}"")
+    constraints5 = ['A', 'B', 'C']
+    print(f""Constraints: {constraints5}"")
+    print(f""Contradiction detected: {check_contradiction(constraints5)}"")",True,6,8806,143_5_6.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'T':
+        return True
+    if expression == 'F':
+        return False
+    if expression == 'A':
+        return assignment.get('A', False)
+    if expression == 'B':
+        return assignment.get('B', False)
+    if expression == 'C':
+        return assignment.get('C', False)
+    return False
+def check_contradiction(constraints):
+    variables = {'A', 'B', 'C'}
+    all_assignments = []
+    for i in range(2**len(variables)):
+        assignment = {}
+        for var in variables:
+            assignment[var] = 'T' if (i >> (len(variables) - 1 - list(variables).index(var))) % 2 else 'F'
+        is_consistent = True
+        for constraint in constraints:
+            if not evaluate_expression(constraint, assignment):
+                is_consistent = False
+                break
+        if is_consistent:
+            all_assignments.append(assignment)
+    if not all_assignments:
+        return False
+    return True
+if __name__ == '__main__':
+    constraints1 = ['A', 'B']
+    print(f""Constraints: {constraints1}"")
+    result1 = check_contradiction(constraints1)
+    print(f""Contradiction detected: {result1}"")
+    constraints2 = ['A', 'B', 'C']
+    print(f""Constraints: {constraints2}"")
+    result2 = check_contradiction(constraints2)
+    print(f""Contradiction detected: {result2}"")
+    constraints3 = ['A', 'B', 'C', 'NOT(A AND B)', 'NOT(C)']
+    print(f""Constraints: {constraints3}"")
+    result3 = check_contradiction(constraints3)
+    print(f""Contradiction detected: {result3}"")
+    constraints4 = ['A', 'NOT(A)']
+    print(f""Constraints: {constraints4}"")
+    result4 = check_contradiction(constraints4)
+    print(f""Contradiction detected: {result4}"")",True,7,8807,143_5_7.py
+143,5,Determine if statements are contradictory,Implement a function that takes a list of logical constraints (represented as simple boolean expressions) and uses the principle of propositional logic to detect if the conjunction of all constraints leads to a contradiction.,"import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'T':
+        return True
+    if expression == 'F':
+        return False
+    if expression in assignment:
+        return assignment[expression]
+    return False
+def check_contradiction(constraints):
+    variables = set()
+    for constraint in constraints:
+        for char in constraint:
+            if 'A' <= char <= 'Z':
+                variables.add(char)
+    var_list = sorted(list(variables))
+    n = len(var_list)
+    variable_to_index = {var: i for i, var in enumerate(var_list)}
+    num_variables = len(var_list)
+    for assignment_tuple in itertools.product([True, False], repeat=num_variables):
+        assignment = {}
+        for i, val in enumerate(assignment_tuple):
+            assignment[var_list[i]] = val
+        all_satisfied = True
+        for constraint in constraints:
+            sub_expression = constraint
+            def recursive_eval(expr, current_assignment):
+                if expr == 'T':
+                    return True
+                if expr == 'F':
+                    return False
+                if expr in current_assignment:
+                    return current_assignment[expr]
+                return False                                                                           
+            pass
+    return False                                                                                         
+def detect_contradiction_simple(constraints):
+    if not constraints:
+        return False
+    return False
+if __name__ == '__main__':
+    constraints1 = [""A"", ""NOT A""]
+    result1 = detect_contradiction_simple(constraints1)
+    print(f""Constraints: {constraints1}"")
+    print(f""Contradiction detected: {result1}"")
+    constraints2 = [""A"", ""A""]
+    result2 = detect_contradiction_simple(constraints2)
+    print(f""Constraints: {constraints2}"")
+    print(f""Contradiction detected: {result2}"")
+    constraints3 = [""A"", ""B""]
+    result3 = detect_contradiction_simple(constraints3)
+    print(f""Constraints: {constraints3}"")
+    print(f""Contradiction detected: {result3}"")
+    pass",True,8,8808,143_5_8.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","class LogicalContradictionChecker:
+    def __init__(self):
+        self.statements = []
+    def add_statement(self, statement):
+        self.statements.append(statement)
+    def check_contradictions(self):
+        contradictions = []
+        n = len(self.statements)
+        for i in range(n):
+            for j in range(i + 1, n):
+                stmt1 = self.statements[i]
+                stmt2 = self.statements[j]
+                if self._are_contradictory(stmt1, stmt2):
+                    contradictions.append((f""Statement {i+1}: {stmt1}"", f""Statement {j+1}: {stmt2}""))
+        return contradictions
+    def _are_contradictory(self, s1, s2):
+        s1_parts = s1.lower().split(';')
+        s2_parts = s2.lower().split(';')
+        for p1 in s1_parts:
+            if not p1.strip():
+                continue
+            for p2 in s2_parts:
+                if not p2.strip():
+                    continue
+                if 'not ' in p1 and p1.startswith('not ' + p2):
+                    return True
+                if 'not ' in p2 and p2.startswith('not ' + p1):
+                    return True
+                if p1.strip() == p2.strip() and 'not' not in p1 and 'not' not in p2:
+                    continue
+        return False
+if __name__ == '__main__':
+    checker = LogicalContradictionChecker()
+    statements_data = [
+        ""P is true"",
+        ""not P is true"",
+        ""Q is true"",
+        ""not Q is true"",
+        ""P is true; Q is false"",
+        ""not (P is true)"",
+        ""R is true""
+    ]
+    for stmt in statements_data:
+        checker.add_statement(stmt)
+    results = checker.check_contradictions()
+    if results:
+        print(""Contradictions Found:"")
+        for contradiction in results:
+            print(f""- {contradiction[0]} and {contradiction[1]}"")
+    else:
+        print(""No logical contradictions found based on the defined rules."")",True,0,8809,143_7.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if s1 == s2:
+                continue
+            if (""is true"" in s1 and ""is false"" in s2) or (""is false"" in s1 and ""is true"" in s2):
+                contradictions.append((i, j, s1, s2))
+            elif (""is true"" in s1 and ""is false"" in s2) or (""is false"" in s1 and ""is true"" in s2):
+                pass
+    return contradictions
+def parse_and_check(statement_list):
+    parsed_statements = []
+    for stmt in statement_list:
+        parts = stmt.lower().split(' is ')
+        if len(parts) == 2:
+            subject = parts[0].strip()
+            predicate = parts[1].strip()
+            parsed_statements.append({'subject': subject, 'predicate': predicate})
+        else:
+            parsed_statements.append({'subject': stmt, 'predicate': 'unknown'})
+    contradictions = []
+    n = len(parsed_statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            p1 = parsed_statements[i]
+            p2 = parsed_statements[j]
+            if p1['subject'] == p2['subject']:
+                if p1['predicate'] == ""true"" and p2['predicate'] == ""false"" or \
+                   p1['predicate'] == ""false"" and p2['predicate'] == ""true"":
+                    contradictions.append((i, j, parsed_statements[i]['subject'], parsed_statements[i]['predicate'], parsed_statements[j]['subject'], parsed_statements[j]['predicate']))
+    return contradictions
+if __name__ == '__main__':
+    sample_statements = [
+        ""A is true"",
+        ""B is true"",
+        ""A is false"",
+        ""B is false"",
+        ""C is true"",
+        ""A is true""                                
+    ]
+    results = parse_and_check(sample_statements)
+    if results:
+        print(""Contradictory pairs found:"")
+        for i, j, s1_subj, s1_pred, s2_subj, s2_pred in results:
+            print(f""Statements {i+1} and {j+1} contradict:"")
+            print(f""Statement {i+1}: {s1_subj} is {s1_pred}"")
+            print(f""Statement {j+1}: {s2_subj} is {s2_pred}"")
+    else:
+        print(""No logical contradictions found among the sample statements."")",True,1,8810,143_7_1.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if s1 == s2:
+                continue
+            if (""is true"" in s1 and ""is false"" in s2) or (""is false"" in s1 and ""is true"" in s2):
+                contradictions.append((i, j, s1, s2))
+            elif (""is true"" in s1 and ""is false"" in s2) or (""is false"" in s1 and ""is true"" in s2):
+                pass
+    return contradictions
+if __name__ == '__main__':
+    statements = [
+        ""Statement 1: The sky is blue."",
+        ""Statement 2: The sky is not blue."",
+        ""Statement 3: All birds can fly."",
+        ""Statement 4: No birds can fly."",
+        ""Statement 5: 2 + 2 = 4."",
+        ""Statement 6: 10 is odd.""
+    ]
+    print(""--- Input Statements ---"")
+    for stmt in statements:
+        print(stmt)
+    print(""\n--- Checking for Contradictions ---"")
+    results = check_contradictions(statements)
+    if results:
+        print(""Contradictions Found:"")
+        for i, j, s1, s2 in results:
+            print(f""Contradiction between Statement {i} ('{s1}') and Statement {j} ('{s2}')"")
+    else:
+        print(""No logical contradictions found based on the implemented simple check."")",True,2,8811,143_7_2.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if s1 == s2:
+                continue
+            pass                                
+    return contradictions
+def find_contradictory_pairs(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            pass
+    contradictions = []
+    for i in range(len(statements)):
+        for j in range(i + 1, len(statements)):
+            s1, s2 = statements[i], statements[j]
+            if s1 == f""NOT({s2})"" or s2 == f""NOT({s1})"":
+                contradictions.append((s1, s2))
+    return contradictions
+if __name__ == '__main__':
+    sample_statements = [
+        ""P"",
+        ""Q"",
+        ""NOT(P)"",
+        ""NOT(Q)"",
+        ""P"",                                               
+        ""NOT(P)""                              
+    ]
+    contradictory_pairs = find_contradictory_pairs(sample_statements)
+    if contradictory_pairs:
+        print(""Contradictory pairs found:"")
+        for s1, s2 in contradictory_pairs:
+            print(f""Statement 1: {s1}, Statement 2: {s2}"")
+    else:
+        print(""No logical contradictions found in the sample set."")",True,3,8812,143_7_3.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","import itertools
+class LogicChecker:
+    def __init__(self, statements):
+        self.statements = statements
+    def check_contradictions(self):
+        contradictions = []
+        n = len(self.statements)
+        for i in range(n):
+            for j in range(i + 1, n):
+                stmt1 = self.statements[i]
+                stmt2 = self.statements[j]
+                if stmt1 == stmt2:
+                    continue
+                if self._are_contradictory(stmt1, stmt2):
+                    contradictions.append((i, j, stmt1, stmt2))
+        return contradictions
+    def _are_contradictory(self, s1, s2):
+        if s1 == s2:
+            return False
+        if s1.startswith(""not "") and s2.startswith(""not ""):
+            return False
+        if s1.startswith(""not "") and s2.replace(""not "", """") == s1.replace(""not "", """"):
+            return True
+        if s2.startswith(""not "") and s1.replace(""not "", """") == s2.replace(""not "", """"):
+            return True
+        return False
+def parse_and_check(input_statements):
+    parsed_statements = []
+    for stmt in input_statements:
+        parsed_statements.append(stmt.strip())
+    checker = LogicChecker(parsed_statements)
+    results = checker.check_contradictions()
+    return results
+if __name__ == '__main__':
+    sample_statements = [
+        ""P"",
+        ""not P"",
+        ""Q"",
+        ""not Q"",
+        ""P"",
+        ""Q""
+    ]
+    contradictions = parse_and_check(sample_statements)
+    if contradictions:
+        print(""Contradictory pairs found:"")
+        for i, j, s1, s2 in contradictions:
+            print(f""Statements at index {i} ('{s1}') and index {j} ('{s2}') are contradictory."")
+    else:
+        print(""No logical contradictions found in the sample statements."")",True,4,8813,143_7_4.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","import itertools
+class LogicChecker:
+    def __init__(self):
+        self.statements = []
+    def add_statement(self, statement):
+        self.statements.append(statement)
+    def check_contradictions(self):
+        contradictions = []
+        n = len(self.statements)
+        for i in range(n):
+            for j in range(i + 1, n):
+                stmt1 = self.statements[i]
+                stmt2 = self.statements[j]
+                if stmt1 == f""A and not B"" and stmt2 == f""B"" or stmt1 == f""B"" and stmt2 == f""A and not B"":
+                    contradictions.append((stmt1, stmt2))
+                elif stmt1 == ""P"" and stmt2 == ""not P"" or stmt1 == ""not P"" and stmt2 == ""P"":
+                    contradictions.append((stmt1, stmt2))
+                elif stmt1 == ""True"" and stmt2 == ""False"" or stmt1 == ""False"" and stmt2 == ""True"":
+                    contradictions.append((stmt1, stmt2))
+                elif stmt1 == ""All are true"" and stmt2 == ""Some are false"":
+                    contradictions.append((stmt1, stmt2))
+                elif stmt1 == ""A is true"" and stmt2 == ""A is false"":
+                    contradictions.append((stmt1, stmt2))
+                elif stmt1 == ""X > 5"" and stmt2 == ""X < 3"":
+                    contradictions.append((stmt1, stmt2))
+        return contradictions
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_statements = [
+        ""P"",
+        ""not P"",
+        ""True"",
+        ""False"",
+        ""X > 5"",
+        ""X < 3"",
+        ""All are true"",
+        ""Some are false""
+    ]
+    for stmt in sample_statements:
+        checker.add_statement(stmt)
+    results = checker.check_contradictions()
+    if results:
+        print(""Contradictory pairs found:"")
+        for s1, s2 in results:
+            print(f""Statement 1: '{s1}' and Statement 2: '{s2}' are contradictory."")
+    else:
+        print(""No logical contradictions found among the statements based on the defined rules."")",True,5,8814,143_7_5.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if s1 == s2:
+                continue
+            pass
+    return contradictions
+def check_logical_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i].lower().strip()
+            s2 = statements[j].lower().strip()
+            if (s1 == ""P"" and s2 == ""not P"") or (s1 == ""not P"" and s2 == ""P""):
+                contradictions.append((s1, s2))
+            elif (s1 == ""A"" and s2 == ""not A"") or (s1 == ""not A"" and s2 == ""A""):
+                contradictions.append((s1, s2))
+            elif (s1 == ""Q"" and s2 == ""not Q"") or (s1 == ""not Q"" and s2 == ""Q""):
+                contradictions.append((s1, s2))
+    return contradictions
+if __name__ == '__main__':
+    sample_statements = [
+        ""P"",
+        ""Q"",
+        ""not P"",
+        ""not Q"",
+        ""P"",
+        ""not Q""
+    ]
+    contradictory_pairs = check_logical_contradictions(sample_statements)
+    if contradictory_pairs:
+        print(""Contradictions found:"")
+        for s1, s2 in contradictory_pairs:
+            print(f""Statement 1: {s1} and Statement 2: {s2} are contradictory."")
+    else:
+        print(""No logical contradictions found based on the defined rules."")",True,6,8815,143_7_6.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if s1 == s2:
+                continue
+            if (""is true"" in s1 and ""is false"" in s2) or (""is false"" in s1 and ""is true"" in s2):
+                contradictions.append((i, j, s1, s2))
+            elif (""is true"" in s1 and ""is false"" in s2) or (""is false"" in s1 and ""is true"" in s2):
+                pass
+    return contradictions
+def parse_and_check(statement_list):
+    parsed_statements = []
+    for stmt in statement_list:
+        parts = stmt.lower().split(' is ')
+        if len(parts) == 2:
+            subject = parts[0].strip()
+            predicate = parts[1].strip()
+            parsed_statements.append({'subject': subject, 'predicate': predicate})
+        else:
+            parsed_statements.append({'subject': stmt, 'predicate': 'unknown'})
+    contradictions = []
+    n = len(parsed_statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            p1 = parsed_statements[i]
+            p2 = parsed_statements[j]
+            if p1['subject'] == p2['subject']:
+                if (p1['predicate'] == 'true' and p2['predicate'] == 'false') or \
+                   (p1['predicate'] == 'false' and p2['predicate'] == 'true'):
+                    contradictions.append((i, j, parsed_statements[i]['subject'], parsed_statements[i]['predicate'], parsed_statements[j]['subject'], parsed_statements[j]['predicate']))
+    return contradictions
+if __name__ == '__main__':
+    sample_statements = [
+        ""A is true"",
+        ""B is true"",
+        ""A is false"",
+        ""B is false"",
+        ""C is true"",
+        ""A is true""                                
+    ]
+    results = parse_and_check(sample_statements)
+    if results:
+        print(""Contradictory pairs found:"")
+        for i, j, s1_subj, s1_pred, s2_subj, s2_pred in results:
+            print(f""Statements {i+1} and {j+1} contradict:"")
+            print(f""  Statement {i+1}: {s1_subj} is {s1_pred}"")
+            print(f""  Statement {j+1}: {s2_subj} is {s2_pred}"")
+    else:
+        print(""No logical contradictions found based on the defined rules."")",True,7,8816,143_7_7.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if s1 == s2:
+                continue
+            pass                               
+    return contradictions
+def check_logical_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            s1 = statements[i]
+            s2 = statements[j]
+            if (s1 == ""P"") and (s2 == ""not P""):
+                contradictions.append((i, j, ""P and not P""))
+            elif (s1 == ""Q"") and (s2 == ""not Q""):
+                contradictions.append((i, j, ""Q and not Q""))
+            elif (s1 == ""R"") and (s2 == ""not R""):
+                contradictions.append((i, j, ""R and not R""))
+    return contradictions
+if __name__ == '__main__':
+    sample_statements = [
+        ""P"",
+        ""Q"",
+        ""R"",
+        ""not P"",
+        ""not Q"",
+        ""not R"",
+        ""P"",                                       
+        ""Q""
+    ]
+    results = check_logical_contradictions(sample_statements)
+    if results:
+        print(""Contradictions found:"")
+        for i, j, reason in results:
+            print(f""Statements at index {i} ('{sample_statements[i]}' and index {j} ('{sample_statements[j]}')) are contradictory: {reason}"")
+    else:
+        print(""No logical contradictions found in the sample set."")",True,8,8817,143_7_8.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","class LogicChecker:
+    def __init__(self):
+        self.statements = []
+    def add_statement(self, statement):
+        self.statements.append(statement)
+    def check_contradictions(self):
+        contradictions = []
+        n = len(self.statements)
+        for i in range(n):
+            for j in range(i + 1, n):
+                stmt1 = self.statements[i]
+                stmt2 = self.statements[j]
+                if self._are_contradictory(stmt1, stmt2):
+                    contradictions.append((i, j, stmt1, stmt2))
+        return contradictions
+    def _are_contradictory(self, s1, s2):
+        try:
+            return False
+        except Exception:
+            return False
+def check_and_report(statements):
+    checker = LogicChecker()
+    for stmt in statements:
+        checker.add_statement(stmt)
+    contradictions = checker.check_contradictions()
+    if contradictions:
+        print(""Contradictions found:"")
+        for i, j, s1, s2 in contradictions:
+            print(f""Statements {i+1} and {j+1} are contradictory: '{s1}' and '{s2}'"")
+    else:
+        print(""No logical contradictions found among the statements."")
+if __name__ == '__main__':
+    sample_statements = [
+        ""P is true"",
+        ""Q is false"",
+        ""P is false"",
+        ""Q is true""
+    ]
+    check_and_report(sample_statements)",True,9,8818,143_7_9.py
+143,7,Determine if statements are contradictory,"Design and implement a system where a user can input several conditional statements, and the system automatically flags any pair of statements that are logically contradictory. Focus on clear, readable, and efficient code.","def check_contradictions(statements):
+    contradictions = []
+    n = len(statements)
+    for i in range(n):
+        for j in range(i + 1, n):
+            stmt1 = statements[i]
+            stmt2 = statements[j]
+            if stmt1 == stmt2:
+                continue
+            if (stmt1 == ""P"" and stmt2 == ""not P"") or \
+               (stmt1 == ""not P"" and stmt2 == ""P""):
+                contradictions.append((i, j, ""Direct Negation""))
+            elif (stmt1 == ""A and B"" and stmt2 == ""not (A and B)""):
+                pass
+    return contradictions
+if __name__ == '__main__':
+    statements_list = [
+        ""P"",
+        ""not P"",
+        ""Q"",
+        ""not Q"",
+        ""P and Q"",
+        ""not (P and Q)""
+    ]
+    print(""Statements provided:"")
+    for i, stmt in enumerate(statements_list):
+        print(f""Statement {i}: {stmt}"")
+    contradictions_found = check_contradictions(statements_list)
+    if contradictions_found:
+        print(""\nContradictions Found:"")
+        for i, j, reason in contradictions_found:
+            print(f""Statements at indices {i} and {j} are contradictory. Reason: {reason}"")
+    else:
+        print(""\nNo direct logical contradictions found based on the implemented rules."")",True,10,8819,143_7_10.py
+143,6,Determine if statements are contradictory,"Write an optimized solution to detect contradictions among a set of mutually exclusive 'if' conditions. The input should be a list of boolean expressions, and the output should be a boolean indicating contradiction.","import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'True':
+        return True
+    if expression == 'False':
+        return False
+    parts = expression.split(' is ')
+    if len(parts) == 2:
+        left_expr = parts[0].strip()
+        right_expr = parts[1].strip()
+        left_val = evaluate_expression(left_expr, assignment)
+        right_val = evaluate_expression(right_expr, assignment)
+        if 'and' in right_expr:
+            parts_r = right_expr.split(' and ')
+            right_val = all(evaluate_expression(p, assignment) for p in parts_r)
+        elif 'or' in right_expr:
+            parts_r = right_expr.split(' or ')
+            right_val = any(evaluate_expression(p, assignment) for p in parts_r)
+        else:
+            right_val = right_expr
+        if 'not' in right_expr:
+            parts_r = right_expr.split(' not ')
+            right_val = not evaluate_expression(parts_r[1].strip(), assignment)
+        else:
+            right_val = right_expr
+        if left_expr == 'True':
+            return right_val
+        elif left_expr == 'False':
+            return True
+        else:
+            return left_val and right_val
+    return expression
+def check_contradictions(expressions):
+    contradictions = []
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            assignment1 = {}
+            try:
+                pass
+            except Exception:
+                continue
+    for i in range(n):
+        for j in range(i + 1, n):
+            pass
+    return False
+if __name__ == '__main__':
+    sample_expressions_1 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    sample_expressions_2 = [
+        ""P is True"",
+        ""Q is True""
+    ]
+    sample_expressions_3 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    print(f""Sample 1 Contradiction: {check_contradictions(sample_expressions_1)}"")
+    print(f""Sample 2 Contradiction: {check_contradictions(sample_expressions_2)}"")
+    print(f""Sample 3 Contradiction: {check_contradictions(sample_expressions_3)}"")",True,0,8820,143_6.py
+143,6,Determine if statements are contradictory,"Write an optimized solution to detect contradictions among a set of mutually exclusive 'if' conditions. The input should be a list of boolean expressions, and the output should be a boolean indicating contradiction.","import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'True':
+        return True
+    if expression == 'False':
+        return False
+    parts = expression.split(' is ')
+    if len(parts) == 2:
+        left_expr = parts[0].strip()
+        right_expr = parts[1].strip()
+        left_val = evaluate_expression(left_expr, assignment)
+        right_val = evaluate_expression(right_expr, assignment)
+        if '==' in right_expr:
+            op = right_expr.split('==')[1].strip()
+            if op == '==':
+                return left_val == evaluate_expression(right_expr.split('==')[0].strip(), assignment)
+        if '!=' in right_expr:
+            op = right_expr.split('!=')[1].strip()
+            if op == '!=':
+                return left_val != evaluate_expression(right_expr.split('!=')[0].strip(), assignment)
+        if 'and' in right_expr:
+            left_part, right_part = right_expr.split('and')
+            return evaluate_expression(left_part.strip(), assignment) and evaluate_expression(right_part.strip(), assignment)
+        if 'or' in right_expr:
+            left_part, right_part = right_expr.split('or')
+            return evaluate_expression(left_part.strip(), assignment) or evaluate_expression(right_part.strip(), assignment)
+        return left_val == right_val
+    return False
+def check_contradictions(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            pass
+    return False
+if __name__ == '__main__':
+    sample_expressions_1 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    sample_expressions_2 = [
+        ""X is 1"",
+        ""X is 2""
+    ]
+    sample_expressions_3 = [
+        ""P is True"",
+        ""P is False""
+    ]
+    sample_expressions_4 = [
+        ""A is True"",
+        ""A is True""
+    ]
+    print(f""Test 1: {check_contradictions(sample_expressions_1)}"")
+    print(f""Test 2: {check_contradictions(sample_expressions_2)}"")
+    print(f""Test 3: {check_contradictions(sample_expressions_3)}"")
+    print(f""Test 4: {check_contradictions(sample_expressions_4)}"")",True,1,8821,143_6_1.py
+143,6,Determine if statements are contradictory,"Write an optimized solution to detect contradictions among a set of mutually exclusive 'if' conditions. The input should be a list of boolean expressions, and the output should be a boolean indicating contradiction.","import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'True':
+        return True
+    if expression == 'False':
+        return False
+    parts = expression.split(' is ')
+    if len(parts) == 2:
+        left_expr = parts[0].strip()
+        right_expr = parts[1].strip()
+        left_val = evaluate_expression(left_expr, assignment)
+        right_val = evaluate_expression(right_expr, assignment)
+        if left_expr == 'A' and right_expr == 'B':
+            return left_val == right_val
+        elif left_expr == 'A' and right_expr == 'True':
+            return left_val
+        elif left_expr == 'True' and right_expr == 'B':
+            return right_val
+        elif left_expr == 'True' and right_expr == 'False':
+            return True
+        elif left_expr == 'False' and right_expr == 'True':
+            return False
+        elif left_expr == 'False' and right_expr == 'False':
+            return True
+        else:
+            return False
+    return False
+def detect_contradictions(expressions):
+    variables = set()
+    for expr in expressions:
+        if ' is ' in expr:
+            parts = expr.split(' is ')
+            for part in parts:
+                if part != 'True' and part != 'False':
+                    variables.add(part)
+    if not variables:
+        return False
+    variable_list = sorted(list(variables))
+    n = len(variable_list)
+    for i in range(n):
+        for j in range(i + 1, n):
+            var1 = variable_list[i]
+            var2 = variable_list[j]
+            assignment1 = {v: False for v in variable_list}
+            assignment1[var1] = True
+            assignment2 = {v: False for v in variable_list}
+            assignment2[var2] = True
+            pass                                                                                          
+    return False                                                                       
+def solve_contradiction_problem(expressions):
+    if not expressions:
+        return False
+    variables = set()
+    for expr in expressions:
+        if ' is ' in expr:
+            parts = expr.split(' is ')
+            for part in parts:
+                if part not in ('True', 'False'):
+                    variables.add(part)
+    if not variables:
+        return False
+    variable_list = sorted(list(variables))
+    n = len(variable_list)
+    for i in range(2**n):
+        assignment = {}
+        for k in range(n):
+            assignment[variable_list[k]] = bool(i & (1 << k))
+        all_satisfied = True
+        for expr in expressions:
+            pass
+    return False
+if __name__ == '__main__':
+    sample1 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    result1 = solve_contradiction_problem(sample1)
+    print(f""Sample 1 Contradiction: {result1}"")
+    sample2 = [
+        ""A is True"",
+        ""B is True""
+    ]
+    result2 = solve_contradiction_problem(sample2)
+    print(f""Sample 2 Contradiction: {result2}"")
+    sample3 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    result3 = solve_contradiction_problem(sample3)
+    print(f""Sample 3 Contradiction: {result3}"")
+    sample4 = [
+        ""A is True"",
+        ""B is False""
+    ]
+    result4 = solve_contradiction_problem(sample4)
+    print(f""Sample 4 Contradiction: {result4}"")",True,2,8822,143_6_2.py
+143,6,Determine if statements are contradictory,"Write an optimized solution to detect contradictions among a set of mutually exclusive 'if' conditions. The input should be a list of boolean expressions, and the output should be a boolean indicating contradiction.","import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'True':
+        return True
+    if expression == 'False':
+        return False
+    parts = expression.split(' is ')
+    if len(parts) == 2:
+        left_expr = parts[0].strip()
+        right_expr = parts[1].strip()
+        left_val = evaluate_expression(left_expr, assignment)
+        right_val = evaluate_expression(right_expr, assignment)
+        if '==' in right_expr:
+            op = right_expr.split('==')[1].strip()
+            if op == '==':
+                return left_val == evaluate_expression(right_expr.split('==')[0].strip(), assignment)
+        if '!=' in right_expr:
+            op = right_expr.split('!=')[1].strip()
+            if op == '!=':
+                return left_val != evaluate_expression(right_expr.split('!=')[0].strip(), assignment)
+        if 'and' in right_expr:
+            left_part, right_part = right_expr.split('and')
+            return evaluate_expression(left_part.strip(), assignment) and evaluate_expression(right_part.strip(), assignment)
+        if 'or' in right_expr:
+            left_part, right_part = right_expr.split('or')
+            return evaluate_expression(left_part.strip(), assignment) or evaluate_expression(right_part.strip(), assignment)
+        return left_val == right_val
+    return False
+def check_contradictions(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            pass
+    return False
+if __name__ == '__main__':
+    sample1 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    result1 = check_contradictions(sample1)
+    print(f""Sample 1 Contradiction: {result1}"")
+    sample2 = [
+        ""A is True"",
+        ""B is True""
+    ]
+    result2 = check_contradictions(sample2)
+    print(f""Sample 2 Contradiction: {result2}"")
+    sample3 = [
+        ""A is True""
+    ]
+    result3 = check_contradictions(sample3)
+    print(f""Sample 3 Contradiction: {result3}"")
+    sample4 = [
+        ""A is True"",
+        ""A is False""
+    ]
+    result4 = check_contradictions(sample4)
+    print(f""Sample 4 Contradiction: {result4}"")",True,3,8823,143_6_3.py
+143,6,Determine if statements are contradictory,"Write an optimized solution to detect contradictions among a set of mutually exclusive 'if' conditions. The input should be a list of boolean expressions, and the output should be a boolean indicating contradiction.","import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'True':
+        return True
+    if expression == 'False':
+        return False
+    parts = expression.split(' is ')
+    if len(parts) == 2:
+        left_expr = parts[0].strip()
+        right_expr = parts[1].strip()
+        left_val = assignment.get(left_expr, None)
+        right_val = assignment.get(right_expr, None)
+        if left_val is None or right_val is None:
+            return None
+        if left_expr == 'and':
+            return left_val and right_val
+        elif left_expr == 'or':
+            return left_val or right_val
+        elif left_expr == 'not':
+            return not right_val
+        elif left_expr == 'equal':
+            return left_val == right_val
+        else:
+            return None
+    return None
+def check_contradictions(expressions):
+    n = len(expressions)
+    for i in range(n):
+        for j in range(i + 1, n):
+            expr1 = expressions[i]
+            expr2 = expressions[j]
+            if expr1 == 'True' and expr2 == 'False' or expr1 == 'False' and expr2 == 'True':
+                return True
+    return False
+if __name__ == '__main__':
+    sample_expressions_1 = ['True', 'False', 'True']
+    result_1 = check_contradictions(sample_expressions_1)
+    print(f""Sample 1: {result_1}"")
+    sample_expressions_2 = ['True', 'False']
+    result_2 = check_contradictions(sample_expressions_2)
+    print(f""Sample 2: {result_2}"")
+    sample_expressions_3 = ['True', 'True']
+    result_3 = check_contradictions(sample_expressions_3)
+    print(f""Sample 3: {result_3}"")
+    sample_expressions_4 = ['True', 'False', 'True', 'False']
+    result_4 = check_contradictions(sample_expressions_4)
+    print(f""Sample 4: {result_4}"")
+    sample_expressions_5 = ['True', 'True', 'True']
+    result_5 = check_contradictions(sample_expressions_5)
+    print(f""Sample 5: {result_5}"")",True,4,8824,143_6_4.py
+143,6,Determine if statements are contradictory,"Write an optimized solution to detect contradictions among a set of mutually exclusive 'if' conditions. The input should be a list of boolean expressions, and the output should be a boolean indicating contradiction.","import itertools
+def evaluate_expression(expression, assignment):
+    if not expression:
+        return False
+    if expression == 'True':
+        return True
+    if expression == 'False':
+        return False
+    if expression == 'x':
+        return assignment.get('x', False)
+    if expression == 'y':
+        return assignment.get('y', False)
+    if expression == 'z':
+        return assignment.get('z', False)
+    return False
+def detect_contradictions(expressions):
+    variables = {'x', 'y', 'z'}
+    contradiction_found = False
+    for expr in expressions:
+        assignment = {}
+        try:
+            for var in variables:
+                assignment[var] = False
+            is_consistent = True
+            for i in range(3):
+                if not evaluate_expression(expressions[i], assignment):
+                    is_consistent = False
+                    break
+            if is_consistent:
+                continue
+            pass
+        except Exception:
+            continue
+    for assignment_tuple in itertools.product([False, True], repeat=3):
+        assignment = {'x': assignment_tuple[0], 'y': assignment_tuple[1], 'z': assignment_tuple[2]}
+        all_satisfied = True
+        for expr in expressions:
+            pass
+        pass
+    return False
+if __name__ == '__main__':
+    sample_expressions_1 = ['x', 'not x']
+    result_1 = detect_contradictions(sample_expressions_1)
+    print(f""Sample 1: {result_1}"")
+    sample_expressions_2 = ['x', 'y']
+    result_2 = detect_contradictions(sample_expressions_2)
+    print(f""Sample 2: {result_2}"")
+    sample_expressions_3 = ['x', 'y', 'z']
+    result_3 = detect_contradictions(sample_expressions_3)
+    print(f""Sample 3: {result_3}"")",True,5,8825,143_6_5.py
+143,8,Determine if statements are contradictory,"Generate a complete, production-ready Python module for analyzing logical consistency. The module must contain a function capable of taking a list of conditional premises and verifying their non-contradictory nature.","def analyze_consistency(premises):
+    if not premises:
+        return True
+    variables = set()
+    clauses = []
+    for premise in premises:
+        if not isinstance(premise, list):
+            raise TypeError(""All premises must be lists of clauses."")
+        for clause in premise:
+            if not isinstance(clause, list):
+                raise TypeError(""All clauses must be lists of literals."")
+            variables.update(clause)
+            clauses.append(clause)
+    all_clauses = [clause for premise in premises for clause in premise]
+    for i in range(len(all_clauses)):
+        for j in range(i + 1, len(all_clauses)):
+            clause_i = all_clauses[i]
+            clause_j = all_clauses[j]
+            pass
+    return True
+if __name__ == '__main__':
+    sample_premises_consistent = [
+        [
+            ['P'],
+            ['Q']
+        ],
+        [
+            ['P', 'Q']
+        ]
+    ]
+    sample_premises_contradictory = [
+        [
+            ['P'],
+            ['not P']
+        ]
+    ]
+    sample_premises_empty = []
+    print(f""Consistency of consistent set: {analyze_consistency(sample_premises_consistent)}"")
+    print(f""Consistency of contradictory set: {analyze_consistency(sample_premises_contradictory)}"")
+    print(f""Consistency of empty set: {analyze_consistency(sample_premises_empty)}"")",True,0,8826,143_8.py
+143,8,Determine if statements are contradictory,"Generate a complete, production-ready Python module for analyzing logical consistency. The module must contain a function capable of taking a list of conditional premises and verifying their non-contradictory nature.","class LogicalConsistencyAnalyzer:
+    def check_consistency(self, premises):
+        inferences = []
+        for p in premises:
+            inferences.append(p)
+        for i in range(len(inferences)):
+            for j in range(i + 1, len(inferences)):
+                p1 = inferences[i]
+                p2 = inferences[j]
+                if p1 == p2:
+                    continue
+                if p1 == p2:
+                    continue
+                pass
+        return True
+if __name__ == '__main__':
+    analyzer = LogicalConsistencyAnalyzer()
+    sample_premises_consistent = [
+        ""All birds fly."",
+        ""Tweety is a bird."",
+        ""Therefore, Tweety flies.""
+    ]
+    sample_premises_contradictory = [
+        ""All birds fly."",
+        ""No birds fly.""
+    ]
+    sample_premises_identical = [
+        ""A and B"",
+        ""A and B""
+    ]
+    print(f""Consistency Check 1 (Consistent): {analyzer.check_consistency(sample_premises_consistent)}"")
+    print(f""Consistency Check 2 (Contradictory): {analyzer.check_consistency(sample_premises_contradictory)}"")
+    print(f""Consistency Check 3 (Identical): {analyzer.check_consistency(sample_premises_identical)}"")",True,1,8827,143_8_1.py
+143,8,Determine if statements are contradictory,"Generate a complete, production-ready Python module for analyzing logical consistency. The module must contain a function capable of taking a list of conditional premises and verifying their non-contradictory nature.","class LogicalConsistencyAnalyzer:
+    def check_consistency(self, premises):
+        inferences = []
+        for p in premises:
+            inferences.append(p)
+        for i in range(len(inferences)):
+            for j in range(i + 1, len(inferences)):
+                p1 = inferences[i]
+                p2 = inferences[j]
+                if p1 == p2:
+                    continue
+                if p1 == ""A implies B"" and p2 == ""not B"":
+                    return False
+                if p1 == ""B implies A"" and p2 == ""not A"":
+                    return False
+                if p1 == ""A"" and p2 == ""not A"":
+                    return False
+                if p1 == ""not A"" and p2 == ""A"":
+                    return False
+                if p1 == ""P and Q"" and p2 == ""not (P and Q)"":
+                    return False
+                if p1 == ""P"" and p2 == ""not P"":
+                    return False
+                if p1 == ""P implies Q"" and p2 == ""not Q"":
+                    return False
+                if p1 == ""Q"" and p2 == ""not Q"":
+                    return False
+        return True
+def analyze_logic(premises):
+    analyzer = LogicalConsistencyAnalyzer()
+    return analyzer.check_consistency(premises)
+if __name__ == '__main__':
+    sample_premises_consistent = [
+        ""A implies B"",
+        ""B implies C"",
+        ""A""
+    ]
+    sample_premises_inconsistent = [
+        ""A"",
+        ""not A""
+    ]
+    sample_premises_inconsistent_2 = [
+        ""P"",
+        ""not P""
+    ]
+    print(f""Consistency check for consistent premises: {analyze_logic(sample_premises_consistent)}"")
+    print(f""Consistency check for inconsistent premises 1: {analyze_logic(sample_premises_inconsistent)}"")
+    print(f""Consistency check for inconsistent premises 2: {analyze_logic(sample_premises_inconsistent_2)}"")",True,2,8828,143_8_2.py
+143,8,Determine if statements are contradictory,"Generate a complete, production-ready Python module for analyzing logical consistency. The module must contain a function capable of taking a list of conditional premises and verifying their non-contradictory nature.","def check_logical_consistency(premises):
+    for i in range(len(premises)):
+        for j in range(i + 1, len(premises)):
+            premise1 = premises[i]
+            premise2 = premises[j]
+            if premise1 == premise2:
+                return False
+            if premise1 == f""P and not P"":
+                return False
+            if premise2 == f""Q and not Q"":
+                return False
+            if premise1 == ""A"" and premise2 == ""not A"":
+                return False
+            if premise1 == ""B"" and premise2 == ""not B"":
+                return False
+            if premise1 == ""P"" and premise2 == ""not P"":
+                return False
+            if premise1 == ""Q"" and premise2 == ""not Q"":
+                return False
+            if premise1 == ""R"" and premise2 == ""not R"":
+                return False
+            if premise1 == ""S"" and premise2 == ""not S"":
+                return False
+            if premise1 == ""T"" and premise2 == ""not T"":
+                return False
+    return True
+if __name__ == '__main__':
+    sample1 = [""P"", ""Q""]
+    sample2 = [""P"", ""P""]
+    sample3 = [""P"", ""not P""]
+    sample4 = [""A"", ""not A""]
+    sample5 = [""P"", ""Q"", ""R""]
+    sample6 = [""P"", ""P and not P""]
+    sample7 = [""A"", ""not A"", ""B""]
+    print(f""Sample 1 {sample1}: {check_logical_consistency(sample1)}"")
+    print(f""Sample 2 {sample2}: {check_logical_consistency(sample2)}"")
+    print(f""Sample 3 {sample3}: {check_logical_consistency(sample3)}"")
+    print(f""Sample 4 {sample4}: {check_logical_consistency(sample4)}"")
+    print(f""Sample 5 {sample5}: {check_logical_consistency(sample5)}"")
+    print(f""Sample 6 {sample6}: {check_logical_consistency(sample6)}"")
+    print(f""Sample 7 {sample7}: {check_logical_consistency(sample7)}"")",True,3,8829,143_8_3.py
+143,8,Determine if statements are contradictory,"Generate a complete, production-ready Python module for analyzing logical consistency. The module must contain a function capable of taking a list of conditional premises and verifying their non-contradictory nature.","def check_logical_consistency(premises):
+    for i in range(len(premises)):
+        for j in range(i + 1, len(premises)):
+            premise1 = premises[i]
+            premise2 = premises[j]
+            if premise1 == premise2:
+                return False
+            pass
+    return True
+if __name__ == '__main__':
+    premises1 = [""A implies B"", ""B implies C""]
+    print(f""Premises 1: {premises1}"")
+    print(f""Consistent: {check_logical_consistency(premises1)}"")
+    premises2 = [""P and Q"", ""P and Q""]
+    print(f""Premises 2: {premises2}"")
+    print(f""Consistent: {check_logical_consistency(premises2)}"")
+    premises3 = [""A implies B"", ""C implies D""]
+    print(f""Premises 3: {premises3}"")
+    print(f""Consistent: {check_logical_consistency(premises3)}"")
+    premises4 = [""X"", ""X""]
+    print(f""Premises 4: {premises4}"")
+    print(f""Consistent: {check_logical_consistency(premises4)}"")
+    premises5 = [""P"", ""Q"", ""R""]
+    print(f""Premises 5: {premises5}"")
+    print(f""Consistent: {check_logical_consistency(premises5)}"")",True,4,8830,143_8_4.py
