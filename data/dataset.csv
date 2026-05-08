@@ -142909,3 +142909,3084 @@ if __name__ == '__main__':
         year = dt.year
         month = dt.month
         print(f""Year: {year}, Month: {month}"")",True,0,6953,111_8.py
+111,11,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new `datetime.date` object where the month is shifted by a specified integer, handling year rollovers correctly. The function must be highly efficient.","import datetime
+def manipulate_date_components(date_obj, month_shift):
+    year = date_obj.year
+    month = date_obj.month
+    new_month = month + month_shift
+    if new_month > 12:
+        new_year = year + (new_month - 13)
+        new_month = new_month - 12
+    elif new_month < 1:
+        new_year = year - (1 - new_month)
+        new_month = new_month + 12
+    else:
+        new_year = year
+        new_month = new_month
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shift1 = 3
+    result1 = manipulate_date_components(date1, shift1)
+    print(f""Original Date: {date1}, Shift: {shift1}, Result: {result1}"")
+    date2 = datetime.date(2024, 1, 5)
+    shift2 = -5
+    result2 = manipulate_date_components(date2, shift2)
+    print(f""Original Date: {date2}, Shift: {shift2}, Result: {result2}"")
+    date3 = datetime.date(2023, 12, 20)
+    shift3 = 1
+    result3 = manipulate_date_components(date3, shift3)
+    print(f""Original Date: {date3}, Shift: {shift3}, Result: {result3}"")
+    date4 = datetime.date(2023, 5, 10)
+    shift4 = 15
+    result4 = manipulate_date_components(date4, shift4)
+    print(f""Original Date: {date4}, Shift: {shift4}, Result: {result4}"")",True,0,6954,111_11.py
+111,11,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new `datetime.date` object where the month is shifted by a specified integer, handling year rollovers correctly. The function must be highly efficient.","import datetime
+def manipulate_date_components(date_obj, month_shift):
+    year = date_obj.year
+    month = date_obj.month
+    new_month = month + month_shift
+    if new_month > 12:
+        new_year = year + (new_month - 13)
+        new_month = new_month - 12
+    elif new_month < 1:
+        new_year = year - (1 - new_month)
+        new_month = new_month + 12
+    else:
+        new_year = year
+        new_month = new_month
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shift1 = 3
+    result1 = manipulate_date_components(date1, shift1)
+    print(f""Original Date: {date1}, Shift: {shift1}, Result: {result1}"")
+    date2 = datetime.date(2023, 1, 10)
+    shift2 = -5
+    result2 = manipulate_date_components(date2, shift2)
+    print(f""Original Date: {date2}, Shift: {shift2}, Result: {result2}"")
+    date3 = datetime.date(2023, 12, 25)
+    shift3 = 1
+    result3 = manipulate_date_components(date3, shift3)
+    print(f""Original Date: {date3}, Shift: {shift3}, Result: {result3}"")
+    date4 = datetime.date(2024, 5, 1)
+    shift4 = 10
+    result4 = manipulate_date_components(date4, shift4)
+    print(f""Original Date: {date4}, Shift: {shift4}, Result: {result4}"")
+    date5 = datetime.date(2024, 2, 15)
+    shift5 = -13
+    result5 = manipulate_date_components(date5, shift5)
+    print(f""Original Date: {date5}, Shift: {shift5}, Result: {result5}"")",True,1,6955,111_11_1.py
+111,11,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new `datetime.date` object where the month is shifted by a specified integer, handling year rollovers correctly. The function must be highly efficient.","import datetime
+def manipulate_date_components(date_obj, shift):
+    year = date_obj.year
+    month = date_obj.month
+    new_month = month + shift
+    year_change = year // 12
+    new_year = year + year_change
+    new_month = new_month % 12
+    if new_month <= 0:
+        new_month += 12
+    if new_month == 12:
+        new_year += 1
+        new_month = 1
+    if new_month > 12:
+        new_year += 1
+        new_month = new_month - 12
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shift1 = 3
+    result1 = manipulate_date_components(date1, shift1)
+    print(f""Original Date: {date1}, Shift: {shift1}, Result: {result1}"")
+    date2 = datetime.date(2023, 1, 10)
+    shift2 = -5
+    result2 = manipulate_date_components(date2, shift2)
+    print(f""Original Date: {date2}, Shift: {shift2}, Result: {result2}"")
+    date3 = datetime.date(2023, 12, 25)
+    shift3 = 1
+    result3 = manipulate_date_components(date3, shift3)
+    print(f""Original Date: {date3}, Shift: {shift3}, Result: {result3}"")
+    date4 = datetime.date(2023, 1, 1)
+    shift4 = 13
+    result4 = manipulate_date_components(date4, shift4)
+    print(f""Original Date: {date4}, Shift: {shift4}, Result: {result4}"")
+    date5 = datetime.date(2023, 5, 1)
+    shift5 = -12
+    result5 = manipulate_date_components(date5, shift5)
+    print(f""Original Date: {date5}, Shift: {shift5}, Result: {result5}"")",True,2,6956,111_11_2.py
+111,11,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new `datetime.date` object where the month is shifted by a specified integer, handling year rollovers correctly. The function must be highly efficient.","import datetime
+def manipulate_date_components(date_obj, month_shift):
+    year = date_obj.year
+    month = date_obj.month
+    new_month = month + month_shift
+    if new_month > 12:
+        new_year = year + (new_month - 13)
+        new_month = new_month - 12
+    elif new_month < 1:
+        new_year = year - (1 - new_month)
+        new_month = new_month + 12
+    else:
+        new_year = year
+        new_month = new_month
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shift1 = 3
+    result1 = manipulate_date_components(date1, shift1)
+    print(f""Original Date: {date1}, Shift: {shift1}, Result: {result1}"")
+    date2 = datetime.date(2023, 1, 10)
+    shift2 = -5
+    result2 = manipulate_date_components(date2, shift2)
+    print(f""Original Date: {date2}, Shift: {shift2}, Result: {result2}"")
+    date3 = datetime.date(2023, 12, 25)
+    shift3 = 1
+    result3 = manipulate_date_components(date3, shift3)
+    print(f""Original Date: {date3}, Shift: {shift3}, Result: {result3}"")
+    date4 = datetime.date(2023, 5, 1)
+    shift4 = 15
+    result4 = manipulate_date_components(date4, shift4)
+    print(f""Original Date: {date4}, Shift: {shift4}, Result: {result4}"")",True,3,6957,111_11_3.py
+111,11,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new `datetime.date` object where the month is shifted by a specified integer, handling year rollovers correctly. The function must be highly efficient.","import datetime
+def manipulate_date_components(date_obj, month_shift):
+    year = date_obj.year
+    month = date_obj.month
+    new_month = month + month_shift
+    if new_month > 12:
+        new_year = year + (new_month - 13)
+        new_month = new_month - 12
+    elif new_month < 1:
+        new_year = year - (1 - new_month)
+        new_month = new_month + 12
+    else:
+        new_year = year
+        new_month = new_month
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shift1 = 3
+    result1 = manipulate_date_components(date1, shift1)
+    print(f""Original Date: {date1}, Shift: {shift1}, Result: {result1}"")
+    date2 = datetime.date(2023, 1, 10)
+    shift2 = -5
+    result2 = manipulate_date_components(date2, shift2)
+    print(f""Original Date: {date2}, Shift: {shift2}, Result: {result2}"")
+    date3 = datetime.date(2023, 12, 25)
+    shift3 = 1
+    result3 = manipulate_date_components(date3, shift3)
+    print(f""Original Date: {date3}, Shift: {shift3}, Result: {result3}"")
+    date4 = datetime.date(2024, 5, 1)
+    shift4 = 15
+    result4 = manipulate_date_components(date4, shift4)
+    print(f""Original Date: {date4}, Shift: {shift4}, Result: {result4}"")
+    date5 = datetime.date(2024, 3, 1)
+    shift5 = -13
+    result5 = manipulate_date_components(date5, shift5)
+    print(f""Original Date: {date5}, Shift: {shift5}, Result: {result5}"")",True,4,6958,111_11_4.py
+111,11,Manipulate simple date components,"Implement an optimized function named `manipulate_date_components` that accepts a `datetime.date` object and returns a new `datetime.date` object where the month is shifted by a specified integer, handling year rollovers correctly. The function must be highly efficient.","import datetime
+def manipulate_date_components(date_obj, month_shift):
+    year = date_obj.year
+    month = date_obj.month
+    new_month = month + month_shift
+    if new_month > 12:
+        new_year = year + (new_month - 13)
+        new_month = new_month - 12
+    elif new_month < 1:
+        new_year = year - (1 - new_month)
+        new_month = new_month + 12
+    else:
+        new_year = year
+    return datetime.date(new_year, new_month, date_obj.day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shift1 = 3
+    result1 = manipulate_date_components(date1, shift1)
+    date2 = datetime.date(2024, 1, 5)
+    shift2 = -5
+    result2 = manipulate_date_components(date2, shift2)
+    date3 = datetime.date(2023, 12, 20)
+    shift3 = 1
+    result3 = manipulate_date_components(date3, shift3)
+    date4 = datetime.date(2023, 5, 10)
+    shift4 = 15
+    result4 = manipulate_date_components(date4, shift4)
+    print(f""Original Date: {date1}, Shift: {shift1}, Result: {result1}"")
+    print(f""Original Date: {date2}, Shift: {shift2}, Result: {result2}"")
+    print(f""Original Date: {date3}, Shift: {shift3}, Result: {result3}"")
+    print(f""Original Date: {date4}, Shift: {shift4}, Result: {result4}"")",True,5,6959,111_11_5.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not isinstance(self._year, int) or not isinstance(self._month, int) or not isinstance(self._day, int):
+            raise ValueError(""Invalid type for date components."")
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        is_leap = (self._year % 4 == 0 and self._year % 100 != 0) or (self._year % 400 == 0)
+        max_days = days_in_month[self._month]
+        if self._month == 2 and is_leap:
+            max_days = 29
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Testing DateManipulator ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date 1: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+        date1.set_year(2024)
+        print(f""After setting year to 2024: {date1}"")
+        date1.set_day(31)
+        print(f""After setting day to 31: {date1}"")
+    except ValueError as e:
+        print(f""Error in Test Case 1: {e}"")
+    except TypeError as e:
+        print(f""Error in Test Case 1: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Initial Date 2 (Leap Year): {date2}"")
+        date2.set_day(30)
+    except ValueError as e:
+        print(f""Successfully caught expected error for invalid day: {e}"")
+    except TypeError as e:
+        print(f""Error in Test Case 2: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date3 = DateManipulator(2023, 2, 30)
+        print(f""Initial Date 3 (Invalid Day): {date3}"")
+    except ValueError as e:
+        print(f""Successfully caught expected error for invalid day: {e}"")
+    except TypeError as e:
+        print(f""Error in Test Case 3: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date4 = DateManipulator(2023, 13, 15)
+    except ValueError as e:
+        print(f""Successfully caught expected error for invalid month: {e}"")
+    except TypeError as e:
+        print(f""Error in Test Case 4: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        DateManipulator(2023, ""Feb"", 15)
+    except TypeError as e:
+        print(f""Successfully caught expected error for invalid type: {e}"")",True,0,6960,111_12.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not isinstance(self._year, int) or not isinstance(self._month, int) or not isinstance(self._day, int):
+            raise ValueError(""Invalid type for date components."")
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        is_leap = (self._year % 4 == 0 and self._year % 100 != 0) or (self._year % 400 == 0)
+        max_days = days_in_month[self._month]
+        if self._month == 2 and is_leap:
+            max_days = 29
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Test Case 1: Valid Date ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+        date1.set_year(2024)
+        print(f""After setting year to 2024: {date1}"")
+        date1.set_day(31)
+        print(f""After setting day to 31: {date1}"")
+    except ValueError as e:
+        print(f""Error during operation: {e}"")
+    except TypeError as e:
+        print(f""Error during operation: {e}"")
+    print(""\n--- Test Case 2: Leap Year Validation (February 29th) ---"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Valid Leap Day: {date2}"")
+        date2.set_year(2023)
+        print(f""After setting year to 2023 (Non-Leap): {date2}"")
+        date2.set_day(29)
+        print(f""Attempting to set Feb 29th in 2023:"")
+        DateManipulator(2023, 2, 29)
+    except ValueError as e:
+        print(f""Caught expected error for invalid date: {e}"")
+    except TypeError as e:
+        print(f""Error during operation: {e}"")
+    print(""\n--- Test Case 3: Invalid Day Validation (Month Boundary) ---"")
+    try:
+        date3 = DateManipulator(2023, 1, 32)
+    except ValueError as e:
+        print(f""Caught expected error for invalid day: {e}"")
+    except TypeError as e:
+        print(f""Error during operation: {e}"")
+    print(""\n--- Test Case 4: Invalid Month Validation ---"")
+    try:
+        date4 = DateManipulator(2023, 13, 1)
+    except ValueError as e:
+        print(f""Caught expected error for invalid month: {e}"")
+    except TypeError as e:
+        print(f""Error during operation: {e}"")
+    print(""\n--- Test Case 5: Invalid Year/Month/Day Combination (Leap Year Check) ---"")
+    try:
+        date5 = DateManipulator(2023, 2, 30)
+    except ValueError as e:
+        print(f""Caught expected error for Feb 30th: {e}"")
+    except TypeError as e:
+        print(f""Error during operation: {e}"")",True,1,6961,111_12_1.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if self._month == 2:
+            is_leap = self._year % 4 == 0 and (self._year % 100 != 0 or self._year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        else:
+            max_days = days_in_month[self._month]
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Test Case 1: Valid Date (Non-Leap Year) ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+        date1.set_year(2024)
+        print(f""After setting year to 2024: {date1}"")
+        date1.set_day(31)
+        print(f""After setting day to 31: {date1}"")
+    except ValueError as e:
+        print(f""Error during operation: {e}"")
+    except TypeError as e:
+        print(f""Error during operation: {e}"")
+    print(""\n--- Test Case 2: Leap Year Validation (February 29th) ---"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Initial Date: {date2}"")
+        print(f""Leap Year Check: {date2._year % 4 == 0 and (date2._year % 100 != 0 or date2._year % 400 == 0)}"")
+        date2.set_day(30)
+        print(f""After setting day to 30: {date2}"")
+    except ValueError as e:
+        print(f""Error during operation: {e}"")
+    print(""\n--- Test Case 3: Invalid Date Creation (Month Boundary) ---"")
+    try:
+        DateManipulator(2023, 13, 1)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid month: {e}"")
+    print(""\n--- Test Case 4: Invalid Date Creation (Day Boundary) ---"")
+    try:
+        DateManipulator(2023, 4, 31)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid day: {e}"")
+    print(""\n--- Test Case 5: Invalid Date Creation (Leap Year Check - Feb 29th in 2023) ---"")
+    try:
+        DateManipulator(2023, 2, 29)
+    except ValueError as e:
+        print(f""Successfully caught error for non-leap year Feb 29th: {e}"")",True,2,6962,111_12_2.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if self._month == 2:
+            if self._year % 4 == 0 and (self._year % 100 != 0 or self._year % 400 == 0):
+                max_days = 29
+            else:
+                max_days = 28
+        else:
+            max_days = days_in_month[self._month]
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_date(self):
+        return (self._year, self._month, self._day)
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Test Case 1: Valid Date ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date: {date1}"")
+        print(f""Extracted: {date1.get_date()}"")
+        date1.set_year(2024)
+        print(f""After setting year to 2024: {date1}"")
+        date1.set_day(31)
+        print(f""After setting day to 31: {date1}"")
+    except ValueError as e:
+        print(f""Error during valid test: {e}"")
+    except TypeError as e:
+        print(f""Error during valid test: {e}"")
+    print(""\n--- Test Case 2: Leap Year Validation (February 29th) ---"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Valid Leap Date: {date2}"")
+        date3 = DateManipulator(2023, 2, 29)
+        print(f""Invalid Leap Date Attempt: {date3}"")
+    except ValueError as e:
+        print(f""Caught expected error for invalid date: {e}"")
+    print(""\n--- Test Case 3: Month Boundary Validation ---"")
+    try:
+        date4 = DateManipulator(2023, 13, 15)
+        print(f""Invalid Month Attempt: {date4}"")
+    except ValueError as e:
+        print(f""Caught expected error for invalid month: {e}"")
+    print(""\n--- Test Case 4: Day Boundary Validation (31 days in April) ---"")
+    try:
+        date5 = DateManipulator(2023, 4, 31)
+        print(f""Invalid Day Attempt: {date5}"")
+    except ValueError as e:
+        print(f""Caught expected error for invalid day: {e}"")
+    print(""\n--- Test Case 5: Setting to Invalid State (Year Change) ---"")
+    try:
+        date6 = DateManipulator(2023, 2, 30)
+        print(f""Initial State: {date6}"")
+        date6.set_year(2023)                                                                                                                   
+        print(f""After setting year back: {date6}"")
+    except ValueError as e:
+        print(f""Caught expected error during state change: {e}"")",True,3,6963,111_12_3.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        pass
+    def get_date(self):
+        return (self._year, self._month, self._day)
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        if not (1 <= new_month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        self._month = new_month
+        self._validate()
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        year = self._year
+        month = self._month
+        is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
+        if month == 2 and is_leap:
+            days_in_month = 29
+        if not (1 <= new_day <= days_in_month):
+            raise ValueError(f""Day {new_day} is invalid for month {self._month} in year {self._year}."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Test Case 1: Valid Initial Date ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date: {date1}"")
+        print(f""Extracted: {date1.get_date()}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    print(""\n--- Test Case 2: Setting and Modifying ---"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)                 
+        print(f""Initial Date: {date2}"")
+        date2.set_month(3)
+        print(f""After setting month to 3: {date2}"")
+        date2.set_day(31)
+        print(f""After setting day to 31: {date2}"")
+        print(""\nAttempting invalid day setting:"")
+        date2.set_day(30)                        
+    except ValueError as ve:
+        print(f""Caught expected error: {ve}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+    print(""\n--- Test Case 3: Invalid Month/Day Creation ---"")
+    try:
+        DateManipulator(2023, 13, 1)
+    except ValueError as ve:
+        print(f""Caught expected error for invalid month: {ve}"")
+    print(""\n--- Test Case 4: Leap Year Validation (Setting to valid leap day) ---"")
+    try:
+        date3 = DateManipulator(2024, 2, 29)
+        print(f""Valid Leap Date: {date3}"")
+    except Exception as e:
+        print(f""Error: {e}"")
+    print(""\n--- Test Case 5: Setting to invalid day in non-leap year ---"")
+    try:
+        date4 = DateManipulator(2023, 2, 29)
+        print(f""Attempting to set Feb 29th in 2023:"")
+        date4.set_day(29)
+    except ValueError as ve:
+        print(f""Caught expected error for non-leap year: {ve}"")",True,4,6964,111_12_4.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        try:
+            self._year = year
+            self._month = month
+            self._day = day
+            self._validate_date()
+        except ValueError:
+            raise ValueError(""Invalid date provided."")
+    def _validate_date(self):
+        if not isinstance(self._year, int) or not isinstance(self._month, int) or not isinstance(self._day, int):
+            raise ValueError(""Invalid date provided."")
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        is_leap = (self._year % 4 == 0 and self._year % 100 != 0) or (self._year % 400 == 0)
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if is_leap:
+            max_days = 29
+        else:
+            max_days = 31
+        if self._month == 2 and is_leap:
+            max_days = 29
+        elif self._month in [4, 6, 9, 11]:
+            max_days = 30
+        elif self._month == 2:
+            max_days = 28
+        else:
+            max_days = 31
+        if self._day > max_days:
+            raise ValueError(""Day is invalid for the given month and year."")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate_date()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate_date()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate_date()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Test Case 1: Valid Date (Non-Leap) ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Original: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+        date1.set_day(31)
+        print(f""After setting day to 31: {date1}"")
+        date1.set_month(12)
+        print(f""After setting month to 12: {date1}"")
+        date1.set_year(2024)
+        print(f""After setting year to 2024: {date1}"")
+    except ValueError as e:
+        print(f""Error during test 1: {e}"")
+    except TypeError as e:
+        print(f""Error during test 1: {e}"")
+    print(""\n--- Test Case 2: Leap Year Validation (Feb 29) ---"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Valid Leap Date: {date2}"")
+        date2.set_day(30)
+        print(f""Attempting invalid day: {date2}"")
+    except ValueError as e:
+        print(f""Caught expected error for invalid day: {e}"")
+    except TypeError as e:
+        print(f""Error during test 2: {e}"")
+    print(""\n--- Test Case 3: Invalid Date Creation (Month Boundary) ---"")
+    try:
+        date3 = DateManipulator(2023, 13, 1)
+    except ValueError as e:
+        print(f""Caught expected error for invalid month: {e}"")
+    except TypeError as e:
+        print(f""Error during test 3: {e}"")
+    print(""\n--- Test Case 4: Invalid Date Creation (Day Boundary) ---"")
+    try:
+        date4 = DateManipulator(2023, 2, 30)
+    except ValueError as e:
+        print(f""Caught expected error for invalid day: {e}"")
+    except TypeError as e:
+        print(f""Error during test 4: {e}"")
+    print(""\n--- Test Case 5: Invalid Date Creation (Leap Year Check) ---"")
+    try:
+        date5 = DateManipulator(2023, 2, 29)
+    except ValueError as e:
+        print(f""Caught expected error for non-leap year Feb 29: {e}"")
+    except TypeError as e:
+        print(f""Error during test 5: {e}"")",True,5,6965,111_12_5.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not isinstance(self._year, int) or not isinstance(self._month, int) or not isinstance(self._day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if self._month == 2:
+            if self._year % 4 == 0 and (self._year % 100 != 0 or self._year % 400 == 0):
+                max_days = 29
+            else:
+                max_days = 28
+        else:
+            max_days = days_in_month[self._month]
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_date(self):
+        return (self._year, self._month, self._day)
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Testing DateManipulator ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date 1: {date1}"")
+        print(f""Extracted Date 1: {date1.get_date()}"")
+    except Exception as e:
+        print(f""Error in Test Case 1: {e}"")
+    print(""-"" * 20)
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Initial Date 2 (Leap Day): {date2}"")
+        print(f""Extracted Date 2: {date2.get_date()}"")
+    except Exception as e:
+        print(f""Error in Test Case 2: {e}"")
+    print(""-"" * 20)
+    try:
+        date3 = DateManipulator(2023, 2, 30)
+        print(f""Initial Date 3 (Invalid Day): {date3}"")
+    except ValueError as e:
+        print(f""Caught expected error for Test Case 3: {e}"")
+    print(""-"" * 20)
+    try:
+        date4 = DateManipulator(2023, 1, 1)
+        print(f""Initial Date 4: {date4}"")
+        date4.set_year(2025)
+        print(f""After setting year to 2025: {date4}"")
+        print(f""Extracted Date 4: {date4.get_date()}"")
+        date4.set_day(31)
+        print(f""After setting day to 31: {date4}"")
+        print(f""Extracted Date 4: {date4.get_date()}"")
+    except Exception as e:
+        print(f""Error in Test Case 4: {e}"")
+    print(""-"" * 20)
+    try:
+        date5 = DateManipulator(2023, 13, 15)
+    except ValueError as e:
+        print(f""Caught expected error for Test Case 5 (Invalid Month): {e}"")",True,6,6966,111_12_6.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        try:
+            import calendar
+            max_days = calendar.monthrange(self._year, self._month)[1]
+            if self._day > max_days:
+                raise ValueError(""Day is invalid for the given month and year."")
+        except ImportError:
+            pass 
+        except ValueError as e:
+            raise ValueError(f""Date validation failed: {e}"")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Testing DateManipulator ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date 1: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+        date1.set_year(2024)
+        date1.set_day(31)
+        print(f""Modified Date 1: {date1}"")
+    except Exception as e:
+        print(f""Error in Test Case 1: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Initial Date 2 (Leap Year): {date2}"")
+        date2.set_year(2023)
+        print(f""Attempting to set date to 2023-02-29..."")
+    except ValueError as e:
+        print(f""Successfully caught expected error for invalid date: {e}"")
+    except Exception as e:
+        print(f""Unexpected error in Test Case 2: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date3 = DateManipulator(2025, 13, 15)
+        print(f""Attempting to create date with invalid month (13): {date3}"")
+    except ValueError as e:
+        print(f""Successfully caught expected error for invalid month: {e}"")
+    except Exception as e:
+        print(f""Unexpected error in Test Case 3: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date4 = DateManipulator(2023, 4, 31)
+        print(f""Attempting to create date with invalid day (April 31st): {date4}"")
+    except ValueError as e:
+        print(f""Successfully caught expected error for invalid day: {e}"")
+    except Exception as e:
+        print(f""Unexpected error in Test Case 4: {e}"")",True,7,6967,111_12_7.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+    def get_date(self):
+        return (self._year, self._month, self._day)
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Testing DateManipulator ---"")
+    try:
+        print(""\nTest 1: Valid Date Creation (2023-10-27)"")
+        date1 = DateManipulator(2023, 10, 27)
+        print(f""Original: {date1}"")
+        print(f""Extracted: Year={date1.get_date()[0]}, Month={date1.get_date()[1]}, Day={date1.get_date()[2]}"")
+        print(""\nTest 3: Setting Month (Valid)"")
+        date1.set_month(12)
+        print(f""New Date: {date1}"")
+        print(""\nTest 4: Setting Month (Invalid)"")
+        try:
+            date1.set_month(13)
+        except ValueError as e:
+            print(f""Caught expected error: {e}"")
+        print(f""Date remains: {date1}"")
+        print(""\nTest 5: Setting Day (Valid - 31st)"")
+        date1.set_day(31)
+        print(f""New Date: {date1}"")
+        print(""\nTest 6: Setting Day (Invalid - 32nd)"")
+        try:
+            date1.set_day(32)
+        except ValueError as e:
+            print(f""Caught expected error: {e}"")
+        print(f""Date remains: {date1}"")
+        print(""\nTest 7: Leap Year Validation (2024 is a leap year)"")
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Valid Leap Date: {date2}"")
+        print(""\nTest 8: Leap Year Validation (2023 is not a leap year)"")
+        try:
+            date2.set_day(29)
+        except ValueError as e:
+            print(f""Caught expected error: {e}"")
+        print(f""Date remains: {date2}"")
+        print(""\nTest 9: Setting Year"")
+        date2.set_year(2025)
+        print(f""New Date: {date2}"")
+    except Exception as e:
+        print(f""\nAn unexpected error occurred during testing: {e}"")",True,8,6968,111_12_8.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        self._year = year
+        self._month = month
+        self._day = day
+        self._validate()
+    def _validate(self):
+        if not isinstance(self._year, int) or not isinstance(self._month, int) or not isinstance(self._day, int):
+            raise ValueError(""Invalid type for date components."")
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        is_leap = (self._year % 4 == 0 and self._year % 100 != 0) or (self._year % 400 == 0)
+        max_days = days_in_month[self._month]
+        if self._month == 2 and is_leap:
+            max_days = 29
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Testing DateManipulator ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Initial Date 1: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+    except Exception as e:
+        print(f""Error in Test Case 1: {e}"")
+    print(""-"" * 20)
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Initial Date 2 (Leap): {date2}"")
+        print(f""Year: {date2.get_year()}, Month: {date2.get_month()}, Day: {date2.get_day()}"")
+    except Exception as e:
+        print(f""Error in Test Case 2: {e}"")
+    print(""-"" * 20)
+    try:
+        date3 = DateManipulator(2023, 2, 29)
+        print(f""Date 3: {date3}"")
+    except ValueError as e:
+        print(f""Successfully caught expected error for Test Case 3: {e}"")
+    except Exception as e:
+        print(f""Unexpected error in Test Case 3: {e}"")
+    print(""-"" * 20)
+    try:
+        date4 = DateManipulator(2025, 1, 15)
+        print(f""Initial Date 4: {date4}"")
+        date4.set_year(2026)
+        print(f""After setting year to 2026: {date4}"")
+        date4.set_day(30)
+        print(f""After setting day to 30: {date4}"")
+        print(""\nAttempting to set invalid date (Feb 30th in 2024):"")
+        date4.set_month(2)
+        date4.set_day(30)
+    except ValueError as e:
+        print(f""Successfully caught expected error during modification: {e}"")
+    except Exception as e:
+        print(f""Error during Test Case 4 modification: {e}"")
+    print(""-"" * 20)
+    try:
+        date5 = DateManipulator(2024, 3, 1)
+        print(f""Initial Date 5: {date5}"")
+        date5.set_year(2024)
+        date5.set_month(3)
+        date5.set_day(1)
+        print(f""Final Date 5: {date5}"")
+    except Exception as e:
+        print(f""Error in Test Case 5: {e}"")",True,9,6969,111_12_9.py
+111,12,Manipulate simple date components,"Develop a class named `DateManipulator` with methods to extract, set, and modify the year, month, and day of a date. Ensure all methods perform validation to prevent invalid date creation (e.g., handling month boundaries and leap years correctly). Provide comprehensive docstrings.","class DateManipulator:
+    def __init__(self, year, month, day):
+        if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+            raise TypeError(""Year, month, and day must be integers."")
+        try:
+            self._year = year
+            self._month = month
+            self._day = day
+            self._validate_date()
+        except ValueError as e:
+            raise ValueError(f""Invalid date provided: {e}"")
+    def _validate_date(self):
+        if not isinstance(self._year, int) or not isinstance(self._month, int) or not isinstance(self._day, int):
+            raise ValueError(""All components must be integers."")
+        if not (1 <= self._month <= 12):
+            raise ValueError(""Month must be between 1 and 12."")
+        if not (1 <= self._day <= 31):
+            raise ValueError(""Day must be between 1 and 31."")
+        is_leap = (self._year % 4 == 0 and self._year % 100 != 0) or (self._year % 400 == 0)
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if is_leap:
+            max_days = 29
+        else:
+            max_days = 31
+        if self._month == 2 and is_leap:
+            max_days = 29
+        elif self._month in [4, 6, 9, 11]:
+            max_days = 30
+        elif self._month == 0 or self._month == 12:
+            max_days = 31
+        else:
+            max_days = 30
+        if self._day > max_days:
+            raise ValueError(f""Day {self._day} is invalid for month {self._month} in year {self._year}."")
+    def get_year(self):
+        return self._year
+    def set_year(self, new_year):
+        if not isinstance(new_year, int):
+            raise TypeError(""Year must be an integer."")
+        self._year = new_year
+        self._validate_date()
+    def get_month(self):
+        return self._month
+    def set_month(self, new_month):
+        if not isinstance(new_month, int):
+            raise TypeError(""Month must be an integer."")
+        self._month = new_month
+        self._validate_date()
+    def get_day(self):
+        return self._day
+    def set_day(self, new_day):
+        if not isinstance(new_day, int):
+            raise TypeError(""Day must be an integer."")
+        self._day = new_day
+        self._validate_date()
+    def __str__(self):
+        return f""{self._year}-{self._month:02d}-{self._day:02d}""
+if __name__ == '__main__':
+    print(""--- Testing DateManipulator ---"")
+    try:
+        date1 = DateManipulator(2023, 10, 25)
+        print(f""Original Date 1: {date1}"")
+        print(f""Year: {date1.get_year()}, Month: {date1.get_month()}, Day: {date1.get_day()}"")
+        date1.set_month(12)
+        print(f""Modified Date 1 (Month set to 12): {date1}"")
+        date1.set_day(32)
+    except ValueError as e:
+        print(f""Caught expected error for invalid day setting: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date2 = DateManipulator(2024, 2, 29)
+        print(f""Valid Leap Date: {date2}"")
+        date2.set_day(30)
+    except ValueError as e:
+        print(f""Caught expected error for invalid day in leap year: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date3 = DateManipulator(2023, 13, 1)
+    except ValueError as e:
+        print(f""Caught expected error for invalid month: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date4 = DateManipulator(2023, 1, 32)
+    except ValueError as e:
+        print(f""Caught expected error for invalid day: {e}"")
+    print(""\n"" + ""=""*30 + ""\n"")
+    try:
+        date5 = DateManipulator(2023, 5, 15)
+        print(f""Original Date 5: {date5}"")
+        date5.set_year(2024)
+        print(f""Modified Date 5 (Year set to 2024): {date5}"")
+        date5.set_day(29)
+        print(f""Date 5 after year change and day set: {date5}"")
+    except ValueError as e:
+        print(f""An error occurred during year modification: {e}"")",True,10,6970,111_12_10.py
+111,13,Manipulate simple date components,"Write a script that takes a string representing a date in 'YYYY-MM-DD' format, parses it into a date object, and then manipulates the components to calculate the date exactly 30 days later, correctly handling month and year transitions. Use only standard library modules.","import datetime
+def calculate_future_date(date_string):
+    date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    future_date = date_obj + datetime.timedelta(days=30)
+    return future_date.strftime('%Y-%m-%d')
+if __name__ == '__main__':
+    input_date = ""2023-12-20""
+    result = calculate_future_date(input_date)
+    print(result)",True,0,6971,111_13.py
+111,13,Manipulate simple date components,"Write a script that takes a string representing a date in 'YYYY-MM-DD' format, parses it into a date object, and then manipulates the components to calculate the date exactly 30 days later, correctly handling month and year transitions. Use only standard library modules.","import datetime
+def calculate_future_date(date_string):
+    date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    future_date = date_obj + datetime.timedelta(days=30)
+    return future_date.strftime('%Y-%m-%d')
+if __name__ == '__main__':
+    sample_date = ""2023-12-15""
+    future_date = calculate_future_date(sample_date)
+    print(future_date)",True,1,6972,111_13_1.py
+111,13,Manipulate simple date components,"Write a script that takes a string representing a date in 'YYYY-MM-DD' format, parses it into a date object, and then manipulates the components to calculate the date exactly 30 days later, correctly handling month and year transitions. Use only standard library modules.","import datetime
+def calculate_future_date(date_string):
+    date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    future_date = date_obj + datetime.timedelta(days=30)
+    return future_date.strftime('%Y-%m-%d')
+if __name__ == '__main__':
+    sample_date = ""2023-12-20""
+    future_date = calculate_future_date(sample_date)
+    print(future_date)",True,2,6973,111_13_2.py
+111,13,Manipulate simple date components,"Write a script that takes a string representing a date in 'YYYY-MM-DD' format, parses it into a date object, and then manipulates the components to calculate the date exactly 30 days later, correctly handling month and year transitions. Use only standard library modules.","import datetime
+def calculate_future_date(date_string):
+    date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+    future_date = date_obj + datetime.timedelta(days=30)
+    return future_date.strftime('%Y-%m-%d')
+if __name__ == '__main__':
+    input_date = ""2023-12-15""
+    result = calculate_future_date(input_date)
+    print(result)",True,3,6974,111_13_3.py
+111,14,Manipulate simple date components,"Create a function that takes a date and a list of desired component shifts (e.g., `[+1, -3, +12]`) and applies these shifts sequentially to the year, month, and day components, returning the resulting date object. Ensure the logic handles all potential edge cases related to month arithmetic.","import datetime
+def apply_date_shifts(date_obj, shifts):
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        if shift == 1:
+            month += 1
+            if month > 12:
+                month = 1
+                year += 1
+        elif shift == -1:
+            month -= 1
+            if month < 1:
+                month = 12
+                year -= 1
+        elif shift > 1 or shift < -1:
+            year += shift // 12
+            month += shift % 12
+            if month == 0:
+                month = 12
+                year -= 1
+            elif month < 1:
+                month = 12
+                year -= 1
+            elif month > 12:
+                month = 1
+                year += 1
+        if month == 1:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 2:
+            if day > 28:
+                day = 28
+            elif day < 1:
+                day = 1
+        elif month == 3:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 4:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 5:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 6:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 7:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 8:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 9:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 10:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 11:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 12:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+    return datetime.date(year, month, day)
+if __name__ == '__main__':
+    initial_date = datetime.date(2023, 10, 25)
+    shifts1 = [+1, -3, +12]
+    result1 = apply_date_shifts(initial_date, shifts1)
+    print(f""Initial Date: {initial_date}"")
+    print(f""Shifts: {shifts1}"")
+    print(f""Result 1: {result1}"")
+    initial_date_2 = datetime.date(2023, 1, 31)
+    shifts2 = [-1, -1]
+    result2 = apply_date_shifts(initial_date_2, shifts2)
+    print(f""\nInitial Date: {initial_date_2}"")
+    print(f""Shifts: {shifts2}"")
+    print(f""Result 2: {result2}"")
+    initial_date_3 = datetime.date(2023, 12, 31)
+    shifts3 = [+1, +1]
+    result3 = apply_date_shifts(initial_date_3, shifts3)
+    print(f""\nInitial Date: {initial_date_3}"")
+    print(f""Shifts: {shifts3}"")
+    print(f""Result 3: {result3}"")
+    initial_date_4 = datetime.date(2023, 1, 1)
+    shifts4 = [-10]
+    result4 = apply_date_shifts(initial_date_4, shifts4)
+    print(f""\nInitial Date: {initial_date_4}"")
+    print(f""Shifts: {shifts4}"")
+    print(f""Result 4: {result4}"")",True,0,6975,111_14.py
+111,14,Manipulate simple date components,"Create a function that takes a date and a list of desired component shifts (e.g., `[+1, -3, +12]`) and applies these shifts sequentially to the year, month, and day components, returning the resulting date object. Ensure the logic handles all potential edge cases related to month arithmetic.","import datetime
+def apply_date_shifts(date_obj, shifts):
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        if shift == 1:
+            month += 1
+            if month > 12:
+                month = 1
+                year += 1
+        elif shift == -1:
+            month -= 1
+            if month < 1:
+                month = 12
+                year -= 1
+        elif shift > 1 or shift < -1:
+            year += shift // 12
+            month += shift % 12
+            total_months_shift = shift
+            new_year = year + (total_months_shift // 12)
+            new_month = month + (total_months_shift % 12)
+            if new_month > 12:
+                new_year += 1
+                new_month -= 12
+            elif new_month < 1:
+                new_year -= 1
+                new_month += 12
+            year = new_year
+            month = new_month
+            try:
+                day = day
+            except ValueError:
+                _, last_day = datetime.date(year, month, 1)
+                day = last_day
+        else:
+            pass
+    current_year = date_obj.year
+    current_month = date_obj.month
+    current_day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        total_months_to_add = shift
+        new_total_months = (current_year * 12 + current_month) + total_months_to_add
+        new_year = (new_total_months // 12)
+        new_month = (new_total_months % 12) + 1
+        if new_month == 0:
+            new_month = 12
+            new_year -= 1
+        current_year = new_year
+        current_month = new_month
+        try:
+            datetime.date(current_year, current_month, current_day)
+        except ValueError:
+            _, last_day = datetime.date(current_year, current_month + 1, 1)
+            current_day = last_day - 1
+    return datetime.date(current_year, current_month, current_day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    shifts1 = [+1, -3, +12]
+    result1 = apply_date_shifts(date1, shifts1)
+    print(f""Original Date: {date1}"")
+    print(f""Shifts: {shifts1}"")
+    print(f""Result: {result1}"")
+    date2 = datetime.date(2024, 1, 31)
+    shifts2 = [-1, -1]
+    result2 = apply_date_shifts(date2, shifts2)
+    print(f""\nOriginal Date: {date2}"")
+    print(f""Shifts: {shifts2}"")
+    print(f""Result: {result2}"")
+    date3 = datetime.date(2023, 1, 1)
+    shifts3 = [+12]
+    result3 = apply_date_shifts(date3, shifts3)
+    print(f""\nOriginal Date: {date3}"")
+    print(f""Shifts: {shifts3}"")
+    print(f""Result: {result3}"")
+    date4 = datetime.date(2023, 2, 28)
+    shifts4 = [+1]
+    result4 = apply_date_shifts(date4, shifts4)
+    print(f""\nOriginal Date: {date4}"")
+    print(f""Shifts: {shifts4}"")
+    print(f""Result: {result4}"")
+    date5 = datetime.date(2023, 1, 31)
+    shifts5 = [-1]
+    result5 = apply_date_shifts(date5, shifts5)
+    print(f""\nOriginal Date: {date5}"")
+    print(f""Shifts: {shifts5}"")
+    print(f""Result: {result5}"")",True,1,6976,111_14_1.py
+111,14,Manipulate simple date components,"Create a function that takes a date and a list of desired component shifts (e.g., `[+1, -3, +12]`) and applies these shifts sequentially to the year, month, and day components, returning the resulting date object. Ensure the logic handles all potential edge cases related to month arithmetic.","import datetime
+def apply_date_shifts(date_obj, shifts):
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        if shift == 1:
+            month += 1
+            if month > 12:
+                month = 1
+                year += 1
+        elif shift == -1:
+            month -= 1
+            if month < 1:
+                month = 12
+                year -= 1
+        elif shift > 1 or shift < -1:
+            pass
+        new_day = day + shift
+        if new_day < 1:
+            months_to_subtract = (1 - new_day) // 30                                                      
+            pass
+    current_year = date_obj.year
+    current_month = date_obj.month
+    current_day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        if shift == 1:
+            current_month += 1
+        elif shift == -1:
+            current_month -= 1
+        if current_month > 12:
+            current_month -= 12
+            current_year += 1
+        elif current_month < 1:
+            current_month += 12
+            current_year -= 1
+        current_day += shift
+    final_year = date_obj.year
+    final_month = date_obj.month
+    final_day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        if shift == 1:
+            final_month += 1
+        elif shift == -1:
+            final_month -= 1
+        if final_month > 12:
+            final_month -= 12
+            final_year += 1
+        elif final_month < 1:
+            final_month += 12
+            final_year -= 1
+        final_day += shift
+    try:
+        return datetime.date(final_year, final_month, final_day)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 25)
+    shifts1 = [+1, -3, +12]
+    result1 = apply_date_shifts(date1, shifts1)
+    print(f""Date: {date1}, Shifts: {shifts1}, Result: {result1}"")
+    date2 = datetime.date(2024, 1, 31)
+    shifts2 = [-1, +1]
+    result2 = apply_date_shifts(date2, shifts2)
+    print(f""Date: {date2}, Shifts: {shifts2}, Result: {result2}"")
+    date3 = datetime.date(2023, 12, 31)
+    shifts3 = [+1, +1]
+    result3 = apply_date_shifts(date3, shifts3)
+    print(f""Date: {date3}, Shifts: {shifts3}, Result: {result3}"")
+    date4 = datetime.date(2023, 1, 1)
+    shifts4 = [-1, -1]
+    result4 = apply_date_shifts(date4, shifts4)
+    print(f""Date: {date4}, Shifts: {shifts4}, Result: {result4}"")
+    date5 = datetime.date(2023, 3, 31)
+    shifts5 = [+1]
+    result5 = apply_date_shifts(date5, shifts5)
+    print(f""Date: {date5}, Shifts: {shifts5}, Result: {result5}"")
+    date6 = datetime.date(2023, 1, 31)
+    shifts6 = [-1]
+    result6 = apply_date_shifts(date6, shifts6)
+    print(f""Date: {date6}, Shifts: {shifts6}, Result: {result6}"")",True,2,6977,111_14_2.py
+111,14,Manipulate simple date components,"Create a function that takes a date and a list of desired component shifts (e.g., `[+1, -3, +12]`) and applies these shifts sequentially to the year, month, and day components, returning the resulting date object. Ensure the logic handles all potential edge cases related to month arithmetic.","import datetime
+def apply_date_shifts(date_obj, shifts):
+    year = date_obj.year
+    month = date_obj.month
+    day = date_obj.day
+    for shift in shifts:
+        if shift == 0:
+            continue
+        if shift == 1:
+            month += 1
+            if month > 12:
+                month = 1
+                year += 1
+        elif shift == -1:
+            month -= 1
+            if month < 1:
+                month = 12
+                year -= 1
+        elif shift > 1 or shift < -1:
+            year += shift // 12
+            month += shift % 12
+            if month > 12:
+                month -= 12
+                year += 1
+            elif month < 1:
+                month += 12
+                year -= 1
+        if month == 1:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 2:
+            if day > 28:
+                day = 28
+            elif day < 1:
+                day = 1
+        elif month == 3:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 4:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 5:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 6:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 7:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 8:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 9:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 10:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+        elif month == 11:
+            if day > 30:
+                day = 30
+            elif day < 1:
+                day = 1
+        elif month == 12:
+            if day > 31:
+                day = 31
+            elif day < 1:
+                day = 1
+    return datetime.date(year, month, day)
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 25)
+    shifts1 = [+1, -3, +12]
+    result1 = apply_date_shifts(date1, shifts1)
+    print(f""Original Date: {date1}"")
+    print(f""Shifts: {shifts1}"")
+    print(f""Result 1: {result1}"")
+    date2 = datetime.date(2024, 1, 31)
+    shifts2 = [-1, -1]
+    result2 = apply_date_shifts(date2, shifts2)
+    print(f""\nOriginal Date: {date2}"")
+    print(f""Shifts: {shifts2}"")
+    print(f""Result 2: {result2}"")
+    date3 = datetime.date(2023, 12, 31)
+    shifts3 = [+1, +1]
+    result3 = apply_date_shifts(date3, shifts3)
+    print(f""\nOriginal Date: {date3}"")
+    print(f""Shifts: {shifts3}"")
+    print(f""Result 3: {result3}"")
+    date4 = datetime.date(2023, 1, 1)
+    shifts4 = [-12]
+    result4 = apply_date_shifts(date4, shifts4)
+    print(f""\nOriginal Date: {date4}"")
+    print(f""Shifts: {shifts4}"")
+    print(f""Result 4: {result4}"")",True,3,6978,111_14_3.py
+112,1,Add two simple quantities together,Implement a standalone Python function named 'add_two_numbers' that accepts two arguments and returns their sum. Ensure the function is highly efficient.,"def add_two_numbers(a, b):
+    return a + b
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 10
+    result = add_two_numbers(num1, num2)
+    print(result)",True,0,6979,112_1.py
+112,2,Add two simple quantities together,Develop a class named 'QuantityCalculator' with a method 'add' that takes two quantities as input and returns their total. Use type hinting extensively.,"from typing import Union
+class QuantityCalculator:
+    def add(self, quantity1: Union[int, float], quantity2: Union[int, float]) -> Union[int, float]:
+        return quantity1 + quantity2
+if __name__ == '__main__':
+    calculator = QuantityCalculator()
+    a = 10
+    b = 5.5
+    result = calculator.add(a, b)
+    print(f""The sum of {a} and {b} is {result}"")
+    x = -3
+    y = 7
+    result2 = calculator.add(x, y)
+    print(f""The sum of {x} and {y} is {result2}"")",True,0,6980,112_2.py
+112,2,Add two simple quantities together,Develop a class named 'QuantityCalculator' with a method 'add' that takes two quantities as input and returns their total. Use type hinting extensively.,"from typing import Union
+class QuantityCalculator:
+    def add(self, quantity1: Union[int, float], quantity2: Union[int, float]) -> Union[int, float]:
+        return quantity1 + quantity2
+if __name__ == '__main__':
+    calculator = QuantityCalculator()
+    a = 10
+    b = 5.5
+    result = calculator.add(a, b)
+    print(result)",True,1,6981,112_2_1.py
+112,2,Add two simple quantities together,Develop a class named 'QuantityCalculator' with a method 'add' that takes two quantities as input and returns their total. Use type hinting extensively.,"from typing import Union
+class QuantityCalculator:
+    def add(self, quantity1: Union[int, float], quantity2: Union[int, float]) -> Union[int, float]:
+        return quantity1 + quantity2
+if __name__ == '__main__':
+    calculator = QuantityCalculator()
+    a = 10
+    b = 25.5
+    result = calculator.add(a, b)
+    print(result)",True,2,6982,112_2_2.py
+112,2,Add two simple quantities together,Develop a class named 'QuantityCalculator' with a method 'add' that takes two quantities as input and returns their total. Use type hinting extensively.,"from typing import Union
+class QuantityCalculator:
+    def add(self, quantity1: Union[int, float], quantity2: Union[int, float]) -> Union[int, float]:
+        return quantity1 + quantity2
+if __name__ == '__main__':
+    calculator = QuantityCalculator()
+    a = 10
+    b = 5.5
+    result = calculator.add(a, b)
+    print(f""The sum of {a} and {b} is: {result}"")
+    x = -3
+    y = 7
+    result2 = calculator.add(x, y)
+    print(f""The sum of {x} and {y} is: {result2}"")",True,3,6983,112_2_3.py
+112,2,Add two simple quantities together,Develop a class named 'QuantityCalculator' with a method 'add' that takes two quantities as input and returns their total. Use type hinting extensively.,"class QuantityCalculator:
+    def add(self, quantity1: int, quantity2: int) -> int:
+        return quantity1 + quantity2
+if __name__ == '__main__':
+    calculator = QuantityCalculator()
+    a = 10
+    b = 25
+    result = calculator.add(a, b)
+    print(result)",True,4,6984,112_2_4.py
+112,2,Add two simple quantities together,Develop a class named 'QuantityCalculator' with a method 'add' that takes two quantities as input and returns their total. Use type hinting extensively.,"from typing import Union
+class QuantityCalculator:
+    def add(self, quantity1: Union[int, float], quantity2: Union[int, float]) -> Union[int, float]:
+        return quantity1 + quantity2
+if __name__ == '__main__':
+    calculator = QuantityCalculator()
+    result1 = calculator.add(10, 5)
+    print(f""10 + 5 = {result1}"")
+    result2 = calculator.add(3.5, 1.2)
+    print(f""3.5 + 1.2 = {result2}"")
+    result3 = calculator.add(-10, 20)
+    print(f""-10 + 20 = {result3}"")",True,5,6985,112_2_5.py
+112,3,Add two simple quantities together,"Write a concise Python snippet that defines and calls a function to add the numbers 15 and 27, and print the result. Optimize for readability.","def add_numbers(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = add_numbers(15, 27)
+    print(result)",True,0,6986,112_3.py
+112,0,Add two simple quantities together,"Write a complete, well-documented Python script that prompts the user to input two numbers and then prints their sum.","def calculate_sum():
+    num1 = 15
+    num2 = 27
+    sum_result = num1 + num2
+    print(sum_result)
+if __name__ == '__main__':
+    calculate_sum()",True,0,6987,112_0.py
+112,4,Add two simple quantities together,Create a command-line tool using Python that reads two integers from command-line arguments and outputs their sum to standard output. Use the 'sys' module.,"import sys
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py <integer1> <integer2>"", file=sys.stderr)
+    else:
+        try:
+            num1 = int(sys.argv[1])
+            num2 = int(sys.argv[2])
+            print(num1 + num2)
+        except ValueError:
+            print(""Error: Arguments must be valid integers."", file=sys.stderr)",True,0,6988,112_4.py
+112,6,Add two simple quantities together,"Write a robust function that handles potential errors (like non-integer input) when adding two numbers, ensuring the function only operates on valid integers.","def safe_add(a, b):
+    try:
+        num_a = int(a)
+        num_b = int(b)
+        return num_a + num_b
+    except ValueError:
+        return ""Error: Invalid input. Inputs must be convertible to integers.""
+    except TypeError:
+        return ""Error: Invalid input types.""
+if __name__ == '__main__':
+    print(safe_add(5, 10))
+    print(safe_add(""5"", ""10""))
+    print(safe_add(3.5, 7))
+    print(safe_add(""hello"", 10))
+    print(safe_add(100, ""200""))",True,0,6989,112_6.py
+112,6,Add two simple quantities together,"Write a robust function that handles potential errors (like non-integer input) when adding two numbers, ensuring the function only operates on valid integers.","def safe_add(a, b):
+    try:
+        num_a = int(a)
+        num_b = int(b)
+        return num_a + num_b
+    except ValueError:
+        return ""Error: Invalid input. Both inputs must be convertible to integers.""
+    except TypeError:
+        return ""Error: Invalid input types provided.""
+if __name__ == '__main__':
+    print(safe_add(5, 10))
+    print(safe_add(""5"", ""10""))
+    print(safe_add(3.5, 7))
+    print(safe_add(""hello"", 10))
+    print(safe_add(100, ""50""))
+    print(safe_add(None, 5))",True,1,6990,112_6_1.py
+112,6,Add two simple quantities together,"Write a robust function that handles potential errors (like non-integer input) when adding two numbers, ensuring the function only operates on valid integers.","def safe_add(a, b):
+    try:
+        num_a = int(a)
+        num_b = int(b)
+        return num_a + num_b
+    except ValueError:
+        return ""Error: Invalid input. Both inputs must be convertible to integers.""
+    except TypeError:
+        return ""Error: Invalid input types provided.""
+if __name__ == '__main__':
+    print(safe_add(5, 10))
+    print(safe_add(""5"", ""10""))
+    print(safe_add(3.5, 7))
+    print(safe_add(""hello"", 10))
+    print(safe_add(2, ""abc""))
+    print(safe_add(None, 5))",True,2,6991,112_6_2.py
+112,6,Add two simple quantities together,"Write a robust function that handles potential errors (like non-integer input) when adding two numbers, ensuring the function only operates on valid integers.","def safe_add(a, b):
+    try:
+        num_a = int(a)
+        num_b = int(b)
+        return num_a + num_b
+    except ValueError:
+        return ""Error: Invalid input. Both inputs must be convertible to integers.""
+    except TypeError:
+        return ""Error: Inputs must be numeric.""
+if __name__ == '__main__':
+    print(safe_add(5, 10))
+    print(safe_add(""5"", ""10""))
+    print(safe_add(3.5, 7))
+    print(safe_add(""hello"", 10))
+    print(safe_add(100, ""50""))
+    print(safe_add(None, 5))",True,3,6992,112_6_3.py
+112,6,Add two simple quantities together,"Write a robust function that handles potential errors (like non-integer input) when adding two numbers, ensuring the function only operates on valid integers.","def safe_add(a, b):
+    try:
+        num_a = int(a)
+        num_b = int(b)
+        return num_a + num_b
+    except ValueError:
+        return ""Error: Invalid input. Both inputs must be convertible to integers.""
+    except TypeError:
+        return ""Error: Invalid input types provided.""
+if __name__ == '__main__':
+    print(safe_add(5, 10))
+    print(safe_add(""5"", ""10""))
+    print(safe_add(3.5, 7))
+    print(safe_add(""hello"", ""10""))
+    print(safe_add(10, ""text""))
+    print(safe_add(None, 5))",True,4,6993,112_6_4.py
+112,7,Add two simple quantities together,"Design and implement a Python module that provides a function specifically for adding two floating-point numbers, ensuring precision is handled correctly.","def add_floats(a, b):
+    return a + b
+if __name__ == '__main__':
+    num1 = 3.14159
+    num2 = 2.71828
+    result = add_floats(num1, num2)
+    print(result)",True,0,6994,112_7.py
+112,7,Add two simple quantities together,"Design and implement a Python module that provides a function specifically for adding two floating-point numbers, ensuring precision is handled correctly.","def add_floats(a: float, b: float) -> float:
+    return a + b
+if __name__ == '__main__':
+    num1 = 3.14159
+    num2 = 2.71828
+    result = add_floats(num1, num2)
+    print(result)",True,1,6995,112_7_1.py
+112,7,Add two simple quantities together,"Design and implement a Python module that provides a function specifically for adding two floating-point numbers, ensuring precision is handled correctly.","def add_floats(a, b):
+    return a + b
+if __name__ == '__main__':
+    num1 = 1.23456789
+    num2 = 2.98765432
+    result = add_floats(num1, num2)
+    print(result)",True,2,6996,112_7_2.py
+112,5,Add two simple quantities together,"Implement an optimized lambda function that takes two variables, 'a' and 'b', and returns their sum. Demonstrate its use with sample values.","def sum_lambda(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = sum_lambda(10, 5)
+    print(result)",True,0,6997,112_5.py
+112,5,Add two simple quantities together,"Implement an optimized lambda function that takes two variables, 'a' and 'b', and returns their sum. Demonstrate its use with sample values.","lambda a, b: a + b
+if __name__ == '__main__':
+    result = (lambda a, b: a + b)(10, 5)
+    print(result)",True,1,6998,112_5_1.py
+112,9,Add two simple quantities together,Write an object-oriented solution where an object representing a 'Sum' calculates the addition of two internal values upon initialization.,"class Sum:
+    def __init__(self, a, b):
+        self.result = a + b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    calculator = Sum(num1, num2)
+    print(calculator.result)",True,0,6999,112_9.py
+112,10,Add two simple quantities together,"Write a complete, robust Python script that prompts the user to input two numbers and then prints their sum. The script must handle input as integers.","if __name__ == '__main__':
+    num1 = 15
+    num2 = 27
+    sum_result = num1 + num2
+    print(sum_result)",True,0,7000,112_10.py
+112,11,Add two simple quantities together,Implement an optimized function named 'add_two_numbers' that accepts two integer arguments and returns their sum. Ensure the implementation is clean and adheres to best practices.,"def add_two_numbers(a, b):
+    return a + b
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 10
+    result = add_two_numbers(num1, num2)
+    print(result)",True,0,7001,112_11.py
+112,11,Add two simple quantities together,Implement an optimized function named 'add_two_numbers' that accepts two integer arguments and returns their sum. Ensure the implementation is clean and adheres to best practices.,"def add_two_numbers(a, b):
+    return a + b
+if __name__ == '__main__':
+    result1 = add_two_numbers(5, 3)
+    print(result1)
+    result2 = add_two_numbers(-10, 20)
+    print(result2)",True,1,7002,112_11_1.py
+112,12,Add two simple quantities together,Develop a command-line Python program that takes two numbers as command-line arguments and displays the result of adding them. Use the 'sys' module for input.,"import sys
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py num1 num2"")
+    else:
+        try:
+            num1 = int(sys.argv[1])
+            num2 = int(sys.argv[2])
+            result = num1 + num2
+            print(result)
+        except ValueError:
+            print(""Invalid input. Please provide integers."")",True,0,7003,112_12.py
+112,13,Add two simple quantities together,"Write a simple, well-documented Python class named 'QuantityCalculator' with a method to add any two numbers stored as instance variables. Focus on object-oriented design principles.","class QuantityCalculator:
+    def __init__(self, num1, num2):
+        self.number1 = num1
+        self.number2 = num2
+    def add_quantities(self):
+        return self.number1 + self.number2
+if __name__ == '__main__':
+    calculator = QuantityCalculator(10, 5)
+    result = calculator.add_quantities()
+    print(result)",True,0,7004,112_13.py
+112,13,Add two simple quantities together,"Write a simple, well-documented Python class named 'QuantityCalculator' with a method to add any two numbers stored as instance variables. Focus on object-oriented design principles.","class QuantityCalculator:
+    def __init__(self, num1, num2):
+        self.number1 = num1
+        self.number2 = num2
+    def add_numbers(self):
+        return self.number1 + self.number2
+if __name__ == '__main__':
+    calculator = QuantityCalculator(10, 5)
+    result = calculator.add_numbers()
+    print(result)",True,1,7005,112_13_1.py
+112,13,Add two simple quantities together,"Write a simple, well-documented Python class named 'QuantityCalculator' with a method to add any two numbers stored as instance variables. Focus on object-oriented design principles.","class QuantityCalculator:
+    def __init__(self, num1, num2):
+        self.number1 = num1
+        self.number2 = num2
+    def add_quantities(self):
+        result = self.number1 + self.number2
+        return result
+if __name__ == '__main__':
+    calculator = QuantityCalculator(10, 5)
+    sum_result = calculator.add_quantities()
+    print(sum_result)",True,2,7006,112_13_2.py
+112,14,Add two simple quantities together,Create an efficient and concise Python function to add two floating-point numbers. Ensure the function handles potential floating-point arithmetic accurately.,"def add_floats(a, b):
+    return a + b
+if __name__ == '__main__':
+    num1 = 3.14159
+    num2 = 2.71828
+    result = add_floats(num1, num2)
+    print(result)",True,0,7007,112_14.py
+113,0,Subtract one amount from another,"Write a complete, well-documented Python script that prompts the user to input two numbers and then calculates the difference between them, ensuring robust error handling for non-numeric input.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1_str = ""15""
+        num2_str = ""7""
+        num1 = float(num1_str)
+        num2 = float(num2_str)
+        difference = calculate_difference(num1, num2)
+        print(difference)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure both inputs are valid numbers."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,7008,113_0.py
+113,0,Subtract one amount from another,"Write a complete, well-documented Python script that prompts the user to input two numbers and then calculates the difference between them, ensuring robust error handling for non-numeric input.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1_str = ""15""
+        num2_str = ""7""
+        num1 = float(num1_str)
+        num2 = float(num2_str)
+        result = calculate_difference(num1, num2)
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure both inputs are valid numbers."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,7009,113_0_1.py
+113,1,Subtract one amount from another,Implement an optimized Python function named 'subtract_amounts' that accepts two floating-point numbers and returns their difference. The function must prioritize mathematical accuracy.,"def subtract_amounts(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 3.2
+    result = subtract_amounts(num1, num2)
+    print(result)",True,0,7010,113_1.py
+113,1,Subtract one amount from another,Implement an optimized Python function named 'subtract_amounts' that accepts two floating-point numbers and returns their difference. The function must prioritize mathematical accuracy.,"import math
+def subtract_amounts(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 3.2
+    result = subtract_amounts(num1, num2)
+    print(result)",True,1,7011,113_1_1.py
+113,1,Subtract one amount from another,Implement an optimized Python function named 'subtract_amounts' that accepts two floating-point numbers and returns their difference. The function must prioritize mathematical accuracy.,"import math
+def subtract_amounts(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 3.25
+    result = subtract_amounts(num1, num2)
+    print(result)",True,2,7012,113_1_2.py
+113,2,Subtract one amount from another,"Develop a class named 'AmountCalculator' with a method 'subtract(self, amount1, amount2)' that performs the subtraction and returns the result. Ensure the class adheres to object-oriented best practices.","class AmountCalculator:
+    def subtract(self, amount1, amount2):
+        return amount1 - amount2
+if __name__ == '__main__':
+    calculator = AmountCalculator()
+    result = calculator.subtract(100, 45)
+    print(result)",True,0,7013,113_2.py
+113,3,Subtract one amount from another,Write a concise and efficient one-line Python expression to subtract the value of variable 'b' from variable 'a' and store the result in a new variable 'difference'.,"if __name__ == '__main__':
+    a = 10
+    b = 3
+    difference = a - b",True,0,7014,113_3.py
+113,4,Subtract one amount from another,"Create a function that takes a list of numbers and an integer, and subtracts the integer from every element in the list, returning a new list of the results. Use list comprehension for optimization.","def subtract_from_list(numbers, integer):
+    return [x - integer for x in numbers]
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_integer = 7
+    result = subtract_from_list(sample_list, sample_integer)
+    print(result)",True,0,7015,113_4.py
+111,4,Manipulate simple date components,"Create a script that reads a date from user input, manipulates the day component by adding a specified number of days, and prints the resulting date in a standardized format.","import datetime
+def manipulate_date():
+    start_date_str = ""2023-10-25""
+    days_to_add = 10
+    start_date = datetime.datetime.strptime(start_date_str, ""%Y-%m-%d"").date()
+    new_day = start_date.day + days_to_add
+    if new_day > 31:
+        month = start_date.month
+        year = start_date.year
+        while True:
+            if month < 12:
+                new_day -= (31 if month == 12 else 30)
+                month += 1
+            else:
+                month = 1
+                year += 1
+            if new_day <= 31:
+                break
+    else:
+        start_date = start_date.replace(day=new_day)
+    result_date = start_date.strftime(""%Y-%m-%d"")
+    print(f""Start Date: {start_date_str}"")
+    print(f""Days to Add: {days_to_add}"")
+    print(f""Resulting Date: {result_date}"")
+if __name__ == '__main__':
+    manipulate_date()",True,0,7016,111_4.py
+111,4,Manipulate simple date components,"Create a script that reads a date from user input, manipulates the day component by adding a specified number of days, and prints the resulting date in a standardized format.","import datetime
+def manipulate_date():
+    start_date_str = ""2023-10-26""
+    days_to_add = 10
+    start_date = datetime.datetime.strptime(start_date_str, ""%Y-%m-%d"").date()
+    new_day = start_date.day + days_to_add
+    if new_day > 31:
+        new_month = start_date.month + (new_day - 31) // 30
+        new_day = new_day % 30
+        if new_month > 12:
+            new_month = (new_month - 1) % 12 + 1
+        if new_month == 12:
+            new_year = start_date.year + (new_month - 1) // 12
+        else:
+            new_year = start_date.year
+        if new_month == 1:
+            new_year += 1
+        result_date = datetime.date(new_year, new_month, new_day)
+    else:
+        try:
+            result_date = datetime.date(start_date.year, start_date.month, new_day)
+        except ValueError:
+            result_date = datetime.date(start_date.year, start_date.month, new_day + 1)
+    print(result_date.strftime(""%Y-%m-%d""))
+if __name__ == '__main__':
+    manipulate_date()",True,1,7017,111_4_1.py
+111,4,Manipulate simple date components,"Create a script that reads a date from user input, manipulates the day component by adding a specified number of days, and prints the resulting date in a standardized format.","import datetime
+def manipulate_date():
+    start_date_str = ""2023-10-25""
+    days_to_add = 10
+    start_date = datetime.datetime.strptime(start_date_str, ""%Y-%m-%d"").date()
+    new_day = start_date.day + days_to_add
+    if new_day > 31:
+        month = start_date.month
+        year = start_date.year
+        while True:
+            if month < 12:
+                new_day -= (31 if month == 12 else 30)
+                if new_day <= 0:
+                    month += 1
+                    if month > 12:
+                        month = 1
+                        year += 1
+                    new_day = new_day + 31
+                else:
+                    break
+            else:
+                month = 1
+                year += 1
+                new_day = new_day - 31
+                break
+    end_date = datetime.date(start_date.year, start_date.month, new_day)
+    print(end_date.strftime(""%Y-%m-%d""))
+if __name__ == '__main__':
+    manipulate_date()",True,2,7018,111_4_2.py
+111,4,Manipulate simple date components,"Create a script that reads a date from user input, manipulates the day component by adding a specified number of days, and prints the resulting date in a standardized format.","import datetime
+def manipulate_date():
+    start_date_str = ""2023-10-26""
+    days_to_add = 10
+    start_date = datetime.datetime.strptime(start_date_str, ""%Y-%m-%d"").date()
+    new_day = start_date.day + days_to_add
+    try:
+        new_date = start_date.replace(day=new_day)
+        print(new_date.strftime(""%Y-%m-%d""))
+    except ValueError:
+        print(""Error: The resulting day is out of range for the month."")
+if __name__ == '__main__':
+    manipulate_date()",True,3,7019,111_4_3.py
+111,4,Manipulate simple date components,"Create a script that reads a date from user input, manipulates the day component by adding a specified number of days, and prints the resulting date in a standardized format.","import datetime
+def manipulate_date():
+    start_date_str = ""2023-10-26""
+    days_to_add_str = ""10""
+    start_date = datetime.datetime.strptime(start_date_str, ""%Y-%m-%d"").date()
+    days_to_add = int(days_to_add_str)
+    new_day = start_date.day + days_to_add
+    new_year = start_date.year
+    new_month = start_date.month
+    if new_day > 31:
+        new_month += (new_day - 31) // 30
+        new_day = new_day % 30
+        if new_day == 0:
+            new_day = 30
+        if new_month > 12:
+            new_month -= 12
+            new_day += 30
+            if new_day > 31:
+                new_day = 1
+                new_month += 1
+    else:
+        new_year_temp = new_year
+        new_month_temp = new_month
+        if new_day > 28:
+            if new_month == 2:
+                new_month_temp = 3
+                new_day = new_day - 28
+            else:
+                new_day = new_day - 31
+                new_month_temp = new_month + 1
+        if new_day > 31:
+            new_month_temp = new_month + (new_day - 31) // 30
+            new_day = new_day % 30
+            if new_day == 0:
+                new_day = 30
+            if new_month_temp > 12:
+                new_month_temp -= 12
+                new_day += 30
+                if new_day > 31:
+                    new_day = 1
+                    new_month_temp += 1
+        if new_month_temp > 12:
+            new_month_temp -= 12
+            new_year_temp += 1
+        new_year = new_year_temp
+        new_month = new_month_temp
+    result_date = datetime.date(new_year, new_month, new_day)
+    print(result_date.strftime(""%Y-%m-%d""))
+if __name__ == '__main__':
+    manipulate_date()",True,4,7020,111_4_4.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    a1 = 100
+    b1 = 45
+    try:
+        result1 = subtract_and_check(a1, b1)
+        print(f""Result of {a1} - {b1}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a2 = 50
+    b2 = 150
+    try:
+        result2 = subtract_and_check(a2, b2)
+        print(f""Result of {a2} - {b2}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a3 = 200
+    b3 = 100
+    try:
+        result3 = subtract_and_check(a3, b3)
+        print(f""Result of {a3} - {b3}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,7021,113_6.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    a1 = 100
+    b1 = 42
+    try:
+        result1 = subtract_and_check(a1, b1)
+        print(f""Result of {a1} - {b1}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a2 = 50
+    b2 = 150
+    try:
+        result2 = subtract_and_check(a2, b2)
+        print(f""Result of {a2} - {b2}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a3 = 200
+    b3 = 100
+    try:
+        result3 = subtract_and_check(a3, b3)
+        print(f""Result of {a3} - {b3}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,7022,113_6_1.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    num1 = 100
+    num2 = 45
+    try:
+        result1 = subtract_and_check(num1, num2)
+        print(f""Result of {num1} - {num2}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    num3 = 10
+    num4 = 20
+    try:
+        result2 = subtract_and_check(num3, num4)
+        print(f""Result of {num3} - {num4}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    num5 = 50
+    num6 = 150
+    try:
+        result3 = subtract_and_check(num5, num6)
+        print(f""Result of {num5} - {num6}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,7023,113_6_2.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    a1 = 100
+    b1 = 30
+    try:
+        result1 = subtract_and_check(a1, b1)
+        print(f""Result of {a1} - {b1}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a2 = 50
+    b2 = 150
+    try:
+        result2 = subtract_and_check(a2, b2)
+        print(f""Result of {a2} - {b2}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a3 = 200
+    b3 = 100
+    try:
+        result3 = subtract_and_check(a3, b3)
+        print(f""Result of {a3} - {b3}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,7024,113_6_3.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    a1 = 100
+    b1 = 45
+    try:
+        result1 = subtract_and_check(a1, b1)
+        print(f""Result of {a1} - {b1}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a2 = 10
+    b2 = 25
+    try:
+        result2 = subtract_and_check(a2, b2)
+        print(f""Result of {a2} - {b2}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a3 = 50
+    b3 = 50
+    try:
+        result3 = subtract_and_check(a3, b3)
+        print(f""Result of {a3} - {b3}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a4 = 10
+    b4 = 50
+    try:
+        result4 = subtract_and_check(a4, b4)
+        print(f""Result of {a4} - {b4}: {result4}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,7025,113_6_4.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    a1 = 100
+    b1 = 30
+    try:
+        result1 = subtract_and_check(a1, b1)
+        print(f""Result of {a1} - {b1}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a2 = 50
+    b2 = 75
+    try:
+        result2 = subtract_and_check(a2, b2)
+        print(f""Result of {a2} - {b2}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    a3 = 10
+    b3 = 15
+    try:
+        result3 = subtract_and_check(a3, b3)
+        print(f""Result of {a3} - {b3}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,5,7026,113_6_5.py
+113,6,Subtract one amount from another,"Implement a function that handles the subtraction of two potentially large integers and includes a check to ensure the result is not negative. If the result is negative, raise a ValueError.","def subtract_and_check(a, b):
+    result = a - b
+    if result < 0:
+        raise ValueError(""Subtraction resulted in a negative number"")
+    return result
+if __name__ == '__main__':
+    num1 = 100
+    num2 = 30
+    try:
+        result1 = subtract_and_check(num1, num2)
+        print(f""Result of {num1} - {num2}: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    num3 = 50
+    num4 = 150
+    try:
+        result2 = subtract_and_check(num3, num4)
+        print(f""Result of {num3} - {num4}: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    num5 = 75
+    num6 = 25
+    try:
+        result3 = subtract_and_check(num5, num6)
+        print(f""Result of {num5} - {num6}: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,6,7027,113_6_6.py
+113,7,Subtract one amount from another,"Design and implement a method within a custom data structure class that allows two instances of the class to subtract their internal values, returning a new instance representing the difference.","class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def subtract(self, other):
+        new_x = self.x - other.x
+        new_y = self.y - other.y
+        return Vector(new_x, new_y)
+if __name__ == '__main__':
+    v1 = Vector(10, 5)
+    v2 = Vector(3, 7)
+    v3 = v1.subtract(v2)
+    print(f""v1: ({v1.x}, {v1.y})"")
+    print(f""v2: ({v2.x}, {v2.y})"")
+    print(f""v3 (v1 - v2): ({v3.x}, {v3.y})"")",True,0,7028,113_7.py
+113,8,Subtract one amount from another,"Write a testable Python function for subtraction that accepts two arguments and returns the difference. Include example test cases demonstrating positive, negative, and zero results.","def subtract(a, b):
+    return a - b
+if __name__ == '__main__':
+    print(subtract(10, 5))
+    print(subtract(5, 10))
+    print(subtract(10, 10))
+    print(subtract(-5, 3))
+    print(subtract(3, -5))
+    print(subtract(-10, -5))
+    print(subtract(-10, -10))",True,0,7029,113_8.py
+113,8,Subtract one amount from another,"Write a testable Python function for subtraction that accepts two arguments and returns the difference. Include example test cases demonstrating positive, negative, and zero results.","def subtract(a, b):
+    return a - b
+if __name__ == '__main__':
+    print(subtract(10, 5))
+    print(subtract(5, 10))
+    print(subtract(10, 10))
+    print(subtract(-10, 5))
+    print(subtract(5, -10))
+    print(subtract(-10, -5))
+    print(subtract(-10, -10))",True,1,7030,113_8_1.py
+113,8,Subtract one amount from another,"Write a testable Python function for subtraction that accepts two arguments and returns the difference. Include example test cases demonstrating positive, negative, and zero results.","def subtract(a, b):
+    return a - b
+if __name__ == '__main__':
+    result1 = subtract(10, 5)
+    print(f""10 - 5 = {result1}"")
+    result2 = subtract(5, 10)
+    print(f""5 - 10 = {result2}"")
+    result3 = subtract(10, 10)
+    print(f""10 - 10 = {result3}"")
+    result4 = subtract(-10, 5)
+    print(f""-10 - 5 = {result4}"")
+    result5 = subtract(5, -10)
+    print(f""5 - (-10) = {result5}"")
+    result6 = subtract(-10, -5)
+    print(f""-10 - (-5) = {result6}"")",True,2,7031,113_8_2.py
+113,8,Subtract one amount from another,"Write a testable Python function for subtraction that accepts two arguments and returns the difference. Include example test cases demonstrating positive, negative, and zero results.","def subtract(a, b):
+    return a - b
+if __name__ == '__main__':
+    result1 = subtract(10, 5)
+    print(f""10 - 5 = {result1}"")
+    result2 = subtract(5, 10)
+    print(f""5 - 10 = {result2}"")
+    result3 = subtract(10, 10)
+    print(f""10 - 10 = {result3}"")
+    result4 = subtract(-10, 5)
+    print(f""-10 - 5 = {result4}"")
+    result5 = subtract(5, -10)
+    print(f""5 - (-10) = {result5}"")
+    result6 = subtract(-10, -5)
+    print(f""-10 - (-5) = {result6}"")
+    result7 = subtract(0, 7)
+    print(f""0 - 7 = {result7}"")
+    result8 = subtract(7, 0)
+    print(f""7 - 0 = {result8}"")",True,3,7032,113_8_3.py
+113,9,Subtract one amount from another,"Generate an optimized solution for calculating the difference between two arbitrary-precision numbers using Python's native integer types, focusing on speed and memory efficiency.","def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 123456789012345678901234567890
+    num2 = 987654321098765432109876543210
+    result = calculate_difference(num1, num2)
+    print(result)",True,0,7033,113_9.py
+113,9,Subtract one amount from another,"Generate an optimized solution for calculating the difference between two arbitrary-precision numbers using Python's native integer types, focusing on speed and memory efficiency.","def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 123456789012345678901234567890
+    num2 = 987654321098765432109876543210
+    difference = calculate_difference(num1, num2)
+    print(difference)",True,1,7034,113_9_1.py
+113,9,Subtract one amount from another,"Generate an optimized solution for calculating the difference between two arbitrary-precision numbers using Python's native integer types, focusing on speed and memory efficiency.","import sys
+def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 123456789012345678901234567890
+    num2 = 987654321098765432109876543210
+    result = calculate_difference(num1, num2)
+    print(result)",True,2,7035,113_9_2.py
+113,5,Subtract one amount from another,"Write a robust script that reads two amounts from standard input, calculates the difference, and prints the result formatted to two decimal places.",,False,0,7036,113_5.py
+113,11,Subtract one amount from another,"Implement an optimized function named 'subtract_amounts' that accepts two numerical arguments, 'minuend' and 'subtrahend', and returns the difference. Ensure the function is highly efficient and includes type hinting and a docstring adhering to best practices.","def subtract_amounts(minuend: float, subtrahend: float) -> float:
+    return minuend - subtrahend
+if __name__ == '__main__':
+    a = 10.5
+    b = 3.2
+    result = subtract_amounts(a, b)
+    print(result)",True,0,7037,113_11.py
+113,11,Subtract one amount from another,"Implement an optimized function named 'subtract_amounts' that accepts two numerical arguments, 'minuend' and 'subtrahend', and returns the difference. Ensure the function is highly efficient and includes type hinting and a docstring adhering to best practices.","def subtract_amounts(minuend: float, subtrahend: float) -> float:
+    return minuend - subtrahend
+if __name__ == '__main__':
+    a = 100.5
+    b = 35.2
+    result = subtract_amounts(a, b)
+    print(result)",True,1,7038,113_11_1.py
+113,11,Subtract one amount from another,"Implement an optimized function named 'subtract_amounts' that accepts two numerical arguments, 'minuend' and 'subtrahend', and returns the difference. Ensure the function is highly efficient and includes type hinting and a docstring adhering to best practices.","def subtract_amounts(minuend: float, subtrahend: float) -> float:
+    return minuend - subtrahend
+if __name__ == '__main__':
+    result1 = subtract_amounts(100.5, 25.2)
+    print(result1)
+    result2 = subtract_amounts(50, 150)
+    print(result2)
+    result3 = subtract_amounts(0.0, 10.0)
+    print(result3)",True,2,7039,113_11_2.py
+113,11,Subtract one amount from another,"Implement an optimized function named 'subtract_amounts' that accepts two numerical arguments, 'minuend' and 'subtrahend', and returns the difference. Ensure the function is highly efficient and includes type hinting and a docstring adhering to best practices.","def subtract_amounts(minuend: float, subtrahend: float) -> float:
+    return minuend - subtrahend
+if __name__ == '__main__':
+    result1 = subtract_amounts(100.5, 25.5)
+    print(result1)
+    result2 = subtract_amounts(50, 150)
+    print(result2)
+    result3 = subtract_amounts(3.14159, 1.0)
+    print(result3)",True,3,7040,113_11_3.py
+113,11,Subtract one amount from another,"Implement an optimized function named 'subtract_amounts' that accepts two numerical arguments, 'minuend' and 'subtrahend', and returns the difference. Ensure the function is highly efficient and includes type hinting and a docstring adhering to best practices.","def subtract_amounts(minuend: float, subtrahend: float) -> float:
+    return minuend - subtrahend
+if __name__ == '__main__':
+    result1 = subtract_amounts(100.5, 25.25)
+    print(result1)
+    result2 = subtract_amounts(50, 150)
+    print(result2)
+    result3 = subtract_amounts(3.14, 1.0)
+    print(result3)",True,4,7041,113_11_4.py
+113,12,Subtract one amount from another,"Develop a class named 'Calculator' with a method 'subtract(self, a, b)' that performs the subtraction $a - b$. The class should be designed for reusability and follow object-oriented programming principles.","class Calculator:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calc = Calculator()
+    result = calc.subtract(10, 4)
+    print(result)",True,0,7042,113_12.py
+113,13,Subtract one amount from another,"Write a concise and efficient Python expression or one-line function that demonstrates the subtraction of a fixed amount (e.g., 15) from a variable input, and print the result. Focus on mathematical simplicity and performance.","if __name__ == '__main__':
+    x = 50
+    result = x - 15
+    print(result)",True,0,7043,113_13.py
+113,10,Subtract one amount from another,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints the result of subtracting the second number from the first. Use clear variable names and handle potential input errors gracefully.",,False,0,7044,113_10.py
+113,14,Subtract one amount from another,"Create a command-line interface (CLI) script using the 'argparse' module that allows a user to specify two numbers and the operation ('subtract'), and then execute the subtraction operation, ensuring robust command-line argument parsing.",,False,0,7045,113_14.py
+114,1,Multiply two given values,Implement an optimized Python function named 'multiply_two_numbers' that accepts two arguments and returns their product. Ensure the function is highly efficient.,"def multiply_two_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    num1 = 12345
+    num2 = 67890
+    result = multiply_two_numbers(num1, num2)
+    print(result)",True,0,7046,114_1.py
+114,2,Multiply two given values,"Develop a class named 'Multiplier' with an initializer that takes two values, and a method to perform the multiplication of those values.","class Multiplier:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    def multiply(self):
+        return self.a * self.b
+if __name__ == '__main__':
+    m = Multiplier(5, 10)
+    result = m.multiply()
+    print(result)",True,0,7047,114_2.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","def safe_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = safe_product(num1, num2)
+    print(result)",True,0,7048,114_3.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","import math
+def robust_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = robust_product(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 0.3333333333333333
+    result2 = robust_product(num3, num4)
+    print(result2)",True,1,7049,114_3_1.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","import math
+def multiply_floats(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = multiply_floats(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 0.3333333333333333
+    result2 = multiply_floats(num3, num4)
+    print(result2)",True,2,7050,114_3_2.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","import math
+def robust_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = robust_product(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 0.3333333333333333
+    result2 = robust_product(num3, num4)
+    print(result2)
+    num5 = 1000000.0
+    num6 = 0.000001
+    result3 = robust_product(num5, num6)
+    print(result3)",True,3,7051,114_3_3.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","import math
+def robust_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = robust_product(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 0.3333333333333333
+    result2 = robust_product(num3, num4)
+    print(result2)
+    num5 = 1.0
+    num6 = 1.0
+    result3 = robust_product(num5, num6)
+    print(result3)",True,4,7052,114_3_4.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","import math
+def robust_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = robust_product(num1, num2)
+    print(result)",True,5,7053,114_3_5.py
+114,3,Multiply two given values,"Write a robust Python function that takes two floating-point numbers as input and returns their product, handling potential floating-point precision considerations.","import math
+def safe_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = safe_product(num1, num2)
+    print(result)",True,6,7054,114_3_6.py
+114,0,Multiply two given values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then multiplies them, printing the result.",,False,0,7055,114_0.py
+114,5,Multiply two given values,"Implement a generator function that yields the product of every possible pair of numbers from two separate input lists, assuming the lists are of equal length.","def product_pairs(list1, list2):
+    for a in list1:
+        for b in list2:
+            yield a * b
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    result_generator = product_pairs(list_a, list_b)
+    results = list(result_generator)
+    print(results)",True,0,7056,114_5.py
+114,5,Multiply two given values,"Implement a generator function that yields the product of every possible pair of numbers from two separate input lists, assuming the lists are of equal length.","def product_generator(list1, list2):
+    for x in list1:
+        for y in list2:
+            yield x * y
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    result_generator = product_generator(list_a, list_b)
+    results = list(result_generator)
+    print(results)",True,1,7057,114_5_1.py
+114,5,Multiply two given values,"Implement a generator function that yields the product of every possible pair of numbers from two separate input lists, assuming the lists are of equal length.","def product_pairs(list1, list2):
+    for a in list1:
+        for b in list2:
+            yield a * b
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [10, 20, 30]
+    result_generator = product_pairs(list_a, list_b)
+    results = list(result_generator)
+    print(results)",True,2,7058,114_5_2.py
+114,6,Multiply two given values,"Write a concise and idiomatic Python expression to multiply two predefined variables, 'a' and 'b', and store the result in a variable named 'product'.","a = 10
+b = 5
+product = a * b
+if __name__ == '__main__':
+    pass",True,0,7059,114_6.py
+114,6,Multiply two given values,"Write a concise and idiomatic Python expression to multiply two predefined variables, 'a' and 'b', and store the result in a variable named 'product'.","a = 5
+b = 10
+product = a * b
+if __name__ == '__main__':
+    print(product)",True,1,7060,114_6_1.py
+114,7,Multiply two given values,Design and implement a decorator for Python that automatically multiplies any function it decorates by a specified constant value.,"def multiply_by_constant(factor):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs) * factor
+        return wrapper
+    return decorator
+@multiply_by_constant(5)
+def double(x):
+    return x * 2
+@multiply_by_constant(10)
+def triple(x):
+    return x * 3
+if __name__ == '__main__':
+    result_double = double(4)
+    result_triple = triple(5)
+    print(f""double(4): {result_double}"")
+    print(f""triple(5): {result_triple}"")",True,0,7061,114_7.py
+114,7,Multiply two given values,Design and implement a decorator for Python that automatically multiplies any function it decorates by a specified constant value.,"def multiply_by_constant(factor):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result * factor
+        return wrapper
+    return decorator
+@multiply_by_constant(5)
+def double(x):
+    return x * 2
+@multiply_by_constant(10)
+def add_ten(x):
+    return x + 10
+if __name__ == '__main__':
+    print(double(3))
+    print(add_ten(5))",True,1,7062,114_7_1.py
+114,8,Multiply two given values,"Write a testable Python module containing a function to multiply two integers, and include unit tests using the 'unittest' framework to verify correctness.","import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(2, 3), 6)
+        self.assertEqual(multiply(5, 4), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-2, 3), -6)
+        self.assertEqual(multiply(4, -5), -20)
+        self.assertEqual(multiply(-4, -5), 20)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(10, 0), 0)
+        self.assertEqual(multiply(0, 0), 0)
+    def test_large_numbers(self):
+        self.assertEqual(multiply(100, 200), 20000)
+        self.assertEqual(multiply(-10, 50), -500)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,7063,114_8.py
+114,8,Multiply two given values,"Write a testable Python module containing a function to multiply two integers, and include unit tests using the 'unittest' framework to verify correctness.","import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+    def test_large_numbers(self):
+        self.assertEqual(multiply(100, 50), 5000)
+        self.assertEqual(multiply(-1000, 2000), -2000000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,7064,114_8_1.py
+114,8,Multiply two given values,"Write a testable Python module containing a function to multiply two integers, and include unit tests using the 'unittest' framework to verify correctness.","import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+        self.assertEqual(multiply(0, 0), 0)
+    def test_large_numbers(self):
+        self.assertEqual(multiply(100, 200), 20000)
+        self.assertEqual(multiply(-1000, 500), -500000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,7065,114_8_2.py
+114,8,Multiply two given values,"Write a testable Python module containing a function to multiply two integers, and include unit tests using the 'unittest' framework to verify correctness.","import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+    def test_mixed_signs(self):
+        self.assertEqual(multiply(5, -3), -15)
+        self.assertEqual(multiply(-5, -3), 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,7066,114_8_3.py
+114,9,Multiply two given values,Write an object-oriented approach to solve the problem: create a class 'ProductCalculator' with a method to calculate the product of any two provided numbers.,"class ProductCalculator:
+    def multiply(self, num1, num2):
+        return num1 * num2
+if __name__ == '__main__':
+    calculator = ProductCalculator()
+    result = calculator.multiply(5, 10)
+    print(result)
+    result2 = calculator.multiply(3.5, 2)
+    print(result2)",True,0,7067,114_9.py
+114,9,Multiply two given values,Write an object-oriented approach to solve the problem: create a class 'ProductCalculator' with a method to calculate the product of any two provided numbers.,"class ProductCalculator:
+    def multiply(self, num1, num2):
+        return num1 * num2
+if __name__ == '__main__':
+    calculator = ProductCalculator()
+    result = calculator.multiply(10, 5)
+    print(result)
+    result2 = calculator.multiply(3.5, 2)
+    print(result2)",True,1,7068,114_9_1.py
+114,9,Multiply two given values,Write an object-oriented approach to solve the problem: create a class 'ProductCalculator' with a method to calculate the product of any two provided numbers.,"class ProductCalculator:
+    def multiply(self, num1, num2):
+        return num1 * num2
+if __name__ == '__main__':
+    calculator = ProductCalculator()
+    result = calculator.multiply(5, 10)
+    print(result)",True,2,7069,114_9_2.py
+114,9,Multiply two given values,Write an object-oriented approach to solve the problem: create a class 'ProductCalculator' with a method to calculate the product of any two provided numbers.,"class ProductCalculator:
+    def multiply(self, a, b):
+        return a * b
+if __name__ == '__main__':
+    calculator = ProductCalculator()
+    num1 = 10
+    num2 = 5
+    result = calculator.multiply(num1, num2)
+    print(result)",True,3,7070,114_9_3.py
+114,10,Multiply two given values,"Write a robust Python function named 'multiply_two_numbers' that accepts two numeric arguments and returns their product. Ensure the code is highly readable and includes clear docstrings explaining the function's purpose, parameters, and return value.","def multiply_two_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 10
+    result = multiply_two_numbers(num1, num2)
+    print(result)",True,0,7071,114_10.py
+114,10,Multiply two given values,"Write a robust Python function named 'multiply_two_numbers' that accepts two numeric arguments and returns their product. Ensure the code is highly readable and includes clear docstrings explaining the function's purpose, parameters, and return value.","def multiply_two_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    result = multiply_two_numbers(num1, num2)
+    print(result)",True,1,7072,114_10_1.py
+114,10,Multiply two given values,"Write a robust Python function named 'multiply_two_numbers' that accepts two numeric arguments and returns their product. Ensure the code is highly readable and includes clear docstrings explaining the function's purpose, parameters, and return value.","def multiply_two_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    result1 = multiply_two_numbers(5, 4)
+    print(f""5 * 4 = {result1}"")
+    result2 = multiply_two_numbers(10.5, 2)
+    print(f""10.5 * 2 = {result2}"")
+    result3 = multiply_two_numbers(-3, 7)
+    print(f""-3 * 7 = {result3}"")",True,2,7073,114_10_2.py
+114,10,Multiply two given values,"Write a robust Python function named 'multiply_two_numbers' that accepts two numeric arguments and returns their product. Ensure the code is highly readable and includes clear docstrings explaining the function's purpose, parameters, and return value.","def multiply_two_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    result1 = multiply_two_numbers(5, 4)
+    print(f""The product of 5 and 4 is: {result1}"")
+    result2 = multiply_two_numbers(10.5, 2)
+    print(f""The product of 10.5 and 2 is: {result2}"")
+    result3 = multiply_two_numbers(-3, 7)
+    print(f""The product of -3 and 7 is: {result3}"")",True,3,7074,114_10_3.py
+114,11,Multiply two given values,Implement an optimized Python function that takes two floating-point numbers as input and returns their precise product. Use the most efficient mathematical operation available.,"import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 3.14159
+    num2 = 2.71828
+    result = precise_product(num1, num2)
+    print(result)",True,0,7075,114_11.py
+114,11,Multiply two given values,Implement an optimized Python function that takes two floating-point numbers as input and returns their precise product. Use the most efficient mathematical operation available.,"def multiply_floats(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 3.14159
+    num2 = 2.71828
+    result = multiply_floats(num1, num2)
+    print(result)",True,1,7076,114_11_1.py
+114,4,Multiply two given values,Create a command-line interface (CLI) script using the 'argparse' module to accept two numerical arguments from the command line and print their product.,,False,0,7077,114_4.py
+114,13,Multiply two given values,Develop a class named 'Multiplier' with an initializer that accepts two values. Implement a method within this class to calculate and return the product of the stored values. Ensure the implementation adheres to object-oriented best practices.,"class Multiplier:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    def multiply(self):
+        return self.a * self.b
+if __name__ == '__main__':
+    m = Multiplier(5, 10)
+    result = m.multiply()
+    print(result)",True,0,7078,114_13.py
+114,14,Multiply two given values,Create a concise and highly efficient lambda function that takes two arguments and returns their product. Demonstrate its usage with an example calculation.,,False,0,7079,114_14.py
+115,0,Divide one total by another,"Write a complete, well-documented Python script that prompts the user to input two numbers and then divides the first number by the second.","def divide_numbers():
+    num1 = 10
+    num2 = 2
+    result = num1 / num2
+    print(result)
+if __name__ == '__main__':
+    divide_numbers()",True,0,7080,115_0.py
+115,1,Divide one total by another,"Implement a robust Python function named 'divide_two_numbers' that accepts two floating-point numbers and returns their division, handling potential division-by-zero errors gracefully with appropriate error messages.","def divide_two_numbers(a, b):
+    if b == 0:
+        return ""Error: Division by zero is not allowed.""
+    else:
+        return a / b
+if __name__ == '__main__':
+    num1 = 10.0
+    num2 = 2.0
+    result1 = divide_two_numbers(num1, num2)
+    print(f""Result of {num1} / {num2}: {result1}"")
+    num3 = 15.0
+    num4 = 0.0
+    result2 = divide_two_numbers(num3, num4)
+    print(f""Result of {num3} / {num4}: {result2}"")
+    num5 = -20.0
+    num6 = 5.0
+    result3 = divide_two_numbers(num5, num6)
+    print(f""Result of {num5} / {num6}: {result3}"")",True,0,7081,115_1.py
+115,1,Divide one total by another,"Implement a robust Python function named 'divide_two_numbers' that accepts two floating-point numbers and returns their division, handling potential division-by-zero errors gracefully with appropriate error messages.","def divide_two_numbers(a, b):
+    if b == 0:
+        return ""Error: Division by zero is not allowed.""
+    else:
+        return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    print(divide_two_numbers(10.0, 0.0))
+    print(divide_two_numbers(-15.0, 3.0))
+    print(divide_two_numbers(0.0, 5.0))",True,1,7082,115_1_1.py
+115,1,Divide one total by another,"Implement a robust Python function named 'divide_two_numbers' that accepts two floating-point numbers and returns their division, handling potential division-by-zero errors gracefully with appropriate error messages.","def divide_two_numbers(a, b):
+    if b == 0:
+        return ""Error: Division by zero is not allowed.""
+    else:
+        return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    print(divide_two_numbers(10.0, 0.0))
+    print(divide_two_numbers(-15.0, 3.0))
+    print(divide_two_numbers(5.0, 0.0))",True,2,7083,115_1_2.py
+115,1,Divide one total by another,"Implement a robust Python function named 'divide_two_numbers' that accepts two floating-point numbers and returns their division, handling potential division-by-zero errors gracefully with appropriate error messages.","def divide_two_numbers(a, b):
+    if b == 0:
+        return ""Error: Division by zero is not allowed.""
+    else:
+        return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    print(divide_two_numbers(10.0, 0.0))
+    print(divide_two_numbers(-15.0, 3.0))
+    print(divide_two_numbers(7.0, 0.0))",True,3,7084,115_1_3.py
+115,1,Divide one total by another,"Implement a robust Python function named 'divide_two_numbers' that accepts two floating-point numbers and returns their division, handling potential division-by-zero errors gracefully with appropriate error messages.","def divide_two_numbers(a, b):
+    if b == 0:
+        return ""Error: Division by zero is not allowed.""
+    else:
+        return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    print(divide_two_numbers(10.0, 0.0))
+    print(divide_two_numbers(5.5, 2.0))
+    print(divide_two_numbers(0.0, 5.0))",True,4,7085,115_1_4.py
+115,1,Divide one total by another,"Implement a robust Python function named 'divide_two_numbers' that accepts two floating-point numbers and returns their division, handling potential division-by-zero errors gracefully with appropriate error messages.","def divide_two_numbers(a, b):
+    if b == 0:
+        return ""Error: Division by zero is not allowed.""
+    else:
+        return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    print(divide_two_numbers(10.0, 0.0))
+    print(divide_two_numbers(5.5, 2.0))
+    print(divide_two_numbers(-15.0, 3.0))",True,5,7086,115_1_5.py
+115,2,Divide one total by another,"Develop an optimized Python function that takes two integers, 'dividend' and 'divisor', and returns the result of the division, ensuring the result is handled as a float.","def optimized_division(dividend, divisor):
+    if divisor == 0:
+        raise ZeroDivisionError(""Divisor cannot be zero"")
+    return float(dividend) / float(divisor)
+if __name__ == '__main__':
+    dividend_val = 10
+    divisor_val = 3
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)
+    dividend_val = 10
+    divisor_val = 2
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)
+    dividend_val = 7
+    divisor_val = 2
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)",True,0,7087,115_2.py
+115,2,Divide one total by another,"Develop an optimized Python function that takes two integers, 'dividend' and 'divisor', and returns the result of the division, ensuring the result is handled as a float.","import math
+def optimized_division(dividend, divisor):
+    if divisor == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return float(dividend) / float(divisor)
+if __name__ == '__main__':
+    dividend_val = 10
+    divisor_val = 3
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)
+    dividend_val = 10
+    divisor_val = 2
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)
+    dividend_val = 7
+    divisor_val = 2
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)",True,1,7088,115_2_1.py
+115,2,Divide one total by another,"Develop an optimized Python function that takes two integers, 'dividend' and 'divisor', and returns the result of the division, ensuring the result is handled as a float.","import math
+def optimized_division(dividend, divisor):
+    if divisor == 0:
+        raise ZeroDivisionError(""Divisor cannot be zero"")
+    return float(dividend) / float(divisor)
+if __name__ == '__main__':
+    dividend_val = 10
+    divisor_val = 3
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)
+    dividend_val = 10
+    divisor_val = 2
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)
+    dividend_val = 7
+    divisor_val = 2
+    result = optimized_division(dividend_val, divisor_val)
+    print(result)",True,2,7089,115_2_2.py
+115,3,Divide one total by another,Write a class named 'DivisionCalculator' with a method 'divide' that performs the division of two provided numbers and includes input validation to ensure both inputs are numeric.,"class DivisionCalculator:
+    def divide(self, numerator, denominator):
+        if not isinstance(numerator, (int, float)) or not isinstance(denominator, (int, float)):
+            raise TypeError(""Both inputs must be numeric."")
+        if denominator == 0:
+            raise ZeroDivisionError(""Cannot divide by zero."")
+        return numerator / denominator
+if __name__ == '__main__':
+    calculator = DivisionCalculator()
+    num1 = 10
+    num2 = 2
+    result = calculator.divide(num1, num2)
+    print(f""Result of {num1} divided by {num2}: {result}"")
+    num3 = 15.5
+    num4 = 3.0
+    result2 = calculator.divide(num3, num4)
+    print(f""Result of {num3} divided by {num4}: {result2}"")
+    try:
+        calculator.divide(10, ""a"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculator.divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")",True,0,7090,115_3.py
+115,3,Divide one total by another,Write a class named 'DivisionCalculator' with a method 'divide' that performs the division of two provided numbers and includes input validation to ensure both inputs are numeric.,"class DivisionCalculator:
+    def divide(self, a, b):
+        if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+            raise TypeError(""Both inputs must be numeric."")
+        if b == 0:
+            raise ZeroDivisionError(""Cannot divide by zero."")
+        return a / b
+if __name__ == '__main__':
+    calculator = DivisionCalculator()
+    num1 = 20
+    num2 = 5
+    result = calculator.divide(num1, num2)
+    print(f""Result of {num1} divided by {num2}: {result}"")
+    num3 = 10
+    num4 = 3
+    result2 = calculator.divide(num3, num4)
+    print(f""Result of {num3} divided by {num4}: {result2}"")
+    try:
+        calculator.divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculator.divide(10, ""a"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,1,7091,115_3_1.py
+115,3,Divide one total by another,Write a class named 'DivisionCalculator' with a method 'divide' that performs the division of two provided numbers and includes input validation to ensure both inputs are numeric.,"class DivisionCalculator:
+    def divide(self, numerator, denominator):
+        if not isinstance(numerator, (int, float)) or not isinstance(denominator, (int, float)):
+            raise TypeError(""Both inputs must be numeric."")
+        if denominator == 0:
+            raise ZeroDivisionError(""Cannot divide by zero."")
+        return numerator / denominator
+if __name__ == '__main__':
+    calculator = DivisionCalculator()
+    num1 = 20
+    num2 = 5
+    result = calculator.divide(num1, num2)
+    print(f""Result of {num1} divided by {num2}: {result}"")
+    num3 = 10
+    num4 = 3
+    result2 = calculator.divide(num3, num4)
+    print(f""Result of {num3} divided by {num4}: {result2}"")
+    try:
+        calculator.divide(10, ""a"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculator.divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")",True,2,7092,115_3_2.py
+115,4,Divide one total by another,Create a command-line interface (CLI) Python program that reads two numbers from command-line arguments and prints the result of dividing the first by the second.,,False,0,7093,115_4.py
+115,5,Divide one total by another,"Implement a highly efficient Python function to calculate the quotient of two arbitrary numbers, specifically designed to manage the scenario where the divisor is zero by raising a specific ValueError.","def calculate_quotient(dividend, divisor):
+    if divisor == 0:
+        raise ValueError(""Division by zero is not allowed"")
+    return dividend / divisor
+if __name__ == '__main__':
+    a = 10
+    b = 2
+    print(calculate_quotient(a, b))
+    c = 15
+    d = 3
+    print(calculate_quotient(c, d))
+    e = 7
+    f = 0
+    try:
+        calculate_quotient(e, f)
+    except ValueError as err:
+        print(f""Error caught: {err}"")",True,0,7094,115_5.py
+115,5,Divide one total by another,"Implement a highly efficient Python function to calculate the quotient of two arbitrary numbers, specifically designed to manage the scenario where the divisor is zero by raising a specific ValueError.","def calculate_quotient(numerator, denominator):
+    if denominator == 0:
+        raise ValueError(""Division by zero is not allowed."")
+    return numerator / denominator
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    try:
+        result = calculate_quotient(num1, num2)
+        print(f""The quotient of {num1} and {num2} is: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    num3 = 15
+    num4 = 0
+    try:
+        result = calculate_quotient(num3, num4)
+        print(f""The quotient of {num3} and {num4} is: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,7095,115_5_1.py
+115,5,Divide one total by another,"Implement a highly efficient Python function to calculate the quotient of two arbitrary numbers, specifically designed to manage the scenario where the divisor is zero by raising a specific ValueError.","def calculate_quotient(numerator, denominator):
+    if denominator == 0:
+        raise ValueError(""Division by zero is not allowed."")
+    return numerator / denominator
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    print(calculate_quotient(num1, num2))
+    num3 = 15
+    num4 = 3
+    print(calculate_quotient(num3, num4))
+    num5 = 7
+    num6 = 0
+    try:
+        calculate_quotient(num5, num6)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,2,7096,115_5_2.py
+115,5,Divide one total by another,"Implement a highly efficient Python function to calculate the quotient of two arbitrary numbers, specifically designed to manage the scenario where the divisor is zero by raising a specific ValueError.","def calculate_quotient(dividend, divisor):
+    if divisor == 0:
+        raise ValueError(""Division by zero is not allowed"")
+    return dividend / divisor
+if __name__ == '__main__':
+    a = 10
+    b = 2
+    print(f""Quotient of {a} and {b}: {calculate_quotient(a, b)}"")
+    c = 15
+    d = 3
+    print(f""Quotient of {c} and {d}: {calculate_quotient(c, d)}"")
+    e = 7
+    f = 0
+    try:
+        calculate_quotient(e, f)
+    except ValueError as err:
+        print(f""Error caught: {err}"")",True,3,7097,115_5_3.py
+115,5,Divide one total by another,"Implement a highly efficient Python function to calculate the quotient of two arbitrary numbers, specifically designed to manage the scenario where the divisor is zero by raising a specific ValueError.","def calculate_quotient(numerator, denominator):
+    if denominator == 0:
+        raise ValueError(""Division by zero is not allowed."")
+    return numerator / denominator
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    try:
+        result = calculate_quotient(num1, num2)
+        print(f""Quotient of {num1} and {num2}: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    num3 = 15
+    num4 = 0
+    try:
+        result = calculate_quotient(num3, num4)
+        print(f""Quotient of {num3} and {num4}: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,7098,115_5_4.py
