@@ -1,0 +1,20 @@
+import sys
+def calculate_sum(input_data):
+    total = 0
+    for line in input_data:
+        try:
+            number = int(line.strip())
+            total += number
+        except ValueError:
+            sys.stderr.write(f"Error: Invalid input '{line.strip()}' is not an integer.\n")
+    return total
+if __name__ == '__main__':
+    sample_input = [
+        "10",
+        "25",
+        "hello",
+        "5",
+        "30.5"
+    ]
+    result = calculate_sum(sample_input)
+    print(result)
