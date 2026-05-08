@@ -1,0 +1,35 @@
+def evaluate_boolean_expression(P, Q, expression):
+    if expression == "P":
+        return P
+    elif expression == "Q":
+        return Q
+    elif expression == "NOT P":
+        return not P
+    elif expression == "NOT Q":
+        return not Q
+    elif expression == "P AND Q":
+        return P and Q
+    elif expression == "P OR Q":
+        return P or Q
+    elif expression == "P XOR Q":
+        return P ^ Q
+    elif expression == "P AND NOT Q":
+        return P and (not Q)
+    elif expression == "P OR NOT Q":
+        return P or (not Q)
+    elif expression == "NOT (P AND Q)":
+        return not (P and Q)
+    elif expression == "P AND (Q OR NOT P)":
+        return P and (Q or (not P))
+    else:
+        raise ValueError("Unknown expression")
+if __name__ == '__main__':
+    P_values = [False, True]
+    Q_values = [False, True]
+    expression = "P AND (Q OR NOT P)"
+    print("P | Q | Result")
+    print("---|---|-------")
+    for p in P_values:
+        for q in Q_values:
+            result = evaluate_boolean_expression(p, q, expression)
+            print(f"{p} | {q} | {result}")
