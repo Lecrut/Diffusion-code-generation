@@ -129013,3 +129013,3264 @@ if __name__ == '__main__':
     print(f""Date: {date3}, Day Index: {converter.get_day_name(date3)}"")
     print(f""Date: {date4}, Day Index: {converter.get_day_name(date4)}"")
     print(f""Date: {date5}, Day Index: {converter.get_day_name(date5)}"")",True,5,6304,101_12_5.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 4:
+        days_in_month = 30
+    elif month == 6:
+        days_in_month = 30
+    elif month == 9:
+        days_in_month = 30
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        return ""Invalid month""
+    days_passed = 0
+    if month == 2:
+        days_passed = 31           
+    elif month == 3:
+        days_passed = 31 + 28                                 
+    elif month == 4:
+        days_passed = 31 + 28 + 31                     
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30                         
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31                               
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30                                     
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31                                           
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31                                                 
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30                                                       
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31                                                             
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30                                                                   
+    else:
+        return ""Invalid month""
+    day_of_week = (days_passed + day - 1) % 7
+    return [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""][day_of_week]
+if __name__ == '__main__':
+    print(f""Day 1, Month 1: {calculate_day_of_week(1, 1)}"")
+    print(f""Day 31, Month 1: {calculate_day_of_week(31, 1)}"")
+    print(f""Day 1, Month 3: {calculate_day_of_week(1, 3)}"")
+    print(f""Day 31, Month 3: {calculate_day_of_week(31, 3)}"")
+    print(f""Day 1, Month 4: {calculate_day_of_week(1, 4)}"")
+    print(f""Day 30, Month 4: {calculate_day_of_week(30, 4)}"")
+    print(f""Day 1, Month 5: {calculate_day_of_week(1, 5)}"")
+    print(f""Day 31, Month 5: {calculate_day_of_week(31, 5)}"")
+    print(f""Day 1, Month 6: {calculate_day_of_week(1, 6)}"")
+    print(f""Day 30, Month 6: {calculate_day_of_week(30, 6)}"")
+    print(f""Day 1, Month 7: {calculate_day_of_week(1, 7)}"")
+    print(f""Day 31, Month 7: {calculate_day_of_week(31, 7)}"")
+    print(f""Day 1, Month 8: {calculate_day_of_week(1, 8)}"")
+    print(f""Day 31, Month 8: {calculate_day_of_week(31, 8)}"")
+    print(f""Day 1, Month 9: {calculate_day_of_week(1, 9)}"")
+    print(f""Day 30, Month 9: {calculate_day_of_week(30, 9)}"")
+    print(f""Day 1, Month 10: {calculate_day_of_week(1, 10)}"")
+    print(f""Day 31, Month 10: {calculate_day_of_week(31, 10)}"")
+    print(f""Day 1, Month 11: {calculate_day_of_week(1, 11)}"")
+    print(f""Day 30, Month 11: {calculate_day_of_week(30, 11)}"")
+    print(f""Day 1, Month 12: {calculate_day_of_week(1, 12)}"")
+    print(f""Day 31, Month 12: {calculate_day_of_week(31, 12)}"")",True,0,6305,101_9.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 3:
+        days_in_month = 31
+    elif month == 4:
+        days_in_month = 30
+    elif month == 5:
+        days_in_month = 31
+    elif month == 6:
+        days_in_month = 30
+    elif month == 7:
+        days_in_month = 31
+    elif month == 8:
+        days_in_month = 31
+    elif month == 9:
+        days_in_month = 30
+    elif month == 10:
+        days_in_month = 31
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        raise ValueError(""Invalid month"")
+    days_passed = 0
+    for m in range(1, month):
+        if m == 2 and (day > 29):
+            days_passed += 29
+        elif m == 2:
+            days_passed += 28
+        else:
+            days_passed += (31 if m in [1, 3, 5, 7, 8, 10, 12] else 30)
+    total_days = days_passed + day
+    remainder = total_days % 7
+    days_of_week = {0: ""Sunday"", 1: ""Monday"", 2: ""Tuesday"", 3: ""Wednesday"", 4: ""Thursday"", 5: ""Friday"", 6: ""Saturday""}
+    return days_of_week[remainder]
+if __name__ == '__main__':
+    test_cases = [
+        (1, 1),                                                      
+        (15, 3),                       
+        (29, 2),                                                                    
+        (31, 12)                      
+    ]
+    for day, month in test_cases:
+        result = calculate_day_of_week(day, month)
+        print(f""Day: {day}, Month: {month} -> Day of the week: {result}"")",True,1,6306,101_9_1.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 4:
+        days_in_month = 30
+    elif month == 6:
+        days_in_month = 30
+    elif month == 9:
+        days_in_month = 30
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        return ""Invalid month""
+    days_passed = 0
+    if month == 2:
+        days_passed = 31           
+    elif month == 3:
+        days_passed = 31 + 28                                 
+    elif month == 4:
+        days_passed = 31 + 28 + 31                     
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30                         
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31                               
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30                                     
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31                                           
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31                                                 
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30                                                       
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31             
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30             
+    day_of_week = (day + days_passed - 1) % 7
+    return day_of_week + 1
+if __name__ == '__main__':
+    print(calculate_day_of_week(1, 1))
+    print(calculate_day_of_week(1, 3))
+    print(calculate_day_of_week(15, 4))
+    print(calculate_day_of_week(29, 2))
+    print(calculate_day_of_week(1, 13))
+    print(calculate_day_of_week(31, 12))",True,2,6307,101_9_2.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 4:
+        days_in_month = 30
+    elif month == 6:
+        days_in_month = 30
+    elif month == 9:
+        days_in_month = 30
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        return ""Invalid month""
+    days_passed = 0
+    if month == 2:
+        days_passed = 31
+    elif month == 4:
+        days_passed = 31 + 28
+    elif month == 6:
+        days_passed = 31 + 28 + 30
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 30
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30
+    if month == 2:
+        days_passed = 31
+    elif month == 3:
+        days_passed = 31 + 28
+    elif month == 4:
+        days_passed = 31 + 28 + 31
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30
+    if month == 2:
+        days_passed = 31
+    elif month == 3:
+        days_passed = 31 + 28
+    elif month == 4:
+        days_passed = 31 + 28 + 31
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30
+    if month == 1:
+        days_passed = day - 1
+    elif month == 3:
+        days_passed = (day - 1) + 28
+    elif month == 4:
+        days_passed = (day - 1) + 28 + 31
+    elif month == 5:
+        days_passed = (day - 1) + 28 + 31 + 30
+    elif month == 6:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31
+    elif month == 7:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31 + 30
+    elif month == 8:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31 + 30 + 31
+    elif month == 9:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31 + 30 + 31 + 31
+    elif month == 10:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30
+    elif month == 11:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31
+    elif month == 12:
+        days_passed = (day - 1) + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30
+    days_of_week = (days_passed + day - 1) % 7
+    return days_of_week
+if __name__ == '__main__':
+    print(calculate_day_of_week(1, 1))
+    print(calculate_day_of_week(15, 3))
+    print(calculate_day_of_week(1, 4))
+    print(calculate_day_of_week(10, 6))
+    print(calculate_day_of_week(25, 12))
+    print(calculate_day_of_week(1, 1))",True,3,6308,101_9_3.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 4:
+        days_in_month = 30
+    elif month == 6:
+        days_in_month = 30
+    elif month == 9:
+        days_in_month = 30
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        return ""Invalid month""
+    days_passed = 0
+    if month == 2:
+        days_passed = 31           
+    elif month == 3:
+        days_passed = 31 + 28                                 
+    elif month == 4:
+        days_passed = 31 + 28 + 31                     
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30                         
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31                               
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30                                     
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31                                           
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31                                                 
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30                                                       
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31             
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30             
+    day_of_week = (day + days_passed - 1) % 7
+    return day_of_week + 1
+if __name__ == '__main__':
+    print(calculate_day_of_week(1, 1))
+    print(calculate_day_of_week(15, 3))
+    print(calculate_day_of_week(1, 4))
+    print(calculate_day_of_week(29, 2))
+    print(calculate_day_of_week(1, 12))
+    print(calculate_day_of_week(31, 12))",True,4,6309,101_9_4.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 4:
+        days_in_month = 30
+    elif month == 6:
+        days_in_month = 30
+    elif month == 9:
+        days_in_month = 30
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        return ""Invalid month""
+    days_passed = 0
+    if month == 2:
+        days_passed = 31           
+    elif month == 3:
+        days_passed = 31 + 28                                 
+    elif month == 4:
+        days_passed = 31 + 28 + 31                     
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30                         
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31                               
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30                                     
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31                                           
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31                                                 
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30                                                       
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31                                                             
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30                                                                   
+    else:
+        return ""Invalid month""
+    day_of_week = (days_passed + day - 1) % 7
+    return [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""][day_of_week]
+if __name__ == '__main__':
+    print(calculate_day_of_week(1, 1))
+    print(calculate_day_of_week(15, 3))
+    print(calculate_day_of_week(29, 2))
+    print(calculate_day_of_week(1, 1))
+    print(calculate_day_of_week(31, 12))",True,5,6310,101_9_5.py
+101,9,Determine the day of the week,"Develop an efficient algorithm to calculate the day of the week given only the day number and the month (ignoring the year, assuming a non-leap year context for simplicity, and then adjust for leap years if necessary for correctness).","def calculate_day_of_week(day, month):
+    if month == 1:
+        days_in_month = 31
+    elif month == 2:
+        days_in_month = 28
+    elif month == 4:
+        days_in_month = 30
+    elif month == 6:
+        days_in_month = 30
+    elif month == 9:
+        days_in_month = 30
+    elif month == 11:
+        days_in_month = 30
+    elif month == 12:
+        days_in_month = 31
+    else:
+        return ""Invalid month""
+    days_passed = 0
+    if month == 2:
+        days_passed = 31           
+    elif month == 3:
+        days_passed = 31 + 28                                 
+    elif month == 4:
+        days_passed = 31 + 28 + 31                     
+    elif month == 5:
+        days_passed = 31 + 28 + 31 + 30                         
+    elif month == 6:
+        days_passed = 31 + 28 + 31 + 30 + 31                               
+    elif month == 7:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30                                     
+    elif month == 8:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31                                           
+    elif month == 9:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31                                                 
+    elif month == 10:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30                                                       
+    elif month == 11:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31                                                             
+    elif month == 12:
+        days_passed = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30                                                                   
+    else:
+        return ""Invalid month""
+    day_of_week = (days_passed + day - 1) % 7
+    return [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""][day_of_week]
+if __name__ == '__main__':
+    test_cases = [
+        (1, 1),                                              
+        (1, 31),                        
+        (3, 1),                        
+        (4, 1),                       
+        (12, 31)                      
+    ]
+    for day, month in test_cases:
+        result = calculate_day_of_week(day, month)
+        print(f""Day: {day}, Month: {month} -> Day of the week: {result}"")",True,6,6311,101_9_6.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def get_day_info(dt: date) -> tuple[str, int]:
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = dt.weekday()
+    day_name = day_names[day_index]
+    day_number = day_index + 1
+    return (day_name, day_number)
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 10, 25),
+        date(2023, 1, 1),
+        date(2024, 12, 25),
+        date(2024, 1, 1)
+    ]
+    for d in sample_dates:
+        name, number = get_day_info(d)
+        print(f""Date: {d}, Day Name: {name}, Day Number: {number}"")",True,0,6312,101_14.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def get_day_info(dt: date) -> tuple[str, int]:
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = dt.weekday()
+    day_name = day_names[day_index]
+    day_number = day_index + 1
+    return (day_name, day_number)
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 25)
+    sample_date_2 = date(2024, 1, 1)
+    sample_date_3 = date(2023, 12, 31)
+    result1 = get_day_info(sample_date_1)
+    print(f""Date: {sample_date_1}, Result: {result1}"")
+    result2 = get_day_info(sample_date_2)
+    print(f""Date: {sample_date_2}, Result: {result2}"")
+    result3 = get_day_info(sample_date_3)
+    print(f""Date: {sample_date_3}, Result: {result3}"")",True,1,6313,101_14_1.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def get_day_info(dt: date) -> tuple[str, int]:
+    days = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_name = days[dt.weekday()]
+    day_number = dt.weekday() + 1
+    return (day_name, day_number)
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 25)
+    sample_date_2 = date(2024, 1, 1)
+    sample_date_3 = date(2023, 12, 31)
+    result1 = get_day_info(sample_date_1)
+    print(f""Date: {sample_date_1}, Result: {result1}"")
+    result2 = get_day_info(sample_date_2)
+    print(f""Date: {sample_date_2}, Result: {result2}"")
+    result3 = get_day_info(sample_date_3)
+    print(f""Date: {sample_date_3}, Result: {result3}"")",True,2,6314,101_14_2.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def date_to_weekday_info(dt: date) -> tuple[str, int]:
+    weekday_names = [
+        ""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""
+    ]
+    weekday_index = dt.weekday()
+    day_name = weekday_names[weekday_index]
+    day_number = weekday_index + 1
+    return day_name, day_number
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 25)
+    sample_date_2 = date(2024, 1, 1)
+    sample_date_3 = date(2024, 12, 25)
+    result1 = date_to_weekday_info(sample_date_1)
+    print(f""Date: {sample_date_1}, Result: {result1}"")
+    result2 = date_to_weekday_info(sample_date_2)
+    print(f""Date: {sample_date_2}, Result: {result2}"")
+    result3 = date_to_weekday_info(sample_date_3)
+    print(f""Date: {sample_date_3}, Result: {result3}"")",True,3,6315,101_14_3.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def get_day_info(dt: date) -> tuple[str, int]:
+    days = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_name = days[dt.weekday()]
+    day_number = dt.weekday() + 1
+    return (day_name, day_number)
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 25)
+    sample_date_2 = date(2024, 1, 1)
+    sample_date_3 = date(2024, 12, 25)
+    result1 = get_day_info(sample_date_1)
+    result2 = get_day_info(sample_date_2)
+    result3 = get_day_info(sample_date_3)
+    print(f""Date {sample_date_1}: {result1}"")
+    print(f""Date {sample_date_2}: {result2}"")
+    print(f""Date {sample_date_3}: {result3}"")",True,4,6316,101_14_4.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def get_day_info(dt: date) -> tuple[str, int]:
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = dt.weekday()
+    day_name = day_names[day_index]
+    day_number = day_index + 1
+    return (day_name, day_number)
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 25)
+    sample_date_2 = date(2024, 1, 1)
+    sample_date_3 = date(2023, 12, 31)
+    result1 = get_day_info(sample_date_1)
+    result2 = get_day_info(sample_date_2)
+    result3 = get_day_info(sample_date_3)
+    print(f""Date {sample_date_1}: {result1}"")
+    print(f""Date {sample_date_2}: {result2}"")
+    print(f""Date {sample_date_3}: {result3}"")",True,5,6317,101_14_5.py
+101,14,Determine the day of the week,"Create a highly efficient, reusable function that accepts a standard Python `datetime.date` object and returns a tuple containing the day of the week as a string (e.g., 'Wednesday') and the numerical representation (Monday=1, Sunday=7). Prioritize performance and readability.","from datetime import date
+def get_day_info(dt: date) -> tuple[str, int]:
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = dt.weekday()
+    day_name = day_names[day_index]
+    day_number = day_index + 1
+    return (day_name, day_number)
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 25)
+    sample_date_2 = date(2024, 1, 1)
+    sample_date_3 = date(2024, 12, 31)
+    result1 = get_day_info(sample_date_1)
+    result2 = get_day_info(sample_date_2)
+    result3 = get_day_info(sample_date_3)
+    print(f""Date {sample_date_1}: {result1}"")
+    print(f""Date {sample_date_2}: {result2}"")
+    print(f""Date {sample_date_3}: {result3}"")",True,6,6318,101_14_6.py
+101,13,Determine the day of the week,Write a standalone Python program that prompts the user to enter a date in the format 'DD-MM-YYYY' and then prints the full date along with the calculated day of the week. Use appropriate input validation to ensure the date format is correct before processing.,"import datetime
+def process_date(date_str):
+    try:
+        day, month, year = map(int, date_str.split('-'))
+        date_obj = datetime.date(year, month, day)
+        day_of_week = date_obj.strftime(""%A"")
+        print(f""Date: {date_obj.strftime('%d-%m-%Y')}"")
+        print(f""Day of the week: {day_of_week}"")
+    except ValueError:
+        print(""Error: Invalid date components."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    sample_date = ""25-12-2023""
+    process_date(sample_date)",True,0,6319,101_13.py
+101,13,Determine the day of the week,Write a standalone Python program that prompts the user to enter a date in the format 'DD-MM-YYYY' and then prints the full date along with the calculated day of the week. Use appropriate input validation to ensure the date format is correct before processing.,"import datetime
+def process_date(date_str):
+    try:
+        day, month, year = map(int, date_str.split('-'))
+        date_obj = datetime.date(year, month, day)
+        day_of_week = date_obj.strftime(""%A"")
+        print(f""Date: {date_obj.strftime('%d-%m-%Y')}"")
+        print(f""Day of the week: {day_of_week}"")
+    except ValueError:
+        print(""Error: Invalid date components provided."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    sample_date = ""25-12-2023""
+    process_date(sample_date)",True,1,6320,101_13_1.py
+101,13,Determine the day of the week,Write a standalone Python program that prompts the user to enter a date in the format 'DD-MM-YYYY' and then prints the full date along with the calculated day of the week. Use appropriate input validation to ensure the date format is correct before processing.,"import datetime
+def process_date(date_str):
+    try:
+        day, month, year = map(int, date_str.split('-'))
+        date_obj = datetime.date(year, month, day)
+        day_of_week = date_obj.strftime(""%A"")
+        print(f""Date: {date_obj.strftime('%d-%m-%Y')}"")
+        print(f""Day of the week: {day_of_week}"")
+    except ValueError:
+        print(""Error: Invalid date components or format."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    sample_date = ""25-12-2023""
+    process_date(sample_date)",True,2,6321,101_13_2.py
+101,13,Determine the day of the week,Write a standalone Python program that prompts the user to enter a date in the format 'DD-MM-YYYY' and then prints the full date along with the calculated day of the week. Use appropriate input validation to ensure the date format is correct before processing.,"import datetime
+def process_date(date_str):
+    try:
+        day, month, year = map(int, date_str.split('-'))
+        date_obj = datetime.date(year, month, day)
+        day_of_week = date_obj.strftime(""%A"")
+        print(f""Date: {date_obj.strftime('%d-%m-%Y')}"")
+        print(f""Day of the week: {day_of_week}"")
+    except ValueError:
+        print(""Error: Invalid date values provided."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    sample_date = ""25-12-2023""
+    process_date(sample_date)",True,3,6322,101_13_3.py
+102,1,Check if a date is a weekday,Implement an optimized function named `is_weekday` that accepts a date object and returns `True` if it is a weekday and `False` otherwise. Prioritize efficiency.,"import datetime
+def is_weekday(date_obj):
+    return date_obj.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 23)
+    date2 = datetime.date(2023, 10, 24)
+    date3 = datetime.date(2023, 10, 28)
+    date4 = datetime.date(2023, 10, 29)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,0,6323,102_1.py
+102,2,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `is_weekday(self, date_obj)` that efficiently checks if the given date is a Monday-Friday. Include appropriate docstrings.","from datetime import date
+class DateChecker:
+    def is_weekday(self, date_obj: date) -> bool:
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+if __name__ == '__main__':
+    checker = DateChecker()
+    date1 = date(2023, 10, 2)
+    date2 = date(2023, 10, 3)
+    date3 = date(2023, 10, 6)
+    date4 = date(2023, 10, 7)
+    date5 = date(2023, 10, 8)
+    print(f""Is {date1} a weekday? {checker.is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {checker.is_weekday(date5)}"")",True,0,6324,102_2.py
+102,2,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `is_weekday(self, date_obj)` that efficiently checks if the given date is a Monday-Friday. Include appropriate docstrings.","from datetime import date
+class DateChecker:
+    def is_weekday(self, date_obj: date) -> bool:
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+if __name__ == '__main__':
+    checker = DateChecker()
+    date1 = date(2023, 10, 2)          
+    date2 = date(2023, 10, 3)           
+    date3 = date(2023, 10, 4)             
+    date4 = date(2023, 10, 5)            
+    date5 = date(2023, 10, 6)          
+    date6 = date(2023, 10, 7)            
+    date7 = date(2023, 10, 8)          
+    print(f""Is {date1} a weekday? {checker.is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {checker.is_weekday(date5)}"")
+    print(f""Is {date6} a weekday? {checker.is_weekday(date6)}"")
+    print(f""Is {date7} a weekday? {checker.is_weekday(date7)}"")",True,1,6325,102_2_1.py
+102,2,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `is_weekday(self, date_obj)` that efficiently checks if the given date is a Monday-Friday. Include appropriate docstrings.","from datetime import date
+class DateChecker:
+    def is_weekday(self, date_obj: date) -> bool:
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+if __name__ == '__main__':
+    checker = DateChecker()
+    date1 = date(2023, 10, 2)
+    print(f""Is {date1} a weekday? {checker.is_weekday(date1)}"")
+    date2 = date(2023, 10, 4)
+    print(f""Is {date2} a weekday? {checker.is_weekday(date2)}"")
+    date3 = date(2023, 10, 7)
+    print(f""Is {date3} a weekday? {checker.is_weekday(date3)}"")
+    date4 = date(2023, 10, 8)
+    print(f""Is {date4} a weekday? {checker.is_weekday(date4)}"")
+    date5 = date(2020, 1, 1)
+    print(f""Is {date5} a weekday? {checker.is_weekday(date5)}"")",True,2,6326,102_2_2.py
+102,2,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `is_weekday(self, date_obj)` that efficiently checks if the given date is a Monday-Friday. Include appropriate docstrings.","from datetime import date
+class DateChecker:
+    def is_weekday(self, date_obj: date) -> bool:
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+if __name__ == '__main__':
+    checker = DateChecker()
+    date1 = date(2023, 10, 2)
+    date2 = date(2023, 10, 3)
+    date3 = date(2023, 10, 5)
+    date4 = date(2023, 10, 6)
+    date5 = date(2023, 10, 7)
+    print(f""Is {date1} a weekday? {checker.is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {checker.is_weekday(date5)}"")",True,3,6327,102_2_3.py
+102,3,Check if a date is a weekday,"Write a single-line, highly concise Python expression to check if a given `datetime.date` object falls on a weekday, assuming standard Monday-to-Friday definition.","import datetime
+if __name__ == '__main__':
+    d = datetime.date(2023, 10, 25)
+    print(d.weekday() < 5)",True,0,6328,102_3.py
+102,3,Check if a date is a weekday,"Write a single-line, highly concise Python expression to check if a given `datetime.date` object falls on a weekday, assuming standard Monday-to-Friday definition.","from datetime import date
+if __name__ == '__main__':
+    d = date(2023, 10, 25)
+    print(d.weekday() < 5)",True,1,6329,102_3_1.py
+102,3,Check if a date is a weekday,"Write a single-line, highly concise Python expression to check if a given `datetime.date` object falls on a weekday, assuming standard Monday-to-Friday definition.","import datetime
+if __name__ == '__main__':
+    date_weekday = datetime.date(2023, 10, 10)
+    print(date_weekday.weekday() < 5)",True,2,6330,102_3_2.py
+102,3,Check if a date is a weekday,"Write a single-line, highly concise Python expression to check if a given `datetime.date` object falls on a weekday, assuming standard Monday-to-Friday definition.","import datetime
+if __name__ == '__main__':
+    date_weekday = datetime.date(2023, 10, 25)
+    print(date_weekday.weekday() < 5)",True,3,6331,102_3_3.py
+102,3,Check if a date is a weekday,"Write a single-line, highly concise Python expression to check if a given `datetime.date` object falls on a weekday, assuming standard Monday-to-Friday definition.","from datetime import date
+if __name__ == '__main__':
+    d1 = date(2023, 10, 23)
+    d2 = date(2023, 10, 28)
+    print(d1.weekday() < 5)
+    print(d2.weekday() < 5)",True,4,6332,102_3_4.py
+102,3,Check if a date is a weekday,"Write a single-line, highly concise Python expression to check if a given `datetime.date` object falls on a weekday, assuming standard Monday-to-Friday definition.","from datetime import date
+if __name__ == '__main__':
+    d1 = date(2023, 10, 2)
+    d2 = date(2023, 10, 3)
+    print(d1.weekday() < 5)
+    print(d2.weekday() < 5)",True,5,6333,102_3_5.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","from datetime import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.strptime(date_string, '%Y-%m-%d')
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = ""2023-10-23""
+    date2 = ""2023-10-29""
+    date3 = ""2023-10-28""
+    date4 = ""2023-10-27""
+    date5 = ""2023-10-28""
+    date6 = ""2023-10-30""
+    date7 = ""2023/10/23""
+    date8 = ""2023-13-01""
+    print(f""Date: {date1}, Result: {check_weekday(date1)}"")
+    print(f""Date: {date2}, Result: {check_weekday(date2)}"")
+    print(f""Date: {date3}, Result: {check_weekday(date3)}"")
+    print(f""Date: {date4}, Result: {check_weekday(date4)}"")
+    print(f""Date: {date5}, Result: {check_weekday(date5)}"")
+    print(f""Date: {date6}, Result: {check_weekday(date6)}"")
+    print(f""Date: {date7}, Result: {check_weekday(date7)}"")
+    print(f""Date: {date8}, Result: {check_weekday(date8)}"")",True,0,6334,102_4.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = '2023-10-23'
+    date2 = '2023-10-28'
+    date3 = '2023-10-29'
+    date4 = '2023-10-30'
+    date5 = '2023-10-31'
+    date6 = '2023-11-05'
+    date7 = '2023-11-04'
+    date8 = '2023-11-05'
+    date9 = '2023/11/05'
+    print(f""Date: {date1}, Result: {check_weekday(date1)}"")
+    print(f""Date: {date2}, Result: {check_weekday(date2)}"")
+    print(f""Date: {date3}, Result: {check_weekday(date3)}"")
+    print(f""Date: {date4}, Result: {check_weekday(date4)}"")
+    print(f""Date: {date5}, Result: {check_weekday(date5)}"")
+    print(f""Date: {date6}, Result: {check_weekday(date6)}"")
+    print(f""Date: {date7}, Result: {check_weekday(date7)}"")
+    print(f""Date: {date8}, Result: {check_weekday(date8)}"")
+    print(f""Date: {date9}, Result: {check_weekday(date9)}"")",True,1,6335,102_4_1.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = '2023-10-23'
+    date2 = '2023-10-28'
+    date3 = '2023-10-29'
+    date4 = '2023-10-30'
+    date5 = '2023-10-31'
+    date6 = '2023-11-01'
+    date7 = '2023-11-04'
+    date8 = '2023-11-05'
+    date9 = '2023-11-05'
+    date10 = '2023-11-06'
+    date11 = '2023-11-07'
+    invalid_date = '2023/10/23'
+    print(f""'{date1}': {check_weekday(date1)}"")
+    print(f""'{date2}': {check_weekday(date2)}"")
+    print(f""'{date3}': {check_weekday(date3)}"")
+    print(f""'{date4}': {check_weekday(date4)}"")
+    print(f""'{date5}': {check_weekday(date5)}"")
+    print(f""'{date6}': {check_weekday(date6)}"")
+    print(f""'{date7}': {check_weekday(date7)}"")
+    print(f""'{date8}': {check_weekday(date8)}"")
+    print(f""'{date9}': {check_weekday(date9)}"")
+    print(f""'{date10}': {check_weekday(date10)}"")
+    print(f""'{date11}': {check_weekday(date11)}"")
+    print(f""'{invalid_date}': {check_weekday(invalid_date)}"")",True,2,6336,102_4_2.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = '2023-10-23'
+    date2 = '2023-10-28'
+    date3 = '2023-10-29'
+    date4 = '2023-10-30'
+    date5 = '2023-10-31'
+    date6 = '2023-11-04'
+    date7 = '2023-11-05'
+    date8 = '2023-11-05'
+    date9 = '2023/11/05'
+    print(f""Date: {date1}, Result: {check_weekday(date1)}"")
+    print(f""Date: {date2}, Result: {check_weekday(date2)}"")
+    print(f""Date: {date3}, Result: {check_weekday(date3)}"")
+    print(f""Date: {date4}, Result: {check_weekday(date4)}"")
+    print(f""Date: {date5}, Result: {check_weekday(date5)}"")
+    print(f""Date: {date6}, Result: {check_weekday(date6)}"")
+    print(f""Date: {date7}, Result: {check_weekday(date7)}"")
+    print(f""Date: {date8}, Result: {check_weekday(date8)}"")
+    print(f""Date: {date9}, Result: {check_weekday(date9)}"")",True,3,6337,102_4_3.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = ""2023-10-23""
+    date2 = ""2023-10-29""
+    date3 = ""2023-10-30""
+    date4 = ""2023-10-28""
+    date5 = ""2023-10-27""
+    date_invalid = ""2023/10/23""
+    print(f""Date {date1}: {check_weekday(date1)}"")
+    print(f""Date {date2}: {check_weekday(date2)}"")
+    print(f""Date {date3}: {check_weekday(date3)}"")
+    print(f""Date {date4}: {check_weekday(date4)}"")
+    print(f""Date {date5}: {check_weekday(date5)}"")
+    print(f""Date {date_invalid}: {check_weekday(date_invalid)}"")",True,4,6338,102_4_4.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = '2023-10-23'
+    date2 = '2023-10-29'
+    date3 = '2023-10-30'
+    date4 = '2023-10-28'
+    date5 = '2023-10-27'
+    date_invalid = '2023/10/23'
+    print(f""Date: {date1}, Result: {check_weekday(date1)}"")
+    print(f""Date: {date2}, Result: {check_weekday(date2)}"")
+    print(f""Date: {date3}, Result: {check_weekday(date3)}"")
+    print(f""Date: {date4}, Result: {check_weekday(date4)}"")
+    print(f""Date: {date5}, Result: {check_weekday(date5)}"")
+    print(f""Date: {date_invalid}, Result: {check_weekday(date_invalid)}"")",True,5,6339,102_4_5.py
+102,4,Check if a date is a weekday,"Create a function that accepts a date string in 'YYYY-MM-DD' format, parses it, and returns 'Weekday' if it's a Monday-Friday, or 'Weekend' otherwise. Ensure error handling for invalid date formats.","import datetime
+def check_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+        weekday = date_obj.weekday()
+        if 0 <= weekday <= 4:
+            return 'Weekday'
+        else:
+            return 'Weekend'
+    except ValueError:
+        return 'Invalid Date Format'
+if __name__ == '__main__':
+    date1 = '2023-10-23'
+    date2 = '2023-10-29'
+    date3 = '2023-10-30'
+    date4 = '2023-10-28'
+    date5 = '2023-10-27'
+    date_invalid = '2023/10/23'
+    print(f""Date: {date1}, Result: {check_weekday(date1)}"")
+    print(f""Date: {date2}, Result: {check_weekday(date2)}"")
+    print(f""Date: {date3}, Result: {check_weekday(date3)}"")
+    print(f""Date: {date4}, Result: {check_weekday(date4)}"")
+    print(f""Date: {date5}, Result: {check_weekday(date5)}"")
+    print(f""Date: {date_invalid}, Result: {check_weekday(date_invalid)}"")",True,6,6340,102_4_6.py
+102,5,Check if a date is a weekday,Design an efficient algorithm to determine if a given date represents a weekday. The solution must handle leap years correctly using Python's built-in date arithmetic.,"import datetime
+def is_weekday(date_str):
+    date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+    weekday = date_obj.weekday()
+    return 0 <= weekday <= 4
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""2024-02-29""
+    date3 = ""2023-10-28""
+    date4 = ""2023-02-28""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,0,6341,102_5.py
+102,5,Check if a date is a weekday,Design an efficient algorithm to determine if a given date represents a weekday. The solution must handle leap years correctly using Python's built-in date arithmetic.,"import datetime
+def is_weekday(date_str):
+    date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+    weekday = date_obj.weekday()
+    return 0 <= weekday <= 4
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""2024-02-29""
+    date3 = ""2023-11-01""
+    date4 = ""2023-02-28""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,1,6342,102_5_1.py
+102,5,Check if a date is a weekday,Design an efficient algorithm to determine if a given date represents a weekday. The solution must handle leap years correctly using Python's built-in date arithmetic.,"import datetime
+def is_weekday(date_str):
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 6
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""2024-02-29""
+    date3 = ""2023-10-28""
+    date4 = ""2023-02-28""
+    date5 = ""2023-02-29""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {is_weekday(date5)}"")",True,2,6343,102_5_2.py
+102,5,Check if a date is a weekday,Design an efficient algorithm to determine if a given date represents a weekday. The solution must handle leap years correctly using Python's built-in date arithmetic.,"import datetime
+def is_weekday(date_str):
+    date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+    weekday = date_obj.weekday()
+    return 0 <= weekday <= 6
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""2024-02-29""
+    date3 = ""2023-11-01""
+    date4 = ""2023-02-28""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,3,6344,102_5_3.py
+102,5,Check if a date is a weekday,Design an efficient algorithm to determine if a given date represents a weekday. The solution must handle leap years correctly using Python's built-in date arithmetic.,"import datetime
+def is_weekday(date_str):
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""2024-02-29""
+    date3 = ""2023-10-28""
+    date4 = ""2023-02-28""
+    date5 = ""2023-02-29""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {is_weekday(date5)}"")",True,4,6345,102_5_4.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    d1 = date(2023, 10, 23)
+    d2 = date(2023, 10, 24)
+    d3 = date(2023, 10, 25)
+    d4 = date(2023, 10, 26)
+    print(f""Day {d1}: {d1.weekday()}"")
+    print(f""Day {d2}: {d2.weekday()}"")
+    print(f""Day {d3}: {d3.weekday()}"")
+    print(f""Day {d4}: {d4.weekday()}"")
+    if d1.weekday() == 0:
+        print(f""Day {d1} is a Monday (0)"")
+    if d2.weekday() == 5:
+        print(f""Day {d2} is a Saturday (5)"")
+    if d3.weekday() == 6:
+        print(f""Day {d3} is a Sunday (6)"")
+    if d4.weekday() == 1:
+        print(f""Day {d4} is a Tuesday (1)"")",True,0,6346,102_6.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    weekday_value = today.weekday()
+    print(f""Weekday value (0=Monday, 6=Sunday): {weekday_value}"")
+    if weekday_value == 0:
+        print(""It is a Monday."")
+    elif weekday_value == 1:
+        print(""It is a Tuesday."")
+    elif weekday_value == 2:
+        print(""It is a Wednesday."")
+    elif weekday_value == 3:
+        print(""It is a Thursday."")
+    elif weekday_value == 4:
+        print(""It is a Friday."")
+    elif weekday_value == 5:
+        print(""It is a Saturday."")
+    else:
+        print(""It is a Sunday."")",True,1,6347,102_6_1.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    weekday_today = today.weekday()
+    print(f""Today's weekday (0=Monday, 6=Sunday): {weekday_today}"")
+    if weekday_today == 0:
+        print(""Today is a Monday."")
+    elif weekday_today == 1:
+        print(""Today is a Tuesday."")
+    elif weekday_today == 2:
+        print(""Today is a Wednesday."")
+    elif weekday_today == 3:
+        print(""Today is a Thursday."")
+    elif weekday_today == 4:
+        print(""Today is a Friday."")
+    elif weekday_today == 5:
+        print(""Today is a Saturday."")
+    elif weekday_today == 6:
+        print(""Today is a Sunday."")
+    else:
+        print(""This is an unexpected weekday value."")
+    specific_date = date(2023, 10, 25)
+    print(f""\nDate: {specific_date}"")
+    weekday_specific = specific_date.weekday()
+    print(f""Weekday for {specific_date}: {weekday_specific}"")
+    if weekday_specific == 4:
+        print(""This date is a Friday."")
+    else:
+        print(""This date is not a Friday."")",True,2,6348,102_6_2.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    weekday_value = today.weekday()
+    print(f""Weekday value (0=Monday, 6=Sunday): {weekday_value}"")
+    if weekday_value == 0:
+        print(""It is a Monday."")
+    elif weekday_value == 1:
+        print(""It is a Tuesday."")
+    elif weekday_value == 2:
+        print(""It is a Wednesday."")
+    elif weekday_value == 3:
+        print(""It is a Thursday."")
+    elif weekday_value == 4:
+        print(""It is a Friday."")
+    elif weekday_value == 5:
+        print(""It is a Saturday."")
+    elif weekday_value == 6:
+        print(""It is a Sunday."")
+    else:
+        print(""This is an invalid weekday value."")",True,3,6349,102_6_3.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    weekday_value = today.weekday()
+    print(f""Weekday value (0=Monday, 6=Sunday): {weekday_value}"")
+    if weekday_value == 0:
+        print(""It is a Monday."")
+    elif weekday_value == 6:
+        print(""It is a Sunday."")
+    else:
+        print(""It is a weekday."")",True,4,6350,102_6_4.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    weekday_today = today.weekday()
+    print(f""Today's weekday (0=Monday, 6=Sunday): {weekday_today}"")
+    if weekday_today < 5:
+        print(""It is a weekday."")
+    else:
+        print(""It is a weekend day."")",True,5,6351,102_6_5.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    weekday_today = today.weekday()
+    print(f""Today's weekday (0=Monday, 6=Sunday): {weekday_today}"")
+    if weekday_today < 5:
+        print(""It is a weekday."")
+    else:
+        print(""It is a weekend day."")
+    specific_date = date(2023, 10, 27)
+    print(f""\nDate: {specific_date}"")
+    weekday_specific = specific_date.weekday()
+    print(f""Weekday for {specific_date}: {weekday_specific}"")
+    if weekday_specific < 5:
+        print(""Specific date is a weekday."")
+    else:
+        print(""Specific date is a weekend day."")",True,6,6352,102_6_6.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    d1 = date(2023, 10, 23)
+    d2 = date(2023, 10, 24)
+    d3 = date(2023, 10, 25)
+    d4 = date(2023, 10, 26)
+    print(f""Date {d1}: Weekday check (0=Monday, 6=Sunday): {d1.weekday() % 7}"")
+    print(f""Date {d2}: Weekday check (0=Monday, 6=Sunday): {d2.weekday() % 7}"")
+    print(f""Date {d3}: Weekday check (0=Monday, 6=Sunday): {d3.weekday() % 7}"")
+    print(f""Date {d4}: Weekday check (0=Monday, 6=Sunday): {d4.weekday() % 7}"")",True,7,6353,102_6_7.py
+102,6,Check if a date is a weekday,Implement a solution using the modulo operator on the `.weekday()` method of a `datetime.date` object to check for weekdays. Provide the full runnable Python code.,"from datetime import date
+if __name__ == '__main__':
+    today = date.today()
+    print(f""Today's date: {today}"")
+    days_of_week = [0, 1, 2, 3, 4, 5, 6]
+    for day in days_of_week:
+        weekday_index = today.weekday() % 7
+        if weekday_index == day:
+            print(f""The day {day} is a weekday."")
+        else:
+            print(f""The day {day} is not a weekday."")",True,8,6354,102_6_8.py
+102,0,Check if a date is a weekday,"Write a complete, robust Python script that takes a date as input and determines if it is a weekday (Monday through Friday). Use the standard `datetime` module and ensure the code is highly readable.","import datetime
+def is_weekday(date_str):
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-23"",
+        ""2023-10-24"",
+        ""2023-10-25"",
+        ""2023-10-26"",
+        ""2023-10-27"",
+        ""2023-10-28"",
+        ""2023-10-29""
+    ]
+    for date_str in test_dates:
+        result = is_weekday(date_str)
+        print(f""Date: {date_str}, Is Weekday: {result}"")",True,0,6355,102_0.py
+102,0,Check if a date is a weekday,"Write a complete, robust Python script that takes a date as input and determines if it is a weekday (Monday through Friday). Use the standard `datetime` module and ensure the code is highly readable.","import datetime
+def is_weekday(date_str):
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    test_dates = [""2023-10-23"", ""2023-10-24"", ""2023-10-25"", ""2023-10-26"", ""2023-10-27"", ""2023-10-28""]
+    for date_str in test_dates:
+        result = is_weekday(date_str)
+        print(f""Date: {date_str}, Is Weekday: {result}"")",True,1,6356,102_0_1.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 11, 1)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 11, 2)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 11, 3)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 11, 4)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 11, 5)
+        self.assertFalse(self.is_weekday(date10))
+    def test_weekday_weekend(self):
+        date_sat = datetime.datetime(2023, 10, 28)
+        self.assertFalse(self.is_weekday(date_sat))
+        date_sun = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(date_sun))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,6357,102_7.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 11, 1)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 11, 2)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 11, 3)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 11, 4)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 11, 5)
+        self.assertTrue(self.is_weekday(date10))
+        date11 = datetime.datetime(2023, 11, 6)
+        self.assertFalse(self.is_weekday(date11))
+    def test_weekday_weekend(self):
+        date_sat = datetime.datetime(2023, 10, 28)
+        self.assertFalse(self.is_weekday(date_sat))
+        date_sun = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(date_sun))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,6358,102_7_1.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date10))
+        date11 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date11))
+        date12 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date12))
+        date13 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date13))
+        date14 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date14))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,6359,102_7_2.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 11, 1)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 11, 2)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 11, 3)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 11, 4)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 11, 5)
+        self.assertFalse(self.is_weekday(date10))
+    def test_weekday_specific_days(self):
+        monday = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(monday))
+        saturday = datetime.datetime(2023, 10, 28)
+        self.assertTrue(self.is_weekday(saturday))
+        sunday = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(sunday))
+        saturday_test = datetime.datetime(2023, 10, 28)
+        self.assertFalse(self.is_weekday(saturday_test))
+        sunday_test = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(sunday_test))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,6360,102_7_3.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 11, 1)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 11, 2)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 11, 3)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 11, 4)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 11, 5)
+        self.assertFalse(self.is_weekday(date10))
+    def test_weekday_specific_days(self):
+        monday = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(monday))
+        saturday = datetime.datetime(2023, 10, 28)
+        self.assertTrue(self.is_weekday(saturday))
+        sunday = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(sunday))
+        self.assertTrue(self.is_weekday(datetime.datetime(2023, 10, 28)))
+        self.assertTrue(self.is_weekday(datetime.datetime(2023, 10, 29)))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,6361,102_7_4.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date1 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(date2))
+    def test_weekday_saturday(self):
+        date1 = datetime.datetime(2023, 10, 28)
+        self.assertFalse(self.is_weekday(date1))
+    def test_weekday_sunday(self):
+        date1 = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(date1))
+    def test_weekday_monday(self):
+        date1 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date1))
+    def test_weekday_friday(self):
+        date1 = datetime.datetime(2023, 10, 27)
+        self.assertTrue(self.is_weekday(date1))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,6362,102_7_5.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 11, 1)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 11, 2)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 11, 3)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 11, 4)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 11, 5)
+        self.assertTrue(self.is_weekday(date10))
+        date11 = datetime.datetime(2023, 11, 6)
+        self.assertFalse(self.is_weekday(date11))
+    def test_weekday_saturday(self):
+        date_sat = datetime.datetime(2023, 10, 28)
+        self.assertFalse(self.is_weekday(date_sat))
+    def test_weekday_sunday(self):
+        date_sun = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(date_sun))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,6363,102_7_6.py
+102,7,Check if a date is a weekday,"Write a testable implementation for checking if a specific date, provided as a `datetime.datetime` object, is a weekday. Use unit testing best practices.","import datetime
+import unittest
+class TestDateWeekday(unittest.TestCase):
+    def is_weekday(self, date_obj):
+        return date_obj.weekday() < 5
+    def test_weekday_true(self):
+        date1 = datetime.datetime(2023, 10, 23)
+        self.assertTrue(self.is_weekday(date1))
+        date2 = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date2))
+    def test_weekday_false(self):
+        date3 = datetime.datetime(2023, 10, 24)
+        self.assertTrue(self.is_weekday(date3))
+        date4 = datetime.datetime(2023, 10, 29)
+        self.assertTrue(self.is_weekday(date4))
+        date5 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date5))
+        date6 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date6))
+        date7 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date7))
+        date8 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date8))
+        date9 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date9))
+        date10 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date10))
+        date11 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date11))
+        date12 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date12))
+        date13 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date13))
+        date14 = datetime.datetime(2023, 10, 31)
+        self.assertTrue(self.is_weekday(date14))
+    def test_weekday_saturday(self):
+        date_sat = datetime.datetime(2023, 10, 28)
+        self.assertFalse(self.is_weekday(date_sat))
+    def test_weekday_sunday(self):
+        date_sun = datetime.datetime(2023, 10, 29)
+        self.assertFalse(self.is_weekday(date_sun))
+    def test_weekday_monday(self):
+        date_mon = datetime.datetime(2023, 10, 30)
+        self.assertTrue(self.is_weekday(date_mon))
+    def test_weekday_friday(self):
+        date_fri = datetime.datetime(2023, 10, 27)
+        self.assertTrue(self.is_weekday(date_fri))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,6364,102_7_7.py
+102,8,Check if a date is a weekday,"Write a general-purpose function that accepts a date object and returns the day of the week as a string (e.g., 'Monday', 'Saturday'), and implicitly check if it is a weekday.","from datetime import date
+def get_day_of_week_and_weekday(date_obj):
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = date_obj.weekday()
+    day_name = day_names[day_index]
+    is_weekday = day_index < 5
+    return day_name, is_weekday
+if __name__ == '__main__':
+    date1 = date(2023, 10, 25)
+    day1, weekday1 = get_day_of_week_and_weekday(date1)
+    print(f""Date: {date1}, Day of the week: {day1}, Is weekday: {weekday1}"")
+    date2 = date(2023, 10, 28)
+    day2, weekday2 = get_day_of_week_and_weekday(date2)
+    print(f""Date: {date2}, Day of the week: {day2}, Is weekday: {weekday2}"")
+    date3 = date(2023, 10, 29)
+    day3, weekday3 = get_day_of_week_and_weekday(date3)
+    print(f""Date: {date3}, Day of the week: {day3}, Is weekday: {weekday3}"")",True,0,6365,102_8.py
+102,8,Check if a date is a weekday,"Write a general-purpose function that accepts a date object and returns the day of the week as a string (e.g., 'Monday', 'Saturday'), and implicitly check if it is a weekday.","import datetime
+def get_day_of_week_and_weekday(date_obj):
+    day_names = [""Sunday"", ""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday""]
+    day_index = date_obj.weekday()
+    day_name = day_names[day_index]
+    is_weekday = day_index < 6
+    return day_name, is_weekday
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 25)
+    date2 = datetime.date(2023, 10, 28)
+    date3 = datetime.date(2023, 10, 29)
+    date4 = datetime.date(2023, 10, 30)
+    print(f""Date: {date1}, Day: {get_day_of_week_and_weekday(date1)[0]}, Weekday: {get_day_of_week_and_weekday(date1)[1]}"")
+    print(f""Date: {date2}, Day: {get_day_of_week_and_weekday(date2)[0]}, Weekday: {get_day_of_week_and_weekday(date2)[1]}"")
+    print(f""Date: {date3}, Day: {get_day_of_week_and_weekday(date3)[0]}, Weekday: {get_day_of_week_and_weekday(date3)[1]}"")
+    print(f""Date: {date4}, Day: {get_day_of_week_and_weekday(date4)[0]}, Weekday: {get_day_of_week_and_weekday(date4)[1]}"")",True,1,6366,102_8_1.py
+102,8,Check if a date is a weekday,"Write a general-purpose function that accepts a date object and returns the day of the week as a string (e.g., 'Monday', 'Saturday'), and implicitly check if it is a weekday.","import datetime
+def get_day_of_week_and_check_weekday(date_obj):
+    day_names = [""Sunday"", ""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday""]
+    day_index = date_obj.weekday()
+    day_name = day_names[day_index]
+    is_weekday = day_index < 6
+    return day_name, is_weekday
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 25)
+    date2 = datetime.date(2023, 10, 29)
+    date3 = datetime.date(2023, 10, 30)
+    date4 = datetime.date(2023, 11, 5)
+    print(f""Date: {date1}, Day: {get_day_of_week_and_check_weekday(date1)[0]}, Weekday: {get_day_of_week_and_check_weekday(date1)[1]}"")
+    print(f""Date: {date2}, Day: {get_day_of_week_and_check_weekday(date2)[0]}, Weekday: {get_day_of_week_and_check_weekday(date2)[1]}"")
+    print(f""Date: {date3}, Day: {get_day_of_week_and_check_weekday(date3)[0]}, Weekday: {get_day_of_week_and_check_weekday(date3)[1]}"")
+    print(f""Date: {date4}, Day: {get_day_of_week_and_check_weekday(date4)[0]}, Weekday: {get_day_of_week_and_check_weekday(date4)[1]}"")",True,2,6367,102_8_2.py
+102,8,Check if a date is a weekday,"Write a general-purpose function that accepts a date object and returns the day of the week as a string (e.g., 'Monday', 'Saturday'), and implicitly check if it is a weekday.","from datetime import date
+def get_day_of_week(date_obj):
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = date_obj.weekday()
+    return day_names[day_index]
+if __name__ == '__main__':
+    date1 = date(2023, 10, 23)
+    print(f""Date {date1}: {get_day_of_week(date1)}"")
+    date2 = date(2023, 10, 29)
+    print(f""Date {date2}: {get_day_of_week(date2)}"")
+    date3 = date(2023, 10, 30)
+    print(f""Date {date3}: {get_day_of_week(date3)}"")
+    date4 = date(2023, 10, 28)
+    print(f""Date {date4}: {get_day_of_week(date4)}"")",True,3,6368,102_8_3.py
+102,8,Check if a date is a weekday,"Write a general-purpose function that accepts a date object and returns the day of the week as a string (e.g., 'Monday', 'Saturday'), and implicitly check if it is a weekday.","from datetime import date
+def get_day_of_week_and_weekday(date_obj):
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = date_obj.weekday()
+    day_name = day_names[day_index]
+    is_weekday = day_index < 5
+    return day_name, is_weekday
+if __name__ == '__main__':
+    date1 = date(2023, 10, 25)
+    date2 = date(2023, 10, 28)
+    date3 = date(2023, 10, 29)
+    date4 = date(2023, 10, 30)
+    print(f""Date: {date1}, Day: {get_day_of_week_and_weekday(date1)[0]}, Weekday: {get_day_of_week_and_weekday(date1)[1]}"")
+    print(f""Date: {date2}, Day: {get_day_of_week_and_weekday(date2)[0]}, Weekday: {get_day_of_week_and_weekday(date2)[1]}"")
+    print(f""Date: {date3}, Day: {get_day_of_week_and_weekday(date3)[0]}, Weekday: {get_day_of_week_and_weekday(date3)[1]}"")
+    print(f""Date: {date4}, Day: {get_day_of_week_and_weekday(date4)[0]}, Weekday: {get_day_of_week_and_weekday(date4)[1]}"")",True,4,6369,102_8_4.py
+102,8,Check if a date is a weekday,"Write a general-purpose function that accepts a date object and returns the day of the week as a string (e.g., 'Monday', 'Saturday'), and implicitly check if it is a weekday.","from datetime import date
+def get_day_of_week_and_weekday(date_obj):
+    day_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    day_index = date_obj.weekday()
+    day_name = day_names[day_index]
+    is_weekday = day_index < 5
+    return day_name, is_weekday
+if __name__ == '__main__':
+    date1 = date(2023, 10, 23)
+    date2 = date(2023, 10, 28)
+    date3 = date(2023, 10, 29)
+    date4 = date(2023, 10, 30)
+    print(f""Date: {date1}, Day: {get_day_of_week_and_weekday(date1)[0]}, Weekday: {get_day_of_week_and_weekday(date1)[1]}"")
+    print(f""Date: {date2}, Day: {get_day_of_week_and_weekday(date2)[0]}, Weekday: {get_day_of_week_and_weekday(date2)[1]}"")
+    print(f""Date: {date3}, Day: {get_day_of_week_and_weekday(date3)[0]}, Weekday: {get_day_of_week_and_weekday(date3)[1]}"")
+    print(f""Date: {date4}, Day: {get_day_of_week_and_weekday(date4)[0]}, Weekday: {get_day_of_week_and_weekday(date4)[1]}"")",True,5,6370,102_8_5.py
+102,10,Check if a date is a weekday,"Write a complete, robust Python script that takes a date as input and determines if it is a weekday (Monday through Friday). Use the `datetime` module and ensure the code is highly efficient and follows all Python best practices.","import datetime
+def is_weekday(date_str):
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-23"",
+        ""2023-10-24"",
+        ""2023-10-25"",
+        ""2023-10-26"",
+        ""2023-10-27"",
+        ""2023-10-28"",
+        ""2023-10-29""
+    ]
+    for date_str in test_dates:
+        result = is_weekday(date_str)
+        print(f""Date: {date_str}, Is Weekday: {result}"")",True,0,6371,102_10.py
+102,10,Check if a date is a weekday,"Write a complete, robust Python script that takes a date as input and determines if it is a weekday (Monday through Friday). Use the `datetime` module and ensure the code is highly efficient and follows all Python best practices.","import datetime
+def is_weekday(date_str):
+    try:
+        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-23"",
+        ""2023-10-24"",
+        ""2023-10-25"",
+        ""2023-10-26"",
+        ""2023-10-27"",
+        ""2023-10-28"",
+        ""2023-10-29"",
+        ""2023-10-30""
+    ]
+    for date_str in test_dates:
+        result = is_weekday(date_str)
+        print(f""Date: {date_str}, Is Weekday: {result}"")",True,1,6372,102_10_1.py
+102,9,Check if a date is a weekday,"Develop the most professional and production-ready Python function to check if any given date is a weekday, ensuring the code is free of unnecessary imports and highly performant.","import datetime
+def is_weekday(date_tuple):
+    date_obj = datetime.datetime.fromtimestamp(date_tuple)
+    return date_obj.weekday() < 5
+if __name__ == '__main__':
+    date1 = 20231027          
+    date2 = 20231028            
+    date3 = 20231029          
+    date4 = 20231030          
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,0,6373,102_9.py
+102,9,Check if a date is a weekday,"Develop the most professional and production-ready Python function to check if any given date is a weekday, ensuring the code is free of unnecessary imports and highly performant.","import datetime
+def is_weekday(date_obj):
+    return date_obj.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 25)
+    date2 = datetime.date(2023, 10, 26)
+    date3 = datetime.date(2023, 10, 27)
+    date4 = datetime.date(2023, 10, 28)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,1,6374,102_9_1.py
+102,9,Check if a date is a weekday,"Develop the most professional and production-ready Python function to check if any given date is a weekday, ensuring the code is free of unnecessary imports and highly performant.","import datetime
+def is_weekday(date_obj: datetime.date) -> bool:
+    return date_obj.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 25)
+    date2 = datetime.date(2023, 10, 26)
+    date3 = datetime.date(2023, 10, 27)
+    date4 = datetime.date(2023, 10, 28)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,2,6375,102_9_2.py
+102,9,Check if a date is a weekday,"Develop the most professional and production-ready Python function to check if any given date is a weekday, ensuring the code is free of unnecessary imports and highly performant.","import datetime
+def is_weekday(date_obj: datetime.date) -> bool:
+    return date_obj.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 23)
+    date2 = datetime.date(2023, 10, 24)
+    date3 = datetime.date(2023, 10, 28)
+    date4 = datetime.date(2023, 10, 29)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,3,6376,102_9_3.py
+102,11,Check if a date is a weekday,"Implement an optimized function named `is_weekday(date_object)` that accepts a Python `datetime.date` object and returns `True` if the date falls on a weekday (Monday to Friday), and `False` otherwise. The implementation must prioritize efficiency.","from datetime import date
+def is_weekday(date_object):
+    return date_object.weekday() < 5
+if __name__ == '__main__':
+    date1 = date(2023, 10, 23)
+    date2 = date(2023, 10, 24)
+    date3 = date(2023, 10, 27)
+    date4 = date(2023, 10, 28)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,0,6377,102_11.py
+102,11,Check if a date is a weekday,"Implement an optimized function named `is_weekday(date_object)` that accepts a Python `datetime.date` object and returns `True` if the date falls on a weekday (Monday to Friday), and `False` otherwise. The implementation must prioritize efficiency.","import datetime
+def is_weekday(date_object):
+    return date_object.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 23)
+    date2 = datetime.date(2023, 10, 24)
+    date3 = datetime.date(2023, 10, 27)
+    date4 = datetime.date(2023, 10, 28)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,1,6378,102_11_1.py
+102,12,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `check_weekday(self, date_string)` that takes a date string in 'YYYY-MM-DD' format, parses it, and returns the boolean result indicating if the date is a weekday. Ensure the parsing handles potential `ValueError` exceptions gracefully.","class DateChecker:
+    def check_weekday(self, date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+            return date_obj.weekday() < 5
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    import datetime
+    checker = DateChecker()
+    date1 = ""2023-10-25""
+    date2 = ""2023-10-26""
+    date3 = ""2023-10-27""
+    date4 = ""2023-10-28""
+    date5 = ""2023-10-29""
+    date_invalid = ""2023/10/25""
+    print(f""Is {date1} a weekday? {checker.check_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.check_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.check_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.check_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {checker.check_weekday(date5)}"")
+    print(f""Is {date_invalid} a weekday? {checker.check_weekday(date_invalid)}"")",True,0,6379,102_12.py
+102,12,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `check_weekday(self, date_string)` that takes a date string in 'YYYY-MM-DD' format, parses it, and returns the boolean result indicating if the date is a weekday. Ensure the parsing handles potential `ValueError` exceptions gracefully.","class DateChecker:
+    def check_weekday(self, date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+            weekday = date_obj.weekday()
+            return 0 <= weekday <= 4
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    import datetime
+    checker = DateChecker()
+    date1 = ""2023-10-25""
+    date2 = ""2023-10-26""
+    date3 = ""2023-10-27""
+    date4 = ""2023-10-28""
+    date5 = ""2023-10-29""
+    date_invalid = ""2023/10/25""
+    print(f""Is {date1} a weekday? {checker.check_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.check_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.check_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.check_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {checker.check_weekday(date5)}"")
+    print(f""Is {date_invalid} a weekday? {checker.check_weekday(date_invalid)}"")",True,1,6380,102_12_1.py
+102,12,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `check_weekday(self, date_string)` that takes a date string in 'YYYY-MM-DD' format, parses it, and returns the boolean result indicating if the date is a weekday. Ensure the parsing handles potential `ValueError` exceptions gracefully.","class DateChecker:
+    def check_weekday(self, date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+            return date_obj.weekday() < 5
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    import datetime
+    checker = DateChecker()
+    date1 = ""2023-10-25""
+    date2 = ""2023-10-26""
+    date3 = ""2023-10-27""
+    date4 = ""2023-10-28""
+    date_invalid = ""2023/10/25""
+    print(f""Is {date1} a weekday? {checker.check_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.check_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.check_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.check_weekday(date4)}"")
+    print(f""Is {date_invalid} a weekday? {checker.check_weekday(date_invalid)}"")",True,2,6381,102_12_2.py
+102,12,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `check_weekday(self, date_string)` that takes a date string in 'YYYY-MM-DD' format, parses it, and returns the boolean result indicating if the date is a weekday. Ensure the parsing handles potential `ValueError` exceptions gracefully.","class DateChecker:
+    def check_weekday(self, date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+            weekday = date_obj.weekday()
+            return 0 <= weekday <= 6
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    import datetime
+    checker = DateChecker()
+    date1 = ""2023-10-25""
+    date2 = ""2023-10-26""
+    date3 = ""2023-10-27""
+    date4 = ""2023-10-28""
+    date5 = ""2023-10-29""
+    invalid_date = ""2023/10/30""
+    print(f""Is {date1} a weekday? {checker.check_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.check_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.check_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.check_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {checker.check_weekday(date5)}"")
+    print(f""Is {invalid_date} a weekday? {checker.check_weekday(invalid_date)}"")",True,3,6382,102_12_3.py
+102,12,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `check_weekday(self, date_string)` that takes a date string in 'YYYY-MM-DD' format, parses it, and returns the boolean result indicating if the date is a weekday. Ensure the parsing handles potential `ValueError` exceptions gracefully.","class DateChecker:
+    def check_weekday(self, date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+            return date_obj.weekday() < 5
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    import datetime
+    checker = DateChecker()
+    date1 = ""2023-10-25""
+    date2 = ""2023-10-26""
+    date3 = ""2023-10-27""
+    date4 = ""2023-10-28""
+    invalid_date = ""2023/10/25""
+    print(f""Is {date1} a weekday? {checker.check_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.check_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.check_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {checker.check_weekday(date4)}"")
+    print(f""Is {invalid_date} a weekday? {checker.check_weekday(invalid_date)}"")",True,4,6383,102_12_4.py
+102,12,Check if a date is a weekday,"Develop a class named `DateChecker` with a method `check_weekday(self, date_string)` that takes a date string in 'YYYY-MM-DD' format, parses it, and returns the boolean result indicating if the date is a weekday. Ensure the parsing handles potential `ValueError` exceptions gracefully.","class DateChecker:
+    def check_weekday(self, date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+            weekday = date_obj.weekday()
+            return 0 <= weekday <= 6
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    import datetime
+    checker = DateChecker()
+    date1 = ""2023-10-25""
+    date2 = ""2023-10-26""
+    date3 = ""2023-10-27""
+    invalid_date = ""2023/10/25""
+    print(f""Is {date1} a weekday? {checker.check_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {checker.check_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {checker.check_weekday(date3)}"")
+    print(f""Is {invalid_date} a weekday? {checker.check_weekday(invalid_date)}"")",True,5,6384,102_12_5.py
+102,13,Check if a date is a weekday,Write a concise and idiomatic Python function that checks if a given `datetime.datetime` object represents a weekday. The function should utilize the built-in weekday properties of the `datetime` object for optimal performance.,"import datetime
+def is_weekday(dt: datetime.datetime) -> bool:
+    return dt.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.datetime(2023, 10, 25)
+    date2 = datetime.datetime(2023, 10, 26)
+    date3 = datetime.datetime(2023, 10, 27)
+    date4 = datetime.datetime(2023, 10, 28)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,0,6385,102_13.py
+102,13,Check if a date is a weekday,Write a concise and idiomatic Python function that checks if a given `datetime.datetime` object represents a weekday. The function should utilize the built-in weekday properties of the `datetime` object for optimal performance.,"import datetime
+def is_weekday(dt: datetime.datetime) -> bool:
+    return dt.weekday() < 5
+if __name__ == '__main__':
+    date1 = datetime.datetime(2023, 10, 23)
+    date2 = datetime.datetime(2023, 10, 28)
+    date3 = datetime.datetime(2023, 10, 29)
+    date4 = datetime.datetime(2023, 10, 30)
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")",True,1,6386,102_13_1.py
+101,10,Determine the day of the week,"Write a complete, robust Python script that takes a date string (in 'YYYY-MM-DD' format) as input and accurately determines the corresponding day of the week (e.g., Monday, Tuesday, etc.). Use the built-in `datetime` module and ensure the output is clearly formatted.",,False,0,6387,101_10.py
+102,14,Check if a date is a weekday,"Generate an optimized solution for determining if an arbitrary date, provided as a string in 'MM/DD/YYYY' format, is a weekday. The solution must handle date parsing and weekday logic efficiently.","import datetime
+def is_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%m/%d/%Y')
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""01/01/2024""
+    date2 = ""02/29/2024""
+    date3 = ""03/15/2024""
+    date4 = ""12/31/2023""
+    date5 = ""04/30/2024""
+    date6 = ""13/01/2024""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {is_weekday(date5)}"")
+    print(f""Is {date6} a weekday? {is_weekday(date6)}"")",True,0,6388,102_14.py
+102,14,Check if a date is a weekday,"Generate an optimized solution for determining if an arbitrary date, provided as a string in 'MM/DD/YYYY' format, is a weekday. The solution must handle date parsing and weekday logic efficiently.","import datetime
+def is_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%m/%d/%Y')
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""01/01/2024""
+    date2 = ""02/15/2024""
+    date3 = ""03/01/2024""
+    date4 = ""04/10/2024""
+    date5 = ""05/20/2024""
+    date6 = ""06/01/2024""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {is_weekday(date5)}"")
+    print(f""Is {date6} a weekday? {is_weekday(date6)}"")",True,1,6389,102_14_1.py
+102,14,Check if a date is a weekday,"Generate an optimized solution for determining if an arbitrary date, provided as a string in 'MM/DD/YYYY' format, is a weekday. The solution must handle date parsing and weekday logic efficiently.","import datetime
+def is_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%m/%d/%Y')
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""01/01/2024""
+    date2 = ""02/15/2024""
+    date3 = ""03/01/2024""
+    date4 = ""04/10/2024""
+    date5 = ""05/20/2024""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {is_weekday(date5)}"")",True,2,6390,102_14_2.py
+102,14,Check if a date is a weekday,"Generate an optimized solution for determining if an arbitrary date, provided as a string in 'MM/DD/YYYY' format, is a weekday. The solution must handle date parsing and weekday logic efficiently.","import datetime
+def is_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%m/%d/%Y')
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""01/01/2024""
+    date2 = ""02/15/2024""
+    date3 = ""03/10/2024""
+    date4 = ""04/20/2024""
+    date5 = ""05/01/2024""
+    print(f""{date1}: {is_weekday(date1)}"")
+    print(f""{date2}: {is_weekday(date2)}"")
+    print(f""{date3}: {is_weekday(date3)}"")
+    print(f""{date4}: {is_weekday(date4)}"")
+    print(f""{date5}: {is_weekday(date5)}"")",True,3,6391,102_14_3.py
+102,14,Check if a date is a weekday,"Generate an optimized solution for determining if an arbitrary date, provided as a string in 'MM/DD/YYYY' format, is a weekday. The solution must handle date parsing and weekday logic efficiently.","import datetime
+def is_weekday(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%m/%d/%Y')
+        weekday = date_obj.weekday()
+        return 0 <= weekday <= 4
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    date1 = ""01/01/2024""
+    date2 = ""02/29/2024""
+    date3 = ""03/15/2024""
+    date4 = ""12/31/2023""
+    date5 = ""04/30/2024""
+    date6 = ""02/28/2024""
+    print(f""Is {date1} a weekday? {is_weekday(date1)}"")
+    print(f""Is {date2} a weekday? {is_weekday(date2)}"")
+    print(f""Is {date3} a weekday? {is_weekday(date3)}"")
+    print(f""Is {date4} a weekday? {is_weekday(date4)}"")
+    print(f""Is {date5} a weekday? {is_weekday(date5)}"")
+    print(f""Is {date6} a weekday? {is_weekday(date6)}"")",True,4,6392,102_14_4.py
+103,1,Calculate the time elapsed today,"Implement an optimized function using the `datetime` module to determine the total number of seconds that have passed today, handling time zone awareness correctly.","import datetime
+import pytz
+def calculate_seconds_today():
+    today = datetime.datetime.now(pytz.utc)
+    start_of_day = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_passed = today - start_of_day
+    return time_passed.total_seconds()
+if __name__ == '__main__':
+    seconds = calculate_seconds_today()
+    print(seconds)",True,0,6393,103_1.py
+103,1,Calculate the time elapsed today,"Implement an optimized function using the `datetime` module to determine the total number of seconds that have passed today, handling time zone awareness correctly.","import datetime
+import pytz
+def calculate_seconds_today():
+    today = datetime.datetime.now(pytz.utc)
+    start_of_day = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = today - start_of_day
+    return int(time_difference.total_seconds())
+if __name__ == '__main__':
+    total_seconds = calculate_seconds_today()
+    print(total_seconds)",True,1,6394,103_1_1.py
+103,1,Calculate the time elapsed today,"Implement an optimized function using the `datetime` module to determine the total number of seconds that have passed today, handling time zone awareness correctly.","import datetime
+import time
+def calculate_seconds_today():
+    now = datetime.datetime.now(datetime.timezone.utc)
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    delta = now - start_of_day
+    return delta.total_seconds()
+if __name__ == '__main__':
+    seconds = calculate_seconds_today()
+    print(seconds)",True,2,6395,103_1_2.py
+103,1,Calculate the time elapsed today,"Implement an optimized function using the `datetime` module to determine the total number of seconds that have passed today, handling time zone awareness correctly.","import datetime
+import pytz
+def calculate_seconds_today():
+    now = datetime.datetime.now(pytz.utc)
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    delta = now - start_of_day
+    return delta.total_seconds()
+if __name__ == '__main__':
+    total_seconds = calculate_seconds_today()
+    print(total_seconds)",True,3,6396,103_1_3.py
+103,1,Calculate the time elapsed today,"Implement an optimized function using the `datetime` module to determine the total number of seconds that have passed today, handling time zone awareness correctly.","import datetime
+import pytz
+def calculate_seconds_today():
+    today = datetime.datetime.now(pytz.utc)
+    start_of_day = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = today - start_of_day
+    return time_difference.total_seconds()
+if __name__ == '__main__':
+    total_seconds = calculate_seconds_today()
+    print(total_seconds)",True,4,6397,103_1_4.py
+103,1,Calculate the time elapsed today,"Implement an optimized function using the `datetime` module to determine the total number of seconds that have passed today, handling time zone awareness correctly.","import datetime
+import pytz
+def calculate_seconds_today():
+    today = datetime.datetime.now(pytz.utc)
+    start_of_day = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_passed = today - start_of_day
+    return time_passed.total_seconds()
+if __name__ == '__main__':
+    total_seconds = calculate_seconds_today()
+    print(total_seconds)",True,5,6398,103_1_5.py
+103,2,Calculate the time elapsed today,"Develop a class named 'TimeCalculator' with a method to return the total elapsed time in hours, minutes, and seconds for the current day.","class TimeCalculator:
+    def get_elapsed_time(self):
+        import datetime
+        now = datetime.datetime.now()
+        total_seconds = now.hour * 3600 + now.minute * 60 + now.second
+        hours = total_seconds // 3600
+        remaining_seconds = total_seconds % 3600
+        minutes = remaining_seconds // 60
+        seconds = remaining_seconds % 60
+        return hours, minutes, seconds
+if __name__ == '__main__':
+    calculator = TimeCalculator()
+    hours, minutes, seconds = calculator.get_elapsed_time()
+    print(f""Elapsed time for the current day: {hours} hours, {minutes} minutes, and {seconds} seconds"")",True,0,6399,103_2.py
+103,2,Calculate the time elapsed today,"Develop a class named 'TimeCalculator' with a method to return the total elapsed time in hours, minutes, and seconds for the current day.","class TimeCalculator:
+    def get_elapsed_time(self):
+        import datetime
+        now = datetime.datetime.now()
+        seconds = now.second
+        minutes = now.minute
+        hours = now.hour
+        total_seconds = (now.hour * 3600) + (now.minute * 60) + now.second
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        return hours, minutes, seconds
+if __name__ == '__main__':
+    calculator = TimeCalculator()
+    hours, minutes, seconds = calculator.get_elapsed_time()
+    print(f""Hours: {hours}, Minutes: {minutes}, Seconds: {seconds}"")",True,1,6400,103_2_1.py
+103,3,Calculate the time elapsed today,Write a concise and efficient one-liner using built-in Python features to get the current time and calculate the difference from the start of the current day.,"if __name__ == '__main__':
+    import datetime
+    now = datetime.datetime(2023, 10, 27, 14, 30, 0)
+    start_of_day = datetime.datetime(now.year, now.month, now.day, 0, 0, 0)
+    difference = now - start_of_day
+    print(difference)",True,0,6401,103_3.py
+103,3,Calculate the time elapsed today,Write a concise and efficient one-liner using built-in Python features to get the current time and calculate the difference from the start of the current day.,"if __name__ == '__main__':
+    import datetime
+    now = datetime.datetime(2023, 10, 27, 14, 30, 0)
+    start_of_day = datetime.datetime(now.year, now.month, now.day, 0, 0, 0)
+    time_difference = now - start_of_day
+    print(time_difference)",True,1,6402,103_3_1.py
+103,4,Calculate the time elapsed today,"Create a function that accepts a date object and calculates the total time elapsed from the start of that date until the current moment, returning the result as a `timedelta` object.","import datetime
+def calculate_elapsed_time(date_object):
+    now = datetime.datetime.now()
+    time_difference = now - date_object
+    return time_difference
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 1, 1, 10, 0, 0)
+    elapsed_time = calculate_elapsed_time(sample_date)
+    print(elapsed_time)",True,0,6403,103_4.py
+103,4,Calculate the time elapsed today,"Create a function that accepts a date object and calculates the total time elapsed from the start of that date until the current moment, returning the result as a `timedelta` object.","import datetime
+def calculate_elapsed_time(date_obj):
+    now = datetime.datetime.now()
+    time_difference = now - date_obj
+    return time_difference
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 1, 1, 10, 0, 0)
+    elapsed_time = calculate_elapsed_time(sample_date)
+    print(elapsed_time)",True,1,6404,103_4_1.py
+103,4,Calculate the time elapsed today,"Create a function that accepts a date object and calculates the total time elapsed from the start of that date until the current moment, returning the result as a `timedelta` object.","import datetime
+def calculate_elapsed_time(date_obj):
+    now = datetime.datetime.now()
+    time_difference = now - date_obj
+    return time_difference
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 1, 1, 10, 0, 0)
+    elapsed = calculate_elapsed_time(sample_date)
+    print(elapsed)",True,2,6405,103_4_2.py
+103,4,Calculate the time elapsed today,"Create a function that accepts a date object and calculates the total time elapsed from the start of that date until the current moment, returning the result as a `timedelta` object.","import datetime
+def calculate_time_elapsed(date_obj):
+    now = datetime.datetime.now()
+    time_elapsed = now - date_obj
+    return time_elapsed
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 1, 1, 10, 0, 0)
+    elapsed_time = calculate_time_elapsed(sample_date)
+    print(elapsed_time)",True,3,6406,103_4_3.py
+103,4,Calculate the time elapsed today,"Create a function that accepts a date object and calculates the total time elapsed from the start of that date until the current moment, returning the result as a `timedelta` object.","from datetime import datetime, timedelta
+def calculate_elapsed_time(date_obj):
+    now = datetime.now()
+    time_difference = now - date_obj
+    return time_difference
+if __name__ == '__main__':
+    sample_date = datetime(2023, 1, 1, 10, 0, 0)
+    elapsed = calculate_elapsed_time(sample_date)
+    print(elapsed)",True,4,6407,103_4_4.py
+103,6,Calculate the time elapsed today,Implement a function that takes a string representing the current date and calculates the total seconds elapsed since the Unix epoch for that specific date.,"import datetime
+import time
+def calculate_seconds_since_epoch(date_string):
+    date_obj = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+    epoch = datetime.datetime(1970, 1, 1)
+    time_difference = date_obj - epoch
+    return int(time_difference.total_seconds())
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    elapsed_seconds = calculate_seconds_since_epoch(sample_date)
+    print(elapsed_seconds)",True,0,6408,103_6.py
+103,6,Calculate the time elapsed today,Implement a function that takes a string representing the current date and calculates the total seconds elapsed since the Unix epoch for that specific date.,"import datetime
+import time
+def calculate_seconds_since_epoch(date_string):
+    date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+    epoch = datetime.datetime(1970, 1, 1)
+    time_difference = date_object - epoch
+    return int(time_difference.total_seconds())
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    elapsed_seconds = calculate_seconds_since_epoch(sample_date)
+    print(elapsed_seconds)",True,1,6409,103_6_1.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time if base_time is not None else datetime.datetime.now()
+    def add_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def subtract_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+if __name__ == '__main__':
+    print(""--- Time Calculation Module Test ---"")
+    start_time = datetime.datetime(2023, 10, 27, 10, 30, 0)
+    print(f""Base Time: {start_time}"")
+    calculator = TimeCalculator(base_time=start_time)
+    delta_seconds = 3600          
+    try:
+        time_after_seconds = calculator.add_time(delta_seconds, unit='seconds')
+        print(f""Adding {delta_seconds} seconds: {time_after_seconds}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error adding seconds: {e}"")
+    delta_minutes = 90
+    try:
+        time_after_minutes = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {time_after_minutes}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error adding minutes: {e}"")
+    delta_hours = 2
+    try:
+        time_before_hours = calculator.subtract_time(delta_hours, unit='hours')
+        print(f""Subtracting {delta_hours} hours: {time_before_hours}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error subtracting hours: {e}"")
+    try:
+        calculator.add_time(10, unit='days')
+    except ValueError as e:
+        print(f""Caught expected error for invalid unit: {e}"")
+    try:
+        calculator.add_time(""invalid"", unit='seconds')
+    except TypeError as e:
+        print(f""Caught expected error for invalid delta type: {e}"")",True,0,6410,103_7.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time
+    def add_time(self, delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time + datetime.timedelta(seconds=delta)
+        elif unit == 'minutes':
+            result = self.base_time + datetime.timedelta(minutes=delta)
+        elif unit == 'hours':
+            result = self.base_time + datetime.timedelta(hours=delta)
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+        return result
+    def subtract_time(self, delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time - datetime.timedelta(seconds=delta)
+        elif unit == 'minutes':
+            result = self.base_time - datetime.timedelta(minutes=delta)
+        elif unit == 'hours':
+            result = self.base_time - datetime.timedelta(hours=delta)
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+        return result
+    def get_time_difference(self, end_time, start_time):
+        if not isinstance(start_time, datetime.datetime) or not isinstance(end_time, datetime.datetime):
+            raise TypeError(""Both start_time and end_time must be datetime objects."")
+        if start_time > end_time:
+            return -1                                                                      
+        difference = end_time - start_time
+        return difference
+if __name__ == '__main__':
+    start = datetime.datetime(2023, 10, 26, 10, 0, 0)
+    calculator = TimeCalculator(base_time=start)
+    print(f""Base Time: {start}"")
+    try:
+        time_plus_minutes = calculator.add_time(30, unit='minutes')
+        print(f""Time + 30 minutes: {time_plus_minutes}"")
+        time_plus_hours = calculator.add_time(2, unit='hours')
+        print(f""Time + 2 hours: {time_plus_hours}"")
+        time_minus_seconds = calculator.subtract_time(60, unit='seconds')
+        print(f""Time - 60 seconds: {time_minus_seconds}"")
+        end = datetime.datetime(2023, 10, 26, 11, 30, 0)
+        diff = calculator.get_time_difference(end, start)
+        print(f""Difference between start and end: {diff}"")
+        try:
+            calculator.add_time(10, unit='days')
+        except ValueError as e:
+            print(f""Caught expected error: {e}"")
+        try:
+            calculator.add_time(10, unit='weeks')
+        except ValueError as e:
+            print(f""Caught expected error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,6411,103_7_1.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_format=""%Y-%m-%d %H:%M:%S""):
+        self.base_format = base_format
+    def parse_time(self, time_str):
+        try:
+            dt = datetime.datetime.strptime(time_str, self.base_format)
+            return dt
+        except ValueError as e:
+            raise ValueError(f""Invalid date format. Expected '{self.base_format}': {e}"")
+    def add_duration(self, dt, duration_str):
+        try:
+            duration = datetime.timedelta(seconds=int(duration_str))
+            new_dt = dt + duration
+            return new_dt
+        except ValueError:
+            raise ValueError(""Invalid duration format. Must be an integer number of seconds."")
+    def format_time(self, dt, output_format=""%Y-%m-%d %H:%M:%S""):
+        try:
+            return dt.strftime(output_format)
+        except Exception as e:
+            raise RuntimeError(f""Error formatting time: {e}"")
+if __name__ == '__main__':
+    calculator = TimeCalculator()
+    sample_date_str = ""2023-10-27 10:00:00""
+    sample_duration_str = ""3600""
+    try:
+        start_time = calculator.parse_time(sample_date_str)
+        print(f""Start Time: {calculator.format_time(start_time)}"")
+        end_time = calculator.add_duration(start_time, sample_duration_str)
+        print(f""End Time (after adding {sample_duration_str} seconds): {calculator.format_time(end_time)}"")
+        another_time_str = ""2024-01-01 00:00:00""
+        another_duration_str = ""86400""
+        start_time_2 = calculator.parse_time(another_time_str)
+        end_time_2 = calculator.add_duration(start_time_2, another_duration_str)
+        print(f""Second Test: Start Time: {calculator.format_time(start_time_2)}, End Time: {calculator.format_time(end_time_2)}"")
+        try:
+            calculator.parse_time(""27/10/2023 10:00"")
+        except ValueError as e:
+            print(f""Error Handling Test Passed: {e}"")
+    except ValueError as e:
+        print(f""A critical error occurred during time calculation: {e}"")
+    except RuntimeError as e:
+        print(f""A formatting error occurred: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,2,6412,103_7_2.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time if base_time is not None else datetime.datetime.now()
+    def add_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def subtract_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def get_time_difference(self, end_time, unit='seconds'):
+        if not isinstance(end_time, datetime.datetime):
+            raise TypeError(""end_time must be a datetime object."")
+        difference = end_time - self.base_time
+        if unit == 'seconds':
+            return difference.total_seconds()
+        elif unit == 'minutes':
+            return difference.total_seconds() / 60
+        elif unit == 'hours':
+            return difference.total_seconds() / 3600
+        else:
+            raise ValueError(""Unsupported difference unit. Use 'seconds', 'minutes', or 'hours'."")
+if __name__ == '__main__':
+    start_time = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    calculator = TimeCalculator(base_time=start_time)
+    print(f""Base Time: {start_time}"")
+    try:
+        delta_minutes = 90
+        new_time_minutes = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {new_time_minutes}"")
+        delta_hours = 2.5
+        new_time_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""Adding {delta_hours} hours: {new_time_hours}"")
+        delta_seconds = 3600
+        new_time_seconds = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""Subtracting {delta_seconds} seconds: {new_time_seconds}"")
+        end_time = datetime.datetime(2023, 10, 27, 11, 30, 0)
+        diff_minutes = calculator.get_time_difference(end_time, unit='minutes')
+        print(f""Difference between {start_time} and {end_time} in minutes: {diff_minutes}"")
+        try:
+            calculator.add_time(""invalid"", unit='minutes')
+        except TypeError as e:
+            print(f""Caught expected error for invalid input: {e}"")
+        try:
+            calculator.get_time_difference(""not a datetime"")
+        except TypeError as e:
+            print(f""Caught expected error for invalid datetime object: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,3,6413,103_7_3.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time if base_time is not None else datetime.datetime.now()
+    def add_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def subtract_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def get_time_difference(self, end_time, unit='seconds'):
+        if not isinstance(end_time, datetime.datetime):
+            raise TypeError(""end_time must be a datetime object."")
+        difference = end_time - self.base_time
+        if unit == 'seconds':
+            return difference.total_seconds()
+        elif unit == 'minutes':
+            return difference.total_seconds() / 60
+        elif unit == 'hours':
+            return difference.total_seconds() / 3600
+        else:
+            raise ValueError(""Unsupported unit for difference calculation. Use 'seconds', 'minutes', or 'hours'."")
+if __name__ == '__main__':
+    print(""--- Time Calculation Module Test ---"")
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    print(f""Base Time Set To: {sample_start}"")
+    calculator = TimeCalculator(base_time=sample_start)
+    delta_minutes = 90
+    try:
+        new_time_minutes = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""\nAdding {delta_minutes} minutes to base time:"")
+        print(f""Resulting Time: {new_time_minutes}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error during addition: {e}"")
+    delta_hours = 2.5
+    try:
+        new_time_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""\nAdding {delta_hours} hours to base time:"")
+        print(f""Resulting Time: {new_time_hours}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error during addition: {e}"")
+    delta_seconds = 3600          
+    try:
+        new_time_sub = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""\nSubtracting {delta_seconds} seconds from base time:"")
+        print(f""Resulting Time: {new_time_sub}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error during subtraction: {e}"")
+    sample_end = datetime.datetime(2023, 10, 27, 11, 30, 0)
+    try:
+        diff_seconds = calculator.get_time_difference(sample_end, unit='seconds')
+        print(f""\nTime difference between {sample_start} and {sample_end} (in seconds): {diff_seconds}"")
+        diff_hours = calculator.get_time_difference(sample_end, unit='hours')
+        print(f""Time difference between {sample_start} and {sample_end} (in hours): {diff_hours}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error during difference calculation: {e}"")
+    print(""\n--- Testing Error Handling ---"")
+    try:
+        calculator.add_time(""invalid"", unit='minutes')
+    except TypeError as e:
+        print(f""Caught expected error for invalid type: {e}"")
+    try:
+        calculator.add_time(10, unit='days')
+    except ValueError as e:
+        print(f""Caught expected error for invalid unit: {e}"")
+    try:
+        calculator.get_time_difference(""not a date"", unit='seconds')
+    except TypeError as e:
+        print(f""Caught expected error for invalid end_time type: {e}"")",True,4,6414,103_7_4.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time if base_time is not None else datetime.datetime.now()
+    def add_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def subtract_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def get_time_difference(self, end_time, unit='seconds'):
+        if not isinstance(end_time, datetime.datetime):
+            raise TypeError(""end_time must be a datetime object."")
+        difference = end_time - self.base_time
+        if unit == 'seconds':
+            return difference.total_seconds()
+        elif unit == 'minutes':
+            return difference.total_seconds() / 60
+        elif unit == 'hours':
+            return difference.total_seconds() / 3600
+        else:
+            raise ValueError(""Unsupported difference unit. Use 'seconds', 'minutes', or 'hours'."")
+if __name__ == '__main__':
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    calculator = TimeCalculator(base_time=sample_start)
+    print(f""Base Time: {sample_start}"")
+    try:
+        delta_minutes = 90
+        new_time_minutes = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {new_time_minutes}"")
+        delta_hours = 2.5
+        new_time_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""Adding {delta_hours} hours: {new_time_hours}"")
+        delta_seconds = 3600
+        new_time_seconds = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""Subtracting {delta_seconds} seconds: {new_time_seconds}"")
+        sample_end = datetime.datetime(2023, 10, 27, 11, 30, 0)
+        diff_minutes = calculator.get_time_difference(sample_end, unit='minutes')
+        print(f""Difference between {sample_end} and base time in minutes: {diff_minutes}"")
+        try:
+            calculator.add_time(""invalid"", unit='minutes')
+        except TypeError as e:
+            print(f""Caught expected error for invalid input: {e}"")
+        try:
+            calculator.get_time_difference(""not_a_date"", unit='minutes')
+        except TypeError as e:
+            print(f""Caught expected error for invalid datetime object: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,5,6415,103_7_5.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time
+    def add_time(self, time_delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time + datetime.timedelta(seconds=time_delta)
+        elif unit == 'minutes':
+            result = self.base_time + datetime.timedelta(minutes=time_delta)
+        elif unit == 'hours':
+            result = self.base_time + datetime.timedelta(hours=time_delta)
+        else:
+            raise ValueError(f""Unsupported time unit: {unit}"")
+        return result
+    def subtract_time(self, time_delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time - datetime.timedelta(seconds=time_delta)
+        elif unit == 'minutes':
+            result = self.base_time - datetime.timedelta(minutes=time_delta)
+        elif unit == 'hours':
+            result = self.base_time - datetime.timedelta(hours=time_delta)
+        else:
+            raise ValueError(f""Unsupported time unit: {unit}"")
+        return result
+    def get_time_difference(self, end_time, start_time):
+        if start_time is None or end_time is None:
+            raise ValueError(""Both start_time and end_time must be provided for difference calculation."")
+        if not isinstance(start_time, datetime.datetime) or not isinstance(end_time, datetime.datetime):
+            raise TypeError(""Inputs must be datetime objects."")
+        if start_time > end_time:
+            raise ValueError(""Start time cannot be after end time."")
+        difference = end_time - start_time
+        return difference
+if __name__ == '__main__':
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    calculator = TimeCalculator(base_time=sample_start)
+    print(f""Base Time: {sample_start}"")
+    try:
+        delta_minutes = 90
+        new_time_add = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {new_time_add}"")
+        delta_hours = 3
+        new_time_add_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""Adding {delta_hours} hours: {new_time_add_hours}"")
+        delta_seconds = 3600          
+        new_time_sub = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""Subtracting {delta_seconds} seconds: {new_time_sub}"")
+        sample_end = datetime.datetime(2023, 10, 27, 11, 30, 0)
+        diff = calculator.get_time_difference(sample_start, sample_end)
+        print(f""Time difference between {sample_start} and {sample_end}: {diff}"")
+        try:
+            calculator.add_time(10, unit='days')
+        except ValueError as e:
+            print(f""Caught expected error for invalid unit: {e}"")
+        try:
+            calculator.subtract_time(10, unit='minutes')
+        except ValueError as e:
+            print(f""Caught expected error for missing base time: {e}"")
+        try:
+            calculator.get_time_difference(sample_end, sample_start)
+        except ValueError as e:
+            print(f""Caught expected error for start > end: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,6,6416,103_7_6.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time if base_time is not None else datetime.datetime.now()
+    def add_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time + datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def subtract_time(self, delta, unit='seconds'):
+        if unit == 'seconds':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(seconds=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for seconds must be a number."")
+        elif unit == 'minutes':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(minutes=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for minutes must be a number."")
+        elif unit == 'hours':
+            if isinstance(delta, (int, float)):
+                new_time = self.base_time - datetime.timedelta(hours=delta)
+                return new_time
+            else:
+                raise TypeError(""Delta for hours must be a number."")
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+    def get_time_difference(self, end_time, unit='seconds'):
+        if not isinstance(end_time, datetime.datetime):
+            raise TypeError(""end_time must be a datetime object."")
+        difference = end_time - self.base_time
+        if unit == 'seconds':
+            return difference.total_seconds()
+        elif unit == 'minutes':
+            return difference.total_seconds() / 60
+        elif unit == 'hours':
+            return difference.total_seconds() / 3600
+        else:
+            raise ValueError(""Unsupported difference unit. Use 'seconds', 'minutes', or 'hours'."")
+if __name__ == '__main__':
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    calculator = TimeCalculator(base_time=sample_start)
+    print(f""Base Time: {sample_start}"")
+    try:
+        delta_minutes = 90
+        new_time_minutes = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {new_time_minutes}"")
+        delta_hours = 2.5
+        new_time_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""Adding {delta_hours} hours: {new_time_hours}"")
+        delta_seconds = 3600
+        new_time_seconds = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""Subtracting {delta_seconds} seconds: {new_time_seconds}"")
+        sample_end = datetime.datetime(2023, 10, 27, 11, 30, 0)
+        diff_minutes = calculator.get_time_difference(sample_end, unit='minutes')
+        print(f""Difference between {sample_end} and base time in minutes: {diff_minutes}"")
+        try:
+            calculator.add_time(""invalid"", unit='minutes')
+        except TypeError as e:
+            print(f""Caught expected error for invalid input: {e}"")
+        try:
+            calculator.get_time_difference(""not_a_date"", unit='minutes')
+        except TypeError as e:
+            print(f""Caught expected error for invalid date type: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,7,6417,103_7_7.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time
+    def add_time(self, time_delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time + datetime.timedelta(seconds=time_delta)
+        elif unit == 'minutes':
+            result = self.base_time + datetime.timedelta(minutes=time_delta)
+        elif unit == 'hours':
+            result = self.base_time + datetime.timedelta(hours=time_delta)
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+        return result
+    def subtract_time(self, time_delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time - datetime.timedelta(seconds=time_delta)
+        elif unit == 'minutes':
+            result = self.base_time - datetime.timedelta(minutes=time_delta)
+        elif unit == 'hours':
+            result = self.base_time - datetime.timedelta(hours=time_delta)
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+        return result
+    def get_time_difference(self, end_time, start_time):
+        if start_time is None or end_time is None:
+            raise ValueError(""Both start_time and end_time must be provided for difference calculation."")
+        if not isinstance(start_time, datetime.datetime) or not isinstance(end_time, datetime.datetime):
+            raise TypeError(""Inputs must be datetime objects."")
+        difference = end_time - start_time
+        return difference
+if __name__ == '__main__':
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    print(f""Base Time: {sample_start}"")
+    calculator = TimeCalculator(base_time=sample_start)
+    try:
+        delta_minutes = 90
+        new_time_add = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {new_time_add}"")
+        delta_hours = 3
+        new_time_add_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""Adding {delta_hours} hours: {new_time_add_hours}"")
+        delta_seconds = 3600          
+        new_time_sub = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""Subtracting {delta_seconds} seconds: {new_time_sub}"")
+        sample_end = datetime.datetime(2023, 10, 27, 11, 30, 0)
+        time_diff = calculator.get_time_difference(sample_end, sample_start)
+        print(f""Time difference between start and end: {time_diff}"")
+        print(""\nTesting error handling:"")
+        try:
+            calculator.add_time(10, unit='days')
+        except ValueError as e:
+            print(f""Caught expected error for invalid unit: {e}"")
+        try:
+            calculator.add_time(10, unit='minutes')
+        except ValueError as e:
+            print(f""Caught expected error for missing base time: {e}"")
+        try:
+            calculator.get_time_difference(sample_start, None)
+        except ValueError as e:
+            print(f""Caught expected error for missing end time: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,8,6418,103_7_8.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time
+    def add_time(self, time_delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time + datetime.timedelta(seconds=time_delta)
+        elif unit == 'minutes':
+            result = self.base_time + datetime.timedelta(minutes=time_delta)
+        elif unit == 'hours':
+            result = self.base_time + datetime.timedelta(hours=time_delta)
+        else:
+            raise ValueError(f""Unsupported time unit: {unit}. Supported units are 'seconds', 'minutes', 'hours'."")
+        return result
+    def subtract_time(self, time_delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time - datetime.timedelta(seconds=time_delta)
+        elif unit == 'minutes':
+            result = self.base_time - datetime.timedelta(minutes=time_delta)
+        elif unit == 'hours':
+            result = self.base_time - datetime.timedelta(hours=time_delta)
+        else:
+            raise ValueError(f""Unsupported time unit: {unit}. Supported units are 'seconds', 'minutes', 'hours'."")
+        return result
+    def get_time_difference(self, start_time, end_time):
+        if start_time is None or end_time is None:
+            raise ValueError(""Both start_time and end_time must be provided for difference calculation."")
+        if not isinstance(start_time, datetime.datetime) or not isinstance(end_time, datetime.datetime):
+            raise TypeError(""Inputs must be datetime objects."")
+        if start_time > end_time:
+            raise ValueError(""Start time cannot be after end time."")
+        difference = end_time - start_time
+        return difference
+if __name__ == '__main__':
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    calculator = TimeCalculator(base_time=sample_start)
+    print(f""Base Time: {sample_start}"")
+    try:
+        time_plus = calculator.add_time(3600, unit='seconds')
+        print(f""Time after adding 1 hour (seconds): {time_plus}"")
+        time_minus = calculator.subtract_time(7200, unit='minutes')
+        print(f""Time after subtracting 2 hours (minutes): {time_minus}"")
+        time_diff = calculator.get_time_difference(sample_start, datetime.datetime(2023, 10, 27, 11, 30, 0))
+        print(f""Time difference between {sample_start} and 11:30:00: {time_diff}"")
+        calculator.add_time(10, unit='minutes')
+        print(f""Time after adding 10 minutes: {calculator.base_time + datetime.timedelta(minutes=10)}"")
+        try:
+            calculator.add_time(10, unit='days')
+        except ValueError as e:
+            print(f""Error caught successfully: {e}"")
+        try:
+            calculator.subtract_time(10, unit='days')
+        except ValueError as e:
+            print(f""Error caught successfully: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,9,6419,103_7_9.py
+103,7,Calculate the time elapsed today,"Design and write a best-practice Python module for time calculations, ensuring the code is highly readable and handles potential errors gracefully.","import datetime
+class TimeCalculator:
+    def __init__(self, base_time=None):
+        self.base_time = base_time
+    def add_time(self, delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time + datetime.timedelta(seconds=delta)
+        elif unit == 'minutes':
+            result = self.base_time + datetime.timedelta(minutes=delta)
+        elif unit == 'hours':
+            result = self.base_time + datetime.timedelta(hours=delta)
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+        return result
+    def subtract_time(self, delta, unit='seconds'):
+        if self.base_time is None:
+            raise ValueError(""Base time must be set before performing calculations."")
+        if unit == 'seconds':
+            result = self.base_time - datetime.timedelta(seconds=delta)
+        elif unit == 'minutes':
+            result = self.base_time - datetime.timedelta(minutes=delta)
+        elif unit == 'hours':
+            result = self.base_time - datetime.timedelta(hours=delta)
+        else:
+            raise ValueError(""Unsupported time unit. Use 'seconds', 'minutes', or 'hours'."")
+        return result
+    def get_time_difference(self, end_time, start_time):
+        if start_time is None or end_time is None:
+            raise ValueError(""Both start_time and end_time must be provided for difference calculation."")
+        if not isinstance(start_time, datetime.datetime) or not isinstance(end_time, datetime.datetime):
+            raise TypeError(""Inputs must be datetime objects."")
+        if start_time > end_time:
+            raise ValueError(""Start time cannot be after end time."")
+        difference = end_time - start_time
+        return difference
+if __name__ == '__main__':
+    sample_start = datetime.datetime(2023, 10, 27, 10, 0, 0)
+    calculator = TimeCalculator(base_time=sample_start)
+    print(f""Base Time: {sample_start}"")
+    try:
+        delta_minutes = 90
+        new_time_add = calculator.add_time(delta_minutes, unit='minutes')
+        print(f""Adding {delta_minutes} minutes: {new_time_add}"")
+        delta_hours = 3
+        new_time_add_hours = calculator.add_time(delta_hours, unit='hours')
+        print(f""Adding {delta_hours} hours: {new_time_add_hours}"")
+        delta_seconds = 3600          
+        new_time_sub = calculator.subtract_time(delta_seconds, unit='seconds')
+        print(f""Subtracting {delta_seconds} seconds: {new_time_sub}"")
+        sample_end = datetime.datetime(2023, 10, 27, 11, 30, 0)
+        diff = calculator.get_time_difference(sample_start, sample_end)
+        print(f""Time difference between {sample_start} and {sample_end}: {diff}"")
+        print(""\nTesting error handling:"")
+        try:
+            calculator.add_time(10, unit='days')
+        except ValueError as e:
+            print(f""Caught expected error for invalid unit: {e}"")
+        try:
+            calculator.subtract_time(10, unit='minutes')
+        except ValueError as e:
+            print(f""Caught expected error for missing base time: {e}"")
+        try:
+            calculator.get_time_difference(sample_end, sample_start)
+        except ValueError as e:
+            print(f""Caught expected error for start > end: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,10,6420,103_7_10.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = now - start_of_day
+    print(f""Current Time: {now}"")
+    print(f""Start of Day: {start_of_day}"")
+    print(f""Difference (Time Elapsed): {time_difference}"")",True,0,6421,103_8.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+def calculate_time_difference(current_time_str):
+    current_time = datetime.datetime.strptime(current_time_str, ""%Y-%m-%d %H:%M:%S"")
+    start_of_day = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
+    difference = current_time - start_of_day
+    return difference
+if __name__ == '__main__':
+    sample_time = ""2023-10-27 14:35:10""
+    difference = calculate_time_difference(sample_time)
+    print(f""Current Time: {sample_time}"")
+    print(f""Start of Day: {datetime.datetime.strptime(sample_time, '%Y-%m-%d %H:%M:%S').date()}"")
+    print(f""Difference (Time elapsed since start of day): {difference}"")",True,1,6422,103_8_1.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+def calculate_time_difference(timestamp):
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    difference = now - start_of_day
+    return difference
+if __name__ == '__main__':
+    sample_timestamp = datetime.datetime(2023, 10, 27, 14, 30, 15)
+    difference = calculate_time_difference(sample_timestamp)
+    print(f""Sample Timestamp: {sample_timestamp}"")
+    print(f""Difference from start of day: {difference}"")",True,2,6423,103_8_2.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = now - start_of_day
+    print(f""Current time: {now}"")
+    print(f""Start of the day: {start_of_day}"")
+    print(f""Difference (time elapsed since start of day): {time_difference}"")",True,3,6424,103_8_3.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+def calculate_time_difference(timestamp):
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    difference = now - start_of_day
+    return difference
+if __name__ == '__main__':
+    sample_timestamp = datetime.datetime(2023, 10, 27, 14, 35, 10)
+    difference = calculate_time_difference(sample_timestamp)
+    print(f""Sample Timestamp: {sample_timestamp}"")
+    print(f""Difference from start of day: {difference}"")",True,4,6425,103_8_4.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = now - start_of_day
+    print(f""Current time: {now}"")
+    print(f""Start of the day: {start_of_day}"")
+    print(f""Difference (timedelta): {time_difference}"")
+    print(f""Difference in seconds: {time_difference.total_seconds()}"")",True,5,6426,103_8_5.py
+103,8,Calculate the time elapsed today,"Write an optimized solution to calculate the difference between the current time and the start of the current day, ensuring the output is formatted clearly.","import datetime
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = now - start_of_day
+    print(f""Current time: {now}"")
+    print(f""Start of the day: {start_of_day}"")
+    print(f""Difference (timedelta): {time_difference}"")
+    print(f""Difference in seconds: {time_difference.total_seconds()}"")
+    print(f""Difference in hours: {time_difference.total_seconds() / 3600}"")
+    print(f""Difference in minutes: {time_difference.total_seconds() / 60}"")",True,6,6427,103_8_6.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import pytz
+def calculate_elapsed_time():
+    now_utc = datetime.datetime.now(pytz.utc)
+    start_of_day_utc = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    elapsed_time = now_utc - start_of_day_utc
+    print(f""Current time (UTC): {now_utc}"")
+    print(f""Start of today (UTC): {start_of_day_utc}"")
+    print(f""Time elapsed today: {elapsed_time}"")
+if __name__ == '__main__':
+    calculate_elapsed_time()",True,0,6428,103_9.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now_utc = datetime.datetime.utcnow()
+    print(f""Current UTC time: {now_utc}"")
+    start_of_day_utc = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_elapsed_seconds = (now_utc - start_of_day_utc).total_seconds()
+    print(f""Time elapsed today (since midnight UTC): {time_elapsed_seconds:.3f} seconds"")",True,1,6429,103_9_1.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now_utc = datetime.datetime.utcnow()
+    print(f""Current UTC time: {now_utc}"")
+    start_of_day_utc = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_elapsed_seconds = (now_utc - start_of_day_utc).total_seconds()
+    print(f""Time elapsed today in seconds: {time_elapsed_seconds}"")
+    current_timestamp = time.time()
+    start_of_day_timestamp = start_of_day_utc.timestamp()
+    time_elapsed_since_epoch = current_timestamp - start_of_day_timestamp
+    print(f""Time elapsed since start of day (epoch based): {time_elapsed_since_epoch}"")",True,2,6430,103_9_2.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now_utc = datetime.datetime.utcnow()
+    print(f""Current UTC time: {now_utc}"")
+    today_start = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    today_end = now_utc.replace(hour=23, minute=59, second=59, microsecond=999999)
+    print(f""Start of today (UTC): {today_start}"")
+    print(f""End of today (UTC): {today_end}"")
+    time_today_seconds = (today_end - today_start).total_seconds()
+    print(f""Total seconds in the day: {time_today_seconds}"")
+    elapsed_seconds_today = (now_utc - today_start).total_seconds()
+    print(f""Time elapsed today (since midnight UTC): {elapsed_seconds_today} seconds"")
+    local_now = datetime.datetime.now()
+    local_today_start = local_now.replace(hour=0, minute=0, second=0, microsecond=0)
+    local_elapsed_seconds = (local_now - local_today_start).total_seconds()
+    print(f""Time elapsed today (since local midnight): {local_elapsed_seconds} seconds"")",True,3,6431,103_9_3.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    print(f""Current time in UTC: {now_utc}"")
+    start_of_day_utc = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_elapsed_today_utc = now_utc - start_of_day_utc
+    print(f""Time elapsed today (UTC): {time_elapsed_today_utc}"")
+    local_time = datetime.datetime.now()
+    start_of_day_local = local_time.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_elapsed_today_local = local_time - start_of_day_local
+    print(f""Current local time: {local_time}"")
+    print(f""Time elapsed today (Local): {time_elapsed_today_local}"")",True,4,6432,103_9_4.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now_utc = datetime.datetime.utcnow()
+    print(f""Current UTC time: {now_utc}"")
+    start_of_day_utc = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_elapsed_seconds = (now_utc - start_of_day_utc).total_seconds()
+    print(f""Time elapsed today (since midnight UTC): {time_elapsed_seconds:.3f} seconds"")
+    local_now = datetime.datetime.now()
+    print(f""Current local time: {local_now}"")
+    start_of_day_local = local_now.replace(hour=0, minute=0, second=0, microsecond=0)
+    local_time_elapsed_seconds = (local_now - start_of_day_local).total_seconds()
+    print(f""Time elapsed today (since midnight local): {local_time_elapsed_seconds:.3f} seconds"")",True,5,6433,103_9_5.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import pytz
+if __name__ == '__main__':
+    now_utc = datetime.datetime.now(pytz.utc)
+    print(f""Current time in UTC: {now_utc}"")
+    today_start_utc = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    print(f""Start of today in UTC: {today_start_utc}"")
+    time_elapsed_today = now_utc - today_start_utc
+    print(f""Time elapsed today (timedelta): {time_elapsed_today}"")
+    total_seconds = time_elapsed_today.total_seconds()
+    print(f""Total seconds elapsed today: {total_seconds}"")
+    print(f""Time elapsed today in hours: {time_elapsed_today.total_seconds() / 3600}"")
+    print(f""Time elapsed today in days: {time_elapsed_today.total_seconds() / (3600 * 24)}"")",True,6,6434,103_9_6.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    print(now)",True,7,6435,103_9_7.py
+103,9,Calculate the time elapsed today,"Generate the complete, runnable Python code to calculate and print the exact time elapsed today, including handling the complexities of time zones if applicable.","import datetime
+import time
+if __name__ == '__main__':
+    now_utc = datetime.datetime.utcnow()
+    print(f""Current UTC time: {now_utc}"")
+    today_start = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    today_end = now_utc.replace(hour=23, minute=59, second=59, microsecond=999999)
+    print(f""Start of today (UTC): {today_start}"")
+    print(f""End of today (UTC): {today_end}"")
+    time_today_seconds = (today_end - today_start).total_seconds()
+    print(f""Total seconds in a day: {time_today_seconds}"")
+    print(f""Exact time elapsed today (in seconds): {time_today_seconds}"")",True,8,6436,103_9_8.py
+103,10,Calculate the time elapsed today,"Write a complete, robust Python script that calculates the exact time elapsed since the beginning of the current day (midnight) using the datetime module. The script must handle system time accurately.","import datetime
+import time
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elapsed_time = now - midnight
+    print(elapsed_time)",True,0,6437,103_10.py
+103,10,Calculate the time elapsed today,"Write a complete, robust Python script that calculates the exact time elapsed since the beginning of the current day (midnight) using the datetime module. The script must handle system time accurately.","import datetime
+import time
+if __name__ == '__main__':
+    now = datetime.datetime.now()
+    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_elapsed = now - midnight
+    print(time_elapsed)",True,1,6438,103_10_1.py
+103,11,Calculate the time elapsed today,Implement an optimized function named 'calculate_elapsed_time_today' that returns the total seconds elapsed since 00:00:00 of the current day. Use the standard library and ensure time complexity is O(1).,"import time
+import datetime
+def calculate_elapsed_time_today():
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elapsed_seconds = (now - start_of_day).total_seconds()
+    return int(elapsed_seconds)
+if __name__ == '__main__':
+    print(calculate_elapsed_time_today())",True,0,6439,103_11.py
+103,11,Calculate the time elapsed today,Implement an optimized function named 'calculate_elapsed_time_today' that returns the total seconds elapsed since 00:00:00 of the current day. Use the standard library and ensure time complexity is O(1).,"import time
+import datetime
+def calculate_elapsed_time_today():
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elapsed_seconds = (now - start_of_day).total_seconds()
+    return int(elapsed_seconds)
+if __name__ == '__main__':
+    elapsed = calculate_elapsed_time_today()
+    print(elapsed)",True,1,6440,103_11_1.py
+103,11,Calculate the time elapsed today,Implement an optimized function named 'calculate_elapsed_time_today' that returns the total seconds elapsed since 00:00:00 of the current day. Use the standard library and ensure time complexity is O(1).,"import time
+import datetime
+def calculate_elapsed_time_today():
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elapsed_time = (now - start_of_day).total_seconds()
+    return elapsed_time
+if __name__ == '__main__':
+    elapsed = calculate_elapsed_time_today()
+    print(elapsed)",True,2,6441,103_11_2.py
+103,12,Calculate the time elapsed today,"Develop a class named 'TimeTracker' with a method 'get_time_elapsed_today' that provides the current time elapsed since the start of the day. The implementation must be clean, efficient, and follow object-oriented programming best practices.","import datetime
+class TimeTracker:
+    def get_time_elapsed_today(self):
+        now = datetime.datetime.now()
+        start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        elapsed_time = now - start_of_day
+        return elapsed_time
+if __name__ == '__main__':
+    tracker = TimeTracker()
+    elapsed = tracker.get_time_elapsed_today()
+    print(elapsed)",True,0,6442,103_12.py
+103,12,Calculate the time elapsed today,"Develop a class named 'TimeTracker' with a method 'get_time_elapsed_today' that provides the current time elapsed since the start of the day. The implementation must be clean, efficient, and follow object-oriented programming best practices.","import datetime
+class TimeTracker:
+    def __init__(self):
+        pass
+    def get_time_elapsed_today(self):
+        now = datetime.datetime.now()
+        start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        elapsed_time = now - start_of_day
+        return elapsed_time
+if __name__ == '__main__':
+    tracker = TimeTracker()
+    elapsed = tracker.get_time_elapsed_today()
+    print(elapsed)",True,1,6443,103_12_1.py
+103,0,Calculate the time elapsed today,"Write a complete, robust Python script to calculate the time elapsed since the beginning of today (midnight) in seconds.",,False,0,6444,103_0.py
+103,14,Calculate the time elapsed today,"Generate the most efficient, single-function solution to determine the time elapsed today in total minutes. The function should accept no arguments and return an integer representing the total minutes since the start of the day.","import datetime
+def get_total_minutes_today():
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = now - start_of_day
+    total_minutes = time_difference.total_seconds() // 60
+    return int(total_minutes)
+if __name__ == '__main__':
+    print(get_total_minutes_today())",True,0,6445,103_14.py
+103,14,Calculate the time elapsed today,"Generate the most efficient, single-function solution to determine the time elapsed today in total minutes. The function should accept no arguments and return an integer representing the total minutes since the start of the day.","import datetime
+def get_total_minutes_today():
+    now = datetime.datetime.now()
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    time_difference = now - start_of_day
+    total_minutes = time_difference.total_seconds() // 60
+    return int(total_minutes)
+if __name__ == '__main__':
+    result = get_total_minutes_today()
+    print(result)",True,1,6446,103_14_1.py
+103,13,Calculate the time elapsed today,Write a command-line Python program that prompts the user for input (if any) and then prints the total time elapsed today in a human-readable format (HH:MM:SS). Ensure the code is highly readable and uses f-strings effectively.,"import datetime
+import time
+def calculate_elapsed_time():
+    start_time = time.time()
+    time.sleep(2.5)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    total_seconds = int(elapsed_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    print(f""Elapsed time today: {hours:02d}:{minutes:02d}:{seconds:02d}"")
+if __name__ == '__main__':
+    calculate_elapsed_time()",True,0,6447,103_13.py
+103,13,Calculate the time elapsed today,Write a command-line Python program that prompts the user for input (if any) and then prints the total time elapsed today in a human-readable format (HH:MM:SS). Ensure the code is highly readable and uses f-strings effectively.,"import datetime
+import time
+def calculate_elapsed_time():
+    start_time = time.time()
+    time.sleep(2.5)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    total_seconds = int(elapsed_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    print(f""Total time elapsed today: {hours:02d}:{minutes:02d}:{seconds:02d}"")
+if __name__ == '__main__':
+    calculate_elapsed_time()",True,1,6448,103_13_1.py
+103,13,Calculate the time elapsed today,Write a command-line Python program that prompts the user for input (if any) and then prints the total time elapsed today in a human-readable format (HH:MM:SS). Ensure the code is highly readable and uses f-strings effectively.,"import datetime
+import time
+def calculate_elapsed_time():
+    start_time = time.time()
+    time.sleep(2)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    total_seconds = int(elapsed_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    return hours, minutes, seconds
+if __name__ == '__main__':
+    hours, minutes, seconds = calculate_elapsed_time()
+    time_string = f""{hours:02d}:{minutes:02d}:{seconds:02d}""
+    print(time_string)",True,2,6449,103_13_2.py
+103,13,Calculate the time elapsed today,Write a command-line Python program that prompts the user for input (if any) and then prints the total time elapsed today in a human-readable format (HH:MM:SS). Ensure the code is highly readable and uses f-strings effectively.,"import datetime
+import time
+def calculate_elapsed_time():
+    start_time = time.time()
+    time.sleep(2)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    total_seconds = int(elapsed_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    print(f""Total time elapsed today: {hours:02d}:{minutes:02d}:{seconds:02d}"")
+if __name__ == '__main__':
+    calculate_elapsed_time()",True,3,6450,103_13_3.py
+103,13,Calculate the time elapsed today,Write a command-line Python program that prompts the user for input (if any) and then prints the total time elapsed today in a human-readable format (HH:MM:SS). Ensure the code is highly readable and uses f-strings effectively.,"import datetime
+import time
+def calculate_elapsed_time():
+    start_time = time.time()
+    time.sleep(2)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    hours = int(elapsed_seconds // 3600)
+    minutes = int((elapsed_seconds % 3600) // 60)
+    seconds = int(elapsed_seconds % 60)
+    print(f""Total time elapsed today: {hours:02d}:{minutes:02d}:{seconds:02d}"")
+if __name__ == '__main__':
+    calculate_elapsed_time()",True,4,6451,103_13_4.py
+103,13,Calculate the time elapsed today,Write a command-line Python program that prompts the user for input (if any) and then prints the total time elapsed today in a human-readable format (HH:MM:SS). Ensure the code is highly readable and uses f-strings effectively.,"import datetime
+import time
+def calculate_elapsed_time():
+    start_time = time.time()
+    time.sleep(2)
+    end_time = time.time()
+    elapsed_seconds = end_time - start_time
+    total_seconds = int(elapsed_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+    return f""{hours:02d}:{minutes:02d}:{seconds:02d}""
+if __name__ == '__main__':
+    print(calculate_elapsed_time())",True,5,6452,103_13_5.py
