@@ -198155,3 +198155,895 @@ if __name__ == '__main__':
     sample_list = [1, 2, 3, 4, 5]
     reversed_list = reverse_list(sample_list)
     print(reversed_list)",True,0,9271,149_0.py
+148,12,Find the largest element list,"Develop an iterative Python function, `find_largest_manual`, to determine the largest element in a list without using the built-in `max()` function. The implementation must be clear and follow best practices.","def find_largest_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -2]
+    sample_list_3 = [42]
+    sample_list_4 = [7]
+    sample_list_5 = []
+    print(f""List: {sample_list_1}, Largest: {find_largest_manual(sample_list_1)}"")
+    print(f""List: {sample_list_2}, Largest: {find_largest_manual(sample_list_2)}"")
+    print(f""List: {sample_list_3}, Largest: {find_largest_manual(sample_list_3)}"")
+    print(f""List: {sample_list_4}, Largest: {find_largest_manual(sample_list_4)}"")
+    try:
+        find_largest_manual(sample_list_5)
+    except ValueError as e:
+        print(f""List: {sample_list_5}, Error: {e}"")",True,0,9272,148_12.py
+148,12,Find the largest element list,"Develop an iterative Python function, `find_largest_manual`, to determine the largest element in a list without using the built-in `max()` function. The implementation must be clear and follow best practices.","def find_largest_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list = [15, 8, 22, 4, 30, 11]
+    result = find_largest_manual(sample_list)
+    print(result)",True,1,9273,148_12_1.py
+148,12,Find the largest element list,"Develop an iterative Python function, `find_largest_manual`, to determine the largest element in a list without using the built-in `max()` function. The implementation must be clear and follow best practices.","def find_largest_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List: {sample_list_1}, Largest: {find_largest_manual(sample_list_1)}"")
+    print(f""List: {sample_list_2}, Largest: {find_largest_manual(sample_list_2)}"")
+    print(f""List: {sample_list_3}, Largest: {find_largest_manual(sample_list_3)}"")
+    try:
+        print(f""List: {sample_list_4}, Largest: {find_largest_manual(sample_list_4)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,2,9274,148_12_2.py
+148,12,Find the largest element list,"Develop an iterative Python function, `find_largest_manual`, to determine the largest element in a list without using the built-in `max()` function. The implementation must be clear and follow best practices.","def find_largest_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [7]
+    sample_list_4 = [42]
+    sample_list_5 = []
+    print(f""List: {sample_list_1}, Largest: {find_largest_manual(sample_list_1)}"")
+    print(f""List: {sample_list_2}, Largest: {find_largest_manual(sample_list_2)}"")
+    print(f""List: {sample_list_3}, Largest: {find_largest_manual(sample_list_3)}"")
+    print(f""List: {sample_list_4}, Largest: {find_largest_manual(sample_list_4)}"")
+    try:
+        print(f""List: {sample_list_5}, Largest: {find_largest_manual(sample_list_5)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,9275,148_12_3.py
+148,12,Find the largest element list,"Develop an iterative Python function, `find_largest_manual`, to determine the largest element in a list without using the built-in `max()` function. The implementation must be clear and follow best practices.","def find_largest_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -2]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List: {sample_list_1}, Largest: {find_largest_manual(sample_list_1)}"")
+    print(f""List: {sample_list_2}, Largest: {find_largest_manual(sample_list_2)}"")
+    print(f""List: {sample_list_3}, Largest: {find_largest_manual(sample_list_3)}"")
+    try:
+        print(f""List: {sample_list_4}, Largest: {find_largest_manual(sample_list_4)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,9276,148_12_4.py
+149,1,Reverse the order of a list,"Implement an optimized in-place reversal algorithm for a given list using two pointers, without creating a new list. Ensure the function is robust and adheres to Python best practices.","def reverse_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Original list 1: {list1}"")
+    reverse_in_place(list1)
+    print(f""Reversed list 1: {list1}"")
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(f""Original list 2: {list2}"")
+    reverse_in_place(list2)
+    print(f""Reversed list 2: {list2}"")
+    list3 = [1, 2, 2, 3, 4]
+    print(f""Original list 3: {list3}"")
+    reverse_in_place(list3)
+    print(f""Reversed list 3: {list3}"")
+    list4 = [5]
+    print(f""Original list 4: {list4}"")
+    reverse_in_place(list4)
+    print(f""Reversed list 4: {list4}"")
+    list5 = []
+    print(f""Original list 5: {list5}"")
+    reverse_in_place(list5)
+    print(f""Reversed list 5: {list5}"")",True,0,9277,149_1.py
+149,1,Reverse the order of a list,"Implement an optimized in-place reversal algorithm for a given list using two pointers, without creating a new list. Ensure the function is robust and adheres to Python best practices.","def reverse_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Original list 1: {list1}"")
+    reverse_in_place(list1)
+    print(f""Reversed list 1: {list1}"")
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(f""Original list 2: {list2}"")
+    reverse_in_place(list2)
+    print(f""Reversed list 2: {list2}"")
+    list3 = [1, 2, 2, 1]
+    print(f""Original list 3: {list3}"")
+    reverse_in_place(list3)
+    print(f""Reversed list 3: {list3}"")
+    list4 = [7]
+    print(f""Original list 4: {list4}"")
+    reverse_in_place(list4)
+    print(f""Reversed list 4: {list4}"")
+    list5 = []
+    print(f""Original list 5: {list5}"")
+    reverse_in_place(list5)
+    print(f""Reversed list 5: {list5}"")",True,1,9278,149_1_1.py
+149,1,Reverse the order of a list,"Implement an optimized in-place reversal algorithm for a given list using two pointers, without creating a new list. Ensure the function is robust and adheres to Python best practices.","def reverse_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(""Original list 1:"", list1)
+    reverse_in_place(list1)
+    print(""Reversed list 1:"", list1)
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(""Original list 2:"", list2)
+    reverse_in_place(list2)
+    print(""Reversed list 2:"", list2)
+    list3 = [1, 2, 2, 3, 4]
+    print(""Original list 3:"", list3)
+    reverse_in_place(list3)
+    print(""Reversed list 3:"", list3)
+    list4 = [7, 8, 9]
+    print(""Original list 4:"", list4)
+    reverse_in_place(list4)
+    print(""Reversed list 4:"", list4)",True,2,9279,149_1_2.py
+149,1,Reverse the order of a list,"Implement an optimized in-place reversal algorithm for a given list using two pointers, without creating a new list. Ensure the function is robust and adheres to Python best practices.","def reverse_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(""Original list 1:"", list1)
+    reverse_in_place(list1)
+    print(""Reversed list 1:"", list1)
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(""Original list 2:"", list2)
+    reverse_in_place(list2)
+    print(""Reversed list 2:"", list2)
+    list3 = [1, 2]
+    print(""Original list 3:"", list3)
+    reverse_in_place(list3)
+    print(""Reversed list 3:"", list3)
+    list4 = [7]
+    print(""Original list 4:"", list4)
+    reverse_in_place(list4)
+    print(""Reversed list 4:"", list4)
+    list5 = []
+    print(""Original list 5:"", list5)
+    reverse_in_place(list5)
+    print(""Reversed list 5:"", list5)",True,3,9280,149_1_3.py
+149,1,Reverse the order of a list,"Implement an optimized in-place reversal algorithm for a given list using two pointers, without creating a new list. Ensure the function is robust and adheres to Python best practices.","def reverse_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(""Original list 1:"", list1)
+    reverse_in_place(list1)
+    print(""Reversed list 1:"", list1)
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(""Original list 2:"", list2)
+    reverse_in_place(list2)
+    print(""Reversed list 2:"", list2)
+    list3 = [1, 2, 2, 3, 4]
+    print(""Original list 3:"", list3)
+    reverse_in_place(list3)
+    print(""Reversed list 3:"", list3)
+    list4 = [5]
+    print(""Original list 4:"", list4)
+    reverse_in_place(list4)
+    print(""Reversed list 4:"", list4)
+    list5 = []
+    print(""Original list 5:"", list5)
+    reverse_in_place(list5)
+    print(""Reversed list 5:"", list5)",True,4,9281,149_1_4.py
+149,1,Reverse the order of a list,"Implement an optimized in-place reversal algorithm for a given list using two pointers, without creating a new list. Ensure the function is robust and adheres to Python best practices.","def reverse_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        temp = arr[left]
+        arr[left] = arr[right]
+        arr[right] = temp
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Original list 1: {list1}"")
+    reverse_in_place(list1)
+    print(f""Reversed list 1: {list1}"")
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(f""Original list 2: {list2}"")
+    reverse_in_place(list2)
+    print(f""Reversed list 2: {list2}"")
+    list3 = [1, 2]
+    print(f""Original list 3: {list3}"")
+    reverse_in_place(list3)
+    print(f""Reversed list 3: {list3}"")
+    list4 = [5]
+    print(f""Original list 4: {list4}"")
+    reverse_in_place(list4)
+    print(f""Reversed list 4: {list4}"")
+    list5 = []
+    print(f""Original list 5: {list5}"")
+    reverse_in_place(list5)
+    print(f""Reversed list 5: {list5}"")",True,5,9282,149_1_5.py
+149,2,Reverse the order of a list,Develop a class named `ListManipulator` with a method `reverse_items` that reverses the order of the list instance it operates on. Provide clear docstrings.,"class ListManipulator:
+    def reverse_items(self, data_list):
+        return data_list[::-1]
+if __name__ == '__main__':
+    manipulator = ListManipulator()
+    sample_list = [1, 2, 3, 4, 5]
+    print(f""Original list: {sample_list}"")
+    reversed_list = manipulator.reverse_items(sample_list)
+    print(f""Reversed list: {reversed_list}"")",True,0,9283,149_2.py
+149,2,Reverse the order of a list,Develop a class named `ListManipulator` with a method `reverse_items` that reverses the order of the list instance it operates on. Provide clear docstrings.,"class ListManipulator:
+    def reverse_items(self, data_list):
+        data_list.reverse()
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    manipulator = ListManipulator()
+    manipulator.reverse_items(my_list)
+    print(""Reversed list:"", my_list)
+    another_list = ['a', 'b', 'c', 'd']
+    print(""Original list:"", another_list)
+    manipulator.reverse_items(another_list)
+    print(""Reversed list:"", another_list)",True,1,9284,149_2_1.py
+149,2,Reverse the order of a list,Develop a class named `ListManipulator` with a method `reverse_items` that reverses the order of the list instance it operates on. Provide clear docstrings.,"class ListManipulator:
+    def reverse_items(self, data):
+        return data[::-1]
+if __name__ == '__main__':
+    manipulator = ListManipulator()
+    sample_list = [1, 2, 3, 4, 5]
+    print(f""Original list: {sample_list}"")
+    reversed_list = manipulator.reverse_items(sample_list)
+    print(f""Reversed list: {reversed_list}"")
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    print(f""Original list: {sample_list_2}"")
+    reversed_list_2 = manipulator.reverse_items(sample_list_2)
+    print(f""Reversed list: {reversed_list_2}"")",True,2,9285,149_2_2.py
+149,2,Reverse the order of a list,Develop a class named `ListManipulator` with a method `reverse_items` that reverses the order of the list instance it operates on. Provide clear docstrings.,"class ListManipulator:
+    def reverse_items(self, data_list):
+        return data_list[::-1]
+if __name__ == '__main__':
+    manipulator = ListManipulator()
+    sample_list = [1, 2, 3, 4, 5]
+    print(f""Original list: {sample_list}"")
+    reversed_list = manipulator.reverse_items(sample_list)
+    print(f""Reversed list: {reversed_list}"")
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    print(f""Original list: {sample_list_2}"")
+    reversed_list_2 = manipulator.reverse_items(sample_list_2)
+    print(f""Reversed list: {reversed_list_2}"")",True,3,9286,149_2_3.py
+149,4,Reverse the order of a list,Implement a recursive Python function to reverse a list. Explain the time and space complexity of this recursive approach.,"def reverse_list_recursive(data):
+    if not data:
+        return []
+    else:
+        return [data[-1]] + reverse_list_recursive(data[:-1])
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list_recursive(sample_list)
+    print(reversed_list)",True,0,9287,149_4.py
+147,7,Sort a list of items,Create a class `DataProcessor` with a method `sort_data` that stores a list internally and allows external calls to sort that list in-place using Python's list methods.,,False,0,9288,147_7.py
+149,6,Reverse the order of a list,"Write a highly concise one-line Python expression or lambda function to reverse a list, assuming the use of built-in functions.","reverse = lambda lst: lst[::-1]
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse(my_list)
+    print(reversed_list)",True,0,9289,149_6.py
+149,7,Reverse the order of a list,"Develop a function that reverses the order of a list of strings, where each string in the list is itself reversed. For example, if the input is ['abc', 'def'], the output should be ['cba', 'fed'].","def reverse_strings_in_list(list_of_strings):
+    reversed_list = []
+    for s in list_of_strings:
+        reversed_s = s[::-1]
+        reversed_list.append(reversed_s)
+    return reversed_list
+if __name__ == '__main__':
+    input_list = ['abc', 'def']
+    output = reverse_strings_in_list(input_list)
+    print(output)",True,0,9290,149_7.py
+149,7,Reverse the order of a list,"Develop a function that reverses the order of a list of strings, where each string in the list is itself reversed. For example, if the input is ['abc', 'def'], the output should be ['cba', 'fed'].","def reverse_strings_in_list(list_of_strings):
+    reversed_list = []
+    for s in list_of_strings:
+        reversed_s = s[::-1]
+        reversed_list.append(reversed_s)
+    return reversed_list[::-1]
+if __name__ == '__main__':
+    input_list = ['abc', 'def']
+    output = reverse_strings_in_list(input_list)
+    print(output)",True,1,9291,149_7_1.py
+149,7,Reverse the order of a list,"Develop a function that reverses the order of a list of strings, where each string in the list is itself reversed. For example, if the input is ['abc', 'def'], the output should be ['cba', 'fed'].","def reverse_list_of_strings(list_of_strings):
+    reversed_list = []
+    for s in list_of_strings:
+        reversed_s = s[::-1]
+        reversed_list.append(reversed_s)
+    return reversed_list
+if __name__ == '__main__':
+    input_list = ['abc', 'def']
+    output = reverse_list_of_strings(input_list)
+    print(output)",True,2,9292,149_7_2.py
+149,7,Reverse the order of a list,"Develop a function that reverses the order of a list of strings, where each string in the list is itself reversed. For example, if the input is ['abc', 'def'], the output should be ['cba', 'fed'].","def reverse_strings_in_list(string_list):
+    reversed_list = []
+    for s in string_list:
+        reversed_s = s[::-1]
+        reversed_list.append(reversed_s)
+    return reversed_list[::-1]
+if __name__ == '__main__':
+    input_list = ['abc', 'def']
+    output = reverse_strings_in_list(input_list)
+    print(output)",True,3,9293,149_7_3.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_in_place(self, lst):
+        left = 0
+        right = len(lst) - 1
+        while left < right:
+            lst[left], lst[right] = lst[right], lst[left]
+            left += 1
+            right -= 1
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [1])
+    def test_simple_reversal(self):
+        data = [1, 2, 3, 4, 5]
+        expected = [5, 4, 3, 2, 1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, expected)
+    def test_list_with_duplicates(self):
+        data = [1, 2, 2, 3, 1]
+        expected = [1, 3, 2, 2, 1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, expected)
+    def test_reverse_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        expected = [-10, 5, 0, -1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, expected)
+    def test_list_with_negative_numbers(self):
+        data = [-5, -2, -1]
+        expected = [-1, -2, -5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, expected)
+    def test_list_with_strings(self):
+        data = [""a"", ""b"", ""c"", ""d""]
+        expected = [""d"", ""c"", ""b"", ""a""]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, expected)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,9294,149_8.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_in_place(self, lst):
+        left = 0
+        right = len(lst) - 1
+        while left < right:
+            lst[left], lst[right] = lst[right], lst[left]
+            left += 1
+            right -= 1
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [10]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [10])
+    def test_simple_reversal(self):
+        data = [1, 2, 3, 4, 5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [5, 4, 3, 2, 1])
+    def test_list_with_duplicates(self):
+        data = [1, 2, 2, 3, 1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [1, 3, 2, 2, 1])
+    def test_reverse_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [-10, 5, 0, -1])
+    def test_list_with_negative_numbers(self):
+        data = [-5, -2, -1, -10]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [-10, -1, -2, -5])
+    def test_list_with_strings(self):
+        data = ['a', 'b', 'c', 'd']
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, ['d', 'c', 'b', 'a'])
+    def test_list_with_mixed_types(self):
+        data = [1, 'a', 3.5, True]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [True, 3.5, 'a', 1])
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,9295,149_8_1.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReversalTest(unittest.TestCase):
+    def test_empty_list(self):
+        data = []
+        reversal_function(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [1]
+        reversal_function(data)
+        self.assertEqual(data, [1])
+    def test_simple_reversal(self):
+        data = [1, 2, 3, 4]
+        reversal_function(data)
+        self.assertEqual(data, [4, 3, 2, 1])
+    def test_list_with_duplicates(self):
+        data = [1, 2, 2, 3, 1]
+        reversal_function(data)
+        self.assertEqual(data, [1, 3, 2, 2, 1])
+    def test_list_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        reversal_function(data)
+        self.assertEqual(data, [-10, 5, 0, -1])
+    def test_list_with_strings(self):
+        data = ['a', 'b', 'c', 'd']
+        reversal_function(data)
+        self.assertEqual(data, ['d', 'c', 'b', 'a'])
+def reversal_function(lst):
+    left = 0
+    right = len(lst) - 1
+    while left < right:
+        lst[left], lst[right] = lst[right], lst[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,9296,149_8_2.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_in_place(self, lst):
+        left = 0
+        right = len(lst) - 1
+        while left < right:
+            lst[left], lst[right] = lst[right], lst[left]
+            left += 1
+            right -= 1
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [5])
+    def test_even_length_list(self):
+        data = [1, 2, 3, 4]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [4, 3, 2, 1])
+    def test_odd_length_list(self):
+        data = [10, 20, 30, 40, 50]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [50, 40, 30, 20, 10])
+    def test_list_with_negatives(self):
+        data = [-1, 0, 1, -5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [-5, 1, 0, -1])
+    def test_list_with_duplicates(self):
+        data = [2, 2, 3, 2]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [2, 3, 2, 2])
+    def test_list_with_strings(self):
+        data = ['a', 'b', 'c', 'd']
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, ['d', 'c', 'b', 'a'])
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,9297,149_8_3.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_in_place(self, lst):
+        left = 0
+        right = len(lst) - 1
+        while left < right:
+            lst[left], lst[right] = lst[right], lst[left]
+            left += 1
+            right -= 1
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [1])
+    def test_simple_reversal(self):
+        data = [1, 2, 3, 4, 5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [5, 4, 3, 2, 1])
+    def test_reversal_with_duplicates(self):
+        data = [1, 2, 2, 3, 1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [1, 3, 2, 2, 1])
+    def test_reverse_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [-10, 5, 0, -1])
+    def test_list_with_strings(self):
+        data = [""a"", ""b"", ""c"", ""d""]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [""d"", ""c"", ""b"", ""a""])
+    def test_list_with_mixed_types(self):
+        data = [1, ""two"", 3.0, False]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [False, 3.0, ""two"", 1])
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,9298,149_8_4.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_list(self, data):
+        data.reverse()
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_list(data)
+        self.assertEqual(data, [])
+    def test_single_element_list(self):
+        data = [1]
+        self.reverser.reverse_list(data)
+        self.assertEqual(data, [1])
+    def test_simple_list(self):
+        data = [1, 2, 3, 4, 5]
+        self.reverser.reverse_list(data)
+        self.assertEqual(data, [5, 4, 3, 2, 1])
+    def test_list_with_duplicates(self):
+        data = [1, 2, 2, 3, 1]
+        self.reverser.reverse_list(data)
+        self.assertEqual(data, [1, 3, 2, 2, 1])
+    def test_list_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        self.reverser.reverse_list(data)
+        self.assertEqual(data, [-10, 5, 0, -1])
+    def test_list_with_strings(self):
+        data = [""a"", ""b"", ""c"", ""d""]
+        self.reverser.reverse_list(data)
+        self.assertEqual(data, [""d"", ""c"", ""b"", ""a""])
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,9299,149_8_5.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_in_place(self, data):
+        left = 0
+        right = len(data) - 1
+        while left < right:
+            data[left], data[right] = data[right], data[left]
+            left += 1
+            right -= 1
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [1])
+    def test_odd_length_list(self):
+        data = [1, 2, 3, 4, 5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [5, 4, 3, 2, 1])
+    def test_even_length_list(self):
+        data = [10, 20, 30, 40]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [40, 30, 20, 10])
+    def test_list_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [-10, 5, 0, -1])
+    def test_list_with_strings(self):
+        data = ['a', 'b', 'c', 'd']
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, ['d', 'c', 'b', 'a'])
+    def test_list_with_duplicates(self):
+        data = [1, 2, 1, 3, 2]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [2, 3, 1, 2, 1])
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,9300,149_8_6.py
+149,8,Reverse the order of a list,Write a comprehensive test suite using the `unittest` framework to verify the correctness of an in-place list reversal function.,"import unittest
+class ListReverser:
+    def reverse_in_place(self, data):
+        left = 0
+        right = len(data) - 1
+        while left < right:
+            data[left], data[right] = data[right], data[left]
+            left += 1
+            right -= 1
+class TestListReverser(unittest.TestCase):
+    def setUp(self):
+        self.reverser = ListReverser()
+    def test_empty_list(self):
+        data = []
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [])
+    def test_single_element(self):
+        data = [1]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [1])
+    def test_simple_list(self):
+        data = [1, 2, 3, 4]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [4, 3, 2, 1])
+    def test_list_with_duplicates(self):
+        data = [5, 2, 8, 2, 5]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [5, 2, 8, 2, 5])
+    def test_list_with_negatives(self):
+        data = [-1, 0, 5, -10]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [-10, 5, 0, -1])
+    def test_list_with_strings(self):
+        data = [""a"", ""b"", ""c"", ""d""]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [""d"", ""c"", ""b"", ""a""])
+    def test_longer_list(self):
+        data = [10, 20, 30, 40, 50, 60]
+        self.reverser.reverse_in_place(data)
+        self.assertEqual(data, [60, 50, 40, 30, 20, 10])
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,9301,149_8_7.py
+149,9,Reverse the order of a list,"Demonstrate the use of the `reversed()` built-in function and list concatenation to reverse a list, providing a clear, readable example.","if __name__ == '__main__':
+    original_list = [1, 2, 3, 4, 5]
+    reversed_list = list(reversed(original_list))
+    concatenated_list = original_list + reversed_list
+    print(f""Original List: {original_list}"")
+    print(f""Reversed List: {reversed_list}"")
+    print(f""Concatenated List: {concatenated_list}"")",True,0,9302,149_9.py
+149,9,Reverse the order of a list,"Demonstrate the use of the `reversed()` built-in function and list concatenation to reverse a list, providing a clear, readable example.","if __name__ == '__main__':
+    original_list = [1, 2, 3, 4, 5]
+    reversed_list = list(reversed(original_list))
+    concatenated_list = original_list + reversed_list
+    print(f""Original List: {original_list}"")
+    print(f""Reversed List (using reversed()): {reversed_list}"")
+    print(f""Concatenated List: {concatenated_list}"")",True,1,9303,149_9_1.py
+149,9,Reverse the order of a list,"Demonstrate the use of the `reversed()` built-in function and list concatenation to reverse a list, providing a clear, readable example.","if __name__ == '__main__':
+    original_list = [1, 2, 3, 4, 5]
+    reversed_list = list(reversed(original_list))
+    concatenated_list = original_list + reversed_list
+    print(f""Original list: {original_list}"")
+    print(f""Reversed list using reversed(): {reversed_list}"")
+    print(f""Concatenated list: {concatenated_list}"")",True,2,9304,149_9_2.py
+149,9,Reverse the order of a list,"Demonstrate the use of the `reversed()` built-in function and list concatenation to reverse a list, providing a clear, readable example.","if __name__ == '__main__':
+    original_list = [1, 2, 3, 4, 5]
+    reversed_list = list(reversed(original_list))
+    concatenated_list = reversed_list + original_list
+    print(f""Original list: {original_list}"")
+    print(f""Reversed list: {reversed_list}"")
+    print(f""Concatenated list: {concatenated_list}"")",True,3,9305,149_9_3.py
+149,10,Reverse the order of a list,"Write a complete, robust Python function named `reverse_list` that takes a list as input and returns a new list with the elements in reverse order. Use slicing for maximum efficiency.","def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)",True,0,9306,149_10.py
+149,3,Reverse the order of a list,"Write a script that reads a list of numbers from standard input, reverses the order of the list, and prints the reversed list to standard output. Ensure error handling for non-integer input.","import sys
+if __name__ == '__main__':
+    input_data = ""1 2 3 4 5""
+    numbers = []
+    try:
+        input_list = input_data.split()
+        for item in input_list:
+            numbers.append(int(item))
+        reversed_numbers = numbers[::-1]
+        print(*(reversed_numbers))
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,0,9307,149_3.py
+149,3,Reverse the order of a list,"Write a script that reads a list of numbers from standard input, reverses the order of the list, and prints the reversed list to standard output. Ensure error handling for non-integer input.","import sys
+if __name__ == '__main__':
+    input_data = ""1 2 3 4 5""
+    numbers = []
+    try:
+        input_numbers = input_data.split()
+        for item in input_numbers:
+            numbers.append(int(item))
+        reversed_numbers = numbers[::-1]
+        print(*(reversed_numbers))
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,1,9308,149_3_1.py
+149,11,Reverse the order of a list,Implement an optimized function using the built-in `list.reverse()` method to reverse the order of the elements in a mutable list in-place. Include docstrings explaining the function's purpose and parameters.,"def reverse_list_inplace(data_list):
+    data_list.reverse()
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    another_list = ['a', 'b', 'c', 'd']
+    print(""Original list:"", another_list)
+    reverse_list_inplace(another_list)
+    print(""Reversed list:"", another_list)",True,0,9309,149_11.py
+149,11,Reverse the order of a list,Implement an optimized function using the built-in `list.reverse()` method to reverse the order of the elements in a mutable list in-place. Include docstrings explaining the function's purpose and parameters.,"def reverse_list_in_place(data_list):
+    data_list.reverse()
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(f""Original list: {my_list}"")
+    reverse_list_in_place(my_list)
+    print(f""Reversed list: {my_list}"")
+    another_list = ['a', 'b', 'c', 'd']
+    print(f""Original list: {another_list}"")
+    reverse_list_in_place(another_list)
+    print(f""Reversed list: {another_list}"")",True,1,9310,149_11_1.py
+149,11,Reverse the order of a list,Implement an optimized function using the built-in `list.reverse()` method to reverse the order of the elements in a mutable list in-place. Include docstrings explaining the function's purpose and parameters.,"def reverse_list_in_place(data_list):
+    data_list.reverse()
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_in_place(my_list)
+    print(""Reversed list:"", my_list)
+    another_list = ['a', 'b', 'c', 'd']
+    print(""Original list:"", another_list)
+    reverse_list_in_place(another_list)
+    print(""Reversed list:"", another_list)",True,2,9311,149_11_2.py
+149,13,Reverse the order of a list,Write a generator function that yields the elements of an input iterable in reverse order without storing the entire reversed list in memory. The function should be named `reverse_generator`.,"def reverse_generator(iterable):
+    it = iter(iterable)
+    try:
+        last = next(it)
+    except StopIteration:
+        return
+    while True:
+        yield last
+        try:
+            last = next(it)
+        except StopIteration:
+            break
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(list(reverse_generator(sample_list)))
+    sample_tuple = (10, 20, 30, 40)
+    print(list(reverse_generator(sample_tuple)))
+    sample_string = ""ABCDE""
+    print(list(reverse_generator(sample_string)))
+    sample_empty = []
+    print(list(reverse_generator(sample_empty)))",True,0,9312,149_13.py
+149,13,Reverse the order of a list,Write a generator function that yields the elements of an input iterable in reverse order without storing the entire reversed list in memory. The function should be named `reverse_generator`.,"def reverse_generator(iterable):
+    it = iter(iterable)
+    try:
+        last = next(it)
+    except StopIteration:
+        return
+    while True:
+        yield last
+        try:
+            last = next(it)
+        except StopIteration:
+            break
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(list(reverse_generator(sample_list)))
+    sample_tuple = (6, 7, 8, 9)
+    print(list(reverse_generator(sample_tuple)))
+    sample_string = ""ABCDE""
+    print(list(reverse_generator(sample_string)))",True,1,9313,149_13_1.py
+149,13,Reverse the order of a list,Write a generator function that yields the elements of an input iterable in reverse order without storing the entire reversed list in memory. The function should be named `reverse_generator`.,"def reverse_generator(iterable):
+    it = iter(iterable)
+    try:
+        last = next(it)
+    except StopIteration:
+        return
+    while True:
+        yield last
+        try:
+            last = next(it)
+        except StopIteration:
+            break
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(list(reverse_generator(sample_list)))
+    sample_tuple = (10, 20, 30, 40)
+    print(list(reverse_generator(sample_tuple)))
+    sample_string = ""ABCDE""
+    print(list(reverse_generator(sample_string)))",True,2,9314,149_13_2.py
+149,13,Reverse the order of a list,Write a generator function that yields the elements of an input iterable in reverse order without storing the entire reversed list in memory. The function should be named `reverse_generator`.,"def reverse_generator(iterable):
+    it = iter(iterable)
+    try:
+        last = next(it)
+    except StopIteration:
+        return
+    while True:
+        yield last
+        try:
+            last = next(it)
+        except StopIteration:
+            break
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(list(reverse_generator(sample_list)))
+    sample_tuple = (10, 20, 30)
+    print(list(reverse_generator(sample_tuple)))
+    sample_string = ""ABCDE""
+    print(list(reverse_generator(sample_string)))",True,3,9315,149_13_3.py
+149,14,Reverse the order of a list,"Create a class named `ListManipulator` with a method `get_reversed_list(self, input_list)` that returns a new list containing the elements of `input_list` in reverse sequence. Ensure the implementation is clean and adheres to object-oriented best practices.","class ListManipulator:
+    def get_reversed_list(self, input_list):
+        return input_list[::-1]
+if __name__ == '__main__':
+    manipulator = ListManipulator()
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = manipulator.get_reversed_list(sample_list)
+    print(reversed_list)",True,0,9316,149_14.py
+149,14,Reverse the order of a list,"Create a class named `ListManipulator` with a method `get_reversed_list(self, input_list)` that returns a new list containing the elements of `input_list` in reverse sequence. Ensure the implementation is clean and adheres to object-oriented best practices.","class ListManipulator:
+    def get_reversed_list(self, input_list):
+        return input_list[::-1]
+if __name__ == '__main__':
+    manipulator = ListManipulator()
+    sample_list_1 = [1, 2, 3, 4, 5]
+    reversed_list_1 = manipulator.get_reversed_list(sample_list_1)
+    print(f""Original list: {sample_list_1}"")
+    print(f""Reversed list: {reversed_list_1}"")
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    reversed_list_2 = manipulator.get_reversed_list(sample_list_2)
+    print(f""Original list: {sample_list_2}"")
+    print(f""Reversed list: {reversed_list_2}"")
+    sample_list_3 = [10, 20, 30]
+    reversed_list_3 = manipulator.get_reversed_list(sample_list_3)
+    print(f""Original list: {sample_list_3}"")
+    print(f""Reversed list: {reversed_list_3}"")",True,1,9317,149_14_1.py
