@@ -195288,3 +195288,601 @@ if __name__ == '__main__':
     input_value_3 = ""A""
     description_3 = map_value_to_description(input_value_3)
     print(f""Input: {input_value_3}, Description: {description_3}"")",True,0,9112,146_6.py
+146,8,Write program for logical flow,"Design and write an optimized function that uses boolean logic to determine the state of a system based on multiple input flags, returning the most appropriate status string.","def determine_system_state(flag_a, flag_b, flag_c):
+    if flag_a and flag_b and not flag_c:
+        return ""State_A_B_Not_C""
+    elif flag_a and flag_c:
+        return ""State_A_C""
+    elif flag_b and flag_c:
+        return ""State_B_C""
+    elif flag_a:
+        return ""State_A""
+    elif flag_b:
+        return ""State_B""
+    elif flag_c:
+        return ""State_C""
+    else:
+        return ""State_None""
+if __name__ == '__main__':
+    print(determine_system_state(True, True, False))
+    print(determine_system_state(True, False, True))
+    print(determine_system_state(False, True, True))
+    print(determine_system_state(True, True, True))
+    print(determine_system_state(False, False, False))
+    print(determine_system_state(True, False, False))
+    print(determine_system_state(False, True, False))
+    print(determine_system_state(False, False, True))",True,0,9113,146_8.py
+146,8,Write program for logical flow,"Design and write an optimized function that uses boolean logic to determine the state of a system based on multiple input flags, returning the most appropriate status string.","def determine_system_state(flag_a, flag_b, flag_c):
+    if flag_a and flag_b and not flag_c:
+        return ""State_A_B_Only""
+    elif flag_a and flag_b and flag_c:
+        return ""State_A_B_C_Full""
+    elif flag_a and not flag_b and flag_c:
+        return ""State_A_C_Only""
+    elif not flag_a and flag_b and flag_c:
+        return ""State_B_C_Only""
+    elif flag_a and not flag_b and not flag_c:
+        return ""State_A_Only""
+    elif not flag_a and not flag_b and flag_c:
+        return ""State_C_Only""
+    elif not flag_a and not flag_b and not flag_c:
+        return ""State_None""
+    else:
+        return ""Error_Unhandled""
+if __name__ == '__main__':
+    print(determine_system_state(True, True, False))
+    print(determine_system_state(True, True, True))
+    print(determine_system_state(True, False, True))
+    print(determine_system_state(False, True, True))
+    print(determine_system_state(True, False, False))
+    print(determine_system_state(False, False, True))
+    print(determine_system_state(False, False, False))",True,1,9114,146_8_1.py
+146,8,Write program for logical flow,"Design and write an optimized function that uses boolean logic to determine the state of a system based on multiple input flags, returning the most appropriate status string.","def determine_system_state(flag_a, flag_b, flag_c):
+    if flag_a and flag_b and not flag_c:
+        return ""State_A_B_Only""
+    elif flag_a and flag_b and flag_c:
+        return ""State_A_B_C_All""
+    elif flag_a and not flag_b and flag_c:
+        return ""State_A_C_Only""
+    elif not flag_a and flag_b and flag_c:
+        return ""State_B_C_Only""
+    elif flag_a and not flag_b and not flag_c:
+        return ""State_A_Only""
+    elif not flag_a and not flag_b and flag_c:
+        return ""State_C_Only""
+    elif not flag_a and not flag_b and not flag_c:
+        return ""State_None""
+    else:
+        return ""Error_Unhandled""
+if __name__ == '__main__':
+    print(determine_system_state(True, True, False))
+    print(determine_system_state(True, True, True))
+    print(determine_system_state(True, False, True))
+    print(determine_system_state(False, True, True))
+    print(determine_system_state(True, False, False))
+    print(determine_system_state(False, False, True))
+    print(determine_system_state(False, False, False))",True,2,9115,146_8_2.py
+146,8,Write program for logical flow,"Design and write an optimized function that uses boolean logic to determine the state of a system based on multiple input flags, returning the most appropriate status string.","def system_status_checker(power_on, sensor_ok, alarm_active, battery_low):
+    if power_on and sensor_ok and not alarm_active and not battery_low:
+        return ""System Nominal""
+    elif power_on and sensor_ok and alarm_active:
+        return ""Warning: Alarm Active""
+    elif power_on and not sensor_ok:
+        return ""Error: Sensor Failure""
+    elif power_on and not alarm_active and battery_low:
+        return ""Warning: Low Battery""
+    elif not power_on:
+        return ""System Off""
+    else:
+        return ""Unknown State""
+if __name__ == '__main__':
+    print(system_status_checker(True, True, False, False))
+    print(system_status_checker(True, True, True, False))
+    print(system_status_checker(True, False, False, False))
+    print(system_status_checker(True, True, False, True))
+    print(system_status_checker(False, True, False, False))
+    print(system_status_checker(False, False, True, True))",True,3,9116,146_8_3.py
+146,8,Write program for logical flow,"Design and write an optimized function that uses boolean logic to determine the state of a system based on multiple input flags, returning the most appropriate status string.","def system_status_checker(power_on, sensor_ok, alarm_active, battery_low):
+    if power_on and sensor_ok and not alarm_active and not battery_low:
+        return ""System Nominal""
+    elif power_on and sensor_ok and alarm_active:
+        return ""Warning: Alarm Active""
+    elif power_on and not sensor_ok:
+        return ""Warning: Sensor Failure""
+    elif power_on and not alarm_active and battery_low:
+        return ""Warning: Low Battery""
+    elif not power_on:
+        return ""System Off""
+    else:
+        return ""Error: Unspecified State""
+if __name__ == '__main__':
+    print(system_status_checker(True, True, False, False))
+    print(system_status_checker(True, True, True, False))
+    print(system_status_checker(True, False, False, False))
+    print(system_status_checker(True, True, False, True))
+    print(system_status_checker(False, True, False, False))
+    print(system_status_checker(False, False, True, True))",True,4,9117,146_8_4.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"import random
+def play_game(level, score, health):
+    if level == 1:
+        if score > 5 and health > 10:
+            return ""Victory""
+        elif score > 0:
+            return ""Partial Win""
+        else:
+            return ""Defeat""
+    elif level == 2:
+        if score >= 10 and health > 5:
+            return ""Great Success""
+        elif score >= 5:
+            return ""Moderate Success""
+        else:
+            return ""Failure""
+    else:
+        if score > 20:
+            return ""Epic Win""
+        elif score > 10:
+            return ""Good Game""
+        else:
+            return ""Game Over""
+if __name__ == '__main__':
+    level_val = 2
+    score_val = 12
+    health_val = 15
+    result = play_game(level_val, score_val, health_val)
+    print(result)",True,0,9118,146_7.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"import random
+def play_game(level, score):
+    if level == 1:
+        if score > 5:
+            return ""Level 1 Success""
+        else:
+            return ""Level 1 Failure""
+    elif level == 2:
+        if score >= 10:
+            return ""Level 2 Success""
+        elif score > 5:
+            return ""Level 2 Partial Success""
+        else:
+            return ""Level 2 Failure""
+    else:
+        if score > 15:
+            return ""Level 3 Bonus""
+        else:
+            return ""Level 3 Standard""
+if __name__ == '__main__':
+    game_level = 2
+    game_score = 12
+    result = play_game(game_level, game_score)
+    print(result)",True,1,9119,146_7_1.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"if __name__ == '__main__':
+    score = 0
+    level = 1
+    item_a = ""apple""
+    item_b = ""banana""
+    if level == 1:
+        if score < 10:
+            if item_a == ""apple"":
+                score += 5
+                level = 2
+            elif item_b == ""banana"":
+                score += 3
+        else:
+            if score < 20:
+                score += 10
+            else:
+                score += 20
+    elif level == 2:
+        if score > 15:
+            if item_a == ""apple"":
+                score += 15
+            elif item_b == ""banana"":
+                score += 10
+        else:
+            if score < 5:
+                score += 5
+            else:
+                score += 1
+    else:
+        if score > 30:
+            score += 50
+        else:
+            score += 10
+    print(f""Final Score: {score}"")",True,2,9120,146_7_2.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"import random
+def play_game(score, health, level):
+    if health <= 0:
+        return ""Game Over: You ran out of health.""
+    elif score >= 100 and level >= 3:
+        return ""Victory! You achieved a perfect score and high level.""
+    elif score >= 50:
+        return ""Success! You reached a good score.""
+    elif health > 20:
+        return ""Partial Success. Keep trying.""
+    else:
+        return ""Failure. You need more effort.""
+if __name__ == '__main__':
+    sample_score = 75
+    sample_health = 30
+    sample_level = 2
+    result = play_game(sample_score, sample_health, sample_level)
+    print(result)",True,3,9121,146_7_3.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"if __name__ == '__main__':
+    score = 0
+    level = 1
+    item_found = False
+    is_lucky = False
+    if level == 1:
+        if score < 10:
+            if item_found:
+                score += 5
+            else:
+                score += 2
+        else:
+            score += 10
+    elif level == 2:
+        if score > 15:
+            if item_found:
+                score += 15
+            else:
+                score += 10
+        else:
+            score += 5
+    else:
+        if item_found:
+            score += 20
+        else:
+            score += 10
+    if score > 25:
+        is_lucky = True
+    elif score >= 15:
+        is_lucky = False
+    else:
+        is_lucky = False
+    print(f""Final Score: {score}"")
+    print(f""Is Lucky: {is_lucky}"")",True,4,9122,146_7_4.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"import random
+def play_game(score, health, level):
+    if health <= 0:
+        return ""Game Over: You ran out of health.""
+    elif score >= 100 and level >= 3:
+        return ""Victory! You achieved a perfect score and high level.""
+    elif score >= 50:
+        return ""Good job! You reached a decent score.""
+    elif health > 20:
+        return ""You are doing okay, but need more focus.""
+    else:
+        return ""Keep trying! You are in trouble.""
+if __name__ == '__main__':
+    sample_score = 75
+    sample_health = 35
+    sample_level = 2
+    result = play_game(sample_score, sample_health, sample_level)
+    print(result)",True,5,9123,146_7_5.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"if __name__ == '__main__':
+    score = 0
+    level = 1
+    item_a = ""apple""
+    item_b = ""banana""
+    if level == 1:
+        if score < 10:
+            if item_a == ""apple"":
+                score += 5
+                level = 2
+            elif item_b == ""banana"":
+                score += 3
+        else:
+            if score < 20:
+                score += 10
+            else:
+                score += 20
+    elif level == 2:
+        if score >= 15:
+            if item_b == ""banana"":
+                score += 15
+            else:
+                score += 5
+        else:
+            if item_a == ""apple"":
+                score += 7
+            else:
+                score += 2
+    else:
+        if score > 30:
+            score += 50
+        else:
+            score += 10
+    print(f""Final Score: {score}"")",True,6,9124,146_7_6.py
+146,7,Write program for logical flow,Write a robust script that uses a series of nested conditional statements to simulate a simple game where the outcome depends on multiple sequential conditions.,"if __name__ == '__main__':
+    score = 0
+    level = 1
+    item_a = ""apple""
+    item_b = ""banana""
+    if level == 1:
+        if score < 10:
+            if item_a == ""apple"":
+                score += 5
+                level = 2
+            elif item_b == ""banana"":
+                score += 3
+            else:
+                score += 1
+        else:
+            if score < 20:
+                score += 10
+            else:
+                score += 20
+    elif level == 2:
+        if score > 15:
+            if item_b == ""banana"":
+                score += 15
+            else:
+                score += 10
+        else:
+            if item_a == ""apple"":
+                score += 5
+            else:
+                score += 2
+    else:
+        if score > 25:
+            score += 50
+        else:
+            score += 10
+    print(f""Final Score: {score}"")",True,7,9125,146_7_7.py
+146,10,Write program for logical flow,"Write a complete, well-documented Python program that demonstrates logical flow using nested if-elif-else statements to determine a letter grade based on a numerical score.","def determine_grade(score):
+    if score >= 90:
+        grade = 'A'
+    elif score >= 80:
+        grade = 'B'
+    elif score >= 70:
+        grade = 'C'
+    elif score >= 60:
+        grade = 'D'
+    else:
+        grade = 'F'
+    return grade
+if __name__ == '__main__':
+    score1 = 95
+    score2 = 82
+    score3 = 77
+    score4 = 55
+    score5 = 90
+    print(f""Score {score1}: Grade {determine_grade(score1)}"")
+    print(f""Score {score2}: Grade {determine_grade(score2)}"")
+    print(f""Score {score3}: Grade {determine_grade(score3)}"")
+    print(f""Score {score4}: Grade {determine_grade(score4)}"")
+    print(f""Score {score5}: Grade {determine_grade(score5)}"")",True,0,9126,146_10.py
+146,10,Write program for logical flow,"Write a complete, well-documented Python program that demonstrates logical flow using nested if-elif-else statements to determine a letter grade based on a numerical score.","def determine_grade(score):
+    if score >= 90:
+        grade = 'A'
+    elif score >= 80:
+        grade = 'B'
+    elif score >= 70:
+        grade = 'C'
+    elif score >= 60:
+        grade = 'D'
+    else:
+        grade = 'F'
+    return grade
+if __name__ == '__main__':
+    sample_scores = [95, 82, 77, 63, 55, 90, 45]
+    for score in sample_scores:
+        result = determine_grade(score)
+        print(f""Score: {score}, Grade: {result}"")",True,1,9127,146_10_1.py
+146,10,Write program for logical flow,"Write a complete, well-documented Python program that demonstrates logical flow using nested if-elif-else statements to determine a letter grade based on a numerical score.","def determine_grade(score):
+    if score >= 90:
+        grade = 'A'
+    elif score >= 80:
+        grade = 'B'
+    elif score >= 70:
+        grade = 'C'
+    elif score >= 60:
+        grade = 'D'
+    else:
+        grade = 'F'
+    return grade
+if __name__ == '__main__':
+    sample_scores = [95, 82, 71, 63, 55, 90, 89]
+    for score in sample_scores:
+        result = determine_grade(score)
+        print(f""Score: {score}, Grade: {result}"")",True,2,9128,146_10_2.py
+146,10,Write program for logical flow,"Write a complete, well-documented Python program that demonstrates logical flow using nested if-elif-else statements to determine a letter grade based on a numerical score.","def determine_grade(score):
+    if score >= 90:
+        grade = 'A'
+    elif score >= 80:
+        grade = 'B'
+    elif score >= 70:
+        grade = 'C'
+    elif score >= 60:
+        grade = 'D'
+    else:
+        grade = 'F'
+    return grade
+if __name__ == '__main__':
+    sample_scores = [95, 82, 77, 65, 45, 90, 59]
+    for score in sample_scores:
+        result = determine_grade(score)
+        print(f""Score: {score}, Grade: {result}"")",True,3,9129,146_10_3.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('is_member', False) and user_data.get('total_spent', 0) > 100:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 600}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 1200}
+    user3 = {'name': 'Charlie', 'age': 45, 'is_member': False, 'total_spent': 800}
+    user4 = {'name': 'David', 'age': 20, 'is_member': True, 'total_spent': 50}
+    user5 = {'name': 'Eve', 'age': 35, 'is_member': True, 'total_spent': 150}
+    print(f""User 1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User 2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User 3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User 4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User 5 eligible: {check_user_eligibility(user5)}"")",True,0,9130,146_11.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    sample_users = [
+        {'name': 'Alice', 'age': 25, 'is_member': True, 'total_spent': 1500},
+        {'name': 'Bob', 'age': 16, 'is_member': True, 'total_spent': 2000},
+        {'name': 'Charlie', 'age': 30, 'is_member': False, 'total_spent': 5000},
+        {'name': 'David', 'age': 40, 'is_member': True, 'total_spent': 500},
+        {'name': 'Eve', 'age': 22, 'is_member': True, 'total_spent': 1001}
+    ]
+    print(""--- Checking User Eligibility ---"")
+    for user in sample_users:
+        result = check_user_eligibility(user)
+        print(f""User: {user['name']}, Eligible: {result}"")
+    print(""\n--- Testing Specific Cases ---"")
+    test_cases = [
+        {'age': 20, 'is_member': True, 'total_spent': 1001},                  
+        {'age': 17, 'is_member': True, 'total_spent': 1001},                              
+        {'age': 20, 'is_member': False, 'total_spent': 1001},                                
+        {'age': 20, 'is_member': True, 'total_spent': 1000}                                 
+    ]
+    for i, user in enumerate(test_cases):
+        result = check_user_eligibility(user)
+        print(f""Test Case {i+1}: Eligible: {result}"")",True,1,9131,146_11_1.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    elif user_data.get('is_member', False) and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 1500}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 800}
+    user3 = {'name': 'Charlie', 'age': 45, 'is_member': False, 'total_spent': 2000}
+    user4 = {'name': 'David', 'age': 20, 'is_member': True, 'total_spent': 500}
+    user5 = {'name': 'Eve', 'age': 50, 'is_member': True, 'total_spent': 100}
+    print(f""User 1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User 2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User 3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User 4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User 5 eligible: {check_user_eligibility(user5)}"")",True,2,9132,146_11_2.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('is_member', False) and user_data.get('total_spent', 0) > 100:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 600}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 1200}
+    user3 = {'name': 'Charlie', 'age': 45, 'is_member': False, 'total_spent': 500}
+    user4 = {'name': 'David', 'age': 20, 'is_member': True, 'total_spent': 50}
+    user5 = {'name': 'Eve', 'age': 35, 'is_member': True, 'total_spent': 150}
+    print(f""User 1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User 2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User 3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User 4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User 5 eligible: {check_user_eligibility(user5)}"")",True,3,9133,146_11_3.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('is_member', False):
+        is_eligible = True
+    elif user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 1500}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 500}
+    user3 = {'name': 'Charlie', 'age': 16, 'is_member': True, 'total_spent': 2000}
+    user4 = {'name': 'David', 'age': 28, 'is_member': False, 'total_spent': 1200}
+    user5 = {'name': 'Eve', 'age': 40, 'is_member': True, 'total_spent': 300}
+    print(f""User1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User5 eligible: {check_user_eligibility(user5)}"")",True,4,9134,146_11_4.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('is_member', False):
+        is_eligible = True
+    elif user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 1500}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 500}
+    user3 = {'name': 'Charlie', 'age': 16, 'is_member': True, 'total_spent': 2000}
+    user4 = {'name': 'David', 'age': 40, 'is_member': False, 'total_spent': 1200}
+    user5 = {'name': 'Eve', 'age': 28, 'is_member': True, 'total_spent': 400}
+    print(f""User1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User5 eligible: {check_user_eligibility(user5)}"")",True,5,9135,146_11_5.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    elif user_data.get('is_member', False) and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 1500}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 800}
+    user3 = {'name': 'Charlie', 'age': 45, 'is_member': False, 'total_spent': 2000}
+    user4 = {'name': 'David', 'age': 20, 'is_member': False, 'total_spent': 500}
+    user5 = {'name': 'Eve', 'age': 35, 'is_member': True, 'total_spent': 400}
+    print(f""User 1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User 2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User 3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User 4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User 5 eligible: {check_user_eligibility(user5)}"")",True,6,9136,146_11_6.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('is_member', False) and user_data.get('total_spent', 0) > 100:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 600}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 1500}
+    user3 = {'name': 'Charlie', 'age': 45, 'is_member': False, 'total_spent': 800}
+    user4 = {'name': 'David', 'age': 20, 'is_member': True, 'total_spent': 50}
+    user5 = {'name': 'Eve', 'age': 35, 'is_member': True, 'total_spent': 1200}
+    print(f""User 1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User 2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User 3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User 4 eligible: {check_user_eligibility(user4)}"")
+    print(f""User 5 eligible: {check_user_eligibility(user5)}"")",True,7,9137,146_11_7.py
+146,11,Write program for logical flow,"Implement an optimized Python function named 'check_user_eligibility' that takes a list of user data (dictionary format) and uses logical operators (AND, OR) to determine if a user qualifies for a specific discount tier.","def check_user_eligibility(user_data):
+    is_eligible = False
+    if user_data.get('age', 0) >= 18 and user_data.get('is_member', False) and user_data.get('total_spent', 0) > 1000:
+        is_eligible = True
+    elif user_data.get('age', 0) >= 25 and user_data.get('total_spent', 0) > 500:
+        is_eligible = True
+    return is_eligible
+if __name__ == '__main__':
+    user1 = {'name': 'Alice', 'age': 22, 'is_member': True, 'total_spent': 1500}
+    user2 = {'name': 'Bob', 'age': 30, 'is_member': True, 'total_spent': 800}
+    user3 = {'name': 'Charlie', 'age': 45, 'is_member': False, 'total_spent': 2000}
+    user4 = {'name': 'David', 'age': 28, 'is_member': True, 'total_spent': 600}
+    print(f""User 1 eligible: {check_user_eligibility(user1)}"")
+    print(f""User 2 eligible: {check_user_eligibility(user2)}"")
+    print(f""User 3 eligible: {check_user_eligibility(user3)}"")
+    print(f""User 4 eligible: {check_user_eligibility(user4)}"")",True,8,9138,146_11_8.py
