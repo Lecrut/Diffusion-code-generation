@@ -199047,3 +199047,1292 @@ if __name__ == '__main__':
     reversed_list_3 = manipulator.get_reversed_list(sample_list_3)
     print(f""Original list: {sample_list_3}"")
     print(f""Reversed list: {reversed_list_3}"")",True,1,9317,149_14_1.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","def reverse_list(numbers):
+    return numbers[::-1]
+if __name__ == '__main__':
+    sample_input = ""1,5,3,9,2""
+    try:
+        input_list = [int(x.strip()) for x in sample_input.split(',')]
+        reversed_list = reverse_list(input_list)
+        print(reversed_list)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all entries are integers separated by commas."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,9318,149_12.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","def reverse_list(numbers):
+    return numbers[::-1]
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        input_list = [int(x) for x in sample_input.split()]
+        reversed_list = reverse_list(input_list)
+        print(reversed_list)
+    except ValueError:
+        print(""Error: Invalid input. Please enter a list of integers."")",True,1,9319,149_12_1.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","def reverse_list(numbers):
+    return numbers[::-1]
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        input_list = [int(x) for x in sample_input.split()]
+        reversed_list = reverse_list(input_list)
+        print(reversed_list)
+    except ValueError:
+        print(""Error: Input contained non-integer values."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,2,9320,149_12_2.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","import sys
+def reverse_list(data):
+    return data[::-1]
+if __name__ == '__main__':
+    sample_input = [1, 2, 3, 4, 5]
+    try:
+        numbers = []
+        for item in sample_input:
+            if not isinstance(item, int):
+                raise ValueError(""Input must be an integer."")
+            numbers.append(item)
+        reversed_numbers = reverse_list(numbers)
+        print(reversed_numbers)
+    except ValueError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,3,9321,149_12_3.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","def reverse_list(numbers):
+    return numbers[::-1]
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        input_list = [int(x) for x in sample_input.split()]
+        reversed_list = reverse_list(input_list)
+        print(reversed_list)
+    except ValueError:
+        print(""Error: Input contains non-integer values."")",True,4,9322,149_12_4.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","def reverse_list(numbers):
+    return numbers[::-1]
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        input_list = [int(x) for x in sample_input.split()]
+        reversed_list = reverse_list(input_list)
+        print(reversed_list)
+    except ValueError:
+        print(""Error: Input contains non-integer values."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,5,9323,149_12_5.py
+149,12,Reverse the order of a list,"Develop a standalone Python script that prompts the user to enter a list of numbers, reads the input, reverses the order of that list, and prints the reversed list. Ensure error handling for non-integer input.","def reverse_list(numbers):
+    return numbers[::-1]
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        input_list = [int(x) for x in sample_input.split()]
+        reversed_list = reverse_list(input_list)
+        print(reversed_list)
+    except ValueError:
+        print(""Error: Input must contain only integers."")",True,6,9324,149_12_6.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    modified_lines = []
+    for line in lines:
+        if line.strip() != item_to_remove:
+            modified_lines.append(line)
+    try:
+        with open(output_filename, 'w') as outfile:
+            outfile.writelines(modified_lines)
+        print(f""Successfully removed '{item_to_remove}' and wrote results to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred while writing to the file: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    if os.path.exists(OUTPUT_FILE):
+        with open(OUTPUT_FILE, 'r') as f:
+            print(""\nContent of output file:"")
+            print(f.read())",True,0,9325,150_0.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+        items = [line.strip() for line in lines if line.strip()]
+        if item_to_remove in items:
+            modified_items = [item for item in items if item != item_to_remove]
+        else:
+            modified_items = items
+        with open(output_filename, 'w') as outfile:
+            for item in modified_items:
+                outfile.write(item + '\n')
+        return True
+    except FileNotFoundError:
+        return False
+    except Exception:
+        return False
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    success = process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    if success:
+        print(f""Successfully processed {INPUT_FILE}. Result written to {OUTPUT_FILE}."")
+        with open(OUTPUT_FILE, 'r') as f:
+            print(""\nContent of output file:"")
+            print(f.read())
+    else:
+        print(f""Error processing files."")",True,1,9326,150_0_1.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    original_items = []
+    for line in lines:
+        original_items.append(line.strip())
+    modified_items = [item for item in original_items if item != item_to_remove]
+    try:
+        with open(output_filename, 'w') as outfile:
+            for item in modified_items:
+                outfile.write(item + '\n')
+        print(f""Successfully removed '{item_to_remove}' and wrote results to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred while writing to the file: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)",True,2,9327,150_0_2.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    modified_lines = []
+    for line in lines:
+        if line.strip() != item_to_remove:
+            modified_lines.append(line)
+    try:
+        with open(output_filename, 'w') as outfile:
+            outfile.writelines(modified_lines)
+        print(f""Successfully removed '{item_to_remove}' and wrote result to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred while writing to the file: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_content = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_content)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    if os.path.exists(OUTPUT_FILE):
+        with open(OUTPUT_FILE, 'r') as f:
+            print(""\nContent of output file:"")
+            print(f.read())",True,3,9328,150_0_3.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","def process_list_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+            items = [line.strip() for line in lines if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred during reading: {e}"")
+        return
+    modified_items = [item for item in items if item != item_to_remove]
+    try:
+        with open(output_filename, 'w') as outfile:
+            for item in modified_items:
+                outfile.write(item + '\n')
+        print(f""Successfully removed '{item_to_remove}' and wrote the result to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred during writing: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    process_list_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)",True,4,9329,150_0_4.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    modified_list = []
+    for line in lines:
+        if line.strip() != item_to_remove:
+            modified_list.append(line)
+    try:
+        with open(output_filename, 'w') as outfile:
+            outfile.writelines(modified_list)
+        print(f""Successfully removed '{item_to_remove}' and wrote result to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred while writing to the file: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    print(""\n--- Verification ---"")
+    try:
+        with open(OUTPUT_FILE, 'r') as f:
+            print(f.read())
+    except FileNotFoundError:
+        print(""Output file was not created."")",True,5,9330,150_0_5.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    modified_lines = []
+    for line in lines:
+        if line.strip() != item_to_remove:
+            modified_lines.append(line)
+    try:
+        with open(output_filename, 'w') as outfile:
+            outfile.writelines(modified_lines)
+        print(f""Successfully removed '{item_to_remove}' and wrote results to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred while writing to the file: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)",True,6,9331,150_0_6.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    modified_lines = []
+    for line in lines:
+        if line.strip() != item_to_remove:
+            modified_lines.append(line)
+    try:
+        with open(output_filename, 'w') as outfile:
+            outfile.writelines(modified_lines)
+        print(f""Successfully removed '{item_to_remove}' and wrote result to {output_filename}"")
+    except Exception as e:
+        print(f""An error occurred while writing to the file: {e}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_data = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_data)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)",True,7,9332,150_0_7.py
+150,0,Remove a specific item list,"Write a complete, robust Python script that reads a list of items from a file and removes a specific, predefined item from that list, writing the modified list back to a new file. Ensure the code is highly efficient.","import os
+def process_file(input_filename, output_filename, item_to_remove):
+    try:
+        with open(input_filename, 'r') as infile:
+            lines = infile.readlines()
+    except FileNotFoundError:
+        print(f""Error: Input file {input_filename} not found."")
+        return
+    except Exception as e:
+        print(f""An error occurred while reading the file: {e}"")
+        return
+    modified_lines = []
+    removed = False
+    for line in lines:
+        if line.strip() == item_to_remove:
+            removed = True
+            continue
+        modified_lines.append(line)
+    with open(output_filename, 'w') as outfile:
+        for line in modified_lines:
+            outfile.write(line)
+    if removed:
+        print(f""Successfully removed '{item_to_remove}' and wrote results to {output_filename}"")
+    else:
+        print(f""'{item_to_remove}' was not found in the file. Wrote original content to {output_filename}"")
+if __name__ == '__main__':
+    INPUT_FILE = ""input.txt""
+    OUTPUT_FILE = ""output.txt""
+    ITEM_TO_REMOVE = ""REMOVE_ME""
+    sample_content = [
+        ""Apple\n"",
+        ""Banana\n"",
+        ""REMOVE_ME\n"",
+        ""Cherry\n"",
+        ""Date\n""
+    ]
+    with open(INPUT_FILE, 'w') as f:
+        f.writelines(sample_content)
+    process_file(INPUT_FILE, OUTPUT_FILE, ITEM_TO_REMOVE)
+    print(""\n--- Verification ---"")
+    if os.path.exists(OUTPUT_FILE):
+        with open(OUTPUT_FILE, 'r') as f:
+            print(f.read())",True,8,9333,150_0_8.py
+150,1,Remove a specific item list,"Implement an optimized function named `remove_item_from_list` that takes a list and a target item, removes all occurrences of the target item, and returns the new list. Use list comprehension for maximum efficiency.","def remove_item_from_list(input_list, target_item):
+    new_list = [item for item in input_list if item != target_item]
+    return new_list
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 2, 4, 2, 5]
+    target1 = 2
+    result1 = remove_item_from_list(list1, target1)
+    print(f""Original list: {list1}"")
+    print(f""Target item: {target1}"")
+    print(f""New list: {result1}"")
+    list2 = ['a', 'b', 'c', 'a', 'd']
+    target2 = 'a'
+    result2 = remove_item_from_list(list2, target2)
+    print(f""Original list: {list2}"")
+    print(f""Target item: {target2}"")
+    print(f""New list: {result2}"")
+    list3 = [10, 20, 30, 40]
+    target3 = 5
+    result3 = remove_item_from_list(list3, target3)
+    print(f""Original list: {list3}"")
+    print(f""Target item: {target3}"")
+    print(f""New list: {result3}"")",True,0,9334,150_1.py
+150,1,Remove a specific item list,"Implement an optimized function named `remove_item_from_list` that takes a list and a target item, removes all occurrences of the target item, and returns the new list. Use list comprehension for maximum efficiency.","def remove_item_from_list(input_list, target_item):
+    new_list = [item for item in input_list if item != target_item]
+    return new_list
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 2, 4, 2, 5]
+    target1 = 2
+    result1 = remove_item_from_list(list1, target1)
+    print(f""Original list: {list1}"")
+    print(f""Target item: {target1}"")
+    print(f""Result list: {result1}"")
+    list2 = ['a', 'b', 'c', 'a', 'd']
+    target2 = 'a'
+    result2 = remove_item_from_list(list2, target2)
+    print(f""Original list: {list2}"")
+    print(f""Target item: {target2}"")
+    print(f""Result list: {result2}"")
+    list3 = [10, 20, 30, 40]
+    target3 = 5
+    result3 = remove_item_from_list(list3, target3)
+    print(f""Original list: {list3}"")
+    print(f""Target item: {target3}"")
+    print(f""Result list: {result3}"")",True,1,9335,150_1_1.py
+150,1,Remove a specific item list,"Implement an optimized function named `remove_item_from_list` that takes a list and a target item, removes all occurrences of the target item, and returns the new list. Use list comprehension for maximum efficiency.","def remove_item_from_list(input_list, target_item):
+    return [item for item in input_list if item != target_item]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 2, 4, 2, 5]
+    target1 = 2
+    result1 = remove_item_from_list(list1, target1)
+    print(f""Original list: {list1}"")
+    print(f""Target item: {target1}"")
+    print(f""Result list: {result1}"")
+    list2 = ['a', 'b', 'c', 'a', 'd']
+    target2 = 'a'
+    result2 = remove_item_from_list(list2, target2)
+    print(f""Original list: {list2}"")
+    print(f""Target item: {target2}"")
+    print(f""Result list: {result2}"")
+    list3 = [10, 20, 30, 10, 40]
+    target3 = 10
+    result3 = remove_item_from_list(list3, target3)
+    print(f""Original list: {list3}"")
+    print(f""Target item: {target3}"")
+    print(f""Result list: {result3}"")",True,2,9336,150_1_2.py
+150,2,Remove a specific item list,"Develop a class named `ItemManager` with a method `remove_specific_item(self, item_list, item_to_remove)` that handles the removal operation. The implementation must be clean and follow object-oriented best practices.","class ItemManager:
+    def remove_specific_item(self, item_list, item_to_remove):
+        try:
+            item_list.remove(item_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemManager()
+    items = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    item_to_remove_1 = ""apple""
+    print(""Original list:"", items)
+    manager.remove_specific_item(items, item_to_remove_1)
+    print(""After removing first 'apple':"", items)
+    items2 = [""red"", ""green"", ""blue"", ""red""]
+    item_to_remove_2 = ""red""
+    print(""Original list:"", items2)
+    manager.remove_specific_item(items2, item_to_remove_2)
+    print(""After removing 'red' from second list:"", items2)
+    items3 = [""a"", ""b"", ""c""]
+    item_to_remove_3 = ""z""
+    print(""Original list:"", items3)
+    manager.remove_specific_item(items3, item_to_remove_3)
+    print(""After attempting to remove 'z':"", items3)",True,0,9337,150_2.py
+150,2,Remove a specific item list,"Develop a class named `ItemManager` with a method `remove_specific_item(self, item_list, item_to_remove)` that handles the removal operation. The implementation must be clean and follow object-oriented best practices.","class ItemManager:
+    def remove_specific_item(self, item_list, item_to_remove):
+        try:
+            item_list.remove(item_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemManager()
+    sample_list = [1, 2, 3, 4, 5]
+    item_to_remove_1 = 3
+    manager.remove_specific_item(sample_list, item_to_remove_1)
+    print(sample_list)
+    sample_list_2 = ['apple', 'banana', 'cherry', 'date']
+    item_to_remove_2 = 'cherry'
+    manager.remove_specific_item(sample_list_2, item_to_remove_2)
+    print(sample_list_2)
+    sample_list_3 = [10, 20, 30]
+    item_to_remove_3 = 99
+    manager.remove_specific_item(sample_list_3, item_to_remove_3)
+    print(sample_list_3)",True,1,9338,150_2_1.py
+150,2,Remove a specific item list,"Develop a class named `ItemManager` with a method `remove_specific_item(self, item_list, item_to_remove)` that handles the removal operation. The implementation must be clean and follow object-oriented best practices.","class ItemManager:
+    def remove_specific_item(self, item_list, item_to_remove):
+        try:
+            item_list.remove(item_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemManager()
+    items = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    item_to_remove_1 = ""apple""
+    item_to_remove_2 = ""grape""
+    print(""Original list:"", items)
+    manager.remove_specific_item(items, item_to_remove_1)
+    print(""After removing"", item_to_remove_1, "":"", items)
+    manager.remove_specific_item(items, item_to_remove_2)
+    print(""After attempting to remove"", item_to_remove_2, "":"", items)",True,2,9339,150_2_2.py
+150,2,Remove a specific item list,"Develop a class named `ItemManager` with a method `remove_specific_item(self, item_list, item_to_remove)` that handles the removal operation. The implementation must be clean and follow object-oriented best practices.","class ItemManager:
+    def remove_specific_item(self, item_list, item_to_remove):
+        try:
+            item_list.remove(item_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemManager()
+    items = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    item_to_remove_1 = ""apple""
+    print(""Original list:"", items)
+    manager.remove_specific_item(items, item_to_remove_1)
+    print(""After removing first 'apple':"", items)
+    items2 = [""red"", ""green"", ""blue""]
+    item_to_remove_2 = ""yellow""
+    print(""Original list 2:"", items2)
+    manager.remove_specific_item(items2, item_to_remove_2)
+    print(""After removing 'yellow':"", items2)
+    items3 = [1, 2, 3]
+    item_to_remove_3 = 5
+    print(""Original list 3:"", items3)
+    manager.remove_specific_item(items3, item_to_remove_3)
+    print(""After removing 5:"", items3)",True,3,9340,150_2_3.py
+150,2,Remove a specific item list,"Develop a class named `ItemManager` with a method `remove_specific_item(self, item_list, item_to_remove)` that handles the removal operation. The implementation must be clean and follow object-oriented best practices.","class ItemManager:
+    def remove_specific_item(self, item_list, item_to_remove):
+        try:
+            item_list.remove(item_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    manager = ItemManager()
+    items = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    item_to_remove_1 = ""apple""
+    print(""Original list:"", items)
+    manager.remove_specific_item(items, item_to_remove_1)
+    print(""After removing first 'apple':"", items)
+    items2 = [""red"", ""green"", ""blue""]
+    item_to_remove_2 = ""yellow""
+    print(""Original list:"", items2)
+    manager.remove_specific_item(items2, item_to_remove_2)
+    print(""After removing 'yellow':"", items2)
+    items3 = [1, 2, 3]
+    item_to_remove_3 = 5
+    print(""Original list:"", items3)
+    manager.remove_specific_item(items3, item_to_remove_3)
+    print(""After removing 5:"", items3)",True,4,9341,150_2_4.py
+150,3,Remove a specific item list,"Write a function that accepts a list of strings and a string to be removed. The function must return a new list containing only the elements that are not the specified string, prioritizing immutability.","def filter_list(string_list, string_to_remove):
+    new_list = []
+    for item in string_list:
+        if item != string_to_remove:
+            new_list.append(item)
+    return new_list
+if __name__ == '__main__':
+    input_list = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    string_to_remove = ""apple""
+    result = filter_list(input_list, string_to_remove)
+    print(result)",True,0,9342,150_3.py
+150,3,Remove a specific item list,"Write a function that accepts a list of strings and a string to be removed. The function must return a new list containing only the elements that are not the specified string, prioritizing immutability.","def filter_strings(string_list, string_to_remove):
+    new_list = []
+    for s in string_list:
+        if s != string_to_remove:
+            new_list.append(s)
+    return new_list
+if __name__ == '__main__':
+    input_list = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    remove_string = ""apple""
+    result = filter_strings(input_list, remove_string)
+    print(result)",True,1,9343,150_3_1.py
+150,3,Remove a specific item list,"Write a function that accepts a list of strings and a string to be removed. The function must return a new list containing only the elements that are not the specified string, prioritizing immutability.","def filter_list(string_list, string_to_remove):
+    new_list = []
+    for item in string_list:
+        if item != string_to_remove:
+            new_list.append(item)
+    return new_list
+if __name__ == '__main__':
+    input_list = [""apple"", ""banana"", ""cherry"", ""apple"", ""date""]
+    remove_string = ""apple""
+    result = filter_list(input_list, remove_string)
+    print(result)",True,2,9344,150_3_2.py
+150,4,Remove a specific item list,Create an optimized algorithm to remove all duplicate elements from a given list of integers. The solution must use a set for efficient tracking and return the resulting list.,"import time
+def remove_duplicates(input_list):
+    seen = set()
+    result = []
+    for item in input_list:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2, 3]
+    start_time = time.time()
+    unique_list = remove_duplicates(sample_list)
+    end_time = time.time()
+    print(unique_list)",True,0,9345,150_4.py
+150,4,Remove a specific item list,Create an optimized algorithm to remove all duplicate elements from a given list of integers. The solution must use a set for efficient tracking and return the resulting list.,"def remove_duplicates(input_list):
+    seen = set()
+    result = []
+    for item in input_list:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2, 3]
+    unique_list = remove_duplicates(sample_list)
+    print(unique_list)",True,1,9346,150_4_1.py
+150,4,Remove a specific item list,Create an optimized algorithm to remove all duplicate elements from a given list of integers. The solution must use a set for efficient tracking and return the resulting list.,"def remove_duplicates(input_list):
+    seen = set()
+    result = []
+    for item in input_list:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2, 10]
+    unique_list = remove_duplicates(sample_list)
+    print(unique_list)",True,2,9347,150_4_2.py
+150,4,Remove a specific item list,Create an optimized algorithm to remove all duplicate elements from a given list of integers. The solution must use a set for efficient tracking and return the resulting list.,"def remove_duplicates(input_list):
+    seen = set()
+    result = []
+    for item in input_list:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    data = [1, 5, 2, 8, 5, 1, 9, 2, 3]
+    unique_list = remove_duplicates(data)
+    print(unique_list)",True,3,9348,150_4_3.py
+150,4,Remove a specific item list,Create an optimized algorithm to remove all duplicate elements from a given list of integers. The solution must use a set for efficient tracking and return the resulting list.,"def remove_duplicates(input_list):
+    seen = set()
+    result = []
+    for item in input_list:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 2, 2, 3, 4, 1, 5, 4]
+    unique_list = remove_duplicates(sample_list)
+    print(unique_list)",True,4,9349,150_4_4.py
+150,5,Remove a specific item list,"Implement a generator function that filters an input list of tuples, yielding only those tuples where the second element does not match a specified value.","def filter_tuples(data, exclude_value):
+    for item in data:
+        if item[1] != exclude_value:
+            yield item
+if __name__ == '__main__':
+    input_list = [(1, 'a'), (2, 'b'), (3, 'a'), (4, 'c'), (5, 'a')]
+    exclude = 'a'
+    filtered_generator = filter_tuples(input_list, exclude)
+    result_list = list(filtered_generator)
+    print(result_list)",True,0,9350,150_5.py
+150,5,Remove a specific item list,"Implement a generator function that filters an input list of tuples, yielding only those tuples where the second element does not match a specified value.","def filter_tuples(data, exclude_value):
+    for item in data:
+        if item[1] != exclude_value:
+            yield item
+if __name__ == '__main__':
+    input_list = [(1, 'a'), (2, 'b'), (3, 'a'), (4, 'c'), (5, 'a')]
+    exclude = 'a'
+    result_generator = filter_tuples(input_list, exclude)
+    result_list = list(result_generator)
+    print(result_list)",True,1,9351,150_5_1.py
+150,5,Remove a specific item list,"Implement a generator function that filters an input list of tuples, yielding only those tuples where the second element does not match a specified value.","def filter_tuples(data, exclude_value):
+    for item in data:
+        if item[1] != exclude_value:
+            yield item
+if __name__ == '__main__':
+    input_list = [(1, 'a'), (2, 'b'), (3, 'a'), (4, 'c'), (5, 'a')]
+    exclude = 'a'
+    filtered_generator = filter_tuples(input_list, exclude)
+    result = list(filtered_generator)
+    print(result)",True,2,9352,150_5_2.py
+150,5,Remove a specific item list,"Implement a generator function that filters an input list of tuples, yielding only those tuples where the second element does not match a specified value.","def filter_tuples(data, exclude_value):
+    for tuple_item in data:
+        if tuple_item[1] != exclude_value:
+            yield tuple_item
+if __name__ == '__main__':
+    input_list = [(1, 'a'), (2, 'b'), (3, 'a'), (4, 'c'), (5, 'a')]
+    exclude = 'a'
+    filtered_generator = filter_tuples(input_list, exclude)
+    result_list = list(filtered_generator)
+    print(result_list)",True,3,9353,150_5_3.py
+150,5,Remove a specific item list,"Implement a generator function that filters an input list of tuples, yielding only those tuples where the second element does not match a specified value.","def filter_tuples(data, exclude_value):
+    for tup in data:
+        if tup[1] != exclude_value:
+            yield tup
+if __name__ == '__main__':
+    input_list = [(1, 'a'), (2, 'b'), (3, 'a'), (4, 'c')]
+    exclude = 'a'
+    filtered_generator = filter_tuples(input_list, exclude)
+    result_list = list(filtered_generator)
+    print(result_list)",True,4,9354,150_5_4.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""A"")
+    object2 = GameObject(""B"")
+    object3 = GameObject(""C"")
+    object4 = GameObject(""D"")
+    object_list = [object1, object2, object3, object4]
+    target_to_remove = object2
+    print(""Original List:"")
+    print(object_list)
+    list_after_removal = remove_object_reference(object_list, target_to_remove)
+    print(""\nList after removing reference to"", target_to_remove.name)
+    print(list_after_removal)
+    print(""\nOriginal List remains unchanged:"")
+    print(object_list)",True,0,9355,150_6.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    else:
+        return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""A"")
+    object2 = GameObject(""B"")
+    object3 = GameObject(""C"")
+    object4 = GameObject(""D"")
+    original_list = [object1, object2, object3, object4]
+    print(""Original List:"")
+    print(original_list)
+    print(""-"" * 20)
+    target_to_remove = object2
+    list_after_removal = remove_object_reference(original_list, target_to_remove)
+    print(f""List after attempting to remove {target_to_remove}:"")
+    print(list_after_removal)
+    print(""-"" * 20)
+    target_not_present = GameObject(""Z"")
+    list_after_no_removal = remove_object_reference(list_after_removal, target_not_present)
+    print(f""List after attempting to remove {target_not_present}:"")
+    print(list_after_no_removal)
+    print(""-"" * 20)
+    list_comprehension_result = [obj for obj in original_list if obj is not target_to_remove]
+    print(f""List after using list comprehension to remove {target_to_remove}:"")
+    print(list_comprehension_result)
+    print(""-"" * 20)",True,1,9356,150_6_1.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""Apple"")
+    object2 = GameObject(""Banana"")
+    object3 = GameObject(""Cherry"")
+    object4 = GameObject(""Date"")
+    object_list = [object1, object2, object3, object4]
+    print(""Original list:"")
+    print(object_list)
+    target_to_remove = object2
+    print(""\nAttempting to remove reference to:"", target_to_remove.name)
+    modified_list = remove_object_reference(object_list, target_to_remove)
+    print(""\nModified list after removal:"")
+    print(modified_list)
+    print(""\nOriginal list remains unchanged:"")
+    print(object_list)
+    target_to_remove_2 = object1
+    print(""\nAttempting to remove reference to:"", target_to_remove_2.name)
+    modified_list_2 = remove_object_reference(object_list, target_to_remove_2)
+    print(""\nModified list after removal:"")
+    print(modified_list_2)",True,2,9357,150_6_2.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""Apple"")
+    object2 = GameObject(""Banana"")
+    object3 = GameObject(""Cherry"")
+    object4 = GameObject(""Date"")
+    original_list = [object1, object2, object3, object4]
+    print(""Original List:"")
+    print(original_list)
+    object_to_remove = object2
+    print(""\nAttempting to remove reference to:"", object_to_remove)
+    modified_list = remove_object_reference(original_list, object_to_remove)
+    print(""\nModified List:"")
+    print(modified_list)
+    print(""\nOriginal List (Unmodified):"")
+    print(original_list)
+    object_to_remove_2 = object1
+    print(""\nAttempting to remove reference to:"", object_to_remove_2)
+    modified_list_2 = remove_object_reference(original_list, object_to_remove_2)
+    print(""\nModified List 2:"")
+    print(modified_list_2)",True,3,9358,150_6_3.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""A"")
+    object2 = GameObject(""B"")
+    object3 = GameObject(""C"")
+    object4 = GameObject(""D"")
+    object_list = [object1, object2, object3, object4]
+    target_to_remove = object2
+    print(""Original List:"")
+    print(object_list)
+    print(""-"" * 20)
+    list_after_removal = remove_object_reference(object_list, target_to_remove)
+    print(""List after removing reference to object2:"")
+    print(list_after_removal)
+    print(""-"" * 20)
+    object_list_2 = [object1, object2, object3, object4]
+    target_to_remove_2 = object1
+    list_after_removal_2 = remove_object_reference(object_list_2, target_to_remove_2)
+    print(""Original List 2:"")
+    print(object_list_2)
+    print(""-"" * 20)
+    print(""List 2 after removing reference to object1:"")
+    print(list_after_removal_2)
+    print(""-"" * 20)
+    object_list_3 = [object1, object2, object3, object4]
+    target_to_remove_3 = GameObject(""Z"")
+    list_after_removal_3 = remove_object_reference(object_list_3, target_to_remove_3)
+    print(""Original List 3:"")
+    print(object_list_3)
+    print(""-"" * 20)
+    print(""List 3 after attempting to remove non-existent object Z:"")
+    print(list_after_removal_3)
+    print(""-"" * 20)",True,4,9359,150_6_4.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""Apple"")
+    object2 = GameObject(""Banana"")
+    object3 = GameObject(""Cherry"")
+    object4 = GameObject(""Date"")
+    original_list = [object1, object2, object3, object4]
+    print(""Original List:"")
+    print(original_list)
+    object_to_remove = object2
+    print(""\nAttempting to remove reference to:"", object_to_remove)
+    list_after_removal = remove_object_reference(original_list, object_to_remove)
+    print(""\nList after removal:"")
+    print(list_after_removal)
+    list_after_removal_attempt2 = remove_object_reference(original_list, object1)
+    print(""\nList after removing object1:"")
+    print(list_after_removal_attempt2)",True,5,9360,150_6_5.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, target_object):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is target_object:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""Apple"")
+    object2 = GameObject(""Banana"")
+    object3 = GameObject(""Cherry"")
+    object4 = GameObject(""Date"")
+    original_list = [object1, object2, object3, object4]
+    object_to_remove = object2
+    print(""Original List:"")
+    print(original_list)
+    list_after_removal = remove_object_reference(original_list, object_to_remove)
+    print(""\nList after removing reference to object_to_remove:"")
+    print(list_after_removal)
+    list_after_removal_attempt = remove_object_reference(original_list, object1)
+    print(""\nList after removing reference to object1:"")
+    print(list_after_removal_attempt)",True,6,9361,150_6_6.py
+150,6,Remove a specific item list,Write a script that simulates removing a specific object reference from a list of objects. Demonstrate the use of list manipulation techniques suitable for object lists.,"import copy
+class GameObject:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""GameObject('{self.name}')""
+def remove_object_reference(object_list, object_to_remove):
+    new_list = []
+    found = False
+    for obj in object_list:
+        if obj is object_to_remove:
+            found = True
+        else:
+            new_list.append(obj)
+    if found:
+        return new_list
+    else:
+        return object_list
+if __name__ == '__main__':
+    object1 = GameObject(""A"")
+    object2 = GameObject(""B"")
+    object3 = GameObject(""C"")
+    object4 = GameObject(""D"")
+    object_list = [object1, object2, object3, object4]
+    object_to_remove = object2
+    print(""Original list:"")
+    print(object_list)
+    object_list_after_removal = remove_object_reference(object_list, object_to_remove)
+    print(""\nList after attempting to remove reference to object_to_remove:"")
+    print(object_list_after_removal)
+    object_list_unchanged = remove_object_reference(object_list, object1)
+    print(""\nList after attempting to remove reference to object1 (which was present):"")
+    print(object_list_unchanged)
+    object_list_no_change = remove_object_reference(object_list, GameObject(""E""))
+    print(""\nList after attempting to remove reference to a non-existent object:"")
+    print(object_list_no_change)",True,7,9362,150_6_7.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class List:
+    def __init__(self, items):
+        self.items = list(items)
+    def remove_by_value(self, value):
+        try:
+            index = self.items.index(value)
+            del self.items[index]
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    data = [1, 5, 2, 8, 5, 3]
+    my_list = List(data)
+    print(f""Original list: {my_list.items}"")
+    my_list.remove_by_value(5)
+    print(f""After removing 5: {my_list.items}"")
+    my_list.remove_by_value(10)
+    print(f""After removing 10: {my_list.items}"")
+    my_list.remove_by_value(2)
+    print(f""After removing 2: {my_list.items}"")
+    my_list.remove_by_value(99)
+    print(f""After removing 99: {my_list.items}"")",True,0,9363,150_7.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class EfficientList:
+    def __init__(self, initial_list):
+        self.data = list(initial_list)
+    def remove_by_value(self, value):
+        try:
+            index_to_remove = self.data.index(value)
+            self.data.pop(index_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 20, 40, 10]
+    efficient_list = EfficientList(sample_list)
+    print(""Original list:"", sample_list)
+    efficient_list.remove_by_value(20)
+    print(""After removing first occurrence of 20:"", efficient_list.data)
+    efficient_list.remove_by_value(10)
+    print(""After removing first occurrence of 10:"", efficient_list.data)
+    efficient_list.remove_by_value(99)
+    print(""After attempting to remove non-existent value:"", efficient_list.data)
+    sample_list_2 = [5, 1, 8, 5, 9]
+    efficient_list_2 = EfficientList(sample_list_2)
+    print(""\nOriginal list 2:"", sample_list_2)
+    efficient_list_2.remove_by_value(5)
+    print(""After removing first occurrence of 5:"", efficient_list_2.data)",True,1,9364,150_7_1.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class EfficientList:
+    def __init__(self, initial_list):
+        self.data = list(initial_list)
+    def remove_by_value(self, value):
+        try:
+            index_to_remove = self.data.index(value)
+            self.data.pop(index_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 20, 40, 10]
+    efficient_list = EfficientList(sample_list)
+    print(""Original list:"", sample_list)
+    efficient_list.remove_by_value(20)
+    print(""After removing first occurrence of 20:"", efficient_list.data)
+    efficient_list.remove_by_value(10)
+    print(""After removing first occurrence of 10:"", efficient_list.data)
+    efficient_list.remove_by_value(99)
+    print(""After attempting to remove 99:"", efficient_list.data)
+    sample_list_2 = [5, 1, 8, 5, 9]
+    efficient_list_2 = EfficientList(sample_list_2)
+    print(""\nOriginal list 2:"", sample_list_2)
+    efficient_list_2.remove_by_value(5)
+    print(""After removing 5:"", efficient_list_2.data)",True,2,9365,150_7_2.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class List:
+    def __init__(self, items):
+        self.items = list(items)
+    def remove_by_value(self, value):
+        try:
+            index = self.items.index(value)
+            del self.items[index]
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    data = [1, 5, 2, 8, 5, 3]
+    my_list = List(data)
+    print(""Original list:"", my_list.items)
+    my_list.remove_by_value(5)
+    print(""After removing first 5:"", my_list.items)
+    my_list.remove_by_value(8)
+    print(""After removing 8:"", my_list.items)
+    my_list.remove_by_value(99)
+    print(""After removing non-existent 99:"", my_list.items)
+    my_list.remove_by_value(2)
+    print(""After removing 2:"", my_list.items)",True,3,9366,150_7_3.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class List:
+    def __init__(self, initial_list):
+        self.data = list(initial_list)
+    def remove_by_value(self, value):
+        try:
+            index = self.data.index(value)
+            self.data.pop(index)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    my_list = List([10, 20, 30, 20, 40, 20])
+    print(f""Original list: {my_list.data}"")
+    my_list.remove_by_value(20)
+    print(f""After removing one instance of 20: {my_list.data}"")
+    my_list.remove_by_value(40)
+    print(f""After removing 40: {my_list.data}"")
+    my_list.remove_by_value(99)
+    print(f""After attempting to remove 99: {my_list.data}"")
+    my_list.remove_by_value(20)
+    print(f""After removing another 20: {my_list.data}"")",True,4,9367,150_7_4.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class List:
+    def __init__(self, initial_list):
+        self.data = list(initial_list)
+    def remove_by_value(self, value):
+        try:
+            index = self.data.index(value)
+            self.data.pop(index)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    my_list = List([10, 20, 30, 20, 40, 20])
+    print(""Original list:"", my_list.data)
+    my_list.remove_by_value(20)
+    print(""After removing one instance of 20:"", my_list.data)
+    my_list.remove_by_value(10)
+    print(""After removing 10:"", my_list.data)
+    my_list.remove_by_value(99)
+    print(""After removing 99 (not found):"", my_list.data)
+    my_list.remove_by_value(40)
+    print(""After removing 40:"", my_list.data)",True,5,9368,150_7_5.py
+150,7,Remove a specific item list,"Design and implement a method within a list class that allows for the removal of an item by its value, ensuring the operation is time-efficient for large lists.","class EfficientList:
+    def __init__(self, initial_list):
+        self.data = list(initial_list)
+    def remove_by_value(self, value):
+        try:
+            index_to_remove = self.data.index(value)
+            self.data.pop(index_to_remove)
+        except ValueError:
+            pass
+if __name__ == '__main__':
+    initial_list = [10, 20, 30, 20, 40, 20]
+    efficient_list = EfficientList(initial_list)
+    print(f""Initial list: {initial_list}"")
+    value_to_remove_1 = 20
+    efficient_list.remove_by_value(value_to_remove_1)
+    print(f""After removing {value_to_remove_1}: {efficient_list.data}"")
+    value_to_remove_2 = 40
+    efficient_list.remove_by_value(value_to_remove_2)
+    print(f""After removing {value_to_remove_2}: {efficient_list.data}"")
+    value_to_remove_3 = 99
+    efficient_list.remove_by_value(value_to_remove_3)
+    print(f""After attempting to remove {value_to_remove_3}: {efficient_list.data}"")",True,6,9369,150_7_6.py
+150,8,Remove a specific item list,"Develop a function that takes a list of mixed data types and removes all elements that are instances of a specific class type, ensuring the resulting list contains only the remaining elements.","class Data:
+    pass
+class Number:
+    pass
+def filter_by_class(data_list, class_to_remove):
+    result = []
+    for item in data_list:
+        if not isinstance(item, class_to_remove):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    mixed_list = [1, ""hello"", Data(), 3.14, Number(), ""world"", 5]
+    class_to_remove_type = Data
+    filtered_list = filter_by_class(mixed_list, class_to_remove_type)
+    print(filtered_list)",True,0,9370,150_8.py
+150,8,Remove a specific item list,"Develop a function that takes a list of mixed data types and removes all elements that are instances of a specific class type, ensuring the resulting list contains only the remaining elements.","class MixedDataRemover:
+    def remove_class(self, data_list, class_type):
+        result = []
+        for item in data_list:
+            if not isinstance(item, class_type):
+                result.append(item)
+        return result
+if __name__ == '__main__':
+    data = [1, ""hello"", 3.14, True, [1, 2], ""world"", 42]
+    class_to_remove = int
+    remover = MixedDataRemover()
+    result = remover.remove_class(data, class_to_remove)
+    print(result)",True,1,9371,150_8_1.py
+150,8,Remove a specific item list,"Develop a function that takes a list of mixed data types and removes all elements that are instances of a specific class type, ensuring the resulting list contains only the remaining elements.","class Data:
+    pass
+class StringData:
+    pass
+def filter_by_class(data_list, class_to_remove):
+    result = []
+    for item in data_list:
+        if not isinstance(item, class_to_remove):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    mixed_list = [1, ""hello"", Data(), 3.14, StringData(), ""world"", 5]
+    class_to_remove_type = Data
+    filtered_list = filter_by_class(mixed_list, class_to_remove_type)
+    print(filtered_list)",True,2,9372,150_8_2.py
+150,8,Remove a specific item list,"Develop a function that takes a list of mixed data types and removes all elements that are instances of a specific class type, ensuring the resulting list contains only the remaining elements.","class Data:
+    pass
+class Number:
+    pass
+def filter_by_class(data_list, class_to_remove):
+    result = []
+    for item in data_list:
+        if not isinstance(item, class_to_remove):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    mixed_data = [1, ""hello"", Data(), 3.14, Number(), ""world"", 2]
+    class_to_remove_type = Data
+    filtered_list = filter_by_class(mixed_data, class_to_remove_type)
+    print(filtered_list)",True,3,9373,150_8_3.py
+150,8,Remove a specific item list,"Develop a function that takes a list of mixed data types and removes all elements that are instances of a specific class type, ensuring the resulting list contains only the remaining elements.","class Data:
+    pass
+class StringData(Data):
+    pass
+class IntegerData(Data):
+    pass
+def filter_by_class(data_list, class_to_remove):
+    result = []
+    for item in data_list:
+        if not isinstance(item, class_to_remove):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    mixed_list = [1, ""hello"", Data(), 2.5, StringData(), 3, None, IntegerData()]
+    class_to_remove = Data
+    filtered_list = filter_by_class(mixed_list, class_to_remove)
+    print(filtered_list)",True,4,9374,150_8_4.py
+150,9,Remove a specific item list,"Write a comprehensive, production-ready Python function to filter a list of dictionaries, removing any dictionary where a specific key-value pair matches the removal criteria.","def filter_list_of_dicts(data, key, value):
+    filtered_data = [d for d in data if d.get(key) != value]
+    return filtered_data
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'name': 'Alice', 'status': 'active'},
+        {'id': 2, 'name': 'Bob', 'status': 'inactive'},
+        {'id': 3, 'name': 'Charlie', 'status': 'active'},
+        {'id': 4, 'name': 'David', 'status': 'inactive'}
+    ]
+    key_to_remove = 'status'
+    value_to_remove = 'active'
+    result = filter_list_of_dicts(sample_data, key_to_remove, value_to_remove)
+    print(result)",True,0,9375,150_9.py
+150,9,Remove a specific item list,"Write a comprehensive, production-ready Python function to filter a list of dictionaries, removing any dictionary where a specific key-value pair matches the removal criteria.","def filter_list_of_dicts(data, key, value):
+    filtered_list = [item for item in data if item.get(key) != value]
+    return filtered_list
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'name': 'Alice', 'status': 'active'},
+        {'id': 2, 'name': 'Bob', 'status': 'inactive'},
+        {'id': 3, 'name': 'Charlie', 'status': 'active'},
+        {'id': 4, 'name': 'David', 'status': 'inactive'}
+    ]
+    key_to_check = 'status'
+    value_to_remove = 'active'
+    result = filter_list_of_dicts(sample_data, key_to_check, value_to_remove)
+    print(result)",True,1,9376,150_9_1.py
