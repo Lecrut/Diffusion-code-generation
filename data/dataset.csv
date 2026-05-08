@@ -137560,3 +137560,2645 @@ if __name__ == '__main__':
     print(f""Day of month for {date2}: {get_day_of_month(date2)}"")
     print(f""Day of month for {date3}: {get_day_of_month(date3)}"")
     print(f""Day of month for invalid input: {get_day_of_month(date_invalid)}"")",True,2,6737,108_11_2.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def date_to_day(year, month, day):
+    if month == 2:
+        is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+        if is_leap:
+            max_days = 29
+        else:
+            max_days = 28
+    elif month in [4, 6, 9, 11]:
+        max_days = 30
+    else:
+        max_days = 31
+    if day > max_days:
+        return None
+    else:
+        return day
+if __name__ == '__main__':
+    year1 = 2024
+    month1 = 2
+    day1 = 29
+    result1 = date_to_day(year1, month1, day1)
+    print(f""Date: {year1}-{month1}-{day1}, Day: {result1}"")
+    year2 = 2023
+    month2 = 2
+    day2 = 29
+    result2 = date_to_day(year2, month2, day2)
+    print(f""Date: {year2}-{month2}-{day2}, Day: {result2}"")
+    year3 = 2024
+    month3 = 3
+    day3 = 31
+    result3 = date_to_day(year3, month3, day3)
+    print(f""Date: {year3}-{month3}-{day3}, Day: {result3}"")
+    year4 = 2023
+    month4 = 12
+    day4 = 31
+    result4 = date_to_day(year4, month4, day4)
+    print(f""Date: {year4}-{month4}-{day4}, Day: {result4}"")
+    year5 = 2024
+    month5 = 2
+    day5 = 28
+    result5 = date_to_day(year5, month5, day5)
+    print(f""Date: {year5}-{month5}-{day5}, Day: {result5}"")",True,0,6738,108_7.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def calculate_day_of_month(year, month):
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = False
+    if year % 4 == 0:
+        if year % 100 == 0:
+            if year % 400 == 0:
+                is_leap = True
+        else:
+            is_leap = False
+    if is_leap:
+        days_in_month[2] = 29
+    if 1 <= month <= 12:
+        return days_in_month[month]
+    else:
+        return -1
+if __name__ == '__main__':
+    year1 = 2024
+    month1 = 2
+    result1 = calculate_day_of_month(year1, month1)
+    print(f""Date: {year1}-{month1}, Day of Month: {result1}"")
+    year2 = 2000
+    month2 = 2
+    result2 = calculate_day_of_month(year2, month2)
+    print(f""Date: {year2}-{month2}, Day of Month: {result2}"")
+    year3 = 2023
+    month3 = 12
+    result3 = calculate_day_of_month(year3, month3)
+    print(f""Date: {year3}-{month3}, Day of Month: {result3}"")
+    year4 = 2024
+    month4 = 2
+    result4 = calculate_day_of_month(year4, month4)
+    print(f""Date: {year4}-{month4}, Day of Month: {result4}"")",True,1,6739,108_7_1.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def calculate_day_of_month(year, month):
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = False
+    if year % 4 == 0:
+        if year % 100 == 0:
+            if year % 400 == 0:
+                is_leap = True
+        else:
+            is_leap = False
+    if is_leap:
+        days_in_month[2] = 29
+    if 1 <= month <= 12:
+        return days_in_month[month]
+    else:
+        return -1
+if __name__ == '__main__':
+    year1 = 2024
+    month1 = 2
+    result1 = calculate_day_of_month(year1, month1)
+    print(f""Date: {year1}-{month1}, Day of Month: {result1}"")
+    year2 = 2023
+    month2 = 12
+    result2 = calculate_day_of_month(year2, month2)
+    print(f""Date: {year2}-{month2}, Day of Month: {result2}"")
+    year3 = 2000
+    month3 = 2
+    result3 = calculate_day_of_month(year3, month3)
+    print(f""Date: {year3}-{month3}, Day of Month: {result3}"")
+    year4 = 2024
+    month4 = 3
+    result4 = calculate_day_of_month(year4, month4)
+    print(f""Date: {year4}-{month4}, Day of Month: {result4}"")",True,2,6740,108_7_2.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def date_to_day(year, month, day):
+    if month == 2:
+        is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+        if is_leap:
+            max_days = 29
+        else:
+            max_days = 28
+    elif month in [4, 6, 9, 11]:
+        max_days = 30
+    else:
+        max_days = 31
+    if day > max_days:
+        return None
+    else:
+        return day
+if __name__ == '__main__':
+    year1 = 2024
+    month1 = 2
+    day1 = 29
+    result1 = date_to_day(year1, month1, day1)
+    print(f""Date: {year1}-{month1}-{day1}, Day of Month: {result1}"")
+    year2 = 2023
+    month2 = 1
+    day2 = 31
+    result2 = date_to_day(year2, month2, day2)
+    print(f""Date: {year2}-{month2}-{day2}, Day of Month: {result2}"")
+    year3 = 2024
+    month3 = 2
+    day3 = 29
+    result3 = date_to_day(year3, month3, day3)
+    print(f""Date: {year3}-{month3}-{day3}, Day of Month: {result3}"")
+    year4 = 2023
+    month4 = 2
+    day4 = 29
+    result4 = date_to_day(year4, month4, day4)
+    print(f""Date: {year4}-{month4}-{day4}, Day of Month: {result4}"")
+    year5 = 2024
+    month5 = 12
+    day5 = 31
+    result5 = date_to_day(year5, month5, day5)
+    print(f""Date: {year5}-{month5}-{day5}, Day of Month: {result5}"")",True,3,6741,108_7_3.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def day_of_month_manual(year, month):
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = False
+    if year % 4 == 0:
+        is_leap = True
+    elif year % 100 == 0:
+        if year % 400 == 0:
+            is_leap = True
+    if is_leap:
+        days_in_month[2] = 29
+    if 1 <= month <= 12:
+        return days_in_month[month]
+    else:
+        return -1
+if __name__ == '__main__':
+    year1 = 2024
+    month1 = 31
+    result1 = day_of_month_manual(year1, month1)
+    print(f""Date: {year1}-{month1}, Day of Month: {result1}"")
+    year2 = 2000
+    month2 = 2
+    result2 = day_of_month_manual(year2, month2)
+    print(f""Date: {year2}-{month2}, Day of Month: {result2}"")
+    year3 = 2023
+    month3 = 12
+    result3 = day_of_month_manual(year3, month3)
+    print(f""Date: {year3}-{month3}, Day of Month: {result3}"")
+    year4 = 2024
+    month4 = 2
+    result4 = day_of_month_manual(year4, month4)
+    print(f""Date: {year4}-{month4}, Day of Month: {result4}"")",True,4,6742,108_7_4.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def calculate_day_of_month(year, month):
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = False
+    if year % 4 == 0:
+        if year % 100 == 0:
+            if year % 400 == 0:
+                is_leap = True
+        else:
+            is_leap = False
+    if is_leap:
+        days_in_month[2] = 29
+    if 1 <= month <= 12:
+        return days_in_month[month]
+    else:
+        return -1
+if __name__ == '__main__':
+    year1 = 2024
+    month1 = 2
+    result1 = calculate_day_of_month(year1, month1)
+    print(f""Date: {year1}-{month1}, Day of Month: {result1}"")
+    year2 = 2000
+    month2 = 2
+    result2 = calculate_day_of_month(year2, month2)
+    print(f""Date: {year2}-{month2}, Day of Month: {result2}"")
+    year3 = 2023
+    month3 = 12
+    result3 = calculate_day_of_month(year3, month3)
+    print(f""Date: {year3}-{month3}, Day of Month: {result3}"")
+    year4 = 2024
+    month4 = 3
+    result4 = calculate_day_of_month(year4, month4)
+    print(f""Date: {year4}-{month4}, Day of Month: {result4}"")",True,5,6743,108_7_5.py
+108,7,Determine the day of the month,"Design and implement a mathematical function that determines the day of the month from a specific date, manually calculating the day number based on month lengths and leap year rules, without relying on string parsing.","import calendar
+def date_to_day(year, month, day):
+    if month == 2:
+        is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+        if is_leap:
+            max_days = 29
+        else:
+            max_days = 28
+    elif month in [4, 6, 9, 11]:
+        max_days = 30
+    else:
+        max_days = 31
+    if day > max_days:
+        return None
+    else:
+        return day
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 10
+    day1 = 25
+    result1 = date_to_day(year1, month1, day1)
+    print(f""Date: {year1}-{month1}-{day1}, Day of Month: {result1}"")
+    year2 = 2000
+    month2 = 2
+    day2 = 29
+    result2 = date_to_day(year2, month2, day2)
+    print(f""Date: {year2}-{month2}-{day2}, Day of Month: {result2}"")
+    year3 = 2024
+    month3 = 2
+    day3 = 29
+    result3 = date_to_day(year3, month3, day3)
+    print(f""Date: {year3}-{month3}-{day3}, Day of Month: {result3}"")
+    year4 = 2023
+    month4 = 12
+    day4 = 31
+    result4 = date_to_day(year4, month4, day4)
+    print(f""Date: {year4}-{month4}-{day4}, Day of Month: {result4}"")
+    year5 = 2023
+    month5 = 13
+    day5 = 1
+    result5 = date_to_day(year5, month5, day5)
+    print(f""Date: {year5}-{month5}-{day5}, Day of Month: {result5}"")",True,6,6744,108_7_6.py
+108,13,Determine the day of the month,"Write a command-line interface (CLI) Python program that prompts the user to enter a full date (YYYY-MM-DD format) and prints only the day of the month. The solution must be clean, efficient, and handle input validation.","import sys
+from datetime import datetime
+def process_date(date_str):
+    try:
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        print(date_obj.day)
+    except ValueError:
+        print(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    process_date(sample_date)",True,0,6745,108_13.py
+108,13,Determine the day of the month,"Write a command-line interface (CLI) Python program that prompts the user to enter a full date (YYYY-MM-DD format) and prints only the day of the month. The solution must be clean, efficient, and handle input validation.","import sys
+from datetime import datetime
+def process_date(date_string):
+    try:
+        date_obj = datetime.strptime(date_string, ""%Y-%m-%d"")
+        print(date_obj.day)
+    except ValueError:
+        print(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    process_date(sample_date)",True,1,6746,108_13_1.py
+108,14,Determine the day of the month,"Create a standalone, highly efficient Python function that accepts a string representing a date and returns the integer value of the day of the month. Prioritize performance and adherence to PEP 8 style guidelines.","import datetime
+def get_day_of_month(date_string: str) -> int:
+    try:
+        date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"").date()
+        return date_object.day
+    except ValueError:
+        raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    sample_date_1 = ""2023-10-27""
+    sample_date_2 = ""1999-01-01""
+    sample_date_3 = ""2024-02-29""
+    print(f""Day of month for {sample_date_1}: {get_day_of_month(sample_date_1)}"")
+    print(f""Day of month for {sample_date_2}: {get_day_of_month(sample_date_2)}"")
+    print(f""Day of month for {sample_date_3}: {get_day_of_month(sample_date_3)}"")",True,0,6747,108_14.py
+108,14,Determine the day of the month,"Create a standalone, highly efficient Python function that accepts a string representing a date and returns the integer value of the day of the month. Prioritize performance and adherence to PEP 8 style guidelines.","import datetime
+def get_day_of_month(date_string: str) -> int:
+    try:
+        date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        return date_object.day
+    except ValueError:
+        raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024-02-29""
+    print(get_day_of_month(date1))
+    print(get_day_of_month(date2))
+    print(get_day_of_month(date3))",True,1,6748,108_14_1.py
+108,14,Determine the day of the month,"Create a standalone, highly efficient Python function that accepts a string representing a date and returns the integer value of the day of the month. Prioritize performance and adherence to PEP 8 style guidelines.","import datetime
+def get_day_of_month(date_string: str) -> int:
+    try:
+        date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        return date_object.day
+    except ValueError:
+        raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    sample_date_1 = ""2023-10-27""
+    sample_date_2 = ""1999-01-01""
+    sample_date_3 = ""2024-02-29""
+    print(f""Date: {sample_date_1}, Day: {get_day_of_month(sample_date_1)}"")
+    print(f""Date: {sample_date_2}, Day: {get_day_of_month(sample_date_2)}"")
+    print(f""Date: {sample_date_3}, Day: {get_day_of_month(sample_date_3)}"")",True,2,6749,108_14_2.py
+108,14,Determine the day of the month,"Create a standalone, highly efficient Python function that accepts a string representing a date and returns the integer value of the day of the month. Prioritize performance and adherence to PEP 8 style guidelines.","import datetime
+def get_day_of_month(date_string: str) -> int:
+    try:
+        date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        return date_object.day
+    except ValueError:
+        raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    sample_date_1 = ""2023-10-27""
+    sample_date_2 = ""1999-01-01""
+    sample_date_3 = ""2024-02-29""
+    print(f""Date: {sample_date_1}, Day of Month: {get_day_of_month(sample_date_1)}"")
+    print(f""Date: {sample_date_2}, Day of Month: {get_day_of_month(sample_date_2)}"")
+    print(f""Date: {sample_date_3}, Day of Month: {get_day_of_month(sample_date_3)}"")",True,3,6750,108_14_3.py
+108,14,Determine the day of the month,"Create a standalone, highly efficient Python function that accepts a string representing a date and returns the integer value of the day of the month. Prioritize performance and adherence to PEP 8 style guidelines.","import datetime
+def get_day_of_month(date_string: str) -> int:
+    try:
+        date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        return date_object.day
+    except ValueError:
+        raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024-02-29""
+    date4 = ""2023-12-31""
+    print(f""Day of month for {date1}: {get_day_of_month(date1)}"")
+    print(f""Day of month for {date2}: {get_day_of_month(date2)}"")
+    print(f""Day of month for {date3}: {get_day_of_month(date3)}"")
+    print(f""Day of month for {date4}: {get_day_of_month(date4)}"")",True,4,6751,108_14_4.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(target_year, target_month, current_year, current_month):
+    target_date = datetime.date(target_year, target_month, 1)
+    today = datetime.date(current_year, current_month, 1)
+    if target_year == current_year and target_month > current_month:
+        days = (datetime.date(target_year, target_month, 1) - datetime.date(current_year, current_month, 1)).days
+        return days
+    elif target_year == current_year and target_month < current_month:
+        days = (datetime.date(datetime.date(current_year, current_month, 1) + datetime.timedelta(days=31) - datetime.timedelta(days=31) + 1) - datetime.date(current_year, current_month, 1)).days
+        return (datetime.date(current_year, 12, 1) - datetime.date(current_year, target_month, 1)).days + (datetime.date(target_year, target_month, 1) - datetime.date(target_year, 12, 1))
+    else:
+        days = (datetime.date(target_year, 12, 1) - datetime.date(current_year, current_month, 1)).days + (datetime.date(target_year, target_month, 1) - datetime.date(target_year, 12, 1))
+        return (datetime.date(target_year, 12, 1) - datetime.date(current_year, current_month, 1)).days + (datetime.date(target_year, target_month, 1) - datetime.date(target_year, 12, 1))
+if __name__ == '__main__':
+    target_year = 2024
+    target_month = 12
+    current_year = 2024
+    current_month = 10
+    days_remaining = calculate_days_remaining(target_year, target_month, current_year, current_month)
+    print(days_remaining)",True,0,6752,109_0.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        if day > today.day:
+            return day - today.day
+        else:
+            return 0
+    else:
+        target_date = datetime.date(year, month, day)
+        if target_date > today:
+            delta = target_date - today
+            return delta.days
+        else:
+            return -abs(target_date - today).days
+if __name__ == '__main__':
+    sample_year = 2024
+    sample_month = 12
+    sample_day = 31
+    days_left = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(days_left)",True,1,6753,109_0_1.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        if day > days_in_month:
+            return -days_in_month
+        else:
+            return days_in_month - (day - 1)
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 12
+    sample_day = 25
+    result = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(result)",True,2,6754,109_0_2.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        return days_in_month - (day - 1)
+    else:
+        return -1
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 15
+    days_left = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(days_left)",True,3,6755,109_0_3.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        return days_in_month - (day - 1)
+    else:
+        return -1
+if __name__ == '__main__':
+    target_year = 2024
+    target_month = 12
+    target_day = 25
+    days_left = calculate_days_remaining(target_year, target_month, target_day)
+    print(days_left)",True,4,6756,109_0_4.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(target_year, target_month, current_date):
+    target_date = datetime.date(target_year, target_month, 1)
+    today = current_date
+    if target_date > today:
+        delta = target_date - today
+        return delta.days
+    else:
+        delta = today - target_date
+        return delta.days
+if __name__ == '__main__':
+    current_date = datetime.date(2023, 10, 26)
+    target_year = 2023
+    target_month = 12
+    days_left = calculate_days_remaining(target_year, target_month, current_date)
+    print(days_left)",True,5,6757,109_0_5.py
+109,0,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a specific month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_remaining = (datetime.date(year, month + 1, 1) - today).days
+    else:
+        days_remaining = 0
+    return days_remaining
+if __name__ == '__main__':
+    sample_year = 2024
+    sample_month = 12
+    sample_day = 31
+    result = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(result)",True,6,6758,109_0_6.py
+108,12,Determine the day of the month,"Develop a class named 'DateCalculator' with a method to determine the day of the month from a given date string. The implementation must be professional, efficient, and use modern Python features.","class DateCalculator:
+    def get_day_of_month(self, date_string: str) -> int:
+        from datetime import datetime
+        try:
+            date_object = datetime.strptime(date_string, ""%Y-%m-%d"")
+            return date_object.day
+        except ValueError:
+            raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024-02-29""
+    print(f""Day of the month for {date1}: {calculator.get_day_of_month(date1)}"")
+    print(f""Day of the month for {date2}: {calculator.get_day_of_month(date2)}"")
+    print(f""Day of the month for {date3}: {calculator.get_day_of_month(date3)}"")",True,0,6759,108_12.py
+108,12,Determine the day of the month,"Develop a class named 'DateCalculator' with a method to determine the day of the month from a given date string. The implementation must be professional, efficient, and use modern Python features.","class DateCalculator:
+    def get_day_of_month(self, date_string: str) -> int:
+        from datetime import datetime
+        try:
+            date_object = datetime.strptime(date_string, ""%Y-%m-%d"")
+            return date_object.day
+        except ValueError:
+            raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    date1 = ""2023-10-27""
+    date2 = ""1999-01-01""
+    date3 = ""2024-02-29""
+    print(f""Day of the month for {date1}: {calculator.get_day_of_month(date1)}"")
+    print(f""Day of the month for {date2}: {calculator.get_day_of_month(date2)}"")
+    print(f""Day of the month for {date3}: {calculator.get_day_of_month(date3)}"")
+    try:
+        calculator.get_day_of_month(""2023/10/27"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,6760,108_12_1.py
+108,12,Determine the day of the month,"Develop a class named 'DateCalculator' with a method to determine the day of the month from a given date string. The implementation must be professional, efficient, and use modern Python features.","class DateCalculator:
+    def get_day_of_month(self, date_string: str) -> int:
+        from datetime import datetime
+        try:
+            date_object = datetime.strptime(date_string, ""%Y-%m-%d"")
+            return date_object.day
+        except ValueError:
+            raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    date_str1 = ""2023-10-27""
+    date_str2 = ""1999-01-01""
+    date_str3 = ""2024-02-29""
+    print(f""Day of the month for {date_str1}: {calculator.get_day_of_month(date_str1)}"")
+    print(f""Day of the month for {date_str2}: {calculator.get_day_of_month(date_str2)}"")
+    print(f""Day of the month for {date_str3}: {calculator.get_day_of_month(date_str3)}"")",True,2,6761,108_12_2.py
+108,12,Determine the day of the month,"Develop a class named 'DateCalculator' with a method to determine the day of the month from a given date string. The implementation must be professional, efficient, and use modern Python features.","class DateCalculator:
+    def get_day_of_month(self, date_string: str) -> int:
+        from datetime import datetime
+        try:
+            date_object = datetime.strptime(date_string, ""%Y-%m-%d"")
+            return date_object.day
+        except ValueError:
+            raise ValueError(""Invalid date format. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    date_str_1 = ""2023-10-27""
+    date_str_2 = ""1999-01-01""
+    date_str_3 = ""2024-02-29""
+    print(f""Day of the month for {date_str_1}: {calculator.get_day_of_month(date_str_1)}"")
+    print(f""Day of the month for {date_str_2}: {calculator.get_day_of_month(date_str_2)}"")
+    print(f""Day of the month for {date_str_3}: {calculator.get_day_of_month(date_str_3)}"")
+    try:
+        calculator.get_day_of_month(""2023/10/27"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,3,6762,108_12_3.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            return 0
+        first_day_of_next_month = today.replace(day=1) + datetime.timedelta(days=32)
+        if first_day_of_next_month.month == today.month:
+            first_day_of_next_month = first_day_of_next_month + datetime.timedelta(days=32)
+        next_month_start = datetime.date(year, month + 1, 1) if month < 12 else datetime.date(year + 1, 1, 1)
+        time_remaining = (next_month_start - today).days
+        return time_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 15
+    time_left = calculator.calculate_time_remaining(sample_year, sample_month, sample_day)
+    print(f""Time remaining until the start of the next month from {sample_year}-{sample_month}-{sample_day}: {time_left} days"")",True,0,6763,109_2.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            days_remaining = 31 - day
+            if day == 31:
+                days_remaining = 0
+            return days_remaining
+        if month > today.month:
+            next_month = today.replace(year=year, month=month, day=1) + datetime.timedelta(days=31)
+            return (next_month - today).days
+        if month < today.month:
+            prev_month = today.replace(year=year, month=month, day=1) - datetime.timedelta(days=31)
+            return (today - prev_month).days
+        return 0
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_year = 2024
+    sample_month = 12
+    sample_day = 25
+    time_left = calculator.calculate_time_remaining(sample_year, sample_month, sample_day)
+    print(f""Time remaining in {sample_year}-{sample_month}-{sample_day}: {time_left} days"")",True,1,6764,109_2_1.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            days_remaining = 31 - day
+            if day == 31:
+                days_remaining = 0
+            return days_remaining
+        else:
+            current_month_days = 0
+            if month == 1:
+                current_month_days = 31
+            elif month == 2:
+                current_month_days = 28 if not (datetime.date.today().year % 4 == 0 and datetime.date.today().year % 100 != 0 or datetime.date.today().year % 400 == 0) else 29
+            elif month == 3:
+                current_month_days = 31
+            elif month == 4:
+                current_month_days = 30
+            elif month == 5:
+                current_month_days = 31
+            elif month == 6:
+                current_month_days = 30
+            elif month == 7:
+                current_month_days = 31
+            elif month == 8:
+                current_month_days = 31
+            elif month == 9:
+                current_month_days = 30
+            elif month == 10:
+                current_month_days = 31
+            elif month == 11:
+                current_month_days = 30
+            elif month == 12:
+                current_month_days = 31
+            target_month_days_passed = 0
+            if month == today.month:
+                target_month_days_passed = day
+            else:
+                if month == 2:
+                    is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+                    days_in_month = 29 if is_leap else 28
+                elif month in [4, 6, 9, 11]:
+                    days_in_month = 30
+                else:
+                    days_in_month = 31
+                days_remaining = days_in_month - day
+                return days_remaining
+        return 0
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    year1 = 2024
+    month1 = 1
+    day1 = 15
+    result1 = calculator.calculate_time_remaining(year1, month1, day1)
+    print(f""Time remaining in {year1}-{month1}: {result1} days"")
+    year2 = 2024
+    month2 = 4
+    day2 = 10
+    result2 = calculator.calculate_time_remaining(year2, month2, day2)
+    print(f""Time remaining in {year2}-{month2}: {result2} days"")
+    year3 = 2023
+    month3 = 2
+    day3 = 10
+    result3 = calculator.calculate_time_remaining(year3, month3, day3)
+    print(f""Time remaining in {year3}-{month3}: {result3} days"")
+    year4 = 2024
+    month4 = 2
+    day4 = 1
+    result4 = calculator.calculate_time_remaining(year4, month4, day4)
+    print(f""Time remaining in {year4}-{month4}: {result4} days"")",True,2,6765,109_2_2.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            days_remaining = 31 - day
+            if day > 31:
+                days_remaining = 0
+            elif day <= 31:
+                days_remaining = 31 - day
+            else:
+                days_remaining = 0
+            if day == 31:
+                days_remaining = 0
+            else:
+                days_remaining = 31 - day
+        else:
+            if month == 12:
+                days_in_month = 31
+            elif month in [4, 6, 9, 11]:
+                days_in_month = 30
+            else:
+                days_in_month = 31
+            days_remaining = days_in_month - day
+        return days_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    year1 = 2023
+    month1 = 10
+    day1 = 15
+    result1 = calculator.calculate_time_remaining(year1, month1, day1)
+    print(f""Time remaining in {year1}-{month1}: {result1} days"")
+    year2 = 2023
+    month2 = 4
+    day2 = 20
+    result2 = calculator.calculate_time_remaining(year2, month2, day2)
+    print(f""Time remaining in {year2}-{month2}: {result2} days"")
+    year3 = 2023
+    month3 = 12
+    day3 = 31
+    result3 = calculator.calculate_time_remaining(year3, month3, day3)
+    print(f""Time remaining in {year3}-{month3}: {result3} days"")
+    year4 = 2023
+    month4 = 1
+    day4 = 30
+    result4 = calculator.calculate_time_remaining(year4, month4, day4)
+    print(f""Time remaining in {year4}-{month4}: {result4} days"")",True,3,6766,109_2_3.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            days_remaining = 31 - day
+            if day == 31:
+                days_remaining = 0
+            return days_remaining
+        else:
+            current_month_days = 0
+            if month == 1:
+                if today.month == 1:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            elif month == 2:
+                if today.month == 2:
+                    current_month_days = 28 if today.year % 4 != 0 or today.year % 100 != 0 or (today.year % 400 == 0) else 29
+                else:
+                    current_month_days = 28
+            elif month == 3:
+                if today.month == 3:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            elif month == 4:
+                if today.month == 4:
+                    current_month_days = 30
+                else:
+                    current_month_days = 30
+            elif month == 5:
+                if today.month == 5:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            elif month == 6:
+                if today.month == 6:
+                    current_month_days = 30
+                else:
+                    current_month_days = 30
+            elif month == 7:
+                if today.month == 7:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            elif month == 8:
+                if today.month == 8:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            elif month == 9:
+                if today.month == 9:
+                    current_month_days = 30
+                else:
+                    current_month_days = 30
+            elif month == 10:
+                if today.month == 10:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            elif month == 11:
+                if today.month == 11:
+                    current_month_days = 30
+                else:
+                    current_month_days = 30
+            elif month == 12:
+                if today.month == 12:
+                    current_month_days = 31
+                else:
+                    current_month_days = 31
+            target_month = month
+            target_year = year
+            if target_month == 12:
+                next_month_start = datetime.date(target_year + 1, 1, 1)
+            else:
+                next_month_start = datetime.date(target_year, target_month + 1, 1)
+            target_month_start = datetime.date(target_year, target_month, 1)
+            current_month_end = datetime.date(target_year, target_month, 1) + datetime.timedelta(days=31)
+            days_in_current_month = (datetime.date(target_year, target_month + 1, 1) - datetime.date(target_year, target_month, 1)).days
+            if target_month == 2:
+                is_leap = target_year % 4 == 0 and (target_year % 100 != 0 or target_year % 400 == 0)
+                days_in_target_month = 29 if is_leap else 28
+            elif target_month in [4, 6, 9, 11]:
+                days_in_target_month = 30
+            else:
+                days_in_target_month = 31
+            days_remaining = days_in_target_month - day
+            return days_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_year_1 = 2023
+    sample_month_1 = 10
+    sample_day_1 = 15
+    result_1 = calculator.calculate_time_remaining(sample_year_1, sample_month_1, sample_day_1)
+    print(f""Time remaining in {sample_year_1}-{sample_month_1}: {sample_day_1} (assuming a 31-day month context): {result_1} days"")
+    sample_year_2 = 2023
+    sample_month_2 = 4
+    sample_day_2 = 1
+    result_2 = calculator.calculate_time_remaining(sample_year_2, sample_month_2, sample_day_2)
+    print(f""Time remaining in {sample_year_2}-{sample_month_2}: {sample_day_2} (assuming a 30-day month context): {result_2} days"")
+    sample_year_3 = 2023
+    sample_month_3 = 2
+    sample_day_3 = 10
+    result_3 = calculator.calculate_time_remaining(sample_year_3, sample_month_3, sample_day_3)
+    print(f""Time remaining in {sample_year_3}-{sample_month_3}: {sample_day_3} (assuming a 28-day month context): {result_3} days"")",True,4,6767,109_2_4.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            days_remaining = 31 - day
+            if day == 31:
+                days_remaining = 0
+            return days_remaining
+        else:
+            current_month_days = 0
+            if month == 1:
+                current_month_days = 31
+            elif month == 2:
+                current_month_days = 28 if not (datetime.date.today().year % 4 == 0 and datetime.date.today().year % 100 != 0 or datetime.date.today().year % 400 == 0) else 29
+            elif month == 3:
+                current_month_days = 31
+            elif month == 4:
+                current_month_days = 30
+            elif month == 5:
+                current_month_days = 31
+            elif month == 6:
+                current_month_days = 30
+            elif month == 7:
+                current_month_days = 31
+            elif month == 8:
+                current_month_days = 31
+            elif month == 9:
+                current_month_days = 30
+            elif month == 10:
+                current_month_days = 31
+            elif month == 11:
+                current_month_days = 30
+            elif month == 12:
+                current_month_days = 31
+            target_date = datetime.date(year, month, day)
+            if target_date.month == datetime.date.today().month and target_date.year == datetime.date.today().year:
+                days_left = (datetime.date(target_date.year, target_date.month + 1, 1) - target_date).days
+                return days_left
+            else:
+                if month == 12:
+                    next_month = datetime.date(year + 1, 1, 1)
+                else:
+                    next_month = datetime.date(year, month + 1, 1)
+                last_day_of_month = next_month - datetime.timedelta(days=1)
+                days_remaining = (last_day_of_month - target_date).days
+                return days_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 15
+    print(f""Time remaining in month {sample_month}/{sample_year} starting from day {sample_day}:"")
+    result1 = calculator.calculate_time_remaining(sample_year, sample_month, sample_day)
+    print(result1)
+    sample_year = 2024
+    sample_month = 1
+    sample_day = 31
+    print(f""\nTime remaining in month {sample_month}/{sample_year} starting from day {sample_day}:"")
+    result2 = calculator.calculate_time_remaining(sample_year, sample_month, sample_day)
+    print(result2)
+    sample_year = 2023
+    sample_month = 4
+    sample_day = 1
+    print(f""\nTime remaining in month {sample_month}/{sample_year} starting from day {sample_day}:"")
+    result3 = calculator.calculate_time_remaining(sample_year, sample_month, sample_day)
+    print(result3)",True,5,6768,109_2_5.py
+109,2,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a given month, ensuring the class is object-oriented and adheres to best practices.","class DateCalculator:
+    def calculate_time_remaining(self, year, month, day):
+        import datetime
+        today = datetime.date.today()
+        if month == today.month and year == today.year:
+            days_remaining = (datetime.date(year, month + 1, 1) - today).days
+            return days_remaining
+        else:
+            first_day_of_next_month = datetime.date(year, month + 1, 1)
+            days_in_current_month = (first_day_of_next_month - today).days
+            return days_in_current_month
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 15
+    time_left = calculator.calculate_time_remaining(sample_year, sample_month, sample_day)
+    print(f""For the month of {sample_month}/{sample_year}, starting from {sample_day}:"")
+    print(f""Time remaining until the next month starts: {time_left} days"")",True,6,6769,109_2_6.py
+109,1,Calculate time remaining in a month,"Implement an optimized function named 'time_remaining_in_month' that accepts a target month and year as input and returns the number of remaining days until the end of that month, assuming the current date is known.","import datetime
+def time_remaining_in_month(target_month, target_year):
+    today = datetime.date.today()
+    if target_year == today.year and target_month > today.month:
+        target_date = datetime.date(target_year, target_month, 1)
+    elif target_year == today.year and target_month < today.month:
+        target_date = datetime.date(target_year, target_month, 1)
+    elif target_year > today.year:
+        target_date = datetime.date(target_year, target_month, 1)
+    else:
+        target_date = datetime.date(target_year, target_month, 1)
+    first_day_of_next_month = datetime.date(target_year, target_month + 1, 1) if target_month < 12 else datetime.date(target_year + 1, 1, 1)
+    if target_year == today.year and target_month == today.month:
+        days_in_month = (datetime.date(target_year, 12, 31) - datetime.date(target_year, 1, 1)).days
+        return days_in_month - (today.day - 1)
+    else:
+        days_in_month = (datetime.date(target_year, 12, 31) - datetime.date(target_year, 1, 1)).days
+        return days_in_month - (today.day - 1)
+if __name__ == '__main__':
+    target_month_1 = 12
+    target_year_1 = 2023
+    result_1 = time_remaining_in_month(target_month_1, target_year_1)
+    print(f""Target: {target_month_1}/{target_year_1}, Remaining days: {result_1}"")
+    target_month_2 = 1
+    target_year_2 = 2024
+    result_2 = time_remaining_in_month(target_month_2, target_year_2)
+    print(f""Target: {target_month_2}/{target_year_2}, Remaining days: {result_2}"")
+    target_month_3 = 6
+    target_year_3 = 2024
+    result_3 = time_remaining_in_month(target_month_3, target_year_3)
+    print(f""Target: {target_month_3}/{target_year_3}, Remaining days: {result_3}"")",True,0,6770,109_1.py
+109,1,Calculate time remaining in a month,"Implement an optimized function named 'time_remaining_in_month' that accepts a target month and year as input and returns the number of remaining days until the end of that month, assuming the current date is known.","import datetime
+def time_remaining_in_month(target_month, target_year):
+    today = datetime.date.today()
+    if target_year == today.year and target_month > today.month:
+        target_date = datetime.date(target_year, target_month, 1)
+    elif target_year == today.year and target_month < today.month:
+        target_date = datetime.date(target_year, target_month, 1)
+    elif target_year > today.year:
+        target_date = datetime.date(target_year, target_month, 1)
+    else:
+        target_date = datetime.date(target_year, target_month, 1)
+    first_day_of_next_month = datetime.date(target_year, target_month + 1, 1) if target_month < 12 else datetime.date(target_year + 1, 1, 1)
+    end_of_month = first_day_of_next_month - datetime.timedelta(days=1)
+    if target_date > today:
+        remaining_days = (end_of_month - today).days
+    else:
+        remaining_days = (end_of_month - today).days
+    return remaining_days
+if __name__ == '__main__':
+    target_month_1 = 12
+    target_year_1 = 2023
+    result_1 = time_remaining_in_month(target_month_1, target_year_1)
+    print(f""Target: {target_month_1}/{target_year_1}, Remaining days: {result_1}"")
+    target_month_2 = 1
+    target_year_2 = 2024
+    result_2 = time_remaining_in_month(target_month_2, target_year_2)
+    print(f""Target: {target_month_2}/{target_year_2}, Remaining days: {result_2}"")
+    target_month_3 = 6
+    target_year_3 = 2024
+    result_3 = time_remaining_in_month(target_month_3, target_year_3)
+    print(f""Target: {target_month_3}/{target_year_3}, Remaining days: {result_3}"")",True,1,6771,109_1_1.py
+109,1,Calculate time remaining in a month,"Implement an optimized function named 'time_remaining_in_month' that accepts a target month and year as input and returns the number of remaining days until the end of that month, assuming the current date is known.","import datetime
+def time_remaining_in_month(target_month, target_year):
+    today = datetime.date.today()
+    if target_year == today.year and target_month > today.month:
+        target_date = datetime.date(target_year, target_month, 1)
+    elif target_year == today.year and target_month < today.month:
+        target_date = datetime.date(target_year, target_month, 1)
+    else:
+        target_date = datetime.date(target_year, target_month, 1)
+    first_day_of_next_month = datetime.date(target_year, target_month + 1, 1) if target_month < 12 else datetime.date(target_year + 1, 1, 1)
+    end_of_month = first_day_of_next_month - datetime.timedelta(days=1)
+    if target_year == today.year and target_month == today.month:
+        remaining_days = (datetime.date(target_year, target_month, 1) + datetime.timedelta(days=31)) - today
+        if target_month == 12:
+            remaining_days = (datetime.date(target_year + 1, 1, 1)) - today
+        else:
+            remaining_days = (datetime.date(target_year, target_month + 1, 1)) - today
+    else:
+        remaining_days = (end_of_month - today).days
+    return remaining_days
+if __name__ == '__main__':
+    target_month_1 = 12
+    target_year_1 = 2023
+    result_1 = time_remaining_in_month(target_month_1, target_year_1)
+    print(f""Target: {target_month_1}/{target_year_1}, Remaining days: {result_1}"")
+    target_month_2 = 1
+    target_year_2 = 2024
+    result_2 = time_remaining_in_month(target_month_2, target_year_2)
+    print(f""Target: {target_month_2}/{target_year_2}, Remaining days: {result_2}"")
+    target_month_3 = 6
+    target_year_3 = 2024
+    result_3 = time_remaining_in_month(target_month_3, target_year_3)
+    print(f""Target: {target_month_3}/{target_year_3}, Remaining days: {result_3}"")",True,2,6772,109_1_2.py
+109,4,Calculate time remaining in a month,"Implement a function that calculates the exact number of days remaining in the current month, given the current date object, utilizing the `datetime` module efficiently.","from datetime import date
+def days_remaining(current_date):
+    today = date.today()
+    current_month = today.month
+    current_year = today.year
+    if current_month == today.month:
+        return 0
+    else:
+        next_month = current_month + 1
+        next_year = current_year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+        next_month_date = date(next_year, next_month, 1)
+        days_in_current_month = (date(current_year, current_month + 1, 1) - date(current_year, current_month, 1)).days
+        days_in_next_month = (date(current_year, current_month + 1, 1) - date(current_year, current_month, 1)).days
+        if current_month == 12:
+            days_left = 0
+        else:
+            next_month_start = date(current_year, current_month + 1, 1)
+            current_month_start = date(current_year, current_month, 1)
+            days_left = (next_month_start - current_month_start).days
+        return days_left
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 15)
+    result = days_remaining(sample_date)
+    print(result)",True,0,6773,109_4.py
+109,4,Calculate time remaining in a month,"Implement a function that calculates the exact number of days remaining in the current month, given the current date object, utilizing the `datetime` module efficiently.","from datetime import date
+def days_remaining(current_date):
+    today = date.today()
+    current_month = today.month
+    current_year = today.year
+    if current_month == today.month:
+        return 0
+    else:
+        next_month = current_month + 1
+        next_year = current_year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+        next_month_date = date(next_year, next_month, 1)
+        days_in_current_month = (date(current_year, current_month + 1, 1) - date(current_year, current_month, 1)).days
+        days_remaining = (date(current_year, current_month + 1, 1) - today).days
+        return days_remaining
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 15)
+    result = days_remaining(sample_date)
+    print(result)",True,1,6774,109_4_1.py
+109,4,Calculate time remaining in a month,"Implement a function that calculates the exact number of days remaining in the current month, given the current date object, utilizing the `datetime` module efficiently.","from datetime import date
+def days_remaining_in_month(current_date):
+    year = current_date.year
+    month = current_date.month
+    if month == 12:
+        days_in_month = 31
+    else:
+        import calendar
+        days_in_month = calendar.monthrange(year, month)[1]
+    days_passed = current_date.day
+    days_remaining = days_in_month - days_passed
+    return days_remaining
+if __name__ == '__main__':
+    test_date_1 = date(2023, 10, 15)
+    result_1 = days_remaining_in_month(test_date_1)
+    print(f""For {test_date_1}, days remaining: {result_1}"")
+    test_date_2 = date(2024, 1, 1)
+    result_2 = days_remaining_in_month(test_date_2)
+    print(f""For {test_date_2}, days remaining: {result_2}"")
+    test_date_3 = date(2023, 12, 31)
+    result_3 = days_remaining_in_month(test_date_3)
+    print(f""For {test_date_3}, days remaining: {result_3}"")
+    test_date_4 = date(2024, 2, 10)
+    result_4 = days_remaining_in_month(test_date_4)
+    print(f""For {test_date_4}, days remaining: {result_4}"")",True,2,6775,109_4_2.py
+109,4,Calculate time remaining in a month,"Implement a function that calculates the exact number of days remaining in the current month, given the current date object, utilizing the `datetime` module efficiently.","from datetime import date
+def days_remaining(current_date):
+    today = date.today()
+    current_month = today.month
+    current_year = today.year
+    if current_month == today.month:
+        return 0
+    else:
+        next_month = current_month + 1
+        next_year = current_year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+        return (31 if next_month == 12 else 30 if next_month in [1, 3, 5, 7, 8, 10, 12] else 28) - today.day
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 15)
+    result = days_remaining(sample_date)
+    print(result)",True,3,6776,109_4_3.py
+109,4,Calculate time remaining in a month,"Implement a function that calculates the exact number of days remaining in the current month, given the current date object, utilizing the `datetime` module efficiently.","from datetime import date
+def days_remaining_in_month(current_date):
+    year = current_date.year
+    month = current_date.month
+    if month == 12:
+        days_in_month = 31
+    else:
+        import calendar
+        days_in_month = calendar.monthrange(year, month)[1]
+    days_passed = current_date.day
+    days_remaining = days_in_month - days_passed
+    return days_remaining
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 15)
+    result_1 = days_remaining_in_month(sample_date_1)
+    print(result_1)
+    sample_date_2 = date(2024, 1, 1)
+    result_2 = days_remaining_in_month(sample_date_2)
+    print(result_2)
+    sample_date_3 = date(2023, 12, 31)
+    result_3 = days_remaining_in_month(sample_date_3)
+    print(result_3)
+    sample_date_4 = date(2024, 2, 10)
+    result_4 = days_remaining_in_month(sample_date_4)
+    print(result_4)",True,4,6777,109_4_4.py
+109,4,Calculate time remaining in a month,"Implement a function that calculates the exact number of days remaining in the current month, given the current date object, utilizing the `datetime` module efficiently.","from datetime import date
+def days_remaining(current_date):
+    today = date.today()
+    current_month = today.month
+    current_year = today.year
+    if current_month == today.month:
+        return 0
+    else:
+        next_month = today.month + 1
+        next_year = today.year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+        import calendar
+        days_in_current_month = calendar.monthrange(current_year, current_month)[1]
+        days_passed = today.day
+        days_remaining = days_in_current_month - days_passed
+        if days_remaining <= 0:
+            return 0
+        else:
+            return days_remaining
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 15)
+    print(f""Days remaining for {sample_date_1}: {days_remaining(sample_date_1)}"")
+    sample_date_2 = date(2023, 10, 31)
+    print(f""Days remaining for {sample_date_2}: {days_remaining(sample_date_2)}"")
+    sample_date_3 = date(2023, 10, 1)
+    print(f""Days remaining for {sample_date_3}: {days_remaining(sample_date_3)}"")
+    sample_date_4 = date(2023, 11, 10)
+    print(f""Days remaining for {sample_date_4}: {days_remaining(sample_date_4)}"")
+    sample_date_5 = date(2023, 12, 1)
+    print(f""Days remaining for {sample_date_5}: {days_remaining(sample_date_5)}"")",True,5,6778,109_4_5.py
+109,5,Calculate time remaining in a month,"Create an efficient algorithm to determine the difference in days between the current date and the last day of the next month, to calculate the remaining time in the current month.","import datetime
+def calculate_remaining_days(year, month):
+    current_date = datetime.date(year, month, 1)
+    if month == 12:
+        next_month = 1
+        next_year = year + 1
+    else:
+        next_month = month + 1
+        next_year = year
+    last_day_of_next_month = (datetime.date(next_year, next_month, 1) + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
+    if next_month == 12:
+        last_day_of_next_month = datetime.date(next_year, 12, 31)
+    else:
+        last_day_of_next_month = datetime.date(next_year, next_month, 1) + datetime.timedelta(days=32) - datetime.timedelta(days=1)
+    days_diff = (last_day_of_next_month - current_date).days
+    return days_diff
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    result = calculate_remaining_days(sample_year, sample_month)
+    print(result)",True,0,6779,109_5.py
+109,5,Calculate time remaining in a month,"Create an efficient algorithm to determine the difference in days between the current date and the last day of the next month, to calculate the remaining time in the current month.","import datetime
+def calculate_time_remaining(year, month):
+    current_date = datetime.date(year, month, 1)
+    if month == 12:
+        next_month = 1
+        next_year = year + 1
+    else:
+        next_month = month + 1
+        next_year = year
+    last_day_of_next_month = (datetime.date(next_year, next_month, 1) + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
+    if next_month == 12:
+        last_day_of_next_month = datetime.date(next_year, 12, 31)
+    else:
+        last_day_of_next_month = datetime.date(next_year, next_month, 1) + datetime.timedelta(days=31) - datetime.timedelta(days=1)
+    days_remaining = (last_day_of_next_month - current_date).days
+    return days_remaining
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    result = calculate_time_remaining(sample_year, sample_month)
+    print(result)",True,1,6780,109_5_1.py
+109,5,Calculate time remaining in a month,"Create an efficient algorithm to determine the difference in days between the current date and the last day of the next month, to calculate the remaining time in the current month.","import datetime
+def calculate_remaining_days(year, month):
+    current_date = datetime.date(year, month, 1)
+    if month == 12:
+        next_month = 1
+        next_year = year + 1
+    else:
+        next_month = month + 1
+        next_year = year
+    last_day_of_next_month = (datetime.date(next_year, next_month, 1) + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
+    if next_month == 12:
+        last_day_of_next_month = datetime.date(next_year, 12, 31)
+    else:
+        last_day_of_next_month = datetime.date(next_year, next_month, 1) + datetime.timedelta(days=31) - datetime.timedelta(days=1)
+    days_difference = (last_day_of_next_month - current_date).days
+    return days_difference
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    result = calculate_remaining_days(sample_year, sample_month)
+    print(result)",True,2,6781,109_5_2.py
+109,5,Calculate time remaining in a month,"Create an efficient algorithm to determine the difference in days between the current date and the last day of the next month, to calculate the remaining time in the current month.","import datetime
+def calculate_remaining_days(year, month):
+    current_date = datetime.date(year, month, 1)
+    if month == 12:
+        next_month_year = year + 1
+        next_month = 1
+    else:
+        next_month_year = year
+        next_month = month + 1
+    last_day_of_next_month = (datetime.date(next_month_year, next_month, 1) + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
+    if next_month == 12:
+        last_day_of_next_month = datetime.date(next_month_year + 1, 1, 1) - datetime.timedelta(days=1)
+    else:
+        last_day_of_next_month = datetime.date(next_month_year, next_month + 1, 1) - datetime.timedelta(days=1)
+    days_difference = (last_day_of_next_month - current_date).days
+    return days_difference
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    result = calculate_remaining_days(sample_year, sample_month)
+    print(result)",True,3,6782,109_5_3.py
+106,5,Calculate the difference in years,"Write a script that reads two separate years from standard input and prints the resulting difference, ensuring the calculation is performed using standard integer arithmetic.","import sys
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    difference = year1 - year2
+    print(difference)",True,0,6783,106_5.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date_str, current_date_str):
+    target_date = datetime.datetime.strptime(target_date_str, ""%Y-%m-%d"").date()
+    current_date = datetime.datetime.strptime(current_date_str, ""%Y-%m-%d"").date()
+    if target_date < current_date:
+        return ""Target date is in the past.""
+    if target_date.month == current_date.month:
+        days_remaining = (target_date - current_date).days
+        return f""Days remaining in the current month: {days_remaining}""
+    else:
+        days_in_current_month = (datetime.date(current_date.year, current_date.month + 1, 1) - datetime.date(current_date.year, current_date.month, 1)).days
+        days_remaining_in_current = (datetime.date(current_date.year, current_date.month + 1, 1) - current_date).days
+        next_month = current_date.replace(day=28) + datetime.timedelta(days=4)
+        if current_date.month == 12:
+            next_month = current_date.replace(year=current_date.year + 1, month=1, day=1)
+        else:
+            next_month = current_date.replace(month=current_date.month + 1, day=1)
+        days_in_current_month = (next_month - current_date).days
+        if target_date.month > current_date.month:
+            if current_date.month == 12:
+                days_in_current = 31
+            else:
+                days_in_current = 30 if current_date.month in [4, 6, 9, 11] else 31
+            days_passed = current_date.day
+            days_remaining_in_month = days_in_current - days_passed
+            return f""Days remaining in the current month: {days_remaining_in_month}""
+        else:
+            return ""Calculation logic error or unexpected case.""
+if __name__ == '__main__':
+    target_date = ""2024-03-15""
+    current_date = ""2024-02-10""
+    result = calculate_time_remaining(target_date, current_date)
+    print(result)
+    target_date_2 = ""2024-02-20""
+    current_date_2 = ""2024-02-10""
+    result_2 = calculate_time_remaining(target_date_2, current_date_2)
+    print(result_2)
+    target_date_3 = ""2024-01-01""
+    current_date_3 = ""2024-02-10""
+    result_3 = calculate_time_remaining(target_date_3, current_date_3)
+    print(result_3)",True,0,6784,109_7.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date_str, current_date_str):
+    target_date = datetime.datetime.strptime(target_date_str, ""%Y-%m-%d"").date()
+    current_date = datetime.datetime.strptime(current_date_str, ""%Y-%m-%d"").date()
+    if target_date < current_date:
+        return ""Target date is in the past.""
+    time_difference = target_date - current_date
+    if time_difference.days < 0:
+        return ""Error in calculation.""
+    return time_difference.days
+if __name__ == '__main__':
+    target = ""2024-03-15""
+    current = ""2024-02-10""
+    result = calculate_time_remaining(target, current)
+    print(result)
+    target_leap = ""2024-03-01""
+    current_leap = ""2024-02-29""
+    result_leap = calculate_time_remaining(target_leap, current_leap)
+    print(result_leap)
+    target_past = ""2023-01-01""
+    current_past = ""2024-01-01""
+    result_past = calculate_time_remaining(target_past, current_past)
+    print(result_past)
+    target_same = ""2024-02-10""
+    current_same = ""2024-02-10""
+    result_same = calculate_time_remaining(target_same, current_same)
+    print(result_same)",True,1,6785,109_7_1.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date, current_date):
+    time_difference = target_date - current_date
+    days_remaining = time_difference.days
+    return days_remaining
+if __name__ == '__main__':
+    target_date = datetime.date(2024, 12, 31)
+    current_date = datetime.date(2024, 10, 15)
+    result = calculate_time_remaining(target_date, current_date)
+    print(result)",True,2,6786,109_7_2.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date_str, current_date_str):
+    target_date = datetime.datetime.strptime(target_date_str, ""%Y-%m-%d"").date()
+    current_date = datetime.datetime.strptime(current_date_str, ""%Y-%m-%d"").date()
+    if target_date < current_date:
+        return ""Target date has passed.""
+    if target_date.month == current_date.month:
+        days_remaining = (target_date - current_date).days
+        return f""Days remaining in the current month: {days_remaining}""
+    else:
+        if current_date.month == 12:
+            next_month = current_date.replace(year=current_date.year + 1, month=1, day=1)
+        else:
+            next_month = current_date.replace(month=current_date.month + 1, day=1)
+        last_day_of_current_month = next_month - datetime.timedelta(days=1)
+        days_in_current_month = (last_day_of_current_month - current_date).days + 1
+        days_left_in_current_month = (datetime.date(current_date.year, current_date.month, 1) + datetime.timedelta(days=days_in_current_month - 1)) - current_date
+        days_until_month_end = (datetime.date(current_date.year, current_date.month, 1) + datetime.timedelta(days=days_in_current_month)) - current_date
+        days_in_target_month = (target_date - datetime.date(target_date.year, target_date.month, 1)).days
+        total_days_remaining = days_in_target_month
+        return f""Time remaining until {target_date.strftime('%Y-%m-%d')}: {total_days_remaining} days.""
+if __name__ == '__main__':
+    target = ""2024-03-15""
+    current = ""2024-01-10""
+    print(calculate_time_remaining(target, current))
+    target_rollover = ""2025-01-05""
+    current_rollover = ""2024-12-20""
+    print(calculate_time_remaining(target_rollover, current_rollover))
+    target_same_month = ""2024-02-10""
+    current_same_month = ""2024-02-01""
+    print(calculate_time_remaining(target_same_month, current_same_month))
+    target_past = ""2023-12-01""
+    current_past = ""2024-01-01""
+    print(calculate_time_remaining(target_past, current_past))",True,3,6787,109_7_3.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date_str, current_date_str):
+    target_date = datetime.datetime.strptime(target_date_str, ""%Y-%m-%d"").date()
+    current_date = datetime.datetime.strptime(current_date_str, ""%Y-%m-%d"").date()
+    if target_date < current_date:
+        return ""Target date has already passed.""
+    time_difference = target_date - current_date
+    if time_difference.days <= 0:
+        return ""The target date is today or in the past.""
+    return str(time_difference.days)
+if __name__ == '__main__':
+    target = ""2024-03-15""
+    current = ""2024-02-10""
+    result1 = calculate_time_remaining(target, current)
+    print(f""Time remaining from {current} to {target}: {result1} days"")
+    target2 = ""2025-01-01""
+    current2 = ""2024-12-31""
+    result2 = calculate_time_remaining(target2, current2)
+    print(f""Time remaining from {current2} to {target2}: {result2} days"")
+    target3 = ""2024-03-01""
+    current3 = ""2024-02-29""
+    result3 = calculate_time_remaining(target3, current3)
+    print(f""Time remaining from {current3} to {target3}: {result3} days"")
+    target4 = ""2024-03-15""
+    current4 = ""2024-03-15""
+    result4 = calculate_time_remaining(target4, current4)
+    print(f""Time remaining from {current4} to {target4}: {result4} days"")
+    target5 = ""2023-01-01""
+    current5 = ""2024-01-01""
+    result5 = calculate_time_remaining(target5, current5)
+    print(f""Time remaining from {current5} to {target5}: {result5} days"")",True,4,6788,109_7_4.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date: datetime.date, current_date: datetime.date) -> int:
+    if target_date < current_date:
+        return 0
+    time_difference = target_date - current_date
+    days_remaining = time_difference.days
+    if days_remaining <= 0:
+        return 0
+    year_diff = target_date.year - current_date.year
+    month_diff = target_date.month - current_date.month
+    total_months = year_diff * 12 + month_diff
+    current_month_days = (datetime.date(current_date.year, current_date.month, 1) + datetime.timedelta(days=31)) - datetime.date(current_date.year, current_date.month, 1)
+    days_in_current_month = (datetime.date(current_date.year, current_date.month, 1) + datetime.timedelta(days=31)).day if current_date.month == 12 else (datetime.date(current_date.year, current_date.month + 1, 1) - datetime.date(current_date.year, current_date.month, 1)).days
+    return days_remaining
+if __name__ == '__main__':
+    current_date_str = ""2023-10-15""
+    target_date_str = ""2024-01-31""
+    current_date = datetime.datetime.strptime(current_date_str, ""%Y-%m-%d"").date()
+    target_date = datetime.datetime.strptime(target_date_str, ""%Y-%m-%d"").date()
+    result = calculate_time_remaining(target_date, current_date)
+    print(result)
+    current_date_2 = datetime.datetime.strptime(""2024-03-01"", ""%Y-%m-%d"").date()
+    target_date_2 = datetime.datetime.strptime(""2024-03-31"", ""%Y-%m-%d"").date()
+    result_2 = calculate_time_remaining(target_date_2, current_date_2)
+    print(result_2)
+    current_date_3 = datetime.datetime.strptime(""2024-01-01"", ""%Y-%m-%d"").date()
+    target_date_3 = datetime.datetime.strptime(""2023-12-31"", ""%Y-%m-%d"").date()
+    result_3 = calculate_time_remaining(target_date_3, current_date_3)
+    print(result_3)",True,5,6789,109_7_5.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date: datetime.date, current_date: datetime.date) -> int:
+    time_remaining = (target_date - current_date).days
+    return time_remaining
+if __name__ == '__main__':
+    target_date_1 = datetime.date(2024, 12, 31)
+    current_date_1 = datetime.date(2024, 1, 1)
+    result_1 = calculate_time_remaining(target_date_1, current_date_1)
+    print(f""Time remaining from {current_date_1} to {target_date_1}: {result_1} days"")
+    target_date_2 = datetime.date(2025, 1, 1)
+    current_date_2 = datetime.date(2024, 12, 31)
+    result_2 = calculate_time_remaining(target_date_2, current_date_2)
+    print(f""Time remaining from {current_date_2} to {target_date_2}: {result_2} days"")
+    target_date_3 = datetime.date(2024, 10, 15)
+    current_date_3 = datetime.date(2024, 10, 1)
+    result_3 = calculate_time_remaining(target_date_3, current_date_3)
+    print(f""Time remaining from {current_date_3} to {target_date_3}: {result_3} days"")
+    target_date_4 = datetime.date(2025, 3, 1)
+    current_date_4 = datetime.date(2025, 2, 1)
+    result_4 = calculate_time_remaining(target_date_4, current_date_4)
+    print(f""Time remaining from {current_date_4} to {target_date_4}: {result_4} days"")",True,6,6790,109_7_6.py
+109,7,Calculate time remaining in a month,"Generate the complete, production-ready Python code for a utility that calculates the time remaining in a month, handling edge cases like month lengths and year rollovers.","import datetime
+def calculate_time_remaining(target_date: datetime.date, current_date: datetime.date) -> int:
+    if target_date < current_date:
+        return 0
+    time_difference = target_date - current_date
+    total_days = time_difference.days
+    if total_days <= 0:
+        return 0
+    year_diff = target_date.year - current_date.year
+    month_diff = target_date.month - current_date.month
+    total_months = year_diff * 12 + month_diff
+    if total_months <= 0:
+        return 0
+    if month_diff >= 0:
+        full_months = year_diff * 12 + month_diff
+    else:
+        full_months = year_diff * 12 + month_diff - 1
+    if target_date.year == current_date.year and target_date.month == current_date.month:
+        return total_days
+    if current_date.month == 12:
+        next_month_start = current_date.replace(year=current_date.year + 1, month=1, day=1)
+    else:
+        next_month_start = current_date.replace(month=current_date.month + 1, day=1)
+    days_in_current_month = (next_month_start - current_date).days
+    months_remaining = total_months
+    if months_remaining == 1 and total_days > 0:
+        return total_days
+    if target_date.month == current_date.month:
+        return total_days
+    else:
+        if current_date.month == 12:
+            days_in_current_month = 31
+        else:
+            days_in_current_month = (datetime.date(current_date.year, current_date.month + 1, 1) - current_date).days
+        return days_in_current_month
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 15)
+    date2 = datetime.date(2023, 10, 31)
+    date3 = datetime.date(2024, 1, 1)
+    date4 = datetime.date(2024, 1, 15)
+    date5 = datetime.date(2024, 12, 31)
+    date6 = datetime.date(2025, 1, 1)
+    print(f""Current Date: {date1}, Target Date: {date2}, Remaining Days in Month: {calculate_time_remaining(date2, date1)}"")
+    print(f""Current Date: {date1}, Target Date: {date1}, Remaining Days in Month: {calculate_time_remaining(date1, date1)}"")
+    print(f""Current Date: {date1}, Target Date: {date3}, Remaining Days in Month: {calculate_time_remaining(date3, date1)}"")
+    print(f""Current Date: {date1}, Target Date: {date4}, Remaining Days in Month: {calculate_time_remaining(date4, date1)}"")
+    print(f""Current Date: {date1}, Target Date: {date5}, Remaining Days in Month: {calculate_time_remaining(date5, date1)}"")
+    print(f""Current Date: {date1}, Target Date: {date6}, Remaining Days in Month: {calculate_time_remaining(date6, date1)}"")",True,7,6791,109_7_7.py
+109,6,Calculate time remaining in a month,Write a standalone Python function that accepts the current date and the target month number (1-12) and returns the remaining days in the current month until the end of the target month.,"import datetime
+def calculate_remaining_days(current_date, target_month):
+    current_year = current_date.year
+    current_month = current_date.month
+    if target_month > current_month:
+        target_year = current_year
+        target_month_num = target_month
+    elif target_month < current_month:
+        target_year = current_year - 1
+        target_month_num = target_month + 12
+    else:
+        target_year = current_year
+        target_month_num = target_month
+    try:
+        target_date = datetime.date(target_year, target_month_num, 1)
+        if target_month_num == current_month:
+            return 0
+        if target_month_num == 12:
+            next_month_start = datetime.date(target_year + 1, 1, 1)
+        else:
+            next_month_start = datetime.date(target_year, target_month_num + 1, 1)
+        days_in_current_month = (datetime.date(current_year, current_month + 1, 1) - datetime.date(current_year, current_month, 1)).days
+        days_passed = (datetime.date(current_year, current_month, 1) - datetime.date(current_year, 1, 1)).days + (target_month_num - 1) * 31                                  
+        days_in_current_month_total = (datetime.date(current_year, current_month + 1, 1) - datetime.date(current_year, current_month, 1)).days
+        if target_month == current_month:
+            return 0
+        if target_month > current_month:
+            days_until_target = (datetime.date(current_year, current_month + 1, 1) - current_date).days
+            return days_until_target
+        else:
+            return 0
+    except ValueError:
+        return -1
+if __name__ == '__main__':
+    current_date_obj = datetime.date(2023, 10, 15)
+    target_month_num_1 = 12
+    target_month_num_2 = 10
+    target_month_num_3 = 11
+    print(f""Current Date: {current_date_obj}"")
+    print(f""Target Month: {target_month_num_1}"")
+    result1 = calculate_remaining_days(current_date_obj, target_month_num_1)
+    print(f""Remaining days in current month until end of target month: {result1}"")
+    print(f""\nCurrent Date: {current_date_obj}"")
+    print(f""Target Month: {target_month_num_2}"")
+    result2 = calculate_remaining_days(current_date_obj, target_month_num_2)
+    print(f""Remaining days in current month until end of target month: {result2}"")
+    print(f""\nCurrent Date: {current_date_obj}"")
+    print(f""Target Month: {target_month_num_3}"")
+    result3 = calculate_remaining_days(current_date_obj, target_month_num_3)
+    print(f""Remaining days in current month until end of target month: {result3}"")",True,0,6792,109_6.py
+109,6,Calculate time remaining in a month,Write a standalone Python function that accepts the current date and the target month number (1-12) and returns the remaining days in the current month until the end of the target month.,"import datetime
+def calculate_remaining_days(current_date, target_month):
+    current_year = current_date.year
+    current_month = current_date.month
+    if target_month > current_month:
+        target_year = current_year
+        target_month_num = target_month
+    elif target_month < current_month:
+        target_year = current_year - 1
+        target_month_num = target_month + 12
+    else:
+        target_year = current_year
+        target_month_num = target_month
+    target_date = datetime.date(target_year, target_month_num, 1)
+    if target_month_num == current_month:
+        return 0
+    if current_month == 12:
+        next_month_start = datetime.date(current_year + 1, 1, 1)
+    else:
+        next_month_start = datetime.date(current_year, current_month + 1, 1)
+    if target_month_num == 12:
+        next_month_start_target = datetime.date(target_year + 1, 1, 1)
+    else:
+        next_month_start_target = datetime.date(target_year, target_month_num + 1, 1)
+    last_day_of_target_month = next_month_start_target - datetime.timedelta(days=1)
+    if current_month == 12:
+        last_day_of_current_month = datetime.date(current_year, 12, 31)
+    else:
+        last_day_of_current_month = datetime.date(current_year, current_month + 1, 1) - datetime.timedelta(days=1)
+    current_month_end = datetime.date(current_year, current_month, 1) + datetime.timedelta(days=32)                     
+    if target_month == current_month:
+        days_left = (datetime.date(current_year, current_month, 1) + datetime.timedelta(days=32) - current_date) - datetime.date(current_year, current_month, 1)
+        days_left = (datetime.date(current_year, current_month, 1) + datetime.timedelta(days=32) - current_date) - datetime.date(current_year, current_month, 1)
+        days_in_current_month = (datetime.date(current_year, current_month + 1, 1) - datetime.date(current_year, current_month, 1)).days
+        days_passed = (current_date - datetime.date(current_year, current_month, 1)).days
+        remaining_in_current_month = days_in_current_month - days_passed
+        return max(0, remaining_in_current_month)
+    return 0
+if __name__ == '__main__':
+    current_date_sample = datetime.date(2023, 10, 15)
+    target_month_sample = 12
+    result = calculate_remaining_days(current_date_sample, target_month_sample)
+    print(result)
+    current_date_sample_2 = datetime.date(2023, 10, 15)
+    target_month_sample_2 = 10
+    result_2 = calculate_remaining_days(current_date_sample_2, target_month_sample_2)
+    print(result_2)
+    current_date_sample_3 = datetime.date(2023, 10, 15)
+    target_month_sample_3 = 11
+    result_3 = calculate_remaining_days(current_date_sample_3, target_month_sample_3)
+    print(result_3)",True,1,6793,109_6_1.py
+109,6,Calculate time remaining in a month,Write a standalone Python function that accepts the current date and the target month number (1-12) and returns the remaining days in the current month until the end of the target month.,"import datetime
+def calculate_remaining_days(current_date, target_month):
+    current_year = current_date.year
+    current_month = current_date.month
+    if target_month > current_month:
+        target_year = current_year
+        target_month_num = target_month
+    elif target_month < current_month:
+        target_year = current_year - 1
+        target_month_num = target_month + 12
+    else:
+        target_year = current_year
+        target_month_num = target_month
+    target_date = datetime.date(target_year, target_month_num, 1)
+    if target_month_num == current_month:
+        return 0
+    if current_month == 12:
+        next_month_start = datetime.date(current_year + 1, 1, 1)
+    else:
+        next_month_start = datetime.date(current_year, current_month + 1, 1)
+    if target_month_num == 12:
+        next_month_start_target = datetime.date(target_year + 1, 1, 1)
+    else:
+        next_month_start_target = datetime.date(target_year, target_month_num + 1, 1)
+    last_day_of_target_month = next_month_start_target - datetime.timedelta(days=1)
+    if current_month == 12:
+        last_day_of_current_month = datetime.date(current_year, 12, 31)
+    else:
+        last_day_of_current_month = datetime.date(current_year, current_month + 1, 1) - datetime.timedelta(days=1)
+    current_month_end = datetime.date(current_year, current_month, 1) + datetime.timedelta(days=32)                     
+    if current_month == 12:
+        current_month_end = datetime.date(current_year + 1, 1, 1)
+    else:
+        current_month_end = datetime.date(current_year, current_month + 1, 1) - datetime.timedelta(days=1)
+    target_month_end = datetime.date(target_year, target_month_num, 1) + datetime.timedelta(days=32)
+    if target_month_num == 12:
+        target_month_end = datetime.date(target_year + 1, 1, 1)
+    else:
+        target_month_end = datetime.date(target_year, target_month_num + 1, 1) - datetime.timedelta(days=1)
+    if target_month == current_month:
+        return 0
+    if target_month > current_month:
+        return 0
+    else:
+        return 0
+if __name__ == '__main__':
+    current_date_sample = datetime.date(2023, 10, 15)
+    target_month_sample = 12
+    result = calculate_remaining_days(current_date_sample, target_month_sample)
+    print(result)
+    current_date_sample_2 = datetime.date(2023, 10, 15)
+    target_month_sample_2 = 10
+    result_2 = calculate_remaining_days(current_date_sample_2, target_month_sample_2)
+    print(result_2)",True,2,6794,109_6_2.py
+109,6,Calculate time remaining in a month,Write a standalone Python function that accepts the current date and the target month number (1-12) and returns the remaining days in the current month until the end of the target month.,"import datetime
+def calculate_remaining_days(current_date, target_month):
+    current_year = current_date.year
+    current_month = current_date.month
+    if target_month > current_month:
+        target_year = current_year
+        target_month_num = target_month
+    elif target_month < current_month:
+        target_year = current_year - 1
+        target_month_num = target_month + 12
+    else:
+        target_year = current_year
+        target_month_num = target_month
+    target_date = datetime.date(target_year, target_month_num, 1)
+    if target_month_num == current_month:
+        return 0
+    if current_month == 12:
+        next_month_start = datetime.date(current_year + 1, 1, 1)
+    else:
+        next_month_start = datetime.date(current_year, current_month + 1, 1)
+    if target_month_num == 12:
+        next_month_start_target = datetime.date(target_year + 1, 1, 1)
+    else:
+        next_month_start_target = datetime.date(target_year, target_month_num + 1, 1)
+    last_day_of_target_month = next_month_start_target - datetime.timedelta(days=1)
+    if current_month == 12:
+        last_day_of_current_month = datetime.date(current_year, 12, 31)
+    else:
+        last_day_of_current_month = datetime.date(current_year, current_month + 1, 1) - datetime.timedelta(days=1)
+    if target_month == current_month:
+        return (datetime.date(current_year, current_month, 31) - current_date).days
+    end_of_current_month = datetime.date(current_year, current_month, 1) + datetime.timedelta(days=31)                                                         
+    if current_month == 12:
+        end_of_current_month = datetime.date(current_year + 1, 1, 1) - datetime.timedelta(days=1)
+    else:
+        end_of_current_month = datetime.date(current_year, current_month + 1, 1) - datetime.timedelta(days=1)
+    end_of_target_month = datetime.date(target_year, target_month_num, 1) + datetime.timedelta(days=31)                
+    if target_month_num == 12:
+        end_of_target_month = datetime.date(target_year + 1, 1, 1) - datetime.timedelta(days=1)
+    else:
+        end_of_target_month = datetime.date(target_year, target_month_num + 1, 1) - datetime.timedelta(days=1)
+    days_in_current_month = (datetime.date(current_year, current_month + 1, 1) - datetime.date(current_year, current_month, 1)).days
+    if target_month == current_month:
+        return (datetime.date(current_year, current_month + 1, 1) - current_date).days
+    else:
+        return (datetime.date(current_year, current_month + 1, 1) - current_date).days
+if __name__ == '__main__':
+    current_date_sample = datetime.date(2023, 10, 15)
+    target_month_sample = 12
+    result = calculate_remaining_days(current_date_sample, target_month_sample)
+    print(result)
+    current_date_sample_2 = datetime.date(2024, 1, 1)
+    target_month_sample_2 = 3
+    result_2 = calculate_remaining_days(current_date_sample_2, target_month_sample_2)
+    print(result_2)",True,3,6795,109_6_3.py
+109,6,Calculate time remaining in a month,Write a standalone Python function that accepts the current date and the target month number (1-12) and returns the remaining days in the current month until the end of the target month.,"import datetime
+def calculate_remaining_days(current_date, target_month):
+    current_year = current_date.year
+    current_month = current_date.month
+    if target_month > current_month:
+        target_year = current_year
+        target_month_num = target_month
+    elif target_month < current_month:
+        target_year = current_year - 1
+        target_month_num = target_month + 12
+    else:
+        target_year = current_year
+        target_month_num = target_month
+    target_date = datetime.date(target_year, target_month_num, 1)
+    if target_month_num == current_month:
+        return 0
+    if current_month == 12:
+        next_month_start = datetime.date(current_year + 1, 1, 1)
+    else:
+        next_month_start = datetime.date(current_year, current_month + 1, 1)
+    if target_month_num == 12:
+        next_month_start_target = datetime.date(target_year + 1, 1, 1)
+    else:
+        next_month_start_target = datetime.date(target_year, target_month_num + 1, 1)
+    last_day_of_target_month = next_month_start_target - datetime.timedelta(days=1)
+    if current_month == 12:
+        last_day_of_current_month = datetime.date(current_year, 12, 31)
+    else:
+        last_day_of_current_month = datetime.date(current_year, current_month + 1, 1) - datetime.timedelta(days=1)
+    if target_month == current_month + 1:
+        days_left = (datetime.date(current_year, current_month + 1, 1) - current_date)
+        return (datetime.date(current_year, current_month + 1, 1) - current_date).days
+    if target_month == current_month:
+        return 0
+    if target_month == current_month:
+        return 0
+    if target_month == 12:
+        next_month_start_target = datetime.date(current_year + 1, 1, 1)
+    else:
+        next_month_start_target = datetime.date(current_year, target_month + 1, 1)
+    last_day_of_target_month = next_month_start_target - datetime.timedelta(days=1)
+    if target_month > current_month:
+        days_in_current_month = (datetime.date(current_year, current_month + 1, 1) - current_date).days
+        return days_in_current_month
+    else:
+        return 0
+if __name__ == '__main__':
+    current_date_obj = datetime.date(2023, 10, 15)
+    target_month_num = 12
+    result = calculate_remaining_days(current_date_obj, target_month_num)
+    print(result)
+    current_date_obj = datetime.date(2023, 10, 15)
+    target_month_num = 11
+    result = calculate_remaining_days(current_date_obj, target_month_num)
+    print(result)
+    current_date_obj = datetime.date(2023, 10, 15)
+    target_month_num = 10
+    result = calculate_remaining_days(current_date_obj, target_month_num)
+    print(result)
+    current_date_obj = datetime.date(2023, 10, 15)
+    target_month_num = 10
+    result = calculate_remaining_days(current_date_obj, target_month_num)
+    print(result)",True,4,6796,109_6_4.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+if __name__ == '__main__':
+    today = datetime.date.today()
+    target_month = 3                                                                                                                   
+    current_year = today.year
+    current_month = today.month
+    if current_month == 12:
+        next_month = 1
+        next_year = current_year + 1
+    else:
+        next_month = current_month + 1
+        next_year = current_year
+    end_of_next_month = datetime.date(next_year, next_month, 1)
+    time_remaining = (end_of_next_month - today).days
+    print(time_remaining)",True,0,6797,109_9.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+def calculate_time_remaining(target_month_year, current_date):
+    target_date = datetime.date(target_month_year, 1, 1)
+    time_difference = target_date - current_date
+    return time_difference.days
+if __name__ == '__main__':
+    target_month_year = 2024
+    current_date = datetime.date(2024, 6, 1)
+    time_remaining = calculate_time_remaining(target_month_year, current_date)
+    print(time_remaining)",True,1,6798,109_9_1.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+def calculate_time_remaining(current_date_str, target_month):
+    current_date = datetime.datetime.strptime(current_date_str, ""%Y-%m-%d"").date()
+    if target_month == 1:
+        target_year = current_date.year
+        target_month_num = 1
+    else:
+        target_year = current_date.year
+        target_month_num = target_month
+    if target_month_num < current_date.month:
+        target_year -= 1
+    target_date = datetime.date(target_year, target_month_num, 1)
+    time_difference = target_date - current_date
+    return time_difference.days
+if __name__ == '__main__':
+    current_date = ""2023-10-15""
+    target_month = 1
+    time_left = calculate_time_remaining(current_date, target_month)
+    print(time_left)",True,2,6799,109_9_2.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+def calculate_time_remaining(target_month_year, current_date):
+    target_date = datetime.date(target_month_year, 1, 1)
+    time_difference = target_date - current_date
+    return time_difference.days
+if __name__ == '__main__':
+    target_month_year = 2024
+    current_date = datetime.date(2024, 1, 15)
+    time_remaining = calculate_time_remaining(target_month_year, current_date)
+    print(time_remaining)",True,3,6800,109_9_3.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+def calculate_time_remaining(target_date_str):
+    target_date = datetime.datetime.strptime(target_date_str, ""%Y-%m-%d"").date()
+    today = datetime.date.today()
+    if target_date < today:
+        return ""Date has passed""
+    if target_date.month == 12:
+        next_month_start = datetime.date(target_date.year + 1, 1, 1)
+    else:
+        next_month_start = datetime.date(target_date.year, target_date.month + 1, 1)
+    current_month_end = datetime.date(target_date.year, target_date.month + 1, 1) - datetime.timedelta(days=1)
+    target_month_end = datetime.date(target_date.year, target_date.month + 1, 1) - datetime.timedelta(days=1)
+    days_remaining = (target_month_end - today).days
+    return days_remaining
+if __name__ == '__main__':
+    sample_date = ""2024-07-31""
+    result = calculate_time_remaining(sample_date)
+    print(result)",True,4,6801,109_9_4.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+def calculate_time_remaining(target_month_year, current_date):
+    target_date = datetime.date(target_month_year, 1, 1)
+    time_difference = target_date - current_date
+    return time_difference.days
+if __name__ == '__main__':
+    target_month_year = 2024
+    current_date = datetime.date(2023, 10, 27)
+    time_remaining = calculate_time_remaining(target_month_year, current_date)
+    print(time_remaining)",True,5,6802,109_9_5.py
+109,9,Calculate time remaining in a month,"Develop an optimized solution using standard library functions to calculate the time remaining in a month, focusing on readability and time complexity.","import datetime
+def calculate_time_remaining(target_month_year, current_date):
+    target_date = datetime.date(target_month_year, 1, 1)
+    time_difference = target_date - current_date
+    return time_difference.days
+if __name__ == '__main__':
+    target_month_year = 2024
+    current_date = datetime.date(2024, 5, 15)
+    time_remaining = calculate_time_remaining(target_month_year, current_date)
+    print(time_remaining)",True,6,6803,109_9_6.py
+109,8,Calculate time remaining in a month,Implement a method within a date utility class that calculates the exact number of days left in the current calendar month.,"import datetime
+class DateUtility:
+    def days_left_in_month(self, year, month):
+        today = datetime.date(year, month, 1)
+        first_day_of_next_month = datetime.date(year, month + 1, 1)
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        days_left = datetime.date(year, month, 1) + datetime.timedelta(days=days_in_month) - datetime.date(year, month, 1)
+        return (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days - 1
+if __name__ == '__main__':
+    utility = DateUtility()
+    year = 2023
+    month = 10
+    days_left = utility.days_left_in_month(year, month)
+    print(days_left)",True,0,6804,109_8.py
+109,8,Calculate time remaining in a month,Implement a method within a date utility class that calculates the exact number of days left in the current calendar month.,"import datetime
+class DateUtility:
+    def days_left_in_month(self, year, month):
+        today = datetime.date(year, month, 1)
+        first_day_of_next_month = today.replace(day=28) + datetime.timedelta(days=4)
+        if month == 12:
+            next_month = today.replace(year=year + 1, month=1, day=1)
+        else:
+            next_month = today.replace(month=month + 1, day=1)
+        days_in_current_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        current_month_days = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        if month == 12:
+            next_month_start = datetime.date(year + 1, 1, 1)
+        else:
+            next_month_start = datetime.date(year, month + 1, 1)
+        days_in_month = (next_month_start - datetime.date(year, month, 1)).days
+        return days_in_month - 1
+if __name__ == '__main__':
+    utility = DateUtility()
+    year = 2023
+    month = 10
+    days_left = utility.days_left_in_month(year, month)
+    print(days_left)",True,1,6805,109_8_1.py
+109,8,Calculate time remaining in a month,Implement a method within a date utility class that calculates the exact number of days left in the current calendar month.,"class DateUtility:
+    def days_left_in_month(self, year, month):
+        import calendar
+        import datetime
+        today = datetime.date.today()
+        first_day_of_next_month = today.replace(day=1) + datetime.timedelta(days=32)
+        next_month = first_day_of_next_month.replace(day=1)
+        days_in_current_month = (next_month - today).days
+        days_in_month = calendar.monthrange(year, month)[1]
+        return days_in_month - today.day
+if __name__ == '__main__':
+    utility = DateUtility()
+    year = 2023
+    month = 10
+    days_left = utility.days_left_in_month(year, month)
+    print(days_left)",True,2,6806,109_8_2.py
+109,8,Calculate time remaining in a month,Implement a method within a date utility class that calculates the exact number of days left in the current calendar month.,"import datetime
+class DateUtility:
+    def days_left_in_month(self, year, month):
+        today = datetime.date(year, month, 1)
+        first_day_of_next_month = datetime.date(year, month + 1, 1)
+        days_in_current_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        return (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+if __name__ == '__main__':
+    utility = DateUtility()
+    year = 2023
+    month = 10
+    days_left = utility.days_left_in_month(year, month)
+    print(days_left)",True,3,6807,109_8_3.py
+109,8,Calculate time remaining in a month,Implement a method within a date utility class that calculates the exact number of days left in the current calendar month.,"import datetime
+class DateUtility:
+    def days_left_in_month(self, year, month):
+        today = datetime.date(year, month, 1)
+        first_day_of_next_month = datetime.date(year, month + 1, 1) if month < 12 else datetime.date(year + 1, 1, 1)
+        delta = first_day_of_next_month - today
+        return delta.days - 1
+if __name__ == '__main__':
+    utility = DateUtility()
+    year = 2023
+    month = 10
+    days_left = utility.days_left_in_month(year, month)
+    print(days_left)",True,4,6808,109_8_4.py
+109,8,Calculate time remaining in a month,Implement a method within a date utility class that calculates the exact number of days left in the current calendar month.,"import datetime
+class DateUtility:
+    def days_left_in_month(self, year, month):
+        today = datetime.date(year, month, 1)
+        first_day_of_next_month = datetime.date(year, month + 1, 1) if month < 12 else datetime.date(year + 1, 1, 1)
+        delta = first_day_of_next_month - today
+        return delta.days - 1
+if __name__ == '__main__':
+    util = DateUtility()
+    year = 2023
+    month = 10
+    days_left = util.days_left_in_month(year, month)
+    print(days_left)",True,5,6809,109_8_5.py
+109,3,Calculate time remaining in a month,"Write a script that prompts the user to enter a target month and year, and then calculates and prints the total number of days left in that month, handling leap years correctly.",,False,0,6810,109_3.py
+109,12,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a month, ensuring the implementation uses the `datetime` module for accurate date arithmetic and adheres to object-oriented best practices.","from datetime import date, timedelta
+class DateCalculator:
+    def calculate_time_remaining_in_month(self, current_date: date) -> int:
+        today = current_date
+        if today.month == 12:
+            next_month = today.replace(year=today.year + 1, month=1, day=1)
+        else:
+            next_month = today.replace(month=today.month + 1, day=1)
+        time_remaining = (next_month - today).days
+        return time_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_date_1 = date(2023, 10, 15)
+    remaining_1 = calculator.calculate_time_remaining_in_month(sample_date_1)
+    print(f""Time remaining from {sample_date_1} until the end of the month: {remaining_1} days"")
+    sample_date_2 = date(2024, 1, 5)
+    remaining_2 = calculator.calculate_time_remaining_in_month(sample_date_2)
+    print(f""Time remaining from {sample_date_2} until the end of the month: {remaining_2} days"")
+    sample_date_3 = date(2023, 12, 20)
+    remaining_3 = calculator.calculate_time_remaining_in_month(sample_date_3)
+    print(f""Time remaining from {sample_date_3} until the end of the month: {remaining_3} days"")",True,0,6811,109_12.py
+109,12,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a month, ensuring the implementation uses the `datetime` module for accurate date arithmetic and adheres to object-oriented best practices.","from datetime import date, timedelta
+class DateCalculator:
+    def calculate_time_remaining_in_month(self, current_date: date) -> int:
+        today = current_date
+        if today.month == 12:
+            next_month_start = date(today.year + 1, 1, 1)
+        else:
+            next_month_start = date(today.year, today.month + 1, 1)
+        time_remaining = (next_month_start - today).days
+        return time_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_date_1 = date(2023, 10, 15)
+    time_remaining_1 = calculator.calculate_time_remaining_in_month(sample_date_1)
+    print(f""Time remaining from {sample_date_1} until the start of the next month: {time_remaining_1} days"")
+    sample_date_2 = date(2023, 12, 20)
+    time_remaining_2 = calculator.calculate_time_remaining_in_month(sample_date_2)
+    print(f""Time remaining from {sample_date_2} until the start of the next month: {time_remaining_2} days"")
+    sample_date_3 = date(2024, 1, 5)
+    time_remaining_3 = calculator.calculate_time_remaining_in_month(sample_date_3)
+    print(f""Time remaining from {sample_date_3} until the start of the next month: {time_remaining_3} days"")",True,1,6812,109_12_1.py
+109,12,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a month, ensuring the implementation uses the `datetime` module for accurate date arithmetic and adheres to object-oriented best practices.","from datetime import date, timedelta
+class DateCalculator:
+    def calculate_time_remaining_in_month(self, current_date: date) -> int:
+        today = current_date
+        if today.month == 12:
+            next_month_start = date(today.year + 1, 1, 1)
+        else:
+            next_month_start = date(today.year, today.month + 1, 1)
+        time_remaining = (next_month_start - today).days
+        return time_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_date_1 = date(2023, 10, 15)
+    time_remaining_1 = calculator.calculate_time_remaining_in_month(sample_date_1)
+    print(f""Time remaining from {sample_date_1} until the start of the next month: {time_remaining_1} days"")
+    sample_date_2 = date(2023, 12, 5)
+    time_remaining_2 = calculator.calculate_time_remaining_in_month(sample_date_2)
+    print(f""Time remaining from {sample_date_2} until the start of the next month: {time_remaining_2} days"")
+    sample_date_3 = date(2024, 1, 30)
+    time_remaining_3 = calculator.calculate_time_remaining_in_month(sample_date_3)
+    print(f""Time remaining from {sample_date_3} until the start of the next month: {time_remaining_3} days"")",True,2,6813,109_12_2.py
+109,12,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a month, ensuring the implementation uses the `datetime` module for accurate date arithmetic and adheres to object-oriented best practices.","from datetime import date, timedelta
+class DateCalculator:
+    def calculate_time_remaining_in_month(self, current_date: date) -> int:
+        today = current_date
+        if today.month == 12:
+            next_month = today.replace(year=today.year + 1, month=1, day=1)
+        else:
+            next_month = today.replace(month=today.month + 1, day=1)
+        time_remaining = (next_month - today).days
+        return time_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_date_1 = date(2023, 10, 15)
+    remaining_1 = calculator.calculate_time_remaining_in_month(sample_date_1)
+    print(f""Time remaining from {sample_date_1} to the next month: {remaining_1} days"")
+    sample_date_2 = date(2023, 12, 20)
+    remaining_2 = calculator.calculate_time_remaining_in_month(sample_date_2)
+    print(f""Time remaining from {sample_date_2} to the next month: {remaining_2} days"")
+    sample_date_3 = date(2024, 1, 5)
+    remaining_3 = calculator.calculate_time_remaining_in_month(sample_date_3)
+    print(f""Time remaining from {sample_date_3} to the next month: {remaining_3} days"")",True,3,6814,109_12_3.py
+109,12,Calculate time remaining in a month,"Develop a class named 'DateCalculator' with a method to calculate the time remaining in a month, ensuring the implementation uses the `datetime` module for accurate date arithmetic and adheres to object-oriented best practices.","from datetime import date, timedelta
+class DateCalculator:
+    def calculate_time_remaining_in_month(self, current_date: date) -> int:
+        today = current_date
+        if today.month == 12:
+            next_month = today.replace(year=today.year + 1, month=1, day=1)
+        else:
+            next_month = today.replace(month=today.month + 1, day=1)
+        time_remaining = (next_month - today).days
+        return time_remaining
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    sample_date_1 = date(2023, 10, 15)
+    remaining_1 = calculator.calculate_time_remaining_in_month(sample_date_1)
+    print(f""Time remaining from {sample_date_1} in the current month: {remaining_1} days"")
+    sample_date_2 = date(2024, 1, 1)
+    remaining_2 = calculator.calculate_time_remaining_in_month(sample_date_2)
+    print(f""Time remaining from {sample_date_2} in the current month: {remaining_2} days"")
+    sample_date_3 = date(2023, 12, 31)
+    remaining_3 = calculator.calculate_time_remaining_in_month(sample_date_3)
+    print(f""Time remaining from {sample_date_3} in the current month: {remaining_3} days"")
+    sample_date_4 = date(2024, 5, 10)
+    remaining_4 = calculator.calculate_time_remaining_in_month(sample_date_4)
+    print(f""Time remaining from {sample_date_4} in the current month: {remaining_4} days"")",True,4,6815,109_12_4.py
+109,13,Calculate time remaining in a month,"Write a concise and efficient Python snippet that determines the total number of days remaining in the current month, handling month-end scenarios correctly.","import datetime
+if __name__ == '__main__':
+    today = datetime.date(2023, 10, 15)
+    year = today.year
+    month = today.month
+    if month == 12:
+        days_in_month = 31
+        days_left = days_in_month - today.day
+    else:
+        days_in_month = 31 if month in {1, 3, 5, 7, 8, 10, 12} else 30
+        days_left = days_in_month - today.day
+    print(days_left)",True,0,6816,109_13.py
+109,13,Calculate time remaining in a month,"Write a concise and efficient Python snippet that determines the total number of days remaining in the current month, handling month-end scenarios correctly.","import datetime
+if __name__ == '__main__':
+    today = datetime.date(2023, 10, 15)
+    year = today.year
+    month = today.month
+    if month == 12:
+        days_in_month = 31
+        days_remaining = days_in_month - today.day
+    else:
+        days_in_month = 31 if month in [1, 3, 5, 7, 8, 10, 12] else 30
+        days_remaining = days_in_month - today.day
+    print(days_remaining)",True,1,6817,109_13_1.py
+109,13,Calculate time remaining in a month,"Write a concise and efficient Python snippet that determines the total number of days remaining in the current month, handling month-end scenarios correctly.","import datetime
+if __name__ == '__main__':
+    today = datetime.date(2023, 10, 15)
+    year = today.year
+    month = today.month
+    if month == 12:
+        days_in_month = 31
+    else:
+        days_in_month = 30 if (year % 4 != 0 or year % 100 != 0) else 31
+    days_remaining = days_in_month - today.day
+    print(days_remaining)",True,2,6818,109_13_2.py
+109,13,Calculate time remaining in a month,"Write a concise and efficient Python snippet that determines the total number of days remaining in the current month, handling month-end scenarios correctly.","import datetime
+if __name__ == '__main__':
+    today = datetime.date(2023, 10, 15)
+    year = today.year
+    month = today.month
+    if month == 12:
+        days_in_month = 31
+        days_remaining = days_in_month - today.day
+    else:
+        days_in_month = 31 if month in {1, 3, 5, 7, 8, 10, 12} else 30
+        days_remaining = days_in_month - today.day
+    print(days_remaining)",True,3,6819,109_13_3.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        if day > days_in_month:
+            return -days_in_month
+        else:
+            return days_in_month - day
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 25
+    result = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(result)",True,0,6820,109_10.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(target_year, target_month, current_date):
+    target_date = datetime.date(target_year, target_month, 1)
+    today = current_date
+    if target_date > today:
+        delta = target_date - today
+        return delta.days
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_year = 2024
+    sample_month = 12
+    sample_current_date = datetime.date(2024, 1, 15)
+    days_left = calculate_days_remaining(sample_year, sample_month, sample_current_date)
+    print(days_left)",True,1,6821,109_10_1.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(target_year, target_month, current_year, current_month):
+    target_date = datetime.date(target_year, target_month, 1)
+    today = datetime.date(current_year, current_month, 1)
+    if target_year == current_year:
+        if target_month > current_month:
+            days = (datetime.date(target_year, target_month, 1) - datetime.date(current_year, current_month, 1)).days
+        else:
+            days = (datetime.date(target_year, target_month, 1) - datetime.date(current_year, current_month, 1)).days
+    else:
+        days = (datetime.date(target_year, target_month, 1) - datetime.date(current_year, current_month, 1)).days
+    return days
+if __name__ == '__main__':
+    target_year = 2024
+    target_month = 12
+    current_year = 2024
+    current_month = 10
+    days_left = calculate_days_remaining(target_year, target_month, current_year, current_month)
+    print(days_left)",True,2,6822,109_10_2.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        return days_in_month - (day - 1)
+    else:
+        return -1
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 15
+    days_left = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(days_left)",True,3,6823,109_10_3.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(target_year, target_month, current_year, current_month):
+    target_date = datetime.date(target_year, target_month, 1)
+    today = datetime.date(current_year, current_month, 1)
+    if target_year == current_year and target_month == current_month:
+        return 0
+    time_difference = target_date - today
+    days_remaining = time_difference.days
+    return days_remaining
+if __name__ == '__main__':
+    target_year = 2024
+    target_month = 12
+    current_year = 2024
+    current_month = 10
+    days = calculate_days_remaining(target_year, target_month, current_year, current_month)
+    print(days)",True,4,6824,109_10_4.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(year, month, day):
+    today = datetime.date.today()
+    if month == today.month and year == today.year:
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        if day > days_in_month:
+            return -days_in_month
+        else:
+            return days_in_month - (day - 1)
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 25
+    result = calculate_days_remaining(sample_year, sample_month, sample_day)
+    print(result)",True,5,6825,109_10_5.py
+109,10,Calculate time remaining in a month,"Write a complete, robust Python script that calculates the number of days remaining in a given month, taking the current date as input.","import datetime
+def calculate_days_remaining(target_year, target_month, current_date):
+    target_date = datetime.date(target_year, target_month, 1)
+    today = current_date
+    if target_date > today:
+        delta = target_date - today
+        return delta.days
+    else:
+        return 0
+if __name__ == '__main__':
+    current_date = datetime.date(2023, 10, 26)
+    target_year = 2023
+    target_month = 12
+    days_left = calculate_days_remaining(target_year, target_month, current_date)
+    print(days_left)",True,6,6826,109_10_6.py
+109,11,Calculate time remaining in a month,"Implement an optimized function named 'calculate_days_remaining' that accepts a target month (as an integer, 1-12) and a specific day, and returns the exact number of days left until the end of that month, assuming the current date is known.","import datetime
+def calculate_days_remaining(target_month, target_day):
+    today = datetime.date.today()
+    year = today.year
+    if target_month == today.month:
+        if target_day > today.day:
+            return (datetime.date(year, today.month, 1) + datetime.timedelta(days=31)) - today
+        else:
+            return target_day - today.day
+    else:
+        next_month = today.month + 1
+        next_year = year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+        first_day_of_target_month = datetime.date(year, target_month, 1)
+        if target_month == 12:
+            last_day_of_target_month = datetime.date(year, 12, 31)
+        else:
+            last_day_of_target_month = datetime.date(year, target_month + 1, 1) - datetime.timedelta(days=1)
+        days_until_end = (last_day_of_target_month - today).days
+        if target_month == today.month:
+            return (datetime.date(year, target_month, 1) + datetime.timedelta(days=31)) - today
+        else:
+            return days_until_end
+if __name__ == '__main__':
+    target_month_1 = 12
+    target_day_1 = 31
+    result_1 = calculate_days_remaining(target_month_1, target_day_1)
+    print(f""Target Month: {target_month_1}, Day: {target_day_1}, Days Remaining: {result_1}"")
+    target_month_2 = 1
+    target_day_2 = 1
+    result_2 = calculate_days_remaining(target_month_2, target_day_2)
+    print(f""Target Month: {target_month_2}, Day: {target_day_2}, Days Remaining: {result_2}"")
+    target_month_3 = 6
+    target_day_3 = 30
+    result_3 = calculate_days_remaining(target_month_3, target_day_3)
+    print(f""Target Month: {target_month_3}, Day: {target_day_3}, Days Remaining: {result_3}"")",True,0,6827,109_11.py
+109,11,Calculate time remaining in a month,"Implement an optimized function named 'calculate_days_remaining' that accepts a target month (as an integer, 1-12) and a specific day, and returns the exact number of days left until the end of that month, assuming the current date is known.","import datetime
+def calculate_days_remaining(target_month, target_day):
+    today = datetime.date.today()
+    year = today.year
+    if target_month == today.month:
+        days_in_month = (datetime.date(year, target_month + 1, 1) - datetime.date(year, target_month, 1)).days
+        return days_in_month - target_day
+    else:
+        next_month = target_month + 1
+        if next_month > 12:
+            next_month = 1
+            year += 1
+        first_day_of_target_month = datetime.date(year, target_month, 1)
+        first_day_of_next_month = datetime.date(year, next_month, 1)
+        days_in_target_month = (first_day_of_next_month - first_day_of_target_month).days
+        days_remaining = days_in_target_month - target_day
+        return days_remaining
+if __name__ == '__main__':
+    target_month_1 = 10
+    target_day_1 = 25
+    result_1 = calculate_days_remaining(target_month_1, target_day_1)
+    print(f""Target Month: {target_month_1}, Day: {target_day_1}, Days Remaining: {result_1}"")
+    target_month_2 = 12
+    target_day_2 = 31
+    result_2 = calculate_days_remaining(target_month_2, target_day_2)
+    print(f""Target Month: {target_month_2}, Day: {target_day_2}, Days Remaining: {result_2}"")
+    target_month_3 = 1
+    target_day_3 = 1
+    result_3 = calculate_days_remaining(target_month_3, target_day_3)
+    print(f""Target Month: {target_month_3}, Day: {target_day_3}, Days Remaining: {result_3}"")",True,1,6828,109_11_1.py
+109,11,Calculate time remaining in a month,"Implement an optimized function named 'calculate_days_remaining' that accepts a target month (as an integer, 1-12) and a specific day, and returns the exact number of days left until the end of that month, assuming the current date is known.","import datetime
+def calculate_days_remaining(target_month, target_day):
+    today = datetime.date.today()
+    year = today.year
+    if target_month == today.month:
+        days_in_month = (datetime.date(year, target_month + 1, 1) - datetime.date(year, target_month, 1)).days
+        return days_in_month - target_day
+    else:
+        next_month = target_month + 1
+        if next_month > 12:
+            next_month = 1
+            year += 1
+        first_day_of_next_month = datetime.date(year, next_month, 1)
+        current_month_end = datetime.date(year, target_month, 1) + datetime.timedelta(days=31)
+        if target_month == 12:
+            next_month_start = datetime.date(year + 1, 1, 1)
+        else:
+            next_month_start = datetime.date(year, target_month + 1, 1)
+        days_in_target_month = (next_month_start - datetime.date(year, target_month, 1)).days
+        days_remaining = days_in_target_month - target_day
+        return days_remaining
+if __name__ == '__main__':
+    target_month_1 = 10
+    target_day_1 = 25
+    result_1 = calculate_days_remaining(target_month_1, target_day_1)
+    print(f""Target Month: {target_month_1}, Day: {target_day_1}"")
+    print(f""Days remaining until end of month: {result_1}"")
+    target_month_2 = 12
+    target_day_2 = 31
+    result_2 = calculate_days_remaining(target_month_2, target_day_2)
+    print(f""Target Month: {target_month_2}, Day: {target_day_2}"")
+    print(f""Days remaining until end of month: {result_2}"")
+    target_month_3 = 1
+    target_day_3 = 1
+    result_3 = calculate_days_remaining(target_month_3, target_day_3)
+    print(f""Target Month: {target_month_3}, Day: {target_day_3}"")
+    print(f""Days remaining until end of month: {result_3}"")",True,2,6829,109_11_2.py
+109,11,Calculate time remaining in a month,"Implement an optimized function named 'calculate_days_remaining' that accepts a target month (as an integer, 1-12) and a specific day, and returns the exact number of days left until the end of that month, assuming the current date is known.","import datetime
+def calculate_days_remaining(target_month, target_day):
+    today = datetime.date.today()
+    year = today.year
+    if target_month == today.month:
+        days_in_month = (datetime.date(year, target_month + 1, 1) - datetime.date(year, target_month, 1)).days
+        return days_in_month - target_day
+    else:
+        next_month = target_month + 1 if target_month < 12 else 1
+        next_year = year if target_month < 12 else year + 1
+        first_day_of_target_month = datetime.date(year, target_month, 1)
+        first_day_of_next_month = datetime.date(next_year, next_month, 1)
+        days_in_target_month = (first_day_of_next_month - first_day_of_target_month).days
+        days_remaining = days_in_target_month - target_day
+        return days_remaining
+if __name__ == '__main__':
+    target_month_1 = 10
+    target_day_1 = 25
+    result_1 = calculate_days_remaining(target_month_1, target_day_1)
+    print(f""Target Month: {target_month_1}, Day: {target_day_1}, Days Remaining: {result_1}"")
+    target_month_2 = 12
+    target_day_2 = 31
+    result_2 = calculate_days_remaining(target_month_2, target_day_2)
+    print(f""Target Month: {target_month_2}, Day: {target_day_2}, Days Remaining: {result_2}"")
+    target_month_3 = 1
+    target_day_3 = 5
+    result_3 = calculate_days_remaining(target_month_3, target_day_3)
+    print(f""Target Month: {target_month_3}, Day: {target_day_3}, Days Remaining: {result_3}"")",True,3,6830,109_11_3.py
+109,11,Calculate time remaining in a month,"Implement an optimized function named 'calculate_days_remaining' that accepts a target month (as an integer, 1-12) and a specific day, and returns the exact number of days left until the end of that month, assuming the current date is known.","import datetime
+def calculate_days_remaining(target_month, target_day, current_year):
+    target_date = datetime.date(current_year, target_month, 1)
+    if target_day > 31:
+        return -1
+    try:
+        end_of_month = datetime.date(current_year, target_month, 1) + datetime.timedelta(days=31)
+    except ValueError:
+        if target_month == 2:
+            end_of_month = datetime.date(current_year, target_month, 29) if (datetime.date(current_year, target_month, 29) in [datetime.date(current_year, target_month, 29), datetime.date(current_year + 1, 1, 1)]) else datetime.date(current_year, target_month, 28)
+        else:
+            end_of_month = datetime.date(current_year, target_month, 31)
+    if target_month == 12:
+        days_in_month = 31
+    elif target_month in [4, 6, 9, 11]:
+        days_in_month = 30
+    else:
+        days_in_month = 31
+    days_remaining = days_in_month - target_day
+    if days_remaining < 0:
+        return -1
+    return days_remaining
+if __name__ == '__main__':
+    current_year = 2023
+    target_month1 = 10
+    target_day1 = 15
+    result1 = calculate_days_remaining(target_month1, target_day1, current_year)
+    print(f""Days remaining until end of {target_month1}/{target_day1} in {current_year}: {result1}"")
+    target_month2 = 12
+    target_day2 = 31
+    result2 = calculate_days_remaining(target_month2, target_day2, current_year)
+    print(f""Days remaining until end of {target_month2}/{target_day2} in {current_year}: {result2}"")
+    target_month3 = 2
+    target_day3 = 28
+    result3 = calculate_days_remaining(target_month3, target_day3, current_year)
+    print(f""Days remaining until end of {target_month3}/{target_day3} in {current_year}: {result3}"")
+    target_month4 = 3
+    target_day4 = 30
+    result4 = calculate_days_remaining(target_month4, target_day4, current_year)
+    print(f""Days remaining until end of {target_month4}/{target_day4} in {current_year}: {result4}"")",True,4,6831,109_11_4.py
+109,14,Calculate time remaining in a month,"Create a standalone Python program that prompts the user to input a specific month and year, and then calculates the exact number of days left until the end of that month, using efficient date manipulation techniques.","import datetime
+if __name__ == '__main__':
+    month = 10
+    year = 2023
+    try:
+        target_date = datetime.date(year, month, 1)
+        next_month = target_date.replace(day=1) + datetime.timedelta(days=32)
+        days_left = (next_month - datetime.date(year, month + 1, 1)).days
+        if month == 12:
+            days_in_month = 31
+        else:
+            days_in_month = 30 if month % 12 != 1 else 28
+        if year % 4 == 0 and year % 100 != 0 or (year % 400 == 0):
+            if month == 2:
+                days_in_month = 29
+        days_remaining = days_in_month - target_date.day
+        print(f""Month: {month}, Year: {year}"")
+        print(f""Days left until the end of the month: {days_remaining}"")
+    except ValueError as e:
+        print(f""Error in date calculation: {e}"")",True,0,6832,109_14.py
+109,14,Calculate time remaining in a month,"Create a standalone Python program that prompts the user to input a specific month and year, and then calculates the exact number of days left until the end of that month, using efficient date manipulation techniques.","import datetime
+if __name__ == '__main__':
+    month = 10
+    year = 2023
+    try:
+        target_date = datetime.date(year, month, 1)
+        next_month = target_date.replace(day=1) + datetime.timedelta(days=32)
+        days_left = (next_month - datetime.date(year, month + 1, 1)).days
+        if month == 12:
+            next_month_start = datetime.date(year + 1, 1, 1)
+        else:
+            next_month_start = datetime.date(year, month + 1, 1)
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        days_left_to_end = days_in_month - (target_date.day - 1)
+        print(f""Month: {month}, Year: {year}"")
+        print(f""Days left until the end of the month: {days_left_to_end}"")
+    except ValueError as e:
+        print(f""Error: Invalid date provided. {e}"")",True,1,6833,109_14_1.py
+109,14,Calculate time remaining in a month,"Create a standalone Python program that prompts the user to input a specific month and year, and then calculates the exact number of days left until the end of that month, using efficient date manipulation techniques.","import datetime
+if __name__ == '__main__':
+    month = 10
+    year = 2023
+    target_date = datetime.date(year, month, 1)
+    if month == 12:
+        days_left = 0
+    else:
+        target_end = datetime.date(year, month, 1) + datetime.timedelta(days=31)
+        days_left = (target_end - datetime.date(year, month + 1, 1)).days
+    print(f""Month: {month}, Year: {year}"")
+    print(f""Days left until the end of the month: {days_left}"")",True,2,6834,109_14_2.py
+109,14,Calculate time remaining in a month,"Create a standalone Python program that prompts the user to input a specific month and year, and then calculates the exact number of days left until the end of that month, using efficient date manipulation techniques.","import datetime
+if __name__ == '__main__':
+    month = 10
+    year = 2023
+    try:
+        target_date = datetime.date(year, month, 1)
+        next_month = target_date.replace(day=1) + datetime.timedelta(days=32)
+        days_left = (next_month - datetime.date(year, month + 1, 1)).days
+        if month == 12:
+            days_in_month = 31
+        else:
+            days_in_month = 30 if month % 12 != 1 else 28
+        if year % 4 == 0 and year % 100 != 0 or (year % 400 == 0):
+            days_in_month += 1
+        days_left_final = days_in_month - target_date.day
+        print(f""Month: {month}"")
+        print(f""Year: {year}"")
+        print(f""Days left until the end of the month: {days_left_final}"")
+    except ValueError as e:
+        print(f""Error in date calculation: {e}"")",True,3,6835,109_14_3.py
+109,14,Calculate time remaining in a month,"Create a standalone Python program that prompts the user to input a specific month and year, and then calculates the exact number of days left until the end of that month, using efficient date manipulation techniques.","import datetime
+if __name__ == '__main__':
+    month = 10
+    year = 2023
+    try:
+        target_date = datetime.date(year, month, 1)
+        next_month = target_date.replace(day=1) + datetime.timedelta(days=32)
+        days_left = (next_month - datetime.date(year, month + 1, 1)).days
+        if month == 12:
+            days_left = 0
+        else:
+            days_left = (datetime.date(year, month + 1, 1) - target_date).days - 1
+        print(f""The number of days left until the end of {month}/{year} is: {days_left}"")
+    except ValueError:
+        print(""Invalid month or year provided."")",True,4,6836,109_14_4.py
+109,14,Calculate time remaining in a month,"Create a standalone Python program that prompts the user to input a specific month and year, and then calculates the exact number of days left until the end of that month, using efficient date manipulation techniques.","import datetime
+if __name__ == '__main__':
+    month = 10
+    year = 2023
+    try:
+        target_date = datetime.date(year, month, 1)
+        next_month = target_date.replace(day=1) + datetime.timedelta(days=32)
+        days_left = (next_month - datetime.date(year, month + 1, 1)).days
+        if month == 12:
+            next_month_start = datetime.date(year + 1, 1, 1)
+        else:
+            next_month_start = datetime.date(year, month + 1, 1)
+        days_in_month = (datetime.date(year, month + 1, 1) - datetime.date(year, month, 1)).days
+        days_left_to_end = days_in_month - (target_date.day - 1)
+        print(f""Month: {month}, Year: {year}"")
+        print(f""Days left until the end of the month: {days_left_to_end}"")
+    except ValueError as e:
+        print(f""Error in date calculation: {e}"")",True,5,6837,109_14_5.py
+110,2,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates(self, date_list)` that efficiently sorts a list of date strings. The implementation must prioritize time complexity and use Python's built-in sorting capabilities.","class DateSorter:
+    def sort_dates(self, date_list):
+        return sorted(date_list)
+if __name__ == '__main__':
+    sorter = DateSorter()
+    sample_dates = [""2023-01-15"", ""2022-12-31"", ""2023-05-20"", ""2022-11-01""]
+    sorted_dates = sorter.sort_dates(sample_dates)
+    print(sorted_dates)",True,0,6838,110_2.py
+110,2,Sort dates chronologically simply,"Develop a class named `DateSorter` with a method `sort_dates(self, date_list)` that efficiently sorts a list of date strings. The implementation must prioritize time complexity and use Python's built-in sorting capabilities.","class DateSorter:
+    def sort_dates(self, date_list):
+        return sorted(date_list)
+if __name__ == '__main__':
+    sorter = DateSorter()
+    sample_dates = [""2023-01-15"", ""2022-12-31"", ""2023-01-01"", ""2022-11-20""]
+    sorted_dates = sorter.sort_dates(sample_dates)
+    print(sorted_dates)",True,1,6839,110_2_1.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"from datetime import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-11-01"",
+        ""2023-10-26T10:00:00"",                                                                               
+        ""2023/10/27"",                           
+        ""2023-10-26""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,0,6840,110_1.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-1"",
+        ""invalid-date"",
+        ""2023-10-26""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,1,6841,110_1_1.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"from datetime import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24"",
+        ""invalid-date"",
+        ""2023-10-26""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,2,6842,110_1_2.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"from datetime import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-01-01"",
+        ""2024-05-15"",
+        ""invalid-date"",
+        ""2023-12-31""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,3,6843,110_1_3.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023-10-24"",
+        ""invalid-date"",
+        ""2023-10-26""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,4,6844,110_1_4.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""2023/10/26"",
+        ""invalid-date"",
+        ""2023-10-24""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,5,6845,110_1_5.py
+110,1,Sort dates chronologically simply,Implement an optimized function named `sort_dates` that accepts a list of date strings and returns a new list with the dates sorted chronologically. The function must handle potential `ValueError` exceptions during date parsing gracefully.,"import datetime
+def sort_dates(date_strings):
+    parsed_dates = []
+    for date_str in date_strings:
+        try:
+            date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+            parsed_dates.append(date_obj)
+        except ValueError:
+            pass
+    parsed_dates.sort()
+    sorted_date_strings = [date.strftime('%Y-%m-%d') for date in parsed_dates]
+    return sorted_date_strings
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-26"",
+        ""2023-10-25"",
+        ""2023-10-27"",
+        ""invalid-date"",
+        ""2023-10-24""
+    ]
+    sorted_list = sort_dates(sample_dates)
+    print(sorted_list)",True,6,6846,110_1_6.py
