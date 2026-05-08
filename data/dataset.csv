@@ -125310,3 +125310,3706 @@ if __name__ == '__main__':
     print(f""Expression: {expression3}, Result: {evaluate_fully_parenthesized(expression3)}"")
     print(f""Expression: {expression4}, Result: {evaluate_fully_parenthesized(expression4)}"")
     print(f""Expression: {expression5}, Result: {evaluate_fully_parenthesized(expression5)}"")",True,4,6174,99_7_4.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'\(|\)|\bAND\b|\bOR\b|\bNOT\b|\d+|\+|\-|\(|\)|\,|\s+', expression_string)
+        if not tokens:
+            return ""Error: Empty expression""
+        tokens_processed = []
+        for token in tokens:
+            if token.strip() == """":
+                continue
+            tokens_processed.append(token)
+        if not tokens_processed:
+            return ""Error: Could not parse expression""
+        precedence_map = {
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '(': 0,
+            ')': 0
+        }
+        evaluation_order = []
+        for i, token in enumerate(tokens_processed):
+            if token in precedence_map:
+                evaluation_order.append((token, precedence_map[token], i))
+            else:
+                evaluation_order.append((token, 0, i))
+        result = []
+        for token, prec, index in evaluation_order:
+            if token in ('AND', 'OR', 'NOT'):
+                result.append({
+                    'type': 'operator',
+                    'token': token,
+                    'precedence': prec,
+                    'index': index
+                })
+            else:
+                result.append({
+                    'type': 'operand',
+                    'token': token,
+                    'precedence': 0,
+                    'index': index
+                })
+        return result
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    test_cases = [
+        ""A AND B OR C"",
+        ""(A AND B) OR C"",
+        ""NOT A OR B"",
+        ""A AND (B OR C)"",
+        ""A OR B AND C"",
+        ""NOT (A AND B)""
+    ]
+    for i, expr in enumerate(test_cases):
+        print(f""--- Test Case {i+1}: {expr} ---"")
+        result = evaluator.check_precedence(expr)
+        for item in result:
+            print(f""Token: {item['token']}, Type: {item['type']}, Precedence: {item['precedence']}, Index: {item['index']}"")
+        print(""-"" * 30)
+    print(""\n--- Complex Scenario Test ---"")
+    complex_expr = ""NOT A AND (B OR NOT C) OR D""
+    result = evaluator.check_precedence(complex_expr)
+    for item in result:
+        print(f""Token: {item['token']}, Type: {item['type']}, Precedence: {item['precedence']}, Index: {item['index']}"")
+    print(""-"" * 30)",True,0,6175,99_12.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'\(|\)|\+|\-|\*|\/|\btrue\b|\bfalse\b|\bAND\b|\bOR\b|\bNOT\b|\b\d+\.\d+|\d+', expression_string)
+        if not tokens:
+            return ""Error: Empty expression""
+        output_order = []
+        operator_stack = []
+        precedence = {
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '(': 0,
+            ')': 0
+        }
+        for token in tokens:
+            if token.replace('.', '', 1).isdigit() or token in ('true', 'false'):
+                output_order.append(token)
+            elif token in precedence:
+                operator_stack.append(token)
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack and operator_stack[-1] != '(':
+                    output_order.append(operator_stack.pop())
+                if operator_stack and operator_stack[-1] == '(':
+                    operator_stack.pop()
+            elif token in ('AND', 'OR', '*', '/'):
+                while (operator_stack and operator_stack[-1] != '(' and 
+                       precedence.get(operator_stack[-1], 0) >= precedence[token]):
+                    output_order.append(operator_stack.pop())
+                operator_stack.append(token)
+            elif token == 'NOT':
+                operator_stack.append(token)
+        while operator_stack:
+            output_order.append(operator_stack.pop())
+        return output_order
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    test_cases = [
+        (""true AND false OR true"", [""true"", ""false"", ""true"", ""AND"", ""OR""]),
+        (""(true OR false) AND true"", [""("", ""true"", ""OR"", ""false"", "")"", ""AND"", ""true""]),
+        (""NOT true OR false"", [""NOT"", ""true"", ""OR"", ""false""]),
+        (""true AND (false OR true)"", [""true"", ""AND"", ""("", ""false"", ""OR"", ""true"", "")""]),
+        (""true OR false AND true"", [""true"", ""OR"", ""false"", ""AND"", ""true""]),
+        (""true AND true AND true"", [""true"", ""AND"", ""true"", ""AND"", ""true""]),
+        (""NOT (true AND false)"", [""NOT"", ""("", ""true"", ""AND"", ""false"", "")""])
+    ]
+    for expression, expected_structure in test_cases:
+        result = evaluator.check_precedence(expression)
+        print(f""Expression: '{expression}'"")
+        print(f""Evaluation Order (Tokens/Operators): {result}"")
+        print(""-"" * 20)",True,1,6176,99_12_1.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'\(|\)|\+|\-|\*|\/|\btrue\b|\bfalse\b|\bAND\b|\bOR\b|\bNOT\b|\b\d+\.\d+|\d+', expression_string.replace(' ', ''))
+        if not tokens:
+            return ""Error: Empty expression""
+        processed_expression = expression_string
+        processed_expression = processed_expression.replace('AND', 'and').replace('OR', 'or').replace('NOT', 'not')
+        try:
+            result = eval(processed_expression, {""__builtins__"": None}, {})
+            evaluation_order = []
+            if 'not' in processed_expression:
+                evaluation_order.append(""NOT (Highest Precedence)"")
+            if 'and' in processed_expression:
+                evaluation_order.append(""AND (Medium Precedence)"")
+            if 'or' in processed_expression:
+                evaluation_order.append(""OR (Lowest Precedence)"")
+            if '(' in processed_expression or ')' in processed_expression:
+                evaluation_order.append(""Grouping (Parentheses dictate order)"")
+            if not evaluation_order:
+                evaluation_order.append(""Simple evaluation (no complex operators)"")
+            return ""Evaluation Order: "" + "" -> "".join(evaluation_order)
+        except Exception as e:
+            return f""Error during evaluation: {e}""
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    test_cases = [
+        (""true AND false OR true"", ""Test 1: Basic AND/OR""),
+        (""(true OR false) AND true"", ""Test 2: Parentheses override""),
+        (""NOT true OR false"", ""Test 3: NOT precedence""),
+        (""true OR true OR true"", ""Test 4: Redundant OR""),
+        (""NOT (true AND false)"", ""Test 5: Nested NOT""),
+        (""true OR false AND true"", ""Test 6: AND before OR""),
+        (""NOT true AND false OR true"", ""Test 7: Complex mix""),
+        (""true AND true AND true"", ""Test 8: Pure AND""),
+        (""false OR false OR false"", ""Test 9: Pure OR""),
+    ]
+    for expression, description in test_cases:
+        result = evaluator.check_precedence(expression)
+        print(f""Expression: '{expression}' ({description})"")
+        print(f""Result: {result}\n"")",True,2,6177,99_12_2.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'\(|\)|\+|\-|\*|\/|\btrue\b|\bfalse\b|\bAND\b|\bOR\b|\bNOT\b|\b\d+\.\d+|\d+', expression_string)
+        if not tokens:
+            return ""Error: Empty expression""
+        token_list = [t.strip() for t in tokens if t.strip()]
+        if not token_list:
+            return ""Error: No valid tokens found""
+        evaluation_order = []
+        parentheses_level = 0
+        for token in token_list:
+            if token == '(':
+                parentheses_level += 1
+            elif token == ')':
+                parentheses_level -= 1
+            if parentheses_level == 0:
+                evaluation_order.append(token)
+        if not evaluation_order:
+            return ""Evaluation structure determined (requires full parsing for exact result)""
+        return f""Tokens found: {token_list}\nSimulated Precedence Grouping: {evaluation_order}""
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    test_cases = [
+        (""true OR false"", ""Test 1: Simple OR""),
+        (""(true OR false) AND true"", ""Test 2: Parentheses override""),
+        (""true AND false OR true"", ""Test 3: AND before OR""),
+        (""true OR true OR true"", ""Test 4: Left-to-right OR""),
+        (""NOT true AND false"", ""Test 5: NOT precedence""),
+        (""true AND (false OR true)"", ""Test 6: Nested precedence""),
+        (""true OR false AND true"", ""Test 7: AND before OR""),
+        (""true AND true AND true"", ""Test 8: Sequential AND""),
+        (""false OR (true AND false)"", ""Test 9: Complex nesting"")
+    ]
+    for expression, description in test_cases:
+        result = evaluator.check_precedence(expression)
+        print(f""--- {description} ---"")
+        print(f""Expression: {expression}"")
+        print(f""Result: {result}\n"")",True,3,6178,99_12_3.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'[\d\.\+\-\*\/\(\)\s]+|true|false', expression_string)
+        if not tokens:
+            return ""Error: Empty expression""
+        tokens = [t.strip() for t in tokens if t.strip()]
+        if not tokens:
+            return ""Error: No valid tokens found""
+        try:
+            result = eval(expression_string)
+            precedence_order = [
+                ""1. Parentheses ()"",
+                ""2. Unary Operators (not, not None)"",
+                ""3. Multiplication (*), Division (/), Modulo (%)"",
+                ""4. Addition (+), Subtraction (-)"",
+                ""5. Comparison operators (==, >, <, etc.)"",
+                ""6. Logical NOT (not)"",
+                ""7. Logical AND (and)"",
+                ""8. Logical OR (or)""
+            ]
+            return {
+                ""evaluation_result"": result,
+                ""precedence_order_followed"": precedence_order,
+                ""notes"": ""Evaluation followed standard Python operator precedence rules.""
+            }
+        except Exception as e:
+            return f""Error during evaluation: {e}""
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    test_cases = [
+        (""true and false or true"", ""Complex logical operation""),
+        (""true and false or true"", ""Standard precedence check""),
+        (""(true or false) and true"", ""Parentheses override""),
+        (""true and false"", ""Multiplication/AND first""),
+        (""true or false and true"", ""Addition/OR precedence""),
+        (""not true and false"", ""Negation precedence""),
+        (""true and (false or true)"", ""Parentheses grouping""),
+        (""10 + 5 * 2"", ""Arithmetic precedence""),
+        (""3 + 4 * 2"", ""Arithmetic precedence""),
+        (""not (true and false)"", ""Nested precedence""),
+        (""false or 0"", ""Boolean/Numeric evaluation"")
+    ]
+    for expression, description in test_cases:
+        print(""="" * 50)
+        print(f""Expression: {expression} ({description})"")
+        result = evaluator.check_precedence(expression)
+        if isinstance(result, dict):
+            print(""Evaluation Result:"")
+            print(f""  Result: {result['evaluation_result']}"")
+            print(f""  Precedence Order Used: {result['precedence_order_followed']}"")
+            print(f""  Notes: {result['notes']}"")
+        else:
+            print(f""Error: {result}"")
+        print(""="" * 50)",True,4,6179,99_12_4.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'(\(|\)|\btrue\b|\bfalse\b|\d+\.?\d*|\+|\-|\*|/|!|\&|\||\^)', expression_string)
+        if not tokens:
+            return ""Error: Empty expression""
+        tokens_with_types = []
+        for token in tokens:
+            if token in ('true', 'false'):
+                tokens_with_types.append((token, 'bool'))
+            elif re.match(r'^-?\d+(\.\d+)?$|[\+\-\*\/!&^\|]', token):
+                tokens_with_types.append((token, 'operator'))
+            elif token in ('(', ')'):
+                tokens_with_types.append((token, 'paren'))
+            else:
+                tokens_with_types.append((token, 'unknown'))
+        if not tokens_with_types:
+            return ""Error: Could not parse tokens""
+        precedence = {
+            '(': 0,
+            ')': 0,
+            '!': 3,
+            '&': 2,
+            '|': 2,
+            '^': 2,
+            '*': 3,
+            '/': 3,
+            '+': 1,
+            '-': 1,
+            'true': 4,
+            'false': 4,
+            '1': 5,
+            '0': 5
+        }
+        evaluation_order = []
+        output_queue = []
+        operator_stack = []
+        for token, token_type in tokens_with_types:
+            if token_type == 'bool':
+                output_queue.append(token)
+            elif token_type == 'paren':
+                if token == '(':
+                    operator_stack.append(token)
+                elif token == ')':
+                    while operator_stack and operator_stack[-1] != '(':
+                        output_queue.append(operator_stack.pop())
+                    if operator_stack and operator_stack[-1] == '(':
+                        operator_stack.pop()
+                else:
+                    output_queue.append(token)
+            elif token_type == 'operator':
+                prec = precedence.get(token, 0)
+                while (operator_stack and operator_stack[-1] != '(' and 
+                       precedence.get(operator_stack[-1], -1) >= prec):
+                    output_queue.append(operator_stack.pop())
+                operator_stack.append(token)
+        while operator_stack:
+            output_queue.append(operator_stack.pop())
+        return output_queue
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    test_cases = [
+        (""true && false || true"", ""True, False, True, ||, &&""),
+        (""(true || false) && true"", ""true, false, ||, true, &&""),
+        (""true && !false"", ""true, !, false, &&""),
+        (""1 + 2 * 3"", ""1, 2, *, 3, +""),
+        (""true | 1 && 0"", ""true, 1, 0, &&, |""),
+        (""!(true && false)"", ""!, true, &&, false""),
+        (""true && true && true"", ""true, true, true, &&, true, &&""),
+        (""10 / 2 + 1"", ""10, 2, /, 1, +""),
+        (""true && (false || true)"", ""true, (, false, ||, true, ), &&""),
+    ]
+    for expression, expected_order_hint in test_cases:
+        result = evaluator.check_precedence(expression)
+        print(f""Expression: '{expression}'"")
+        print(f""Evaluation Order (Precedence Flow): {result}"")
+        print(""-"" * 20)
+    print(""\n--- Complex Scenario Test ---"")
+    complex_expression = ""true && (10 / 2) || !false""
+    result = evaluator.check_precedence(complex_expression)
+    print(f""Expression: '{complex_expression}'"")
+    print(f""Evaluation Order (Precedence Flow): {result}"")",True,5,6180,99_12_5.py
+99,12,Understand boolean operator precedence,"Develop an optimized Python class named `BooleanEvaluator` with a method `check_precedence(expression_string)` that parses and evaluates a complex boolean expression string, explicitly detailing the order in which operations are performed based on Python's built-in precedence rules. Provide test cases for complex scenarios.","import re
+class BooleanEvaluator:
+    def check_precedence(self, expression_string):
+        tokens = re.findall(r'\(|\)|\+|\-|\*|\/|\btrue\b|\bfalse\b|\bAND\b|\bOR\b|\bNOT\b|\b\d+\.\d+|\d+', expression_string.replace(' ', ''))
+        if not tokens:
+            return ""Error: Empty expression""
+        precedence_map = {
+            'NOT': 3,
+            'AND': 2,
+            'OR': 1,
+            '(': 0,
+            ')': 0
+        }
+        output_queue = []
+        operator_stack = []
+        precedence = {'NOT': 3, 'AND': 2, 'OR': 1}
+        for token in tokens:
+            if token in ('true', 'false'):
+                output_queue.append(token)
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack and operator_stack[-1] != '(':
+                    output_queue.append(operator_stack.pop())
+                if operator_stack and operator_stack[-1] == '(':
+                    operator_stack.pop()
+            elif token in precedence:
+                while (operator_stack and operator_stack[-1] != '(' and 
+                       precedence.get(operator_stack[-1], 0) >= precedence[token]):
+                    output_queue.append(operator_stack.pop())
+                operator_stack.append(token)
+            else:
+                if token in ('AND', 'OR'):
+                    operator_stack.append(token)
+        while operator_stack:
+            output_queue.append(operator_stack.pop())
+        return ""Evaluation Order Simulated: "" + "" -> "".join(output_queue)
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    expr1 = ""true OR false AND true""
+    result1 = evaluator.check_precedence(expr1)
+    print(f""Expression: {expr1}"")
+    print(f""Result: {result1}\n"")
+    expr2 = ""(true OR false) AND true""
+    result2 = evaluator.check_precedence(expr2)
+    print(f""Expression: {expr2}"")
+    print(f""Result: {result2}\n"")
+    expr3 = ""NOT true AND (false OR NOT false)""
+    result3 = evaluator.check_precedence(expr3)
+    print(f""Expression: {expr3}"")
+    print(f""Result: {result3}\n"")
+    expr4 = ""true OR false OR true AND false""
+    result4 = evaluator.check_precedence(expr4)
+    print(f""Expression: {expr4}"")
+    print(f""Result: {result4}\n"")
+    expr5 = ""NOT (true AND false) OR (true OR false)""
+    result5 = evaluator.check_precedence(expr5)
+    print(f""Expression: {expr5}"")
+    print(f""Result: {result5}\n"")",True,6,6181,99_12_6.py
+99,11,Understand boolean operator precedence,"Implement a function named `evaluate_boolean_expression` that accepts a string representing a boolean expression (using Python's `and`, `or`, `not`, and comparison operators like `==`, `>`, etc.) and evaluates it correctly, respecting standard Python operator precedence rules. The function must handle potential syntax errors gracefully.","import ast
+import operator
+def evaluate_boolean_expression(expression, variables):
+    node_map = {
+        ast.And: operator.and_,
+        ast.Or: operator.or_,
+        ast.Not: operator.not_,
+        ast.Eq: operator.eq,
+        ast.NotEq: operator.ne,
+        ast.Gt: operator.gt,
+        ast.Lt: operator.lt,
+        ast.GtE: operator.ge,
+        ast.LtE: operator.le,
+    }
+    def _eval_node(node):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body)
+        elif isinstance(node, ast.Constant):
+            if isinstance(node.value, bool):
+                return node.value
+            elif isinstance(node.value, (int, float)):
+                return variables.get(node.value, 0)
+            else:
+                raise TypeError(f""Unsupported constant type: {type(node.value)}"")
+        elif isinstance(node, ast.Name):
+            if node.id in variables:
+                return variables[node.id]
+            else:
+                raise NameError(f""Variable '{node.id}' not defined"")
+        elif isinstance(node, ast.BoolOp):
+            op = node.op
+            if isinstance(op, ast.And):
+                results = [_eval_node(n) for n in node.values]
+                return operator.and_(*results)
+            elif isinstance(op, ast.Or):
+                results = [_eval_node(n) for n in node.values]
+                return operator.or_(*results)
+        elif isinstance(node, ast.UnaryOp):
+            op = node.op
+            operand = _eval_node(node.operand)
+            if op == ast.Not:
+                return operator.not_(operand)
+        elif isinstance(node, ast.Compare):
+            left = _eval_node(node.left)
+            op_type = None
+            right = _eval_node(node.comparators[0])
+            if len(node.comparators) == 1:
+                op_type = type(node.ops[0])
+                if op_type in node_map:
+                    op_func = node_map[op_type]
+                    return op_func(left, right)
+            raise ValueError(""Complex comparison structure not fully supported in this simplified evaluator."")
+        else:
+            raise TypeError(f""Unsupported AST node type: {type(node)}"")
+    try:
+        body = ast.parse(expression, mode='eval')
+        result = _eval_node(body.body)
+        return result
+    except (SyntaxError, TypeError, NameError, ValueError) as e:
+        return f""Error: {e}""
+if __name__ == '__main__':
+    variables = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": 10,
+        ""D"": 5,
+        ""E"": 20
+    }
+    expressions = [
+        ""A and not B"",
+        ""A or B"",
+        ""not A"",
+        ""C > D"",
+        ""E == 20"",
+        ""(A and B) or not C"",
+        ""A and (C > D or E == 20)"",
+        ""not (A or B)"",
+        ""A == B"",
+        ""A > C and not D""
+    ]
+    print(""--- Evaluation Results ---"")
+    for expr in expressions:
+        result = evaluate_boolean_expression(expr, variables)
+        print(f""Expression: '{expr}' -> Result: {result}"")
+    print(""\n--- Error Handling Tests ---"")
+    error_expressions = [
+        ""A and $B"",
+        ""A == B and"",
+        ""A == 10 and"",
+        ""A == B and C""
+    ]
+    for expr in error_expressions:
+        result = evaluate_boolean_expression(expr, variables)
+        print(f""Expression: '{expr}' -> Result: {result}"")",True,0,6182,99_11.py
+99,11,Understand boolean operator precedence,"Implement a function named `evaluate_boolean_expression` that accepts a string representing a boolean expression (using Python's `and`, `or`, `not`, and comparison operators like `==`, `>`, etc.) and evaluates it correctly, respecting standard Python operator precedence rules. The function must handle potential syntax errors gracefully.","import ast
+import operator
+def evaluate_boolean_expression(expression, context=None):
+    if context is None:
+        context = {}
+    class CustomNode(ast.AST):
+        pass
+    def _eval_node(node, ctx):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body, ctx)
+        elif isinstance(node, ast.Constant):
+            if isinstance(node.value, bool):
+                return node.value
+            elif isinstance(node.value, (int, float)):
+                return context.get(node.value, 0)
+            elif isinstance(node.value, str):
+                return node.value
+        elif isinstance(node, ast.Name):
+            if node.id in context:
+                return context[node.id]
+            else:
+                raise NameError(f""Variable '{node.id}' not defined in context."")
+        elif isinstance(node, ast.BoolOp):
+            op = node.op
+            values = [_eval_node(v, ctx) for v in node.values]
+            if op == ""and"":
+                return all(values)
+            elif op == ""or"":
+                return any(values)
+            elif op == ""not"":
+                pass
+            else:
+                raise TypeError(f""Unsupported boolean operation: {op}"")
+        elif isinstance(node, ast.UnaryOp):
+            op = node.op
+            operand = _eval_node(node.operand, ctx)
+            if op == ""not"":
+                return not operand
+            else:
+                raise TypeError(f""Unsupported unary operation: {op}"")
+        elif isinstance(node, ast.Compare):
+            left = _eval_node(node.left, ctx)
+            op = None
+            right = _eval_node(node.comparators[0], ctx)
+            if len(node.comparators) == 1:
+                op = type(node.ops[0])
+                right = _eval_node(node.comparators[0], ctx)
+            if op is None:
+                raise ValueError(""Invalid comparison structure."")
+            if op == ""=="":
+                return left == right
+            elif op == ""!="":
+                return left != right
+            elif op == "">"":
+                return left > right
+            elif op == ""<"":
+                return left < right
+            elif op == "">="":
+                return left >= right
+            elif op == ""<="":
+                return left <= right
+            elif op == ""in"":
+                if not isinstance(right, (list, set)):
+                    raise TypeError(""Comparison 'in' requires a sequence on the right."")
+                return right in left
+            elif op == ""not in"":
+                if not isinstance(right, (list, set)):
+                    raise TypeError(""Comparison 'not in' requires a sequence on the right."")
+                return not (right in left)
+            else:
+                raise TypeError(f""Unsupported comparison operator: {op}"")
+        raise TypeError(f""Unknown AST node type encountered: {type(node)}"")
+    try:
+        node = ast.parse(expression, mode='eval')
+        result = _eval_node(node.body, context)
+        return result
+    except SyntaxError as e:
+        raise ValueError(f""Syntax Error in expression: {e}"")
+    except NameError as e:
+        raise ValueError(f""Context Error: {e}"")
+    except TypeError as e:
+        raise ValueError(f""Evaluation Error: {e}"")
+    except Exception as e:
+        raise ValueError(f""An unexpected error occurred during evaluation: {e}"")
+if __name__ == '__main__':
+    context_data = {
+        ""A"": 10,
+        ""B"": 5,
+        ""C"": 20,
+        ""is_valid"": True,
+        ""score"": 85
+    }
+    print(""--- Test Case 1: Simple Boolean Logic (and, or, not) ---"")
+    expression1 = ""(A > 5) and (B == 5) or not is_valid""
+    try:
+        result1 = evaluate_boolean_expression(expression1, context_data)
+        print(f""Expression: {expression1}"")
+        print(f""Result: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\n--- Test Case 2: Complex Comparison ---"")
+    expression2 = ""score >= 80 and C > A""
+    try:
+        result2 = evaluate_boolean_expression(expression2, context_data)
+        print(f""Expression: {expression2}"")
+        print(f""Result: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\n--- Test Case 3: String and Membership Comparison ---"")
+    context_data_2 = {
+        ""items"": [""apple"", ""banana""],
+        ""name"": ""apple""
+    }
+    expression3 = ""name == 'apple' and 'apple' in items""
+    try:
+        result3 = evaluate_boolean_expression(expression3, context_data_2)
+        print(f""Expression: {expression3}"")
+        print(f""Result: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\n--- Test Case 4: Syntax Error Handling ---"")
+    expression4 = ""A > 5 and""
+    try:
+        result4 = evaluate_boolean_expression(expression4, context_data)
+        print(f""Expression: {expression4}"")
+        print(f""Result: {result4}"")
+    except ValueError as e:
+        print(f""Error caught successfully: {e}"")
+    print(""\n--- Test Case 5: Undefined Variable Handling ---"")
+    expression5 = ""A > Z""
+    try:
+        result5 = evaluate_boolean_expression(expression5, context_data)
+        print(f""Expression: {expression5}"")
+        print(f""Result: {result5}"")
+    except ValueError as e:
+        print(f""Error caught successfully: {e}"")",True,1,6183,99_11_1.py
+99,11,Understand boolean operator precedence,"Implement a function named `evaluate_boolean_expression` that accepts a string representing a boolean expression (using Python's `and`, `or`, `not`, and comparison operators like `==`, `>`, etc.) and evaluates it correctly, respecting standard Python operator precedence rules. The function must handle potential syntax errors gracefully.","import ast
+import operator
+def evaluate_boolean_expression(expression, variables):
+    node_map = {
+        ast.And: operator.and_,
+        ast.Or: operator.or_,
+        ast.Not: operator.not_,
+        ast.Eq: operator.eq,
+        ast.NotEq: operator.ne,
+        ast.Gt: operator.gt,
+        ast.Lt: operator.lt,
+        ast.GtE: operator.ge,
+        ast.LtE: operator.le,
+    }
+    def _eval_node(node):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body)
+        elif isinstance(node, ast.Constant):
+            if isinstance(node.value, bool):
+                return node.value
+            elif isinstance(node.value, (int, float)):
+                return node.value
+        elif isinstance(node, ast.Name):
+            if node.id in variables:
+                return variables[node.id]
+            else:
+                raise NameError(f""Variable '{node.id}' not defined"")
+        elif isinstance(node, ast.BoolOp):
+            op = node.op
+            if isinstance(op, ast.And):
+                results = [_eval_node(n) for n in node.values]
+                return operator.and_(*results)
+            elif isinstance(op, ast.Or):
+                results = [_eval_node(n) for n in node.values]
+                return operator.or_(*results)
+        elif isinstance(node, ast.UnaryOp):
+            op = node.op
+            operand = _eval_node(node.operand)
+            if op == ast.Not:
+                return operator.not_(operand)
+        elif isinstance(node, ast.Compare):
+            left = _eval_node(node.left)
+            op_type = None
+            right = _eval_node(node.comparators[0])
+            if len(node.comparators) == 1:
+                op_type = type(node.ops[0])
+                right = node.comparators[0]
+            elif len(node.comparators) > 1:
+                current_op = node.ops[0]
+                current_right = node.comparators[0]
+                for i in range(1, len(node.comparators)):
+                    next_op = node.ops[i]
+                    next_right = node.comparators[i]
+                    if not isinstance(next_right, (ast.Constant, ast.Name)):
+                        raise TypeError(""Invalid right operand in chained comparison"")
+                    if not isinstance(current_right, (int, float)) and not isinstance(next_right, (int, float)):
+                        raise TypeError(""Chained comparison requires numeric operands"")
+                    if not _eval_node(current_right) in (True, False):
+                        raise TypeError(""Chained comparison requires boolean result"")
+                    current_right = next_right
+                    current_op = next_op
+                    if current_op not in node_map:
+                        raise TypeError(f""Unsupported comparison operator: {type(current_op)}"")
+                    current_result = node_map[current_op](_eval_node(current_right), _eval_node(current_right))
+                    pass                                                                                                       
+                if len(node.comparators) == 1:
+                    op_type = type(node.ops[0])
+                    right = node.comparators[0]
+                else:
+                    op_type = type(node.ops[0])
+                    right = node.comparators[0]
+            if op_type:
+                return node_map[op_type](left, right)
+            else:
+                raise ValueError(""Invalid comparison structure encountered"")
+        else:
+            raise TypeError(f""Unsupported AST node type: {type(node)}"")
+    try:
+        return _eval_node(ast.Expression(body=expression))
+    except Exception as e:
+        raise ValueError(f""Error during evaluation: {e}"")
+if __name__ == '__main__':
+    variables = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": 10,
+        ""D"": 5
+    }
+    expression1 = ""(A and not B) or (C > D)""
+    print(f""Expression: {expression1}"")
+    try:
+        result1 = evaluate_boolean_expression(expression1, variables)
+        print(f""Result 1: {result1}"")
+    except ValueError as e:
+        print(f""Error 1: {e}"")
+    print(""-"" * 20)
+    expression2 = ""A == True and B != False""
+    print(f""Expression: {expression2}"")
+    try:
+        result2 = evaluate_boolean_expression(expression2, variables)
+        print(f""Result 2: {result2}"")
+    except ValueError as e:
+        print(f""Error 2: {e}"")
+    print(""-"" * 20)
+    expression3 = ""C > D and A""
+    print(f""Expression: {expression3}"")
+    try:
+        result3 = evaluate_boolean_expression(expression3, variables)
+        print(f""Result 3: {result3}"")
+    except ValueError as e:
+        print(f""Error 3: {e}"")
+    print(""-"" * 20)
+    expression4 = ""A + B""
+    print(f""Expression: {expression4}"")
+    try:
+        result4 = evaluate_boolean_expression(expression4, variables)
+        print(f""Result 4: {result4}"")
+    except ValueError as e:
+        print(f""Error 4 (Expected Error): {e}"")
+    print(""-"" * 20)
+    expression5 = ""X and A""
+    print(f""Expression: {expression5}"")
+    try:
+        result5 = evaluate_boolean_expression(expression5, variables)
+        print(f""Result 5: {result5}"")
+    except ValueError as e:
+        print(f""Error 5 (Expected Error): {e}"")",True,2,6184,99_11_2.py
+99,11,Understand boolean operator precedence,"Implement a function named `evaluate_boolean_expression` that accepts a string representing a boolean expression (using Python's `and`, `or`, `not`, and comparison operators like `==`, `>`, etc.) and evaluates it correctly, respecting standard Python operator precedence rules. The function must handle potential syntax errors gracefully.","import ast
+import operator
+def evaluate_boolean_expression(expression, context=None):
+    if context is None:
+        context = {}
+    class CustomNode(ast.AST):
+        pass
+    def _eval_node(node, context):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body, context)
+        elif isinstance(node, ast.Constant):
+            if isinstance(node.value, bool):
+                return node.value
+            elif isinstance(node.value, (int, float)):
+                return node.value
+            elif isinstance(node.value, str):
+                return node.value
+        elif isinstance(node, ast.Name):
+            if node.id in context:
+                return context[node.id]
+            else:
+                raise NameError(f""Variable '{node.id}' not defined in context."")
+        elif isinstance(node, ast.BoolOp):
+            op = node.op
+            if isinstance(op, ast.And):
+                results = [_eval_node(n, context) for n in node.values]
+                return all(results)
+            elif isinstance(op, ast.Or):
+                results = [_eval_node(n, context) for n in node.values]
+                return any(results)
+            elif isinstance(op, ast.Not):
+                operand = _eval_node(node.op, context)
+                return not operand
+        elif isinstance(node, ast.UnaryOp):
+            op = node.op
+            operand = _eval_node(node.operand, context)
+            if op == ast.Not:
+                return not operand
+            elif op == ast.NotNone:
+                raise TypeError(""Invalid unary operator."")
+        elif isinstance(node, ast.Compare):
+            left = _eval_node(node.left, context)
+            op = None
+            right = _eval_node(node.comparators[0], context)
+            if len(node.comparators) == 1:
+                op = type(node.comparators[0])
+                right = node.comparators[0]
+            elif len(node.comparators) > 1:
+                for i in range(len(node.comparators) - 1):
+                    current_op = type(node.comparators[i])
+                    next_comp = node.comparators[i+1]
+                    if not isinstance(next_comp, ast.Compare):
+                        raise TypeError(""Chained comparisons must be of the same type."")
+                    if not isinstance(next_comp.comparators[0], type(node.comparators[i])):
+                        raise TypeError(""Chained comparison types must match."")
+                    node.comparators = [node.comparators[i]] + next_comp.comparators
+                    op = type(node.comparators[i])
+                    right = node.comparators[i+1]
+                op = type(node.comparators[0])
+                right = node.comparators[-1]
+            if op:
+                if op == ast.Eq: return left == right
+                if op == ast.NotEq: return left != right
+                if op == ast.Gt: return left > right
+                if op == ast.Lt: return left < right
+                if op == ast.GtE: return left >= right
+                if op == ast.LtE: return left <= right
+                if op == ast.Is: return left is right
+                if op == ast.IsNot: return left is not right
+                if op == ast.In: return right in left
+                if op == ast.NotIn: return right not in left
+            else:
+                raise ValueError(""Invalid comparison structure."")
+        else:
+            raise TypeError(f""Unsupported AST node type: {type(node)}"")
+    try:
+        return _eval_node(ast.parse(expression, mode='eval'), context)
+    except Exception as e:
+        raise SyntaxError(f""Error evaluating expression: {e}"")
+if __name__ == '__main__':
+    data = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": 10,
+        ""D"": 20,
+        ""is_valid"": True
+    }
+    expression1 = ""(A and not B) or (C > 5)""
+    try:
+        result1 = evaluate_boolean_expression(expression1, data)
+        print(f""Expression: {expression1}"")
+        print(f""Result 1: {result1}"")
+    except Exception as e:
+        print(f""Error in Example 1: {e}"")
+    print(""-"" * 20)
+    expression2 = ""D >= 15 and A == True""
+    try:
+        result2 = evaluate_boolean_expression(expression2, data)
+        print(f""Expression: {expression2}"")
+        print(f""Result 2: {result2}"")
+    except Exception as e:
+        print(f""Error in Example 2: {e}"")
+    print(""-"" * 20)
+    expression3 = ""not (B or C == 10)""
+    try:
+        result3 = evaluate_boolean_expression(expression3, data)
+        print(f""Expression: {expression3}"")
+        print(f""Result 3: {result3}"")
+    except Exception as e:
+        print(f""Error in Example 3: {e}"")
+    print(""-"" * 20)
+    expression4 = ""A and B or""
+    try:
+        result4 = evaluate_boolean_expression(expression4, data)
+        print(f""Expression: {expression4}"")
+        print(f""Result 4: {result4}"")
+    except SyntaxError as e:
+        print(f""Successfully caught Syntax Error for Example 4: {e}"")
+    except Exception as e:
+        print(f""Caught unexpected error for Example 4: {e}"")",True,3,6185,99_11_3.py
+99,11,Understand boolean operator precedence,"Implement a function named `evaluate_boolean_expression` that accepts a string representing a boolean expression (using Python's `and`, `or`, `not`, and comparison operators like `==`, `>`, etc.) and evaluates it correctly, respecting standard Python operator precedence rules. The function must handle potential syntax errors gracefully.","def evaluate_boolean_expression(expression, variables):
+    import re
+    def evaluate_token(token, vars):
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            return float(token)
+        if token in vars:
+            return vars[token]
+        raise NameError(f""Variable or undefined token: {token}"")
+    def parse_and_bind(tokens, vars):
+        output_queue = []
+        operator_stack = []
+        values_stack = []
+        precedence = {
+            '==': 1, '!=': 1, '>': 2, '<': 2, '>=': 2, '<=': 2,
+            'and': 3, 'or': 4, 'not': 5
+        }
+        def apply_op(op, values):
+            if op == 'not':
+                if len(values) < 1:
+                    raise SyntaxError(""Not enough operands for 'not'"")
+                operand = values.pop()
+                result = not evaluate_token(operand, vars)
+                values.append(result)
+            elif op in ('and', 'or'):
+                if len(values) < 2:
+                    raise SyntaxError(f""Not enough operands for '{op}'"")
+                right = values.pop()
+                left = values.pop()
+                if op == 'and':
+                    result = left and right
+                else:
+                    result = left or right
+                values.append(result)
+            elif op in ('==', '!=', '>', '<', '>=', '<='):
+                if len(values) < 2:
+                    raise SyntaxError(f""Not enough operands for comparison operator '{op}'"")
+                right = values.pop()
+                left = values.pop()
+                if op == '==': result = left == right
+                elif op == '!=': result = left != right
+                elif op == '>': result = left > right
+                elif op == '<': result = left < right
+                elif op == '>=': result = left >= right
+                elif op == '<=': result = left <= right
+                values.append(result)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        for token in tokens:
+            if token.replace('.', '', 1).isdigit() or (token.startswith('-') and token[1:].replace('.', '', 1).isdigit()):
+                values_stack.append(evaluate_token(token, vars))
+            elif token in precedence:
+                while (operator_stack and precedence.get(operator_stack[-1], 0) >= precedence[token]):
+                    op = operator_stack.pop()
+                    apply_op(op, values_stack)
+                operator_stack.append(token)
+            else:
+                raise SyntaxError(f""Invalid token: {token}"")
+        while operator_stack:
+            op = operator_stack.pop()
+            if op == 'not':
+                if len(values_stack) < 1:
+                    raise SyntaxError(""Not enough operands for 'not'"")
+                operand = values_stack.pop()
+                result = not evaluate_token(operand, vars)
+                values_stack.append(result)
+            elif op in ('and', 'or'):
+                if len(values_stack) < 2:
+                    raise SyntaxError(f""Not enough operands for '{op}'"")
+                right = values_stack.pop()
+                left = values_stack.pop()
+                if op == 'and':
+                    result = left and right
+                else:
+                    result = left or right
+                values_stack.append(result)
+            elif op in ('==', '!=', '>', '<', '>=', '<='):
+                if len(values_stack) < 2:
+                    raise SyntaxError(f""Not enough operands for comparison operator '{op}'"")
+                right = values_stack.pop()
+                left = values_stack.pop()
+                if op == '==': result = left == right
+                elif op == '!=': result = left != right
+                elif op == '>': result = left > right
+                elif op == '<': result = left < right
+                elif op == '>=': result = left >= right
+                elif op == '<=': result = left <= right
+                values_stack.append(result)
+            else:
+                raise ValueError(f""Internal error processing operator: {op}"")
+        if len(values_stack) != 1:
+            raise SyntaxError(""Malformed expression resulting in incorrect stack size"")
+        return values_stack[0]
+    tokens = re.findall(r'[\d\.\-]+|\b(and|or|not|==|!=|>=|<=|>|<)\b', expression)
+    variables = {}
+    for var, val in variables.items():
+        variables[var] = val
+    try:
+        result = parse_and_bind(tokens, variables)
+        return result
+    except (SyntaxError, NameError, ValueError) as e:
+        raise ValueError(f""Error evaluating expression: {e}"")
+if __name__ == '__main__':
+    test_cases = [
+        (""x > 5 and y == 10"", {""x"": 6, ""y"": 10}),
+        (""not (x == 5)"", {""x"": 5}),
+        (""a > 10 or b < 5"", {""a"": 12, ""b"": 3}),
+        (""x >= 5 and y <= 10"", {""x"": 5, ""y"": 10}),
+        (""not (x == 5 and y == 10)"", {""x"": 5, ""y"": 10}),
+        (""10 > 5 and 2 == 2"", {}),
+        (""x == 5 or y == 10"", {""x"": 4, ""y"": 11}),
+        (""x > 10 and not y"", {""x"": 15, ""y"": 5}),
+        (""10 > 20"", {}),
+        (""x == 5 and y > 10"", {""x"": 5, ""y"": 11}),
+        (""x == 5"", {""x"": 5}),
+        (""x == 5 or y == 10 and z == 1"", {""x"": 5, ""y"": 10, ""z"": 1}),
+        (""x > 5 and not (y == 10)"", {""x"": 6, ""y"": 10}),
+        (""10 > 20 and"", {}),
+        (""x > 5 and"", {""x"": 6}),
+        (""x > 5 and y"", {""x"": 6, ""y"": 10}),
+        (""x > 5 and y == 10 and z > 1"", {""x"": 6, ""y"": 10, ""z"": 2}),
+    ]
+    for expression, vars_input in test_cases:
+        try:
+            result = evaluate_boolean_expression(expression, vars_input)
+            print(f""Expression: '{expression}' with variables {vars_input}: Result = {result}"")
+        except ValueError as e:
+            print(f""Expression: '{expression}' with variables {vars_input}: Error = {e}"")
+        except Exception as e:
+            print(f""Expression: '{expression}' with variables {vars_input}: Unexpected Error = {e}"")
+        print(""-"" * 20)",True,4,6186,99_11_4.py
+99,11,Understand boolean operator precedence,"Implement a function named `evaluate_boolean_expression` that accepts a string representing a boolean expression (using Python's `and`, `or`, `not`, and comparison operators like `==`, `>`, etc.) and evaluates it correctly, respecting standard Python operator precedence rules. The function must handle potential syntax errors gracefully.","import ast
+import operator
+def evaluate_boolean_expression(expression, context=None):
+    if context is None:
+        context = {}
+    class Context:
+        def __init__(self, context):
+            self.context = context
+    class ExpressionEvaluator(ast.NodeVisitor):
+        def visit_Expression(self, node):
+            if isinstance(node, ast.BoolOp):
+                op = node.op
+                values = [self.visit(v) for v in node.values]
+                if op == ""and"":
+                    return all(values)
+                elif op == ""or"":
+                    return any(values)
+            elif isinstance(node, ast.UnaryOp):
+                op = node.op
+                operand = self.visit(node.operand)
+                if op == ""not"":
+                    return not operand
+            elif isinstance(node, ast.Compare):
+                left = self.visit(node.left)
+                op = None
+                right = self.visit(node.comparators[0])
+                if len(node.comparators) == 1:
+                    op = type(node.comparators[0])
+                    right = node.comparators[0]
+                elif len(node.comparators) > 1:
+                    op = type(node.comparators[0])
+                    right = node.comparators[0]
+                if op is not None:
+                    try:
+                        result = operator.gt(left, right) if op == ast.Gt else \
+                                  operator.lt(left, right) if op == ast.Lt else \
+                                  operator.eq(left, right) if op == ast.Eq else \
+                                  operator.ge(left, right) if op == ast.Ge else \
+                                  operator.le(left, right) if op == ast.Le else \
+                                  None
+                        return bool(result)
+                    except TypeError:
+                        return False
+                return False
+            return None
+    try:
+        tree = ast.parse(expression, mode='eval')
+        evaluator = ExpressionEvaluator()
+        result = evaluator.visit(tree.body)
+        return bool(result)
+    except SyntaxError:
+        return ""Syntax Error""
+    except Exception:
+        return ""Evaluation Error""
+if __name__ == '__main__':
+    def safe_eval(expr, ctx):
+        try:
+            return evaluate_boolean_expression(expr, ctx)
+        except Exception as e:
+            return f""Error: {e}""
+    expr1 = ""True and (5 > 3 or 1 == 1)""
+    ctx1 = {""a"": 5, ""b"": 1}
+    print(f""Expression: {expr1}"")
+    print(f""Context: {ctx1}"")
+    print(f""Result: {safe_eval(expr1, ctx1)}\n"")
+    expr2 = ""not (a == 5) or (b > 10)""
+    ctx2 = {""a"": 5, ""b"": 12}
+    print(f""Expression: {expr2}"")
+    print(f""Context: {ctx2}"")
+    print(f""Result: {safe_eval(expr2, ctx2)}\n"")
+    expr3 = ""(10 > 5) and (20 == 20) or (3 < 1)""
+    ctx3 = {}
+    print(f""Expression: {expr3}"")
+    print(f""Context: {ctx3}"")
+    print(f""Result: {safe_eval(expr3, ctx3)}\n"")
+    expr4 = ""True and 5 >""
+    ctx4 = {}
+    print(f""Expression: {expr4}"")
+    print(f""Context: {ctx4}"")
+    print(f""Result: {safe_eval(expr4, ctx4)}\n"")
+    expr5 = ""a == 5""
+    ctx5 = {}
+    print(f""Expression: {expr5}"")
+    print(f""Context: {ctx5}"")
+    print(f""Result: {safe_eval(expr5, ctx5)}\n"")",True,5,6187,99_11_5.py
+99,13,Understand boolean operator precedence,Write a standalone Python program that uses the `operator` module or direct logical operators to compare two sets of boolean conditions. Demonstrate how operator precedence dictates the evaluation order when combining multiple conditions with `and` and `or`.,"import operator
+def evaluate_conditions(cond1, cond2, cond3, cond4):
+    result = cond1 and cond2 or cond3 and cond4
+    return result
+if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    d = False
+    result = evaluate_conditions(a, b, c, d)
+    print(f""a = {a}"")
+    print(f""b = {b}"")
+    print(f""c = {c}"")
+    print(f""d = {d}"")
+    print(f""Result of (a and b) or (c and d): {result}"")",True,0,6188,99_13.py
+99,13,Understand boolean operator precedence,Write a standalone Python program that uses the `operator` module or direct logical operators to compare two sets of boolean conditions. Demonstrate how operator precedence dictates the evaluation order when combining multiple conditions with `and` and `or`.,"import operator
+def evaluate_conditions(cond1, cond2, cond3, cond4):
+    result = cond1 and cond2 or cond3 and cond4
+    return result
+if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    d = False
+    result = evaluate_conditions(a, b, c, d)
+    print(f""a: {a}"")
+    print(f""b: {b}"")
+    print(f""c: {c}"")
+    print(f""d: {d}"")
+    print(f""Result of (a and b) or (c and d): {result}"")",True,1,6189,99_13_1.py
+100,1,Write a simple logic checker,"Implement a robust Python function named 'check_logic' that accepts three boolean inputs (A, B, C) and returns the result of the logical expression (A AND (B OR NOT C)).","def check_logic(A, B, C):
+    return A and (B or not C)
+if __name__ == '__main__':
+    A_val = True
+    B_val = False
+    C_val = True
+    result = check_logic(A_val, B_val, C_val)
+    print(result)",True,0,6190,100_1.py
+100,1,Write a simple logic checker,"Implement a robust Python function named 'check_logic' that accepts three boolean inputs (A, B, C) and returns the result of the logical expression (A AND (B OR NOT C)).","def check_logic(A, B, C):
+    return A and (B or not C)
+if __name__ == '__main__':
+    print(check_logic(True, True, False))
+    print(check_logic(True, False, True))
+    print(check_logic(False, True, False))
+    print(check_logic(False, False, True))",True,1,6191,100_1_1.py
+100,2,Write a simple logic checker,Develop an optimized Python script to check the validity of a simple three-input logic gate (AND gate) and print the result clearly.,"def check_and_gate(a, b, expected):
+    result = a and b
+    is_valid = result == expected
+    return result, is_valid
+if __name__ == '__main__':
+    input_a = 1
+    input_b = 0
+    expected_output = 0
+    actual_output, is_valid = check_and_gate(input_a, input_b, expected_output)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Expected AND result: {expected_output}"")
+    print(f""Actual AND result: {actual_output}"")
+    if is_valid:
+        print(""Gate validity: Valid"")
+    else:
+        print(""Gate validity: Invalid"")",True,0,6192,100_2.py
+99,14,Understand boolean operator precedence,"Generate a comprehensive Python solution that uses the `ast` module to inspect and print the Abstract Syntax Tree (AST) representation of a sample boolean expression, explicitly showing how the AST reflects the correct precedence of operators like `not` before `and` before `or`.",,False,0,6193,99_14.py
+100,0,Write a simple logic checker,"Write a simple Python program that checks if a given number is positive, negative, or zero, using conditional statements.",,False,0,6194,100_0.py
+100,3,Write a simple logic checker,"Create a class named 'LogicChecker' with a method 'evaluate' that takes a list of boolean values and returns True only if all values are True, ensuring the implementation is highly efficient.","class LogicChecker:
+    def evaluate(self, bool_list):
+        for value in bool_list:
+            if not value:
+                return False
+        return True
+if __name__ == '__main__':
+    checker = LogicChecker()
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [True, True]
+    list4 = []
+    list5 = [False]
+    print(f""List 1: {checker.evaluate(list1)}"")
+    print(f""List 2: {checker.evaluate(list2)}"")
+    print(f""List 3: {checker.evaluate(list3)}"")
+    print(f""List 4: {checker.evaluate(list4)}"")
+    print(f""List 5: {checker.evaluate(list5)}"")",True,0,6195,100_3.py
+100,3,Write a simple logic checker,"Create a class named 'LogicChecker' with a method 'evaluate' that takes a list of boolean values and returns True only if all values are True, ensuring the implementation is highly efficient.","class LogicChecker:
+    def evaluate(self, bool_list):
+        return all(bool_list)
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample1 = [True, True, True]
+    sample2 = [True, False, True]
+    sample3 = [False, False]
+    sample4 = []
+    sample5 = [True]
+    print(f""Sample 1: {checker.evaluate(sample1)}"")
+    print(f""Sample 2: {checker.evaluate(sample2)}"")
+    print(f""Sample 3: {checker.evaluate(sample3)}"")
+    print(f""Sample 4: {checker.evaluate(sample4)}"")
+    print(f""Sample 5: {checker.evaluate(sample5)}"")",True,1,6196,100_3_1.py
+100,3,Write a simple logic checker,"Create a class named 'LogicChecker' with a method 'evaluate' that takes a list of boolean values and returns True only if all values are True, ensuring the implementation is highly efficient.","class LogicChecker:
+    def evaluate(self, bool_list):
+        return all(bool_list)
+if __name__ == '__main__':
+    checker = LogicChecker()
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [False, False]
+    list4 = []
+    list5 = [True]
+    print(f""List 1: {list1}, Result: {checker.evaluate(list1)}"")
+    print(f""List 2: {list2}, Result: {checker.evaluate(list2)}"")
+    print(f""List 3: {list3}, Result: {checker.evaluate(list3)}"")
+    print(f""List 4: {list4}, Result: {checker.evaluate(list4)}"")
+    print(f""List 5: {list5}, Result: {checker.evaluate(list5)}"")",True,2,6197,100_3_2.py
+100,3,Write a simple logic checker,"Create a class named 'LogicChecker' with a method 'evaluate' that takes a list of boolean values and returns True only if all values are True, ensuring the implementation is highly efficient.","class LogicChecker:
+    def evaluate(self, bool_list):
+        for value in bool_list:
+            if not value:
+                return False
+        return True
+if __name__ == '__main__':
+    checker = LogicChecker()
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [True, True, False]
+    list4 = []
+    list5 = [True]
+    print(f""List 1: {checker.evaluate(list1)}"")
+    print(f""List 2: {checker.evaluate(list2)}"")
+    print(f""List 3: {checker.evaluate(list3)}"")
+    print(f""List 4: {checker.evaluate(list4)}"")
+    print(f""List 5: {checker.evaluate(list5)}"")",True,3,6198,100_3_3.py
+100,4,Write a simple logic checker,"Write a complete, well-documented Python script that simulates a basic logic checker for an XOR operation between two binary inputs.","def xor_operation(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    input_a = 10
+    input_b = 5
+    result = xor_operation(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""XOR Result: {result}"")",True,0,6199,100_4.py
+100,4,Write a simple logic checker,"Write a complete, well-documented Python script that simulates a basic logic checker for an XOR operation between two binary inputs.","import sys
+def xor_operation(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    input_a = 10
+    input_b = 5
+    result = xor_operation(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""XOR Result: {result}"")",True,1,6200,100_4_1.py
+100,4,Write a simple logic checker,"Write a complete, well-documented Python script that simulates a basic logic checker for an XOR operation between two binary inputs.","def xor_operation(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    binary_a = 10
+    binary_b = 5
+    result = xor_operation(binary_a, binary_b)
+    print(f""Binary A: {binary_a}"")
+    print(f""Binary B: {binary_b}"")
+    print(f""XOR Result: {result}"")",True,2,6201,100_4_2.py
+100,5,Write a simple logic checker,"Implement a function that takes two integers, x and y, and determines if the condition (x > y) is logically true, returning only the boolean result.","def check_condition(x, y):
+    return x > y
+if __name__ == '__main__':
+    print(check_condition(5, 3))
+    print(check_condition(10, 10))
+    print(check_condition(2, 7))
+    print(check_condition(0, -5))",True,0,6202,100_5.py
+100,5,Write a simple logic checker,"Implement a function that takes two integers, x and y, and determines if the condition (x > y) is logically true, returning only the boolean result.","def check_condition(x, y):
+    return x > y
+if __name__ == '__main__':
+    print(check_condition(5, 3))
+    print(check_condition(10, 10))
+    print(check_condition(2, 7))
+    print(check_condition(-1, 0))",True,1,6203,100_5_1.py
+100,5,Write a simple logic checker,"Implement a function that takes two integers, x and y, and determines if the condition (x > y) is logically true, returning only the boolean result.","def check_condition(x, y):
+    return x > y
+if __name__ == '__main__':
+    print(check_condition(5, 3))
+    print(check_condition(10, 10))
+    print(check_condition(2, 8))
+    print(check_condition(-1, -5))",True,2,6204,100_5_2.py
+100,5,Write a simple logic checker,"Implement a function that takes two integers, x and y, and determines if the condition (x > y) is logically true, returning only the boolean result.","def check_condition(x, y):
+    return x > y
+if __name__ == '__main__':
+    print(check_condition(5, 3))
+    print(check_condition(1, 1))
+    print(check_condition(10, 20))
+    print(check_condition(-1, -5))",True,3,6205,100_5_3.py
+100,5,Write a simple logic checker,"Implement a function that takes two integers, x and y, and determines if the condition (x > y) is logically true, returning only the boolean result.","def check_condition(x, y):
+    return x > y
+if __name__ == '__main__':
+    print(check_condition(5, 3))
+    print(check_condition(10, 10))
+    print(check_condition(2, 7))
+    print(check_condition(8, 4))",True,4,6206,100_5_4.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input1, input2, output):
+    expected_output = input1 & input2
+    return expected_output == output
+if __name__ == '__main__':
+    print(check_consistency(1, 0, 0))
+    print(check_consistency(1, 1, 1))
+    print(check_consistency(0, 1, 0))
+    print(check_consistency(0, 0, 0))
+    print(check_consistency(1, 0, 1))
+    print(check_consistency(0, 1, 1))",True,0,6207,100_6.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input1, input2, expected_output):
+    actual_output = input1 and input2
+    return actual_output == expected_output
+if __name__ == '__main__':
+    test_cases = [
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+        (1, 1, 1),
+        (0, 0, 1),
+        (1, 0, 0),
+        (0, 1, 0),
+        (1, 1, 1)
+    ]
+    all_consistent = True
+    for i1, i2, expected in test_cases:
+        result = check_consistency(i1, i2, expected)
+        if not result:
+            all_consistent = False
+            print(f""Inconsistent: Inputs ({i1}, {i2}), Expected ({expected}), Actual ({i1} and {i2})"")
+    if all_consistent:
+        print(""All test cases passed consistency check."")
+    else:
+        print(""Some test cases failed consistency check."")",True,1,6208,100_6_1.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input_a, input_b, output):
+    expected_output = input_a & input_b
+    return output == expected_output
+if __name__ == '__main__':
+    test_cases = [
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+        (1, 1, 1),
+        (0, 0, 1),
+        (1, 0, 1),
+        (0, 1, 1),
+        (1, 1, 0)
+    ]
+    all_consistent = True
+    for a, b, out in test_cases:
+        if not check_consistency(a, b, out):
+            print(f""Inconsistent: a={a}, b={b}, output={out}"")
+            all_consistent = False
+    if all_consistent:
+        print(""All test cases are consistent."")
+    else:
+        print(""Some test cases are inconsistent."")",True,2,6209,100_6_2.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(a, b, output):
+    expected = a & b
+    return output == expected
+if __name__ == '__main__':
+    print(check_consistency(1, 0, 0))
+    print(check_consistency(1, 1, 1))
+    print(check_consistency(1, 0, 1))
+    print(check_consistency(0, 0, 0))
+    print(check_consistency(1, 1, 0))",True,3,6210,100_6_3.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input1, input2, output):
+    expected_output = input1 & input2
+    return expected_output == output
+if __name__ == '__main__':
+    test_cases = [
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+        (1, 1, 1),
+        (0, 0, 1),
+        (1, 0, 1),
+        (0, 1, 1),
+        (1, 1, 0)
+    ]
+    for i1, i2, o in test_cases:
+        result = check_consistency(i1, i2, o)
+        print(f""Inputs: {i1}, {i2}, Output: {o}, Consistent: {result}"")",True,4,6211,100_6_4.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input_a, input_b, output):
+    expected_output = input_a and input_b
+    return expected_output == output
+if __name__ == '__main__':
+    print(check_consistency(1, 0, 0))
+    print(check_consistency(1, 1, 1))
+    print(check_consistency(0, 1, 0))
+    print(check_consistency(0, 0, 0))
+    print(check_consistency(1, 1, 0))",True,5,6212,100_6_5.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input_a, input_b, output):
+    expected_output = input_a & input_b
+    return expected_output == output
+if __name__ == '__main__':
+    test_cases = [
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+        (1, 1, 1),
+        (0, 0, 1),
+        (1, 0, 1),
+        (0, 1, 1),
+        (1, 1, 0)
+    ]
+    all_consistent = True
+    for a, b, out in test_cases:
+        if not check_consistency(a, b, out):
+            all_consistent = False
+            print(f""Inconsistent: a={a}, b={b}, output={out}"")
+            break
+    if all_consistent:
+        print(""All test cases passed consistency check."")
+    else:
+        print(""Some test cases failed consistency check."")",True,6,6213,100_6_6.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input_a, input_b, output):
+    expected_output = input_a and input_b
+    return expected_output == output
+if __name__ == '__main__':
+    print(check_consistency(1, 0, 0))
+    print(check_consistency(1, 1, 1))
+    print(check_consistency(0, 1, 0))
+    print(check_consistency(0, 0, 0))
+    print(check_consistency(1, 0, 1))
+    print(check_consistency(0, 1, 1))",True,7,6214,100_6_7.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input1, input2, output):
+    expected_output = input1 & input2
+    return output == expected_output
+if __name__ == '__main__':
+    test_cases = [
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+        (1, 1, 1),
+        (0, 0, 1),
+        (1, 0, 1),
+        (0, 1, 1),
+        (1, 1, 0)
+    ]
+    for i1, i2, out in test_cases:
+        result = check_consistency(i1, i2, out)
+        print(f""Inputs: {i1}, {i2}, Output: {out}, Consistent: {result}"")",True,8,6215,100_6_8.py
+100,6,Write a simple logic checker,"Write an efficient Python function to check the consistency of a simple two-input logic system, where the output must be the logical AND of the inputs.","def check_consistency(input_a, input_b, output):
+    expected_output = input_a and input_b
+    return expected_output == output
+if __name__ == '__main__':
+    test_cases = [
+        (0, 0, 0),
+        (0, 1, 0),
+        (1, 0, 0),
+        (1, 1, 1),
+        (0, 0, 1),
+        (1, 0, 1),
+        (0, 1, 1),
+        (1, 1, 0)
+    ]
+    for a, b, out in test_cases:
+        result = check_consistency(a, b, out)
+        print(f""Inputs: a={a}, b={b}, Output: {out}, Consistent: {result}"")",True,9,6216,100_6_9.py
+100,7,Write a simple logic checker,"Design and write a simple logic checker that takes a string of '1's and '0's as input and verifies if the sequence represents a valid AND operation (i.e., all inputs must be 1 for the result to be 1).","def check_and_operation(binary_string):
+    if not binary_string:
+        return False
+    for char in binary_string:
+        if char != '1':
+            return False
+    return True
+if __name__ == '__main__':
+    test_cases = [
+        (""111"", True),
+        (""101"", False),
+        (""011"", False),
+        (""110"", False),
+        ("""", False),
+        (""1"", True),
+        (""0"", False)
+    ]
+    for input_str, expected in test_cases:
+        result = check_and_operation(input_str)
+        assert result == expected, f""Input: {input_str}, Expected: {expected}, Got: {result}""
+        print(f""Input: {input_str}, Result: {result}"")",True,0,6217,100_7.py
+100,7,Write a simple logic checker,"Design and write a simple logic checker that takes a string of '1's and '0's as input and verifies if the sequence represents a valid AND operation (i.e., all inputs must be 1 for the result to be 1).","def check_and_operation(binary_string):
+    if not binary_string:
+        return False
+    for char in binary_string:
+        if char == '0':
+            return False
+    return True
+if __name__ == '__main__':
+    test_cases = [
+        (""111"", True),
+        (""101"", False),
+        (""011"", False),
+        (""110"", False),
+        ("""", False),
+        (""1"", True),
+        (""0"", False)
+    ]
+    for input_str, expected in test_cases:
+        result = check_and_operation(input_str)
+        assert result == expected, f""Input: {input_str}, Expected: {expected}, Got: {result}""
+        print(f""Input: {input_str}, Result: {result} (Correct)"")",True,1,6218,100_7_1.py
+100,7,Write a simple logic checker,"Design and write a simple logic checker that takes a string of '1's and '0's as input and verifies if the sequence represents a valid AND operation (i.e., all inputs must be 1 for the result to be 1).","def check_and_operation(binary_string):
+    if not binary_string:
+        return False
+    for char in binary_string:
+        if char != '1':
+            return False
+    return True
+if __name__ == '__main__':
+    test_cases = [
+        (""111"", True),
+        (""101"", False),
+        (""011"", False),
+        (""110"", False),
+        ("""", False),
+        (""1"", True),
+        (""1111"", True)
+    ]
+    for input_str, expected in test_cases:
+        result = check_and_operation(input_str)
+        assert result == expected, f""Input: {input_str}, Expected: {expected}, Got: {result}""
+        print(f""Input: {input_str}, Result: {result}"")",True,2,6219,100_7_2.py
+100,7,Write a simple logic checker,"Design and write a simple logic checker that takes a string of '1's and '0's as input and verifies if the sequence represents a valid AND operation (i.e., all inputs must be 1 for the result to be 1).","def check_and_operation(binary_string):
+    if not binary_string:
+        return False
+    for char in binary_string:
+        if char != '1':
+            return False
+    return True
+if __name__ == '__main__':
+    test_cases = [
+        (""111"", True),
+        (""101"", False),
+        (""011"", False),
+        (""110"", False),
+        ("""", False),
+        (""1"", True),
+        (""0"", False)
+    ]
+    for input_str, expected in test_cases:
+        result = check_and_operation(input_str)
+        print(f""Input: {input_str}, Expected: {expected}, Got: {result}, Match: {result == expected}"")",True,3,6220,100_7_3.py
+100,8,Write a simple logic checker,"Develop a flexible Python function that checks a complex logical condition involving multiple variables and returns the final boolean outcome, adhering to best practices for readability.","def check_complex_condition(a, b, c, d, x, y):
+    result = (a > b) or (c == d) and (x * 2 > y)
+    return result
+if __name__ == '__main__':
+    val_a = 10
+    val_b = 5
+    val_c = 7
+    val_d = 7
+    val_x = 3
+    val_y = 10
+    final_outcome = check_complex_condition(val_a, val_b, val_c, val_d, val_x, val_y)
+    print(final_outcome)",True,0,6221,100_8.py
+100,8,Write a simple logic checker,"Develop a flexible Python function that checks a complex logical condition involving multiple variables and returns the final boolean outcome, adhering to best practices for readability.","def check_complex_condition(a, b, c, d, x):
+    result = (a > b) or (c == d) and (x > 10)
+    return result
+if __name__ == '__main__':
+    val_a = 5
+    val_b = 3
+    val_c = 7
+    val_d = 7
+    val_x = 12
+    final_outcome = check_complex_condition(val_a, val_b, val_c, val_d, val_x)
+    print(final_outcome)",True,1,6222,100_8_1.py
+100,8,Write a simple logic checker,"Develop a flexible Python function that checks a complex logical condition involving multiple variables and returns the final boolean outcome, adhering to best practices for readability.","def check_complex_condition(a, b, c, d, x, y):
+    result = (a > b) or (c == d) and (x + y > 10)
+    return result
+if __name__ == '__main__':
+    val_a = 10
+    val_b = 5
+    val_c = 8
+    val_d = 8
+    val_x = 3
+    val_y = 4
+    final_outcome = check_complex_condition(val_a, val_b, val_c, val_d, val_x, val_y)
+    print(final_outcome)",True,2,6223,100_8_2.py
+100,8,Write a simple logic checker,"Develop a flexible Python function that checks a complex logical condition involving multiple variables and returns the final boolean outcome, adhering to best practices for readability.","def check_complex_condition(a, b, c, d, x, y):
+    result = (a > b) or (c == d) and (x + y > 10)
+    return result
+if __name__ == '__main__':
+    val_a = 10
+    val_b = 5
+    val_c = 7
+    val_d = 7
+    val_x = 3
+    val_y = 4
+    final_outcome = check_complex_condition(val_a, val_b, val_c, val_d, val_x, val_y)
+    print(final_outcome)",True,3,6224,100_8_3.py
+100,10,Write a simple logic checker,"Write a complete, robust Python script that defines a function to check if a given input is a valid boolean expression, handling potential syntax errors gracefully.","import ast
+def is_valid_boolean_expression(expression):
+    try:
+        ast.parse(expression, mode='eval')
+        return True
+    except SyntaxError:
+        return False
+    except TypeError:
+        return False
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expressions_to_test = [
+        ""True"",
+        ""False"",
+        ""True and False"",
+        ""not True"",
+        ""5 > 3"",
+        ""True or False"",
+        ""True == True and False"",
+        ""True && False""
+    ]
+    for expr in expressions_to_test:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")",True,0,6225,100_10.py
+100,10,Write a simple logic checker,"Write a complete, robust Python script that defines a function to check if a given input is a valid boolean expression, handling potential syntax errors gracefully.","import ast
+def is_valid_boolean_expression(expression):
+    try:
+        ast.parse(expression, mode='eval')
+        return True
+    except SyntaxError:
+        return False
+    except TypeError:
+        return False
+if __name__ == '__main__':
+    expressions_to_test = [
+        ""True"",
+        ""False"",
+        ""True and False"",
+        ""not True"",
+        ""True or False"",
+        ""True == True"",
+        ""True == False"",
+        ""True == 'True'"",
+        ""True and"",
+        ""True or"",
+        ""True =="",
+        ""True and True"",
+        ""True or False and True""
+    ]
+    for expr in expressions_to_test:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")",True,1,6226,100_10_1.py
+100,10,Write a simple logic checker,"Write a complete, robust Python script that defines a function to check if a given input is a valid boolean expression, handling potential syntax errors gracefully.","import ast
+def is_valid_boolean_expression(expression):
+    try:
+        ast.parse(expression, mode='eval')
+        return True
+    except SyntaxError:
+        return False
+    except TypeError:
+        return False
+    except Exception:
+        return False
+if __name__ == '__main__':
+    test_expressions = [
+        ""True"",
+        ""False"",
+        ""True and False"",
+        ""not True"",
+        ""5 > 3"",
+        ""True or False"",
+        ""True == True"",
+        ""True and"",
+        ""True or"",
+        ""True =="",
+        ""True and True""
+    ]
+    for expr in test_expressions:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")",True,2,6227,100_10_2.py
+100,10,Write a simple logic checker,"Write a complete, robust Python script that defines a function to check if a given input is a valid boolean expression, handling potential syntax errors gracefully.","import re
+def is_valid_boolean_expression(expression):
+    if not isinstance(expression, str):
+        return False
+    if not expression:
+        return False
+    tokens = expression.split()
+    if not tokens:
+        return False
+    valid_tokens = set()
+    for token in tokens:
+        if token.isalnum():
+            valid_tokens.add(token)
+        elif token in ('and', 'or', 'not'):
+            valid_tokens.add(token)
+        elif token in ('(', ')'):
+            valid_tokens.add(token)
+        else:
+            return False
+    if not valid_tokens:
+        return False
+    balance = 0
+    for token in tokens:
+        if token == '(':
+            balance += 1
+        elif token == ')':
+            balance -= 1
+        if balance < 0:
+            return False
+        if balance == 0:
+            if token not in ('and', 'or', 'not', '(', ')'):
+                pass
+    if balance != 0:
+        return False
+    if len(tokens) % 2 == 0:
+        pass
+    return True
+if __name__ == '__main__':
+    test_expressions = [
+        ""True and False"",
+        ""(True or False) and not False"",
+        ""True and"",
+        ""True and False and"",
+        ""True (False or True)"",
+        ""True and (False)"",
+        ""True and False and True"",
+        ""True and (False"",
+        ""True and False and True and"",
+        ""True and False and True and False""
+    ]
+    for expr in test_expressions:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")
+    print(""\n--- Additional Tests ---"")
+    print(f""Expression: 'True' -> Valid: {is_valid_boolean_expression('True')}"")
+    print(f""Expression: 'and' -> Valid: {is_valid_boolean_expression('and')}"")
+    print(f""Expression: 'True and' -> Valid: {is_valid_boolean_expression('True and')}"")
+    print(f""Expression: '((True or False))' -> Valid: {is_valid_boolean_expression('((True or False))')}"")
+    print(f""Expression: 'True and (False' -> Valid: {is_valid_boolean_expression('True and (False')}"")",True,3,6228,100_10_3.py
+100,10,Write a simple logic checker,"Write a complete, robust Python script that defines a function to check if a given input is a valid boolean expression, handling potential syntax errors gracefully.","import ast
+def is_valid_boolean_expression(expression):
+    try:
+        ast.parse(expression, mode='eval')
+    except SyntaxError:
+        return False
+    except ValueError:
+        return False
+    except Exception:
+        return False
+    return True
+if __name__ == '__main__':
+    test_expressions = [
+        ""True"",
+        ""False"",
+        ""True and False"",
+        ""not True"",
+        ""True or False"",
+        ""True == True"",
+        ""5 > 3"",
+        ""True and"",
+        ""True || False"",
+        ""True == False and"",
+        ""True and True""
+    ]
+    for expr in test_expressions:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")",True,4,6229,100_10_4.py
+100,10,Write a simple logic checker,"Write a complete, robust Python script that defines a function to check if a given input is a valid boolean expression, handling potential syntax errors gracefully.","import re
+def is_valid_boolean_expression(expression):
+    if not isinstance(expression, str):
+        return False
+    if not expression:
+        return False
+    balance = 0
+    for char in expression:
+        if char == '(':
+            balance += 1
+        elif char == ')':
+            balance -= 1
+        if balance < 0:
+            return False
+    if balance != 0:
+        return False
+    valid_chars = ""()+-*/&|""
+    if not all(char in valid_chars or char.isspace() for char in expression):
+        return False
+    return True
+if __name__ == '__main__':
+    test_expressions = [
+        ""true"",
+        ""false"",
+        ""(true && false)"",
+        ""!(true)"",
+        ""true || false"",
+        ""true && (false || true)"",
+        ""true &&"",
+        ""false || )"",
+        ""((true)"",
+        ""true $ false""
+    ]
+    for expr in test_expressions:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")
+    print(""-"" * 20)
+    invalid_tests = [
+        """",
+        ""true &&"",
+        ""false || )"",
+        ""((true"",
+        ""true $ false""
+    ]
+    for expr in invalid_tests:
+        result = is_valid_boolean_expression(expr)
+        print(f""Expression: '{expr}' -> Valid: {result}"")",True,5,6230,100_10_5.py
+100,12,Write a simple logic checker,"Develop an efficient Python function that takes a list of boolean values and checks if all elements satisfy a specific logical condition (e.g., all are True or all are False).","def check_all_same(bool_list):
+    if not bool_list:
+        return True
+    first_value = bool_list[0]
+    return all(x == first_value for x in bool_list)
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [False, False, False]
+    list3 = [True, False, True]
+    list4 = [False]
+    list5 = []
+    print(f""List 1: {list1}, Result: {check_all_same(list1)}"")
+    print(f""List 2: {list2}, Result: {check_all_same(list2)}"")
+    print(f""List 3: {list3}, Result: {check_all_same(list3)}"")
+    print(f""List 4: {list4}, Result: {check_all_same(list4)}"")
+    print(f""List 5: {list5}, Result: {check_all_same(list5)}"")",True,0,6231,100_12.py
+100,12,Write a simple logic checker,"Develop an efficient Python function that takes a list of boolean values and checks if all elements satisfy a specific logical condition (e.g., all are True or all are False).","def check_all_same(bool_list):
+    if not bool_list:
+        return True
+    first_value = bool_list[0]
+    return all(x == first_value for x in bool_list)
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [False, False, False]
+    list3 = [True, False, True]
+    list4 = [True, True, False]
+    list5 = []
+    list6 = [True]
+    print(f""List 1: {list1}, Result: {check_all_same(list1)}"")
+    print(f""List 2: {list2}, Result: {check_all_same(list2)}"")
+    print(f""List 3: {list3}, Result: {check_all_same(list3)}"")
+    print(f""List 4: {list4}, Result: {check_all_same(list4)}"")
+    print(f""List 5: {list5}, Result: {check_all_same(list5)}"")
+    print(f""List 6: {list6}, Result: {check_all_same(list6)}"")",True,1,6232,100_12_1.py
+100,12,Write a simple logic checker,"Develop an efficient Python function that takes a list of boolean values and checks if all elements satisfy a specific logical condition (e.g., all are True or all are False).","def check_all_same(bool_list):
+    if not bool_list:
+        return True
+    first_value = bool_list[0]
+    return all(x == first_value for x in bool_list)
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [False, False, False]
+    list3 = [True, False, True]
+    list4 = [False]
+    list5 = []
+    list6 = [True, True, False]
+    print(f""List 1: {list1}, Result: {check_all_same(list1)}"")
+    print(f""List 2: {list2}, Result: {check_all_same(list2)}"")
+    print(f""List 3: {list3}, Result: {check_all_same(list3)}"")
+    print(f""List 4: {list4}, Result: {check_all_same(list4)}"")
+    print(f""List 5: {list5}, Result: {check_all_same(list5)}"")
+    print(f""List 6: {list6}, Result: {check_all_same(list6)}"")",True,2,6233,100_12_2.py
+100,12,Write a simple logic checker,"Develop an efficient Python function that takes a list of boolean values and checks if all elements satisfy a specific logical condition (e.g., all are True or all are False).","def check_all_same(bool_list):
+    if not bool_list:
+        return True
+    first_value = bool_list[0]
+    return all(x == first_value for x in bool_list)
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [False, False, False]
+    list3 = [True, False, True]
+    list4 = [False, False, True]
+    list5 = []
+    list6 = [True]
+    print(f""List 1: {list1}, Result: {check_all_same(list1)}"")
+    print(f""List 2: {list2}, Result: {check_all_same(list2)}"")
+    print(f""List 3: {list3}, Result: {check_all_same(list3)}"")
+    print(f""List 4: {list4}, Result: {check_all_same(list4)}"")
+    print(f""List 5: {list5}, Result: {check_all_same(list5)}"")
+    print(f""List 6: {list6}, Result: {check_all_same(list6)}"")",True,3,6234,100_12_3.py
+100,13,Write a simple logic checker,"Write a simple, well-documented Python program that simulates a basic logic checker for AND, OR, and NOT operations on two input boolean variables.","def logic_checker(a, b):
+    and_result = a and b
+    or_result = a or b
+    not_a_result = not a
+    not_b_result = not b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    var1 = True
+    var2 = False
+    and_res, or_res, not_var1, not_var2 = logic_checker(var1, var2)
+    print(f""Input A: {var1}, Input B: {var2}"")
+    print(f""AND result: {and_res}"")
+    print(f""OR result: {or_res}"")
+    print(f""NOT A result: {not_var1}"")
+    print(f""NOT B result: {not_var2}"")",True,0,6235,100_13.py
+100,13,Write a simple logic checker,"Write a simple, well-documented Python program that simulates a basic logic checker for AND, OR, and NOT operations on two input boolean variables.","def logic_checker(a, b):
+    and_result = a and b
+    or_result = a or b
+    not_a_result = not a
+    not_b_result = not b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    input_a = True
+    input_b = False
+    and_res, or_res, not_a_res, not_b_res = logic_checker(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""AND result: {and_res}"")
+    print(f""OR result: {or_res}"")
+    print(f""NOT A result: {not_a_res}"")
+    print(f""NOT B result: {not_b_res}"")",True,1,6236,100_13_1.py
+100,13,Write a simple logic checker,"Write a simple, well-documented Python program that simulates a basic logic checker for AND, OR, and NOT operations on two input boolean variables.","def logic_checker(a, b):
+    and_result = a and b
+    or_result = a or b
+    not_a_result = not a
+    not_b_result = not b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    var1 = True
+    var2 = False
+    and_res, or_res, not_var1, not_var2 = logic_checker(var1, var2)
+    print(f""Variable 1: {var1}"")
+    print(f""Variable 2: {var2}"")
+    print(f""AND result: {and_res}"")
+    print(f""OR result: {or_res}"")
+    print(f""NOT Variable 1 result: {not_var1}"")
+    print(f""NOT Variable 2 result: {not_var2}"")",True,2,6237,100_13_2.py
+100,9,Write a simple logic checker,"Write a complete, runnable Python program that allows a user to input two numbers and checks if their sum is greater than the difference between them, printing the logical result.","if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    sum_result = num1 + num2
+    difference_result = abs(num1 - num2)
+    if sum_result > difference_result:
+        print(""The sum is greater than the absolute difference."")
+    else:
+        print(""The sum is not greater than the absolute difference."")",True,0,6238,100_9.py
+100,9,Write a simple logic checker,"Write a complete, runnable Python program that allows a user to input two numbers and checks if their sum is greater than the difference between them, printing the logical result.","if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    sum_val = num1 + num2
+    diff_val = num1 - num2
+    if sum_val > diff_val:
+        print(""The sum is greater than the difference."")
+    else:
+        print(""The sum is not greater than the difference."")",True,1,6239,100_9_1.py
+100,9,Write a simple logic checker,"Write a complete, runnable Python program that allows a user to input two numbers and checks if their sum is greater than the difference between them, printing the logical result.","if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    sum_result = num1 + num2
+    difference_result = abs(num1 - num2)
+    if sum_result > difference_result:
+        print(""The sum is greater than the difference."")
+    else:
+        print(""The sum is not greater than the difference."")",True,2,6240,100_9_2.py
+101,0,Determine the day of the week,"Write a complete, robust Python script that takes a date string (in 'YYYY-MM-DD' format) as input and accurately determines the corresponding day of the week (Monday=0, Sunday=6).","import datetime
+def get_day_of_week(date_string):
+    date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    day_of_week = date_obj.weekday()
+    return day_of_week
+if __name__ == '__main__':
+    date_input = '2023-10-27'
+    result = get_day_of_week(date_input)
+    print(result)",True,0,6241,101_0.py
+101,0,Determine the day of the week,"Write a complete, robust Python script that takes a date string (in 'YYYY-MM-DD' format) as input and accurately determines the corresponding day of the week (Monday=0, Sunday=6).","import datetime
+def get_day_of_week(date_string):
+    date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    day_of_week = date_obj.weekday()
+    return day_of_week
+if __name__ == '__main__':
+    date_input = '2023-10-26'
+    result = get_day_of_week(date_input)
+    print(result)",True,1,6242,101_0_1.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'\(|\)|\w+|\+|\-|\*|\/|=', expression)
+        if not tokens:
+            raise ValueError(""Empty expression"")
+        values = []
+        operators = []
+        for token in tokens:
+            if token.replace('-', '').replace('*', '').replace('/', '') in ('+', '-', '*', '/'):
+                operators.append(token)
+            elif token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                values.append(float(token))
+            elif token == '(':
+                values.append(0)                            
+            elif token == ')':
+                pass
+            else:
+                values.append(variables.get(token, 0))
+        processed_expression = expression
+        for var, val in variables.items():
+            processed_expression = processed_expression.replace(var, str(val))
+        try:
+            result = eval(processed_expression)
+            return bool(result)
+        except Exception:
+            return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    expression1 = ""5 + 3 * 2""
+    variables1 = {""x"": 10}
+    result1 = checker.evaluate(expression1, variables1)
+    print(f""Expression: '{expression1}', Variables: {variables1}"")
+    print(f""Result: {result1}"")
+    expression2 = ""(x > 5) and (10 / 2 == 5)""
+    variables2 = {""x"": 7}
+    result2 = checker.evaluate(expression2, variables2)
+    print(f""Expression: '{expression2}', Variables: {variables2}"")
+    print(f""Result: {result2}"")
+    expression3 = ""10 > x or x == 10""
+    variables3 = {""x"": 10}
+    result3 = checker.evaluate(expression3, variables3)
+    print(f""Expression: '{expression3}', Variables: {variables3}"")
+    print(f""Result: {result3}"")
+    expression4 = ""x * 2 - 1""
+    variables4 = {""x"": 5}
+    result4 = checker.evaluate(expression4, variables4)
+    print(f""Expression: '{expression4}', Variables: {variables4}"")
+    print(f""Result: {result4}"")
+    expression5 = ""5 / (x - 1)""
+    variables5 = {""x"": 5}
+    result5 = checker.evaluate(expression5, variables5)
+    print(f""Expression: '{expression5}', Variables: {variables5}"")
+    print(f""Result: {result5}"")",True,0,6243,100_11.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'\(|\)|\w+|\+|\-|\*|\/|=', expression)
+        if not tokens:
+            raise ValueError(""Empty expression"")
+        result_stack = []
+        operator_stack = []
+        def apply_op():
+            op = operator_stack.pop()
+            right = result_stack.pop()
+            left = result_stack.pop()
+            if op == '+':
+                result_stack.append(left + right)
+            elif op == '-':
+                result_stack.append(left - right)
+            elif op == '*':
+                result_stack.append(left * right)
+            elif op == '/':
+                if right == 0:
+                    raise ZeroDivisionError(""Division by zero"")
+                result_stack.append(left / right)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        for token in tokens:
+            if token.replace('.', '', 1).isdigit() or (token.startswith('-') and token[1:].replace('.', '', 1).isdigit()):
+                result_stack.append(float(token))
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack[-1] != '(':
+                    apply_op()
+                operator_stack.pop()
+            elif token in ('+', '-', '*', '/'):
+                operator_stack.append(token)
+            elif re.match(r'^\w+$', token):
+                result_stack.append(variables.get(token, 0))
+            else:
+                raise ValueError(f""Invalid token: {token}"")
+        while operator_stack:
+            apply_op()
+        if len(result_stack) == 1:
+            return True
+        raise ValueError(""Malformed expression"")
+if __name__ == '__main__':
+    checker = LogicChecker()
+    variables1 = {
+        ""a"": 10,
+        ""b"": 5
+    }
+    expression1 = ""(a + b) * 2""
+    try:
+        result1 = checker.evaluate(expression1, variables1)
+        print(f""Expression: {expression1}, Variables: {variables1}"")
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression1}': {e}"")
+    print(""-"" * 20)
+    variables2 = {
+        ""x"": 3,
+        ""y"": 4
+    }
+    expression2 = ""x * (y - 1) / 2""
+    try:
+        result2 = checker.evaluate(expression2, variables2)
+        print(f""Expression: {expression2}, Variables: {variables2}"")
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression2}': {e}"")
+    print(""-"" * 20)
+    variables3 = {""p"": 1}
+    expression3 = ""p""
+    try:
+        result3 = checker.evaluate(expression3, variables3)
+        print(f""Expression: {expression3}, Variables: {variables3}"")
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression3}': {e}"")
+    print(""-"" * 20)
+    variables4 = {""A"": 1, ""B"": 1}
+    expression4 = ""(A > 0) and (B == 1)""                                                       
+    try:
+        result4 = checker.evaluate(""A + B"", variables4)
+        print(f""Expression: 'A + B', Variables: {variables4}"")
+        print(f""Result: {result4}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression4}': {e}"")",True,1,6244,100_11_1.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'([a-zA-Z0-9_]+|\(|\)|\+|\-|\*|\/|==|!=|>=|<=)', expression)
+        if not tokens:
+            raise ValueError(""Empty expression provided"")
+        processed_expression = expression
+        for var_name, value in variables.items():
+            processed_expression = re.sub(r'\b' + re.escape(var_name) + r'\b', str(value), processed_expression)
+        processed_expression = processed_expression.replace('&&', 'and').replace('||', 'or').replace('==', '==').replace('!=', '!=')
+        try:
+            result = eval(processed_expression)
+            return bool(result)
+        except Exception as e:
+            raise ValueError(f""Error evaluating expression '{expression}': {e}"")
+if __name__ == '__main__':
+    checker = LogicChecker()
+    variables1 = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": 10
+    }
+    expression1 = ""A and (B or not C)""
+    result1 = checker.evaluate(expression1, variables1)
+    print(f""Expression: '{expression1}' with variables {variables1}"")
+    print(f""Result: {result1}"")
+    variables2 = {
+        ""X"": 5,
+        ""Y"": 10,
+        ""Z"": 3
+    }
+    expression2 = ""(X > 3) and (Y <= 15)""
+    result2 = checker.evaluate(expression2, variables2)
+    print(f""\nExpression: '{expression2}' with variables {variables2}"")
+    print(f""Result: {result2}"")
+    variables3 = {
+        ""P"": True,
+        ""Q"": False
+    }
+    expression3 = ""P != Q""
+    result3 = checker.evaluate(expression3, variables3)
+    print(f""\nExpression: '{expression3}' with variables {variables3}"")
+    print(f""Result: {result3}"")
+    try:
+        variables4 = {""A"": 1}
+        expression4 = ""A + B""
+        checker.evaluate(expression4, variables4)
+    except ValueError as e:
+        print(f""\nError caught for invalid operation: {e}"")",True,2,6245,100_11_2.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'\(|\)|\w+|\+|\-|\*|/|=', expression)
+        if not tokens:
+            raise ValueError(""Empty expression"")
+        result_stack = []
+        operator_stack = []
+        def apply_op():
+            op = operator_stack.pop()
+            right = result_stack.pop()
+            left = result_stack.pop()
+            if op == '+':
+                result_stack.append(left + right)
+            elif op == '-':
+                result_stack.append(left - right)
+            elif op == '*':
+                result_stack.append(left * right)
+            elif op == '/':
+                if right == 0:
+                    raise ZeroDivisionError(""Division by zero"")
+                result_stack.append(left / right)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        for token in tokens:
+            if token.replace('.', '', 1).isdigit() or (token.startswith('-') and token[1:].replace('.', '', 1).isdigit()):
+                result_stack.append(float(token))
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack[-1] != '(':
+                    apply_op()
+                operator_stack.pop()
+                operator_stack.pop()
+            elif token in ('+', '-', '*', '/'):
+                operator_stack.append(token)
+            elif re.match(r'^\w+$', token):
+                result_stack.append(float(token))
+            else:
+                raise ValueError(f""Invalid token: {token}"")
+        while operator_stack:
+            apply_op()
+        if len(result_stack) == 1:
+            return True
+        else:
+            raise ValueError(""Malformed expression"")
+if __name__ == '__main__':
+    checker = LogicChecker()
+    variables1 = {
+        'a': 10,
+        'b': 5
+    }
+    expression1 = ""(a + b) * 2""
+    try:
+        result1 = checker.evaluate(expression1, variables1)
+        print(f""Expression: {expression1}, Variables: {variables1}"")
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression1}': {e}"")
+    print(""-"" * 20)
+    variables2 = {
+        'x': 3,
+        'y': 4
+    }
+    expression2 = ""x * (y - 1) / 2""
+    try:
+        result2 = checker.evaluate(expression2, variables2)
+        print(f""Expression: {expression2}, Variables: {variables2}"")
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression2}': {e}"")
+    print(""-"" * 20)
+    variables3 = {
+        'a': 10,
+        'b': 0
+    }
+    expression3 = ""(a + b) / (b - 5)""
+    try:
+        result3 = checker.evaluate(expression3, variables3)
+        print(f""Expression: {expression3}, Variables: {variables3}"")
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression3}': {e}"")",True,3,6246,100_11_3.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate_expression(self, expression: str, variables: dict) -> bool:
+        import re
+        def evaluate_token(token, vars):
+            if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+                return float(token)
+            return vars.get(token, 0)
+        tokens = re.findall(r'[a-zA-Z_()]|[-+*/=]|[\d.]+', expression)
+        if not tokens:
+            raise ValueError(""Empty expression"")
+        stack = []
+        operators = []
+        for token in tokens:
+            if token.replace('.', '', 1).isdigit():
+                stack.append(float(token))
+            elif token in ['(', '+', '-', '*', '/', '=']:
+                if token in ['+', '-', '*', '/']:
+                    operators.append(token)
+                elif token == '(':
+                    stack.append(token)
+                elif token == '=':
+                    if len(stack) < 2:
+                        raise ValueError(""Syntax error: '=' requires two operands"")
+                    op = operators.pop()
+                    right = stack.pop()
+                    left = stack.pop()
+                    if op == '+':
+                        result = left + right
+                    elif op == '-':
+                        result = left - right
+                    elif op == '*':
+                        result = left * right
+                    elif op == '/':
+                        if right == 0:
+                            raise ZeroDivisionError(""Division by zero"")
+                        result = left / right
+                    stack.append(result)
+                else:
+                    pass
+            else:
+                if token in variables:
+                    stack.append(variables[token])
+                else:
+                    raise NameError(f""Undefined variable: {token}"")
+        if not stack:
+            raise ValueError(""Invalid expression structure"")
+        if len(stack) != 1:
+            raise ValueError(""Invalid expression structure or unmatched operators"")
+        result = stack[0]
+        if isinstance(result, (int, float)):
+            return bool(result)
+        return bool(result)
+if __name__ == '__main__':
+    checker = LogicChecker()
+    sample_variables = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": 10,
+        ""X"": 5.5
+    }
+    expression1 = ""A + B * 2""
+    try:
+        result1 = checker.evaluate_expression(expression1, sample_variables)
+        print(f""Expression: '{expression1}', Result: {result1}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression1}': {e}"")
+    expression2 = ""(C > 5) AND (A == True)""                                                                                               
+    expression3 = ""A * (C / 2)""
+    try:
+        result3 = checker.evaluate_expression(expression3, sample_variables)
+        print(f""Expression: '{expression3}', Result: {result3}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression3}': {e}"")
+    expression4 = ""X > 0""                                                                                                           
+    try:
+        expression5 = ""A > 0""                                         
+        print(f""Expression: '{expression5}', Result: {checker.evaluate_expression(expression5, sample_variables)}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression5}': {e}"")
+    expression6 = ""A * 2""
+    try:
+        result6 = checker.evaluate_expression(expression6, sample_variables)
+        print(f""Expression: '{expression6}', Result: {result6}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression6}': {e}"")
+    expression7 = ""A + B""
+    try:
+        result7 = checker.evaluate_expression(expression7, sample_variables)
+        print(f""Expression: '{expression7}', Result: {result7}"")
+    except Exception as e:
+        print(f""Error evaluating '{expression7}': {e}"")",True,4,6247,100_11_4.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'\(|\)|\w+|\+|\-|\*|\/|=', expression)
+        if not tokens:
+            raise ValueError(""Empty expression"")
+        result_stack = []
+        operator_stack = []
+        def apply_op():
+            op = operator_stack.pop()
+            right = result_stack.pop()
+            left = result_stack.pop()
+            if op == '+':
+                result_stack.append(left + right)
+            elif op == '-':
+                result_stack.append(left - right)
+            elif op == '*':
+                result_stack.append(left * right)
+            elif op == '/':
+                if right == 0:
+                    raise ZeroDivisionError(""Division by zero"")
+                result_stack.append(left / right)
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        for token in tokens:
+            if token.replace('.', '', 1).isdigit() or (token.startswith('-') and token[1:].replace('.', '', 1).isdigit()):
+                result_stack.append(float(token))
+            elif token == '(':
+                operator_stack.append(token)
+            elif token == ')':
+                while operator_stack[-1] != '(':
+                    apply_op()
+                operator_stack.pop()
+                if operator_stack and operator_stack[-1] == '(':
+                    operator_stack.pop()
+            elif token in ('+', '-', '*', '/'):
+                operator_stack.append(token)
+            elif re.match(r'^\w+$', token):
+                result_stack.append(variables.get(token, 0))
+            else:
+                raise ValueError(f""Invalid token: {token}"")
+        while operator_stack:
+            apply_op()
+        if len(result_stack) == 1:
+            return result_stack[0]
+        else:
+            raise ValueError(""Malformed expression"")
+if __name__ == '__main__':
+    checker = LogicChecker()
+    variables1 = {
+        ""a"": 10,
+        ""b"": 5,
+        ""c"": 2
+    }
+    expression1 = ""(a + b) * c / 2""
+    try:
+        result1 = checker.evaluate(expression1, variables1)
+        print(f""Expression: {expression1}"")
+        print(f""Variables: a={variables1['a']}, b={variables1['b']}, c={variables1['c']}"")
+        print(f""Result: {result1}"")
+    except Exception as e:
+        print(f""Error evaluating expression 1: {e}"")
+    print(""-"" * 20)
+    variables2 = {
+        ""x"": 100,
+        ""y"": 50
+    }
+    expression2 = ""x * (y - 10)""
+    try:
+        result2 = checker.evaluate(expression2, variables2)
+        print(f""Expression: {expression2}"")
+        print(f""Variables: x={variables2['x']}, y={variables2['y']}"")
+        print(f""Result: {result2}"")
+    except Exception as e:
+        print(f""Error evaluating expression 2: {e}"")
+    print(""-"" * 20)
+    variables3 = {
+        ""p"": 20,
+        ""q"": 5,
+        ""r"": 2
+    }
+    expression3 = ""p - q * r""
+    try:
+        result3 = checker.evaluate(expression3, variables3)
+        print(f""Expression: {expression3}"")
+        print(f""Variables: p={variables3['p']}, q={variables3['q']}, r={variables3['r']}"")
+        print(f""Result: {result3}"")
+    except Exception as e:
+        print(f""Error evaluating expression 3: {e}"")",True,5,6248,100_11_5.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'([a-zA-Z0-9_]+|\(|\)|\+|\-|\*|\/|==|!=|>=|<=)', expression)
+        if not tokens:
+            raise ValueError(""Empty expression provided"")
+        processed_expression = expression
+        for var, value in variables.items():
+            processed_expression = processed_expression.replace(var, str(value))
+        try:
+            result = eval(processed_expression)
+            return bool(result)
+        except Exception as e:
+            raise ValueError(f""Error evaluating expression '{expression}' with variables {variables}: {e}"")
+if __name__ == '__main__':
+    checker = LogicChecker()
+    vars1 = {""A"": 10, ""B"": 5}
+    expr1 = ""A > B""
+    result1 = checker.evaluate(expr1, vars1)
+    print(f""Expression: '{expr1}' with {vars1}: {result1}"")
+    vars2 = {""X"": True, ""Y"": False}
+    expr2 = ""(X == True) and (Y == False)""
+    result2 = checker.evaluate(expr2, vars2)
+    print(f""Expression: '{expr2}' with {vars2}: {result2}"")
+    vars3 = {""P"": 1, ""Q"": 0}
+    expr3 = ""P <= Q + 1""
+    result3 = checker.evaluate(expr3, vars3)
+    print(f""Expression: '{expr3}' with {vars3}: {result3}"")
+    try:
+        vars4 = {""A"": 10}
+        expr4 = ""A == B""                 
+        checker.evaluate(expr4, vars4)
+    except ValueError as e:
+        print(f""Error caught for invalid expression: {e}"")
+    vars5 = {""A"": 1, ""B"": 2}
+    expr5 = ""A == B""
+    result5 = checker.evaluate(expr5, vars5)
+    print(f""Expression: '{expr5}' with {vars5}: {result5}"")",True,6,6249,100_11_6.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'([a-zA-Z0-9_]+|\(|\)|\+|\-|\*|\/|==|!=|<=|>=|&&|\|\|)', expression)
+        allowed_chars = ""abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()&|!+*/=<>\""' ""
+        if not all(c in allowed_chars for c in expression):
+            raise ValueError(""Expression contains disallowed characters."")
+        scope = variables.copy()
+        try:
+            result = eval(expression, {""__builtins__"": None}, scope)
+            return bool(result)
+        except Exception as e:
+            print(f""Evaluation error: {e}"")
+            return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    vars1 = {""A"": True, ""B"": False}
+    expr1 = ""A && !B""
+    result1 = checker.evaluate(expr1, vars1)
+    print(f""Expression: '{expr1}', Variables: {vars1} -> Result: {result1}"")
+    vars2 = {""X"": 10, ""Y"": 5}
+    expr2 = ""(X > 5) || (Y == 5)""
+    result2 = checker.evaluate(expr2, vars2)
+    print(f""Expression: '{expr2}', Variables: {vars2} -> Result: {result2}"")
+    vars3 = {""P"": False, ""Q"": True}
+    expr3 = ""P || Q""
+    result3 = checker.evaluate(expr3, vars3)
+    print(f""Expression: '{expr3}', Variables: {vars3} -> Result: {result3}"")
+    vars4 = {""R"": True}
+    expr4 = ""R""
+    result4 = checker.evaluate(expr4, vars4)
+    print(f""Expression: '{expr4}', Variables: {vars4} -> Result: {result4}"")
+    vars5 = {""A"": 1}
+    expr5 = ""A / 0""
+    result5 = checker.evaluate(expr5, vars5)
+    print(f""Expression: '{expr5}', Variables: {vars5} -> Result: {result5}"")
+    vars6 = {""L"": True, ""M"": False}
+    expr6 = ""(L && M) || (not M)""
+    vars6_safe = {""L"": True, ""M"": False}
+    expr6_safe = ""(L and M) or (not M)""                                                                                                        
+    result6 = checker.evaluate(""L and not M"", vars6_safe)
+    print(f""Expression: 'L and not M', Variables: {vars6_safe} -> Result: {result6}"")",True,7,6250,100_11_7.py
+100,11,Write a simple logic checker,"Implement an optimized Python class named 'LogicChecker' with a method to evaluate a simple logical expression given as a string, ensuring the evaluation is safe and efficient.","class LogicChecker:
+    def evaluate(self, expression: str, variables: dict) -> bool:
+        import re
+        def substitute(match):
+            var_name = match.group(1)
+            if var_name in variables:
+                return str(variables[var_name])
+            return match.group(0)
+        tokens = re.findall(r'[\w\s\+\-\*\/\(\)\=\&|]', expression)
+        processed_expression = expression
+        for var, value in variables.items():
+            processed_expression = re.sub(r'\b' + re.escape(var) + r'\b', str(value), processed_expression)
+        try:
+            result = eval(processed_expression)
+            return bool(result)
+        except Exception:
+            return False
+if __name__ == '__main__':
+    checker = LogicChecker()
+    variables1 = {""A"": True, ""B"": False}
+    expression1 = ""A AND NOT B""
+    result1 = checker.evaluate(expression1, variables1)
+    print(f""Expression: '{expression1}' with variables {variables1}: {result1}"")
+    variables2 = {""X"": True, ""Y"": True}
+    expression2 = ""X OR Y""
+    result2 = checker.evaluate(expression2, variables2)
+    print(f""Expression: '{expression2}' with variables {variables2}: {result2}"")
+    variables3 = {""P"": True, ""Q"": False}
+    expression3 = ""(P AND Q) OR (NOT P)""
+    result3 = checker.evaluate(expression3, variables3)
+    print(f""Expression: '{expression3}' with variables {variables3}: {result3}"")
+    variables4 = {""A"": True}
+    expression4 = ""A AND B""
+    result4 = checker.evaluate(expression4, variables4)
+    print(f""Expression: '{expression4}' with variables {variables4}: {result4}"")",True,8,6251,100_11_8.py
+101,1,Determine the day of the week,"Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string, ensuring the use of the `datetime` module efficiently.","from datetime import datetime
+def determine_weekday(date_obj):
+    return date_obj.strftime(""%A"")
+if __name__ == '__main__':
+    date1 = datetime(2023, 10, 26)
+    date2 = datetime(2024, 1, 1)
+    date3 = datetime(2025, 12, 31)
+    print(determine_weekday(date1))
+    print(determine_weekday(date2))
+    print(determine_weekday(date3))",True,0,6252,101_1.py
+101,1,Determine the day of the week,"Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string, ensuring the use of the `datetime` module efficiently.","from datetime import date
+def determine_weekday(date_obj):
+    return date_obj.strftime(""%A"")
+if __name__ == '__main__':
+    sample_date_1 = date(2023, 10, 26)
+    print(determine_weekday(sample_date_1))
+    sample_date_2 = date(2024, 1, 1)
+    print(determine_weekday(sample_date_2))
+    sample_date_3 = date(2025, 12, 31)
+    print(determine_weekday(sample_date_3))",True,1,6253,101_1_1.py
+101,1,Determine the day of the week,"Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string, ensuring the use of the `datetime` module efficiently.","from datetime import datetime
+def determine_weekday(date_obj):
+    return date_obj.strftime(""%A"")
+if __name__ == '__main__':
+    date1 = datetime(2023, 10, 26)
+    date2 = datetime(2024, 1, 1)
+    date3 = datetime(2023, 12, 25)
+    print(determine_weekday(date1))
+    print(determine_weekday(date2))
+    print(determine_weekday(date3))",True,2,6254,101_1_2.py
+101,1,Determine the day of the week,"Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string, ensuring the use of the `datetime` module efficiently.","from datetime import date
+def determine_weekday(date_obj):
+    return date_obj.strftime(""%A"")
+if __name__ == '__main__':
+    date1 = date(2023, 10, 26)
+    date2 = date(2024, 1, 1)
+    date3 = date(2025, 12, 31)
+    print(determine_weekday(date1))
+    print(determine_weekday(date2))
+    print(determine_weekday(date3))",True,3,6255,101_1_3.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"from datetime import date
+class DateConverter:
+    def get_day_of_week(self, date_obj: date) -> int:
+        if not isinstance(date_obj, date):
+            raise TypeError(""Input must be a datetime.date object."")
+        return date_obj.weekday()
+if __name__ == '__main__':
+    converter = DateConverter()
+    sample_dates = [
+        date(2023, 1, 1),                                   
+        date(2023, 1, 2),                                   
+        date(2023, 12, 31),                                  
+        date(2024, 5, 15)                                      
+    ]
+    print(""Testing DateConverter.get_day_of_week:"")
+    for d in sample_dates:
+        day_index = converter.get_day_of_week(d)
+        print(f""Date: {d}, Day Index (Monday=0): {day_index}"")
+    try:
+        converter.get_day_of_week(""not_a_date"")
+    except TypeError as e:
+        print(f""\nCaught expected error for invalid input: {e}"")",True,0,6256,101_2.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"from datetime import date
+class DateConverter:
+    def get_day_of_week(self, date_obj: date) -> int:
+        return date_obj.weekday()
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = date(2023, 10, 2)
+    day1 = converter.get_day_of_week(date1)
+    print(f""Date: {date1}, Day of Week (Monday=0): {day1}"")
+    date2 = date(2023, 1, 1)
+    day2 = converter.get_day_of_week(date2)
+    print(f""Date: {date2}, Day of Week (Monday=0): {day2}"")
+    date3 = date(2024, 12, 25)
+    day3 = converter.get_day_of_week(date3)
+    print(f""Date: {date3}, Day of Week (Monday=0): {day3}"")
+    date4 = date(2025, 5, 15)
+    day4 = converter.get_day_of_week(date4)
+    print(f""Date: {date4}, Day of Week (Monday=0): {day4}"")",True,1,6257,101_2_1.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"class DateConverter:
+    def get_day_of_week(self, date_object):
+        if not isinstance(date_object, (datetime.date, datetime.datetime)):
+            raise TypeError(""Input must be a datetime.date or datetime.datetime object."")
+        day_of_week = date_object.weekday()
+        return day_of_week
+if __name__ == '__main__':
+    import datetime
+    converter = DateConverter()
+    sample_date_1 = datetime.date(2023, 10, 2)
+    sample_date_2 = datetime.datetime(2023, 10, 31, 14, 30)
+    sample_date_3 = datetime.date(2024, 1, 1)
+    print(f""Date {sample_date_1}: Day of the week (Monday=0): {converter.get_day_of_week(sample_date_1)}"")
+    print(f""Date {sample_date_2}: Day of the week (Monday=0): {converter.get_day_of_week(sample_date_2)}"")
+    print(f""Date {sample_date_3}: Day of the week (Monday=0): {converter.get_day_of_week(sample_date_3)}"")",True,2,6258,101_2_2.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"class DateConverter:
+    def get_day_of_week(self, date_object):
+        if not isinstance(date_object, (datetime.date, datetime.datetime)):
+            raise TypeError(""Input must be a datetime.date or datetime.datetime object."")
+        day_of_week = date_object.weekday()
+        return day_of_week
+if __name__ == '__main__':
+    import datetime
+    converter = DateConverter()
+    sample_date_1 = datetime.date(2023, 10, 23)
+    day_1 = converter.get_day_of_week(sample_date_1)
+    print(f""Date: {sample_date_1}, Day of Week (Monday=0): {day_1}"")
+    sample_date_2 = datetime.date(2023, 10, 29)
+    day_2 = converter.get_day_of_week(sample_date_2)
+    print(f""Date: {sample_date_2}, Day of Week (Monday=0): {day_2}"")
+    sample_date_3 = datetime.date(2023, 10, 27)
+    day_3 = converter.get_day_of_week(sample_date_3)
+    print(f""Date: {sample_date_3}, Day of Week (Monday=0): {day_3}"")
+    sample_date_4 = datetime.date(2024, 1, 1)
+    day_4 = converter.get_day_of_week(sample_date_4)
+    print(f""Date: {sample_date_4}, Day of Week (Monday=0): {day_4}"")",True,3,6259,101_2_3.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"from datetime import date
+class DateConverter:
+    def get_day_of_week(self, date_obj: date) -> int:
+        if not isinstance(date_obj, date):
+            raise TypeError(""Input must be a datetime.date object."")
+        return date_obj.weekday()
+if __name__ == '__main__':
+    converter = DateConverter()
+    sample_dates = [
+        date(2023, 1, 1),                                   
+        date(2023, 1, 2),                                   
+        date(2023, 12, 31),                                  
+        date(2024, 5, 15)                                      
+    ]
+    for sample_date in sample_dates:
+        day_index = converter.get_day_of_week(sample_date)
+        print(f""Date: {sample_date}, Day of Week (Monday=0): {day_index}"")",True,4,6260,101_2_4.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"from datetime import date
+class DateConverter:
+    def get_day_of_week(self, date_obj: date) -> int:
+        return date_obj.weekday()
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = date(2023, 10, 23)
+    day1 = converter.get_day_of_week(date1)
+    print(f""Date: {date1}, Day of the week (Monday=0): {day1}"")
+    date2 = date(2024, 1, 1)
+    day2 = converter.get_day_of_week(date2)
+    print(f""Date: {date2}, Day of the week (Monday=0): {day2}"")
+    date3 = date(2025, 12, 31)
+    day3 = converter.get_day_of_week(date3)
+    print(f""Date: {date3}, Day of the week (Monday=0): {day3}"")",True,5,6261,101_2_5.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"from datetime import date
+class DateConverter:
+    def get_day_of_week(self, date_obj: date) -> int:
+        if not isinstance(date_obj, date):
+            raise TypeError(""Input must be a datetime.date object."")
+        return date_obj.weekday()
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = date(2023, 10, 2)          
+    date2 = date(2023, 10, 3)           
+    date3 = date(2023, 10, 6)          
+    date4 = date(2023, 10, 1)          
+    print(f""Date: {date1}, Day of Week (Monday=0): {converter.get_day_of_week(date1)}"")
+    print(f""Date: {date2}, Day of Week (Monday=0): {converter.get_day_of_week(date2)}"")
+    print(f""Date: {date3}, Day of Week (Monday=0): {converter.get_day_of_week(date3)}"")
+    print(f""Date: {date4}, Day of Week (Monday=0): {converter.get_day_of_week(date4)}"")",True,6,6262,101_2_6.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"class DateConverter:
+    def get_day_of_week(self, date_object):
+        if not isinstance(date_object, (datetime.date, datetime.datetime)):
+            raise TypeError(""Input must be a datetime.date or datetime.datetime object."")
+        if isinstance(date_object, datetime.datetime):
+            date_only = date_object.date()
+        else:
+            date_only = date_object
+        return date_only.weekday()
+if __name__ == '__main__':
+    import datetime
+    converter = DateConverter()
+    sample_dates = [
+        datetime.date(2023, 10, 2),          
+        datetime.date(2023, 10, 1),          
+        datetime.date(2023, 10, 31),          
+        datetime.date(2024, 1, 1)           
+    ]
+    for date_obj in sample_dates:
+        try:
+            day_index = converter.get_day_of_week(date_obj)
+            print(f""Date: {date_obj}, Day of Week (Monday=0): {day_index}"")
+        except TypeError as e:
+            print(f""Error processing {date_obj}: {e}"")",True,7,6263,101_2_7.py
+101,2,Determine the day of the week,Develop a class named `DateConverter` with a method `get_day_of_week` that takes a date object and returns the day of the week as an integer (where Monday is 0). Provide comprehensive docstrings.,"class DateConverter:
+    def get_day_of_week(self, date_object):
+        if not isinstance(date_object, (datetime.date, datetime.datetime)):
+            raise TypeError(""Input must be a datetime.date or datetime.datetime object."")
+        day_of_week = date_object.weekday()
+        return day_of_week
+if __name__ == '__main__':
+    import datetime
+    converter = DateConverter()
+    sample_date_1 = datetime.date(2023, 10, 2)
+    day1 = converter.get_day_of_week(sample_date_1)
+    print(f""Date: {sample_date_1}, Day of Week (Monday=0): {day1}"")
+    sample_date_2 = datetime.date(2023, 10, 29)
+    day2 = converter.get_day_of_week(sample_date_2)
+    print(f""Date: {sample_date_2}, Day of Week (Monday=0): {day2}"")
+    sample_date_3 = datetime.date(2023, 10, 4)
+    day3 = converter.get_day_of_week(sample_date_3)
+    print(f""Date: {sample_date_3}, Day of Week (Monday=0): {day3}"")
+    sample_date_4 = datetime.date(2023, 10, 6)
+    day4 = converter.get_day_of_week(sample_date_4)
+    print(f""Date: {sample_date_4}, Day of Week (Monday=0): {day4}"")",True,8,6264,101_2_8.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    a = year % 100
+    y = year // 100
+    m = month
+    k = (13 * (a % 4) + a) % 12
+    j = a // 4
+    k = (k + j) % 12
+    h = (13 * (m + 1) + k + j - 1) % 7
+    if h < 0:
+        h += 7
+    return h
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 1
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the 1st: {result2}"")
+    year3 = 2023
+    month3 = 10
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the 1st: {result3}"")
+    year4 = 2024
+    month4 = 3
+    result4 = day_of_week_first_of_month(year4, month4)
+    print(f""Year: {year4}, Month: {month4}, Day of week for the 1st: {result4}"")",True,0,6265,101_4.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    a = year % 100
+    y = year // 100
+    m = month
+    k = (13 * (a % 4) + a) % 12
+    j = a // 4
+    k = (k + j) % 12
+    h = (13 * (m + 1) + k + j - 7 * (m + 1)) % 7
+    return h
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the first day: {result1}"")
+    year2 = 2024
+    month2 = 5
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the first day: {result2}"")
+    year3 = 2025
+    month3 = 12
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the first day: {result3}"")",True,1,6266,101_4_1.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    k = year % 100
+    j = year // 100
+    m = year % 100
+    q = 1
+    m_zeller = month if month > 2 else month + 12
+    K = year % 100
+    J = year // 100
+    h = (q + math.floor((13 * (m_zeller + 1)) / 5) + K + math.floor(K / 4) + math.floor(J / 4) - 2 * J) % 7
+    q = 1
+    m_zeller = month if month > 2 else month + 12
+    K = year % 100
+    J = year // 100
+    h_zeller = (q + math.floor((13 * (m_zeller + 1)) / 5) + K + math.floor(K / 4) + math.floor(J / 4) - 2 * J) % 7
+    day_index = (h_zeller + 5) % 7
+    return day_index
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 3
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the 1st: {result2}"")
+    year3 = 2000
+    month3 = 1
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the 1st: {result3}"")",True,2,6267,101_4_2.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 0
+    else:
+        h = month
+        d = 1
+    k = year % 100
+    j = year // 100
+    q = 1
+    m_zeller = month
+    K = year % 100
+    J = year // 100
+    if m_zeller <= 2:
+        m_zeller += 12
+        year -= 1
+    h = (q + math.floor(13 * (m_zeller + 1)) // 5 + K + math.floor(K / 4) + math.floor(J / 4) - 2 * J) % 7
+    return h
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 5
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the 1st: {result2}"")
+    year3 = 2000
+    month3 = 1
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the 1st: {result3}"")
+    year4 = 1999
+    month4 = 12
+    result4 = day_of_week_first_of_month(year4, month4)
+    print(f""Year: {year4}, Month: {month4}, Day of week for the 1st: {result4}"")",True,3,6268,101_4_3.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    a = year % 100
+    y = year // 100
+    m = month
+    k = (13 * (a % 4) + a) % 12
+    j = a // 4
+    k = (k + j) % 12
+    h = (13 * (m + 1) + 2 * j + k) % 7
+    return h
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 5
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the 1st: {result2}"")
+    year3 = 2025
+    month3 = 12
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the 1st: {result3}"")",True,4,6269,101_4_4.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    a = year % 100
+    y = year // 100
+    m = month
+    k = (13 * (a % 4) + a) % 12
+    j = a // 4
+    k = (k + j) % 12
+    h = (13 * (m + 1) + k + j - 1) % 7
+    if h < 0:
+        h += 7
+    return h
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 10
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the 1st: {result2}"")
+    year3 = 2025
+    month3 = 3
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the 1st: {result3}"")",True,5,6270,101_4_5.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    a = year % 100
+    y = year // 100
+    m = month
+    k = (13 * (a % 4) + a) % 12;
+    j = a // 4;
+    k = (k + j) % 12;
+    h = (13 * (m + 1) + 8) % 12;
+    day = (d + h - 7 * (10 * y + 5)) % 7
+    if day < 0:
+        day += 7
+    return day
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, First day of the month is day: {result1}"")
+    year2 = 2024
+    month2 = 5
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, First day of the month is day: {result2}"")
+    year3 = 2023
+    month3 = 12
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, First day of the month is day: {result3}"")",True,6,6271,101_4_6.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import datetime
+def day_of_week_first_of_month(year, month):
+    date = datetime.date(year, month, 1)
+    return date.weekday()
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of the week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 12
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of the week for the 1st: {result2}"")
+    year3 = 2025
+    month3 = 3
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of the week for the 1st: {result3}"")",True,7,6272,101_4_7.py
+101,4,Determine the day of the week,Implement a standalone function that takes a year and a month as input and returns the day of the week for the first day of that month in a given year. Use the Zeller's congruence or an equivalent efficient algorithm.,"import math
+def day_of_week_first_of_month(year, month):
+    if month == 1:
+        h = 1
+        d = 1
+    else:
+        h = 1
+        d = month
+    a = year % 100
+    y = year // 100
+    m = month
+    k = (13 * (a % 4) + a) % 12;
+    j = a // 4;
+    k = (k + j) % 12;
+    h = (13 * (m + 1) + 2 * j + k) % 7
+    return h
+if __name__ == '__main__':
+    year1 = 2023
+    month1 = 1
+    result1 = day_of_week_first_of_month(year1, month1)
+    print(f""Year: {year1}, Month: {month1}, Day of week for the 1st: {result1}"")
+    year2 = 2024
+    month2 = 1
+    result2 = day_of_week_first_of_month(year2, month2)
+    print(f""Year: {year2}, Month: {month2}, Day of week for the 1st: {result2}"")
+    year3 = 2023
+    month3 = 10
+    result3 = day_of_week_first_of_month(year3, month3)
+    print(f""Year: {year3}, Month: {month3}, Day of week for the 1st: {result3}"")
+    year4 = 2024
+    month4 = 3
+    result4 = day_of_week_first_of_month(year4, month4)
+    print(f""Year: {year4}, Month: {month4}, Day of week for the 1st: {result4}"")",True,8,6273,101_4_8.py
+101,5,Determine the day of the week,Create a function `find_day_of_week_from_timestamp` that accepts a Unix timestamp and returns the corresponding day of the week name. Optimize for performance.,"import datetime
+def find_day_of_week_from_timestamp(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%A')
+if __name__ == '__main__':
+    sample_timestamp_1 = 1678886400                              
+    sample_timestamp_2 = 1609459200                            
+    sample_timestamp_3 = 1577836800                               
+    print(f""Timestamp {sample_timestamp_1}: {find_day_of_week_from_timestamp(sample_timestamp_1)}"")
+    print(f""Timestamp {sample_timestamp_2}: {find_day_of_week_from_timestamp(sample_timestamp_2)}"")
+    print(f""Timestamp {sample_timestamp_3}: {find_day_of_week_from_timestamp(sample_timestamp_3)}"")",True,0,6274,101_5.py
+101,5,Determine the day of the week,Create a function `find_day_of_week_from_timestamp` that accepts a Unix timestamp and returns the corresponding day of the week name. Optimize for performance.,"import datetime
+def find_day_of_week_from_timestamp(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%A')
+if __name__ == '__main__':
+    sample_timestamp_1 = 1678886400
+    sample_timestamp_2 = 1609459200
+    print(f""Timestamp {sample_timestamp_1}: {find_day_of_week_from_timestamp(sample_timestamp_1)}"")
+    print(f""Timestamp {sample_timestamp_2}: {find_day_of_week_from_timestamp(sample_timestamp_2)}"")",True,1,6275,101_5_1.py
+101,5,Determine the day of the week,Create a function `find_day_of_week_from_timestamp` that accepts a Unix timestamp and returns the corresponding day of the week name. Optimize for performance.,"import datetime
+def find_day_of_week_from_timestamp(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%A')
+if __name__ == '__main__':
+    sample_timestamp_1 = 1678886400
+    result_1 = find_day_of_week_from_timestamp(sample_timestamp_1)
+    print(f""Timestamp: {sample_timestamp_1}, Day of Week: {result_1}"")
+    sample_timestamp_2 = 1609459200
+    result_2 = find_day_of_week_from_timestamp(sample_timestamp_2)
+    print(f""Timestamp: {sample_timestamp_2}, Day of Week: {result_2}"")
+    sample_timestamp_3 = 1577836800
+    result_3 = find_day_of_week_from_timestamp(sample_timestamp_3)
+    print(f""Timestamp: {sample_timestamp_3}, Day of Week: {result_3}"")",True,2,6276,101_5_2.py
+101,5,Determine the day of the week,Create a function `find_day_of_week_from_timestamp` that accepts a Unix timestamp and returns the corresponding day of the week name. Optimize for performance.,"import datetime
+def find_day_of_week_from_timestamp(timestamp):
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%A')
+if __name__ == '__main__':
+    sample_timestamp_1 = 1678886400
+    result_1 = find_day_of_week_from_timestamp(sample_timestamp_1)
+    print(f""Timestamp: {sample_timestamp_1}, Day of Week: {result_1}"")
+    sample_timestamp_2 = 1672531200
+    result_2 = find_day_of_week_from_timestamp(sample_timestamp_2)
+    print(f""Timestamp: {sample_timestamp_2}, Day of Week: {result_2}"")
+    sample_timestamp_3 = 1577836800
+    result_3 = find_day_of_week_from_timestamp(sample_timestamp_3)
+    print(f""Timestamp: {sample_timestamp_3}, Day of Week: {result_3}"")",True,3,6277,101_5_3.py
+101,6,Determine the day of the week,"Write a Python solution using only the standard library to calculate the day of the week for a specific date, explicitly handling leap years correctly.","import datetime
+def calculate_day_of_week(year, month, day):
+    try:
+        date_obj = datetime.date(year, month, day)
+        return date_obj.weekday()
+    except ValueError:
+        return -1
+if __name__ == '__main__':
+    year = 2024
+    month = 2
+    day = 29
+    day_of_week = calculate_day_of_week(year, month, day)
+    print(day_of_week)",True,0,6278,101_6.py
+101,7,Determine the day of the week,"Design and implement a factory pattern approach for date calculation, providing a class that can generate the day of the week for any given date object.","import datetime
+class DateCalculatorFactory:
+    def get_day_of_week(self, date_object):
+        return date_object.weekday()
+class DateCalculator:
+    def __init__(self, factory):
+        self._factory = factory
+    def get_day_of_week(self, date_object):
+        return self._factory.get_day_of_week(date_object)
+if __name__ == '__main__':
+    class MockDate:
+        def __init__(self, year, month, day):
+            self.year = year
+            self.month = month
+            self.day = day
+            self.date = datetime.date(year, month, day)
+    class MockDateTime:
+        def __init__(self, year, month, day):
+            self.year = year
+            self.month = month
+            self.day = day
+            self.date = datetime.date(year, month, day)
+    factory = DateCalculatorFactory()
+    calculator = DateCalculator(factory)
+    date1 = MockDate(2023, 10, 26)
+    date2 = MockDateTime(1999, 1, 1)
+    day1 = calculator.get_day_of_week(date1.date)
+    day2 = calculator.get_day_of_week(date2.date)
+    print(f""Day of the week for {date1.date}: {day1}"")
+    print(f""Day of the week for {date2.date}: {day2}"")",True,0,6279,101_7.py
+101,7,Determine the day of the week,"Design and implement a factory pattern approach for date calculation, providing a class that can generate the day of the week for any given date object.","import datetime
+class DateCalculatorFactory:
+    def get_day_of_week(self, date_object):
+        return date_object.weekday()
+class DateCalculator:
+    def __init__(self, factory):
+        self._factory = factory
+    def get_day_of_week(self, date_object):
+        return self._factory.get_day_of_week(date_object)
+if __name__ == '__main__':
+    class DateFactory:
+        def get_day_of_week(self, date_object):
+            return date_object.weekday()
+    factory = DateFactory()
+    calculator = DateCalculator(factory)
+    date1 = datetime.date(2023, 10, 26)
+    date2 = datetime.date(2024, 1, 1)
+    date3 = datetime.date(1999, 12, 31)
+    print(f""Day of the week for {date1}: {calculator.get_day_of_week(date1)}"")
+    print(f""Day of the week for {date2}: {calculator.get_day_of_week(date2)}"")
+    print(f""Day of the week for {date3}: {calculator.get_day_of_week(date3)}"")",True,1,6280,101_7_1.py
+101,7,Determine the day of the week,"Design and implement a factory pattern approach for date calculation, providing a class that can generate the day of the week for any given date object.","import datetime
+class DateCalculatorFactory:
+    def get_day_of_week(self, date_object):
+        return date_object.weekday()
+class DateCalculator:
+    def __init__(self, factory):
+        self._factory = factory
+    def get_day_of_week(self, date_object):
+        return self._factory.get_day_of_week(date_object)
+if __name__ == '__main__':
+    class MockDate:
+        def __init__(self, year, month, day):
+            self.year = year
+            self.month = month
+            self.day = day
+            self.date = datetime.date(year, month, day)
+    class MockDateTime:
+        def __init__(self, year, month, day):
+            self.year = year
+            self.month = month
+            self.day = day
+            self.date = datetime.date(year, month, day)
+    factory = DateCalculatorFactory()
+    calculator = DateCalculator(factory)
+    date1 = MockDate(2023, 10, 26)
+    date2 = MockDateTime(1999, 1, 1)
+    date3 = MockDate(2024, 12, 31)
+    day1 = calculator.get_day_of_week(date1.date)
+    day2 = calculator.get_day_of_week(date2.date)
+    day3 = calculator.get_day_of_week(date3.date)
+    print(f""Day of the week for {date1.date}: {day1}"")
+    print(f""Day of the week for {date2.date}: {day2}"")
+    print(f""Day of the week for {date3.date}: {day3}"")",True,2,6281,101_7_2.py
+101,7,Determine the day of the week,"Design and implement a factory pattern approach for date calculation, providing a class that can generate the day of the week for any given date object.","import datetime
+class DateCalculatorFactory:
+    def get_day_of_week(self, date_object):
+        return date_object.weekday()
+class DateCalculator:
+    def __init__(self, factory):
+        self._factory = factory
+    def get_day_of_week(self, date_object):
+        return self._factory.get_day_of_week(date_object)
+if __name__ == '__main__':
+    class ConcreteDateCalculatorFactory:
+        def get_day_of_week(self, date_object):
+            return date_object.weekday()
+    factory = ConcreteDateCalculatorFactory()
+    calculator = DateCalculator(factory)
+    date1 = datetime.date(2023, 10, 26)
+    date2 = datetime.date(1999, 1, 1)
+    date3 = datetime.date(2024, 12, 31)
+    day1 = calculator.get_day_of_week(date1)
+    day2 = calculator.get_day_of_week(date2)
+    day3 = calculator.get_day_of_week(date3)
+    print(f""Day of the week for {date1}: {day1}"")
+    print(f""Day of the week for {date2}: {day2}"")
+    print(f""Day of the week for {date3}: {day3}"")",True,3,6282,101_7_3.py
+101,3,Determine the day of the week,Write a command-line tool using the `argparse` module that prompts the user to enter a date and outputs the day of the week in a human-readable format. Ensure error handling for invalid date formats.,"import argparse
+import datetime
+def get_day_of_week(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        return date_obj.strftime('%A')
+    except ValueError:
+        raise argparse.ArgumentTypeError(f""Invalid date format: {date_string}. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=""Convert a date string to the day of the week."")
+    parser.add_argument(""date"", type=str, help=""The date in YYYY-MM-DD format."")
+    args = parser.parse_args([""2023-10-27""])
+    try:
+        day_name = get_day_of_week(args.date)
+        print(day_name)
+    except argparse.ArgumentTypeError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,6283,101_3.py
+101,3,Determine the day of the week,Write a command-line tool using the `argparse` module that prompts the user to enter a date and outputs the day of the week in a human-readable format. Ensure error handling for invalid date formats.,"import argparse
+import datetime
+def get_day_of_week(date_string):
+    try:
+        date_object = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        return date_object.strftime('%A')
+    except ValueError:
+        raise argparse.ArgumentTypeError(f""Invalid date format: {date_string}. Please use YYYY-MM-DD."")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=""Convert a date string to the day of the week."")
+    parser.add_argument(""date"", type=str, help=""The date in YYYY-MM-DD format."")
+    args = parser.parse_args([""2023-10-27""])
+    try:
+        day_name = get_day_of_week(args.date)
+        print(day_name)
+    except argparse.ArgumentTypeError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,6284,101_3_1.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    return calendar.weekday(year, month, day)
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+    def test_month_start_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 3, 1), 0)
+    def test_month_end_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 31), 6)
+        self.assertEqual(determine_weekday(2023, 4, 30), 5)
+        self.assertEqual(determine_weekday(2023, 2, 28), 5)
+        self.assertEqual(determine_weekday(2024, 2, 29), 6)
+    def test_leap_year_dates(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 6)
+    def test_different_months(self):
+        self.assertEqual(determine_weekday(2023, 12, 31), 6)
+        self.assertEqual(determine_weekday(2023, 9, 30), 5)
+        self.assertEqual(determine_weekday(2023, 2, 28), 5)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,6285,101_8.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    return calendar.weekday(year, month, day)
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 10, 31), 2)
+    def test_start_of_month(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 5, 1), 3)
+    def test_end_of_month(self):
+        self.assertEqual(determine_weekday(2023, 1, 31), 2)
+        self.assertEqual(determine_weekday(2023, 4, 30), 1)
+        self.assertEqual(determine_weekday(2023, 2, 28), 1)
+    def test_leap_year(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 1)
+    def test_year_boundaries(self):
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+        self.assertEqual(determine_weekday(2024, 1, 1), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,6286,101_8_1.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    try:
+        weekday_num = calendar.weekday(year, month, day)
+        return weekday_num
+    except ValueError:
+        return None
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+    def test_month_start_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 3, 1), 0)
+    def test_month_end_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 31), 2)
+        self.assertEqual(determine_weekday(2023, 4, 30), 1)
+        self.assertEqual(determine_weekday(2023, 2, 28), 1)
+    def test_leap_year_edge_case(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 3)
+    def test_invalid_date_edge_case(self):
+        self.assertIsNone(determine_weekday(2023, 2, 30))
+        self.assertIsNone(determine_weekday(2023, 13, 1))
+        self.assertIsNone(determine_weekday(2023, 1, 130))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,6287,101_8_2.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    return calendar.weekday(year, month, day)
+class TestDetermineWeekday(unittest.TestCase):
+    def test_normal_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 10, 31), 2)
+    def test_start_of_month(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 5, 1), 3)
+    def test_end_of_month(self):
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+        self.assertEqual(determine_weekday(2024, 1, 31), 6)
+    def test_leap_year(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 1)
+    def test_different_months(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,6288,101_8_3.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    return calendar.weekday(year, month, day)
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 10, 31), 2)
+    def test_start_of_month(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 5, 1), 3)
+    def test_end_of_month(self):
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+        self.assertEqual(determine_weekday(2024, 1, 31), 6)
+    def test_leap_year(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 1)
+    def test_different_months(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2023, 3, 1), 2)
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,6289,101_8_4.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    try:
+        weekday_num = calendar.weekday(year, month, day)
+        return weekday_num
+    except ValueError:
+        return None
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+    def test_month_start_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 3, 1), 0)
+    def test_month_end_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 31), 2)
+        self.assertEqual(determine_weekday(2023, 4, 30), 1)
+        self.assertEqual(determine_weekday(2023, 2, 28), 1)
+    def test_leap_year_edge_case(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 3)
+    def test_non_existent_date(self):
+        self.assertIsNone(determine_weekday(2023, 2, 30))
+        self.assertIsNone(determine_weekday(2023, 4, 31))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-action', 'excite'], exit=False)",True,5,6290,101_8_5.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    day_of_week = calendar.weekday(year, month, day)
+    return day_of_week
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 25), 3)
+        self.assertEqual(determine_weekday(2023, 10, 31), 4)
+    def test_start_of_month(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 5, 1), 3)
+    def test_end_of_month(self):
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+        self.assertEqual(determine_weekday(2024, 2, 29), 1)
+    def test_leap_year(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 1)
+        self.assertEqual(determine_weekday(2028, 2, 29), 1)
+    def test_different_months(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,6291,101_8_6.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    try:
+        weekday_num = calendar.weekday(year, month, day)
+        return weekday_num
+    except ValueError:
+        return None
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 27), 4)
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+    def test_month_start_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 3, 1), 0)
+    def test_month_end_edge_case(self):
+        self.assertEqual(determine_weekday(2023, 1, 31), 2)
+        self.assertEqual(determine_weekday(2023, 4, 30), 1)
+        self.assertEqual(determine_weekday(2023, 2, 28), 1)
+    def test_leap_year_edge_case(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 3)
+    def test_invalid_date(self):
+        self.assertIsNone(determine_weekday(2023, 2, 30))
+        self.assertIsNone(determine_weekday(2023, 13, 1))
+        self.assertIsNone(determine_weekday(2023, 1, 130))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-action', 'excite'], exit=False)",True,7,6292,101_8_7.py
+101,8,Determine the day of the week,"Write a test suite using `unittest` for the `determine_weekday` function developed previously, covering edge cases like the start and end of months.","import unittest
+def determine_weekday(year, month, day):
+    import calendar
+    return calendar.weekday(year, month, day)
+class TestDetermineWeekday(unittest.TestCase):
+    def test_standard_dates(self):
+        self.assertEqual(determine_weekday(2023, 10, 26), 3)
+        self.assertEqual(determine_weekday(2023, 10, 31), 2)
+    def test_start_of_month(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2024, 5, 1), 3)
+    def test_end_of_month(self):
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+        self.assertEqual(determine_weekday(2024, 1, 31), 6)
+    def test_leap_year(self):
+        self.assertEqual(determine_weekday(2024, 2, 29), 3)
+    def test_different_months(self):
+        self.assertEqual(determine_weekday(2023, 1, 1), 0)
+        self.assertEqual(determine_weekday(2023, 12, 31), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,8,6293,101_8_8.py
+100,14,Write a simple logic checker,"Create an optimized function that parses a string representing a simple logical statement (e.g., 'A AND B') and returns the resulting boolean value, assuming 'A' and 'B' are provided as input.","def evaluate_logical_statement(statement, variables):
+    if "" AND "" in statement:
+        parts = statement.split("" AND "")
+        if len(parts) == 2:
+            left_val = variables.get(parts[0].strip(), False)
+            right_val = variables.get(parts[1].strip(), False)
+            return left_val and right_val
+    elif "" OR "" in statement:
+        parts = statement.split("" OR "")
+        if len(parts) == 2:
+            left_val = variables.get(parts[0].strip(), False)
+            right_val = variables.get(parts[1].strip(), False)
+            return left_val or right_val
+    elif "" NOT "" in statement:
+        parts = statement.split("" NOT "")
+        if len(parts) == 2:
+            operand = parts[1].strip()
+            if operand in variables:
+                return not variables[operand]
+    return False
+if __name__ == '__main__':
+    statement1 = ""A AND B""
+    variables1 = {""A"": True, ""B"": False}
+    result1 = evaluate_logical_statement(statement1, variables1)
+    print(f""Statement: {statement1}, Variables: {variables1}, Result: {result1}"")
+    statement2 = ""A OR B""
+    variables2 = {""A"": True, ""B"": True}
+    result2 = evaluate_logical_statement(statement2, variables2)
+    print(f""Statement: {statement2}, Variables: {variables2}, Result: {result2}"")
+    statement3 = ""NOT A""
+    variables3 = {""A"": True}
+    result3 = evaluate_logical_statement(statement3, variables3)
+    print(f""Statement: {statement3}, Variables: {variables3}, Result: {result3}"")
+    statement4 = ""B AND NOT A""
+    variables4 = {""A"": True, ""B"": False}
+    result4 = evaluate_logical_statement(statement4, variables4)
+    print(f""Statement: {statement4}, Variables: {variables4}, Result: {result4}"")
+    statement5 = ""A AND B AND C""
+    variables5 = {""A"": True, ""B"": True, ""C"": True}
+    result5 = evaluate_logical_statement(statement5, variables5)
+    print(f""Statement: {statement5}, Variables: {variables5}, Result: {result5}"")",True,0,6294,100_14.py
+100,14,Write a simple logic checker,"Create an optimized function that parses a string representing a simple logical statement (e.g., 'A AND B') and returns the resulting boolean value, assuming 'A' and 'B' are provided as input.","def evaluate_logical_statement(statement, variables):
+    if "" AND "" in statement:
+        parts = statement.split("" AND "")
+        if len(parts) == 2:
+            left_val = variables.get(parts[0].strip())
+            right_val = variables.get(parts[1].strip())
+            if left_val is not None and right_val is not None:
+                return left_val and right_val
+    elif "" OR "" in statement:
+        parts = statement.split("" OR "")
+        if len(parts) == 2:
+            left_val = variables.get(parts[0].strip())
+            right_val = variables.get(parts[1].strip())
+            if left_val is not None and right_val is not None:
+                return left_val or right_val
+    elif "" NOT "" in statement:
+        parts = statement.split("" NOT "")
+        if len(parts) == 2:
+            operand = parts[1].strip()
+            if operand in variables:
+                return not variables[operand]
+    elif statement in variables:
+        return variables[statement]
+    return False
+if __name__ == '__main__':
+    variables = {
+        'A': True,
+        'B': False,
+        'C': True
+    }
+    statement1 = 'A AND B'
+    result1 = evaluate_logical_statement(statement1, variables)
+    print(f""Statement: {statement1}, Result: {result1}"")
+    statement2 = 'A OR B'
+    result2 = evaluate_logical_statement(statement2, variables)
+    print(f""Statement: {statement2}, Result: {result2}"")
+    statement3 = 'NOT A'
+    result3 = evaluate_logical_statement(statement3, variables)
+    print(f""Statement: {statement3}, Result: {result3}"")
+    statement4 = 'C'
+    result4 = evaluate_logical_statement(statement4, variables)
+    print(f""Statement: {statement4}, Result: {result4}"")
+    statement5 = 'A AND C'
+    result5 = evaluate_logical_statement(statement5, variables)
+    print(f""Statement: {statement5}, Result: {result5}"")",True,1,6295,100_14_1.py
+101,11,Determine the day of the week,Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string. The function must be highly efficient and adhere to all Python best practices.,"from datetime import date
+def determine_weekday(date_obj: date) -> str:
+    weekday_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    return weekday_names[date_obj.weekday()]
+if __name__ == '__main__':
+    date1 = date(2023, 10, 25)
+    date2 = date(2024, 1, 1)
+    date3 = date(2023, 12, 25)
+    print(determine_weekday(date1))
+    print(determine_weekday(date2))
+    print(determine_weekday(date3))",True,0,6296,101_11.py
+101,11,Determine the day of the week,Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string. The function must be highly efficient and adhere to all Python best practices.,"import datetime
+def determine_weekday(date_obj):
+    return date_obj.strftime(""%A"")
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 26)
+    date2 = datetime.date(2024, 1, 1)
+    date3 = datetime.date(2025, 12, 31)
+    print(determine_weekday(date1))
+    print(determine_weekday(date2))
+    print(determine_weekday(date3))",True,1,6297,101_11_1.py
+101,11,Determine the day of the week,Implement an optimized function named `determine_weekday` that accepts a date object and returns the full name of the day of the week as a string. The function must be highly efficient and adhere to all Python best practices.,"from datetime import date
+def determine_weekday(date_obj: date) -> str:
+    weekday_names = [""Monday"", ""Tuesday"", ""Wednesday"", ""Thursday"", ""Friday"", ""Saturday"", ""Sunday""]
+    return weekday_names[date_obj.weekday()]
+if __name__ == '__main__':
+    date1 = date(2023, 10, 25)
+    date2 = date(2024, 1, 1)
+    date3 = date(2024, 12, 25)
+    print(determine_weekday(date1))
+    print(determine_weekday(date2))
+    print(determine_weekday(date3))",True,2,6298,101_11_2.py
+101,12,Determine the day of the week,"Develop a class named `DateConverter` with a method `get_day_name(date_string)` that parses a date string provided in 'MM/DD/YYYY' format and returns the corresponding day of the week as an integer (where Monday=0, Sunday=6). Ensure the implementation is clean and handles potential `ValueError` exceptions gracefully.","class DateConverter:
+    def get_day_name(self, date_string):
+        try:
+            month, day, year = date_string.split('/')
+            month = int(month)
+            day = int(day)
+            year = int(year)
+            import datetime
+            date_obj = datetime.date(year, month, day)
+            return date_obj.weekday()
+        except ValueError:
+            return -1
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = ""01/01/2024""
+    date2 = ""12/31/2023""
+    date3 = ""02/29/2024""
+    date4 = ""13/01/2024""
+    print(f""Date {date1}: {converter.get_day_name(date1)}"")
+    print(f""Date {date2}: {converter.get_day_name(date2)}"")
+    print(f""Date {date3}: {converter.get_day_name(date3)}"")
+    print(f""Date {date4}: {converter.get_day_name(date4)}"")",True,0,6299,101_12.py
+101,12,Determine the day of the week,"Develop a class named `DateConverter` with a method `get_day_name(date_string)` that parses a date string provided in 'MM/DD/YYYY' format and returns the corresponding day of the week as an integer (where Monday=0, Sunday=6). Ensure the implementation is clean and handles potential `ValueError` exceptions gracefully.","class DateConverter:
+    def get_day_name(self, date_string):
+        try:
+            month, day, year = map(int, date_string.split('/'))
+            import datetime
+            date_obj = datetime.date(year, month, day)
+            return date_obj.weekday()
+        except ValueError:
+            return -1
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = ""01/15/2023""
+    date2 = ""12/31/2022""
+    date3 = ""02/28/2024""
+    date4 = ""13/01/2023""
+    print(f""Date {date1}: {converter.get_day_name(date1)}"")
+    print(f""Date {date2}: {converter.get_day_name(date2)}"")
+    print(f""Date {date3}: {converter.get_day_name(date3)}"")
+    print(f""Date {date4}: {converter.get_day_name(date4)}"")",True,1,6300,101_12_1.py
+101,12,Determine the day of the week,"Develop a class named `DateConverter` with a method `get_day_name(date_string)` that parses a date string provided in 'MM/DD/YYYY' format and returns the corresponding day of the week as an integer (where Monday=0, Sunday=6). Ensure the implementation is clean and handles potential `ValueError` exceptions gracefully.","class DateConverter:
+    def get_day_name(self, date_string):
+        try:
+            month, day, year = map(int, date_string.split('/'))
+            import datetime
+            date_obj = datetime.date(year, month, day)
+            return date_obj.weekday()
+        except ValueError:
+            return -1
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = ""01/15/2023""
+    date2 = ""12/31/2022""
+    date3 = ""02/28/2024""
+    date4 = ""13/01/2023""
+    print(f""Day name for {date1}: {converter.get_day_name(date1)}"")
+    print(f""Day name for {date2}: {converter.get_day_name(date2)}"")
+    print(f""Day name for {date3}: {converter.get_day_name(date3)}"")
+    print(f""Day name for {date4}: {converter.get_day_name(date4)}"")",True,2,6301,101_12_2.py
+101,12,Determine the day of the week,"Develop a class named `DateConverter` with a method `get_day_name(date_string)` that parses a date string provided in 'MM/DD/YYYY' format and returns the corresponding day of the week as an integer (where Monday=0, Sunday=6). Ensure the implementation is clean and handles potential `ValueError` exceptions gracefully.","class DateConverter:
+    def get_day_name(self, date_string):
+        try:
+            month, day, year = map(int, date_string.split('/'))
+            import datetime
+            date_obj = datetime.date(year, month, day)
+            return date_obj.weekday()
+        except ValueError:
+            return -1
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = ""10/27/2023""
+    date2 = ""01/01/2024""
+    date3 = ""12/31/2022""
+    date4 = ""02/29/2024""
+    date5 = ""99/99/9999""
+    print(f""Date {date1}: {converter.get_day_name(date1)}"")
+    print(f""Date {date2}: {converter.get_day_name(date2)}"")
+    print(f""Date {date3}: {converter.get_day_name(date3)}"")
+    print(f""Date {date4}: {converter.get_day_name(date4)}"")
+    print(f""Date {date5}: {converter.get_day_name(date5)}"")",True,3,6302,101_12_3.py
+101,12,Determine the day of the week,"Develop a class named `DateConverter` with a method `get_day_name(date_string)` that parses a date string provided in 'MM/DD/YYYY' format and returns the corresponding day of the week as an integer (where Monday=0, Sunday=6). Ensure the implementation is clean and handles potential `ValueError` exceptions gracefully.","class DateConverter:
+    def get_day_name(self, date_string):
+        try:
+            month, day, year = map(int, date_string.split('/'))
+            import datetime
+            date_obj = datetime.date(year, month, day)
+            return date_obj.weekday()
+        except ValueError:
+            return -1
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = ""10/26/2023""
+    date2 = ""01/01/2024""
+    date3 = ""12/31/2022""
+    date4 = ""02/29/2024""
+    date5 = ""13/01/2024""
+    print(f""Date {date1}: {converter.get_day_name(date1)}"")
+    print(f""Date {date2}: {converter.get_day_name(date2)}"")
+    print(f""Date {date3}: {converter.get_day_name(date3)}"")
+    print(f""Date {date4}: {converter.get_day_name(date4)}"")
+    print(f""Date {date5}: {converter.get_day_name(date5)}"")",True,4,6303,101_12_4.py
+101,12,Determine the day of the week,"Develop a class named `DateConverter` with a method `get_day_name(date_string)` that parses a date string provided in 'MM/DD/YYYY' format and returns the corresponding day of the week as an integer (where Monday=0, Sunday=6). Ensure the implementation is clean and handles potential `ValueError` exceptions gracefully.","class DateConverter:
+    def get_day_name(self, date_string):
+        try:
+            month, day, year = date_string.split('/')
+            month_num = int(month)
+            day_num = int(day)
+            year_num = int(year)
+            import datetime
+            date_obj = datetime.date(year_num, month_num, day_num)
+            return date_obj.weekday()
+        except ValueError:
+            return -1
+if __name__ == '__main__':
+    converter = DateConverter()
+    date1 = ""10/25/2023""
+    date2 = ""01/01/2024""
+    date3 = ""12/31/2022""
+    date4 = ""02/29/2024""
+    date5 = ""13/40/2023""
+    print(f""Date: {date1}, Day Index: {converter.get_day_name(date1)}"")
+    print(f""Date: {date2}, Day Index: {converter.get_day_name(date2)}"")
+    print(f""Date: {date3}, Day Index: {converter.get_day_name(date3)}"")
+    print(f""Date: {date4}, Day Index: {converter.get_day_name(date4)}"")
+    print(f""Date: {date5}, Day Index: {converter.get_day_name(date5)}"")",True,5,6304,101_12_5.py
