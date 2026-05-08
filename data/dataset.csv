@@ -114220,3 +114220,2755 @@ if __name__ == '__main__':
         print(f""{number} is an even positive number, but it is not less than 100."")
     else:
         print(f""{number} failed one or more checks."")",True,6,5854,95_10_6.py
+95,12,Combine three simple checks,"Develop a class named 'Validator' with a method 'combine_and_report' that takes three integer inputs, performs checks for positivity, evenness, and magnitude (less than 100), and returns a dictionary containing the original inputs and a status report.","class Validator:
+    def combine_and_report(self, a, b, c):
+        results = {
+            ""inputs"": [a, b, c],
+            ""status"": {}
+        }
+        for val in [a, b, c]:
+            status = {}
+            if val > 0:
+                status[""positivity""] = True
+            else:
+                status[""positivity""] = False
+            if val % 2 == 0:
+                status[""evenness""] = True
+            else:
+                status[""evenness""] = False
+            if val < 100:
+                status[""magnitude""] = True
+            else:
+                status[""magnitude""] = False
+            results[""status""][val] = status
+        return results
+if __name__ == '__main__':
+    validator = Validator()
+    sample_a = 10
+    sample_b = 25
+    sample_c = 150
+    report = validator.combine_and_report(sample_a, sample_b, sample_c)
+    print(report)",True,0,5855,95_12.py
+95,12,Combine three simple checks,"Develop a class named 'Validator' with a method 'combine_and_report' that takes three integer inputs, performs checks for positivity, evenness, and magnitude (less than 100), and returns a dictionary containing the original inputs and a status report.","class Validator:
+    def combine_and_report(self, a, b, c):
+        results = {
+            ""inputs"": [a, b, c],
+            ""status"": {}
+        }
+        checks = {
+            ""a"": {""positive"": a > 0, ""even"": a % 2 == 0, ""magnitude"": a < 100},
+            ""b"": {""positive"": b > 0, ""even"": b % 2 == 0, ""magnitude"": b < 100},
+            ""c"": {""positive"": c > 0, ""even"": c % 2 == 0, ""magnitude"": c < 100}
+        }
+        for key, check_data in checks.items():
+            results[""status""][key] = {
+                ""positive"": check_data[""positive""],
+                ""even"": check_data[""even""],
+                ""magnitude"": check_data[""magnitude""]
+            }
+        return results
+if __name__ == '__main__':
+    validator = Validator()
+    sample_a = 10
+    sample_b = 50
+    sample_c = 150
+    report = validator.combine_and_report(sample_a, sample_b, sample_c)
+    print(report)",True,1,5856,95_12_1.py
+95,12,Combine three simple checks,"Develop a class named 'Validator' with a method 'combine_and_report' that takes three integer inputs, performs checks for positivity, evenness, and magnitude (less than 100), and returns a dictionary containing the original inputs and a status report.","class Validator:
+    def combine_and_report(self, a, b, c):
+        results = {
+            ""inputs"": [a, b, c],
+            ""status"": {}
+        }
+        checks = {
+            ""a"": {""positive"": a > 0, ""even"": a % 2 == 0, ""magnitude"": a < 100},
+            ""b"": {""positive"": b > 0, ""even"": b % 2 == 0, ""magnitude"": b < 100},
+            ""c"": {""positive"": c > 0, ""even"": c % 2 == 0, ""magnitude"": c < 100}
+        }
+        for key, check_data in checks.items():
+            results[""status""][key] = {
+                ""positive"": check_data[""positive""],
+                ""even"": check_data[""even""],
+                ""magnitude"": check_data[""magnitude""]
+            }
+        return results
+if __name__ == '__main__':
+    validator = Validator()
+    sample_a = 10
+    sample_b = 25
+    sample_c = 99
+    report = validator.combine_and_report(sample_a, sample_b, sample_c)
+    print(report)",True,2,5857,95_12_2.py
+95,12,Combine three simple checks,"Develop a class named 'Validator' with a method 'combine_and_report' that takes three integer inputs, performs checks for positivity, evenness, and magnitude (less than 100), and returns a dictionary containing the original inputs and a status report.","class Validator:
+    def combine_and_report(self, a, b, c):
+        results = {}
+        def check(n, name):
+            if n <= 0:
+                return False
+            if n % 2 != 0:
+                return False
+            if n >= 100:
+                return False
+            return True
+        status = {}
+        if check(a, 'a'):
+            status['a'] = 'Pass'
+        else:
+            status['a'] = 'Fail'
+        if check(b, 'b'):
+            status['b'] = 'Pass'
+        else:
+            status['b'] = 'Fail'
+        if check(c, 'c'):
+            status['c'] = 'Pass'
+        else:
+            status['c'] = 'Fail'
+        results['inputs'] = {'a': a, 'b': b, 'c': c}
+        results['status'] = status
+        return results
+if __name__ == '__main__':
+    validator = Validator()
+    sample_a = 10
+    sample_b = 20
+    sample_c = 99
+    report = validator.combine_and_report(sample_a, sample_b, sample_c)
+    print(report)",True,3,5858,95_12_3.py
+95,12,Combine three simple checks,"Develop a class named 'Validator' with a method 'combine_and_report' that takes three integer inputs, performs checks for positivity, evenness, and magnitude (less than 100), and returns a dictionary containing the original inputs and a status report.","class Validator:
+    def combine_and_report(self, a, b, c):
+        results = {
+            ""inputs"": [a, b, c],
+            ""status"": {}
+        }
+        for val in [a, b, c]:
+            status = {}
+            if val > 0:
+                status[""positivity""] = True
+            else:
+                status[""positivity""] = False
+            if val % 2 == 0:
+                status[""evenness""] = True
+            else:
+                status[""evenness""] = False
+            if val < 100:
+                status[""magnitude""] = True
+            else:
+                status[""magnitude""] = False
+            results[""status""][str(val)] = status
+        return results
+if __name__ == '__main__':
+    validator = Validator()
+    sample_a = 10
+    sample_b = 25
+    sample_c = 150
+    report = validator.combine_and_report(sample_a, sample_b, sample_c)
+    print(report)",True,4,5859,95_12_4.py
+95,12,Combine three simple checks,"Develop a class named 'Validator' with a method 'combine_and_report' that takes three integer inputs, performs checks for positivity, evenness, and magnitude (less than 100), and returns a dictionary containing the original inputs and a status report.","class Validator:
+    def combine_and_report(self, a, b, c):
+        results = {
+            ""inputs"": [a, b, c],
+            ""status"": {}
+        }
+        checks = {
+            ""a"": {""positive"": a > 0, ""even"": a % 2 == 0, ""magnitude"": a < 100},
+            ""b"": {""positive"": b > 0, ""even"": b % 2 == 0, ""magnitude"": b < 100},
+            ""c"": {""positive"": c > 0, ""even"": c % 2 == 0, ""magnitude"": c < 100}
+        }
+        for key, check in checks.items():
+            results[""status""][key] = {
+                ""positive"": check[""positive""],
+                ""even"": check[""even""],
+                ""magnitude"": check[""magnitude""]
+            }
+        return results
+if __name__ == '__main__':
+    validator = Validator()
+    sample_a = 10
+    sample_b = 25
+    sample_c = 99
+    report = validator.combine_and_report(sample_a, sample_b, sample_c)
+    print(report)",True,5,5860,95_12_5.py
+95,13,Combine three simple checks,"Write a clean and efficient Python function that takes three variables, checks if all three satisfy specific criteria (positive, even, and less than 100), and returns True only if all conditions are met, otherwise return False.","def check_conditions(a, b, c):
+    return a > 0 and a % 2 == 0 and a < 100 and b > 0 and b % 2 == 0 and b < 100 and c > 0 and c % 2 == 0 and c < 100
+if __name__ == '__main__':
+    print(check_conditions(10, 20, 30))
+    print(check_conditions(100, 20, 30))
+    print(check_conditions(10, 21, 30))
+    print(check_conditions(10, 20, 101))
+    print(check_conditions(5, 10, 12))",True,0,5861,95_13.py
+95,13,Combine three simple checks,"Write a clean and efficient Python function that takes three variables, checks if all three satisfy specific criteria (positive, even, and less than 100), and returns True only if all conditions are met, otherwise return False.","def check_conditions(a, b, c):
+    return a > 0 and a % 2 == 0 and a < 100 and b > 0 and b % 2 == 0 and b < 100 and c > 0 and c % 2 == 0 and c < 100
+if __name__ == '__main__':
+    print(check_conditions(10, 20, 30))
+    print(check_conditions(100, 20, 30))
+    print(check_conditions(5, 10, 100))
+    print(check_conditions(4, 6, 8))
+    print(check_conditions(10, 21, 30))",True,1,5862,95_13_1.py
+95,13,Combine three simple checks,"Write a clean and efficient Python function that takes three variables, checks if all three satisfy specific criteria (positive, even, and less than 100), and returns True only if all conditions are met, otherwise return False.","def check_conditions(a, b, c):
+    return a > 0 and a % 2 == 0 and a < 100 and b > 0 and b % 2 == 0 and b < 100 and c > 0 and c % 2 == 0 and c < 100
+if __name__ == '__main__':
+    print(check_conditions(10, 20, 30))
+    print(check_conditions(100, 20, 30))
+    print(check_conditions(5, 10, 99))
+    print(check_conditions(10, 21, 30))",True,2,5863,95_13_2.py
+96,0,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates the nested boolean logic expression: `(A and B) or (C and not D)`. Assume A, B, C, and D are boolean variables.","if __name__ == '__main__':
+    A = True
+    B = False
+    C = True
+    D = False
+    result = (A and B) or (C and not D)
+    print(result)",True,0,5864,96_0.py
+96,0,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates the nested boolean logic expression: `(A and B) or (C and not D)`. Assume A, B, C, and D are boolean variables.","def evaluate_expression(A, B, C, D):
+    result = (A and B) or (C and not D)
+    return result
+if __name__ == '__main__':
+    A = True
+    B = False
+    C = True
+    D = False
+    result = evaluate_expression(A, B, C, D)
+    print(result)",True,1,5865,96_0_1.py
+95,14,Combine three simple checks,"Generate the complete, best-practice Python code to read three integer inputs from the user, combine them by performing the three specified checks (positive, even, less than 100), and handle potential input errors gracefully.","def process_numbers(a, b, c):
+    results = {}
+    if a > 0:
+        results['a_positive'] = True
+    else:
+        results['a_positive'] = False
+    if a % 2 == 0:
+        results['a_even'] = True
+    else:
+        results['a_even'] = False
+    if a < 100:
+        results['a_less_than_100'] = True
+    else:
+        results['a_less_than_100'] = False
+    if b > 0:
+        results['b_positive'] = True
+    else:
+        results['b_positive'] = False
+    if b % 2 == 0:
+        results['b_even'] = True
+    else:
+        results['b_even'] = False
+    if b < 100:
+        results['b_less_than_100'] = True
+    else:
+        results['b_less_than_100'] = False
+    if c > 0:
+        results['c_positive'] = True
+    else:
+        results['c_positive'] = False
+    if c % 2 == 0:
+        results['c_even'] = True
+    else:
+        results['c_even'] = False
+    if c < 100:
+        results['c_less_than_100'] = True
+    else:
+        results['c_less_than_100'] = False
+    return results
+if __name__ == '__main__':
+    input_values = (10, 25, 150)
+    a, b, c = input_values
+    try:
+        processed_data = process_numbers(a, b, c)
+        print(processed_data)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")",True,0,5866,95_14.py
+95,14,Combine three simple checks,"Generate the complete, best-practice Python code to read three integer inputs from the user, combine them by performing the three specified checks (positive, even, less than 100), and handle potential input errors gracefully.","def process_numbers(a, b, c):
+    results = {}
+    if a > 0:
+        results['a_positive'] = True
+    else:
+        results['a_positive'] = False
+    if a % 2 == 0:
+        results['a_even'] = True
+    else:
+        results['a_even'] = False
+    if a < 100:
+        results['a_less_than_100'] = True
+    else:
+        results['a_less_than_100'] = False
+    if b > 0:
+        results['b_positive'] = True
+    else:
+        results['b_positive'] = False
+    if b % 2 == 0:
+        results['b_even'] = True
+    else:
+        results['b_even'] = False
+    if b < 100:
+        results['b_less_than_100'] = True
+    else:
+        results['b_less_than_100'] = False
+    if c > 0:
+        results['c_positive'] = True
+    else:
+        results['c_positive'] = False
+    if c % 2 == 0:
+        results['c_even'] = True
+    else:
+        results['c_even'] = False
+    if c < 100:
+        results['c_less_than_100'] = True
+    else:
+        results['c_less_than_100'] = False
+    return results
+if __name__ == '__main__':
+    input_values = (10, 25, 99)
+    a, b, c = input_values
+    try:
+        processed_data = process_numbers(a, b, c)
+        print(processed_data)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")",True,1,5867,95_14_1.py
+95,14,Combine three simple checks,"Generate the complete, best-practice Python code to read three integer inputs from the user, combine them by performing the three specified checks (positive, even, less than 100), and handle potential input errors gracefully.","def process_numbers(a, b, c):
+    results = {}
+    if a > 0:
+        results['a_positive'] = True
+    else:
+        results['a_positive'] = False
+    if a % 2 == 0:
+        results['a_even'] = True
+    else:
+        results['a_even'] = False
+    if a < 100:
+        results['a_less_than_100'] = True
+    else:
+        results['a_less_than_100'] = False
+    if b > 0:
+        results['b_positive'] = True
+    else:
+        results['b_positive'] = False
+    if b % 2 == 0:
+        results['b_even'] = True
+    else:
+        results['b_even'] = False
+    if b < 100:
+        results['b_less_than_100'] = True
+    else:
+        results['b_less_than_100'] = False
+    if c > 0:
+        results['c_positive'] = True
+    else:
+        results['c_positive'] = False
+    if c % 2 == 0:
+        results['c_even'] = True
+    else:
+        results['c_even'] = False
+    if c < 100:
+        results['c_less_than_100'] = True
+    else:
+        results['c_less_than_100'] = False
+    return results
+if __name__ == '__main__':
+    input_values = (10, 25, 99)
+    a, b, c = input_values
+    try:
+        results = process_numbers(a, b, c)
+        print(f""Results for inputs ({a}, {b}, {c}):"")
+        print(f""A checks: {results.get('a_positive')}, {results.get('a_even')}, {results.get('a_less_than_100')}"")
+        print(f""B checks: {results.get('b_positive')}, {results.get('b_even')}, {results.get('b_less_than_100')}"")
+        print(f""C checks: {results.get('c_positive')}, {results.get('c_even')}, {results.get('c_less_than_100')}"")
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")",True,2,5868,95_14_2.py
+95,14,Combine three simple checks,"Generate the complete, best-practice Python code to read three integer inputs from the user, combine them by performing the three specified checks (positive, even, less than 100), and handle potential input errors gracefully.","def process_numbers(a, b, c):
+    results = {}
+    if a > 0:
+        results['a_positive'] = True
+    else:
+        results['a_positive'] = False
+    if a % 2 == 0:
+        results['a_even'] = True
+    else:
+        results['a_even'] = False
+    if a < 100:
+        results['a_less_than_100'] = True
+    else:
+        results['a_less_than_100'] = False
+    if b > 0:
+        results['b_positive'] = True
+    else:
+        results['b_positive'] = False
+    if b % 2 == 0:
+        results['b_even'] = True
+    else:
+        results['b_even'] = False
+    if b < 100:
+        results['b_less_than_100'] = True
+    else:
+        results['b_less_than_100'] = False
+    if c > 0:
+        results['c_positive'] = True
+    else:
+        results['c_positive'] = False
+    if c % 2 == 0:
+        results['c_even'] = True
+    else:
+        results['c_even'] = False
+    if c < 100:
+        results['c_less_than_100'] = True
+    else:
+        results['c_less_than_100'] = False
+    return results
+if __name__ == '__main__':
+    input_values = (10, 25, 150)
+    a, b, c = input_values
+    try:
+        results = process_numbers(a, b, c)
+        print(results)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")",True,3,5869,95_14_3.py
+95,14,Combine three simple checks,"Generate the complete, best-practice Python code to read three integer inputs from the user, combine them by performing the three specified checks (positive, even, less than 100), and handle potential input errors gracefully.","def process_numbers(a, b, c):
+    results = {}
+    if a > 0:
+        results['a_positive'] = True
+    else:
+        results['a_positive'] = False
+    if a % 2 == 0:
+        results['a_even'] = True
+    else:
+        results['a_even'] = False
+    if a < 100:
+        results['a_less_than_100'] = True
+    else:
+        results['a_less_than_100'] = False
+    if b > 0:
+        results['b_positive'] = True
+    else:
+        results['b_positive'] = False
+    if b % 2 == 0:
+        results['b_even'] = True
+    else:
+        results['b_even'] = False
+    if b < 100:
+        results['b_less_than_100'] = True
+    else:
+        results['b_less_than_100'] = False
+    if c > 0:
+        results['c_positive'] = True
+    else:
+        results['c_positive'] = False
+    if c % 2 == 0:
+        results['c_even'] = True
+    else:
+        results['c_even'] = False
+    if c < 100:
+        results['c_less_than_100'] = True
+    else:
+        results['c_less_than_100'] = False
+    return results
+if __name__ == '__main__':
+    input_values = (10, 25, 99)
+    try:
+        a = int(input_values[0])
+        b = int(input_values[1])
+        c = int(input_values[2])
+        results = process_numbers(a, b, c)
+        print(results)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."")
+    except IndexError:
+        print(""Error: Not enough input values provided."")",True,4,5870,95_14_4.py
+95,14,Combine three simple checks,"Generate the complete, best-practice Python code to read three integer inputs from the user, combine them by performing the three specified checks (positive, even, less than 100), and handle potential input errors gracefully.","def process_numbers(a, b, c):
+    results = {}
+    if a > 0:
+        results['a_positive'] = True
+    else:
+        results['a_positive'] = False
+    if a % 2 == 0:
+        results['a_even'] = True
+    else:
+        results['a_even'] = False
+    if a < 100:
+        results['a_less_than_100'] = True
+    else:
+        results['a_less_than_100'] = False
+    if b > 0:
+        results['b_positive'] = True
+    else:
+        results['b_positive'] = False
+    if b % 2 == 0:
+        results['b_even'] = True
+    else:
+        results['b_even'] = False
+    if b < 100:
+        results['b_less_than_100'] = True
+    else:
+        results['b_less_than_100'] = False
+    if c > 0:
+        results['c_positive'] = True
+    else:
+        results['c_positive'] = False
+    if c % 2 == 0:
+        results['c_even'] = True
+    else:
+        results['c_even'] = False
+    if c < 100:
+        results['c_less_than_100'] = True
+    else:
+        results['c_less_than_100'] = False
+    return results
+if __name__ == '__main__':
+    input_a = 10
+    input_b = 50
+    input_c = 150
+    try:
+        numbers = [input_a, input_b, input_c]
+        if len(numbers) != 3:
+            raise ValueError(""Incorrect number of inputs provided."")
+        results = process_numbers(input_a, input_b, input_c)
+        print(results)
+    except ValueError as e:
+        print(f""Error: {e}"")
+    except TypeError:
+        print(""Error: Inputs must be integers."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,5,5871,95_14_5.py
+96,2,Evaluate nested boolean logic,Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes four boolean inputs and returns the result of the nested logic: `(a and b) or (c and not d)`. Ensure the implementation is robust and adheres to object-oriented principles.,"class BooleanEvaluator:
+    def check_complex_condition(self, a: bool, b: bool, c: bool, d: bool) -> bool:
+        result = (a and b) or (c and not d)
+        return result
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    a_val = True
+    b_val = False
+    c_val = True
+    d_val = False
+    result = evaluator.check_complex_condition(a_val, b_val, c_val, d_val)
+    print(result)",True,0,5872,96_2.py
+96,2,Evaluate nested boolean logic,Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes four boolean inputs and returns the result of the nested logic: `(a and b) or (c and not d)`. Ensure the implementation is robust and adheres to object-oriented principles.,"class BooleanEvaluator:
+    def check_complex_condition(self, a, b, c, d):
+        return (a and b) or (c and not d)
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    a_val = True
+    b_val = False
+    c_val = True
+    d_val = False
+    result = evaluator.check_complex_condition(a_val, b_val, c_val, d_val)
+    print(result)",True,1,5873,96_2_1.py
+96,2,Evaluate nested boolean logic,Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes four boolean inputs and returns the result of the nested logic: `(a and b) or (c and not d)`. Ensure the implementation is robust and adheres to object-oriented principles.,"class BooleanEvaluator:
+    def check_complex_condition(self, a, b, c, d):
+        result = (a and b) or (c and not d)
+        return result
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    a_val = True
+    b_val = False
+    c_val = True
+    d_val = False
+    result = evaluator.check_complex_condition(a_val, b_val, c_val, d_val)
+    print(result)",True,2,5874,96_2_2.py
+96,2,Evaluate nested boolean logic,Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes four boolean inputs and returns the result of the nested logic: `(a and b) or (c and not d)`. Ensure the implementation is robust and adheres to object-oriented principles.,"class BooleanEvaluator:
+    def check_complex_condition(self, a: bool, b: bool, c: bool, d: bool) -> bool:
+        result = (a and b) or (c and not d)
+        return result
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    a1, b1, c1, d1 = True, True, False, True
+    result1 = evaluator.check_complex_condition(a1, b1, c1, d1)
+    print(f""a={a1}, b={b1}, c={c1}, d={d1} -> Result: {result1}"")
+    a2, b2, c2, d2 = True, False, True, False
+    result2 = evaluator.check_complex_condition(a2, b2, c2, d2)
+    print(f""a={a2}, b={b2}, c={c2}, d={d2} -> Result: {result2}"")
+    a3, b3, c3, d3 = False, False, False, False
+    result3 = evaluator.check_complex_condition(a3, b3, c3, d3)
+    print(f""a={a3}, b={b3}, c={c3}, d={d3} -> Result: {result3}"")
+    a4, b4, c4, d4 = True, True, True, True
+    result4 = evaluator.check_complex_condition(a4, b4, c4, d4)
+    print(f""a={a4}, b={b4}, c={c4}, d={d4} -> Result: {result4}"")",True,3,5875,96_2_3.py
+96,2,Evaluate nested boolean logic,Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes four boolean inputs and returns the result of the nested logic: `(a and b) or (c and not d)`. Ensure the implementation is robust and adheres to object-oriented principles.,"class BooleanEvaluator:
+    def check_complex_condition(self, a: bool, b: bool, c: bool, d: bool) -> bool:
+        result = (a and b) or (c and not d)
+        return result
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    a1, b1, c1, d1 = True, True, True, False
+    result1 = evaluator.check_complex_condition(a1, b1, c1, d1)
+    print(f""a={a1}, b={b1}, c={c1}, d={d1} -> Result: {result1}"")
+    a2, b2, c2, d2 = True, False, False, True
+    result2 = evaluator.check_complex_condition(a2, b2, c2, d2)
+    print(f""a={a2}, b={b2}, c={c2}, d={d2} -> Result: {result2}"")
+    a3, b3, c3, d3 = False, False, True, False
+    result3 = evaluator.check_complex_condition(a3, b3, c3, d3)
+    print(f""a={a3}, b={b3}, c={c3}, d={d3} -> Result: {result3}"")
+    a4, b4, c4, d4 = True, True, False, True
+    result4 = evaluator.check_complex_condition(a4, b4, c4, d4)
+    print(f""a={a4}, b={b4}, c={c4}, d={d4} -> Result: {result4}"")",True,4,5876,96_2_4.py
+96,1,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts four boolean arguments (a, b, c, d) and returns the result of the expression: `(a and b) or (c and not d)`. Use clear variable names and efficient boolean operators.","def evaluate_nested_logic(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+if __name__ == '__main__':
+    a_val = True
+    b_val = False
+    c_val = True
+    d_val = False
+    final_result = evaluate_nested_logic(a_val, b_val, c_val, d_val)
+    print(final_result)",True,0,5877,96_1.py
+96,1,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts four boolean arguments (a, b, c, d) and returns the result of the expression: `(a and b) or (c and not d)`. Use clear variable names and efficient boolean operators.","def evaluate_nested_logic(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+if __name__ == '__main__':
+    a_val = True
+    b_val = False
+    c_val = True
+    d_val = False
+    output = evaluate_nested_logic(a_val, b_val, c_val, d_val)
+    print(output)",True,1,5878,96_1_1.py
+96,1,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts four boolean arguments (a, b, c, d) and returns the result of the expression: `(a and b) or (c and not d)`. Use clear variable names and efficient boolean operators.","def evaluate_nested_logic(a, b, c, d):
+    intermediate_result_1 = a and b
+    intermediate_result_2 = c and not d
+    final_result = intermediate_result_1 or intermediate_result_2
+    return final_result
+if __name__ == '__main__':
+    a_val = True
+    b_val = False
+    c_val = True
+    d_val = False
+    result = evaluate_nested_logic(a_val, b_val, c_val, d_val)
+    print(result)",True,2,5879,96_1_2.py
+96,4,Evaluate nested boolean logic,"Create a recursive Python function to evaluate arbitrarily nested boolean expressions represented as a nested list structure, where the structure defines the order of operations. The structure should represent the expression: `((A op B) op C) op D`.","def evaluate_expression(expression):
+    if len(expression) == 1:
+        return expression[0]
+    else:
+        left = evaluate_expression(expression[0])
+        right = evaluate_expression(expression[1])
+        op = expression[2]
+        return eval(f""{left} {op} {right}"")
+if __name__ == '__main__':
+    expression = [
+        'A',
+        'op',
+        ['A', 'B'],
+        'op',
+        'C'
+    ]
+    expr1 = [True, False, 'and']
+    expr2 = [expr1[0], True, 'and']
+    final_expression = [expr2[0], False, 'and']
+    def recursive_eval(expr):
+        if len(expr) == 3:
+            left, right, op = expr
+            if op == 'and':
+                return left and right
+            elif op == 'or':
+                return left or right
+            elif op == 'not':
+                return not left
+            else:
+                raise ValueError(f""Unknown operator: {op}"")
+        else:
+            raise ValueError(""Invalid expression structure for this recursive implementation."")
+    expr_ab = [True, False, 'and']
+    expr_abc = [expr_ab[0], True, 'and']
+    final_expr = [expr_abc[0], False, 'and']
+    result = recursive_eval(final_expr)
+    print(result)",True,0,5880,96_4.py
+96,4,Evaluate nested boolean logic,"Create a recursive Python function to evaluate arbitrarily nested boolean expressions represented as a nested list structure, where the structure defines the order of operations. The structure should represent the expression: `((A op B) op C) op D`.","def evaluate_expression(expression):
+    if len(expression) == 1:
+        return expression[0]
+    else:
+        left = evaluate_expression(expression[0])
+        right = evaluate_expression(expression[1])
+        operator = expression[2]
+        result = None
+        if operator == 'and':
+            result = left and right
+        elif operator == 'or':
+            result = left or right
+        elif operator == 'not':
+            result = not left
+        elif operator == 'xor':
+            result = left ^ right
+        else:
+            raise ValueError(""Unknown operator"")
+        return result
+if __name__ == '__main__':
+    sample_expression = [
+        'and',
+        [True, False],
+        'or',
+        [True, True],
+        'and',
+        [True, False]
+    ]
+    def evaluate_nested(expr):
+        if len(expr) == 1:
+            return expr[0]
+        left_expr = evaluate_nested(expr[0])
+        operator = expr[1]
+        right_expr = evaluate_nested(expr[2])
+        if operator == 'and':
+            return left_expr and right_expr
+        elif operator == 'or':
+            return left_expr or right_expr
+        elif operator == 'not':
+            return not left_expr
+        elif operator == 'xor':
+            return left_expr ^ right_expr
+        else:
+            raise ValueError(""Unknown operator"")
+    test_expression = [
+        [True, 'and', False],            
+        [True, 'or', True],                     
+        [True, 'and', False]                           
+    ]
+    try:
+        result = evaluate_nested(test_expression)
+        print(result)
+    except Exception as e:
+        print(f""Error: {e}"")",True,1,5881,96_4_1.py
+96,4,Evaluate nested boolean logic,"Create a recursive Python function to evaluate arbitrarily nested boolean expressions represented as a nested list structure, where the structure defines the order of operations. The structure should represent the expression: `((A op B) op C) op D`.","def evaluate_expression(expression):
+    if len(expression) == 1:
+        return expression[0]
+    else:
+        left = evaluate_expression(expression[0])
+        right = evaluate_expression(expression[1])
+        operator = expression[2]
+        result = None
+        if operator == 'and':
+            result = left and right
+        elif operator == 'or':
+            result = left or right
+        elif operator == 'not':
+            result = not left
+        elif operator == 'xor':
+            result = left ^ right
+        else:
+            raise ValueError(""Unknown operator"")
+        return result
+if __name__ == '__main__':
+    expression = [['A', 'and', ['B', 'or', ['C', 'not', 'D']]]]
+    result = evaluate_expression(expression)
+    print(result)",True,2,5882,96_4_2.py
+96,5,Evaluate nested boolean logic,"Implement a solution using Python's built-in `eval()` function safely (or preferably, without it) to evaluate the expression `(X and Y) or (Z and not W)`, ensuring all inputs are handled as booleans.","if __name__ == '__main__':
+    X = True
+    Y = False
+    Z = True
+    W = False
+    expression = ""(X and Y) or (Z and not W)""
+    result = (X and Y) or (Z and not W)
+    print(result)",True,0,5883,96_5.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {}
+    for var, val in sample_data:
+        values[var] = val
+    if len(sample_data) >= 4:
+        A_val = sample_data[0][1]
+        B_val = sample_data[1][1]
+        C_val = sample_data[2][1]
+        D_val = sample_data[3][1]
+        test_result = (A_val and B_val) or (C_val and not D_val)
+        print(f""A={A_val}, B={B_val}, C={C_val}, D={D_val}"")
+        print(f""Result: {test_result}"")
+    else:
+        print(""Sample data is insufficient to test the expression (A and B) or (C and not D)."")",True,0,5884,96_6.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, var_b in variables:
+        results.append((var_a and var_b) or (variables[2].get(0, False) and not variables[3].get(0, False)))
+    return results
+if __name__ == '__main__':
+    test_cases = [
+        [('A', True), ('B', False), ('C', True), ('D', False)],
+        [('X', True), ('Y', True), ('Z', False), ('W', True)],
+        [('P', False), ('Q', False), ('R', True), ('S', False)]
+    ]
+    for case in test_cases:
+        variables = [tuple(case[i]) for i in range(4)]
+        def evaluate_expression_corrected(variables_list):
+            results = []
+            for item in variables_list:
+                if len(item) >= 4:
+                    A, B, C, D = item[0], item[1], item[2], item[3]
+                    result = (A and B) or (C and not D)
+                    results.append(result)
+                else:
+                    results.append(None)
+            return results
+        results = evaluate_expression_corrected(variables)
+        print(results)",True,1,5885,96_6_1.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {}
+    for var, val in sample_data:
+        values[var] = val
+    A = values.get('A', False)
+    B = values.get('B', False)
+    C = values.get('C', False)
+    D = values.get('D', False)
+    test_inputs = [
+        (A, B, C, D)
+    ]
+    expected_result = (A and B) or (C and not D)
+    actual_result = evaluate_expression(sample_data)
+    print(f""Test Inputs: A={A}, B={B}, C={C}, D={D}"")
+    print(f""Expected Result: {expected_result}"")
+    print(f""Actual Results (all combinations): {actual_result}"")
+    final_result = (A and B) or (C and not D)
+    print(f""Specific Expression Evaluation: {final_result}"")",True,2,5886,96_6_2.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {name: value for name, value in sample_data}
+    A = next(val for name, val in sample_data if name == 'A')
+    B = next(val for name, val in sample_data if name == 'B')
+    C = next(val for name, val in sample_data if name == 'C')
+    D = next(val for name, val in sample_data if name == 'D')
+    test_result = (A and B) or (C and not D)
+    print(test_result)",True,3,5887,96_6_3.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {name: value for name, value in sample_data}
+    n = len(sample_data)
+    all_results = []
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                for l in range(n):
+                    A_tuple = sample_data[i]
+                    B_tuple = sample_data[j]
+                    C_tuple = sample_data[k]
+                    D_tuple = sample_data[l]
+                    A = A_tuple[0]
+                    B = B_tuple[0]
+                    C = C_tuple[0]
+                    D = D_tuple[0]
+                    result = (A and B) or (C and not D)
+                    all_results.append(result)
+    print(all_results)",True,4,5888,96_6_4.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {}
+    for var, val in sample_data:
+        values[var] = val
+    A = values.get('A', False)
+    B = values.get('B', False)
+    C = values.get('C', False)
+    D = values.get('D', False)
+    test_cases = [
+        [A, B, C, D]
+    ]
+    if len(sample_data) >= 4:
+        A_val = sample_data[0][1] if sample_data[0][0] == 'A' else False
+        B_val = sample_data[1][1] if sample_data[1][0] == 'B' else False
+        C_val = sample_data[2][1] if sample_data[2][0] == 'C' else False
+        D_val = sample_data[3][1] if sample_data[3][0] == 'D' else False
+        expression_result = (A_val and B_val) or (C_val and not D_val)
+        print(expression_result)
+    else:
+        print(""Not enough variables provided to evaluate the expression."")",True,5,5889,96_6_5.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {}
+    for var, val in sample_data:
+        values[var] = val
+    A = values.get('A', False)
+    B = values.get('B', False)
+    C = values.get('C', False)
+    D = values.get('D', False)
+    test_cases = [
+        [A, B, C, D]
+    ]
+    if len(sample_data) >= 4:
+        A_val = sample_data[0][1] if sample_data[0][0] == 'A' else False
+        B_val = sample_data[1][1] if sample_data[1][0] == 'B' else False
+        C_val = sample_data[2][1] if sample_data[2][0] == 'C' else False
+        D_val = sample_data[3][1] if sample_data[3][0] == 'D' else False
+        expression_result = (A_val and B_val) or (C_val and not D_val)
+        print(expression_result)
+    else:
+        print(""Insufficient data to evaluate the expression."")",True,6,5890,96_6_6.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expressions(variables):
+    results = []
+    for var_tuple in variables:
+        A, B = var_tuple[0], var_tuple[1]
+        C, D = var_tuple[2], var_tuple[3]
+        expression_result = (A and B) or (C and not D)
+        results.append(expression_result)
+    return results
+if __name__ == '__main__':
+    test_data = [
+        ('A', True, 'B', False),
+        ('A', False, 'B', True),
+        ('A', True, 'B', True),
+        ('A', False, 'B', False)
+    ]
+    evaluated_results = evaluate_expressions(test_data)
+    print(evaluated_results)",True,7,5891,96_6_7.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, val_a in variables:
+        for var_b, val_b in variables:
+            for var_c, val_c in variables:
+                for var_d, val_d in variables:
+                    result = (val_a and val_b) or (val_c and not val_d)
+                    results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = [('A', True), ('B', False), ('C', True), ('D', False)]
+    values = {}
+    for var, val in sample_data:
+        values[var] = val
+    A = values.get('A', False)
+    B = values.get('B', False)
+    C = values.get('C', False)
+    D = values.get('D', False)
+    test_cases = [
+        [A, B, C, D]
+    ]
+    A_val = next(val for var, val in sample_data if var == 'A')
+    B_val = next(val for var, val in sample_data if var == 'B')
+    C_val = next(val for var, val in sample_data if var == 'C')
+    D_val = next(val for var, val in sample_data if var == 'D')
+    final_result = (A_val and B_val) or (C_val and not D_val)
+    print(final_result)",True,8,5892,96_6_8.py
+96,6,Evaluate nested boolean logic,"Write a testable Python function that takes a list of tuples, where each tuple represents the variables (e.g., `[('A', True), ('B', False), ...]`), and evaluates the expression `(A and B) or (C and not D)` for each set of inputs.","def evaluate_expression(variables):
+    results = []
+    for var_a, var_b in variables:
+        results.append((var_a and var_b) or (variables[2].get(0, False) and not variables[3].get(0, False)))
+    return results
+if __name__ == '__main__':
+    test_cases = [
+        [('A', True), ('B', False), ('C', True), ('D', False)],
+        [('X', True), ('Y', True), ('Z', False), ('W', True)],
+        [('P', False), ('Q', False), ('R', True), ('S', False)]
+    ]
+    for case in test_cases:
+        A_val = case[0][1] if len(case) > 0 else False
+        B_val = case[1][1] if len(case) > 1 else False
+        C_val = case[2][1] if len(case) > 2 else False
+        D_val = case[3][1] if len(case) > 3 else False
+        def evaluate_specific(var_list):
+            if len(var_list) < 4:
+                return []
+            A = var_list[0][1]
+            B = var_list[1][1]
+            C = var_list[2][1]
+            D = var_list[3][1]
+            result = (A and B) or (C and not D)
+            return [result]
+        def evaluate_expression_final(variables):
+            if len(variables) < 4:
+                return []
+            A = variables[0][1]
+            B = variables[1][1]
+            C = variables[2][1]
+            D = variables[3][1]
+            result = (A and B) or (C and not D)
+            return [result]
+        result1 = evaluate_expression_final(test_cases[0])
+        print(f""Test Case 1 Result: {result1}"")
+        assert result1[0] == True
+        result2 = evaluate_expression_final(test_cases[1])
+        print(f""Test Case 2 Result: {result2}"")
+        assert result2[0] == True
+        result3 = evaluate_expression_final(test_cases[2])
+        print(f""Test Case 3 Result: {result3}"")
+        assert result3[0] == True",True,9,5893,96_6_9.py
+96,7,Evaluate nested boolean logic,"Design and implement a highly efficient bitwise approach to evaluate the boolean logic `(A and B) or (C and not D)` if A, B, C, and D are represented by integers (where non-zero is True). Assume A=1, B=0, C=1, D=0 for testing.",,False,0,5894,96_7.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression(num_tests):
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if expected != actual:
+            print(f""Test failed for a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return False
+    return True
+if __name__ == '__main__':
+    NUM_TESTS = 100
+    all_passed = True
+    print(""Starting evaluation tests..."")
+    all_passed = test_expression(NUM_TESTS)
+    if all_passed:
+        print(f""Successfully passed {NUM_TESTS} random tests."")
+    else:
+        print(""One or more tests failed."")",True,0,5895,96_8.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression(num_tests):
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if actual != expected:
+            print(f""Test failed for a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return False
+    return True
+if __name__ == '__main__':
+    NUM_TESTS = 100
+    all_passed = True
+    print(""Starting evaluation tests..."")
+    all_passed = test_expression(NUM_TESTS)
+    if all_passed:
+        print(f""All {NUM_TESTS} tests passed successfully."")
+    else:
+        print(""One or more tests failed."")",True,1,5896,96_8_1.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression(num_tests):
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if expected != actual:
+            print(f""Test failed for a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return False
+    return True
+if __name__ == '__main__':
+    NUM_TESTS = 100
+    all_passed = True
+    print(""Starting evaluation tests..."")
+    all_passed = test_expression(NUM_TESTS)
+    if all_passed:
+        print(f""Successfully passed {NUM_TESTS} random tests."")
+    else:
+        print(f""One or more tests failed."")",True,2,5897,96_8_2.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression(num_tests):
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if expected != actual:
+            print(f""Test failed for a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return False
+    return True
+if __name__ == '__main__':
+    NUM_TESTS = 100
+    all_passed = test_expression(NUM_TESTS)
+    if all_passed:
+        print(""All 100 tests passed successfully."")
+    else:
+        print(""One or more tests failed."")",True,3,5898,96_8_3.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression(num_tests):
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if expected != actual:
+            print(f""Test failed: a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return False
+    return True
+if __name__ == '__main__':
+    NUM_TESTS = 100
+    all_passed = True
+    print(""Starting evaluation tests..."")
+    all_passed = test_expression(NUM_TESTS)
+    if all_passed:
+        print(f""Successfully passed {NUM_TESTS} random tests."")
+    else:
+        print(""One or more tests failed."")",True,4,5899,96_8_4.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression(num_tests):
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if expected != actual:
+            print(f""Test failed: a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return False
+    return True
+if __name__ == '__main__':
+    NUM_TESTS = 100
+    all_passed = True
+    print(""Starting evaluation tests..."")
+    all_passed = test_expression(NUM_TESTS)
+    if all_passed:
+        print(f""Successfully passed {NUM_TESTS} random tests."")
+    else:
+        print(f""One or more tests failed."")",True,5,5900,96_8_5.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_evaluation():
+    num_tests = 100
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if actual != expected:
+            print(f""Test failed for a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return
+    print(""All 100 tests passed."")
+if __name__ == '__main__':
+    test_evaluation()",True,6,5901,96_8_6.py
+96,8,Evaluate nested boolean logic,Write a comprehensive script that defines a function to evaluate the expression `(a and b) or (c and not d)` and then tests it against 100 randomly generated sets of boolean inputs to verify correctness.,"import random
+def evaluate_expression(a, b, c, d):
+    result = (a and b) or (c and not d)
+    return result
+def test_expression():
+    num_tests = 100
+    for _ in range(num_tests):
+        a = random.choice([True, False])
+        b = random.choice([True, False])
+        c = random.choice([True, False])
+        d = random.choice([True, False])
+        expected = evaluate_expression(a, b, c, d)
+        actual = evaluate_expression(a, b, c, d)
+        if actual != expected:
+            print(f""Test failed for a={a}, b={b}, c={c}, d={d}. Expected: {expected}, Got: {actual}"")
+            return
+    print(""All 100 tests passed."")
+if __name__ == '__main__':
+    test_expression()",True,7,5902,96_8_7.py
+96,9,Evaluate nested boolean logic,"Refactor the logic for evaluating `(A and B) or (C and not D)` into a concise, single-line expression within a function, prioritizing readability and adherence to Python best practices.","def evaluate_expression(A, B, C, D):
+    return (A and B) or (C and not D)
+if __name__ == '__main__':
+    A_val = True
+    B_val = False
+    C_val = True
+    D_val = False
+    result = evaluate_expression(A_val, B_val, C_val, D_val)
+    print(result)",True,0,5903,96_9.py
+96,10,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates a complex nested boolean expression involving AND, OR, and NOT operators, demonstrating operator precedence correctly.","if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    expression = (a and b) or (not c and a)
+    result = expression
+    print(f""a: {a}"")
+    print(f""b: {b}"")
+    print(f""c: {c}"")
+    print(f""Expression: {expression}"")",True,0,5904,96_10.py
+96,10,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates a complex nested boolean expression involving AND, OR, and NOT operators, demonstrating operator precedence correctly.","if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    expression = (a and not b) or (c and a)
+    result = expression
+    print(f""a: {a}"")
+    print(f""b: {b}"")
+    print(f""c: {c}"")
+    print(f""Expression: {expression}"")",True,1,5905,96_10_1.py
+96,10,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates a complex nested boolean expression involving AND, OR, and NOT operators, demonstrating operator precedence correctly.","if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    d = False
+    result = not a or (b and c) and d
+    print(result)",True,2,5906,96_10_2.py
+96,10,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates a complex nested boolean expression involving AND, OR, and NOT operators, demonstrating operator precedence correctly.","if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    d = False
+    expression = (a and b) or (not c and d)
+    print(f""a: {a}"")
+    print(f""b: {b}"")
+    print(f""c: {c}"")
+    print(f""d: {d}"")
+    print(f""Expression result: {expression}"")",True,3,5907,96_10_3.py
+96,10,Evaluate nested boolean logic,"Write a complete, well-documented Python script that evaluates a complex nested boolean expression involving AND, OR, and NOT operators, demonstrating operator precedence correctly.","if __name__ == '__main__':
+    a = True
+    b = False
+    c = True
+    result = not a or (b and c) and a
+    print(result)",True,4,5908,96_10_4.py
+91,13,Negate a single boolean value,"Create a standalone Python script that reads a boolean value from standard input, negates it, and prints the result to standard output. Handle potential input errors gracefully, focusing on professional error handling.",,False,0,5909,91_13.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            elif any(results):
+                return True
+            else:
+                return False
+        return False
+    else:
+        return False
+if __name__ == '__main__':
+    sample1 = [True, True]
+    sample2 = [False, True]
+    sample3 = [False, False]
+    sample4 = [True]
+    sample5 = [False]
+    sample6 = [True, False, True]
+    sample7 = [True, True, False]
+    sample8 = []
+    sample9 = [True, [False, True], True]
+    sample10 = [[True], [False], [True]]
+    print(f""Sample 1: {evaluate_nested_logic(sample1)}"")
+    print(f""Sample 2: {evaluate_nested_logic(sample2)}"")
+    print(f""Sample 3: {evaluate_nested_logic(sample3)}"")
+    print(f""Sample 4: {evaluate_nested_logic(sample4)}"")
+    print(f""Sample 5: {evaluate_nested_logic(sample5)}"")
+    print(f""Sample 6: {evaluate_nested_logic(sample6)}"")
+    print(f""Sample 7: {evaluate_nested_logic(sample7)}"")
+    print(f""Sample 8: {evaluate_nested_logic(sample8)}"")
+    print(f""Sample 9: {evaluate_nested_logic(sample9)}"")
+    print(f""Sample 10: {evaluate_nested_logic(sample10)}"")",True,0,5910,96_11.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            if any(results):
+                return True
+            return False
+        return False
+    return False
+if __name__ == '__main__':
+    sample1 = [True, True]
+    sample2 = [False, True]
+    sample3 = [True, False, True]
+    sample4 = [False]
+    sample5 = [True, True, True]
+    sample6 = [False, False]
+    sample7 = [True]
+    sample8 = []
+    sample9 = (True, False)
+    sample10 = (True, True, False)
+    print(f""Sample 1: {evaluate_nested_logic(sample1)}"")
+    print(f""Sample 2: {evaluate_nested_logic(sample2)}"")
+    print(f""Sample 3: {evaluate_nested_logic(sample3)}"")
+    print(f""Sample 4: {evaluate_nested_logic(sample4)}"")
+    print(f""Sample 5: {evaluate_nested_logic(sample5)}"")
+    print(f""Sample 6: {evaluate_nested_logic(sample6)}"")
+    print(f""Sample 7: {evaluate_nested_logic(sample7)}"")
+    print(f""Sample 8: {evaluate_nested_logic(sample8)}"")
+    print(f""Sample 9: {evaluate_nested_logic(sample9)}"")
+    print(f""Sample 10: {evaluate_nested_logic(sample10)}"")",True,1,5911,96_11_1.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        else:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            return all(results)
+    else:
+        return False
+if __name__ == '__main__':
+    sample1 = [True, False]
+    sample2 = [True, True, False]
+    sample3 = [True]
+    sample4 = [False]
+    sample5 = [True, True]
+    sample6 = [False, False]
+    sample7 = [True, False, [True, False], [True]]
+    sample8 = [True, [False, [True, False]], True]
+    sample9 = []
+    sample10 = [True, True, True]
+    print(f""Sample 1: {evaluate_nested_logic(sample1)}"")
+    print(f""Sample 2: {evaluate_nested_logic(sample2)}"")
+    print(f""Sample 3: {evaluate_nested_logic(sample3)}"")
+    print(f""Sample 4: {evaluate_nested_logic(sample4)}"")
+    print(f""Sample 5: {evaluate_nested_logic(sample5)}"")
+    print(f""Sample 6: {evaluate_nested_logic(sample6)}"")
+    print(f""Sample 7: {evaluate_nested_logic(sample7)}"")
+    print(f""Sample 8: {evaluate_nested_logic(sample8)}"")
+    print(f""Sample 9: {evaluate_nested_logic(sample9)}"")
+    print(f""Sample 10: {evaluate_nested_logic(sample10)}"")",True,2,5912,96_11_2.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            return any(results)
+        return False
+    else:
+        return False
+if __name__ == '__main__':
+    test_case_1 = [True, True]
+    test_case_2 = [False, True]
+    test_case_3 = [True, False]
+    test_case_4 = [False]
+    test_case_5 = [True, True, False]
+    test_case_6 = [False, False]
+    test_case_7 = [True, True, True]
+    test_case_8 = []
+    test_case_9 = [True]
+    test_case_10 = [False, False, False]
+    print(f""Test 1: {evaluate_nested_logic(test_case_1)}"")
+    print(f""Test 2: {evaluate_nested_logic(test_case_2)}"")
+    print(f""Test 3: {evaluate_nested_logic(test_case_3)}"")
+    print(f""Test 4: {evaluate_nested_logic(test_case_4)}"")
+    print(f""Test 5: {evaluate_nested_logic(test_case_5)}"")
+    print(f""Test 6: {evaluate_nested_logic(test_case_6)}"")
+    print(f""Test 7: {evaluate_nested_logic(test_case_7)}"")
+    print(f""Test 8: {evaluate_nested_logic(test_case_8)}"")
+    print(f""Test 9: {evaluate_nested_logic(test_case_9)}"")
+    print(f""Test 10: {evaluate_nested_logic(test_case_10)}"")",True,3,5913,96_11_3.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            if any(results):
+                return True
+            return False
+        return False
+    return False
+if __name__ == '__main__':
+    test_case_1 = [True, True]
+    test_case_2 = [False, True]
+    test_case_3 = [True, False, True]
+    test_case_4 = [False]
+    test_case_5 = [True, True, False]
+    test_case_6 = [True]
+    test_case_7 = []
+    test_case_8 = [True, [False, True], True]
+    test_case_9 = [[True], [False], [True]]
+    print(f""Test Case 1: {evaluate_nested_logic(test_case_1)}"")
+    print(f""Test Case 2: {evaluate_nested_logic(test_case_2)}"")
+    print(f""Test Case 3: {evaluate_nested_logic(test_case_3)}"")
+    print(f""Test Case 4: {evaluate_nested_logic(test_case_4)}"")
+    print(f""Test Case 5: {evaluate_nested_logic(test_case_5)}"")
+    print(f""Test Case 6: {evaluate_nested_logic(test_case_6)}"")
+    print(f""Test Case 7: {evaluate_nested_logic(test_case_7)}"")
+    print(f""Test Case 8: {evaluate_nested_logic(test_case_8)}"")
+    print(f""Test Case 9: {evaluate_nested_logic(test_case_9)}"")",True,4,5914,96_11_4.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            if any(results):
+                return False
+            return False
+        return False
+    return False
+if __name__ == '__main__':
+    test_case_1 = [True, True]
+    test_case_2 = [False, True]
+    test_case_3 = [True, False, True]
+    test_case_4 = [False]
+    test_case_5 = [True, True, True]
+    test_case_6 = []
+    test_case_7 = [False, False]
+    test_case_8 = [True]
+    test_case_9 = [False, True, False]
+    print(f""Test Case 1: {evaluate_nested_logic(test_case_1)}"")
+    print(f""Test Case 2: {evaluate_nested_logic(test_case_2)}"")
+    print(f""Test Case 3: {evaluate_nested_logic(test_case_3)}"")
+    print(f""Test Case 4: {evaluate_nested_logic(test_case_4)}"")
+    print(f""Test Case 5: {evaluate_nested_logic(test_case_5)}"")
+    print(f""Test Case 6: {evaluate_nested_logic(test_case_6)}"")
+    print(f""Test Case 7: {evaluate_nested_logic(test_case_7)}"")
+    print(f""Test Case 8: {evaluate_nested_logic(test_case_8)}"")
+    print(f""Test Case 9: {evaluate_nested_logic(test_case_9)}"")",True,5,5915,96_11_5.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            if any(results):
+                return True
+            return False
+        return False
+    return False
+if __name__ == '__main__':
+    sample1 = [True, True]
+    sample2 = [False, True]
+    sample3 = [True, False, True]
+    sample4 = [False]
+    sample5 = [True, True, True]
+    sample6 = []
+    sample7 = [False, False]
+    sample8 = [True]
+    sample9 = [False, True, False]
+    print(f""Sample 1: {evaluate_nested_logic(sample1)}"")
+    print(f""Sample 2: {evaluate_nested_logic(sample2)}"")
+    print(f""Sample 3: {evaluate_nested_logic(sample3)}"")
+    print(f""Sample 4: {evaluate_nested_logic(sample4)}"")
+    print(f""Sample 5: {evaluate_nested_logic(sample5)}"")
+    print(f""Sample 6: {evaluate_nested_logic(sample6)}"")
+    print(f""Sample 7: {evaluate_nested_logic(sample7)}"")
+    print(f""Sample 8: {evaluate_nested_logic(sample8)}"")
+    print(f""Sample 9: {evaluate_nested_logic(sample9)}"")",True,6,5916,96_11_6.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if all(results):
+                return True
+            if any(results):
+                return True
+            return False
+        return False
+    return False
+if __name__ == '__main__':
+    sample1 = [True, True]
+    sample2 = [False, True]
+    sample3 = [True, False, True]
+    sample4 = [False]
+    sample5 = [True, True, False]
+    sample6 = [True]
+    sample7 = []
+    sample8 = [True, [False, True], True]
+    sample9 = [[True], [False], [True, False]]
+    print(f""Sample 1: {evaluate_nested_logic(sample1)}"")
+    print(f""Sample 2: {evaluate_nested_logic(sample2)}"")
+    print(f""Sample 3: {evaluate_nested_logic(sample3)}"")
+    print(f""Sample 4: {evaluate_nested_logic(sample4)}"")
+    print(f""Sample 5: {evaluate_nested_logic(sample5)}"")
+    print(f""Sample 6: {evaluate_nested_logic(sample6)}"")
+    print(f""Sample 7: {evaluate_nested_logic(sample7)}"")
+    print(f""Sample 8: {evaluate_nested_logic(sample8)}"")
+    print(f""Sample 9: {evaluate_nested_logic(sample9)}"")",True,7,5917,96_11_7.py
+96,11,Evaluate nested boolean logic,"Implement an optimized Python function named `evaluate_nested_logic` that accepts a nested structure of boolean conditions (represented as nested lists or tuples) and returns the final boolean result, prioritizing clarity and efficiency.","def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        if not logic_structure:
+            return False
+        if len(logic_structure) == 1:
+            return evaluate_nested_logic(logic_structure[0])
+        if len(logic_structure) > 1:
+            results = [evaluate_nested_logic(item) for item in logic_structure]
+            if len(results) == 1:
+                return results[0]
+            if len(results) == 2:
+                return results[0] and results[1]
+            if len(results) > 2:
+                return all(results)
+            return False
+    return False
+if __name__ == '__main__':
+    sample1 = [True, False]
+    sample2 = [True, True, False]
+    sample3 = [True]
+    sample4 = [False]
+    sample5 = [True, True, True]
+    sample6 = [False, False]
+    sample7 = [True, False, True]
+    sample8 = [True, True, True, False]
+    sample9 = [True, True]
+    sample10 = [False]
+    sample11 = [True, True, True, True]
+    sample12 = []
+    sample13 = [True, False, True]
+    print(f""Sample 1: {evaluate_nested_logic(sample1)}"")
+    print(f""Sample 2: {evaluate_nested_logic(sample2)}"")
+    print(f""Sample 3: {evaluate_nested_logic(sample3)}"")
+    print(f""Sample 4: {evaluate_nested_logic(sample4)}"")
+    print(f""Sample 5: {evaluate_nested_logic(sample5)}"")
+    print(f""Sample 6: {evaluate_nested_logic(sample6)}"")
+    print(f""Sample 7: {evaluate_nested_logic(sample7)}"")
+    print(f""Sample 8: {evaluate_nested_logic(sample8)}"")
+    print(f""Sample 9: {evaluate_nested_logic(sample9)}"")
+    print(f""Sample 10: {evaluate_nested_logic(sample10)}"")
+    print(f""Sample 11: {evaluate_nested_logic(sample11)}"")
+    print(f""Sample 12: {evaluate_nested_logic(sample12)}"")
+    print(f""Sample 13: {evaluate_nested_logic(sample13)}"")",True,8,5918,96_11_8.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_booleans(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_booleans(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True], [False, [False, True]], [False]]
+    structure2 = [[False, [False, False]], [True]]
+    structure3 = [[False, [False, [False, [False, False]]]], [False]]
+    structure4 = [[False, False], [False, False]]
+    structure5 = [[False, [False, [False, [False, [False]]]]]]
+    print(f""Structure 1 result: {evaluate_nested_booleans(structure1)}"")
+    print(f""Structure 2 result: {evaluate_nested_booleans(structure2)}"")
+    print(f""Structure 3 result: {evaluate_nested_booleans(structure3)}"")
+    print(f""Structure 4 result: {evaluate_nested_booleans(structure4)}"")
+    print(f""Structure 5 result: {evaluate_nested_booleans(structure5)}"")",True,0,5919,96_13.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_boolean(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_boolean(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True], [False, [False, True]], [False]]
+    structure2 = [[False, [False, [False, False]]], [True]]
+    structure3 = [[False, False], [False, False]]
+    structure4 = [[False, [False, [False, [False, False]]]]]
+    structure5 = [[False, False]]
+    print(f""Structure 1 evaluates to True: {evaluate_nested_boolean(structure1)}"")
+    print(f""Structure 2 evaluates to True: {evaluate_nested_boolean(structure2)}"")
+    print(f""Structure 3 evaluates to True: {evaluate_nested_boolean(structure3)}"")
+    print(f""Structure 4 evaluates to True: {evaluate_nested_boolean(structure4)}"")
+    print(f""Structure 5 evaluates to True: {evaluate_nested_boolean(structure5)}"")",True,1,5920,96_13_1.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_booleans(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_booleans(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True, False], [False, False]]
+    structure2 = [[False, False], [True, False]]
+    structure3 = [[False, False], [False, False]]
+    structure4 = [[True], [False, [False, True]]]
+    structure5 = [[False, [True, [False, False]]], [False]]
+    print(f""Structure 1 evaluates to True: {evaluate_nested_booleans(structure1)}"")
+    print(f""Structure 2 evaluates to True: {evaluate_nested_booleans(structure2)}"")
+    print(f""Structure 3 evaluates to True: {evaluate_nested_booleans(structure3)}"")
+    print(f""Structure 4 evaluates to True: {evaluate_nested_booleans(structure4)}"")
+    print(f""Structure 5 evaluates to True: {evaluate_nested_booleans(structure5)}"")",True,2,5921,96_13_2.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_booleans(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_booleans(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True], [False, [False, True]], [False]]
+    print(evaluate_nested_booleans(structure1))
+    structure2 = [[False, [False, False]], [True]]
+    print(evaluate_nested_booleans(structure2))
+    structure3 = [[False, [False, [False, [False, False]]]]]
+    print(evaluate_nested_booleans(structure3))
+    structure4 = [[False, False], [False, False]]
+    print(evaluate_nested_booleans(structure4))
+    structure5 = [[False, False, [False, True]], [False]]
+    print(evaluate_nested_booleans(structure5))",True,3,5922,96_13_3.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_boolean(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_boolean(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True], [False, [False, True]], [False]]
+    structure2 = [[False, False], [True, [False, False]], [False]]
+    structure3 = [[False, False, [False, [True]]], [False]]
+    structure4 = [[False, False], [False, False]]
+    structure5 = [[False, False], [False, False], [False, False]]
+    print(f""Structure 1 result: {evaluate_nested_boolean(structure1)}"")
+    print(f""Structure 2 result: {evaluate_nested_boolean(structure2)}"")
+    print(f""Structure 3 result: {evaluate_nested_boolean(structure3)}"")
+    print(f""Structure 4 result: {evaluate_nested_boolean(structure4)}"")
+    print(f""Structure 5 result: {evaluate_nested_boolean(structure5)}"")",True,4,5923,96_13_4.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_boolean(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_boolean(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True], [False, [True, False]], [False]]
+    structure2 = [[False, [False, [False, [True]]]], [True]]
+    structure3 = [[False, [False, [False]]], [False]]
+    structure4 = [[False, [False, [False, [False]]]]]
+    structure5 = [[False, [False, [False, [False, [False]]]]]]
+    print(f""Structure 1 result: {evaluate_nested_boolean(structure1)}"")
+    print(f""Structure 2 result: {evaluate_nested_boolean(structure2)}"")
+    print(f""Structure 3 result: {evaluate_nested_boolean(structure3)}"")
+    print(f""Structure 4 result: {evaluate_nested_boolean(structure4)}"")
+    print(f""Structure 5 result: {evaluate_nested_boolean(structure5)}"")",True,5,5924,96_13_5.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_boolean(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_boolean(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True], [False, [False, True]], [False]]
+    structure2 = [[False, [False, False]], [True]]
+    structure3 = [[False, [False, [False, [False, False]]]]]
+    structure4 = [[False, False], [False, False]]
+    structure5 = [[False, [False, [False, [False, [False]]]]]]
+    print(f""Structure 1 result: {evaluate_nested_boolean(structure1)}"")
+    print(f""Structure 2 result: {evaluate_nested_boolean(structure2)}"")
+    print(f""Structure 3 result: {evaluate_nested_boolean(structure3)}"")
+    print(f""Structure 4 result: {evaluate_nested_boolean(structure4)}"")
+    print(f""Structure 5 result: {evaluate_nested_boolean(structure5)}"")",True,6,5925,96_13_6.py
+96,13,Evaluate nested boolean logic,"Write a function that takes a list of lists of booleans representing a nested structure and recursively evaluates the entire structure to determine if at least one path evaluates to True, optimizing for early exit.","def evaluate_nested_booleans(nested_list):
+    for item in nested_list:
+        if isinstance(item, list):
+            if evaluate_nested_booleans(item):
+                return True
+        elif isinstance(item, bool):
+            if item:
+                return True
+    return False
+if __name__ == '__main__':
+    structure1 = [[True, False], [False, False]]
+    structure2 = [[False, False], [True, False]]
+    structure3 = [[False, False], [False, False]]
+    structure4 = [[True], [False, [False, True]]]
+    structure5 = [[False, [False, [False, [True]]]]]
+    structure6 = [[False, False], [False, False]]
+    print(f""Structure 1 result: {evaluate_nested_booleans(structure1)}"")
+    print(f""Structure 2 result: {evaluate_nested_booleans(structure2)}"")
+    print(f""Structure 3 result: {evaluate_nested_booleans(structure3)}"")
+    print(f""Structure 4 result: {evaluate_nested_booleans(structure4)}"")
+    print(f""Structure 5 result: {evaluate_nested_booleans(structure5)}"")
+    print(f""Structure 6 result: {evaluate_nested_booleans(structure6)}"")",True,7,5926,96_13_7.py
+96,14,Evaluate nested boolean logic,"Create a robust Python function that simulates the evaluation of a deeply nested logical expression string (e.g., using parentheses) and returns the final boolean outcome, handling potential syntax errors gracefully.","import operator
+def evaluate_nested_boolean_expression(expression):
+    try:
+        tokens = expression.split()
+        stack = []
+        operators = {
+            'and': operator.and_,
+            'or': operator.or_,
+            'not': lambda x: not x,
+            '(': lambda: None
+        }
+        for token in tokens:
+            if token == '(':
+                stack.append(token)
+            elif token == ')':
+                while stack and stack[-1] != '(':
+                    op = stack.pop()
+                    operand = stack.pop()
+                    if op == 'not':
+                        result = operators['not'](operand)
+                    elif op == 'and':
+                        result = operators['and'](operand, stack.pop())
+                    elif op == 'or':
+                        result = operators['or'](operand, stack.pop())
+                    else:
+                        raise ValueError(f""Unknown operator: {op}"")
+                    stack.append(result)
+                if stack and stack[-1] == '(':
+                    stack.pop()
+            elif token in operators:
+                stack.append(token)
+            else:
+                stack.append(token)
+        if stack:
+            return stack[-1]
+        else:
+            return False
+    except Exception:
+        return None
+if __name__ == '__main__':
+    expression1 = ""(True and False) or (not False)""
+    expression2 = ""True or (False and True)""
+    expression3 = ""not (True and not False)""
+    expression4 = ""True and (False or True)""
+    expression5 = ""True and False""
+    expression6 = ""True or (False""
+    expression7 = ""True and (False or True""
+    expression8 = ""True and (False or True)""
+    expression9 = ""True and (False or True)""
+    expression10 = ""True and False and True""
+    expression11 = ""not True""
+    expression12 = ""not (True and False)""
+    expression13 = ""True and (False or True)""
+    expression14 = ""True and False and True""
+    expression15 = ""True and (False or True""
+    expression16 = ""True and False and True""
+    expression17 = ""True and (False or True)""
+    expression18 = ""True and False and True""
+    expression19 = ""True and False and True""
+    expression20 = ""True and False and True""
+    expression21 = ""True and False and True""
+    expression22 = ""True and False and True""
+    expression23 = ""True and False and True""
+    expression24 = ""True and False and True""
+    expression25 = ""True and False and True""
+    expression26 = ""True and False and True""
+    expression27 = ""True and False and True""
+    expression28 = ""True and False and True""
+    expression29 = ""True and False and True""
+    expression30 = ""True and False and True""
+    expression31 = ""True and False and True""
+    expression32 = ""True and False and True""
+    expression33 = ""True and False and True""
+    expression34 = ""True and False and True""
+    expression35 = ""True and False and True""
+    expression36 = ""True and False and True""
+    expression37 = ""True and False and True""
+    expression38 = ""True and False and True""
+    expression39 = ""True and False and True""
+    expression40 = ""True and False and True""
+    expression41 = ""True and False and True""
+    expression42 = ""True and False and True""
+    expression43 = ""True and False and True""
+    expression44 = ""True and False and True""
+    expression45 = ""True and False and True""
+    expression46 = ""True and False and True""
+    expression47 = ""True and False and True""
+    expression48 = ""True and False and True""
+    expression49 = ""True and False and True""
+    expression50 = ""True and False and True""
+    expression51 = ""True and False and True""
+    expression52 = ""True and False and True""
+    expression53 = ""True and False and True""
+    expression54 = ""True and False and True""
+    expression55 = ""True and False and True""
+    expression56 = ""True and False and True""
+    expression57 = ""True and False and True""
+    expression58 = ""True and False and True""
+    expression59 = ""True and False and True""
+    expression60 = ""True and False and True""
+    expression61 = ""True and False and True""
+    expression62 = ""True and False and True""
+    expression63 = ""True and False and True""
+    expression64 = ""True and False and True""
+    expression65 = ""True and False and True""
+    expression66 = ""True and False and True""
+    expression67 = ""True and False and True""
+    expression68 = ""True and False and True""
+    expression69 = ""True and False and True""
+    expression70 = ""True and False and True""
+    expression71 = ""True and False and True""
+    expression72 = ""True and False and True""
+    expression73 = ""True and False and True""
+    expression74 = ""True and False and True""
+    expression75 = ""True and False and True""
+    expression76 = ""True and False and True""
+    expression77 = ""True and False and True""
+    expression78 = ""True and False and True""
+    expression79 = ""True and False and True""
+    expression80 = ""True and False and True""
+    expression81 = ""True and False and True""
+    expression82 = ""True and False and True""
+    expression83 = ""True and False and True""
+    expression84 = ""True and False and True""
+    expression85 = ""True and False and True""
+    expression86 = ""True and False and True""
+    expression87 = ""True and False and True""
+    expression88 = ""True and False and True""
+    expression89 = ""True and False and True""
+    expression90 = ""True and False and True""
+    expression91 = ""True and False and True""
+    expression92 = ""True and False and True""
+    expression93 = ""True and False and True""
+    expression94 = ""True and False and True""
+    expression95 = ""True and False and True""
+    expression96 = ""True and False and True""
+    expression97 = ""True and False and True""
+    expression98 = ""True and False and True""
+    expression99 = ""True and False and True""
+    expression100 = ""True and False and True""
+    expression101 = ""True and False and True""
+    expression102 = ""True and False and True""
+    expression103 = ""True and False and True""
+    expression104 = ""True and False and True""
+    expression105 = ""True and False and True""
+    expression106 = ""True and False and True""
+    expression107 = ""True and False and True""
+    expression108 = ""True and False and True""
+    expression109 = ""True and False and True""
+    expression110 = ""True and False and True""
+    expression111 = ""True and False and True""
+    expression112 = ""True and False and True""
+    expression113 = ""True and False and True""
+    expression114 = ""True and False and True""
+    expression115 = ""True and False and True""
+    expression116 = ""True and False and True""
+    expression117 = ""True and False and True""
+    expression118 = ""True and False and True""
+    expression119 = ""True and False and True""
+    expression120 = ""True and False and True""
+    expression121 = ""True and False and True""
+    expression122 = ""True and False and True""
+    expression123 = ""True and False and True""
+    expression124 = ""True and False and True""
+    expression125 = ""True and False and True""
+print(""Example 1 Result:"", eval(f""({1+1}) > 0""))
+print(""Example 2 Result:"", eval(f""5 > 3""))
+print(""Example 3 Result:"", eval(f""10 / 2""))
+print(""Example 4 Result:"", eval(f""10 - 5""))
+print(""Example 5 Result:"", eval(f""2 ** 3""))
+print",True,0,5927,96_14.py
+96,14,Evaluate nested boolean logic,"Create a robust Python function that simulates the evaluation of a deeply nested logical expression string (e.g., using parentheses) and returns the final boolean outcome, handling potential syntax errors gracefully.","def evaluate_nested_boolean_expression(expression: str, variables: dict) -> bool:
+    stack = []
+    tokens = expression.replace('(', ' ( ').replace(')', ' ) ').split()
+    for token in tokens:
+        if token.isdigit() or token in variables:
+            if token.isdigit():
+                stack.append(bool(int(token)))
+            elif token in variables:
+                stack.append(variables[token])
+        elif token == '(':
+            stack.append(None)
+        elif token == ')':
+            if not stack:
+                raise ValueError(""Mismatched parentheses: closing parenthesis without opening one."")
+            result = stack.pop()
+            if result is None:
+                raise ValueError(""Mismatched parentheses: empty expression inside parentheses."")
+            stack.append(result)
+        else:
+            if token.lower() == 'and':
+                if len(stack) < 2:
+                    raise ValueError(""Syntax error: 'and' requires two operands."")
+                right = stack.pop()
+                left = stack.pop()
+                stack.append(left and right)
+            elif token.lower() == 'or':
+                if len(stack) < 2:
+                    raise ValueError(""Syntax error: 'or' requires two operands."")
+                right = stack.pop()
+                left = stack.pop()
+                stack.append(left or right)
+            else:
+                raise ValueError(f""Unknown token: {token}"")
+    if len(stack) != 1:
+        raise ValueError(""Syntax error: Unbalanced expression."")
+    return stack[0]
+if __name__ == '__main__':
+    variables = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": True
+    }
+    test_cases = [
+        (""A and (B or C)"", variables, True),
+        (""(A and B) or C"", variables, True),
+        (""not (A or B)"", variables, False),
+        (""A and not B"", variables, False),
+        (""not (A and B)"", variables, False),
+        (""A or (B and C)"", variables, True),
+        (""A and (B or (C and A))"", variables, True),
+        (""A and (B or (C and D))"", variables, False)                                                                                                                                                
+    ]
+    print(""--- Testing Nested Expression Evaluation ---"")
+    for expression, vars_dict, expected in test_cases:
+        try:
+            result = evaluate_nested_boolean_expression(expression, vars_dict)
+            status = ""PASS"" if result == expected else f""FAIL (Expected: {expected}, Got: {result})""
+            print(f""Expression: '{expression}'"")
+            print(f""Result: {result} | Status: {status}\n"")
+        except ValueError as e:
+            print(f""Expression: '{expression}'"")
+            print(f""ERROR: {e}\n"")
+        except Exception as e:
+            print(f""Expression: '{expression}'"")
+            print(f""UNEXPECTED ERROR: {e}\n"")
+    print(""--- Testing Error Handling ---"")
+    error_cases = [
+        (""A and B"", variables, None),                                       
+        (""(A and B"", variables, None),             
+        (""A and"", variables, None),                  
+        (""A or B or C"", variables, None),                                      
+        (""A & B"", variables, None)                   
+    ]
+    for expression, vars_dict, _ in error_cases:
+        try:
+            evaluate_nested_boolean_expression(expression, vars_dict)
+            print(f""Expression: '{expression}' | FAILED TO CATCH ERROR"")
+        except ValueError as e:
+            print(f""Expression: '{expression}' | Successfully caught error: {e}\n"")
+        except Exception as e:
+            print(f""Expression: '{expression}' | Caught unexpected error: {e}\n"")",True,1,5928,96_14_1.py
+96,14,Evaluate nested boolean logic,"Create a robust Python function that simulates the evaluation of a deeply nested logical expression string (e.g., using parentheses) and returns the final boolean outcome, handling potential syntax errors gracefully.","def evaluate_nested_boolean_expression(expression):
+    stack = []
+    operators = []
+    values = []
+    i = 0
+    while i < len(expression):
+        char = expression[i]
+        if char.isalnum():
+            num_str = """"
+            while i < len(expression) and expression[i].isalnum():
+                num_str += expression[i]
+                i += 1
+            if num_str:
+                values.append(float(num_str))
+            else:
+                raise ValueError(""Invalid character sequence"")
+        elif char == '(':
+            stack.append(char)
+            operators.append('(')
+        elif char == ')':
+            if not stack or stack[-1] != '(':
+                raise ValueError(""Mismatched parentheses"")
+            stack.pop()
+            operators.pop()
+        elif char in '+-*/':
+            operators.append(char)
+        else:
+            raise ValueError(f""Invalid character in expression: {char}"")
+        i += 1
+    if stack:
+        raise ValueError(""Mismatched parentheses remaining"")
+    if len(values) == 0:
+        return False
+    if len(values) == 1:
+        return bool(values[0])
+    if len(values) == 2:
+        op = operators[0]
+        if op == '(':
+            raise ValueError(""Invalid expression structure"")
+        if op in '+-*/':
+            try:
+                if op == '+':
+                    return values[0] and values[1]
+                elif op == '-':
+                    return values[0] and (not values[1])
+                elif op == '*':
+                    return values[0] and values[1]
+                elif op == '/':
+                    return values[0] and (values[1] != 0) and (values[0] > values[1])
+            except ZeroDivisionError:
+                return False
+    if len(values) > 2:
+        return False
+    return False
+if __name__ == '__main__':
+    test_cases = [
+        (""((1) AND (2))"", False),
+        (""(True AND False)"", False),
+        (""((1) OR (0))"", True),
+        (""(1 AND 0)"", False),
+        (""(True OR True)"", True),
+        (""((1) AND (1))"", True),
+        (""(1 OR 0)"", True),
+        (""((1) AND (0))"", False),
+        (""((True) AND (False))"", False),
+        (""((1) OR (1))"", True),
+        (""((1) AND (1))"", True),
+        (""((1) OR (0))"", True),
+        (""((1) AND (0))"", False),
+        (""((True) OR (True))"", True),
+        (""((1) AND (1))"", True),
+        (""((1) OR (0))"", True),
+        (""((1) AND (0))"", False),
+        (""((True) OR (True))"", True),
+        (""((1) AND (1))"", True),
+        (""((1) OR (0))"", True),
+    ]
+    for expression, expected in test_cases:
+        try:
+            result = evaluate_nested_boolean_expression(expression)
+            assert result == expected, f""Expression: {expression}, Expected: {expected}, Got: {result}""
+            print(f""PASS: {expression} -> {result}"")
+        except ValueError as e:
+            print(f""ERROR: {expression} raised ValueError: {e}"")
+        except Exception as e:
+            print(f""UNEXPECTED ERROR for {expression}: {e}"")
+    print(""\n--- Additional Test Cases ---"")
+    try:
+        evaluate_nested_boolean_expression(""(1 AND 2"")
+    except ValueError as e:
+        print(f""Caught expected error for '(1 AND 2': {e}"")
+    try:
+        evaluate_nested_boolean_expression(""(1 $ 2)"")
+    except ValueError as e:
+        print(f""Caught expected error for '(1 $ 2)': {e}"")
+    print(""Simulation complete."")",True,2,5929,96_14_2.py
+96,14,Evaluate nested boolean logic,"Create a robust Python function that simulates the evaluation of a deeply nested logical expression string (e.g., using parentheses) and returns the final boolean outcome, handling potential syntax errors gracefully.","import operator
+def evaluate_nested_boolean_expression(expression):
+    stack = []
+    operators = {
+        'and': operator.and_,
+        'or': operator.or_,
+        'not': operator.not_,
+        '==': operator.eq,
+        '!=': operator.ne,
+        '>': operator.gt,
+        '<': operator.lt,
+        '>=': operator.ge,
+        '<=': operator.le
+    }
+    tokens = expression.replace('(', ' ( ').replace(')', ' ) ').split()
+    for token in tokens:
+        if token.isdigit() or (token.startswith('-') and token[1:].isdigit()):
+            stack.append(float(token))
+        elif token in operators:
+            stack.append(token)
+        elif token == '(':
+            stack.append(token)
+        elif token == ')':
+            while stack and stack[-1] != '(':
+                op = stack.pop()
+                right = stack.pop()
+                stack.append(operators[op](right))
+            if not stack or stack[-1] != '(':
+                raise ValueError(""Mismatched parentheses"")
+            stack.pop()
+        else:
+            try:
+                value = float(token)
+                stack.append(value)
+            except ValueError:
+                raise ValueError(f""Invalid token: {token}"")
+    if len(stack) == 1:
+        return stack[0]
+    else:
+        raise ValueError(""Malformed expression"")
+if __name__ == '__main__':
+    expressions = [
+        ""True and (False or True)"",
+        ""not (1 == 1)"",
+        ""(5 > 3) and (10 < 20)"",
+        ""True or (False and False)"",
+        ""not (5 > 10)"",
+        ""True and (5 > 3) or False""
+    ]
+    for expr in expressions:
+        try:
+            result = evaluate_nested_boolean_expression(expr)
+            print(f""Expression: {expr}"")
+            print(f""Result: {result}\n"")
+        except ValueError as e:
+            print(f""Expression: {expr}"")
+            print(f""Error: {e}\n"")
+        except Exception as e:
+            print(f""Expression: {expr}"")
+            print(f""Unexpected Error: {e}\n"")",True,3,5930,96_14_3.py
+96,12,Evaluate nested boolean logic,"Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes a dictionary representing nested boolean states and returns the aggregated result, ensuring the implementation uses idiomatic Python for nested logic evaluation.","class BooleanEvaluator:
+    def check_complex_condition(self, nested_states: dict) -> bool:
+        def evaluate(state):
+            if isinstance(state, bool):
+                return state
+            elif isinstance(state, dict):
+                if not state:
+                    return False
+                return all(evaluate(value) for value in state.values())
+            else:
+                return bool(state)
+        return evaluate(nested_states)
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    sample_data_1 = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": True,
+        ""D"": {
+            ""E"": True,
+            ""F"": False
+        }
+    }
+    sample_data_2 = {
+        ""X"": True,
+        ""Y"": {
+            ""P"": False,
+            ""Q"": True
+        },
+        ""R"": False
+    }
+    print(f""Result for sample_data_1: {evaluator.check_complex_condition(sample_data_1)}"")
+    print(f""Result for sample_data_2: {evaluator.check_complex_condition(sample_data_2)}"")",True,0,5931,96_12.py
+96,12,Evaluate nested boolean logic,"Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes a dictionary representing nested boolean states and returns the aggregated result, ensuring the implementation uses idiomatic Python for nested logic evaluation.","class BooleanEvaluator:
+    def check_complex_condition(self, nested_states: dict) -> bool:
+        def evaluate(state):
+            if isinstance(state, bool):
+                return state
+            elif isinstance(state, dict):
+                if not state:
+                    return False
+                return all(evaluate(value) for value in state.values())
+            return False
+        return evaluate(nested_states)
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    sample1 = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": True
+    }
+    result1 = evaluator.check_complex_condition(sample1)
+    print(f""Result 1: {result1}"")
+    sample2 = {
+        ""X"": True,
+        ""Y"": True,
+        ""Z"": False
+    }
+    result2 = evaluator.check_complex_condition(sample2)
+    print(f""Result 2: {result2}"")
+    sample3 = {
+        ""P"": True,
+        ""Q"": False,
+        ""R"": True,
+        ""S"": True
+    }
+    result3 = evaluator.check_complex_condition(sample3)
+    print(f""Result 3: {result3}"")
+    sample4 = {
+        ""Empty"": {}
+    }
+    result4 = evaluator.check_complex_condition(sample4)
+    print(f""Result 4: {result4}"")
+    sample5 = {
+        ""All"": True
+    }
+    result5 = evaluator.check_complex_condition(sample5)
+    print(f""Result 5: {result5}"")",True,1,5932,96_12_1.py
+96,12,Evaluate nested boolean logic,"Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes a dictionary representing nested boolean states and returns the aggregated result, ensuring the implementation uses idiomatic Python for nested logic evaluation.","class BooleanEvaluator:
+    def check_complex_condition(self, nested_states: dict) -> bool:
+        def evaluate(state):
+            if isinstance(state, bool):
+                return state
+            elif isinstance(state, dict):
+                if not state:
+                    return False
+                return all(evaluate(value) for value in state.values())
+            else:
+                return bool(state)
+        return evaluate(nested_states)
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    sample_data_1 = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": True,
+        ""D"": {""E"": True, ""F"": False},
+        ""G"": None
+    }
+    sample_data_2 = {
+        ""X"": True,
+        ""Y"": {""P"": True, ""Q"": False},
+        ""Z"": False
+    }
+    result_1 = evaluator.check_complex_condition(sample_data_1)
+    print(f""Result 1: {result_1}"")
+    result_2 = evaluator.check_complex_condition(sample_data_2)
+    print(f""Result 2: {result_2}"")",True,2,5933,96_12_2.py
+96,12,Evaluate nested boolean logic,"Develop a class named `BooleanEvaluator` with a method `check_complex_condition` that takes a dictionary representing nested boolean states and returns the aggregated result, ensuring the implementation uses idiomatic Python for nested logic evaluation.","class BooleanEvaluator:
+    def check_complex_condition(self, states: dict) -> bool:
+        if not states:
+            return False
+        def evaluate_nested(sub_states: dict) -> bool:
+            if not sub_states:
+                return False
+            results = []
+            for key, value in sub_states.items():
+                if isinstance(value, dict):
+                    results.append(evaluate_nested(value))
+                elif isinstance(value, bool):
+                    results.append(value)
+                else:
+                    results.append(bool(value))
+            return all(results)
+        return evaluate_nested(states)
+if __name__ == '__main__':
+    evaluator = BooleanEvaluator()
+    sample_states_1 = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": {
+            ""D"": True,
+            ""E"": False
+        }
+    }
+    sample_states_2 = {
+        ""X"": True,
+        ""Y"": {
+            ""P"": False,
+            ""Q"": {
+                ""R"": True
+            }
+        }
+    }
+    sample_states_3 = {
+        ""S1"": True,
+        ""S2"": False,
+        ""S3"": {
+            ""S3a"": True,
+            ""S3b"": True
+        }
+    }
+    print(f""Result for sample_states_1: {evaluator.check_complex_condition(sample_states_1)}"")
+    print(f""Result for sample_states_2: {evaluator.check_complex_condition(sample_states_2)}"")
+    print(f""Result for sample_states_3: {evaluator.check_complex_condition(sample_states_3)}"")",True,3,5934,96_12_3.py
+97,1,Create a simple truth table,Implement an optimized Python function that takes two boolean inputs and prints the corresponding truth table entries for all four combinations (True/False).,"def print_truth_table(a, b):
+    print(f""a: {a}, b: {b}"")
+    print(f""True, True"")
+    print(f""True, False"")
+    print(f""False, True"")
+    print(f""False, False"")
+if __name__ == '__main__':
+    print_truth_table(True, True)
+    print(""-"" * 10)
+    print_truth_table(True, False)
+    print(""-"" * 10)
+    print_truth_table(False, True)
+    print(""-"" * 10)
+    print_truth_table(False, False)",True,0,5935,97_1.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a, val_b, val_c)
+                    results.append(result)
+        return results
+    def display(self, results):
+        print(""A | B | C | A AND B | A AND C | B AND C | A AND B AND C"")
+        print(""-"" * 60)
+        for a, b, c in results:
+            ab = a & b
+            ac = a & c
+            bc = b & c
+            abc = a & b & c
+            print(f""{a} | {b} | {c} | {ab} | {ac} | {bc} | {abc}"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    a_val = 0
+    b_val = 1
+    c_val = 0
+    all_results = generator.generate(a_val, b_val, c_val)
+    generator.display(all_results)",True,0,5936,97_2.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a, val_b, val_c)
+                    truth_value = ""T"" if (val_a or val_b or val_c) else ""F""
+                    results.append((val_a, val_b, val_c, truth_value))
+        return results
+    def display(self, results):
+        print(""A | B | C | A OR B OR C"")
+        print(""---|---|---|---------"")
+        for a, b, c, result in results:
+            print(f""{a} | {b} | {c} | {result}"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    a_val = 0
+    b_val = 1
+    c_val = 0
+    sample_results = generator.generate(a_val, b_val, c_val)
+    generator.display(sample_results)",True,1,5937,97_2_1.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a, val_b, val_c)
+                    truth_value = str(val_a) + "" "" + str(val_b) + "" "" + str(val_c)
+                    results.append((result, truth_value))
+        return results
+    def display(self, a, b, c):
+        data = self.generate(a, b, c)
+        print(""A | B | C | A AND B | A AND C | B AND C | A AND B AND C"")
+        print(""-"" * 55)
+        for (a_val, b_val, c_val), truth_value in data:
+            ab = a_val and b_val
+            ac = a_val and c_val
+            bc = b_val and c_val
+            abc = a_val and b_val and c_val
+            print(f""{a_val} | {b_val} | {c_val} | {ab} | {ac} | {bc} | {abc}"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    generator.display(0, 0, 0)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(0, 0, 1)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(0, 1, 0)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(1, 0, 0)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(1, 1, 0)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(1, 0, 1)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(0, 1, 1)
+    print(""\n"" + ""=""*55 + ""\n"")
+    generator.display(1, 1, 1)",True,2,5938,97_2_2.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for i in range(8):
+            a_val = (i >> 2) & 1
+            b_val = (i >> 1) & 1
+            c_val = i & 1
+            a_str = str(a_val)
+            b_str = str(b_val)
+            c_str = str(c_val)
+            row = [a_str, b_str, c_str]
+            if a_val == 1:
+                row.append(str(a_val))
+            else:
+                row.append(str(a_val))
+            if b_val == 1:
+                row.append(str(b_val))
+            else:
+                row.append(str(b_val))
+            if c_val == 1:
+                row.append(str(c_val))
+            else:
+                row.append(str(c_val))
+            results.append(row)
+        return results
+    def display(self, results):
+        headers = [""A"", ""B"", ""C""]
+        print(f""{headers[0]:<3} {headers[1]:<3} {headers[2]:<3} |"")
+        print(""-"" * 15)
+        for row in results:
+            print(f""{row[0]:<3} {row[1]:<3} {row[2]:<3} |"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    a_sample = 0
+    b_sample = 1
+    c_sample = 0
+    print(""Generating truth table for A, B, C with sample values A=0, B=1, C=0"")
+    table_data = generator.generate(a_sample, b_sample, c_sample)
+    generator.display(table_data)
+    print(""\nGenerating truth table for A, B, C with sample values A=1, B=0, C=1"")
+    table_data_2 = generator.generate(1, 0, 1)
+    generator.display(table_data_2)",True,3,5939,97_2_3.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for i in range(8):
+            a_val = (i >> 2) & 1
+            b_val = (i >> 1) & 1
+            c_val = i & 1
+            a_str = str(a_val)
+            b_str = str(b_val)
+            c_str = str(c_val)
+            row = [a_str, b_str, c_str]
+            if a_val == 1:
+                row.append(str(a_val))
+            else:
+                row.append(str(a_val))
+            if b_val == 1:
+                row.append(str(b_val))
+            else:
+                row.append(str(b_val))
+            if c_val == 1:
+                row.append(str(c_val))
+            else:
+                row.append(str(c_val))
+            results.append(row)
+        return results
+    def display(self, results):
+        headers = [""A"", ""B"", ""C""]
+        print(f""{headers[0]:<3} {headers[1]:<3} {headers[2]:<3} |"")
+        for row in results:
+            print(f""{row[0]:<3} {row[1]:<3} {row[2]:<3} |"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    A_sample = 0
+    B_sample = 1
+    C_sample = 0
+    print(""Generating Truth Table for A, B, C with A=0, B=1, C=0"")
+    table_data = generator.generate(A_sample, B_sample, C_sample)
+    generator.display(table_data)
+    print(""\nGenerating Truth Table for A, B, C with A=1, B=0, C=1"")
+    table_data_2 = generator.generate(1, 0, 1)
+    generator.display(table_data_2)",True,4,5940,97_2_4.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a << 2) + (val_b << 1) + val_c
+                    results.append((val_a, val_b, val_c, result))
+        return results
+    def display(self, results):
+        print(""A | B | C | A & B & C | A & ~B & C | ~A & B & C | ~A & ~B & C | A & B & ~C | A & ~B & ~C | ~A & B & ~C | ~A & ~B & C | A & ~B & C | ~A & B & C | ~A & ~B & ~C"")
+        print(""-"" * 85)
+        for a, b, c, r in results:
+            print(f""{a} | {b} | {c} | {r}"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    a_val = 0
+    b_val = 1
+    c_val = 0
+    truth_table_data = generator.generate(a_val, b_val, c_val)
+    generator.display(truth_table_data)",True,5,5941,97_2_5.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a, val_b, val_c)
+                    truth_value = str(val_a) + str(val_b) + str(val_c)
+                    results.append((result, truth_value))
+        return results
+    def display(self, results):
+        headers = [""A"", ""B"", ""C"", ""A AND B"", ""A OR B"", ""A XOR B"", ""A AND C"", ""A OR C"", ""A XOR C"", ""B AND C"", ""B OR C"", ""B XOR C"", ""C""]
+        print(f""{'A':<3}{'B':<3}{'C':<3} | {'A AND B':<8} {'A OR B':<8} {'A XOR B':<8} | {'A AND C':<8} {'A OR C':<8} {'A XOR C':<8} | {'B AND C':<8} {'B OR C':<8} {'B XOR C':<8} | {'C':<3}"")
+        print(""-"" * 75)
+        for (a, b, c), truth_value in results:
+            ab = a & b
+            ac = a & c
+            bc = b & c
+            and_ab = a & b
+            or_ab = a | b
+            xor_ab = a ^ b
+            and_ac = a & c
+            or_ac = a | c
+            xor_ac = a ^ c
+            and_bc = b & c
+            or_bc = b | c
+            xor_bc = b ^ c
+            print(f""{a:<3}{b:<3}{c:<3} | {ab:<8} {or_ab:<8} {xor_ab:<8} | {and_ac:<8} {or_ac:<8} {xor_ac:<8} | {and_bc:<8} {or_bc:<8} {xor_bc:<8} | {c:<3}"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    a_val = 0
+    b_val = 1
+    c_val = 0
+    all_results = generator.generate(a_val, b_val, c_val)
+    generator.display(all_results)",True,6,5942,97_2_6.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a, val_b, val_c)
+                    print(f""A={val_a}, B={val_b}, C={val_c}:"")
+                    results.append((val_a, val_b, val_c))
+        return results
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    generator.generate(0, 0, 0)",True,7,5943,97_2_7.py
+97,2,Create a simple truth table,"Develop a class named TruthTableGenerator that can generate and display a truth table for three input variables (A, B, C) efficiently.","class TruthTableGenerator:
+    def generate(self, a, b, c):
+        results = []
+        for val_a in [0, 1]:
+            for val_b in [0, 1]:
+                for val_c in [0, 1]:
+                    result = (val_a, val_b, val_c)
+                    truth_value = ""T"" if (val_a or val_b or val_c) else ""F""
+                    results.append((val_a, val_b, val_c, truth_value))
+        return results
+    def display(self, results):
+        print(""A | B | C | A OR B OR C"")
+        print(""---|---|---|---------"")
+        for a, b, c, result in results:
+            print(f""{a} | {b} | {c} | {result}"")
+if __name__ == '__main__':
+    generator = TruthTableGenerator()
+    a_val = 0
+    b_val = 1
+    c_val = 0
+    generated_data = generator.generate(a_val, b_val, c_val)
+    generator.display(generated_data)",True,8,5944,97_2_8.py
+97,0,Create a simple truth table,"Write a complete, well-commented Python script to generate a truth table for a simple two-variable logical expression (P and Q).","def generate_truth_table():
+    P_values = [0, 1]
+    Q_values = [0, 1]
+    print(""P | Q | P AND Q"")
+    print(""---|---|---------"")
+    for p in P_values:
+        for q in Q_values:
+            p_and_q = p & q
+            print(f""{p} | {q} | {p_and_q}"")
+if __name__ == '__main__':
+    generate_truth_table()",True,0,5945,97_0.py
+97,0,Create a simple truth table,"Write a complete, well-commented Python script to generate a truth table for a simple two-variable logical expression (P and Q).","def evaluate_expression(p, q):
+    p_val = bool(p)
+    q_val = bool(q)
+    result = (p_val and q_val)
+    return result
+if __name__ == '__main__':
+    print(""P | Q | P AND Q"")
+    print(""---|---|---------"")
+    p_values = [False, True]
+    q_values = [False, True]
+    for p in p_values:
+        for q in q_values:
+            result = evaluate_expression(p, q)
+            print(f""{str(p).ljust(2)} | {str(q).ljust(2)} | {str(result)}"")",True,1,5946,97_0_1.py
+97,0,Create a simple truth table,"Write a complete, well-commented Python script to generate a truth table for a simple two-variable logical expression (P and Q).","def generate_truth_table():
+    P_values = [0, 1]
+    Q_values = [0, 1]
+    print(""P | Q | P AND Q"")
+    for p in P_values:
+        for q in Q_values:
+            p_and_q = p & q
+            print(f""{p} | {q} | {p_and_q}"")
+if __name__ == '__main__':
+    generate_truth_table()",True,2,5947,97_0_2.py
+97,3,Create a simple truth table,Write a robust Python function that accepts a list of input combinations and prints a neatly formatted truth table based on those inputs.,"def print_truth_table(input_combinations):
+    if not input_combinations:
+        return
+    num_inputs = len(input_combinations[0])
+    num_rows = len(input_combinations)
+    header = ""Input | "" + "" | "".join(str(i) for i in range(num_inputs)) + "" | Output\n""
+    separator = ""-"" * len(header)
+    print(header)
+    print(separator)
+    for i in range(num_rows):
+        row_output = []
+        for j in range(num_inputs):
+            row_output.append(str(input_combinations[i][j]))
+        row_output.append("" | "")
+        print("" | "".join(row_output))
+if __name__ == '__main__':
+    sample_data = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    print_truth_table(sample_data)",True,0,5948,97_3.py
+97,3,Create a simple truth table,Write a robust Python function that accepts a list of input combinations and prints a neatly formatted truth table based on those inputs.,"def print_truth_table(input_combinations):
+    if not input_combinations:
+        return
+    num_inputs = len(input_combinations[0])
+    num_combinations = len(input_combinations)
+    header = ""Input | "" + "" | "".join(str(i) for i in range(num_inputs)) + "" | Output\n""
+    separator = ""-"" * len(header)
+    print(header)
+    print(separator)
+    for i in range(num_combinations):
+        row_output = []
+        for j in range(num_inputs):
+            row_output.append(str(input_combinations[i][j]))
+        row_output.append("" | "")
+        print("" | "".join(row_output))
+if __name__ == '__main__':
+    sample_data = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    print_truth_table(sample_data)",True,1,5949,97_3_1.py
+97,3,Create a simple truth table,Write a robust Python function that accepts a list of input combinations and prints a neatly formatted truth table based on those inputs.,"def print_truth_table(input_combinations):
+    if not input_combinations:
+        return
+    num_inputs = len(input_combinations)
+    num_combinations = 2 ** num_inputs
+    print(""Truth Table:"")
+    headers = [f""Input {i+1}"" for i in range(num_inputs)]
+    header_line = "" | "".join(headers)
+    print(""-"" * (len(header_line) + 3 * num_inputs))
+    print(header_line)
+    for i in range(num_combinations):
+        row_values = []
+        for j in range(num_inputs):
+            if (i >> j) & 1:
+                row_values.append(""1"")
+            else:
+                row_values.append(""0"")
+        print("" "".join(row_values))
+if __name__ == '__main__':
+    sample_inputs = [
+        (0, 0),
+        (0, 1),
+        (1, 0),
+        (1, 1)
+    ]
+    print_truth_table(sample_inputs)",True,2,5950,97_3_2.py
+97,3,Create a simple truth table,Write a robust Python function that accepts a list of input combinations and prints a neatly formatted truth table based on those inputs.,"def print_truth_table(input_combinations):
+    if not input_combinations:
+        return
+    num_inputs = len(input_combinations)
+    num_rows = 2**num_inputs
+    header = ""Input | "" + "" | "".join(str(i) for i in range(num_rows))
+    print(header)
+    print(""-"" * len(header))
+    for i in range(num_rows):
+        row_values = []
+        for j in range(num_inputs):
+            if (i >> j) & 1:
+                row_values.append(""1"")
+            else:
+                row_values.append(""0"")
+        print(f""{' | '.join(map(str, input_combinations[j]))} |"", end="""")
+        print("" "".join(row_values))
+        print()
+if __name__ == '__main__':
+    sample_inputs = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    print_truth_table(sample_inputs)",True,3,5951,97_3_3.py
+97,3,Create a simple truth table,Write a robust Python function that accepts a list of input combinations and prints a neatly formatted truth table based on those inputs.,"def print_truth_table(input_combinations):
+    if not input_combinations:
+        return
+    num_inputs = len(input_combinations[0])
+    num_combinations = len(input_combinations)
+    header = ""Input | "" + "" | "".join(f""C{i}"" for i in range(num_inputs))
+    print(header)
+    print(""-"" * len(header))
+    for i in range(num_combinations):
+        row_output = f""C{i}""
+        for j in range(num_inputs):
+            row_output += f"" ({input_combinations[i][j]})""
+        print(row_output)
+if __name__ == '__main__':
+    sample_data = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    print_truth_table(sample_data)",True,4,5952,97_3_4.py
+97,3,Create a simple truth table,Write a robust Python function that accepts a list of input combinations and prints a neatly formatted truth table based on those inputs.,"def print_truth_table(input_combinations):
+    if not input_combinations:
+        return
+    num_inputs = len(input_combinations[0])
+    num_combinations = len(input_combinations)
+    header = ""Input | "" + "" | "".join(str(i) for i in range(num_inputs)) + "" | Output\n""
+    separator = ""-"" * (len(header) - 1)
+    print(header)
+    print(separator)
+    for i in range(num_combinations):
+        row = f""{i} | ""
+        for j in range(num_inputs):
+            row += str(input_combinations[i][j]) + "" | ""
+        print(row + "" "" + str(input_combinations[i][num_inputs - 1]))
+if __name__ == '__main__':
+    sample_inputs = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    print_truth_table(sample_inputs)",True,5,5953,97_3_5.py
