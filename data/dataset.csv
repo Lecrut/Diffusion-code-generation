@@ -203777,3 +203777,848 @@ if __name__ == '__main__':
     my_list = [1, 5, 10, 2, 8]
     result = iterative_sum(my_list)
     print(result)",True,4,9611,155_5_4.py
+155,6,Find the sum of a list,"Write a script that prompts the user to enter a sequence of numbers, which are provided as a space-separated string, and then calculates and prints their total sum. Handle potential `ValueError` during type conversion.","if __name__ == '__main__':
+    input_string = ""10 20 30 40""
+    numbers = input_string.split()
+    total_sum = 0
+    for num_str in numbers:
+        try:
+            number = int(num_str)
+            total_sum += number
+        except ValueError:
+            print(f""Error: Could not convert '{num_str}' to an integer."")
+    print(total_sum)",True,0,9612,155_6.py
+155,6,Find the sum of a list,"Write a script that prompts the user to enter a sequence of numbers, which are provided as a space-separated string, and then calculates and prints their total sum. Handle potential `ValueError` during type conversion.","if __name__ == '__main__':
+    input_string = ""10 20 30 40""
+    numbers = input_string.split()
+    total_sum = 0
+    for num_str in numbers:
+        try:
+            number = int(num_str)
+            total_sum += number
+        except ValueError:
+            print(f""Error: Could not convert '{num_str}' to an integer."")
+    print(f""The total sum is: {total_sum}"")",True,1,9613,155_6_1.py
+155,6,Find the sum of a list,"Write a script that prompts the user to enter a sequence of numbers, which are provided as a space-separated string, and then calculates and prints their total sum. Handle potential `ValueError` during type conversion.","def calculate_sum(input_string):
+    try:
+        numbers = input_string.split()
+        total = 0
+        for num_str in numbers:
+            total += int(num_str)
+        return total
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all parts are valid integers.""
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    result = calculate_sum(sample_input)
+    print(result)",True,2,9614,155_6_2.py
+155,6,Find the sum of a list,"Write a script that prompts the user to enter a sequence of numbers, which are provided as a space-separated string, and then calculates and prints their total sum. Handle potential `ValueError` during type conversion.","def calculate_sum(input_string):
+    numbers = input_string.split()
+    total = 0
+    for item in numbers:
+        try:
+            total += int(item)
+        except ValueError:
+            print(f""Error: '{item}' is not a valid integer."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 25 30 45""
+    result = calculate_sum(sample_input)
+    if result is not None:
+        print(result)",True,3,9615,155_6_3.py
+155,7,Find the sum of a list,"Design and write a concise, one-line Python expression to calculate the sum of elements in a list, demonstrating Pythonic efficiency.","if __name__ == '__main__':
+    my_list = [1, 5, 10, 2]
+    print(sum(my_list))",True,0,9616,155_7.py
+155,7,Find the sum of a list,"Design and write a concise, one-line Python expression to calculate the sum of elements in a list, demonstrating Pythonic efficiency.","if __name__ == '__main__':
+    my_list = [1, 5, 10, 2]
+    total = sum(my_list)
+    print(total)",True,1,9617,155_7_1.py
+155,7,Find the sum of a list,"Design and write a concise, one-line Python expression to calculate the sum of elements in a list, demonstrating Pythonic efficiency.","if __name__ == '__main__':
+    data = [1, 5, 10, 2]
+    print(sum(data))",True,2,9618,155_7_2.py
+155,7,Find the sum of a list,"Design and write a concise, one-line Python expression to calculate the sum of elements in a list, demonstrating Pythonic efficiency.","if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(sum(data))",True,3,9619,155_7_3.py
+155,10,Find the sum of a list,Write a robust and efficient Python function named 'calculate_list_sum' that accepts a list of numbers (integers or floats) and returns their total sum. Use the built-in `sum()` function for optimal performance.,"def calculate_list_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    result1 = calculate_list_sum(list1)
+    print(result1)
+    list2 = [10.5, 20.5, 30.0]
+    result2 = calculate_list_sum(list2)
+    print(result2)
+    list3 = [-1, 5, -3, 10]
+    result3 = calculate_list_sum(list3)
+    print(result3)",True,0,9620,155_10.py
+155,10,Find the sum of a list,Write a robust and efficient Python function named 'calculate_list_sum' that accepts a list of numbers (integers or floats) and returns their total sum. Use the built-in `sum()` function for optimal performance.,"def calculate_list_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20.5, 30.0]
+    list3 = [-1, 5, -3, 10]
+    print(calculate_list_sum(list1))
+    print(calculate_list_sum(list2))
+    print(calculate_list_sum(list3))",True,1,9621,155_10_1.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total_sum = 0
+    for number in numbers:
+        total_sum += abs(number)
+    return total_sum
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4, 5]
+    sample_list2 = [-10, 0, 5, -2.5]
+    sample_list3 = [-1, -1, -1, -1]
+    sample_list4 = [100]
+    sample_list5 = []
+    result1 = sum_of_absolute_values(sample_list1)
+    result2 = sum_of_absolute_values(sample_list2)
+    result3 = sum_of_absolute_values(sample_list3)
+    result4 = sum_of_absolute_values(sample_list4)
+    result5 = sum_of_absolute_values(sample_list5)
+    print(f""Result for {sample_list1}: {result1}"")
+    print(f""Result for {sample_list2}: {result2}"")
+    print(f""Result for {sample_list3}: {result3}"")
+    print(f""Result for {sample_list4}: {result4}"")
+    print(f""Result for {sample_list5}: {result5}"")",True,0,9622,155_8.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total_sum = 0
+    for number in numbers:
+        total_sum += abs(number)
+    return total_sum
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4]
+    sample_list2 = [-5, 10, -15, 0]
+    sample_list3 = [7, 8, -1, -9]
+    sample_list4 = [100]
+    sample_list5 = []
+    result1 = sum_of_absolute_values(sample_list1)
+    result2 = sum_of_absolute_values(sample_list2)
+    result3 = sum_of_absolute_values(sample_list3)
+    result4 = sum_of_absolute_values(sample_list4)
+    result5 = sum_of_absolute_values(sample_list5)
+    print(f""Result for {sample_list1}: {result1}"")
+    print(f""Result for {sample_list2}: {result2}"")
+    print(f""Result for {sample_list3}: {result3}"")
+    print(f""Result for {sample_list4}: {result4}"")
+    print(f""Result for {sample_list5}: {result5}"")",True,1,9623,155_8_1.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total = 0
+    for number in numbers:
+        total += abs(number)
+    return total
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4, 5]
+    result1 = sum_of_absolute_values(sample_list1)
+    print(result1)
+    sample_list2 = [-10, 0, -5, 15]
+    result2 = sum_of_absolute_values(sample_list2)
+    print(result2)
+    sample_list3 = [7, 7, 7]
+    result3 = sum_of_absolute_values(sample_list3)
+    print(result3)
+    sample_list4 = [-1, -2, -3]
+    result4 = sum_of_absolute_values(sample_list4)
+    print(result4)",True,2,9624,155_8_2.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total_sum = 0
+    for number in numbers:
+        total_sum += abs(number)
+    return total_sum
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4, 5]
+    sample_list2 = [-10, 20, -30]
+    sample_list3 = [0, 0, -5, 10]
+    sample_list4 = [-1, -2, -3]
+    result1 = sum_of_absolute_values(sample_list1)
+    result2 = sum_of_absolute_values(sample_list2)
+    result3 = sum_of_absolute_values(sample_list3)
+    result4 = sum_of_absolute_values(sample_list4)
+    print(f""Sum of absolute values for {sample_list1}: {result1}"")
+    print(f""Sum of absolute values for {sample_list2}: {result2}"")
+    print(f""Sum of absolute values for {sample_list3}: {result3}"")
+    print(f""Sum of absolute values for {sample_list4}: {result4}"")",True,3,9625,155_8_3.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total_sum = 0
+    for number in numbers:
+        total_sum += abs(number)
+    return total_sum
+if __name__ == '__main__':
+    sample_list = [1, -2, 3, -4, 5]
+    result = sum_of_absolute_values(sample_list)
+    print(result)",True,4,9626,155_8_4.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(data):
+    total_sum = 0
+    for x in data:
+        total_sum += abs(x)
+    return total_sum
+if __name__ == '__main__':
+    sample_list_1 = [1, -2, 3, -4, 5]
+    result_1 = sum_of_absolute_values(sample_list_1)
+    print(result_1)
+    sample_list_2 = [-10, 0, -5, 20]
+    result_2 = sum_of_absolute_values(sample_list_2)
+    print(result_2)
+    sample_list_3 = [-1, -2, -3]
+    result_3 = sum_of_absolute_values(sample_list_3)
+    print(result_3)",True,5,9627,155_8_5.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total = 0
+    for number in numbers:
+        total += abs(number)
+    return total
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4, 5]
+    result1 = sum_of_absolute_values(sample_list1)
+    print(result1)
+    sample_list2 = [-10, 0, -5.5, 2]
+    result2 = sum_of_absolute_values(sample_list2)
+    print(result2)
+    sample_list3 = [7, 7, 7]
+    result3 = sum_of_absolute_values(sample_list3)
+    print(result3)",True,6,9628,155_8_6.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total = 0
+    for number in numbers:
+        total += abs(number)
+    return total
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4, 5]
+    sample_list2 = [-10, 0, 5, -2.5]
+    sample_list3 = [7, 7, 7]
+    sample_list4 = [-1, -1, -1]
+    sample_list5 = []
+    result1 = sum_of_absolute_values(sample_list1)
+    result2 = sum_of_absolute_values(sample_list2)
+    result3 = sum_of_absolute_values(sample_list3)
+    result4 = sum_of_absolute_values(sample_list4)
+    result5 = sum_of_absolute_values(sample_list5)
+    print(f""Result for {sample_list1}: {result1}"")
+    print(f""Result for {sample_list2}: {result2}"")
+    print(f""Result for {sample_list3}: {result3}"")
+    print(f""Result for {sample_list4}: {result4}"")
+    print(f""Result for {sample_list5}: {result5}"")",True,7,9629,155_8_7.py
+155,8,Find the sum of a list,"Write a comprehensive function that finds the sum of the absolute values of all numbers in a list, ensuring the result is non-negative.","def sum_of_absolute_values(numbers):
+    total_sum = 0
+    for number in numbers:
+        total_sum += abs(number)
+    return total_sum
+if __name__ == '__main__':
+    sample_list1 = [1, -2, 3, -4, 5]
+    sample_list2 = [-10, 0, 5, -2.5]
+    sample_list3 = [7, 8, -1, -9]
+    sample_list4 = []
+    result1 = sum_of_absolute_values(sample_list1)
+    result2 = sum_of_absolute_values(sample_list2)
+    result3 = sum_of_absolute_values(sample_list3)
+    result4 = sum_of_absolute_values(sample_list4)
+    print(f""Result for {sample_list1}: {result1}"")
+    print(f""Result for {sample_list2}: {result2}"")
+    print(f""Result for {sample_list3}: {result3}"")
+    print(f""Result for {sample_list4}: {result4}"")",True,8,9630,155_8_8.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_1 = []
+    expected_1 = 0
+    result_1 = sum_list(test_case_1)
+    assert result_1 == expected_1, f""Test Case 1 Failed: Expected {expected_1}, Got {result_1}""
+    print(f""Test Case 1 Passed: Empty list. Result: {result_1}"")
+    test_case_2 = [1, 2, 3, 4, 5]
+    expected_2 = 15
+    result_2 = sum_list(test_case_2)
+    assert result_2 == expected_2, f""Test Case 2 Failed: Expected {expected_2}, Got {result_2}""
+    print(f""Test Case 2 Passed: Positive numbers. Result: {result_2}"")
+    test_case_3 = [-1, -2, -3, -4]
+    expected_3 = -10
+    result_3 = sum_list(test_case_3)
+    assert result_3 == expected_3, f""Test Case 3 Failed: Expected {expected_3}, Got {result_3}""
+    print(f""Test Case 3 Passed: Negative numbers. Result: {result_3}"")
+    test_case_4 = [10, -5, 20, -15]
+    expected_4 = 10
+    result_4 = sum_list(test_case_4)
+    assert result_4 == expected_4, f""Test Case 4 Failed: Expected {expected_4}, Got {result_4}""
+    print(f""Test Case 4 Passed: Mixed numbers. Result: {result_4}"")",True,0,9631,155_9.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_1 = []
+    expected_1 = 0
+    result_1 = sum_list(test_case_1)
+    assert result_1 == expected_1, f""Test Case 1 Failed: Expected {expected_1}, Got {result_1}""
+    print(f""Test Case 1 Passed: Empty list. Result: {result_1}"")
+    test_case_2 = [1, 2, 3, 4, 5]
+    expected_2 = 15
+    result_2 = sum_list(test_case_2)
+    assert result_2 == expected_2, f""Test Case 2 Failed: Expected {expected_2}, Got {result_2}""
+    print(f""Test Case 2 Passed: Positive numbers. Result: {result_2}"")
+    test_case_3 = [-1, -2, -3]
+    expected_3 = -6
+    result_3 = sum_list(test_case_3)
+    assert result_3 == expected_3, f""Test Case 3 Failed: Expected {expected_3}, Got {result_3}""
+    print(f""Test Case 3 Passed: Negative numbers. Result: {result_3}"")
+    test_case_4 = [10, -5, 20, -1]
+    expected_4 = 24
+    result_4 = sum_list(test_case_4)
+    assert result_4 == expected_4, f""Test Case 4 Failed: Expected {expected_4}, Got {result_4}""
+    print(f""Test Case 4 Passed: Mixed numbers. Result: {result_4}"")",True,1,9632,155_9_1.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_1 = []
+    expected_1 = 0
+    result_1 = sum_list(test_case_1)
+    assert result_1 == expected_1, f""Test Case 1 Failed: Expected {expected_1}, Got {result_1}""
+    test_case_2 = [1, 2, 3, 4, 5]
+    expected_2 = 15
+    result_2 = sum_list(test_case_2)
+    assert result_2 == expected_2, f""Test Case 2 Failed: Expected {expected_2}, Got {result_2}""
+    test_case_3 = [-1, -2, -3]
+    expected_3 = -6
+    result_3 = sum_list(test_case_3)
+    assert result_3 == expected_3, f""Test Case 3 Failed: Expected {expected_3}, Got {result_3}""
+    test_case_4 = [10, -5, 20, -15]
+    expected_4 = 10
+    result_4 = sum_list(test_case_4)
+    assert result_4 == expected_4, f""Test Case 4 Failed: Expected {expected_4}, Got {result_4}""
+    print(""All test cases passed."")",True,2,9633,155_9_2.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_1 = []
+    expected_1 = 0
+    result_1 = sum_list(test_case_1)
+    assert result_1 == expected_1, f""Test Case 1 Failed: Expected {expected_1}, Got {result_1}""
+    print(f""Test Case 1 Passed: List {test_case_1}, Result {result_1}"")
+    test_case_2 = [1, 2, 3, 4, 5]
+    expected_2 = 15
+    result_2 = sum_list(test_case_2)
+    assert result_2 == expected_2, f""Test Case 2 Failed: Expected {expected_2}, Got {result_2}""
+    print(f""Test Case 2 Passed: List {test_case_2}, Result {result_2}"")
+    test_case_3 = [-1, -2, -3]
+    expected_3 = -6
+    result_3 = sum_list(test_case_3)
+    assert result_3 == expected_3, f""Test Case 3 Failed: Expected {expected_3}, Got {result_3}""
+    print(f""Test Case 3 Passed: List {test_case_3}, Result {result_3}"")
+    test_case_4 = [10, -5, 20, -15]
+    expected_4 = 10
+    result_4 = sum_list(test_case_4)
+    assert result_4 == expected_4, f""Test Case 4 Failed: Expected {expected_4}, Got {result_4}""
+    print(f""Test Case 4 Passed: List {test_case_4}, Result {result_4}"")",True,3,9634,155_9_3.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_1 = []
+    expected_1 = 0
+    result_1 = sum_list(test_case_1)
+    assert result_1 == expected_1, f""Test Case 1 Failed: Expected {expected_1}, Got {result_1}""
+    print(f""Test Case 1 Passed: Empty list. Result: {result_1}"")
+    test_case_2 = [1, 2, 3, 4, 5]
+    expected_2 = 15
+    result_2 = sum_list(test_case_2)
+    assert result_2 == expected_2, f""Test Case 2 Failed: Expected {expected_2}, Got {result_2}""
+    print(f""Test Case 2 Passed: Positive numbers. Result: {result_2}"")
+    test_case_3 = [-1, -2, -3]
+    expected_3 = -6
+    result_3 = sum_list(test_case_3)
+    assert result_3 == expected_3, f""Test Case 3 Failed: Expected {expected_3}, Got {result_3}""
+    print(f""Test Case 3 Passed: Negative numbers. Result: {result_3}"")
+    test_case_4 = [10, -5, 2, -8]
+    expected_4 = -1
+    result_4 = sum_list(test_case_4)
+    assert result_4 == expected_4, f""Test Case 4 Failed: Expected {expected_4}, Got {result_4}""
+    print(f""Test Case 4 Passed: Mixed numbers. Result: {result_4}"")",True,4,9635,155_9_4.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_empty = []
+    expected_empty = 0
+    result_empty = sum_list(test_case_empty)
+    assert result_empty == expected_empty, f""Empty list test failed: Expected {expected_empty}, Got {result_empty}""
+    print(f""Test Case: Empty List"")
+    print(f""Input: {test_case_empty}"")
+    print(f""Result: {result_empty}"")
+    test_case_positive = [1, 2, 3, 4, 5]
+    expected_positive = 15
+    result_positive = sum_list(test_case_positive)
+    assert result_positive == expected_positive, f""Positive numbers test failed: Expected {expected_positive}, Got {result_positive}""
+    print(f""\nTest Case: Positive Numbers"")
+    print(f""Input: {test_case_positive}"")
+    print(f""Result: {result_positive}"")
+    test_case_negative = [-1, -5, 10]
+    expected_negative = 4
+    result_negative = sum_list(test_case_negative)
+    assert result_negative == expected_negative, f""Negative numbers test failed: Expected {expected_negative}, Got {result_negative}""
+    print(f""\nTest Case: Negative Numbers"")
+    print(f""Input: {test_case_negative}"")
+    print(f""Result: {result_negative}"")
+    test_case_mixed = [10, -5, 2, -8]
+    expected_mixed = -1
+    result_mixed = sum_list(test_case_mixed)
+    assert result_mixed == expected_mixed, f""Mixed numbers test failed: Expected {expected_mixed}, Got {result_mixed}""
+    print(f""\nTest Case: Mixed Numbers"")
+    print(f""Input: {test_case_mixed}"")
+    print(f""Result: {result_mixed}"")",True,5,9636,155_9_5.py
+155,9,Find the sum of a list,"Develop a testable function for summing a list, including example test cases demonstrating correct behavior for empty lists, positive numbers, and negative numbers.","def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    test_case_1 = []
+    expected_1 = 0
+    result_1 = sum_list(test_case_1)
+    assert result_1 == expected_1, f""Test Case 1 Failed: Expected {expected_1}, Got {result_1}""
+    test_case_2 = [1, 2, 3, 4, 5]
+    expected_2 = 15
+    result_2 = sum_list(test_case_2)
+    assert result_2 == expected_2, f""Test Case 2 Failed: Expected {expected_2}, Got {result_2}""
+    test_case_3 = [-1, -2, -3]
+    expected_3 = -6
+    result_3 = sum_list(test_case_3)
+    assert result_3 == expected_3, f""Test Case 3 Failed: Expected {expected_3}, Got {result_3}""
+    test_case_4 = [10, -5, 2, -8]
+    expected_4 = -1
+    result_4 = sum_list(test_case_4)
+    assert result_4 == expected_4, f""Test Case 4 Failed: Expected {expected_4}, Got {result_4}""
+    print(""All test cases passed."")",True,6,9637,155_9_6.py
+155,11,Find the sum of a list,"Implement a class named 'ListOperations' with a method called 'get_sum' that calculates and returns the sum of all elements in an internal list, ensuring the implementation is clean and adheres to Object-Oriented Programming best practices.","class ListOperations:
+    def __init__(self, data):
+        self._data = list(data)
+    def get_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    lo = ListOperations(sample_list)
+    result = lo.get_sum()
+    print(result)",True,0,9638,155_11.py
+155,11,Find the sum of a list,"Implement a class named 'ListOperations' with a method called 'get_sum' that calculates and returns the sum of all elements in an internal list, ensuring the implementation is clean and adheres to Object-Oriented Programming best practices.","class ListOperations:
+    def __init__(self, data):
+        self._data = list(data)
+    def get_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    list_ops = ListOperations(sample_list)
+    result = list_ops.get_sum()
+    print(result)",True,1,9639,155_11_1.py
+155,11,Find the sum of a list,"Implement a class named 'ListOperations' with a method called 'get_sum' that calculates and returns the sum of all elements in an internal list, ensuring the implementation is clean and adheres to Object-Oriented Programming best practices.","class ListOperations:
+    def __init__(self, data):
+        self._data = data
+    def get_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    list_ops = ListOperations(sample_list)
+    result = list_ops.get_sum()
+    print(result)",True,2,9640,155_11_2.py
+155,11,Find the sum of a list,"Implement a class named 'ListOperations' with a method called 'get_sum' that calculates and returns the sum of all elements in an internal list, ensuring the implementation is clean and adheres to Object-Oriented Programming best practices.","class ListOperations:
+    def __init__(self, data):
+        self._data = list(data)
+    def get_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    operations = ListOperations(sample_list)
+    result = operations.get_sum()
+    print(result)",True,3,9641,155_11_3.py
+155,13,Find the sum of a list,Write a generator function called 'stream_sum' that takes an iterable (like a list) and yields the running sum of the elements as it processes them. Optimize this function for memory efficiency.,"def stream_sum(iterable):
+    current_sum = 0
+    for item in iterable:
+        current_sum += item
+        yield current_sum
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result_stream = stream_sum(data)
+    final_sum = 0
+    print(""Streamed sums:"")
+    for s in result_stream:
+        print(s)
+        final_sum = s
+    print(""\nFinal sum (last yielded value):"")
+    print(final_sum)",True,0,9642,155_13.py
+155,13,Find the sum of a list,Write a generator function called 'stream_sum' that takes an iterable (like a list) and yields the running sum of the elements as it processes them. Optimize this function for memory efficiency.,"def stream_sum(iterable):
+    current_sum = 0
+    for item in iterable:
+        current_sum += item
+        yield current_sum
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result_generator = stream_sum(data)
+    final_sum = 0
+    print(""Stream sum of data:"", list(result_generator))
+    for s in result_generator:
+        final_sum += s
+    print(""Total sum calculated:"", final_sum)",True,1,9643,155_13_1.py
+155,13,Find the sum of a list,Write a generator function called 'stream_sum' that takes an iterable (like a list) and yields the running sum of the elements as it processes them. Optimize this function for memory efficiency.,"def stream_sum(iterable):
+    current_sum = 0
+    for item in iterable:
+        current_sum += item
+        yield current_sum
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result_stream = stream_sum(data)
+    final_sum = 0
+    print(""Stream results:"")
+    for s in result_stream:
+        print(s)
+        final_sum = s
+    print(""\nFinal sum yielded by the stream:"")
+    print(final_sum)",True,2,9644,155_13_2.py
+155,13,Find the sum of a list,Write a generator function called 'stream_sum' that takes an iterable (like a list) and yields the running sum of the elements as it processes them. Optimize this function for memory efficiency.,"def stream_sum(iterable):
+    current_sum = 0
+    for item in iterable:
+        current_sum += item
+        yield current_sum
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result_generator = stream_sum(data)
+    final_sum = 0
+    print(""Running stream_sum on:"", data)
+    for running_sum in result_generator:
+        print(""Running sum:"", running_sum)
+        final_sum = running_sum
+    print(""Final sum:"", final_sum)
+    data_empty = []
+    result_generator_empty = stream_sum(data_empty)
+    print(""\nRunning stream_sum on empty list:"", data_empty)
+    for running_sum in result_generator_empty:
+        print(""Running sum:"", running_sum)",True,3,9645,155_13_3.py
+155,13,Find the sum of a list,Write a generator function called 'stream_sum' that takes an iterable (like a list) and yields the running sum of the elements as it processes them. Optimize this function for memory efficiency.,"def stream_sum(iterable):
+    current_sum = 0
+    for item in iterable:
+        current_sum += item
+        yield current_sum
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result_generator = stream_sum(data)
+    print(list(result_generator))",True,4,9646,155_13_4.py
+155,14,Find the sum of a list,"Create a complete, well-documented Python program that defines a function to find the sum of a list and includes an example usage block demonstrating the function with a sample list of mixed integer and float values.","def calculate_list_sum(data_list):
+    total = 0
+    for item in data_list:
+        total += item
+    return total
+if __name__ == '__main__':
+    sample_list = [10, 5.5, -3, 12.25, 0]
+    result = calculate_list_sum(sample_list)
+    print(result)",True,0,9647,155_14.py
+156,0,Find the average of a list,"Write a complete, robust Python script that takes a list of numbers as input and calculates their arithmetic mean. Use the built-in `sum()` function for efficiency.","def calculate_arithmetic_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    mean = calculate_arithmetic_mean(sample_numbers)
+    print(mean)",True,0,9648,156_0.py
+156,0,Find the average of a list,"Write a complete, robust Python script that takes a list of numbers as input and calculates their arithmetic mean. Use the built-in `sum()` function for efficiency.","def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    mean_value = calculate_mean(sample_numbers)
+    print(mean_value)",True,1,9649,156_0_1.py
+156,1,Find the average of a list,Implement an optimized Python function named `calculate_average` that accepts a list of floats and returns their average. Handle the edge case where the input list is empty by raising a `ValueError`.,"def calculate_average(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    list1 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    list2 = [10.5, 20.5, 30.5]
+    empty_list = []
+    try:
+        avg1 = calculate_average(list1)
+        print(f""Average of {list1}: {avg1}"")
+        avg2 = calculate_average(list2)
+        print(f""Average of {list2}: {avg2}"")
+        calculate_average(empty_list)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,9650,156_1.py
+156,2,Find the average of a list,Develop a class named `ListAnalyzer` with a method `get_average` that calculates and returns the average of the numbers stored in an internal list. Ensure the implementation is clean and follows object-oriented best practices.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def get_average(self):
+        if not self._data:
+            return 0
+        return sum(self._data) / len(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    analyzer = ListAnalyzer(sample_list)
+    average = analyzer.get_average()
+    print(average)",True,0,9651,156_2.py
+156,2,Find the average of a list,Develop a class named `ListAnalyzer` with a method `get_average` that calculates and returns the average of the numbers stored in an internal list. Ensure the implementation is clean and follows object-oriented best practices.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = list(data)
+    def get_average(self):
+        if not self._data:
+            return 0
+        return sum(self._data) / len(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    analyzer = ListAnalyzer(sample_list)
+    average = analyzer.get_average()
+    print(average)",True,1,9652,156_2_1.py
+156,2,Find the average of a list,Develop a class named `ListAnalyzer` with a method `get_average` that calculates and returns the average of the numbers stored in an internal list. Ensure the implementation is clean and follows object-oriented best practices.,"class ListAnalyzer:
+    def __init__(self, numbers):
+        self._numbers = numbers
+    def get_average(self):
+        if not self._numbers:
+            return 0
+        return sum(self._numbers) / len(self._numbers)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    analyzer = ListAnalyzer(sample_data)
+    average = analyzer.get_average()
+    print(average)",True,2,9653,156_2_2.py
+156,3,Find the average of a list,"Write a concise and highly readable Python expression or function to find the average of a list of integers, demonstrating the use of list comprehension or generator expressions if appropriate.","if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    average = sum(numbers) / len(numbers)
+    print(average)",True,0,9654,156_3.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40, 50)
+    avg1 = compute_average(data1)
+    print(f""Average of {data1}: {avg1}"")
+    data2 = [5, 15, 25, 35]
+    avg2 = compute_average(data2)
+    print(f""Average of {data2}: {avg2}"")
+    data3 = ()
+    avg3 = compute_average(data3)
+    print(f""Average of {data3}: {avg3}"")
+    data4 = [1, 2, 3]
+    avg4 = compute_average(data4)
+    print(f""Average of {data4}: {avg4}"")",True,0,9655,156_4.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40, 50)
+    avg1 = compute_average(data1)
+    print(f""Average of {data1}: {avg1}"")
+    data2 = [5, 15, 25, 35]
+    avg2 = compute_average(data2)
+    print(f""Average of {data2}: {avg2}"")
+    data3 = ()
+    avg3 = compute_average(data3)
+    print(f""Average of {data3}: {avg3}"")
+    data4 = [7]
+    avg4 = compute_average(data4)
+    print(f""Average of {data4}: {avg4}"")",True,1,9656,156_4_1.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    result1 = compute_average(sample1)
+    print(f""Average of {sample1}: {result1}"")
+    sample2 = (10, 20, 30, 40)
+    result2 = compute_average(sample2)
+    print(f""Average of {sample2}: {result2}"")
+    sample3 = [5]
+    result3 = compute_average(sample3)
+    print(f""Average of {sample3}: {result3}"")
+    sample4 = []
+    result4 = compute_average(sample4)
+    print(f""Average of {sample4}: {result4}"")",True,2,9657,156_4_2.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    result1 = compute_average(sample1)
+    print(f""Average of {sample1}: {result1}"")
+    sample2 = (10, 20, 30, 40)
+    result2 = compute_average(sample2)
+    print(f""Average of {sample2}: {result2}"")
+    sample3 = [7.5, 8.5, 9.5]
+    result3 = compute_average(sample3)
+    print(f""Average of {sample3}: {result3}"")
+    sample4 = []
+    result4 = compute_average(sample4)
+    print(f""Average of {sample4}: {result4}"")",True,3,9658,156_4_3.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    result1 = compute_average(sample1)
+    print(f""Average of {sample1}: {result1}"")
+    sample2 = (10, 20, 30, 40)
+    result2 = compute_average(sample2)
+    print(f""Average of {sample2}: {result2}"")
+    sample3 = [5.5, 1.5, 3.0]
+    result3 = compute_average(sample3)
+    print(f""Average of {sample3}: {result3}"")
+    sample4 = []
+    result4 = compute_average(sample4)
+    print(f""Average of {sample4}: {result4}"")",True,4,9659,156_4_4.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    result1 = compute_average(sample1)
+    print(f""The average of {sample1} is: {result1}"")
+    sample2 = (10, 20, 30)
+    result2 = compute_average(sample2)
+    print(f""The average of {sample2} is: {result2}"")
+    sample3 = []
+    result3 = compute_average(sample3)
+    print(f""The average of {sample3} is: {result3}"")
+    sample4 = [5.5, 6.5, 7.5]
+    result4 = compute_average(sample4)
+    print(f""The average of {sample4} is: {result4}"")",True,5,9660,156_4_5.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40, 50)
+    avg1 = compute_average(data1)
+    print(f""Average of {list(data1)} is: {avg1}"")
+    data2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    avg2 = compute_average(data2)
+    print(f""Average of {data2} is: {avg2}"")
+    data3 = (100,)
+    avg3 = compute_average(data3)
+    print(f""Average of {data3} is: {avg3}"")
+    data4 = ()
+    avg4 = compute_average(data4)
+    print(f""Average of {data4} is: {avg4}"")",True,6,9661,156_4_6.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    result1 = compute_average(sample1)
+    print(f""Average of {sample1}: {result1}"")
+    sample2 = (10, 20, 30, 40)
+    result2 = compute_average(sample2)
+    print(f""Average of {sample2}: {result2}"")
+    sample3 = []
+    result3 = compute_average(sample3)
+    print(f""Average of {sample3}: {result3}"")
+    sample4 = [5.5, 1.5, 3.0]
+    result4 = compute_average(sample4)
+    print(f""Average of {sample4}: {result4}"")",True,7,9662,156_4_7.py
+156,4,Find the average of a list,Create a function that accepts an iterable (like a tuple or list) of numbers and computes the average. The function must be time-efficient (O(n)).,"def compute_average(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = (1, 2, 3, 4, 5)
+    avg1 = compute_average(data1)
+    print(f""Average of {data1}: {avg1}"")
+    data2 = [10, 20, 30, 40]
+    avg2 = compute_average(data2)
+    print(f""Average of {data2}: {avg2}"")
+    data3 = (7, 14, 21)
+    avg3 = compute_average(data3)
+    print(f""Average of {data3}: {avg3}"")
+    data4 = []
+    avg4 = compute_average(data4)
+    print(f""Average of {data4}: {avg4}"")",True,8,9663,156_4_8.py
+156,5,Find the average of a list,"Write a script that prompts the user to input a sequence of numbers, stores them in a list, and then prints the calculated average. Include necessary input validation to ensure all inputs are valid numbers.","if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    numbers_list = []
+    all_valid = True
+    for item in sample_numbers:
+        if isinstance(item, (int, float)):
+            numbers_list.append(item)
+        else:
+            all_valid = False
+            break
+    if all_valid and numbers_list:
+        average = sum(numbers_list) / len(numbers_list)
+        print(average)
+    else:
+        print(""Error: One or more inputs were not valid numbers."")",True,0,9664,156_5.py
+156,5,Find the average of a list,"Write a script that prompts the user to input a sequence of numbers, stores them in a list, and then prints the calculated average. Include necessary input validation to ensure all inputs are valid numbers.","if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    numbers_list = []
+    all_valid = True
+    for item in sample_numbers:
+        if isinstance(item, (int, float)):
+            numbers_list.append(item)
+        else:
+            all_valid = False
+            break
+    if all_valid and numbers_list:
+        average = sum(numbers_list) / len(numbers_list)
+        print(average)
+    else:
+        print(""Error: One or more sample values were not valid numbers."")",True,1,9665,156_5_1.py
+156,5,Find the average of a list,"Write a script that prompts the user to input a sequence of numbers, stores them in a list, and then prints the calculated average. Include necessary input validation to ensure all inputs are valid numbers.","if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    total = 0
+    count = 0
+    for num in numbers:
+        if isinstance(num, (int, float)):
+            total += num
+            count += 1
+        else:
+            print(f""Invalid input found: {num}. Skipping."")
+    if count > 0:
+        average = total / count
+        print(f""The numbers entered are: {numbers}"")
+        print(f""The calculated average is: {average}"")
+    else:
+        print(""No valid numbers were entered to calculate the average."")",True,2,9666,156_5_2.py
+156,5,Find the average of a list,"Write a script that prompts the user to input a sequence of numbers, stores them in a list, and then prints the calculated average. Include necessary input validation to ensure all inputs are valid numbers.","if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    numbers_list = []
+    valid_input = True
+    for item in sample_numbers:
+        try:
+            numbers_list.append(float(item))
+        except ValueError:
+            valid_input = False
+            break
+    if valid_input and numbers_list:
+        average = sum(numbers_list) / len(numbers_list)
+        print(average)
+    else:
+        print(""Error: One or more inputs were not valid numbers."")",True,3,9667,156_5_3.py
+156,5,Find the average of a list,"Write a script that prompts the user to input a sequence of numbers, stores them in a list, and then prints the calculated average. Include necessary input validation to ensure all inputs are valid numbers.","if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40, 50]
+    numbers_list = []
+    valid_inputs = True
+    for item in sample_numbers:
+        if isinstance(item, (int, float)):
+            numbers_list.append(item)
+        else:
+            valid_inputs = False
+            break
+    if valid_inputs and numbers_list:
+        average = sum(numbers_list) / len(numbers_list)
+        print(average)
+    else:
+        print(""Error: One or more inputs were not valid numbers."")",True,4,9668,156_5_4.py
