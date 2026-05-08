@@ -152856,3 +152856,2771 @@ if __name__ == '__main__':
     difference_result = num1 - num2
     print(f""Sum: {sum_result}"")
     print(f""Difference: {difference_result}"")",True,1,7575,125_3_1.py
+125,8,Solve simple addition subtraction problems,Develop a command-line style script that accepts two integers as command-line arguments and prints their addition and subtraction results.,"import sys
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py integer1 integer2"")
+    else:
+        try:
+            num1 = int(sys.argv[1])
+            num2 = int(sys.argv[2])
+            print(f""Addition: {num1 + num2}"")
+            print(f""Subtraction: {num1 - num2}"")
+        except ValueError:
+            print(""Error: Arguments must be valid integers."")",True,0,7576,125_8.py
+125,9,Solve simple addition subtraction problems,"Write a single, concise Python function that handles both addition and subtraction based on a specified operation string ('add' or 'subtract') and two input numbers.","def calculate(operation, a, b):
+    if operation == 'add':
+        return a + b
+    elif operation == 'subtract':
+        return a - b
+    else:
+        raise ValueError(""Invalid operation specified"")
+if __name__ == '__main__':
+    result_add = calculate('add', 10, 5)
+    result_subtract = calculate('subtract', 10, 5)
+    print(f""Addition result: {result_add}"")
+    print(f""Subtraction result: {result_subtract}"")",True,0,7577,125_9.py
+125,9,Solve simple addition subtraction problems,"Write a single, concise Python function that handles both addition and subtraction based on a specified operation string ('add' or 'subtract') and two input numbers.","def calculate(operation, a, b):
+    if operation == 'add':
+        return a + b
+    elif operation == 'subtract':
+        return a - b
+    else:
+        raise ValueError(""Invalid operation specified"")
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    result_add = calculate('add', num1, num2)
+    result_subtract = calculate('subtract', num1, num2)
+    print(f""Addition: {result_add}"")
+    print(f""Subtraction: {result_subtract}"")",True,1,7578,125_9_1.py
+125,9,Solve simple addition subtraction problems,"Write a single, concise Python function that handles both addition and subtraction based on a specified operation string ('add' or 'subtract') and two input numbers.","def calculate(operation, a, b):
+    if operation == 'add':
+        return a + b
+    elif operation == 'subtract':
+        return a - b
+    else:
+        raise ValueError(""Invalid operation"")
+if __name__ == '__main__':
+    result_add = calculate('add', 10, 5)
+    result_subtract = calculate('subtract', 10, 5)
+    print(f""Addition result: {result_add}"")
+    print(f""Subtraction result: {result_subtract}"")",True,2,7579,125_9_2.py
+125,9,Solve simple addition subtraction problems,"Write a single, concise Python function that handles both addition and subtraction based on a specified operation string ('add' or 'subtract') and two input numbers.","def calculate(operation, a, b):
+    if operation == 'add':
+        return a + b
+    elif operation == 'subtract':
+        return a - b
+    else:
+        raise ValueError(""Invalid operation"")
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    result_add = calculate('add', num1, num2)
+    result_subtract = calculate('subtract', num1, num2)
+    print(f""Addition: {result_add}"")
+    print(f""Subtraction: {result_subtract}"")",True,3,7580,125_9_3.py
+125,9,Solve simple addition subtraction problems,"Write a single, concise Python function that handles both addition and subtraction based on a specified operation string ('add' or 'subtract') and two input numbers.","def calculate(operation, a, b):
+    if operation == 'add':
+        return a + b
+    elif operation == 'subtract':
+        return a - b
+    else:
+        raise ValueError(""Invalid operation"")
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    op1 = 'add'
+    result1 = calculate(op1, num1, num2)
+    print(f""Addition of {num1} and {num2}: {result1}"")
+    num3 = 10
+    num4 = 4
+    op2 = 'subtract'
+    result2 = calculate(op2, num3, num4)
+    print(f""Subtraction of {num3} and {num4}: {result2}"")",True,4,7581,125_9_4.py
+125,7,Solve simple addition subtraction problems,Implement a function that takes a list of numbers and returns a new list containing the sum of each number in the original list.,,False,0,7582,125_7.py
+122,14,Find the average of several numbers,"Create a command-line tool using Python that reads a sequence of numbers from standard input and outputs the calculated average, ensuring the code is production-ready and handles potential non-numeric input errors.","import sys
+def calculate_average(data):
+    if not data:
+        return 0.0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    input_data = sample_input.split()
+    numbers = []
+    error_occurred = False
+    for item in input_data:
+        try:
+            numbers.append(float(item))
+        except ValueError:
+            error_occurred = True
+            break
+    if error_occurred:
+        print(""Error: Invalid input detected. Please ensure all inputs are numeric."")
+    else:
+        average = calculate_average(numbers)
+        print(average)",True,0,7583,122_14.py
+122,14,Find the average of several numbers,"Create a command-line tool using Python that reads a sequence of numbers from standard input and outputs the calculated average, ensuring the code is production-ready and handles potential non-numeric input errors.","import sys
+def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    input_data = sample_input.split()
+    numbers = []
+    error_occurred = False
+    for item in input_data:
+        try:
+            numbers.append(float(item))
+        except ValueError:
+            error_occurred = True
+            break
+    if error_occurred:
+        print(""Error: Invalid input detected. Please ensure all inputs are numeric."")
+    else:
+        average = calculate_average(numbers)
+        print(average)",True,1,7584,122_14_1.py
+122,14,Find the average of several numbers,"Create a command-line tool using Python that reads a sequence of numbers from standard input and outputs the calculated average, ensuring the code is production-ready and handles potential non-numeric input errors.","import sys
+def calculate_average(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    input_data = sample_input.split()
+    numbers = []
+    error_occurred = False
+    for item in input_data:
+        try:
+            numbers.append(float(item))
+        except ValueError:
+            error_occurred = True
+            break
+    if error_occurred:
+        print(""Error: Invalid input detected. Please ensure all inputs are numeric."")
+    else:
+        if numbers:
+            average = calculate_average(numbers)
+            print(average)
+        else:
+            print(""No valid numbers were provided."")",True,2,7585,122_14_2.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            if '+' in expr:
+                parts = expr.split('+')
+                if len(parts) == 2:
+                    num1 = int(parts[0].strip())
+                    num2 = int(parts[1].strip())
+                    results.append(num1 + num2)
+            elif '-' in expr:
+                parts = expr.split('-')
+                if len(parts) == 2:
+                    num1 = int(parts[0].strip())
+                    num2 = int(parts[1].strip())
+                    results.append(num1 - num2)
+            else:
+                continue
+        except ValueError:
+            continue
+        except IndexError:
+            continue
+    return results
+if __name__ == '__main__':
+    sample_expressions = ['5+3', '10-4', '20+5', '15-7', '100+100', '1-5']
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,0,7586,125_11.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            parts = expr.split('+')
+            if len(parts) == 2:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 + num2)
+            elif len(parts) == 2 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            elif len(parts) == 3 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                num3 = int(parts_sub[2])
+                results.append(num1 - num2 - num3)
+            elif len(parts) == 3 and '+' in expr:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                num3 = int(parts[2])
+                results.append(num1 + num2 + num3)
+            else:
+                raise ValueError(""Invalid expression format"")
+        except ValueError:
+            results.append(f""Error processing: {expr}"")
+        except Exception:
+            results.append(f""Error processing: {expr}"")
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        ""5+3"",
+        ""10-4"",
+        ""20+5-1"",
+        ""100+20"",
+        ""7-11""
+    ]
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,1,7587,125_11_1.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        match = re.match(r""(\d+)\s*([\+\-])\s*(\d+)"", expr)
+        if match:
+            num1 = int(match.group(1))
+            operator = match.group(2)
+            num2 = int(match.group(3))
+            if operator == '+':
+                results.append(num1 + num2)
+            elif operator == '-':
+                results.append(num1 - num2)
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        ""5+3"",
+        ""10-4"",
+        ""20+15"",
+        ""30-10"",
+        ""7+1"",
+        ""12-5""
+    ]
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,2,7588,125_11_2.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            parts = expr.split('+')
+            if len(parts) == 2:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 + num2)
+            elif len(parts) == 2 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            elif len(parts) == 2 and expr.count('-') == 1:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 - num2)
+            else:
+                raise ValueError(""Invalid format"")
+        except ValueError:
+            pass
+        except IndexError:
+            pass
+    return results
+if __name__ == '__main__':
+    sample_expressions = ['5+3', '10-4', '20+5', '15-7', '100+200']
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,3,7589,125_11_3.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            parts = expr.split('+')
+            if len(parts) == 2:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 + num2)
+            elif len(parts) == 2 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            elif len(parts) == 3 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                num3 = int(parts_sub[2])
+                results.append(num1 - num2 - num3)
+            elif len(parts) == 3 and '+' in expr:
+                parts_add = expr.split('+')
+                num1 = int(parts_add[0])
+                num2 = int(parts_add[1])
+                num3 = int(parts_add[2])
+                results.append(num1 + num2 + num3)
+            elif len(parts) == 3 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                num3 = int(parts_sub[2])
+                results.append(num1 - num2 - num3)
+            elif len(parts) == 3 and '+' in expr and '-' in expr:
+                pass
+            else:
+                if '-' in expr:
+                    try:
+                        a, b = map(int, expr.split('-'))
+                        results.append(a - b)
+                    except ValueError:
+                        pass
+                else:
+                    pass
+        except ValueError:
+            pass
+    return results
+def solve_arithmetic_optimized(expressions):
+    results = []
+    for expr in expressions:
+        if '+' in expr:
+            try:
+                nums = [int(x) for x in expr.split('+')]
+                if len(nums) >= 2:
+                    current_result = nums[0]
+                    for i in range(1, len(nums)):
+                        current_result += nums[i]
+                    results.append(current_result)
+            except ValueError:
+                pass
+        elif '-' in expr:
+            try:
+                parts = expr.split('-')
+                if len(parts) == 2:
+                    a = int(parts[0])
+                    b = int(parts[1])
+                    results.append(a - b)
+                elif len(parts) > 2:
+                    nums = [int(x) for x in parts]
+                    current_result = nums[0]
+                    for i in range(1, len(nums)):
+                        current_result -= nums[i]
+                    results.append(current_result)
+            except ValueError:
+                pass
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        '5+3',
+        '10-4',
+        '20+5-2',
+        '100-50',
+        '1+2+3'
+    ]
+    results = solve_arithmetic_optimized(sample_expressions)
+    print(results)",True,4,7590,125_11_4.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            if '+' in expr:
+                parts = expr.split('+')
+                if len(parts) == 2:
+                    num1 = int(parts[0].strip())
+                    num2 = int(parts[1].strip())
+                    results.append(num1 + num2)
+            elif '-' in expr:
+                parts = expr.split('-')
+                if len(parts) == 2:
+                    num1 = int(parts[0].strip())
+                    num2 = int(parts[1].strip())
+                    results.append(num1 - num2)
+            else:
+                continue
+        except ValueError:
+            pass
+        except IndexError:
+            pass
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        '5+3',
+        '10-4',
+        '20+5',
+        '15-7',
+        '100+200',
+        '50-10'
+    ]
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,5,7591,125_11_5.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            parts = expr.split('+')
+            if len(parts) == 2:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 + num2)
+            elif len(parts) == 2 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            elif len(parts) == 2 and expr.count('-') == 1:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 - num2)
+            elif len(parts) == 1:
+                if '-' in expr:
+                    parts_sub = expr.split('-')
+                    num1 = int(parts_sub[0])
+                    num2 = int(parts_sub[1])
+                    results.append(num1 - num2)
+                else:
+                    results.append(int(expr))
+        except ValueError:
+            continue
+        except IndexError:
+            continue
+    return results
+if __name__ == '__main__':
+    sample_expressions = ['5+3', '10-4', '20+5', '15-7', '100+200', '1-9']
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,6,7592,125_11_6.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            parts = expr.split('+')
+            if len(parts) == 2:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 + num2)
+            elif len(parts) == 2 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            elif len(parts) == 3 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                num3 = int(parts_sub[2])
+                results.append(num1 - num2 - num3)
+            elif len(parts) == 3 and '+' in expr:
+                parts_add = expr.split('+')
+                num1 = int(parts_add[0])
+                num2 = int(parts_add[1])
+                num3 = int(parts_add[2])
+                results.append(num1 + num2 + num3)
+            elif len(parts) == 3 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                num3 = int(parts_sub[2])
+                results.append(num1 - num2 - num3)
+            elif len(parts) == 3 and '+' in expr and '-' in expr:
+                pass
+            else:
+                if '-' in expr:
+                    try:
+                        a, b = map(int, expr.split('-'))
+                        results.append(a - b)
+                    except ValueError:
+                        pass
+                else:
+                    try:
+                        a, b = map(int, expr.split('+'))
+                        results.append(a + b)
+                    except ValueError:
+                        pass
+        except ValueError:
+            continue
+        except Exception:
+            continue
+    return results
+if __name__ == '__main__':
+    test_expressions = [
+        '5+3',
+        '10-4',
+        '20+5-1',
+        '15-7',
+        '10+2+3',
+        '20-10-5'
+    ]
+    results = solve_arithmetic(test_expressions)
+    print(results)",True,7,7593,125_11_7.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        try:
+            parts = expr.split('+')
+            if len(parts) == 2:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 + num2)
+            elif len(parts) == 2 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            elif len(parts) == 2 and expr.count('-') == 1:
+                num1 = int(parts[0])
+                num2 = int(parts[1])
+                results.append(num1 - num2)
+            elif len(parts) == 1 and '-' in expr:
+                parts_sub = expr.split('-')
+                num1 = int(parts_sub[0])
+                num2 = int(parts_sub[1])
+                results.append(num1 - num2)
+            else:
+                raise ValueError(""Invalid format"")
+        except ValueError:
+            results.append(f""Error processing: {expr}"")
+        except Exception:
+            results.append(f""Error processing: {expr}"")
+    return results
+if __name__ == '__main__':
+    sample_expressions = ['5+3', '10-4', '20+5', '15-7', '100+100']
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,8,7594,125_11_8.py
+125,11,Solve simple addition subtraction problems,"Implement an optimized function named 'solve_arithmetic' that accepts a list of arithmetic expressions (strings like '5+3' or '10-4') and returns a list of the results, handling both addition and subtraction operations robustly.","import re
+def solve_arithmetic(expressions):
+    results = []
+    for expr in expressions:
+        match = re.match(r""(\d+)\s*([+\-])\s*(\d+)"", expr)
+        if match:
+            num1 = int(match.group(1))
+            operator = match.group(2)
+            num2 = int(match.group(3))
+            if operator == '+':
+                results.append(num1 + num2)
+            elif operator == '-':
+                results.append(num1 - num2)
+    return results
+if __name__ == '__main__':
+    sample_expressions = [
+        '5+3',
+        '10-4',
+        '20+7',
+        '15-8',
+        '100+50',
+        '12-1'
+    ]
+    results = solve_arithmetic(sample_expressions)
+    print(results)",True,9,7595,125_11_9.py
+125,13,Solve simple addition subtraction problems,Write a concise and efficient Python function that takes two integers as input and returns a tuple containing their sum and their difference.,"def calculate_sum_difference(a, b):
+    return (a + b, a - b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    result = calculate_sum_difference(num1, num2)
+    print(result)",True,0,7596,125_13.py
+125,14,Solve simple addition subtraction problems,"Create a command-line interface (CLI) program using Python that repeatedly asks the user for two numbers and performs both addition and subtraction operations, providing clear output for each calculation.","import random
+def main():
+    num1 = random.randint(1, 100)
+    num2 = random.randint(1, 100)
+    print(f""First number: {num1}"")
+    print(f""Second number: {num2}"")
+    addition_result = num1 + num2
+    subtraction_result = num1 - num2
+    print(f""Addition result: {addition_result}"")
+    print(f""Subtraction result: {subtraction_result}"")
+if __name__ == '__main__':
+    main()",True,0,7597,125_14.py
+125,14,Solve simple addition subtraction problems,"Create a command-line interface (CLI) program using Python that repeatedly asks the user for two numbers and performs both addition and subtraction operations, providing clear output for each calculation.","import random
+def main():
+    num1 = random.randint(1, 100)
+    num2 = random.randint(1, 100)
+    print(f""First number: {num1}"")
+    print(f""Second number: {num2}"")
+    addition_result = num1 + num2
+    subtraction_result = num1 - num2
+    print(f""Addition result: {num1} + {num2} = {addition_result}"")
+    print(f""Subtraction result: {num1} - {num2} = {subtraction_result}"")
+if __name__ == '__main__':
+    main()",True,1,7598,125_14_1.py
+126,0,Check if a value is equal,"Implement a simple Python function named 'check_equality' that takes two arguments, 'a' and 'b', and returns True if they are equal, and False otherwise. Ensure the implementation is concise and follows Python best practices.","def check_equality(a, b):
+    return a == b
+if __name__ == '__main__':
+    print(check_equality(5, 5))
+    print(check_equality(10, 5))
+    print(check_equality(""hello"", ""hello""))
+    print(check_equality(1, 2))",True,0,7599,126_0.py
+126,1,Check if a value is equal,"Write a robust Python function that checks if two strings are exactly equal, ignoring case sensitivity. The function should be named 'are_strings_equal_case_insensitive'.","def are_strings_equal_case_insensitive(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal_case_insensitive(""Hello"", ""hello""))
+    print(are_strings_equal_case_insensitive(""Python"", ""python""))
+    print(are_strings_equal_case_insensitive(""World"", ""earth""))
+    print(are_strings_equal_case_insensitive(""Apple"", ""apple""))
+    print(are_strings_equal_case_insensitive(""Test"", ""tEsT""))
+    print(are_strings_equal_case_insensitive(""abc"", ""ABD""))",True,0,7600,126_1.py
+126,1,Check if a value is equal,"Write a robust Python function that checks if two strings are exactly equal, ignoring case sensitivity. The function should be named 'are_strings_equal_case_insensitive'.","def are_strings_equal_case_insensitive(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal_case_insensitive(""Hello"", ""hello""))
+    print(are_strings_equal_case_insensitive(""Python"", ""python""))
+    print(are_strings_equal_case_insensitive(""World"", ""earth""))
+    print(are_strings_equal_case_insensitive(""Test"", ""tEsT""))
+    print(are_strings_equal_case_insensitive(""Apple"", ""Banana""))",True,1,7601,126_1_1.py
+126,1,Check if a value is equal,"Write a robust Python function that checks if two strings are exactly equal, ignoring case sensitivity. The function should be named 'are_strings_equal_case_insensitive'.","def are_strings_equal_case_insensitive(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal_case_insensitive(""Hello"", ""hello""))
+    print(are_strings_equal_case_insensitive(""Python"", ""python""))
+    print(are_strings_equal_case_insensitive(""World"", ""earth""))
+    print(are_strings_equal_case_insensitive(""Test"", ""tEsT""))
+    print(are_strings_equal_case_insensitive(""Apple"", ""Orange""))",True,2,7602,126_1_2.py
+126,1,Check if a value is equal,"Write a robust Python function that checks if two strings are exactly equal, ignoring case sensitivity. The function should be named 'are_strings_equal_case_insensitive'.","def are_strings_equal_case_insensitive(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal_case_insensitive(""Hello"", ""hello""))
+    print(are_strings_equal_case_insensitive(""Python"", ""python""))
+    print(are_strings_equal_case_insensitive(""World"", ""earth""))
+    print(are_strings_equal_case_insensitive(""Apple"", ""apPle""))
+    print(are_strings_equal_case_insensitive(""Test"", ""tEsT""))",True,3,7603,126_1_3.py
+126,2,Check if a value is equal,"Develop an optimized method within a class called 'ValueChecker' that has a method 'is_equal(self, value1, value2)' to determine if two provided values are equal. Prioritize efficiency.","class ValueChecker:
+    def is_equal(self, value1, value2):
+        return value1 == value2
+if __name__ == '__main__':
+    checker = ValueChecker()
+    print(checker.is_equal(10, 10))
+    print(checker.is_equal(5.5, 5.5))
+    print(checker.is_equal(""hello"", ""hello""))
+    print(checker.is_equal(1, 2))
+    print(checker.is_equal(True, True))
+    print(checker.is_equal(10, 10.0))",True,0,7604,126_2.py
+126,2,Check if a value is equal,"Develop an optimized method within a class called 'ValueChecker' that has a method 'is_equal(self, value1, value2)' to determine if two provided values are equal. Prioritize efficiency.","class ValueChecker:
+    def is_equal(self, value1, value2):
+        return value1 == value2
+if __name__ == '__main__':
+    checker = ValueChecker()
+    print(checker.is_equal(10, 10))
+    print(checker.is_equal(5.5, 5.5))
+    print(checker.is_equal(""hello"", ""hello""))
+    print(checker.is_equal(1, 2))
+    print(checker.is_equal(True, True))
+    print(checker.is_equal(3.14, 3.1400000000000004))",True,1,7605,126_2_1.py
+126,2,Check if a value is equal,"Develop an optimized method within a class called 'ValueChecker' that has a method 'is_equal(self, value1, value2)' to determine if two provided values are equal. Prioritize efficiency.","class ValueChecker:
+    def is_equal(self, value1, value2):
+        return value1 == value2
+if __name__ == '__main__':
+    checker = ValueChecker()
+    print(checker.is_equal(10, 10))
+    print(checker.is_equal(5.5, 5.5))
+    print(checker.is_equal(""hello"", ""hello""))
+    print(checker.is_equal(1, 2))
+    print(checker.is_equal(True, True))
+    print(checker.is_equal(10, 11))",True,2,7606,126_2_2.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0])
+                    num2 = float(parts[1])
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for addition""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0])
+                    num2 = float(parts[1])
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for subtraction""
+        return ""Error: Invalid expression format""
+if __name__ == '__main__':
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    result_sub = calc.subtract(20, 8)
+    print(f""20 - 8 = {result_sub}"")
+    result_solve_add = calc.solve(""15 + 7"")
+    print(f""Solving 15 + 7: {result_solve_add}"")
+    result_solve_sub = calc.solve(""30 - 12"")
+    print(f""Solving 30 - 12: {result_solve_sub}"")
+    result_solve_error = calc.solve(""10 + hello"")
+    print(f""Solving 10 + hello: {result_solve_error}"")
+    result_solve_invalid = calc.solve(""10 * 5"")
+    print(f""Solving 10 * 5: {result_solve_invalid}"")",True,0,7607,125_12.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0])
+                    num2 = float(parts[1])
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for addition""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0])
+                    num2 = float(parts[1])
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for subtraction""
+        return ""Error: Invalid expression format""
+if __name__ == '__main__':
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    result_sub = calc.subtract(20, 8)
+    print(f""20 - 8 = {result_sub}"")
+    result_solve_add = calc.solve(""15 + 7"")
+    print(f""Solving 15 + 7: {result_solve_add}"")
+    result_solve_sub = calc.solve(""30 - 12"")
+    print(f""Solving 30 - 12: {result_solve_sub}"")
+    result_solve_error = calc.solve(""10 + hello"")
+    print(f""Solving 10 + hello: {result_solve_error}"")",True,1,7608,125_12_1.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for addition""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for subtraction""
+        return ""Error: Invalid expression format""
+if __name__ == '__main__':
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    print(f""Addition of 10 and 5: {result_add}"")
+    result_sub = calc.subtract(20, 8)
+    print(f""Subtraction of 20 and 8: {result_sub}"")
+    result_solve_add = calc.solve(""15 + 7"")
+    print(f""Solving 15 + 7: {result_solve_add}"")
+    result_solve_sub = calc.solve(""30 - 12"")
+    print(f""Solving 30 - 12: {result_solve_sub}"")
+    result_solve_error = calc.solve(""10 + hello"")
+    print(f""Solving 10 + hello: {result_solve_error}"")",True,2,7609,125_12_2.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0])
+                    num2 = float(parts[1])
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for addition""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0])
+                    num2 = float(parts[1])
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for subtraction""
+        return ""Error: Invalid expression format. Only simple addition or subtraction supported.""
+if __name__ == '__main__':
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    result_sub = calc.subtract(20, 8)
+    print(f""20 - 8 = {result_sub}"")
+    result_solve_add = calc.solve(""15 + 7"")
+    print(f""Solving 15 + 7: {result_solve_add}"")
+    result_solve_sub = calc.solve(""30 - 12"")
+    print(f""Solving 30 - 12: {result_solve_sub}"")
+    result_solve_invalid = calc.solve(""10 + 5 + 2"")
+    print(f""Solving 10 + 5 + 2: {result_solve_invalid}"")
+    result_solve_invalid_format = calc.solve(""10 - 5 - 2"")
+    print(f""Solving 10 - 5 - 2: {result_solve_invalid_format}"")",True,3,7610,125_12_3.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers in addition expression""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers in subtraction expression""
+        return ""Error: Unsupported operation or invalid expression format""
+if __name__ == '__main__':
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    result_sub = calc.subtract(10, 5)
+    print(f""10 - 5 = {result_sub}"")
+    result_solve_add = calc.solve(""15 + 7"")
+    print(f""Solving '15 + 7': {result_solve_add}"")
+    result_solve_sub = calc.solve(""20 - 8"")
+    print(f""Solving '20 - 8': {result_solve_sub}"")
+    result_solve_invalid = calc.solve(""10 + hello"")
+    print(f""Solving '10 + hello': {result_solve_invalid}"")
+    result_solve_unknown = calc.solve(""10 * 2"")
+    print(f""Solving '10 * 2': {result_solve_unknown}"")",True,4,7611,125_12_4.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers in addition expression""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers in subtraction expression""
+        return ""Error: Invalid expression format. Only simple addition or subtraction is supported.""
+if __name__ == '__main__':
+    calc = Calculator()
+    print(""Addition result:"")
+    result_add = calc.add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    print(""\nSubtraction result:"")
+    result_sub = calc.subtract(20, 7)
+    print(f""20 - 7 = {result_sub}"")
+    print(""\nSolving addition problem:"")
+    result_solve_add = calc.solve(""15 + 8"")
+    print(f""15 + 8 = {result_solve_add}"")
+    print(""\nSolving subtraction problem:"")
+    result_solve_sub = calc.solve(""30 - 12"")
+    print(f""30 - 12 = {result_solve_sub}"")
+    print(""\nSolving invalid problem:"")
+    result_solve_invalid = calc.solve(""10 + 5 + 2"")
+    print(f""10 + 5 + 2 = {result_solve_invalid}"")",True,5,7612,125_12_5.py
+125,12,Solve simple addition subtraction problems,"Develop a class named 'Calculator' with methods for 'add', 'subtract', and 'solve' that encapsulate the logic for simple addition and subtraction problems, ensuring the class is highly object-oriented and adheres to best practices.","class Calculator:
+    def add(self, a, b):
+        return a + b
+    def subtract(self, a, b):
+        return a - b
+    def solve(self, expression):
+        if ' + ' in expression:
+            parts = expression.split(' + ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.add(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for addition.""
+        elif ' - ' in expression:
+            parts = expression.split(' - ')
+            if len(parts) == 2:
+                try:
+                    num1 = float(parts[0].strip())
+                    num2 = float(parts[1].strip())
+                    return self.subtract(num1, num2)
+                except ValueError:
+                    return ""Error: Invalid numbers for subtraction.""
+        return ""Error: Invalid expression format. Only simple addition or subtraction supported.""
+if __name__ == '__main__':
+    calc = Calculator()
+    result_add = calc.add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    result_sub = calc.subtract(20, 8)
+    print(f""20 - 8 = {result_sub}"")
+    result_solve_add = calc.solve(""15 + 7"")
+    print(f""Solving 15 + 7: {result_solve_add}"")
+    result_solve_sub = calc.solve(""30 - 12"")
+    print(f""Solving 30 - 12: {result_solve_sub}"")
+    result_solve_invalid = calc.solve(""10 + 5 + 2"")
+    print(f""Solving 10 + 5 + 2: {result_solve_invalid}"")",True,6,7613,125_12_6.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(""Test Case 1 (Integers):"")
+    for result in yield_equality_check(10, 10):
+        print(result)
+    for result in yield_equality_check(10, 20):
+        print(result)
+    print(""\nTest Case 2 (Strings):"")
+    for result in yield_equality_check(""hello"", ""hello""):
+        print(result)
+    for result in yield_equality_check(""hello"", ""world""):
+        print(result)
+    print(""\nTest Case 3 (Lists):"")
+    for result in yield_equality_check([1, 2], [1, 2]):
+        print(result)
+    for result in yield_equality_check([1, 2], [2, 1]):
+        print(result)
+    print(""\nTest Case 4 (Booleans):"")
+    for result in yield_equality_check(True, True):
+        print(result)
+    for result in yield_equality_check(True, False):
+        print(result)
+    print(""\nTest Case 5 (Objects):"")
+    obj1 = [1, 2]
+    obj2 = [1, 2]
+    obj3 = [3, 4]
+    for result in yield_equality_check(obj1, obj2):
+        print(result)
+    for result in yield_equality_check(obj1, obj3):
+        print(result)",True,0,7614,126_4.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(""Test Case 1 (Integers):"")
+    for result in yield_equality_check(10, 10):
+        print(result)
+    for result in yield_equality_check(10, 20):
+        print(result)
+    print(""\nTest Case 2 (Strings):"")
+    for result in yield_equality_check(""hello"", ""hello""):
+        print(result)
+    for result in yield_equality_check(""hello"", ""world""):
+        print(result)
+    print(""\nTest Case 3 (Lists):"")
+    for result in yield_equality_check([1, 2], [1, 2]):
+        print(result)
+    for result in yield_equality_check([1, 2], [2, 1]):
+        print(result)
+    print(""\nTest Case 4 (Objects):"")
+    obj1 = object()
+    obj2 = object()
+    obj3 = obj1
+    print(""obj1 == obj2:"", obj1 == obj2)
+    for result in yield_equality_check(obj1, obj2):
+        print(result)
+    for result in yield_equality_check(obj1, obj3):
+        print(result)",True,1,7615,126_4_1.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(""Test Case 1 (Integers):"")
+    for result in yield_equality_check(10, 10):
+        print(result)
+    for result in yield_equality_check(10, 20):
+        print(result)
+    print(""\nTest Case 2 (Strings):"")
+    for result in yield_equality_check(""hello"", ""hello""):
+        print(result)
+    for result in yield_equality_check(""hello"", ""world""):
+        print(result)
+    print(""\nTest Case 3 (Lists):"")
+    for result in yield_equality_check([1, 2], [1, 2]):
+        print(result)
+    for result in yield_equality_check([1, 2], [2, 1]):
+        print(result)
+    print(""\nTest Case 4 (Objects):"")
+    obj1 = object()
+    obj2 = object()
+    obj3 = obj1
+    print(""obj1 == obj2:"")
+    for result in yield_equality_check(obj1, obj2):
+        print(result)
+    print(""obj1 == obj3:"")
+    for result in yield_equality_check(obj1, obj3):
+        print(result)",True,2,7616,126_4_2.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(""Test Case 1 (Integers):"")
+    for result in yield_equality_check(10, 10):
+        print(result)
+    for result in yield_equality_check(10, 5):
+        print(result)
+    print(""\nTest Case 2 (Strings):"")
+    for result in yield_equality_check(""hello"", ""hello""):
+        print(result)
+    for result in yield_equality_check(""hello"", ""world""):
+        print(result)
+    print(""\nTest Case 3 (Lists):"")
+    for result in yield_equality_check([1, 2], [1, 2]):
+        print(result)
+    for result in yield_equality_check([1, 2], [2, 1]):
+        print(result)
+    print(""\nTest Case 4 (Objects):"")
+    obj1 = object()
+    obj2 = object()
+    obj3 = obj1
+    print(""obj1 == obj2:"")
+    for result in yield_equality_check(obj1, obj2):
+        print(result)
+    print(""obj1 == obj3:"")
+    for result in yield_equality_check(obj1, obj3):
+        print(result)",True,3,7617,126_4_3.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(""Test 1 (Integers):"")
+    for result in yield_equality_check(10, 10):
+        print(result)
+    for result in yield_equality_check(10, 20):
+        print(result)
+    print(""\nTest 2 (Strings):"")
+    for result in yield_equality_check(""hello"", ""hello""):
+        print(result)
+    for result in yield_equality_check(""hello"", ""world""):
+        print(result)
+    print(""\nTest 3 (Lists):"")
+    for result in yield_equality_check([1, 2], [1, 2]):
+        print(result)
+    for result in yield_equality_check([1, 2], [2, 1]):
+        print(result)
+    print(""\nTest 4 (Booleans):"")
+    for result in yield_equality_check(True, True):
+        print(result)
+    for result in yield_equality_check(True, False):
+        print(result)",True,4,7618,126_4_4.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(list(yield_equality_check(1, 1)))
+    print(list(yield_equality_check(1, 2)))
+    print(list(yield_equality_check(""hello"", ""hello"")))
+    print(list(yield_equality_check(""hello"", ""world"")))
+    print(list(yield_equality_check([1, 2], [1, 2])))
+    print(list(yield_equality_check([1, 2], [3, 4])))
+    print(list(yield_equality_check(None, None)))
+    print(list(yield_equality_check(0.0, 0)))",True,5,7619,126_4_5.py
+126,4,Check if a value is equal,"Implement a generator function that yields True if two provided arbitrary objects are equal based on their built-in equality comparison (`==`), and False otherwise. Name the function 'yield_equality_check'.","def yield_equality_check(a, b):
+    if a == b:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(""Test Case 1:"")
+    for result in yield_equality_check(10, 10):
+        print(result)
+    print(""\nTest Case 2:"")
+    for result in yield_equality_check(""hello"", ""hello""):
+        print(result)
+    print(""\nTest Case 3:"")
+    for result in yield_equality_check(1, 2):
+        print(result)
+    print(""\nTest Case 4:"")
+    for result in yield_equality_check([1, 2], [1, 2]):
+        print(result)
+    print(""\nTest Case 5:"")
+    for result in yield_equality_check(None, None):
+        print(result)
+    print(""\nTest Case 6:"")
+    for result in yield_equality_check(5.5, 5.500000000000001):
+        print(result)",True,6,7620,126_4_6.py
+126,5,Check if a value is equal,Write a highly efficient one-line expression in Python to check if the integer 100 is equal to the result of adding 5 and 9. Demonstrate the result.,"if __name__ == '__main__':
+    if 100 == 5 + 9:
+        print(""True"")
+    else:
+        print(""False"")",True,0,7621,126_5.py
+126,5,Check if a value is equal,Write a highly efficient one-line expression in Python to check if the integer 100 is equal to the result of adding 5 and 9. Demonstrate the result.,"if __name__ == '__main__':
+    print((100 == 5 + 9))",True,1,7622,126_5_1.py
+126,3,Check if a value is equal,Create a script that prompts the user to input two numbers from the console and then uses an 'if' statement to check if the entered numbers are equal. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    num1 = 10
+    num2 = 10
+    if num1 == num2:
+        print(""The numbers are equal."")
+    else:
+        print(""The numbers are not equal."")",True,0,7623,126_3.py
+126,6,Check if a value is equal,"Design and write a class 'ComparisonTool' with a method 'check_value_equality(self, x, y)' that strictly checks for equality between two numerical inputs, ensuring the code is fully documented with docstrings.","class ComparisonTool:
+    def check_value_equality(self, x, y):
+        return x == y
+if __name__ == '__main__':
+    tool = ComparisonTool()
+    x1 = 5
+    y1 = 5
+    result1 = tool.check_value_equality(x1, y1)
+    print(f""Checking equality between {x1} and {y1}: {result1}"")
+    x2 = 10
+    y2 = 20
+    result2 = tool.check_value_equality(x2, y2)
+    print(f""Checking equality between {x2} and {y2}: {result2}"")
+    x3 = 3.14
+    y3 = 3.14
+    result3 = tool.check_value_equality(x3, y3)
+    print(f""Checking equality between {x3} and {y3}: {result3}"")
+    x4 = 1.0
+    y4 = 1.0000000000000001
+    result4 = tool.check_value_equality(x4, y4)
+    print(f""Checking equality between {x4} and {y4}: {result4}"")",True,0,7624,126_6.py
+126,6,Check if a value is equal,"Design and write a class 'ComparisonTool' with a method 'check_value_equality(self, x, y)' that strictly checks for equality between two numerical inputs, ensuring the code is fully documented with docstrings.","class ComparisonTool:
+    def check_value_equality(self, x, y):
+        return x == y
+if __name__ == '__main__':
+    tool = ComparisonTool()
+    x1 = 5
+    y1 = 5
+    result1 = tool.check_value_equality(x1, y1)
+    print(f""Checking equality between {x1} and {y1}: {result1}"")
+    x2 = 10
+    y2 = 20
+    result2 = tool.check_value_equality(x2, y2)
+    print(f""Checking equality between {x2} and {y2}: {result2}"")
+    x3 = 3.14
+    y3 = 3.14
+    result3 = tool.check_value_equality(x3, y3)
+    print(f""Checking equality between {x3} and {y3}: {result3}"")
+    x4 = 1.0
+    y4 = 1.0000000000000001
+    result4 = tool.check_value_equality(x4, y4)
+    print(f""Checking equality between {x4} and {y4}: {result4}"")
+    x5 = 5
+    y5 = 5.0
+    result5 = tool.check_value_equality(x5, y5)
+    print(f""Checking equality between {x5} and {y5}: {result5}"")",True,1,7625,126_6_1.py
+126,6,Check if a value is equal,"Design and write a class 'ComparisonTool' with a method 'check_value_equality(self, x, y)' that strictly checks for equality between two numerical inputs, ensuring the code is fully documented with docstrings.","class ComparisonTool:
+    def check_value_equality(self, x, y):
+        return x == y
+if __name__ == '__main__':
+    tool = ComparisonTool()
+    x1 = 5
+    y1 = 5
+    result1 = tool.check_value_equality(x1, y1)
+    print(f""Checking equality between {x1} and {y1}: {result1}"")
+    x2 = 10
+    y2 = 20
+    result2 = tool.check_value_equality(x2, y2)
+    print(f""Checking equality between {x2} and {y2}: {result2}"")
+    x3 = 3.14
+    y3 = 3.14
+    result3 = tool.check_value_equality(x3, y3)
+    print(f""Checking equality between {x3} and {y3}: {result3}"")
+    x4 = 1.0
+    y4 = 1.0000000000000001
+    result4 = tool.check_value_equality(x4, y4)
+    print(f""Checking equality between {x4} and {y4}: {result4}"")
+    x5 = 5
+    y5 = ""5""
+    result5 = tool.check_value_equality(x5, y5)
+    print(f""Checking equality between {x5} and '{y5}': {result5}"")",True,2,7626,126_6_2.py
+126,6,Check if a value is equal,"Design and write a class 'ComparisonTool' with a method 'check_value_equality(self, x, y)' that strictly checks for equality between two numerical inputs, ensuring the code is fully documented with docstrings.","class ComparisonTool:
+    def check_value_equality(self, x, y):
+        return x == y
+if __name__ == '__main__':
+    tool = ComparisonTool()
+    x1 = 5
+    y1 = 5
+    result1 = tool.check_value_equality(x1, y1)
+    print(f""Checking equality between {x1} and {y1}: {result1}"")
+    x2 = 10.5
+    y2 = 10.50
+    result2 = tool.check_value_equality(x2, y2)
+    print(f""Checking equality between {x2} and {y2}: {result2}"")
+    x3 = 1
+    y3 = 2
+    result3 = tool.check_value_equality(x3, y3)
+    print(f""Checking equality between {x3} and {y3}: {result3}"")
+    x4 = -3
+    y4 = -3
+    result4 = tool.check_value_equality(x4, y4)
+    print(f""Checking equality between {x4} and {y4}: {result4}"")",True,3,7627,126_6_3.py
+126,7,Check if a value is equal,Write a function that accepts a list of items and checks if all elements in the list are equal to the first element. Return a boolean result.,"def check_all_equal(items):
+    if not items:
+        return True
+    first_element = items[0]
+    for item in items:
+        if item != first_element:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 1, 1]
+    list2 = [5, 5, 5]
+    list3 = [1, 2, 1]
+    list4 = [10]
+    list5 = []
+    list6 = [3.14, 3.14, 3.14]
+    list7 = [2, 2, 3]
+    print(f""list1: {check_all_equal(list1)}"")
+    print(f""list2: {check_all_equal(list2)}"")
+    print(f""list3: {check_all_equal(list3)}"")
+    print(f""list4: {check_all_equal(list4)}"")
+    print(f""list5: {check_all_equal(list5)}"")
+    print(f""list6: {check_all_equal(list6)}"")
+    print(f""list7: {check_all_equal(list7)}"")",True,0,7628,126_7.py
+126,7,Check if a value is equal,Write a function that accepts a list of items and checks if all elements in the list are equal to the first element. Return a boolean result.,"def check_all_equal(items):
+    if not items:
+        return True
+    first_element = items[0]
+    for item in items:
+        if item != first_element:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 1, 1, 1]
+    list2 = [5, 5, 5]
+    list3 = [1, 2, 1]
+    list4 = []
+    list5 = [10]
+    print(f""list1: {check_all_equal(list1)}"")
+    print(f""list2: {check_all_equal(list2)}"")
+    print(f""list3: {check_all_equal(list3)}"")
+    print(f""list4: {check_all_equal(list4)}"")
+    print(f""list5: {check_all_equal(list5)}"")",True,1,7629,126_7_1.py
+126,7,Check if a value is equal,Write a function that accepts a list of items and checks if all elements in the list are equal to the first element. Return a boolean result.,"def check_all_equal(items):
+    if not items:
+        return True
+    first_element = items[0]
+    for item in items:
+        if item != first_element:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 1, 1]
+    list2 = [5, 5, 5]
+    list3 = [1, 2, 1]
+    list4 = []
+    list5 = [10]
+    print(f""list1: {check_all_equal(list1)}"")
+    print(f""list2: {check_all_equal(list2)}"")
+    print(f""list3: {check_all_equal(list3)}"")
+    print(f""list4: {check_all_equal(list4)}"")
+    print(f""list5: {check_all_equal(list5)}"")",True,2,7630,126_7_2.py
+126,7,Check if a value is equal,Write a function that accepts a list of items and checks if all elements in the list are equal to the first element. Return a boolean result.,"def check_all_equal(items):
+    if not items:
+        return True
+    first_element = items[0]
+    for item in items:
+        if item != first_element:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 1, 1]
+    list2 = [5, 5, 5]
+    list3 = [1, 2, 1]
+    list4 = [10]
+    list5 = []
+    list6 = [3.14, 3.14]
+    list7 = [1, 2]
+    print(f""list1: {check_all_equal(list1)}"")
+    print(f""list2: {check_all_equal(list2)}"")
+    print(f""list3: {check_all_equal(list3)}"")
+    print(f""list4: {check_all_equal(list4)}"")
+    print(f""list5: {check_all_equal(list5)}"")
+    print(f""list6: {check_all_equal(list6)}"")
+    print(f""list7: {check_all_equal(list7)}"")",True,3,7631,126_7_3.py
+126,7,Check if a value is equal,Write a function that accepts a list of items and checks if all elements in the list are equal to the first element. Return a boolean result.,"def check_all_equal(items):
+    if not items:
+        return True
+    first_element = items[0]
+    for item in items:
+        if item != first_element:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 1, 1]
+    list2 = [5, 5, 5]
+    list3 = [1, 2, 1]
+    list4 = [7]
+    list5 = []
+    list6 = [3.14, 3.14, 3.14]
+    list7 = [10, 20, 10]
+    print(f""list1: {check_all_equal(list1)}"")
+    print(f""list2: {check_all_equal(list2)}"")
+    print(f""list3: {check_all_equal(list3)}"")
+    print(f""list4: {check_all_equal(list4)}"")
+    print(f""list5: {check_all_equal(list5)}"")
+    print(f""list6: {check_all_equal(list6)}"")
+    print(f""list7: {check_all_equal(list7)}"")",True,4,7632,126_7_4.py
+126,9,Check if a value is equal,"Develop a complete, runnable Python program that reads two values from standard input and prints a clear message indicating whether they are equal or not. Ensure the solution is production-ready.","import sys
+if __name__ == '__main__':
+    value1 = 10
+    value2 = 10
+    if value1 == value2:
+        print(""The two values are equal."")
+    else:
+        print(""The two values are not equal."")",True,0,7633,126_9.py
+126,10,Check if a value is equal,"Write a robust Python function named 'check_equality' that takes two arguments, 'a' and 'b', and returns True if they are exactly equal, and False otherwise. Ensure the code is highly readable and follows all Python best practices.","def check_equality(a, b):
+    return a == b
+if __name__ == '__main__':
+    print(check_equality(5, 5))
+    print(check_equality(10, 5))
+    print(check_equality(""hello"", ""hello""))
+    print(check_equality(10.5, 10.5))
+    print(check_equality(10, 10.0))",True,0,7634,126_10.py
+126,10,Check if a value is equal,"Write a robust Python function named 'check_equality' that takes two arguments, 'a' and 'b', and returns True if they are exactly equal, and False otherwise. Ensure the code is highly readable and follows all Python best practices.","def check_equality(a, b):
+    return a == b
+if __name__ == '__main__':
+    print(check_equality(5, 5))
+    print(check_equality(10, 5))
+    print(check_equality(""hello"", ""hello""))
+    print(check_equality(1, 2))
+    print(check_equality(3.14, 3.1400000000000004))",True,1,7635,126_10_1.py
+126,10,Check if a value is equal,"Write a robust Python function named 'check_equality' that takes two arguments, 'a' and 'b', and returns True if they are exactly equal, and False otherwise. Ensure the code is highly readable and follows all Python best practices.","def check_equality(a, b):
+    return a == b
+if __name__ == '__main__':
+    print(check_equality(5, 5))
+    print(check_equality(10, 5))
+    print(check_equality(""hello"", ""hello""))
+    print(check_equality(10, 10.0))
+    print(check_equality([1, 2], [1, 2]))",True,2,7636,126_10_2.py
+126,10,Check if a value is equal,"Write a robust Python function named 'check_equality' that takes two arguments, 'a' and 'b', and returns True if they are exactly equal, and False otherwise. Ensure the code is highly readable and follows all Python best practices.","def check_equality(a, b):
+    return a == b
+if __name__ == '__main__':
+    print(check_equality(5, 5))
+    print(check_equality(10, 5))
+    print(check_equality(""hello"", ""hello""))
+    print(check_equality(10, 10.0))",True,3,7637,126_10_3.py
+126,11,Check if a value is equal,"Implement an optimized one-line Python expression to check if the string 'apple' is equal to the string 'Apple', ignoring case sensitivity. Provide the complete runnable code.","if __name__ == '__main__':
+    result = 'apple'.lower() == 'apple'.lower()
+    print(result)",True,0,7638,126_11.py
+126,12,Check if a value is equal,"Develop a class named 'ValueChecker' with a method 'is_equal(self, val1, val2)' that efficiently determines if the two input values are equal. Include docstrings explaining the method's purpose and parameters.","class ValueChecker:
+    def is_equal(self, val1, val2):
+        return val1 == val2
+if __name__ == '__main__':
+    checker = ValueChecker()
+    print(checker.is_equal(5, 5))
+    print(checker.is_equal(10, 5))
+    print(checker.is_equal(""hello"", ""hello""))
+    print(checker.is_equal(3.14, 3.1400000000000004))",True,0,7639,126_12.py
+126,12,Check if a value is equal,"Develop a class named 'ValueChecker' with a method 'is_equal(self, val1, val2)' that efficiently determines if the two input values are equal. Include docstrings explaining the method's purpose and parameters.","class ValueChecker:
+    def is_equal(self, val1, val2):
+        return val1 == val2
+if __name__ == '__main__':
+    checker = ValueChecker()
+    print(checker.is_equal(10, 10))
+    print(checker.is_equal(5, 3))
+    print(checker.is_equal(""hello"", ""hello""))
+    print(checker.is_equal(True, True))
+    print(checker.is_equal(1.5, 1.50))",True,1,7640,126_12_1.py
+126,12,Check if a value is equal,"Develop a class named 'ValueChecker' with a method 'is_equal(self, val1, val2)' that efficiently determines if the two input values are equal. Include docstrings explaining the method's purpose and parameters.","class ValueChecker:
+    def is_equal(self, val1, val2):
+        return val1 == val2
+if __name__ == '__main__':
+    checker = ValueChecker()
+    value1 = 10
+    value2 = 10
+    value3 = 5
+    value4 = 5.0
+    value5 = ""hello""
+    print(f""Is {value1} equal to {value2}? {checker.is_equal(value1, value2)}"")
+    print(f""Is {value1} equal to {value3}? {checker.is_equal(value1, value3)}"")
+    print(f""Is {value4} equal to {value2}? {checker.is_equal(value4, value2)}"")
+    print(f""Is {value5} equal to {value1}? {checker.is_equal(value5, value1)}"")",True,2,7641,126_12_2.py
+125,10,Solve simple addition subtraction problems,"Write a complete, well-documented Python script that prompts the user to input two numbers and then calculates and prints their sum and difference.","def calculate_sum_difference():
+    num1 = 15
+    num2 = 7
+    sum_result = num1 + num2
+    difference_result = num1 - num2
+    print(f""The first number is: {num1}"")
+    print(f""The second number is: {num2}"")
+    print(f""The sum of the two numbers is: {sum_result}"")
+    print(f""The difference between the two numbers is: {difference_result}"")
+if __name__ == '__main__':
+    calculate_sum_difference()",True,0,7642,125_10.py
+126,14,Check if a value is equal,"Create a generator function that yields True if the input integer is equal to 10, and False otherwise. This function must be highly efficient for large sequences.","def check_ten_generator(n):
+    if n == 10:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(list(check_ten_generator(10)))
+    print(list(check_ten_generator(5)))
+    print(list(check_ten_generator(20)))
+    print(list(check_ten_generator(1000000)))",True,0,7643,126_14.py
+126,14,Check if a value is equal,"Create a generator function that yields True if the input integer is equal to 10, and False otherwise. This function must be highly efficient for large sequences.","def check_ten_generator(n):
+    if n == 10:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    for number in [5, 10, 15, 10, 20, 100]:
+        for result in check_ten_generator(number):
+            print(result)",True,1,7644,126_14_1.py
+126,14,Check if a value is equal,"Create a generator function that yields True if the input integer is equal to 10, and False otherwise. This function must be highly efficient for large sequences.","def check_ten_generator(n):
+    if n == 10:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    print(list(check_ten_generator(10)))
+    print(list(check_ten_generator(5)))
+    print(list(check_ten_generator(20)))
+    print(list(check_ten_generator(1000)))",True,2,7645,126_14_2.py
+126,14,Check if a value is equal,"Create a generator function that yields True if the input integer is equal to 10, and False otherwise. This function must be highly efficient for large sequences.","def check_ten_generator(n):
+    if n == 10:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    for i in [5, 10, 15, 10, 20, 100]:
+        print(f""Input: {i}, Result: {next(check_ten_generator(i))}"")",True,3,7646,126_14_3.py
+126,14,Check if a value is equal,"Create a generator function that yields True if the input integer is equal to 10, and False otherwise. This function must be highly efficient for large sequences.","def check_ten(n):
+    if n == 10:
+        yield True
+    else:
+        yield False
+if __name__ == '__main__':
+    generator1 = check_ten(10)
+    print(list(generator1))
+    generator2 = check_ten(5)
+    print(list(generator2))
+    generator3 = check_ten(20)
+    print(list(generator3))",True,4,7647,126_14_4.py
+127,0,Figure out if something is odd,"Write a complete, well-documented Python script that takes a list of integers and determines if there is an odd number present in the list. Use the most efficient method.","def has_odd(numbers):
+    for number in numbers:
+        if number % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6]
+    result = has_odd(sample_list)
+    print(result)",True,0,7648,127_0.py
+127,1,Figure out if something is odd,"Implement an optimized function named 'is_list_odd' that accepts a list of integers and returns True if at least one number in the list is odd, and False otherwise. Ensure the code is highly efficient.","def is_list_odd(data):
+    for x in data:
+        if x % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 6, 8, 9]
+    list4 = []
+    list5 = [10, 20, 30]
+    print(f""list1: {is_list_odd(list1)}"")
+    print(f""list2: {is_list_odd(list2)}"")
+    print(f""list3: {is_list_odd(list3)}"")
+    print(f""list4: {is_list_odd(list4)}"")
+    print(f""list5: {is_list_odd(list5)}"")",True,0,7649,127_1.py
+127,1,Figure out if something is odd,"Implement an optimized function named 'is_list_odd' that accepts a list of integers and returns True if at least one number in the list is odd, and False otherwise. Ensure the code is highly efficient.","def is_list_odd(data):
+    for x in data:
+        if x % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [2, 4, 6]
+    list2 = [1, 3, 5]
+    list3 = [2, 4, 8]
+    list4 = []
+    list5 = [10, 12, 15]
+    print(f""list1: {is_list_odd(list1)}"")
+    print(f""list2: {is_list_odd(list2)}"")
+    print(f""list3: {is_list_odd(list3)}"")
+    print(f""list4: {is_list_odd(list4)}"")
+    print(f""list5: {is_list_odd(list5)}"")",True,1,7650,127_1_1.py
+127,1,Figure out if something is odd,"Implement an optimized function named 'is_list_odd' that accepts a list of integers and returns True if at least one number in the list is odd, and False otherwise. Ensure the code is highly efficient.","def is_list_odd(data):
+    for x in data:
+        if x % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [2, 4, 6]
+    list2 = [1, 3, 5]
+    list3 = [2, 4, 6, 8]
+    list4 = [10, 20, 30]
+    list5 = [2, 3, 4]
+    print(f""is_list_odd({list1}): {is_list_odd(list1)}"")
+    print(f""is_list_odd({list2}): {is_list_odd(list2)}"")
+    print(f""is_list_odd({list3}): {is_list_odd(list3)}"")
+    print(f""is_list_odd({list4}): {is_list_odd(list4)}"")
+    print(f""is_list_odd({list5}): {is_list_odd(list5)}"")",True,2,7651,127_1_2.py
+127,1,Figure out if something is odd,"Implement an optimized function named 'is_list_odd' that accepts a list of integers and returns True if at least one number in the list is odd, and False otherwise. Ensure the code is highly efficient.","def is_list_odd(data):
+    for x in data:
+        if x % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [2, 4, 6]
+    list2 = [1, 3, 5]
+    list3 = [2, 4, 8, 10]
+    list4 = [7, 2, 4]
+    list5 = []
+    print(f""list1: {is_list_odd(list1)}"")
+    print(f""list2: {is_list_odd(list2)}"")
+    print(f""list3: {is_list_odd(list3)}"")
+    print(f""list4: {is_list_odd(list4)}"")
+    print(f""list5: {is_list_odd(list5)}"")",True,3,7652,127_1_3.py
+127,1,Figure out if something is odd,"Implement an optimized function named 'is_list_odd' that accepts a list of integers and returns True if at least one number in the list is odd, and False otherwise. Ensure the code is highly efficient.","def is_list_odd(data):
+    for x in data:
+        if x % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [2, 4, 6]
+    list2 = [1, 3, 5]
+    list3 = [2, 4, 6, 8]
+    list4 = [10, 20, 30]
+    list5 = [1, 2, 3]
+    print(f""is_list_odd({list1}): {is_list_odd(list1)}"")
+    print(f""is_list_odd({list2}): {is_list_odd(list2)}"")
+    print(f""is_list_odd({list3}): {is_list_odd(list3)}"")
+    print(f""is_list_odd({list4}): {is_list_odd(list4)}"")
+    print(f""is_list_odd({list5}): {is_list_odd(list5)}"")",True,4,7653,127_1_4.py
+127,1,Figure out if something is odd,"Implement an optimized function named 'is_list_odd' that accepts a list of integers and returns True if at least one number in the list is odd, and False otherwise. Ensure the code is highly efficient.","def is_list_odd(data):
+    for x in data:
+        if x % 2 != 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 6, 9]
+    list4 = []
+    list5 = [10, 20, 30]
+    print(f""list1: {is_list_odd(list1)}"")
+    print(f""list2: {is_list_odd(list2)}"")
+    print(f""list3: {is_list_odd(list3)}"")
+    print(f""list4: {is_list_odd(list4)}"")
+    print(f""list5: {is_list_odd(list5)}"")",True,5,7654,127_1_5.py
+127,2,Figure out if something is odd,"Develop a class named 'NumberChecker' with a method 'check_for_oddness' that takes an integer as input and returns True if the number is odd, and False if it is even. Provide clear docstrings.","class NumberChecker:
+    def check_for_oddness(self, number: int) -> bool:
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    for num in sample_numbers:
+        result = checker.check_for_oddness(num)
+        print(f""Number: {num}, Is Odd: {result}"")",True,0,7655,127_2.py
+127,2,Figure out if something is odd,"Develop a class named 'NumberChecker' with a method 'check_for_oddness' that takes an integer as input and returns True if the number is odd, and False if it is even. Provide clear docstrings.","class NumberChecker:
+    def check_for_oddness(self, number: int) -> bool:
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_numbers = [1, 2, 3, 4, 5, 6, 0, -1, -2]
+    for num in sample_numbers:
+        result = checker.check_for_oddness(num)
+        print(f""Number: {num}, Is Odd: {result}"")",True,1,7656,127_2_1.py
+127,2,Figure out if something is odd,"Develop a class named 'NumberChecker' with a method 'check_for_oddness' that takes an integer as input and returns True if the number is odd, and False if it is even. Provide clear docstrings.","class NumberChecker:
+    def check_for_oddness(self, number: int) -> bool:
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_numbers = [1, 2, 3, 4, 5, 6, 0, -1, -2]
+    for num in sample_numbers:
+        result = checker.check_for_oddness(num)
+        print(f""Is {num} odd? {result}"")",True,2,7657,127_2_2.py
+127,2,Figure out if something is odd,"Develop a class named 'NumberChecker' with a method 'check_for_oddness' that takes an integer as input and returns True if the number is odd, and False if it is even. Provide clear docstrings.","class NumberChecker:
+    def check_for_oddness(self, number: int) -> bool:
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_numbers = [1, 2, 3, 4, 5, 10, 11]
+    for num in sample_numbers:
+        result = checker.check_for_oddness(num)
+        print(f""Is {num} odd? {result}"")",True,3,7658,127_2_3.py
+127,2,Figure out if something is odd,"Develop a class named 'NumberChecker' with a method 'check_for_oddness' that takes an integer as input and returns True if the number is odd, and False if it is even. Provide clear docstrings.","class NumberChecker:
+    def check_for_oddness(self, number: int) -> bool:
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_numbers = [1, 2, 3, 4, 5, 10, 22]
+    for num in sample_numbers:
+        result = checker.check_for_oddness(num)
+        print(f""Is {num} odd? {result}"")",True,4,7659,127_2_4.py
+127,3,Figure out if something is odd,Write a Python function that takes a single integer and uses bitwise operations to determine if the number is odd. The implementation must be the most performant possible.,"def is_odd(n):
+    return (n & 1) == 1
+if __name__ == '__main__':
+    print(is_odd(5))
+    print(is_odd(4))
+    print(is_odd(0))
+    print(is_odd(-3))",True,0,7660,127_3.py
+127,3,Figure out if something is odd,Write a Python function that takes a single integer and uses bitwise operations to determine if the number is odd. The implementation must be the most performant possible.,"def is_odd(n):
+    return (n & 1) == 1
+if __name__ == '__main__':
+    print(is_odd(5))
+    print(is_odd(4))
+    print(is_odd(0))
+    print(is_odd(-3))
+    print(is_odd(7))",True,1,7661,127_3_1.py
+127,4,Figure out if something is odd,Create a script that reads a sequence of numbers from standard input and prints 'Odd' or 'Even' for each number. Handle potential input errors robustly.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    for num in input_data:
+        try:
+            if isinstance(num, int):
+                if num % 2 == 0:
+                    print(""Even"")
+                else:
+                    print(""Odd"")
+            else:
+                print(f""Error: Invalid input type for {num}"")
+        except TypeError:
+            print(f""Error: Could not process value {num}"")
+        except Exception as e:
+            print(f""An unexpected error occurred: {e}"")",True,0,7662,127_4.py
+127,4,Figure out if something is odd,Create a script that reads a sequence of numbers from standard input and prints 'Odd' or 'Even' for each number. Handle potential input errors robustly.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    for num in input_data:
+        try:
+            if isinstance(num, int):
+                if num % 2 == 0:
+                    print(""Even"")
+                else:
+                    print(""Odd"")
+            else:
+                print(""Error: Non-integer input encountered"")
+        except TypeError:
+            print(""Error: Input type issue encountered"")",True,1,7663,127_4_1.py
+127,4,Figure out if something is odd,Create a script that reads a sequence of numbers from standard input and prints 'Odd' or 'Even' for each number. Handle potential input errors robustly.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    for num in input_data:
+        try:
+            if isinstance(num, int):
+                if num % 2 == 0:
+                    print(""Even"")
+                else:
+                    print(""Odd"")
+            else:
+                print(""Error: Non-integer input encountered"")
+        except TypeError:
+            print(""Error: Input type error encountered"")",True,2,7664,127_4_2.py
+127,4,Figure out if something is odd,Create a script that reads a sequence of numbers from standard input and prints 'Odd' or 'Even' for each number. Handle potential input errors robustly.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    for num in input_data:
+        try:
+            if isinstance(num, int):
+                if num % 2 == 0:
+                    print(""Even"")
+                else:
+                    print(""Odd"")
+            else:
+                print(""Error: Invalid input type"")
+        except TypeError:
+            print(""Error: Input is not a valid number"")",True,3,7665,127_4_3.py
+127,4,Figure out if something is odd,Create a script that reads a sequence of numbers from standard input and prints 'Odd' or 'Even' for each number. Handle potential input errors robustly.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    for line in input_data:
+        try:
+            if line % 2 == 0:
+                print(""Even"")
+            else:
+                print(""Odd"")
+        except TypeError:
+            print(""Error: Invalid input encountered."")
+        except Exception:
+            print(""An unexpected error occurred."")",True,4,7666,127_4_4.py
+127,4,Figure out if something is odd,Create a script that reads a sequence of numbers from standard input and prints 'Odd' or 'Even' for each number. Handle potential input errors robustly.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    for num in input_data:
+        try:
+            if num % 2 == 0:
+                print(""Even"")
+            else:
+                print(""Odd"")
+        except TypeError:
+            print(""Error: Invalid input type encountered."")
+        except Exception as e:
+            print(f""An unexpected error occurred: {e}"")",True,5,7667,127_4_5.py
+127,5,Figure out if something is odd,"Implement a generator function that yields True for every odd number found within a given range [start, end]. The function must be memory efficient.","def odd_generator(start, end):
+    for num in range(start, end + 1):
+        if num % 2 != 0:
+            yield True
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 10
+    generator = odd_generator(start_val, end_val)
+    result = list(generator)
+    print(result)",True,0,7668,127_5.py
+127,5,Figure out if something is odd,"Implement a generator function that yields True for every odd number found within a given range [start, end]. The function must be memory efficient.","def odd_generator(start, end):
+    for num in range(start, end + 1):
+        if num % 2 != 0:
+            yield True
+if __name__ == '__main__':
+    print(list(odd_generator(1, 10)))
+    print(list(odd_generator(2, 8)))
+    print(list(odd_generator(10, 12)))",True,1,7669,127_5_1.py
+127,5,Figure out if something is odd,"Implement a generator function that yields True for every odd number found within a given range [start, end]. The function must be memory efficient.","def odd_generator(start, end):
+    for number in range(start, end + 1):
+        if number % 2 != 0:
+            yield True
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 10
+    generator = odd_generator(start_val, end_val)
+    result = list(generator)
+    print(result)",True,2,7670,127_5_2.py
+127,5,Figure out if something is odd,"Implement a generator function that yields True for every odd number found within a given range [start, end]. The function must be memory efficient.","def odd_generator(start, end):
+    for number in range(start, end + 1):
+        if number % 2 != 0:
+            yield True
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 10
+    generator = odd_generator(start_val, end_val)
+    result_list = list(generator)
+    print(result_list)",True,3,7671,127_5_3.py
+127,5,Figure out if something is odd,"Implement a generator function that yields True for every odd number found within a given range [start, end]. The function must be memory efficient.","def odd_generator(start, end):
+    for num in range(start, end + 1):
+        if num % 2 != 0:
+            yield True
+if __name__ == '__main__':
+    print(list(odd_generator(1, 10)))
+    print(list(odd_generator(2, 9)))
+    print(list(odd_generator(10, 10)))
+    print(list(odd_generator(0, 5)))",True,4,7672,127_5_4.py
+127,6,Figure out if something is odd,"Design and write a comprehensive function 'analyze_list_parity' that takes a list of integers and returns a tuple containing two boolean values: one for whether the list contains only even numbers, and one for whether it contains only odd numbers.","def analyze_list_parity(data):
+    all_even = True
+    all_odd = True
+    if not data:
+        return True, True
+    for x in data:
+        if x % 2 != 0:
+            all_even = False
+        if x % 2 == 0:
+            all_odd = False
+    return all_even, all_odd
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 6, 5]
+    list4 = []
+    list5 = [2, 4, 5]
+    print(f""List {list1}: {analyze_list_parity(list1)}"")
+    print(f""List {list2}: {analyze_list_parity(list2)}"")
+    print(f""List {list3}: {analyze_list_parity(list3)}"")
+    print(f""List {list4}: {analyze_list_parity(list4)}"")
+    print(f""List {list5}: {analyze_list_parity(list5)}"")",True,0,7673,127_6.py
+127,6,Figure out if something is odd,"Design and write a comprehensive function 'analyze_list_parity' that takes a list of integers and returns a tuple containing two boolean values: one for whether the list contains only even numbers, and one for whether it contains only odd numbers.","def analyze_list_parity(data):
+    all_even = True
+    all_odd = True
+    if not data:
+        return True, True
+    for x in data:
+        if x % 2 != 0:
+            all_even = False
+        if x % 2 == 0:
+            all_odd = False
+    return all_even, all_odd
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 5, 6]
+    list4 = []
+    list5 = [1, 3]
+    print(f""List {list1}: {analyze_list_parity(list1)}"")
+    print(f""List {list2}: {analyze_list_parity(list2)}"")
+    print(f""List {list3}: {analyze_list_parity(list3)}"")
+    print(f""List {list4}: {analyze_list_parity(list4)}"")
+    print(f""List {list5}: {analyze_list_parity(list5)}"")",True,1,7674,127_6_1.py
+127,6,Figure out if something is odd,"Design and write a comprehensive function 'analyze_list_parity' that takes a list of integers and returns a tuple containing two boolean values: one for whether the list contains only even numbers, and one for whether it contains only odd numbers.","def analyze_list_parity(data):
+    all_even = True
+    all_odd = True
+    if not data:
+        return True, True
+    for x in data:
+        if x % 2 != 0:
+            all_even = False
+        if x % 2 == 0:
+            all_odd = False
+    return all_even, all_odd
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 5, 6]
+    list4 = []
+    list5 = [1, 3, 5]
+    list6 = [2, 4, 6, 8, 1]
+    print(f""List {list1}: {analyze_list_parity(list1)}"")
+    print(f""List {list2}: {analyze_list_parity(list2)}"")
+    print(f""List {list3}: {analyze_list_parity(list3)}"")
+    print(f""List {list4}: {analyze_list_parity(list4)}"")
+    print(f""List {list5}: {analyze_list_parity(list5)}"")
+    print(f""List {list6}: {analyze_list_parity(list6)}"")",True,2,7675,127_6_2.py
+127,6,Figure out if something is odd,"Design and write a comprehensive function 'analyze_list_parity' that takes a list of integers and returns a tuple containing two boolean values: one for whether the list contains only even numbers, and one for whether it contains only odd numbers.","def analyze_list_parity(data):
+    all_even = True
+    all_odd = True
+    if not data:
+        return True, True
+    for x in data:
+        if x % 2 != 0:
+            all_even = False
+        if x % 2 == 0:
+            all_odd = False
+    return all_even, all_odd
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 5, 6]
+    list4 = []
+    list5 = [1, 3]
+    list6 = [2, 2]
+    list7 = [1, 1]
+    print(f""List {list1}: {analyze_list_parity(list1)}"")
+    print(f""List {list2}: {analyze_list_parity(list2)}"")
+    print(f""List {list3}: {analyze_list_parity(list3)}"")
+    print(f""List {list4}: {analyze_list_parity(list4)}"")
+    print(f""List {list5}: {analyze_list_parity(list5)}"")
+    print(f""List {list6}: {analyze_list_parity(list6)}"")
+    print(f""List {list7}: {analyze_list_parity(list7)}"")",True,3,7676,127_6_3.py
+127,6,Figure out if something is odd,"Design and write a comprehensive function 'analyze_list_parity' that takes a list of integers and returns a tuple containing two boolean values: one for whether the list contains only even numbers, and one for whether it contains only odd numbers.","def analyze_list_parity(data):
+    all_even = True
+    all_odd = True
+    if not data:
+        return True, True
+    for x in data:
+        if x % 2 != 0:
+            all_even = False
+        if x % 2 == 0:
+            all_odd = False
+    return all_even, all_odd
+if __name__ == '__main__':
+    list1 = [2, 4, 6, 8]
+    list2 = [1, 3, 5, 7]
+    list3 = [2, 4, 5, 6]
+    list4 = [1, 3, 5]
+    list5 = []
+    list6 = [2, 2]
+    list7 = [1, 1]
+    print(f""List {list1}: {analyze_list_parity(list1)}"")
+    print(f""List {list2}: {analyze_list_parity(list2)}"")
+    print(f""List {list3}: {analyze_list_parity(list3)}"")
+    print(f""List {list4}: {analyze_list_parity(list4)}"")
+    print(f""List {list5}: {analyze_list_parity(list5)}"")
+    print(f""List {list6}: {analyze_list_parity(list6)}"")
+    print(f""List {list7}: {analyze_list_parity(list7)}"")",True,4,7677,127_6_4.py
+127,7,Figure out if something is odd,"Write an interactive Python program that prompts the user to enter a list of numbers, validates the input as integers, and then prints whether the entire collection is odd or even based on the count of odd numbers.","def analyze_numbers(numbers):
+    odd_count = 0
+    for num in numbers:
+        if num % 2 != 0:
+            odd_count += 1
+    if odd_count % 2 == 0:
+        print(""The number of odd numbers is even."")
+    else:
+        print(""The number of odd numbers is odd."")
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    analyze_numbers(sample_numbers)",True,0,7678,127_7.py
+127,7,Figure out if something is odd,"Write an interactive Python program that prompts the user to enter a list of numbers, validates the input as integers, and then prints whether the entire collection is odd or even based on the count of odd numbers.","def analyze_numbers(numbers):
+    odd_count = 0
+    for num in numbers:
+        if num % 2 != 0:
+            odd_count += 1
+    if odd_count % 2 == 0:
+        print(""The collection has an even count of odd numbers."")
+    else:
+        print(""The collection has an odd count of odd numbers."")
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    analyze_numbers(sample_numbers)",True,1,7679,127_7_1.py
+127,7,Figure out if something is odd,"Write an interactive Python program that prompts the user to enter a list of numbers, validates the input as integers, and then prints whether the entire collection is odd or even based on the count of odd numbers.","def analyze_numbers(numbers):
+    odd_count = 0
+    for num in numbers:
+        if num % 2 != 0:
+            odd_count += 1
+    if odd_count % 2 == 0:
+        print(""Even number of odd numbers."")
+    else:
+        print(""Odd number of odd numbers."")
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    analyze_numbers(sample_numbers)",True,2,7680,127_7_2.py
+127,7,Figure out if something is odd,"Write an interactive Python program that prompts the user to enter a list of numbers, validates the input as integers, and then prints whether the entire collection is odd or even based on the count of odd numbers.","def check_odd_even(numbers):
+    odd_count = 0
+    for num in numbers:
+        if num % 2 != 0:
+            odd_count += 1
+    if odd_count % 2 == 0:
+        print(""Even number of odd numbers."")
+    else:
+        print(""Odd number of odd numbers."")
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    check_odd_even(sample_numbers)",True,3,7681,127_7_3.py
+127,7,Figure out if something is odd,"Write an interactive Python program that prompts the user to enter a list of numbers, validates the input as integers, and then prints whether the entire collection is odd or even based on the count of odd numbers.","def analyze_numbers(numbers):
+    odd_count = 0
+    for num in numbers:
+        if num % 2 != 0:
+            odd_count += 1
+    if odd_count % 2 == 0:
+        print(""Even number of odd numbers."")
+    else:
+        print(""Odd number of odd numbers."")
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    analyze_numbers(sample_numbers)",True,4,7682,127_7_4.py
+127,7,Figure out if something is odd,"Write an interactive Python program that prompts the user to enter a list of numbers, validates the input as integers, and then prints whether the entire collection is odd or even based on the count of odd numbers.","def analyze_numbers(numbers):
+    odd_count = 0
+    for num in numbers:
+        if num % 2 != 0:
+            odd_count += 1
+    if odd_count % 2 == 0:
+        print(""The count of odd numbers is even."")
+    else:
+        print(""The count of odd numbers is odd."")
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    analyze_numbers(sample_numbers)",True,5,7683,127_7_5.py
+127,8,Figure out if something is odd,"Implement a decorator named 'mark_odd' that can be applied to a function. This decorator should automatically check if the function's return value is odd and raise an exception if it is, ensuring the function only processes odd results.","def mark_odd(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result % 2 != 0:
+            raise ValueError(""Function returned an odd number. Only even results are allowed."")
+        return result
+    return wrapper
+@mark_odd
+def sample_function(x):
+    return x
+if __name__ == '__main__':
+    print(""Testing with even number:"")
+    try:
+        result_even = sample_function(4)
+        print(f""Result: {result_even}"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")
+    print(""\nTesting with odd number:"")
+    try:
+        result_odd = sample_function(5)
+        print(f""Result: {result_odd}"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,0,7684,127_8.py
+127,8,Figure out if something is odd,"Implement a decorator named 'mark_odd' that can be applied to a function. This decorator should automatically check if the function's return value is odd and raise an exception if it is, ensuring the function only processes odd results.","def mark_odd(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result % 2 != 0:
+            raise ValueError(""Function returned an odd number. Only even results are allowed."")
+        return result
+    return wrapper
+@mark_odd
+def sample_function(x):
+    return x
+if __name__ == '__main__':
+    print(sample_function(2))
+    try:
+        sample_function(3)
+    except ValueError as e:
+        print(f""Caught exception: {e}"")
+    try:
+        sample_function(4)
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,1,7685,127_8_1.py
+127,8,Figure out if something is odd,"Implement a decorator named 'mark_odd' that can be applied to a function. This decorator should automatically check if the function's return value is odd and raise an exception if it is, ensuring the function only processes odd results.","def mark_odd(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result % 2 != 0:
+            raise ValueError(""Function returned an odd number. Only even results are allowed."")
+        return result
+    return wrapper
+@mark_odd
+def sample_function(x):
+    return x
+if __name__ == '__main__':
+    try:
+        print(f""Testing with even number: {sample_function(4)}"")
+        print(f""Testing with odd number: {sample_function(5)}"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,2,7686,127_8_2.py
+127,8,Figure out if something is odd,"Implement a decorator named 'mark_odd' that can be applied to a function. This decorator should automatically check if the function's return value is odd and raise an exception if it is, ensuring the function only processes odd results.","def mark_odd(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result % 2 != 0:
+            raise ValueError(""Function returned an odd number, which is not allowed."")
+        return result
+    return wrapper
+@mark_odd
+def sample_function(x):
+    return x
+if __name__ == '__main__':
+    print(sample_function(4))
+    try:
+        sample_function(5)
+    except ValueError as e:
+        print(f""Caught exception: {e}"")
+    try:
+        sample_function(6)
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,3,7687,127_8_3.py
+127,8,Figure out if something is odd,"Implement a decorator named 'mark_odd' that can be applied to a function. This decorator should automatically check if the function's return value is odd and raise an exception if it is, ensuring the function only processes odd results.","def mark_odd(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result % 2 != 0:
+            raise ValueError(""Function returned an odd number, only even numbers are allowed."")
+        return result
+    return wrapper
+@mark_odd
+def sample_function(x):
+    return x
+if __name__ == '__main__':
+    try:
+        print(f""Testing with even number: {sample_function(4)}"")
+        print(f""Testing with odd number: {sample_function(5)}"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,4,7688,127_8_4.py
+127,8,Figure out if something is odd,"Implement a decorator named 'mark_odd' that can be applied to a function. This decorator should automatically check if the function's return value is odd and raise an exception if it is, ensuring the function only processes odd results.","def mark_odd(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result % 2 != 0:
+            raise ValueError(""Function returned an odd number. Only even results are allowed."")
+        return result
+    return wrapper
+@mark_odd
+def sample_function(x):
+    return x
+if __name__ == '__main__':
+    print(""Testing with an even number (should pass):"")
+    try:
+        result_even = sample_function(4)
+        print(f""Result: {result_even}"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")
+    print(""\nTesting with an odd number (should raise exception):"")
+    try:
+        result_odd = sample_function(5)
+        print(f""Result: {result_odd}"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,5,7689,127_8_5.py
+127,9,Figure out if something is odd,"Write a unit test using the 'unittest' framework for the function that checks for odd numbers, ensuring all edge cases (empty list, all even, all odd, mixed) are thoroughly tested.","import unittest
+def check_odd_numbers(numbers):
+    return all(x % 2 != 0 for x in numbers)
+class TestOddNumberChecker(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertFalse(check_odd_numbers([]))
+    def test_all_even(self):
+        self.assertFalse(check_odd_numbers([2, 4, 6, 8]))
+    def test_all_odd(self):
+        self.assertTrue(check_odd_numbers([1, 3, 5, 7]))
+    def test_mixed_numbers(self):
+        self.assertFalse(check_odd_numbers([1, 2, 3, 4]))
+    def test_single_odd(self):
+        self.assertTrue(check_odd_numbers([5]))
+    def test_single_even(self):
+        self.assertFalse(check_odd_numbers([6]))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,7690,127_9.py
+127,9,Figure out if something is odd,"Write a unit test using the 'unittest' framework for the function that checks for odd numbers, ensuring all edge cases (empty list, all even, all odd, mixed) are thoroughly tested.","import unittest
+def check_odd_numbers(numbers):
+    return all(x % 2 != 0 for x in numbers)
+class TestCheckOddNumbers(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertFalse(check_odd_numbers([]))
+    def test_all_even(self):
+        self.assertFalse(check_odd_numbers([2, 4, 6, 8]))
+    def test_all_odd(self):
+        self.assertTrue(check_odd_numbers([1, 3, 5, 7]))
+    def test_mixed_numbers(self):
+        self.assertFalse(check_odd_numbers([1, 2, 3, 4]))
+    def test_single_odd(self):
+        self.assertTrue(check_odd_numbers([5]))
+    def test_single_even(self):
+        self.assertFalse(check_odd_numbers([6]))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,7691,127_9_1.py
+126,8,Check if a value is equal,Implement a decorator named 'check_if_equal' that wraps any function and ensures that the function only executes if its input arguments are strictly equal to each other. Provide an example usage.,,False,0,7692,126_8.py
+127,11,Figure out if something is odd,"Implement an optimized function named 'check_odd_even' that accepts an integer as input and returns the string 'Odd' if the number is odd, and 'Even' if the number is even. Ensure the function is highly efficient.","def check_odd_even(number):
+    if number % 2 != 0:
+        return 'Odd'
+    else:
+        return 'Even'
+if __name__ == '__main__':
+    print(check_odd_even(4))
+    print(check_odd_even(7))
+    print(check_odd_even(0))
+    print(check_odd_even(-3))",True,0,7693,127_11.py
+127,11,Figure out if something is odd,"Implement an optimized function named 'check_odd_even' that accepts an integer as input and returns the string 'Odd' if the number is odd, and 'Even' if the number is even. Ensure the function is highly efficient.","def check_odd_even(n):
+    if n % 2 != 0:
+        return 'Odd'
+    else:
+        return 'Even'
+if __name__ == '__main__':
+    print(check_odd_even(4))
+    print(check_odd_even(7))
+    print(check_odd_even(0))
+    print(check_odd_even(-3))",True,1,7694,127_11_1.py
+127,12,Figure out if something is odd,Develop a class named 'NumberChecker' with a method 'is_odd' that takes an integer and returns a boolean value indicating whether the number is odd. Ensure the implementation adheres to object-oriented best practices.,"class NumberChecker:
+    def is_odd(self, number):
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    num1 = 7
+    num2 = 10
+    num3 = 0
+    num4 = -3
+    print(f""Is {num1} odd? {checker.is_odd(num1)}"")
+    print(f""Is {num2} odd? {checker.is_odd(num2)}"")
+    print(f""Is {num3} odd? {checker.is_odd(num3)}"")
+    print(f""Is {num4} odd? {checker.is_odd(num4)}"")",True,0,7695,127_12.py
+127,12,Figure out if something is odd,Develop a class named 'NumberChecker' with a method 'is_odd' that takes an integer and returns a boolean value indicating whether the number is odd. Ensure the implementation adheres to object-oriented best practices.,"class NumberChecker:
+    def is_odd(self, number):
+        return number % 2 != 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    num1 = 7
+    num2 = 10
+    num3 = 0
+    num4 = -5
+    print(f""Is {num1} odd? {checker.is_odd(num1)}"")
+    print(f""Is {num2} odd? {checker.is_odd(num2)}"")
+    print(f""Is {num3} odd? {checker.is_odd(num3)}"")
+    print(f""Is {num4} odd? {checker.is_odd(num4)}"")",True,1,7696,127_12_1.py
+126,13,Check if a value is equal,Write a complete script that prompts the user to input two numbers from the console and uses an if-statement to check if they are equal. Handle potential input errors gracefully using appropriate type casting.,,False,0,7697,126_13.py
+127,14,Figure out if something is odd,Create a concise and highly readable Python expression or function that takes an integer and uses bitwise operations (if applicable and more efficient) to determine and return the parity (odd or even) of the input number.,"def parity(n):
+    return n & 1
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 7
+    num3 = 0
+    print(f""Parity of {num1}: {parity(num1)}"")
+    print(f""Parity of {num2}: {parity(num2)}"")
+    print(f""Parity of {num3}: {parity(num3)}"")",True,0,7698,127_14.py
+127,14,Figure out if something is odd,Create a concise and highly readable Python expression or function that takes an integer and uses bitwise operations (if applicable and more efficient) to determine and return the parity (odd or even) of the input number.,"def parity(n):
+    return n & 1
+if __name__ == '__main__':
+    print(f""Parity of 4: {parity(4)}"")
+    print(f""Parity of 7: {parity(7)}"")
+    print(f""Parity of 0: {parity(0)}"")
+    print(f""Parity of 100: {parity(100)}"")",True,1,7699,127_14_1.py
+127,14,Figure out if something is odd,Create a concise and highly readable Python expression or function that takes an integer and uses bitwise operations (if applicable and more efficient) to determine and return the parity (odd or even) of the input number.,"def parity(n):
+    return n & 1
+if __name__ == '__main__':
+    num1 = 7
+    num2 = 10
+    num3 = 0
+    print(f""Parity of {num1}: {parity(num1)}"")
+    print(f""Parity of {num2}: {parity(num2)}"")
+    print(f""Parity of {num3}: {parity(num3)}"")",True,2,7700,127_14_2.py
+127,10,Figure out if something is odd,"Write a complete, robust Python script that prompts the user to enter a number and then determines if that number is odd or even, utilizing efficient modulo operations.","import sys
+def check_odd_even(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_numbers = [10, 7, 0, -4, 15]
+    for num in sample_numbers:
+        result = check_odd_even(num)
+        print(f""Number: {num}, Result: {result}"")",True,0,7701,127_10.py
+127,10,Figure out if something is odd,"Write a complete, robust Python script that prompts the user to enter a number and then determines if that number is odd or even, utilizing efficient modulo operations.","import sys
+def check_odd_even(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_numbers = [4, 7, 10, 13, 22, 35]
+    for num in sample_numbers:
+        result = check_odd_even(num)
+        print(f""The number {num} is {result}"")",True,1,7702,127_10_1.py
+127,10,Figure out if something is odd,"Write a complete, robust Python script that prompts the user to enter a number and then determines if that number is odd or even, utilizing efficient modulo operations.","import sys
+def check_odd_even(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_numbers = [10, 7, 0, -4, 15]
+    for num in sample_numbers:
+        result = check_odd_even(num)
+        print(f""The number {num} is {result}"")",True,2,7703,127_10_2.py
+128,1,Test if a value is negative,"Implement an optimized Python function named `is_negative` that takes a single numeric argument and returns `True` if the number is negative, and `False` otherwise. Ensure efficiency.","def is_negative(number):
+    return number < 0
+if __name__ == '__main__':
+    print(is_negative(-5))
+    print(is_negative(0))
+    print(is_negative(10.5))
+    print(is_negative(-0.001))",True,0,7704,128_1.py
+128,1,Test if a value is negative,"Implement an optimized Python function named `is_negative` that takes a single numeric argument and returns `True` if the number is negative, and `False` otherwise. Ensure efficiency.","def is_negative(number):
+    return number < 0
+if __name__ == '__main__':
+    print(f""is_negative(-5): {is_negative(-5)}"")
+    print(f""is_negative(0): {is_negative(0)}"")
+    print(f""is_negative(10.5): {is_negative(10.5)}"")
+    print(f""is_negative(-1): {is_negative(-1)}"")
+    print(f""is_negative(999): {is_negative(999)}"")",True,1,7705,128_1_1.py
+128,1,Test if a value is negative,"Implement an optimized Python function named `is_negative` that takes a single numeric argument and returns `True` if the number is negative, and `False` otherwise. Ensure efficiency.","def is_negative(number):
+    return number < 0
+if __name__ == '__main__':
+    print(f""is_negative(-5): {is_negative(-5)}"")
+    print(f""is_negative(0): {is_negative(0)}"")
+    print(f""is_negative(10.5): {is_negative(10.5)}"")
+    print(f""is_negative(-0.001): {is_negative(-0.001)}"")
+    print(f""is_negative(99): {is_negative(99)}"")",True,2,7706,128_1_2.py
+128,1,Test if a value is negative,"Implement an optimized Python function named `is_negative` that takes a single numeric argument and returns `True` if the number is negative, and `False` otherwise. Ensure efficiency.","def is_negative(number):
+    return number < 0
+if __name__ == '__main__':
+    print(is_negative(5))
+    print(is_negative(-10))
+    print(is_negative(0))
+    print(is_negative(-3.14))
+    print(is_negative(1.0))",True,3,7707,128_1_3.py
+128,1,Test if a value is negative,"Implement an optimized Python function named `is_negative` that takes a single numeric argument and returns `True` if the number is negative, and `False` otherwise. Ensure efficiency.","def is_negative(number):
+    return number < 0
+if __name__ == '__main__':
+    print(f""is_negative(-5): {is_negative(-5)}"")
+    print(f""is_negative(0): {is_negative(0)}"")
+    print(f""is_negative(10.5): {is_negative(10.5)}"")
+    print(f""is_negative(-0.001): {is_negative(-0.001)}"")
+    print(f""is_negative(42): {is_negative(42)}"")",True,4,7708,128_1_4.py
+128,2,Test if a value is negative,"Develop a class named `NumberChecker` with a method `check_negativity(self, value)` that efficiently determines if the input value is negative. Use best-practice object-oriented programming.","class NumberChecker:
+    def check_negativity(self, value):
+        return value < 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_values = [10, -5, 0, -100, 3.14]
+    for value in sample_values:
+        result = checker.check_negativity(value)
+        print(f""Value: {value}, Is Negative: {result}"")",True,0,7709,128_2.py
+128,2,Test if a value is negative,"Develop a class named `NumberChecker` with a method `check_negativity(self, value)` that efficiently determines if the input value is negative. Use best-practice object-oriented programming.","class NumberChecker:
+    def check_negativity(self, value):
+        return value < 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_values = [10, -5, 0, -100, 3.14, -0.001]
+    for value in sample_values:
+        result = checker.check_negativity(value)
+        print(f""Value: {value}, Is Negative: {result}"")",True,1,7710,128_2_1.py
+128,3,Test if a value is negative,"Write a concise, one-line Python expression that evaluates to `True` if the variable `x` is less than zero, and `False` otherwise. Assume `x` is already defined.","if __name__ == '__main__':
+    x = -5
+    result = x < 0
+    print(result)",True,0,7711,128_3.py
+128,0,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests if that number is negative. Use clear input handling.","if __name__ == '__main__':
+    test_number = -10
+    is_negative = test_number < 0
+    print(f""The test number is: {test_number}"")
+    print(f""Is the number negative? {is_negative}"")",True,0,7712,128_0.py
+128,0,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests if that number is negative. Use clear input handling.","def check_negativity(number):
+    if number < 0:
+        return True
+    else:
+        return False
+if __name__ == '__main__':
+    test_numbers = [10, -5, 0, -100, 3.14]
+    for num in test_numbers:
+        result = check_negativity(num)
+        print(f""Testing number: {num}, Is negative: {result}"")",True,1,7713,128_0_1.py
+128,0,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests if that number is negative. Use clear input handling.","def check_negativity(number):
+    if number < 0:
+        return True
+    else:
+        return False
+if __name__ == '__main__':
+    sample_number = -15
+    is_negative = check_negativity(sample_number)
+    print(f""The sample number is: {sample_number}"")
+    print(f""Is the sample number negative? {is_negative}"")",True,2,7714,128_0_2.py
+128,0,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests if that number is negative. Use clear input handling.","if __name__ == '__main__':
+    test_number = -10
+    is_negative = test_number < 0
+    print(f""The number is: {test_number}"")
+    print(f""Is the number negative? {is_negative}"")",True,3,7715,128_0_3.py
+128,0,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests if that number is negative. Use clear input handling.","if __name__ == '__main__':
+    sample_number = -10
+    is_negative = sample_number < 0
+    print(f""The sample number is: {sample_number}"")
+    print(f""Is the sample number negative? {is_negative}"")",True,4,7716,128_0_4.py
+128,4,Test if a value is negative,Create a function `check_and_print_negative` that accepts an arbitrary number and prints a descriptive message indicating whether the number provided is negative or not.,"def check_and_print_negative(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    check_and_print_negative(10)
+    check_and_print_negative(-5)
+    check_and_print_negative(0)
+    check_and_print_negative(-100)",True,0,7717,128_4.py
+128,4,Test if a value is negative,Create a function `check_and_print_negative` that accepts an arbitrary number and prints a descriptive message indicating whether the number provided is negative or not.,"def check_and_print_negative(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    check_and_print_negative(10)
+    check_and_print_negative(-5)
+    check_and_print_negative(0)
+    check_and_print_negative(-1.5)
+    check_and_print_negative(42)",True,1,7718,128_4_1.py
+128,4,Test if a value is negative,Create a function `check_and_print_negative` that accepts an arbitrary number and prints a descriptive message indicating whether the number provided is negative or not.,"def check_and_print_negative(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    check_and_print_negative(10)
+    check_and_print_negative(-5)
+    check_and_print_negative(0)
+    check_and_print_negative(-1.5)",True,2,7719,128_4_2.py
+128,4,Test if a value is negative,Create a function `check_and_print_negative` that accepts an arbitrary number and prints a descriptive message indicating whether the number provided is negative or not.,"def check_and_print_negative(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    check_and_print_negative(10)
+    check_and_print_negative(-5)
+    check_and_print_negative(0)
+    check_and_print_negative(3.14)
+    check_and_print_negative(-100)",True,3,7720,128_4_3.py
+128,4,Test if a value is negative,Create a function `check_and_print_negative` that accepts an arbitrary number and prints a descriptive message indicating whether the number provided is negative or not.,"def check_and_print_negative(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    check_and_print_negative(10)
+    check_and_print_negative(-5)
+    check_and_print_negative(0)
+    check_and_print_negative(-123.45)",True,4,7721,128_4_4.py
+128,5,Test if a value is negative,Implement a generator function that yields `True` for every negative number in an input list of integers. Optimize for memory efficiency.,"def find_negatives(data):
+    for x in data:
+        if x < 0:
+            yield True
+if __name__ == '__main__':
+    input_list = [1, -2, 3, -4, 5, -6, 0]
+    result_generator = find_negatives(input_list)
+    output_list = list(result_generator)
+    print(output_list)",True,0,7722,128_5.py
+128,5,Test if a value is negative,Implement a generator function that yields `True` for every negative number in an input list of integers. Optimize for memory efficiency.,"def find_negatives(data):
+    for x in data:
+        if x < 0:
+            yield True
+if __name__ == '__main__':
+    sample_list = [1, -2, 3, -4, 5, -6, 0]
+    result_generator = find_negatives(sample_list)
+    output_list = list(result_generator)
+    print(output_list)",True,1,7723,128_5_1.py
+128,5,Test if a value is negative,Implement a generator function that yields `True` for every negative number in an input list of integers. Optimize for memory efficiency.,"def find_negatives(data):
+    for item in data:
+        if item < 0:
+            yield True
+if __name__ == '__main__':
+    sample_list = [1, -2, 3, -4, 5, -6, 0]
+    result_generator = find_negatives(sample_list)
+    output_list = list(result_generator)
+    print(output_list)",True,2,7724,128_5_2.py
+128,6,Test if a value is negative,Write a testable Python function using type hinting that checks if a given float value is strictly less than zero. Include docstrings explaining the function's purpose and parameters.,"def is_strictly_less_than_zero(value: float) -> bool:
+    return value < 0
+if __name__ == '__main__':
+    test_values = [5.0, -1.0, 0.0, -0.001, 100.5]
+    for val in test_values:
+        result = is_strictly_less_than_zero(val)
+        print(f""is_strictly_less_than_zero({val}) is {result}"")",True,0,7725,128_6.py
+128,6,Test if a value is negative,Write a testable Python function using type hinting that checks if a given float value is strictly less than zero. Include docstrings explaining the function's purpose and parameters.,"def is_strictly_less_than_zero(value: float) -> bool:
+    return value < 0
+if __name__ == '__main__':
+    print(f""is_strictly_less_than_zero(-5.0): {is_strictly_less_than_zero(-5.0)}"")
+    print(f""is_strictly_less_than_zero(0.0): {is_strictly_less_than_zero(0.0)}"")
+    print(f""is_strictly_less_than_zero(1.5): {is_strictly_less_than_zero(1.5)}"")
+    print(f""is_strictly_less_than_zero(-0.001): {is_strictly_less_than_zero(-0.001)}"")",True,1,7726,128_6_1.py
+128,6,Test if a value is negative,Write a testable Python function using type hinting that checks if a given float value is strictly less than zero. Include docstrings explaining the function's purpose and parameters.,"def is_strictly_less_than_zero(value: float) -> bool:
+    return value < 0
+if __name__ == '__main__':
+    print(f""is_strictly_less_than_zero(-5.0): {is_strictly_less_than_zero(-5.0)}"")
+    print(f""is_strictly_less_than_zero(0.0): {is_strictly_less_than_zero(0.0)}"")
+    print(f""is_strictly_less_than_zero(1.5): {is_strictly_less_than_zero(1.5)}"")
+    print(f""is_strictly_less_than_zero(-0.001): {is_strictly_less_than_zero(-0.001)}"")
+    print(f""is_strictly_less_than_zero(99.9): {is_strictly_less_than_zero(99.9)}"")",True,2,7727,128_6_2.py
+128,6,Test if a value is negative,Write a testable Python function using type hinting that checks if a given float value is strictly less than zero. Include docstrings explaining the function's purpose and parameters.,"def is_strictly_less_than_zero(value: float) -> bool:
+    return value < 0
+if __name__ == '__main__':
+    test_values = [5.0, -1.0, 0.0, -0.001, 100.5]
+    for val in test_values:
+        result = is_strictly_less_than_zero(val)
+        print(f""Is {val} strictly less than zero? {result}"")",True,3,7728,128_6_3.py
+128,6,Test if a value is negative,Write a testable Python function using type hinting that checks if a given float value is strictly less than zero. Include docstrings explaining the function's purpose and parameters.,"def is_strictly_less_than_zero(value: float) -> bool:
+    return value < 0
+if __name__ == '__main__':
+    print(f""is_strictly_less_than_zero(-5.0): {is_strictly_less_than_zero(-5.0)}"")
+    print(f""is_strictly_less_than_zero(0.0): {is_strictly_less_than_zero(0.0)}"")
+    print(f""is_strictly_less_than_zero(1.5): {is_strictly_less_than_zero(1.5)}"")
+    print(f""is_strictly_less_than_zero(-0.001): {is_strictly_less_than_zero(-0.001)}"")
+    print(f""is_strictly_less_than_zero(1e-10): {is_strictly_less_than_zero(1e-10)}"")",True,4,7729,128_6_4.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function returned a negative value, execution blocked."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply(5, 2):"")
+    try:
+        result = multiply(5, 2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting multiply(-5, 2):"")
+    try:
+        result = multiply(-5, 2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting add(10, -3):"")
+    try:
+        result = add(10, -3)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,7730,128_7.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function returned a negative value, execution blocked."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply(5, 2):"")
+    try:
+        result = multiply(5, 2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting multiply(-5, 2):"")
+    try:
+        result = multiply(-5, 2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting add(10, -3):"")
+    try:
+        result = add(10, -3)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting add(10, -15):"")
+    try:
+        result = add(10, -15)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,7731,128_7_1.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function returned a negative value, execution blocked."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply:"")
+    try:
+        result_mult = multiply(5, 2)
+        print(f""multiply(5, 2) = {result_mult}"")
+        result_mult_neg = multiply(-5, 2)
+    except ValueError as e:
+        print(f""Error caught for multiply: {e}"")
+    print(""\nTesting add:"")
+    try:
+        result_add = add(10, 5)
+        print(f""add(10, 5) = {result_add}"")
+        result_add_neg = add(10, -5)
+    except ValueError as e:
+        print(f""Error caught for add: {e}"")",True,2,7732,128_7_2.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function execution blocked: Return value is negative."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply:"")
+    try:
+        result_mult_positive = multiply(5, 2)
+        print(f""multiply(5, 2) = {result_mult_positive}"")
+        result_mult_negative = multiply(5, -2)
+    except ValueError as e:
+        print(f""Error caught for multiply: {e}"")
+    print(""\nTesting add:"")
+    try:
+        result_add_positive = add(10, 5)
+        print(f""add(10, 5) = {result_add_positive}"")
+        result_add_negative = add(-10, 5)
+    except ValueError as e:
+        print(f""Error caught for add: {e}"")",True,3,7733,128_7_3.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function returned a negative value, execution blocked."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply:"")
+    try:
+        result_mult_pos = multiply(5, 3)
+        print(f""multiply(5, 3) returned: {result_mult_pos}"")
+        result_mult_neg = multiply(-5, 3)
+    except ValueError as e:
+        print(f""Error caught for multiply: {e}"")
+    print(""\nTesting add:"")
+    try:
+        result_add_pos = add(10, 5)
+        print(f""add(10, 5) returned: {result_add_pos}"")
+        result_add_neg = add(-10, 5)
+    except ValueError as e:
+        print(f""Error caught for add: {e}"")",True,4,7734,128_7_4.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function execution blocked: Return value is negative."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(f""Multiply 5 and 2: {multiply(5, 2)}"")
+    try:
+        print(f""Multiply -5 and 2: {multiply(-5, 2)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    print(f""Add 10 and 5: {add(10, 5)}"")
+    try:
+        print(f""Add 10 and -5: {add(10, -5)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,5,7735,128_7_5.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function returned a negative value, execution blocked."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply:"")
+    try:
+        result1 = multiply(5, 3)
+        print(f""multiply(5, 3) returned: {result1}"")
+        result2 = multiply(-5, 3)
+        print(f""multiply(-5, 3) returned: {result2}"")
+    except ValueError as e:
+        print(f""Error caught for multiply: {e}"")
+    print(""\nTesting add:"")
+    try:
+        result3 = add(10, 5)
+        print(f""add(10, 5) returned: {result3}"")
+        result4 = add(-10, 5)
+        print(f""add(-10, 5) returned: {result4}"")
+    except ValueError as e:
+        print(f""Error caught for add: {e}"")",True,6,7736,128_7_6.py
+128,7,Test if a value is negative,Design and implement a decorator for a function that automatically checks if the function's return value is negative before allowing execution.,"def check_negative_return(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result < 0:
+            raise ValueError(""Function returned a negative value, execution blocked."")
+        return result
+    return wrapper
+@check_negative_return
+def multiply(a, b):
+    return a * b
+@check_negative_return
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(""Testing multiply with positive inputs:"")
+    try:
+        result_mul = multiply(5, 3)
+        print(f""multiply(5, 3) = {result_mul}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting multiply with inputs resulting in a negative value:"")
+    try:
+        result_mul_neg = multiply(5, -1)
+        print(f""multiply(5, -1) = {result_mul_neg}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting add with positive inputs:"")
+    try:
+        result_add = add(10, 5)
+        print(f""add(10, 5) = {result_add}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nTesting add with inputs resulting in a negative value:"")
+    try:
+        result_add_neg = add(10, -15)
+        print(f""add(10, -15) = {result_add_neg}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,7,7737,128_7_7.py
+128,9,Test if a value is negative,"Provide the most Pythonic and simplest way to write an expression that checks if a variable `value` is negative, suitable for use in conditional statements.","if __name__ == '__main__':
+    value = -5
+    if value < 0:
+        print(""Value is negative"")",True,0,7738,128_9.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","if __name__ == '__main__':
+    sample_number = -15
+    is_negative = sample_number < 0
+    print(f""The sample number is: {sample_number}"")
+    print(f""Is the sample number negative? {is_negative}"")",True,0,7739,128_10.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","def check_negativity(number):
+    if number < 0:
+        print(f""{number} is negative."")
+    else:
+        print(f""{number} is not negative."")
+if __name__ == '__main__':
+    sample_number = -15
+    check_negativity(sample_number)
+    sample_number_positive = 42
+    check_negativity(sample_number_positive)
+    sample_number_zero = 0
+    check_negativity(sample_number_zero)",True,1,7740,128_10_1.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","def check_negativity(number):
+    if number < 0:
+        print(f""{number} is negative."")
+    else:
+        print(f""{number} is not negative."")
+if __name__ == '__main__':
+    sample_number_1 = -15
+    sample_number_2 = 42
+    sample_number_3 = 0
+    sample_number_4 = -1
+    check_negativity(sample_number_1)
+    check_negativity(sample_number_2)
+    check_negativity(sample_number_3)
+    check_negativity(sample_number_4)",True,2,7741,128_10_2.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","import sys
+def check_negativity(number):
+    if number < 0:
+        print(f""{number} is negative."")
+    else:
+        print(f""{number} is not negative."")
+if __name__ == '__main__':
+    sample_number = -15
+    check_negativity(sample_number)
+    sample_number_positive = 42
+    check_negativity(sample_number_positive)
+    sample_number_zero = 0
+    check_negativity(sample_number_zero)",True,3,7742,128_10_3.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","def check_negativity(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    sample_number = -15
+    check_negativity(sample_number)
+    sample_number_positive = 42
+    check_negativity(sample_number_positive)
+    sample_number_zero = 0
+    check_negativity(sample_number_zero)",True,4,7743,128_10_4.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","if __name__ == '__main__':
+    sample_number = -10
+    is_negative = sample_number < 0
+    print(f""The sample number is: {sample_number}"")
+    print(f""Is the sample number negative? {is_negative}"")",True,5,7744,128_10_5.py
+128,10,Test if a value is negative,"Write a complete, robust Python script that prompts the user to enter a number and then tests and prints whether that number is negative. Use clear, descriptive variable names and include error handling for non-integer input.","def check_negativity(number):
+    if number < 0:
+        print(f""The number {number} is negative."")
+    else:
+        print(f""The number {number} is not negative."")
+if __name__ == '__main__':
+    sample_number_1 = -15
+    sample_number_2 = 42
+    sample_number_3 = 0
+    sample_number_4 = -1
+    check_negativity(sample_number_1)
+    check_negativity(sample_number_2)
+    check_negativity(sample_number_3)
+    check_negativity(sample_number_4)",True,6,7745,128_10_6.py
+128,11,Test if a value is negative,Implement an optimized Python function named 'is_negative' that accepts a single numerical argument and returns a boolean value indicating whether the input is strictly less than zero. Ensure the function is highly efficient.,"def is_negative(number):
+    return number < 0
+if __name__ == '__main__':
+    print(is_negative(5))
+    print(is_negative(-5))
+    print(is_negative(0))
+    print(is_negative(-0.001))",True,0,7746,128_11.py
+128,12,Test if a value is negative,"Develop a class named 'NumberChecker' with a method 'check_negativity(self, value)' that determines if the provided value is negative. The implementation must follow object-oriented best practices.","class NumberChecker:
+    def check_negativity(self, value):
+        return value < 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    sample_values = [10, -5, 0, -100, 3.14]
+    for value in sample_values:
+        result = checker.check_negativity(value)
+        print(f""Value: {value}, Is Negative: {result}"")",True,0,7747,128_12.py
