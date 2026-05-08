@@ -134767,3 +134767,2796 @@ if __name__ == '__main__':
     sample_years = [2020, 1995, 2023, 1980, 2024]
     result = year_difference(sample_years)
     print(result)",True,1,6592,106_4_1.py
+106,0,Calculate the difference in years,"Write a complete, robust Python script that prompts the user to enter two years and calculates the difference between them, handling potential input errors gracefully.","import sys
+def calculate_difference(year1, year2):
+    return abs(year1 - year2)
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    try:
+        if not isinstance(year1, int) or not isinstance(year2, int):
+            raise ValueError(""Inputs must be integers."")
+        difference = calculate_difference(year1, year2)
+        print(difference)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,0,6593,106_0.py
+106,6,Calculate the difference in years,"Implement a function that calculates the time elapsed between a start year and an end year, returning the result as a positive integer, using the `abs()` function.","import math
+def calculate_time_elapsed(start_year, end_year):
+    return abs(end_year - start_year)
+if __name__ == '__main__':
+    start = 2000
+    end = 2025
+    result = calculate_time_elapsed(start, end)
+    print(result)",True,0,6594,106_6.py
+106,6,Calculate the difference in years,"Implement a function that calculates the time elapsed between a start year and an end year, returning the result as a positive integer, using the `abs()` function.","import math
+def calculate_time_elapsed(start_year, end_year):
+    return abs(end_year - start_year)
+if __name__ == '__main__':
+    start = 2000
+    end = 2024
+    result = calculate_time_elapsed(start, end)
+    print(result)",True,1,6595,106_6_1.py
+106,7,Calculate the difference in years,"Design and write a complete program that continuously prompts the user for two years until valid integer input is provided, and then calculates and displays the difference.",,False,0,6596,106_7.py
+106,8,Calculate the difference in years,"Write a Python function that calculates the difference in years between two dates represented as strings in 'YYYY' format, handling the string-to-integer conversion internally.","def calculate_year_difference(date_str1, date_str2):
+    year1 = int(date_str1)
+    year2 = int(date_str2)
+    return year2 - year1
+if __name__ == '__main__':
+    date1 = ""2000""
+    date2 = ""1995""
+    difference = calculate_year_difference(date1, date2)
+    print(difference)",True,0,6597,106_8.py
+106,8,Calculate the difference in years,"Write a Python function that calculates the difference in years between two dates represented as strings in 'YYYY' format, handling the string-to-integer conversion internally.","def calculate_year_difference(date_str1, date_str2):
+    year1 = int(date_str1)
+    year2 = int(date_str2)
+    return year2 - year1
+if __name__ == '__main__':
+    date1 = ""2000""
+    date2 = ""2020""
+    difference = calculate_year_difference(date1, date2)
+    print(difference)",True,1,6598,106_8_1.py
+106,8,Calculate the difference in years,"Write a Python function that calculates the difference in years between two dates represented as strings in 'YYYY' format, handling the string-to-integer conversion internally.","def calculate_year_difference(date_str1, date_str2):
+    year1 = int(date_str1)
+    year2 = int(date_str2)
+    return abs(year1 - year2)
+if __name__ == '__main__':
+    date1 = ""2020""
+    date2 = ""1995""
+    difference = calculate_year_difference(date1, date2)
+    print(difference)",True,2,6599,106_8_2.py
+106,8,Calculate the difference in years,"Write a Python function that calculates the difference in years between two dates represented as strings in 'YYYY' format, handling the string-to-integer conversion internally.","def calculate_year_difference(date_str1, date_str2):
+    year1 = int(date_str1)
+    year2 = int(date_str2)
+    return year2 - year1
+if __name__ == '__main__':
+    date1 = ""2020""
+    date2 = ""1995""
+    difference = calculate_year_difference(date1, date2)
+    print(difference)",True,3,6600,106_8_3.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year2 - year1
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2000, 2020), 20)
+        self.assertEqual(calculate_year_difference(1990, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2020, 2000), -20)
+        self.assertEqual(calculate_year_difference(2010, 2000), -10)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2000, 2000), 0)
+    def test_large_difference(self):
+        self.assertEqual(calculate_year_difference(100, 2000), 1900)
+        self.assertEqual(calculate_year_difference(1000, 500), -500)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,6601,106_9.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year1 - year2
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2024, 2020), 4)
+        self.assertEqual(calculate_year_difference(2030, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2020, 2030), -10)
+        self.assertEqual(calculate_year_difference(2010, 2024), -14)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2022, 2022), 0)
+    def test_large_difference(self):
+        self.assertEqual(calculate_year_difference(2100, 1900), 200)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,6602,106_9_1.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year1 - year2
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2024, 2020), 4)
+        self.assertEqual(calculate_year_difference(2030, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2010, 2024), -14)
+        self.assertEqual(calculate_year_difference(1990, 2000), -10)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2020, 2020), 0)
+    def test_large_difference(self):
+        self.assertEqual(calculate_year_difference(2100, 1800), 300)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,6603,106_9_2.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year1 - year2
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2024, 2020), 4)
+        self.assertEqual(calculate_year_difference(2030, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2010, 2024), -14)
+        self.assertEqual(calculate_year_difference(1990, 2000), -10)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2023, 2023), 0)
+    def test_large_numbers(self):
+        self.assertEqual(calculate_year_difference(2100, 1800), 300)
+        self.assertEqual(calculate_year_difference(10000, 5000), 5000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,6604,106_9_3.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year1 - year2
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2024, 2020), 4)
+        self.assertEqual(calculate_year_difference(2030, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2010, 2020), -10)
+        self.assertEqual(calculate_year_difference(1990, 2000), -10)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2023, 2023), 0)
+    def test_large_difference(self):
+        self.assertEqual(calculate_year_difference(2100, 1800), 300)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,6605,106_9_4.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year1 - year2
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2024, 2020), 4)
+        self.assertEqual(calculate_year_difference(2030, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2010, 2024), -14)
+        self.assertEqual(calculate_year_difference(1990, 2000), -10)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2023, 2023), 0)
+    def test_large_difference(self):
+        self.assertEqual(calculate_year_difference(2100, 1800), 300)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,6606,106_9_5.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year1 - year2
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2024, 2020), 4)
+        self.assertEqual(calculate_year_difference(2030, 2010), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2020, 2030), -10)
+        self.assertEqual(calculate_year_difference(1990, 2000), -10)
+    def test_zero_difference(self):
+        self.assertEqual(calculate_year_difference(2022, 2022), 0)
+    def test_large_difference(self):
+        self.assertEqual(calculate_year_difference(2100, 1800), 300)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,6607,106_9_6.py
+106,9,Calculate the difference in years,"Write a unit-tested Python module for a function that calculates the difference in years, using the `unittest` framework to ensure correctness for various positive and negative inputs.","import unittest
+def calculate_year_difference(year1, year2):
+    return year2 - year1
+class TestYearDifference(unittest.TestCase):
+    def test_positive_difference(self):
+        self.assertEqual(calculate_year_difference(2000, 2020), 20)
+    def test_negative_difference(self):
+        self.assertEqual(calculate_year_difference(2020, 2000), -20)
+    def test_difference_with_larger_numbers(self):
+        self.assertEqual(calculate_year_difference(1990, 2023), 33)
+    def test_difference_with_smaller_numbers(self):
+        self.assertEqual(calculate_year_difference(1980, 1950), -30)
+    def test_difference_of_zero(self):
+        self.assertEqual(calculate_year_difference(2010, 2010), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,6608,106_9_7.py
+106,10,Calculate the difference in years,"Write a robust Python function named 'calculate_year_difference' that accepts two integer arguments, 'end_year' and 'start_year', and returns the absolute difference between them. Ensure the code is highly readable and includes docstrings explaining the function's purpose and parameters.","def calculate_year_difference(end_year: int, start_year: int) -> int:
+    return abs(end_year - start_year)
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1990
+    difference = calculate_year_difference(year1, year2)
+    print(f""The difference between {year1} and {year2} is: {difference}"")",True,0,6609,106_10.py
+106,10,Calculate the difference in years,"Write a robust Python function named 'calculate_year_difference' that accepts two integer arguments, 'end_year' and 'start_year', and returns the absolute difference between them. Ensure the code is highly readable and includes docstrings explaining the function's purpose and parameters.","def calculate_year_difference(end_year, start_year):
+    return abs(end_year - start_year)
+if __name__ == '__main__':
+    year1 = 2024
+    year2 = 1990
+    difference = calculate_year_difference(year1, year2)
+    print(difference)",True,1,6610,106_10_1.py
+106,10,Calculate the difference in years,"Write a robust Python function named 'calculate_year_difference' that accepts two integer arguments, 'end_year' and 'start_year', and returns the absolute difference between them. Ensure the code is highly readable and includes docstrings explaining the function's purpose and parameters.","def calculate_year_difference(end_year, start_year):
+    return abs(end_year - start_year)
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1990
+    difference = calculate_year_difference(year1, year2)
+    print(difference)",True,2,6611,106_10_2.py
+106,10,Calculate the difference in years,"Write a robust Python function named 'calculate_year_difference' that accepts two integer arguments, 'end_year' and 'start_year', and returns the absolute difference between them. Ensure the code is highly readable and includes docstrings explaining the function's purpose and parameters.","def calculate_year_difference(end_year: int, start_year: int) -> int:
+    return abs(end_year - start_year)
+if __name__ == '__main__':
+    year1 = 2024
+    year2 = 1990
+    difference = calculate_year_difference(year1, year2)
+    print(f""The difference between {year1} and {year2} is: {difference}"")",True,3,6612,106_10_3.py
+106,11,Calculate the difference in years,Implement an optimized Python script that prompts the user to input two years and calculates the difference. The script must handle potential `ValueError` exceptions if non-integer input is provided and use efficient input handling.,"def calculate_difference(year1, year2):
+    return abs(year1 - year2)
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    try:
+        y1 = int(year1)
+        y2 = int(year2)
+        difference = calculate_difference(y1, y2)
+        print(difference)
+    except ValueError:
+        print(""Error: Invalid input. Please enter integer values."")",True,0,6613,106_11.py
+106,11,Calculate the difference in years,Implement an optimized Python script that prompts the user to input two years and calculates the difference. The script must handle potential `ValueError` exceptions if non-integer input is provided and use efficient input handling.,"if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    difference = abs(year1 - year2)
+    print(difference)",True,1,6614,106_11_1.py
+106,11,Calculate the difference in years,Implement an optimized Python script that prompts the user to input two years and calculates the difference. The script must handle potential `ValueError` exceptions if non-integer input is provided and use efficient input handling.,"if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    try:
+        y1 = int(year1)
+        y2 = int(year2)
+        difference = abs(y1 - y2)
+        print(difference)
+    except ValueError:
+        print(""Invalid input: Please enter integer values."")",True,2,6615,106_11_2.py
+106,11,Calculate the difference in years,Implement an optimized Python script that prompts the user to input two years and calculates the difference. The script must handle potential `ValueError` exceptions if non-integer input is provided and use efficient input handling.,"if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    try:
+        y1 = int(year1)
+        y2 = int(year2)
+        difference = abs(y1 - y2)
+        print(difference)
+    except ValueError:
+        print(""Error: Invalid input. Please enter integers."")",True,3,6616,106_11_3.py
+106,12,Calculate the difference in years,"Develop a class named 'DateCalculator' with a method 'get_difference(year1, year2)' that calculates the difference in years between the two input years. The implementation must be clean and follow object-oriented programming best practices.","class DateCalculator:
+    def get_difference(self, year1, year2):
+        return abs(year1 - year2)
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    year_a = 2020
+    year_b = 1995
+    difference = calculator.get_difference(year_a, year_b)
+    print(difference)",True,0,6617,106_12.py
+106,13,Calculate the difference in years,"Write a concise and efficient one-line expression or a very short function to calculate the difference in years between a given future year and a past year, assuming the inputs are already validated integers.","if __name__ == '__main__':
+    future_year = 2030
+    past_year = 2010
+    difference = future_year - past_year
+    print(difference)",True,0,6618,106_13.py
+106,14,Calculate the difference in years,"Create a complete, runnable Python program that reads two years from standard input, calculates the absolute difference, and prints the result to the console in a clear, user-friendly format.","import sys
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    difference = abs(year1 - year2)
+    print(f""Year 1: {year1}"")
+    print(f""Year 2: {year2}"")
+    print(f""Absolute difference: {difference}"")",True,0,6619,106_14.py
+106,14,Calculate the difference in years,"Create a complete, runnable Python program that reads two years from standard input, calculates the absolute difference, and prints the result to the console in a clear, user-friendly format.","import sys
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    difference = abs(year1 - year2)
+    print(f""Year 1: {year1}"")
+    print(f""Year 2: {year2}"")
+    print(f""The absolute difference between the two years is: {difference}"")",True,1,6620,106_14_1.py
+106,14,Calculate the difference in years,"Create a complete, runnable Python program that reads two years from standard input, calculates the absolute difference, and prints the result to the console in a clear, user-friendly format.","import sys
+if __name__ == '__main__':
+    try:
+        year1_str = ""2023""
+        year2_str = ""2021""
+        year1 = int(year1_str)
+        year2 = int(year2_str)
+        difference = abs(year1 - year2)
+        print(f""Year 1: {year1}"")
+        print(f""Year 2: {year2}"")
+        print(f""The absolute difference is: {difference}"")
+    except ValueError:
+        print(""Error: Please enter valid integer years."")",True,2,6621,106_14_2.py
+106,14,Calculate the difference in years,"Create a complete, runnable Python program that reads two years from standard input, calculates the absolute difference, and prints the result to the console in a clear, user-friendly format.","import sys
+if __name__ == '__main__':
+    year1 = 2023
+    year2 = 1998
+    difference = abs(year1 - year2)
+    print(f""Year 1: {year1}"")
+    print(f""Year 2: {year2}"")
+    print(f""The absolute difference between the years is: {difference}"")",True,3,6622,106_14_3.py
+107,0,Format a date string simply,Write a simple Python function that takes a date as a string in 'YYYY-MM-DD' format and returns it in 'MM/DD/YYYY' format.,"import datetime
+def reformat_date(date_str):
+    date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+    return date_obj.strftime('%m/%d/%Y')
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    formatted_date = reformat_date(sample_date)
+    print(formatted_date)",True,0,6623,107_0.py
+107,0,Format a date string simply,Write a simple Python function that takes a date as a string in 'YYYY-MM-DD' format and returns it in 'MM/DD/YYYY' format.,"from datetime import datetime
+def reformat_date(date_string):
+    date_object = datetime.strptime(date_string, '%Y-%m-%d')
+    return date_object.strftime('%m/%d/%Y')
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    formatted_date = reformat_date(sample_date)
+    print(formatted_date)",True,1,6624,107_0_1.py
+107,1,Format a date string simply,Implement an optimized Python function using the `datetime` module to convert a given date string from 'DD-MM-YYYY' to ISO format ('YYYY-MM-DD').,"from datetime import datetime
+def convert_date_format(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%d-%m-%Y')
+        iso_format = date_object.strftime('%Y-%m-%d')
+        return iso_format
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date_str1 = ""31-12-2023""
+    date_str2 = ""01-01-2024""
+    date_str3 = ""25-08-1999""
+    print(convert_date_format(date_str1))
+    print(convert_date_format(date_str2))
+    print(convert_date_format(date_str3))",True,0,6625,107_1.py
+107,1,Format a date string simply,Implement an optimized Python function using the `datetime` module to convert a given date string from 'DD-MM-YYYY' to ISO format ('YYYY-MM-DD').,"from datetime import datetime
+def convert_date_format(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%d-%m-%Y')
+        iso_format = date_object.strftime('%Y-%m-%d')
+        return iso_format
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    sample_date = ""31-12-2023""
+    iso_date = convert_date_format(sample_date)
+    print(iso_date)",True,1,6626,107_1_1.py
+107,1,Format a date string simply,Implement an optimized Python function using the `datetime` module to convert a given date string from 'DD-MM-YYYY' to ISO format ('YYYY-MM-DD').,"from datetime import datetime
+def convert_date_format(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%d-%m-%Y')
+        iso_format = date_object.strftime('%Y-%m-%d')
+        return iso_format
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date_to_convert = '31-12-2023'
+    iso_date = convert_date_format(date_to_convert)
+    print(iso_date)",True,2,6627,107_1_2.py
+103,5,Calculate the time elapsed today,"Write a script that continuously monitors and prints the time elapsed since midnight for the current day, updating the display every minute.",,False,0,6628,103_5.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string."")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date string format incorrect. Expected YYYY-MM-DD."")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values."")
+            formatted_date = f""{year}{month:02d}{day:02d}""
+            return int(formatted_date)
+        except ValueError:
+            return None
+        except Exception:
+            return None
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    sample_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",
+        ""not-a-date"",
+        12345
+    ]
+    for date_str in sample_dates:
+        result = formatter.format_date(date_str)
+        print(f""Input: {date_str}, Output: {result}"")",True,0,6629,107_3.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string."")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD."")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values."")
+            formatted_date = f""{year}{month:02d}{day:02d}""
+            return int(formatted_date)
+        except ValueError as e:
+            raise ValueError(f""Error processing date '{date_string}': {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred with '{date_string}': {e}"")
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    test_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",                       
+        ""2023-13-01"",                      
+        ""2023-02-30"",                    
+        ""not-a-date""                        
+    ]
+    for date_str in test_dates:
+        try:
+            result = formatter.format_date(date_str)
+            print(f""Input: {date_str} -> Output: {result}"")
+        except ValueError as e:
+            print(f""Input: {date_str} -> Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str} -> Unexpected Error: {e}"")",True,1,6630,107_3_1.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string"")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD"")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values"")
+            formatted_date = f""{year}{month:02d}{day:02d}""
+            return int(formatted_date)
+        except ValueError as e:
+            raise ValueError(f""Error processing date '{date_string}': {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred for '{date_string}': {e}"")
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    sample_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",
+        ""invalid-date"",
+        12345,
+        ""2023-13-01""
+    ]
+    for date_str in sample_dates:
+        try:
+            result = formatter.format_date(date_str)
+            print(f""Input: {date_str} -> Output: {result}"")
+        except ValueError as e:
+            print(f""Input: {date_str} -> Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str} -> Unexpected Error: {e}"")",True,2,6631,107_3_2.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string"")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD"")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values"")
+            formatted_date = f""{year}{month:02d}{day:02d}""
+            return int(formatted_date)
+        except ValueError as e:
+            raise ValueError(f""Error processing date string '{date_string}': {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    sample_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",                       
+        ""2023-13-01"",                      
+        ""2023-02-30"",                    
+        ""not-a-date""                         
+    ]
+    for date_str in sample_dates:
+        try:
+            result = formatter.format_date(date_str)
+            print(f""Input: {date_str} -> Output: {result}"")
+        except ValueError as e:
+            print(f""Input: {date_str} -> Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str} -> Unexpected Error: {e}"")",True,3,6632,107_3_3.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string"")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD"")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values"")
+            formatted_date = f""{year}{month:02d}{day:02d}""
+            return int(formatted_date)
+        except ValueError as e:
+            raise ValueError(f""Error processing date '{date_string}': {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred for '{date_string}': {e}"")
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    sample_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",
+        ""InvalidDate""
+    ]
+    for date_str in sample_dates:
+        try:
+            result = formatter.format_date(date_str)
+            print(f""Input: {date_str}, Output: {result}"")
+        except ValueError as e:
+            print(f""Input: {date_str}, Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str}, Unexpected Error: {e}"")",True,4,6633,107_3_4.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string."")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD."")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values."")
+            formatted_date = f""{year}{month:02d}{day:02d}""
+            return int(formatted_date)
+        except ValueError as e:
+            raise ValueError(f""Error processing date '{date_string}': {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred for '{date_string}': {e}"")
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    sample_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",
+        ""invalid-date"",
+        12345,
+        ""2023-13-01""
+    ]
+    for date_str in sample_dates:
+        try:
+            result = formatter.format_date(date_str)
+            print(f""Input: {date_str} -> Output: {result}"")
+        except ValueError as e:
+            print(f""Input: {date_str} -> Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str} -> Unexpected Error: {e}"")",True,5,6634,107_3_5.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string"")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD"")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values"")
+            return int(f""{year}{month:02d}{day:02d}"")
+        except ValueError as e:
+            raise ValueError(f""Error processing date '{date_string}': {e}"")
+        except Exception as e:
+            raise ValueError(f""An unexpected error occurred with '{date_string}': {e}"")
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    sample_dates = [
+        ""2023-10-27"",
+        ""1999-01-01"",
+        ""2024-02-29"",
+        ""2023/10/27"",
+        ""invalid-date"",
+        12345
+    ]
+    for date_str in sample_dates:
+        try:
+            result = formatter.format_date(date_str)
+            print(f""Input: {date_str} -> Formatted: {result}"")
+        except ValueError as e:
+            print(f""Input: {date_str} -> Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str} -> Unexpected Error: {e}"")",True,6,6635,107_3_6.py
+107,3,Format a date string simply,"Create a class named DateFormatter with a method to convert any input date string into a standardized 'YYYYMMDD' integer format, ensuring error handling for invalid input.","class DateFormatter:
+    def format_date(self, date_string):
+        try:
+            if not isinstance(date_string, str):
+                raise ValueError(""Input must be a string"")
+            parts = date_string.split('-')
+            if len(parts) != 3:
+                raise ValueError(""Date format incorrect. Expected YYYY-MM-DD"")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = int(parts[2])
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid month or day values"")
+            return int(f""{year}{month:02d}{day:02d}"")
+        except ValueError:
+            return None
+if __name__ == '__main__':
+    formatter = DateFormatter()
+    dates_to_test = [
+        ""2023-10-27"",
+        ""2024-01-01"",
+        ""2025-12-31"",
+        ""2023/10/27"",
+        ""not-a-date"",
+        ""2023-13-01"",
+        12345
+    ]
+    for date_str in dates_to_test:
+        result = formatter.format_date(date_str)
+        print(f""Input: {date_str}, Output: {result}"")",True,7,6636,107_3_7.py
+107,4,Format a date string simply,"Write an efficient function that takes a full date string (e.g., '2023-10-27') and formats it into a localized string using the 'dd-Mon-yyyy' format.","from datetime import datetime
+import locale
+def format_date_localized(date_string):
+    try:
+        date_obj = datetime.strptime(date_string, '%Y-%m-%d')
+        try:
+            locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+        except locale.Error:
+            try:
+                locale.setlocale(locale.LC_TIME, 'English_United States.1252')
+            except locale.Error:
+                pass
+        formatted_date = date_obj.strftime('%d-%b-%Y')
+        return formatted_date
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date_input = '2023-10-27'
+    result = format_date_localized(date_input)
+    print(result)",True,0,6637,107_4.py
+107,4,Format a date string simply,"Write an efficient function that takes a full date string (e.g., '2023-10-27') and formats it into a localized string using the 'dd-Mon-yyyy' format.","from datetime import datetime
+import locale
+def format_date_localized(date_string):
+    try:
+        date_obj = datetime.strptime(date_string, '%Y-%m-%d')
+        try:
+            locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+        except locale.Error:
+            try:
+                locale.setlocale(locale.LC_TIME, 'English_United States.1252')
+            except locale.Error:
+                pass
+        formatted_date = date_obj.strftime('%d-%b-%Y')
+        return formatted_date
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date1 = '2023-10-27'
+    date2 = '2024-01-05'
+    print(format_date_localized(date1))
+    print(format_date_localized(date2))",True,1,6638,107_4_1.py
+107,4,Format a date string simply,"Write an efficient function that takes a full date string (e.g., '2023-10-27') and formats it into a localized string using the 'dd-Mon-yyyy' format.","from datetime import datetime
+import locale
+def format_date_localized(date_string):
+    try:
+        date_obj = datetime.strptime(date_string, '%Y-%m-%d')
+        formatted_date = date_obj.strftime('%d-%b-%Y')
+        return formatted_date
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date_input = '2023-10-27'
+    result = format_date_localized(date_input)
+    print(result)",True,2,6639,107_4_2.py
+107,4,Format a date string simply,"Write an efficient function that takes a full date string (e.g., '2023-10-27') and formats it into a localized string using the 'dd-Mon-yyyy' format.","from datetime import datetime
+import locale
+def format_date_localized(date_string):
+    try:
+        date_obj = datetime.strptime(date_string, '%Y-%m-%d')
+        try:
+            locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+        except locale.Error:
+            try:
+                locale.setlocale(locale.LC_TIME, 'English_United States.1252')
+            except locale.Error:
+                pass
+        formatted_date = date_obj.strftime('%d-%b-%Y')
+        return formatted_date
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date1 = '2023-10-27'
+    date2 = '2024-01-01'
+    print(format_date_localized(date1))
+    print(format_date_localized(date2))",True,3,6640,107_4_3.py
+107,5,Format a date string simply,"Implement a solution to format a date string from a specific input format ('MM/DD/YY') to a standard Python `datetime.date` object, handling potential `ValueError` exceptions gracefully.","from datetime import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%m/%d/%y').date()
+        return date_object
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date_str_valid = ""03/15/23""
+    date_str_invalid = ""2023-03-15""
+    date_str_format_error = ""15-03-2023""
+    date1 = format_date_string(date_str_valid)
+    date2 = format_date_string(date_str_invalid)
+    date3 = format_date_string(date_str_format_error)
+    print(f""Input: {date_str_valid}, Result: {date1}"")
+    print(f""Input: {date_str_invalid}, Result: {date2}"")
+    print(f""Input: {date_str_format_error}, Result: {date3}"")",True,0,6641,107_5.py
+107,5,Format a date string simply,"Implement a solution to format a date string from a specific input format ('MM/DD/YY') to a standard Python `datetime.date` object, handling potential `ValueError` exceptions gracefully.","from datetime import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%m/%d/%y').date()
+        return date_object
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date_str_valid = ""03/15/23""
+    date_str_invalid = ""2023-03-15""
+    date_str_format_error = ""15-03-2023""
+    result_valid = format_date_string(date_str_valid)
+    result_invalid = format_date_string(date_str_invalid)
+    result_error = format_date_string(date_str_format_error)
+    print(f""Input: {date_str_valid}, Result: {result_valid}"")
+    print(f""Input: {date_str_invalid}, Result: {result_invalid}"")
+    print(f""Input: {date_str_format_error}, Result: {result_error}"")",True,1,6642,107_5_1.py
+107,5,Format a date string simply,"Implement a solution to format a date string from a specific input format ('MM/DD/YY') to a standard Python `datetime.date` object, handling potential `ValueError` exceptions gracefully.","from datetime import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%m/%d/%y').date()
+        return date_object
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date_str_valid = ""12/31/23""
+    date_str_invalid = ""2023-12-31""
+    date_str_format_error = ""31/12/23""
+    result_valid = format_date_string(date_str_valid)
+    result_invalid = format_date_string(date_str_invalid)
+    result_format_error = format_date_string(date_str_format_error)
+    print(f""Input: {date_str_valid}, Result: {result_valid}"")
+    print(f""Input: {date_str_invalid}, Result: {result_invalid}"")
+    print(f""Input: {date_str_format_error}, Result: {result_format_error}"")",True,2,6643,107_5_2.py
+107,5,Format a date string simply,"Implement a solution to format a date string from a specific input format ('MM/DD/YY') to a standard Python `datetime.date` object, handling potential `ValueError` exceptions gracefully.","from datetime import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%m/%d/%y').date()
+        return date_object
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date_str_valid = ""03/15/23""
+    date_str_invalid = ""2023-03-15""
+    date_str_format_error = ""15/03/23""
+    result1 = format_date_string(date_str_valid)
+    result2 = format_date_string(date_str_invalid)
+    result3 = format_date_string(date_str_format_error)
+    print(f""Input: {date_str_valid}, Result: {result1}, Type: {type(result1)}"")
+    print(f""Input: {date_str_invalid}, Result: {result2}, Type: {type(result2)}"")
+    print(f""Input: {date_str_format_error}, Result: {result3}, Type: {type(result3)}"")",True,3,6644,107_5_3.py
+107,5,Format a date string simply,"Implement a solution to format a date string from a specific input format ('MM/DD/YY') to a standard Python `datetime.date` object, handling potential `ValueError` exceptions gracefully.","from datetime import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%m/%d/%y').date()
+        return date_object
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date_str_valid = ""03/15/23""
+    date_str_invalid = ""2023-03-15""
+    date_str_format_error = ""15/03/23""
+    result_valid = format_date_string(date_str_valid)
+    result_invalid = format_date_string(date_str_invalid)
+    result_format_error = format_date_string(date_str_format_error)
+    print(f""Input: {date_str_valid}, Result: {result_valid}"")
+    print(f""Input: {date_str_invalid}, Result: {result_invalid}"")
+    print(f""Input: {date_str_format_error}, Result: {result_format_error}"")",True,4,6645,107_5_4.py
+107,5,Format a date string simply,"Implement a solution to format a date string from a specific input format ('MM/DD/YY') to a standard Python `datetime.date` object, handling potential `ValueError` exceptions gracefully.","from datetime import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.strptime(date_string, '%m/%d/%y').date()
+        return date_object
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    date_str_valid = ""12/31/23""
+    date_str_invalid = ""32/01/23""
+    date_str_wrong_format = ""2023-12-31""
+    result1 = format_date_string(date_str_valid)
+    result2 = format_date_string(date_str_invalid)
+    result3 = format_date_string(date_str_wrong_format)
+    print(f""Input: {date_str_valid}, Result: {result1}"")
+    print(f""Input: {date_str_invalid}, Result: {result2}"")
+    print(f""Input: {date_str_wrong_format}, Result: {result3}"")",True,5,6646,107_5_5.py
+107,2,Format a date string simply,"Develop a robust script that parses a date string in the format 'Month Day, Year' and outputs the date in the standard 'YYYY-MM-DD' format.",,False,0,6647,107_2.py
+107,7,Format a date string simply,Write a concise and highly readable function that takes a date string and returns the date formatted as a Unix timestamp (integer).,"import datetime
+def date_to_timestamp(date_string):
+    dt_object = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    return int(dt_object.timestamp())
+if __name__ == '__main__':
+    date_str1 = ""2023-10-27""
+    timestamp1 = date_to_timestamp(date_str1)
+    print(f""{date_str1}: {timestamp1}"")
+    date_str2 = ""1999-01-01""
+    timestamp2 = date_to_timestamp(date_str2)
+    print(f""{date_str2}: {timestamp2}"")",True,0,6648,107_7.py
+107,7,Format a date string simply,Write a concise and highly readable function that takes a date string and returns the date formatted as a Unix timestamp (integer).,"import datetime
+def date_to_timestamp(date_string):
+    dt_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+    return int(dt_object.timestamp())
+if __name__ == '__main__':
+    date_str_1 = ""2023-10-27""
+    timestamp_1 = date_to_timestamp(date_str_1)
+    print(f""{date_str_1}: {timestamp_1}"")
+    date_str_2 = ""1999-01-01""
+    timestamp_2 = date_to_timestamp(date_str_2)
+    print(f""{date_str_2}: {timestamp_2}"")",True,1,6649,107_7_1.py
+107,7,Format a date string simply,Write a concise and highly readable function that takes a date string and returns the date formatted as a Unix timestamp (integer).,"import datetime
+def date_to_timestamp(date_string):
+    dt_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+    timestamp = int(dt_object.timestamp())
+    return timestamp
+if __name__ == '__main__':
+    date_str1 = ""2023-10-27""
+    timestamp1 = date_to_timestamp(date_str1)
+    print(f""{date_str1}: {timestamp1}"")
+    date_str2 = ""1999-01-01""
+    timestamp2 = date_to_timestamp(date_str2)
+    print(f""{date_str2}: {timestamp2}"")",True,2,6650,107_7_2.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","from datetime import datetime
+def parse_and_standardize_dates(date_strings, formats):
+    standardized_dates = {}
+    for i, date_str in enumerate(date_strings):
+        parsed_date = None
+        for fmt in formats:
+            try:
+                parsed_date = datetime.strptime(date_str, fmt)
+                standardized_dates[f""date_{i}""] = parsed_date
+                break
+            except ValueError:
+                continue
+        if parsed_date is None:
+            standardized_dates[f""date_{i}""] = None
+    return standardized_dates
+if __name__ == '__main__':
+    date_inputs = [
+        ""2023-01-15"",
+        ""02/28/2023"",
+        ""15-Feb-2023"",
+        ""2023/03/01""
+    ]
+    date_formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%b-%Y"",
+        ""%Y/%m/%d""
+    ]
+    results = parse_and_standardize_dates(date_inputs, date_formats)
+    for key, value in results.items():
+        print(f""{key}: {value}"")",True,0,6651,107_8.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","import datetime
+def parse_and_standardize_dates(date_strings):
+    standardized_dates = {}
+    for original_format, date_strings_list in date_strings.items():
+        for date_str in date_strings_list:
+            try:
+                date_obj = datetime.datetime.strptime(date_str, original_format)
+                standardized_dates[date_str] = date_obj
+            except ValueError:
+                standardized_dates[date_str] = None
+    return standardized_dates
+if __name__ == '__main__':
+    input_data = {
+        ""format_a"": [""2023-10-26"", ""2023-11-15""],
+        ""format_b"": [""11/15/2023"", ""12-31-2023""],
+        ""format_c"": [""2023/10/26"", ""2023/11/15""]
+    }
+    results = parse_and_standardize_dates(input_data)
+    print(results)",True,1,6652,107_8_1.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","import datetime
+def parse_and_standardize_dates(date_strings):
+    standardized_dates = {}
+    for i, date_str in enumerate(date_strings):
+        parsed_date = None
+        for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%d-%m-%Y', '%Y/%m/%d', '%m/%d/%mpy']:
+            try:
+                parsed_date = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed_date:
+            standardized_dates[f""date_{i}""] = parsed_date
+        else:
+            standardized_dates[f""date_{i}""] = None
+    return standardized_dates
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""10/27/2023""
+    ]
+    results = parse_and_standardize_dates(sample_dates)
+    print(results)",True,2,6653,107_8_2.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","import datetime
+def parse_and_standardize_dates(date_strings):
+    standardized_dates = {}
+    for original_format, date_strings_list in date_strings.items():
+        for date_str in date_strings_list:
+            try:
+                date_obj = datetime.datetime.strptime(date_str, original_format)
+                standardized_dates[date_str] = date_obj
+            except ValueError:
+                standardized_dates[date_str] = None
+    return standardized_dates
+if __name__ == '__main__':
+    input_data = {
+        ""format_a"": [""2023-10-26"", ""2023-11-01""],
+        ""format_b"": [""10/26/2023"", ""11/01/2023""],
+        ""format_c"": [""26-Oct-2023"", ""01-Nov-2023""]
+    }
+    results = parse_and_standardize_dates(input_data)
+    print(results)",True,3,6654,107_8_3.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","import datetime
+def parse_and_standardize_dates(date_strings):
+    standardized_dates = {}
+    for original_format, date_str in date_strings.items():
+        parsed_date = None
+        try:
+            if original_format == ""YYYY-MM-DD"":
+                parsed_date = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+            elif original_format == ""MM/DD/YYYY"":
+                parsed_date = datetime.datetime.strptime(date_str, ""%m/%d/%Y"").date()
+            elif original_format == ""DD-MM-YYYY"":
+                parsed_date = datetime.datetime.strptime(date_str, ""%d-%m-%Y"").date()
+            elif original_format == ""YYYY/MM/DD"":
+                parsed_date = datetime.datetime.strptime(date_str, ""%Y/%m/%d"").date()
+            elif original_format == ""Month DD, YYYY"":
+                parsed_date = datetime.datetime.strptime(date_str, ""%B %d, %Y"").date()
+            else:
+                raise ValueError(""Unsupported format"")
+            standardized_dates[original_format] = parsed_date
+        except ValueError as e:
+            standardized_dates[original_format] = f""Error: {e}""
+        except Exception as e:
+            standardized_dates[original_format] = f""Error: {e}""
+    return standardized_dates
+if __name__ == '__main__':
+    input_data = {
+        ""YYYY-MM-DD"": ""2023-10-26"",
+        ""MM/DD/YYYY"": ""10/26/2023"",
+        ""DD-MM-YYYY"": ""26-10-2023"",
+        ""YYYY/MM/DD"": ""2023/10/26"",
+        ""Month DD, YYYY"": ""October 26, 2023""
+    }
+    results = parse_and_standardize_dates(input_data)
+    print(results)",True,4,6655,107_8_4.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","import datetime
+def parse_and_standardize_dates(date_strings):
+    standardized_dates = {}
+    for original_format, date_strings_list in date_strings.items():
+        for date_str in date_strings_list:
+            try:
+                date_obj = datetime.datetime.strptime(date_str, original_format)
+                standardized_dates[date_str] = date_obj
+            except ValueError:
+                standardized_dates[date_str] = None
+    return standardized_dates
+if __name__ == '__main__':
+    input_data = {
+        ""format_1"": [""2023-01-15"", ""2023/01/16""],
+        ""format_2"": [""01/16/2023"", ""16-Jan-2023""],
+        ""format_3"": [""2023-01-17""]
+    }
+    results = parse_and_standardize_dates(input_data)
+    print(results)",True,5,6656,107_8_5.py
+107,8,Format a date string simply,"Develop an optimized method to handle date string parsing and reformatting for multiple input formats simultaneously, returning a dictionary of standardized date objects.","import datetime
+def parse_and_reformat_dates(date_strings):
+    standardized_dates = {}
+    for i, date_str in enumerate(date_strings):
+        parsed_date = None
+        formats_to_try = [
+            ""%Y-%m-%d"",
+            ""%m/%d/%Y"",
+            ""%d-%m-%Y"",
+            ""%Y/%m/%d"",
+            ""%m-%d-%Y""
+        ]
+        for fmt in formats_to_try:
+            try:
+                parsed_date = datetime.datetime.strptime(date_str, fmt)
+                break
+            except ValueError:
+                continue
+        if parsed_date:
+            standardized_dates[f""date_{i}""] = parsed_date
+        else:
+            standardized_dates[f""date_{i}""] = None
+    return standardized_dates
+if __name__ == '__main__':
+    input_dates = [
+        ""2023-10-26"",
+        ""11/15/2023"",
+        ""26-10-2023"",
+        ""2023/10/26"",
+        ""10-26-2023"",
+        ""NotADate""
+    ]
+    result = parse_and_reformat_dates(input_dates)
+    print(result)",True,6,6657,107_8_6.py
+107,9,Format a date string simply,"Implement a utility function that takes a date string and formats it into a string where the month is represented by its two-digit numerical value and the day is zero-padded to two digits, using only string manipulation if possible, otherwise use `strftime`.","import datetime
+def format_date_string(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        month = date_obj.strftime(""%m"")
+        day = date_obj.strftime(""%d"")
+        return f""{month}{day}""
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date1 = ""2023-10-05""
+    date2 = ""2024-01-31""
+    date3 = ""1999-12-01""
+    print(format_date_string(date1))
+    print(format_date_string(date2))
+    print(format_date_string(date3))",True,0,6658,107_9.py
+107,9,Format a date string simply,"Implement a utility function that takes a date string and formats it into a string where the month is represented by its two-digit numerical value and the day is zero-padded to two digits, using only string manipulation if possible, otherwise use `strftime`.","import datetime
+def format_date_string(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        month = date_obj.strftime(""%m"")
+        day = date_obj.strftime(""%d"")
+        return f""{month}{day}""
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date1 = ""2023-10-05""
+    date2 = ""2024-01-31""
+    date3 = ""2022-12-01""
+    print(format_date_string(date1))
+    print(format_date_string(date2))
+    print(format_date_string(date3))",True,1,6659,107_9_1.py
+107,9,Format a date string simply,"Implement a utility function that takes a date string and formats it into a string where the month is represented by its two-digit numerical value and the day is zero-padded to two digits, using only string manipulation if possible, otherwise use `strftime`.","import datetime
+def format_date_string(date_string):
+    try:
+        date_object = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        month = date_object.strftime(""%m"")
+        day = date_object.strftime(""%d"")
+        return f""{month}{day}""
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date1 = ""2023-10-05""
+    date2 = ""2024-01-31""
+    date3 = ""1999-12-01""
+    print(format_date_string(date1))
+    print(format_date_string(date2))
+    print(format_date_string(date3))",True,2,6660,107_9_2.py
+107,9,Format a date string simply,"Implement a utility function that takes a date string and formats it into a string where the month is represented by its two-digit numerical value and the day is zero-padded to two digits, using only string manipulation if possible, otherwise use `strftime`.","import datetime
+def format_date_string(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, ""%Y-%m-%d"")
+        month = date_obj.strftime(""%m"")
+        day = date_obj.strftime(""%d"")
+        return f""{month}{day}""
+    except ValueError:
+        return ""Invalid date format""
+if __name__ == '__main__':
+    date1 = ""2023-10-05""
+    date2 = ""2024-01-31""
+    date3 = ""2025-12-01""
+    print(format_date_string(date1))
+    print(format_date_string(date2))
+    print(format_date_string(date3))",True,3,6661,107_9_3.py
+107,6,Format a date string simply,"Generate a complete, best-practice Python script that reads a date from standard input and prints it in the format 'Day, Month Date, Year'.",,False,0,6662,107_6.py
+107,11,Format a date string simply,Implement an optimized function named 'format_date_string' that accepts a date string in ISO format ('YYYY-MM-DD') and returns the date in the US standard format ('MM/DD/YYYY'). Use the 'datetime' module for reliable parsing and formatting.,"import datetime
+def format_date_string(iso_date_string):
+    dt_object = datetime.datetime.strptime(iso_date_string, '%Y-%m-%d')
+    return dt_object.strftime('%m/%d/%Y')
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    formatted_date = format_date_string(sample_date)
+    print(formatted_date)",True,0,6663,107_11.py
+107,11,Format a date string simply,Implement an optimized function named 'format_date_string' that accepts a date string in ISO format ('YYYY-MM-DD') and returns the date in the US standard format ('MM/DD/YYYY'). Use the 'datetime' module for reliable parsing and formatting.,"import datetime
+def format_date_string(iso_date_string):
+    dt_object = datetime.datetime.strptime(iso_date_string, '%Y-%m-%d')
+    formatted_date = dt_object.strftime('%m/%d/%Y')
+    return formatted_date
+if __name__ == '__main__':
+    sample_date = ""2023-10-27""
+    result = format_date_string(sample_date)
+    print(result)",True,1,6664,107_11_1.py
+107,10,Format a date string simply,"Write a complete, well-documented Python script that takes a date as a string in 'YYYY-MM-DD' format and outputs it in 'MM/DD/YYYY' format using only standard Python library functions, ensuring efficiency.","import datetime
+if __name__ == '__main__':
+    date_string = ""2023-10-27""
+    try:
+        date_object = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        formatted_date = date_object.strftime('%m/%d/%Y')
+        print(formatted_date)
+    except ValueError:
+        print(""Invalid date format provided."")",True,0,6665,107_10.py
+107,10,Format a date string simply,"Write a complete, well-documented Python script that takes a date as a string in 'YYYY-MM-DD' format and outputs it in 'MM/DD/YYYY' format using only standard Python library functions, ensuring efficiency.","import datetime
+if __name__ == '__main__':
+    date_string = ""2023-10-27""
+    try:
+        date_object = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        formatted_date = date_object.strftime('%m/%d/%Y')
+        print(formatted_date)
+    except ValueError:
+        print(""Invalid date format. Please use YYYY-MM-DD."")",True,1,6666,107_10_1.py
+107,12,Format a date string simply,"Develop a class method within a Date utility class that handles the conversion of a date string from 'YYYY-MM-DD' to a localized string format 'Month Day, Year'. The solution must be robust against potential date parsing errors.","class DateUtility:
+    @staticmethod
+    def convert_date_string(date_string):
+        try:
+            date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+            return date_obj.strftime('%B %d, %Y')
+        except ValueError:
+            return ""Invalid Date Format""
+if __name__ == '__main__':
+    import datetime
+    date_str1 = ""2023-10-27""
+    date_str2 = ""2024-01-01""
+    date_str3 = ""2023/10/27""
+    date_str4 = ""not-a-date""
+    print(f""'{date_str1}' converted: {DateUtility.convert_date_string(date_str1)}"")
+    print(f""'{date_str2}' converted: {DateUtility.convert_date_string(date_str2)}"")
+    print(f""'{date_str3}' converted: {DateUtility.convert_date_string(date_str3)}"")
+    print(f""'{date_str4}' converted: {DateUtility.convert_date_string(date_str4)}"")",True,0,6667,107_12.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","from datetime import datetime
+def standardize_date_format(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            dt_object = datetime.strptime(date_string, fmt)
+            return dt_object.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    date1 = '12/31/2023'
+    date2 = '2024-01-15'
+    date3 = '05/20/2022'
+    date4 = '2023/10/01'
+    invalid_date = '2023-13-01'
+    formats_to_try = ['%m/%d/%Y', '%Y-%m-%d', '%d/%m/%Y', '%Y/%m/%d']
+    print(f""Input: {date1}, Standardized: {standardize_date_format(date1, formats_to_try)}"")
+    print(f""Input: {date2}, Standardized: {standardize_date_format(date2, formats_to_try)}"")
+    print(f""Input: {date3}, Standardized: {standardize_date_format(date3, formats_to_try)}"")
+    print(f""Input: {date4}, Standardized: {standardize_date_format(date4, formats_to_try)}"")
+    print(f""Input: {invalid_date}, Standardized: {standardize_date_format(invalid_date, formats_to_try)}"")",True,0,6668,107_14.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","from datetime import datetime
+def standardize_date_format(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            dt_object = datetime.strptime(date_string, fmt)
+            return dt_object.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    dates_to_convert = [
+        ('01/15/2023', ['%m/%d/%Y', '%Y-%m-%d']),
+        ('2024-05-20', ['%m/%d/%Y', '%Y-%m-%d']),
+        ('12/31/2022', ['%m/%d/%Y', '%Y-%m-d']),
+        ('2025/01/01', ['%m/%d/%Y', '%Y-%m-%d'])
+    ]
+    results = {}
+    for date_str, formats in dates_to_convert:
+        standard_date = standardize_date_format(date_str, formats)
+        results[date_str] = standard_date
+    print(results)",True,1,6669,107_14_1.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","from datetime import datetime
+def standardize_date_format(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            dt_object = datetime.strptime(date_string, fmt)
+            return dt_object.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    date1 = '12/31/2023'
+    date2 = '2024-01-15'
+    date3 = '05/20/2022'
+    date4 = '2023/10/01'
+    date5 = 'InvalidDate'
+    formats_to_try = ['%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%Y/%m/%d']
+    print(f""Input: {date1}, Standardized: {standardize_date_format(date1, formats_to_try)}"")
+    print(f""Input: {date2}, Standardized: {standardize_date_format(date2, formats_to_try)}"")
+    print(f""Input: {date3}, Standardized: {standardize_date_format(date3, formats_to_try)}"")
+    print(f""Input: {date4}, Standardized: {standardize_date_format(date4, formats_to_try)}"")
+    print(f""Input: {date5}, Standardized: {standardize_date_format(date5, formats_to_try)}"")",True,2,6670,107_14_2.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","from datetime import datetime
+def standardize_date(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            dt_object = datetime.strptime(date_string, fmt)
+            return dt_object.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    date1 = '12/31/2023'
+    date2 = '2024-01-15'
+    date3 = '05/20/2022'
+    date4 = '2023/11/01'
+    invalid_date = '2023-13-01'
+    formats_to_try = ['%m/%d/%Y', '%Y-%m-%d', '%d/%m/%Y', '%Y/%m/%d']
+    print(f""Input: {date1}, Formats: {formats_to_try}"")
+    result1 = standardize_date(date1, formats_to_try)
+    print(f""Standardized: {result1}\n"")
+    print(f""Input: {date2}, Formats: {formats_to_try}"")
+    result2 = standardize_date(date2, formats_to_try)
+    print(f""Standardized: {result2}\n"")
+    print(f""Input: {date3}, Formats: {formats_to_try}"")
+    result3 = standardize_date(date3, formats_to_try)
+    print(f""Standardized: {result3}\n"")
+    print(f""Input: {date4}, Formats: {formats_to_try}"")
+    result4 = standardize_date(date4, formats_to_try)
+    print(f""Standardized: {result4}\n"")
+    print(f""Input: {invalid_date}, Formats: {formats_to_try}"")
+    result_invalid = standardize_date(invalid_date, formats_to_try)
+    print(f""Standardized: {result_invalid}"")",True,3,6671,107_14_3.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","from datetime import datetime
+def standardize_date_format(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            dt_object = datetime.strptime(date_string, fmt)
+            return dt_object.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    test_dates = [
+        (""12/31/2023"", ['%m/%d/%Y', '%Y-%m-%d']),
+        (""2024-01-15"", ['%m/%d/%Y', '%Y-%m-%d']),
+        (""05/20/2022"", ['%m/%d/%Y', '%Y-%m-%d']),
+        (""2023/11/01"", ['%m/%d/%Y', '%Y-%m-d']),
+        (""invalid-date"", ['%m/%d/%Y', '%Y-%m-%d']),
+        (""31/12/2023"", ['%m/%d/%Y', '%Y-%m-%d']),
+    ]
+    results = {}
+    for date_str, formats in test_dates:
+        standardized = standardize_date_format(date_str, formats)
+        results[date_str] = standardized
+    for date_str, result in results.items():
+        print(f""Input: {date_str}, Standardized: {result}"")",True,4,6672,107_14_4.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","from datetime import datetime
+def standardize_date_format(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            dt_object = datetime.strptime(date_string, fmt)
+            return dt_object.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    date1 = '12/31/2023'
+    date2 = '2024-01-15'
+    date3 = '05/20/2022'
+    date4 = '2023/10/01'
+    invalid_date = '2023-13-01'
+    formats_to_try = ['%m/%d/%Y', '%Y-%m-%d', '%m/%d/%y', '%Y/%m/%d']
+    print(f""Input: {date1}, Standardized: {standardize_date_format(date1, formats_to_try)}"")
+    print(f""Input: {date2}, Standardized: {standardize_date_format(date2, formats_to_try)}"")
+    print(f""Input: {date3}, Standardized: {standardize_date_format(date3, formats_to_try)}"")
+    print(f""Input: {date4}, Standardized: {standardize_date_format(date4, formats_to_try)}"")
+    print(f""Input: {invalid_date}, Standardized: {standardize_date_format(invalid_date, formats_to_try)}"")",True,5,6673,107_14_5.py
+107,14,Format a date string simply,"Write a flexible Python function that can handle multiple input date formats (e.g., 'MM/DD/YYYY', 'YYYY-MM-DD') and convert them uniformly into a standardized 'YYYY-MM-DD' string. Implement error handling for invalid input formats.","import datetime
+def standardize_date(date_string, input_formats):
+    for fmt in input_formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.strftime('%Y-%m-%d')
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    date1 = '12/31/2023'
+    date2 = '2024-01-15'
+    date3 = '05/20/2022'
+    date4 = '2023/10/01'
+    invalid_date = '2023-13-01'
+    formats_to_try = ['%m/%d/%Y', '%Y-%m-%d', '%m/%d/%Y', '%Y/%m/%d']
+    print(f""Input: {date1}, Formats: {formats_to_try}"")
+    result1 = standardize_date(date1, formats_to_try)
+    print(f""Standardized: {result1}\n"")
+    print(f""Input: {date2}, Formats: {formats_to_try}"")
+    result2 = standardize_date(date2, formats_to_try)
+    print(f""Standardized: {result2}\n"")
+    print(f""Input: {date3}, Formats: {formats_to_try}"")
+    result3 = standardize_date(date3, formats_to_try)
+    print(f""Standardized: {result3}\n"")
+    print(f""Input: {date4}, Formats: {formats_to_try}"")
+    result4 = standardize_date(date4, formats_to_try)
+    print(f""Standardized: {result4}\n"")
+    print(f""Input: {invalid_date}, Formats: {formats_to_try}"")
+    result_invalid = standardize_date(invalid_date, formats_to_try)
+    print(f""Standardized: {result_invalid}"")",True,6,6674,107_14_6.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),
+        (2024, 2, 29),
+        (2023, 2, 29),
+        (2023, 13, 1),
+        (2023, 40, 1),
+        (2024, 2, 30),
+        (2023, 12, 32),
+        (2024, 13, 1)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,0,6675,108_0.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    if calendar.isleap(year):
+        if month == 2 and not (1 <= day <= 29):
+            return False
+        if month in [4, 6, 9, 11] and not (1 <= day <= 30):
+            return False
+    else:
+        if month == 2 and not (1 <= day <= 28):
+            return False
+        if month in [4, 6, 9, 11] and not (1 <= day <= 30):
+            return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),
+        (2024, 2, 29),
+        (2023, 2, 29),
+        (2023, 2, 30),
+        (2024, 3, 1),
+        (2023, 13, 1),
+        (2023, 1, 32),
+        (2023, 1, 0),
+        (2024, 2, 30)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,1,6676,108_0_1.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2024, 10, 25),
+        (2023, 2, 28),
+        (2024, 2, 29),
+        (2023, 2, 29),
+        (2024, 13, 1),
+        (2024, 2, 30),
+        (2024, 2, 29),
+        (2023, 12, 32),
+        (2024, 1, 0),
+        (2025, 13, 1)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,2,6677,108_0_2.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    if calendar.isleap(year):
+        if month == 2 and not (1 <= day <= 29):
+            return False
+        if month in [4, 6, 9, 11] and not (1 <= day <= 30):
+            return False
+    else:
+        if month == 2 and not (1 <= day <= 28):
+            return False
+        if month in [4, 6, 9, 11] and not (1 <= day <= 30):
+            return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),         
+        (2024, 2, 29),                   
+        (2023, 2, 29),                            
+        (2023, 4, 31),                                
+        (2023, 13, 1),                  
+        (2024, 1, 32),                
+        (2024, 2, 30),                                           
+        (2024, 2, 28)           
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,3,6678,108_0_3.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),
+        (2024, 2, 29),
+        (2023, 13, 1),
+        (2023, 5, 32),
+        (2024, 2, 30),
+        (2023, 12, 31),
+        (2023, 2, 29),
+        (2023, 2, 28)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}) is valid: {result}"")",True,4,6679,108_0_4.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2024, 10, 25),         
+        (2023, 2, 28),                          
+        (2024, 2, 29),                      
+        (2023, 2, 29),                            
+        (2024, 2, 30),                                           
+        (2024, 13, 1),                  
+        (2024, 40, 1),                
+        (2024, 2, 31)                                            
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,5,6680,108_0_5.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    if calendar.isleap(year):
+        if month == 2 and not (1 <= day <= 29):
+            return False
+        if month in [4, 6, 9, 11] and not (1 <= day <= 30):
+            return False
+    else:
+        if month == 2 and not (1 <= day <= 28):
+            return False
+        if month in [4, 6, 9, 11] and not (1 <= day <= 30):
+            return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),
+        (2024, 2, 29),
+        (2023, 2, 29),
+        (2023, 4, 31),
+        (2024, 2, 30),
+        (2023, 13, 1),
+        (2024, 1, 1),
+        (2023, 12, 31)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}) is valid: {result}"")",True,6,6681,108_0_6.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),
+        (2024, 2, 29),
+        (2023, 2, 29),
+        (2023, 13, 1),
+        (2023, 40, 1),
+        (2024, 2, 30),
+        (2023, 1, 32),
+        (2024, 2, 28)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,7,6682,108_0_7.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2023, 10, 26),
+        (2024, 2, 29),
+        (2023, 2, 29),
+        (2023, 13, 1),
+        (2023, 40, 1),
+        (2024, 2, 30),
+        (2023, 12, 32),
+        (2024, 13, 1)
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}) is valid: {result}"")",True,8,6683,108_0_8.py
+108,0,Determine the day of the month,"Write a complete, robust Python script that takes a date (year, month, day) as input and validates if the given date is a valid calendar date, handling leap years correctly.","import calendar
+def is_valid_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False
+    if month < 1 or month > 12:
+        return False
+    if not (1 <= day <= 31):
+        return False
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    is_leap = calendar.isleap(year)
+    if is_leap:
+        days_in_month[2] = 29
+    if day > days_in_month[month]:
+        return False
+    return True
+if __name__ == '__main__':
+    test_dates = [
+        (2024, 10, 25),         
+        (2023, 2, 29),                                      
+        (2024, 2, 29),                                
+        (2023, 13, 1),                  
+        (2023, 1, 32),                
+        (2024, 2, 30),                                           
+        (2024, 2, 29),          
+        (2023, 12, 31)          
+    ]
+    for year, month, day in test_dates:
+        result = is_valid_date(year, month, day)
+        print(f""Date ({year}, {month}, {day}): {result}"")",True,9,6684,108_0_9.py
+108,1,Determine the day of the month,"Implement an optimized function named 'determine_day' that accepts a full date string in 'YYYY-MM-DD' format and returns the day of the month as an integer, using the built-in 'datetime' module for parsing.","import datetime
+def determine_day(date_string):
+    date_object = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    return date_object.day
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    day1 = determine_day(date1)
+    print(f""The day for {date1} is: {day1}"")
+    date2 = ""1999-01-01""
+    day2 = determine_day(date2)
+    print(f""The day for {date2} is: {day2}"")
+    date3 = ""2024-02-29""
+    day3 = determine_day(date3)
+    print(f""The day for {date3} is: {day3}"")",True,0,6685,108_1.py
+108,1,Determine the day of the month,"Implement an optimized function named 'determine_day' that accepts a full date string in 'YYYY-MM-DD' format and returns the day of the month as an integer, using the built-in 'datetime' module for parsing.","import datetime
+def determine_day(date_string):
+    date_object = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    return date_object.day
+if __name__ == '__main__':
+    date1 = ""2023-10-27""
+    result1 = determine_day(date1)
+    print(result1)
+    date2 = ""1999-01-01""
+    result2 = determine_day(date2)
+    print(result2)
+    date3 = ""2024-02-29""
+    result3 = determine_day(date3)
+    print(result3)",True,1,6686,108_1_1.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+            if day > max_days:
+                raise ValueError(f""Invalid day for February in {year}: {day}"")
+            return day
+        else:
+            if day > days_in_month[month]:
+                raise ValueError(f""Invalid day for month {month} in {year}: {day}"")
+            return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    print(f""Day of month for 2023, 10, 25: {calculator.get_day_of_month(2023, 10, 25)}"")
+    print(f""Day of month for 2024, 2, 29 (Leap): {calculator.get_day_of_month(2024, 2, 29)}"")
+    print(f""Day of month for 2023, 1, 31: {calculator.get_day_of_month(2023, 1, 31)}"")
+    try:
+        calculator.get_day_of_month(2023, 13, 15)
+    except ValueError as e:
+        print(f""Error caught for invalid month: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 10, 32)
+    except ValueError as e:
+        print(f""Error caught for invalid day: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 2, 29)
+    except ValueError as e:
+        print(f""Error caught for invalid day in Feb: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 4, 31)
+    except ValueError as e:
+        print(f""Error caught for invalid day in April: {e}"")",True,0,6687,108_2.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+            if day > max_days:
+                raise ValueError(f""Invalid day for February in {year}: {day}"")
+            return day
+        else:
+            if day > days_in_month[month]:
+                raise ValueError(f""Invalid day for month {month} in {year}: {day}"")
+            return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    print(f""Day of month for 2023, 10, 25: {calculator.get_day_of_month(2023, 10, 25)}"")
+    print(f""Day of month for 2024, 2, 29 (Leap year): {calculator.get_day_of_month(2024, 2, 29)}"")
+    print(f""Day of month for 2023, 12, 31: {calculator.get_day_of_month(2023, 12, 31)}"")
+    try:
+        calculator.get_day_of_month(2023, 13, 15)
+    except ValueError as e:
+        print(f""Error caught for invalid month: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 10, 32)
+    except ValueError as e:
+        print(f""Error caught for invalid day: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 2, 29)
+    except ValueError as e:
+        print(f""Error caught for invalid day in Feb: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 4, 31)
+    except ValueError as e:
+        print(f""Error caught for invalid day in April: {e}"")",True,1,6688,108_2_1.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            if is_leap:
+                max_days = 29
+            else:
+                max_days = 28
+            if day > max_days:
+                raise ValueError(f""Invalid day for February in {year}: {day}"")
+            return day
+        else:
+            max_days = days_in_month[month]
+            if day > max_days:
+                raise ValueError(f""Invalid day for month {month} in {year}: {day}"")
+            return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    print(f""Day of month for 2023, 10, 25: {calculator.get_day_of_month(2023, 10, 25)}"")
+    print(f""Day of month for 2024, 2, 29 (Leap year): {calculator.get_day_of_month(2024, 2, 29)}"")
+    print(f""Day of month for 2023, 2, 28: {calculator.get_day_of_month(2023, 2, 28)}"")
+    print(f""Day of month for 2023, 4, 30: {calculator.get_day_of_month(2023, 4, 30)}"")
+    try:
+        calculator.get_day_of_month(2023, 13, 15)
+    except ValueError as e:
+        print(f""Error caught for invalid month: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 2, 29)
+    except ValueError as e:
+        print(f""Error caught for invalid day (Feb 29 in non-leap year): {e}"")
+    try:
+        calculator.get_day_of_month(2023, 4, 31)
+    except ValueError as e:
+        print(f""Error caught for invalid day (April 31): {e}"")",True,2,6689,108_2_2.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+            if day > max_days:
+                raise ValueError(f""Invalid day for February in {year}: {day}"")
+            return day
+        else:
+            if day > days_in_month[month]:
+                raise ValueError(f""Invalid day for month {month} in {year}: {day}"")
+            return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    print(f""Day of month for 2023, 10, 25: {calculator.get_day_of_month(2023, 10, 25)}"")
+    print(f""Day of month for 2024, 2, 29 (Leap year): {calculator.get_day_of_month(2024, 2, 29)}"")
+    print(f""Day of month for 2023, 1, 1: {calculator.get_day_of_month(2023, 1, 1)}"")
+    print(f""Day of month for 2023, 4, 30: {calculator.get_day_of_month(2023, 4, 30)}"")
+    try:
+        calculator.get_day_of_month(2023, 13, 15)
+    except ValueError as e:
+        print(f""Error caught for invalid month: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 10, 32)
+    except ValueError as e:
+        print(f""Error caught for invalid day: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 2, 29)
+    except ValueError as e:
+        print(f""Error caught for invalid day in Feb: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 2, 29)
+    except ValueError as e:
+        print(f""Error caught for invalid day in Feb (2023): {e}"")
+    try:
+        calculator.get_day_of_month(2024, 2, 30)
+    except ValueError as e:
+        print(f""Error caught for invalid day in Feb (2024): {e}"")",True,3,6690,108_2_3.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        else:
+            max_days = days_in_month[month]
+        if day > max_days:
+            raise ValueError(f""Invalid day for month {month}: {day}. Maximum days is {max_days}."")
+        return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    print(f""Day of month for 2023, 10, 25: {calculator.get_day_of_month(2023, 10, 25)}"")
+    print(f""Day of month for 2024, 2, 29 (Leap year): {calculator.get_day_of_month(2024, 2, 29)}"")
+    print(f""Day of month for 2023, 1, 31: {calculator.get_day_of_month(2023, 1, 31)}"")
+    try:
+        calculator.get_day_of_month(2023, 13, 15)
+    except ValueError as e:
+        print(f""Error caught for invalid month: {e}"")
+    try:
+        calculator.get_day_of_month(2023, 2, 29)
+    except ValueError as e:
+        print(f""Error caught for invalid day (Feb 29 in non-leap year): {e}"")
+    try:
+        calculator.get_day_of_month(2023, 4, 31)
+    except ValueError as e:
+        print(f""Error caught for invalid day (April 31): {e}"")",True,4,6691,108_2_4.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+            if day > max_days:
+                raise ValueError(f""Invalid day for February in {year}: {day}"")
+            return day
+        else:
+            if day > days_in_month[month]:
+                raise ValueError(f""Invalid day for month {month} in {year}: {day}"")
+            return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    try:
+        result1 = calculator.get_day_of_month(2023, 10, 25)
+        print(f""Date 2023-10-25: Day of month is {result1}"")
+    except ValueError as e:
+        print(f""Error for 2023-10-25: {e}"")
+    try:
+        result2 = calculator.get_day_of_month(2024, 2, 29)
+        print(f""Date 2024-02-29: Day of month is {result2}"")
+    except ValueError as e:
+        print(f""Error for 2024-02-29: {e}"")
+    try:
+        result3 = calculator.get_day_of_month(2023, 2, 29)
+        print(f""Date 2023-02-29: Day of month is {result3}"")
+    except ValueError as e:
+        print(f""Error for 2023-02-29: {e}"")
+    try:
+        result4 = calculator.get_day_of_month(2023, 13, 15)
+        print(f""Date 2023-13-15: Day of month is {result4}"")
+    except ValueError as e:
+        print(f""Error for 2023-13-15: {e}"")
+    try:
+        result5 = calculator.get_day_of_month(2023, 4, 31)
+        print(f""Date 2023-04-31: Day of month is {result5}"")
+    except ValueError as e:
+        print(f""Error for 2023-04-31: {e}"")
+    try:
+        result6 = calculator.get_day_of_month(2023, 2, 30)
+        print(f""Date 2023-02-30: Day of month is {result6}"")
+    except ValueError as e:
+        print(f""Error for 2023-02-30: {e}"")",True,5,6692,108_2_5.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+            if day > max_days:
+                raise ValueError(f""Invalid day for February in {year}: {day}"")
+            return day
+        else:
+            if day > days_in_month[month]:
+                raise ValueError(f""Invalid day for month {month} in {year}: {day}"")
+            return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    try:
+        result1 = calculator.get_day_of_month(2023, 10, 25)
+        print(f""Date 2023-10-25: Day of month is {result1}"")
+    except ValueError as e:
+        print(f""Error for 2023-10-25: {e}"")
+    try:
+        result2 = calculator.get_day_of_month(2024, 2, 29)
+        print(f""Date 2024-02-29: Day of month is {result2}"")
+    except ValueError as e:
+        print(f""Error for 2024-02-29: {e}"")
+    try:
+        result3 = calculator.get_day_of_month(2023, 2, 29)
+        print(f""Date 2023-02-29: Day of month is {result3}"")
+    except ValueError as e:
+        print(f""Error for 2023-02-29: {e}"")
+    try:
+        result4 = calculator.get_day_of_month(2023, 4, 31)
+        print(f""Date 2023-04-31: Day of month is {result4}"")
+    except ValueError as e:
+        print(f""Error for 2023-04-31: {e}"")
+    try:
+        result5 = calculator.get_day_of_month(2023, 13, 15)
+        print(f""Date 2023-13-15: Day of month is {result5}"")
+    except ValueError as e:
+        print(f""Error for 2023-13-15: {e}"")
+    try:
+        result6 = calculator.get_day_of_month(2023, 5, 0)
+        print(f""Date 2023-05-00: Day of month is {result6}"")
+    except ValueError as e:
+        print(f""Error for 2023-05-00: {e}"")",True,6,6693,108_2_6.py
+108,2,Determine the day of the month,"Develop a class named 'DateCalculator' with a method 'get_day_of_month(self, year, month, day)' that calculates the correct day of the month, including error handling for invalid month and day combinations.","class DateCalculator:
+    def get_day_of_month(self, year, month, day):
+        if not (1 <= month <= 12):
+            raise ValueError(""Invalid month: Month must be between 1 and 12."")
+        if not (1 <= day <= 31):
+            raise ValueError(""Invalid day: Day must be between 1 and 31."")
+        days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if month == 2:
+            is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+            max_days = 29 if is_leap else 28
+        else:
+            max_days = days_in_month[month]
+        if day > max_days:
+            raise ValueError(f""Invalid date: Day {day} is not valid for month {month} in year {year}."")
+        return day
+if __name__ == '__main__':
+    calculator = DateCalculator()
+    try:
+        result1 = calculator.get_day_of_month(2023, 10, 25)
+        print(f""Day of month for 2023-10-25: {result1}"")
+    except ValueError as e:
+        print(f""Error for 2023-10-25: {e}"")
+    try:
+        result2 = calculator.get_day_of_month(2024, 2, 29)
+        print(f""Day of month for 2024-02-29: {result2}"")
+    except ValueError as e:
+        print(f""Error for 2024-02-29: {e}"")
+    try:
+        result3 = calculator.get_day_of_month(2023, 1, 32)
+        print(f""Day of month for 2023-01-32: {result3}"")
+    except ValueError as e:
+        print(f""Error for 2023-01-32: {e}"")
+    try:
+        result4 = calculator.get_day_of_month(2023, 13, 15)
+        print(f""Day of month for 2023-13-15: {result4}"")
+    except ValueError as e:
+        print(f""Error for 2023-13-15: {e}"")
+    try:
+        result5 = calculator.get_day_of_month(2023, 2, 29)
+        print(f""Day of month for 2023-02-29: {result5}"")
+    except ValueError as e:
+        print(f""Error for 2023-02-29: {e}"")",True,7,6694,108_2_7.py
+107,13,Format a date string simply,"Provide the most concise and efficient one-line Python expression to convert a given date string, like '2023-10-27', into a standard datetime object and then format it as 'YYYYMMDD'. Focus on minimizing overhead.",,False,0,6695,107_13.py
+108,4,Determine the day of the month,"Create a function that accepts a date object and returns the day of the month as a string, ensuring the output format is 'Day X of Month Y'.","from datetime import date
+def format_date(date_obj):
+    day = date_obj.day
+    month = date_obj.month
+    return f""Day {day} of Month {month}""
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 15)
+    result = format_date(sample_date)
+    print(result)",True,0,6696,108_4.py
+108,4,Determine the day of the month,"Create a function that accepts a date object and returns the day of the month as a string, ensuring the output format is 'Day X of Month Y'.","import datetime
+def format_date(date_obj):
+    day = date_obj.day
+    month = date_obj.month
+    return f""Day {day} of Month {month}""
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 10, 15)
+    result = format_date(sample_date)
+    print(result)",True,1,6697,108_4_1.py
+108,5,Determine the day of the month,"Implement a solution to determine the day of the month from a given date object, prioritizing the use of standard library features for maximum efficiency and readability.","import datetime
+if __name__ == '__main__':
+    date_object = datetime.date(2023, 10, 27)
+    day_of_month = date_object.day
+    print(day_of_month)",True,0,6698,108_5.py
+108,5,Determine the day of the month,"Implement a solution to determine the day of the month from a given date object, prioritizing the use of standard library features for maximum efficiency and readability.","import datetime
+if __name__ == '__main__':
+    date_obj = datetime.date(2023, 10, 27)
+    day_of_month = date_obj.day
+    print(day_of_month)",True,1,6699,108_5_1.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    if month == 2 and year % 4 == 0:
+        if day > 29:
+            return False, ""February cannot have more than 29 days in a non-leap year.""
+    elif month == 2:
+        if day > 28:
+            return False, ""February cannot have more than 28 days in a non-leap year.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 31
+    valid, result = validate_date(sample_year, sample_month, sample_day)
+    if valid:
+        print(result)
+    else:
+        print(f""Error: Invalid date provided for Year: {sample_year}, Month: {sample_month}, Day: {sample_day}"")
+        print(""Please ensure the year is an integer, the month is between 1 and 12, and the day is between 1 and 31."")",True,0,6700,108_6.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    if month == 2 and year % 4 == 0:
+        if day > 29:
+            return False, ""February cannot have more than 29 days in a non-leap year.""
+    elif month == 2:
+        if day > 28:
+            return False, ""February cannot have more than 28 days in a non-leap year.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 31
+    try:
+        is_valid, result = validate_date(sample_year, sample_month, sample_day)
+        if is_valid:
+            print(result)
+        else:
+            print(f""Error: Invalid date combination for {sample_year}-{sample_month}-{sample_day}. Details: {result}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,6701,108_6_1.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    if month == 2 and year % 4 == 0:
+        if day > 29:
+            return False, ""February cannot have more than 29 days in a non-leap year.""
+    elif month == 2:
+        if day > 28:
+            return False, ""February cannot have more than 28 days in a non-leap year.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 31
+    try:
+        is_valid, result = validate_date(sample_year, sample_month, sample_day)
+        if is_valid:
+            print(result)
+        else:
+            print(f""Error: Invalid date combination for Year: {sample_year}, Month: {sample_month}, Day: {sample_day}. Details: {result}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,2,6702,108_6_2.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    days_in_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if month == 2:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            if day > 29:
+                return False, ""February cannot have 29 days in this year.""
+    elif month in [4, 6, 9, 11]:
+        if day > 30:
+            return False, f""Month {month} cannot have more than 30 days.""
+    elif month in [1, 3, 5, 7, 8, 10, 12]:
+        if day > 31:
+            return False, f""Month {month} cannot have more than 31 days.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 13
+    sample_day = 32
+    year = sample_year
+    month = sample_month
+    day = sample_day
+    is_valid, result = validate_date(year, month, day)
+    if is_valid:
+        print(result)
+    else:
+        print(f""Error: Invalid date input. {result}"")",True,3,6703,108_6_3.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if year < 1 or month < 1 or month > 12 or day < 1 or day > 31:
+        return False, ""Invalid date components provided.""
+    if (month == 4 or month == 6 or month == 9 or month == 11) and day > 30:
+        return False, ""Invalid day for the given month (must be <= 30).""
+    if month == 2:
+        is_leap = (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+        if is_leap and day > 29:
+            return False, ""Invalid day for February in a leap year (must be <= 29).""
+        if not is_leap and day > 28:
+            return False, ""Invalid day for February in a common year (must be <= 28).""
+    if month == 10 or month == 12:
+        if day > 31:
+            return False, ""Invalid day for months with 31 days (must be <= 31).""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 2
+    sample_day = 30
+    try:
+        is_valid, result = validate_date(sample_year, sample_month, sample_day)
+        if is_valid:
+            print(result)
+        else:
+            print(f""Error: {result}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,4,6704,108_6_4.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 13
+    sample_day = 32
+    year = sample_year
+    month = sample_month
+    day = sample_day
+    is_valid, result = validate_date(year, month, day)
+    if is_valid:
+        print(result)
+    else:
+        print(f""Error: Invalid date input. {result}"")",True,5,6705,108_6_5.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    if month == 2 and year % 4 == 0:
+        if day > 29:
+            return False, ""February cannot have more than 29 days in a non-leap year.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 31
+    is_valid, result = validate_date(sample_year, sample_month, sample_day)
+    if is_valid:
+        print(result)
+    else:
+        print(f""Error: Invalid date provided. Details: {result}"")",True,6,6706,108_6_6.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    if month in [4, 6, 9, 11]:
+        if day > 30:
+            return False, ""Days in this month are at most 30.""
+    elif month == 2:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            if day > 29:
+                return False, ""February 29th is not valid for this year (non-leap year).""
+            if day > 28:
+                return False, ""February has 28 days in a common year.""
+        else:
+            if day > 28:
+                return False, ""February has 28 days in a common year.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 31
+    valid, result = validate_date(sample_year, sample_month, sample_day)
+    if valid:
+        print(result)
+    else:
+        print(f""Error: Invalid date input. Details: {result}"")",True,7,6707,108_6_7.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date():
+    year = 2023
+    month = 10
+    day = 25
+    if not (1 <= month <= 12):
+        print(""Error: Invalid month. Month must be between 1 and 12."")
+        return False
+    if not (1 <= day <= 31):
+        print(""Error: Invalid day. Day must be between 1 and 31."")
+        return False
+    if month == 2:
+        if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
+            max_day = 29
+        else:
+            max_day = 28
+        if day > max_day:
+            print(f""Error: Invalid day for the given month and year. February {year} only has {max_day} days."")
+            return False
+    elif month in [4, 6, 9, 11]:
+        max_day = 30
+        if day > max_day:
+            print(f""Error: Invalid day. Month {month} only has {max_day} days."")
+            return False
+    else:
+        max_day = 31
+        if day > max_day:
+            print(f""Error: Invalid day. Month {month} only has {max_day} days."")
+            return False
+    print(f""Validated Day of the Month: {day}"")
+    return True
+if __name__ == '__main__':
+    validate_date()",True,8,6708,108_6_8.py
+108,6,Determine the day of the month,"Write a command-line interface (CLI) script that prompts the user to enter a year, month, and day, and then outputs the validated day of the month, including comprehensive error messages for invalid inputs.","import sys
+def validate_date(year, month, day):
+    if not isinstance(year, int) or not isinstance(month, int) or not isinstance(day, int):
+        return False, ""All inputs must be integers.""
+    if not (1 <= month <= 12):
+        return False, ""Month must be between 1 and 12.""
+    if not (1 <= day <= 31):
+        return False, ""Day must be between 1 and 31.""
+    if month == 2 and year % 4 == 0:
+        if day > 29:
+            return False, ""February cannot have more than 29 days in a non-leap year.""
+    return True, day
+if __name__ == '__main__':
+    sample_year = 2023
+    sample_month = 10
+    sample_day = 31
+    valid, result = validate_date(sample_year, sample_month, sample_day)
+    if valid:
+        print(result)
+    else:
+        print(f""Error: Invalid date provided. Details: {result}"")",True,9,6709,108_6_9.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20231
+    day_of_month = (days_elapsed % 31) + 1
+    return day_of_month
+if __name__ == '__main__':
+    sample_days1 = 1
+    result1 = get_day_of_month(sample_days1)
+    print(f""Days elapsed: {sample_days1}, Day of the month: {result1}"")
+    sample_days2 = 31
+    result2 = get_day_of_month(sample_days2)
+    print(f""Days elapsed: {sample_days2}, Day of the month: {result2}"")
+    sample_days3 = 32
+    result3 = get_day_of_month(sample_days3)
+    print(f""Days elapsed: {sample_days3}, Day of the month: {result3}"")",True,0,6710,108_3.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20230101
+    day_of_year = reference_date + days_elapsed
+    return day_of_year % 365
+if __name__ == '__main__':
+    sample_days = [0, 1, 365, 366, 730]
+    for days in sample_days:
+        print(f""Days elapsed: {days}, Day of the month: {get_day_of_month(days)}"")",True,1,6711,108_3_1.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20230101
+    day_of_year = reference_date + days_elapsed
+    return day_of_year % 365
+if __name__ == '__main__':
+    sample_days_1 = 10
+    result_1 = get_day_of_month(sample_days_1)
+    print(f""Days elapsed: {sample_days_1}, Day of month: {result_1}"")
+    sample_days_2 = 365
+    result_2 = get_day_of_month(sample_days_2)
+    print(f""Days elapsed: {sample_days_2}, Day of month: {result_2}"")
+    sample_days_3 = 366
+    result_3 = get_day_of_month(sample_days_3)
+    print(f""Days elapsed: {sample_days_3}, Day of month: {result_3}"")",True,2,6712,108_3_2.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20230101
+    day_of_year = reference_date + days_elapsed
+    return day_of_year % 365
+if __name__ == '__main__':
+    sample_days_1 = 10
+    result_1 = get_day_of_month(sample_days_1)
+    print(f""Days elapsed: {sample_days_1}, Day of the month: {result_1}"")
+    sample_days_2 = 365
+    result_2 = get_day_of_month(sample_days_2)
+    print(f""Days elapsed: {sample_days_2}, Day of the month: {result_2}"")
+    sample_days_3 = 366
+    result_3 = get_day_of_month(sample_days_3)
+    print(f""Days elapsed: {sample_days_3}, Day of the month: {result_3}"")",True,3,6713,108_3_3.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def calculate_day_of_month(days_elapsed):
+    reference_date = ""2023-01-01""
+    days_since_reference = int(days_elapsed)
+    reference_date_obj = reference_date
+    import datetime
+    try:
+        reference_date_obj = datetime.datetime.strptime(reference_date, ""%Y-%m-%d"").date()
+        target_date = reference_date_obj + datetime.timedelta(days=days_since_reference)
+        return target_date.day
+    except ValueError:
+        return ""Invalid input""
+if __name__ == '__main__':
+    sample_days_1 = 5
+    result_1 = calculate_day_of_month(sample_days_1)
+    print(f""Days elapsed: {sample_days_1}, Day of the month: {result_1}"")
+    sample_days_2 = 365
+    result_2 = calculate_day_of_month(sample_days_2)
+    print(f""Days elapsed: {sample_days_2}, Day of the month: {result_2}"")
+    sample_days_3 = 1000
+    result_3 = calculate_day_of_month(sample_days_3)
+    print(f""Days elapsed: {sample_days_3}, Day of the month: {result_3}"")",True,4,6714,108_3_4.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20231
+    day_of_month = reference_date + days_elapsed
+    return day_of_month
+if __name__ == '__main__':
+    sample_days_1 = 10
+    result_1 = get_day_of_month(sample_days_1)
+    print(f""Days elapsed: {sample_days_1}, Day of the month: {result_1}"")
+    sample_days_2 = 30
+    result_2 = get_day_of_month(sample_days_2)
+    print(f""Days elapsed: {sample_days_2}, Day of the month: {result_2}"")",True,5,6715,108_3_5.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20230101
+    day_of_month = reference_date + days_elapsed
+    return day_of_month % 365
+if __name__ == '__main__':
+    sample_days = [0, 365, 730, 365 * 2 + 1]
+    for days in sample_days:
+        print(f""Days elapsed: {days}, Day of the month: {get_day_of_month(days)}"")",True,6,6716,108_3_6.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20230101
+    day_of_year = reference_date + days_elapsed
+    return day_of_year % 365
+if __name__ == '__main__':
+    sample_days1 = 10
+    result1 = get_day_of_month(sample_days1)
+    print(f""Days elapsed: {sample_days1}, Day of month: {result1}"")
+    sample_days2 = 365
+    result2 = get_day_of_month(sample_days2)
+    print(f""Days elapsed: {sample_days2}, Day of month: {result2}"")
+    sample_days3 = 366
+    result3 = get_day_of_month(sample_days3)
+    print(f""Days elapsed: {sample_days3}, Day of month: {result3}"")",True,7,6717,108_3_7.py
+108,3,Determine the day of the month,"Write a concise and efficient Python function that determines the day of the month given the total number of days elapsed since a reference date, assuming the input is a sequential day number.","def get_day_of_month(days_elapsed):
+    reference_date = 20230101
+    day_of_month = reference_date + days_elapsed
+    return day_of_month % 365
+if __name__ == '__main__':
+    sample_days_1 = 10
+    result_1 = get_day_of_month(sample_days_1)
+    print(result_1)
+    sample_days_2 = 365
+    result_2 = get_day_of_month(sample_days_2)
+    print(result_2)
+    sample_days_3 = 366
+    result_3 = get_day_of_month(sample_days_3)
+    print(result_3)",True,8,6718,108_3_8.py
+108,8,Determine the day of the month,"Write a highly optimized, one-line lambda function that takes a standard Python datetime object and returns only the day component.","import datetime
+lambda dt:dt.day
+if __name__ == '__main__':
+    now = datetime.datetime(2023, 10, 27, 14, 30, 0)
+    result = (lambda dt:dt.day)(now)
+    print(result)",True,0,6719,108_8.py
+108,8,Determine the day of the month,"Write a highly optimized, one-line lambda function that takes a standard Python datetime object and returns only the day component.","lambda dt: dt.day
+if __name__ == '__main__':
+    from datetime import datetime
+    sample_date = datetime(2023, 10, 27)
+    result = (lambda dt: dt.day)(sample_date)
+    print(result)",True,1,6720,108_8_1.py
+108,8,Determine the day of the month,"Write a highly optimized, one-line lambda function that takes a standard Python datetime object and returns only the day component.","lambda dt: dt.day
+if __name__ == '__main__':
+    import datetime
+    sample_date = datetime.datetime(2023, 10, 27, 14, 30, 0)
+    result = (lambda dt: dt.day)(sample_date)
+    print(result)",True,2,6721,108_8_2.py
+108,8,Determine the day of the month,"Write a highly optimized, one-line lambda function that takes a standard Python datetime object and returns only the day component.","import datetime
+day_extractor = lambda dt: dt.day
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 10, 27, 14, 30, 0)
+    result = day_extractor(sample_date)
+    print(result)",True,3,6722,108_8_3.py
+108,9,Determine the day of the month,"Generate the complete, production-ready Python code for a module that provides a class method to calculate the day of the month from a standard date tuple, adhering strictly to PEP 8 guidelines.","import datetime
+class DateUtils:
+    @staticmethod
+    def get_day_of_month(date_tuple):
+        year, month, day = date_tuple
+        return day
+if __name__ == '__main__':
+    sample_date_1 = (2023, 10, 27)
+    result_1 = DateUtils.get_day_of_month(sample_date_1)
+    print(f""Day of the month for {sample_date_1}: {result_1}"")
+    sample_date_2 = (1999, 1, 1)
+    result_2 = DateUtils.get_day_of_month(sample_date_2)
+    print(f""Day of the month for {sample_date_2}: {result_2}"")
+    sample_date_3 = (2024, 2, 29)
+    result_3 = DateUtils.get_day_of_month(sample_date_3)
+    print(f""Day of the month for {sample_date_3}: {result_3}"")",True,0,6723,108_9.py
+108,9,Determine the day of the month,"Generate the complete, production-ready Python code for a module that provides a class method to calculate the day of the month from a standard date tuple, adhering strictly to PEP 8 guidelines.","import datetime
+class DateUtils:
+    @staticmethod
+    def get_day_of_month(date_tuple):
+        year, month, day = date_tuple
+        return day
+if __name__ == '__main__':
+    sample_date = (2023, 10, 27)
+    day = DateUtils.get_day_of_month(sample_date)
+    print(day)",True,1,6724,108_9_1.py
+108,9,Determine the day of the month,"Generate the complete, production-ready Python code for a module that provides a class method to calculate the day of the month from a standard date tuple, adhering strictly to PEP 8 guidelines.","import datetime
+class DateUtils:
+    @staticmethod
+    def get_day_of_month(date_tuple):
+        return date_tuple[1]
+if __name__ == '__main__':
+    sample_date = (2023, 10, 27)
+    day = DateUtils.get_day_of_month(sample_date)
+    print(day)",True,2,6725,108_9_2.py
+108,9,Determine the day of the month,"Generate the complete, production-ready Python code for a module that provides a class method to calculate the day of the month from a standard date tuple, adhering strictly to PEP 8 guidelines.","import datetime
+class DateUtils:
+    @classmethod
+    def get_day_of_month(cls, date_tuple):
+        day = date_tuple[1]
+        return day
+if __name__ == '__main__':
+    sample_date = (2023, 10, 27)
+    day = DateUtils.get_day_of_month(sample_date)
+    print(day)",True,3,6726,108_9_3.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y""
+    ]
+    for fmt in formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.day
+        except ValueError:
+            continue
+    raise ValueError(f""Could not parse date string: {date_string}"")
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""11-05-2024"",
+        ""2024-01-01""
+    ]
+    for date_str in test_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing {date_str}: {e}"")",True,0,6727,108_10.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%y"",
+        ""%d/%m/%y""
+    ]
+    for fmt in formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.day
+        except ValueError:
+            continue
+    raise ValueError(f""Could not parse date string: {date_string}"")
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""10-27-23"",
+        ""27/10/23"",
+        ""2024-01-05""
+    ]
+    for date_str in test_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing {date_str}: {e}"")",True,1,6728,108_10_1.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y""
+    ]
+    for fmt in formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.day
+        except ValueError:
+            continue
+    raise ValueError(f""Could not parse date string: {date_string}"")
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""11-05-2024"",
+        ""2024-01-01""
+    ]
+    for date_str in sample_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing {date_str}: {e}"")
+        except Exception as e:
+            print(f""An unexpected error occurred for {date_str}: {e}"")",True,2,6729,108_10_2.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y"",
+        ""%d/%m/%Y""
+    ]
+    for fmt in formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.day
+        except ValueError:
+            continue
+    raise ValueError(f""Could not parse date string: {date_string}"")
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""10-27-2023"",
+        ""27/10/2023"",
+        ""2024-01-05""
+    ]
+    for date_str in sample_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing {date_str}: {e}"")
+        print(""-"" * 20)",True,3,6730,108_10_3.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y"",
+        ""%d/%m/%Y""
+    ]
+    for fmt in formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.day
+        except ValueError:
+            continue
+    raise ValueError(f""Could not parse date string: {date_string}"")
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""10-27-2023"",
+        ""27/10/2023"",
+        ""2023-10-27T10:00:00""
+    ]
+    for date_str in test_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: '{date_str}' -> Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing '{date_str}': {e}"")
+        print(""-"" * 20)",True,4,6731,108_10_4.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y""
+    ]
+    for fmt in formats:
+        try:
+            dt_object = datetime.datetime.strptime(date_string, fmt)
+            return dt_object.day
+        except ValueError:
+            continue
+    raise ValueError(f""Date format not recognized for input: {date_string}"")
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""12-31-2024"",
+        ""2024-01-01""
+    ]
+    for date_str in sample_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing {date_str}: {e}"")",True,5,6732,108_10_5.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y""
+    ]
+    for fmt in formats:
+        try:
+            dt_object = datetime.datetime.strptime(date_string, fmt)
+            return dt_object.day
+        except ValueError:
+            continue
+    raise ValueError(f""Could not parse date string: {date_string}"")
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""11-05-2024"",
+        ""invalid-date""
+    ]
+    for date_str in sample_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Input: {date_str}, Error: {e}"")
+        except Exception as e:
+            print(f""Input: {date_str}, Unexpected Error: {e}"")",True,6,6733,108_10_6.py
+108,10,Determine the day of the month,"Write a complete, robust Python script that takes a date as input and accurately determines the day of the month, handling various date formats using the datetime module. The code must be highly optimized and follow all Python best practices.","import datetime
+def get_day_of_month(date_string):
+    formats = [
+        ""%Y-%m-%d"",
+        ""%m/%d/%Y"",
+        ""%d-%m-%Y"",
+        ""%Y/%m/%d"",
+        ""%m-%d-%Y"",
+        ""%d/%m/%Y"",
+        ""%Y%m%d""
+    ]
+    for fmt in formats:
+        try:
+            date_obj = datetime.datetime.strptime(date_string, fmt)
+            return date_obj.day
+        except ValueError:
+            continue
+    raise ValueError(f""Date format not recognized for input: {date_string}"")
+if __name__ == '__main__':
+    test_dates = [
+        ""2023-10-27"",
+        ""10/27/2023"",
+        ""27-10-2023"",
+        ""2023/10/27"",
+        ""10-27-2023"",
+        ""27/10/2023"",
+        ""20231027"",
+        ""2023-12-31""
+    ]
+    for date_str in test_dates:
+        try:
+            day = get_day_of_month(date_str)
+            print(f""Input: {date_str}, Day of Month: {day}"")
+        except ValueError as e:
+            print(f""Error processing {date_str}: {e}"")",True,7,6734,108_10_7.py
+108,11,Determine the day of the month,Implement an optimized function named 'get_day_of_month' that accepts a date object and returns the day of the month as an integer. Ensure the function is efficient and handles potential errors gracefully.,"import datetime
+def get_day_of_month(date_obj):
+    try:
+        return date_obj.day
+    except AttributeError:
+        return None
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 27)
+    date2 = datetime.date(2024, 1, 1)
+    date3 = datetime.date(2023, 12, 31)
+    date_invalid = ""not_a_date""
+    print(f""Day of month for {date1}: {get_day_of_month(date1)}"")
+    print(f""Day of month for {date2}: {get_day_of_month(date2)}"")
+    print(f""Day of month for {date3}: {get_day_of_month(date3)}"")
+    print(f""Day of month for invalid input: {get_day_of_month(date_invalid)}"")",True,0,6735,108_11.py
+108,11,Determine the day of the month,Implement an optimized function named 'get_day_of_month' that accepts a date object and returns the day of the month as an integer. Ensure the function is efficient and handles potential errors gracefully.,"import datetime
+def get_day_of_month(date_obj):
+    try:
+        return date_obj.day
+    except AttributeError:
+        return None
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 27)
+    date2 = datetime.datetime(2024, 1, 1)
+    date3 = datetime.date(2022, 12, 31)
+    date_invalid = ""not_a_date""
+    print(f""Day of month for {date1}: {get_day_of_month(date1)}"")
+    print(f""Day of month for {date2}: {get_day_of_month(date2)}"")
+    print(f""Day of month for {date3}: {get_day_of_month(date3)}"")
+    print(f""Day of month for invalid input: {get_day_of_month(date_invalid)}"")",True,1,6736,108_11_1.py
+108,11,Determine the day of the month,Implement an optimized function named 'get_day_of_month' that accepts a date object and returns the day of the month as an integer. Ensure the function is efficient and handles potential errors gracefully.,"import datetime
+def get_day_of_month(date_obj):
+    try:
+        return date_obj.day
+    except AttributeError:
+        return -1
+if __name__ == '__main__':
+    date1 = datetime.date(2023, 10, 27)
+    date2 = datetime.date(2024, 1, 1)
+    date3 = datetime.date(2023, 12, 31)
+    date_invalid = ""not_a_date""
+    print(f""Day of month for {date1}: {get_day_of_month(date1)}"")
+    print(f""Day of month for {date2}: {get_day_of_month(date2)}"")
+    print(f""Day of month for {date3}: {get_day_of_month(date3)}"")
+    print(f""Day of month for invalid input: {get_day_of_month(date_invalid)}"")",True,2,6737,108_11_2.py
