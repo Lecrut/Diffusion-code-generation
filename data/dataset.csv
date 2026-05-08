@@ -171193,3 +171193,3206 @@ if __name__ == '__main__':
     print(""Results of logical combinations:"")
     for res in results:
         print(res)",True,5,8331,136_2_5.py
+136,6,Write code for logical operators,"Write a class method for a custom object that overloads the standard comparison operators (`__and__`, `__or__`) to define custom logical behavior.","class CustomLogic:
+    def __init__(self, value):
+        self.value = value
+    def __and__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value and other.value)
+        return NotImplemented
+    def __or__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value or other.value)
+        return NotImplemented
+if __name__ == '__main__':
+    a = CustomLogic(True)
+    b = CustomLogic(False)
+    c = CustomLogic(True)
+    result_and = a and b
+    result_or = a or b
+    print(f""a: {a.value}"")
+    print(f""b: {b.value}"")
+    print(f""c: {c.value}"")
+    print(f""a and b: {result_and.value}"")
+    print(f""a or b: {result_or.value}"")
+    d = CustomLogic(10)
+    e = CustomLogic(20)
+    result_and_num = d and e
+    print(f""d: {d.value}"")
+    print(f""e: {e.value}"")
+    print(f""d and e: {result_and_num.value}"")",True,0,8332,136_6.py
+136,6,Write code for logical operators,"Write a class method for a custom object that overloads the standard comparison operators (`__and__`, `__or__`) to define custom logical behavior.","class CustomLogic:
+    def __init__(self, value):
+        self.value = value
+    def __and__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value and other.value)
+        return NotImplemented
+    def __or__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value or other.value)
+        return NotImplemented
+if __name__ == '__main__':
+    a = CustomLogic(True)
+    b = CustomLogic(False)
+    c = CustomLogic(True)
+    result_and = a and b
+    result_or = a or b
+    result_and_complex = a and c
+    result_or_complex = a or c
+    print(f""a: {a.value}"")
+    print(f""b: {b.value}"")
+    print(f""c: {c.value}"")
+    print(f""a and b: {result_and.value}"")
+    print(f""a or b: {result_or.value}"")
+    print(f""a and c: {result_and_complex.value}"")
+    print(f""a or c: {result_or_complex.value}"")",True,1,8333,136_6_1.py
+136,6,Write code for logical operators,"Write a class method for a custom object that overloads the standard comparison operators (`__and__`, `__or__`) to define custom logical behavior.","class CustomLogic:
+    def __init__(self, value):
+        self.value = value
+    def __and__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value and other.value)
+        return NotImplemented
+    def __or__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value or other.value)
+        return NotImplemented
+if __name__ == '__main__':
+    a = CustomLogic(True)
+    b = CustomLogic(False)
+    c = CustomLogic(True)
+    result_and = a and b
+    result_or = a or b
+    result_and_complex = a and c
+    result_or_complex = a or c
+    print(f""a: {a.value}, b: {b.value}, c: {c.value}"")
+    print(f""a and b: {result_and.value}"")
+    print(f""a or b: {result_or.value}"")
+    print(f""a and c: {result_and_complex.value}"")
+    print(f""a or c: {result_or_complex.value}"")",True,2,8334,136_6_2.py
+136,6,Write code for logical operators,"Write a class method for a custom object that overloads the standard comparison operators (`__and__`, `__or__`) to define custom logical behavior.","class CustomLogic:
+    def __init__(self, value):
+        self.value = value
+    def __and__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value and other.value)
+        return NotImplemented
+    def __or__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value or other.value)
+        return NotImplemented
+if __name__ == '__main__':
+    a = CustomLogic(True)
+    b = CustomLogic(False)
+    c = CustomLogic(True)
+    result_and = a and b
+    print(f""a and b: {result_and.value}"")
+    result_or = a or b
+    print(f""a or b: {result_or.value}"")
+    result_and_c = a and c
+    print(f""a and c: {result_and_c.value}"")
+    result_or_c = a or c
+    print(f""a or c: {result_or_c.value}"")",True,3,8335,136_6_3.py
+136,6,Write code for logical operators,"Write a class method for a custom object that overloads the standard comparison operators (`__and__`, `__or__`) to define custom logical behavior.","class CustomLogic:
+    def __init__(self, value):
+        self.value = value
+    def __and__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value and other.value)
+        return NotImplemented
+    def __or__(self, other):
+        if isinstance(other, CustomLogic):
+            return CustomLogic(self.value or other.value)
+        return NotImplemented
+if __name__ == '__main__':
+    a = CustomLogic(True)
+    b = CustomLogic(False)
+    c = CustomLogic(True)
+    result_and = a and b
+    result_or = a or b
+    print(f""a: {a.value}"")
+    print(f""b: {b.value}"")
+    print(f""c: {c.value}"")
+    print(f""a and b: {result_and.value}"")
+    print(f""a or b: {result_or.value}"")
+    d = CustomLogic(False)
+    result_and_c = c and d
+    print(f""c and d: {result_and_c.value}"")",True,4,8336,136_6_4.py
+136,8,Write code for logical operators,"Write a function that accepts a list of integers and a single boolean flag, and returns a list of booleans indicating whether each integer satisfies the flag (e.g., if the integer is even AND the flag is True).","def check_integers(numbers, flag):
+    result = []
+    for num in numbers:
+        if flag:
+            if num % 2 == 0:
+                result.append(True)
+            else:
+                result.append(False)
+        else:
+            result.append(False)
+    return result
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    sample_flag_true = True
+    sample_flag_false = False
+    result_true = check_integers(sample_numbers, sample_flag_true)
+    print(f""Numbers: {sample_numbers}, Flag: {sample_flag_true}"")
+    print(f""Result: {result_true}"")
+    result_false = check_integers(sample_numbers, sample_flag_false)
+    print(f""Numbers: {sample_numbers}, Flag: {sample_flag_false}"")
+    print(f""Result: {result_false}"")",True,0,8337,136_8.py
+136,8,Write code for logical operators,"Write a function that accepts a list of integers and a single boolean flag, and returns a list of booleans indicating whether each integer satisfies the flag (e.g., if the integer is even AND the flag is True).","def check_integers(numbers, flag):
+    result = []
+    for number in numbers:
+        if flag:
+            if number % 2 == 0:
+                result.append(True)
+            else:
+                result.append(False)
+        else:
+            result.append(False)
+    return result
+if __name__ == '__main__':
+    sample_numbers = [1, 2, 3, 4, 5, 6]
+    sample_flag_true = True
+    sample_flag_false = False
+    result_true = check_integers(sample_numbers, sample_flag_true)
+    print(f""Numbers: {sample_numbers}, Flag: {sample_flag_true}"")
+    print(f""Result: {result_true}"")
+    result_false = check_integers(sample_numbers, sample_flag_false)
+    print(f""Numbers: {sample_numbers}, Flag: {sample_flag_false}"")
+    print(f""Result: {result_false}"")",True,1,8338,136_8_1.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or not C""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y)""
+    variables2 = {""X"": True, ""Y"": False}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""A and (B or C)""
+    variables3 = {""A"": True, ""B"": True, ""C"": False}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,0,8339,136_4.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or not C""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y) and Z""
+    variables2 = {""X"": True, ""Y"": False, ""Z"": True}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""A and (B or C)""
+    variables3 = {""A"": True, ""B"": True, ""C"": False}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,1,8340,136_4_1.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or (not C)""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y) and Z""
+    variables2 = {""X"": True, ""Y"": False, ""Z"": True}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""A and (B or C)""
+    variables3 = {""A"": True, ""B"": True, ""C"": False}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,2,8341,136_4_2.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or (not C)""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y) and Z""
+    variables2 = {""X"": True, ""Y"": False, ""Z"": True}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""A or (B and not C)""
+    variables3 = {""A"": True, ""B"": True, ""C"": False}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,3,8342,136_4_3.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or (not C)""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y)""
+    variables2 = {""X"": True, ""Y"": False}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""A and (B or C)""
+    variables3 = {""A"": True, ""B"": True, ""C"": False}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,4,8343,136_4_4.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or not C""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y)""
+    variables2 = {""X"": False, ""Y"": False}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""(P and Q) or (R and not S)""
+    variables3 = {""P"": True, ""Q"": True, ""R"": False, ""S"": True}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,5,8344,136_4_5.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression_string = ""A and (B or not C)""
+    variable_values = {
+        ""A"": True,
+        ""B"": False,
+        ""C"": True
+    }
+    final_result = evaluate_boolean_expression(expression_string, variable_values)
+    print(final_result)",True,6,8345,136_4_6.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or not C""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y)""
+    variables2 = {""X"": True, ""Y"": False}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""(P and Q) or (R and not S)""
+    variables3 = {""P"": True, ""Q"": True, ""R"": False, ""S"": True}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,7,8346,136_4_7.py
+136,4,Write code for logical operators,"Create a function that evaluates a complex logical expression string, where variables are represented by boolean literals, and returns the final boolean result.","def evaluate_boolean_expression(expression, variables):
+    result = expression
+    for var_name, value in variables.items():
+        result = result.replace(var_name, str(value))
+    return eval(result)
+if __name__ == '__main__':
+    expression1 = ""(A and B) or not C""
+    variables1 = {""A"": True, ""B"": False, ""C"": True}
+    result1 = evaluate_boolean_expression(expression1, variables1)
+    print(f""Expression: {expression1}, Variables: {variables1}, Result: {result1}"")
+    expression2 = ""not (X or Y) and Z""
+    variables2 = {""X"": False, ""Y"": True, ""Z"": False}
+    result2 = evaluate_boolean_expression(expression2, variables2)
+    print(f""Expression: {expression2}, Variables: {variables2}, Result: {result2}"")
+    expression3 = ""A == B or C""
+    variables3 = {""A"": True, ""B"": True, ""C"": False}
+    result3 = evaluate_boolean_expression(expression3, variables3)
+    print(f""Expression: {expression3}, Variables: {variables3}, Result: {result3}"")",True,8,8347,136_4_8.py
+136,9,Write code for logical operators,Implement a small calculator class that includes a method to perform logical operations on two input boolean values and return the result as a descriptive string.,"class BooleanCalculator:
+    def logical_operation(self, a: bool, b: bool) -> str:
+        if a and b:
+            return ""Both inputs are True, so the result is True.""
+        elif a or b:
+            return ""At least one input is True, so the result is True.""
+        else:
+            return ""Both inputs are False, so the result is False.""
+if __name__ == '__main__':
+    calculator = BooleanCalculator()
+    print(calculator.logical_operation(True, True))
+    print(calculator.logical_operation(True, False))
+    print(calculator.logical_operation(False, True))
+    print(calculator.logical_operation(False, False))",True,0,8348,136_9.py
+136,9,Write code for logical operators,Implement a small calculator class that includes a method to perform logical operations on two input boolean values and return the result as a descriptive string.,"class BooleanCalculator:
+    def logical_operation(self, a: bool, b: bool) -> str:
+        if a and b:
+            return ""Both inputs are True, so the result is True.""
+        elif a or b:
+            return ""At least one input is True, so the result is True.""
+        else:
+            return ""Both inputs are False, so the result is False.""
+if __name__ == '__main__':
+    calculator = BooleanCalculator()
+    a1 = True
+    b1 = True
+    result1 = calculator.logical_operation(a1, b1)
+    print(f""Inputs: a={a1}, b={b1}, Result: {result1}"")
+    a2 = True
+    b2 = False
+    result2 = calculator.logical_operation(a2, b2)
+    print(f""Inputs: a={a2}, b={b2}, Result: {result2}"")
+    a3 = False
+    b3 = False
+    result3 = calculator.logical_operation(a3, b3)
+    print(f""Inputs: a={a3}, b={b3}, Result: {result3}"")
+    a4 = False
+    b4 = True
+    result4 = calculator.logical_operation(a4, b4)
+    print(f""Inputs: a={a4}, b={b4}, Result: {result4}"")",True,1,8349,136_9_1.py
+136,9,Write code for logical operators,Implement a small calculator class that includes a method to perform logical operations on two input boolean values and return the result as a descriptive string.,"class BooleanCalculator:
+    def logical_operation(self, a: bool, b: bool) -> str:
+        result = a and b
+        return f""Logical AND of {a} and {b} is {result}""
+if __name__ == '__main__':
+    calculator = BooleanCalculator()
+    bool1 = True
+    bool2 = False
+    result_and = calculator.logical_operation(bool1, bool2)
+    print(result_and)
+    bool3 = True
+    bool4 = True
+    result_or = calculator.logical_operation(bool3, bool4)
+    print(result_or)
+    bool5 = False
+    bool6 = False
+    result_xor = calculator.logical_operation(bool5, bool6)
+    print(result_xor)",True,2,8350,136_9_2.py
+136,10,Write code for logical operators,"Write a complete, well-documented Python program that defines and demonstrates the logical operators (AND, OR, NOT, XOR) using boolean variables and print their results.","def logical_operators_demo():
+    a = True
+    b = False
+    print(""--- Logical Operators Demonstration ---"")
+    print(f""a = {a}, b = {b}"")
+    and_result = a and b
+    or_result = a or b
+    not_a_result = not a
+    xor_result = a ^ b
+    print(""\n--- Results ---"")
+    print(f""a AND b: {and_result}"")
+    print(f""a OR b: {or_result}"")
+    print(f""NOT a: {not_a_result}"")
+    print(f""a XOR b: {xor_result}"")
+if __name__ == '__main__':
+    logical_operators_demo()",True,0,8351,136_10.py
+136,10,Write code for logical operators,"Write a complete, well-documented Python program that defines and demonstrates the logical operators (AND, OR, NOT, XOR) using boolean variables and print their results.","def logical_operators_demo():
+    a = True
+    b = False
+    and_result = a and b
+    or_result = a or b
+    not_a_result = not a
+    xor_result = a ^ b
+    print(f""a: {a}"")
+    print(f""b: {b}"")
+    print(f""a AND b: {and_result}"")
+    print(f""a OR b: {or_result}"")
+    print(f""NOT a: {not_a_result}"")
+    print(f""a XOR b: {xor_result}"")
+if __name__ == '__main__':
+    logical_operators_demo()",True,1,8352,136_10_1.py
+136,10,Write code for logical operators,"Write a complete, well-documented Python program that defines and demonstrates the logical operators (AND, OR, NOT, XOR) using boolean variables and print their results.","def main():
+    a = True
+    b = False
+    c = True
+    print(""--- Logical Operators Demonstration ---"")
+    print(f""a = {a}, b = {b}, c = {c}"")
+    and_result = a and b
+    or_result = a or b
+    not_a_result = not a
+    xor_result = a ^ b
+    print(""\n--- AND Operator (a and b) ---"")
+    print(f""a and b: {and_result}"")
+    print(""\n--- OR Operator (a or b) ---"")
+    print(f""a or b: {or_result}"")
+    print(""\n--- NOT Operator (not a) ---"")
+    print(f""not a: {not_a_result}"")
+    print(""\n--- XOR Operator (a XOR b) ---"")
+    print(f""a XOR b: {xor_result}"")
+if __name__ == '__main__':
+    main()",True,2,8353,136_10_2.py
+136,11,Write code for logical operators,"Implement an optimized Python function named 'evaluate_logic' that accepts three boolean inputs (a, b, c) and returns the result of the expression (a AND b) OR (NOT c). Ensure the function is efficient and uses idiomatic Python operators.","def evaluate_logic(a, b, c):
+    return (a and b) or (not c)
+if __name__ == '__main__':
+    print(evaluate_logic(True, True, False))
+    print(evaluate_logic(True, False, True))
+    print(evaluate_logic(False, False, False))
+    print(evaluate_logic(True, True, True))",True,0,8354,136_11.py
+136,11,Write code for logical operators,"Implement an optimized Python function named 'evaluate_logic' that accepts three boolean inputs (a, b, c) and returns the result of the expression (a AND b) OR (NOT c). Ensure the function is efficient and uses idiomatic Python operators.","def evaluate_logic(a, b, c):
+    return (a and b) or (not c)
+if __name__ == '__main__':
+    print(evaluate_logic(True, True, False))
+    print(evaluate_logic(True, False, True))
+    print(evaluate_logic(False, True, False))
+    print(evaluate_logic(False, False, True))",True,1,8355,136_11_1.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            results.append(expr)
+        return results
+if __name__ == '__main__':
+    lo = LogicalOperations()
+    expressions1 = [True, False, True]
+    results1 = lo.apply_operators(expressions1)
+    print(results1)
+    expressions2 = [True, True, False]
+    results2 = lo.apply_operators(expressions2)
+    print(results2)
+    expressions3 = [True, False, False, True]
+    results3 = lo.apply_operators(expressions3)
+    print(results3)",True,0,8356,136_12.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            results.append(expr)
+        return results
+if __name__ == '__main__':
+    logic_ops = LogicalOperations()
+    expressions = [
+        (True, True),
+        (True, False),
+        (False, True),
+        (False, False)
+    ]
+    results = logic_ops.apply_operators(expressions)
+    print(results)",True,1,8357,136_12_1.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            if isinstance(expr, list):
+                result = expr[0]
+                for i in range(1, len(expr)):
+                    result = result and expr[i]
+                results.append(result)
+            else:
+                results.append(expr)
+        return results
+if __name__ == '__main__':
+    lo = LogicalOperations()
+    sample_expressions = [
+        [True, True, False],
+        [False, True],
+        [True, True, True, False],
+        [False]
+    ]
+    results = lo.apply_operators(sample_expressions)
+    print(results)",True,2,8358,136_12_2.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            result = expr
+            for op in ['and', 'or', 'not']:
+                if op == 'and':
+                    result = result and expr[1] if len(expr) > 1 else False
+                elif op == 'or':
+                    result = result or expr[1] if len(expr) > 1 else False
+                elif op == 'not':
+                    result = not result
+                results.append(result)
+        return results
+if __name__ == '__main__':
+    lo = LogicalOperations()
+    sample_expressions = [
+        (True, True, False),
+        (True, False, True),
+        (False, False, True)
+    ]
+    results = lo.apply_operators(sample_expressions)
+    print(results)",True,3,8359,136_12_3.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            try:
+                result = eval(str(expr))
+                results.append(result)
+            except Exception as e:
+                results.append(f""Error: {e}"")
+        return results
+if __name__ == '__main__':
+    logic_ops = LogicalOperations()
+    sample_expressions = [
+        ""True and False"",
+        ""True or False"",
+        ""not True"",
+        ""False and False"",
+        ""True or True""
+    ]
+    results = logic_ops.apply_operators(sample_expressions)
+    print(results)",True,4,8360,136_12_4.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            try:
+                result = eval(f""({expr})"")
+                results.append(result)
+            except Exception:
+                results.append(None)
+        return results
+if __name__ == '__main__':
+    logic_ops = LogicalOperations()
+    sample_expressions = [
+        ""True and False"",
+        ""True or False"",
+        ""not True"",
+        ""False and False"",
+        ""True or True""
+    ]
+    results = logic_ops.apply_operators(sample_expressions)
+    print(results)",True,5,8361,136_12_5.py
+136,12,Write code for logical operators,Develop a class named 'LogicalOperations' with a method 'apply_operators' that takes a list of boolean expressions and returns a list of the corresponding results using Python's built-in logical operators.,"class LogicalOperations:
+    def apply_operators(self, expressions):
+        results = []
+        for expr in expressions:
+            result = expr
+            for op in ['and', 'or', 'not']:
+                if op == 'and':
+                    result = result and expr[1] if len(expr) > 1 else False
+                elif op == 'or':
+                    result = result or expr[1] if len(expr) > 1 else False
+                elif op == 'not':
+                    result = not result
+            results.append(result)
+        return results
+if __name__ == '__main__':
+    lo = LogicalOperations()
+    sample_expressions = [
+        (True, True, False),
+        (False, True, True),
+        (True, False, False)
+    ]
+    results = lo.apply_operators(sample_expressions)
+    print(results)",True,6,8362,136_12_6.py
+136,14,Write code for logical operators,"Implement a function 'check_conditions' that takes two lists of boolean values, one for 'condition_A' and one for 'condition_B', and returns a new list where each element is the result of applying the logical AND operation between the corresponding elements of the two lists.","def check_conditions(condition_A, condition_B):
+    result = []
+    for a, b in zip(condition_A, condition_B):
+        result.append(a and b)
+    return result
+if __name__ == '__main__':
+    list_A = [True, False, True, True]
+    list_B = [True, True, False, False]
+    output = check_conditions(list_A, list_B)
+    print(output)",True,0,8363,136_14.py
+136,14,Write code for logical operators,"Implement a function 'check_conditions' that takes two lists of boolean values, one for 'condition_A' and one for 'condition_B', and returns a new list where each element is the result of applying the logical AND operation between the corresponding elements of the two lists.","def check_conditions(condition_A, condition_B):
+    result = []
+    for a, b in zip(condition_A, condition_B):
+        result.append(a and b)
+    return result
+if __name__ == '__main__':
+    list_A = [True, False, True, True]
+    list_B = [True, True, False, False]
+    result = check_conditions(list_A, list_B)
+    print(result)",True,1,8364,136_14_1.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions():
+    input_value = 7
+    if input_value > 10:
+        result = ""Greater than 10""
+    elif input_value >= 5:
+        result = ""Between 5 and 10 (inclusive)""
+    else:
+        result = ""Less than 5""
+    print(f""Input: {input_value}"")
+    print(f""Result: {result}"")
+if __name__ == '__main__':
+    test_conditional_expressions()",True,0,8365,137_0.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_logic(value):
+    if value > 0:
+        result = ""Positive""
+    elif value == 0:
+        result = ""Zero""
+    else:
+        result = ""Negative""
+    return result
+if __name__ == '__main__':
+    sample_inputs = [10, -5, 0, 3.14, -100]
+    print(""Testing Conditional Expressions:"")
+    for num in sample_inputs:
+        output = test_conditional_logic(num)
+        print(f""Input: {num}, Output: {output}"")",True,1,8366,137_0_1.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions():
+    value = 7
+    if value > 10:
+        result = ""Greater than 10""
+    elif value >= 5:
+        result = ""Between 5 and 10 (inclusive)""
+    else:
+        result = ""Less than 5""
+    print(f""Testing value: {value}"")
+    print(f""Result: {result}"")
+    value = 3
+    if value > 10:
+        result = ""Greater than 10""
+    elif value >= 5:
+        result = ""Between 5 and 10 (inclusive)""
+    else:
+        result = ""Less than 5""
+    print(f""Testing value: {value}"")
+    print(f""Result: {result}"")
+    value = 10
+    if value > 10:
+        result = ""Greater than 10""
+    elif value >= 5:
+        result = ""Between 5 and 10 (inclusive)""
+    else:
+        result = ""Less than 5""
+    print(f""Testing value: {value}"")
+    print(f""Result: {result}"")
+if __name__ == '__main__':
+    test_conditional_expressions()",True,2,8367,137_0_2.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions(value):
+    if value > 10:
+        result = ""Greater than ten""
+    elif value >= 5:
+        result = ""Between five and ten (inclusive)""
+    else:
+        result = ""Less than five""
+    return result
+if __name__ == '__main__':
+    sample_inputs = [2, 5, 10, 15, 20, 0, -3]
+    for number in sample_inputs:
+        output = test_conditional_expressions(number)
+        print(f""Input: {number}, Output: {output}"")",True,3,8368,137_0_3.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions(value):
+    if value > 0:
+        result = ""Positive""
+    elif value < 0:
+        result = ""Negative""
+    else:
+        result = ""Zero""
+    return result
+if __name__ == '__main__':
+    sample_inputs = [10, -5, 0, 3.14, -100]
+    print(""Testing conditional expressions:"")
+    for num in sample_inputs:
+        output = test_conditional_expressions(num)
+        print(f""Input: {num}, Output: {output}"")",True,4,8369,137_0_4.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions():
+    value = 75
+    if value >= 90:
+        result = ""Grade A""
+    elif value >= 80:
+        result = ""Grade B""
+    elif value >= 70:
+        result = ""Grade C""
+    else:
+        result = ""Grade F""
+    print(f""Input Value: {value}"")
+    print(f""Result: {result}"")
+if __name__ == '__main__':
+    test_conditional_expressions()",True,5,8370,137_0_5.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions(value):
+    if value > 10:
+        result = ""Greater than ten""
+    elif value >= 5:
+        result = ""Between five and ten (inclusive)""
+    else:
+        result = ""Less than five""
+    return result
+if __name__ == '__main__':
+    sample_inputs = [2, 5, 10, 15, 20, 0, -3]
+    print(""Testing conditional expressions:"")
+    for num in sample_inputs:
+        output = test_conditional_expressions(num)
+        print(f""Input: {num}, Output: {output}"")",True,6,8371,137_0_6.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions(value):
+    if value > 0:
+        result = ""Positive""
+    elif value < 0:
+        result = ""Negative""
+    else:
+        result = ""Zero""
+    return result
+if __name__ == '__main__':
+    test_values = [10, -5, 0, 3.14, -100]
+    print(""Testing conditional expressions:"")
+    for val in test_values:
+        output = test_conditional_expressions(val)
+        print(f""Input: {val}, Output: {output}"")",True,7,8372,137_0_7.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_logic(value):
+    if value > 10:
+        result = ""Greater than ten""
+    elif value >= 5:
+        result = ""Between five and ten (inclusive)""
+    else:
+        result = ""Less than five""
+    return result
+if __name__ == '__main__':
+    test_values = [2, 5, 10, 15, 20, 0, -3]
+    for val in test_values:
+        output = test_conditional_logic(val)
+        print(f""Input: {val}, Output: {output}"")",True,8,8373,137_0_8.py
+137,0,Test simple conditional expressions,"Write a complete, well-documented Python script that tests simple conditional expressions using if-elif-else statements with a sample set of input values.","def test_conditional_expressions(value):
+    if value > 0:
+        result = ""Positive""
+    elif value < 0:
+        result = ""Negative""
+    else:
+        result = ""Zero""
+    return result
+sample_inputs = [10, -5, 0, 3.14, -100]
+for input_value in sample_inputs:
+    output = test_conditional_expressions(input_value)
+    print(f""Input: {input_value}, Output: {output}"")
+if __name__ == '__main__':
+    pass",True,9,8374,137_0_9.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return expr.simplify()
+    except sympy.SympifyError:
+        return None
+def evaluate_and_compare(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_sub = expr1.subs(variables, {v: 1 for v in variables})
+        expr2_sub = expr2.subs(variables, {v: 1 for v in variables})
+        return expr1.equals(expr2)
+    except Exception:
+        return False
+def check_equivalence(expr1_str, expr2_str, variables):
+    if expr1_str == expr2_str:
+        return True
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        all_vars = set()
+        for s in [expr1_str, expr2_str]:
+            for char in s:
+                if 'a' <= char <= 'z':
+                    all_vars.add(char)
+        if not all_vars:
+            return sympy.simplify(expr1) == sympy.simplify(expr2)
+        var_list = sorted(list(all_vars))
+        n = len(var_list)
+        for i in range(2**n):
+            assignment = {}
+            temp_i = i
+            for j in range(n):
+                assignment[var_list[j]] = bool(temp_i & 1)
+                temp_i >>= 1
+            try:
+                val1 = expr1.subs(assignment, {v: 1 if v in ('True', 'True') else 0 for v in var_list})
+                val2 = expr2.subs(assignment, {v: 1 if v in ('True', 'True') else 0 for v in var_list})
+                if val1 != val2:
+                    return False
+            except Exception:
+                continue
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expr1 = ""a AND (b OR c)""
+    expr2 = ""(a AND b) OR c""
+    variables = ['a', 'b', 'c']
+    result = check_equivalence(expr1, expr2, variables)
+    print(f""Expression 1: {expr1}"")
+    print(f""Expression 2: {expr2}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result}"")
+    print(""-"" * 20)
+    expr3 = ""a OR (b AND c)""
+    expr4 = ""(a OR b) AND (a OR c)""
+    result2 = check_equivalence(expr3, expr4, variables)
+    print(f""Expression 3: {expr3}"")
+    print(f""Expression 4: {expr4}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result2}"")",True,0,8375,136_7.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return expr.simplify()
+    except sympy.SympifyError:
+        return None
+def check_equivalence(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        subs1 = {var: sympy.Symbol(var) for var in variables}
+        expr1_subs = expr1.subs(subs1)
+        expr2_subs = expr2.subs(subs1)
+        return expr1_subs == expr2_subs
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expr1_str = ""(A AND B) OR C""
+    expr2_str = ""A OR (B OR C)""
+    variables = ['A', 'B', 'C']
+    result = check_equivalence(expr1_str, expr2_str, variables)
+    print(f""Expression 1: {expr1_str}"")
+    print(f""Expression 2: {expr2_str}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result}"")
+    expr3_str = ""A + B""
+    expr4_str = ""(A + B)""
+    variables = ['A', 'B']
+    result2 = check_equivalence(expr3_str, expr4_str, variables)
+    print(f""\nExpression 3: {expr3_str}"")
+    print(f""Expression 4: {expr4_str}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result2}"")",True,1,8376,136_7_1.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return expr.simplify()
+    except sympy.SympifyError:
+        return None
+def check_equivalence(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        subs1 = {var: sympy.Symbol(var) for var in variables}
+        expr1_subs = expr1.subs(subs1)
+        expr2_subs = expr2.subs(subs1)
+        return expr1_subs == expr2_subs
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expr1_str = ""(A AND B) OR (NOT A AND C)""
+    expr2_str = ""(A OR B) AND (A OR C)""
+    variables = ['A', 'B', 'C']
+    result = check_equivalence(expr1_str, expr2_str, variables)
+    print(f""Expression 1: {expr1_str}"")
+    print(f""Expression 2: {expr2_str}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result}"")",True,2,8377,136_7_2.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return expr.simplify()
+    except sympy.SympifyError:
+        return None
+def check_equivalence(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        subs1 = {var: sympy.Symbol(var) for var in variables}
+        subs1.update({sympy.Symbol(var): sympy.Symbol(var) for var in variables})
+        return expr1.equals(expr2)
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expr1_str = ""(A AND B) OR C""
+    expr2_str = ""A OR (B OR C)""
+    variables = ['A', 'B', 'C']
+    result = check_equivalence(expr1_str, expr2_str, variables)
+    print(f""Expression 1: {expr1_str}"")
+    print(f""Expression 2: {expr2_str}"")
+    print(f""Logical Equivalence: {result}"")
+    print(""-"" * 20)
+    expr3_str = ""A AND (B OR C)""
+    expr4_str = ""(A AND B) OR C""
+    result2 = check_equivalence(expr3_str, expr4_str, variables)
+    print(f""Expression 3: {expr3_str}"")
+    print(f""Expression 4: {expr4_str}"")
+    print(f""Logical Equivalence: {result2}"")
+    print(""-"" * 20)
+    expr5_str = ""A""
+    expr6_str = ""A""
+    result3 = check_equivalence(expr5_str, expr6_str, variables)
+    print(f""Expression 5: {expr5_str}"")
+    print(f""Expression 6: {expr6_str}"")
+    print(f""Logical Equivalence: {result3}"")",True,3,8378,136_7_3.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return sympy.simplify(expr)
+    except sympy.SympifyError:
+        return None
+def evaluate_and_compare(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_subs = expr1.subs(variables)
+        expr2_subs = expr2.subs(variables)
+        return sympy.simplify(expr1_subs) == sympy.simplify(expr2_subs)
+    except Exception:
+        return False
+def check_equivalence(expr1_str, expr2_str, variables):
+    if not variables:
+        return False
+    result = evaluate_and_compare(expr1_str, expr2_str, variables)
+    return result
+if __name__ == '__main__':
+    expr1_str_1 = ""P""
+    expr2_str_1 = ""P""
+    variables_1 = [""P""]
+    result_1 = check_equivalence(expr1_str_1, expr2_str_1, variables_1)
+    print(f""Test 1 (P == P): {result_1}"")
+    expr1_str_2 = ""P""
+    expr2_str_2 = ""Q""
+    variables_2 = [""P"", ""Q""]
+    result_2 = check_equivalence(expr1_str_2, expr2_str_2, variables_2)
+    print(f""Test 2 (P == Q): {result_2}"")
+    expr1_str_3 = ""(P & Q)""
+    expr2_str_3 = ""(Q & P)""
+    variables_3 = [""P"", ""Q""]
+    result_3 = check_equivalence(expr1_str_3, expr2_str_3, variables_3)
+    print(f""Test 3 ((P & Q) == (Q & P)): {result_3}"")
+    expr1_str_4 = ""P""
+    expr2_str_4 = ""NOT P""
+    variables_4 = [""P""]
+    result_4 = check_equivalence(expr1_str_4, expr2_str_4, variables_4)
+    print(f""Test 4 (P == NOT P): {result_4}"")
+    expr1_str_5 = ""!(P & Q)""
+    expr2_str_5 = ""(!P | !Q)""
+    variables_5 = [""P"", ""Q""]
+    result_5 = check_equivalence(expr1_str_5, expr2_str_5, variables_5)
+    print(f""Test 5 (!(P & Q) == (!P | !Q)): {result_5}"")
+    expr1_str_6 = ""(P & Q)""
+    expr2_str_6 = ""(P | Q)""
+    variables_6 = [""P"", ""Q""]
+    result_6 = check_equivalence(expr1_str_6, expr2_str_6, variables_6)
+    print(f""Test 6 ((P & Q) == (P | Q)): {result_6}"")",True,4,8379,136_7_4.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return sympy.simplify(expr)
+    except sympy.SympifyError:
+        return None
+def evaluate_and_compare(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_sub = expr1.subs(variables, {var: 1 for var in variables})
+        expr2_sub = expr2.subs(variables, {var: 1 for var in variables})
+        return sympy.simplify(expr1_sub) == sympy.simplify(expr2_sub)
+    except Exception:
+        return False
+def check_equivalence(expr1_str, expr2_str, variables):
+    if not variables:
+        return False
+    context = {var: True for var in variables}
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_eval = expr1.subs(variables, context)
+        expr2_eval = expr2.subs(variables, context)
+        return sympy.simplify(expr1_eval) == sympy.simplify(expr2_eval)
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expr_a = ""(p AND q) OR (NOT p)""
+    expr_b = ""q OR (NOT p)""
+    vars_1 = ['p', 'q']
+    expr_c = ""p OR q""
+    expr_d = ""(p OR q)""
+    vars_2 = ['p', 'q']
+    expr_e = ""p AND (q OR r)""
+    expr_f = ""(p AND q) OR r""
+    vars_3 = ['p', 'q', 'r']
+    print(f""Expression A: {expr_a}"")
+    print(f""Expression B: {expr_b}"")
+    result_1 = check_equivalence(expr_a, expr_b, vars_1)
+    print(f""Equivalence (A vs B): {result_1}\n"")
+    print(f""Expression C: {expr_c}"")
+    print(f""Expression D: {expr_d}"")
+    result_2 = check_equivalence(expr_c, expr_d, vars_2)
+    print(f""Equivalence (C vs D): {result_2}\n"")
+    print(f""Expression E: {expr_e}"")
+    print(f""Expression F: {expr_f}"")
+    result_3 = check_equivalence(expr_e, expr_f, vars_3)
+    print(f""Equivalence (E vs F): {result_3}\n"")",True,5,8380,136_7_5.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return sympy.simplify(expr)
+    except sympy.SympifyError:
+        return None
+def evaluate_and_compare(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_subs = expr1.subs(variables)
+        expr2_subs = expr2.subs(variables)
+        simplified1 = sympy.simplify(expr1_subs)
+        simplified2 = sympy.simplify(expr2_subs)
+        return simplified1 == simplified2
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expression1 = ""A & ~B""
+    expression2 = ""~A | B""
+    variables = {'A': 1, 'B': 0}
+    result = evaluate_and_compare(expression1, expression2, variables)
+    print(f""Expression 1: {expression1}"")
+    print(f""Expression 2: {expression2}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result}"")
+    expression3 = ""(A | B) & C""
+    expression4 = ""A & (B & C)""
+    variables = {'A': 1, 'B': 0, 'C': 1}
+    result2 = evaluate_and_compare(expression3, expression4, variables)
+    print(f""\nExpression 3: {expression3}"")
+    print(f""Expression 4: {expression4}"")
+    print(f""Variables: {variables}"")
+    print(f""Logical Equivalence: {result2}"")",True,6,8381,136_7_6.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return sympy.simplify(expr)
+    except sympy.SympifyError:
+        return None
+def evaluate_and_compare(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        subs1 = {var: float(val) for var, val in variables.items()}
+        subs2 = {var: float(val) for var, val in variables.items()}
+        val1 = expr1.subs(subs1).evalf()
+        val2 = expr2.subs(subs2).evalf()
+        return abs(val1 - val2) < 1e-9
+    except Exception:
+        return False
+def find_variables(expression_str):
+    import re
+    variables = set()
+    for match in re.findall(r'[a-zA-Z_][a-zA-Z0-9_]*', expression_str):
+        variables.add(match)
+    return sorted(list(variables))
+if __name__ == '__main__':
+    expression1 = ""A + B""
+    expression2 = ""(A + B)""
+    variables = {'A': 2, 'B': 3}
+    print(f""Expression 1: {expression1}"")
+    print(f""Expression 2: {expression2}"")
+    print(f""Variables: {variables}"")
+    is_equivalent = evaluate_and_compare(expression1, expression2, variables)
+    print(f""Are the expressions logically equivalent for these values? {is_equivalent}"")
+    expression3 = ""A * (B + C)""
+    expression4 = ""(A * B) + (A * C)""
+    variables_3 = {'A': 1, 'B': 2, 'C': 4}
+    print(f""\nExpression 3: {expression3}"")
+    print(f""Expression 4: {expression4}"")
+    print(f""Variables: {variables_3}"")
+    is_equivalent_2 = evaluate_and_compare(expression3, expression4, variables_3)
+    print(f""Are the expressions logically equivalent for these values? {is_equivalent_2}"")",True,7,8382,136_7_7.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return sympy.simplify(expr)
+    except sympy.SympifyError:
+        return None
+def evaluate_and_compare(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_subs = expr1.subs(variables)
+        expr2_subs = expr2.subs(variables)
+        simplified_expr1 = sympy.simplify(expr1_subs)
+        simplified_expr2 = sympy.simplify(expr2_subs)
+        return simplified_expr1 == simplified_expr2
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expression1 = ""A & ~B""
+    expression2 = ""~A | B""
+    variables = {'A': sympy.Symbol('A'), 'B': sympy.Symbol('B')}
+    result = evaluate_and_compare(expression1, expression2, variables)
+    print(f""Expression 1: {expression1}"")
+    print(f""Expression 2: {expression2}"")
+    print(f""Logical Equivalence: {result}"")
+    expression3 = ""(A | B) & C""
+    expression4 = ""A & (B | C)""
+    variables = {'A': sympy.Symbol('A'), 'B': sympy.Symbol('B'), 'C': sympy.Symbol('C')}
+    result2 = evaluate_and_compare(expression3, expression4, variables)
+    print(f""\nExpression 3: {expression3}"")
+    print(f""Expression 4: {expression4}"")
+    print(f""Logical Equivalence: {result2}"")",True,8,8383,136_7_8.py
+136,7,Write code for logical operators,"Generate an efficient algorithm in Python to determine the logical equivalence between two complex boolean expressions provided as strings, assuming simple variable substitution.","import sympy
+def simplify_expression(expression_str):
+    try:
+        expr = sympy.sympify(expression_str)
+        return expr.simplify()
+    except sympy.SympifyError:
+        return None
+def check_equivalence(expr1_str, expr2_str, variables):
+    try:
+        expr1 = sympy.sympify(expr1_str)
+        expr2 = sympy.sympify(expr2_str)
+        expr1_subs = expr1.subs(variables, {v: sympy.Symbol(v) for v in variables})
+        expr2_subs = expr2.subs(variables, {v: sympy.Symbol(v) for v in variables})
+        return expr1_subs == expr2_subs
+    except Exception:
+        return False
+if __name__ == '__main__':
+    expr1_str = ""(A OR B) AND (NOT A OR C)""
+    expr2_str = ""(A OR C) AND (NOT A OR B)""
+    variables = ['A', 'B', 'C']
+    result = check_equivalence(expr1_str, expr2_str, variables)
+    print(f""Expression 1: {expr1_str}"")
+    print(f""Expression 2: {expr2_str}"")
+    print(f""Logical Equivalence: {result}"")",True,9,8384,136_7_9.py
+137,1,Test simple conditional expressions,"Implement an optimized Python function named 'check_grade' that takes a numerical score and returns the corresponding letter grade (A, B, C, D, F) using nested conditional expressions.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(check_grade(95))
+    print(check_grade(82))
+    print(check_grade(70))
+    print(check_grade(65))
+    print(check_grade(55))",True,0,8385,137_1.py
+137,1,Test simple conditional expressions,"Implement an optimized Python function named 'check_grade' that takes a numerical score and returns the corresponding letter grade (A, B, C, D, F) using nested conditional expressions.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(check_grade(95))
+    print(check_grade(82))
+    print(check_grade(77))
+    print(check_grade(60))
+    print(check_grade(55))",True,1,8386,137_1_1.py
+137,2,Test simple conditional expressions,"Develop a class named 'DecisionMaker' with a method that uses chained conditional expressions to determine the category of an input number (positive, negative, or zero).","class DecisionMaker:
+    def categorize_number(self, number):
+        if number > 0:
+            return ""positive""
+        elif number < 0:
+            return ""negative""
+        else:
+            return ""zero""
+if __name__ == '__main__':
+    dm = DecisionMaker()
+    print(dm.categorize_number(10))
+    print(dm.categorize_number(-5))
+    print(dm.categorize_number(0))
+    print(dm.categorize_number(3.14))
+    print(dm.categorize_number(-100))",True,0,8387,137_2.py
+137,2,Test simple conditional expressions,"Develop a class named 'DecisionMaker' with a method that uses chained conditional expressions to determine the category of an input number (positive, negative, or zero).","class DecisionMaker:
+    def categorize_number(self, number):
+        if number > 0:
+            return ""positive""
+        elif number < 0:
+            return ""negative""
+        else:
+            return ""zero""
+if __name__ == '__main__':
+    dm = DecisionMaker()
+    print(dm.categorize_number(10))
+    print(dm.categorize_number(-5))
+    print(dm.categorize_number(0))
+    print(dm.categorize_number(123.45))
+    print(dm.categorize_number(-0.001))",True,1,8388,137_2_1.py
+137,2,Test simple conditional expressions,"Develop a class named 'DecisionMaker' with a method that uses chained conditional expressions to determine the category of an input number (positive, negative, or zero).","class DecisionMaker:
+    def categorize_number(self, number):
+        if number > 0:
+            return ""positive""
+        elif number < 0:
+            return ""negative""
+        else:
+            return ""zero""
+if __name__ == '__main__':
+    dm = DecisionMaker()
+    print(dm.categorize_number(10))
+    print(dm.categorize_number(-5))
+    print(dm.categorize_number(0))
+    print(dm.categorize_number(12345))
+    print(dm.categorize_number(-99))",True,2,8389,137_2_2.py
+137,3,Test simple conditional expressions,"Write a program that iterates through a list of numbers and uses conditional expressions to print whether each number is 'Positive', 'Negative', or 'Zero'.","def classify_numbers(numbers):
+    results = []
+    for number in numbers:
+        if number > 0:
+            result = ""Positive""
+        elif number < 0:
+            result = ""Negative""
+        else:
+            result = ""Zero""
+        results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_list = [10, -5, 0, 3.14, -100, 0]
+    classification = classify_numbers(sample_list)
+    for number, classification_result in zip(sample_list, classification):
+        print(f""{number}: {classification_result}"")",True,0,8390,137_3.py
+137,3,Test simple conditional expressions,"Write a program that iterates through a list of numbers and uses conditional expressions to print whether each number is 'Positive', 'Negative', or 'Zero'.","def classify_numbers(numbers):
+    results = []
+    for number in numbers:
+        if number > 0:
+            result = ""Positive""
+        elif number < 0:
+            result = ""Negative""
+        else:
+            result = ""Zero""
+        results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_list = [10, -5, 0, 3.14, -100, 0.0]
+    classification = classify_numbers(sample_list)
+    for number, classification_result in zip(sample_list, classification):
+        print(f""{number}: {classification_result}"")",True,1,8391,137_3_1.py
+137,3,Test simple conditional expressions,"Write a program that iterates through a list of numbers and uses conditional expressions to print whether each number is 'Positive', 'Negative', or 'Zero'.","def classify_numbers(numbers):
+    results = []
+    for number in numbers:
+        if number > 0:
+            result = ""Positive""
+        elif number < 0:
+            result = ""Negative""
+        else:
+            result = ""Zero""
+        results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_list = [10, -5, 0, 3.14, -100, 0]
+    classification = classify_numbers(sample_list)
+    for number, status in zip(sample_list, classification):
+        print(f""{number}: {status}"")",True,2,8392,137_3_2.py
+137,3,Test simple conditional expressions,"Write a program that iterates through a list of numbers and uses conditional expressions to print whether each number is 'Positive', 'Negative', or 'Zero'.","def classify_numbers(numbers):
+    results = []
+    for number in numbers:
+        if number > 0:
+            result = ""Positive""
+        elif number < 0:
+            result = ""Negative""
+        else:
+            result = ""Zero""
+        results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_list = [10, -5, 0, 3.14, -100, 0]
+    classification = classify_numbers(sample_list)
+    for i, classification_result in enumerate(classification):
+        print(f""Number {sample_list[i]}: {classification_result}"")",True,3,8393,137_3_3.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 100:
+        if number % 2 == 0:
+            return ""Valid""
+        else:
+            return ""Invalid""
+    elif 0 <= number <= 100:
+        if number % 10 == 0:
+            return ""Valid""
+        else:
+            return ""Invalid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    test_numbers = [150, 200, 50, 100, 101, 0, -5]
+    for num in test_numbers:
+        result = evaluate_complex_condition(num)
+        print(f""Number: {num}, Result: {result}"")",True,0,8394,137_4.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 0 and number % 2 == 0:
+        if number < 100:
+            return ""Valid""
+        else:
+            return ""Invalid""
+    elif number > 100 and number % 3 == 0:
+        return ""Valid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    test_numbers = [2, 10, 100, 101, 3, 150, 7]
+    for num in test_numbers:
+        result = evaluate_complex_condition(num)
+        print(f""Number: {num}, Result: {result}"")",True,1,8395,137_4_1.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 0:
+        if number % 2 == 0:
+            if number < 100:
+                return ""Valid""
+            else:
+                return ""Invalid""
+        else:
+            return ""Invalid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    print(evaluate_complex_condition(50))
+    print(evaluate_complex_condition(100))
+    print(evaluate_complex_condition(150))
+    print(evaluate_complex_condition(10))
+    print(evaluate_complex_condition(0))
+    print(evaluate_complex_condition(-10))",True,2,8396,137_4_2.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 0 and number % 2 == 0:
+        if number < 100:
+            return ""Valid""
+        else:
+            return ""Invalid""
+    elif number > 100 and number % 3 == 0:
+        return ""Valid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    test_numbers = [2, 4, 100, 101, 150, 3]
+    for num in test_numbers:
+        result = evaluate_complex_condition(num)
+        print(f""Number: {num}, Result: {result}"")",True,3,8397,137_4_3.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 0 and number % 2 == 0:
+        if number < 100:
+            return ""Valid""
+        else:
+            return ""Invalid""
+    elif number > 100 and number % 3 == 0:
+        return ""Valid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    test_numbers = [2, 4, 10, 100, 101, 102, 3, 5, 6, 1000]
+    for num in test_numbers:
+        result = evaluate_complex_condition(num)
+        print(f""Number: {num}, Result: {result}"")",True,4,8398,137_4_4.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 0 and number % 2 == 0:
+        if number < 100:
+            return ""Valid""
+        else:
+            return ""Invalid""
+    elif number > 100 and number % 3 == 0:
+        return ""Valid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    test_numbers = [2, 4, 10, 100, 101, 102, 3, 5, 6]
+    for num in test_numbers:
+        result = evaluate_complex_condition(num)
+        print(f""Number: {num}, Result: {result}"")",True,5,8399,137_4_5.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number, age, has_license, is_adult):
+    if number > 18 and age >= 18 and has_license and is_adult:
+        return ""Valid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    print(evaluate_complex_condition(25, 20, True, True))
+    print(evaluate_complex_condition(16, 20, True, True))
+    print(evaluate_complex_condition(30, 15, True, True))
+    print(evaluate_complex_condition(20, 18, False, True))
+    print(evaluate_complex_condition(10, 18, True, False))
+    print(evaluate_complex_condition(18, 18, False, True))",True,6,8400,137_4_6.py
+137,4,Test simple conditional expressions,Create a function that evaluates a complex conditional expression involving multiple boolean checks to determine if a number is 'Valid' or 'Invalid' based on predefined rules.,"def evaluate_complex_condition(number):
+    if number > 0:
+        if number % 2 == 0:
+            if number < 100:
+                return ""Valid""
+            else:
+                return ""Invalid""
+        else:
+            return ""Invalid""
+    else:
+        return ""Invalid""
+if __name__ == '__main__':
+    test_numbers = [10, 20, 50, 100, 15, 2, 101, -5, 0]
+    for num in test_numbers:
+        result = evaluate_complex_condition(num)
+        print(f""Number: {num}, Result: {result}"")",True,7,8401,137_4_7.py
+137,5,Test simple conditional expressions,Generate a test suite using Python's `unittest` framework to thoroughly test a function that uses simple conditional logic for decision making.,"import unittest
+def decision_maker(score):
+    if score >= 90:
+        return ""A""
+    elif score >= 80:
+        return ""B""
+    elif score >= 70:
+        return ""C""
+    else:
+        return ""F""
+class TestDecisionMaker(unittest.TestCase):
+    def test_grade_a(self):
+        self.assertEqual(decision_maker(95), ""A"")
+        self.assertEqual(decision_maker(100), ""A"")
+    def test_grade_b(self):
+        self.assertEqual(decision_maker(85), ""B"")
+        self.assertEqual(decision_maker(80), ""B"")
+    def test_grade_c(self):
+        self.assertEqual(decision_maker(70), ""C"")
+        self.assertEqual(decision_maker(75), ""C"")
+    def test_grade_f(self):
+        self.assertEqual(decision_maker(69), ""F"")
+        self.assertEqual(decision_maker(0), ""F"")
+    def test_boundary_conditions(self):
+        self.assertEqual(decision_maker(89), ""B"")
+        self.assertEqual(decision_maker(90), ""A"")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,8402,137_5.py
+137,5,Test simple conditional expressions,Generate a test suite using Python's `unittest` framework to thoroughly test a function that uses simple conditional logic for decision making.,"import unittest
+def decision_maker(score):
+    if score >= 90:
+        return ""A""
+    elif score >= 80:
+        return ""B""
+    elif score >= 70:
+        return ""C""
+    else:
+        return ""F""
+class TestDecisionMaker(unittest.TestCase):
+    def test_grade_a(self):
+        self.assertEqual(decision_maker(95), ""A"")
+        self.assertEqual(decision_maker(100), ""A"")
+    def test_grade_b(self):
+        self.assertEqual(decision_maker(85), ""B"")
+        self.assertEqual(decision_maker(80), ""B"")
+    def test_grade_c(self):
+        self.assertEqual(decision_maker(75), ""C"")
+        self.assertEqual(decision_maker(70), ""C"")
+    def test_grade_f(self):
+        self.assertEqual(decision_maker(69), ""F"")
+        self.assertEqual(decision_maker(0), ""F"")
+    def test_boundary_conditions(self):
+        self.assertEqual(decision_maker(90), ""A"")
+        self.assertEqual(decision_maker(89), ""B"")
+        self.assertEqual(decision_maker(79), ""C"")
+        self.assertEqual(decision_maker(69), ""F"")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,8403,137_5_1.py
+137,5,Test simple conditional expressions,Generate a test suite using Python's `unittest` framework to thoroughly test a function that uses simple conditional logic for decision making.,"import unittest
+def decision_maker(score):
+    if score >= 90:
+        return ""A""
+    elif score >= 80:
+        return ""B""
+    elif score >= 70:
+        return ""C""
+    else:
+        return ""F""
+class TestDecisionMaker(unittest.TestCase):
+    def test_grade_a(self):
+        self.assertEqual(decision_maker(95), ""A"")
+        self.assertEqual(decision_maker(100), ""A"")
+    def test_grade_b(self):
+        self.assertEqual(decision_maker(85), ""B"")
+        self.assertEqual(decision_maker(80), ""B"")
+    def test_grade_c(self):
+        self.assertEqual(decision_maker(75), ""C"")
+        self.assertEqual(decision_maker(70), ""C"")
+    def test_grade_f(self):
+        self.assertEqual(decision_maker(69), ""F"")
+        self.assertEqual(decision_maker(0), ""F"")
+    def test_boundary_conditions(self):
+        self.assertEqual(decision_maker(89), ""B"")
+        self.assertEqual(decision_maker(90), ""A"")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,8404,137_5_2.py
+137,6,Test simple conditional expressions,"Implement a solution to categorize a temperature reading into 'Freezing', 'Moderate', or 'Hot' using a series of nested conditional expressions.","def categorize_temperature(temp):
+    if temp <= 0:
+        if temp < -10:
+            return 'Freezing'
+        else:
+            return 'Freezing'
+    elif temp <= 25:
+        return 'Moderate'
+    else:
+        return 'Hot'
+if __name__ == '__main__':
+    temp1 = -5
+    temp2 = 15
+    temp3 = 35
+    temp4 = 0
+    temp5 = -15
+    print(f""Temperature {temp1}: {categorize_temperature(temp1)}"")
+    print(f""Temperature {temp2}: {categorize_temperature(temp2)}"")
+    print(f""Temperature {temp3}: {categorize_temperature(temp3)}"")
+    print(f""Temperature {temp4}: {categorize_temperature(temp4)}"")
+    print(f""Temperature {temp5}: {categorize_temperature(temp5)}"")",True,0,8405,137_6.py
+137,6,Test simple conditional expressions,"Implement a solution to categorize a temperature reading into 'Freezing', 'Moderate', or 'Hot' using a series of nested conditional expressions.","def categorize_temperature(temp):
+    if temp <= 0:
+        if temp < -10:
+            return 'Freezing'
+        else:
+            return 'Freezing'
+    elif temp <= 25:
+        return 'Moderate'
+    else:
+        return 'Hot'
+if __name__ == '__main__':
+    temperature1 = -5
+    temperature2 = 15
+    temperature3 = 35
+    temperature4 = 0
+    temperature5 = -15
+    print(f""Temperature {temperature1}: {categorize_temperature(temperature1)}"")
+    print(f""Temperature {temperature2}: {categorize_temperature(temperature2)}"")
+    print(f""Temperature {temperature3}: {categorize_temperature(temperature3)}"")
+    print(f""Temperature {temperature4}: {categorize_temperature(temperature4)}"")
+    print(f""Temperature {temperature5}: {categorize_temperature(temperature5)}"")",True,1,8406,137_6_1.py
+137,6,Test simple conditional expressions,"Implement a solution to categorize a temperature reading into 'Freezing', 'Moderate', or 'Hot' using a series of nested conditional expressions.","def categorize_temperature(temp):
+    if temp <= 0:
+        if temp < -10:
+            return 'Freezing'
+        else:
+            return 'Freezing'
+    elif temp <= 20:
+        return 'Moderate'
+    else:
+        return 'Hot'
+if __name__ == '__main__':
+    temp1 = -5
+    temp2 = 15
+    temp3 = 30
+    temp4 = 0
+    temp5 = -15
+    print(f""Temperature {temp1}: {categorize_temperature(temp1)}"")
+    print(f""Temperature {temp2}: {categorize_temperature(temp2)}"")
+    print(f""Temperature {temp3}: {categorize_temperature(temp3)}"")
+    print(f""Temperature {temp4}: {categorize_temperature(temp4)}"")
+    print(f""Temperature {temp5}: {categorize_temperature(temp5)}"")",True,2,8407,137_6_2.py
+137,6,Test simple conditional expressions,"Implement a solution to categorize a temperature reading into 'Freezing', 'Moderate', or 'Hot' using a series of nested conditional expressions.","def categorize_temperature(temp):
+    if temp <= 0:
+        if temp <= -10:
+            return 'Freezing'
+        else:
+            return 'Moderate'
+    elif temp <= 20:
+        return 'Moderate'
+    else:
+        return 'Hot'
+if __name__ == '__main__':
+    temp1 = -5
+    temp2 = 15
+    temp3 = 30
+    temp4 = -15
+    temp5 = 25
+    print(f""Temperature {temp1}: {categorize_temperature(temp1)}"")
+    print(f""Temperature {temp2}: {categorize_temperature(temp2)}"")
+    print(f""Temperature {temp3}: {categorize_temperature(temp3)}"")
+    print(f""Temperature {temp4}: {categorize_temperature(temp4)}"")
+    print(f""Temperature {temp5}: {categorize_temperature(temp5)}"")",True,3,8408,137_6_3.py
+137,7,Test simple conditional expressions,"Write a script that reads user input for a choice (1, 2, or 3) and uses a single, comprehensive conditional expression to print the appropriate message.","if __name__ == '__main__':
+    choice = 2
+    message = ""You selected option 2."" if choice == 2 else (""You selected option 1."" if choice == 1 else ""You selected option 3."")
+    print(message)",True,0,8409,137_7.py
+137,8,Test simple conditional expressions,"Design and implement a function that uses the ternary operator (conditional expression) to assign a status string based on whether a variable is greater than, less than, or equal to a threshold.","def assign_status(value, threshold):
+    return ""Greater"" if value > threshold else (""Less"" if value < threshold else ""Equal"")
+if __name__ == '__main__':
+    x = 10
+    t1 = 5
+    t2 = 10
+    status1 = assign_status(x, t1)
+    status2 = assign_status(x, t2)
+    status3 = assign_status(10, 10)
+    status4 = assign_status(3, 5)
+    print(f""x={x}, threshold={t1}: {status1}"")
+    print(f""x={x}, threshold={t2}: {status2}"")
+    print(f""10, threshold={t2}: {status3}"")
+    print(f""3, threshold={t1}: {status4}"")",True,0,8410,137_8.py
+137,8,Test simple conditional expressions,"Design and implement a function that uses the ternary operator (conditional expression) to assign a status string based on whether a variable is greater than, less than, or equal to a threshold.","def assign_status(value, threshold):
+    return ""Greater"" if value > threshold else (""Less"" if value < threshold else ""Equal"")
+if __name__ == '__main__':
+    x = 10
+    t1 = 5
+    t2 = 10
+    status1 = assign_status(x, t1)
+    status2 = assign_status(x, t2)
+    status3 = assign_status(10, 10)
+    print(f""x={x}, threshold={t1}, status={status1}"")
+    print(f""x={x}, threshold={t2}, status={status2}"")
+    print(f""x=10, threshold=10, status={status3}"")",True,1,8411,137_8_1.py
+137,8,Test simple conditional expressions,"Design and implement a function that uses the ternary operator (conditional expression) to assign a status string based on whether a variable is greater than, less than, or equal to a threshold.","def assign_status(value, threshold):
+    return ""Greater"" if value > threshold else (""Less"" if value < threshold else ""Equal"")
+if __name__ == '__main__':
+    x = 10
+    t1 = 5
+    t2 = 10
+    t3 = 10
+    status1 = assign_status(x, t1)
+    status2 = assign_status(x, t2)
+    status3 = assign_status(x, t3)
+    print(f""x={x}, threshold={t1}: {status1}"")
+    print(f""x={x}, threshold={t2}: {status2}"")
+    print(f""x={x}, threshold={t3}: {status3}"")",True,2,8412,137_8_2.py
+137,8,Test simple conditional expressions,"Design and implement a function that uses the ternary operator (conditional expression) to assign a status string based on whether a variable is greater than, less than, or equal to a threshold.","def assign_status(value, threshold):
+    status = value > threshold
+    return ""Greater"" if status else (""Less"" if value < threshold else ""Equal"")
+if __name__ == '__main__':
+    x = 10
+    t1 = 5
+    t2 = 10
+    print(f""Value: {x}, Threshold: {t1}, Status: {assign_status(x, t1)}"")
+    print(f""Value: {x}, Threshold: {t2}, Status: {assign_status(x, t2)}"")
+    print(f""Value: 3, Threshold: 5, Status: {assign_status(3, 5)}"")
+    print(f""Value: 5, Threshold: 5, Status: {assign_status(5, 5)}"")
+    print(f""Value: 15, Threshold: 10, Status: {assign_status(15, 10)}"")
+    print(f""Value: 2, Threshold: 10, Status: {assign_status(2, 10)}"")",True,3,8413,137_8_3.py
+137,8,Test simple conditional expressions,"Design and implement a function that uses the ternary operator (conditional expression) to assign a status string based on whether a variable is greater than, less than, or equal to a threshold.","def assign_status(value, threshold):
+    return ""Greater"" if value > threshold else (""Less"" if value < threshold else ""Equal"")
+if __name__ == '__main__':
+    x = 10
+    t1 = 5
+    t2 = 10
+    status1 = assign_status(x, t1)
+    status2 = assign_status(x, t2)
+    status3 = assign_status(10, 10)
+    status4 = assign_status(3, 5)
+    print(f""Value: {x}, Threshold: {t1}, Status: {status1}"")
+    print(f""Value: {x}, Threshold: {t2}, Status: {status2}"")
+    print(f""Value: 10, Threshold: 10, Status: {status3}"")
+    print(f""Value: 3, Threshold: 5, Status: {status4}"")",True,4,8414,137_8_4.py
+137,8,Test simple conditional expressions,"Design and implement a function that uses the ternary operator (conditional expression) to assign a status string based on whether a variable is greater than, less than, or equal to a threshold.","def assign_status(value, threshold):
+    return ""Greater"" if value > threshold else (""Less"" if value < threshold else ""Equal"")
+if __name__ == '__main__':
+    x = 10
+    t1 = 5
+    t2 = 10
+    t3 = 10
+    print(f""x={x}, threshold={t1}: {assign_status(x, t1)}"")
+    print(f""x={x}, threshold={t2}: {assign_status(x, t2)}"")
+    print(f""x={x}, threshold={t3}: {assign_status(x, t3)}"")
+    x = 20
+    print(f""x={x}, threshold={t1}: {assign_status(x, t1)}"")
+    print(f""x={x}, threshold={t2}: {assign_status(x, t2)}"")
+    print(f""x={x}, threshold={t3}: {assign_status(x, t3)}"")",True,5,8415,137_8_5.py
+137,9,Test simple conditional expressions,"Write an efficient Python function that processes a list of strings and uses conditional expressions to filter and categorize them into 'Short', 'Medium', or 'Long' based on length.","def categorize_strings(string_list):
+    result = []
+    for s in string_list:
+        if len(s) < 10:
+            category = 'Short'
+        elif len(s) < 50:
+            category = 'Medium'
+        else:
+            category = 'Long'
+        result.append(category)
+    return result
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit"", ""watermelon"", ""blueberry"", ""raspberry"", ""orange"", ""pineapple"", ""this is a very long string""]
+    categorized = categorize_strings(sample_strings)
+    print(categorized)",True,0,8416,137_9.py
+137,9,Test simple conditional expressions,"Write an efficient Python function that processes a list of strings and uses conditional expressions to filter and categorize them into 'Short', 'Medium', or 'Long' based on length.","def categorize_strings(string_list):
+    result = []
+    for s in string_list:
+        if len(s) < 10:
+            category = 'Short'
+        elif len(s) < 50:
+            category = 'Medium'
+        else:
+            category = 'Long'
+        result.append(category)
+    return result
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit"", ""watermelon"", ""blueberry"", ""raspberry"", ""orange"", ""pineapple"", ""this is a medium length string""]
+    categorized = categorize_strings(sample_strings)
+    print(categorized)",True,1,8417,137_9_1.py
+137,9,Test simple conditional expressions,"Write an efficient Python function that processes a list of strings and uses conditional expressions to filter and categorize them into 'Short', 'Medium', or 'Long' based on length.","def categorize_strings(string_list):
+    result = []
+    for s in string_list:
+        if len(s) < 10:
+            category = 'Short'
+        elif len(s) < 50:
+            category = 'Medium'
+        else:
+            category = 'Long'
+        result.append(category)
+    return result
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit"", ""watermelon"", ""blueberry"", ""raspberry"", ""orange"", ""pineapple"", ""this is a very long sentence""]
+    categorized = categorize_strings(sample_strings)
+    print(categorized)",True,2,8418,137_9_2.py
+137,9,Test simple conditional expressions,"Write an efficient Python function that processes a list of strings and uses conditional expressions to filter and categorize them into 'Short', 'Medium', or 'Long' based on length.","def categorize_strings(string_list):
+    result = []
+    for s in string_list:
+        if len(s) < 10:
+            category = 'Short'
+        elif len(s) < 50:
+            category = 'Medium'
+        else:
+            category = 'Long'
+        result.append(category)
+    return result
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit"", ""watermelon"", ""blueberry""]
+    categorized = categorize_strings(sample_strings)
+    print(categorized)",True,3,8419,137_9_3.py
+137,9,Test simple conditional expressions,"Write an efficient Python function that processes a list of strings and uses conditional expressions to filter and categorize them into 'Short', 'Medium', or 'Long' based on length.","def categorize_strings(string_list):
+    result = []
+    for s in string_list:
+        if len(s) < 10:
+            category = 'Short'
+        elif len(s) < 50:
+            category = 'Medium'
+        else:
+            category = 'Long'
+        result.append((s, category))
+    return result
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit"", ""watermelon"", ""blueberry"", ""raspberry"", ""orange"", ""pineapple"", ""this is a very long string""]
+    categorized_data = categorize_strings(sample_strings)
+    for original, category in categorized_data:
+        print(f""'{original}': {category}"")",True,4,8420,137_9_4.py
+137,11,Test simple conditional expressions,"Implement an optimized function named 'check_grade' that accepts a numerical score and returns the corresponding letter grade ('A', 'B', 'C', 'D', 'F') based on simple conditional logic.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(f""Score 95: {check_grade(95)}"")
+    print(f""Score 82: {check_grade(82)}"")
+    print(f""Score 70: {check_grade(70)}"")
+    print(f""Score 65: {check_grade(65)}"")
+    print(f""Score 55: {check_grade(55)}"")
+    print(f""Score 100: {check_grade(100)}"")
+    print(f""Score 40: {check_grade(40)}"")",True,0,8421,137_11.py
+137,11,Test simple conditional expressions,"Implement an optimized function named 'check_grade' that accepts a numerical score and returns the corresponding letter grade ('A', 'B', 'C', 'D', 'F') based on simple conditional logic.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(f""Score 95: {check_grade(95)}"")
+    print(f""Score 82: {check_grade(82)}"")
+    print(f""Score 70: {check_grade(70)}"")
+    print(f""Score 65: {check_grade(65)}"")
+    print(f""Score 55: {check_grade(55)}"")
+    print(f""Score 90: {check_grade(90)}"")
+    print(f""Score 40: {check_grade(40)}"")",True,1,8422,137_11_1.py
+137,11,Test simple conditional expressions,"Implement an optimized function named 'check_grade' that accepts a numerical score and returns the corresponding letter grade ('A', 'B', 'C', 'D', 'F') based on simple conditional logic.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(f""Score 95: {check_grade(95)}"")
+    print(f""Score 88: {check_grade(88)}"")
+    print(f""Score 72: {check_grade(72)}"")
+    print(f""Score 60: {check_grade(60)}"")
+    print(f""Score 55: {check_grade(55)}"")
+    print(f""Score 100: {check_grade(100)}"")
+    print(f""Score 45: {check_grade(45)}"")",True,2,8423,137_11_2.py
+137,11,Test simple conditional expressions,"Implement an optimized function named 'check_grade' that accepts a numerical score and returns the corresponding letter grade ('A', 'B', 'C', 'D', 'F') based on simple conditional logic.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(check_grade(95))
+    print(check_grade(82))
+    print(check_grade(70))
+    print(check_grade(65))
+    print(check_grade(55))",True,3,8424,137_11_3.py
+137,11,Test simple conditional expressions,"Implement an optimized function named 'check_grade' that accepts a numerical score and returns the corresponding letter grade ('A', 'B', 'C', 'D', 'F') based on simple conditional logic.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(f""Score 95: {check_grade(95)}"")
+    print(f""Score 88: {check_grade(88)}"")
+    print(f""Score 72: {check_grade(72)}"")
+    print(f""Score 60: {check_grade(60)}"")
+    print(f""Score 55: {check_grade(55)}"")
+    print(f""Score 90: {check_grade(90)}"")
+    print(f""Score 45: {check_grade(45)}"")",True,4,8425,137_11_4.py
+137,11,Test simple conditional expressions,"Implement an optimized function named 'check_grade' that accepts a numerical score and returns the corresponding letter grade ('A', 'B', 'C', 'D', 'F') based on simple conditional logic.","def check_grade(score):
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+if __name__ == '__main__':
+    print(f""Score 95: {check_grade(95)}"")
+    print(f""Score 88: {check_grade(88)}"")
+    print(f""Score 72: {check_grade(72)}"")
+    print(f""Score 65: {check_grade(65)}"")
+    print(f""Score 59: {check_grade(59)}"")
+    print(f""Score 100: {check_grade(100)}"")
+    print(f""Score 40: {check_grade(40)}"")",True,5,8426,137_11_5.py
+136,13,Write code for logical operators,"Write a robust script that reads two boolean values from user input and then uses all three logical operators (&, |, !) to generate and print all possible combinations of truth values for a set of predefined conditions.",,False,0,8427,136_13.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""a is the largest"")
+    elif b >= a and b >= c:
+        print(f""b is the largest"")
+    else:
+        print(f""c is the largest"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(7, 7, 7)
+    find_largest(15, 12, 18)",True,0,8428,137_13.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""a is the largest"")
+    elif b >= a and b >= c:
+        print(f""b is the largest"")
+    else:
+        print(f""c is the largest"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(7, 7, 7)
+    find_largest(42, 15, 33)",True,1,8429,137_13_1.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""Largest: {a}"")
+    elif b >= a and b >= c:
+        print(f""Largest: {b}"")
+    else:
+        print(f""Largest: {c}"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(7, 7, 7)
+    find_largest(42, 15, 30)",True,2,8430,137_13_2.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""Largest: {a}"")
+    elif b >= a and b >= c:
+        print(f""Largest: {b}"")
+    else:
+        print(f""Largest: {c}"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(7, 7, 7)
+    find_largest(42, 15, 33)",True,3,8431,137_13_3.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""{a} is the largest"")
+    elif b >= a and b >= c:
+        print(f""{b} is the largest"")
+    else:
+        print(f""{c} is the largest"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(42, 15, 30)",True,4,8432,137_13_4.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""Largest: {a}"")
+    elif b >= a and b >= c:
+        print(f""Largest: {b}"")
+    else:
+        print(f""Largest: {c}"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(7, 7, 7)
+    find_largest(15, 12, 18)",True,5,8433,137_13_5.py
+137,13,Test simple conditional expressions,"Write a single, efficient Python function that takes three integer arguments (a, b, c) and uses nested conditional expressions to determine and print which of the three numbers is the largest.","def find_largest(a, b, c):
+    if a >= b and a >= c:
+        print(f""Largest is: {a}"")
+    elif b >= a and b >= c:
+        print(f""Largest is: {b}"")
+    else:
+        print(f""Largest is: {c}"")
+if __name__ == '__main__':
+    find_largest(10, 5, 20)
+    find_largest(3, 8, 1)
+    find_largest(7, 7, 7)
+    find_largest(42, 11, 33)",True,6,8434,137_13_6.py
+137,14,Test simple conditional expressions,"Generate a comprehensive test program that uses conditional statements to check if a number is positive, negative, or zero, and ensures the output is handled robustly for all three cases.","def check_number(number):
+    if number > 0:
+        print(""Positive"")
+    elif number < 0:
+        print(""Negative"")
+    else:
+        print(""Zero"")
+if __name__ == '__main__':
+    test_numbers = [10, -5, 0, 3.14, -100]
+    for num in test_numbers:
+        check_number(num)",True,0,8435,137_14.py
+137,12,Test simple conditional expressions,Develop a class named 'ConditionalTester' with a method to evaluate a set of simple boolean conditions and print the appropriate outcome for each test case.,"class ConditionalTester:
+    def evaluate_conditions(self, test_cases):
+        for case_id, conditions in test_cases.items():
+            result = True
+            for condition_name, condition_value in conditions.items():
+                if not eval(f""{condition_value}""):
+                    result = False
+                    break
+            print(f""Test Case {case_id}: {'PASS' if result else 'FAIL'}"")
+if __name__ == '__main__':
+    tester = ConditionalTester()
+    sample_tests = {
+        1: {
+            ""A > 5"": True,
+            ""B == 10"": False
+        },
+        2: {
+            ""C < 20"": True,
+            ""D == 5"": True
+        },
+        3: {
+            ""E > 100"": False,
+            ""F == 50"": True
+        }
+    }
+    tester.evaluate_conditions(sample_tests)",True,0,8436,137_12.py
+137,12,Test simple conditional expressions,Develop a class named 'ConditionalTester' with a method to evaluate a set of simple boolean conditions and print the appropriate outcome for each test case.,"class ConditionalTester:
+    def evaluate_conditions(self, test_cases):
+        for i, case in enumerate(test_cases):
+            result = False
+            if case.get('condition_a', False) and case.get('condition_b', False):
+                result = True
+            print(f""Test Case {i+1}: Result is {result}"")
+if __name__ == '__main__':
+    tester = ConditionalTester()
+    sample_tests = [
+        {'condition_a': True, 'condition_b': True},
+        {'condition_a': True, 'condition_b': False},
+        {'condition_a': False, 'condition_b': True},
+        {'condition_a': False, 'condition_b': False},
+        {'condition_a': True, 'condition_b': True}
+    ]
+    tester.evaluate_conditions(sample_tests)",True,1,8437,137_12_1.py
+137,12,Test simple conditional expressions,Develop a class named 'ConditionalTester' with a method to evaluate a set of simple boolean conditions and print the appropriate outcome for each test case.,"class ConditionalTester:
+    def evaluate_conditions(self, test_cases):
+        for case_name, conditions in test_cases.items():
+            result = True
+            for condition_name, condition_value in conditions.items():
+                if not condition_value:
+                    result = False
+                    break
+            print(f""Test Case: {case_name}, Result: {'PASS' if result else 'FAIL'}"")
+if __name__ == '__main__':
+    tester = ConditionalTester()
+    sample_tests = {
+        ""Test A"": {
+            ""is_positive"": True,
+            ""is_even"": False
+        },
+        ""Test B"": {
+            ""is_positive"": True,
+            ""is_even"": True
+        },
+        ""Test C"": {
+            ""is_positive"": False,
+            ""is_even"": True
+        }
+    }
+    tester.evaluate_conditions(sample_tests)",True,2,8438,137_12_2.py
+137,12,Test simple conditional expressions,Develop a class named 'ConditionalTester' with a method to evaluate a set of simple boolean conditions and print the appropriate outcome for each test case.,"class ConditionalTester:
+    def evaluate_conditions(self, test_cases):
+        for case in test_cases:
+            result = False
+            if case.get('condition_a', False) and case.get('condition_b', False):
+                result = True
+            print(f""Test Case: {case.get('name', 'Unnamed')}, Result: {result}"")
+if __name__ == '__main__':
+    tester = ConditionalTester()
+    sample_tests = [
+        {'name': 'Test 1', 'condition_a': True, 'condition_b': True},
+        {'name': 'Test 2', 'condition_a': True, 'condition_b': False},
+        {'name': 'Test 3', 'condition_a': False, 'condition_b': True},
+        {'name': 'Test 4', 'condition_a': False, 'condition_b': False},
+        {'name': 'Test 5', 'condition_a': True, 'condition_b': True}
+    ]
+    tester.evaluate_conditions(sample_tests)",True,3,8439,137_12_3.py
+137,12,Test simple conditional expressions,Develop a class named 'ConditionalTester' with a method to evaluate a set of simple boolean conditions and print the appropriate outcome for each test case.,"class ConditionalTester:
+    def evaluate_conditions(self, test_cases):
+        for case_id, conditions in test_cases.items():
+            result = False
+            for condition_name, condition_value in conditions.items():
+                if condition_value:
+                    result = True
+                    break
+            print(f""Test Case {case_id}: Result is {result}"")
+if __name__ == '__main__':
+    tester = ConditionalTester()
+    sample_tests = {
+        1: {""is_positive"": True, ""is_even"": False},
+        2: {""is_positive"": False, ""is_even"": True},
+        3: {""is_positive"": True, ""is_even"": True},
+        4: {""is_positive"": False, ""is_even"": False}
+    }
+    tester.evaluate_conditions(sample_tests)",True,4,8440,137_12_4.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def and_truth_table(a, b):
+    results = []
+    if a and b:
+        results.append((a, b, False))
+    elif a and not b:
+        results.append((a, b, False))
+    elif not a and b:
+        results.append((a, b, False))
+    else:
+        results.append((a, b, True))
+    return results
+if __name__ == '__main__':
+    input_a = False
+    input_b = True
+    truth_table = and_truth_table(input_a, input_b)
+    for a, b, result in truth_table:
+        print(f""Input A: {a}, Input B: {b}, Result (A AND B): {result}"")",True,0,8441,138_0.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def generate_and_truth_table(a, b):
+    results = []
+    if a:
+        if b:
+            results.append((a, b, False))
+        else:
+            results.append((a, b, False))
+    else:
+        results.append((a, b, False))
+    return results
+if __name__ == '__main__':
+    input_a = True
+    input_b = False
+    truth_table = generate_and_truth_table(input_a, input_b)
+    for a_val, b_val, result in truth_table:
+        print(f""A: {a_val}, B: {b_val}, A AND B: {result}"")",True,1,8442,138_0_1.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def generate_and_truth_table(a, b):
+    results = []
+    if a == False:
+        results.append((False, False))
+    elif a == True:
+        if b == False:
+            results.append((False, False))
+        elif b == True:
+            results.append((True, True))
+    return results
+if __name__ == '__main__':
+    input_a = False
+    input_b = True
+    truth_table = generate_and_truth_table(input_a, input_b)
+    print(f""Input A: {input_a}, Input B: {input_b}"")
+    print(""Truth Table for A AND B:"")
+    for row in truth_table:
+        print(f""A: {row[0]}, B: {row[1]} -> A AND B: {row[0] and row[1]}"")",True,2,8443,138_0_2.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def generate_and_truth_table(a, b):
+    results = []
+    if a and b:
+        results.append((a, b, False))
+    elif a and not b:
+        results.append((a, b, False))
+    elif not a and b:
+        results.append((a, b, False))
+    else:
+        results.append((a, b, True))
+    return results
+if __name__ == '__main__':
+    input_a = False
+    input_b = True
+    truth_table = generate_and_truth_table(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(""Truth Table for A AND B:"")
+    for a, b, result in truth_table:
+        print(f""A={a}, B={b} -> A AND B = {result}"")",True,3,8444,138_0_3.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def generate_truth_table_and():
+    input_a = False
+    input_b = False
+    print(""Input A | Input B | A AND B"")
+    print(""-------------------------"")
+    results = [
+        (input_a, input_b, input_a and input_b)
+    ]
+    for a, b, result in results:
+        print(f""{a} | {b} | {result}"")
+if __name__ == '__main__':
+    generate_truth_table_and()",True,4,8445,138_0_4.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def and_truth_table():
+    a = False
+    b = False
+    print(""A | B | A AND B"")
+    print(""-----------------"")
+    if a and b:
+        print(f""{'False'}|{'False'}|{'True'}"")
+    elif a and not b:
+        print(f""{'False'}|{'True'}|{'False'}"")
+    elif not a and b:
+        print(f""{'True'}|{'False'}|{'False'}"")
+    else:
+        print(f""{'True'}|{'True'}|{'False'}"")
+if __name__ == '__main__':
+    and_truth_table()",True,5,8446,138_0_5.py
+138,0,Understand boolean truth tables,"Write a complete, well-commented Python script that generates the truth table for a single boolean operation (AND) involving two boolean inputs.","def and_truth_table():
+    a = False
+    b = False
+    print(""A | B | A AND B"")
+    print(""-----------------"")
+    if a:
+        if b:
+            result = True
+        else:
+            result = False
+    else:
+        result = False
+    print(f""{a} | {b} | {result}"")
+if __name__ == '__main__':
+    and_truth_table()",True,6,8447,138_0_6.py
+138,1,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts a boolean operator (e.g., 'and', 'or', 'not') and two input boolean values, returning the full truth table as a dictionary.","def generate_truth_table(operator, a, b):
+    results = {}
+    if operator == 'and':
+        results[(a, b)] = a and b
+    elif operator == 'or':
+        results[(a, b)] = a or b
+    elif operator == 'not':
+        results[(a, b)] = not a
+    else:
+        raise ValueError(""Unsupported operator"")
+    return results
+if __name__ == '__main__':
+    operator_and = 'and'
+    a_and = True
+    b_and = False
+    truth_table_and = generate_truth_table(operator_and, a_and, b_and)
+    print(f""Truth Table for {operator_and} ({a_and}, {b_and}): {truth_table_and}"")
+    operator_or = 'or'
+    a_or = True
+    b_or = True
+    truth_table_or = generate_truth_table(operator_or, a_or, b_or)
+    print(f""Truth Table for {operator_or} ({a_or}, {b_or}): {truth_table_or}"")
+    operator_not = 'not'
+    a_not = True
+    b_not = False
+    truth_table_not = generate_truth_table(operator_not, a_not, b_not)
+    print(f""Truth Table for {operator_not} ({a_not}, {b_not}): {truth_table_not}"")",True,0,8448,138_1.py
+138,1,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts a boolean operator (e.g., 'and', 'or', 'not') and two input boolean values, returning the full truth table as a dictionary.","def generate_truth_table(operator, a, b):
+    results = {}
+    if operator == 'and':
+        results[(a, b)] = a and b
+    elif operator == 'or':
+        results[(a, b)] = a or b
+    elif operator == 'not':
+        results[(a, b)] = not a
+    else:
+        raise ValueError(""Unsupported operator"")
+    return results
+if __name__ == '__main__':
+    operator_and = 'and'
+    a_and = True
+    b_and = False
+    truth_table_and = generate_truth_table(operator_and, a_and, b_and)
+    print(f""Truth Table for {operator_and} ({a_and}, {b_and}): {truth_table_and}"")
+    operator_or = 'or'
+    a_or = True
+    b_or = False
+    truth_table_or = generate_truth_table(operator_or, a_or, b_or)
+    print(f""Truth Table for {operator_or} ({a_or}, {b_or}): {truth_table_or}"")
+    operator_not = 'not'
+    a_not = True
+    b_not = False
+    truth_table_not = generate_truth_table(operator_not, a_not, b_not)
+    print(f""Truth Table for {operator_not} ({a_not}, {b_not}): {truth_table_not}"")",True,1,8449,138_1_1.py
+138,1,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts a boolean operator (e.g., 'and', 'or', 'not') and two input boolean values, returning the full truth table as a dictionary.","def generate_truth_table(operator, a, b):
+    results = {}
+    if operator == 'and':
+        results[(a, b)] = a and b
+    elif operator == 'or':
+        results[(a, b)] = a or b
+    elif operator == 'not':
+        results[(a, b)] = not a
+    else:
+        raise ValueError(""Unsupported operator"")
+    return results
+if __name__ == '__main__':
+    operator_and = 'and'
+    a_and = True
+    b_and = False
+    table_and = generate_truth_table(operator_and, a_and, b_and)
+    print(f""Truth Table for {operator_and} ({a_and}, {b_and}): {table_and}"")
+    operator_or = 'or'
+    a_or = True
+    b_or = False
+    table_or = generate_truth_table(operator_or, a_or, b_or)
+    print(f""Truth Table for {operator_or} ({a_or}, {b_or}): {table_or}"")
+    operator_not = 'not'
+    a_not = True
+    b_not = False
+    table_not = generate_truth_table(operator_not, a_not, b_not)
+    print(f""Truth Table for {operator_not} ({a_not}, {b_not}): {table_not}"")",True,2,8450,138_1_2.py
+138,3,Understand boolean truth tables,Write a concise and efficient Python function that takes a list of boolean inputs and generates a truth table for the logical OR operation across all possible combinations.,"def generate_or_truth_table(bool_list):
+    n = len(bool_list)
+    table = []
+    for i in range(2**n):
+        combination = []
+        temp = i
+        for _ in range(n):
+            combination.append(bool(temp % 2))
+            temp //= 2
+        or_result = False
+        for val in combination:
+            if val:
+                or_result = True
+        table.append(tuple(combination) + (or_result,))
+    return table
+if __name__ == '__main__':
+    sample_inputs = [False, True]
+    truth_table = generate_or_truth_table(sample_inputs)
+    for row in truth_table:
+        print(row)",True,0,8451,138_3.py
+138,3,Understand boolean truth tables,Write a concise and efficient Python function that takes a list of boolean inputs and generates a truth table for the logical OR operation across all possible combinations.,"def generate_or_truth_table(bool_list):
+    n = len(bool_list)
+    table = []
+    for i in range(2**n):
+        combination = []
+        temp = i
+        for _ in range(n):
+            combination.append(bool(temp % 2))
+            temp //= 2
+        or_result = False
+        for val in combination:
+            if val:
+                or_result = True
+                break
+        table.append(tuple(combination))
+        table.append(or_result)
+    return table
+if __name__ == '__main__':
+    sample_inputs = [False, True]
+    truth_table = generate_or_truth_table(sample_inputs)
+    for row in truth_table:
+        print(row)",True,1,8452,138_3_1.py
+138,3,Understand boolean truth tables,Write a concise and efficient Python function that takes a list of boolean inputs and generates a truth table for the logical OR operation across all possible combinations.,"def generate_or_truth_table(bool_list):
+    n = len(bool_list)
+    rows = 2**n
+    truth_table = []
+    for i in range(rows):
+        row = []
+        for j in range(n):
+            if (i >> j) & 1:
+                row.append(bool_list[j])
+            else:
+                row.append(not bool_list[j])
+        truth_table.append(row)
+    return truth_table
+if __name__ == '__main__':
+    sample_inputs = [False, True]
+    truth_table_result = generate_or_truth_table(sample_inputs)
+    for row in truth_table_result:
+        print(row)",True,2,8453,138_3_2.py
+138,2,Understand boolean truth tables,Develop a class named 'BooleanLogic' with a method 'calculate_table' that can generate and display the truth table for all combinations of two boolean variables (P and Q) for the logical equivalence (P AND Q).,"class BooleanLogic:
+    def calculate_table(self):
+        P_values = [0, 1]
+        Q_values = [0, 1]
+        results = []
+        for p in P_values:
+            for q in Q_values:
+                p_and_q = p & q
+                results.append((p, q, p_and_q))
+        print(""P | Q | P AND Q"")
+        print(""---|---|---------"")
+        for p, q, result in results:
+            print(f""{p} | {q} | {result}"")
+if __name__ == '__main__':
+    logic = BooleanLogic()
+    logic.calculate_table()",True,0,8454,138_2.py
+138,2,Understand boolean truth tables,Develop a class named 'BooleanLogic' with a method 'calculate_table' that can generate and display the truth table for all combinations of two boolean variables (P and Q) for the logical equivalence (P AND Q).,"class BooleanLogic:
+    def calculate_table(self):
+        P_values = [0, 1]
+        Q_values = [0, 1]
+        results = []
+        operation = lambda p, q: p and q
+        for p in P_values:
+            for q in Q_values:
+                result = operation(p, q)
+                results.append((p, q, result))
+        return results
+if __name__ == '__main__':
+    bl = BooleanLogic()
+    table = bl.calculate_table()
+    print(""P | Q | P AND Q"")
+    for p, q, result in table:
+        print(f""{p} | {q} | {result}"")",True,1,8455,138_2_1.py
+138,2,Understand boolean truth tables,Develop a class named 'BooleanLogic' with a method 'calculate_table' that can generate and display the truth table for all combinations of two boolean variables (P and Q) for the logical equivalence (P AND Q).,"class BooleanLogic:
+    def calculate_table(self):
+        P_values = [0, 1]
+        Q_values = [0, 1]
+        results = []
+        operation = lambda p, q: p and q
+        for p in P_values:
+            for q in Q_values:
+                result = operation(p, q)
+                results.append((p, q, result))
+        return results
+if __name__ == '__main__':
+    bl = BooleanLogic()
+    table = bl.calculate_table()
+    print(""P | Q | P AND Q"")
+    print(""---|---|---------"")
+    for p, q, result in table:
+        print(f""{p} | {q} | {result}"")",True,2,8456,138_2_2.py
+138,2,Understand boolean truth tables,Develop a class named 'BooleanLogic' with a method 'calculate_table' that can generate and display the truth table for all combinations of two boolean variables (P and Q) for the logical equivalence (P AND Q).,"class BooleanLogic:
+    def calculate_table(self):
+        P_values = [0, 1]
+        Q_values = [0, 1]
+        result = []
+        for p in P_values:
+            for q in Q_values:
+                p_and_q = p & q
+                result.append((p, q, p_and_q))
+        return result
+if __name__ == '__main__':
+    bl = BooleanLogic()
+    table = bl.calculate_table()
+    print(""P | Q | P AND Q"")
+    print(""---|---|---------"")
+    for p, q, result in table:
+        print(f""{p} | {q} | {result}"")",True,3,8457,138_2_3.py
+138,4,Understand boolean truth tables,"Implement a function that takes two boolean inputs and returns a tuple representing the truth table for all four possible combinations of (True, True), (True, False), (False, True), and (False, False).","def truth_table(a, b):
+    results = [
+        (a, b),
+        (a, not b),
+        (not a, b),
+        (not a, not b)
+    ]
+    return tuple(results)
+if __name__ == '__main__':
+    print(truth_table(True, True))
+    print(truth_table(True, False))
+    print(truth_table(False, True))
+    print(truth_table(False, False))",True,0,8458,138_4.py
+138,4,Understand boolean truth tables,"Implement a function that takes two boolean inputs and returns a tuple representing the truth table for all four possible combinations of (True, True), (True, False), (False, True), and (False, False).","def truth_table(a, b):
+    result = [
+        (a, b),
+        (a, not b),
+        (not a, b),
+        (not a, not b)
+    ]
+    return tuple(result)
+if __name__ == '__main__':
+    print(truth_table(True, True))
+    print(truth_table(True, False))
+    print(truth_table(False, True))
+    print(truth_table(False, False))",True,1,8459,138_4_1.py
+138,4,Understand boolean truth tables,"Implement a function that takes two boolean inputs and returns a tuple representing the truth table for all four possible combinations of (True, True), (True, False), (False, True), and (False, False).","def truth_table(a, b):
+    result = [
+        (a, b),
+        (a, not b),
+        (not a, b),
+        (not a, not b)
+    ]
+    return tuple(result)
+if __name__ == '__main__':
+    a_val = True
+    b_val = True
+    table = truth_table(a_val, b_val)
+    print(table)",True,2,8460,138_4_2.py
+138,4,Understand boolean truth tables,"Implement a function that takes two boolean inputs and returns a tuple representing the truth table for all four possible combinations of (True, True), (True, False), (False, True), and (False, False).","def truth_table(a, b):
+    results = [
+        (a, b),
+        (a, not b),
+        (not a, b),
+        (not a, not b)
+    ]
+    return tuple(results)
+if __name__ == '__main__':
+    a_val = True
+    b_val = True
+    table = truth_table(a_val, b_val)
+    print(table)",True,3,8461,138_4_3.py
+137,10,Test simple conditional expressions,"Write a complete, well-documented Python script that tests various simple conditional expressions using if, elif, and else statements with predefined input variables.","def test_conditionals():
+    a = 10
+    b = 20
+    c = 30
+    if a > 15:
+        result = ""A is greater than 15""
+    elif b > 15:
+        result = ""B is greater than 15""
+    else:
+        result = ""Neither A nor B is greater than 15""
+    if c == 30:
+        status = ""C is exactly 30""
+    elif c < 30:
+        status = ""C is less than 30""
+    else:
+        status = ""C is greater than 30""
+    print(f""Test 1 Result: {result}"")
+    print(f""Test 2 Result: {status}"")
+if __name__ == '__main__':
+    test_conditionals()",True,0,8462,137_10.py
+137,10,Test simple conditional expressions,"Write a complete, well-documented Python script that tests various simple conditional expressions using if, elif, and else statements with predefined input variables.","def test_conditionals():
+    a = 10
+    b = 20
+    c = 30
+    if a > 15:
+        result = ""A is greater than 15""
+    elif b > 15:
+        result = ""B is greater than 15""
+    else:
+        result = ""Neither A nor B is greater than 15""
+    if c == 30:
+        status = ""C is exactly 30""
+    elif c < 30:
+        status = ""C is less than 30""
+    else:
+        status = ""C is greater than 30""
+    print(result)
+    print(status)
+if __name__ == '__main__':
+    test_conditionals()",True,1,8463,137_10_1.py
+138,7,Understand boolean truth tables,Create an optimized function that takes a list of boolean values and calculates and returns the truth table for the implication (P -> Q) for every pair in the list.,"def calculate_implication_truth_table(list_p, list_q):
+    truth_table = []
+    for p, q in zip(list_p, list_q):
+        result = not p or q
+        truth_table.append((p, q, result))
+    return truth_table
+if __name__ == '__main__':
+    P_values = [True, False, True, False]
+    Q_values = [True, True, False, False]
+    result = calculate_implication_truth_table(P_values, Q_values)
+    for p, q, r in result:
+        print(f""P={p}, Q={q} => P -> Q = {r}"")",True,0,8464,138_7.py
+138,7,Understand boolean truth tables,Create an optimized function that takes a list of boolean values and calculates and returns the truth table for the implication (P -> Q) for every pair in the list.,"def calculate_implication_truth_table(list_p, list_q):
+    truth_table = []
+    for p, q in zip(list_p, list_q):
+        result = not p or q
+        truth_table.append((p, q, result))
+    return truth_table
+if __name__ == '__main__':
+    P_values = [True, False, True, False]
+    Q_values = [True, True, False, False]
+    result = calculate_implication_truth_table(P_values, Q_values)
+    for p, q, r in result:
+        print(f""P: {p}, Q: {q} => P -> Q: {r}"")",True,1,8465,138_7_1.py
+138,7,Understand boolean truth tables,Create an optimized function that takes a list of boolean values and calculates and returns the truth table for the implication (P -> Q) for every pair in the list.,"def calculate_implication_truth_table(list_p, list_q):
+    truth_table = []
+    for p, q in zip(list_p, list_q):
+        result = not p or q
+        truth_table.append((p, q, result))
+    return truth_table
+if __name__ == '__main__':
+    P_values = [True, False, True, False]
+    Q_values = [True, True, False, False]
+    result = calculate_implication_truth_table(P_values, Q_values)
+    for p, q, r in result:
+        print(f""P={p}, Q={q} => P -> Q is {r}"")",True,2,8466,138_7_2.py
+138,7,Understand boolean truth tables,Create an optimized function that takes a list of boolean values and calculates and returns the truth table for the implication (P -> Q) for every pair in the list.,"def calculate_implication_truth_table(list_p, list_q):
+    truth_table = []
+    for p, q in zip(list_p, list_q):
+        result = not p or q
+        truth_table.append((p, q, result))
+    return truth_table
+if __name__ == '__main__':
+    p_values = [True, False, True, False]
+    q_values = [True, True, False, False]
+    result = calculate_implication_truth_table(p_values, q_values)
+    for p, q, r in result:
+        print(f""P: {p}, Q: {q}, P -> Q: {r}"")",True,3,8467,138_7_3.py
+138,8,Understand boolean truth tables,"Write a complete, runnable Python program that uses nested loops to systematically generate and print the full truth table for a three-variable boolean expression (P, Q, R) for the condition (P OR Q) AND (NOT R).","if __name__ == '__main__':
+    P_values = [0, 1]
+    Q_values = [0, 1]
+    R_values = [0, 1]
+    print(""P | Q | R | (P OR Q) AND (NOT R)"")
+    print(""-"" * 40)
+    for p in P_values:
+        for q in Q_values:
+            for r in R_values:
+                p_or_q = p or q
+                not_r = not r
+                result = p_or_q and not_r
+                print(f""{p} | {q} | {r} | {result}"")",True,0,8468,138_8.py
+138,8,Understand boolean truth tables,"Write a complete, runnable Python program that uses nested loops to systematically generate and print the full truth table for a three-variable boolean expression (P, Q, R) for the condition (P OR Q) AND (NOT R).","if __name__ == '__main__':
+    print(""P | Q | R | (P OR Q) AND (NOT R)"")
+    for p in [0, 1]:
+        for q in [0, 1]:
+            for r in [0, 1]:
+                p_or_q = p or q
+                not_r = not r
+                result = p_or_q and not_r
+                print(f""{p} | {q} | {r} | {result}"")",True,1,8469,138_8_1.py
+138,8,Understand boolean truth tables,"Write a complete, runnable Python program that uses nested loops to systematically generate and print the full truth table for a three-variable boolean expression (P, Q, R) for the condition (P OR Q) AND (NOT R).","if __name__ == '__main__':
+    p_values = [0, 1]
+    q_values = [0, 1]
+    r_values = [0, 1]
+    print(""P | Q | R | (P OR Q) AND (NOT R)"")
+    print(""-"" * 40)
+    for p in p_values:
+        for q in q_values:
+            for r in r_values:
+                p_or_q = p or q
+                not_r = not r
+                result = p_or_q and not_r
+                print(f""{p} | {q} | {r} | {result}"")",True,2,8470,138_8_2.py
+138,8,Understand boolean truth tables,"Write a complete, runnable Python program that uses nested loops to systematically generate and print the full truth table for a three-variable boolean expression (P, Q, R) for the condition (P OR Q) AND (NOT R).","if __name__ == '__main__':
+    P_values = [0, 1]
+    Q_values = [0, 1]
+    R_values = [0, 1]
+    print(""Truth Table for (P OR Q) AND (NOT R)"")
+    print(""-"" * 40)
+    for p in P_values:
+        for q in Q_values:
+            for r in R_values:
+                p_or_q = p or q
+                not_r = not r
+                result = p_or_q and not_r
+                print(f""P={p}, Q={q}, R={r} -> Result={result}"")",True,3,8471,138_8_3.py
+138,5,Understand boolean truth tables,Write a robust script that iterates through all possible combinations of two boolean variables (True/False) and prints the resulting truth table for the XOR operation.,"if __name__ == '__main__':
+    for a in [False, True]:
+        for b in [False, True]:
+            result = a ^ b
+            print(f""a: {a}, b: {b}, a XOR b: {result}"")",True,0,8472,138_5.py
+138,5,Understand boolean truth tables,Write a robust script that iterates through all possible combinations of two boolean variables (True/False) and prints the resulting truth table for the XOR operation.,"import itertools
+def xor(a, b):
+    return a != b
+if __name__ == '__main__':
+    booleans = [False, True]
+    print(""XOR Truth Table"")
+    print(""-----------------"")
+    for a in booleans:
+        for b in booleans:
+            result = xor(a, b)
+            print(f""A: {a}, B: {b} -> XOR: {result}"")",True,1,8473,138_5_1.py
+138,10,Understand boolean truth tables,"Write a complete, well-documented Python script that generates and prints the full boolean truth table for two variables (A and B), covering all four possible combinations.","if __name__ == '__main__':
+    A = [0, 0, 1, 1]
+    B = [0, 1, 0, 1]
+    print(""A | B | A AND B"")
+    print(""---|---|---------"")
+    for i in range(len(A)):
+        result = A[i] & B[i]
+        print(f""{A[i]} | {B[i]} | {result}"")",True,0,8474,138_10.py
+138,10,Understand boolean truth tables,"Write a complete, well-documented Python script that generates and prints the full boolean truth table for two variables (A and B), covering all four possible combinations.","if __name__ == '__main__':
+    A = [0, 0, 1, 1]
+    B = [0, 1, 0, 1]
+    print(""A | B | A AND B"")
+    print(""-"" * 15)
+    for i in range(len(A)):
+        result = A[i] & B[i]
+        print(f""{A[i]} | {B[i]} | {result}"")",True,1,8475,138_10_1.py
+138,10,Understand boolean truth tables,"Write a complete, well-documented Python script that generates and prints the full boolean truth table for two variables (A and B), covering all four possible combinations.","if __name__ == '__main__':
+    A = [0, 0, 1, 1]
+    B = [0, 1, 0, 1]
+    print(""A | B | A AND B"")
+    print(""---|---|---------"")
+    for i in range(len(A)):
+        result = A[i] and B[i]
+        print(f""{A[i]} | {B[i]} | {result}"")",True,2,8476,138_10_2.py
+138,10,Understand boolean truth tables,"Write a complete, well-documented Python script that generates and prints the full boolean truth table for two variables (A and B), covering all four possible combinations.","if __name__ == '__main__':
+    A = [0, 0, 1, 1]
+    B = [0, 1, 0, 1]
+    print(""A | B | A AND B"")
+    print(""---+---+----------"")
+    for i in range(len(A)):
+        result = A[i] & B[i]
+        print(f""{A[i]} | {B[i]} | {result}"")",True,3,8477,138_10_3.py
+138,11,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts two boolean inputs and returns a dictionary containing all possible truth table outcomes in a clear, readable format.","def generate_truth_table(a, b):
+    results = {}
+    combinations = [(a, b)]
+    for val_a, val_b in combinations:
+        result = {
+            ""A"": val_a,
+            ""B"": val_b,
+            ""AND"": val_a and val_b,
+            ""OR"": val_a or val_b,
+            ""XOR"": val_a ^ val_b,
+            ""NOT_A"": not val_a,
+            ""NOT_B"": not val_b
+        }
+        results[f""A={val_a}, B={val_b}""] = result
+    return results
+if __name__ == '__main__':
+    input_a = False
+    input_b = True
+    truth_table = generate_truth_table(input_a, input_b)
+    print(truth_table)",True,0,8478,138_11.py
+138,11,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts two boolean inputs and returns a dictionary containing all possible truth table outcomes in a clear, readable format.","def generate_truth_table(a, b):
+    results = []
+    if a:
+        if b:
+            results.append((True, True))
+        else:
+            results.append((True, False))
+    else:
+        if b:
+            results.append((False, True))
+        else:
+            results.append((False, False))
+    return {
+        (True, True): (a, b),
+        (True, False): (a, b),
+        (False, True): (a, b),
+        (False, False): (a, b)
+    }
+if __name__ == '__main__':
+    a_val = True
+    b_val = False
+    truth_table = generate_truth_table(a_val, b_val)
+    print(truth_table)",True,1,8479,138_11_1.py
+138,11,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts two boolean inputs and returns a dictionary containing all possible truth table outcomes in a clear, readable format.","def generate_truth_table(a, b):
+    results = {}
+    combinations = [(a, b)]
+    for val_a, val_b in combinations:
+        result = {
+            ""A"": val_a,
+            ""B"": val_b,
+            ""AND"": val_a and val_b,
+            ""OR"": val_a or val_b,
+            ""XOR"": val_a ^ val_b,
+            ""NOT_A"": not val_a,
+            ""NOT_B"": not val_b
+        }
+        results[f""({val_a}, {val_b})""] = result
+    return results
+if __name__ == '__main__':
+    a_val = True
+    b_val = False
+    truth_table = generate_truth_table(a_val, b_val)
+    print(truth_table)",True,2,8480,138_11_2.py
+138,11,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts two boolean inputs and returns a dictionary containing all possible truth table outcomes in a clear, readable format.","def generate_truth_table(a, b):
+    results = {}
+    combinations = [(a, b), (False, True), (True, False)]
+    for val_a, val_b in combinations:
+        result = (val_a and val_b)
+        key = (val_a, val_b)
+        results[key] = result
+    return results
+if __name__ == '__main__':
+    a_val = False
+    b_val = False
+    truth_table = generate_truth_table(a_val, b_val)
+    print(truth_table)",True,3,8481,138_11_3.py
+138,11,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts two boolean inputs and returns a dictionary containing all possible truth table outcomes in a clear, readable format.","def generate_truth_table(a, b):
+    results = {}
+    combinations = [(a, b)]
+    for val_a, val_b in combinations:
+        result = {
+            ""A"": val_a,
+            ""B"": val_b,
+            ""AND"": val_a and val_b,
+            ""OR"": val_a or val_b,
+            ""XOR"": val_a ^ val_b,
+            ""NOT_A"": not val_a,
+            ""NOT_B"": not val_b
+        }
+        results[f""A={val_a}, B={val_b}""] = result
+    return results
+if __name__ == '__main__':
+    input_a = True
+    input_b = False
+    truth_table = generate_truth_table(input_a, input_b)
+    print(truth_table)",True,4,8482,138_11_4.py
+138,11,Understand boolean truth tables,"Implement an optimized Python function named 'generate_truth_table' that accepts two boolean inputs and returns a dictionary containing all possible truth table outcomes in a clear, readable format.","def generate_truth_table(a, b):
+    results = {}
+    combinations = [(a, b), (a, not b), (not a, b), (not a, not b)]
+    for val_a, val_b in combinations:
+        result = (val_a, val_b)
+        if val_a and val_b:
+            result_str = ""T""
+        elif val_a or val_b:
+            result_str = ""T""
+        else:
+            result_str = ""F""
+        key = f""A={val_a}, B={val_b}""
+        results[key] = result_str
+    return results
+if __name__ == '__main__':
+    input_a = True
+    input_b = False
+    truth_table = generate_truth_table(input_a, input_b)
+    print(truth_table)",True,5,8483,138_11_5.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        current_row = []
+        temp = i
+        for _ in range(n):
+            current_row.append(str(temp % 2))
+            temp //= 2
+        result = None
+        if operation == ""AND"":
+            all_true = True
+            for val in inputs:
+                if not val:
+                    all_true = False
+                    break
+            result = ""True"" if all_true else ""False""
+        elif operation == ""OR"":
+            result = ""True"" if any(inputs) else ""False""
+        elif operation == ""XOR"":
+            xor_sum = sum(inputs)
+            result = ""True"" if xor_sum % 2 != 0 else ""False""
+        elif operation == ""NOT"":
+            result = ""True"" if not inputs[0] else ""False""
+        else:
+            result = ""Unknown Operation""
+        results.append(current_row + [result])
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    operation_type = ""AND""
+    truth_table = generate_truth_table(boolean_inputs, operation_type)
+    print(f""Inputs: {boolean_inputs}"")
+    print(f""Operation: {operation_type}"")
+    print(""Truth Table:"")
+    for row in truth_table:
+        print(row)
+    boolean_inputs_2 = [False, False, True]
+    operation_type_2 = ""OR""
+    truth_table_2 = generate_truth_table(boolean_inputs_2, operation_type_2)
+    print(f""\nInputs: {boolean_inputs_2}"")
+    print(f""Operation: {operation_type_2}"")
+    print(""Truth Table:"")
+    for row in truth_table_2:
+        print(row)
+    boolean_inputs_3 = [True, False]
+    operation_type_3 = ""XOR""
+    truth_table_3 = generate_truth_table(boolean_inputs_3, operation_type_3)
+    print(f""\nInputs: {boolean_inputs_3}"")
+    print(f""Operation: {operation_type_3}"")
+    print(""Truth Table:"")
+    for row in truth_table_3:
+        print(row)",True,0,8484,138_9.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        row = []
+        temp = i
+        for _ in range(n):
+            row.append(bool(temp % 2))
+            temp //= 2
+        result = None
+        if operation == 'and':
+            result = all(row)
+        elif operation == 'or':
+            result = any(row)
+        elif operation == 'xor':
+            result = (sum(row) % 2) == 1
+        elif operation == 'not':
+            result = not row[0]
+        else:
+            result = ""Unknown Operation""
+        results.append(row + [result])
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    print(""--- AND Operation ---"")
+    and_table = generate_truth_table(boolean_inputs, 'and')
+    for row in and_table:
+        print(row)
+    print(""\n--- OR Operation ---"")
+    or_table = generate_truth_table(boolean_inputs, 'or')
+    for row in or_table:
+        print(row)
+    print(""\n--- XOR Operation ---"")
+    xor_table = generate_truth_table(boolean_inputs, 'xor')
+    for row in xor_table:
+        print(row)
+    print(""\n--- NOT Operation (applied to the first input) ---"")
+    not_table = generate_truth_table(boolean_inputs, 'not')
+    for row in not_table:
+        print(row)",True,1,8485,138_9_1.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        if i == 0:
+            a = False
+            b = False
+        else:
+            a = True
+            b = False
+            temp = i
+            while temp > 0:
+                if temp & 1:
+                    a = not a
+                temp >>= 1
+                if temp > 0:
+                    b = not b
+                temp >>= 1
+        if operation == 'and':
+            result = a and b
+        elif operation == 'or':
+            result = a or b
+        elif operation == 'xor':
+            result = a ^ b
+        elif operation == 'not':
+            result = not a
+        else:
+            raise ValueError(""Unsupported operation"")
+        results.append((a, b, result))
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    operation_type = 'and'
+    truth_table = generate_truth_table(boolean_inputs, operation_type)
+    print(f""Truth Table for {operation_type}:"")
+    for a, b, result in truth_table:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_2 = [True, False]
+    operation_type_2 = 'xor'
+    truth_table_2 = generate_truth_table(boolean_inputs_2, operation_type_2)
+    print(f""\nTruth Table for {operation_type_2}:"")
+    for a, b, result in truth_table_2:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_3 = [True]
+    operation_type_3 = 'not'
+    truth_table_3 = generate_truth_table(boolean_inputs_3, operation_type_3)
+    print(f""\nTruth Table for {operation_type_3}:"")
+    for a, b, result in truth_table_3:
+        print(f""A: {a} -> Result: {result}"")",True,2,8486,138_9_2.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        if i == 0:
+            a = False
+            b = False
+        else:
+            a = True
+            b = False
+            temp = i
+            while temp > 0:
+                if temp & 1:
+                    a = not a
+                temp >>= 1
+                if temp > 0:
+                    b = not b
+                temp >>= 1
+        if operation == ""AND"":
+            result = a and b
+        elif operation == ""OR"":
+            result = a or b
+        elif operation == ""XOR"":
+            result = a ^ b
+        elif operation == ""NOT"":
+            result = not a
+        else:
+            raise ValueError(""Unsupported operation"")
+        results.append((a, b, result))
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    operation_type = ""AND""
+    truth_table = generate_truth_table(boolean_inputs, operation_type)
+    print(f""Truth Table for {operation_type}:"")
+    for a, b, result in truth_table:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_2 = [False, False, True, True]
+    operation_type_2 = ""XOR""
+    truth_table_2 = generate_truth_table(boolean_inputs_2, operation_type_2)
+    print(f""\nTruth Table for {operation_type_2}:"")
+    for a, b, result in truth_table_2:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_3 = [True]
+    operation_type_3 = ""NOT""
+    truth_table_3 = generate_truth_table(boolean_inputs_3, operation_type_3)
+    print(f""\nTruth Table for {operation_type_3}:"")
+    for a, b, result in truth_table_3:
+        print(f""A: {a} -> Result: {result}"")",True,3,8487,138_9_3.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        row = []
+        temp = i
+        for _ in range(n):
+            row.append(bool(temp % 2))
+            temp //= 2
+        result = None
+        if operation == 'and':
+            result = all(row)
+        elif operation == 'or':
+            result = any(row)
+        elif operation == 'xor':
+            result = (sum(row) % 2) == 1
+        elif operation == 'not':
+            result = not row[0] if n == 1 else False
+        else:
+            result = ""Unknown Operation""
+        results.append(row + [result])
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    print(""--- AND Truth Table ---"")
+    and_table = generate_truth_table(boolean_inputs, 'and')
+    for row in and_table:
+        print(row)
+    print(""\n--- OR Truth Table ---"")
+    or_table = generate_truth_table(boolean_inputs, 'or')
+    for row in or_table:
+        print(row)
+    print(""\n--- XOR Truth Table ---"")
+    xor_table = generate_truth_table(boolean_inputs, 'xor')
+    for row in xor_table:
+        print(row)
+    print(""\n--- NOT Truth Table (applied to the first input) ---"")
+    not_table = generate_truth_table(boolean_inputs, 'not')
+    for row in not_table:
+        print(row)",True,4,8488,138_9_4.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        current_row = []
+        temp = i
+        for _ in range(n):
+            current_row.append(str(temp % 2))
+            temp //= 2
+        result = None
+        if operation == ""AND"":
+            all_true = True
+            for val in inputs:
+                if not val:
+                    all_true = False
+                    break
+            result = ""1"" if all_true else ""0""
+        elif operation == ""OR"":
+            result = ""1"" if any(inputs) else ""0""
+        elif operation == ""XOR"":
+            xor_sum = sum(inputs)
+            result = ""1"" if xor_sum % 2 != 0 else ""0""
+        elif operation == ""NOT"":
+            result = ""1"" if not inputs[0] else ""0""
+        else:
+            result = ""Error: Unknown operation""
+        results.append(current_row + [result])
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    operations = [""AND"", ""OR"", ""XOR"", ""NOT""]
+    for op in operations:
+        truth_table = generate_truth_table(boolean_inputs, op)
+        print(f""--- Truth Table for {op} on inputs {boolean_inputs} ---"")
+        header = ""Input 1 | Input 2 | Result""
+        print(header)
+        print(""-"" * len(header))
+        for row in truth_table:
+            print(f""{row[0]} | {row[1]} | {row[2]}"")
+        print(""\n"")",True,5,8489,138_9_5.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        current_inputs = []
+        temp = i
+        for _ in range(n):
+            current_inputs.append(temp % 2)
+            temp //= 2
+        current_inputs.reverse()
+        if len(current_inputs) != n:
+            continue
+        result = None
+        if operation == ""AND"":
+            result = all(current_inputs)
+        elif operation == ""OR"":
+            result = any(current_inputs)
+        elif operation == ""XOR"":
+            result = current_inputs[0] ^ current_inputs[1] if n == 2 else False
+            if n > 2:
+                result = False
+        elif operation == ""NOT"":
+            result = not current_inputs[0]
+        else:
+            result = ""Unknown Operation""
+        results.append(tuple(current_inputs) + (result,))
+    header = [""Input 1"", ""Input 2"", ""Input 3"", ""Output""]
+    table = [header]
+    for row in results:
+        table.append(list(row))
+    return table
+if __name__ == '__main__':
+    boolean_list = [False, True]
+    operation_name = ""AND""
+    truth_table = generate_truth_table(boolean_list, operation_name)
+    print(f""Truth Table for {operation_name}:"")
+    for row in truth_table:
+        print(row)
+    boolean_list_2 = [False, False, True, True]
+    operation_name_2 = ""OR""
+    truth_table_2 = generate_truth_table(boolean_list_2, operation_name_2)
+    print(f""\nTruth Table for {operation_name_2}:"")
+    for row in truth_table_2:
+        print(row)
+    boolean_list_3 = [True]
+    operation_name_3 = ""NOT""
+    truth_table_3 = generate_truth_table(boolean_list_3, operation_name_3)
+    print(f""\nTruth Table for {operation_name_3}:"")
+    for row in truth_table_3:
+        print(row)",True,6,8490,138_9_6.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        if i == 0:
+            a = False
+            b = False
+        else:
+            a = True
+            b = False
+            temp = i
+            while temp > 0:
+                if temp & 1:
+                    a = not a
+                temp >>= 1
+                if temp > 0:
+                    b = not b
+                temp >>= 1
+        if operation == ""AND"":
+            result = a and b
+        elif operation == ""OR"":
+            result = a or b
+        elif operation == ""XOR"":
+            result = a ^ b
+        elif operation == ""NOT"":
+            result = not a
+        else:
+            raise ValueError(""Unsupported operation"")
+        results.append((a, b, result))
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    operation_type = ""AND""
+    truth_table = generate_truth_table(boolean_inputs, operation_type)
+    print(f""Truth Table for {operation_type}:"")
+    for a, b, result in truth_table:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_2 = [True, False]
+    operation_type_2 = ""OR""
+    truth_table_2 = generate_truth_table(boolean_inputs_2, operation_type_2)
+    print(f""\nTruth Table for {operation_type_2}:"")
+    for a, b, result in truth_table_2:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_3 = [True]
+    operation_type_3 = ""NOT""
+    truth_table_3 = generate_truth_table(boolean_inputs_3, operation_type_3)
+    print(f""\nTruth Table for {operation_type_3}:"")
+    for a, b, result in truth_table_3:
+        print(f""A: {a} -> Result: {result}"")",True,7,8491,138_9_7.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        if i == 0:
+            a = False
+            b = False
+        else:
+            a = True
+            b = False
+            temp = i
+            while temp > 0:
+                if temp & 1:
+                    a = not a
+                temp >>= 1
+                if temp > 0:
+                    b = not b
+                temp >>= 1
+        if operation == 'and':
+            result = a and b
+        elif operation == 'or':
+            result = a or b
+        elif operation == 'xor':
+            result = a ^ b
+        elif operation == 'not':
+            result = not a
+        else:
+            raise ValueError(""Unsupported operation"")
+        results.append((a, b, result))
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    operation_name = 'and'
+    truth_table = generate_truth_table(boolean_inputs, operation_name)
+    print(f""Truth Table for {operation_name}:"")
+    for a, b, result in truth_table:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_2 = [True, False]
+    operation_name_2 = 'xor'
+    truth_table_2 = generate_truth_table(boolean_inputs_2, operation_name_2)
+    print(f""\nTruth Table for {operation_name_2}:"")
+    for a, b, result in truth_table_2:
+        print(f""A: {a}, B: {b} -> Result: {result}"")
+    boolean_inputs_3 = [True]
+    operation_name_3 = 'not'
+    truth_table_3 = generate_truth_table(boolean_inputs_3, operation_name_3)
+    print(f""\nTruth Table for {operation_name_3}:"")
+    for a, b, result in truth_table_3:
+        print(f""A: {a} -> Result: {result}"")",True,8,8492,138_9_8.py
+138,9,Understand boolean truth tables,"Implement a general-purpose function that accepts a list of boolean inputs and a string specifying the desired logical operation, returning the resulting truth table structure for that operation.","def generate_truth_table(inputs, operation):
+    results = []
+    n = len(inputs)
+    for i in range(2**n):
+        row = []
+        temp = i
+        for _ in range(n):
+            row.append(bool(temp % 2))
+            temp //= 2
+        result = None
+        if operation == 'and':
+            result = all(row)
+        elif operation == 'or':
+            result = any(row)
+        elif operation == 'xor':
+            result = row[0]
+            for j in range(1, n):
+                result = result ^ row[j]
+        elif operation == 'not_all':
+            result = not all(row)
+        else:
+            raise ValueError(""Unsupported operation"")
+        results.append(row + [result])
+    return results
+if __name__ == '__main__':
+    boolean_inputs = [False, True]
+    print(""--- AND Truth Table ---"")
+    and_table = generate_truth_table(boolean_inputs, 'and')
+    for row in and_table:
+        print(row)
+    print(""\n--- OR Truth Table ---"")
+    or_table = generate_truth_table(boolean_inputs, 'or')
+    for row in or_table:
+        print(row)
+    print(""\n--- XOR Truth Table ---"")
+    xor_table = generate_truth_table(boolean_inputs, 'xor')
+    for row in xor_table:
+        print(row)
+    print(""\n--- NOT_ALL Truth Table ---"")
+    not_all_table = generate_truth_table(boolean_inputs, 'not_all')
+    for row in not_all_table:
+        print(row)",True,9,8493,138_9_9.py
