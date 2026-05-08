@@ -158784,3 +158784,3783 @@ if __name__ == '__main__':
     for value in test_values:
         result = evaluate_rules(value, rules)
         print(f""Input: {value}, Decision: {result}"")",True,0,7924,131_5.py
+131,6,Decide based on input rules,"Write a complete program that simulates a simple decision-making process. Read a set of predefined rules from a file, and for each line, determine the output based on the provided input variable.","import os
+def simulate_decision_making(rules_file, input_variable):
+    results = []
+    try:
+        with open(rules_file, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                try:
+                    rule_line = line.split(':')
+                    if len(rule_line) == 2:
+                        rule_condition = rule_line[0].strip()
+                        rule_output = rule_line[1].strip()
+                        if rule_condition == input_variable:
+                            results.append(rule_output)
+                        else:
+                            results.append(f""No rule found for {input_variable}"")
+                    else:
+                        results.append(f""Malformed rule line: {line}"")
+                except Exception as e:
+                    results.append(f""Error processing line: {line} - {e}"")
+    except FileNotFoundError:
+        return [f""Error: Rules file '{rules_file}' not found.""]
+    return results
+if __name__ == '__main__':
+    RULES_FILE = ""rules.txt""
+    INPUT_VALUE = ""A""
+    with open(RULES_FILE, 'w') as f:
+        f.write(""# Decision Rules\n"")
+        f.write(""A: Output Alpha\n"")
+        f.write(""B: Output Beta\n"")
+        f.write(""C: Output Gamma\n"")
+        f.write(""D: Output Delta\n"")
+    output = simulate_decision_making(RULES_FILE, INPUT_VALUE)
+    for result in output:
+        print(result)",True,0,7925,131_6.py
+131,6,Decide based on input rules,"Write a complete program that simulates a simple decision-making process. Read a set of predefined rules from a file, and for each line, determine the output based on the provided input variable.","import os
+def simulate_decision_making(rules_file, input_variable):
+    results = []
+    try:
+        with open(rules_file, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                try:
+                    rule_line = line.split(':')
+                    if len(rule_line) == 2:
+                        rule_condition = rule_line[0].strip()
+                        rule_output = rule_line[1].strip()
+                        if rule_condition == input_variable:
+                            results.append(rule_output)
+                        else:
+                            results.append(f""No rule found for {input_variable}"")
+                    else:
+                        results.append(f""Malformed rule line: {line}"")
+                except Exception as e:
+                    results.append(f""Error processing line: {line} - {e}"")
+    except FileNotFoundError:
+        return [f""Error: Rules file '{rules_file}' not found.""]
+    return results
+if __name__ == '__main__':
+    RULES_FILE = ""rules.txt""
+    INPUT_VALUE = ""A""
+    with open(RULES_FILE, 'w') as f:
+        f.write(""# Decision Rules\n"")
+        f.write(""A:Result_for_A\n"")
+        f.write(""B:Result_for_B\n"")
+        f.write(""C:Result_for_C\n"")
+        f.write(""D:Result_for_D\n"")
+    simulation_output = simulate_decision_making(RULES_FILE, INPUT_VALUE)
+    for result in simulation_output:
+        print(result)",True,1,7926,131_6_1.py
+131,6,Decide based on input rules,"Write a complete program that simulates a simple decision-making process. Read a set of predefined rules from a file, and for each line, determine the output based on the provided input variable.","import os
+def simulate_decision_making(rules_file, input_variable):
+    results = []
+    try:
+        with open(rules_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                parts = line.split(':')
+                if len(parts) == 2:
+                    rule_key = parts[0].strip()
+                    rule_value = parts[1].strip()
+                    if rule_key == input_variable:
+                        results.append(rule_value)
+                    else:
+                        results.append(f""No rule found for {input_variable}"")
+                else:
+                    results.append(f""Malformed line: {line}"")
+    except FileNotFoundError:
+        return [f""Error: Rules file {rules_file} not found""]
+    return results
+if __name__ == '__main__':
+    RULES_FILE = ""rules.txt""
+    INPUT = ""temperature""
+    with open(RULES_FILE, 'w') as f:
+        f.write(""# Rule: temperature decisions\n"")
+        f.write(""temperature:hot\n"")
+        f.write(""temperature:cold\n"")
+        f.write(""humidity:high\n"")
+        f.write(""humidity:low\n"")
+    output = simulate_decision_making(RULES_FILE, INPUT)
+    for result in output:
+        print(result)",True,2,7927,131_6_2.py
+131,6,Decide based on input rules,"Write a complete program that simulates a simple decision-making process. Read a set of predefined rules from a file, and for each line, determine the output based on the provided input variable.","import os
+def simulate_decision_making(rules_file, input_variable):
+    results = []
+    try:
+        with open(rules_file, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                try:
+                    rule_line = line.split(':')
+                    if len(rule_line) == 2:
+                        rule_condition = rule_line[0].strip()
+                        rule_output = rule_line[1].strip()
+                        if rule_condition == input_variable:
+                            results.append(rule_output)
+                        else:
+                            results.append(f""No rule found for {input_variable}"")
+                    else:
+                        results.append(f""Malformed rule line: {line}"")
+                except Exception as e:
+                    results.append(f""Error processing line: {line} - {e}"")
+    except FileNotFoundError:
+        return [f""Error: Rules file '{rules_file}' not found.""]
+    return results
+if __name__ == '__main__':
+    RULES_FILE = ""rules.txt""
+    INPUT_VALUE = ""A""
+    with open(RULES_FILE, 'w') as f:
+        f.write(""# Rule: If input is A, output is True\n"")
+        f.write(""A:True\n"")
+        f.write(""B:False\n"")
+        f.write(""C:True\n"")
+        f.write(""D:False\n"")
+    simulation_results = simulate_decision_making(RULES_FILE, INPUT_VALUE)
+    for result in simulation_results:
+        print(result)",True,3,7928,131_6_3.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == ""A"":
+        if value > 10:
+            return value * 2
+        else:
+            return value + 5
+    elif node == ""B"":
+        if value % 2 == 0:
+            return value // 2
+        else:
+            return value + 1
+    elif node == ""C"":
+        if value < 5:
+            return value - 1
+        else:
+            return value * 3
+    else:
+        return value
+if __name__ == '__main__':
+    test_cases = [
+        ((""A"", 15), 0),
+        ((""A"", 5), 0),
+        ((""B"", 10), 0),
+        ((""B"", 7), 0),
+        ((""C"", 3), 0),
+        ((""C"", 8), 0),
+        ((""D"", 100), 0)
+    ]
+    for (node, value), expected in test_cases:
+        result = resolve_decision_tree(node, value)
+        print(f""Node: {node}, Value: {value}, Result: {result}, Expected: {expected}, Match: {result == expected}"")",True,0,7929,131_7.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == ""A"":
+        if value > 10:
+            return value * 2
+        else:
+            return value + 5
+    elif node == ""B"":
+        if value % 2 == 0:
+            return value // 2
+        else:
+            return value + 1
+    elif node == ""C"":
+        if value < 5:
+            return value - 1
+        else:
+            return value * 3
+    else:
+        return value
+if __name__ == '__main__':
+    test_cases = [
+        ((""A"", 15), 30),
+        ((""A"", 5), 10),
+        ((""B"", 10), 5),
+        ((""B"", 7), 8),
+        ((""C"", 3), 2),
+        ((""C"", 8), 24),
+        ((""D"", 100), 100)
+    ]
+    for (node, value), expected in test_cases:
+        result = resolve_decision_tree(node, value)
+        print(f""Node: {node}, Value: {value}, Result: {result}, Expected: {expected}, Match: {result == expected}"")",True,1,7930,131_7_1.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, decision_value):
+    if node == ""A"":
+        if decision_value > 5:
+            return 1
+        else:
+            return 2
+    elif node == ""B"":
+        if decision_value == 10:
+            return 3
+        else:
+            return 4
+    elif node == ""C"":
+        if decision_value % 2 == 0:
+            return 5
+        else:
+            return 6
+    else:
+        return 0
+if __name__ == '__main__':
+    test_cases = [
+        ((""A"", 7), 1),
+        ((""A"", 3), 2),
+        ((""B"", 10), 3),
+        ((""B"", 5), 4),
+        ((""C"", 4), 5),
+        ((""C"", 3), 6),
+        ((""D"", 1), 0)
+    ]
+    for (node, decision), expected in test_cases:
+        result = resolve_decision_tree(node, decision)
+        assert result == expected, f""Input: node={node}, decision={decision}, Expected: {expected}, Got: {result}""
+        print(f""Test Passed for node={node}, decision={decision}. Result: {result}"")",True,2,7931,131_7_2.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == 'A':
+        if value > 10:
+            return value * 2
+        else:
+            return value + 5
+    elif node == 'B':
+        if value % 2 == 0:
+            return value // 2
+        else:
+            return value + 1
+    elif node == 'C':
+        if value < 5:
+            return value * 3
+        else:
+            return value - 2
+    else:
+        return value
+if __name__ == '__main__':
+    tree_structure = {
+        'A': {
+            'condition': lambda v: v > 10,
+            'true': lambda v: v * 2,
+            'false': lambda v: v + 5
+        },
+        'B': {
+            'condition': lambda v: v % 2 == 0,
+            'true': lambda v: v // 2,
+            'false': lambda v: v + 1
+        },
+        'C': {
+            'condition': lambda v: v < 5,
+            'true': lambda v: v * 3,
+            'false': lambda v: v - 2
+        }
+    }
+    def recursive_resolver(node_key, input_value):
+        if node_key not in tree_structure:
+            return input_value
+        node_data = tree_structure[node_key]
+        condition_func = node_data['condition']
+        if condition_func(input_value):
+            return node_data['true'](input_value)
+        else:
+            return node_data['false'](input_value)
+    result1 = recursive_resolver('A', 15)
+    result2 = recursive_resolver('A', 5)
+    result3 = recursive_resolver('B', 10)
+    result4 = recursive_resolver('B', 7)
+    result5 = recursive_resolver('C', 3)
+    result6 = recursive_resolver('C', 10)
+    print(f""A(15): {result1}"")
+    print(f""A(5): {result2}"")
+    print(f""B(10): {result3}"")
+    print(f""B(7): {result4}"")
+    print(f""C(3): {result5}"")
+    print(f""C(10): {result6}"")",True,3,7932,131_7_3.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == ""A"":
+        if value > 10:
+            return 1
+        else:
+            return 0
+    elif node == ""B"":
+        if value % 2 == 0:
+            return 2
+        else:
+            return 3
+    elif node == ""C"":
+        if value < 5:
+            return 4
+        else:
+            return 5
+    else:
+        return value
+if __name__ == '__main__':
+    test_cases = [
+        ((""A"", 15), 1),
+        ((""A"", 5), 0),
+        ((""B"", 10), 2),
+        ((""B"", 11), 3),
+        ((""C"", 3), 4),
+        ((""C"", 7), 5),
+        ((""D"", 99), 99)
+    ]
+    for (node, val), expected in test_cases:
+        result = resolve_decision_tree(node, val)
+        print(f""Node: {node}, Value: {val}, Result: {result}, Expected: {expected}, Match: {result == expected}"")",True,4,7933,131_7_4.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == 'A':
+        if value > 10:
+            return value * 2
+        else:
+            return value + 5
+    elif node == 'B':
+        if value % 2 == 0:
+            return value // 2
+        else:
+            return value + 1
+    elif node == 'C':
+        if value < 0:
+            return value * -1
+        else:
+            return value
+    else:
+        return value
+if __name__ == '__main__':
+    tree1 = 'A'
+    value1 = 15
+    result1 = resolve_decision_tree(tree1, value1)
+    print(f""Result 1: {result1}"")
+    tree2 = 'B'
+    value2 = 10
+    result2 = resolve_decision_tree(tree2, value2)
+    print(f""Result 2: {result2}"")
+    tree3 = 'C'
+    value3 = -5
+    result3 = resolve_decision_tree(tree3, value3)
+    print(f""Result 3: {result3}"")
+    tree4 = 'A'
+    value4 = 5
+    result4 = resolve_decision_tree(tree4, value4)
+    print(f""Result 4: {result4}"")
+    tree5 = 'B'
+    value5 = 7
+    result5 = resolve_decision_tree(tree5, value5)
+    print(f""Result 5: {result5}"")",True,5,7934,131_7_5.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == ""A"":
+        if value > 10:
+            return value * 2
+        else:
+            return value + 1
+    elif node == ""B"":
+        if value % 2 == 0:
+            return value // 2
+        else:
+            return value + 5
+    elif node == ""C"":
+        if value > 50:
+            return value - 10
+        else:
+            return value * 3
+    else:
+        return value
+if __name__ == '__main__':
+    tree_structure = {
+        ""A"": {
+            ""condition"": ""value > 10"",
+            ""true_branch"": lambda v: v * 2,
+            ""false_branch"": lambda v: v + 1
+        },
+        ""B"": {
+            ""condition"": ""value % 2 == 0"",
+            ""true_branch"": lambda v: v // 2,
+            ""false_branch"": lambda v: v + 5
+        },
+        ""C"": {
+            ""condition"": ""value > 50"",
+            ""true_branch"": lambda v: v - 10,
+            ""false_branch"": lambda v: v * 3
+        }
+    }
+    def recursive_resolver(current_node, input_value):
+        if current_node is None:
+            return input_value
+        if current_node in tree_structure:
+            branch_key = tree_structure[current_node][""condition""]
+            if ""A"" in current_node:
+                if input_value > 10:
+                    return tree_structure[""A""][""true_branch""](input_value)
+                else:
+                    return tree_structure[""A""][""false_branch""](input_value)
+            elif ""B"" in current_node:
+                if input_value % 2 == 0:
+                    return tree_structure[""B""][""true_branch""](input_value)
+                else:
+                    return tree_structure[""B""][""false_branch""](input_value)
+            elif ""C"" in current_node:
+                if input_value > 50:
+                    return tree_structure[""C""][""true_branch""](input_value)
+                else:
+                    return tree_structure[""C""][""false_branch""](input_value)
+            else:
+                return input_value
+        return input_value
+    result1 = recursive_resolver(""A"", 15)
+    result2 = recursive_resolver(""B"", 8)
+    result3 = recursive_resolver(""C"", 60)
+    result4 = recursive_resolver(""C"", 40)
+    result5 = recursive_resolver(""D"", 100)
+    print(f""Result 1 (A, 15): {result1}"")
+    print(f""Result 2 (B, 8): {result2}"")
+    print(f""Result 3 (C, 60): {result3}"")
+    print(f""Result 4 (C, 40): {result4}"")
+    print(f""Result 5 (D, 100): {result5}"")",True,6,7935,131_7_6.py
+131,7,Decide based on input rules,Design and implement a recursive function in Python that resolves a complex decision tree defined by nested conditional statements. The function must be tail-call optimized where possible for performance.,"def resolve_decision_tree(node, value):
+    if node == ""A"":
+        if value > 5:
+            return 1
+        else:
+            return 2
+    elif node == ""B"":
+        if value % 2 == 0:
+            return 3
+        else:
+            return 4
+    elif node == ""C"":
+        if value < 10:
+            return 5
+        else:
+            return 6
+    else:
+        return 0
+if __name__ == '__main__':
+    test_cases = [
+        (""A"", 7),
+        (""A"", 3),
+        (""B"", 4),
+        (""B"", 6),
+        (""C"", 5),
+        (""C"", 15)
+    ]
+    for node, val in test_cases:
+        result = resolve_decision_tree(node, val)
+        print(f""Node: {node}, Value: {val}, Result: {result}"")",True,7,7936,131_7_7.py
+131,8,Decide based on input rules,"Generate a highly optimized function that handles the 'decide based on input rules' scenario, where the rules are a list of tuples `(threshold, outcome)`. The function must use binary search if the rules are sorted to achieve O(log n) lookup time.","import bisect
+def decide_based_on_rules(data, rules):
+    if not rules:
+        return None
+    thresholds = [rule[0] for rule in rules]
+    def find_index(value):
+        if not thresholds:
+            return -1
+        idx = bisect.bisect_right(thresholds, value)
+        if idx == 0:
+            return 0
+        return idx - 1
+    if not data:
+        return None
+    idx = bisect.bisect_right(thresholds, data)
+    if idx == 0:
+        return rules[0][1]
+    elif idx == len(thresholds):
+        return rules[-1][1]
+    else:
+        return rules[idx - 1][1]
+if __name__ == '__main__':
+    sample_data = [10, 25, 5, 30, 15]
+    sample_rules = [(5, 'Low'), (20, 'Medium'), (35, 'High')]
+    print(f""Data: {sample_data}"")
+    print(f""Rules: {sample_rules}"")
+    results = []
+    for item in sample_data:
+        result = decide_based_on_rules(item, sample_rules)
+        results.append((item, result))
+    for data, result in results:
+        print(f""Input {data}: Decision = {result}"")",True,0,7937,131_8.py
+131,8,Decide based on input rules,"Generate a highly optimized function that handles the 'decide based on input rules' scenario, where the rules are a list of tuples `(threshold, outcome)`. The function must use binary search if the rules are sorted to achieve O(log n) lookup time.","import bisect
+def decide_based_on_rules(data, rules):
+    if not rules:
+        return None
+    sorted_thresholds = [rule[0] for rule in rules]
+    def find_index(value):
+        return bisect.bisect_right(sorted_thresholds, value)
+    if not sorted_thresholds:
+        return None
+    idx = find_index(data)
+    if idx == 0:
+        return rules[0][1]
+    elif idx < len(sorted_thresholds):
+        return rules[idx - 1][1]
+    else:
+        return rules[-1][1]
+if __name__ == '__main__':
+    data_points = [10, 25, 40, 55, 70, 85, 100]
+    decision_rules = [
+        (20, 'Low'),
+        (50, 'Medium'),
+        (80, 'High')
+    ]
+    print(f""Data Points: {data_points}"")
+    print(f""Rules: {decision_rules}"")
+    for data in data_points:
+        result = decide_based_on_rules(data, decision_rules)
+        print(f""Input: {data}, Decision: {result}"")",True,1,7938,131_8_1.py
+131,8,Decide based on input rules,"Generate a highly optimized function that handles the 'decide based on input rules' scenario, where the rules are a list of tuples `(threshold, outcome)`. The function must use binary search if the rules are sorted to achieve O(log n) lookup time.","import bisect
+def decide_based_on_rules(data, rules):
+    if not rules:
+        return None
+    thresholds = [rule[0] for rule in rules]
+    def find_index(value):
+        if not thresholds:
+            return -1
+        idx = bisect.bisect_right(thresholds, value)
+        if idx == 0:
+            return 0
+        return idx - 1
+    if not data:
+        return None
+    sorted_thresholds = sorted(list(set(thresholds)))
+    def lookup(value):
+        if not sorted_thresholds:
+            return None
+        idx = bisect.bisect_right(sorted_thresholds, value)
+        if idx == 0:
+            return rules[0][1]
+        return rules[idx - 1][1]
+    results = []
+    for item in data:
+        results.append(lookup(item))
+    return results
+if __name__ == '__main__':
+    sample_data = [10, 25, 5, 30, 15]
+    sample_rules = [(10, 'Low'), (20, 'Medium'), (35, 'High')]
+    result = decide_based_on_rules(sample_data, sample_rules)
+    print(result)",True,2,7939,131_8_2.py
+131,8,Decide based on input rules,"Generate a highly optimized function that handles the 'decide based on input rules' scenario, where the rules are a list of tuples `(threshold, outcome)`. The function must use binary search if the rules are sorted to achieve O(log n) lookup time.","import bisect
+def decide_based_on_rules(data, rules):
+    if not rules:
+        return None
+    thresholds = [rule[0] for rule in rules]
+    def find_index(value):
+        if not thresholds:
+            return -1
+        idx = bisect.bisect_right(thresholds, value)
+        if idx == 0:
+            return 0
+        return idx - 1
+    if not data:
+        return None
+    idx = bisect.bisect_right(thresholds, data)
+    if idx == 0:
+        return rules[0][1]
+    else:
+        return rules[idx - 1][1]
+if __name__ == '__main__':
+    sample_data = [10, 25, 5, 30, 15]
+    sample_rules = [
+        (10, 'Low'),
+        (20, 'Medium'),
+        (30, 'High')
+    ]
+    print(f""Data: {sample_data}"")
+    print(f""Rules: {sample_rules}"")
+    results = []
+    for item in sample_data:
+        result = decide_based_on_rules(item, sample_rules)
+        results.append((item, result))
+    for data_point, outcome in results:
+        print(f""Input: {data_point}, Outcome: {outcome}"")",True,3,7940,131_8_3.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionEngineError(Exception):
+    pass
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Any):
+        if not callable(condition):
+            raise TypeError(""Condition must be a callable function."")
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> bool:
+        return self.condition(context)
+    def execute(self, context: Dict[str, Any]) -> Any:
+        return self.action
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self._rules: List[DecisionRule] = rules
+    def add_rule(self, rule: DecisionRule):
+        self._rules.append(rule)
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results: Dict[str, Any] = {}
+        for rule in self._rules:
+            if rule.evaluate(context):
+                results[f""rule_{id(rule)}""] = rule.execute(context)
+        return results
+if __name__ == '__main__':
+    def is_high_priority(data: Dict[str, Any]) -> bool:
+        return data.get(""priority"", 0) > 5
+    def is_premium_user(data: Dict[str, Any]) -> bool:
+        return data.get(""status"") == ""premium""
+    def assign_high_value_bonus(data: Dict[str, Any]) -> str:
+        return ""Bonus_HighValue""
+    def assign_standard_reward(data: Dict[str, Any]) -> str:
+        return ""Reward_Standard""
+    sample_rules: List[DecisionRule] = [
+        DecisionRule(is_high_priority, assign_high_value_bonus),
+        DecisionRule(is_premium_user, lambda d: ""Bonus_Premium"")
+    ]
+    engine = DecisionEngine(sample_rules)
+    sample_context_1: Dict[str, Any] = {
+        ""id"": 101,
+        ""priority"": 7,
+        ""status"": ""premium"",
+        ""amount"": 150.00
+    }
+    sample_context_2: Dict[str, Any] = {
+        ""id"": 102,
+        ""priority"": 3,
+        ""status"": ""standard"",
+        ""amount"": 50.00
+    }
+    print(""--- Executing Decision for Sample Context 1 ---"")
+    result_1 = engine.execute(sample_context_1)
+    print(result_1)
+    print(""\n--- Executing Decision for Sample Context 2 ---"")
+    result_2 = engine.execute(sample_context_2)
+    print(result_2)",True,0,7941,131_9.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Any, Dict, List, Union
+class DecisionEngineError(Exception):
+    pass
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Any):
+        if not callable(condition):
+            raise TypeError(""Condition must be a callable function."")
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> bool:
+        return self.condition(context)
+    def execute(self, context: Dict[str, Any]) -> Any:
+        if self.evaluate(context):
+            return self.action
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self._rules = rules
+    def add_rule(self, rule: DecisionRule):
+        self._rules.append(rule)
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results: Dict[str, Any] = {}
+        for rule in self._rules:
+            action_result = rule.execute(context)
+            if action_result is not None:
+                rule_name = f""rule_{id(rule)}""
+                results[rule_name] = action_result
+        return results
+if __name__ == '__main__':
+    def is_high_priority(data: Dict[str, Any]) -> bool:
+        return data.get(""priority"", 0) > 5
+    def is_premium_user(data: Dict[str, Any]) -> bool:
+        return data.get(""status"") == ""premium""
+    def assign_discount(data: Dict[str, Any]) -> float:
+        return 0.15
+    def assign_standard_rate(data: Dict[str, Any]) -> float:
+        return 0.05
+    sample_rules = [
+        DecisionRule(is_high_priority, ""HIGH_PRIORITY_FLAG""),
+        DecisionRule(is_premium_user, ""PREMIUM_STATUS_FLAG""),
+        DecisionRule(lambda data: data.get(""amount"", 0) > 100, assign_discount),
+        DecisionRule(lambda data: True, assign_standard_rate),
+    ]
+    engine = DecisionEngine(sample_rules)
+    sample_context_1 = {
+        ""priority"": 10,
+        ""status"": ""premium"",
+        ""amount"": 150.0
+    }
+    sample_context_2 = {
+        ""priority"": 3,
+        ""status"": ""standard"",
+        ""amount"": 50.0
+    }
+    print(""--- Executing Decision for Context 1 ---"")
+    result_1 = engine.execute(sample_context_1)
+    print(result_1)
+    print(""\n--- Executing Decision for Context 2 ---"")
+    result_2 = engine.execute(sample_context_2)
+    print(result_2)",True,1,7942,131_9_1.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionEngineError(Exception):
+    pass
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Any):
+        if not callable(condition):
+            raise TypeError(""Condition must be a callable function."")
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> bool:
+        return self.condition(context)
+    def execute(self, context: Dict[str, Any]) -> Any:
+        if self.evaluate(context):
+            return self.action
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self._rules: List[DecisionRule] = rules
+    def add_rule(self, rule: DecisionRule):
+        self._rules.append(rule)
+    def execute_decisions(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results: Dict[str, Any] = {}
+        for i, rule in enumerate(self._rules):
+            action = rule.execute(context)
+            if action is not None:
+                results[f""rule_{i}""] = action
+        return results
+if __name__ == '__main__':
+    def is_high_priority(data: Dict[str, Any]) -> bool:
+        return data.get(""priority"", 0) > 5
+    def is_premium_user(data: Dict[str, Any]) -> bool:
+        return data.get(""user_type"") == ""premium""
+    def assign_discount(data: Dict[str, Any]) -> float:
+        base_price = data.get(""price"", 100.0)
+        if is_premium_user(data):
+            return base_price * 0.90
+        return base_price * 0.80
+    sample_rules: List[DecisionRule] = [
+        DecisionRule(condition=is_high_priority, action=""FLAG_HIGH_PRIORITY""),
+        DecisionRule(condition=is_premium_user, action=""APPLY_PREMIUM_DISCOUNT""),
+        DecisionRule(condition=lambda data: data.get(""amount"", 0) > 500, action=""FLAG_LARGE_TRANSACTION""),
+        DecisionRule(condition=lambda data: data.get(""status"") == ""pending"", action=""FLAG_PENDING""),
+    ]
+    engine = DecisionEngine(sample_rules)
+    sample_context_1: Dict[str, Any] = {
+        ""id"": 101,
+        ""priority"": 8,
+        ""user_type"": ""premium"",
+        ""price"": 150.0,
+        ""status"": ""completed"",
+        ""amount"": 100.0
+    }
+    sample_context_2: Dict[str, Any] = {
+        ""id"": 102,
+        ""priority"": 3,
+        ""user_type"": ""standard"",
+        ""price"": 200.0,
+        ""status"": ""pending"",
+        ""amount"": 600.0
+    }
+    print(""--- Executing Decisions for Context 1 ---"")
+    results_1 = engine.execute_decisions(sample_context_1)
+    print(results_1)
+    print(""\n--- Executing Decisions for Context 2 ---"")
+    results_2 = engine.execute_decisions(sample_context_2)
+    print(results_2)",True,2,7943,131_9_2.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Callable[[Dict[str, Any]], Any]):
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> Any:
+        if self.condition(context):
+            return self.action(context)
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self.rules = rules
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results = {}
+        for rule in self.rules:
+            result = rule.evaluate(context)
+            if result is not None:
+                rule_name = rule.__class__.__name__
+                results[f""rule_{rule_name}""] = result
+        return results
+if __name__ == '__main__':
+    def is_high_priority(context: Dict[str, Any]) -> bool:
+        return context.get(""priority"", 0) > 5
+    def assign_high_value(context: Dict[str, Any]) -> str:
+        return ""HighValueAssignment""
+    def assign_low_value(context: Dict[str, Any]) -> str:
+        return ""LowValueAssignment""
+    def determine_status(context: Dict[str, Any]) -> str:
+        if context.get(""score"", 0) > 80:
+            return ""Approved""
+        return ""Pending""
+    rules_list: List[DecisionRule] = [
+        DecisionRule(
+            condition=is_high_priority,
+            action=assign_high_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""score"", 0) < 50,
+            action=assign_low_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""score"", 0) > 80,
+            action=lambda ctx: ""Approved""
+        ),
+        DecisionRule(
+            condition=lambda ctx: True,
+            action=determine_status
+        )
+    ]
+    engine = DecisionEngine(rules_list)
+    sample_context_1 = {
+        ""item_id"": 101,
+        ""priority"": 10,
+        ""score"": 90,
+        ""data"": ""A""
+    }
+    sample_context_2 = {
+        ""item_id"": 102,
+        ""priority"": 2,
+        ""score"": 30,
+        ""data"": ""B""
+    }
+    print(""--- Executing Decision for Context 1 ---"")
+    results_1 = engine.execute(sample_context_1)
+    print(results_1)
+    print(""\n--- Executing Decision for Context 2 ---"")
+    results_2 = engine.execute(sample_context_2)
+    print(results_2)",True,3,7944,131_9_3.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Any, Dict, List, Union
+class DecisionEngineError(Exception):
+    pass
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Any):
+        if not callable(condition):
+            raise TypeError(""Condition must be a callable function."")
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> bool:
+        return self.condition(context)
+    def execute(self, context: Dict[str, Any]) -> Any:
+        if self.evaluate(context):
+            return self.action
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self._rules: List[DecisionRule] = rules
+    def add_rule(self, rule: DecisionRule):
+        self._rules.append(rule)
+    def execute_decisions(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results: Dict[str, Any] = {}
+        for i, rule in enumerate(self._rules):
+            action = rule.execute(context)
+            if action is not None:
+                results[f""rule_{i}""] = action
+        return results
+if __name__ == '__main__':
+    def is_high_priority(data: Dict[str, Any]) -> bool:
+        return data.get(""priority"", 0) > 5
+    def is_premium_user(data: Dict[str, Any]) -> bool:
+        return data.get(""user_type"") == ""premium""
+    def assign_discount(data: Dict[str, Any]) -> float:
+        base_price = data.get(""price"", 100.0)
+        if is_premium_user(data):
+            return base_price * 0.90
+        return base_price * 0.80
+    sample_rules = [
+        DecisionRule(condition=is_high_priority, action=""FLAG_HIGH_PRIORITY""),
+        DecisionRule(condition=is_premium_user, action=""APPLY_PREMIUM_DISCOUNT""),
+        DecisionRule(condition=lambda data: data.get(""amount"", 0) > 500, action=""FLAG_LARGE_TRANSACTION""),
+        DecisionRule(condition=lambda data: data.get(""status"") == ""pending"", action=""SET_STATUS_PENDING""),
+    ]
+    engine = DecisionEngine(sample_rules)
+    sample_context_1 = {
+        ""id"": 101,
+        ""priority"": 8,
+        ""user_type"": ""premium"",
+        ""price"": 150.0,
+        ""status"": ""completed"",
+        ""amount"": 100.0
+    }
+    sample_context_2 = {
+        ""id"": 102,
+        ""priority"": 3,
+        ""user_type"": ""standard"",
+        ""price"": 200.0,
+        ""status"": ""pending"",
+        ""amount"": 600.0
+    }
+    print(""--- Executing Decisions for Context 1 ---"")
+    results_1 = engine.execute_decisions(sample_context_1)
+    print(results_1)
+    print(""\n--- Executing Decisions for Context 2 ---"")
+    results_2 = engine.execute_decisions(sample_context_2)
+    print(results_2)",True,4,7945,131_9_4.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Any, Dict, List, Union
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Callable[[Dict[str, Any]], Any]):
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> Union[Any, None]:
+        if self.condition(context):
+            return self.action(context)
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self.rules = rules
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results = {}
+        for rule in self.rules:
+            result = rule.evaluate(context)
+            if result is not None:
+                result_key = f""rule_{id(rule)}""
+                results[result_key] = result
+        return results
+if __name__ == '__main__':
+    def is_high_priority(context: Dict[str, Any]) -> bool:
+        return context.get(""priority"", 0) > 5
+    def assign_high_value(context: Dict[str, Any]) -> str:
+        return ""HighValueAssignment""
+    def assign_low_value(context: Dict[str, Any]) -> str:
+        return ""LowValueAssignment""
+    def determine_status(context: Dict[str, Any]) -> str:
+        if context.get(""score"", 0) > 80:
+            return ""Approved""
+        return ""Pending""
+    rules_list: List[DecisionRule] = [
+        DecisionRule(
+            condition=is_high_priority,
+            action=assign_high_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""score"", 0) < 50,
+            action=assign_low_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""score"", 0) > 80,
+            action=lambda ctx: ""Approved""
+        ),
+        DecisionRule(
+            condition=lambda ctx: True,
+            action=determine_status
+        )
+    ]
+    engine = DecisionEngine(rules_list)
+    sample_context_1 = {
+        ""item_id"": 101,
+        ""priority"": 10,
+        ""score"": 90,
+        ""data"": ""A""
+    }
+    sample_context_2 = {
+        ""item_id"": 102,
+        ""priority"": 2,
+        ""score"": 30,
+        ""data"": ""B""
+    }
+    print(""--- Executing Sample Context 1 ---"")
+    results_1 = engine.execute(sample_context_1)
+    print(results_1)
+    print(""\n--- Executing Sample Context 2 ---"")
+    results_2 = engine.execute(sample_context_2)
+    print(results_2)",True,5,7946,131_9_5.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Callable[[Dict[str, Any]], Any]):
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> Any:
+        if self.condition(context):
+            return self.action(context)
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self.rules = rules
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results = {}
+        for rule in self.rules:
+            result = rule.evaluate(context)
+            if result is not None:
+                rule_name = rule.__class__.__name__
+                results[f""rule_{rule_name}""] = result
+        return results
+if __name__ == '__main__':
+    def is_high_priority(context: Dict[str, Any]) -> bool:
+        return context.get(""priority"", 0) > 5
+    def assign_high_value(context: Dict[str, Any]) -> str:
+        return ""HighValueAssignment""
+    def assign_low_value(context: Dict[str, Any]) -> str:
+        return ""LowValueAssignment""
+    def determine_status(context: Dict[str, Any]) -> str:
+        if context.get(""score"", 0) > 80:
+            return ""Approved""
+        return ""Pending""
+    rules_list: List[DecisionRule] = [
+        DecisionRule(
+            condition=is_high_priority,
+            action=assign_high_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""score"", 0) < 50,
+            action=assign_low_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""score"", 0) > 80,
+            action=lambda ctx: ""Approved""
+        ),
+        DecisionRule(
+            condition=lambda ctx: True,
+            action=determine_status
+        )
+    ]
+    engine = DecisionEngine(rules_list)
+    sample_context_1 = {
+        ""item_id"": 101,
+        ""priority"": 10,
+        ""score"": 90,
+        ""data"": ""A""
+    }
+    sample_context_2 = {
+        ""item_id"": 102,
+        ""priority"": 2,
+        ""score"": 30,
+        ""data"": ""B""
+    }
+    print(""--- Executing Decision for Sample Context 1 ---"")
+    results_1 = engine.execute(sample_context_1)
+    print(results_1)
+    print(""\n--- Executing Decision for Sample Context 2 ---"")
+    results_2 = engine.execute(sample_context_2)
+    print(results_2)",True,6,7947,131_9_6.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionEngineError(Exception):
+    pass
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Any):
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> bool:
+        return self.condition(context)
+    def execute(self, context: Dict[str, Any]) -> Any:
+        if self.evaluate(context):
+            return self.action
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self._rules: List[DecisionRule] = rules
+    def add_rule(self, rule: DecisionRule):
+        self._rules.append(rule)
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results: Dict[str, Any] = {}
+        for rule in self._rules:
+            action_result = rule.execute(context)
+            if action_result is not None:
+                results[f""rule_{id(rule)}""] = action_result
+        return results
+if __name__ == '__main__':
+    def is_high_priority(data: Dict[str, Any]) -> bool:
+        return data.get(""priority"", 0) > 5
+    def is_urgent_task(data: Dict[str, Any]) -> bool:
+        return data.get(""status"") == ""pending""
+    def assign_high_value(data: Dict[str, Any]) -> str:
+        return ""HIGH_VALUE_ASSIGNMENT""
+    def assign_low_value(data: Dict[str, Any]) -> str:
+        return ""LOW_VALUE_ASSIGNMENT""
+    sample_rules: List[DecisionRule] = [
+        DecisionRule(
+            condition=is_high_priority,
+            action=""FLAG_HIGH_PRIORITY""
+        ),
+        DecisionRule(
+            condition=is_urgent_task,
+            action=""FLAG_URGENT_TASK""
+        ),
+        DecisionRule(
+            condition=lambda data: data.get(""value"", 0) > 100,
+            action=assign_high_value
+        ),
+        DecisionRule(
+            condition=lambda data: data.get(""value"", 0) <= 100,
+            action=assign_low_value
+        )
+    ]
+    engine = DecisionEngine(sample_rules)
+    sample_data_1: Dict[str, Any] = {
+        ""id"": 101,
+        ""priority"": 8,
+        ""status"": ""pending"",
+        ""value"": 150
+    }
+    sample_data_2: Dict[str, Any] = {
+        ""id"": 102,
+        ""priority"": 3,
+        ""status"": ""completed"",
+        ""value"": 50
+    }
+    print(""--- Executing Decision Engine with Sample Data 1 ---"")
+    results_1 = engine.execute(sample_data_1)
+    print(results_1)
+    print(""\n--- Executing Decision Engine with Sample Data 2 ---"")
+    results_2 = engine.execute(sample_data_2)
+    print(results_2)",True,7,7948,131_9_7.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionRule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Callable[[Dict[str, Any]], Any]):
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> Any:
+        if self.condition(context):
+            return self.action(context)
+        return None
+class DecisionEngine:
+    def __init__(self, rules: List[DecisionRule]):
+        self.rules = rules
+    def execute(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        results = {}
+        for rule in self.rules:
+            result = rule.evaluate(context)
+            if result is not None:
+                result_key = f""rule_{id(rule)}""
+                results[result_key] = result
+        return results
+if __name__ == '__main__':
+    def is_high_priority(context: Dict[str, Any]) -> bool:
+        return context.get(""priority"", 0) > 5
+    def assign_high_value(context: Dict[str, Any]) -> str:
+        return ""HighValueAssignment""
+    def assign_low_value(context: Dict[str, Any]) -> str:
+        return ""LowValueAssignment""
+    def check_status(context: Dict[str, Any]) -> str:
+        return ""StatusChecked""
+    rules_list: List[DecisionRule] = [
+        DecisionRule(
+            condition=is_high_priority,
+            action=assign_high_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""value"", 0) < 10,
+            action=assign_low_value
+        ),
+        DecisionRule(
+            condition=lambda ctx: ctx.get(""status"") == ""ACTIVE"",
+            action=check_status
+        )
+    ]
+    engine = DecisionEngine(rules_list)
+    sample_context_1 = {
+        ""id"": 101,
+        ""priority"": 8,
+        ""value"": 50,
+        ""status"": ""ACTIVE""
+    }
+    sample_context_2 = {
+        ""id"": 102,
+        ""priority"": 3,
+        ""value"": 5,
+        ""status"": ""INACTIVE""
+    }
+    print(""--- Executing Decision for Context 1 ---"")
+    results_1 = engine.execute(sample_context_1)
+    print(results_1)
+    print(""\n--- Executing Decision for Context 2 ---"")
+    results_2 = engine.execute(sample_context_2)
+    print(results_2)",True,8,7949,131_9_8.py
+131,9,Decide based on input rules,"Write a comprehensive, production-ready Python module that defines a flexible system for executing decisions based on configurable input rules, ensuring strict type hinting and comprehensive docstrings.","from typing import Callable, Dict, Any, List, Tuple
+class DecisionEngineError(Exception):
+    pass
+class Rule:
+    def __init__(self, condition: Callable[[Dict[str, Any]], bool], action: Any):
+        if not callable(condition):
+            raise TypeError(""Condition must be a callable function."")
+        self.condition = condition
+        self.action = action
+    def evaluate(self, context: Dict[str, Any]) -> bool:
+        return self.condition(context)
+    def execute(self, context: Dict[str, Any]) -> Any:
+        return self.action
+class DecisionEngine:
+    def __init__(self, rules: List[Rule]):
+        self._rules: List[Rule] = rules
+    def add_rule(self, rule: Rule):
+        self._rules.append(rule)
+    def decide(self, context: Dict[str, Any]) -> Tuple[bool, Any]:
+        for rule in self._rules:
+            if rule.evaluate(context):
+                return True, rule.execute(context)
+        return False, None
+if __name__ == '__main__':
+    def is_high_priority(data: Dict[str, Any]) -> bool:
+        return data.get(""priority"", 0) > 5
+    def is_urgent_task(data: Dict[str, Any]) -> bool:
+        return data.get(""status"") == ""pending""
+    def assign_high_value_action(data: Dict[str, Any]) -> str:
+        return ""ACTION_HIGH_VALUE""
+    def assign_pending_action(data: Dict[str, Any]) -> str:
+        return ""ACTION_PENDING""
+    sample_rules: List[Rule] = [
+        Rule(condition=is_high_priority, action=assign_high_value_action),
+        Rule(condition=is_urgent_task, action=assign_pending_action),
+    ]
+    engine = DecisionEngine(sample_rules)
+    sample_context_1 = {
+        ""priority"": 10,
+        ""status"": ""pending"",
+        ""item_id"": 101
+    }
+    sample_context_2 = {
+        ""priority"": 3,
+        ""status"": ""complete"",
+        ""item_id"": 102
+    }
+    print(""--- Testing Context 1 (High Priority, Pending) ---"")
+    result1, action1 = engine.decide(sample_context_1)
+    print(f""Context: {sample_context_1}"")
+    print(f""Decision: Success={result1}, Action={action1}"")
+    print(""\n--- Testing Context 2 (Low Priority, Complete) ---"")
+    result2, action2 = engine.decide(sample_context_2)
+    print(f""Context: {sample_context_2}"")
+    print(f""Decision: Success={result2}, Action={action2}"")
+    sample_context_3 = {
+        ""priority"": 8,
+        ""status"": ""complete"",
+        ""item_id"": 103
+    }
+    print(""\n--- Testing Context 3 (High Priority, Complete) ---"")
+    result3, action3 = engine.decide(sample_context_3)
+    print(f""Context: {sample_context_3}"")
+    print(f""Decision: Success={result3}, Action={action3}"")",True,9,7950,131_9_9.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def categorize_input(data):
+    if not data:
+        return ""Unknown""
+    if isinstance(data, str):
+        lower_data = data.lower().strip()
+        if ""error"" in lower_data or ""fail"" in lower_data:
+            return ""Error Category""
+        elif ""urgent"" in lower_data or ""critical"" in lower_data:
+            return ""High Priority""
+        elif ""request"" in lower_data or ""query"" in lower_data:
+            return ""Information Request""
+        else:
+            return ""General""
+    if isinstance(data, int):
+        if data > 100:
+            return ""Large Value""
+        elif data > 0:
+            return ""Positive Value""
+        else:
+            return ""Zero or Negative""
+    if isinstance(data, list):
+        if not data:
+            return ""Empty List""
+        if all(isinstance(item, str) for item in data):
+            return ""String List""
+        return ""Mixed List""
+    return ""Uncategorized""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""This is an urgent request for data."",
+        ""System check complete."",
+        ""Error occurred during processing."",
+        150,
+        -5,
+        [],
+        [""item1"", ""item2""]
+    ]
+    results = []
+    for item in sample_inputs:
+        category = categorize_input(item)
+        results.append((item, category))
+    for original, category in results:
+        print(f""Input: {original}, Category: {category}"")",True,0,7951,131_10.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def categorize_input(data):
+    if not data:
+        return ""No Data""
+    if isinstance(data, str):
+        data = data.lower().strip()
+    if ""error"" in data or ""fail"" in data:
+        return ""Error Category""
+    elif ""high"" in data or ""urgent"" in data:
+        return ""High Priority""
+    elif ""medium"" in data or ""standard"" in data:
+        return ""Medium Priority""
+    elif ""low"" in data or ""routine"" in data:
+        return ""Low Priority""
+    else:
+        return ""Default Category""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""System error detected"",
+        ""High priority request"",
+        ""Standard operation"",
+        ""Routine check"",
+        ""Low level warning"",
+        ""This is a normal message""
+    ]
+    results = []
+    for item in sample_inputs:
+        category = categorize_input(item)
+        results.append((item, category))
+    for original, category in results:
+        print(f""Input: {original}, Output: {category}"")",True,1,7952,131_10_1.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def determine_category(input_data):
+    if not input_data:
+        return ""Unknown""
+    data_str = str(input_data).lower().strip()
+    if ""high"" in data_str or ""urgent"" in data_str:
+        return ""Priority_High""
+    elif ""medium"" in data_str or ""standard"" in data_str:
+        return ""Priority_Medium""
+    elif ""low"" in data_str or ""routine"" in data_str:
+        return ""Priority_Low""
+    else:
+        return ""Priority_Unknown""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""High priority task"",
+        ""Standard request"",
+        ""Routine check"",
+        ""Urgent system alert"",
+        ""Low level notification"",
+        ""Some random text""
+    ]
+    results = []
+    for item in sample_inputs:
+        category = determine_category(item)
+        results.append((item, category))
+    for original, category in results:
+        print(f""Input: {original}, Category: {category}"")",True,2,7953,131_10_2.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def categorize_input(data):
+    if not data:
+        return ""No Data""
+    if isinstance(data, str):
+        data = data.lower().strip()
+    if ""error"" in data or ""fail"" in data:
+        return ""Error Category""
+    elif ""high"" in data or ""urgent"" in data:
+        return ""High Priority""
+    elif ""medium"" in data or ""standard"" in data:
+        return ""Medium Priority""
+    elif ""low"" in data or ""routine"" in data:
+        return ""Low Priority""
+    else:
+        return ""Default Category""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""System is running high load"",
+        ""Routine check complete"",
+        ""Error detected in module X"",
+        ""Standard operation"",
+        ""Low resource usage"",
+        ""Urgent system alert""
+    ]
+    results = []
+    for item in sample_inputs:
+        category = categorize_input(item)
+        results.append((item, category))
+    for original, category in results:
+        print(f""Input: {original}, Category: {category}"")",True,3,7954,131_10_3.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def categorize_input(data):
+    if not data:
+        return ""No Data""
+    if isinstance(data, str):
+        data = data.lower().strip()
+    if ""error"" in data or ""fail"" in data:
+        return ""Error Category""
+    elif ""high"" in data or ""urgent"" in data:
+        return ""High Priority""
+    elif ""medium"" in data or ""standard"" in data:
+        return ""Medium Priority""
+    elif ""low"" in data or ""routine"" in data:
+        return ""Low Priority""
+    else:
+        return ""Default Category""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""System error detected"",
+        ""High priority request"",
+        ""Standard operation"",
+        ""Routine check"",
+        ""Low level warning"",
+        ""This is a normal message""
+    ]
+    results = []
+    for item in sample_inputs:
+        category = categorize_input(item)
+        results.append((item, category))
+    for original, category in results:
+        print(f""Input: {original}, Category: {category}"")",True,4,7955,131_10_4.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def categorize_input(data):
+    if not data:
+        return ""No Data""
+    if isinstance(data, str):
+        data = data.lower().strip()
+    if ""error"" in data or ""fail"" in data:
+        return ""Error Category""
+    elif ""high"" in data or ""urgent"" in data:
+        return ""High Priority""
+    elif ""medium"" in data or ""standard"" in data:
+        return ""Medium Priority""
+    elif ""low"" in data or ""routine"" in data:
+        return ""Low Priority""
+    else:
+        return ""Default Category""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""System error detected"",
+        ""High priority request"",
+        ""Standard operational task"",
+        ""Routine maintenance check"",
+        ""Low level warning"",
+        ""This is a normal message""
+    ]
+    results = []
+    for item in sample_inputs:
+        category = categorize_input(item)
+        results.append((item, category))
+    for original, category in results:
+        print(f""Input: {original}, Category: {category}"")",True,5,7956,131_10_5.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def determine_category(input_data):
+    if not input_data:
+        return ""Unknown""
+    data_str = str(input_data).lower().strip()
+    if ""high"" in data_str or ""urgent"" in data_str:
+        return ""Priority_High""
+    elif ""medium"" in data_str or ""standard"" in data_str:
+        return ""Priority_Medium""
+    elif ""low"" in data_str or ""routine"" in data_str:
+        return ""Priority_Low""
+    else:
+        return ""Priority_Unknown""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""System is running at high load"",
+        ""Task requires medium attention"",
+        ""Routine check complete"",
+        ""Urgent error detected now"",
+        ""Standard operation mode""
+    ]
+    results = []
+    for data in sample_inputs:
+        category = determine_category(data)
+        results.append((data, category))
+    for data, category in results:
+        print(f""Input: {data}, Category: {category}"")",True,6,7957,131_10_6.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def determine_category(input_value):
+    if isinstance(input_value, str):
+        lower_val = input_value.lower().strip()
+        if lower_val.startswith(""a""):
+            return ""Category A""
+        elif lower_val.startswith(""b""):
+            return ""Category B""
+        elif lower_val.startswith(""c""):
+            return ""Category C""
+        else:
+            return ""Category D""
+    elif isinstance(input_value, int):
+        if input_value > 100:
+            return ""High Value""
+        else:
+            return ""Low Value""
+    else:
+        return ""Invalid Input Type""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""Apple"",
+        ""Banana"",
+        ""Carrot"",
+        ""Date"",
+        ""150"",
+        ""50"",
+        ""Orange""
+    ]
+    for item in sample_inputs:
+        result = determine_category(item)
+        print(result)",True,7,7958,131_10_7.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def categorize_input(data):
+    category = ""Unknown""
+    if not data:
+        return category
+    if isinstance(data, str):
+        lower_data = data.lower().strip()
+        if ""error"" in lower_data or ""fail"" in lower_data:
+            category = ""Error""
+        elif ""urgent"" in lower_data or ""critical"" in lower_data:
+            category = ""High Priority""
+        elif ""request"" in lower_data or ""query"" in lower_data:
+            category = ""Information Request""
+        else:
+            category = ""General""
+    elif isinstance(data, int):
+        if data > 100:
+            category = ""Large Value""
+        else:
+            category = ""Small Value""
+    elif isinstance(data, list):
+        if len(data) > 5:
+            category = ""Long List""
+        else:
+            category = ""Short List""
+    else:
+        category = ""Invalid Type""
+    return category
+if __name__ == '__main__':
+    sample_inputs = [
+        ""System error occurred"",
+        ""Please provide a query"",
+        150,
+        [""a"", ""b"", ""c"", ""d"", ""e"", ""f""],
+        ""Urgent task"",
+        10,
+        []
+    ]
+    results = []
+    for item in sample_inputs:
+        results.append(categorize_input(item))
+    for result in results:
+        print(result)",True,8,7959,131_10_8.py
+131,10,Decide based on input rules,"Write a complete, production-ready Python script that reads a list of user inputs from standard input, applies a set of conditional rules to determine an output category, and prints the result. The code must be highly optimized and follow all Python best practices.","import sys
+def determine_category(input_data):
+    if not input_data:
+        return ""UNKNOWN""
+    data_str = str(input_data).lower()
+    if ""high"" in data_str or ""urgent"" in data_str:
+        return ""PRIORITY""
+    elif ""medium"" in data_str or ""standard"" in data_str:
+        return ""NORMAL""
+    elif ""low"" in data_str or ""minor"" in data_str:
+        return ""LOW""
+    else:
+        return ""OTHER""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""High priority request"",
+        ""Standard task"",
+        ""Low importance item"",
+        ""Urgent notification"",
+        ""A regular update""
+    ]
+    for item in sample_inputs:
+        result = determine_category(item)
+        print(result)",True,9,7960,131_10_9.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self, rules):
+        self.rules = rules
+    def decide(self, input_value):
+        for rule in self.rules:
+            if rule['condition'] == input_value:
+                return rule['decision']
+        return None
+if __name__ == '__main__':
+    sample_rules = [
+        {'condition': 10, 'decision': 'Low'},
+        {'condition': 25, 'decision': 'Medium'},
+        {'condition': 50, 'decision': 'High'},
+        {'condition': 100, 'decision': 'Very High'}
+    ]
+    decider = RuleBasedDecider(sample_rules)
+    test_values = [10, 25, 50, 100, 30, 99]
+    for value in test_values:
+        result = decider.decide(value)
+        print(f""Input: {value}, Decision: {result}"")",True,0,7961,131_11.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self, rules):
+        self.rules = rules
+    def decide(self, input_value):
+        for rule in self.rules:
+            if rule['condition'] == input_value:
+                return rule['decision']
+        return None
+if __name__ == '__main__':
+    sample_rules = [
+        {'condition': 10, 'decision': 'Low'},
+        {'condition': 25, 'decision': 'Medium'},
+        {'condition': 50, 'decision': 'High'},
+        {'condition': 100, 'decision': 'Very High'}
+    ]
+    decider = RuleBasedDecider(sample_rules)
+    test_values = [10, 25, 50, 100, 30, 5]
+    for value in test_values:
+        result = decider.decide(value)
+        print(f""Input: {value}, Decision: {result}"")",True,1,7962,131_11_1.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition, decision):
+        self.rules.append((condition, decision))
+    def decide(self, input_value):
+        for condition, decision in self.rules:
+            if condition(input_value):
+                return decision
+        return None
+if __name__ == '__main__':
+    decider = RuleBasedDecider()
+    def is_high(value):
+        return value > 50
+    def is_medium(value):
+        return 10 <= value <= 50
+    def is_low(value):
+        return value < 10
+    decider.add_rule(is_high, ""High Priority"")
+    decider.add_rule(is_medium, ""Medium Priority"")
+    decider.add_rule(is_low, ""Low Priority"")
+    test_values = [5, 30, 75, 100, 45]
+    for value in test_values:
+        result = decider.decide(value)
+        print(f""Input: {value}, Decision: {result}"")",True,2,7963,131_11_2.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self, rules):
+        self.rules = rules
+    def decide(self, input_value):
+        for rule in self.rules:
+            if rule['condition'] == input_value:
+                return rule['decision']
+        return None
+if __name__ == '__main__':
+    sample_rules = [
+        {'condition': 10, 'decision': 'Low'},
+        {'condition': 25, 'decision': 'Medium'},
+        {'condition': 50, 'decision': 'High'},
+        {'condition': 100, 'decision': 'Very High'}
+    ]
+    decider = RuleBasedDecider(sample_rules)
+    print(f""Decision for 10: {decider.decide(10)}"")
+    print(f""Decision for 25: {decider.decide(25)}"")
+    print(f""Decision for 50: {decider.decide(50)}"")
+    print(f""Decision for 100: {decider.decide(100)}"")
+    print(f""Decision for 30: {decider.decide(30)}"")
+    print(f""Decision for 5: {decider.decide(5)}"")",True,3,7964,131_11_3.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition_func, decision):
+        self.rules.append((condition_func, decision))
+    def decide(self, input_value):
+        for condition, decision in self.rules:
+            if condition(input_value):
+                return decision
+        return None
+if __name__ == '__main__':
+    decider = RuleBasedDecider()
+    def is_high(value):
+        return value > 50
+    def is_medium(value):
+        return 10 <= value <= 50
+    def is_low(value):
+        return value < 10
+    decider.add_rule(is_high, ""High Priority"")
+    decider.add_rule(is_medium, ""Medium Priority"")
+    decider.add_rule(is_low, ""Low Priority"")
+    test_values = [10, 30, 75, 50, 5, 100]
+    for value in test_values:
+        result = decider.decide(value)
+        print(f""Input: {value}, Decision: {result}"")",True,4,7965,131_11_4.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition_func, decision):
+        self.rules.append((condition_func, decision))
+    def decide(self, input_value):
+        for condition, decision in self.rules:
+            if condition(input_value):
+                return decision
+        return None
+if __name__ == '__main__':
+    decider = RuleBasedDecider()
+    def is_high_priority(value):
+        return value > 80
+    def is_medium_priority(value):
+        return 40 <= value <= 80
+    def is_low_priority(value):
+        return value < 40
+    decider.add_rule(is_high_priority, ""High Priority"")
+    decider.add_rule(is_medium_priority, ""Medium Priority"")
+    decider.add_rule(is_low_priority, ""Low Priority"")
+    test_values = [10, 55, 90, 30, 75, 81]
+    for value in test_values:
+        result = decider.decide(value)
+        print(f""Input: {value}, Decision: {result}"")",True,5,7966,131_11_5.py
+131,11,Decide based on input rules,"Implement an optimized class named RuleBasedDecider that contains a method to process an input value against a predefined set of complex, nested input rules and return the corresponding decision. Ensure the implementation is clean, efficient, and adheres to object-oriented principles.","class RuleBasedDecider:
+    def __init__(self, rules):
+        self.rules = rules
+    def decide(self, input_value):
+        for rule in self.rules:
+            if rule['condition'] == input_value:
+                return rule['decision']
+        return None
+if __name__ == '__main__':
+    sample_rules = [
+        {'condition': 10, 'decision': 'Low'},
+        {'condition': 25, 'decision': 'Medium'},
+        {'condition': 50, 'decision': 'High'},
+        {'condition': 100, 'decision': 'Very High'}
+    ]
+    decider = RuleBasedDecider(sample_rules)
+    test_values = [10, 25, 50, 100, 75, 0]
+    for value in test_values:
+        result = decider.decide(value)
+        print(f""Input: {value}, Decision: {result}"")",True,6,7967,131_11_6.py
+127,13,Figure out if something is odd,"Write a command-line Python program that reads an integer from standard input and prints a clear, user-friendly message indicating whether the entered number is odd or even. Use best-practice input handling.",,False,0,7968,127_13.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        condition = rule['condition']
+        result = rule['result']
+        match = True
+        for key, required_value in condition.items():
+            if input_params.get(key) != required_value:
+                match = False
+                break
+        if match:
+            return result
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'condition': {'temperature': 30, 'humidity': 80},
+            'result': 'Action_A'
+        },
+        {
+            'condition': {'location': 'hot'},
+            'result': 'Action_B'
+        },
+        {
+            'condition': {'temperature': 40},
+            'result': 'Action_C'
+        }
+    ]
+    decision = decide_based_on_input(sample_input, sample_rules)
+    print(decision)",True,0,7969,131_12.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        conditions_met = True
+        for key, required_value in rule['conditions'].items():
+            if input_params.get(key) != required_value:
+                conditions_met = False
+                break
+        if conditions_met:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'conditions': {'temperature': 30, 'humidity': 70},
+            'decision': 'Mild conditions'
+        },
+        {
+            'conditions': {'temperature': 35},
+            'decision': 'Hot weather alert'
+        },
+        {
+            'conditions': {'location': 'hot'},
+            'decision': 'Desert heat warning'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,1,7970,131_12_1.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        match = True
+        for condition_key, required_value in rule['condition'].items():
+            if input_params.get(condition_key) != required_value:
+                match = False
+                break
+        if match:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'condition': {'temperature': 30, 'humidity': 70},
+            'decision': 'Mild conditions'
+        },
+        {
+            'condition': {'temperature': 35},
+            'decision': 'Hot weather alert'
+        },
+        {
+            'condition': {'location': 'hot'},
+            'decision': 'Desert heat protocol'
+        },
+        {
+            'condition': {'humidity': 80},
+            'decision': 'High humidity warning'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,2,7971,131_12_2.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        if check_rule(input_params, rule):
+            return rule['decision']
+    return None
+def check_rule(input_params, rule):
+    for key, required_value in rule['conditions'].items():
+        if input_params.get(key) != required_value:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_input = {
+        ""temperature"": 35,
+        ""humidity"": 60,
+        ""location"": ""hot""
+    }
+    sample_rules = [
+        {
+            ""conditions"": {
+                ""temperature"": 30,
+                ""humidity"": 70
+            },
+            ""decision"": ""High Humidity Alert""
+        },
+        {
+            ""conditions"": {
+                ""location"": ""hot""
+            },
+            ""decision"": ""Hot Weather Protocol""
+        },
+        {
+            ""conditions"": {
+                ""temperature"": 35
+            },
+            ""decision"": ""Moderate Heat Warning""
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,3,7972,131_12_3.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        conditions_met = True
+        for key, required_value in rule['conditions'].items():
+            if input_params.get(key) != required_value:
+                conditions_met = False
+                break
+        if conditions_met:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'conditions': {'temperature': 30, 'humidity': 70},
+            'decision': 'Mild conditions'
+        },
+        {
+            'conditions': {'temperature': 35},
+            'decision': 'Hot weather warning'
+        },
+        {
+            'conditions': {'location': 'hot'},
+            'decision': 'Desert heat protocol'
+        },
+        {
+            'conditions': {'humidity': 80},
+            'decision': 'High humidity alert'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,4,7973,131_12_4.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        match = True
+        for condition_key, required_value in rule['condition'].items():
+            if input_params.get(condition_key) != required_value:
+                match = False
+                break
+        if match:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 60,
+        'location': 'North'
+    }
+    sample_rules = [
+        {
+            'condition': {'temperature': 30},
+            'decision': 'Mild Weather'
+        },
+        {
+            'condition': {'humidity': 70},
+            'decision': 'High Humidity Alert'
+        },
+        {
+            'condition': {'location': 'North', 'temperature': 35},
+            'decision': 'Hot and Dry North'
+        },
+        {
+            'condition': {'humidity': 60},
+            'decision': 'Moderate Conditions'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,5,7974,131_12_5.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, rules):
+    for rule in rules:
+        conditions_met = True
+        for key, required_value in rule['conditions'].items():
+            if input_params.get(key) != required_value:
+                conditions_met = False
+                break
+        if conditions_met:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    input_data = {
+        ""temperature"": 35,
+        ""humidity"": 60,
+        ""location"": ""North""
+    }
+    decision_rules = [
+        {
+            ""conditions"": {""temperature"": 30, ""humidity"": 50},
+            ""decision"": ""Optimal conditions met""
+        },
+        {
+            ""conditions"": {""temperature"": 35},
+            ""decision"": ""High temperature warning""
+        },
+        {
+            ""conditions"": {""location"": ""North""},
+            ""decision"": ""Northern zone alert""
+        }
+    ]
+    result = decide_based_on_input(input_data, decision_rules)
+    print(result)",True,6,7975,131_12_6.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        conditions_met = True
+        for key, required_value in rule['conditions'].items():
+            if input_params.get(key) != required_value:
+                conditions_met = False
+                break
+        if conditions_met:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'conditions': {'temperature': 30, 'humidity': 70},
+            'decision': 'Mild conditions'
+        },
+        {
+            'conditions': {'temperature': 35},
+            'decision': 'Hot weather alert'
+        },
+        {
+            'conditions': {'location': 'hot'},
+            'decision': 'Desert heat warning'
+        },
+        {
+            'conditions': {'humidity': 80},
+            'decision': 'High humidity advisory'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,7,7976,131_12_7.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        if check_rule(input_params, rule):
+            return rule['decision']
+    return None
+def check_rule(input_params, rule):
+    for key, required_value in rule['conditions'].items():
+        if input_params.get(key) != required_value:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_input = {
+        ""temperature"": 35,
+        ""humidity"": 70,
+        ""location"": ""hot_zone""
+    }
+    sample_rules = [
+        {
+            ""conditions"": {
+                ""temperature"": 30,
+                ""humidity"": 60
+            },
+            ""decision"": ""Mild conditions""
+        },
+        {
+            ""conditions"": {
+                ""temperature"": 35,
+                ""location"": ""hot_zone""
+            },
+            ""decision"": ""High heat warning""
+        },
+        {
+            ""conditions"": {
+                ""humidity"": 80
+            },
+            ""decision"": ""High humidity alert""
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,8,7977,131_12_8.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        conditions_met = True
+        for key, required_value in rule['conditions'].items():
+            if input_params.get(key) != required_value:
+                conditions_met = False
+                break
+        if conditions_met:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'conditions': {'temperature': 30, 'humidity': 70},
+            'decision': 'Mild conditions'
+        },
+        {
+            'conditions': {'temperature': 35},
+            'decision': 'Hot weather warning'
+        },
+        {
+            'conditions': {'location': 'hot'},
+            'decision': 'Desert heat protocol'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,9,7978,131_12_9.py
+131,12,Decide based on input rules,Develop a standalone Python function named decide_based_on_input that accepts a dictionary of input parameters and a list of decision rules. The function must iterate through the rules sequentially and return the first matching decision based on the input criteria. Prioritize efficiency.,"def decide_based_on_input(input_params, decision_rules):
+    for rule in decision_rules:
+        conditions_met = True
+        for key, required_value in rule['conditions'].items():
+            if input_params.get(key) != required_value:
+                conditions_met = False
+                break
+        if conditions_met:
+            return rule['decision']
+    return None
+if __name__ == '__main__':
+    sample_input = {
+        'temperature': 35,
+        'humidity': 80,
+        'location': 'hot'
+    }
+    sample_rules = [
+        {
+            'conditions': {'temperature': 30, 'humidity': 70},
+            'decision': 'Mild conditions'
+        },
+        {
+            'conditions': {'temperature': 35},
+            'decision': 'Hot weather alert'
+        },
+        {
+            'conditions': {'location': 'hot'},
+            'decision': 'Desert heat protocol'
+        },
+        {
+            'conditions': {'humidity': 80},
+            'decision': 'High humidity warning'
+        }
+    ]
+    result = decide_based_on_input(sample_input, sample_rules)
+    print(result)",True,10,7979,131_12_10.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, status):
+    if score >= 90:
+        return ""Excellent"", ""Pass""
+    elif score >= 70:
+        return ""Good"", ""Pass""
+    elif score >= 50:
+        return ""Average"", ""Review""
+    elif score >= 30:
+        return ""Poor"", ""Fail""
+    else:
+        return ""Failing"", ""Fail""
+def process_input(input_score, input_status):
+    try:
+        score = int(input_score)
+        status = input_status.lower()
+    except ValueError:
+        return ""Error"", ""Invalid input for score.""
+    if not isinstance(score, int) or not isinstance(status, str):
+        return ""Error"", ""Invalid data types provided.""
+    if score < 0 or score > 100:
+        return ""Error"", ""Score must be between 0 and 100.""
+    if status == ""pass"" or status == ""fail"" or status == ""review"":
+        result_type, action = decision_simulator(score, status)
+        return result_type, action
+    else:
+        return ""Error"", ""Invalid status provided. Must be 'Pass', 'Fail', or 'Review'.""
+if __name__ == '__main__':
+    sample_inputs = [
+        (""85"", ""Pass""),
+        (""45"", ""Review""),
+        (""92"", ""Pass""),
+        (""25"", ""Fail""),
+        (""105"", ""Pass""),
+        (""abc"", ""Pass""),
+        (""60"", ""Unknown""),
+        (""-10"", ""Pass"")
+    ]
+    print(""--- Decision Simulation Results ---"")
+    for score_str, status_str in sample_inputs:
+        print(f""\nInput Score: {score_str}, Input Status: {status_str}"")
+        result_type, action = process_input(score_str, status_str)
+        print(f""Result Type: {result_type}, Action: {action}"")
+    print(""\n--- Simulation Complete ---"")",True,0,7980,131_13.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, attempt):
+    if score >= 90:
+        return ""Grade A: Excellent performance.""
+    elif score >= 80:
+        return ""Grade B: Good performance.""
+    elif score >= 70:
+        return ""Grade C: Satisfactory performance.""
+    elif score >= 60:
+        return ""Grade D: Needs improvement.""
+    elif score >= 50:
+        return ""Grade F: Poor performance.""
+    else:
+        return ""Invalid score. Score must be between 0 and 100.""
+def process_decision(input_value):
+    try:
+        score = int(input_value)
+        if not (0 <= score <= 100):
+            raise ValueError(""Score out of range."")
+        if score < 0 or score > 100:
+            return decision_simulator(score, 1)
+        else:
+            return decision_simulator(score, 1)
+    except ValueError as e:
+        return f""Error: Invalid input provided. Details: {e}""
+    except TypeError:
+        return ""Error: Input must be a numerical value.""
+    except Exception as e:
+        return f""An unexpected error occurred: {e}""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""95"",
+        ""72"",
+        ""45"",
+        ""105"",
+        ""abc"",
+        ""-10"",
+        ""88""
+    ]
+    print(""--- Decision Simulation Results ---"")
+    for input_val in sample_inputs:
+        result = process_decision(input_val)
+        print(f""Input: '{input_val}' -> Result: {result}"")
+        print(""-"" * 30)",True,1,7981,131_13_1.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, effort):
+    if score >= 90 and effort >= 8:
+        result = ""Excellent performance, high effort. Reward: Gold Medal.""
+    elif score >= 70 and effort >= 5:
+        result = ""Good performance, moderate effort. Reward: Silver Medal.""
+    elif score >= 50 and effort >= 3:
+        result = ""Satisfactory performance, low effort. Reward: Bronze Medal.""
+    elif score >= 0 and effort >= 0:
+        result = ""Needs improvement, minimal effort. Reward: Participation Certificate.""
+    else:
+        result = ""Invalid input combination. Please check your scores and effort levels.""
+    return result
+if __name__ == '__main__':
+    sample_score_1 = 95
+    sample_effort_1 = 9
+    sample_score_2 = 65
+    sample_effort_2 = 4
+    sample_score_3 = 40
+    sample_effort_3 = 10
+    sample_score_4 = 100
+    sample_effort_4 = -5
+    print(f""Scenario 1 (Score: {sample_score_1}, Effort: {sample_effort_1}): {decision_simulator(sample_score_1, sample_effort_1)}"")
+    print(f""Scenario 2 (Score: {sample_score_2}, Effort: {sample_effort_2}): {decision_simulator(sample_score_2, sample_effort_2)}"")
+    print(f""Scenario 3 (Score: {sample_score_3}, Effort: {sample_effort_3}): {decision_simulator(sample_score_3, sample_effort_3)}"")
+    print(f""Scenario 4 (Score: {sample_score_4}, Effort: {sample_effort_4}): {decision_simulator(sample_score_4, sample_effort_4)}"")
+    print(f""Scenario 5 (Score: 50, Effort: 3): {decision_simulator(50, 3)}"")
+    print(f""Scenario 6 (Score: 10, Effort: 1): {decision_simulator(10, 1)}"")",True,2,7982,131_13_2.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(value):
+    if isinstance(value, int):
+        if value > 0:
+            return ""Positive Result""
+        elif value == 0:
+            return ""Zero Value""
+        else:
+            return ""Negative Value""
+    elif isinstance(value, str):
+        if value.lower() == ""high"":
+            return ""High Priority Action""
+        elif value.lower() == ""low"":
+            return ""Low Priority Action""
+        else:
+            return ""Unknown String Input""
+    else:
+        return ""Invalid Data Type""
+if __name__ == '__main__':
+    sample_inputs = [
+        10,
+        -5,
+        0,
+        ""High"",
+        ""low"",
+        ""medium"",
+        3.14,
+        [1, 2, 3]
+    ]
+    print(""--- Decision Simulation Results ---"")
+    for input_val in sample_inputs:
+        result = decision_simulator(input_val)
+        print(f""Input: {repr(input_val)} -> Result: {result}"")
+    print(""---------------------------------"")",True,3,7983,131_13_3.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, status):
+    if score >= 90:
+        result = ""Excellent""
+    elif score >= 70:
+        result = ""Good""
+    elif score >= 50:
+        result = ""Average""
+    elif score >= 30:
+        result = ""Needs Improvement""
+    else:
+        result = ""Failing""
+    if status == ""Pass"":
+        final_message = f""Score: {score}%, Status: {status}. Result: {result}.""
+    elif status == ""Fail"":
+        final_message = f""Score: {score}%, Status: {status}. Result: {result}. Action required.""
+    else:
+        final_message = f""Invalid status provided: {status}.""
+    return final_message
+if __name__ == '__main__':
+    sample_score_1 = 95
+    sample_status_1 = ""Pass""
+    sample_score_2 = 45
+    sample_status_2 = ""Fail""
+    sample_score_3 = 82
+    sample_status_3 = ""Pass""
+    sample_score_4 = 25
+    sample_status_4 = ""Pass""
+    print(decision_simulator(sample_score_1, sample_status_1))
+    print(""-"" * 30)
+    print(decision_simulator(sample_score_2, sample_status_2))
+    print(""-"" * 30)
+    print(decision_simulator(sample_score_3, sample_status_3))
+    print(""-"" * 30)
+    print(decision_simulator(sample_score_4, sample_status_4))
+    print(""-"" * 30)
+    invalid_status = ""Unknown""
+    print(decision_simulator(60, invalid_status))
+    print(""-"" * 30)
+    try:
+        invalid_score = ""ABC""
+        decision_simulator(invalid_score, ""Pass"")
+    except Exception as e:
+        print(f""Error caught during execution: {e}"")",True,4,7984,131_13_4.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, status):
+    if score >= 90:
+        result = ""Excellent""
+    elif score >= 70:
+        result = ""Good""
+    elif score >= 50:
+        result = ""Average""
+    elif score >= 30:
+        result = ""Needs Improvement""
+    else:
+        result = ""Failing""
+    if status == ""Pass"":
+        final_message = f""Score: {score}%, Status: {status}. Result: {result}.""
+    elif status == ""Fail"":
+        final_message = f""Score: {score}%, Status: {status}. Result: {result}. Action required.""
+    else:
+        final_message = f""Invalid status provided: {status}.""
+    return final_message
+if __name__ == '__main__':
+    sample_score_1 = 95
+    sample_status_1 = ""Pass""
+    sample_score_2 = 45
+    sample_status_2 = ""Fail""
+    sample_score_3 = 82
+    sample_status_3 = ""Pass""
+    sample_score_4 = 25
+    sample_status_4 = ""Pass""
+    print(decision_simulator(sample_score_1, sample_status_1))
+    print(""-"" * 30)
+    print(decision_simulator(sample_score_2, sample_status_2))
+    print(""-"" * 30)
+    print(decision_simulator(sample_score_3, sample_status_3))
+    print(""-"" * 30)
+    print(decision_simulator(sample_score_4, sample_status_4))
+    print(""-"" * 30)
+    try:
+        invalid_score = 100
+        invalid_status = ""Unknown""
+        print(decision_simulator(invalid_score, invalid_status))
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,5,7985,131_13_5.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, effort):
+    if score >= 90 and effort >= 8:
+        result = ""Excellent performance. High reward achieved.""
+    elif score >= 70 and effort >= 5:
+        result = ""Good performance. Moderate reward achieved.""
+    elif score >= 50 and effort >= 3:
+        result = ""Average performance. Low reward achieved.""
+    elif score >= 0 and effort < 3:
+        result = ""Poor performance. Minimal reward achieved.""
+    else:
+        result = ""Insufficient data or very low metrics.""
+    return result
+if __name__ == '__main__':
+    sample_score_1 = 95
+    sample_effort_1 = 9
+    sample_score_2 = 65
+    sample_effort_2 = 4
+    sample_score_3 = 40
+    sample_effort_3 = 2
+    sample_score_4 = 80
+    sample_effort_4 = 6
+    inputs = [
+        (sample_score_1, sample_effort_1),
+        (sample_score_2, sample_effort_2),
+        (sample_score_3, sample_effort_3),
+        (sample_score_4, sample_effort_4)
+    ]
+    for score, effort in inputs:
+        try:
+            output = decision_simulator(score, effort)
+            print(f""Score: {score}, Effort: {effort} -> Decision: {output}"")
+        except Exception as e:
+            print(f""An error occurred during simulation for input ({score}, {effort}): {e}"", file=sys.stderr)
+            print(""Error handling activated."", file=sys.stderr)
+            continue",True,6,7986,131_13_6.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, status):
+    if score >= 90:
+        result = ""Excellent""
+    elif score >= 70:
+        result = ""Good""
+    elif score >= 50:
+        result = ""Average""
+    elif score >= 30:
+        result = ""Needs Improvement""
+    else:
+        result = ""Failing""
+    if status == ""Pass"":
+        final_message = f""Status: {status}, Score: {score}%, Result: {result}""
+    elif status == ""Fail"":
+        final_message = f""Status: {status}, Score: {score}%, Result: {result}. Action required.""
+    else:
+        final_message = f""Status: {status}, Score: {score}%, Result: {result}. Status unknown.""
+    return final_message
+if __name__ == '__main__':
+    sample_score_1 = 95
+    sample_status_1 = ""Pass""
+    sample_score_2 = 45
+    sample_status_2 = ""Fail""
+    sample_score_3 = 82
+    sample_status_3 = ""Unknown""
+    test_cases = [
+        (sample_score_1, sample_status_1),
+        (sample_score_2, sample_status_2),
+        (sample_score_3, sample_status_3)
+    ]
+    for score, status in test_cases:
+        try:
+            output = decision_simulator(score, status)
+            print(output)
+        except Exception as e:
+            print(f""An error occurred during simulation: {e}"", file=sys.stderr)
+    invalid_score = 105
+    invalid_status = ""Pass""
+    try:
+        print(""\nTesting invalid input scenario:"")
+        output = decision_simulator(invalid_score, invalid_status)
+        print(output)
+    except Exception as e:
+        print(f""An error occurred during invalid input test: {e}"", file=sys.stderr)",True,7,7987,131_13_7.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, status):
+    if score >= 90:
+        result = ""Excellent""
+    elif score >= 70:
+        result = ""Good""
+    elif score >= 50:
+        result = ""Average""
+    elif score >= 30:
+        result = ""Needs Improvement""
+    else:
+        result = ""Failing""
+    if status == ""Pass"":
+        final_message = f""Status: {status}, Score: {score}%, Result: {result}""
+    elif status == ""Fail"":
+        final_message = f""Status: {status}, Score: {score}%, Result: {result}. Action required.""
+    else:
+        final_message = f""Status: {status}, Score: {score}%, Result: {result}. Status unknown.""
+    return final_message
+if __name__ == '__main__':
+    sample_score_1 = 95
+    sample_status_1 = ""Pass""
+    sample_score_2 = 45
+    sample_status_2 = ""Fail""
+    sample_score_3 = 82
+    sample_status_3 = ""Unknown""
+    test_cases = [
+        (sample_score_1, sample_status_1),
+        (sample_score_2, sample_status_2),
+        (sample_score_3, sample_status_3)
+    ]
+    for score, status in test_cases:
+        try:
+            output = decision_simulator(score, status)
+            print(output)
+        except Exception as e:
+            print(f""An error occurred during simulation: {e}"", file=sys.stderr)
+    invalid_score = 105
+    invalid_status = ""Pass""
+    try:
+        print(""\nTesting invalid input scenario:"")
+        output = decision_simulator(invalid_score, invalid_status)
+        print(output)
+    except Exception as e:
+        print(f""An error occurred during simulation: {e}"", file=sys.stderr)",True,8,7988,131_13_8.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(score, age):
+    if score >= 90 and age >= 65:
+        result = ""Senior Citizen Bonus""
+    elif score >= 70 or age >= 60:
+        result = ""Mid-Range Incentive""
+    elif score >= 50:
+        result = ""Standard Qualification""
+    elif score >= 30:
+        result = ""Low Qualification""
+    else:
+        result = ""Insufficient Qualification""
+    return result
+def process_input(input_score, input_age):
+    try:
+        score = int(input_score)
+        age = int(input_age)
+    except ValueError:
+        return ""Error: Invalid input. Please provide integer values.""
+    if score < 0 or age < 0:
+        return ""Error: Score and age must be non-negative.""
+    return decision_simulator(score, age)
+if __name__ == '__main__':
+    sample_score_1 = ""95""
+    sample_age_1 = ""70""
+    sample_score_2 = ""45""
+    sample_age_2 = ""30""
+    sample_score_3 = ""80""
+    sample_age_3 = ""55""
+    sample_score_4 = ""100""
+    sample_age_4 = ""25""
+    sample_score_5 = ""20""
+    sample_age_5 = ""50""
+    print(f""Scenario 1 (Score: {sample_score_1}, Age: {sample_age_1}): {process_input(sample_score_1, sample_age_1)}"")
+    print(f""Scenario 2 (Score: {sample_score_2}, Age: {sample_age_2}): {process_input(sample_score_2, sample_age_2)}"")
+    print(f""Scenario 3 (Score: {sample_score_3}, Age: {sample_age_3}): {process_input(sample_score_3, sample_age_3)}"")
+    print(f""Scenario 4 (Score: {sample_score_4}, Age: {sample_age_4}): {process_input(sample_score_4, sample_age_4)}"")
+    print(f""Scenario 5 (Score: {sample_score_5}, Age: {sample_age_5}): {process_input(sample_score_5, sample_age_5)}"")
+    print(f""Scenario 6 (Invalid Input Test): {process_input('abc', '30')}"")
+    print(f""Scenario 7 (Negative Input Test): {process_input(-10, 50)}"")",True,9,7989,131_13_9.py
+131,13,Decide based on input rules,"Write a robust Python program that simulates a decision-making process. The program must handle various input scenarios and use conditional logic (if/elif/else) to execute the correct action based on the input values, ensuring error handling for invalid inputs is included. The code must be professional grade.","import sys
+def decision_simulator(value):
+    if isinstance(value, int):
+        if value > 0:
+            return ""Positive Action""
+        elif value == 0:
+            return ""Neutral Action""
+        else:
+            return ""Negative Action""
+    elif isinstance(value, str):
+        if value.lower() == ""high"":
+            return ""High Priority""
+        elif value.lower() == ""low"":
+            return ""Low Priority""
+        else:
+            return ""Unknown String Input""
+    else:
+        return ""Invalid Data Type""
+if __name__ == '__main__':
+    test_inputs = [
+        10,
+        -5,
+        0,
+        500,
+        ""High"",
+        ""low"",
+        ""medium"",
+        3.14,
+        None
+    ]
+    for input_value in test_inputs:
+        result = decision_simulator(input_value)
+        print(f""Input: {input_value} -> Result: {result}"")
+        print(""-"" * 20)",True,10,7990,131_13_10.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"import collections
+class RuleBasedMapper:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, conditions, output):
+        self.rules.append((conditions, output))
+    def map(self, input_conditions):
+        for conditions, output in self.rules:
+            if conditions == input_conditions:
+                return output
+        return None
+if __name__ == '__main__':
+    mapper = RuleBasedMapper()
+    mapper.add_rule((""temperature"", 30), ""Warm"")
+    mapper.add_rule((""temperature"", 40), ""Hot"")
+    mapper.add_rule((""humidity"", 80), ""Humid"")
+    mapper.add_rule((""temperature"", 35, ""humidity"", 80), ""Comfortable"")
+    test_cases = [
+        (""temperature"", 30),
+        (""temperature"", 40),
+        (""humidity"", 80),
+        (""temperature"", 35, ""humidity"", 80),
+        (""temperature"", 25)
+    ]
+    results = {}
+    for conditions in test_cases:
+        output = mapper.map(conditions)
+        results[conditions] = output
+    for conditions, output in results.items():
+        print(f""Input: {conditions} -> Output: {output}"")",True,0,7991,131_14.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"class RuleEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, conditions, output):
+        self.rules.append((conditions, output))
+    def evaluate(self, input_conditions):
+        for conditions, output in self.rules:
+            if conditions == input_conditions:
+                return output
+        return None
+if __name__ == '__main__':
+    engine = RuleEngine()
+    engine.add_rule((""temperature"", 30), ""Warm"")
+    engine.add_rule((""temperature"", 40), ""Hot"")
+    engine.add_rule((""humidity"", 80), ""Humid"")
+    engine.add_rule((""temperature"", 35, ""humidity"", 80), ""Comfortable"")
+    test_cases = [
+        (""temperature"", 30),
+        (""temperature"", 40),
+        (""humidity"", 80),
+        (""temperature"", 35, ""humidity"", 80),
+        (""temperature"", 25)
+    ]
+    results = {}
+    for conditions in test_cases:
+        result = engine.evaluate(conditions)
+        results[conditions] = result
+    print(results)",True,1,7992,131_14_1.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"class RuleEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition, output):
+        self.rules.append((condition, output))
+    def evaluate(self, conditions):
+        for condition, output in self.rules:
+            if condition == conditions:
+                return output
+        return None
+if __name__ == '__main__':
+    engine = RuleEngine()
+    engine.add_rule(""temperature > 30"", ""Hot"")
+    engine.add_rule(""temperature <= 20"", ""Cold"")
+    engine.add_rule(""humidity > 70"", ""Humid"")
+    engine.add_rule(""temperature > 25 and humidity > 70"", ""Very Hot and Humid"")
+    test_conditions_1 = ""temperature > 30""
+    test_conditions_2 = ""temperature <= 20""
+    test_conditions_3 = ""temperature > 25 and humidity > 70""
+    test_conditions_4 = ""temperature = 22""
+    print(f""Conditions: {test_conditions_1} -> Output: {engine.evaluate(test_conditions_1)}"")
+    print(f""Conditions: {test_conditions_2} -> Output: {engine.evaluate(test_conditions_2)}"")
+    print(f""Conditions: {test_conditions_3} -> Output: {engine.evaluate(test_conditions_3)}"")
+    print(f""Conditions: {test_conditions_4} -> Output: {engine.evaluate(test_conditions_4)}"")
+    print(f""Conditions: temperature = 22 -> Output: {engine.evaluate('temperature = 22')}"")
+    print(f""Conditions: temperature = 22 and humidity = 50 -> Output: {engine.evaluate('temperature = 22 and humidity = 50')}"")",True,2,7993,131_14_2.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"class RuleBasedMapper:
+    def __init__(self, rules):
+        self.rules = rules
+    def map(self, conditions):
+        for rule_id, rule in self.rules.items():
+            if self._matches(conditions, rule['conditions']):
+                return rule['output']
+        return None
+    def _matches(self, conditions, required_conditions):
+        if not required_conditions:
+            return True
+        for cond, required_val in required_conditions.items():
+            if conditions.get(cond) != required_val:
+                return False
+        return True
+if __name__ == '__main__':
+    sample_rules = {
+        ""Rule_A"": {
+            ""conditions"": {""temperature"": 30, ""humidity"": 60},
+            ""output"": ""Optimal_Setting_1""
+        },
+        ""Rule_B"": {
+            ""conditions"": {""temperature"": 20, ""humidity"": 50},
+            ""output"": ""Cool_Setting_2""
+        },
+        ""Rule_C"": {
+            ""conditions"": {""temperature"": 35},
+            ""output"": ""High_Temp_Warning""
+        },
+        ""Rule_D"": {
+            ""conditions"": {""humidity"": 80},
+            ""output"": ""High_Humidity_Alert""
+        }
+    }
+    mapper = RuleBasedMapper(sample_rules)
+    test_cases = [
+        {""temperature"": 30, ""humidity"": 60},                       
+        {""temperature"": 20, ""humidity"": 50},                       
+        {""temperature"": 35, ""humidity"": 55},                                                                                           
+        {""temperature"": 40, ""humidity"": 80},                       
+        {""temperature"": 25, ""humidity"": 55}                      
+    ]
+    print(""--- Rule-Based Mapping Results ---"")
+    for i, conditions in enumerate(test_cases):
+        result = mapper.map(conditions)
+        print(f""Test Case {i+1}: Conditions={conditions} -> Output={result}"")
+    print(""---------------------------------"")",True,3,7994,131_14_3.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"def rule_engine(conditions, rules):
+    result = None
+    for condition, action in rules:
+        if all(condition.get(k) == v for k, v in conditions.items()):
+            result = action
+            break
+    return result
+def setup_rules():
+    rules = [
+        ({""color"": ""red"", ""size"": ""large""}, {""output"": ""high_priority""}),
+        ({""color"": ""blue"", ""size"": ""small""}, {""output"": ""low_priority""}),
+        ({""color"": ""green"", ""size"": ""large""}, {""output"": ""medium_priority""}),
+        ({""color"": ""red"", ""size"": ""small""}, {""output"": ""low_priority""}),
+    ]
+    return rules
+if __name__ == '__main__':
+    sample_conditions_1 = {""color"": ""red"", ""size"": ""large""}
+    sample_conditions_2 = {""color"": ""blue"", ""size"": ""small""}
+    sample_conditions_3 = {""color"": ""green"", ""size"": ""large""}
+    sample_conditions_4 = {""color"": ""yellow"", ""size"": ""medium""}
+    rules_set = setup_rules()
+    result_1 = rule_engine(sample_conditions_1, rules_set)
+    result_2 = rule_engine(sample_conditions_2, rules_set)
+    result_3 = rule_engine(sample_conditions_3, rules_set)
+    result_4 = rule_engine(sample_conditions_4, rules_set)
+    print(f""Conditions 1 ({sample_conditions_1}): {result_1}"")
+    print(f""Conditions 2 ({sample_conditions_2}): {result_2}"")
+    print(f""Conditions 3 ({sample_conditions_3}): {result_3}"")
+    print(f""Conditions 4 ({sample_conditions_4}): {result_4}"")",True,4,7995,131_14_4.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"import collections
+class RuleBasedMapper:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, conditions, output):
+        self.rules.append((conditions, output))
+    def map(self, input_conditions):
+        for conditions, output in self.rules:
+            if conditions == input_conditions:
+                return output
+        return None
+if __name__ == '__main__':
+    mapper = RuleBasedMapper()
+    mapper.add_rule((""temperature"", 30), ""Warm"")
+    mapper.add_rule((""temperature"", 10), ""Cold"")
+    mapper.add_rule((""humidity"", 80), ""Humid"")
+    mapper.add_rule((""humidity"", 40), ""Dry"")
+    mapper.add_rule((""temperature"", 25, ""humidity"", 50), ""Comfortable"")
+    test_cases = [
+        (""temperature"", 30),
+        (""temperature"", 10),
+        (""humidity"", 80),
+        (""humidity"", 40),
+        (""temperature"", 25, ""humidity"", 50),
+        (""temperature"", 35)
+    ]
+    results = {}
+    for conditions in test_cases:
+        output = mapper.map(conditions)
+        results[conditions] = output
+    for conditions, output in results.items():
+        print(f""Input: {conditions} -> Output: {output}"")",True,5,7996,131_14_5.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"import collections
+class RuleBasedMapper:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, conditions, output):
+        self.rules.append((conditions, output))
+    def map(self, input_conditions):
+        for conditions, output in self.rules:
+            if conditions == input_conditions:
+                return output
+        return None
+if __name__ == '__main__':
+    mapper = RuleBasedMapper()
+    mapper.add_rule((""temperature"", 30), ""Warm"")
+    mapper.add_rule((""temperature"", 40), ""Hot"")
+    mapper.add_rule((""humidity"", 80), ""Humid"")
+    mapper.add_rule((""humidity"", 50), ""Dry"")
+    mapper.add_rule((""temperature"", 35, ""humidity"", 80), ""Comfortable"")
+    test_cases = [
+        (""temperature"", 30),
+        (""temperature"", 40),
+        (""humidity"", 80),
+        (""humidity"", 50),
+        (""temperature"", 35, ""humidity"", 80),
+        (""temperature"", 25)
+    ]
+    results = {}
+    for conditions in test_cases:
+        output = mapper.map(conditions)
+        results[conditions] = output
+    print(results)",True,6,7997,131_14_6.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"import collections
+class RuleBasedMapper:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, conditions, output):
+        self.rules.append((conditions, output))
+    def map(self, input_conditions):
+        for conditions, output in self.rules:
+            if conditions == input_conditions:
+                return output
+        return None
+if __name__ == '__main__':
+    mapper = RuleBasedMapper()
+    mapper.add_rule((""temperature"", 30), ""Warm"")
+    mapper.add_rule((""temperature"", 45), ""Hot"")
+    mapper.add_rule((""humidity"", 80), ""Humid"")
+    mapper.add_rule((""humidity"", 50), ""Moderate"")
+    mapper.add_rule((""temperature"", 30, ""humidity"", 80), ""Very Warm and Humid"")
+    test_cases = [
+        (""temperature"", 30),
+        (""temperature"", 45),
+        (""humidity"", 80),
+        (""humidity"", 50),
+        (""temperature"", 30, ""humidity"", 80),
+        (""temperature"", 25)
+    ]
+    results = {}
+    for conditions in test_cases:
+        output = mapper.map(conditions)
+        results[conditions] = output
+    for conditions, output in results.items():
+        print(f""Input: {conditions} -> Output: {output}"")",True,7,7998,131_14_7.py
+131,14,Decide based on input rules,Create an efficient algorithm in Python to map a set of input conditions to a corresponding output value using a structured rule-based system. The solution must demonstrate clear separation of concerns and be suitable for scaling.,"class RuleEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition, output):
+        self.rules.append((condition, output))
+    def evaluate(self, conditions):
+        for condition, output in self.rules:
+            if conditions == condition:
+                return output
+        return None
+if __name__ == '__main__':
+    engine = RuleEngine()
+    engine.add_rule(""temperature > 30"", ""Hot"")
+    engine.add_rule(""temperature <= 20"", ""Cold"")
+    engine.add_rule(""humidity > 70"", ""Humid"")
+    engine.add_rule(""temperature > 25 and humidity > 70"", ""Very Hot and Humid"")
+    test_conditions_1 = ""temperature > 30""
+    test_conditions_2 = ""temperature <= 20""
+    test_conditions_3 = ""temperature > 25 and humidity > 70""
+    test_conditions_4 = ""temperature = 22""
+    print(f""Conditions: {test_conditions_1} -> Output: {engine.evaluate(test_conditions_1)}"")
+    print(f""Conditions: {test_conditions_2} -> Output: {engine.evaluate(test_conditions_2)}"")
+    print(f""Conditions: {test_conditions_3} -> Output: {engine.evaluate(test_conditions_3)}"")
+    print(f""Conditions: {test_conditions_4} -> Output: {engine.evaluate(test_conditions_4)}"")
+    print(f""Conditions: temperature = 22 -> Output: {engine.evaluate('temperature = 22')}"")
+    print(f""Conditions: temperature = 22 and humidity = 50 -> Output: {engine.evaluate('temperature = 22 and humidity = 50')}"")",True,8,7999,131_14_8.py
+132,1,Handle simple true false logic,Implement an optimized function named 'check_and_combine' that accepts two boolean values and returns a single boolean representing their logical OR.,"def check_and_combine(a: bool, b: bool) -> bool:
+    return a or b
+if __name__ == '__main__':
+    result1 = check_and_combine(True, False)
+    print(f""check_and_combine(True, False): {result1}"")
+    result2 = check_and_combine(False, True)
+    print(f""check_and_combine(False, True): {result2}"")
+    result3 = check_and_combine(True, True)
+    print(f""check_and_combine(True, True): {result3}"")
+    result4 = check_and_combine(False, False)
+    print(f""check_and_combine(False, False): {result4}"")",True,0,8000,132_1.py
+132,1,Handle simple true false logic,Implement an optimized function named 'check_and_combine' that accepts two boolean values and returns a single boolean representing their logical OR.,"def check_and_combine(a, b):
+    return a or b
+if __name__ == '__main__':
+    print(check_and_combine(True, False))
+    print(check_and_combine(False, True))
+    print(check_and_combine(True, True))
+    print(check_and_combine(False, False))",True,1,8001,132_1_1.py
+132,1,Handle simple true false logic,Implement an optimized function named 'check_and_combine' that accepts two boolean values and returns a single boolean representing their logical OR.,"def check_and_combine(a, b):
+    return a or b
+if __name__ == '__main__':
+    result1 = check_and_combine(True, False)
+    print(f""check_and_combine(True, False): {result1}"")
+    result2 = check_and_combine(False, True)
+    print(f""check_and_combine(False, True): {result2}"")
+    result3 = check_and_combine(True, True)
+    print(f""check_and_combine(True, True): {result3}"")
+    result4 = check_and_combine(False, False)
+    print(f""check_and_combine(False, False): {result4}"")",True,2,8002,132_1_2.py
+132,2,Handle simple true false logic,Develop a class named 'BooleanLogic' with a method 'evaluate_xor' that takes two booleans and returns the result of their exclusive OR operation.,"class BooleanLogic:
+    def evaluate_xor(self, a, b):
+        return a ^ b
+if __name__ == '__main__':
+    logic = BooleanLogic()
+    result1 = logic.evaluate_xor(True, False)
+    print(f""XOR(True, False): {result1}"")
+    result2 = logic.evaluate_xor(True, True)
+    print(f""XOR(True, True): {result2}"")
+    result3 = logic.evaluate_xor(False, True)
+    print(f""XOR(False, True): {result3}"")
+    result4 = logic.evaluate_xor(False, False)
+    print(f""XOR(False, False): {result4}"")",True,0,8003,132_2.py
+132,2,Handle simple true false logic,Develop a class named 'BooleanLogic' with a method 'evaluate_xor' that takes two booleans and returns the result of their exclusive OR operation.,"class BooleanLogic:
+    def evaluate_xor(self, a, b):
+        return a ^ b
+if __name__ == '__main__':
+    logic = BooleanLogic()
+    result1 = logic.evaluate_xor(True, False)
+    result2 = logic.evaluate_xor(True, True)
+    result3 = logic.evaluate_xor(False, True)
+    result4 = logic.evaluate_xor(False, False)
+    print(f""XOR(True, False): {result1}"")
+    print(f""XOR(True, True): {result2}"")
+    print(f""XOR(False, True): {result3}"")
+    print(f""XOR(False, False): {result4}"")",True,1,8004,132_2_1.py
+132,3,Handle simple true false logic,"Write a robust function 'determine_state' that takes three boolean inputs (A, B, C) and returns True if at least two of them are True, and False otherwise.","def determine_state(A, B, C):
+    return (A and B) or (A and C) or (B and C)
+if __name__ == '__main__':
+    print(determine_state(True, True, False))
+    print(determine_state(True, False, False))
+    print(determine_state(False, True, False))
+    print(determine_state(False, False, True))
+    print(determine_state(True, True, True))
+    print(determine_state(False, False, False))",True,0,8005,132_3.py
+132,3,Handle simple true false logic,"Write a robust function 'determine_state' that takes three boolean inputs (A, B, C) and returns True if at least two of them are True, and False otherwise.","def determine_state(A, B, C):
+    return (A and B) or (A and C) or (B and C)
+if __name__ == '__main__':
+    print(determine_state(True, True, False))
+    print(determine_state(True, False, False))
+    print(determine_state(False, True, False))
+    print(determine_state(False, False, True))
+    print(determine_state(True, True, True))
+    print(determine_state(False, False, False))
+    print(determine_state(True, True, True))",True,1,8006,132_3_1.py
+132,3,Handle simple true false logic,"Write a robust function 'determine_state' that takes three boolean inputs (A, B, C) and returns True if at least two of them are True, and False otherwise.","def determine_state(A, B, C):
+    return (A and B) or (A and C) or (B and C)
+if __name__ == '__main__':
+    print(f""A=True, B=True, C=True: {determine_state(True, True, True)}"")
+    print(f""A=True, B=True, C=False: {determine_state(True, True, False)}"")
+    print(f""A=True, B=False, C=False: {determine_state(True, False, False)}"")
+    print(f""A=False, B=False, C=False: {determine_state(False, False, False)}"")
+    print(f""A=True, B=False, C=True: {determine_state(True, False, True)}"")
+    print(f""A=False, B=True, C=True: {determine_state(False, True, True)}"")
+    print(f""A=True, B=True, C=False: {determine_state(True, True, False)}"")",True,2,8007,132_3_2.py
+132,4,Handle simple true false logic,Implement a function 'check_all_true' that accepts a list of booleans and returns True only if every element in the list is True. Ensure the implementation is efficient.,"def check_all_true(bool_list):
+    for item in bool_list:
+        if not item:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [True, True]
+    list4 = []
+    list5 = [False]
+    list6 = [True, True, False, True]
+    print(f""list1: {check_all_true(list1)}"")
+    print(f""list2: {check_all_true(list2)}"")
+    print(f""list3: {check_all_true(list3)}"")
+    print(f""list4: {check_all_true(list4)}"")
+    print(f""list5: {check_all_true(list5)}"")
+    print(f""list6: {check_all_true(list6)}"")",True,0,8008,132_4.py
+132,4,Handle simple true false logic,Implement a function 'check_all_true' that accepts a list of booleans and returns True only if every element in the list is True. Ensure the implementation is efficient.,"def check_all_true(bool_list):
+    for value in bool_list:
+        if not value:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [True, True]
+    list4 = []
+    list5 = [False]
+    list6 = [True, True, False, True]
+    print(f""list1: {check_all_true(list1)}"")
+    print(f""list2: {check_all_true(list2)}"")
+    print(f""list3: {check_all_true(list3)}"")
+    print(f""list4: {check_all_true(list4)}"")
+    print(f""list5: {check_all_true(list5)}"")
+    print(f""list6: {check_all_true(list6)}"")",True,1,8009,132_4_1.py
+132,4,Handle simple true false logic,Implement a function 'check_all_true' that accepts a list of booleans and returns True only if every element in the list is True. Ensure the implementation is efficient.,"def check_all_true(bool_list):
+    for item in bool_list:
+        if not item:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [True, True]
+    list4 = []
+    list5 = [False]
+    list6 = [True, True, False]
+    print(f""list1: {check_all_true(list1)}"")
+    print(f""list2: {check_all_true(list2)}"")
+    print(f""list3: {check_all_true(list3)}"")
+    print(f""list4: {check_all_true(list4)}"")
+    print(f""list5: {check_all_true(list5)}"")
+    print(f""list6: {check_all_true(list6)}"")",True,2,8010,132_4_2.py
+132,4,Handle simple true false logic,Implement a function 'check_all_true' that accepts a list of booleans and returns True only if every element in the list is True. Ensure the implementation is efficient.,"def check_all_true(bool_list):
+    for item in bool_list:
+        if not item:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [True]
+    list4 = []
+    list5 = [True, True, False]
+    print(f""list1: {check_all_true(list1)}"")
+    print(f""list2: {check_all_true(list2)}"")
+    print(f""list3: {check_all_true(list3)}"")
+    print(f""list4: {check_all_true(list4)}"")
+    print(f""list5: {check_all_true(list5)}"")",True,3,8011,132_4_3.py
+132,0,Handle simple true false logic,"Write a complete, highly readable Python script that takes two boolean inputs and prints the logical AND result.",,False,0,8012,132_0.py
+132,6,Handle simple true false logic,"Create a function 'evaluate_complex_logic' that takes two booleans (P and Q) and returns the result of the implication (P implies Q), using the correct logical operator.","def evaluate_complex_logic(P, Q):
+    return not P or Q
+if __name__ == '__main__':
+    P_val = True
+    Q_val = False
+    result = evaluate_complex_logic(P_val, Q_val)
+    print(result)
+    P_val = False
+    Q_val = True
+    result = evaluate_complex_logic(P_val, Q_val)
+    print(result)
+    P_val = True
+    Q_val = True
+    result = evaluate_complex_logic(P_val, Q_val)
+    print(result)
+    P_val = False
+    Q_val = False
+    result = evaluate_complex_logic(P_val, Q_val)
+    print(result)",True,0,8013,132_6.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dictionary():
+    data = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_value_is_true(key):
+        if key in data:
+            return data[key] is True
+        return False
+    return data, check_value_is_true
+if __name__ == '__main__':
+    my_dict, check_key = create_and_check_dictionary()
+    print(""Dictionary:"", my_dict)
+    key_to_check = ""apple""
+    result = check_key(key_to_check)
+    print(f""Is the value for '{key_to_check}' True? {result}"")
+    key_to_check = ""banana""
+    result = check_key(key_to_check)
+    print(f""Is the value for '{key_to_check}' True? {result}"")
+    key_to_check = ""grape""
+    result = check_key(key_to_check)
+    print(f""Is the value for '{key_to_check}' True? {result}"")",True,0,8014,132_7.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dictionary():
+    my_dict = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_key_value(data_dict, key):
+        if key in data_dict:
+            return data_dict[key]
+        return None
+    target_key = ""apple""
+    value = check_key_value(my_dict, target_key)
+    if value is True:
+        print(f""The value for '{target_key}' is True."")
+    else:
+        print(f""The value for '{target_key}' is not True."")
+if __name__ == '__main__':
+    create_and_check_dictionary()",True,1,8015,132_7_1.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dict():
+    data = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_value(key):
+        if key in data:
+            return data[key]
+        return None
+    key_to_check = ""apple""
+    result = check_value(key_to_check)
+    print(f""The value for '{key_to_check}' is True: {result is True}"")
+if __name__ == '__main__':
+    create_and_check_dict()",True,2,8016,132_7_2.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dictionary():
+    data = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_value_is_true(dictionary, key):
+        if key in dictionary:
+            return dictionary[key] is True
+        return False
+    key_to_check = ""apple""
+    result = check_value_is_true(data, key_to_check)
+    print(f""The dictionary is: {data}"")
+    print(f""Checking if the value for '{key_to_check}' is True: {result}"")
+if __name__ == '__main__':
+    create_and_check_dictionary()",True,3,8017,132_7_3.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dictionary():
+    data = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_value_is_true(dictionary, key):
+        if key in dictionary:
+            return dictionary[key] is True
+        return False
+    print(""Dictionary created:"")
+    print(data)
+    print(""\nChecking values:"")
+    print(""Is 'apple' True?"", check_value_is_true(data, ""apple""))
+    print(""Is 'banana' True?"", check_value_is_true(data, ""banana""))
+    print(""Is 'cherry' True?"", check_value_is_true(data, ""cherry""))
+    print(""Is 'grape' True?"", check_value_is_true(data, ""grape""))
+if __name__ == '__main__':
+    create_and_check_dictionary()",True,4,8018,132_7_4.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dictionary():
+    data = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_key_value(dictionary, key):
+        if key in dictionary:
+            return dictionary[key] is True
+        return False
+    print(""Dictionary created:"")
+    print(data)
+    print(""\nChecking values:"")
+    print(f""Is 'apple' True? {check_key_value(data, 'apple')}"")
+    print(f""Is 'banana' True? {check_key_value(data, 'banana')}"")
+    print(f""Is 'cherry' True? {check_key_value(data, 'cherry')}"")
+    print(f""Is 'grape' True? {check_key_value(data, 'grape')}"")
+if __name__ == '__main__':
+    create_and_check_dictionary()",True,5,8019,132_7_5.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_boolean_dict():
+    data = {
+        ""is_active"": True,
+        ""is_logged_in"": False,
+        ""has_permission"": True,
+        ""is_admin"": False
+    }
+    return data
+def check_key_value(data, key):
+    if key in data:
+        return data[key] is True
+    return False
+if __name__ == '__main__':
+    my_dict = create_boolean_dict()
+    print(f""The dictionary: {my_dict}"")
+    key1 = ""is_active""
+    result1 = check_key_value(my_dict, key1)
+    print(f""Is the value for '{key1}' True? {result1}"")
+    key2 = ""is_logged_in""
+    result2 = check_key_value(my_dict, key2)
+    print(f""Is the value for '{key2}' True? {result2}"")
+    key3 = ""non_existent_key""
+    result3 = check_key_value(my_dict, key3)
+    print(f""Is the value for '{key3}' True? {result3}"")",True,6,8020,132_7_6.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","data_dict = {
+    ""apple"": True,
+    ""banana"": False,
+    ""cherry"": True,
+    ""date"": False
+}
+def check_value_true(dictionary, key):
+    if key in dictionary:
+        return dictionary[key] is True
+    return False
+if __name__ == '__main__':
+    print(f""Checking 'apple': {check_value_true(data_dict, 'apple')}"")
+    print(f""Checking 'banana': {check_value_true(data_dict, 'banana')}"")
+    print(f""Checking 'cherry': {check_value_true(data_dict, 'cherry')}"")
+    print(f""Checking 'date': {check_value_true(data_dict, 'date')}"")
+    print(f""Checking 'grape': {check_value_true(data_dict, 'grape')}"")",True,7,8021,132_7_7.py
+132,7,Handle simple true false logic,"Design and implement a dictionary mapping string keys to boolean values, and write a function to check if a specific key's value is True.","def create_and_check_dictionary():
+    data = {
+        ""apple"": True,
+        ""banana"": False,
+        ""cherry"": True,
+        ""date"": False
+    }
+    def check_value_is_true(dictionary, key):
+        if key in dictionary:
+            return dictionary[key] is True
+        return False
+    print(""Dictionary created:"")
+    print(data)
+    print(""\nChecking values:"")
+    keys_to_check = [""apple"", ""banana"", ""cherry"", ""grape""]
+    for key in keys_to_check:
+        result = check_value_is_true(data, key)
+        print(f""Is the value for '{key}' True? {result}"")
+if __name__ == '__main__':
+    create_and_check_dictionary()",True,8,8022,132_7_8.py
+132,8,Handle simple true false logic,Write an optimized function that takes an arbitrary number of boolean arguments and returns True if and only if all provided arguments are True.,"def all_true(*args):
+    return all(args)
+if __name__ == '__main__':
+    print(all_true(True, True, True))
+    print(all_true(True, False, True))
+    print(all_true(False, False))
+    print(all_true())
+    print(all_true(True))",True,0,8023,132_8.py
+132,8,Handle simple true false logic,Write an optimized function that takes an arbitrary number of boolean arguments and returns True if and only if all provided arguments are True.,"def all_true(*args):
+    return all(args)
+if __name__ == '__main__':
+    print(all_true(True, True, True))
+    print(all_true(True, False, True))
+    print(all_true(False))
+    print(all_true())
+    print(all_true(True, True, False, True))",True,1,8024,132_8_1.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logical_and(a, b):
+    return a and b
+def logical_or(a, b):
+    return a or b
+def logical_not(a):
+    return not a
+def logical_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    print(""--- Logical AND ---"")
+    print(f""AND({val1}, {val2}) = {logical_and(val1, val2)}"")
+    print(""\n--- Logical OR ---"")
+    print(f""OR({val1}, {val2}) = {logical_or(val1, val2)}"")
+    print(""\n--- Logical NOT ---"")
+    print(f""NOT({val1}) = {logical_not(val1)}"")
+    print(""\n--- Logical XOR ---"")
+    print(f""XOR({val1}, {val2}) = {logical_xor(val1, val2)}"")",True,0,8025,132_9.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logical_and(a, b):
+    return a and b
+def logical_or(a, b):
+    return a or b
+def logical_not(a):
+    return not a
+def logical_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    print(""--- Logical AND ---"")
+    print(f""AND({val1}, {val2}): {logical_and(val1, val2)}"")
+    print(""\n--- Logical OR ---"")
+    print(f""OR({val1}, {val2}): {logical_or(val1, val2)}"")
+    print(""\n--- Logical NOT ---"")
+    print(f""NOT({val1}): {logical_not(val1)}"")
+    print(""\n--- Logical XOR ---"")
+    print(f""XOR({val1}, {val2}): {logical_xor(val1, val2)}"")",True,1,8026,132_9_1.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logic_and(a, b):
+    return a and b
+def logic_or(a, b):
+    return a or b
+def logic_not(a):
+    return not a
+def logic_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    x = True
+    y = False
+    print(""--- AND Operation ---"")
+    print(f""AND({x}, {y}) = {logic_and(x, y)}"")
+    print(""\n--- OR Operation ---"")
+    print(f""OR({x}, {y}) = {logic_or(x, y)}"")
+    print(""\n--- NOT Operation ---"")
+    print(f""NOT({x}) = {logic_not(x)}"")
+    print(""\n--- XOR Operation ---"")
+    print(f""XOR({x}, {y}) = {logic_xor(x, y)}"")",True,2,8027,132_9_2.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logic_and(a, b):
+    return a and b
+def logic_or(a, b):
+    return a or b
+def logic_not(a):
+    return not a
+def logic_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    and_result = logic_and(val1, val2)
+    or_result = logic_or(val1, val2)
+    not_result = logic_not(val1)
+    xor_result = logic_xor(val1, val2)
+    print(f""AND({val1}, {val2}): {and_result}"")
+    print(f""OR({val1}, {val2}): {or_result}"")
+    print(f""NOT({val1}): {not_result}"")
+    print(f""XOR({val1}, {val2}): {xor_result}"")",True,3,8028,132_9_3.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logic_and(a, b):
+    return a and b
+def logic_or(a, b):
+    return a or b
+def logic_not(a):
+    return not a
+def logic_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    print(f""val1: {val1}"")
+    print(f""val2: {val2}"")
+    and_result = logic_and(val1, val2)
+    print(f""AND result ({val1} AND {val2}): {and_result}"")
+    or_result = logic_or(val1, val2)
+    print(f""OR result ({val1} OR {val2}): {or_result}"")
+    not_result = logic_not(val1)
+    print(f""NOT result (NOT {val1}): {not_result}"")
+    xor_result = logic_xor(val1, val2)
+    print(f""XOR result ({val1} XOR {val2}): {xor_result}"")",True,4,8029,132_9_4.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logical_and(a, b):
+    return a and b
+def logical_or(a, b):
+    return a or b
+def logical_not(a):
+    return not a
+def logical_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    and_result = logical_and(val1, val2)
+    or_result = logical_or(val1, val2)
+    not_result = logical_not(val1)
+    xor_result = logical_xor(val1, val2)
+    print(f""val1: {val1}"")
+    print(f""val2: {val2}"")
+    print(f""AND result: {and_result}"")
+    print(f""OR result: {or_result}"")
+    print(f""NOT result: {not_result}"")
+    print(f""XOR result: {xor_result}"")",True,5,8030,132_9_5.py
+132,9,Handle simple true false logic,"Generate a complete, well-documented Python module that contains several distinct functions for basic true/false logic operations (AND, OR, NOT, XOR).","def logic_and(a, b):
+    return a and b
+def logic_or(a, b):
+    return a or b
+def logic_not(a):
+    return not a
+def logic_xor(a, b):
+    return a ^ b
+if __name__ == '__main__':
+    val1 = True
+    val2 = False
+    and_result = logic_and(val1, val2)
+    or_result = logic_or(val1, val2)
+    not_result = logic_not(val1)
+    xor_result = logic_xor(val1, val2)
+    print(f""AND: {and_result}"")
+    print(f""OR: {or_result}"")
+    print(f""NOT: {not_result}"")
+    print(f""XOR: {xor_result}"")",True,6,8031,132_9_6.py
+132,5,Handle simple true false logic,Write a script that reads two boolean values from standard input and prints the result of the logical NOT operation for each.,"import sys
+if __name__ == '__main__':
+    input_data = [True, False]
+    a = input_data[0]
+    b = input_data[1]
+    print(not a)
+    print(not b)",True,0,8032,132_5.py
+132,10,Handle simple true false logic,"Write a complete, well-documented Python script that takes two boolean inputs and returns the logical AND result, demonstrating clear true/false handling.","def logical_and(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    input_a = True
+    input_b = False
+    result = logical_and(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Result of logical AND: {result}"")
+    input_a = True
+    input_b = True
+    result = logical_and(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Result of logical AND: {result}"")
+    input_a = False
+    input_b = True
+    result = logical_and(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Result of logical AND: {result}"")",True,0,8033,132_10.py
+132,10,Handle simple true false logic,"Write a complete, well-documented Python script that takes two boolean inputs and returns the logical AND result, demonstrating clear true/false handling.","def logical_and(a: bool, b: bool) -> bool:
+    return a and b
+if __name__ == '__main__':
+    input_a = True
+    input_b = False
+    result = logical_and(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Result of AND operation: {result}"")
+    input_a = True
+    input_b = True
+    result = logical_and(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Result of AND operation: {result}"")
+    input_a = False
+    input_b = True
+    result = logical_and(input_a, input_b)
+    print(f""Input A: {input_a}"")
+    print(f""Input B: {input_b}"")
+    print(f""Result of AND operation: {result}"")",True,1,8034,132_10_1.py
+132,11,Handle simple true false logic,Implement an optimized Python function named 'check_logic' that accepts two boolean arguments (a and b) and returns the boolean result of their logical OR operation. Ensure the function is efficient and adheres to best practices.,"def check_logic(a: bool, b: bool) -> bool:
+    return a or b
+if __name__ == '__main__':
+    result1 = check_logic(True, False)
+    print(f""check_logic(True, False): {result1}"")
+    result2 = check_logic(False, True)
+    print(f""check_logic(False, True): {result2}"")
+    result3 = check_logic(True, True)
+    print(f""check_logic(True, True): {result3}"")
+    result4 = check_logic(False, False)
+    print(f""check_logic(False, False): {result4}"")",True,0,8035,132_11.py
+132,12,Handle simple true false logic,Develop a class named 'BooleanHandler' with a method 'evaluate' that accepts a list of boolean values and returns the logical AND of all values in the list. Provide thorough type hinting.,"class BooleanHandler:
+    def evaluate(self, bool_list: list[bool]) -> bool:
+        if not bool_list:
+            return True
+        result = True
+        for value in bool_list:
+            result = result and value
+        return result
+if __name__ == '__main__':
+    handler = BooleanHandler()
+    list1 = [True, True, False]
+    list2 = [True, True, True]
+    list3 = [False, False]
+    list4 = []
+    list5 = [True]
+    print(f""Evaluating {list1}: {handler.evaluate(list1)}"")
+    print(f""Evaluating {list2}: {handler.evaluate(list2)}"")
+    print(f""Evaluating {list3}: {handler.evaluate(list3)}"")
+    print(f""Evaluating {list4}: {handler.evaluate(list4)}"")
+    print(f""Evaluating {list5}: {handler.evaluate(list5)}"")",True,0,8036,132_12.py
+132,12,Handle simple true false logic,Develop a class named 'BooleanHandler' with a method 'evaluate' that accepts a list of boolean values and returns the logical AND of all values in the list. Provide thorough type hinting.,"class BooleanHandler:
+    def evaluate(self, bool_list: list[bool]) -> bool:
+        if not bool_list:
+            return True
+        result = True
+        for value in bool_list:
+            result = result and value
+        return result
+if __name__ == '__main__':
+    handler = BooleanHandler()
+    list1 = [True, True, True]
+    list2 = [True, False, True]
+    list3 = [False, False]
+    list4 = []
+    list5 = [True]
+    print(f""Evaluating {list1}: {handler.evaluate(list1)}"")
+    print(f""Evaluating {list2}: {handler.evaluate(list2)}"")
+    print(f""Evaluating {list3}: {handler.evaluate(list3)}"")
+    print(f""Evaluating {list4}: {handler.evaluate(list4)}"")
+    print(f""Evaluating {list5}: {handler.evaluate(list5)}"")",True,1,8037,132_12_1.py
+132,12,Handle simple true false logic,Develop a class named 'BooleanHandler' with a method 'evaluate' that accepts a list of boolean values and returns the logical AND of all values in the list. Provide thorough type hinting.,"class BooleanHandler:
+    def evaluate(self, bool_list: list[bool]) -> bool:
+        if not bool_list:
+            return True
+        result = True
+        for value in bool_list:
+            result = result and value
+        return result
+if __name__ == '__main__':
+    handler = BooleanHandler()
+    list1 = [True, True, False]
+    list2 = [True, True, True]
+    list3 = [False, False]
+    list4 = []
+    print(f""Evaluating {list1}: {handler.evaluate(list1)}"")
+    print(f""Evaluating {list2}: {handler.evaluate(list2)}"")
+    print(f""Evaluating {list3}: {handler.evaluate(list3)}"")
+    print(f""Evaluating {list4}: {handler.evaluate(list4)}"")",True,2,8038,132_12_2.py
+132,13,Handle simple true false logic,"Write a concise and efficient Python snippet that uses conditional expressions to determine if a combined condition (A AND B) is true, given two variables A and B, handling all true/false combinations explicitly.",,False,0,8039,132_13.py
+133,0,Evaluate simple true false statements,"Write a complete, well-documented Python script that takes a list of true/false strings and prints the count of true and false values. Use efficient string manipulation.","def count_true_false(data):
+    true_count = 0
+    false_count = 0
+    for item in data:
+        if item == ""True"":
+            true_count += 1
+        elif item == ""False"":
+            false_count += 1
+    return true_count, false_count
+if __name__ == '__main__':
+    sample_data = [""True"", ""False"", ""True"", ""False"", ""True"", ""True"", ""False""]
+    true_count, false_count = count_true_false(sample_data)
+    print(f""True count: {true_count}"")
+    print(f""False count: {false_count}"")",True,0,8040,133_0.py
+132,14,Handle simple true false logic,"Create a standalone Python program that simulates a simple true/false gate. Define two input variables and print the result of their logical NOT operation, ensuring the output clearly reflects the boolean logic.",,False,0,8041,132_14.py
+133,1,Evaluate simple true false statements,"Implement an optimized function named `evaluate_statements` that accepts a list of strings, where each string is either 'True' or 'False', and returns a tuple containing the total count of 'True' and 'False' statements. Ensure the function is time-efficient.","def evaluate_statements(statements):
+    true_count = 0
+    false_count = 0
+    for statement in statements:
+        if statement == 'True':
+            true_count += 1
+        elif statement == 'False':
+            false_count += 1
+    return (true_count, false_count)
+if __name__ == '__main__':
+    sample_statements = ['True', 'False', 'True', 'True', 'False', 'False', 'True']
+    result = evaluate_statements(sample_statements)
+    print(result)",True,0,8042,133_1.py
+133,2,Evaluate simple true false statements,Develop a class named `TruthEvaluator` with a method `process_statements` that takes a list of boolean-like strings and returns a dictionary containing the counts for 'True' and 'False'. Adhere to object-oriented programming best practices.,"class TruthEvaluator:
+    def process_statements(self, statements):
+        true_count = 0
+        false_count = 0
+        for statement in statements:
+            if statement.lower() == 'true':
+                true_count += 1
+            elif statement.lower() == 'false':
+                false_count += 1
+        return {'True': true_count, 'False': false_count}
+if __name__ == '__main__':
+    evaluator = TruthEvaluator()
+    sample_statements = [""True"", ""false"", ""True"", ""False"", ""true"", ""False""]
+    results = evaluator.process_statements(sample_statements)
+    print(results)",True,0,8043,133_2.py
+133,2,Evaluate simple true false statements,Develop a class named `TruthEvaluator` with a method `process_statements` that takes a list of boolean-like strings and returns a dictionary containing the counts for 'True' and 'False'. Adhere to object-oriented programming best practices.,"class TruthEvaluator:
+    def process_statements(self, statements):
+        true_count = 0
+        false_count = 0
+        for statement in statements:
+            if statement.lower() == 'true':
+                true_count += 1
+            elif statement.lower() == 'false':
+                false_count += 1
+        return {
+            ""True"": true_count,
+            ""False"": false_count
+        }
+if __name__ == '__main__':
+    evaluator = TruthEvaluator()
+    sample_statements = [
+        ""True"",
+        ""false"",
+        ""True"",
+        ""False"",
+        ""true"",
+        ""anything""
+    ]
+    results = evaluator.process_statements(sample_statements)
+    print(results)",True,1,8044,133_2_1.py
+133,2,Evaluate simple true false statements,Develop a class named `TruthEvaluator` with a method `process_statements` that takes a list of boolean-like strings and returns a dictionary containing the counts for 'True' and 'False'. Adhere to object-oriented programming best practices.,"class TruthEvaluator:
+    def process_statements(self, statements):
+        true_count = 0
+        false_count = 0
+        for statement in statements:
+            if statement.lower() == 'true':
+                true_count += 1
+            elif statement.lower() == 'false':
+                false_count += 1
+        return {'True': true_count, 'False': false_count}
+if __name__ == '__main__':
+    evaluator = TruthEvaluator()
+    sample_statements = [""True"", ""false"", ""True"", ""False"", ""true"", ""false""]
+    results = evaluator.process_statements(sample_statements)
+    print(results)",True,2,8045,133_2_2.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements_1 = [""True"", ""False"", ""True"", ""False"", ""True""]
+    print(check_majority(test_statements_1))
+    test_statements_2 = [""False"", ""False"", ""True"", ""False""]
+    print(check_majority(test_statements_2))
+    test_statements_3 = [""True"", ""True"", ""False""]
+    print(check_majority(test_statements_3))",True,0,8046,133_3.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements1 = [""True"", ""False"", ""True"", ""False""]
+    test_statements2 = [""True"", ""True"", ""False"", ""False""]
+    test_statements3 = [""True"", ""False"", ""False""]
+    test_statements4 = [""True"", ""True"", ""True""]
+    print(f""Test 1: {check_majority(test_statements1)}"")
+    print(f""Test 2: {check_majority(test_statements2)}"")
+    print(f""Test 3: {check_majority(test_statements3)}"")
+    print(f""Test 4: {check_majority(test_statements4)}"")",True,1,8047,133_3_1.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements_1 = [""True"", ""False"", ""True"", ""True""]
+    print(check_majority(test_statements_1))
+    test_statements_2 = [""False"", ""False"", ""True"", ""False""]
+    print(check_majority(test_statements_2))
+    test_statements_3 = [""True"", ""False"", ""False""]
+    print(check_majority(test_statements_3))",True,2,8048,133_3_2.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements_1 = [""True"", ""False"", ""True"", ""False"", ""True""]
+    result_1 = check_majority(test_statements_1)
+    print(f""Test 1: {result_1}"")
+    test_statements_2 = [""False"", ""False"", ""True"", ""False""]
+    result_2 = check_majority(test_statements_2)
+    print(f""Test 2: {result_2}"")
+    test_statements_3 = [""True"", ""True"", ""False""]
+    result_3 = check_majority(test_statements_3)
+    print(f""Test 3: {result_3}"")",True,3,8049,133_3_3.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements1 = [""True"", ""False"", ""True"", ""False""]
+    test_statements2 = [""True"", ""True"", ""False"", ""False""]
+    test_statements3 = [""True"", ""False"", ""False""]
+    print(check_majority(test_statements1))
+    print(check_majority(test_statements2))
+    print(check_majority(test_statements3))",True,4,8050,133_3_4.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements_1 = [""True"", ""False"", ""True"", ""True"", ""False""]
+    print(check_majority(test_statements_1))
+    test_statements_2 = [""True"", ""False"", ""False"", ""False""]
+    print(check_majority(test_statements_2))
+    test_statements_3 = [""True"", ""True"", ""False""]
+    print(check_majority(test_statements_3))",True,5,8051,133_3_5.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements1 = [""True"", ""False"", ""True"", ""True""]
+    test_statements2 = [""False"", ""False"", ""True"", ""False""]
+    test_statements3 = [""True"", ""False"", ""False""]
+    print(check_majority(test_statements1))
+    print(check_majority(test_statements2))
+    print(check_majority(test_statements3))",True,6,8052,133_3_6.py
+133,3,Evaluate simple true false statements,Write a concise and highly readable Python function that takes a list of simple true/false statements (represented as strings) and returns a single boolean value indicating if the majority of the statements are true. Optimize for minimal lines of code.,"def check_majority(statements):
+    true_count = sum(1 for s in statements if s == ""True"")
+    return true_count > len(statements) / 2
+if __name__ == '__main__':
+    test_statements_1 = [""True"", ""False"", ""True"", ""True""]
+    print(check_majority(test_statements_1))
+    test_statements_2 = [""False"", ""False"", ""True"", ""False""]
+    print(check_majority(test_statements_2))
+    test_statements_3 = [""True"", ""False"", ""True"", ""False""]
+    print(check_majority(test_statements_3))
+    test_statements_4 = [""True"", ""True"", ""False""]
+    print(check_majority(test_statements_4))",True,7,8053,133_3_7.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(string_list):
+    for s in string_list:
+        yield s.lower() in ('true', '1', 'yes')
+if __name__ == '__main__':
+    input_list = [""True"", ""False"", ""1"", ""No"", ""Yes"", ""0""]
+    results = evaluate_strings(input_list)
+    output_list = list(results)
+    print(output_list)",True,0,8054,133_5.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(input_list):
+    for s in input_list:
+        yield s.lower() in ('true', '1', 'yes')
+if __name__ == '__main__':
+    sample_list = [""True"", ""False"", ""1"", ""No"", ""Yes"", ""0""]
+    result_generator = evaluate_strings(sample_list)
+    results = list(result_generator)
+    print(results)",True,1,8055,133_5_1.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(input_list):
+    for s in input_list:
+        yield s.lower() in ('true', '1', 'yes')
+if __name__ == '__main__':
+    sample_list = [""True"", ""False"", ""1"", ""No"", ""Yes"", ""0""]
+    results = evaluate_strings(sample_list)
+    print(list(results))",True,2,8056,133_5_2.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(input_list):
+    for s in input_list:
+        yield s.lower() in ('true', '1', 'yes')
+if __name__ == '__main__':
+    sample_list = [""True"", ""False"", ""1"", ""No"", ""Yes"", ""0""]
+    results_generator = evaluate_strings(sample_list)
+    results_list = list(results_generator)
+    print(results_list)",True,3,8057,133_5_3.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(input_list):
+    for s in input_list:
+        yield s.lower() in ('true', '1', 't')
+if __name__ == '__main__':
+    sample_list = [""True"", ""False"", ""1"", ""no"", ""t"", ""0""]
+    results = evaluate_strings(sample_list)
+    print(list(results))",True,4,8058,133_5_4.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(input_list):
+    for s in input_list:
+        yield s.lower() in ('true', '1', 'yes')
+if __name__ == '__main__':
+    sample_list = [""True"", ""False"", ""1"", ""No"", ""Yes""]
+    result_generator = evaluate_strings(sample_list)
+    results = list(result_generator)
+    print(results)",True,5,8059,133_5_5.py
+133,5,Evaluate simple true false statements,"Implement a generator function that yields the result of evaluating each string in an input list to a boolean, ensuring lazy evaluation for memory efficiency.","def evaluate_strings(input_list):
+    for s in input_list:
+        yield s.lower() in ('true', '1', 't')
+if __name__ == '__main__':
+    sample_list = [""True"", ""False"", ""1"", ""no"", ""t""]
+    results = evaluate_strings(sample_list)
+    output_list = list(results)
+    print(output_list)",True,6,8060,133_5_6.py
+133,6,Evaluate simple true false statements,Design and implement a function `check_truth_distribution` that accepts a list of true/false strings and returns a dictionary mapping the string ('True' or 'False') to its respective frequency count. Use collections.Counter for optimization.,"from collections import Counter
+def check_truth_distribution(data):
+    truth_counts = Counter(data)
+    return dict(truth_counts)
+if __name__ == '__main__':
+    sample_data = [
+        ""True"",
+        ""False"",
+        ""True"",
+        ""True"",
+        ""False"",
+        ""True"",
+        ""False"",
+        ""False"",
+        ""True""
+    ]
+    result = check_truth_distribution(sample_data)
+    print(result)",True,0,8061,133_6.py
+133,6,Evaluate simple true false statements,Design and implement a function `check_truth_distribution` that accepts a list of true/false strings and returns a dictionary mapping the string ('True' or 'False') to its respective frequency count. Use collections.Counter for optimization.,"from collections import Counter
+def check_truth_distribution(data):
+    truth_counts = Counter(data)
+    return dict(truth_counts)
+if __name__ == '__main__':
+    sample_data = [""True"", ""False"", ""True"", ""True"", ""False"", ""True"", ""False"", ""False""]
+    distribution = check_truth_distribution(sample_data)
+    print(distribution)",True,1,8062,133_6_1.py
+133,7,Evaluate simple true false statements,"Write a pure Python function that takes a list of strings and returns a list of booleans, where 'True' maps to True and 'False' maps to False. Ensure the conversion logic is clean and efficient.","def stringlist_to_boollist(stringlist):
+    result = []
+    for s in stringlist:
+        if s == 'True':
+            result.append(True)
+        elif s == 'False':
+            result.append(False)
+        else:
+            raise ValueError(""Invalid string encountered"")
+    return result
+if __name__ == '__main__':
+    sample_list = ['True', 'False', 'True', 'False']
+    boolean_list = stringlist_to_boollist(sample_list)
+    print(boolean_list)",True,0,8063,133_7.py
+133,7,Evaluate simple true false statements,"Write a pure Python function that takes a list of strings and returns a list of booleans, where 'True' maps to True and 'False' maps to False. Ensure the conversion logic is clean and efficient.","def string_list_to_bool_list(str_list):
+    bool_list = []
+    for s in str_list:
+        if s == 'True':
+            bool_list.append(True)
+        elif s == 'False':
+            bool_list.append(False)
+        else:
+            raise ValueError(f""Unexpected string encountered: {s}"")
+    return bool_list
+if __name__ == '__main__':
+    sample_input = ['True', 'False', 'True', 'False']
+    result = string_list_to_bool_list(sample_input)
+    print(result)",True,1,8064,133_7_1.py
+133,7,Evaluate simple true false statements,"Write a pure Python function that takes a list of strings and returns a list of booleans, where 'True' maps to True and 'False' maps to False. Ensure the conversion logic is clean and efficient.","def stringlist_to_boollist(stringlist):
+    result = []
+    for s in stringlist:
+        if s == 'True':
+            result.append(True)
+        elif s == 'False':
+            result.append(False)
+        else:
+            raise ValueError(f""Unexpected string encountered: {s}"")
+    return result
+if __name__ == '__main__':
+    sample_list = ['True', 'False', 'True', 'False']
+    boolean_list = stringlist_to_boollist(sample_list)
+    print(boolean_list)",True,2,8065,133_7_2.py
+133,7,Evaluate simple true false statements,"Write a pure Python function that takes a list of strings and returns a list of booleans, where 'True' maps to True and 'False' maps to False. Ensure the conversion logic is clean and efficient.","def stringlist_to_boollist(stringlist):
+    boollist = []
+    for s in stringlist:
+        if s == 'True':
+            boollist.append(True)
+        elif s == 'False':
+            boollist.append(False)
+        else:
+            raise ValueError(""Invalid string encountered"")
+    return boollist
+if __name__ == '__main__':
+    sample_list = ['True', 'False', 'True', 'False']
+    result = stringlist_to_boollist(sample_list)
+    print(result)",True,3,8066,133_7_3.py
+133,7,Evaluate simple true false statements,"Write a pure Python function that takes a list of strings and returns a list of booleans, where 'True' maps to True and 'False' maps to False. Ensure the conversion logic is clean and efficient.","def stringlist_to_boollist(stringlist):
+    boollist = []
+    for s in stringlist:
+        if s == 'True':
+            boollist.append(True)
+        elif s == 'False':
+            boollist.append(False)
+        else:
+            raise ValueError(f""Unexpected string encountered: {s}"")
+    return boollist
+if __name__ == '__main__':
+    sample_input = ['True', 'False', 'True', 'False']
+    result = stringlist_to_boollist(sample_input)
+    print(result)",True,4,8067,133_7_4.py
+133,8,Evaluate simple true false statements,Develop a command-line interface (CLI) script using the `argparse` module that accepts a file path containing true/false statements and outputs the total number of true statements to standard output. The code must be production-ready.,,False,0,8068,133_8.py
+130,11,Check if a value is zero,"Write a complete, runnable Python script that prompts the user to enter a number and uses an if-else structure to check if the entered value is zero. Include robust error handling for non-integer inputs.","def check_number(number):
+    if number == 0:
+        print(""The number is zero."")
+    else:
+        print(""The number is not zero."")
+if __name__ == '__main__':
+    sample_value = 0
+    check_number(sample_value)
+    sample_value = 5
+    check_number(sample_value)
+    sample_value = -10
+    check_number(sample_value)",True,0,8069,130_11.py
