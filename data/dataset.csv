@@ -213547,3 +213547,1507 @@ if __name__ == '__main__':
     search_name = ""David""
     found_contact = find_contact(sample_contacts, search_name)
     print(found_contact)",True,2,10167,165_13_2.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name in contacts:
+        del contacts[name]
+        return True
+    else:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+def main():
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    for name, phone, email in sample_contacts:
+        add_contact(name, phone, email)
+    list_contacts()
+    print(""\n--- Deleting Contacts ---"")
+    names_to_delete = [""Bob"", ""NonExistent""]
+    for name in names_to_delete:
+        delete_contact(name)
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,0,10168,165_12.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name in contacts:
+        del contacts[name]
+        return True
+    else:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+if __name__ == '__main__':
+    print(""--- Initializing Contact Book with Sample Data ---"")
+    add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    list_contacts()
+    print(""\n--- Attempting to Delete Contact ---"")
+    delete_contact(""Bob"")
+    delete_contact(""NonExistent"")
+    list_contacts()",True,1,10169,165_12_1.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name in contacts:
+        del contacts[name]
+        return True
+    else:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+def main():
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    for name, phone, email in sample_contacts:
+        add_contact(name, phone, email)
+    list_contacts()
+    print(""\n--- Deleting Sample Contact ---"")
+    delete_contact(""Bob"")
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,2,10170,165_12_2.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    if name in contacts:
+        print(f""Error: Contact '{name}' already exists."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name not in contacts:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+    del contacts[name]
+    return True
+def main():
+    print(""--- Contact Book CLI Simulation ---"")
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    for name, phone, email in sample_contacts:
+        if add_contact(name, phone, email):
+            pass
+        else:
+            print(f""Failed to add sample contact: {name}"")
+    list_contacts()
+    print(""\n--- Deleting Sample Contact (Bob) ---"")
+    delete_contact(""Bob"")
+    list_contacts()
+    print(""\n--- Attempting to delete non-existent contact (David) ---"")
+    delete_contact(""David"")
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,3,10171,165_12_3.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name in contacts:
+        del contacts[name]
+        return True
+    else:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+def main():
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    for name, phone, email in sample_contacts:
+        add_contact(name, phone, email)
+    list_contacts()
+    print(""\n--- Deleting Sample Contacts ---"")
+    names_to_delete = [""Alice"", ""Bob"", ""David""]
+    for name in names_to_delete:
+        delete_contact(name)
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,4,10172,165_12_4.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name in contacts:
+        del contacts[name]
+        return True
+    else:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+def main():
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    for name, phone, email in sample_contacts:
+        add_contact(name, phone, email)
+    list_contacts()
+    print(""\n--- Deleting Contact ---"")
+    names_to_delete = [""Bob"", ""NonExistent""]
+    for name in names_to_delete:
+        delete_contact(name)
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,5,10173,165_12_5.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = {}
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    if name in contacts:
+        print(f""Error: Contact '{name}' already exists."")
+        return False
+    contacts[name] = {""phone"": phone, ""email"": email}
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for name, details in contacts.items():
+        print(f""Name: {name}, Phone: {details['phone']}, Email: {details['email']}"")
+    print(""--------------------"")
+def delete_contact(name):
+    if name not in contacts:
+        print(f""Error: Contact '{name}' not found."")
+        return False
+    del contacts[name]
+    return True
+def main():
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    for name, phone, email in sample_contacts:
+        add_contact(name, phone, email)
+    list_contacts()
+    print(""\n--- Deleting Sample Contact (Bob) ---"")
+    delete_contact(""Bob"")
+    list_contacts()
+    print(""\n--- Attempting to delete non-existent contact (David) ---"")
+    delete_contact(""David"")
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,6,10174,165_12_6.py
+165,12,Build a simple contact book,"Develop a command-line interface (CLI) application for a contact book. The application must use functions to handle user input for adding, listing, and deleting contacts, ensuring robust error handling for invalid input.","import sys
+contacts = []
+def add_contact(name, phone, email):
+    if not name or not phone or not email:
+        print(""Error: All fields must be provided."")
+        return False
+    contacts.append((name, phone, email))
+    return True
+def list_contacts():
+    if not contacts:
+        print(""No contacts found."")
+        return
+    print(""\n--- Contact Book ---"")
+    for i, (name, phone, email) in enumerate(contacts):
+        print(f""[{i+1}] Name: {name}, Phone: {phone}, Email: {email}"")
+    print(""--------------------"")
+def delete_contact(index):
+    if not (0 <= index < len(contacts)):
+        print(""Error: Invalid contact number."")
+        return False
+    del contacts[index]
+    return True
+def main():
+    sample_contacts = [
+        (""Alice"", ""123-456-7890"", ""alice@example.com""),
+        (""Bob"", ""987-654-3210"", ""bob@example.com""),
+        (""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    ]
+    contacts.extend(sample_contacts)
+    print(""--- Contact Book CLI Simulation ---"")
+    print(""\n--- Listing all contacts ---"")
+    list_contacts()
+    print(""\n--- Adding new contacts (Sample Data) ---"")
+    new_contact1 = (""David"", ""111-222-3333"", ""david@example.com"")
+    if add_contact(*new_contact1):
+        print(f""Successfully added: {new_contact1[0]}"")
+    else:
+        print(""Failed to add contact 1."")
+    new_contact2 = (""Eve"", ""444-555-6666"", ""eve@example.com"")
+    if add_contact(*new_contact2):
+        print(f""Successfully added: {new_contact2[0]}"")
+    else:
+        print(""Failed to add contact 2."")
+    print(""\n--- Listing all contacts after additions ---"")
+    list_contacts()
+    print(""\n--- Deleting a contact (Sample Data) ---"")
+    if len(contacts) > 0:
+        contact_to_delete_index = 0
+        print(f""Attempting to delete contact at index {contact_to_delete_index} (Alice)..."")
+        if delete_contact(contact_to_delete_index):
+            print(""Deletion successful."")
+        else:
+            print(""Deletion failed."")
+    else:
+        print(""No contacts to delete."")
+    print(""\n--- Final Contact List ---"")
+    list_contacts()
+if __name__ == '__main__':
+    main()",True,7,10175,165_12_7.py
+166,0,Track favorite colors easily,"Write a complete, well-documented Python script that allows a user to input favorite colors and stores them in a dictionary.","def store_favorite_colors():
+    favorite_colors = {
+        ""red"": ""favorite"",
+        ""blue"": ""favorite"",
+        ""green"": ""favorite"",
+        ""yellow"": ""favorite""
+    }
+    return favorite_colors
+if __name__ == '__main__':
+    colors = store_favorite_colors()
+    print(colors)",True,0,10176,166_0.py
+166,1,Track favorite colors easily,Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a frequency map (dictionary) of those colors.,"def track_favorite_colors(colors):
+    frequency_map = {}
+    for color in colors:
+        frequency_map[color] = frequency_map.get(color, 0) + 1
+    return frequency_map
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""red"", ""green"", ""blue"", ""red"", ""yellow""]
+    result = track_favorite_colors(sample_colors)
+    print(result)",True,0,10177,166_1.py
+166,1,Track favorite colors easily,Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a frequency map (dictionary) of those colors.,"def track_favorite_colors(color_list):
+    frequency_map = {}
+    for color in color_list:
+        if color in frequency_map:
+            frequency_map[color] += 1
+        else:
+            frequency_map[color] = 1
+    return frequency_map
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""red"", ""green"", ""blue"", ""red"", ""yellow""]
+    result = track_favorite_colors(sample_colors)
+    print(result)",True,1,10178,166_1_1.py
+166,1,Track favorite colors easily,Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a frequency map (dictionary) of those colors.,"def track_favorite_colors(colors):
+    frequency_map = {}
+    for color in colors:
+        if color in frequency_map:
+            frequency_map[color] += 1
+        else:
+            frequency_map[color] = 1
+    return frequency_map
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""red"", ""green"", ""blue"", ""red"", ""yellow""]
+    result = track_favorite_colors(sample_colors)
+    print(result)",True,2,10179,166_1_2.py
+166,1,Track favorite colors easily,Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a frequency map (dictionary) of those colors.,"def track_favorite_colors(color_list):
+    frequency_map = {}
+    for color in color_list:
+        frequency_map[color] = frequency_map.get(color, 0) + 1
+    return frequency_map
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""red"", ""green"", ""blue"", ""red"", ""yellow""]
+    result = track_favorite_colors(sample_colors)
+    print(result)",True,3,10180,166_1_3.py
+166,2,Track favorite colors easily,"Develop an interactive command-line application that prompts the user to enter favorite colors repeatedly until the user enters 'done', and then displays the total count for each color.","def process_colors(colors):
+    color_counts = {}
+    for color in colors:
+        if color != 'done':
+            color_counts[color] = color_counts.get(color, 0) + 1
+    return color_counts
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"",
+        ""blue"",
+        ""red"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""done"",
+        ""green""
+    ]
+    results = process_colors(sample_colors)
+    for color, count in results.items():
+        print(f""{color}: {count}"")",True,0,10181,166_2.py
+166,2,Track favorite colors easily,"Develop an interactive command-line application that prompts the user to enter favorite colors repeatedly until the user enters 'done', and then displays the total count for each color.","def process_colors(color_list):
+    color_counts = {}
+    for color in color_list:
+        if color in color_counts:
+            color_counts[color] += 1
+        else:
+            color_counts[color] = 1
+    return color_counts
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"",
+        ""blue"",
+        ""red"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""yellow"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""purple""
+    ]
+    counts = process_colors(sample_colors)
+    for color, count in counts.items():
+        print(f""{color}: {count}"")",True,1,10182,166_2_1.py
+166,2,Track favorite colors easily,"Develop an interactive command-line application that prompts the user to enter favorite colors repeatedly until the user enters 'done', and then displays the total count for each color.","def process_colors(sample_colors):
+    color_counts = {}
+    for color in sample_colors:
+        if color != 'done':
+            if color in color_counts:
+                color_counts[color] += 1
+            else:
+                color_counts[color] = 1
+    return color_counts
+if __name__ == '__main__':
+    sample_input = [
+        ""red"",
+        ""blue"",
+        ""red"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""done"",
+        ""green""
+    ]
+    results = process_colors(sample_input)
+    for color, count in results.items():
+        print(f""{color}: {count}"")",True,2,10183,166_2_2.py
+166,2,Track favorite colors easily,"Develop an interactive command-line application that prompts the user to enter favorite colors repeatedly until the user enters 'done', and then displays the total count for each color.","def process_colors(colors):
+    color_counts = {}
+    for color in colors:
+        if color != 'done':
+            if color in color_counts:
+                color_counts[color] += 1
+            else:
+                color_counts[color] = 1
+    return color_counts
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"",
+        ""blue"",
+        ""red"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""done"",
+        ""green""
+    ]
+    result = process_colors(sample_colors)
+    for color, count in result.items():
+        print(f""{color}: {count}"")",True,3,10184,166_2_3.py
+166,2,Track favorite colors easily,"Develop an interactive command-line application that prompts the user to enter favorite colors repeatedly until the user enters 'done', and then displays the total count for each color.","def process_colors(colors):
+    color_counts = {}
+    for color in colors:
+        if color != 'done':
+            if color in color_counts:
+                color_counts[color] += 1
+            else:
+                color_counts[color] = 1
+    return color_counts
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"",
+        ""blue"",
+        ""red"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""done"",
+        ""green""
+    ]
+    result = process_colors(sample_colors)
+    print(result)",True,4,10185,166_2_4.py
+166,2,Track favorite colors easily,"Develop an interactive command-line application that prompts the user to enter favorite colors repeatedly until the user enters 'done', and then displays the total count for each color.","def process_colors(colors):
+    color_counts = {}
+    for color in colors:
+        if color != 'done':
+            color_counts[color] = color_counts.get(color, 0) + 1
+    return color_counts
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"",
+        ""blue"",
+        ""red"",
+        ""green"",
+        ""blue"",
+        ""red"",
+        ""done"",
+        ""green""
+    ]
+    result = process_colors(sample_colors)
+    print(result)",True,5,10186,166_2_5.py
+166,3,Track favorite colors easily,"Write a class named 'ColorTracker' with an initializer that sets up an empty set to store unique favorite colors, and methods to add a color and display all tracked colors.","class ColorTracker:
+    def __init__(self):
+        self.favorite_colors = set()
+    def add_color(self, color):
+        self.favorite_colors.add(color)
+    def display_colors(self):
+        print(""Tracked Colors:"", list(self.favorite_colors))
+if __name__ == '__main__':
+    tracker = ColorTracker()
+    tracker.add_color(""Red"")
+    tracker.add_color(""Blue"")
+    tracker.add_color(""Red"")
+    tracker.add_color(""Green"")
+    tracker.display_colors()",True,0,10187,166_3.py
+166,3,Track favorite colors easily,"Write a class named 'ColorTracker' with an initializer that sets up an empty set to store unique favorite colors, and methods to add a color and display all tracked colors.","class ColorTracker:
+    def __init__(self):
+        self.favorite_colors = set()
+    def add_color(self, color):
+        self.favorite_colors.add(color)
+    def display_colors(self):
+        print(""Tracked Colors:"")
+        for color in self.favorite_colors:
+            print(color)
+if __name__ == '__main__':
+    tracker = ColorTracker()
+    tracker.add_color(""Red"")
+    tracker.add_color(""Blue"")
+    tracker.add_color(""Red"")
+    tracker.add_color(""Green"")
+    tracker.display_colors()",True,1,10188,166_3_1.py
+166,3,Track favorite colors easily,"Write a class named 'ColorTracker' with an initializer that sets up an empty set to store unique favorite colors, and methods to add a color and display all tracked colors.","class ColorTracker:
+    def __init__(self):
+        self.favorite_colors = set()
+    def add_color(self, color):
+        self.favorite_colors.add(color)
+    def display_colors(self):
+        print(""Tracked colors:"", list(self.favorite_colors))
+if __name__ == '__main__':
+    tracker = ColorTracker()
+    tracker.add_color(""Red"")
+    tracker.add_color(""Blue"")
+    tracker.add_color(""Red"")
+    tracker.add_color(""Green"")
+    tracker.display_colors()",True,2,10189,166_3_2.py
+166,4,Track favorite colors easily,"Create a function that reads color preferences from a file named 'colors.txt', assumes one color per line, and prints the total count for each unique color found.",,False,0,10190,166_4.py
+166,5,Track favorite colors easily,"Implement a generator function that yields favorite colors as they are entered, and use it to process a predefined list of colors, ensuring memory efficiency.","def favorite_color_generator():
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple"", ""orange""]
+    for color in colors:
+        yield color
+if __name__ == '__main__':
+    color_gen = favorite_color_generator()
+    processed_colors = []
+    for color in color_gen:
+        processed_colors.append(color)
+    print(processed_colors)",True,0,10191,166_5.py
+166,5,Track favorite colors easily,"Implement a generator function that yields favorite colors as they are entered, and use it to process a predefined list of colors, ensuring memory efficiency.","def favorite_color_generator():
+    yield ""red""
+    yield ""blue""
+    yield ""green""
+    yield ""yellow""
+if __name__ == '__main__':
+    color_stream = favorite_color_generator()
+    predefined_colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    processed_colors = []
+    for color in color_stream:
+        if color in predefined_colors:
+            processed_colors.append(color)
+    print(processed_colors)",True,1,10192,166_5_1.py
+166,5,Track favorite colors easily,"Implement a generator function that yields favorite colors as they are entered, and use it to process a predefined list of colors, ensuring memory efficiency.","def favorite_color_generator():
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple"", ""orange""]
+    for color in colors:
+        yield color
+if __name__ == '__main__':
+    color_gen = favorite_color_generator()
+    processed_colors = []
+    for color in color_gen:
+        processed_colors.append(color.upper())
+    print(processed_colors)",True,2,10193,166_5_2.py
+166,5,Track favorite colors easily,"Implement a generator function that yields favorite colors as they are entered, and use it to process a predefined list of colors, ensuring memory efficiency.","def favorite_colors_generator():
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple"", ""orange""]
+    for color in colors:
+        yield color
+if __name__ == '__main__':
+    color_gen = favorite_colors_generator()
+    processed_colors = []
+    for color in color_gen:
+        processed_colors.append(color)
+    print(processed_colors)",True,3,10194,166_5_3.py
+166,6,Track favorite colors easily,"Write a robust script that reads color inputs from standard input, handles potential empty lines, and outputs the most frequently chosen color.",,False,0,10195,166_6.py
+166,7,Track favorite colors easily,"Design and implement a class to manage favorite colors, ensuring that adding a color automatically updates the count and handles case-insensitivity (e.g., 'Red' and 'red' count as the same color).","class FavoriteColors:
+    def __init__(self):
+        self.colors = {}
+    def add_color(self, color):
+        normalized_color = color.lower()
+        if normalized_color in self.colors:
+            self.colors[normalized_color] += 1
+        else:
+            self.colors[normalized_color] = 1
+    def get_color_counts(self):
+        return self.colors
+if __name__ == '__main__':
+    manager = FavoriteColors()
+    colors_to_add = [
+        ""Red"",
+        ""blue"",
+        ""red"",
+        ""Green"",
+        ""Blue"",
+        ""purple""
+    ]
+    for color in colors_to_add:
+        manager.add_color(color)
+    counts = manager.get_color_counts()
+    print(counts)",True,0,10196,166_7.py
+166,7,Track favorite colors easily,"Design and implement a class to manage favorite colors, ensuring that adding a color automatically updates the count and handles case-insensitivity (e.g., 'Red' and 'red' count as the same color).","class FavoriteColors:
+    def __init__(self):
+        self.colors = {}
+    def add_color(self, color):
+        normalized_color = color.lower()
+        if normalized_color in self.colors:
+            self.colors[normalized_color] += 1
+        else:
+            self.colors[normalized_color] = 1
+    def get_color_counts(self):
+        return self.colors
+if __name__ == '__main__':
+    manager = FavoriteColors()
+    colors_to_add = [
+        ""Red"",
+        ""blue"",
+        ""green"",
+        ""Red"",
+        ""blue"",
+        ""Yellow"",
+        ""green""
+    ]
+    for color in colors_to_add:
+        manager.add_color(color)
+    counts = manager.get_color_counts()
+    print(counts)",True,1,10197,166_7_1.py
+166,7,Track favorite colors easily,"Design and implement a class to manage favorite colors, ensuring that adding a color automatically updates the count and handles case-insensitivity (e.g., 'Red' and 'red' count as the same color).","class FavoriteColors:
+    def __init__(self):
+        self.colors = {}
+    def add_color(self, color):
+        normalized_color = color.lower()
+        if normalized_color in self.colors:
+            self.colors[normalized_color] += 1
+        else:
+            self.colors[normalized_color] = 1
+    def get_color_counts(self):
+        return self.colors
+if __name__ == '__main__':
+    fc = FavoriteColors()
+    colors_to_add = [
+        ""Red"",
+        ""blue"",
+        ""red"",
+        ""Green"",
+        ""Blue"",
+        ""purple"",
+        ""red""
+    ]
+    for color in colors_to_add:
+        fc.add_color(color)
+    counts = fc.get_color_counts()
+    print(counts)",True,2,10198,166_7_2.py
+166,7,Track favorite colors easily,"Design and implement a class to manage favorite colors, ensuring that adding a color automatically updates the count and handles case-insensitivity (e.g., 'Red' and 'red' count as the same color).","class FavoriteColors:
+    def __init__(self):
+        self.colors = {}
+    def add_color(self, color):
+        normalized_color = color.lower()
+        if normalized_color in self.colors:
+            self.colors[normalized_color] += 1
+        else:
+            self.colors[normalized_color] = 1
+    def get_color_counts(self):
+        return self.colors
+if __name__ == '__main__':
+    manager = FavoriteColors()
+    colors_to_add = [
+        ""Red"",
+        ""blue"",
+        ""green"",
+        ""red"",
+        ""Blue"",
+        ""yellow"",
+        ""blue""
+    ]
+    for color in colors_to_add:
+        manager.add_color(color)
+    counts = manager.get_color_counts()
+    print(counts)",True,3,10199,166_7_3.py
+166,7,Track favorite colors easily,"Design and implement a class to manage favorite colors, ensuring that adding a color automatically updates the count and handles case-insensitivity (e.g., 'Red' and 'red' count as the same color).","class FavoriteColors:
+    def __init__(self):
+        self.colors = {}
+    def add_color(self, color):
+        normalized_color = color.lower()
+        if normalized_color in self.colors:
+            self.colors[normalized_color] += 1
+        else:
+            self.colors[normalized_color] = 1
+    def get_color_counts(self):
+        return self.colors
+if __name__ == '__main__':
+    manager = FavoriteColors()
+    colors_to_add = [
+        ""Red"",
+        ""blue"",
+        ""red"",
+        ""Green"",
+        ""Blue"",
+        ""yellow""
+    ]
+    for color in colors_to_add:
+        manager.add_color(color)
+    counts = manager.get_color_counts()
+    print(counts)",True,4,10200,166_7_4.py
+166,8,Track favorite colors easily,Write an efficient algorithm to process a large list of color strings and return a sorted list of the top 5 most frequently occurring colors.,"import collections
+def find_top_5_colors(color_list):
+    color_counts = collections.Counter(color_list)
+    sorted_colors = color_counts.most_common(5)
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""yellow"", ""blue"",
+        ""green"", ""red"", ""purple"", ""blue"", ""red"", ""orange"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""purple"", ""blue"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""yellow"", ""pink"", ""cyan""
+    ]
+    top_colors = find_top_5_colors(sample_colors)
+    print(top_colors)",True,0,10201,166_8.py
+166,8,Track favorite colors easily,Write an efficient algorithm to process a large list of color strings and return a sorted list of the top 5 most frequently occurring colors.,"import collections
+def find_top_5_colors(color_list):
+    color_counts = collections.Counter(color_list)
+    sorted_colors = color_counts.most_common(5)
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""yellow"", ""blue"",
+        ""green"", ""red"", ""purple"", ""blue"", ""red"", ""orange"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""pink"", ""purple""
+    ]
+    top_colors = find_top_5_colors(sample_colors)
+    print(top_colors)",True,1,10202,166_8_1.py
+166,8,Track favorite colors easily,Write an efficient algorithm to process a large list of color strings and return a sorted list of the top 5 most frequently occurring colors.,"import collections
+def find_top_5_colors(color_list):
+    color_counts = collections.Counter(color_list)
+    sorted_colors = color_counts.most_common(5)
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""yellow"", ""blue"",
+        ""green"", ""red"", ""purple"", ""blue"", ""red"", ""orange"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""purple"", ""blue"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""purple"", ""yellow""
+    ]
+    top_colors = find_top_5_colors(sample_colors)
+    print(top_colors)",True,2,10203,166_8_2.py
+166,8,Track favorite colors easily,Write an efficient algorithm to process a large list of color strings and return a sorted list of the top 5 most frequently occurring colors.,"import collections
+def find_top_5_colors(color_list):
+    color_counts = collections.Counter(color_list)
+    sorted_colors = color_counts.most_common(5)
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""yellow"", ""blue"",
+        ""green"", ""red"", ""purple"", ""blue"", ""red"", ""orange"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""purple"", ""blue"", ""red"", ""yellow"",
+        ""pink"", ""cyan"", ""magenta"", ""red"", ""blue""
+    ]
+    top_colors = find_top_5_colors(sample_colors)
+    print(top_colors)",True,3,10204,166_8_3.py
+166,8,Track favorite colors easily,Write an efficient algorithm to process a large list of color strings and return a sorted list of the top 5 most frequently occurring colors.,"import collections
+def find_top_5_colors(color_list):
+    color_counts = collections.Counter(color_list)
+    sorted_colors = color_counts.most_common(5)
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""yellow"", ""blue"",
+        ""green"", ""red"", ""purple"", ""blue"", ""red"", ""orange"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""purple"", ""blue"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""yellow"", ""orange""
+    ]
+    top_colors = find_top_5_colors(sample_colors)
+    print(top_colors)",True,4,10205,166_8_4.py
+166,8,Track favorite colors easily,Write an efficient algorithm to process a large list of color strings and return a sorted list of the top 5 most frequently occurring colors.,"import collections
+def find_top_5_colors(color_list):
+    color_counts = collections.Counter(color_list)
+    most_common = color_counts.most_common(5)
+    return most_common
+if __name__ == '__main__':
+    sample_colors = [
+        ""red"", ""blue"", ""green"", ""red"", ""blue"", ""red"", ""yellow"", ""blue"",
+        ""green"", ""red"", ""purple"", ""blue"", ""red"", ""orange"", ""yellow"",
+        ""red"", ""blue"", ""green"", ""red"", ""purple"", ""blue"", ""yellow"",
+        ""red"", ""red"", ""red"", ""red"", ""red"", ""cyan"", ""magenta""
+    ]
+    top_colors = find_top_5_colors(sample_colors)
+    print(top_colors)",True,5,10206,166_8_5.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    try:
+        with open(filename, 'w') as f:
+            for color in colors:
+                f.write(color + '\n')
+        print(f""Colors saved to {filename}"")
+    except IOError:
+        print(f""Error: Could not write to file {filename}"")
+def load_colors(filename):
+    loaded_colors = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                loaded_colors.append(line.strip())
+        print(f""Colors loaded from {filename}"")
+        return loaded_colors
+    except FileNotFoundError:
+        print(f""File {filename} not found. Returning empty list."")
+        return []
+    except IOError:
+        print(f""Error: Could not read from file {filename}"")
+        return []
+if __name__ == '__main__':
+    filename = ""favorite_colors.txt""
+    save_colors(filename)
+    loaded = load_colors(filename)
+    print(""Loaded colors:"")
+    for color in loaded:
+        print(color)",True,0,10207,166_9.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    try:
+        with open(filename, 'w') as f:
+            for color in colors:
+                f.write(color + '\n')
+        print(f""Colors saved to {filename}"")
+    except IOError as e:
+        print(f""Error saving file: {e}"")
+def load_colors(filename):
+    loaded_colors = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                loaded_colors.append(line.strip())
+        print(f""Colors loaded from {filename}"")
+        return loaded_colors
+    except FileNotFoundError:
+        print(f""File {filename} not found. Starting with default colors."")
+        return [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    except IOError as e:
+        print(f""Error loading file: {e}"")
+        return []
+if __name__ == '__main__':
+    file_name = ""favorite_colors.txt""
+    save_colors(file_name)
+    loaded = load_colors(file_name)
+    print(""Loaded favorite colors:"")
+    for color in loaded:
+        print(color)",True,1,10208,166_9_1.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    try:
+        with open(filename, 'w') as f:
+            for color in colors:
+                f.write(color + '\n')
+        print(f""Colors saved to {filename}"")
+    except IOError:
+        print(f""Error: Could not write to file {filename}"")
+def load_colors(filename):
+    loaded_colors = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                loaded_colors.append(line.strip())
+        print(f""Colors loaded from {filename}: {loaded_colors}"")
+        return loaded_colors
+    except FileNotFoundError:
+        print(f""File {filename} not found. Starting with default colors."")
+        return [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    except IOError:
+        print(f""Error: Could not read from file {filename}"")
+        return []
+if __name__ == '__main__':
+    filename = ""favorite_colors.txt""
+    save_colors(filename)
+    loaded = load_colors(filename)",True,2,10209,166_9_2.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    try:
+        with open(filename, 'w') as f:
+            for color in colors:
+                f.write(color + '\n')
+    except IOError:
+        pass
+def load_colors(filename):
+    colors = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                colors.append(line.strip())
+    except IOError:
+        pass
+    return colors
+if __name__ == '__main__':
+    filename = ""favorite_colors.txt""
+    save_colors(filename)
+    loaded_colors = load_colors(filename)
+    print(""Loaded favorite colors:"")
+    for color in loaded_colors:
+        print(color)",True,3,10210,166_9_3.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    try:
+        with open(filename, 'w') as f:
+            for color in colors:
+                f.write(color + '\n')
+        print(f""Colors saved to {filename}"")
+    except IOError as e:
+        print(f""Error saving file: {e}"")
+def load_colors(filename):
+    loaded_colors = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                loaded_colors.append(line.strip())
+        print(f""Colors loaded from {filename}"")
+        return loaded_colors
+    except FileNotFoundError:
+        print(f""File {filename} not found. Returning empty list."")
+        return []
+    except IOError as e:
+        print(f""Error loading file: {e}"")
+        return []
+if __name__ == '__main__':
+    filename = ""favorite_colors.txt""
+    save_colors(filename)
+    loaded = load_colors(filename)
+    print(""Loaded colors:"")
+    for color in loaded:
+        print(color)",True,4,10211,166_9_4.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    try:
+        with open(filename, 'w') as f:
+            for color in colors:
+                f.write(color + '\n')
+    except IOError as e:
+        print(f""Error writing to file: {e}"")
+def load_colors(filename):
+    colors = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                colors.append(line.strip())
+    except FileNotFoundError:
+        print(f""File {filename} not found. Starting with empty list."")
+    except IOError as e:
+        print(f""Error reading from file: {e}"")
+    return colors
+if __name__ == '__main__':
+    filename = ""favorite_colors.txt""
+    save_colors(filename)
+    loaded_colors = load_colors(filename)
+    print(""Loaded favorite colors:"")
+    for color in loaded_colors:
+        print(color)",True,5,10212,166_9_5.py
+166,9,Track favorite colors easily,"Develop a complete, runnable Python program that uses file I/O to persist the user's favorite colors to a file and loads them back upon execution.","def save_colors(filename):
+    colors = [""red"", ""blue"", ""green"", ""yellow"", ""purple""]
+    with open(filename, ""w"") as f:
+        for color in colors:
+            f.write(color + ""\n"")
+def load_colors(filename):
+    colors = []
+    with open(filename, ""r"") as f:
+        for line in f:
+            colors.append(line.strip())
+    return colors
+if __name__ == '__main__':
+    filename = ""favorite_colors.txt""
+    save_colors(filename)
+    loaded_colors = load_colors(filename)
+    print(""Loaded favorite colors:"")
+    for color in loaded_colors:
+        print(color)",True,6,10213,166_9_6.py
+166,10,Track favorite colors easily,"Write a complete, object-oriented Python script that allows a user to input favorite colors and stores them in a dictionary, ensuring the code is clean, well-documented, and follows best practices.","class ColorManager:
+    def __init__(self):
+        self.favorite_colors = {}
+    def add_color(self, color):
+        self.favorite_colors[color] = True
+    def display_colors(self):
+        for color in self.favorite_colors:
+            print(f""Favorite color: {color}"")
+if __name__ == '__main__':
+    manager = ColorManager()
+    manager.add_color(""Red"")
+    manager.add_color(""Blue"")
+    manager.add_color(""Green"")
+    manager.add_color(""Yellow"")
+    manager.display_colors()",True,0,10214,166_10.py
+166,10,Track favorite colors easily,"Write a complete, object-oriented Python script that allows a user to input favorite colors and stores them in a dictionary, ensuring the code is clean, well-documented, and follows best practices.","class ColorManager:
+    def __init__(self):
+        self.favorite_colors = {}
+    def add_favorite_color(self, color):
+        self.favorite_colors[color] = True
+    def display_colors(self):
+        for color, exists in self.favorite_colors.items():
+            if exists:
+                print(f""Favorite color: {color}"")
+if __name__ == '__main__':
+    manager = ColorManager()
+    manager.add_favorite_color(""Red"")
+    manager.add_favorite_color(""Blue"")
+    manager.add_favorite_color(""Green"")
+    manager.add_favorite_color(""Yellow"")
+    manager.display_colors()",True,1,10215,166_10_1.py
+166,10,Track favorite colors easily,"Write a complete, object-oriented Python script that allows a user to input favorite colors and stores them in a dictionary, ensuring the code is clean, well-documented, and follows best practices.","class ColorManager:
+    def __init__(self):
+        self.favorite_colors = {}
+    def add_color(self, color):
+        self.favorite_colors[color] = True
+    def display_colors(self):
+        for color, is_favorite in self.favorite_colors.items():
+            print(f""Favorite Color: {color}"")
+if __name__ == '__main__':
+    manager = ColorManager()
+    manager.add_color(""Red"")
+    manager.add_color(""Blue"")
+    manager.add_color(""Green"")
+    manager.add_color(""Yellow"")
+    manager.display_colors()",True,2,10216,166_10_2.py
+166,10,Track favorite colors easily,"Write a complete, object-oriented Python script that allows a user to input favorite colors and stores them in a dictionary, ensuring the code is clean, well-documented, and follows best practices.","class ColorManager:
+    def __init__(self):
+        self.favorite_colors = {}
+    def add_favorite_color(self, color):
+        self.favorite_colors[color] = True
+    def display_colors(self):
+        print(""Favorite Colors:"")
+        if not self.favorite_colors:
+            print(""No colors have been added yet."")
+            return
+        for color in self.favorite_colors:
+            print(f""- {color}"")
+if __name__ == '__main__':
+    manager = ColorManager()
+    manager.add_favorite_color(""Red"")
+    manager.add_favorite_color(""Blue"")
+    manager.add_favorite_color(""Green"")
+    manager.add_favorite_color(""Yellow"")
+    manager.display_colors()",True,3,10217,166_10_3.py
+166,10,Track favorite colors easily,"Write a complete, object-oriented Python script that allows a user to input favorite colors and stores them in a dictionary, ensuring the code is clean, well-documented, and follows best practices.","class ColorManager:
+    def __init__(self):
+        self.favorite_colors = {}
+    def add_color(self, color):
+        self.favorite_colors[color] = True
+    def display_colors(self):
+        for color, exists in self.favorite_colors.items():
+            if exists:
+                print(f""Favorite color: {color}"")
+if __name__ == '__main__':
+    manager = ColorManager()
+    manager.add_color(""Red"")
+    manager.add_color(""Blue"")
+    manager.add_color(""Green"")
+    manager.add_color(""Yellow"")
+    manager.display_colors()",True,4,10218,166_10_4.py
+166,10,Track favorite colors easily,"Write a complete, object-oriented Python script that allows a user to input favorite colors and stores them in a dictionary, ensuring the code is clean, well-documented, and follows best practices.","class ColorManager:
+    def __init__(self):
+        self.favorite_colors = {}
+    def add_color(self, color):
+        self.favorite_colors[color] = True
+    def display_colors(self):
+        print(""Favorite Colors:"")
+        if not self.favorite_colors:
+            print(""No colors have been added yet."")
+        else:
+            for color in self.favorite_colors:
+                print(f""- {color}"")
+if __name__ == '__main__':
+    manager = ColorManager()
+    manager.add_color(""Red"")
+    manager.add_color(""Blue"")
+    manager.add_color(""Green"")
+    manager.add_color(""Yellow"")
+    manager.display_colors()",True,5,10219,166_10_5.py
+166,11,Track favorite colors easily,"Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a sorted list of unique favorite colors, using set operations for efficiency.","def track_favorite_colors(color_list):
+    unique_colors = set(color_list)
+    sorted_colors = sorted(list(unique_colors))
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""green"", ""red"", ""yellow"", ""blue"", ""red""]
+    result = track_favorite_colors(sample_colors)
+    print(result)",True,0,10220,166_11.py
+166,11,Track favorite colors easily,"Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a sorted list of unique favorite colors, using set operations for efficiency.","import time
+def track_favorite_colors(color_list):
+    unique_colors = set(color_list)
+    sorted_colors = sorted(list(unique_colors))
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""green"", ""red"", ""yellow"", ""blue"", ""red"", ""purple""]
+    start_time = time.time()
+    favorite_colors = track_favorite_colors(sample_colors)
+    end_time = time.time()
+    print(favorite_colors)",True,1,10221,166_11_1.py
+166,11,Track favorite colors easily,"Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a sorted list of unique favorite colors, using set operations for efficiency.","import time
+def track_favorite_colors(color_list):
+    unique_colors = set(color_list)
+    sorted_colors = sorted(list(unique_colors))
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""green"", ""red"", ""yellow"", ""blue"", ""red""]
+    start_time = time.time()
+    favorite_colors = track_favorite_colors(sample_colors)
+    end_time = time.time()
+    print(favorite_colors)",True,2,10222,166_11_2.py
+166,11,Track favorite colors easily,"Implement an optimized function named 'track_favorite_colors' that accepts a list of color strings and returns a sorted list of unique favorite colors, using set operations for efficiency.","import time
+def track_favorite_colors(color_list):
+    unique_colors = set(color_list)
+    sorted_colors = sorted(list(unique_colors))
+    return sorted_colors
+if __name__ == '__main__':
+    sample_colors = [""red"", ""blue"", ""green"", ""red"", ""yellow"", ""blue"", ""red""]
+    start_time = time.time()
+    result = track_favorite_colors(sample_colors)
+    end_time = time.time()
+    print(result)",True,3,10223,166_11_3.py
+165,5,Build a simple contact book,"Write a main execution block that provides a clear, interactive menu for the user to choose between adding, viewing, searching, and saving contacts.",,False,0,10224,165_5.py
+166,13,Track favorite colors easily,Write a class named 'ColorTracker' with a method to add a new favorite color and another method to display all tracked colors. Ensure the class is fully encapsulated and highly efficient.,"class ColorTracker:
+    def __init__(self):
+        self._favorite_colors = set()
+    def add_favorite_color(self, color):
+        self._favorite_colors.add(color)
+    def display_colors(self):
+        return list(self._favorite_colors)
+if __name__ == '__main__':
+    tracker = ColorTracker()
+    tracker.add_favorite_color(""Red"")
+    tracker.add_favorite_color(""Blue"")
+    tracker.add_favorite_color(""Green"")
+    tracker.add_favorite_color(""Red"")
+    print(tracker.display_colors())",True,0,10225,166_13.py
+166,14,Track favorite colors easily,"Create a single, self-contained Python script that reads favorite colors from standard input, processes them to find the most frequently mentioned color, and prints the result clearly.",,False,0,10226,166_14.py
+167,0,Store names and ages now,"Write a complete, high-quality Python script that reads a list of store names and their corresponding ages from a file and prints them in a formatted table. Use efficient file handling.",,False,0,10227,167_0.py
+167,1,Store names and ages now,"Implement an optimized function named 'process_store_data' that accepts a list of tuples (store_name, age) and returns a dictionary where keys are store names and values are ages. Ensure time complexity is O(n).","def process_store_data(data):
+    result = {}
+    for store_name, age in data:
+        result[store_name] = age
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""StoreA"", 30),
+        (""StoreB"", 25),
+        (""StoreC"", 35),
+        (""StoreD"", 28)
+    ]
+    processed_data = process_store_data(sample_data)
+    print(processed_data)",True,0,10228,167_1.py
+167,2,Store names and ages now,Develop a class named 'StoreInventory' with an initializer that accepts a list of store names and ages. Implement a method 'display_data' to print the store names and ages neatly to the console.,"class StoreInventory:
+    def __init__(self, store_names, ages):
+        self.store_names = store_names
+        self.ages = ages
+    def display_data(self):
+        for name, age in zip(self.store_names, self.ages):
+            print(f""Store: {name}, Age: {age}"")
+if __name__ == '__main__':
+    store_names_list = [""Store A"", ""Store B"", ""Store C""]
+    ages_list = [25, 30, 22]
+    inventory = StoreInventory(store_names_list, ages_list)
+    inventory.display_data()",True,0,10229,167_2.py
+167,3,Store names and ages now,Write a robust Python script that takes user input for store names and ages iteratively and stores them in a dictionary. Include error handling for non-integer age inputs.,"import random
+store_data = {}
+store_names = [""Bookstore"", ""Grocery Shop"", ""Electronics Store"", ""Bakery""]
+ages = [25, 40, 33, 55]
+for name, age in zip(store_names, ages):
+    try:
+        store_data[name] = int(age)
+    except ValueError:
+        print(f""Error: Invalid age input for store {name}. Skipping."")
+if __name__ == '__main__':
+    print(store_data)",True,0,10230,167_3.py
+167,3,Store names and ages now,Write a robust Python script that takes user input for store names and ages iteratively and stores them in a dictionary. Include error handling for non-integer age inputs.,"store_data = {}
+store_names = [""StoreA"", ""StoreB"", ""StoreC""]
+ages = [25, 30, ""thirty""]
+if len(store_names) != len(ages):
+    exit()
+for name, age in zip(store_names, ages):
+    try:
+        age_int = int(age)
+        store_data[name] = age_int
+    except ValueError:
+        print(f""Error: Invalid age input for {name}. Skipping entry."")
+if __name__ == '__main__':
+    pass",True,1,10231,167_3_1.py
+167,3,Store names and ages now,Write a robust Python script that takes user input for store names and ages iteratively and stores them in a dictionary. Include error handling for non-integer age inputs.,"import random
+store_data = {}
+store_names = [""Bookstore"", ""Grocery"", ""Electronics"", ""Clothing""]
+ages = [25, 30, 45, 22]
+for name, age in zip(store_names, ages):
+    try:
+        store_data[name] = age
+    except ValueError:
+        print(f""Error: Invalid age input for store {name}"")
+if __name__ == '__main__':
+    pass",True,2,10232,167_3_2.py
+167,3,Store names and ages now,Write a robust Python script that takes user input for store names and ages iteratively and stores them in a dictionary. Include error handling for non-integer age inputs.,"import random
+store_data = {}
+store_names = [""Bookstore"", ""Electronics Shop"", ""Grocery Mart"", ""Clothing Boutique""]
+ages = [25, 30, 45, 22]
+for name, age in zip(store_names, ages):
+    try:
+        store_data[name] = int(age)
+    except ValueError:
+        print(f""Error: Invalid age input for store {name}. Skipping."")
+if __name__ == '__main__':
+    pass",True,3,10233,167_3_3.py
+167,4,Store names and ages now,Create a function 'calculate_average_age' that takes a dictionary of store names and ages and calculates the arithmetic mean of all store ages. Handle the case where the input dictionary is empty.,,False,0,10234,167_4.py
+167,5,Store names and ages now,"Implement a generator function that yields store names and ages from an input list of data, optimizing memory usage for very large datasets.","def data_generator(data):
+    for store_name, age in data:
+        yield store_name, age
+if __name__ == '__main__':
+    sample_data = [
+        (""StoreA"", 30),
+        (""StoreB"", 25),
+        (""StoreC"", 35),
+        (""StoreD"", 40),
+        (""StoreE"", 22)
+    ]
+    generator = data_generator(sample_data)
+    print(""Iterating through the generator:"")
+    for name, age in generator:
+        print(f""Store: {name}, Age: {age}"")",True,0,10235,167_5.py
+167,5,Store names and ages now,"Implement a generator function that yields store names and ages from an input list of data, optimizing memory usage for very large datasets.","def data_generator(data):
+    for store_name, age in data:
+        yield store_name, age
+if __name__ == '__main__':
+    sample_data = [
+        (""StoreA"", 30),
+        (""StoreB"", 25),
+        (""StoreC"", 35),
+        (""StoreD"", 40),
+        (""StoreE"", 22)
+    ]
+    generator = data_generator(sample_data)
+    for name, age in generator:
+        print(f""Store: {name}, Age: {age}"")",True,1,10236,167_5_1.py
+167,5,Store names and ages now,"Implement a generator function that yields store names and ages from an input list of data, optimizing memory usage for very large datasets.","def data_generator(data):
+    for store_name, age in data:
+        yield store_name, age
+if __name__ == '__main__':
+    sample_data = [
+        (""StoreA"", 30),
+        (""StoreB"", 25),
+        (""StoreC"", 40),
+        (""StoreD"", 35),
+        (""StoreE"", 28)
+    ]
+    generator = data_generator(sample_data)
+    for name, age in generator:
+        print(f""Store: {name}, Age: {age}"")",True,2,10237,167_5_2.py
+167,5,Store names and ages now,"Implement a generator function that yields store names and ages from an input list of data, optimizing memory usage for very large datasets.","def data_generator(data):
+    for store_name, age in data:
+        yield store_name, age
+if __name__ == '__main__':
+    sample_data = [
+        (""StoreA"", 30),
+        (""StoreB"", 25),
+        (""StoreC"", 40),
+        (""StoreD"", 22),
+        (""StoreE"", 35)
+    ]
+    generator = data_generator(sample_data)
+    print(""Starting data iteration:"")
+    for name, age in generator:
+        print(f""Store: {name}, Age: {age}"")",True,3,10238,167_5_3.py
+167,6,Store names and ages now,"Write an efficient script using list comprehension to filter a provided list of (name, age) pairs, keeping only stores where the age is greater than 30.","if __name__ == '__main__':
+    data = [(""Alice"", 35), (""Bob"", 28), (""Charlie"", 31), (""David"", 40), (""Eve"", 25)]
+    filtered_data = [(name, age) for name, age in data if age > 30]
+    print(filtered_data)",True,0,10239,167_6.py
+167,6,Store names and ages now,"Write an efficient script using list comprehension to filter a provided list of (name, age) pairs, keeping only stores where the age is greater than 30.","if __name__ == '__main__':
+    data = [(""Alice"", 35), (""Bob"", 28), (""Charlie"", 31), (""David"", 40), (""Eve"", 29)]
+    filtered_data = [(name, age) for name, age in data if age > 30]
+    print(filtered_data)",True,1,10240,167_6_1.py
+167,7,Store names and ages now,"Design and write a class 'StoreDataHandler' that manages a collection of store names and ages, providing methods to add new entries and retrieve data by store name efficiently.","class StoreDataHandler:
+    def __init__(self):
+        self.data = {}
+    def add_store_data(self, store_name, age):
+        self.data[store_name] = age
+    def get_store_age(self, store_name):
+        return self.data.get(store_name)
+if __name__ == '__main__':
+    handler = StoreDataHandler()
+    handler.add_store_data(""StoreA"", 10)
+    handler.add_store_data(""StoreB"", 25)
+    handler.add_store_data(""StoreC"", 30)
+    print(f""Age of StoreA: {handler.get_store_age('StoreA')}"")
+    print(f""Age of StoreB: {handler.get_store_age('StoreB')}"")
+    print(f""Age of StoreC: {handler.get_store_age('StoreC')}"")
+    print(f""Age of StoreD: {handler.get_store_age('StoreD')}"")",True,0,10241,167_7.py
+167,8,Store names and ages now,"Develop a complete program that reads store names and ages from standard input, stores them, and then outputs the data sorted by store name alphabetically.",,False,0,10242,167_8.py
+167,9,Store names and ages now,"Write a single, highly optimized function that takes a list of strings, each containing a store name and age separated by a colon (e.g., 'StoreA:25'), and returns a list of dictionaries, parsing the data efficiently.","def parse_store_data(data):
+    result = []
+    for item in data:
+        try:
+            store_name, age_str = item.split(':')
+            result.append({
+                'store_name': store_name,
+                'age': int(age_str)
+            })
+        except ValueError:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        'StoreA:25',
+        'StoreB:30',
+        'StoreC:22',
+        'StoreD:45',
+        'InvalidEntry'
+    ]
+    parsed_data = parse_store_data(sample_data)
+    print(parsed_data)",True,0,10243,167_9.py
+167,9,Store names and ages now,"Write a single, highly optimized function that takes a list of strings, each containing a store name and age separated by a colon (e.g., 'StoreA:25'), and returns a list of dictionaries, parsing the data efficiently.","def parse_store_data(data):
+    result = []
+    for item in data:
+        try:
+            store_name, age_str = item.split(':')
+            result.append({'store_name': store_name, 'age': int(age_str)})
+        except ValueError:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        'StoreA:25',
+        'StoreB:30',
+        'StoreC:45',
+        'StoreD:22',
+        'InvalidEntry'
+    ]
+    parsed_data = parse_store_data(sample_data)
+    print(parsed_data)",True,1,10244,167_9_1.py
+167,9,Store names and ages now,"Write a single, highly optimized function that takes a list of strings, each containing a store name and age separated by a colon (e.g., 'StoreA:25'), and returns a list of dictionaries, parsing the data efficiently.","def parse_store_data(data):
+    result = []
+    for item in data:
+        try:
+            store_name, age_str = item.split(':', 1)
+            result.append({
+                'store_name': store_name,
+                'age': int(age_str)
+            })
+        except ValueError:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        'StoreA:25',
+        'StoreB:30',
+        'StoreC:22',
+        'StoreD:45',
+        'InvalidEntry'
+    ]
+    parsed_data = parse_store_data(sample_data)
+    print(parsed_data)",True,2,10245,167_9_2.py
+167,9,Store names and ages now,"Write a single, highly optimized function that takes a list of strings, each containing a store name and age separated by a colon (e.g., 'StoreA:25'), and returns a list of dictionaries, parsing the data efficiently.","def parse_store_data(data_list):
+    result = []
+    for item in data_list:
+        try:
+            store_name, age_str = item.split(':')
+            result.append({
+                ""store_name"": store_name,
+                ""age"": int(age_str)
+            })
+        except ValueError:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        'StoreA:25',
+        'StoreB:30',
+        'StoreC:22',
+        'StoreD:45',
+        'InvalidEntry'
+    ]
+    parsed_data = parse_store_data(sample_data)
+    print(parsed_data)",True,3,10246,167_9_3.py
+167,9,Store names and ages now,"Write a single, highly optimized function that takes a list of strings, each containing a store name and age separated by a colon (e.g., 'StoreA:25'), and returns a list of dictionaries, parsing the data efficiently.","def parse_store_data(data_list):
+    result = []
+    for item in data_list:
+        if ':' in item:
+            parts = item.split(':', 1)
+            if len(parts) == 2:
+                store_name = parts[0].strip()
+                try:
+                    age = int(parts[1].strip())
+                    result.append({'store_name': store_name, 'age': age})
+                except ValueError:
+                    continue
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        'StoreA:25',
+        'StoreB:30',
+        'StoreC:45',
+        'StoreD:22',
+        'InvalidEntry'
+    ]
+    parsed_data = parse_store_data(sample_data)
+    print(parsed_data)",True,4,10247,167_9_4.py
+167,10,Store names and ages now,"Write a complete, high-quality Python script that reads a list of store names and their corresponding ages from a file and prints them in a neatly formatted table. Use efficient file handling.","def create_data_file(filename):
+    with open(filename, 'w') as f:
+        f.write(""Store A,25\n"")
+        f.write(""Store B,30\n"")
+        f.write(""Store C,22\n"")
+        f.write(""Store D,45\n"")
+def process_data(filename):
+    data = []
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                parts = line.strip().split(',')
+                if len(parts) == 2:
+                    store_name = parts[0].strip()
+                    age = int(parts[1].strip())
+                    data.append((store_name, age))
+    except FileNotFoundError:
+        return []
+    return data
+def print_table(data):
+    if not data:
+        print(""No data to display."")
+        return
+    print(""\n--- Store Information ---"")
+    max_store_len = max(len(name) for name, age in data) if data else 0
+    header_name = ""Store Name"".ljust(max_store_len + 2)
+    header_age = ""Age"".center(5)
+    print(f""{header_name} | {header_age}"")
+    print(""-"" * (max_store_len + 10))
+    for name, age in data:
+        print(f""{name.ljust(max_store_len)} | {age}"")
+if __name__ == '__main__':
+    FILE_NAME = ""store_data.txt""
+    create_data_file(FILE_NAME)
+    store_data = process_data(FILE_NAME)
+    print_table(store_data)",True,0,10248,167_10.py
+167,11,Store names and ages now,"Implement an optimized Python class named 'StoreData' to store store names and ages. The class must include methods for adding new store entries and retrieving all data, ensuring O(1) average time complexity for lookups if possible.","class StoreData:
+    def __init__(self):
+        self.stores = {}
+    def add_store(self, name, age):
+        self.stores[name] = age
+    def get_all_data(self):
+        return self.stores
+if __name__ == '__main__':
+    data_store = StoreData()
+    data_store.add_store(""StoreA"", 10)
+    data_store.add_store(""StoreB"", 25)
+    data_store.add_store(""StoreC"", 30)
+    all_data = data_store.get_all_data()
+    print(all_data)",True,0,10249,167_11.py
+167,11,Store names and ages now,"Implement an optimized Python class named 'StoreData' to store store names and ages. The class must include methods for adding new store entries and retrieving all data, ensuring O(1) average time complexity for lookups if possible.","class StoreData:
+    def __init__(self):
+        self.stores = {}
+    def add_store(self, name, age):
+        self.stores[name] = age
+    def get_all_data(self):
+        return self.stores
+if __name__ == '__main__':
+    data_store = StoreData()
+    data_store.add_store(""Store A"", 10)
+    data_store.add_store(""Store B"", 25)
+    data_store.add_store(""Store C"", 30)
+    all_data = data_store.get_all_data()
+    print(all_data)",True,1,10250,167_11_1.py
+167,11,Store names and ages now,"Implement an optimized Python class named 'StoreData' to store store names and ages. The class must include methods for adding new store entries and retrieving all data, ensuring O(1) average time complexity for lookups if possible.","class StoreData:
+    def __init__(self):
+        self.stores = {}
+    def add_store(self, name, age):
+        self.stores[name] = age
+    def get_all_data(self):
+        return self.stores
+if __name__ == '__main__':
+    data_manager = StoreData()
+    data_manager.add_store(""Store A"", 10)
+    data_manager.add_store(""Store B"", 25)
+    data_manager.add_store(""Store C"", 30)
+    all_data = data_manager.get_all_data()
+    print(all_data)",True,2,10251,167_11_2.py
