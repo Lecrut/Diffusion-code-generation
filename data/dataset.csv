@@ -220298,3 +220298,2688 @@ class TestInventoryManager(unittest.TestCase):
         self.assertEqual(self.manager.get_item(""Sharpener""), 10)
 if __name__ == '__main__':
     unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,10406,169_7_5.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts(data):
+    def add_item(item, count):
+        if item in data:
+            data[item] += count
+        else:
+            data[item] = count
+    def get_count(item):
+        if item in data:
+            return data[item]
+        else:
+            return 0
+    def update_count(item, new_count):
+        if item in data:
+            if new_count >= 0:
+                data[item] = new_count
+            else:
+                raise ValueError(""Count cannot be negative"")
+        else:
+            data[item] = new_count
+    def display_counts(data):
+        print(""--- Item Counts ---"")
+        if not data:
+            print(""No items found."")
+            return
+        for item, count in sorted(data.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return {
+        ""add"": add_item,
+        ""get"": get_count,
+        ""update"": update_count,
+        ""display"": display_counts
+    }
+if __name__ == '__main__':
+    item_data = {""apple"": 10, ""banana"": 5, ""orange"": 12}
+    operations = manage_item_counts(item_data)
+    print(""Initial Data:"", item_data)
+    operations[""add""](""apple"", 7)
+    operations[""add""](""grape"", 20)
+    operations[""add""](""banana"", 3)
+    print(""After Add Operations:"", item_data)
+    print(""Count of apple:"", operations[""get""](""apple""))
+    print(""Count of kiwi (new item):"", operations[""get""](""kiwi""))
+    operations[""update""](""orange"", 15)
+    print(""After Update Operation:"", item_data)
+    try:
+        operations[""update""](""apple"", -5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    operations[""display""](item_data)",True,0,10407,169_10.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts(data):
+    def add_item(item, count):
+        if not isinstance(item, str) or not isinstance(count, int) or count < 0:
+            raise ValueError(""Invalid item or count provided for addition."")
+        data[item] = data.get(item, 0) + count
+    def get_count(item):
+        if item in data:
+            return data[item]
+        raise KeyError(f""Item '{item}' not found."")
+    def update_count(item, new_count):
+        if item not in data:
+            raise KeyError(f""Item '{item}' not found for update."")
+        if not isinstance(new_count, int) or new_count < 0:
+            raise ValueError(""New count must be a non-negative integer."")
+        data[item] = new_count
+    def display_counts():
+        print(""--- Item Counts ---"")
+        if not data:
+            print(""No items currently stored."")
+            return
+        for item, count in sorted(data.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return {
+        ""add"": add_item,
+        ""get"": get_count,
+        ""update"": update_count,
+        ""display"": display_counts
+    }
+if __name__ == '__main__':
+    initial_data = {
+        ""apples"": 10,
+        ""bananas"": 25
+    }
+    manager = manage_item_counts(initial_data)
+    print(""Initial Data:"", initial_data)
+    try:
+        manager[""add""](""apples"", 5)
+        manager[""add""](""oranges"", 15)
+        manager[""add""](""bananas"", 10)
+        print(""\nAfter Add Operations:"")
+        print(""Apples count:"", manager[""get""](""apples""))
+        print(""Oranges count:"", manager[""get""](""oranges""))
+        print(""Bananas count:"", manager[""get""](""bananas""))
+        manager[""update""](""apples"", 50)
+        print(""\nAfter Update Operation:"")
+        print(""Apples count:"", manager[""get""](""apples""))
+        manager[""update""](""grapes"", 5)
+        manager[""display""]()
+        print(""\nAttempting to retrieve non-existent item:"")
+        try:
+            manager[""get""](""pears"")
+        except KeyError as e:
+            print(f""Caught expected error: {e}"")
+        print(""\nAttempting to update non-existent item:"")
+        try:
+            manager[""update""](""kiwis"", 10)
+        except KeyError as e:
+            print(f""Caught expected error: {e}"")
+        print(""\nFinal Data State:"")
+        print(initial_data)
+    except ValueError as e:
+        print(f""\nOperation Error: {e}"")
+    except Exception as e:
+        print(f""\nAn unexpected error occurred: {e}"")",True,1,10408,169_10_1.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts():
+    item_counts = {}
+    def add_item(item, count):
+        if not isinstance(item, str) or not isinstance(count, int) or count < 0:
+            raise ValueError(""Invalid item or count provided."")
+        item_counts[item] = item_counts.get(item, 0) + count
+    def get_count(item):
+        if item in item_counts:
+            return item_counts[item]
+        return 0
+    def update_count(item, new_count):
+        if not isinstance(new_count, int) or new_count < 0:
+            raise ValueError(""Invalid new count provided."")
+        if item not in item_counts:
+            raise KeyError(f""Item '{item}' not found for update."")
+        item_counts[item] = new_count
+    def display_counts():
+        print(""--- Item Counts ---"")
+        if not item_counts:
+            print(""No items currently tracked."")
+            return
+        for item, count in sorted(item_counts.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return item_counts, add_item, get_count, update_count, display_counts
+if __name__ == '__main__':
+    counts, add, get, update, display = manage_item_counts()
+    print(""Initial counts:"", counts)
+    try:
+        add(""apples"", 10)
+        add(""bananas"", 5)
+        add(""apples"", 3)
+        add(""oranges"", 12)
+        print(""\nCounts after additions:"")
+        display()
+        print(""\nRetrieving counts:"")
+        print(""Apples count:"", get(""apples""))
+        print(""Bananas count:"", get(""bananas""))
+        print(""Grapes count (non-existent):"", get(""grapes""))
+        print(""\nUpdating counts:"")
+        update(""apples"", 15)
+        update(""bananas"", 8)
+        update(""grapes"", 20)
+        print(""\nFinal counts after updates:"")
+        display()
+        try:
+            update(""kiwis"", 5)
+            print(""Kiwis count:"", get(""kiwis""))
+        except KeyError as e:
+            print(f""Error caught: {e}"")
+        try:
+            update(""apples"", -5)
+            print(""Apples count after subtraction:"", get(""apples""))
+        except ValueError as e:
+            print(f""Error caught: {e}"")
+    except Exception as e:
+        print(f""\nAn unexpected error occurred: {e}"")",True,2,10409,169_10_2.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts(data):
+    def add_item(item, count):
+        if not isinstance(item, str) or not isinstance(count, int) or count < 0:
+            raise ValueError(""Invalid item or count provided for addition."")
+        data[item] = data.get(item, 0) + count
+    def get_count(item):
+        if item in data:
+            return data[item]
+        raise KeyError(f""Item '{item}' not found."")
+    def update_count(item, new_count):
+        if item not in data:
+            raise KeyError(f""Item '{item}' not found for update."")
+        if not isinstance(new_count, int) or new_count < 0:
+            raise ValueError(""New count must be a non-negative integer."")
+        data[item] = new_count
+    def display_counts():
+        print(""--- Item Counts ---"")
+        if not data:
+            print(""No items currently stored."")
+            return
+        for item, count in sorted(data.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return add_item, get_count, update_count, display_counts
+if __name__ == '__main__':
+    initial_data = {
+        ""apples"": 10,
+        ""bananas"": 5,
+        ""oranges"": 15
+    }
+    add, get, update, display = manage_item_counts(initial_data.copy())
+    print(""Initial State:"")
+    display()
+    try:
+        add(""apples"", 7)
+        add(""bananas"", 12)
+        add(""grapes"", 20)
+        add(""apples"", -5)                                             
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\nState after additions:"")
+    display()
+    try:
+        count_apples = get(""apples"")
+        print(f""Count of apples: {count_apples}"")
+        count_kiwi = get(""kiwi"")
+    except KeyError as e:
+        print(f""Error retrieving count: {e}"")
+    try:
+        update(""oranges"", 30)
+        print(""\nState after update:"")
+        display()
+        update(""pears"", 5)                                                     
+    except KeyError as e:
+        print(f""Error during update: {e}"")
+    try:
+        update(""bananas"", -10)                                          
+    except ValueError as e:
+        print(f""Error during update: {e}"")
+    print(""\nFinal State:"")
+    display()",True,3,10410,169_10_3.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts():
+    item_counts = {}
+    def add_item(item, count):
+        if not isinstance(item, str) or not isinstance(count, int) or count < 0:
+            raise ValueError(""Invalid input: item must be a string and count must be a non-negative integer."")
+        if item in item_counts:
+            item_counts[item] += count
+        else:
+            item_counts[item] = count
+    def get_count(item):
+        if item in item_counts:
+            return item_counts[item]
+        else:
+            raise KeyError(f""Item '{item}' not found in counts."")
+    def update_count(item, change):
+        if item not in item_counts:
+            raise KeyError(f""Cannot update: Item '{item}' not found."")
+        new_count = item_counts[item] + change
+        if new_count < 0:
+            raise ValueError(f""Update resulted in negative count for {item}."")
+        item_counts[item] = new_count
+    def display_counts():
+        print(""--- Item Counts ---"")
+        if not item_counts:
+            print(""No items currently tracked."")
+            return
+        for item, count in sorted(item_counts.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return item_counts, add_item, get_count, update_count, display_counts
+if __name__ == '__main__':
+    counts, add, get, update, display = manage_item_counts()
+    print(""Initial state:"")
+    display()
+    try:
+        add(""apples"", 10)
+        add(""bananas"", 5)
+        add(""apples"", 3)
+        print(""\nAfter additions:"")
+        display()
+        print(""\nRetrieving counts:"")
+        print(f""Apples count: {get('apples')}"")
+        try:
+            print(f""oranges count: {get('oranges')}"")
+        except KeyError as e:
+            print(e)
+        print(""\nUpdating counts:"")
+        update(""bananas"", -2)
+        update(""grapes"", 20)
+        print(""\nFinal state:"")
+        display()
+        try:
+            get(""nonexistent"")
+        except KeyError as e:
+            print(f""Error caught: {e}"")
+        try:
+            update(""apples"", -100)
+        except ValueError as e:
+            print(f""Error caught: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,4,10411,169_10_4.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts(data):
+    def add_item(item, count):
+        if item in data:
+            data[item] += count
+        else:
+            data[item] = count
+    def get_count(item):
+        if item in data:
+            return data[item]
+        else:
+            return 0
+    def update_count(item, new_count):
+        if item in data:
+            if new_count >= 0:
+                data[item] = new_count
+            else:
+                raise ValueError(""Count cannot be negative"")
+        else:
+            data[item] = new_count
+    def display_counts(data):
+        print(""--- Item Counts ---"")
+        if not data:
+            print(""No items found."")
+            return
+        for item, count in sorted(data.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return {
+        ""add"": add_item,
+        ""get"": get_count,
+        ""update"": update_count,
+        ""display"": display_counts
+    }
+if __name__ == '__main__':
+    item_data = {
+        ""apples"": 10,
+        ""bananas"": 25,
+        ""oranges"": 15
+    }
+    manager = manage_item_counts(item_data)
+    print(""Initial Data:"", item_data)
+    manager[""add""](""apples"", 5)
+    manager[""add""](""bananas"", 10)
+    manager[""add""](""grapes"", 30)
+    print(""After Adding:"", item_data)
+    print(""Count of bananas:"", manager[""get""](""bananas""))
+    print(""Count of pears (new item):"", manager[""get""](""pears""))
+    manager[""update""](""apples"", 12)
+    print(""After Updating apples:"", item_data)
+    try:
+        manager[""update""](""oranges"", -5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    manager[""display""](item_data)",True,5,10412,169_10_5.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts():
+    item_counts = {}
+    def add_item(item, count):
+        if not isinstance(item, str) or not isinstance(count, int) or count < 0:
+            raise ValueError(""Invalid item or count provided."")
+        item_counts[item] = item_counts.get(item, 0) + count
+    def get_count(item):
+        if item in item_counts:
+            return item_counts[item]
+        return 0
+    def update_count(item, new_count):
+        if not isinstance(new_count, int) or new_count < 0:
+            raise ValueError(""Invalid new count provided."")
+        if item not in item_counts:
+            raise KeyError(f""Item '{item}' not found."")
+        item_counts[item] = new_count
+    def display_counts():
+        print(""--- Item Counts ---"")
+        if not item_counts:
+            print(""No items currently tracked."")
+            return
+        for item, count in sorted(item_counts.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return item_counts, add_item, get_count, update_count, display_counts
+if __name__ == '__main__':
+    counts, add, get, update, display = manage_item_counts()
+    print(""Initial state:"")
+    display()
+    try:
+        add(""apples"", 10)
+        add(""bananas"", 5)
+        add(""apples"", 3)
+        add(""oranges"", 12)
+        print(""\nAfter additions:"")
+        display()
+        print(""\nRetrieving counts:"")
+        print(f""Apples: {get('apples')}"")
+        print(f""Bananas: {get('bananas')}"")
+        print(f""Grapes (non-existent): {get('grapes')}"")
+        print(""\nUpdating counts:"")
+        update(""apples"", 15)
+        update(""bananas"", 8)
+        print(""\nFinal state after updates:"")
+        display()
+        try:
+            update(""grapes"", 5)
+        except KeyError as e:
+            print(f""Error caught: {e}"")
+        try:
+            update(""apples"", -1)
+        except ValueError as e:
+            print(f""Error caught: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,6,10413,169_10_6.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts(data):
+    def add_item(item, count):
+        if item in data:
+            data[item] += count
+        else:
+            data[item] = count
+    def get_count(item):
+        if item in data:
+            return data[item]
+        else:
+            return 0
+    def update_count(item, new_count):
+        if item in data:
+            if new_count >= 0:
+                data[item] = new_count
+            else:
+                raise ValueError(""Count cannot be negative"")
+        else:
+            data[item] = new_count
+    def display_counts(data_dict):
+        print(""--- Item Counts ---"")
+        if not data_dict:
+            print(""No items found."")
+            return
+        for item, count in sorted(data_dict.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return {
+        ""add"": add_item,
+        ""get"": get_count,
+        ""update"": update_count,
+        ""display"": display_counts
+    }
+if __name__ == '__main__':
+    item_data = {}
+    operations = manage_item_counts(item_data)
+    print(""Initial Data:"", item_data)
+    operations[""add""](""apple"", 10)
+    operations[""add""](""banana"", 5)
+    operations[""add""](""apple"", 3)
+    print(""After Add Operations:"", item_data)
+    print(""Count of apple:"", operations[""get""](""apple""))
+    print(""Count of orange (non-existent):"", operations[""get""](""orange""))
+    operations[""update""](""banana"", 12)
+    operations[""update""](""orange"", 20)
+    print(""After Update Operations:"", item_data)
+    operations[""display""](item_data)
+    try:
+        operations[""update""](""apple"", -5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    operations[""display""](item_data)",True,7,10414,169_10_7.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts():
+    item_counts = {
+        ""apple"": 10,
+        ""banana"": 25,
+        ""orange"": 15
+    }
+    def add_item(item, quantity):
+        if not isinstance(item, str) or not isinstance(quantity, int) or quantity < 0:
+            return False
+        item_counts[item] = item_counts.get(item, 0) + quantity
+        return True
+    def get_count(item):
+        return item_counts.get(item, 0)
+    def update_count(item, new_quantity):
+        if not isinstance(new_quantity, int) or new_quantity < 0:
+            return False
+        if item in item_counts:
+            item_counts[item] = new_quantity
+            return True
+        return False
+    def display_counts():
+        print(""--- Current Item Counts ---"")
+        for item, count in item_counts.items():
+            print(f""{item}: {count}"")
+        print(""---------------------------"")
+    print(""Initial State:"")
+    display_counts()
+    print(""\n--- Testing Add Operation ---"")
+    add_item(""apple"", 5)
+    add_item(""grape"", 10)
+    add_item(""apple"", 3)
+    display_counts()
+    print(""\n--- Testing Get Operation ---"")
+    print(f""Count of banana: {get_count('banana')}"")
+    print(f""Count of kiwi (non-existent): {get_count('kiwi')}"")
+    print(""\n--- Testing Update Operation ---"")
+    update_count(""banana"", 50)
+    update_count(""kiwi"", 5)
+    print(f""Count of banana after update: {get_count('banana')}"")
+    print(f""Count of kiwi after update: {get_count('kiwi')}"")
+    print(""\nFinal State:"")
+    display_counts()
+if __name__ == '__main__':
+    manage_item_counts()",True,8,10415,169_10_8.py
+169,10,Manage simple item counts,"Write a complete, robust Python script to manage item counts stored in a dictionary. The script must include functions for adding, retrieving, updating, and displaying the counts, ensuring all operations are efficient and error-checked.","def manage_item_counts(data):
+    def add_item(item, count):
+        if item in data:
+            data[item] += count
+        else:
+            data[item] = count
+    def get_count(item):
+        if item in data:
+            return data[item]
+        else:
+            return 0
+    def update_count(item, new_count):
+        if item in data:
+            if new_count >= 0:
+                data[item] = new_count
+            else:
+                raise ValueError(""Count cannot be negative"")
+        else:
+            data[item] = new_count
+    def display_counts(data):
+        print(""--- Item Counts ---"")
+        if not data:
+            print(""No items found."")
+            return
+        for item, count in sorted(data.items()):
+            print(f""{item}: {count}"")
+        print(""-------------------"")
+    return {
+        ""add"": add_item,
+        ""get"": get_count,
+        ""update"": update_count,
+        ""display"": display_counts
+    }
+if __name__ == '__main__':
+    item_data = {
+        ""apples"": 10,
+        ""bananas"": 25,
+        ""oranges"": 15
+    }
+    manager = manage_item_counts(item_data)
+    print(""Initial Data:"", item_data)
+    manager[""add""](""apples"", 5)
+    manager[""add""](""bananas"", 10)
+    manager[""add""](""grapes"", 30)
+    print(""After Adding:"", item_data)
+    print(""Count of bananas:"", manager[""get""](""bananas""))
+    print(""Count of pears (non-existent):"", manager[""get""](""pears""))
+    manager[""update""](""apples"", 12)
+    manager[""update""](""kiwis"", 50)
+    print(""After Updating:"", item_data)
+    manager[""display""](item_data)
+    try:
+        manager[""update""](""oranges"", -5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    print(""Final Data:"", item_data)
+    manager[""display""](item_data)",True,9,10416,169_10_9.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._inventory = {}
+    def increment(self, item, amount):
+        if item in self._inventory:
+            self._inventory[item] += amount
+        else:
+            self._inventory[item] = amount
+    def decrement(self, item, amount):
+        if item in self._inventory:
+            if self._inventory[item] >= amount:
+                self._inventory[item] -= amount
+            else:
+                self._inventory[item] = 0
+        else:
+            self._inventory[item] = 0
+    def get_total_stock(self):
+        total = sum(self._inventory.values())
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 100)
+    manager.increment(""Bananas"", 50)
+    manager.increment(""Apples"", 25)
+    print(f""Apples stock: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Apples stock after decrement: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock after decrement: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Oranges stock after decrement: {manager._inventory.get('Oranges', 0)}"")
+    print(f""Total stock after decrement: {manager.get_total_stock()}"")",True,0,10417,169_11.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._inventory = {}
+    def increment(self, item, amount):
+        if item in self._inventory:
+            self._inventory[item] += amount
+        else:
+            self._inventory[item] = amount
+    def decrement(self, item, amount):
+        if item in self._inventory:
+            if self._inventory[item] >= amount:
+                self._inventory[item] -= amount
+            else:
+                self._inventory[item] = 0
+        else:
+            self._inventory[item] = 0
+    def get_total_stock(self):
+        total = 0
+        for count in self._inventory.values():
+            total += count
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 100)
+    manager.increment(""Bananas"", 50)
+    manager.increment(""Apples"", 25)
+    print(f""Apples stock: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Apples stock after decrement: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock after decrement: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Oranges stock after decrement: {manager._inventory.get('Oranges', 0)}"")
+    print(f""Total stock after operations: {manager.get_total_stock()}"")",True,1,10418,169_11_1.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._inventory = {}
+    def increment(self, item, amount):
+        if item in self._inventory:
+            self._inventory[item] += amount
+        else:
+            self._inventory[item] = amount
+    def decrement(self, item, amount):
+        if item in self._inventory:
+            if self._inventory[item] >= amount:
+                self._inventory[item] -= amount
+            else:
+                self._inventory[item] = 0
+        else:
+            self._inventory[item] = 0
+    def get_total_stock(self):
+        total = 0
+        for count in self._inventory.values():
+            total += count
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 100)
+    manager.increment(""Bananas"", 50)
+    manager.increment(""Apples"", 25)
+    print(f""Apples stock: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Apples stock after decrement: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock after decrement: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Oranges stock after decrement: {manager._inventory.get('Oranges', 0)}"")
+    print(f""Total stock after decrement: {manager.get_total_stock()}"")",True,2,10419,169_11_2.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._stock = {}
+    def increment(self, item, amount):
+        if item in self._stock:
+            self._stock[item] += amount
+        else:
+            self._stock[item] = amount
+    def decrement(self, item, amount):
+        if item in self._stock:
+            if self._stock[item] >= amount:
+                self._stock[item] -= amount
+            else:
+                self._stock[item] = 0
+        else:
+            self._stock[item] = 0
+    def get_total_stock(self):
+        total = 0
+        for count in self._stock.values():
+            total += count
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 100)
+    manager.increment(""Bananas"", 50)
+    manager.increment(""Apples"", 25)
+    print(f""Stock of Apples: {manager._stock.get('Apples', 0)}"")
+    print(f""Stock of Bananas: {manager._stock.get('Bananas', 0)}"")
+    print(f""Total Stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Stock of Apples after decrement: {manager._stock.get('Apples', 0)}"")
+    print(f""Stock of Bananas after decrement: {manager._stock.get('Bananas', 0)}"")
+    print(f""Stock of Oranges after decrement: {manager._stock.get('Oranges', 0)}"")
+    print(f""Total Stock after decrement: {manager.get_total_stock()}"")",True,3,10420,169_11_3.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._stock = {}
+    def increment(self, item, amount):
+        if item in self._stock:
+            self._stock[item] += amount
+        else:
+            self._stock[item] = amount
+    def decrement(self, item, amount):
+        if item in self._stock:
+            if self._stock[item] >= amount:
+                self._stock[item] -= amount
+            else:
+                self._stock[item] = 0
+        else:
+            self._stock[item] = 0
+    def get_total_stock(self):
+        total = 0
+        for count in self._stock.values():
+            total += count
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 50)
+    manager.increment(""Bananas"", 100)
+    manager.increment(""Apples"", 25)
+    print(f""Stock after increments: {manager._stock}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 10)
+    manager.decrement(""Oranges"", 5)
+    print(f""Stock after decrements: {manager._stock}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Bananas"", 150)
+    print(f""Stock after large decrement: {manager._stock}"")
+    print(f""Total stock: {manager.get_total_stock()}"")",True,4,10421,169_11_4.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._stock = {}
+    def increment(self, item, amount):
+        if item in self._stock:
+            self._stock[item] += amount
+        else:
+            self._stock[item] = amount
+    def decrement(self, item, amount):
+        if item in self._stock:
+            if self._stock[item] >= amount:
+                self._stock[item] -= amount
+            else:
+                self._stock[item] = 0
+        else:
+            self._stock[item] = 0
+    def get_total_stock(self):
+        total = sum(self._stock.values())
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 50)
+    manager.increment(""Bananas"", 100)
+    manager.increment(""Apples"", 25)
+    print(f""Stock of Apples: {manager._stock.get('Apples', 0)}"")
+    print(f""Stock of Bananas: {manager._stock.get('Bananas', 0)}"")
+    print(f""Total Stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 10)
+    manager.decrement(""Oranges"", 5)
+    print(f""Stock of Apples after decrement: {manager._stock.get('Apples', 0)}"")
+    print(f""Stock of Bananas after decrement: {manager._stock.get('Bananas', 0)}"")
+    print(f""Stock of Oranges after decrement: {manager._stock.get('Oranges', 0)}"")
+    print(f""Total Stock after decrement: {manager.get_total_stock()}"")",True,5,10422,169_11_5.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._inventory = {}
+    def increment(self, item, amount):
+        if item in self._inventory:
+            self._inventory[item] += amount
+        else:
+            self._inventory[item] = amount
+    def decrement(self, item, amount):
+        if item in self._inventory:
+            if self._inventory[item] >= amount:
+                self._inventory[item] -= amount
+            else:
+                self._inventory[item] = 0
+        else:
+            self._inventory[item] = 0
+    def get_total_stock(self):
+        total = sum(self._inventory.values())
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 50)
+    manager.increment(""Bananas"", 100)
+    manager.increment(""Apples"", 25)
+    manager.decrement(""Bananas"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Inventory: {manager._inventory}"")
+    print(f""Total Stock: {manager.get_total_stock()}"")",True,6,10423,169_11_6.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._inventory = {}
+    def increment(self, item, amount):
+        if item in self._inventory:
+            self._inventory[item] += amount
+        else:
+            self._inventory[item] = amount
+    def decrement(self, item, amount):
+        if item in self._inventory:
+            if self._inventory[item] >= amount:
+                self._inventory[item] -= amount
+            else:
+                self._inventory[item] = 0
+        else:
+            self._inventory[item] = 0
+    def get_total_stock(self):
+        total = 0
+        for count in self._inventory.values():
+            total += count
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 100)
+    manager.increment(""Bananas"", 50)
+    manager.increment(""Apples"", 20)
+    print(f""Apples stock: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Apples stock after decrement: {manager._inventory.get('Apples', 0)}"")
+    print(f""Bananas stock after decrement: {manager._inventory.get('Bananas', 0)}"")
+    print(f""Oranges stock after decrement: {manager._inventory.get('Oranges', 0)}"")
+    print(f""Total stock after decrement: {manager.get_total_stock()}"")",True,7,10424,169_11_7.py
+169,11,Manage simple item counts,"Implement an optimized class named 'InventoryManager' to handle item counts. The class must encapsulate the counts using a dictionary and provide methods for incrementing, decrementing, and checking the total stock, adhering to object-oriented best practices.","class InventoryManager:
+    def __init__(self):
+        self._stock = {}
+    def increment(self, item, amount):
+        if item in self._stock:
+            self._stock[item] += amount
+        else:
+            self._stock[item] = amount
+    def decrement(self, item, amount):
+        if item in self._stock:
+            if self._stock[item] >= amount:
+                self._stock[item] -= amount
+            else:
+                self._stock[item] = 0
+        else:
+            self._stock[item] = 0
+    def get_total_stock(self):
+        total = sum(self._stock.values())
+        return total
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.increment(""Apples"", 100)
+    manager.increment(""Bananas"", 50)
+    manager.increment(""Apples"", 25)
+    print(f""Apples stock: {manager._stock.get('Apples', 0)}"")
+    print(f""Bananas stock: {manager._stock.get('Bananas', 0)}"")
+    print(f""Total stock: {manager.get_total_stock()}"")
+    manager.decrement(""Apples"", 30)
+    manager.decrement(""Oranges"", 10)
+    print(f""Apples stock after decrement: {manager._stock.get('Apples', 0)}"")
+    print(f""Bananas stock after decrement: {manager._stock.get('Bananas', 0)}"")
+    print(f""Oranges stock after decrement: {manager._stock.get('Oranges', 0)}"")
+    print(f""Total stock after decrement: {manager.get_total_stock()}"")",True,8,10425,169_11_8.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(item_counts):
+    inventory = {}
+    for count in item_counts:
+        try:
+            count_int = int(count)
+            inventory[count] = inventory.get(count, 0) + count_int
+        except (ValueError, TypeError):
+            continue
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5.5, ""20"", ""invalid"", 3.0, 10]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,0,10426,169_13.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(counts):
+    inventory = {}
+    for item, count in enumerate(counts):
+        try:
+            if isinstance(count, (int, float)):
+                inventory[f""item_{item}""] = int(count)
+            else:
+                inventory[f""item_{item}""] = 0
+        except ValueError:
+            inventory[f""item_{item}""] = 0
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5.5, ""20"", None, 3]
+    result = calculate_inventory(sample_counts)
+    print(result)",True,1,10427,169_13_1.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(counts):
+    inventory = {}
+    for count in counts:
+        try:
+            item_name = str(count)
+            inventory[item_name] = int(count)
+        except (ValueError, TypeError):
+            continue
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5.5, ""20"", None, 3.14, 15]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,2,10428,169_13_2.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(counts):
+    inventory = {}
+    for item, count in enumerate(counts):
+        try:
+            item_name = f""item_{item}""
+            if isinstance(count, (int, float)):
+                inventory[item_name] = int(count)
+            else:
+                inventory[item_name] = 0
+        except Exception:
+            inventory[f""item_{item}""] = 0
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5.5, ""20"", 3, None, 12.9]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,3,10429,169_13_3.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(item_counts):
+    inventory = {}
+    for count in item_counts:
+        try:
+            count_int = int(count)
+            inventory[count] = inventory.get(count, 0) + count_int
+        except (ValueError, TypeError):
+            continue
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5.5, ""20"", ""invalid"", 3.5, 10]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,4,10430,169_13_4.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(item_counts):
+    inventory = {}
+    for count in item_counts:
+        try:
+            item_value = int(count)
+            inventory[item_value] = inventory.get(item_value, 0) + item_value
+        except (ValueError, TypeError):
+            pass
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5, ""12"", 3.5, ""error"", 10]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,5,10431,169_13_5.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(counts):
+    inventory = {}
+    for count in counts:
+        try:
+            item_name = str(count)
+            inventory[item_name] = int(count)
+        except (ValueError, TypeError):
+            continue
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, 5.5, ""20"", ""error"", 3.14, 15]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,6,10432,169_13_6.py
+169,13,Manage simple item counts,"Write a single, highly efficient function that takes a list of item counts and returns a dictionary representing the final inventory. The function must handle potential non-integer inputs gracefully and prioritize O(n) time complexity.","def calculate_inventory(counts):
+    inventory = {}
+    for count in counts:
+        try:
+            item_count = int(count)
+            inventory[str(count)] = item_count
+        except (ValueError, TypeError):
+            inventory[str(count)] = None
+    return inventory
+if __name__ == '__main__':
+    sample_counts = [10, ""5"", 22.5, ""invalid"", 100]
+    final_inventory = calculate_inventory(sample_counts)
+    print(final_inventory)",True,7,10433,169_13_7.py
+169,12,Manage simple item counts,"Develop a functional Python solution that reads item counts from a provided list of tuples (item_name, count) and aggregates the total inventory for each unique item. Ensure the aggregation process is time-efficient.","if __name__ == '__main__':
+    inventory_data = [
+        (""apple"", 10),
+        (""banana"", 5),
+        (""apple"", 15),
+        (""orange"", 8),
+        (""banana"", 12),
+        (""apple"", 7)
+    ]
+    inventory = {}
+    for item_name, count in inventory_data:
+        if item_name in inventory:
+            inventory[item_name] += count
+        else:
+            inventory[item_name] = count
+    print(inventory)",True,0,10434,169_12.py
+169,12,Manage simple item counts,"Develop a functional Python solution that reads item counts from a provided list of tuples (item_name, count) and aggregates the total inventory for each unique item. Ensure the aggregation process is time-efficient.","if __name__ == '__main__':
+    inventory_data = [
+        (""apple"", 10),
+        (""banana"", 5),
+        (""apple"", 15),
+        (""orange"", 8),
+        (""banana"", 12),
+        (""apple"", 20)
+    ]
+    inventory = {}
+    for item_name, count in inventory_data:
+        if item_name in inventory:
+            inventory[item_name] += count
+        else:
+            inventory[item_name] = count
+    print(inventory)",True,1,10435,169_12_1.py
+169,12,Manage simple item counts,"Develop a functional Python solution that reads item counts from a provided list of tuples (item_name, count) and aggregates the total inventory for each unique item. Ensure the aggregation process is time-efficient.","def aggregate_inventory(item_counts):
+    inventory = {}
+    for item, count in item_counts:
+        inventory[item] = inventory.get(item, 0) + count
+    return inventory
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 10),
+        (""banana"", 5),
+        (""apple"", 15),
+        (""orange"", 8),
+        (""banana"", 12),
+        (""apple"", 7)
+    ]
+    total_inventory = aggregate_inventory(sample_data)
+    print(total_inventory)",True,2,10436,169_12_2.py
+170,0,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and listing items. Ensure the design is robust and follows OOP principles.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Not enough quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def list_items(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""Current Inventory:"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.list_items()
+    my_inventory.add_item(""Apples"", 20)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Bananas"", 30)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Grapes"", 10)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Apples"", 100)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Oranges"", 100)
+    my_inventory.list_items()",True,0,10437,170_0.py
+170,0,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and listing items. Ensure the design is robust and follows OOP principles.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Insufficient quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def list_items(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""Current Inventory:"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.list_items()
+    my_inventory.add_item(""Apples"", 20)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Bananas"", 30)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Grapes"", 10)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Apples"", 100)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Oranges"", 100)
+    my_inventory.list_items()",True,1,10438,170_0_1.py
+170,0,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and listing items. Ensure the design is robust and follows OOP principles.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def list_items(self):
+        return self.items
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    print(""Initial Inventory:"")
+    print(my_inventory.list_items())
+    my_inventory.add_item(""Apples"", 20)
+    print(""\nAfter adding 20 Apples:"")
+    print(my_inventory.list_items())
+    print(""\nRemoving 10 Bananas:"")
+    success = my_inventory.remove_item(""Bananas"", 10)
+    if success:
+        print(""Removal successful."")
+    else:
+        print(""Removal failed (not enough items)."")
+    print(my_inventory.list_items())
+    print(""\nAttempting to remove too many Oranges:"")
+    success = my_inventory.remove_item(""Oranges"", 100)
+    if success:
+        print(""Removal successful."")
+    else:
+        print(""Removal failed (not enough items)."")
+    print(my_inventory.list_items())
+    print(""\nAttempting to remove non-existent item:"")
+    success = my_inventory.remove_item(""Grapes"", 5)
+    if success:
+        print(""Removal successful."")
+    else:
+        print(""Removal failed (item not found)."")
+    print(my_inventory.list_items())",True,2,10439,170_0_2.py
+170,0,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and listing items. Ensure the design is robust and follows OOP principles.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Insufficient quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def list_items(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""Current Inventory:"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.list_items()
+    my_inventory.add_item(""Apples"", 20)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Bananas"", 30)
+    my_inventory.remove_item(""Grapes"", 10)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Apples"", 100)
+    my_inventory.list_items()
+    my_inventory.remove_item(""Oranges"", 100)
+    my_inventory.list_items()",True,3,10440,170_0_3.py
+170,1,Create a basic inventory system,"Implement the inventory system by using a dictionary within the 'Inventory' class to store item details, where the item ID is the key, and the item details are stored as nested dictionaries.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, details):
+        self.items[item_id] = details
+    def get_item(self, item_id):
+        return self.items.get(item_id)
+if __name__ == '__main__':
+    inventory = Inventory()
+    item1_details = {""name"": ""Laptop"", ""quantity"": 10, ""price"": 1200.00}
+    inventory.add_item(""A001"", item1_details)
+    item2_details = {""name"": ""Mouse"", ""quantity"": 50, ""price"": 25.50}
+    inventory.add_item(""B002"", item2_details)
+    item3_details = {""name"": ""Keyboard"", ""quantity"": 30, ""price"": 75.00}
+    inventory.add_item(""C003"", item3_details)
+    print(""Inventory contents:"")
+    for item_id, details in inventory.items.items():
+        print(f""ID: {item_id}, Details: {details}"")
+    print(""\nRetrieving item A001:"")
+    print(inventory.get_item(""A001""))
+    print(""\nRetrieving item Z999 (non-existent):"")
+    print(inventory.get_item(""Z999""))",True,0,10441,170_1.py
+170,1,Create a basic inventory system,"Implement the inventory system by using a dictionary within the 'Inventory' class to store item details, where the item ID is the key, and the item details are stored as nested dictionaries.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, details):
+        self.items[item_id] = details
+    def get_item(self, item_id):
+        return self.items.get(item_id)
+if __name__ == '__main__':
+    inventory = Inventory()
+    item1_details = {""name"": ""Laptop"", ""quantity"": 10, ""price"": 1200.00}
+    inventory.add_item(""A001"", item1_details)
+    item2_details = {""name"": ""Mouse"", ""quantity"": 50, ""price"": 25.50}
+    inventory.add_item(""B002"", item2_details)
+    item3_details = {""name"": ""Keyboard"", ""quantity"": 30, ""price"": 75.00}
+    inventory.add_item(""C003"", item3_details)
+    print(inventory.get_item(""A001""))
+    print(inventory.get_item(""B002""))
+    print(inventory.get_item(""C003""))
+    print(inventory.get_item(""D004""))",True,1,10442,170_1_1.py
+170,1,Create a basic inventory system,"Implement the inventory system by using a dictionary within the 'Inventory' class to store item details, where the item ID is the key, and the item details are stored as nested dictionaries.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, details):
+        self.items[item_id] = details
+    def get_item(self, item_id):
+        return self.items.get(item_id)
+if __name__ == '__main__':
+    inventory = Inventory()
+    item1_details = {""name"": ""Laptop"", ""quantity"": 10, ""price"": 1200.00}
+    inventory.add_item(""A001"", item1_details)
+    item2_details = {""name"": ""Mouse"", ""quantity"": 50, ""price"": 25.50}
+    inventory.add_item(""B002"", item2_details)
+    print(inventory.get_item(""A001""))
+    print(inventory.get_item(""B002""))
+    print(inventory.get_item(""C003""))",True,2,10443,170_1_2.py
+170,2,Create a basic inventory system,"Develop a method within the Inventory class to add a new item to the inventory, handling potential errors if the item ID already exists. The function must be efficient.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, item_name, quantity):
+        if item_id in self.items:
+            raise ValueError(f""Item ID {item_id} already exists in the inventory."")
+        self.items[item_id] = {""name"": item_name, ""quantity"": quantity}
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    try:
+        my_inventory.add_item(101, ""Apple"", 50)
+        my_inventory.add_item(102, ""Banana"", 30)
+        my_inventory.add_item(101, ""Apple"", 10)
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(my_inventory.items)",True,0,10444,170_2.py
+170,2,Create a basic inventory system,"Develop a method within the Inventory class to add a new item to the inventory, handling potential errors if the item ID already exists. The function must be efficient.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, item_name, quantity):
+        if item_id in self.items:
+            raise ValueError(f""Item ID {item_id} already exists in inventory."")
+        self.items[item_id] = {""name"": item_name, ""quantity"": quantity}
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    try:
+        my_inventory.add_item(101, ""Laptop"", 5)
+        my_inventory.add_item(102, ""Mouse"", 10)
+        my_inventory.add_item(101, ""Laptop Pro"", 2)
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(my_inventory.items)",True,1,10445,170_2_1.py
+170,2,Create a basic inventory system,"Develop a method within the Inventory class to add a new item to the inventory, handling potential errors if the item ID already exists. The function must be efficient.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, item_name, quantity):
+        if item_id in self.items:
+            raise ValueError(f""Item ID {item_id} already exists in the inventory."")
+        self.items[item_id] = {""name"": item_name, ""quantity"": quantity}
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    try:
+        my_inventory.add_item(101, ""Laptop"", 5)
+        print(""Item 101 added successfully."")
+        my_inventory.add_item(102, ""Mouse"", 20)
+        print(""Item 102 added successfully."")
+        my_inventory.add_item(101, ""Monitor"", 3)
+        print(""Item 101 added successfully."")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(""\nCurrent Inventory:"")
+    for item_id, details in my_inventory.items.items():
+        print(f""ID: {item_id}, Name: {details['name']}, Quantity: {details['quantity']}"")",True,2,10446,170_2_2.py
+170,2,Create a basic inventory system,"Develop a method within the Inventory class to add a new item to the inventory, handling potential errors if the item ID already exists. The function must be efficient.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, item_name, quantity):
+        if item_id in self.items:
+            raise ValueError(f""Item ID {item_id} already exists in the inventory."")
+        self.items[item_id] = {""name"": item_name, ""quantity"": quantity}
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    try:
+        my_inventory.add_item(101, ""Apple"", 50)
+        my_inventory.add_item(102, ""Banana"", 120)
+        my_inventory.add_item(101, ""Apple"", 10)
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(my_inventory.items)",True,3,10447,170_2_3.py
+170,2,Create a basic inventory system,"Develop a method within the Inventory class to add a new item to the inventory, handling potential errors if the item ID already exists. The function must be efficient.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, item_name, quantity):
+        if item_id in self.items:
+            raise ValueError(f""Item ID {item_id} already exists in the inventory."")
+        self.items[item_id] = {""name"": item_name, ""quantity"": quantity}
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    try:
+        my_inventory.add_item(101, ""Laptop"", 5)
+        my_inventory.add_item(102, ""Mouse"", 10)
+        my_inventory.add_item(101, ""Laptop Pro"", 2)
+    except ValueError as e:
+        print(f""Error: {e}"")
+    print(my_inventory.items)",True,4,10448,170_2_4.py
+170,3,Create a basic inventory system,"Create a separate function that accepts the Inventory object and prints all items in a neatly formatted, readable list to the console.","class Inventory:
+    def __init__(self, items):
+        self.items = items
+def print_inventory(inventory):
+    print(""--- Inventory List ---"")
+    for item in inventory.items:
+        print(f""- {item}"")
+if __name__ == '__main__':
+    sample_items = [
+        ""Laptop"",
+        ""Mouse"",
+        ""Keyboard"",
+        ""Monitor"",
+        ""Webcam""
+    ]
+    my_inventory = Inventory(sample_items)
+    print_inventory(my_inventory)",True,0,10449,170_3.py
+170,3,Create a basic inventory system,"Create a separate function that accepts the Inventory object and prints all items in a neatly formatted, readable list to the console.","class Inventory:
+    def __init__(self, items):
+        self.items = items
+def print_inventory(inventory):
+    print(""--- Inventory List ---"")
+    for item_name, quantity in inventory.items.items():
+        print(f""Item: {item_name}, Quantity: {quantity}"")
+    print(""----------------------"")
+if __name__ == '__main__':
+    sample_items = {
+        ""Apples"": 50,
+        ""Bananas"": 120,
+        ""Oranges"": 75,
+        ""Grapes"": 30
+    }
+    my_inventory = Inventory(sample_items)
+    print_inventory(my_inventory)",True,1,10450,170_3_1.py
+170,3,Create a basic inventory system,"Create a separate function that accepts the Inventory object and prints all items in a neatly formatted, readable list to the console.","class Inventory:
+    def __init__(self, items):
+        self.items = items
+def print_inventory(inventory):
+    print(""--- Inventory List ---"")
+    for item in inventory.items:
+        print(f""- {item}"")
+if __name__ == '__main__':
+    sample_items = [
+        ""Apple"",
+        ""Banana"",
+        ""Carrot"",
+        ""Milk""
+    ]
+    my_inventory = Inventory(sample_items)
+    print_inventory(my_inventory)",True,2,10451,170_3_2.py
+170,4,Create a basic inventory system,Implement a method in the Inventory class to search for an item by its ID and return the corresponding item details. This search operation must be time-efficient (O(1) average time complexity).,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, name, quantity):
+        self.items[item_id] = {""name"": name, ""quantity"": quantity}
+    def search_by_id(self, item_id):
+        return self.items.get(item_id)
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(101, ""Laptop"", 5)
+    inventory.add_item(102, ""Mouse"", 20)
+    inventory.add_item(103, ""Keyboard"", 15)
+    print(inventory.search_by_id(101))
+    print(inventory.search_by_id(102))
+    print(inventory.search_by_id(999))",True,0,10452,170_4.py
+170,4,Create a basic inventory system,Implement a method in the Inventory class to search for an item by its ID and return the corresponding item details. This search operation must be time-efficient (O(1) average time complexity).,"class Inventory:
+    def __init__(self):
+        self.items = {
+            1: {""name"": ""Laptop"", ""price"": 1200.00},
+            2: {""name"": ""Mouse"", ""price"": 25.50},
+            3: {""name"": ""Keyboard"", ""price"": 75.00},
+            4: {""name"": ""Monitor"", ""price"": 300.00}
+        }
+    def search_by_id(self, item_id):
+        return self.items.get(item_id)
+if __name__ == '__main__':
+    inventory = Inventory()
+    item_id_to_find = 2
+    item_details = inventory.search_by_id(item_id_to_find)
+    print(f""Searching for item ID: {item_id_to_find}"")
+    print(item_details)
+    item_id_to_find = 99
+    item_details = inventory.search_by_id(item_id_to_find)
+    print(f""Searching for item ID: {item_id_to_find}"")
+    print(item_details)",True,1,10453,170_4_1.py
+170,5,Create a basic inventory system,Write a main execution block that demonstrates the functionality of the Inventory system. Include adding at least five distinct items and then listing the entire inventory.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def list_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apples"", 50)
+    inventory.add_item(""Bananas"", 120)
+    inventory.add_item(""Oranges"", 75)
+    inventory.add_item(""Grapes"", 30)
+    inventory.add_item(""Pears"", 45)
+    print(""--- Inventory List ---"")
+    inventory.list_inventory()",True,0,10454,170_5.py
+170,5,Create a basic inventory system,Write a main execution block that demonstrates the functionality of the Inventory system. Include adding at least five distinct items and then listing the entire inventory.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def list_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apples"", 10)
+    inventory.add_item(""Bananas"", 15)
+    inventory.add_item(""Oranges"", 20)
+    inventory.add_item(""Grapes"", 5)
+    inventory.add_item(""Pears"", 12)
+    print(""--- Inventory List ---"")
+    inventory.list_inventory()",True,1,10455,170_5_1.py
+170,5,Create a basic inventory system,Write a main execution block that demonstrates the functionality of the Inventory system. Include adding at least five distinct items and then listing the entire inventory.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, name, quantity):
+        if name in self.items:
+            self.items[name] += quantity
+        else:
+            self.items[name] = quantity
+    def list_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apple"", 10)
+    inventory.add_item(""Banana"", 25)
+    inventory.add_item(""Orange"", 15)
+    inventory.add_item(""Grapes"", 30)
+    inventory.add_item(""Mango"", 12)
+    print(""--- Inventory List ---"")
+    inventory.list_inventory()",True,2,10456,170_5_2.py
+170,5,Create a basic inventory system,Write a main execution block that demonstrates the functionality of the Inventory system. Include adding at least five distinct items and then listing the entire inventory.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def list_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apples"", 10)
+    inventory.add_item(""Bananas"", 15)
+    inventory.add_item(""Oranges"", 20)
+    inventory.add_item(""Grapes"", 5)
+    inventory.add_item(""Pears"", 12)
+    print(""--- Inventory ---"")
+    inventory.list_inventory()",True,3,10457,170_5_3.py
+170,5,Create a basic inventory system,Write a main execution block that demonstrates the functionality of the Inventory system. Include adding at least five distinct items and then listing the entire inventory.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def list_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apples"", 10)
+    inventory.add_item(""Bananas"", 15)
+    inventory.add_item(""Oranges"", 8)
+    inventory.add_item(""Grapes"", 20)
+    inventory.add_item(""Pears"", 12)
+    print(""--- Inventory ---"")
+    inventory.list_inventory()",True,4,10458,170_5_4.py
+170,5,Create a basic inventory system,Write a main execution block that demonstrates the functionality of the Inventory system. Include adding at least five distinct items and then listing the entire inventory.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def list_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apples"", 10)
+    inventory.add_item(""Bananas"", 25)
+    inventory.add_item(""Oranges"", 15)
+    inventory.add_item(""Grapes"", 30)
+    inventory.add_item(""Pears"", 12)
+    print(""--- Inventory ---"")
+    inventory.list_inventory()",True,5,10459,170_5_5.py
+170,6,Create a basic inventory system,"Refactor the item storage mechanism to use a list of dictionaries instead of a single dictionary for better scalability, while maintaining the functionality of adding and retrieving items.","class ItemStorage:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item_data):
+        self.items.append(item_data)
+    def get_all_items(self):
+        return self.items
+if __name__ == '__main__':
+    storage = ItemStorage()
+    item1 = {""id"": 1, ""name"": ""Apple"", ""quantity"": 10}
+    item2 = {""id"": 2, ""name"": ""Banana"", ""quantity"": 5}
+    item3 = {""id"": 3, ""name"": ""Orange"", ""quantity"": 12}
+    storage.add_item(item1)
+    storage.add_item(item2)
+    storage.add_item(item3)
+    all_items = storage.get_all_items()
+    print(all_items)",True,0,10460,170_6.py
+170,6,Create a basic inventory system,"Refactor the item storage mechanism to use a list of dictionaries instead of a single dictionary for better scalability, while maintaining the functionality of adding and retrieving items.","class ItemStorage:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item_data):
+        self.items.append(item_data)
+    def get_all_items(self):
+        return self.items
+if __name__ == '__main__':
+    storage = ItemStorage()
+    item1 = {""id"": 1, ""name"": ""Apple"", ""quantity"": 10}
+    item2 = {""id"": 2, ""name"": ""Banana"", ""quantity"": 15}
+    item3 = {""id"": 3, ""name"": ""Orange"", ""quantity"": 20}
+    storage.add_item(item1)
+    storage.add_item(item2)
+    storage.add_item(item3)
+    all_items = storage.get_all_items()
+    print(all_items)",True,1,10461,170_6_1.py
+170,6,Create a basic inventory system,"Refactor the item storage mechanism to use a list of dictionaries instead of a single dictionary for better scalability, while maintaining the functionality of adding and retrieving items.","class ItemStorage:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item_data):
+        self.items.append(item_data)
+    def get_all_items(self):
+        return self.items
+if __name__ == '__main__':
+    storage = ItemStorage()
+    item1 = {""id"": 1, ""name"": ""Apple"", ""quantity"": 10}
+    item2 = {""id"": 2, ""name"": ""Banana"", ""quantity"": 15}
+    item3 = {""id"": 3, ""name"": ""Orange"", ""quantity"": 8}
+    storage.add_item(item1)
+    storage.add_item(item2)
+    storage.add_item(item3)
+    all_items = storage.get_all_items()
+    print(all_items)",True,2,10462,170_6_2.py
+170,7,Create a basic inventory system,Implement functionality to update the quantity of an existing item in the inventory. The function must validate that the item exists before performing the update.,"class Inventory:
+    def __init__(self):
+        self.items = {
+            ""apple"": 10,
+            ""banana"": 5,
+            ""orange"": 12
+        }
+    def update_quantity(self, item_name, new_quantity):
+        if item_name in self.items:
+            self.items[item_name] = new_quantity
+            return True
+        else:
+            return False
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(f""Initial inventory: {inventory.items}"")
+    item_to_update = ""apple""
+    new_quantity = 15
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity of {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    item_to_update = ""grape""
+    new_quantity = 20
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity of {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    print(f""Final inventory: {inventory.items}"")",True,0,10463,170_7.py
+170,7,Create a basic inventory system,Implement functionality to update the quantity of an existing item in the inventory. The function must validate that the item exists before performing the update.,"class Inventory:
+    def __init__(self):
+        self.items = {
+            ""apple"": 10,
+            ""banana"": 5,
+            ""orange"": 12
+        }
+    def update_quantity(self, item_name, new_quantity):
+        if item_name in self.items:
+            self.items[item_name] = new_quantity
+            return True
+        else:
+            return False
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(f""Initial inventory: {inventory.items}"")
+    item_to_update = ""apple""
+    new_quantity = 15
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    print(f""Attempting to update {item_to_update} to {new_quantity}. Success: {success}"")
+    print(f""Updated inventory: {inventory.items}"")
+    item_to_update = ""grape""
+    new_quantity = 20
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    print(f""Attempting to update {item_to_update} to {new_quantity}. Success: {success}"")
+    print(f""Updated inventory: {inventory.items}"")",True,1,10464,170_7_1.py
+170,7,Create a basic inventory system,Implement functionality to update the quantity of an existing item in the inventory. The function must validate that the item exists before performing the update.,"class Inventory:
+    def __init__(self):
+        self.items = {
+            ""apple"": 10,
+            ""banana"": 5,
+            ""orange"": 12
+        }
+    def update_quantity(self, item_name, new_quantity):
+        if item_name in self.items:
+            self.items[item_name] = new_quantity
+            return True
+        else:
+            return False
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(f""Initial inventory: {inventory.items}"")
+    item_to_update = ""apple""
+    new_quantity = 15
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity for {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    item_to_update = ""grape""
+    new_quantity = 20
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity for {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    print(f""Final inventory: {inventory.items}"")",True,2,10465,170_7_2.py
+170,7,Create a basic inventory system,Implement functionality to update the quantity of an existing item in the inventory. The function must validate that the item exists before performing the update.,"class Inventory:
+    def __init__(self):
+        self.items = {
+            ""apple"": 10,
+            ""banana"": 5,
+            ""orange"": 12
+        }
+    def update_quantity(self, item_name, new_quantity):
+        if item_name in self.items:
+            self.items[item_name] = new_quantity
+            return True
+        else:
+            return False
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(f""Initial inventory: {inventory.items}"")
+    item_to_update = ""apple""
+    new_quantity = 15
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    item_to_update = ""grape""
+    new_quantity = 20
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    print(f""Final inventory: {inventory.items}"")",True,3,10466,170_7_3.py
+170,7,Create a basic inventory system,Implement functionality to update the quantity of an existing item in the inventory. The function must validate that the item exists before performing the update.,"class Inventory:
+    def __init__(self):
+        self.items = {
+            ""apple"": 10,
+            ""banana"": 5,
+            ""orange"": 15
+        }
+    def update_quantity(self, item_name, new_quantity):
+        if item_name in self.items:
+            self.items[item_name] = new_quantity
+            return True
+        else:
+            return False
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(f""Initial inventory: {inventory.items}"")
+    item_to_update = ""apple""
+    new_quantity = 12
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity of {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    item_to_update = ""grape""
+    new_quantity = 20
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity of {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found."")
+    print(f""Final inventory: {inventory.items}"")",True,4,10467,170_7_4.py
+170,7,Create a basic inventory system,Implement functionality to update the quantity of an existing item in the inventory. The function must validate that the item exists before performing the update.,"class Inventory:
+    def __init__(self):
+        self.items = {
+            ""apple"": 10,
+            ""banana"": 5,
+            ""orange"": 15
+        }
+    def update_quantity(self, item_name, new_quantity):
+        if item_name in self.items:
+            self.items[item_name] = new_quantity
+            return True
+        else:
+            return False
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(f""Initial inventory: {inventory.items}"")
+    item_to_update = ""apple""
+    new_quantity = 12
+    success = inventory.update_quantity(item_to_update, new_quantity)
+    if success:
+        print(f""Successfully updated quantity for {item_to_update} to {new_quantity}"")
+    else:
+        print(f""Error: Item {item_to_update} not found in inventory."")
+    item_to_update_nonexistent = ""grape""
+    new_quantity_nonexistent = 50
+    success_nonexistent = inventory.update_quantity(item_to_update_nonexistent, new_quantity_nonexistent)
+    if success_nonexistent:
+        print(f""Successfully updated quantity for {item_to_update_nonexistent} to {new_quantity_nonexistent}"")
+    else:
+        print(f""Error: Item {item_to_update_nonexistent} not found in inventory."")
+    print(f""Final inventory: {inventory.items}"")",True,5,10468,170_7_5.py
+169,14,Manage simple item counts,"Create an interactive command-line interface (CLI) program using Python to manage simple item counts. The CLI must allow the user to input commands to add new items, view current counts, and exit, utilizing file I/O (e.g., JSON or a simple text file) for persistent storage.","import json
+import os
+DATA_FILE = ""item_counts.json""
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+def add_item(data, item, count):
+    if item in data:
+        data[item] += count
+    else:
+        data[item] = count
+    save_data(data)
+def view_counts(data):
+    for item, count in data.items():
+        print(f""{item}: {count}"")
+if __name__ == '__main__':
+    data = load_data()
+    print(""--- Item Count Manager (Sample Run) ---"")
+    print(""\n--- Adding Sample Items ---"")
+    add_item(data, ""apples"", 10)
+    add_item(data, ""bananas"", 5)
+    add_item(data, ""oranges"", 12)
+    print(""\n--- Viewing Current Counts ---"")
+    view_counts(data)
+    print(""\n--- Adding More Sample Items ---"")
+    add_item(data, ""apples"", 3)
+    add_item(data, ""grapes"", 8)
+    print(""\n--- Final Counts ---"")
+    view_counts(data)
+    print(""\n--- Exiting Program ---"")",True,0,10469,169_14.py
+169,14,Manage simple item counts,"Create an interactive command-line interface (CLI) program using Python to manage simple item counts. The CLI must allow the user to input commands to add new items, view current counts, and exit, utilizing file I/O (e.g., JSON or a simple text file) for persistent storage.","import json
+import os
+DATA_FILE = ""item_counts.json""
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+def add_item(data, item, count):
+    if item in data:
+        data[item] += count
+    else:
+        data[item] = count
+    save_data(data)
+def view_counts(data):
+    for item, count in data.items():
+        print(f""{item}: {count}"")
+if __name__ == '__main__':
+    data = load_data()
+    print(""--- Item Count Manager (Sample Run) ---"")
+    print(""\n--- Adding Sample Items ---"")
+    add_item(data, ""apples"", 10)
+    add_item(data, ""bananas"", 5)
+    add_item(data, ""oranges"", 12)
+    print(""\n--- Viewing Current Counts ---"")
+    view_counts(data)
+    print(""\n--- Adding More Sample Items ---"")
+    add_item(data, ""apples"", 3)
+    add_item(data, ""grapes"", 20)
+    print(""\n--- Final Counts ---"")
+    view_counts(data)
+    print(""\nProgram finished. Data saved to item_counts.json"")",True,1,10470,169_14_1.py
+169,14,Manage simple item counts,"Create an interactive command-line interface (CLI) program using Python to manage simple item counts. The CLI must allow the user to input commands to add new items, view current counts, and exit, utilizing file I/O (e.g., JSON or a simple text file) for persistent storage.","import json
+import os
+DATA_FILE = ""item_counts.json""
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+def add_item(data, item, count):
+    if item in data:
+        data[item] += count
+    else:
+        data[item] = count
+    save_data(data)
+def view_counts(data):
+    for item, count in data.items():
+        print(f""{item}: {count}"")
+if __name__ == '__main__':
+    data = load_data()
+    print(""--- Item Count Manager (Sample Run) ---"")
+    print(""\n--- Adding Sample Items ---"")
+    add_item(data, ""apples"", 10)
+    add_item(data, ""bananas"", 5)
+    add_item(data, ""oranges"", 12)
+    print(""\n--- Viewing Current Counts ---"")
+    view_counts(data)
+    print(""\n--- Adding More Sample Items ---"")
+    add_item(data, ""apples"", 3)
+    add_item(data, ""grapes"", 8)
+    print(""\n--- Final Counts ---"")
+    view_counts(data)
+    print(""\nProgram finished. Data saved to item_counts.json"")",True,2,10471,169_14_2.py
+169,14,Manage simple item counts,"Create an interactive command-line interface (CLI) program using Python to manage simple item counts. The CLI must allow the user to input commands to add new items, view current counts, and exit, utilizing file I/O (e.g., JSON or a simple text file) for persistent storage.","import json
+import os
+DATA_FILE = ""item_counts.json""
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, 'r') as f:
+        return json.load(f)
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+def add_item(data, item, count):
+    if item in data:
+        data[item] += count
+    else:
+        data[item] = count
+    save_data(data)
+def view_counts(data):
+    for item, count in data.items():
+        print(f""{item}: {count}"")
+if __name__ == '__main__':
+    data = load_data()
+    print(""--- Item Count Manager (Sample Run) ---"")
+    print(""\nAction 1: Adding items (Sample Data)"")
+    add_item(data, ""apples"", 10)
+    add_item(data, ""bananas"", 5)
+    add_item(data, ""apples"", 3)
+    print(""\nAction 2: Viewing current counts"")
+    view_counts(data)
+    print(""\n--- Final State ---"")
+    view_counts(data)
+    print(""\nExiting program."")",True,3,10472,169_14_3.py
+169,14,Manage simple item counts,"Create an interactive command-line interface (CLI) program using Python to manage simple item counts. The CLI must allow the user to input commands to add new items, view current counts, and exit, utilizing file I/O (e.g., JSON or a simple text file) for persistent storage.","import json
+import os
+DATA_FILE = ""item_counts.json""
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+def add_item(data, item, count):
+    if item in data:
+        data[item] += count
+    else:
+        data[item] = count
+    save_data(data)
+def view_counts(data):
+    for item, count in data.items():
+        print(f""{item}: {count}"")
+if __name__ == '__main__':
+    data = load_data()
+    print(""--- Item Count Manager CLI ---"")
+    print(""Available commands: add <item> <count>, view, exit"")
+    sample_commands = [
+        (""add"", ""apples"", 10),
+        (""add"", ""bananas"", 5),
+        (""add"", ""apples"", 3),
+        (""view"",),
+        (""add"", ""oranges"", 12),
+        (""view"",)
+    ]
+    for cmd, *args in sample_commands:
+        if cmd == ""add"":
+            if len(args) == 2:
+                item = args[0]
+                try:
+                    count = int(args[1])
+                    add_item(data, item, count)
+                    print(f""Executed: add {item} {count}"")
+                except ValueError:
+                    print(f""Error: Count must be an integer for add command."")
+            else:
+                print(""Error: 'add' command requires an item and a count."")
+        elif cmd == ""view"":
+            view_counts(data)
+        elif cmd == ""exit"":
+            print(""Exiting program."")
+            break
+        else:
+            print(f""Unknown command: {cmd}"")
+    print(""\n--- Final Counts ---"")
+    view_counts(data)
+    save_data(data)",True,4,10473,169_14_4.py
+169,14,Manage simple item counts,"Create an interactive command-line interface (CLI) program using Python to manage simple item counts. The CLI must allow the user to input commands to add new items, view current counts, and exit, utilizing file I/O (e.g., JSON or a simple text file) for persistent storage.","import json
+import os
+DATA_FILE = ""item_counts.json""
+def load_data():
+    if not os.path.exists(DATA_FILE):
+        return {}
+    with open(DATA_FILE, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+def save_data(data):
+    with open(DATA_FILE, 'w') as f:
+        json.dump(data, f)
+def add_item(data, item, count):
+    if item in data:
+        data[item] += count
+    else:
+        data[item] = count
+    save_data(data)
+def view_counts(data):
+    for item, count in data.items():
+        print(f""{item}: {count}"")
+if __name__ == '__main__':
+    data = load_data()
+    print(""--- Item Count Manager CLI ---"")
+    print(""Commands: add <item> <count>, view, exit"")
+    sample_commands = [
+        (""add"", ""apples"", 10),
+        (""add"", ""bananas"", 5),
+        (""add"", ""apples"", 3),
+        (""view"",),
+        (""exit"",)
+    ]
+    for cmd, *args in sample_commands:
+        if cmd == ""add"":
+            if len(args) == 2:
+                item = args[0]
+                try:
+                    count = int(args[1])
+                    add_item(data, item, count)
+                    print(f""Added {count} of {item}."")
+                except ValueError:
+                    print(""Invalid count. Please use an integer."")
+            else:
+                print(""Usage: add <item> <count>"")
+        elif cmd == ""view"":
+            view_counts(data)
+        elif cmd == ""exit"":
+            print(""Exiting program."")
+            break
+    print(""\n--- Final Counts ---"")
+    view_counts(data)
+    save_data(data)",True,5,10474,169_14_5.py
+170,9,Create a basic inventory system,"Generate the complete, optimized, and fully documented Python script for the basic inventory system, ensuring all components are cohesive and adhere strictly to Python best practices.","import json
+class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, name, quantity, price):
+        if item_id in self.items:
+            self.items[item_id]['quantity'] += quantity
+            self.items[item_id]['price'] = price
+        else:
+            self.items[item_id] = {
+                'name': name,
+                'quantity': quantity,
+                'price': price
+            }
+    def display_inventory(self):
+        print(""--- Inventory Report ---"")
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""{:<10} {:<20} {:<10} {:<10}"".format(""ID"", ""Name"", ""Quantity"", ""Price""))
+        print(""-"" * 42)
+        for item_id, data in self.items.items():
+            print(""{:<10} {:<20} {:<10} {:<10.2f}"".format(
+                item_id, data['name'], data['quantity'], data['price']
+            ))
+        print(""------------------------"")
+def main():
+    inventory = Inventory()
+    inventory.add_item(101, ""Laptop"", 10, 1200.50)
+    inventory.add_item(102, ""Mouse"", 50, 25.99)
+    inventory.add_item(103, ""Keyboard"", 30, 75.00)
+    inventory.add_item(101, ""Laptop"", 5, 1200.50)
+    inventory.add_item(104, ""Monitor"", 15, 350.75)
+    inventory.display_inventory()
+if __name__ == '__main__':
+    main()",True,0,10475,170_9.py
+170,9,Create a basic inventory system,"Generate the complete, optimized, and fully documented Python script for the basic inventory system, ensuring all components are cohesive and adhere strictly to Python best practices.","import json
+class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, name, quantity, price):
+        if item_id in self.items:
+            self.items[item_id]['quantity'] += quantity
+            self.items[item_id]['price'] = price
+        else:
+            self.items[item_id] = {
+                'name': name,
+                'quantity': quantity,
+                'price': price
+            }
+    def display_inventory(self):
+        print(""--- Inventory Report ---"")
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""{:<10} {:<20} {:<10} {:<10}"".format(""ID"", ""Name"", ""Quantity"", ""Price""))
+        print(""-"" * 42)
+        for item_id, data in self.items.items():
+            print(""{:<10} {:<20} {:<10} ${:<9.2f}"".format(
+                item_id, data['name'], data['quantity'], data['price']
+            ))
+        print(""------------------------"")
+    def save_to_file(self, filename=""inventory.json""):
+        with open(filename, 'w') as f:
+            json.dump(self.items, f, indent=4)
+def initialize_inventory():
+    inv = Inventory()
+    inv.add_item(101, ""Laptop"", 15, 1200.50)
+    inv.add_item(102, ""Mouse"", 50, 25.99)
+    inv.add_item(103, ""Keyboard"", 30, 75.00)
+    inv.add_item(104, ""Monitor"", 10, 350.75)
+    inv.display_inventory()
+    inv.save_to_file()
+if __name__ == '__main__':
+    initialize_inventory()",True,1,10476,170_9_1.py
+170,9,Create a basic inventory system,"Generate the complete, optimized, and fully documented Python script for the basic inventory system, ensuring all components are cohesive and adhere strictly to Python best practices.","import json
+class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, name, quantity, price):
+        if item_id in self.items:
+            self.items[item_id]['quantity'] += quantity
+            self.items[item_id]['price'] = price
+        else:
+            self.items[item_id] = {
+                'name': name,
+                'quantity': quantity,
+                'price': price
+            }
+    def display_inventory(self):
+        print(""--- Inventory Report ---"")
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""{:<10} {:<20} {:<10} {:<10}"".format(""ID"", ""Name"", ""Quantity"", ""Price""))
+        print(""-"" * 42)
+        for item_id, data in self.items.items():
+            print(""{:<10} {:<20} {:<10} {:<10.2f}"".format(
+                item_id, data['name'], data['quantity'], data['price']
+            ))
+        print(""------------------------"")
+def main():
+    inventory = Inventory()
+    inventory.add_item(101, ""Laptop"", 10, 1200.50)
+    inventory.add_item(102, ""Mouse"", 50, 25.99)
+    inventory.add_item(103, ""Keyboard"", 30, 75.00)
+    inventory.add_item(101, ""Laptop"", 5, 1250.00)
+    inventory.add_item(104, ""Monitor"", 15, 350.75)
+    inventory.display_inventory()
+if __name__ == '__main__':
+    main()",True,2,10477,170_9_2.py
+170,9,Create a basic inventory system,"Generate the complete, optimized, and fully documented Python script for the basic inventory system, ensuring all components are cohesive and adhere strictly to Python best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, name, quantity, price):
+        if item_id in self.items:
+            self.items[item_id]['quantity'] += quantity
+            self.items[item_id]['price'] = price
+        else:
+            self.items[item_id] = {
+                'name': name,
+                'quantity': quantity,
+                'price': price
+            }
+    def display_inventory(self):
+        print(""--- Inventory Report ---"")
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(f""{'ID':<10} {'Name':<20} {'Quantity':<10} {'Price':<10}"")
+        print(""-"" * 44)
+        for item_id, data in self.items.items():
+            print(f""{item_id:<10} {data['name']:<20} {data['quantity']:<10} {data['price']:<10.2f}"")
+        print(""------------------------"")
+if __name__ == '__main__':
+    inventory_system = Inventory()
+    inventory_system.add_item(101, ""Laptop"", 5, 1200.50)
+    inventory_system.add_item(102, ""Mouse"", 20, 25.99)
+    inventory_system.add_item(103, ""Keyboard"", 15, 75.00)
+    inventory_system.add_item(101, ""Laptop"", 3, 1200.50)
+    inventory_system.add_item(104, ""Monitor"", 8, 350.75)
+    inventory_system.display_inventory()",True,3,10478,170_9_3.py
+170,9,Create a basic inventory system,"Generate the complete, optimized, and fully documented Python script for the basic inventory system, ensuring all components are cohesive and adhere strictly to Python best practices.","import json
+class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, name, quantity, price):
+        if item_id in self.items:
+            self.items[item_id]['quantity'] += quantity
+            self.items[item_id]['price'] = price
+        else:
+            self.items[item_id] = {
+                'name': name,
+                'quantity': quantity,
+                'price': price
+            }
+    def display_inventory(self):
+        print(""--- Inventory Report ---"")
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""{:<10} {:<20} {:<10} {:<10}"".format(""ID"", ""Name"", ""Quantity"", ""Price""))
+        print(""-"" * 44)
+        for item_id, data in self.items.items():
+            print(""{:<10} {:<20} {:<10} {:<10.2f}"".format(
+                item_id, data['name'], data['quantity'], data['price']
+            ))
+        print(""------------------------"")
+def main():
+    inventory = Inventory()
+    inventory.add_item(101, ""Laptop"", 10, 1200.50)
+    inventory.add_item(102, ""Mouse"", 50, 25.99)
+    inventory.add_item(103, ""Keyboard"", 30, 75.00)
+    inventory.add_item(101, ""Laptop"", 5, 1250.00)
+    inventory.add_item(104, ""Monitor"", 15, 350.75)
+    inventory.display_inventory()
+if __name__ == '__main__':
+    main()",True,4,10479,170_9_4.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0:
+            raise ValueError(""Invalid item ID provided."")
+        if not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if not isinstance(item_id, int) or item_id <= 0:
+            raise ValueError(""Invalid item ID provided."")
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Caught expected error for invalid ID (-5): {e}"")
+    print(""\n--- Testing Invalid Quantity Addition ---"")
+    try:
+        inventory.add_item(103, -1)
+    except ValueError as e:
+        print(f""Caught expected error for invalid quantity (-1): {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity}"")
+    except KeyError as e:
+        print(f""Error during retrieval: {e}"")
+    print(""\n--- Testing Invalid Item ID Retrieval ---"")
+    try:
+        inventory.get_item(999)
+    except ValueError as e:
+        print(f""Caught expected error for invalid ID (999): {e}"")
+    except KeyError as e:
+        print(f""Caught expected error for non-existent item: {e}"")",True,0,10480,170_8.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if not isinstance(item_id, int) or item_id <= 0:
+            raise ValueError(""Invalid item ID provided."")
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+        print(f""Current inventory: {inventory.items}"")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Caught expected error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for missing item: {e}"")
+    except ValueError as e:
+        print(f""Caught unexpected error during retrieval: {e}"")",True,1,10481,170_8_1.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if item_id not in self.items:
+            raise KeyError(f""Item ID {item_id} not found in inventory."")
+        return self.items[item_id]
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for missing item: {e}"")
+    print(""\n--- Testing Retrieval of Non-existent Item ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for non-existent item: {e}"")",True,2,10482,170_8_2.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for missing item: {e}"")
+    print(""\n--- Testing Retrieval of Non-existent Item ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for non-existent item: {e}"")",True,3,10483,170_8_3.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if not isinstance(item_id, int) or item_id <= 0:
+            raise ValueError(""Invalid item ID provided."")
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Caught expected error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for missing item: {e}"")
+    except ValueError as e:
+        print(f""Error during retrieval: {e}"")
+    print(""\n--- Testing Retrieval of Non-existent Item ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for non-existent item: {e}"")
+    except ValueError as e:
+        print(f""Error during retrieval: {e}"")",True,4,10484,170_8_4.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if not isinstance(item_id, int) or item_id <= 0:
+            raise ValueError(""Invalid item ID provided."")
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        inventory.add_item(101, 3)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Get Item ---"")
+    try:
+        item101_quantity = inventory.get_item(101)
+        print(f""Quantity for item 101: {item101_quantity}"")
+        item103_quantity = inventory.get_item(103)
+        print(f""Quantity for item 103: {item103_quantity}"")
+    except (KeyError, ValueError) as e:
+        print(f""Error during retrieval: {e}"")
+    print(""\n--- Testing Error Handling (Invalid ID) ---"")
+    try:
+        inventory.get_item(-5)
+    except (KeyError, ValueError) as e:
+        print(f""Successfully caught error for invalid ID - {e}"")
+    try:
+        inventory.add_item(""abc"", 10)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid item ID during addition - {e}"")
+    try:
+        inventory.add_item(104, -5)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid quantity during addition - {e}"")",True,5,10485,170_8_5.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if item_id not in self.items:
+            raise KeyError(f""Item ID {item_id} not found in inventory."")
+        return self.items[item_id]
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for missing item: {e}"")
+    print(""\n--- Testing Invalid Item ID Retrieval ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for invalid retrieval: {e}"")",True,6,10486,170_8_6.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found in inventory."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Successfully added items."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Caught expected error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for missing item: {e}"")
+    print(""\n--- Testing Retrieval of Non-existent Item ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for non-existent item: {e}"")",True,7,10487,170_8_7.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found in inventory."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 50)
+        inventory.add_item(102, 25)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 10)
+    except ValueError as e:
+        print(f""Successfully caught error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for missing item: {e}"")
+    print(""\n--- Testing Retrieval of Non-existent Item ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Successfully caught error for non-existent item: {e}"")",True,8,10488,170_8_8.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if item_id not in self.items:
+            raise KeyError(f""Item ID {item_id} not found in inventory."")
+        return self.items[item_id]
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Item ID Addition ---"")
+    try:
+        inventory.add_item(-5, 2)
+    except ValueError as e:
+        print(f""Caught expected error for invalid ID: {e}"")
+    print(""\n--- Testing Retrieval ---"")
+    try:
+        quantity101 = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity101}"")
+        quantity999 = inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for missing item: {e}"")
+    print(""\n--- Testing Retrieval of Non-existent Item ---"")
+    try:
+        inventory.get_item(999)
+    except KeyError as e:
+        print(f""Caught expected error for non-existent item: {e}"")",True,9,10489,170_8_9.py
+170,8,Create a basic inventory system,Add error handling to the inventory system to gracefully manage cases where an invalid item ID is provided during addition or retrieval operations.,"class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_id, quantity):
+        if not isinstance(item_id, int) or item_id <= 0 or not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Invalid item ID or quantity provided."")
+        if item_id in self.items:
+            self.items[item_id] += quantity
+        else:
+            self.items[item_id] = quantity
+    def get_item(self, item_id):
+        if not isinstance(item_id, int) or item_id <= 0:
+            raise ValueError(""Invalid item ID provided."")
+        if item_id in self.items:
+            return self.items[item_id]
+        else:
+            raise KeyError(f""Item ID {item_id} not found."")
+if __name__ == '__main__':
+    inventory = Inventory()
+    print(""--- Testing Add Item ---"")
+    try:
+        inventory.add_item(101, 5)
+        inventory.add_item(102, 10)
+        print(""Items added successfully."")
+    except ValueError as e:
+        print(f""Error during addition: {e}"")
+    print(""\n--- Testing Invalid Add Item (Negative Quantity) ---"")
+    try:
+        inventory.add_item(103, -2)
+    except ValueError as e:
+        print(f""Caught expected error: {e}"")
+    print(""\n--- Testing Invalid Add Item (Invalid ID Type) ---"")
+    try:
+        inventory.add_item(""abc"", 5)
+    except ValueError as e:
+        print(f""Caught expected error: {e}"")
+    print(""\n--- Testing Get Item (Valid ID) ---"")
+    try:
+        quantity = inventory.get_item(101)
+        print(f""Quantity for item 101: {quantity}"")
+    except (ValueError, KeyError) as e:
+        print(f""Error during retrieval: {e}"")
+    print(""\n--- Testing Get Item (Non-existent ID) ---"")
+    try:
+        quantity = inventory.get_item(999)
+        print(f""Quantity for item 999: {quantity}"")
+    except (ValueError, KeyError) as e:
+        print(f""Caught expected error: {e}"")
+    print(""\n--- Testing Get Item (Invalid ID Type) ---"")
+    try:
+        inventory.get_item(""xyz"")
+    except (ValueError, KeyError) as e:
+        print(f""Caught expected error: {e}"")",True,10,10490,170_8_10.py
