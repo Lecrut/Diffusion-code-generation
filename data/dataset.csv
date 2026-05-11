@@ -210080,3 +210080,3470 @@ if __name__ == '__main__':
         print(f""{fruit} is {color}"")
 if __name__ == '__main__':
     main()",True,2,10024,163_9_2.py
+163,10,Hold fruit and color pairs,"Write a complete, production-ready Python script that reads a list of fruit names and their corresponding color pairs from a file and stores them in a dictionary, ensuring high readability and error handling.",,False,0,10025,163_10.py
+163,11,Hold fruit and color pairs,"Implement an optimized function named `create_fruit_color_map` that accepts a list of tuples (fruit, color) and returns a dictionary mapping fruit names to their colors, utilizing dictionary comprehension for efficiency.","def create_fruit_color_map(fruit_color_list):
+    return {fruit: color for fruit, color in fruit_color_list}
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", ""red""),
+        (""banana"", ""yellow""),
+        (""grape"", ""purple""),
+        (""orange"", ""orange""),
+        (""strawberry"", ""red""),
+        (""lemon"", ""yellow"")
+    ]
+    color_map = create_fruit_color_map(sample_data)
+    print(color_map)",True,0,10026,163_11.py
+163,12,Hold fruit and color pairs,"Develop a class named `FruitColorManager` to encapsulate the logic for holding fruit and color pairs. The class must include methods to add pairs, retrieve pairs, and display all stored data, adhering to Object-Oriented Programming best practices.","class FruitColorManager:
+    def __init__(self):
+        self.fruit_colors = []
+    def add_pair(self, fruit, color):
+        self.fruit_colors.append((fruit, color))
+    def get_pairs(self):
+        return self.fruit_colors
+    def display_all(self):
+        for fruit, color in self.fruit_colors:
+            print(f""Fruit: {fruit}, Color: {color}"")
+if __name__ == '__main__':
+    manager = FruitColorManager()
+    manager.add_pair(""Apple"", ""Red"")
+    manager.add_pair(""Banana"", ""Yellow"")
+    manager.add_pair(""Grape"", ""Purple"")
+    print(""--- Stored Fruit and Color Pairs ---"")
+    pairs = manager.get_pairs()
+    for fruit, color in pairs:
+        print(f""Fruit: {fruit}, Color: {color}"")",True,0,10027,163_12.py
+163,12,Hold fruit and color pairs,"Develop a class named `FruitColorManager` to encapsulate the logic for holding fruit and color pairs. The class must include methods to add pairs, retrieve pairs, and display all stored data, adhering to Object-Oriented Programming best practices.","class FruitColorManager:
+    def __init__(self):
+        self.fruit_colors = []
+    def add_pair(self, fruit, color):
+        self.fruit_colors.append((fruit, color))
+    def get_pairs(self):
+        return self.fruit_colors
+    def display_all(self):
+        for fruit, color in self.fruit_colors:
+            print(f""Fruit: {fruit}, Color: {color}"")
+if __name__ == '__main__':
+    manager = FruitColorManager()
+    manager.add_pair(""Apple"", ""Red"")
+    manager.add_pair(""Banana"", ""Yellow"")
+    manager.add_pair(""Grape"", ""Purple"")
+    manager.add_pair(""Orange"", ""Orange"")
+    print(""--- Stored Fruit and Color Pairs ---"")
+    pairs = manager.get_pairs()
+    for fruit, color in pairs:
+        print(f""{fruit}: {color}"")
+    print(""\n--- Displaying All Data ---"")
+    manager.display_all()",True,1,10028,163_12_1.py
+163,12,Hold fruit and color pairs,"Develop a class named `FruitColorManager` to encapsulate the logic for holding fruit and color pairs. The class must include methods to add pairs, retrieve pairs, and display all stored data, adhering to Object-Oriented Programming best practices.","class FruitColorManager:
+    def __init__(self):
+        self.fruit_colors = []
+    def add_pair(self, fruit, color):
+        self.fruit_colors.append((fruit, color))
+    def get_pairs(self):
+        return self.fruit_colors
+    def display_all(self):
+        for fruit, color in self.fruit_colors:
+            print(f""Fruit: {fruit}, Color: {color}"")
+if __name__ == '__main__':
+    manager = FruitColorManager()
+    manager.add_pair(""Apple"", ""Red"")
+    manager.add_pair(""Banana"", ""Yellow"")
+    manager.add_pair(""Grape"", ""Purple"")
+    manager.add_pair(""Orange"", ""Orange"")
+    print(""--- Stored Fruit and Color Pairs ---"")
+    all_pairs = manager.get_pairs()
+    for fruit, color in all_pairs:
+        print(f""({fruit}, {color})"")
+    print(""\n--- Displaying All Data ---"")
+    manager.display_all()",True,2,10029,163_12_2.py
+163,12,Hold fruit and color pairs,"Develop a class named `FruitColorManager` to encapsulate the logic for holding fruit and color pairs. The class must include methods to add pairs, retrieve pairs, and display all stored data, adhering to Object-Oriented Programming best practices.","class FruitColorManager:
+    def __init__(self):
+        self.fruit_colors = []
+    def add_pair(self, fruit, color):
+        self.fruit_colors.append((fruit, color))
+    def get_pairs(self):
+        return self.fruit_colors
+    def display_all(self):
+        for fruit, color in self.fruit_colors:
+            print(f""Fruit: {fruit}, Color: {color}"")
+if __name__ == '__main__':
+    manager = FruitColorManager()
+    manager.add_pair(""Apple"", ""Red"")
+    manager.add_pair(""Banana"", ""Yellow"")
+    manager.add_pair(""Grape"", ""Purple"")
+    manager.add_pair(""Orange"", ""Orange"")
+    print(""--- Stored Fruit and Color Pairs ---"")
+    pairs = manager.get_pairs()
+    for fruit, color in pairs:
+        print(f""({fruit}, {color})"")
+    print(""\n--- Displaying All Data ---"")
+    manager.display_all()",True,3,10030,163_12_3.py
+163,13,Hold fruit and color pairs,Write a command-line interface (CLI) script using the `argparse` module that prompts the user to input fruit and color pairs and then prints the resulting data in a neatly formatted table.,,False,0,10031,163_13.py
+163,14,Hold fruit and color pairs,"Write a purely functional approach using a generator function to yield the fruit and color pairs from an input list, optimizing for memory efficiency when processing large datasets.","def fruit_color_generator(data):
+    for fruit, color in data:
+        yield fruit, color
+if __name__ == '__main__':
+    input_data = [
+        (""apple"", ""red""),
+        (""banana"", ""yellow""),
+        (""grape"", ""purple""),
+        (""orange"", ""orange""),
+        (""strawberry"", ""red""),
+        (""kiwi"", ""brown"")
+    ]
+    fruit_color_pairs = fruit_color_generator(input_data)
+    for fruit, color in fruit_color_pairs:
+        print(f""Fruit: {fruit}, Color: {color}"")",True,0,10032,163_14.py
+163,14,Hold fruit and color pairs,"Write a purely functional approach using a generator function to yield the fruit and color pairs from an input list, optimizing for memory efficiency when processing large datasets.","def fruit_color_generator(data):
+    for fruit, color in data:
+        yield fruit, color
+if __name__ == '__main__':
+    input_data = [
+        (""apple"", ""red""),
+        (""banana"", ""yellow""),
+        (""grape"", ""purple""),
+        (""orange"", ""orange""),
+        (""kiwi"", ""brown"")
+    ]
+    fruit_color_pairs = fruit_color_generator(input_data)
+    for fruit, color in fruit_color_pairs:
+        print(f""Fruit: {fruit}, Color: {color}"")",True,1,10033,163_14_1.py
+163,14,Hold fruit and color pairs,"Write a purely functional approach using a generator function to yield the fruit and color pairs from an input list, optimizing for memory efficiency when processing large datasets.","def fruit_color_generator(data):
+    for fruit, color in data:
+        yield fruit, color
+if __name__ == '__main__':
+    input_data = [
+        (""apple"", ""red""),
+        (""banana"", ""yellow""),
+        (""grape"", ""purple""),
+        (""orange"", ""orange""),
+        (""kiwi"", ""brown"")
+    ]
+    result_generator = fruit_color_generator(input_data)
+    print(""Processing fruit and color pairs:"")
+    for fruit, color in result_generator:
+        print(f""Fruit: {fruit}, Color: {color}"")",True,2,10034,163_14_2.py
+164,0,Organize animal types simply,"Write a complete, well-documented Python script to organize a predefined list of animal types into a dictionary structure, using appropriate data types.","def organize_animals():
+    animal_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant""]
+    animal_dict = {}
+    for animal in animal_list:
+        animal_dict[animal] = ""mammal"" if animal in [""dog"", ""cat"", ""lion"", ""elephant""] else (""bird"" if animal == ""bird"" else ""fish"")
+    return animal_dict
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,0,10035,164_0.py
+164,0,Organize animal types simply,"Write a complete, well-documented Python script to organize a predefined list of animal types into a dictionary structure, using appropriate data types.","def organize_animals():
+    animal_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant""]
+    animal_dictionary = {}
+    for animal in animal_list:
+        animal_dictionary[animal] = ""mammal"" if animal in [""dog"", ""cat"", ""lion"", ""elephant""] else (""bird"" if animal == ""bird"" else ""fish"")
+    return animal_dictionary
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,1,10036,164_0_1.py
+164,0,Organize animal types simply,"Write a complete, well-documented Python script to organize a predefined list of animal types into a dictionary structure, using appropriate data types.","def organize_animals():
+    animal_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant""]
+    animal_dictionary = {}
+    for animal in animal_list:
+        animal_dictionary[animal] = ""mammal"" if animal in [""dog"", ""cat"", ""lion"", ""elephant""] else ""other""
+    return animal_dictionary
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,2,10037,164_0_2.py
+164,0,Organize animal types simply,"Write a complete, well-documented Python script to organize a predefined list of animal types into a dictionary structure, using appropriate data types.","def organize_animals():
+    animal_list = [""dog"", ""cat"", ""lion"", ""elephant"", ""tiger""]
+    animal_dictionary = {}
+    for animal in animal_list:
+        animal_dictionary[animal] = ""mammal""
+    return animal_dictionary
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,3,10038,164_0_3.py
+164,1,Organize animal types simply,Implement a function that takes a raw string of animal types and returns a dictionary where keys are the animal names and values are placeholder lists of related categories.,"def categorize_animals(raw_string):
+    animal_dict = {}
+    animals = raw_string.split(',')
+    for animal in animals:
+        animal = animal.strip()
+        if animal:
+            animal_dict[animal] = [""Mammal"", ""Vertebrate""]
+    return animal_dict
+if __name__ == '__main__':
+    sample_input = ""Dog,Cat,Bird,Fish""
+    result = categorize_animals(sample_input)
+    print(result)",True,0,10039,164_1.py
+164,1,Organize animal types simply,Implement a function that takes a raw string of animal types and returns a dictionary where keys are the animal names and values are placeholder lists of related categories.,"def process_animal_string(raw_string):
+    animal_dict = {}
+    animals = raw_string.split(',')
+    for animal in animals:
+        animal_name = animal.strip()
+        if animal_name:
+            animal_dict[animal_name] = []
+    return animal_dict
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish""
+    result = process_animal_string(sample_input)
+    print(result)",True,1,10040,164_1_1.py
+164,1,Organize animal types simply,Implement a function that takes a raw string of animal types and returns a dictionary where keys are the animal names and values are placeholder lists of related categories.,"def categorize_animals(raw_string):
+    animal_dict = {}
+    animals = raw_string.split(',')
+    for animal in animals:
+        animal_name = animal.strip()
+        if animal_name:
+            animal_dict[animal_name] = []
+    return animal_dict
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish""
+    result = categorize_animals(sample_input)
+    print(result)",True,2,10041,164_1_2.py
+164,1,Organize animal types simply,Implement a function that takes a raw string of animal types and returns a dictionary where keys are the animal names and values are placeholder lists of related categories.,"def process_animal_string(raw_string):
+    animal_dict = {}
+    animals = raw_string.split(',')
+    for animal in animals:
+        animal = animal.strip()
+        if animal:
+            animal_dict[animal] = [""Category A"", ""Category B"", ""Category C""]
+    return animal_dict
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish""
+    result = process_animal_string(sample_input)
+    print(result)",True,3,10042,164_1_3.py
+157,4,Find the smallest value list,Create a standalone Python script that reads a list of numbers from standard input and prints the smallest number found in that list. Include error handling for non-numeric input.,,False,0,10043,157_4.py
+164,2,Organize animal types simply,"Develop an optimized class named 'AnimalOrganizer' that handles the storage and retrieval of animal types, ensuring efficient lookup operations.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, animal_type, animal_details):
+        self.animals[animal_type] = animal_details
+    def get_animal(self, animal_type):
+        return self.animals.get(animal_type)
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", {""age"": 5, ""breed"": ""Labrador""})
+    organizer.add_animal(""Cat"", {""age"": 3, ""breed"": ""Siamese""})
+    organizer.add_animal(""Bird"", {""age"": 7, ""species"": ""Parrot""})
+    print(organizer.get_animal(""Dog""))
+    print(organizer.get_animal(""Cat""))
+    print(organizer.get_animal(""Fish""))",True,0,10044,164_2.py
+164,2,Organize animal types simply,"Develop an optimized class named 'AnimalOrganizer' that handles the storage and retrieval of animal types, ensuring efficient lookup operations.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, animal_type, animal_details):
+        self.animals[animal_type] = animal_details
+    def get_animal(self, animal_type):
+        return self.animals.get(animal_type)
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", {""age"": 5, ""breed"": ""Labrador""})
+    organizer.add_animal(""Cat"", {""age"": 3, ""breed"": ""Siamese""})
+    organizer.add_animal(""Bird"", {""age"": 2, ""species"": ""Parrot""})
+    print(organizer.get_animal(""Dog""))
+    print(organizer.get_animal(""Cat""))
+    print(organizer.get_animal(""Fish""))",True,1,10045,164_2_1.py
+164,2,Organize animal types simply,"Develop an optimized class named 'AnimalOrganizer' that handles the storage and retrieval of animal types, ensuring efficient lookup operations.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, animal_type, details):
+        self.animals[animal_type] = details
+    def get_animal(self, animal_type):
+        return self.animals.get(animal_type)
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", {""age"": 5, ""breed"": ""Labrador""})
+    organizer.add_animal(""Cat"", {""age"": 3, ""breed"": ""Siamese""})
+    organizer.add_animal(""Bird"", {""age"": 2, ""species"": ""Parrot""})
+    print(organizer.get_animal(""Dog""))
+    print(organizer.get_animal(""Cat""))
+    print(organizer.get_animal(""Fish""))",True,2,10046,164_2_2.py
+164,2,Organize animal types simply,"Develop an optimized class named 'AnimalOrganizer' that handles the storage and retrieval of animal types, ensuring efficient lookup operations.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, animal_type, details):
+        self.animals[animal_type] = details
+    def get_animal(self, animal_type):
+        return self.animals.get(animal_type)
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", {""age"": 5, ""breed"": ""Golden Retriever""})
+    organizer.add_animal(""Cat"", {""age"": 3, ""breed"": ""Siamese""})
+    organizer.add_animal(""Bird"", {""age"": 2, ""species"": ""Parrot""})
+    print(organizer.get_animal(""Dog""))
+    print(organizer.get_animal(""Cat""))
+    print(organizer.get_animal(""Fish""))",True,3,10047,164_2_3.py
+162,5,Map names to simple values,"Write a script that reads map names and their values from a standard input stream and stores them in a dictionary, then prints the resulting map.",,False,0,10048,162_5.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, parent in animal_data.items():
+        current_level = """"
+        path = []
+        temp = animal
+        while temp:
+            path.append(temp)
+            if temp in hierarchy:
+                current_level = temp
+                break
+            temp = hierarchy.get(temp)
+        if path:
+            organized[current_level] = organized.get(current_level, []) + [animal]
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": ""Mammal"",
+        ""Cat"": ""Mammal"",
+        ""Whale"": ""Mammal"",
+        ""Lion"": ""Mammal"",
+        ""Fish"": ""Animal"",
+        ""Bird"": ""Animal"",
+        ""Snake"": ""Reptile""
+    }
+    hierarchy = {
+        ""Mammal"": ""Animal"",
+        ""Animal"": ""None"",
+        ""Reptile"": ""None""
+    }
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,0,10049,164_3.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, parent in animal_data.items():
+        current_level = parent
+        path = []
+        temp = animal
+        while current_level is not None:
+            path.append(current_level)
+            if current_level in hierarchy:
+                current_level = hierarchy[current_level]
+            else:
+                break
+        if path:
+            root = path[0]
+            if root not in organized:
+                organized[root] = []
+            organized[root].append(animal)
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": ""Mammal"",
+        ""Cat"": ""Mammal"",
+        ""Whale"": ""Mammal"",
+        ""Lion"": ""Mammal"",
+        ""Fish"": ""Animal"",
+        ""Bird"": ""Animal"",
+        ""Snake"": ""Reptile""
+    }
+    hierarchy = {
+        ""Mammal"": None,
+        ""Animal"": None,
+        ""Reptile"": None
+    }
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,1,10050,164_3_1.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, group in animal_data.items():
+        current_level = animal
+        path = []
+        found = False
+        for i in range(len(hierarchy)):
+            if animal == hierarchy[i]:
+                current_level = hierarchy[i]
+                path.append(current_level)
+                found = True
+                break
+        if found:
+            organized.setdefault(current_level, []).append(animal)
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": [""Fido"", ""Buddy""],
+        ""Cat"": [""Whiskers"", ""Shadow""],
+        ""Mammal"": [""Dog"", ""Cat""],
+        ""Animal"": [""Dog"", ""Cat"", ""Bird""]
+    }
+    hierarchy = [
+        ""Mammal"",
+        ""Dog"",
+        ""Cat""
+    ]
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,2,10051,164_3_2.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, parent in animal_data.items():
+        current_level = parent
+        path = []
+        while current_level:
+            path.append(current_level)
+            if current_level in hierarchy:
+                current_level = hierarchy[current_level]
+            else:
+                break
+        if path:
+            organized[tuple(path)] = animal
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": ""Mammal"",
+        ""Cat"": ""Mammal"",
+        ""Whale"": ""Mammal"",
+        ""Lion"": ""Mammal"",
+        ""Fish"": ""Animal"",
+        ""Bird"": ""Animal"",
+        ""Snake"": ""Reptile""
+    }
+    hierarchy = {
+        ""Mammal"": None,
+        ""Animal"": None,
+        ""Reptile"": None
+    }
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,3,10052,164_3_3.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, parent in animal_data.items():
+        current_level = parent
+        path = []
+        temp = animal
+        while current_level is not None:
+            path.append(current_level)
+            if current_level in hierarchy:
+                current_level = hierarchy[current_level]
+            else:
+                break
+        if path:
+            root = path[0]
+            organized.setdefault(root, []).append(animal)
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": ""Mammal"",
+        ""Cat"": ""Mammal"",
+        ""Whale"": ""Mammal"",
+        ""Lion"": ""Mammal"",
+        ""Fish"": ""Animal"",
+        ""Bird"": ""Animal"",
+        ""Snake"": ""Reptile""
+    }
+    hierarchy = {
+        ""Mammal"": None,
+        ""Animal"": None,
+        ""Reptile"": None
+    }
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,4,10053,164_3_4.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, parent in animal_data.items():
+        current_level = parent
+        path = []
+        while current_level:
+            path.append(current_level)
+            if current_level in hierarchy:
+                current_level = hierarchy[current_level]
+            else:
+                break
+        if path:
+            for i in range(len(path) - 1):
+                parent_node = path[i]
+                child_node = path[i+1]
+                if parent_node not in organized:
+                    organized[parent_node] = []
+                organized[parent_node].append(child_node)
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": ""Mammal"",
+        ""Cat"": ""Mammal"",
+        ""Whale"": ""Mammal"",
+        ""Lion"": ""Mammal"",
+        ""Fish"": ""Animal"",
+        ""Bird"": ""Animal"",
+        ""Snake"": ""Reptile""
+    }
+    hierarchy = {
+        ""Mammal"": ""Animal"",
+        ""Animal"": ""Reptile"",
+        ""Reptile"": ""Snake""
+    }
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,5,10054,164_3_5.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, group in animal_data.items():
+        current_level = animal
+        path = []
+        found = False
+        for i in range(len(hierarchy)):
+            if animal == hierarchy[i]:
+                current_level = hierarchy[i]
+                path.append(current_level)
+                found = True
+                break
+        if found:
+            organized.setdefault(current_level, []).append(animal)
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": [""Poodle"", ""Beagle""],
+        ""Cat"": [""Siamese"", ""Persian""],
+        ""Mammal"": [""Dog"", ""Cat""],
+        ""Poodle"": [],
+        ""Beagle"": [],
+        ""Siamese"": [],
+        ""Persian"": []
+    }
+    hierarchy = [""Mammal"", ""Dog"", ""Cat""]
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,6,10055,164_3_6.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, group in animal_data.items():
+        current_level = animal
+        path = []
+        found = False
+        for i in range(len(hierarchy)):
+            if animal == hierarchy[i]:
+                current_level = hierarchy[i]
+                path.append(hierarchy[i])
+                found = True
+                break
+        if found:
+            organized.setdefault(hierarchy[0], set()).add(animal)
+        else:
+            organized.setdefault(""Other"", set()).add(animal)
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": [""Mammal""],
+        ""Cat"": [""Mammal""],
+        ""Whale"": [""Mammal""],
+        ""Eagle"": [""Bird""],
+        ""Parrot"": [""Bird""],
+        ""Fish"": [""Fish""],
+        ""Snake"": [""Reptile""]
+    }
+    hierarchy = [
+        ""Mammal"",
+        ""Bird"",
+        ""Fish"",
+        ""Reptile""
+    ]
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,7,10056,164_3_7.py
+164,3,Organize animal types simply,"Write a recursive function to organize animal types based on a specified hierarchical relationship (e.g., Mammals -> Dogs, Cats).","def organize_animals(animal_data, hierarchy):
+    organized = {}
+    for animal, parent in animal_data.items():
+        current_level = """"
+        path = []
+        temp = animal
+        while temp:
+            path.append(temp)
+            if temp in hierarchy:
+                current_level = temp
+                break
+            temp = hierarchy.get(temp)
+        if path:
+            organized[current_level] = organized.get(current_level, []) + [animal]
+    return organized
+if __name__ == '__main__':
+    animal_data = {
+        ""Dog"": ""Mammal"",
+        ""Cat"": ""Mammal"",
+        ""Whale"": ""Mammal"",
+        ""Lion"": ""Mammal"",
+        ""Fish"": ""Animal"",
+        ""Bird"": ""Animal"",
+        ""Snake"": ""Reptile""
+    }
+    hierarchy = {
+        ""Mammal"": ""Animal"",
+        ""Animal"": ""Reptile"",
+        ""Reptile"": ""Snake""
+    }
+    result = organize_animals(animal_data, hierarchy)
+    print(result)",True,8,10057,164_3_8.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import operator
+def custom_sort_and_group(animals):
+    sorted_animals = sorted(animals)
+    grouped_animals = {}
+    for animal in sorted_animals:
+        first_letter = animal[0]
+        if first_letter not in grouped_animals:
+            grouped_animals[first_letter] = []
+        grouped_animals[first_letter].append(animal)
+    return sorted_animals, grouped_animals
+if __name__ == '__main__':
+    animal_list = [""Lion"", ""Tiger"", ""Elephant"", ""Bear"", ""Zebra"", ""Giraffe"", ""Monkey""]
+    sorted_list, grouped_data = custom_sort_and_group(animal_list)
+    print(sorted_list)
+    print(grouped_data)",True,0,10058,164_5.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import operator
+def custom_sort_and_group(animals):
+    sorted_animals = sorted(animals)
+    grouped_animals = {}
+    for animal in sorted_animals:
+        first_letter = animal[0]
+        if first_letter not in grouped_animals:
+            grouped_animals[first_letter] = []
+        grouped_animals[first_letter].append(animal)
+    return sorted_animals, grouped_animals
+if __name__ == '__main__':
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""zebra"", ""monkey"", ""giraffe"", ""bear""]
+    sorted_list, grouped_data = custom_sort_and_group(animal_list)
+    print(sorted_list)
+    print(grouped_data)",True,1,10059,164_5_1.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import collections
+def custom_sort_and_group(animal_list):
+    sorted_list = sorted(animal_list)
+    grouped_list = collections.defaultdict(list)
+    for animal in sorted_list:
+        first_letter = animal[0].upper()
+        grouped_list[first_letter].append(animal)
+    result = []
+    for letter in sorted(grouped_list.keys()):
+        result.extend(grouped_list[letter])
+    return result
+if __name__ == '__main__':
+    animals = [""lion"", ""tiger"", ""elephant"", ""zebra"", ""monkey"", ""bear""]
+    sorted_and_grouped = custom_sort_and_group(animals)
+    print(sorted_and_grouped)",True,2,10060,164_5_2.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import operator
+def custom_sort_and_group(animal_list):
+    sorted_list = sorted(animal_list)
+    grouped_list = {}
+    for animal in sorted_list:
+        first_letter = animal[0]
+        if first_letter not in grouped_list:
+            grouped_list[first_letter] = []
+        grouped_list[first_letter].append(animal)
+    return sorted_list, grouped_list
+if __name__ == '__main__':
+    animals = [""lion"", ""tiger"", ""elephant"", ""zebra"", ""monkey"", ""giraffe"", ""bear""]
+    sorted_animals, grouped_animals = custom_sort_and_group(animals)
+    print(sorted_animals)
+    print(grouped_animals)",True,3,10061,164_5_3.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import operator
+def sort_and_group_animals(animal_list):
+    sorted_list = sorted(animal_list)
+    grouped_list = {}
+    for animal in sorted_list:
+        first_letter = animal[0]
+        if first_letter not in grouped_list:
+            grouped_list[first_letter] = []
+        grouped_list[first_letter].append(animal)
+    return sorted_list, grouped_list
+if __name__ == '__main__':
+    animals = [""lion"", ""tiger"", ""elephant"", ""bear"", ""zebra"", ""giraffe"", ""monkey""]
+    sorted_animals, grouped_animals = sort_and_group_animals(animals)
+    print(sorted_animals)
+    print(grouped_animals)",True,4,10062,164_5_4.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import operator
+def custom_sort(animals):
+    sorted_animals = sorted(animals)
+    grouped_animals = {}
+    for animal in sorted_animals:
+        first_letter = animal[0]
+        if first_letter not in grouped_animals:
+            grouped_animals[first_letter] = []
+        grouped_animals[first_letter].append(animal)
+    return sorted_animals, grouped_animals
+if __name__ == '__main__':
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""zebra"", ""monkey"", ""giraffe"", ""bear""]
+    sorted_list, grouped_data = custom_sort(animal_list)
+    print(sorted_list)
+    print(grouped_data)",True,5,10063,164_5_5.py
+164,5,Organize animal types simply,"Implement a sorting algorithm within a Python script to arrange a list of animal types alphabetically, followed by a grouping based on the first letter of the animal name.","import operator
+def custom_sort_and_group(animals):
+    sorted_animals = sorted(animals)
+    grouped_animals = {}
+    for animal in sorted_animals:
+        first_letter = animal[0]
+        if first_letter not in grouped_animals:
+            grouped_animals[first_letter] = []
+        grouped_animals[first_letter].append(animal)
+    return grouped_animals
+if __name__ == '__main__':
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""zebra"", ""monkey"", ""giraffe"", ""bear""]
+    result = custom_sort_and_group(animal_list)
+    print(result)",True,6,10064,164_5_6.py
+164,4,Organize animal types simply,Create a function that reads animal data from a CSV file and outputs a neatly formatted JSON object organizing the data by the primary animal group.,,False,0,10065,164_4.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals):
+        self.animals = animals
+    def insert_animal(self, new_animal):
+        n = len(self.animals)
+        self.animals.insert(n, new_animal)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal = ""Fish""
+    animal_list.insert_animal(new_animal)
+    print(f""After inserting {new_animal}: {animal_list.animals}"")
+    new_animal_2 = ""Snake""
+    animal_list.insert_animal(new_animal_2)
+    print(f""After inserting {new_animal_2}: {animal_list.animals}"")",True,0,10066,164_7.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals=None):
+        self.animals = list(animals)
+    def insert_animal(self, new_animal):
+        self.animals.append(new_animal)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal_1 = ""Fish""
+    animal_list.insert_animal(new_animal_1)
+    print(f""After inserting {new_animal_1}: {animal_list.animals}"")
+    new_animal_2 = ""Snake""
+    animal_list.insert_animal(new_animal_2)
+    print(f""After inserting {new_animal_2}: {animal_list.animals}"")",True,1,10067,164_7_1.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals):
+        self.animals = list(animals)
+    def insert_animal(self, new_animal):
+        self.animals.append(new_animal)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal_1 = ""Fish""
+    animal_list.insert_animal(new_animal_1)
+    print(f""After inserting {new_animal_1}: {animal_list.animals}"")
+    new_animal_2 = ""Snake""
+    animal_list.insert_animal(new_animal_2)
+    print(f""After inserting {new_animal_2}: {animal_list.animals}"")",True,2,10068,164_7_2.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals=None):
+        self.animals = animals if animals is not None else []
+    def insert_animal(self, animal_type):
+        self.animals.append(animal_type)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal = ""Fish""
+    animal_list.insert_animal(new_animal)
+    print(f""After inserting {new_animal}: {animal_list.animals}"")
+    another_animal = ""Snake""
+    animal_list.insert_animal(another_animal)
+    print(f""After inserting {another_animal}: {animal_list.animals}"")",True,3,10069,164_7_3.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals):
+        self.animals = animals
+    def insert_animal(self, new_animal):
+        self.animals.append(new_animal)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal_1 = ""Fish""
+    animal_list.insert_animal(new_animal_1)
+    print(f""After inserting {new_animal_1}: {animal_list.animals}"")
+    new_animal_2 = ""Snake""
+    animal_list.insert_animal(new_animal_2)
+    print(f""After inserting {new_animal_2}: {animal_list.animals}"")",True,4,10070,164_7_4.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals):
+        self.animals = animals
+    def insert_animal(self, new_animal):
+        self.animals.append(new_animal)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal = ""Fish""
+    animal_list.insert_animal(new_animal)
+    print(f""After inserting {new_animal}: {animal_list.animals}"")
+    new_animal_2 = ""Snake""
+    animal_list.insert_animal(new_animal_2)
+    print(f""After inserting {new_animal_2}: {animal_list.animals}"")",True,5,10071,164_7_5.py
+164,7,Organize animal types simply,"Implement an optimized method within a list object to insert a new animal type while maintaining the organized structure, prioritizing time complexity.","class AnimalList:
+    def __init__(self, animals=None):
+        self.animals = list(animals)
+    def insert_animal(self, new_animal):
+        n = len(self.animals)
+        self.animals.insert(n, new_animal)
+if __name__ == '__main__':
+    initial_animals = [""Dog"", ""Cat"", ""Bird""]
+    animal_list = AnimalList(initial_animals)
+    print(f""Initial list: {animal_list.animals}"")
+    new_animal_1 = ""Fish""
+    animal_list.insert_animal(new_animal_1)
+    print(f""After inserting {new_animal_1}: {animal_list.animals}"")
+    new_animal_2 = ""Snake""
+    animal_list.insert_animal(new_animal_2)
+    print(f""After inserting {new_animal_2}: {animal_list.animals}"")",True,6,10072,164_7_6.py
+164,8,Organize animal types simply,Design and write a program that accepts a comma-separated string of animal names and outputs a perfectly organized dictionary where each animal is mapped to its corresponding descriptive category.,"def organize_animals(input_string):
+    animal_categories = {
+        ""dog"": ""Canine"",
+        ""cat"": ""Feline"",
+        ""bird"": ""Avian"",
+        ""fish"": ""Aquatic"",
+        ""lion"": ""Feline"",
+        ""cow"": ""Bovine""
+    }
+    result_dict = {}
+    animals = [animal.strip() for animal in input_string.split(',')]
+    for animal in animals:
+        if animal in animal_categories:
+            result_dict[animal] = animal_categories[animal]
+    return result_dict
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish,lion,cow,snake""
+    organized_data = organize_animals(sample_input)
+    print(organized_data)",True,0,10073,164_8.py
+164,8,Organize animal types simply,Design and write a program that accepts a comma-separated string of animal names and outputs a perfectly organized dictionary where each animal is mapped to its corresponding descriptive category.,"def organize_animals(input_string):
+    animal_categories = {
+        ""dog"": ""Canine"",
+        ""cat"": ""Feline"",
+        ""bird"": ""Avian"",
+        ""fish"": ""Aquatic"",
+        ""lion"": ""Feline"",
+        ""cow"": ""Bovine""
+    }
+    result_dict = {}
+    animals = [animal.strip() for animal in input_string.split(',')]
+    for animal in animals:
+        if animal in animal_categories:
+            result_dict[animal] = animal_categories[animal]
+        else:
+            result_dict[animal] = ""Unknown""
+    return result_dict
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish,lion,cow,snake""
+    organized_data = organize_animals(sample_input)
+    print(organized_data)",True,1,10074,164_8_1.py
+164,8,Organize animal types simply,Design and write a program that accepts a comma-separated string of animal names and outputs a perfectly organized dictionary where each animal is mapped to its corresponding descriptive category.,"def organize_animals(input_string):
+    animal_data = {
+        ""dog"": ""Canine"",
+        ""cat"": ""Feline"",
+        ""bird"": ""Avian"",
+        ""fish"": ""Pisces"",
+        ""lion"": ""Feline"",
+        ""cow"": ""Bovine""
+    }
+    result = {}
+    animals = [animal.strip() for animal in input_string.split(',')]
+    for animal in animals:
+        if animal in animal_data:
+            result[animal] = animal_data[animal]
+        else:
+            result[animal] = ""Unknown""
+    return result
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish,lion,cow,snake""
+    organized_dictionary = organize_animals(sample_input)
+    print(organized_dictionary)",True,2,10075,164_8_2.py
+164,8,Organize animal types simply,Design and write a program that accepts a comma-separated string of animal names and outputs a perfectly organized dictionary where each animal is mapped to its corresponding descriptive category.,"def organize_animals(input_string):
+    animal_categories = {
+        ""dog"": ""Canine"",
+        ""cat"": ""Feline"",
+        ""bird"": ""Avian"",
+        ""fish"": ""Aquatic"",
+        ""lion"": ""Feline"",
+        ""cow"": ""Bovine""
+    }
+    result_dict = {}
+    animals = [animal.strip() for animal in input_string.split(',')]
+    for animal in animals:
+        if animal in animal_categories:
+            result_dict[animal] = animal_categories[animal]
+    return result_dict
+if __name__ == '__main__':
+    sample_input = ""dog,cat,bird,fish,lion,cow,snake""
+    output = organize_animals(sample_input)
+    print(output)",True,3,10076,164_8_3.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, animal_type, count):
+        if animal_type not in self.animals:
+            self.animals[animal_type] = 0
+        self.animals[animal_type] += count
+    def display_organization(self):
+        if not self.animals:
+            print(""No animal data to display."")
+            return
+        print(""--- Animal Organization ---"")
+        sorted_animals = sorted(self.animals.items())
+        for animal, count in sorted_animals:
+            print(f""{animal}: {count}"")
+        print(""---------------------------"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", 15)
+    organizer.add_animal(""Cat"", 22)
+    organizer.add_animal(""Bird"", 8)
+    organizer.add_animal(""Fish"", 30)
+    organizer.add_animal(""Rabbit"", 12)
+    organizer.display_organization()",True,0,10077,164_9.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""{name}: {animal_type}"")
+        print(""---------------------------"")
+    def get_animal_type(self, name):
+        return self.animals.get(name, ""Animal not found"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", ""Canine"")
+    organizer.add_animal(""Cat"", ""Feline"")
+    organizer.add_animal(""Lion"", ""Feline"")
+    organizer.add_animal(""Elephant"", ""Mammal"")
+    organizer.add_animal(""Eagle"", ""Avian"")
+    organizer.display_all()
+    print(f""Type of Dog: {organizer.get_animal_type('Dog')}"")
+    print(f""Type of Snake: {organizer.get_animal_type('Snake')}"")",True,1,10078,164_9_1.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""Animal: {name}, Type: {animal_type}"")
+        print(""---------------------------"")
+    def display_by_type(self, animal_type):
+        print(f""\n--- Animals of Type: {animal_type} ---"")
+        found = False
+        for name, animal_type in self.animals.items():
+            if animal_type == animal_type:
+                print(f""{name}: {animal_type}"")
+                found = True
+        if not found:
+            print(f""No animals found of type {animal_type}."")
+        print(""------------------------------------"")
+def manage_and_display_animals():
+    organizer = AnimalOrganizer()
+    sample_data = [
+        (""Leo"", ""Lion""),
+        (""Molly"", ""Dog""),
+        (""Bartholomew"", ""Cat""),
+        (""Spot"", ""Dog""),
+        (""Cleo"", ""Lion""),
+        (""Rex"", ""Wolf"")
+    ]
+    for name, animal_type in sample_data:
+        organizer.add_animal(name, animal_type)
+    organizer.display_all()
+    print(""\n--- Grouped by Type ---"")
+    unique_types = set(organizer.animals.values())
+    for animal_type in sorted(list(unique_types)):
+        organizer.display_by_type(animal_type)
+if __name__ == '__main__':
+    manage_and_display_animals()",True,2,10079,164_9_2.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""{name}: {animal_type}"")
+        print(""---------------------------"")
+    def display_by_type(self, animal_type):
+        print(f""\n--- Animals of type {animal_type} ---"")
+        found = False
+        for name, animal_type in self.animals.items():
+            if animal_type == animal_type:
+                print(f""{name}: {animal_type}"")
+                found = True
+        if not found:
+            print(f""No animals found of type {animal_type}."")
+        print(""----------------------------------"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Leo"", ""Mammal"")
+    organizer.add_animal(""Whale"", ""Mammal"")
+    organizer.add_animal(""Eagle"", ""Bird"")
+    organizer.add_animal(""Shark"", ""Fish"")
+    organizer.add_animal(""Parrot"", ""Bird"")
+    organizer.add_animal(""Dolphin"", ""Mammal"")
+    organizer.display_all()
+    organizer.display_by_type(""Mammal"")
+    organizer.display_by_type(""Bird"")
+    organizer.display_by_type(""Reptile"")",True,3,10080,164_9_3.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""{name}: {animal_type}"")
+        print(""---------------------------"")
+    def get_animal_type(self, name):
+        return self.animals.get(name, ""Animal not found"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Lion"", ""Mammal"")
+    organizer.add_animal(""Eagle"", ""Bird"")
+    organizer.add_animal(""Whale"", ""Mammal"")
+    organizer.add_animal(""Snake"", ""Reptile"")
+    organizer.add_animal(""Parrot"", ""Bird"")
+    organizer.display_all()
+    print(""\n--- Specific Lookups ---"")
+    print(f""Lion's type: {organizer.get_animal_type('Lion')}"")
+    print(f""Elephant's type: {organizer.get_animal_type('Elephant')}"")
+    print(f""Shark's type: {organizer.get_animal_type('Shark')}"")",True,4,10081,164_9_4.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""Name: {name}, Type: {animal_type}"")
+        print(""---------------------------"")
+    def get_animal_type(self, name):
+        return self.animals.get(name, ""Animal not found"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Leo"", ""Lion"")
+    organizer.add_animal(""Molly"", ""Dog"")
+    organizer.add_animal(""Toby"", ""Rabbit"")
+    organizer.add_animal(""Bartholomew"", ""Bear"")
+    organizer.display_all()
+    print(""\n--- Specific Queries ---"")
+    print(f""Type of Leo: {organizer.get_animal_type('Leo')}"")
+    print(f""Type of Fido: {organizer.get_animal_type('Fido')}"")
+    print(f""Type of Unknown: {organizer.get_animal_type('Fido')}"")",True,5,10082,164_9_5.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""{name}: {animal_type}"")
+        print(""---------------------------"")
+    def get_animal_type(self, name):
+        return self.animals.get(name, ""Animal not found"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Lion"", ""Mammal"")
+    organizer.add_animal(""Eagle"", ""Bird"")
+    organizer.add_animal(""Whale"", ""Mammal"")
+    organizer.add_animal(""Snake"", ""Reptile"")
+    organizer.add_animal(""Parrot"", ""Bird"")
+    organizer.display_all()
+    print(""\n--- Specific Lookups ---"")
+    print(f""Lion's type: {organizer.get_animal_type('Lion')}"")
+    print(f""Elephant's type: {organizer.get_animal_type('Elephant')}"")
+    print(f""Fish's type: {organizer.get_animal_type('Fish')}"")",True,6,10083,164_9_6.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, animal_type, count):
+        if animal_type in self.animals:
+            self.animals[animal_type] += count
+        else:
+            self.animals[animal_type] = count
+    def display_organization(self):
+        if not self.animals:
+            print(""No animal data to display."")
+            return
+        print(""--- Animal Organization ---"")
+        sorted_animals = sorted(self.animals.items())
+        for animal, count in sorted_animals:
+            print(f""{animal}: {count}"")
+        print(""---------------------------"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", 5)
+    organizer.add_animal(""Cat"", 8)
+    organizer.add_animal(""Bird"", 12)
+    organizer.add_animal(""Fish"", 3)
+    organizer.add_animal(""Dog"", 2)
+    organizer.display_organization()",True,7,10084,164_9_7.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""{name}: {animal_type}"")
+        print(""---------------------------"")
+    def get_animal_type(self, name):
+        return self.animals.get(name, ""Animal not found"")
+if __name__ == '__main__':
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Dog"", ""Canine"")
+    organizer.add_animal(""Cat"", ""Feline"")
+    organizer.add_animal(""Lion"", ""Feline"")
+    organizer.add_animal(""Elephant"", ""Mammal"")
+    organizer.add_animal(""Eagle"", ""Avian"")
+    organizer.display_all()
+    print(f""\nType of Dog: {organizer.get_animal_type('Dog')}"")
+    print(f""Type of Snake: {organizer.get_animal_type('Snake')}"")",True,8,10085,164_9_8.py
+164,9,Organize animal types simply,"Write a comprehensive Python module that contains all necessary functions for managing and displaying the organization of animal types in a clean, readable manner.","class AnimalOrganizer:
+    def __init__(self):
+        self.animals = {}
+    def add_animal(self, name, type):
+        self.animals[name] = type
+    def display_all(self):
+        print(""--- Animal Organization ---"")
+        if not self.animals:
+            print(""No animals currently organized."")
+            return
+        for name, animal_type in self.animals.items():
+            print(f""Animal: {name}, Type: {animal_type}"")
+        print(""---------------------------"")
+    def display_by_type(self, animal_type):
+        print(f""\n--- Animals of Type: {animal_type} ---"")
+        found = False
+        for name, animal_type in self.animals.items():
+            if animal_type == animal_type:
+                print(f""{name}: {animal_type}"")
+                found = True
+        if not found:
+            print(f""No animals found of type {animal_type}."")
+        print(""------------------------------------"")
+def manage_and_display_animals():
+    organizer = AnimalOrganizer()
+    organizer.add_animal(""Leo"", ""Lion"")
+    organizer.add_animal(""Molly"", ""Dog"")
+    organizer.add_animal(""Toby"", ""Cat"")
+    organizer.add_animal(""Simba"", ""Lion"")
+    organizer.add_animal(""Bella"", ""Dog"")
+    organizer.add_animal(""Whiskers"", ""Cat"")
+    organizer.display_all()
+    organizer.display_by_type(""Lion"")
+    organizer.display_by_type(""Dog"")
+    organizer.display_by_type(""Bird"")
+if __name__ == '__main__':
+    manage_and_display_animals()",True,9,10086,164_9_9.py
+164,10,Organize animal types simply,"Write a complete, well-documented Python script that organizes a predefined list of animal types into a dictionary where keys are the animal names and values are lists of their corresponding taxonomic classes (e.g., Mammals, Birds, Reptiles).","def organize_animals():
+    animal_data = {
+        ""Lion"": [""Mammals"", ""Carnivora""],
+        ""Eagle"": [""Birds"", ""Aves""],
+        ""Snake"": [""Reptiles"", ""Serpentes""],
+        ""Frog"": [""Amphibians"", ""Anura""],
+        ""Whale"": [""Mammals"", ""Cetacea""],
+        ""Turtle"": [""Reptiles"", ""Testudines""]
+    }
+    return animal_data
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,0,10087,164_10.py
+164,10,Organize animal types simply,"Write a complete, well-documented Python script that organizes a predefined list of animal types into a dictionary where keys are the animal names and values are lists of their corresponding taxonomic classes (e.g., Mammals, Birds, Reptiles).","def organize_animals():
+    animal_data = {
+        ""Lion"": [""Mammals"", ""Carnivora""],
+        ""Eagle"": [""Birds"", ""Aves""],
+        ""Snake"": [""Reptiles"", ""Serpentes""],
+        ""Frog"": [""Amphibians"", ""Anura""],
+        ""Whale"": [""Mammals"", ""Cetacea""],
+        ""Crocodile"": [""Reptiles"", ""Crocodilia""]
+    }
+    return animal_data
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,1,10088,164_10_1.py
+164,10,Organize animal types simply,"Write a complete, well-documented Python script that organizes a predefined list of animal types into a dictionary where keys are the animal names and values are lists of their corresponding taxonomic classes (e.g., Mammals, Birds, Reptiles).","def organize_animals():
+    animal_data = {
+        ""Lion"": [""Mammals"", ""Carnivora""],
+        ""Eagle"": [""Birds"", ""Aves""],
+        ""Snake"": [""Reptiles"", ""Serpentes""],
+        ""Frog"": [""Amphibians"", ""Anura""],
+        ""Whale"": [""Mammals"", ""Cetacea""]
+    }
+    return animal_data
+if __name__ == '__main__':
+    organized_data = organize_animals()
+    print(organized_data)",True,2,10089,164_10_2.py
+164,11,Organize animal types simply,"Implement an optimized class-based structure in Python to manage animal classification. The class should handle the storage and retrieval of animal types based on their biological order, ensuring efficient lookups.","class AnimalClassifier:
+    def __init__(self):
+        self.classification = {}
+    def add_animal(self, order, animal_type):
+        self.classification[order] = animal_type
+    def get_animal_type(self, order):
+        return self.classification.get(order)
+if __name__ == '__main__':
+    classifier = AnimalClassifier()
+    classifier.add_animal(""Mammalia"", ""Dog"")
+    classifier.add_animal(""Aves"", ""Eagle"")
+    classifier.add_animal(""Mammalia"", ""Whale"")
+    classifier.add_animal(""Reptilia"", ""Snake"")
+    print(f""Type for Mammalia: {classifier.get_animal_type('Mammalia')}"")
+    print(f""Type for Aves: {classifier.get_animal_type('Aves')}"")
+    print(f""Type for Pisces: {classifier.get_animal_type('Pisces')}"")",True,0,10090,164_11.py
+164,11,Organize animal types simply,"Implement an optimized class-based structure in Python to manage animal classification. The class should handle the storage and retrieval of animal types based on their biological order, ensuring efficient lookups.","class AnimalClassifier:
+    def __init__(self):
+        self.classification = {}
+    def add_animal(self, order, animal_type):
+        self.classification[order] = animal_type
+    def get_animal_type(self, order):
+        return self.classification.get(order)
+if __name__ == '__main__':
+    classifier = AnimalClassifier()
+    classifier.add_animal(""Mammalia"", ""Dog"")
+    classifier.add_animal(""Aves"", ""Eagle"")
+    classifier.add_animal(""Mammalia"", ""Cat"")
+    classifier.add_animal(""Reptilia"", ""Snake"")
+    print(f""Type for Mammalia: {classifier.get_animal_type('Mammalia')}"")
+    print(f""Type for Aves: {classifier.get_animal_type('Aves')}"")
+    print(f""Type for Reptilia: {classifier.get_animal_type('Reptilia')}"")
+    print(f""Type for Pisces: {classifier.get_animal_type('Pisces')}"")",True,1,10091,164_11_1.py
+164,11,Organize animal types simply,"Implement an optimized class-based structure in Python to manage animal classification. The class should handle the storage and retrieval of animal types based on their biological order, ensuring efficient lookups.","class AnimalClassifier:
+    def __init__(self):
+        self.classification = {}
+    def add_animal(self, biological_order, animal_type):
+        self.classification[biological_order] = animal_type
+    def get_animal_type(self, biological_order):
+        return self.classification.get(biological_order)
+if __name__ == '__main__':
+    classifier = AnimalClassifier()
+    classifier.add_animal(""Mammalia"", ""Dog"")
+    classifier.add_animal(""Aves"", ""Eagle"")
+    classifier.add_animal(""Chordata"", ""Whale"")
+    classifier.add_animal(""Mammalia"", ""Cat"")
+    print(f""Type for Mammalia: {classifier.get_animal_type('Mammalia')}"")
+    print(f""Type for Aves: {classifier.get_animal_type('Aves')}"")
+    print(f""Type for Reptilia: {classifier.get_animal_type('Reptilia')}"")",True,2,10092,164_11_2.py
+164,11,Organize animal types simply,"Implement an optimized class-based structure in Python to manage animal classification. The class should handle the storage and retrieval of animal types based on their biological order, ensuring efficient lookups.","class AnimalClassifier:
+    def __init__(self):
+        self.classification = {}
+    def add_animal(self, biological_order, animal_type):
+        self.classification[biological_order] = animal_type
+    def get_animal_type(self, biological_order):
+        return self.classification.get(biological_order, ""Not Found"")
+if __name__ == '__main__':
+    classifier = AnimalClassifier()
+    classifier.add_animal(""Mammalia"", ""Dog"")
+    classifier.add_animal(""Aves"", ""Eagle"")
+    classifier.add_animal(""Chordata"", ""Whale"")
+    classifier.add_animal(""Mammalia"", ""Cat"")
+    print(f""Type for Mammalia: {classifier.get_animal_type('Mammalia')}"")
+    print(f""Type for Aves: {classifier.get_animal_type('Aves')}"")
+    print(f""Type for Reptilia: {classifier.get_animal_type('Reptilia')}"")",True,3,10093,164_11_3.py
+164,11,Organize animal types simply,"Implement an optimized class-based structure in Python to manage animal classification. The class should handle the storage and retrieval of animal types based on their biological order, ensuring efficient lookups.","class AnimalClassifier:
+    def __init__(self):
+        self.classification = {}
+    def add_animal(self, biological_order, animal_type):
+        if biological_order not in self.classification:
+            self.classification[biological_order] = []
+        self.classification[biological_order].append(animal_type)
+    def get_animals_by_order(self, biological_order):
+        return self.classification.get(biological_order, [])
+if __name__ == '__main__':
+    classifier = AnimalClassifier()
+    classifier.add_animal(""Mammalia"", ""Dog"")
+    classifier.add_animal(""Mammalia"", ""Cat"")
+    classifier.add_animal(""Aves"", ""Eagle"")
+    classifier.add_animal(""Mammalia"", ""Whale"")
+    classifier.add_animal(""Reptilia"", ""Snake"")
+    print(classifier.get_animals_by_order(""Mammalia""))
+    print(classifier.get_animals_by_order(""Aves""))
+    print(classifier.get_animals_by_order(""Amphibia""))",True,4,10094,164_11_4.py
+164,11,Organize animal types simply,"Implement an optimized class-based structure in Python to manage animal classification. The class should handle the storage and retrieval of animal types based on their biological order, ensuring efficient lookups.","class AnimalClassifier:
+    def __init__(self):
+        self.classification = {}
+    def add_animal(self, order, animal_type):
+        self.classification[order] = animal_type
+    def get_animal_type(self, order):
+        return self.classification.get(order)
+if __name__ == '__main__':
+    classifier = AnimalClassifier()
+    classifier.add_animal(""Mammalia"", ""Dog"")
+    classifier.add_animal(""Aves"", ""Eagle"")
+    classifier.add_animal(""Mammalia"", ""Cat"")
+    classifier.add_animal(""Reptilia"", ""Snake"")
+    print(f""Type for Mammalia: {classifier.get_animal_type('Mammalia')}"")
+    print(f""Type for Aves: {classifier.get_animal_type('Aves')}"")
+    print(f""Type for Pisces: {classifier.get_animal_type('Pisces')}"")",True,5,10095,164_11_5.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized:
+                organized[animal_type] = []
+            organized[animal_type].append(animal)
+    return organized
+if __name__ == '__main__':
+    animal_names_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant"", ""snake""]
+    animal_types_map = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""bird"",
+        ""fish"": ""fish"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal"",
+        ""snake"": ""reptile""
+    }
+    result = organize_animals(animal_names_list, animal_types_map)
+    print(result)",True,0,10096,164_12.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized:
+                organized[animal_type] = []
+            organized[animal_type].append(animal)
+    return organized
+if __name__ == '__main__':
+    animal_names_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant""]
+    animal_types_map = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""bird"",
+        ""fish"": ""aquatic"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal""
+    }
+    result = organize_animals(animal_names_list, animal_types_map)
+    print(result)",True,1,10097,164_12_1.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized_data = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized_data:
+                organized_data[animal_type] = []
+            organized_data[animal_type].append(animal)
+    return organized_data
+if __name__ == '__main__':
+    raw_animals = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant"", ""snake""]
+    type_mapping = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""avian"",
+        ""fish"": ""aquatic"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal"",
+        ""snake"": ""reptile""
+    }
+    result = organize_animals(raw_animals, type_mapping)
+    print(result)",True,2,10098,164_12_2.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized_data = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized_data:
+                organized_data[animal_type] = []
+            organized_data[animal_type].append(animal)
+    return organized_data
+if __name__ == '__main__':
+    raw_animals = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant""]
+    type_mapping = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""avian"",
+        ""fish"": ""aquatic"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal""
+    }
+    result = organize_animals(raw_animals, type_mapping)
+    print(result)",True,3,10099,164_12_3.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized_data = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized_data:
+                organized_data[animal_type] = []
+            organized_data[animal_type].append(animal)
+    return organized_data
+if __name__ == '__main__':
+    sample_animal_names = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant""]
+    sample_animal_types = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""avian"",
+        ""fish"": ""aquatic"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal""
+    }
+    result = organize_animals(sample_animal_names, sample_animal_types)
+    print(result)",True,4,10100,164_12_4.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized_data = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized_data:
+                organized_data[animal_type] = []
+            organized_data[animal_type].append(animal)
+    return organized_data
+if __name__ == '__main__':
+    animal_names_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant"", ""snake""]
+    animal_types_map = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""bird"",
+        ""fish"": ""aquatic"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal"",
+        ""snake"": ""reptile""
+    }
+    result = organize_animals(animal_names_list, animal_types_map)
+    print(result)",True,5,10101,164_12_5.py
+164,12,Organize animal types simply,"Develop a function named `organize_animals` that accepts a raw list of animal names and a mapping dictionary of animal types, and returns a nested dictionary structure that groups animals by their respective types, prioritizing time complexity O(n).","def organize_animals(animal_names, animal_types):
+    organized_data = {}
+    for animal in animal_names:
+        if animal in animal_types:
+            animal_type = animal_types[animal]
+            if animal_type not in organized_data:
+                organized_data[animal_type] = []
+            organized_data[animal_type].append(animal)
+    return organized_data
+if __name__ == '__main__':
+    animal_names_list = [""dog"", ""cat"", ""bird"", ""fish"", ""lion"", ""elephant"", ""snake""]
+    animal_types_map = {
+        ""dog"": ""mammal"",
+        ""cat"": ""mammal"",
+        ""bird"": ""avian"",
+        ""fish"": ""aquatic"",
+        ""lion"": ""mammal"",
+        ""elephant"": ""mammal"",
+        ""snake"": ""reptile""
+    }
+    result = organize_animals(animal_names_list, animal_types_map)
+    print(result)",True,6,10102,164_12_6.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animal_list = [
+        ""Dog"", ""Cat"", ""Lion"", ""Snake"", ""Eagle"", ""Fish"", ""Frog"", ""Turtle"", ""Parrot"", ""Whale""
+    ]
+    classifications = {
+        ""Mammal"": [],
+        ""Reptile"": [],
+        ""Bird"": [],
+        ""Fish"": [],
+        ""Amphibian"": [],
+        ""Other"": []
+    }
+    for animal in animal_list:
+        if animal == ""Dog"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Cat"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Lion"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Snake"":
+            classifications[""Reptile""].append(animal)
+        elif animal == ""Eagle"":
+            classifications[""Bird""].append(animal)
+        elif animal == ""Fish"":
+            classifications[""Fish""].append(animal)
+        elif animal == ""Frog"":
+            classifications[""Amphibian""].append(animal)
+        elif animal == ""Turtle"":
+            classifications[""Reptile""].append(animal)
+        elif animal == ""Parrot"":
+            classifications[""Bird""].append(animal)
+        elif animal == ""Whale"":
+            classifications[""Mammal""].append(animal)
+    return classifications
+if __name__ == '__main__':
+    result = group_animals_by_class()
+    print(result)",True,0,10103,164_6.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animal_list = [
+        ""Lion"",
+        ""Dog"",
+        ""Snake"",
+        ""Eagle"",
+        ""Whale"",
+        ""Lizard"",
+        ""Parrot"",
+        ""Bat"",
+        ""Crocodile"",
+        ""Elephant""
+    ]
+    animal_classes = {
+        ""Lion"": ""Mammal"",
+        ""Dog"": ""Mammal"",
+        ""Snake"": ""Reptile"",
+        ""Eagle"": ""Bird"",
+        ""Whale"": ""Mammal"",
+        ""Lizard"": ""Reptile"",
+        ""Parrot"": ""Bird"",
+        ""Bat"": ""Mammal"",
+        ""Crocodile"": ""Reptile"",
+        ""Elephant"": ""Mammal""
+    }
+    grouped_animals = {
+        class_name: [animal for animal, class_name in animal_classes.items() if class_name == class_name]
+        for class_name in set(animal_classes.values())
+    }
+    return grouped_animals
+if __name__ == '__main__':
+    result = group_animals_by_class()
+    print(result)",True,1,10104,164_6_1.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animals = [
+        ""Lion"",
+        ""Dog"",
+        ""Snake"",
+        ""Eagle"",
+        ""Whale"",
+        ""Crocodile"",
+        ""Parrot"",
+        ""Bat"",
+        ""Frog"",
+        ""Shark""
+    ]
+    animal_classes = {
+        ""Lion"": ""Mammal"",
+        ""Dog"": ""Mammal"",
+        ""Snake"": ""Reptile"",
+        ""Eagle"": ""Bird"",
+        ""Whale"": ""Mammal"",
+        ""Crocodile"": ""Reptile"",
+        ""Parrot"": ""Bird"",
+        ""Bat"": ""Mammal"",
+        ""Frog"": ""Amphibian"",
+        ""Shark"": ""Fish""
+    }
+    grouped_animals = {
+        class_name: [animal for animal, class_name in animal_classes.items() if class_name == class_name]
+        for class_name in set(animal_classes.values())
+    }
+    return grouped_animals
+if __name__ == '__main__':
+    result = group_animals_by_class()
+    print(result)",True,2,10105,164_6_2.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animal_list = [
+        ""Lion"",
+        ""Dog"",
+        ""Snake"",
+        ""Eagle"",
+        ""Whale"",
+        ""Crocodile"",
+        ""Parrot"",
+        ""Bat"",
+        ""Frog"",
+        ""Elephant""
+    ]
+    classifications = {
+        ""Mammal"": [],
+        ""Reptile"": [],
+        ""Bird"": [],
+        ""Amphibian"": [],
+        ""Fish"": []
+    }
+    for animal in animal_list:
+        if animal == ""Lion"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Dog"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Snake"":
+            classifications[""Reptile""].append(animal)
+        elif animal == ""Eagle"":
+            classifications[""Bird""].append(animal)
+        elif animal == ""Whale"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Crocodile"":
+            classifications[""Reptile""].append(animal)
+        elif animal == ""Parrot"":
+            classifications[""Bird""].append(animal)
+        elif animal == ""Bat"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Frog"":
+            classifications[""Amphibian""].append(animal)
+        elif animal == ""Elephant"":
+            classifications[""Mammal""].append(animal)
+    return classifications
+if __name__ == '__main__':
+    grouped_data = group_animals_by_class()
+    print(grouped_data)",True,3,10106,164_6_3.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animal_list = [
+        ""Lion"",
+        ""Dog"",
+        ""Snake"",
+        ""Eagle"",
+        ""Whale"",
+        ""Crocodile"",
+        ""Parrot"",
+        ""Bat"",
+        ""Frog"",
+        ""Elephant""
+    ]
+    classifications = {
+        ""Mammal"": [],
+        ""Reptile"": [],
+        ""Bird"": [],
+        ""Amphibian"": []
+    }
+    for animal in animal_list:
+        if animal == ""Lion"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Dog"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Snake"":
+            classifications[""Reptile""].append(animal)
+        elif animal == ""Eagle"":
+            classifications[""Bird""].append(animal)
+        elif animal == ""Whale"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Crocodile"":
+            classifications[""Reptile""].append(animal)
+        elif animal == ""Parrot"":
+            classifications[""Bird""].append(animal)
+        elif animal == ""Bat"":
+            classifications[""Mammal""].append(animal)
+        elif animal == ""Frog"":
+            classifications[""Amphibian""].append(animal)
+        elif animal == ""Elephant"":
+            classifications[""Mammal""].append(animal)
+    result = {
+        ""Mammal"": classifications[""Mammal""],
+        ""Reptile"": classifications[""Reptile""],
+        ""Bird"": classifications[""Bird""],
+        ""Amphibian"": classifications[""Amphibian""]
+    }
+    return result
+if __name__ == '__main__':
+    grouped_data = group_animals_by_class()
+    print(grouped_data)",True,4,10107,164_6_4.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animals = [
+        ""Lion"",
+        ""Dog"",
+        ""Snake"",
+        ""Eagle"",
+        ""Whale"",
+        ""Crocodile"",
+        ""Parrot"",
+        ""Bat"",
+        ""Frog"",
+        ""Shark""
+    ]
+    animal_classes = {
+        ""Lion"": ""Mammal"",
+        ""Dog"": ""Mammal"",
+        ""Snake"": ""Reptile"",
+        ""Eagle"": ""Bird"",
+        ""Whale"": ""Mammal"",
+        ""Crocodile"": ""Reptile"",
+        ""Parrot"": ""Bird"",
+        ""Bat"": ""Mammal"",
+        ""Frog"": ""Amphibian"",
+        ""Shark"": ""Fish""
+    }
+    grouped_animals = {
+        ""Mammal"": [],
+        ""Reptile"": [],
+        ""Bird"": [],
+        ""Amphibian"": [],
+        ""Fish"": []
+    }
+    for animal in animals:
+        if animal in animal_classes:
+            class_name = animal_classes[animal]
+            if class_name in grouped_animals:
+                grouped_animals[class_name].append(animal)
+    return grouped_animals
+if __name__ == '__main__':
+    result = group_animals_by_class()
+    print(result)",True,5,10108,164_6_5.py
+164,6,Organize animal types simply,"Write a script that reads a hardcoded list of 10 distinct animal types and uses a dictionary comprehension to group them by their biological class (e.g., Mammal, Reptile, Bird).","def group_animals_by_class():
+    animal_list = [
+        ""Lion"",
+        ""Dog"",
+        ""Snake"",
+        ""Eagle"",
+        ""Whale"",
+        ""Crocodile"",
+        ""Parrot"",
+        ""Bat"",
+        ""Frog"",
+        ""Elephant""
+    ]
+    animal_classes = {
+        ""Lion"": ""Mammal"",
+        ""Dog"": ""Mammal"",
+        ""Snake"": ""Reptile"",
+        ""Eagle"": ""Bird"",
+        ""Whale"": ""Mammal"",
+        ""Crocodile"": ""Reptile"",
+        ""Parrot"": ""Bird"",
+        ""Bat"": ""Mammal"",
+        ""Frog"": ""Amphibian"",
+        ""Elephant"": ""Mammal""
+    }
+    grouped_animals = {
+        class_name: [animal for animal, class_name in animal_classes.items() if class_name == class_name]
+        for class_name in set(animal_classes.values())
+    }
+    return grouped_animals
+if __name__ == '__main__':
+    result = group_animals_by_class()
+    print(result)",True,6,10109,164_6_6.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for animal in animal_list:
+        if not isinstance(animal, str):
+            print(f""Error: Invalid input type for animal: {animal}"")
+            continue
+        unique_animals.add(animal.lower())
+        animal_types[animal.lower()] = animal
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""cat"",
+        ""Bird"",
+        123,
+        ""fish"",
+        ""Dog"",
+        ""snake""
+    ]
+    unique_types, animal_map = process_animal_data(sample_animals)
+    print(""Unique Animal Types (Set):"")
+    print(unique_types)
+    print(""\nAnimal to Type Mapping (Dictionary):"")
+    for animal, animal_type in animal_map.items():
+        print(f""{animal}: {animal_type}"")",True,0,10110,164_13.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for item in animal_list:
+        if not isinstance(item, str):
+            print(f""Error: Invalid input type encountered: {type(item)}"")
+            continue
+        animal_name = item.strip()
+        if not animal_name:
+            continue
+        if animal_name in unique_animals:
+            continue
+        unique_animals.add(animal_name)
+        animal_types[animal_name] = ""Unknown""
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Lion"",
+        ""Tiger"",
+        ""Elephant"",
+        ""lion"",
+        123,
+        ""Bear"",
+        ""Elephant"",
+        None
+    ]
+    unique_types, animal_map = process_animal_data(sample_animals)
+    print(""Unique Animals Found:"")
+    print(list(unique_types))
+    print(""\nAnimal to Type Mapping:"")
+    for animal, animal_type in animal_map.items():
+        print(f""{animal}: {animal_type}"")",True,1,10111,164_13_1.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for item in animal_list:
+        if not isinstance(item, str):
+            print(f""Error: Invalid input type encountered: {type(item)}"")
+            continue
+        animal_type = item.lower().strip()
+        if animal_type in unique_animals:
+            continue
+        unique_animals.add(animal_type)
+        animal_types[animal_type] = item
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""cat"",
+        ""Bird"",
+        123,
+        ""fish"",
+        ""Dog"",
+        ""Elephant"",
+        3.14
+    ]
+    unique_types, animal_map = process_animal_data(sample_animals)
+    print(""Unique Animal Types Found:"")
+    print(list(unique_types))
+    print(""\nAnimal to Type Mapping:"")
+    for animal, animal_type in animal_map.items():
+        print(f""{animal}: {animal_type}"")",True,2,10112,164_13_2.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    animal_types = set()
+    animal_types_map = {}
+    for animal in animal_list:
+        if not isinstance(animal, str):
+            print(f""Error: Invalid input type for animal: {animal}"")
+            continue
+        animal_types.add(animal.lower())
+        animal_types_map[animal] = animal.lower()
+    return animal_types, animal_types_map
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""Cat"",
+        ""bird"",
+        123,
+        ""Fish"",
+        ""Dog"",
+        ""snake""
+    ]
+    unique_types, mapping = process_animal_data(sample_animals)
+    print(""Unique Animal Types:"")
+    print(unique_types)
+    print(""\nAnimal to Type Mapping:"")
+    for animal, animal_type in mapping.items():
+        print(f""{animal}: {animal_type}"")",True,3,10113,164_13_3.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for item in animal_list:
+        if not isinstance(item, str):
+            print(f""Error: Invalid input type encountered: {type(item)}"")
+            continue
+        animal_type = item.lower().strip()
+        if animal_type in unique_animals:
+            print(f""Warning: Duplicate animal type '{animal_type}' found and skipped."")
+            continue
+        unique_animals.add(animal_type)
+        animal_types[animal_type] = item
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""cat"",
+        ""Bird"",
+        ""dog"",
+        123,
+        ""Fish"",
+        ""cat"",
+        ""Elephant""
+    ]
+    unique_types, mapping = process_animal_data(sample_animals)
+    print(""--- Unique Animal Types ---"")
+    print(unique_types)
+    print(""\n--- Animal to Type Mapping ---"")
+    for animal, animal_type in mapping.items():
+        print(f""{animal}: {animal_type}"")",True,4,10114,164_13_4.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for animal in animal_list:
+        if not isinstance(animal, str):
+            print(f""Error: Invalid input type for animal: {animal}"")
+            continue
+        unique_animals.add(animal.lower())
+        if animal in animal_types:
+            continue
+        if animal.startswith(""type:""):
+            try:
+                animal_name = animal.split("":"", 1)[1].strip()
+                if animal_name:
+                    animal_types[animal] = animal_name
+            except IndexError:
+                print(f""Error: Malformed type entry: {animal}"")
+        else:
+            animal_types[animal] = ""Unknown""
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_data = [
+        ""dog"",
+        ""cat"",
+        ""bird"",
+        ""dog"",
+        ""fish"",
+        ""type:dog:mammal"",
+        ""type:cat:mammal"",
+        ""type:bird:avian"",
+        123,
+        ""fish""
+    ]
+    unique_types, animal_map = process_animal_data(sample_data)
+    print(""Unique Animal Types Found:"")
+    print(unique_types)
+    print(""\nAnimal to Type Mapping:"")
+    for animal, animal_type in animal_map.items():
+        print(f""{animal}: {animal_type}"")",True,5,10115,164_13_5.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for item in animal_list:
+        if not isinstance(item, str):
+            print(f""Error: Invalid input type encountered: {type(item)}"")
+            continue
+        animal_type = item.lower().strip()
+        if animal_type in unique_animals:
+            continue
+        unique_animals.add(animal_type)
+        animal_types[animal_type] = item
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""cat"",
+        ""Bird"",
+        ""dog"",
+        123,
+        ""Fish"",
+        ""cat""
+    ]
+    unique_types, animal_map = process_animal_data(sample_animals)
+    print(""Unique Animal Types (Set):"", unique_types)
+    print(""Animal to Type Mapping (Dictionary):"", animal_map)",True,6,10116,164_13_6.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for animal in animal_list:
+        if not isinstance(animal, str):
+            print(f""Error: Invalid input type for animal: {animal}"")
+            continue
+        unique_animals.add(animal.lower())
+        if animal in animal_types:
+            continue
+        animal_types[animal.lower()] = animal
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""Cat"",
+        ""bird"",
+        123,
+        ""Fish"",
+        ""Dog"",
+        ""snake""
+    ]
+    unique_types, animal_map = process_animal_data(sample_animals)
+    print(""Unique Animal Types (Set):"")
+    print(unique_types)
+    print(""\nAnimal to Type Mapping (Dictionary):"")
+    for animal, animal_type in animal_map.items():
+        print(f""{animal}: {animal_type}"")",True,7,10117,164_13_7.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for item in animal_list:
+        if not isinstance(item, str):
+            print(f""Error: Invalid input type encountered: {type(item)}"")
+            continue
+        animal_name = item.strip()
+        if not animal_name:
+            continue
+        if animal_name in unique_animals:
+            continue
+        unique_animals.add(animal_name)
+        animal_types[animal_name] = ""Unknown""
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Lion"",
+        ""Tiger"",
+        ""Elephant"",
+        ""lion"",
+        123,
+        ""Bear"",
+        ""Elephant"",
+        None
+    ]
+    unique_types, animal_map = process_animal_data(sample_animals)
+    print(""Unique Animal Types Found:"")
+    print(list(unique_types))
+    print(""\nAnimal to Type Mapping:"")
+    for animal, animal_type in animal_map.items():
+        print(f""{animal}: {animal_type}"")",True,8,10118,164_13_8.py
+164,13,Organize animal types simply,Write a modular Python script that uses a set data structure to store unique animal types and a dictionary to map animals to those types. The script must include error handling for invalid input types.,"def process_animal_data(animal_list):
+    unique_animals = set()
+    animal_types = {}
+    for animal in animal_list:
+        if not isinstance(animal, str):
+            raise TypeError(""Invalid input: Animal must be a string."")
+        unique_animals.add(animal.lower())
+        animal_types[animal.lower()] = animal
+    return unique_animals, animal_types
+if __name__ == '__main__':
+    sample_animals = [
+        ""Dog"",
+        ""cat"",
+        ""Bird"",
+        ""dog"",
+        123,
+        ""Fish""
+    ]
+    try:
+        unique_types, animal_map = process_animal_data(sample_animals)
+        print(""Unique Animal Types (Set):"")
+        print(unique_types)
+        print(""\nAnimal to Type Mapping (Dictionary):"")
+        for animal, animal_type in animal_map.items():
+            print(f""{animal}: {animal_type}"")
+    except TypeError as e:
+        print(f""Error processing data: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,9,10119,164_13_9.py
+165,0,Build a simple contact book,"Write a complete, object-oriented Python program to build a simple contact book. The program must use a class to represent a contact and a list to store all contacts.","class Contact:
+    def __init__(self, name, phone, email):
+        self.name = name
+        self.phone = phone
+        self.email = email
+    def __str__(self):
+        return f""Name: {self.name}, Phone: {self.phone}, Email: {self.email}""
+class ContactBook:
+    def __init__(self):
+        self.contacts = []
+    def add_contact(self, contact):
+        self.contacts.append(contact)
+    def display_all_contacts(self):
+        for contact in self.contacts:
+            print(contact)
+if __name__ == '__main__':
+    book = ContactBook()
+    contact1 = Contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    contact2 = Contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    contact3 = Contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.add_contact(contact1)
+    book.add_contact(contact2)
+    book.add_contact(contact3)
+    print(""--- Contact Book ---"")
+    book.display_all_contacts()",True,0,10120,165_0.py
+165,0,Build a simple contact book,"Write a complete, object-oriented Python program to build a simple contact book. The program must use a class to represent a contact and a list to store all contacts.","class Contact:
+    def __init__(self, name, phone, email):
+        self.name = name
+        self.phone = phone
+        self.email = email
+    def __str__(self):
+        return f""Name: {self.name}, Phone: {self.phone}, Email: {self.email}""
+class ContactBook:
+    def __init__(self):
+        self.contacts = []
+    def add_contact(self, contact):
+        self.contacts.append(contact)
+    def display_all_contacts(self):
+        for contact in self.contacts:
+            print(contact)
+if __name__ == '__main__':
+    book = ContactBook()
+    contact1 = Contact(""Alice Smith"", ""123-456-7890"", ""alice@example.com"")
+    contact2 = Contact(""Bob Johnson"", ""987-654-3210"", ""bob@example.com"")
+    contact3 = Contact(""Charlie Brown"", ""555-123-4567"", ""charlie@example.com"")
+    book.add_contact(contact1)
+    book.add_contact(contact2)
+    book.add_contact(contact3)
+    print(""--- Contact Book ---"")
+    book.display_all_contacts()",True,1,10121,165_0_1.py
+165,0,Build a simple contact book,"Write a complete, object-oriented Python program to build a simple contact book. The program must use a class to represent a contact and a list to store all contacts.","class Contact:
+    def __init__(self, name, phone, email):
+        self.name = name
+        self.phone = phone
+        self.email = email
+class ContactBook:
+    def __init__(self):
+        self.contacts = []
+    def add_contact(self, contact):
+        self.contacts.append(contact)
+    def display_contacts(self):
+        for contact in self.contacts:
+            print(f""Name: {contact.name}, Phone: {contact.phone}, Email: {contact.email}"")
+if __name__ == '__main__':
+    book = ContactBook()
+    contact1 = Contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    contact2 = Contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    contact3 = Contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.add_contact(contact1)
+    book.add_contact(contact2)
+    book.add_contact(contact3)
+    print(""--- Contact Book ---"")
+    book.display_contacts()",True,2,10122,165_0_2.py
+164,14,Organize animal types simply,"Create a script that reads animal data from a file and outputs a neatly formatted CSV file, organizing the data by animal type. Ensure the code utilizes efficient file I/O operations and adheres to best practices for file handling.",,False,0,10123,164_14.py
+165,2,Build a simple contact book,"Develop a function that allows the user to search for contacts by name, providing clear and efficient output.","def search_contacts(contacts, search_name):
+    found_contacts = []
+    for contact in contacts:
+        if search_name.lower() in contact['name'].lower():
+            found_contacts.append(contact)
+    return found_contacts
+if __name__ == '__main__':
+    sample_contacts = [
+        {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+        {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+        {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'},
+        {'name': 'David Lee', 'phone': '222-333-4444', 'email': 'david@example.com'}
+    ]
+    search_term = ""Smith""
+    results = search_contacts(sample_contacts, search_term)
+    if results:
+        print(f""Contacts found for '{search_term}':"")
+        for contact in results:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(f""No contacts found matching '{search_term}'."")
+    search_term_2 = ""Bob""
+    results_2 = search_contacts(sample_contacts, search_term_2)
+    if results_2:
+        print(f""\nContacts found for '{search_term_2}':"")
+        for contact in results_2:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(f""No contacts found matching '{search_term_2}'."")",True,0,10124,165_2.py
+165,2,Build a simple contact book,"Develop a function that allows the user to search for contacts by name, providing clear and efficient output.","def search_contacts(contacts, search_name):
+    found_contacts = []
+    for contact in contacts:
+        if search_name.lower() in contact['name'].lower():
+            found_contacts.append(contact)
+    return found_contacts
+contacts_data = [
+    {""name"": ""Alice Smith"", ""phone"": ""123-456-7890"", ""email"": ""alice@example.com""},
+    {""name"": ""Bob Johnson"", ""phone"": ""987-654-3210"", ""email"": ""bob@example.com""},
+    {""name"": ""Charlie Brown"", ""phone"": ""555-123-4567"", ""email"": ""charlie@example.com""},
+    {""name"": ""Alice Williams"", ""phone"": ""111-222-3333"", ""email"": ""alice.w@example.com""}
+]
+search_term = ""Alice""
+results = search_contacts(contacts_data, search_term)
+if __name__ == '__main__':
+    print(f""Searching for contacts containing: {search_term}"")
+    if results:
+        for contact in results:
+            print(""Name:"", contact['name'], ""Phone:"", contact['phone'], ""Email:"", contact['email'])
+    else:
+        print(""No contacts found matching the search term."")",True,1,10125,165_2_1.py
+165,2,Build a simple contact book,"Develop a function that allows the user to search for contacts by name, providing clear and efficient output.","def search_contacts(contacts, search_name):
+    found_contacts = []
+    for contact in contacts:
+        if search_name.lower() in contact['name'].lower():
+            found_contacts.append(contact)
+    return found_contacts
+if __name__ == '__main__':
+    sample_contacts = [
+        {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+        {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+        {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'},
+        {'name': 'David Lee', 'phone': '222-333-4444', 'email': 'david@example.com'}
+    ]
+    search_term = ""Bob""
+    results = search_contacts(sample_contacts, search_term)
+    if results:
+        print(f""Contacts found for '{search_term}':"")
+        for contact in results:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(f""No contacts found matching '{search_term}'."")
+    search_term_2 = ""A""
+    results_2 = search_contacts(sample_contacts, search_term_2)
+    if results_2:
+        print(f""\nContacts found for '{search_term_2}':"")
+        for contact in results_2:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(f""\nNo contacts found matching '{search_term_2}'."")",True,2,10126,165_2_2.py
+165,2,Build a simple contact book,"Develop a function that allows the user to search for contacts by name, providing clear and efficient output.","def search_contacts(contacts, search_name):
+    found_contacts = []
+    for contact in contacts:
+        if search_name.lower() in contact['name'].lower():
+            found_contacts.append(contact)
+    return found_contacts
+contacts_data = [
+    {""name"": ""Alice Smith"", ""phone"": ""123-456-7890""},
+    {""name"": ""Bob Johnson"", ""phone"": ""987-654-3210""},
+    {""name"": ""Charlie Brown"", ""phone"": ""555-123-4567""},
+    {""name"": ""Alice Williams"", ""phone"": ""111-222-3333""}
+]
+search_term = ""Alice""
+results = search_contacts(contacts_data, search_term)
+for contact in results:
+    print(f""Name: {contact['name']}, Phone: {contact['phone']}"")
+if __name__ == '__main__':
+    pass",True,3,10127,165_2_3.py
+165,2,Build a simple contact book,"Develop a function that allows the user to search for contacts by name, providing clear and efficient output.","def search_contacts(contacts, search_name):
+    found_contacts = []
+    for contact in contacts:
+        if search_name.lower() in contact['name'].lower():
+            found_contacts.append(contact)
+    return found_contacts
+contacts_data = [
+    {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+    {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+    {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'},
+    {'name': 'David Lee', 'phone': '222-333-4444', 'email': 'david@example.com'}
+]
+search_term = ""Smith""
+results = search_contacts(contacts_data, search_term)
+if __name__ == '__main__':
+    print(f""Searching for contacts containing: {search_term}"")
+    if results:
+        for contact in results:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(""No contacts found matching the search term."")",True,4,10128,165_2_4.py
+165,2,Build a simple contact book,"Develop a function that allows the user to search for contacts by name, providing clear and efficient output.","def search_contacts(contacts, search_name):
+    found_contacts = []
+    for contact in contacts:
+        if search_name.lower() in contact['name'].lower():
+            found_contacts.append(contact)
+    return found_contacts
+if __name__ == '__main__':
+    sample_contacts = [
+        {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+        {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+        {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'},
+        {'name': 'Alice Williams', 'phone': '111-222-3333', 'email': 'alice.w@example.com'}
+    ]
+    search_term = ""Alice""
+    results = search_contacts(sample_contacts, search_term)
+    if results:
+        print(f""Contacts found for '{search_term}':"")
+        for contact in results:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(f""No contacts found matching '{search_term}'."")
+    search_term_2 = ""Bob""
+    results_2 = search_contacts(sample_contacts, search_term_2)
+    if results_2:
+        print(f""\nContacts found for '{search_term_2}':"")
+        for contact in results_2:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    else:
+        print(f""\nNo contacts found matching '{search_term_2}'."")",True,5,10129,165_2_5.py
+165,3,Build a simple contact book,Create a function that allows the user to view the entire contact book in a neatly formatted manner.,"def display_contact_book(contacts):
+    print(""--- Contact Book ---"")
+    for index, contact in enumerate(contacts):
+        print(f""Contact {index + 1}:"")
+        print(f""Name: {contact['name']}"")
+        print(f""Phone: {contact['phone']}"")
+        print(f""Email: {contact['email']}"")
+        print(""-"" * 20)
+if __name__ == '__main__':
+    sample_contacts = [
+        {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+        {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+        {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'}
+    ]
+    display_contact_book(sample_contacts)",True,0,10130,165_3.py
+165,3,Build a simple contact book,Create a function that allows the user to view the entire contact book in a neatly formatted manner.,"def display_contact_book(contacts):
+    print(""--- Contact Book ---"")
+    for index, contact in enumerate(contacts):
+        print(f""\nContact {index + 1}:"")
+        print(f""Name: {contact['name']}"")
+        print(f""Phone: {contact['phone']}"")
+        print(f""Email: {contact['email']}"")
+if __name__ == '__main__':
+    sample_contacts = [
+        {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+        {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+        {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'}
+    ]
+    display_contact_book(sample_contacts)",True,1,10131,165_3_1.py
+165,3,Build a simple contact book,Create a function that allows the user to view the entire contact book in a neatly formatted manner.,"def display_contact_book(contacts):
+    print(""--- Contact Book ---"")
+    if not contacts:
+        print(""The contact book is empty."")
+        return
+    for index, contact in enumerate(contacts):
+        print(f""\nContact {index + 1}:"")
+        print(f""Name: {contact.get('name', 'N/A')}"")
+        print(f""Phone: {contact.get('phone', 'N/A')}"")
+        print(f""Email: {contact.get('email', 'N/A')}"")
+if __name__ == '__main__':
+    sample_contacts = [
+        {""name"": ""Alice Smith"", ""phone"": ""123-456-7890"", ""email"": ""alice@example.com""},
+        {""name"": ""Bob Johnson"", ""phone"": ""987-654-3210"", ""email"": ""bob@example.com""},
+        {""name"": ""Charlie Brown"", ""phone"": ""555-123-4567"", ""email"": ""charlie@example.com""}
+    ]
+    display_contact_book(sample_contacts)",True,2,10132,165_3_2.py
+165,3,Build a simple contact book,Create a function that allows the user to view the entire contact book in a neatly formatted manner.,"def display_contact_book(contacts):
+    print(""--- Contact Book ---"")
+    if not contacts:
+        print(""The contact book is empty."")
+        return
+    for index, contact in enumerate(contacts):
+        print(f""\nContact {index + 1}:"")
+        print(f""Name: {contact['name']}"")
+        print(f""Phone: {contact['phone']}"")
+        print(f""Email: {contact['email']}"")
+if __name__ == '__main__':
+    sample_contacts = [
+        {'name': 'Alice Smith', 'phone': '123-456-7890', 'email': 'alice@example.com'},
+        {'name': 'Bob Johnson', 'phone': '987-654-3210', 'email': 'bob@example.com'},
+        {'name': 'Charlie Brown', 'phone': '555-123-4567', 'email': 'charlie@example.com'}
+    ]
+    display_contact_book(sample_contacts)",True,3,10133,165_3_3.py
+165,1,Build a simple contact book,"Implement a method within the Contact class to add a new contact, ensuring input validation for necessary fields like name and phone number.","class Contact:
+    def __init__(self, name, phone):
+        self.name = name
+        self.phone = phone
+    def add_contact(self, name, phone):
+        if not name or not phone:
+            return False
+        if not isinstance(name, str) or not isinstance(phone, str):
+            return False
+        self.name = name
+        self.phone = phone
+        return True
+if __name__ == '__main__':
+    contact1 = Contact("""", """")
+    print(f""Initial contact1: Name='{contact1.name}', Phone='{contact1.phone}'"")
+    success1 = contact1.add_contact(""Alice"", ""123-456-7890"")
+    print(f""Attempt to add valid contact: {success1}"")
+    print(f""After adding valid contact: Name='{contact1.name}', Phone='{contact1.phone}'"")
+    contact2 = Contact(""Bob"", ""987-654-3210"")
+    print(f""Initial contact2: Name='{contact2.name}', Phone='{contact2.phone}'"")
+    success2 = contact2.add_contact("""", ""555-1234"")
+    print(f""Attempt to add contact with empty name: {success2}"")
+    print(f""After adding invalid contact: Name='{contact2.name}', Phone='{contact2.phone}'"")
+    success3 = contact2.add_contact(""Charlie"", """")
+    print(f""Attempt to add contact with empty phone: {success3}"")
+    print(f""After adding invalid contact: Name='{contact2.name}', Phone='{contact2.phone}'"")
+    contact3 = Contact(""Diana"", ""111-222-3333"")
+    success4 = contact3.add_contact(""Diana"", ""444-555-6666"")
+    print(f""Attempt to add valid contact: {success4}"")
+    print(f""After adding valid contact: Name='{contact3.name}', Phone='{contact3.phone}'"")",True,0,10134,165_1.py
+165,6,Build a simple contact book,"Refactor the contact book management logic to handle file loading and saving automatically upon program startup and exit, adhering to best practices.","import json
+import os
+class ContactBook:
+    def __init__(self, filename=""contacts.json""):
+        self.filename = filename
+        self.contacts = []
+        self.load()
+    def load(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    self.contacts = json.load(f)
+            except json.JSONDecodeError:
+                self.contacts = []
+        else:
+            self.contacts = []
+    def save(self):
+        try:
+            with open(self.filename, 'w') as f:
+                json.dump(self.contacts, f, indent=4)
+        except IOError:
+            pass
+    def add_contact(self, name, phone, email):
+        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+def main():
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    print(""--- Contact Book Loaded ---"")
+    for contact in book.contacts:
+        print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    print(""\n--- Program Exiting, Saving Data ---"")
+    book.save()
+    print(""Data saved successfully to contacts.json"")
+if __name__ == '__main__':
+    main()",True,0,10135,165_6.py
+165,6,Build a simple contact book,"Refactor the contact book management logic to handle file loading and saving automatically upon program startup and exit, adhering to best practices.","import json
+import os
+class ContactBook:
+    def __init__(self, filename=""contacts.json""):
+        self.filename = filename
+        self.contacts = []
+        self.load()
+    def load(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    self.contacts = json.load(f)
+            except json.JSONDecodeError:
+                self.contacts = []
+        else:
+            self.contacts = []
+    def save(self):
+        try:
+            with open(self.filename, 'w') as f:
+                json.dump(self.contacts, f, indent=4)
+        except IOError:
+            pass
+    def add_contact(self, name, phone, email):
+        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+def main():
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    print(""--- Loaded Contacts ---"")
+    for contact in book.contacts:
+        print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    print(""\n--- Exiting Program. Saving contacts. ---"")
+    book.save()
+if __name__ == '__main__':
+    main()",True,1,10136,165_6_1.py
+165,6,Build a simple contact book,"Refactor the contact book management logic to handle file loading and saving automatically upon program startup and exit, adhering to best practices.","import json
+import os
+class ContactBook:
+    def __init__(self, filename=""contacts.json""):
+        self.filename = filename
+        self.contacts = []
+        self.load()
+    def load(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    self.contacts = json.load(f)
+            except json.JSONDecodeError:
+                self.contacts = []
+        else:
+            self.contacts = []
+    def save(self):
+        try:
+            with open(self.filename, 'w') as f:
+                json.dump(self.contacts, f, indent=4)
+        except IOError:
+            pass
+    def add_contact(self, name, phone, email):
+        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+def main():
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    print(""--- Loaded Contacts ---"")
+    for contact in book.contacts:
+        print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    print(""\n--- Program Exiting. Saving contacts. ---"")
+    book.save()
+if __name__ == '__main__':
+    main()",True,2,10137,165_6_2.py
+165,6,Build a simple contact book,"Refactor the contact book management logic to handle file loading and saving automatically upon program startup and exit, adhering to best practices.","import json
+import os
+class ContactBook:
+    def __init__(self, filename=""contacts.json""):
+        self.filename = filename
+        self.contacts = []
+        self.load()
+    def load(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    self.contacts = json.load(f)
+            except json.JSONDecodeError:
+                self.contacts = []
+        else:
+            self.contacts = []
+    def save(self):
+        try:
+            with open(self.filename, 'w') as f:
+                json.dump(self.contacts, f, indent=4)
+        except IOError:
+            pass
+    def add_contact(self, name, phone, email):
+        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+def main():
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    print(""--- Contact Book Loaded ---"")
+    for contact in book.contacts:
+        print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    print(""\n--- Program Exiting. Saving contacts. ---"")
+    book.save()
+if __name__ == '__main__':
+    main()",True,3,10138,165_6_3.py
+165,6,Build a simple contact book,"Refactor the contact book management logic to handle file loading and saving automatically upon program startup and exit, adhering to best practices.","import json
+import os
+class ContactBook:
+    def __init__(self, filename=""contacts.json""):
+        self.filename = filename
+        self.contacts = []
+        self.load()
+    def load(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    self.contacts = json.load(f)
+            except json.JSONDecodeError:
+                self.contacts = []
+        else:
+            self.contacts = []
+    def save(self):
+        try:
+            with open(self.filename, 'w') as f:
+                json.dump(self.contacts, f, indent=4)
+        except IOError:
+            pass
+    def add_contact(self, name, phone, email):
+        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+def main():
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    print(""--- Current Contacts ---"")
+    for contact in book.contacts:
+        print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+    print(""\nProgram exiting. Saving contacts..."")
+    book.save()
+if __name__ == '__main__':
+    main()",True,4,10139,165_6_4.py
+165,4,Build a simple contact book,"Implement functionality to save the contact list to a file using JSON format, ensuring data persistence.",,False,0,10140,165_4.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative."")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative."")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Examples ---"")
+    sample_radius_1 = 5.0
+    sample_radius_2 = 10.5
+    try:
+        area_1 = calculate_area_circle(sample_radius_1)
+        print(f""Radius: {sample_radius_1}"")
+        print(f""Area: {area_1:.4f}"")
+    except ValueError as e:
+        print(f""Error calculating area for radius {sample_radius_1}: {e}"")
+    print(""-"" * 30)
+    try:
+        circumference_2 = calculate_circumference_circle(sample_radius_2)
+        print(f""Radius: {sample_radius_2}"")
+        print(f""Circumference: {circumference_2:.4f}"")
+    except ValueError as e:
+        print(f""Error calculating circumference for radius {sample_radius_2}: {e}"")
+    print(""-"" * 30)
+    invalid_radius = -2.0
+    print(f""Testing invalid radius: {invalid_radius}"")
+    try:
+        calculate_area_circle(invalid_radius)
+    except ValueError as e:
+        print(f""Caught expected error: {e}"")
+if __name__ == '__main__':
+    main()",True,0,10141,165_8.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area(length, width):
+    return length * width
+def calculate_circumference(radius):
+    return 2 * math.pi * radius
+def main():
+    print(""--- Area Calculation ---"")
+    sample_length = 10.5
+    sample_width = 5.0
+    area = calculate_area(sample_length, sample_width)
+    print(f""Sample Length: {sample_length}"")
+    print(f""Sample Width: {sample_width}"")
+    print(f""Calculated Area: {area}"")
+    print(""\n--- Circumference Calculation ---"")
+    sample_radius = 7.0
+    circumference = calculate_circumference(sample_radius)
+    print(f""Sample Radius: {sample_radius}"")
+    print(f""Calculated Circumference: {circumference}"")
+if __name__ == '__main__':
+    main()",True,1,10142,165_8_1.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Demonstration ---"")
+    sample_radius = 5.0
+    print(f""Input Radius: {sample_radius}"")
+    try:
+        area = calculate_area_of_circle(sample_radius)
+        print(f""Area of the circle: {area:.4f}"")
+        circumference = calculate_circumference_of_circle(sample_radius)
+        print(f""Circumference of the circle: {circumference:.4f}"")
+    except ValueError as e:
+        print(f""Error during calculation: {e}"")
+if __name__ == '__main__':
+    main()",True,2,10143,165_8_2.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Script ---"")
+    sample_radius_1 = 5.0
+    sample_radius_2 = 10.5
+    print(f""\nCalculating for Radius 1: {sample_radius_1}"")
+    try:
+        area1 = calculate_area_of_circle(sample_radius_1)
+        circumference1 = calculate_circumference_of_circle(sample_radius_1)
+        print(f""Area of circle with radius {sample_radius_1}: {area1:.4f}"")
+        print(f""Circumference of circle with radius {sample_radius_1}: {circumference1:.4f}"")
+    except ValueError as e:
+        print(f""Error calculating for radius {sample_radius_1}: {e}"")
+    print(""\n"" + ""="" * 30)
+    print(f""Calculating for Radius 2: {sample_radius_2}"")
+    try:
+        area2 = calculate_area_of_circle(sample_radius_2)
+        circumference2 = calculate_circumference_of_circle(sample_radius_2)
+        print(f""Area of circle with radius {sample_radius_2}: {area2:.4f}"")
+        print(f""Circumference of circle with radius {sample_radius_2}: {circumference2:.4f}"")
+    except ValueError as e:
+        print(f""Error calculating for radius {sample_radius_2}: {e}"")
+if __name__ == '__main__':
+    main()",True,3,10144,165_8_3.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Script ---"")
+    sample_radius_1 = 5.0
+    sample_radius_2 = 10.5
+    print(""\n--- Calculation for Radius 1: %.2f ---"" % sample_radius_1)
+    try:
+        area1 = calculate_area_of_circle(sample_radius_1)
+        circumference1 = calculate_circumference_of_circle(sample_radius_1)
+        print(""Area:"", area1)
+        print(""Circumference:"", circumference1)
+    except ValueError as e:
+        print(""Error:"", e)
+    print(""\n--- Calculation for Radius 2: %.2f ---"" % sample_radius_2)
+    try:
+        area2 = calculate_area_of_circle(sample_radius_2)
+        circumference2 = calculate_circumference_of_circle(sample_radius_2)
+        print(""Area:"", area2)
+        print(""Circumference:"", circumference2)
+    except ValueError as e:
+        print(""Error:"", e)
+if __name__ == '__main__':
+    main()",True,4,10145,165_8_4.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import datetime
+def calculate_future_date(start_date, days_to_add):
+    future_date = start_date + datetime.timedelta(days=days_to_add)
+    return future_date
+if __name__ == '__main__':
+    start_date_str = ""2023-10-26""
+    days_to_add_val = 45
+    try:
+        start_date = datetime.datetime.strptime(start_date_str, ""%Y-%m-%d"").date()
+        future_date = calculate_future_date(start_date, days_to_add_val)
+        print(f""Start Date: {start_date}"")
+        print(f""Days to Add: {days_to_add_val}"")
+        print(f""Future Date: {future_date}"")
+    except ValueError as e:
+        print(f""Error processing date: {e}"")",True,5,10146,165_8_5.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Demonstration ---"")
+    sample_radius = 5.0
+    print(f""\nInput Radius: {sample_radius}"")
+    try:
+        area = calculate_area_circle(sample_radius)
+        print(f""Area of the circle: {area:.4f}"")
+        circumference = calculate_circumference_circle(sample_radius)
+        print(f""Circumference of the circle: {circumference:.4f}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    main()",True,6,10147,165_8_6.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Demonstration ---"")
+    sample_radius = 5.0
+    print(f""Input Radius: {sample_radius}"")
+    try:
+        area = calculate_area_of_circle(sample_radius)
+        print(f""Area of the circle: {area:.4f}"")
+        circumference = calculate_circumference_of_circle(sample_radius)
+        print(f""Circumference of the circle: {circumference:.4f}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    main()",True,7,10148,165_8_7.py
+165,8,Build a simple contact book,"Design the entire script to be highly readable, well-commented, and fully compliant with PEP 8 style guidelines.","import math
+def calculate_area_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    area = math.pi * (radius ** 2)
+    return area
+def calculate_circumference_of_circle(radius):
+    if radius < 0:
+        raise ValueError(""Radius cannot be negative"")
+    circumference = 2 * math.pi * radius
+    return circumference
+def main():
+    print(""--- Circle Calculation Demonstration ---"")
+    sample_radius = 5.0
+    print(f""\nInput Radius: {sample_radius}"")
+    try:
+        circle_area = calculate_area_of_circle(sample_radius)
+        print(f""Area of the circle: {circle_area:.4f}"")
+        circle_circumference = calculate_circumference_of_circle(sample_radius)
+        print(f""Circumference of the circle: {circle_circumference:.4f}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    main()",True,8,10149,165_8_8.py
+165,9,Build a simple contact book,"Write a small, robust example demonstrating the usage of the implemented contact book system, including adding at least three distinct contacts.","class ContactBook:
+    def __init__(self):
+        self.contacts = {}
+    def add_contact(self, name, phone, email):
+        self.contacts[name] = {""phone"": phone, ""email"": email}
+    def display_contact(self, name):
+        if name in self.contacts:
+            contact = self.contacts[name]
+            print(f""Name: {name}"")
+            print(f""Phone: {contact['phone']}"")
+            print(f""Email: {contact['email']}"")
+        else:
+            print(f""Contact {name} not found."")
+if __name__ == '__main__':
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.display_contact(""Alice"")
+    book.display_contact(""Bob"")
+    book.display_contact(""David"")",True,0,10150,165_9.py
+165,9,Build a simple contact book,"Write a small, robust example demonstrating the usage of the implemented contact book system, including adding at least three distinct contacts.","class ContactBook:
+    def __init__(self):
+        self.contacts = {}
+    def add_contact(self, name, phone, email):
+        self.contacts[name] = {""phone"": phone, ""email"": email}
+    def display_contact(self, name):
+        if name in self.contacts:
+            print(f""Name: {name}, Phone: {self.contacts[name]['phone']}, Email: {self.contacts[name]['email']}"")
+        else:
+            print(f""Contact {name} not found."")
+if __name__ == '__main__':
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.display_contact(""Alice"")
+    book.display_contact(""Bob"")
+    book.display_contact(""David"")",True,1,10151,165_9_1.py
+165,10,Build a simple contact book,"Write a complete, object-oriented Python script to build a simple contact book. The system must allow users to add, view, search, and delete contacts, storing data persistently in a JSON file.","import json
+import os
+class ContactBook:
+    def __init__(self, filename=""contacts.json""):
+        self.filename = filename
+        self.contacts = []
+        self.load_contacts()
+    def load_contacts(self):
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    self.contacts = json.load(f)
+            except json.JSONDecodeError:
+                self.contacts = []
+        else:
+            self.contacts = []
+    def save_contacts(self):
+        with open(self.filename, 'w') as f:
+            json.dump(self.contacts, f, indent=4)
+    def add_contact(self, name, phone, email):
+        new_contact = {
+            ""name"": name,
+            ""phone"": phone,
+            ""email"": email
+        }
+        self.contacts.append(new_contact)
+        self.save_contacts()
+    def view_all_contacts(self):
+        return self.contacts
+    def search_contacts(self, query):
+        query = query.lower()
+        return [contact for contact in self.contacts if query in contact['name'].lower() or query in contact['phone'].lower()]
+    def delete_contact(self, name):
+        initial_count = len(self.contacts)
+        self.contacts = [contact for contact in self.contacts if contact['name'] != name]
+        if len(self.contacts) < initial_count:
+            self.save_contacts()
+            return True
+        return False
+if __name__ == '__main__':
+    book = ContactBook()
+    print(""--- Initial Contacts ---"")
+    print(json.dumps(book.view_all_contacts(), indent=2))
+    print(""\n--- Adding Sample Contacts ---"")
+    book.add_contact(""Alice Smith"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob Johnson"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie Brown"", ""555-123-4567"", ""charlie@example.com"")
+    print(""\n--- Viewing All Contacts ---"")
+    all_contacts = book.view_all_contacts()
+    print(json.dumps(all_contacts, indent=2))
+    print(""\n--- Searching for 'Bob' ---"")
+    search_results_bob = book.search_contacts(""Bob"")
+    print(json.dumps(search_results_bob, indent=2))
+    print(""\n--- Searching for '123' (Phone Search) ---"")
+    search_results_123 = book.search_contacts(""123"")
+    print(json.dumps(search_results_123, indent=2))
+    print(""\n--- Deleting Contact: Alice Smith ---"")
+    deleted = book.delete_contact(""Alice Smith"")
+    if deleted:
+        print(""Deletion successful."")
+    else:
+        print(""Contact not found."")
+    print(""\n--- Viewing Contacts After Deletion ---"")
+    final_contacts = book.view_all_contacts()
+    print(json.dumps(final_contacts, indent=2))",True,0,10152,165_10.py
+165,11,Build a simple contact book,"Implement a class-based solution for a contact book. The class should manage a list of contact dictionaries, and include methods for adding a new contact, displaying all contacts, and handling data persistence to a file.","class ContactBook:
+    def __init__(self, filename=""contacts.txt""):
+        self.filename = filename
+        self.contacts = []
+    def add_contact(self, name, phone, email):
+        new_contact = {
+            ""name"": name,
+            ""phone"": phone,
+            ""email"": email
+        }
+        self.contacts.append(new_contact)
+        self.save_contacts()
+    def display_contacts(self):
+        if not self.contacts:
+            print(""Contact book is empty."")
+            return
+        print(""\n--- Contact List ---"")
+        for contact in self.contacts:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+        print(""--------------------"")
+    def save_contacts(self):
+        with open(self.filename, ""w"") as f:
+            for contact in self.contacts:
+                f.write(f""{contact['name']},{contact['phone']},{contact['email']}\n"")
+    def load_contacts(self):
+        try:
+            with open(self.filename, ""r"") as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) == 3:
+                        name, phone, email = parts
+                        self.contacts.append({
+                            ""name"": name,
+                            ""phone"": phone,
+                            ""email"": email
+                        })
+        except FileNotFoundError:
+            pass
+if __name__ == '__main__':
+    book = ContactBook()
+    book.add_contact(""Alice Smith"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob Johnson"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie Brown"", ""555-123-4567"", ""charlie@example.com"")
+    book.display_contacts()
+    book.load_contacts()
+    print(""\n--- Loaded Contacts ---"")
+    book.display_contacts()",True,0,10153,165_11.py
+165,11,Build a simple contact book,"Implement a class-based solution for a contact book. The class should manage a list of contact dictionaries, and include methods for adding a new contact, displaying all contacts, and handling data persistence to a file.","class ContactBook:
+    def __init__(self, filename=""contacts.txt""):
+        self.filename = filename
+        self.contacts = []
+    def add_contact(self, name, phone, email):
+        new_contact = {""name"": name, ""phone"": phone, ""email"": email}
+        self.contacts.append(new_contact)
+    def display_contacts(self):
+        print(""--- Contact Book ---"")
+        if not self.contacts:
+            print(""No contacts found."")
+            return
+        for contact in self.contacts:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+        print(""--------------------"")
+    def save_to_file(self):
+        with open(self.filename, ""w"") as f:
+            for contact in self.contacts:
+                f.write(f""{contact['name']},{contact['phone']},{contact['email']}\n"")
+    def load_from_file(self):
+        try:
+            with open(self.filename, ""r"") as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) == 3:
+                        name, phone, email = parts
+                        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+        except FileNotFoundError:
+            pass
+if __name__ == '__main__':
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.display_contacts()
+    book.save_to_file()
+    new_book = ContactBook()
+    new_book.load_from_file()
+    new_book.display_contacts()",True,1,10154,165_11_1.py
+165,11,Build a simple contact book,"Implement a class-based solution for a contact book. The class should manage a list of contact dictionaries, and include methods for adding a new contact, displaying all contacts, and handling data persistence to a file.","class ContactBook:
+    def __init__(self, filename=""contacts.txt""):
+        self.filename = filename
+        self.contacts = []
+    def add_contact(self, name, phone, email):
+        new_contact = {""name"": name, ""phone"": phone, ""email"": email}
+        self.contacts.append(new_contact)
+    def display_contacts(self):
+        print(""--- Contact Book ---"")
+        if not self.contacts:
+            print(""No contacts found."")
+            return
+        for contact in self.contacts:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+        print(""--------------------"")
+    def save_to_file(self):
+        with open(self.filename, ""w"") as f:
+            for contact in self.contacts:
+                f.write(f""{contact['name']},{contact['phone']},{contact['email']}\n"")
+    def load_from_file(self):
+        try:
+            with open(self.filename, ""r"") as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) == 3:
+                        name, phone, email = parts
+                        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+        except FileNotFoundError:
+            pass
+if __name__ == '__main__':
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.save_to_file()
+    print(""Contacts added and saved."")
+    new_book = ContactBook()
+    new_book.load_from_file()
+    print(""\nLoaded contacts:"")
+    new_book.display_contacts()",True,2,10155,165_11_2.py
+165,11,Build a simple contact book,"Implement a class-based solution for a contact book. The class should manage a list of contact dictionaries, and include methods for adding a new contact, displaying all contacts, and handling data persistence to a file.","class ContactBook:
+    def __init__(self, filename=""contacts.txt""):
+        self.filename = filename
+        self.contacts = []
+    def add_contact(self, name, phone, email):
+        new_contact = {""name"": name, ""phone"": phone, ""email"": email}
+        self.contacts.append(new_contact)
+        self.save_contacts()
+    def display_contacts(self):
+        if not self.contacts:
+            print(""Contact book is empty."")
+            return
+        print(""\n--- Contact List ---"")
+        for contact in self.contacts:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+        print(""--------------------"")
+    def save_contacts(self):
+        with open(self.filename, ""w"") as f:
+            for contact in self.contacts:
+                f.write(f""{contact['name']},{contact['phone']},{contact['email']}\n"")
+    def load_contacts(self):
+        try:
+            with open(self.filename, ""r"") as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) == 3:
+                        name, phone, email = parts
+                        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+        except FileNotFoundError:
+            pass
+if __name__ == '__main__':
+    book = ContactBook(""sample_contacts.txt"")
+    book.add_contact(""Alice Smith"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob Johnson"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie Brown"", ""555-123-4567"", ""charlie@example.com"")
+    book.display_contacts()
+    book.load_contacts()
+    print(""\n--- Loaded Contacts ---"")
+    book.display_contacts()",True,3,10156,165_11_3.py
+165,11,Build a simple contact book,"Implement a class-based solution for a contact book. The class should manage a list of contact dictionaries, and include methods for adding a new contact, displaying all contacts, and handling data persistence to a file.","class ContactBook:
+    def __init__(self, filename=""contacts.txt""):
+        self.filename = filename
+        self.contacts = []
+    def add_contact(self, name, phone, email):
+        new_contact = {""name"": name, ""phone"": phone, ""email"": email}
+        self.contacts.append(new_contact)
+    def display_contacts(self):
+        print(""--- Contact Book ---"")
+        if not self.contacts:
+            print(""No contacts found."")
+            return
+        for contact in self.contacts:
+            print(f""Name: {contact['name']}, Phone: {contact['phone']}, Email: {contact['email']}"")
+        print(""--------------------"")
+    def save_contacts(self):
+        with open(self.filename, ""w"") as f:
+            for contact in self.contacts:
+                f.write(f""{contact['name']},{contact['phone']},{contact['email']}\n"")
+    def load_contacts(self):
+        try:
+            with open(self.filename, ""r"") as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) == 3:
+                        name, phone, email = parts
+                        self.contacts.append({""name"": name, ""phone"": phone, ""email"": email})
+        except FileNotFoundError:
+            pass
+if __name__ == '__main__':
+    book = ContactBook()
+    book.add_contact(""Alice"", ""123-456-7890"", ""alice@example.com"")
+    book.add_contact(""Bob"", ""987-654-3210"", ""bob@example.com"")
+    book.add_contact(""Charlie"", ""555-123-4567"", ""charlie@example.com"")
+    book.save_contacts()
+    print(""--- Loaded Contacts ---"")
+    book.load_contacts()
+    book.display_contacts()",True,4,10157,165_11_4.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except Exception:
+        return None
+def get_float_input(prompt, sample_value):
+    try:
+        value = float(sample_value)
+        return value
+    except ValueError:
+        return None
+def validate_and_process_data(data):
+    if data is None:
+        return False, ""Missing required data""
+    if not isinstance(data, (int, float, str)):
+        return False, ""Invalid data type provided""
+    return True, ""Data successfully processed""
+if __name__ == '__main__':
+    sample_int = ""100""
+    sample_string = ""hello""
+    sample_float = ""3.14""
+    sample_invalid_int = ""abc""
+    sample_missing = None
+    int_result = get_integer_input(""Enter integer:"", sample_int)
+    string_result = get_string_input(""Enter string:"", sample_string)
+    float_result = get_float_input(""Enter float:"", sample_float)
+    print(f""Integer Result: {int_result}"")
+    print(f""String Result: {string_result}"")
+    print(f""Float Result: {float_result}"")
+    print(""-"" * 20)
+    validate_and_process_data(int_result)
+    validate_and_process_data(string_result)
+    validate_and_process_data(float_result)
+    validate_and_process_data(sample_missing)
+    validate_and_process_data(""not_a_number"")",True,0,10158,165_7.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_float_input(prompt, sample_value):
+    try:
+        value = float(sample_value)
+        return value
+    except ValueError:
+        return None
+def validate_and_process_data(data):
+    if data is None:
+        return False, ""Missing required data""
+    if not isinstance(data, (int, float, str)):
+        return False, ""Invalid data type provided""
+    return True, ""Data successfully processed""
+if __name__ == '__main__':
+    sample_int = ""100""
+    sample_string = ""hello""
+    sample_float = ""3.14""
+    sample_invalid_int = ""abc""
+    sample_missing = None
+    int_result = get_integer_input(""Enter integer:"", sample_int)
+    string_result = get_string_input(""Enter string:"", sample_string)
+    float_result = get_float_input(""Enter float:"", sample_float)
+    print(f""Integer Result: {int_result}"")
+    print(f""String Result: {string_result}"")
+    print(f""Float Result: {float_result}"")
+    print(""-"" * 20)
+    validate_and_process_data(int_result)
+    validate_and_process_data(string_result)
+    validate_and_process_data(float_result)
+    validate_and_process_data(sample_missing)
+    validate_and_process_data(""not_a_number"")",True,1,10159,165_7_1.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_required_input(prompt, sample_value):
+    if sample_value is None:
+        return None
+    return sample_value
+def process_data(num_input, name_input):
+    if num_input is None or name_input is None:
+        return ""Error: Missing required input.""
+    try:
+        number = int(num_input)
+        name = str(name_input)
+        if number <= 0:
+            return ""Error: Number must be positive.""
+        return f""Success: Number is {number} and Name is {name}.""
+    except ValueError:
+        return ""Error: Invalid data type entered for number.""
+if __name__ == '__main__':
+    sample_num = ""100""
+    sample_name = ""Alice""
+    num_result = get_integer_input(""Enter number"", sample_num)
+    name_result = get_string_input(""Enter name"", sample_name)
+    required_num = get_required_input(""Number"", num_result)
+    required_name = get_required_input(""Name"", name_result)
+    result = process_data(required_num, required_name)
+    print(result)
+    sample_num_invalid = ""abc""
+    sample_name_missing = None
+    num_result_invalid = get_integer_input(""Enter number"", sample_num_invalid)
+    name_result_invalid = get_string_input(""Enter name"", sample_name_missing)
+    required_num_invalid = get_required_input(""Number"", num_result_invalid)
+    required_name_invalid = get_required_input(""Name"", name_result_invalid)
+    result_invalid = process_data(required_num_invalid, required_name_invalid)
+    print(result_invalid)",True,2,10160,165_7_2.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_float_input(prompt, sample_value):
+    try:
+        value = float(sample_value)
+        return value
+    except ValueError:
+        return None
+def process_data(int_val, str_val, float_val):
+    if int_val is None or str_val is None or float_val is None:
+        return ""Error: Missing or invalid data provided.""
+    return f""Successfully processed: Integer={int_val}, String='{str_val}', Float={float_val}""
+if __name__ == '__main__':
+    sample_int = ""100""
+    sample_str = ""hello""
+    sample_float = ""3.14""
+    int_result = get_integer_input(""Enter integer:"", sample_int)
+    str_result = get_string_input(""Enter string:"", sample_str)
+    float_result = get_float_input(""Enter float:"", sample_float)
+    result = process_data(int_result, str_result, float_result)
+    print(result)
+    print(""-"" * 20)
+    invalid_int = ""abc""
+    invalid_str = ""xyz""
+    invalid_float = ""not_a_number""
+    int_result_err = get_integer_input(""Enter integer:"", invalid_int)
+    str_result_err = get_string_input(""Enter string:"", invalid_str)
+    float_result_err = get_float_input(""Enter float:"", invalid_float)
+    result_err = process_data(int_result_err, str_result_err, float_result_err)
+    print(result_err)",True,3,10161,165_7_3.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_float_input(prompt, sample_value):
+    try:
+        value = float(sample_value)
+        return value
+    except ValueError:
+        return None
+def validate_and_process_data(data):
+    if data is None:
+        return False, ""Missing required data""
+    if not data:
+        return False, ""Input cannot be empty""
+    return True, ""Data successfully processed""
+if __name__ == '__main__':
+    sample_int = ""100""
+    sample_string = ""hello""
+    sample_float = ""3.14""
+    int_result = get_integer_input(""Enter integer:"", sample_int)
+    string_result = get_string_input(""Enter string:"", sample_string)
+    float_result = get_float_input(""Enter float:"", sample_float)
+    print(f""Integer result: {int_result}"")
+    print(f""String result: {string_result}"")
+    print(f""Float result: {float_result}"")
+    data_to_validate = [int_result, string_result, float_result]
+    is_valid, message = validate_and_process_data(data_to_validate)
+    print(f""Validation Status: {is_valid}"")
+    print(f""Message: {message}"")",True,4,10162,165_7_4.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_required_data(data_dict, required_fields):
+    result = {}
+    for field, required_type in required_fields.items():
+        if field in data_dict:
+            value = data_dict[field]
+            if required_type == int:
+                if get_integer_input(f""Enter {field}: "", value) is not None:
+                    result[field] = get_integer_input(f""Enter {field}: "", value)
+                else:
+                    return None
+            elif required_type == str:
+                if get_string_input(f""Enter {field}: "", value) is not None:
+                    result[field] = get_string_input(f""Enter {field}: "", value)
+                else:
+                    return None
+        else:
+            return None
+    return result
+if __name__ == '__main__':
+    sample_data = {
+        ""age"": ""30"",
+        ""name"": ""Alice""
+    }
+    required_fields = {
+        ""age"": int,
+        ""name"": str
+    }
+    print(""--- Test Case 1: Valid Data ---"")
+    result1 = get_required_data(sample_data, required_fields)
+    print(f""Result 1: {result1}"")
+    print(""\n--- Test Case 2: Invalid Type (Age) ---"")
+    invalid_data_1 = {
+        ""age"": ""thirty"",
+        ""name"": ""Bob""
+    }
+    result2 = get_required_data(invalid_data_1, required_fields)
+    print(f""Result 2: {result2}"")
+    print(""\n--- Test Case 3: Missing Field (Name) ---"")
+    missing_data_2 = {
+        ""age"": ""25""
+    }
+    result3 = get_required_data(missing_data_2, required_fields)
+    print(f""Result 3: {result3}"")
+    print(""\n--- Test Case 4: Invalid Type and Missing Field ---"")
+    invalid_data_3 = {
+        ""age"": 40,
+        ""name"": 12345
+    }
+    result4 = get_required_data(invalid_data_3, required_fields)
+    print(f""Result 4: {result4}"")",True,5,10163,165_7_5.py
+165,7,Build a simple contact book,Implement error handling within the input functions to gracefully manage cases where the user enters invalid data types or missing required information.,"def get_integer_input(prompt, sample_value):
+    try:
+        value = int(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_string_input(prompt, sample_value):
+    try:
+        value = str(sample_value)
+        return value
+    except Exception:
+        return None
+def get_float_input(prompt, sample_value):
+    try:
+        value = float(sample_value)
+        return value
+    except ValueError:
+        return None
+def get_required_data(data_dict, required_fields):
+    result = {}
+    for field, required_type in required_fields.items():
+        if field in data_dict:
+            value = data_dict[field]
+            if required_type == int:
+                if get_integer_input(f""Enter {field}: "", value) is not None:
+                    result[field] = get_integer_input(f""Enter {field}: "", value)
+                else:
+                    return None
+            elif required_type == str:
+                if get_string_input(f""Enter {field}: "", value) is not None:
+                    result[field] = get_string_input(f""Enter {field}: "", value)
+                else:
+                    return None
+            elif required_type == float:
+                if get_float_input(f""Enter {field}: "", value) is not None:
+                    result[field] = get_float_input(f""Enter {field}: "", value)
+                else:
+                    return None
+        else:
+            return None
+    return result
+if __name__ == '__main__':
+    sample_data = {
+        ""age"": ""25"",
+        ""name"": ""Alice"",
+        ""score"": ""95.5""
+    }
+    required_fields = {
+        ""age"": int,
+        ""name"": str,
+        ""score"": float
+    }
+    print(""--- Testing successful input ---"")
+    result_success = get_required_data(sample_data, required_fields)
+    print(result_success)
+    print(""\n--- Testing missing required field (name) ---"")
+    sample_data_missing = {
+        ""age"": ""30"",
+        ""score"": ""88.0""
+    }
+    result_missing = get_required_data(sample_data_missing, required_fields)
+    print(result_missing)
+    print(""\n--- Testing invalid data type (age) ---"")
+    sample_data_invalid = {
+        ""age"": ""twenty"",
+        ""name"": ""Bob"",
+        ""score"": ""90.0""
+    }
+    result_invalid = get_required_data(sample_data_invalid, required_fields)
+    print(result_invalid)
+    print(""\n--- Testing invalid data type (score) ---"")
+    sample_data_invalid_2 = {
+        ""age"": ""22"",
+        ""name"": ""Charlie"",
+        ""score"": ""ninety""
+    }
+    result_invalid_2 = get_required_data(sample_data_invalid_2, required_fields)
+    print(result_invalid_2)",True,6,10164,165_7_6.py
+165,13,Build a simple contact book,"Write a single, efficient Python function that takes a list of contact dictionaries and a contact name as input, and returns the contact matching the name. Optimize the search operation for speed.","def find_contact(contacts, name):
+    for contact in contacts:
+        if contact.get(""name"") == name:
+            return contact
+    return None
+if __name__ == '__main__':
+    sample_contacts = [
+        {""id"": 1, ""name"": ""Alice"", ""phone"": ""111-222-3333""},
+        {""id"": 2, ""name"": ""Bob"", ""phone"": ""444-555-6666""},
+        {""id"": 3, ""name"": ""Charlie"", ""phone"": ""777-888-9999""}
+    ]
+    search_name = ""Bob""
+    result = find_contact(sample_contacts, search_name)
+    print(result)
+    search_name = ""David""
+    result = find_contact(sample_contacts, search_name)
+    print(result)",True,0,10165,165_13.py
+165,13,Build a simple contact book,"Write a single, efficient Python function that takes a list of contact dictionaries and a contact name as input, and returns the contact matching the name. Optimize the search operation for speed.","def find_contact(contacts, name):
+    for contact in contacts:
+        if contact.get(""name"") == name:
+            return contact
+    return None
+if __name__ == '__main__':
+    sample_contacts = [
+        {""name"": ""Alice"", ""phone"": ""111-222-3333"", ""email"": ""alice@example.com""},
+        {""name"": ""Bob"", ""phone"": ""444-555-6666"", ""email"": ""bob@example.com""},
+        {""name"": ""Charlie"", ""phone"": ""777-888-9999"", ""email"": ""charlie@example.com""}
+    ]
+    search_name = ""Bob""
+    result = find_contact(sample_contacts, search_name)
+    print(result)
+    search_name = ""David""
+    result = find_contact(sample_contacts, search_name)
+    print(result)",True,1,10166,165_13_1.py
+165,13,Build a simple contact book,"Write a single, efficient Python function that takes a list of contact dictionaries and a contact name as input, and returns the contact matching the name. Optimize the search operation for speed.","def find_contact(contacts, name):
+    for contact in contacts:
+        if contact.get(""name"") == name:
+            return contact
+    return None
+if __name__ == '__main__':
+    sample_contacts = [
+        {""id"": 1, ""name"": ""Alice"", ""phone"": ""111-222-3333""},
+        {""id"": 2, ""name"": ""Bob"", ""phone"": ""444-555-6666""},
+        {""id"": 3, ""name"": ""Charlie"", ""phone"": ""777-888-9999""}
+    ]
+    search_name = ""Bob""
+    found_contact = find_contact(sample_contacts, search_name)
+    print(found_contact)
+    search_name = ""David""
+    found_contact = find_contact(sample_contacts, search_name)
+    print(found_contact)",True,2,10167,165_13_2.py
