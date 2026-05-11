@@ -1,0 +1,11 @@
+def fruit_colors_generator(fruits, colors):
+    for fruit, color in zip(fruits, colors):
+        yield (fruit, color)
+if __name__ == '__main__':
+    fruits_list = ["apple", "banana", "cherry", "date"]
+    colors_list = ["red", "yellow", "red", "brown"]
+    fruit_color_generator = fruit_colors_generator(fruits_list, colors_list)
+    result_list = []
+    for pair in fruit_color_generator:
+        result_list.append(pair)
+    print(result_list)
