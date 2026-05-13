@@ -10,7 +10,7 @@ from tokenizer import CodeTokenizer
 
 
 class CodeInstructionDataset(Dataset):
-    def __init__(self, csv_file, tokenizer, max_prompt_len=256, max_code_len=512):
+    def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024):
         self.df = pd.read_csv(csv_file)
         self.df = self.df[['instruction', 'code']].dropna()
         self.tokenizer = tokenizer
@@ -101,18 +101,18 @@ if __name__ == "__main__":
     
     tokenizer = CodeTokenizer()
     
-    MAX_PROMPT_LEN = 256
-    MAX_CODE_LEN = 512
-    BATCH_SIZE = 64
-    NUM_WORKERS = 4
+    MAX_PROMPT_LEN = 96
+    MAX_CODE_LEN = 1024
+    BATCH_SIZE = 32
+    NUM_WORKERS = 5
     EPOCHS = 20
     
     model = LocalConvDiffCoder(
         vocab_size=tokenizer.vocab_size,
         mask_token_id=tokenizer.mask_token_id,
         pad_token_id=tokenizer.pad_token_id,
-        hidden_dim=512,
-        num_blocks=6,
+        hidden_dim=256,
+        num_blocks=4,
         max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN
     ).to(DEVICE)
     

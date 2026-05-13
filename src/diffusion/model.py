@@ -41,7 +41,7 @@ class CNNBlock(nn.Module):
         return x
 
 class LocalConvDiffCoder(nn.Module):
-    def __init__(self, vocab_size, mask_token_id, pad_token_id, hidden_dim=512, num_blocks=6, max_seq_len=1024):
+    def __init__(self, vocab_size, mask_token_id, pad_token_id, hidden_dim=256, num_blocks=4, max_seq_len=1024):
         super().__init__()
         self.vocab_size = vocab_size
         self.mask_token_id = mask_token_id
