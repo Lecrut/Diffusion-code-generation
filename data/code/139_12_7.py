@@ -1,0 +1,16 @@
+def simulate_gates(a, b):
+    and_result = a & b
+    or_result = a | b
+    not_a_result = 1 - a
+    not_b_result = 1 - b
+    return and_result, or_result, not_a_result, not_b_result
+if __name__ == '__main__':
+    input_a = 1
+    input_b = 0
+    and_out, or_out, not_a_out, not_b_out = simulate_gates(input_a, input_b)
+    print(f"Input A: {input_a}")
+    print(f"Input B: {input_b}")
+    print(f"AND Output: {and_out}")
+    print(f"OR Output: {or_out}")
+    print(f"NOT A Output: {not_a_out}")
+    print(f"NOT B Output: {not_b_out}")

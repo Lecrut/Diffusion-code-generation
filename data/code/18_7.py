@@ -1,0 +1,18 @@
+def compare_large_integers(a, b):
+    if a > b:
+        return 1
+    elif a < b:
+        return -1
+    else:
+        return 0
+if __name__ == '__main__':
+    num1 = 1234567890123456789
+    num2 = 9876543210987654321
+    num3 = 1234567890123456789
+    num4 = 1234567890123456789
+    result1 = compare_large_integers(num1, num2)
+    print(f"Comparing {num1} and {num2}: {result1}")
+    result2 = compare_large_integers(num1, num3)
+    print(f"Comparing {num1} and {num3}: {result2}")
+    result3 = compare_large_integers(num4, num4)
+    print(f"Comparing {num4} and {num4}: {result3}")

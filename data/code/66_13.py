@@ -1,0 +1,25 @@
+import sys
+def check_strictly_increasing(line):
+    try:
+        numbers = [int(x) for x in line.split()]
+    except ValueError:
+        return False
+    if len(numbers) < 2:
+        return True
+    for i in range(len(numbers) - 1):
+        if numbers[i] >= numbers[i+1]:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_input = "1 3 5 7 9"
+    result = check_strictly_increasing(sample_input)
+    print(result)
+    sample_input_decreasing = "1 3 2 5"
+    result = check_strictly_increasing(sample_input_decreasing)
+    print(result)
+    sample_input_with_error = "1 3 a 5"
+    result = check_strictly_increasing(sample_input_with_error)
+    print(result)
+    sample_input_equal = "1 1 2"
+    result = check_strictly_increasing(sample_input_equal)
+    print(result)

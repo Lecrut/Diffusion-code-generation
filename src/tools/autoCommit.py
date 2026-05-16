@@ -11,6 +11,7 @@ def auto_commit():
             subprocess.run(["git", "add", "data/"], cwd=".")
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             subprocess.run(["git", "commit", "-m", f"Auto-commit: Dataset progress at {timestamp}"], cwd=".")
+            subprocess.run(["git", "push"], cwd=".")
             print(f"Auto-committed at {timestamp}")
         else:
             print("No changes to commit")

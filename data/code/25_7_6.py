@@ -1,0 +1,16 @@
+def contains_zero(numbers):
+    for number in numbers:
+        if number == 0:
+            return True
+    return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [1, 0, 3, 4, 5]
+    list3 = [7, 8, 9, 0, 1]
+    list4 = []
+    list5 = [0, 0, 0]
+    print(f"List {list1} contains zero: {contains_zero(list1)}")
+    print(f"List {list2} contains zero: {contains_zero(list2)}")
+    print(f"List {list3} contains zero: {contains_zero(list3)}")
+    print(f"List {list4} contains zero: {contains_zero(list4)}")
+    print(f"List {list5} contains zero: {contains_zero(list5)}")

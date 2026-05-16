@@ -1,0 +1,6 @@
+def sort_complex_numbers(complex_list):
+    return sorted(complex_list, key=lambda x: (x.real, x.imag))
+if __name__ == '__main__':
+    sample_list = [1 + 2j, 3.5 + 1j, 1 - 5j, 3.5 + 4j, 0 + 0j]
+    sorted_list = sort_complex_numbers(sample_list)
+    print(sorted_list)

@@ -1,0 +1,28 @@
+def categorize_strings(string_list):
+    categories = {
+        "fruit": [],
+        "vegetable": [],
+        "meat": []
+    }
+    for s in string_list:
+        s_lower = s.lower()
+        if 'fruit' in s_lower:
+            categories["fruit"].append(s)
+        elif 'vegetable' in s_lower:
+            categories["vegetable"].append(s)
+        elif 'meat' in s_lower:
+            categories["meat"].append(s)
+    return categories
+if __name__ == '__main__':
+    sample_list = [
+        "apple is a fruit",
+        "broccoli is a vegetable",
+        "beef is a meat",
+        "banana is a fruit",
+        "carrot is a vegetable",
+        "chicken is meat",
+        "orange is a fruit",
+        "spinach is a vegetable"
+    ]
+    result = categorize_strings(sample_list)
+    print(result)
