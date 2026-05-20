@@ -257,7 +257,7 @@ if __name__ == "__main__":
     BATCH_SIZE = 4
     ACCUMULATION_STEPS = 8
     NUM_WORKERS = 3
-    EPOCHS = 40
+    EPOCHS = 100
     HIDDEN_DIM = 256
     NUM_BLOCKS = 4
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
