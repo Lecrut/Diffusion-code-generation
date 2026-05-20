@@ -238,9 +238,9 @@ if __name__ == "__main__":
         torch.set_float32_matmul_precision("high")
     
     MAX_PROMPT_LEN = 96
-    MAX_CODE_LEN = 1024
+    MAX_CODE_LEN = 512
     BATCH_SIZE = 32
-    NUM_WORKERS = 4
+    NUM_WORKERS = 3
     EPOCHS = 20
     HIDDEN_DIM = 256
     NUM_BLOCKS = 3
