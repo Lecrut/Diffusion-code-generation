@@ -139,7 +139,17 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
     model.train()
 
 
-def train_diffcoder(model, dataloader, optimizer, epochs, device, tokenizer, sample_pairs, experiment=None):
+def train_diffcoder(
+    model,
+    dataloader,
+    optimizer,
+    epochs,
+    device,
+    tokenizer,
+    sample_pairs,
+    checkpoint_dir,
+    experiment=None,
+):
     model.train() 
     use_amp = device == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
@@ -202,7 +212,8 @@ def train_diffcoder(model, dataloader, optimizer, epochs, device, tokenizer, sam
             "model_state_dict": model.state_dict(),
             "optimizer_state_dict": optimizer.state_dict(),
         }
-        torch.save(checkpoint, f"diffcoder_epoch_{epoch+1}.pt")
+        checkpoint_path = checkpoint_dir / f"diffcoder_epoch_{epoch+1}.pt"
+        torch.save(checkpoint, checkpoint_path)
         print("Checkpoint zapisany!\n")
 
         if sample_pairs:
@@ -267,8 +278,10 @@ if __name__ == "__main__":
         num_blocks=NUM_BLOCKS,
         max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN
     ).to(DEVICE)
-    
+
     repo_root = Path(__file__).resolve().parents[1]
+    checkpoint_dir = repo_root / "checkpoints"
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
     dataset_path = repo_root / "data" / "dataset.csv"
     dataset = CodeInstructionDataset(
         str(dataset_path),
@@ -308,7 +321,17 @@ if __name__ == "__main__":
                 }
             )
 
-    train_diffcoder(model, dataloader, optimizer, EPOCHS, DEVICE, tokenizer, sample_pairs, experiment)
+    train_diffcoder(
+        model,
+        dataloader,
+        optimizer,
+        EPOCHS,
+        DEVICE,
+        tokenizer,
+        sample_pairs,
+        checkpoint_dir,
+        experiment,
+    )
 
     if experiment is not None:
         experiment.end()
