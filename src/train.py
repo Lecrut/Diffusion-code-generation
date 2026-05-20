@@ -243,7 +243,7 @@ if __name__ == "__main__":
     NUM_WORKERS = 5
     EPOCHS = 20
     HIDDEN_DIM = 256
-    NUM_BLOCKS = 5
+    NUM_BLOCKS = 3
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
 
     tokenizer = CodeTokenizer()
