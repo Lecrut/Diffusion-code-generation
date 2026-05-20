@@ -1,19 +1,40 @@
 from functools import partial
 from pathlib import Path
+import os
+import random
 import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 import pandas as pd
 from tqdm import tqdm
+from dotenv import load_dotenv
 
 from diffusion.model import LocalConvDiffCoder
 from tokenizer import CodeTokenizer 
 
+try:
+    from comet_ml import Experiment
+except Exception:
+    Experiment = None
+
 
 class CodeInstructionDataset(Dataset):
-    def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024):
+    def __init__(
+        self,
+        csv_file,
+        tokenizer,
+        max_prompt_len=128,
+        max_code_len=1024,
+        dataset_fraction=1.0,
+        seed=42,
+    ):
         self.df = pd.read_csv(csv_file)
         self.df = self.df[['instruction', 'code']].dropna()
+        if not (0.0 < dataset_fraction <= 1.0):
+            raise ValueError("dataset_fraction must be in (0.0, 1.0].")
+        if dataset_fraction < 1.0:
+            keep = max(1, int(len(self.df) * dataset_fraction))
+            self.df = self.df.sample(n=keep, random_state=seed).reset_index(drop=True)
         self.tokenizer = tokenizer
         self.max_prompt_len = max_prompt_len
         self.max_code_len = max_code_len
@@ -30,8 +51,8 @@ class CodeInstructionDataset(Dataset):
     def __getitem__(self, idx):
         row = self.df.iloc[idx]
         
-        prompt_ids_raw = self.tokenizer.encode(row['instruction'])
-        code_ids_raw = self.tokenizer.encode(row['code'])
+        prompt_ids_raw = self.tokenizer.encode_instruction(row['instruction'])
+        code_ids_raw = self.tokenizer.encode_code(row['code'])
         
         prompt_ids = self._pad_or_truncate(prompt_ids_raw, self.max_prompt_len)
         code_ids = self._pad_or_truncate(code_ids_raw, self.max_code_len)
@@ -69,7 +90,56 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     }
 
 
-def train_diffcoder(model, dataloader, optimizer, epochs, device):
+def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None):
+    model.eval()
+    table_rows = []
+    for idx, sample in enumerate(samples):
+        prompt = sample["instruction"]
+        target_code = sample["code"]
+        prompt_ids = torch.tensor(tokenizer.encode_instruction(prompt), dtype=torch.long).to(device)
+        with torch.no_grad():
+            gen_ids = model.generate(
+                prompt_ids,
+                steps=steps,
+                device=device,
+                eos_token_id=tokenizer.eos_token_id,
+            )
+        gen_text = tokenizer.decode(gen_ids[0].tolist())
+
+        if experiment is not None:
+            experiment.log_text(
+                "Epoch "
+                f"{epoch} | sample {idx}\nPROMPT:\n{prompt}"
+                f"\n\nGROUND_TRUTH:\n{target_code}"
+                f"\n\nGENERATED:\n{gen_text}",
+                step=epoch,
+            )
+            table_rows.append(
+                {
+                    "epoch": epoch,
+                    "sample": idx,
+                    "prompt": prompt,
+                    "ground_truth": target_code,
+                    "generated": gen_text,
+                }
+            )
+        else:
+            print("-" * 80)
+            print(f"Epoch {epoch} | sample {idx}")
+            print("PROMPT:")
+            print(prompt)
+            print("GROUND_TRUTH:")
+            print(target_code)
+            print("GENERATED:")
+            print(gen_text)
+
+    if experiment is not None and table_rows:
+        experiment.log_table("generated_samples", table_rows, step=epoch)
+
+    model.train()
+
+
+def train_diffcoder(model, dataloader, optimizer, epochs, device, tokenizer, sample_pairs, experiment=None):
     model.train() 
     use_amp = device == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
@@ -114,9 +184,18 @@ def train_diffcoder(model, dataloader, optimizer, epochs, device):
             
             total_loss += loss.item()
             progress_bar.set_postfix({'loss': f"{loss.item():.4f}"})
+            if experiment is not None:
+                step = epoch * len(dataloader) + batch_idx
+                experiment.log_metric("train_loss", loss.item(), step=step)
             
         avg_loss = total_loss / len(dataloader)
         print(f"\n--- Zakończono Epokę {epoch+1} | Średni błąd: {avg_loss:.4f} ---")
+        print(f"Średni loss w epoce {epoch+1}: {avg_loss:.6f}")
+
+        if experiment is not None:
+            experiment.log_metric("epoch_loss", avg_loss, step=epoch + 1)
+            experiment.log_metric("epoch_avg_loss", avg_loss, step=epoch + 1)
+            experiment.log_metric("lr", optimizer.param_groups[0]["lr"], step=epoch + 1)
         
         checkpoint = {
             "epoch": epoch + 1,
@@ -126,8 +205,19 @@ def train_diffcoder(model, dataloader, optimizer, epochs, device):
         torch.save(checkpoint, f"diffcoder_epoch_{epoch+1}.pt")
         print("Checkpoint zapisany!\n")
 
+        if sample_pairs:
+            log_generated_samples(
+                model,
+                tokenizer,
+                sample_pairs,
+                device,
+                epoch + 1,
+                experiment=experiment,
+            )
+
 
 if __name__ == "__main__":
+    load_dotenv()
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Rozpoczynam trening na: {DEVICE}")
 
@@ -136,20 +226,45 @@ if __name__ == "__main__":
         torch.backends.cudnn.allow_tf32 = True
         torch.set_float32_matmul_precision("high")
     
-    tokenizer = CodeTokenizer()
-    
     MAX_PROMPT_LEN = 96
     MAX_CODE_LEN = 1024
     BATCH_SIZE = 32
     NUM_WORKERS = 5
     EPOCHS = 20
+    HIDDEN_DIM = 256
+    NUM_BLOCKS = 5
+    DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
+
+    tokenizer = CodeTokenizer()
+
+    comet_api_key = os.getenv("COMET_API_KEY")
+    comet_project_name = os.getenv("COMET_PROJECT_NAME")
+    comet_workspace = os.getenv("COMET_WORKSPACE")
+
+    experiment = None
+    if Experiment is not None and comet_api_key and comet_project_name:
+        experiment = Experiment(
+            api_key=comet_api_key,
+            project_name=comet_project_name,
+            workspace=comet_workspace,
+            auto_output_logging="simple",
+        )
+        experiment.log_parameters({
+            "max_prompt_len": MAX_PROMPT_LEN,
+            "max_code_len": MAX_CODE_LEN,
+            "batch_size": BATCH_SIZE,
+            "epochs": EPOCHS,
+            "hidden_dim": HIDDEN_DIM,
+            "num_blocks": NUM_BLOCKS,
+            "dataset_fraction": DATASET_FRACTION,
+        })
     
     model = LocalConvDiffCoder(
         vocab_size=tokenizer.vocab_size,
         mask_token_id=tokenizer.mask_token_id,
         pad_token_id=tokenizer.pad_token_id,
-        hidden_dim=256,
-        num_blocks=4,
+        hidden_dim=HIDDEN_DIM,
+        num_blocks=NUM_BLOCKS,
         max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN
     ).to(DEVICE)
     
@@ -160,6 +275,7 @@ if __name__ == "__main__":
         tokenizer,
         max_prompt_len=MAX_PROMPT_LEN,
         max_code_len=MAX_CODE_LEN,
+        dataset_fraction=DATASET_FRACTION,
     )
     collate_fn = partial(
         collate_batch,
@@ -178,5 +294,21 @@ if __name__ == "__main__":
     )
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
-    
-    train_diffcoder(model, dataloader, optimizer, EPOCHS, DEVICE)
+
+    sample_pairs = []
+    if len(dataset) > 0:
+        rng = random.Random(42)
+        sample_indices = rng.sample(range(len(dataset)), min(3, len(dataset)))
+        for idx in sample_indices:
+            row = dataset.df.iloc[idx]
+            sample_pairs.append(
+                {
+                    "instruction": str(row["instruction"]),
+                    "code": str(row["code"]),
+                }
+            )
+
+    train_diffcoder(model, dataloader, optimizer, EPOCHS, DEVICE, tokenizer, sample_pairs, experiment)
+
+    if experiment is not None:
+        experiment.end()

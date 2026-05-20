@@ -117,7 +117,7 @@ class LocalConvDiffCoder(nn.Module):
         return logits[:, prompt_len:, :]
 
     @torch.no_grad()
-    def generate(self, prompt_ids, steps=50, device="cuda"):
+    def generate(self, prompt_ids, steps=50, device="cuda", eos_token_id=None):
         if prompt_ids.dim() == 1:
             prompt_ids = prompt_ids.unsqueeze(0)
         prompt_ids = prompt_ids.to(device)
@@ -143,4 +143,10 @@ class LocalConvDiffCoder(nn.Module):
             
             seq = pred
             
+        if eos_token_id is not None:
+            eos_pos = (seq[0] == eos_token_id).nonzero(as_tuple=False)
+            if eos_pos.numel() > 0:
+                cut = int(eos_pos[0].item()) + 1
+                seq = seq[:, :cut]
+
         return seq

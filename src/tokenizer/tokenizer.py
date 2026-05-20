@@ -33,18 +33,31 @@ class CodeTokenizer:
     def mask_token_id(self) -> int:
         return int(self.tokenizer.mask_token_id)
 
+    @property
+    def eos_token_id(self) -> int | None:
+        return None if self.tokenizer.eos_token_id is None else int(self.tokenizer.eos_token_id)
+
     @staticmethod
-    def normalize_text(text: str) -> str:
+    def normalize_instruction(text: str) -> str:
         normalized = text.lower().strip()
         normalized = re.sub(r"\s+", " ", normalized)
         return normalized
 
-    def encode(self, text: str, *, add_special_tokens: bool = True) -> list[int]:
-        normalized_text = self.normalize_text(text)
+    def encode_instruction(self, text: str, *, add_special_tokens: bool = True) -> list[int]:
+        normalized_text = self.normalize_instruction(text)
         return self.tokenizer.encode(
             normalized_text,
             add_special_tokens=add_special_tokens,
         )
+
+    def encode_code(self, text: str, *, add_special_tokens: bool = True) -> list[int]:
+        return self.tokenizer.encode(
+            text,
+            add_special_tokens=add_special_tokens,
+        )
+
+    def encode(self, text: str, *, add_special_tokens: bool = True) -> list[int]:
+        return self.encode_instruction(text, add_special_tokens=add_special_tokens)
 
     def decode(self, token_ids: Iterable[int], *, skip_special_tokens: bool = True) -> str:
         return self.tokenizer.decode(
