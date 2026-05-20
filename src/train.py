@@ -240,7 +240,7 @@ if __name__ == "__main__":
     MAX_PROMPT_LEN = 96
     MAX_CODE_LEN = 1024
     BATCH_SIZE = 32
-    NUM_WORKERS = 5
+    NUM_WORKERS = 4
     EPOCHS = 20
     HIDDEN_DIM = 256
     NUM_BLOCKS = 3
