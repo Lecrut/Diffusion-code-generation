@@ -157,47 +157,62 @@ def train_diffcoder(
     for epoch in range(epochs):
         total_loss = 0
         progress_bar = tqdm(enumerate(dataloader), total=len(dataloader), desc=f"Epoka {epoch+1}/{epochs}")
-        
+            
+            # NOWE: Zerujemy gradienty na samym początku epoki!
+        optimizer.zero_grad() 
+            
         for batch_idx, batch in progress_bar:
             x_0 = batch['code_ids'].to(device)
             prompt_ids = batch['prompt_ids'].to(device)
-            
+                
             batch_size, seq_len = x_0.shape
-            
+                
             t = torch.rand(batch_size, device=device)
-            
             mask_prob = t.view(batch_size, 1)
             rand_matrix = torch.rand(batch_size, seq_len, device=device)
-            
+                
             is_masked = (rand_matrix < mask_prob) & (x_0 != model.pad_token_id)
-            
             x_t = x_0.clone()
             x_t[is_masked] = model.mask_token_id
-            
-            optimizer.zero_grad()
+                
+            # USUNIĘTO: optimizer.zero_grad() z tego miejsca!
+                
             with torch.amp.autocast("cuda", enabled=use_amp):
                 logits = model(x_t, prompt_ids, t)
-                
+                    
                 masked_logits = logits[is_masked] 
                 masked_targets = x_0[is_masked]
-                
+                    
                 if masked_targets.numel() > 0:
                     loss = F.cross_entropy(masked_logits, masked_targets)
                 else:
                     loss = torch.tensor(0.0, device=device, requires_grad=True)
-            
+                
+            # NOWE: Zapisujemy prawdziwy (pełny) błąd do statystyk przed podzieleniem!
+            current_loss = loss.item()
+                
+            # NOWE: Dzielimy błąd przez kroki akumulacji
+            loss = loss / ACCUMULATION_STEPS
+                
+            # Liczymy gradienty (zostaną zsumowane z poprzednimi krokami)
             scaler.scale(loss).backward()
-            scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-            scaler.step(optimizer)
-            scaler.update()
-            
-            total_loss += loss.item()
-            progress_bar.set_postfix({'loss': f"{loss.item():.4f}"})
+                
+            # NOWE: Warunek - aktualizujemy wagi tylko co 8 kroków, ALBO gdy to ostatni krok w epoce
+            if (batch_idx + 1) % ACCUMULATION_STEPS == 0 or (batch_idx + 1) == len(dataloader):
+                scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+                scaler.step(optimizer)
+                scaler.update()
+                # NOWE: Po wykonaniu kroku uczącego, zerujemy gradienty, by zacząć zbierać na nowo
+                optimizer.zero_grad()
+                
+                # LOGOWANIE: Używamy `current_loss`, a nie zredukowanego `loss.item()`
+            total_loss += current_loss
+            progress_bar.set_postfix({'loss': f"{current_loss:.4f}"})
             if experiment is not None:
                 step = epoch * len(dataloader) + batch_idx
-                experiment.log_metric("train_loss", loss.item(), step=step)
-            
+                experiment.log_metric("train_loss", current_loss, step=step)
+                
         avg_loss = total_loss / len(dataloader)
         print(f"\n--- Zakończono Epokę {epoch+1} | Średni błąd: {avg_loss:.4f} ---")
         print(f"Średni loss w epoce {epoch+1}: {avg_loss:.6f}")
@@ -239,7 +254,8 @@ if __name__ == "__main__":
     
     MAX_PROMPT_LEN = 96
     MAX_CODE_LEN = 512
-    BATCH_SIZE = 32
+    BATCH_SIZE = 4
+    ACCUMULATION_STEPS = 8
     NUM_WORKERS = 3
     EPOCHS = 100
     HIDDEN_DIM = 256
