@@ -1,3 +1,4 @@
+from functools import partial
 from pathlib import Path
 import torch
 import torch.nn.functional as F
@@ -24,8 +25,7 @@ class CodeInstructionDataset(Dataset):
     def _pad_or_truncate(self, ids, max_len):
         if len(ids) > max_len:
             return ids[:max_len]
-        padding_length = max_len - len(ids)
-        return ids + [self.pad_id] * padding_length
+        return ids
 
     def __getitem__(self, idx):
         row = self.df.iloc[idx]
@@ -37,15 +37,42 @@ class CodeInstructionDataset(Dataset):
         code_ids = self._pad_or_truncate(code_ids_raw, self.max_code_len)
         
         return {
-            'prompt_ids': torch.tensor(prompt_ids, dtype=torch.long),
-            'code_ids': torch.tensor(code_ids, dtype=torch.long)
+            'prompt_ids': prompt_ids,
+            'code_ids': code_ids
         }
+
+
+def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
+    prompt_max = min(max(len(item['prompt_ids']) for item in batch), max_prompt_len)
+    code_max = min(max(len(item['code_ids']) for item in batch), max_code_len)
+
+    prompt_tensors = []
+    code_tensors = []
+    for item in batch:
+        prompt_ids = item['prompt_ids'][:prompt_max]
+        code_ids = item['code_ids'][:code_max]
+
+        prompt_pad = prompt_max - len(prompt_ids)
+        code_pad = code_max - len(code_ids)
+
+        if prompt_pad > 0:
+            prompt_ids = prompt_ids + [pad_id] * prompt_pad
+        if code_pad > 0:
+            code_ids = code_ids + [pad_id] * code_pad
+
+        prompt_tensors.append(torch.tensor(prompt_ids, dtype=torch.long))
+        code_tensors.append(torch.tensor(code_ids, dtype=torch.long))
+
+    return {
+        'prompt_ids': torch.stack(prompt_tensors, dim=0),
+        'code_ids': torch.stack(code_tensors, dim=0)
+    }
 
 
 def train_diffcoder(model, dataloader, optimizer, epochs, device):
     model.train() 
     use_amp = device == "cuda"
-    scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     
     for epoch in range(epochs):
         total_loss = 0
@@ -68,7 +95,7 @@ def train_diffcoder(model, dataloader, optimizer, epochs, device):
             x_t[is_masked] = model.mask_token_id
             
             optimizer.zero_grad()
-            with torch.cuda.amp.autocast(enabled=use_amp):
+            with torch.amp.autocast("cuda", enabled=use_amp):
                 logits = model(x_t, prompt_ids, t)
                 
                 masked_logits = logits[is_masked] 
@@ -91,13 +118,23 @@ def train_diffcoder(model, dataloader, optimizer, epochs, device):
         avg_loss = total_loss / len(dataloader)
         print(f"\n--- Zakończono Epokę {epoch+1} | Średni błąd: {avg_loss:.4f} ---")
         
-        torch.save(model.state_dict(), f"diffcoder_epoch_{epoch+1}.pt")
-        print("Model zapisany!\n")
+        checkpoint = {
+            "epoch": epoch + 1,
+            "model_state_dict": model.state_dict(),
+            "optimizer_state_dict": optimizer.state_dict(),
+        }
+        torch.save(checkpoint, f"diffcoder_epoch_{epoch+1}.pt")
+        print("Checkpoint zapisany!\n")
 
 
 if __name__ == "__main__":
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Rozpoczynam trening na: {DEVICE}")
+
+    if DEVICE == "cuda":
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.backends.cudnn.allow_tf32 = True
+        torch.set_float32_matmul_precision("high")
     
     tokenizer = CodeTokenizer()
     
@@ -124,6 +161,12 @@ if __name__ == "__main__":
         max_prompt_len=MAX_PROMPT_LEN,
         max_code_len=MAX_CODE_LEN,
     )
+    collate_fn = partial(
+        collate_batch,
+        pad_id=tokenizer.pad_token_id,
+        max_prompt_len=MAX_PROMPT_LEN,
+        max_code_len=MAX_CODE_LEN,
+    )
     dataloader = DataLoader(
         dataset,
         batch_size=BATCH_SIZE,
@@ -131,6 +174,7 @@ if __name__ == "__main__":
         num_workers=NUM_WORKERS,
         pin_memory=DEVICE == "cuda",
         persistent_workers=NUM_WORKERS > 0,
+        collate_fn=collate_fn,
     )
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
