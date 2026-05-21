@@ -11,6 +11,10 @@ class GeminiTester:
         self.temperature = temperature
 
     def test_code(self, user_instruction: str, plan: str, code: str) -> str:
+        # todo: write a metric for evaluating the code
+        # the metric should be countable and should be based on the user's instruction and the plan
+        # we can use this metric to compere codes 
+        
         system_prompt = (
             "You are Module 4 in a multi-agent diffusion coding pipeline. "
             "Evaluate the generated code based on the user's instruction and the provided plan. "
