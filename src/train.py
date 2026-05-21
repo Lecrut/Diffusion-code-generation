@@ -2,9 +2,10 @@ from functools import partial
 from pathlib import Path
 import os
 import random
+import math
 import torch
 import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split
 import pandas as pd
 from tqdm import tqdm
 from dotenv import load_dotenv
@@ -141,41 +142,45 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
 
 def train_diffcoder(
     model,
-    dataloader,
+    train_dataloader,
+    val_dataloader,
     optimizer,
     epochs,
+    accumulation_steps,
+    early_stopping_patience,
     device,
     tokenizer,
     sample_pairs,
     checkpoint_dir,
     experiment=None,
 ):
-    model.train() 
     use_amp = device == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
+    best_val_loss = float("inf")
+    best_checkpoint_path = None
+    epochs_without_improvement = 0
     
     for epoch in range(epochs):
+        model.train()
         total_loss = 0
-        progress_bar = tqdm(enumerate(dataloader), total=len(dataloader), desc=f"Epoka {epoch+1}/{epochs}")
-            
-            # NOWE: Zerujemy gradienty na samym początku epoki!
-        optimizer.zero_grad() 
+        progress_bar = tqdm(enumerate(train_dataloader), total=len(train_dataloader), desc=f"Epoka {epoch+1}/{epochs}")
+        optimizer.zero_grad()
             
         for batch_idx, batch in progress_bar:
             x_0 = batch['code_ids'].to(device)
             prompt_ids = batch['prompt_ids'].to(device)
                 
             batch_size, seq_len = x_0.shape
-                
-            t = torch.rand(batch_size, device=device)
-            mask_prob = t.view(batch_size, 1)
+
+            u = torch.rand(batch_size, device=device)
+            mask_prob = torch.cos(u * math.pi / 2)
+            mask_prob = mask_prob.view(batch_size, 1)
+            t = mask_prob.view(-1)
             rand_matrix = torch.rand(batch_size, seq_len, device=device)
                 
             is_masked = (rand_matrix < mask_prob) & (x_0 != model.pad_token_id)
             x_t = x_0.clone()
             x_t[is_masked] = model.mask_token_id
-                
-            # USUNIĘTO: optimizer.zero_grad() z tego miejsca!
                 
             with torch.amp.autocast("cuda", enabled=use_amp):
                 logits = model(x_t, prompt_ids, t)
@@ -188,48 +193,104 @@ def train_diffcoder(
                 else:
                     loss = torch.tensor(0.0, device=device, requires_grad=True)
                 
-            # NOWE: Zapisujemy prawdziwy (pełny) błąd do statystyk przed podzieleniem!
             current_loss = loss.item()
+            loss = loss / accumulation_steps
                 
-            # NOWE: Dzielimy błąd przez kroki akumulacji
-            loss = loss / ACCUMULATION_STEPS
-                
-            # Liczymy gradienty (zostaną zsumowane z poprzednimi krokami)
             scaler.scale(loss).backward()
                 
-            # NOWE: Warunek - aktualizujemy wagi tylko co 8 kroków, ALBO gdy to ostatni krok w epoce
-            if (batch_idx + 1) % ACCUMULATION_STEPS == 0 or (batch_idx + 1) == len(dataloader):
+            if (batch_idx + 1) % accumulation_steps == 0 or (batch_idx + 1) == len(train_dataloader):
                 scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
                 scaler.step(optimizer)
                 scaler.update()
-                # NOWE: Po wykonaniu kroku uczącego, zerujemy gradienty, by zacząć zbierać na nowo
                 optimizer.zero_grad()
                 
-                # LOGOWANIE: Używamy `current_loss`, a nie zredukowanego `loss.item()`
             total_loss += current_loss
             progress_bar.set_postfix({'loss': f"{current_loss:.4f}"})
             if experiment is not None:
-                step = epoch * len(dataloader) + batch_idx
+                step = epoch * len(train_dataloader) + batch_idx
                 experiment.log_metric("train_loss", current_loss, step=step)
                 
-        avg_loss = total_loss / len(dataloader)
+        avg_loss = total_loss / len(train_dataloader)
+        model.eval()
+        val_total_loss = 0.0
+        val_steps = 0
+        with torch.no_grad():
+            for val_batch in val_dataloader:
+                x_0 = val_batch['code_ids'].to(device)
+                prompt_ids = val_batch['prompt_ids'].to(device)
+                batch_size, seq_len = x_0.shape
+
+                u = torch.rand(batch_size, device=device)
+                mask_prob = torch.cos(u * math.pi / 2)
+                mask_prob = mask_prob.view(batch_size, 1)
+                t = mask_prob.view(-1)
+                rand_matrix = torch.rand(batch_size, seq_len, device=device)
+
+                is_masked = (rand_matrix < mask_prob) & (x_0 != model.pad_token_id)
+                x_t = x_0.clone()
+                x_t[is_masked] = model.mask_token_id
+
+                logits = model(x_t, prompt_ids, t)
+                masked_logits = logits[is_masked]
+                masked_targets = x_0[is_masked]
+
+                if masked_targets.numel() > 0:
+                    batch_val_loss = F.cross_entropy(masked_logits, masked_targets).item()
+                else:
+                    batch_val_loss = 0.0
+
+                val_total_loss += batch_val_loss
+                val_steps += 1
+
+        val_loss = val_total_loss / max(1, val_steps)
+
         print(f"\n--- Zakończono Epokę {epoch+1} | Średni błąd: {avg_loss:.4f} ---")
         print(f"Średni loss w epoce {epoch+1}: {avg_loss:.6f}")
+        print(f"Walidacyjny loss w epoce {epoch+1}: {val_loss:.6f}")
 
         if experiment is not None:
             experiment.log_metric("epoch_loss", avg_loss, step=epoch + 1)
             experiment.log_metric("epoch_avg_loss", avg_loss, step=epoch + 1)
+            experiment.log_metric("val_loss", val_loss, step=epoch + 1)
             experiment.log_metric("lr", optimizer.param_groups[0]["lr"], step=epoch + 1)
-        
-        checkpoint = {
-            "epoch": epoch + 1,
-            "model_state_dict": model.state_dict(),
-            "optimizer_state_dict": optimizer.state_dict(),
-        }
-        checkpoint_path = checkpoint_dir / f"diffcoder_epoch_{epoch+1}.pt"
-        torch.save(checkpoint, checkpoint_path)
-        print("Checkpoint zapisany!\n")
+
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            epochs_without_improvement = 0
+
+            checkpoint = {
+                "epoch": epoch + 1,
+                "val_loss": val_loss,
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+            }
+            checkpoint_path = checkpoint_dir / f"diffcoder_best_epoch_{epoch+1}.pt"
+            torch.save(checkpoint, checkpoint_path)
+            print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
+
+            if experiment is not None:
+                print("Kolejkuję model do wysyłki na Comet ML...")
+                experiment.log_model(
+                    name="diffcoder",
+                    file_or_folder=str(checkpoint_path),
+                    overwrite=True,
+                )
+
+            if best_checkpoint_path is not None and best_checkpoint_path.exists():
+                try:
+                    os.remove(best_checkpoint_path)
+                    print(f"Usunięto stary checkpoint z dysku: {best_checkpoint_path}")
+                except Exception as e:
+                    print(f"Ostrzeżenie: Nie udało się usunąć lokalnego checkpointu: {e}")
+
+            best_checkpoint_path = checkpoint_path
+        else:
+            epochs_without_improvement += 1
+            print(
+                f"Brak poprawy val loss przez {epochs_without_improvement} epok(e). "
+                f"Najlepszy val loss: {best_val_loss:.6f}"
+            )
 
         if sample_pairs:
             log_generated_samples(
@@ -240,6 +301,13 @@ def train_diffcoder(
                 epoch + 1,
                 experiment=experiment,
             )
+
+        if epochs_without_improvement >= early_stopping_patience:
+            print(
+                f"Early stopping: brak poprawy przez {early_stopping_patience} epok. "
+                f"Kończę trening na epoce {epoch+1}."
+            )
+            break
 
 
 if __name__ == "__main__":
@@ -257,7 +325,9 @@ if __name__ == "__main__":
     BATCH_SIZE = 4
     ACCUMULATION_STEPS = 8
     NUM_WORKERS = 3
-    EPOCHS = 100
+    EPOCHS = 500
+    VAL_SPLIT = 0.05
+    EARLY_STOPPING_PATIENCE = 20
     HIDDEN_DIM = 256
     NUM_BLOCKS = 4
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
@@ -281,6 +351,8 @@ if __name__ == "__main__":
             "max_code_len": MAX_CODE_LEN,
             "batch_size": BATCH_SIZE,
             "epochs": EPOCHS,
+            "val_split": VAL_SPLIT,
+            "early_stopping_patience": EARLY_STOPPING_PATIENCE,
             "hidden_dim": HIDDEN_DIM,
             "num_blocks": NUM_BLOCKS,
             "dataset_fraction": DATASET_FRACTION,
@@ -306,16 +378,46 @@ if __name__ == "__main__":
         max_code_len=MAX_CODE_LEN,
         dataset_fraction=DATASET_FRACTION,
     )
+    if len(dataset) < 2:
+        raise ValueError("Dataset musi mieć co najmniej 2 próbki, aby wykonać split train/validation.")
+
+    val_size = max(1, int(len(dataset) * VAL_SPLIT))
+    train_size = len(dataset) - val_size
+    if train_size < 1:
+        train_size = 1
+        val_size = len(dataset) - 1
+
+    split_generator = torch.Generator().manual_seed(42)
+    train_dataset, val_dataset = random_split(
+        dataset,
+        [train_size, val_size],
+        generator=split_generator,
+    )
+
+    print(
+        f"Podział danych: train={len(train_dataset)} próbek, val={len(val_dataset)} próbek "
+        f"({VAL_SPLIT * 100:.1f}% walidacji)"
+    )
+
     collate_fn = partial(
         collate_batch,
         pad_id=tokenizer.pad_token_id,
         max_prompt_len=MAX_PROMPT_LEN,
         max_code_len=MAX_CODE_LEN,
     )
-    dataloader = DataLoader(
-        dataset,
+    train_dataloader = DataLoader(
+        train_dataset,
         batch_size=BATCH_SIZE,
         shuffle=True,
+        num_workers=NUM_WORKERS,
+        pin_memory=DEVICE == "cuda",
+        persistent_workers=NUM_WORKERS > 0,
+        collate_fn=collate_fn,
+    )
+    val_dataloader = DataLoader(
+        val_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
         num_workers=NUM_WORKERS,
         pin_memory=DEVICE == "cuda",
         persistent_workers=NUM_WORKERS > 0,
@@ -339,9 +441,12 @@ if __name__ == "__main__":
 
     train_diffcoder(
         model,
-        dataloader,
+        train_dataloader,
+        val_dataloader,
         optimizer,
         EPOCHS,
+        ACCUMULATION_STEPS,
+        EARLY_STOPPING_PATIENCE,
         DEVICE,
         tokenizer,
         sample_pairs,
