@@ -1,6 +1,7 @@
 from functools import partial
 from pathlib import Path
 import os
+import shutil
 import random
 import math
 import torch
@@ -276,7 +277,7 @@ def train_diffcoder(
                 "model_state_dict": model.state_dict(),
                 "optimizer_state_dict": optimizer.state_dict(),
             }
-            checkpoint_path = checkpoint_dir / f"diffcoder_best_epoch_{epoch+1}.pt"
+            checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
             torch.save(checkpoint, checkpoint_path)
             print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
 
@@ -287,13 +288,25 @@ def train_diffcoder(
                     file_or_folder=str(checkpoint_path),
                     overwrite=True,
                 )
+            try:
+                comet_cache = os.path.expanduser("~/.cometml")
+                comet_offline = os.path.expanduser("~/.comet_offline")
+                    
+                if os.path.exists(comet_cache):
+                    shutil.rmtree(comet_cache, ignore_errors=True)
+                if os.path.exists(comet_offline):
+                    shutil.rmtree(comet_offline, ignore_errors=True)
+                        
+                print("Wyczyszczono pamięć podręczną Cometa.")
+            except Exception as e:
+                pass
 
-            if best_checkpoint_path is not None and best_checkpoint_path.exists():
-                try:
-                    os.remove(best_checkpoint_path)
-                    print(f"Usunięto stary checkpoint z dysku: {best_checkpoint_path}")
-                except Exception as e:
-                    print(f"Ostrzeżenie: Nie udało się usunąć lokalnego checkpointu: {e}")
+            # if best_checkpoint_path is not None and best_checkpoint_path.exists():
+            #     try:
+            #         os.remove(best_checkpoint_path)
+            #         print(f"Usunięto stary checkpoint z dysku: {best_checkpoint_path}")
+            #     except Exception as e:
+            #         print(f"Ostrzeżenie: Nie udało się usunąć lokalnego checkpointu: {e}")
 
             best_checkpoint_path = checkpoint_path
         else:
@@ -343,8 +356,8 @@ if __name__ == "__main__":
     NUM_BLOCKS = 5
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
-    RESUME_FROM_CHECKPOINT = False # True - restart from checkpoint
-    RESUME_CHECKPOINT_NAME = "" # name of model in folder checkpoint
+    RESUME_FROM_CHECKPOINT = True # True - restart from checkpoint
+    RESUME_CHECKPOINT_NAME = "diffcoder_best.pt" # name of model in folder checkpoint
     LR_PLATEAU_PATIENCE = 5
     LR_PLATEAU_FACTOR = 0.5
     LR_MIN = 1e-5
@@ -476,8 +489,8 @@ if __name__ == "__main__":
             checkpoint = torch.load(resume_path, map_location=DEVICE)
             model.load_state_dict(checkpoint["model_state_dict"])
             optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
-            for group in optimizer.param_groups:
-                group["lr"] = BASE_LR
+            # for group in optimizer.param_groups:
+            #     group["lr"] = BASE_LR
             start_epoch = int(checkpoint.get("epoch", 0))
             best_val_loss = float(checkpoint.get("val_loss", "inf"))
             best_checkpoint_path = resume_path
