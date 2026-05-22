@@ -18,10 +18,12 @@ class AdaLN(nn.Module):
 
 class CNNBlock(nn.Module):
     """Pojedynczy blok splotowy"""
-    def __init__(self, dim, kernel_size=5):
+    def __init__(self, dim, kernel_size=5, dilation=1):
         super().__init__()
         # Splot 1D zapewnia lokalne okno kontekstowe
-        self.conv = nn.Conv1d(dim, dim, kernel_size, padding=kernel_size // 2)
+        padding = (kernel_size - 1) * dilation // 2
+        self.conv = nn.Conv1d(dim, dim, kernel_size, padding=padding, dilation=dilation)
+        # self.conv = nn.Conv1d(dim, dim, kernel_size, padding=kernel_size // 2)
         self.ln = AdaLN(dim)
         self.mlp = nn.Sequential(
             nn.Linear(dim, dim * 2),
@@ -58,7 +60,8 @@ class LocalConvDiffCoder(nn.Module):
         )
         
         self.blocks = nn.ModuleList([
-            CNNBlock(hidden_dim, kernel_size=5 + (i * 2)) for i in range(num_blocks)
+            # CNNBlock(hidden_dim, kernel_size=5 + (i * 2)) for i in range(num_blocks)
+            CNNBlock(hidden_dim, kernel_size=5, dilation=2**i) for i in range(num_blocks)
         ])
         
         self.ln_final = nn.LayerNorm(hidden_dim)

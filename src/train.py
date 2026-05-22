@@ -145,6 +145,7 @@ def train_diffcoder(
     train_dataloader,
     val_dataloader,
     optimizer,
+    scheduler,
     epochs,
     accumulation_steps,
     early_stopping_patience,
@@ -258,6 +259,13 @@ def train_diffcoder(
             experiment.log_metric("val_loss", val_loss, step=epoch + 1)
             experiment.log_metric("lr", optimizer.param_groups[0]["lr"], step=epoch + 1)
 
+        if scheduler is not None:
+            previous_lr = optimizer.param_groups[0]["lr"]
+            scheduler.step(val_loss)
+            new_lr = optimizer.param_groups[0]["lr"]
+            if new_lr < previous_lr:
+                print(f"ReduceLROnPlateau: lr {previous_lr:.6g} -> {new_lr:.6g}")
+
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             epochs_without_improvement = 0
@@ -329,14 +337,17 @@ if __name__ == "__main__":
     ACCUMULATION_STEPS = 8
     NUM_WORKERS = 3
     EPOCHS = 500
-    VAL_SPLIT = 0.05
+    VAL_SPLIT = 0.1
     EARLY_STOPPING_PATIENCE = 50
     HIDDEN_DIM = 256
-    NUM_BLOCKS = 4
+    NUM_BLOCKS = 5
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
-    RESUME_FROM_CHECKPOINT = True
-    RESUME_CHECKPOINT_NAME = "diffcoder_best_epoch_52.pt"
+    RESUME_FROM_CHECKPOINT = False # True - restart from checkpoint
+    RESUME_CHECKPOINT_NAME = "" # name of model in folder checkpoint
+    LR_PLATEAU_PATIENCE = 5
+    LR_PLATEAU_FACTOR = 0.5
+    LR_MIN = 1e-5
 
     tokenizer = CodeTokenizer()
 
@@ -431,6 +442,13 @@ if __name__ == "__main__":
     )
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=BASE_LR, weight_decay=0.01)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode="min",
+        factor=LR_PLATEAU_FACTOR,
+        patience=LR_PLATEAU_PATIENCE,
+        min_lr=LR_MIN,
+    )
 
     def resolve_best_checkpoint(path):
         candidates = list(path.glob("diffcoder_best_epoch_*.pt"))
@@ -488,6 +506,7 @@ if __name__ == "__main__":
         train_dataloader,
         val_dataloader,
         optimizer,
+        scheduler,
         EPOCHS,
         ACCUMULATION_STEPS,
         EARLY_STOPPING_PATIENCE,
