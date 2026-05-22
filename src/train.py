@@ -4,6 +4,7 @@ import os
 import shutil
 import random
 import math
+import tempfile
 import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, random_split
@@ -18,6 +19,27 @@ try:
     from comet_ml import Experiment
 except Exception:
     Experiment = None
+
+
+def clear_comet_temp_cache() -> None:
+    cache_roots = [
+        Path(os.path.expanduser("~/.cometml")),
+        Path(os.path.expanduser("~/.comet_offline")),
+    ]
+    temp_root = Path(tempfile.gettempdir())
+
+    for cache_root in cache_roots:
+        if cache_root.exists():
+            shutil.rmtree(cache_root, ignore_errors=True)
+
+    if temp_root.exists():
+        for entry in temp_root.iterdir():
+            name = entry.name.lower()
+            if "comet" in name:
+                if entry.is_dir():
+                    shutil.rmtree(entry, ignore_errors=True)
+                else:
+                    entry.unlink(missing_ok=True)
 
 
 class CodeInstructionDataset(Dataset):
@@ -283,20 +305,14 @@ def train_diffcoder(
 
             if experiment is not None:
                 print("Kolejkuję model do wysyłki na Comet ML...")
+                clear_comet_temp_cache()
                 experiment.log_model(
                     name="diffcoder",
                     file_or_folder=str(checkpoint_path),
                     overwrite=True,
                 )
+                clear_comet_temp_cache()
             try:
-                comet_cache = os.path.expanduser("~/.cometml")
-                comet_offline = os.path.expanduser("~/.comet_offline")
-                    
-                if os.path.exists(comet_cache):
-                    shutil.rmtree(comet_cache, ignore_errors=True)
-                if os.path.exists(comet_offline):
-                    shutil.rmtree(comet_offline, ignore_errors=True)
-                        
                 print("Wyczyszczono pamięć podręczną Cometa.")
             except Exception as e:
                 pass
