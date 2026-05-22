@@ -352,11 +352,11 @@ if __name__ == "__main__":
     EPOCHS = 500
     VAL_SPLIT = 0.1
     EARLY_STOPPING_PATIENCE = 50
-    HIDDEN_DIM = 256
+    HIDDEN_DIM = 512
     NUM_BLOCKS = 5
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
-    RESUME_FROM_CHECKPOINT = True # True - restart from checkpoint
+    RESUME_FROM_CHECKPOINT = False # True - restart from checkpoint
     RESUME_CHECKPOINT_NAME = "diffcoder_best.pt" # name of model in folder checkpoint
     LR_PLATEAU_PATIENCE = 5
     LR_PLATEAU_FACTOR = 0.5
