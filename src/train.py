@@ -1,4 +1,5 @@
 from functools import partial
+import gc
 from pathlib import Path
 import os
 import shutil
@@ -29,17 +30,56 @@ def clear_comet_temp_cache() -> None:
     temp_root = Path(tempfile.gettempdir())
 
     for cache_root in cache_roots:
-        if cache_root.exists():
-            shutil.rmtree(cache_root, ignore_errors=True)
+        try:
+            if cache_root.exists():
+                shutil.rmtree(cache_root, ignore_errors=True)
+        except Exception:
+            pass
 
     if temp_root.exists():
         for entry in temp_root.iterdir():
             name = entry.name.lower()
             if "comet" in name:
-                if entry.is_dir():
-                    shutil.rmtree(entry, ignore_errors=True)
-                else:
-                    entry.unlink(missing_ok=True)
+                try:
+                    if entry.is_dir():
+                        shutil.rmtree(entry, ignore_errors=True)
+                    else:
+                        entry.unlink(missing_ok=True)
+                except Exception:
+                    pass
+
+
+def release_training_memory() -> None:
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        try:
+            torch.cuda.ipc_collect()
+        except Exception:
+            pass
+
+
+def log_best_model_to_comet(experiment, checkpoint_path: Path) -> None:
+    if experiment is None:
+        return
+
+    print(f"Comet ML: wysyłam najlepszy model z {checkpoint_path.name}")
+    clear_comet_temp_cache()
+    experiment.log_model(
+        name="diffcoder_best",
+        file_or_folder=str(checkpoint_path),
+        overwrite=True,
+    )
+
+    flush = getattr(experiment, "flush", None)
+    if callable(flush):
+        try:
+            flush()
+        except Exception:
+            pass
+
+    clear_comet_temp_cache()
+    release_training_memory()
 
 
 class CodeInstructionDataset(Dataset):
@@ -188,6 +228,7 @@ def train_diffcoder(
     epochs_without_improvement = 0
     
     for epoch in range(start_epoch, epochs):
+        print(f"\n[TRAIN] Start epoki {epoch + 1}/{epochs}")
         model.train()
         total_loss = 0
         progress_bar = tqdm(enumerate(train_dataloader), total=len(train_dataloader), desc=f"Epoka {epoch+1}/{epochs}")
@@ -239,6 +280,7 @@ def train_diffcoder(
                 experiment.log_metric("train_loss", current_loss, step=step)
                 
         avg_loss = total_loss / len(train_dataloader)
+        print(f"[VALIDATION] Start walidacji dla epoki {epoch + 1}")
         model.eval()
         val_total_loss = 0.0
         val_steps = 0
@@ -293,6 +335,8 @@ def train_diffcoder(
             best_val_loss = val_loss
             epochs_without_improvement = 0
 
+            print(f"[BEST] Nowy najlepszy val_loss: {val_loss:.6f}")
+
             checkpoint = {
                 "epoch": epoch + 1,
                 "val_loss": val_loss,
@@ -300,29 +344,27 @@ def train_diffcoder(
                 "optimizer_state_dict": optimizer.state_dict(),
             }
             checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
+
+            for stale_checkpoint in checkpoint_dir.glob("diffcoder_best_epoch_*.pt"):
+                try:
+                    stale_checkpoint.unlink()
+                except Exception:
+                    pass
+
             torch.save(checkpoint, checkpoint_path)
             print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
 
             if experiment is not None:
                 print("Kolejkuję model do wysyłki na Comet ML...")
-                clear_comet_temp_cache()
-                experiment.log_model(
-                    name="diffcoder",
-                    file_or_folder=str(checkpoint_path),
-                    overwrite=True,
-                )
-                clear_comet_temp_cache()
-            try:
-                print("Wyczyszczono pamięć podręczną Cometa.")
-            except Exception as e:
-                pass
+                log_best_model_to_comet(experiment, checkpoint_path)
+                print("Wyczyszczono pamięć podręczną Cometa i pamięć roboczą po zapisie najlepszego modelu.")
 
-            # if best_checkpoint_path is not None and best_checkpoint_path.exists():
-            #     try:
-            #         os.remove(best_checkpoint_path)
-            #         print(f"Usunięto stary checkpoint z dysku: {best_checkpoint_path}")
-            #     except Exception as e:
-            #         print(f"Ostrzeżenie: Nie udało się usunąć lokalnego checkpointu: {e}")
+            if best_checkpoint_path is not None and best_checkpoint_path != checkpoint_path:
+                try:
+                    best_checkpoint_path.unlink()
+                    print(f"Usunięto poprzedni najlepszy checkpoint z dysku: {best_checkpoint_path}")
+                except Exception as e:
+                    print(f"Ostrzeżenie: Nie udało się usunąć poprzedniego checkpointu: {e}")
 
             best_checkpoint_path = checkpoint_path
         else:
@@ -331,6 +373,8 @@ def train_diffcoder(
                 f"Brak poprawy val loss przez {epochs_without_improvement} epok(e). "
                 f"Najlepszy val loss: {best_val_loss:.6f}"
             )
+
+        release_training_memory()
 
         if sample_pairs:
             log_generated_samples(
@@ -354,6 +398,7 @@ if __name__ == "__main__":
     load_dotenv()
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Rozpoczynam trening na: {DEVICE}")
+    print("Inicjalizuję konfigurację treningu i przygotowuję dane...")
 
     if DEVICE == "cuda":
         torch.backends.cuda.matmul.allow_tf32 = True
@@ -386,6 +431,7 @@ if __name__ == "__main__":
 
     experiment = None
     if Experiment is not None and comet_api_key and comet_project_name:
+        print("Comet ML: aktywuję eksperyment i logowanie metryk.")
         experiment = Experiment(
             api_key=comet_api_key,
             project_name=comet_project_name,
@@ -424,6 +470,7 @@ if __name__ == "__main__":
         max_code_len=MAX_CODE_LEN,
         dataset_fraction=DATASET_FRACTION,
     )
+    print(f"Zbiór danych załadowany: {len(dataset)} próbek")
     if len(dataset) < 2:
         raise ValueError("Dataset musi mieć co najmniej 2 próbki, aby wykonać split train/validation.")
 
@@ -444,6 +491,7 @@ if __name__ == "__main__":
         f"Podział danych: train={len(train_dataset)} próbek, val={len(val_dataset)} próbek "
         f"({VAL_SPLIT * 100:.1f}% walidacji)"
     )
+    print(f"Checkpointy będą zapisywane do: {checkpoint_dir}")
 
     collate_fn = partial(
         collate_batch,
