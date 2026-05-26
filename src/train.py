@@ -55,11 +55,16 @@ def _coerce_torch_rng_state(rng_state):
     if rng_state is None:
         return None
     if isinstance(rng_state, torch.Tensor):
-        return rng_state
+        return rng_state.detach().cpu().to(dtype=torch.uint8).flatten()
     if isinstance(rng_state, (bytes, bytearray, memoryview)):
         return torch.tensor(list(rng_state), dtype=torch.uint8)
     if isinstance(rng_state, (list, tuple)):
         return torch.tensor(rng_state, dtype=torch.uint8)
+    try:
+        coerced_state = torch.as_tensor(rng_state, dtype=torch.uint8)
+        return coerced_state.flatten().contiguous()
+    except Exception:
+        pass
     return None
 
 
@@ -74,7 +79,10 @@ def restore_rng_state(state: dict) -> None:
     torch_cpu_rng_state = state.get("torch_cpu_rng_state")
     torch_cpu_rng_state = _coerce_torch_rng_state(torch_cpu_rng_state)
     if torch_cpu_rng_state is not None:
-        torch.set_rng_state(torch_cpu_rng_state)
+        try:
+            torch.set_rng_state(torch_cpu_rng_state)
+        except Exception as e:
+            print(f"[RESUME] Pomijam stan RNG CPU: {e}")
 
     if torch.cuda.is_available():
         torch_cuda_rng_state_all = state.get("torch_cuda_rng_state_all")
@@ -85,7 +93,10 @@ def restore_rng_state(state: dict) -> None:
             ]
             coerced_cuda_state = [single_state for single_state in coerced_cuda_state if single_state is not None]
             if coerced_cuda_state:
-                torch.cuda.set_rng_state_all(coerced_cuda_state)
+                try:
+                    torch.cuda.set_rng_state_all(coerced_cuda_state)
+                except Exception as e:
+                    print(f"[RESUME] Pomijam stan RNG CUDA: {e}")
 
 
 def build_training_checkpoint(
