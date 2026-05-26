@@ -51,6 +51,18 @@ def capture_rng_state() -> dict:
     return state
 
 
+def _coerce_torch_rng_state(rng_state):
+    if rng_state is None:
+        return None
+    if isinstance(rng_state, torch.Tensor):
+        return rng_state
+    if isinstance(rng_state, (bytes, bytearray, memoryview)):
+        return torch.tensor(list(rng_state), dtype=torch.uint8)
+    if isinstance(rng_state, (list, tuple)):
+        return torch.tensor(rng_state, dtype=torch.uint8)
+    return None
+
+
 def restore_rng_state(state: dict) -> None:
     if not state:
         return
@@ -60,13 +72,20 @@ def restore_rng_state(state: dict) -> None:
         random.setstate(python_random_state)
 
     torch_cpu_rng_state = state.get("torch_cpu_rng_state")
+    torch_cpu_rng_state = _coerce_torch_rng_state(torch_cpu_rng_state)
     if torch_cpu_rng_state is not None:
         torch.set_rng_state(torch_cpu_rng_state)
 
     if torch.cuda.is_available():
         torch_cuda_rng_state_all = state.get("torch_cuda_rng_state_all")
         if torch_cuda_rng_state_all is not None:
-            torch.cuda.set_rng_state_all(torch_cuda_rng_state_all)
+            coerced_cuda_state = [
+                _coerce_torch_rng_state(single_state)
+                for single_state in torch_cuda_rng_state_all
+            ]
+            coerced_cuda_state = [single_state for single_state in coerced_cuda_state if single_state is not None]
+            if coerced_cuda_state:
+                torch.cuda.set_rng_state_all(coerced_cuda_state)
 
 
 def build_training_checkpoint(
