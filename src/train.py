@@ -133,6 +133,26 @@ _comet_uploader_thread = None
 _comet_uploader_stop_event = None
 
 
+def prune_local_checkpoints(checkpoint_dir: Path, keep_last: int = 3):
+    try:
+        candidates = list(checkpoint_dir.glob("diffcoder_best_epoch_*.pt"))
+        def _epoch_of(p):
+            try:
+                return int(p.stem.split("_")[-1])
+            except Exception:
+                return -1
+        candidates_sorted = sorted(candidates, key=_epoch_of)
+        to_delete = candidates_sorted[:-keep_last] if len(candidates_sorted) > keep_last else []
+        for old in to_delete:
+            try:
+                old.unlink()
+                print(f"[PRUNE] Usunięto lokalny stary checkpoint: {old.name}")
+            except Exception:
+                pass
+    except Exception as e:
+        print(f"[PRUNE] Błąd podczas przycinania lokalnych checkpointów: {e}")
+
+
 class CodeInstructionDataset(Dataset):
     def __init__(
         self,
@@ -405,6 +425,12 @@ def train_diffcoder(
             except Exception as e:
                 print(f"Błąd zapisu checkpointu: {e}")
             print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path} (epoka {epoch_num})")
+
+            # Immediately prune local epoched checkpoints to free disk space
+            try:
+                prune_local_checkpoints(checkpoint_dir, keep_last=3)
+            except Exception:
+                pass
 
             if experiment is not None:
                 print("Kolejkuję model do wysyłki na Comet ML (asynchronicznie)...")
