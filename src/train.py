@@ -26,30 +26,9 @@ except Exception:
 
 
 def clear_comet_temp_cache() -> None:
-    cache_roots = [
-        Path(os.path.expanduser("~/.cometml")),
-        Path(os.path.expanduser("~/.comet_offline")),
-    ]
-    temp_root = Path(tempfile.gettempdir())
-
-    for cache_root in cache_roots:
-        try:
-            if cache_root.exists():
-                shutil.rmtree(cache_root, ignore_errors=True)
-        except Exception:
-            pass
-
-    if temp_root.exists():
-        for entry in temp_root.iterdir():
-            name = entry.name.lower()
-            if "comet" in name:
-                try:
-                    if entry.is_dir():
-                        shutil.rmtree(entry, ignore_errors=True)
-                    else:
-                        entry.unlink(missing_ok=True)
-                except Exception:
-                    pass
+    # Comet temp cache cleaning removed — handled by external background cleaner.
+    # This function is intentionally a no-op to avoid deleting files unexpectedly.
+    return
 
 
 def release_training_memory() -> None:
@@ -62,16 +41,76 @@ def release_training_memory() -> None:
             pass
 
 
-def log_best_model_to_comet(experiment, checkpoint_path: Path) -> None:
+def capture_rng_state() -> dict:
+    state = {
+        "python_random_state": random.getstate(),
+        "torch_cpu_rng_state": torch.get_rng_state(),
+    }
+    if torch.cuda.is_available():
+        state["torch_cuda_rng_state_all"] = torch.cuda.get_rng_state_all()
+    return state
+
+
+def restore_rng_state(state: dict) -> None:
+    if not state:
+        return
+
+    python_random_state = state.get("python_random_state")
+    if python_random_state is not None:
+        random.setstate(python_random_state)
+
+    torch_cpu_rng_state = state.get("torch_cpu_rng_state")
+    if torch_cpu_rng_state is not None:
+        torch.set_rng_state(torch_cpu_rng_state)
+
+    if torch.cuda.is_available():
+        torch_cuda_rng_state_all = state.get("torch_cuda_rng_state_all")
+        if torch_cuda_rng_state_all is not None:
+            torch.cuda.set_rng_state_all(torch_cuda_rng_state_all)
+
+
+def build_training_checkpoint(
+    model,
+    optimizer,
+    scheduler,
+    scaler,
+    epoch,
+    val_loss,
+    best_val_loss,
+    extra_metadata=None,
+) -> dict:
+    return {
+        "epoch": int(epoch),
+        "val_loss": float(val_loss),
+        "best_val_loss": float(best_val_loss),
+        "model_state_dict": model.state_dict(),
+        "optimizer_state_dict": optimizer.state_dict(),
+        "scheduler_state_dict": scheduler.state_dict() if scheduler is not None else None,
+        "scaler_state_dict": scaler.state_dict() if scaler is not None else None,
+        "rng_state": capture_rng_state(),
+        "train_metadata": extra_metadata or {},
+    }
+
+
+def save_training_checkpoint(checkpoint: dict, checkpoint_path: Path) -> None:
+    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(checkpoint, checkpoint_path)
+
+
+def load_training_checkpoint(checkpoint_path: Path, device: str) -> dict:
+    return torch.load(checkpoint_path, map_location=device)
+
+
+def log_best_model_to_comet(experiment, checkpoint_path: Path, epoch: int) -> None:
     if experiment is None:
         return
 
-    print(f"Comet ML: wysyłam najlepszy model z {checkpoint_path.name}")
-    clear_comet_temp_cache()
+    comet_name = f"diffcoder_checkpoint_epoch_{epoch}"
+    print(f"Comet ML: wysyłam checkpoint {checkpoint_path.name} jako {comet_name}")
     experiment.log_model(
-        name="diffcoder_best",
+        name=comet_name,
         file_or_folder=str(checkpoint_path),
-        overwrite=True,
+        overwrite=False,
     )
 
     flush = getattr(experiment, "flush", None)
@@ -81,7 +120,6 @@ def log_best_model_to_comet(experiment, checkpoint_path: Path) -> None:
         except Exception:
             pass
 
-    clear_comet_temp_cache()
     release_training_memory()
 
 
@@ -94,29 +132,9 @@ def _comet_uploader_worker(experiment, q: _queue.Queue, stop_event: threading.Ev
 
         try:
             print(f"[COMET-UPLOADER] Rozpoczynam upload epoki {epoch_num}: {checkpoint_path.name}")
-            clear_comet_temp_cache()
-            experiment.log_model(name="diffcoder_best", file_or_folder=str(checkpoint_path), overwrite=True)
-            clear_comet_temp_cache()
+            log_best_model_to_comet(experiment, checkpoint_path, epoch_num)
             release_training_memory()
             print(f"[COMET-UPLOADER] Upload epoki {epoch_num} zakończony.")
-
-            # Prune old epoched checkpoints, keep only the newest `keep_last`
-            parent = checkpoint_path.parent
-            candidates = list(parent.glob("diffcoder_best_epoch_*.pt"))
-            def _epoch_of(p):
-                try:
-                    return int(p.stem.split("_")[-1])
-                except Exception:
-                    return -1
-
-            candidates_sorted = sorted(candidates, key=_epoch_of)
-            to_delete = candidates_sorted[:-keep_last] if len(candidates_sorted) > keep_last else []
-            for old in to_delete:
-                try:
-                    old.unlink()
-                    print(f"[COMET-UPLOADER] Usunięto stary checkpoint: {old.name}")
-                except Exception:
-                    pass
 
         except Exception as e:
             print(f"[COMET-UPLOADER] Błąd podczas uploadu: {e}")
@@ -131,26 +149,6 @@ def _comet_uploader_worker(experiment, q: _queue.Queue, stop_event: threading.Ev
 _comet_uploader_queue = None
 _comet_uploader_thread = None
 _comet_uploader_stop_event = None
-
-
-def prune_local_checkpoints(checkpoint_dir: Path, keep_last: int = 3):
-    try:
-        candidates = list(checkpoint_dir.glob("diffcoder_best_epoch_*.pt"))
-        def _epoch_of(p):
-            try:
-                return int(p.stem.split("_")[-1])
-            except Exception:
-                return -1
-        candidates_sorted = sorted(candidates, key=_epoch_of)
-        to_delete = candidates_sorted[:-keep_last] if len(candidates_sorted) > keep_last else []
-        for old in to_delete:
-            try:
-                old.unlink()
-                print(f"[PRUNE] Usunięto lokalny stary checkpoint: {old.name}")
-            except Exception:
-                pass
-    except Exception as e:
-        print(f"[PRUNE] Błąd podczas przycinania lokalnych checkpointów: {e}")
 
 
 class CodeInstructionDataset(Dataset):
@@ -291,9 +289,17 @@ def train_diffcoder(
     start_epoch=0,
     best_val_loss=None,
     best_checkpoint_path=None,
+    resume_checkpoint=None,
 ):
     use_amp = device == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
+    if resume_checkpoint is not None:
+        scaler_state_dict = resume_checkpoint.get("scaler_state_dict")
+        if scaler_state_dict is not None:
+            try:
+                scaler.load_state_dict(scaler_state_dict)
+            except Exception as e:
+                print(f"[RESUME] Nie udało się wczytać stanu scaler-a: {e}")
     if best_val_loss is None:
         best_val_loss = float("inf")
     epochs_without_improvement = 0
@@ -408,29 +414,31 @@ def train_diffcoder(
 
             print(f"[BEST] Nowy najlepszy val_loss: {val_loss:.6f}")
 
-            checkpoint = {
-                "epoch": epoch + 1,
-                "val_loss": val_loss,
-                "model_state_dict": model.state_dict(),
-                "optimizer_state_dict": optimizer.state_dict(),
-            }
+            checkpoint = build_training_checkpoint(
+                model=model,
+                optimizer=optimizer,
+                scheduler=scheduler,
+                scaler=scaler,
+                epoch=epoch + 1,
+                val_loss=val_loss,
+                best_val_loss=best_val_loss,
+                extra_metadata={
+                    "epoch": epoch + 1,
+                    "val_loss": val_loss,
+                    "learning_rate": optimizer.param_groups[0]["lr"],
+                },
+            )
             checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
 
             # Save both a canonical name and an epoched copy so we can keep a small history locally
             epoch_num = epoch + 1
             checkpoint_epoch_path = checkpoint_dir / f"diffcoder_best_epoch_{epoch_num}.pt"
             try:
-                torch.save(checkpoint, checkpoint_epoch_path)
-                torch.save(checkpoint, checkpoint_path)
+                save_training_checkpoint(checkpoint, checkpoint_epoch_path)
+                save_training_checkpoint(checkpoint, checkpoint_path)
             except Exception as e:
                 print(f"Błąd zapisu checkpointu: {e}")
             print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path} (epoka {epoch_num})")
-
-            # Immediately prune local epoched checkpoints to free disk space
-            try:
-                prune_local_checkpoints(checkpoint_dir, keep_last=3)
-            except Exception:
-                pass
 
             if experiment is not None:
                 print("Kolejkuję model do wysyłki na Comet ML (asynchronicznie)...")
@@ -452,14 +460,6 @@ def train_diffcoder(
                     print(f"[COMET-UPLOADER] Nie udało się dodać zadania do kolejki: {e}")
 
                 print("Zadanie wysyłki dodane do kolejki.")
-
-            # delete previous canonical best if different
-            if best_checkpoint_path is not None and best_checkpoint_path != checkpoint_path:
-                try:
-                    best_checkpoint_path.unlink()
-                    print(f"Usunięto poprzedni najlepszy checkpoint z dysku: {best_checkpoint_path}")
-                except Exception as e:
-                    print(f"Ostrzeżenie: Nie udało się usunąć poprzedniego checkpointu: {e}")
 
             best_checkpoint_path = checkpoint_path
         else:
@@ -651,6 +651,7 @@ if __name__ == "__main__":
     start_epoch = 0
     best_val_loss = None
     best_checkpoint_path = None
+    resume_checkpoint = None
     if RESUME_FROM_CHECKPOINT:
         resume_path = None
         if RESUME_CHECKPOINT_NAME:
@@ -658,17 +659,22 @@ if __name__ == "__main__":
         else:
             resume_path = resolve_best_checkpoint(checkpoint_dir)
         if resume_path is not None and resume_path.exists():
-            checkpoint = torch.load(resume_path, map_location=DEVICE)
-            model.load_state_dict(checkpoint["model_state_dict"])
-            optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
-            # for group in optimizer.param_groups:
-            #     group["lr"] = BASE_LR
-            start_epoch = int(checkpoint.get("epoch", 0))
-            best_val_loss = float(checkpoint.get("val_loss", "inf"))
+            resume_checkpoint = load_training_checkpoint(resume_path, DEVICE)
+            model.load_state_dict(resume_checkpoint["model_state_dict"])
+            optimizer.load_state_dict(resume_checkpoint["optimizer_state_dict"])
+            scheduler_state_dict = resume_checkpoint.get("scheduler_state_dict")
+            if scheduler_state_dict is not None:
+                try:
+                    scheduler.load_state_dict(scheduler_state_dict)
+                except Exception as e:
+                    print(f"[RESUME] Nie udało się wczytać stanu scheduler-a: {e}")
+            start_epoch = int(resume_checkpoint.get("epoch", 0))
+            best_val_loss = float(resume_checkpoint.get("best_val_loss", resume_checkpoint.get("val_loss", "inf")))
+            restore_rng_state(resume_checkpoint.get("rng_state", {}))
             best_checkpoint_path = resume_path
             print(
                 f"Wznawiam trening z checkpointu: {resume_path} | "
-                f"epoch={start_epoch} | best_val_loss={best_val_loss:.6f} | lr={BASE_LR}"
+                f"epoch={start_epoch} | best_val_loss={best_val_loss:.6f} | lr={optimizer.param_groups[0]['lr']:.6g}"
             )
         else:
             print("Nie znaleziono checkpointu do wznowienia. Start od zera.")
@@ -703,6 +709,7 @@ if __name__ == "__main__":
         start_epoch=start_epoch,
         best_val_loss=best_val_loss,
         best_checkpoint_path=best_checkpoint_path,
+        resume_checkpoint=resume_checkpoint,
     )
 
     if experiment is not None:
