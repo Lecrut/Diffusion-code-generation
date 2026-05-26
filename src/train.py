@@ -461,6 +461,14 @@ def train_diffcoder(
 
                 print("Zadanie wysyłki dodane do kolejki.")
 
+            # Remove previous canonical best checkpoint file to keep only the newest
+            if best_checkpoint_path is not None and best_checkpoint_path.exists() and best_checkpoint_path != checkpoint_path:
+                try:
+                    best_checkpoint_path.unlink()
+                    print(f"Usunięto poprzedni najlepszy checkpoint z dysku: {best_checkpoint_path}")
+                except Exception as e:
+                    print(f"Ostrzeżenie: Nie udało się usunąć poprzedniego checkpointu: {e}")
+
             best_checkpoint_path = checkpoint_path
         else:
             epochs_without_improvement += 1
@@ -512,7 +520,7 @@ if __name__ == "__main__":
     NUM_BLOCKS = 5
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
-    RESUME_FROM_CHECKPOINT = False # True - restart from checkpoint
+    RESUME_FROM_CHECKPOINT = True # True - restart from checkpoint
     RESUME_CHECKPOINT_NAME = "diffcoder_best.pt" # name of model in folder checkpoint
     LR_PLATEAU_PATIENCE = 5
     LR_PLATEAU_FACTOR = 0.5
