@@ -1,5 +1,8 @@
 from functools import partial
 import gc
+import threading
+import queue as _queue
+import time
 from pathlib import Path
 import os
 import shutil
@@ -80,6 +83,54 @@ def log_best_model_to_comet(experiment, checkpoint_path: Path) -> None:
 
     clear_comet_temp_cache()
     release_training_memory()
+
+
+def _comet_uploader_worker(experiment, q: _queue.Queue, stop_event: threading.Event, keep_last: int = 3):
+    while not stop_event.is_set() or not q.empty():
+        try:
+            checkpoint_path, epoch_num = q.get(timeout=1)
+        except Exception:
+            continue
+
+        try:
+            print(f"[COMET-UPLOADER] Rozpoczynam upload epoki {epoch_num}: {checkpoint_path.name}")
+            clear_comet_temp_cache()
+            experiment.log_model(name="diffcoder_best", file_or_folder=str(checkpoint_path), overwrite=True)
+            clear_comet_temp_cache()
+            release_training_memory()
+            print(f"[COMET-UPLOADER] Upload epoki {epoch_num} zakończony.")
+
+            # Prune old epoched checkpoints, keep only the newest `keep_last`
+            parent = checkpoint_path.parent
+            candidates = list(parent.glob("diffcoder_best_epoch_*.pt"))
+            def _epoch_of(p):
+                try:
+                    return int(p.stem.split("_")[-1])
+                except Exception:
+                    return -1
+
+            candidates_sorted = sorted(candidates, key=_epoch_of)
+            to_delete = candidates_sorted[:-keep_last] if len(candidates_sorted) > keep_last else []
+            for old in to_delete:
+                try:
+                    old.unlink()
+                    print(f"[COMET-UPLOADER] Usunięto stary checkpoint: {old.name}")
+                except Exception:
+                    pass
+
+        except Exception as e:
+            print(f"[COMET-UPLOADER] Błąd podczas uploadu: {e}")
+        finally:
+            try:
+                q.task_done()
+            except Exception:
+                pass
+
+
+# Globals for uploader
+_comet_uploader_queue = None
+_comet_uploader_thread = None
+_comet_uploader_stop_event = None
 
 
 class CodeInstructionDataset(Dataset):
@@ -345,20 +396,38 @@ def train_diffcoder(
             }
             checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
 
-            for stale_checkpoint in checkpoint_dir.glob("diffcoder_best_epoch_*.pt"):
-                try:
-                    stale_checkpoint.unlink()
-                except Exception:
-                    pass
-
-            torch.save(checkpoint, checkpoint_path)
-            print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
+            # Save both a canonical name and an epoched copy so we can keep a small history locally
+            epoch_num = epoch + 1
+            checkpoint_epoch_path = checkpoint_dir / f"diffcoder_best_epoch_{epoch_num}.pt"
+            try:
+                torch.save(checkpoint, checkpoint_epoch_path)
+                torch.save(checkpoint, checkpoint_path)
+            except Exception as e:
+                print(f"Błąd zapisu checkpointu: {e}")
+            print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path} (epoka {epoch_num})")
 
             if experiment is not None:
-                print("Kolejkuję model do wysyłki na Comet ML...")
-                log_best_model_to_comet(experiment, checkpoint_path)
-                print("Wyczyszczono pamięć podręczną Cometa i pamięć roboczą po zapisie najlepszego modelu.")
+                print("Kolejkuję model do wysyłki na Comet ML (asynchronicznie)...")
+                # ensure uploader queue exists
+                global _comet_uploader_queue
+                if _comet_uploader_queue is None:
+                    _comet_uploader_queue = _queue.Queue(maxsize=3)
 
+                # If queue is full, drop the oldest task to make room
+                try:
+                    if _comet_uploader_queue.full():
+                        try:
+                            dropped = _comet_uploader_queue.get_nowait()
+                            print(f"[COMET-UPLOADER] Kolejka pełna, usuwam najstarsze zadanie: {dropped[1]}")
+                        except Exception:
+                            pass
+                    _comet_uploader_queue.put_nowait((checkpoint_path, epoch_num))
+                except Exception as e:
+                    print(f"[COMET-UPLOADER] Nie udało się dodać zadania do kolejki: {e}")
+
+                print("Zadanie wysyłki dodane do kolejki.")
+
+            # delete previous canonical best if different
             if best_checkpoint_path is not None and best_checkpoint_path != checkpoint_path:
                 try:
                     best_checkpoint_path.unlink()
@@ -449,6 +518,19 @@ if __name__ == "__main__":
             "num_blocks": NUM_BLOCKS,
             "dataset_fraction": DATASET_FRACTION,
         })
+        # start background uploader thread (non-blocking uploads)
+        try:
+            _comet_uploader_queue = _queue.Queue(maxsize=3)
+            _comet_uploader_stop_event = threading.Event()
+            _comet_uploader_thread = threading.Thread(
+                target=_comet_uploader_worker,
+                args=(experiment, _comet_uploader_queue, _comet_uploader_stop_event, 3),
+                daemon=True,
+            )
+            _comet_uploader_thread.start()
+            print("[COMET-UPLOADER] Wątek uploader-a uruchomiony.")
+        except Exception as e:
+            print(f"[COMET-UPLOADER] Nie udało się uruchomić uploader-a: {e}")
     
     model = LocalConvDiffCoder(
         vocab_size=tokenizer.vocab_size,
@@ -598,4 +680,17 @@ if __name__ == "__main__":
     )
 
     if experiment is not None:
+        print("Oczekiwanie na zakończenie zadań uploadu do Comet...")
+        try:
+            if _comet_uploader_queue is not None:
+                _comet_uploader_queue.join()
+        except Exception:
+            pass
+        try:
+            if _comet_uploader_stop_event is not None:
+                _comet_uploader_stop_event.set()
+            if _comet_uploader_thread is not None:
+                _comet_uploader_thread.join(timeout=10)
+        except Exception:
+            pass
         experiment.end()
