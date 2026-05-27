@@ -206,6 +206,21 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
     model.train()
 
 
+def cleanup_checkpoint_dir(checkpoint_dir, keep_path=None):
+    """Keep only the selected checkpoint file in checkpoints/.
+
+    Removes all diffcoder_best*.pt files except keep_path.
+    """
+    for candidate in checkpoint_dir.glob("diffcoder_best*.pt"):
+        if keep_path is not None and candidate.resolve() == keep_path.resolve():
+            continue
+        try:
+            candidate.unlink()
+            print(f"Usunięto checkpoint: {candidate}")
+        except Exception as e:
+            print(f"Ostrzeżenie: nie udało się usunąć checkpointu {candidate}: {e}")
+
+
 def train_diffcoder(
     model,
     train_dataloader,
@@ -334,24 +349,20 @@ def train_diffcoder(
                 "model_state_dict": model.state_dict(),
                 "optimizer_state_dict": optimizer.state_dict(),
             }
-            checkpoint_path = checkpoint_dir / f"diffcoder_best_epoch_{epoch+1}.pt"
+            checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
             torch.save(checkpoint, checkpoint_path)
+            cleanup_checkpoint_dir(checkpoint_dir, keep_path=checkpoint_path)
             print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
 
             if experiment is not None:
                 print("Kolejkuję model do wysyłki na Comet ML...")
+                experiment.log_other("best_model_epoch", epoch + 1)
+                experiment.log_other("best_model_val_loss", val_loss)
                 experiment.log_model(
-                    name="diffcoder",
+                    name="diffcoder_best",
                     file_or_folder=str(checkpoint_path),
                     overwrite=True,
                 )
-
-            if best_checkpoint_path is not None and best_checkpoint_path.exists():
-                try:
-                    os.remove(best_checkpoint_path)
-                    print(f"Usunięto stary checkpoint z dysku: {best_checkpoint_path}")
-                except Exception as e:
-                    print(f"Ostrzeżenie: Nie udało się usunąć lokalnego checkpointu: {e}")
 
             best_checkpoint_path = checkpoint_path
         else:
@@ -404,7 +415,7 @@ if __name__ == "__main__":
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
     RESUME_FROM_CHECKPOINT = False
-    RESUME_CHECKPOINT_NAME = "diffcoder_best_epoch_52.pt"
+    RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
 
     tokenizer = CodeTokenizer()
 
@@ -532,6 +543,7 @@ if __name__ == "__main__":
             start_epoch = int(checkpoint.get("epoch", 0))
             best_val_loss = float(checkpoint.get("val_loss", "inf"))
             best_checkpoint_path = resume_path
+            cleanup_checkpoint_dir(checkpoint_dir, keep_path=best_checkpoint_path)
             print(
                 f"Wznawiam trening z checkpointu: {resume_path} | "
                 f"epoch={start_epoch} | best_val_loss={best_val_loss:.6f} | lr={BASE_LR}"
