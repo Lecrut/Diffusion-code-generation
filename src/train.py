@@ -117,7 +117,8 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
             is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
             x_masked = x_0.clone()
             x_masked[is_masked] = tokenizer.mask_token_id
-            masked_text = tokenizer.decode(x_masked[0].tolist())
+            # keep special tokens (mask) visible when decoding masked ground truth
+            masked_text = tokenizer.decode(x_masked[0].tolist(), skip_special_tokens=False)
 
             with torch.no_grad():
                 logits = model(x_masked, prompt_ids, mask_prob.view(-1))
@@ -136,13 +137,13 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                         else:
                             merged.append(tok)
                         pred_idx += 1
-                    predicted_text = tokenizer.decode(merged)
+                    # keep special tokens visible to inspect masks/preds
+                    predicted_text = tokenizer.decode(merged, skip_special_tokens=False)
                 except Exception:
                     predicted_text = tokenizer.decode(pred_ids[0].tolist())
-
-        except Exception:
-            masked_text = ""
-            predicted_text = ""
+        except Exception as e:
+            masked_text = f"<ERROR: {type(e).__name__}: {e}>"
+            predicted_text = masked_text
 
         # also run full generation (separate inference path)
         try:
@@ -154,8 +155,8 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                     eos_token_id=tokenizer.eos_token_id,
                 )
             gen_text = tokenizer.decode(gen_ids[0].tolist())
-        except Exception:
-            gen_text = ""
+        except Exception as e:
+            gen_text = f"<ERROR: {type(e).__name__}: {e}>"
 
         # log to Comet or stdout
         if experiment is not None:
