@@ -1,7 +1,6 @@
 from functools import partial
 from pathlib import Path
 import os
-import csv
 import random
 import math
 import torch
@@ -93,46 +92,72 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
 
 
 def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None):
+    """Loguje próbki: instrukcja, ground-truth, masked ground-truth, predicted (forward on masked), generated (full infer).
+    Nie zapisuje już CSV — tylko loguje do Comet (table/text) lub stdout.
+    """
     model.eval()
     table_rows = []
-    # prepare output folder
-    out_dir = None
-    if checkpoint_dir is not None:
-        out_dir = Path(checkpoint_dir) / "generated_samples"
-        out_dir.mkdir(parents=True, exist_ok=True)
+
     for idx, sample in enumerate(samples):
         prompt = sample["instruction"]
         target_code = sample["code"]
         prompt_ids = torch.tensor(tokenizer.encode_instruction(prompt), dtype=torch.long).to(device)
+
         masked_text = ""
         predicted_text = ""
-        with torch.no_grad():
-            try:
-                code_ids_raw = tokenizer.encode_code(target_code)
-                x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
-                u = torch.rand(1, device=device)
-                mask_prob = torch.cos(u * math.pi / 2)
-                rand_matrix = torch.rand(1, x_0.size(1), device=device)
-                is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
-                x_masked = x_0.clone()
-                x_masked[is_masked] = tokenizer.mask_token_id
-                masked_text = tokenizer.decode(x_masked[0].tolist())
+        gen_text = ""
 
+        # compute masked ground truth and model's prediction on that masked input
+        try:
+            code_ids_raw = tokenizer.encode_code(target_code)
+            x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
+            u = torch.rand(1, device=device)
+            mask_prob = torch.cos(u * math.pi / 2)
+            rand_matrix = torch.rand(1, x_0.size(1), device=device)
+            is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
+            x_masked = x_0.clone()
+            x_masked[is_masked] = tokenizer.mask_token_id
+            masked_text = tokenizer.decode(x_masked[0].tolist())
+
+            with torch.no_grad():
                 logits = model(x_masked, prompt_ids, mask_prob.view(-1))
                 pred_ids = logits.argmax(dim=-1)
-                predicted_text = tokenizer.decode(pred_ids[0].tolist())
-            except Exception:
-                masked_text = ""
-                predicted_text = ""
+                # merge predictions into masked input: replace mask tokens with model preds
+                try:
+                    mask_id = tokenizer.mask_token_id
+                    x_masked_cpu = x_masked[0].cpu().tolist()
+                    pred_cpu = pred_ids[0].cpu().tolist()
+                    merged = []
+                    pred_idx = 0
+                    for tok in x_masked_cpu:
+                        if tok == mask_id:
+                            # take next prediction for this position
+                            merged.append(pred_cpu[pred_idx])
+                        else:
+                            merged.append(tok)
+                        pred_idx += 1
+                    predicted_text = tokenizer.decode(merged)
+                except Exception:
+                    predicted_text = tokenizer.decode(pred_ids[0].tolist())
 
-            gen_ids = model.generate(
-                prompt_ids,
-                steps=steps,
-                device=device,
-                eos_token_id=tokenizer.eos_token_id,
-            )
-        gen_text = tokenizer.decode(gen_ids[0].tolist())
+        except Exception:
+            masked_text = ""
+            predicted_text = ""
 
+        # also run full generation (separate inference path)
+        try:
+            with torch.no_grad():
+                gen_ids = model.generate(
+                    prompt_ids,
+                    steps=steps,
+                    device=device,
+                    eos_token_id=tokenizer.eos_token_id,
+                )
+            gen_text = tokenizer.decode(gen_ids[0].tolist())
+        except Exception:
+            gen_text = ""
+
+        # log to Comet or stdout
         if experiment is not None:
             experiment.log_text(
                 "Epoch "
@@ -169,26 +194,7 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
             print(gen_text)
 
     if experiment is not None and table_rows:
-        # log a table and save CSV; also upload CSV as asset
         experiment.log_table("generated_samples", table_rows, step=epoch)
-        if out_dir is not None:
-            csv_path = out_dir / f"generated_samples_epoch_{epoch}.csv"
-            keys = ["epoch", "sample", "prompt", "ground_truth", "masked_ground_truth", "predicted_this_iteration", "generated"]
-            try:
-                with open(csv_path, "w", encoding="utf-8", newline="") as f:
-                    writer = csv.DictWriter(f, fieldnames=keys)
-                    writer.writeheader()
-                    for r in table_rows:
-                        writer.writerow({k: r.get(k, "") for k in keys})
-                try:
-                    experiment.log_asset(str(csv_path))
-                except Exception:
-                    pass
-            except Exception:
-                pass
-        else:
-            # if no checkpoint dir provided, still attempt to log small table
-            pass
 
     model.train()
 
