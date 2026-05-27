@@ -331,11 +331,12 @@ if __name__ == "__main__":
     EPOCHS = 500
     VAL_SPLIT = 0.05
     EARLY_STOPPING_PATIENCE = 50
-    HIDDEN_DIM = 256
-    NUM_BLOCKS = 4
+    HIDDEN_DIM = 512
+    NUM_BLOCKS = 5
+    DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
-    RESUME_FROM_CHECKPOINT = True
+    RESUME_FROM_CHECKPOINT = False
     RESUME_CHECKPOINT_NAME = "diffcoder_best_epoch_52.pt"
 
     tokenizer = CodeTokenizer()
@@ -370,7 +371,8 @@ if __name__ == "__main__":
         pad_token_id=tokenizer.pad_token_id,
         hidden_dim=HIDDEN_DIM,
         num_blocks=NUM_BLOCKS,
-        max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN
+        max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN,
+        dilation_factor=DILATION_FACTOR,
     ).to(DEVICE)
 
     repo_root = Path(__file__).resolve().parents[1]
