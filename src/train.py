@@ -91,27 +91,87 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     }
 
 
-def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None):
+def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None):
+    """Loguje próbki: instrukcja, ground-truth, masked ground-truth, predicted (forward on masked), generated (full infer).
+    Nie zapisuje już CSV — tylko loguje do Comet (table/text) lub stdout.
+    """
     model.eval()
     table_rows = []
+
     for idx, sample in enumerate(samples):
         prompt = sample["instruction"]
         target_code = sample["code"]
         prompt_ids = torch.tensor(tokenizer.encode_instruction(prompt), dtype=torch.long).to(device)
-        with torch.no_grad():
-            gen_ids = model.generate(
-                prompt_ids,
-                steps=steps,
-                device=device,
-                eos_token_id=tokenizer.eos_token_id,
-            )
-        gen_text = tokenizer.decode(gen_ids[0].tolist())
+        if prompt_ids.dim() == 1:
+            prompt_ids = prompt_ids.unsqueeze(0)
 
+        masked_text = ""
+        predicted_text = ""
+        gen_text = ""
+
+        # compute masked ground truth and model's prediction on that masked input
+        try:
+            code_ids_raw = tokenizer.encode_code(target_code)
+            x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
+            u = torch.rand(1, device=device)
+            mask_prob = torch.cos(u * math.pi / 2)
+            rand_matrix = torch.rand(1, x_0.size(1), device=device)
+            is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
+            x_masked = x_0.clone()
+            x_masked[is_masked] = tokenizer.mask_token_id
+            # keep special tokens (mask) visible when decoding masked ground truth
+            masked_text = tokenizer.decode(x_masked[0].tolist(), skip_special_tokens=False)
+
+            with torch.no_grad():
+                logits = model(x_masked, prompt_ids, mask_prob.view(-1))
+                pred_ids = logits.argmax(dim=-1)
+                # merge predictions into masked input: replace mask tokens with model preds
+                try:
+                    mask_id = tokenizer.mask_token_id
+                    x_masked_cpu = x_masked[0].cpu().tolist()
+                    pred_cpu = pred_ids[0].cpu().tolist()
+                    merged = []
+                    pred_idx = 0
+                    for tok in x_masked_cpu:
+                        if tok == mask_id:
+                            # take next prediction for this position
+                            merged.append(pred_cpu[pred_idx])
+                        else:
+                            merged.append(tok)
+                        pred_idx += 1
+                    # keep special tokens visible to inspect masks/preds
+                    predicted_text = tokenizer.decode(merged, skip_special_tokens=False)
+                except Exception:
+                    predicted_text = tokenizer.decode(pred_ids[0].tolist())
+        except Exception as e:
+            import traceback
+            tb = traceback.format_exc()
+            masked_text = f"<ERROR: {type(e).__name__}: {e}>\n{tb}"
+            predicted_text = masked_text
+
+        # also run full generation (separate inference path)
+        try:
+            with torch.no_grad():
+                gen_ids = model.generate(
+                    prompt_ids,
+                    steps=steps,
+                    device=device,
+                    eos_token_id=tokenizer.eos_token_id,
+                )
+            gen_text = tokenizer.decode(gen_ids[0].tolist())
+        except Exception as e:
+            import traceback
+            tb = traceback.format_exc()
+            gen_text = f"<ERROR: {type(e).__name__}: {e}>\n{tb}"
+
+        # log to Comet or stdout
         if experiment is not None:
             experiment.log_text(
                 "Epoch "
                 f"{epoch} | sample {idx}\nPROMPT:\n{prompt}"
                 f"\n\nGROUND_TRUTH:\n{target_code}"
+                f"\n\nMASKED_GROUND_TRUTH:\n{masked_text}"
+                f"\n\nPREDICTED_THIS_ITERATION:\n{predicted_text}"
                 f"\n\nGENERATED:\n{gen_text}",
                 step=epoch,
             )
@@ -121,6 +181,8 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                     "sample": idx,
                     "prompt": prompt,
                     "ground_truth": target_code,
+                    "masked_ground_truth": masked_text,
+                    "predicted_this_iteration": predicted_text,
                     "generated": gen_text,
                 }
             )
@@ -131,6 +193,10 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
             print(prompt)
             print("GROUND_TRUTH:")
             print(target_code)
+            print("MASKED_GROUND_TRUTH:")
+            print(masked_text)
+            print("PREDICTED_THIS_ITERATION:")
+            print(predicted_text)
             print("GENERATED:")
             print(gen_text)
 
@@ -138,6 +204,21 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
         experiment.log_table("generated_samples", table_rows, step=epoch)
 
     model.train()
+
+
+def cleanup_checkpoint_dir(checkpoint_dir, keep_path=None):
+    """Keep only the selected checkpoint file in checkpoints/.
+
+    Removes all diffcoder_best*.pt files except keep_path.
+    """
+    for candidate in checkpoint_dir.glob("diffcoder_best*.pt"):
+        if keep_path is not None and candidate.resolve() == keep_path.resolve():
+            continue
+        try:
+            candidate.unlink()
+            print(f"Usunięto checkpoint: {candidate}")
+        except Exception as e:
+            print(f"Ostrzeżenie: nie udało się usunąć checkpointu {candidate}: {e}")
 
 
 def train_diffcoder(
@@ -268,24 +349,20 @@ def train_diffcoder(
                 "model_state_dict": model.state_dict(),
                 "optimizer_state_dict": optimizer.state_dict(),
             }
-            checkpoint_path = checkpoint_dir / f"diffcoder_best_epoch_{epoch+1}.pt"
+            checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
             torch.save(checkpoint, checkpoint_path)
+            cleanup_checkpoint_dir(checkpoint_dir, keep_path=checkpoint_path)
             print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
 
             if experiment is not None:
                 print("Kolejkuję model do wysyłki na Comet ML...")
+                experiment.log_other("best_model_epoch", epoch + 1)
+                experiment.log_other("best_model_val_loss", val_loss)
                 experiment.log_model(
-                    name="diffcoder",
+                    name="diffcoder_best",
                     file_or_folder=str(checkpoint_path),
                     overwrite=True,
                 )
-
-            if best_checkpoint_path is not None and best_checkpoint_path.exists():
-                try:
-                    os.remove(best_checkpoint_path)
-                    print(f"Usunięto stary checkpoint z dysku: {best_checkpoint_path}")
-                except Exception as e:
-                    print(f"Ostrzeżenie: Nie udało się usunąć lokalnego checkpointu: {e}")
 
             best_checkpoint_path = checkpoint_path
         else:
@@ -303,6 +380,7 @@ def train_diffcoder(
                 device,
                 epoch + 1,
                 experiment=experiment,
+                checkpoint_dir=checkpoint_dir,
             )
 
         if epochs_without_improvement >= early_stopping_patience:
@@ -331,12 +409,13 @@ if __name__ == "__main__":
     EPOCHS = 500
     VAL_SPLIT = 0.05
     EARLY_STOPPING_PATIENCE = 50
-    HIDDEN_DIM = 256
-    NUM_BLOCKS = 4
+    HIDDEN_DIM = 512
+    NUM_BLOCKS = 5
+    DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
-    RESUME_FROM_CHECKPOINT = True
-    RESUME_CHECKPOINT_NAME = "diffcoder_best_epoch_52.pt"
+    RESUME_FROM_CHECKPOINT = False
+    RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
 
     tokenizer = CodeTokenizer()
 
@@ -370,7 +449,8 @@ if __name__ == "__main__":
         pad_token_id=tokenizer.pad_token_id,
         hidden_dim=HIDDEN_DIM,
         num_blocks=NUM_BLOCKS,
-        max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN
+        max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN,
+        dilation_factor=DILATION_FACTOR,
     ).to(DEVICE)
 
     repo_root = Path(__file__).resolve().parents[1]
@@ -463,6 +543,7 @@ if __name__ == "__main__":
             start_epoch = int(checkpoint.get("epoch", 0))
             best_val_loss = float(checkpoint.get("val_loss", "inf"))
             best_checkpoint_path = resume_path
+            cleanup_checkpoint_dir(checkpoint_dir, keep_path=best_checkpoint_path)
             print(
                 f"Wznawiam trening z checkpointu: {resume_path} | "
                 f"epoch={start_epoch} | best_val_loss={best_val_loss:.6f} | lr={BASE_LR}"

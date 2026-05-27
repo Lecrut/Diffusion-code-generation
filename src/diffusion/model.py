@@ -17,11 +17,15 @@ class AdaLN(nn.Module):
         return self.norm(x) * (1 + gamma) + beta
 
 class CNNBlock(nn.Module):
-    """Pojedynczy blok splotowy"""
-    def __init__(self, dim, kernel_size=5):
+    """Pojedynczy blok splotowy z obsługą dylacji (dilation).
+    Dylacja pozwala zwiększyć efektywne okno recepcyjne bez zwiększania
+    liczby parametrów ani głębokości sieci.
+    """
+    def __init__(self, dim, kernel_size=5, dilation=1):
         super().__init__()
-        # Splot 1D zapewnia lokalne okno kontekstowe
-        self.conv = nn.Conv1d(dim, dim, kernel_size, padding=kernel_size // 2)
+        # padding tak dobrany, by zachować tę samą długość wyjścia jak wejścia
+        padding = ((kernel_size - 1) // 2) * dilation
+        self.conv = nn.Conv1d(dim, dim, kernel_size, padding=padding, dilation=dilation)
         self.ln = AdaLN(dim)
         self.mlp = nn.Sequential(
             nn.Linear(dim, dim * 2),
@@ -41,7 +45,16 @@ class CNNBlock(nn.Module):
         return x
 
 class LocalConvDiffCoder(nn.Module):
-    def __init__(self, vocab_size, mask_token_id, pad_token_id, hidden_dim=256, num_blocks=4, max_seq_len=1024):
+    def __init__(
+        self,
+        vocab_size,
+        mask_token_id,
+        pad_token_id,
+        hidden_dim=256,
+        num_blocks=4,
+        max_seq_len=1024,
+        dilation_factor=2,
+    ):
         super().__init__()
         self.vocab_size = vocab_size
         self.mask_token_id = mask_token_id
@@ -58,7 +71,11 @@ class LocalConvDiffCoder(nn.Module):
         )
         
         self.blocks = nn.ModuleList([
-            CNNBlock(hidden_dim, kernel_size=5 + (i * 2)) for i in range(num_blocks)
+            CNNBlock(
+                hidden_dim,
+                kernel_size=5 + (i * 2),
+                dilation=(dilation_factor ** i)
+            ) for i in range(num_blocks)
         ])
         
         self.ln_final = nn.LayerNorm(hidden_dim)
