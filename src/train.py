@@ -102,6 +102,8 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
         prompt = sample["instruction"]
         target_code = sample["code"]
         prompt_ids = torch.tensor(tokenizer.encode_instruction(prompt), dtype=torch.long).to(device)
+        if prompt_ids.dim() == 1:
+            prompt_ids = prompt_ids.unsqueeze(0)
 
         masked_text = ""
         predicted_text = ""
@@ -142,7 +144,9 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                 except Exception:
                     predicted_text = tokenizer.decode(pred_ids[0].tolist())
         except Exception as e:
-            masked_text = f"<ERROR: {type(e).__name__}: {e}>"
+            import traceback
+            tb = traceback.format_exc()
+            masked_text = f"<ERROR: {type(e).__name__}: {e}>\n{tb}"
             predicted_text = masked_text
 
         # also run full generation (separate inference path)
@@ -156,7 +160,9 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                 )
             gen_text = tokenizer.decode(gen_ids[0].tolist())
         except Exception as e:
-            gen_text = f"<ERROR: {type(e).__name__}: {e}>"
+            import traceback
+            tb = traceback.format_exc()
+            gen_text = f"<ERROR: {type(e).__name__}: {e}>\n{tb}"
 
         # log to Comet or stdout
         if experiment is not None:
