@@ -104,17 +104,9 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
         prompt = sample["instruction"]
         target_code = sample["code"]
         prompt_ids = torch.tensor(tokenizer.encode_instruction(prompt), dtype=torch.long).to(device)
+        masked_text = ""
+        predicted_text = ""
         with torch.no_grad():
-            gen_ids = model.generate(
-                prompt_ids,
-                steps=steps,
-                device=device,
-                eos_token_id=tokenizer.eos_token_id,
-            )
-        gen_text = tokenizer.decode(gen_ids[0].tolist())
-
-        if experiment is not None:
-            # create masked ground truth similar to training mask procedure
             try:
                 code_ids_raw = tokenizer.encode_code(target_code)
                 x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
@@ -125,14 +117,29 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                 x_masked = x_0.clone()
                 x_masked[is_masked] = tokenizer.mask_token_id
                 masked_text = tokenizer.decode(x_masked[0].tolist())
+
+                logits = model(x_masked, prompt_ids, mask_prob.view(-1))
+                pred_ids = logits.argmax(dim=-1)
+                predicted_text = tokenizer.decode(pred_ids[0].tolist())
             except Exception:
                 masked_text = ""
+                predicted_text = ""
 
+            gen_ids = model.generate(
+                prompt_ids,
+                steps=steps,
+                device=device,
+                eos_token_id=tokenizer.eos_token_id,
+            )
+        gen_text = tokenizer.decode(gen_ids[0].tolist())
+
+        if experiment is not None:
             experiment.log_text(
                 "Epoch "
                 f"{epoch} | sample {idx}\nPROMPT:\n{prompt}"
                 f"\n\nGROUND_TRUTH:\n{target_code}"
                 f"\n\nMASKED_GROUND_TRUTH:\n{masked_text}"
+                f"\n\nPREDICTED_THIS_ITERATION:\n{predicted_text}"
                 f"\n\nGENERATED:\n{gen_text}",
                 step=epoch,
             )
@@ -143,6 +150,7 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
                     "prompt": prompt,
                     "ground_truth": target_code,
                     "masked_ground_truth": masked_text,
+                    "predicted_this_iteration": predicted_text,
                     "generated": gen_text,
                 }
             )
@@ -153,22 +161,10 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
             print(prompt)
             print("GROUND_TRUTH:")
             print(target_code)
-            # also print masked version for local inspection
-            try:
-                code_ids_raw = tokenizer.encode_code(target_code)
-                x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
-                u = torch.rand(1, device=device)
-                mask_prob = torch.cos(u * math.pi / 2)
-                rand_matrix = torch.rand(1, x_0.size(1), device=device)
-                is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
-                x_masked = x_0.clone()
-                x_masked[is_masked] = tokenizer.mask_token_id
-                masked_text = tokenizer.decode(x_masked[0].tolist())
-            except Exception:
-                masked_text = ""
-
             print("MASKED_GROUND_TRUTH:")
             print(masked_text)
+            print("PREDICTED_THIS_ITERATION:")
+            print(predicted_text)
             print("GENERATED:")
             print(gen_text)
 
@@ -177,7 +173,7 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
         experiment.log_table("generated_samples", table_rows, step=epoch)
         if out_dir is not None:
             csv_path = out_dir / f"generated_samples_epoch_{epoch}.csv"
-            keys = ["epoch", "sample", "prompt", "ground_truth", "masked_ground_truth", "generated"]
+            keys = ["epoch", "sample", "prompt", "ground_truth", "masked_ground_truth", "predicted_this_iteration", "generated"]
             try:
                 with open(csv_path, "w", encoding="utf-8", newline="") as f:
                     writer = csv.DictWriter(f, fieldnames=keys)
