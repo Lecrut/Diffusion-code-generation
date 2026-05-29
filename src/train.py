@@ -2,7 +2,6 @@ from functools import partial
 from pathlib import Path
 import os
 import random
-import math
 import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, random_split
@@ -17,6 +16,33 @@ try:
     from comet_ml import Experiment
 except Exception:
     Experiment = None
+
+
+def get_epoch_mask_upper_bound(epoch_number, total_epochs):
+    if total_epochs <= 1:
+        return 1.0
+
+    warmup_end = min(100, total_epochs)
+    full_end = min(250, total_epochs)
+
+    if epoch_number <= warmup_end:
+        start_bound = 0.20
+        end_bound = 0.60 if warmup_end > 1 else 1.0
+        progress = (epoch_number - 1) / max(1, warmup_end - 1)
+        return start_bound + (end_bound - start_bound) * progress
+
+    if epoch_number <= full_end:
+        start_bound = 0.60
+        end_bound = 1.00
+        progress = (epoch_number - warmup_end) / max(1, full_end - warmup_end)
+        return start_bound + (end_bound - start_bound) * progress
+
+    return 1.0
+
+
+def sample_epoch_mask_prob(batch_size, device, epoch_number, total_epochs):
+    upper_bound = get_epoch_mask_upper_bound(epoch_number, total_epochs)
+    return torch.rand(batch_size, device=device) * upper_bound
 
 
 class CodeInstructionDataset(Dataset):
@@ -91,7 +117,7 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     }
 
 
-def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None):
+def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None, total_epochs=None):
     """Loguje próbki: instrukcja, ground-truth, masked ground-truth, predicted (forward on masked), generated (full infer).
     Nie zapisuje już CSV — tylko loguje do Comet (table/text) lub stdout.
     """
@@ -113,8 +139,11 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
         try:
             code_ids_raw = tokenizer.encode_code(target_code)
             x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
-            u = torch.rand(1, device=device)
-            mask_prob = torch.cos(u * math.pi / 2)
+            if total_epochs is None:
+                upper_bound = 1.0
+            else:
+                upper_bound = get_epoch_mask_upper_bound(epoch, total_epochs)
+            mask_prob = torch.rand(1, device=device) * upper_bound
             rand_matrix = torch.rand(1, x_0.size(1), device=device)
             is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
             x_masked = x_0.clone()
@@ -237,17 +266,29 @@ def train_diffcoder(
     start_epoch=0,
     best_val_loss=None,
     best_checkpoint_path=None,
+    total_epochs=None,
 ):
     use_amp = device == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     if best_val_loss is None:
         best_val_loss = float("inf")
     epochs_without_improvement = 0
+    effective_total_epochs = total_epochs or epochs
     
     for epoch in range(start_epoch, epochs):
         model.train()
         total_loss = 0
-        progress_bar = tqdm(enumerate(train_dataloader), total=len(train_dataloader), desc=f"Epoka {epoch+1}/{epochs}")
+        epoch_number = epoch + 1
+        current_mask_upper_bound = get_epoch_mask_upper_bound(epoch_number, effective_total_epochs)
+        print(
+            f"Epoka {epoch_number}/{effective_total_epochs} | "
+            f"aktualne maskowanie: 0.0% - {current_mask_upper_bound * 100:.1f}%"
+        )
+        progress_bar = tqdm(
+            enumerate(train_dataloader),
+            total=len(train_dataloader),
+            desc=f"Epoka {epoch_number}/{effective_total_epochs}",
+        )
         optimizer.zero_grad()
             
         for batch_idx, batch in progress_bar:
@@ -256,8 +297,7 @@ def train_diffcoder(
                 
             batch_size, seq_len = x_0.shape
 
-            u = torch.rand(batch_size, device=device)
-            mask_prob = torch.cos(u * math.pi / 2)
+            mask_prob = sample_epoch_mask_prob(batch_size, device, epoch_number, effective_total_epochs)
             mask_prob = mask_prob.view(batch_size, 1)
             t = mask_prob.view(-1)
             rand_matrix = torch.rand(batch_size, seq_len, device=device)
@@ -305,8 +345,7 @@ def train_diffcoder(
                 prompt_ids = val_batch['prompt_ids'].to(device)
                 batch_size, seq_len = x_0.shape
 
-                u = torch.rand(batch_size, device=device)
-                mask_prob = torch.cos(u * math.pi / 2)
+                mask_prob = sample_epoch_mask_prob(batch_size, device, epoch_number, effective_total_epochs)
                 mask_prob = mask_prob.view(batch_size, 1)
                 t = mask_prob.view(-1)
                 rand_matrix = torch.rand(batch_size, seq_len, device=device)
@@ -345,6 +384,8 @@ def train_diffcoder(
 
             checkpoint = {
                 "epoch": epoch + 1,
+                "total_epochs": effective_total_epochs,
+                "mask_upper_bound": current_mask_upper_bound,
                 "val_loss": val_loss,
                 "model_state_dict": model.state_dict(),
                 "optimizer_state_dict": optimizer.state_dict(),
@@ -378,9 +419,10 @@ def train_diffcoder(
                 tokenizer,
                 sample_pairs,
                 device,
-                epoch + 1,
+                epoch_number,
                 experiment=experiment,
                 checkpoint_dir=checkpoint_dir,
+                total_epochs=effective_total_epochs,
             )
 
         if epochs_without_improvement >= early_stopping_patience:
@@ -528,6 +570,7 @@ if __name__ == "__main__":
     start_epoch = 0
     best_val_loss = None
     best_checkpoint_path = None
+    training_total_epochs = EPOCHS
     if RESUME_FROM_CHECKPOINT:
         resume_path = None
         if RESUME_CHECKPOINT_NAME:
@@ -541,12 +584,14 @@ if __name__ == "__main__":
             for group in optimizer.param_groups:
                 group["lr"] = BASE_LR
             start_epoch = int(checkpoint.get("epoch", 0))
+            training_total_epochs = int(checkpoint.get("total_epochs", EPOCHS))
             best_val_loss = float(checkpoint.get("val_loss", "inf"))
             best_checkpoint_path = resume_path
             cleanup_checkpoint_dir(checkpoint_dir, keep_path=best_checkpoint_path)
             print(
                 f"Wznawiam trening z checkpointu: {resume_path} | "
-                f"epoch={start_epoch} | best_val_loss={best_val_loss:.6f} | lr={BASE_LR}"
+                f"epoch={start_epoch} | total_epochs={training_total_epochs} | "
+                f"best_val_loss={best_val_loss:.6f} | lr={BASE_LR}"
             )
         else:
             print("Nie znaleziono checkpointu do wznowienia. Start od zera.")
@@ -580,6 +625,7 @@ if __name__ == "__main__":
         start_epoch=start_epoch,
         best_val_loss=best_val_loss,
         best_checkpoint_path=best_checkpoint_path,
+        total_epochs=training_total_epochs,
     )
 
     if experiment is not None:
