@@ -18,31 +18,39 @@ except Exception:
     Experiment = None
 
 
-def get_epoch_mask_upper_bound(epoch_number, total_epochs):
+def get_epoch_mask_bounds(epoch_number, total_epochs):
     if total_epochs <= 1:
-        return 1.0
+        return 0.30, 1.0
 
     warmup_end = min(100, total_epochs)
     full_end = min(250, total_epochs)
 
     if epoch_number <= warmup_end:
-        start_bound = 0.20
-        end_bound = 0.60 if warmup_end > 1 else 1.0
+        lower_start = 0.10
+        lower_end = 0.20 if warmup_end > 1 else 0.30
+        upper_start = 0.30
+        upper_end = 0.60 if warmup_end > 1 else 1.0
         progress = (epoch_number - 1) / max(1, warmup_end - 1)
-        return start_bound + (end_bound - start_bound) * progress
+        lower_bound = lower_start + (lower_end - lower_start) * progress
+        upper_bound = upper_start + (upper_end - upper_start) * progress
+        return lower_bound, upper_bound
 
     if epoch_number <= full_end:
-        start_bound = 0.60
-        end_bound = 1.00
+        lower_start = 0.20
+        lower_end = 0.30
+        upper_start = 0.60
+        upper_end = 1.00
         progress = (epoch_number - warmup_end) / max(1, full_end - warmup_end)
-        return start_bound + (end_bound - start_bound) * progress
+        lower_bound = lower_start + (lower_end - lower_start) * progress
+        upper_bound = upper_start + (upper_end - upper_start) * progress
+        return lower_bound, upper_bound
 
-    return 1.0
+    return 0.30, 1.0
 
 
 def sample_epoch_mask_prob(batch_size, device, epoch_number, total_epochs):
-    upper_bound = get_epoch_mask_upper_bound(epoch_number, total_epochs)
-    return torch.rand(batch_size, device=device) * upper_bound
+    lower_bound, upper_bound = get_epoch_mask_bounds(epoch_number, total_epochs)
+    return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
 
 
 class CodeInstructionDataset(Dataset):
@@ -140,10 +148,10 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
             code_ids_raw = tokenizer.encode_code(target_code)
             x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
             if total_epochs is None:
-                upper_bound = 1.0
+                lower_bound, upper_bound = 0.30, 1.0
             else:
-                upper_bound = get_epoch_mask_upper_bound(epoch, total_epochs)
-            mask_prob = torch.rand(1, device=device) * upper_bound
+                lower_bound, upper_bound = get_epoch_mask_bounds(epoch, total_epochs)
+            mask_prob = lower_bound + torch.rand(1, device=device) * (upper_bound - lower_bound)
             rand_matrix = torch.rand(1, x_0.size(1), device=device)
             is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
             x_masked = x_0.clone()
@@ -281,10 +289,10 @@ def train_diffcoder(
         model.train()
         total_loss = 0
         epoch_number = epoch + 1
-        current_mask_upper_bound = get_epoch_mask_upper_bound(epoch_number, effective_total_epochs)
+        current_mask_lower_bound, current_mask_upper_bound = get_epoch_mask_bounds(epoch_number, effective_total_epochs)
         print(
             f"Epoka {epoch_number}/{effective_total_epochs} | "
-            f"aktualne maskowanie: 0.0% - {current_mask_upper_bound * 100:.1f}%"
+            f"aktualne maskowanie: {current_mask_lower_bound * 100:.1f}% - {current_mask_upper_bound * 100:.1f}%"
         )
         progress_bar = tqdm(
             enumerate(train_dataloader),
@@ -398,6 +406,7 @@ def train_diffcoder(
         checkpoint = {
             "epoch": epoch + 1,
             "total_epochs": effective_total_epochs,
+            "mask_lower_bound": current_mask_lower_bound,
             "mask_upper_bound": current_mask_upper_bound,
             "val_loss": val_loss,
             "best_val_loss": best_val_loss,
