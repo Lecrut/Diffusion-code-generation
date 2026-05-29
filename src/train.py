@@ -474,7 +474,7 @@ if __name__ == "__main__":
     VAL_SPLIT = 0.05
     EARLY_STOPPING_PATIENCE = 50
     HIDDEN_DIM = 512
-    NUM_BLOCKS = 6
+    NUM_BLOCKS = 8
     DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
