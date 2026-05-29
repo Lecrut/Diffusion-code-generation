@@ -492,7 +492,7 @@ if __name__ == "__main__":
     LR_SCHEDULER_MIN_LR = 1e-6
     LR_SCHEDULER_THRESHOLD = 1e-4
     LR_SCHEDULER_COOLDOWN = 2
-    RESUME_FROM_CHECKPOINT = False
+    RESUME_FROM_CHECKPOINT = True
     RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
 
     tokenizer = CodeTokenizer()
