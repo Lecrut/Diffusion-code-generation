@@ -255,6 +255,7 @@ def train_diffcoder(
     train_dataloader,
     val_dataloader,
     optimizer,
+    scheduler,
     epochs,
     accumulation_steps,
     early_stopping_patience,
@@ -265,6 +266,7 @@ def train_diffcoder(
     experiment=None,
     start_epoch=0,
     best_val_loss=None,
+    epochs_without_improvement=0,
     best_checkpoint_path=None,
     total_epochs=None,
 ):
@@ -272,8 +274,8 @@ def train_diffcoder(
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     if best_val_loss is None:
         best_val_loss = float("inf")
-    epochs_without_improvement = 0
     effective_total_epochs = total_epochs or epochs
+    latest_checkpoint_path = checkpoint_dir / "diffcoder_latest.pt"
     
     for epoch in range(start_epoch, epochs):
         model.train()
@@ -372,24 +374,45 @@ def train_diffcoder(
         print(f"Średni loss w epoce {epoch+1}: {avg_loss:.6f}")
         print(f"Walidacyjny loss w epoce {epoch+1}: {val_loss:.6f}")
 
+        previous_lr = optimizer.param_groups[0]["lr"]
+        if scheduler is not None:
+            scheduler.step(val_loss)
+        current_lr = optimizer.param_groups[0]["lr"]
+
         if experiment is not None:
             experiment.log_metric("epoch_loss", avg_loss, step=epoch + 1)
             experiment.log_metric("epoch_avg_loss", avg_loss, step=epoch + 1)
             experiment.log_metric("val_loss", val_loss, step=epoch + 1)
-            experiment.log_metric("lr", optimizer.param_groups[0]["lr"], step=epoch + 1)
+            experiment.log_metric("lr", current_lr, step=epoch + 1)
 
-        if val_loss < best_val_loss:
+        if current_lr < previous_lr:
+            print(f"ReduceLROnPlateau obniżył lr: {previous_lr:.8f} -> {current_lr:.8f}")
+
+        improved = val_loss < best_val_loss
+        if improved:
             best_val_loss = val_loss
             epochs_without_improvement = 0
+        else:
+            epochs_without_improvement += 1
 
-            checkpoint = {
-                "epoch": epoch + 1,
-                "total_epochs": effective_total_epochs,
-                "mask_upper_bound": current_mask_upper_bound,
-                "val_loss": val_loss,
-                "model_state_dict": model.state_dict(),
-                "optimizer_state_dict": optimizer.state_dict(),
-            }
+        checkpoint = {
+            "epoch": epoch + 1,
+            "total_epochs": effective_total_epochs,
+            "mask_upper_bound": current_mask_upper_bound,
+            "val_loss": val_loss,
+            "best_val_loss": best_val_loss,
+            "epochs_without_improvement": epochs_without_improvement,
+            "model_state_dict": model.state_dict(),
+            "optimizer_state_dict": optimizer.state_dict(),
+            "scheduler_state_dict": None if scheduler is None else scheduler.state_dict(),
+        }
+        torch.save(checkpoint, latest_checkpoint_path)
+        print(
+            f"Zapisano checkpoint bieżący: {latest_checkpoint_path} | "
+            f"lr={current_lr:.8f}"
+        )
+
+        if improved:
             checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
             torch.save(checkpoint, checkpoint_path)
             cleanup_checkpoint_dir(checkpoint_dir, keep_path=checkpoint_path)
@@ -407,7 +430,6 @@ def train_diffcoder(
 
             best_checkpoint_path = checkpoint_path
         else:
-            epochs_without_improvement += 1
             print(
                 f"Brak poprawy val loss przez {epochs_without_improvement} epok(e). "
                 f"Najlepszy val loss: {best_val_loss:.6f}"
@@ -452,10 +474,15 @@ if __name__ == "__main__":
     VAL_SPLIT = 0.05
     EARLY_STOPPING_PATIENCE = 50
     HIDDEN_DIM = 512
-    NUM_BLOCKS = 5
+    NUM_BLOCKS = 6
     DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
     BASE_LR = 1e-4
+    LR_SCHEDULER_FACTOR = 0.5
+    LR_SCHEDULER_PATIENCE = 8
+    LR_SCHEDULER_MIN_LR = 1e-6
+    LR_SCHEDULER_THRESHOLD = 1e-4
+    LR_SCHEDULER_COOLDOWN = 2
     RESUME_FROM_CHECKPOINT = False
     RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
 
@@ -483,6 +510,12 @@ if __name__ == "__main__":
             "hidden_dim": HIDDEN_DIM,
             "num_blocks": NUM_BLOCKS,
             "dataset_fraction": DATASET_FRACTION,
+            "base_lr": BASE_LR,
+            "lr_scheduler_factor": LR_SCHEDULER_FACTOR,
+            "lr_scheduler_patience": LR_SCHEDULER_PATIENCE,
+            "lr_scheduler_min_lr": LR_SCHEDULER_MIN_LR,
+            "lr_scheduler_threshold": LR_SCHEDULER_THRESHOLD,
+            "lr_scheduler_cooldown": LR_SCHEDULER_COOLDOWN,
         })
     
     model = LocalConvDiffCoder(
@@ -553,8 +586,25 @@ if __name__ == "__main__":
     )
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=BASE_LR, weight_decay=0.01)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode="min",
+        factor=LR_SCHEDULER_FACTOR,
+        patience=LR_SCHEDULER_PATIENCE,
+        threshold=LR_SCHEDULER_THRESHOLD,
+        cooldown=LR_SCHEDULER_COOLDOWN,
+        min_lr=LR_SCHEDULER_MIN_LR,
+    )
 
-    def resolve_best_checkpoint(path):
+    def resolve_resume_checkpoint(path):
+        latest_checkpoint = path / "diffcoder_latest.pt"
+        if latest_checkpoint.exists():
+            return latest_checkpoint
+
+        best_checkpoint = path / "diffcoder_best.pt"
+        if best_checkpoint.exists():
+            return best_checkpoint
+
         candidates = list(path.glob("diffcoder_best_epoch_*.pt"))
         if not candidates:
             return None
@@ -571,27 +621,30 @@ if __name__ == "__main__":
     best_val_loss = None
     best_checkpoint_path = None
     training_total_epochs = EPOCHS
+    epochs_without_improvement = 0
     if RESUME_FROM_CHECKPOINT:
         resume_path = None
         if RESUME_CHECKPOINT_NAME:
             resume_path = checkpoint_dir / RESUME_CHECKPOINT_NAME
         else:
-            resume_path = resolve_best_checkpoint(checkpoint_dir)
+            resume_path = resolve_resume_checkpoint(checkpoint_dir)
         if resume_path is not None and resume_path.exists():
             checkpoint = torch.load(resume_path, map_location=DEVICE)
             model.load_state_dict(checkpoint["model_state_dict"])
             optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
-            for group in optimizer.param_groups:
-                group["lr"] = BASE_LR
+            scheduler_state_dict = checkpoint.get("scheduler_state_dict")
+            if scheduler_state_dict is not None:
+                scheduler.load_state_dict(scheduler_state_dict)
             start_epoch = int(checkpoint.get("epoch", 0))
             training_total_epochs = int(checkpoint.get("total_epochs", EPOCHS))
-            best_val_loss = float(checkpoint.get("val_loss", "inf"))
+            best_val_loss = float(checkpoint.get("best_val_loss", checkpoint.get("val_loss", "inf")))
+            epochs_without_improvement = int(checkpoint.get("epochs_without_improvement", 0))
             best_checkpoint_path = resume_path
             cleanup_checkpoint_dir(checkpoint_dir, keep_path=best_checkpoint_path)
             print(
                 f"Wznawiam trening z checkpointu: {resume_path} | "
                 f"epoch={start_epoch} | total_epochs={training_total_epochs} | "
-                f"best_val_loss={best_val_loss:.6f} | lr={BASE_LR}"
+                f"best_val_loss={best_val_loss:.6f} | lr={optimizer.param_groups[0]['lr']:.8f}"
             )
         else:
             print("Nie znaleziono checkpointu do wznowienia. Start od zera.")
@@ -622,8 +675,10 @@ if __name__ == "__main__":
         sample_pairs,
         checkpoint_dir,
         experiment,
+        scheduler,
         start_epoch=start_epoch,
         best_val_loss=best_val_loss,
+        epochs_without_improvement=epochs_without_improvement,
         best_checkpoint_path=best_checkpoint_path,
         total_epochs=training_total_epochs,
     )
