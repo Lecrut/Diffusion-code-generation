@@ -481,19 +481,19 @@ if __name__ == "__main__":
     NUM_WORKERS = 3
     EPOCHS = 500
     VAL_SPLIT = 0.05
-    EARLY_STOPPING_PATIENCE = 200
+    EARLY_STOPPING_PATIENCE = 50
     HIDDEN_DIM = 512
     NUM_BLOCKS = 6
     DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
     DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
-    BASE_LR = 1e-4
+    BASE_LR = 5e-5
     LR_SCHEDULER_FACTOR = 0.5
     LR_SCHEDULER_PATIENCE = 8
     LR_SCHEDULER_MIN_LR = 1e-6
     LR_SCHEDULER_THRESHOLD = 1e-4
     LR_SCHEDULER_COOLDOWN = 2
     RESUME_FROM_CHECKPOINT = True
-    RESUME_CHECKPOINT_NAME = "diffcoder_latest.pt"
+    RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
 
     tokenizer = CodeTokenizer()
 
