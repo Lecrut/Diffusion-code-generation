@@ -481,7 +481,7 @@ if __name__ == "__main__":
     NUM_WORKERS = 3
     EPOCHS = 500
     VAL_SPLIT = 0.05
-    EARLY_STOPPING_PATIENCE = 50
+    EARLY_STOPPING_PATIENCE = 200
     HIDDEN_DIM = 512
     NUM_BLOCKS = 6
     DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
@@ -493,7 +493,7 @@ if __name__ == "__main__":
     LR_SCHEDULER_THRESHOLD = 1e-4
     LR_SCHEDULER_COOLDOWN = 2
     RESUME_FROM_CHECKPOINT = True
-    RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
+    RESUME_CHECKPOINT_NAME = "diffcoder_latest.pt"
 
     tokenizer = CodeTokenizer()
 
