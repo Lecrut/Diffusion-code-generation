@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 
 from diffusion.model import LocalConvDiffCoder
 from tokenizer import CodeTokenizer 
+from diffusion.loss import CalculateLoss
 
 try:
     from comet_ml import Experiment
@@ -243,6 +244,13 @@ def train_diffcoder(
     if best_val_loss is None:
         best_val_loss = float("inf")
     epochs_without_improvement = 0
+
+    loss_fn = CalculateLoss(
+        gamma=1.0, 
+        ce_weight=1.0, 
+        dtw_weight=0.1, 
+        embedding_matrix=model.embedding.weight
+    ).to(device)
     
     for epoch in range(start_epoch, epochs):
         model.train()
@@ -272,11 +280,13 @@ def train_diffcoder(
                 masked_logits = logits[is_masked] 
                 masked_targets = x_0[is_masked]
                     
-                if masked_targets.numel() > 0:
-                    loss = F.cross_entropy(masked_logits, masked_targets)
-                else:
-                    loss = torch.tensor(0.0, device=device, requires_grad=True)
-                
+                loss, ce_loss, dtw_loss = loss_fn(
+                    full_logits=logits, 
+                    masked_logits=masked_logits, 
+                    masked_targets=masked_targets,
+                    ast_embeddings=None #TODO: przekazać drzewo ast
+                )
+                            
             current_loss = loss.item()
             loss = loss / accumulation_steps
                 
@@ -320,7 +330,13 @@ def train_diffcoder(
                 masked_targets = x_0[is_masked]
 
                 if masked_targets.numel() > 0:
-                    batch_val_loss = F.cross_entropy(masked_logits, masked_targets).item()
+                    val_loss_tensor, _, _ = loss_fn(
+                        full_logits=logits, 
+                        masked_logits=masked_logits, 
+                        masked_targets=masked_targets,
+                        ast_embeddings=val_batch.get('ast_embeddings') #TODO: przekazać drzewo ast 
+                    )
+                    batch_val_loss = val_loss_tensor.item()
                 else:
                     batch_val_loss = 0.0
 
