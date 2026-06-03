@@ -2,6 +2,7 @@ from functools import partial
 from pathlib import Path
 import os
 import random
+import ast as _ast
 import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader, random_split
@@ -19,9 +20,17 @@ except Exception:
     Experiment = None
 
 
+# number of initial epochs to keep mask range fixed at 30-50%
+# will be set from env in __main__ (default 10)
+INITIAL_FIXED_EPOCHS = 20
+
+
 def get_epoch_mask_bounds(epoch_number, total_epochs):
     if total_epochs <= 1:
         return 0.30, 1.0
+
+    if INITIAL_FIXED_EPOCHS is not None and epoch_number <= INITIAL_FIXED_EPOCHS:
+        return 0.30, 0.50
 
     warmup_end = min(100, total_epochs)
     full_end = min(250, total_epochs)
@@ -75,6 +84,18 @@ class CodeInstructionDataset(Dataset):
         self.max_prompt_len = max_prompt_len
         self.max_code_len = max_code_len
         self.pad_id = self.tokenizer.pad_token_id
+        # build simple AST node-type vocabulary across dataset (fast heuristic)
+        self.node_vocab = {}
+        for code in self.df['code'].astype(str):
+            try:
+                tree = _ast.parse(code)
+                for n in _ast.walk(tree):
+                    t = type(n).__name__
+                    if t not in self.node_vocab:
+                        self.node_vocab[t] = len(self.node_vocab)
+            except Exception:
+                continue
+        self.ast_dim = len(self.node_vocab)
 
     def __len__(self):
         return len(self.df)
@@ -92,10 +113,23 @@ class CodeInstructionDataset(Dataset):
         
         prompt_ids = self._pad_or_truncate(prompt_ids_raw, self.max_prompt_len)
         code_ids = self._pad_or_truncate(code_ids_raw, self.max_code_len)
-        
+        # extract simple AST bag-of-node-types vector
+        try:
+            tree = _ast.parse(row['code'])
+            counts = [0] * self.ast_dim
+            for n in _ast.walk(tree):
+                t = type(n).__name__
+                idx_t = self.node_vocab.get(t)
+                if idx_t is not None:
+                    counts[idx_t] += 1
+            ast_vec = torch.tensor(counts, dtype=torch.float)
+        except Exception:
+            ast_vec = torch.zeros(self.ast_dim, dtype=torch.float)
+
         return {
             'prompt_ids': prompt_ids,
-            'code_ids': code_ids
+            'code_ids': code_ids,
+            'ast_vec': ast_vec,
         }
 
 
@@ -120,10 +154,17 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
         prompt_tensors.append(torch.tensor(prompt_ids, dtype=torch.long))
         code_tensors.append(torch.tensor(code_ids, dtype=torch.long))
 
-    return {
+    result = {
         'prompt_ids': torch.stack(prompt_tensors, dim=0),
         'code_ids': torch.stack(code_tensors, dim=0)
     }
+
+    # include ast vectors if present
+    if 'ast_vec' in batch[0]:
+        ast_tensors = [item['ast_vec'] for item in batch]
+        result['ast_vec'] = torch.stack(ast_tensors, dim=0)
+
+    return result
 
 
 def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None, total_epochs=None):
@@ -334,12 +375,33 @@ def train_diffcoder(
                     
                 masked_logits = logits[is_masked] 
                 masked_targets = x_0[is_masked]
-                    
+                # prepare ast embeddings projection if available
+                ast_embeddings = None
+                if 'ast_vec' in batch and batch.get('ast_vec') is not None:
+                    ast_vec = batch.get('ast_vec').to(device)
+                    embed_mat = loss_fn.embedding_matrix if hasattr(loss_fn, 'embedding_matrix') else None
+                    if embed_mat is not None:
+                        try:
+                            # ensure embed_mat on same device
+                            embed_mat = embed_mat.to(device)
+                        except Exception:
+                            pass
+                    if embed_mat is not None and embed_mat.size(0) >= ast_vec.size(1):
+                        W = embed_mat[:ast_vec.size(1), :]
+                    elif embed_mat is not None:
+                        W = embed_mat.mean(dim=0, keepdim=True).repeat(ast_vec.size(1), 1)
+                    else:
+                        W = None
+
+                    if W is not None:
+                        ast_proj = ast_vec @ W
+                        ast_embeddings = ast_proj.unsqueeze(1)
+
                 loss, ce_loss, dtw_loss = loss_fn(
                     full_logits=logits, 
                     masked_logits=masked_logits, 
                     masked_targets=masked_targets,
-                    ast_embeddings=None #TODO: przekazać drzewo ast
+                    ast_embeddings=ast_embeddings,
                 )
                             
             current_loss = loss.item()
@@ -384,11 +446,32 @@ def train_diffcoder(
                 masked_targets = x_0[is_masked]
 
                 if masked_targets.numel() > 0:
+                    # prepare ast embeddings for validation batch (same projection as training)
+                    ast_embeddings = None
+                    if val_batch.get('ast_vec') is not None:
+                        ast_vec = val_batch.get('ast_vec').to(device)
+                        embed_mat = loss_fn.embedding_matrix if hasattr(loss_fn, 'embedding_matrix') else None
+                        if embed_mat is not None:
+                            try:
+                                embed_mat = embed_mat.to(device)
+                            except Exception:
+                                pass
+                        if embed_mat is not None and embed_mat.size(0) >= ast_vec.size(1):
+                            W = embed_mat[:ast_vec.size(1), :]
+                        elif embed_mat is not None:
+                            W = embed_mat.mean(dim=0, keepdim=True).repeat(ast_vec.size(1), 1)
+                        else:
+                            W = None
+
+                        if W is not None:
+                            ast_proj = ast_vec @ W
+                            ast_embeddings = ast_proj.unsqueeze(1)
+
                     val_loss_tensor, _, _ = loss_fn(
-                        full_logits=logits, 
-                        masked_logits=masked_logits, 
+                        full_logits=logits,
+                        masked_logits=masked_logits,
                         masked_targets=masked_targets,
-                        ast_embeddings=val_batch.get('ast_embeddings') #TODO: przekazać drzewo ast 
+                        ast_embeddings=ast_embeddings,
                     )
                     batch_val_loss = val_loss_tensor.item()
                 else:
@@ -487,6 +570,8 @@ def train_diffcoder(
 
 if __name__ == "__main__":
     load_dotenv()
+    # configure INITIAL_FIXED_EPOCHS after loading dotenv so .env is respected
+    INITIAL_FIXED_EPOCHS = int(os.getenv("INITIAL_FIXED_EPOCHS", "10"))
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Rozpoczynam trening na: {DEVICE}")
 
