@@ -58,9 +58,14 @@ def get_epoch_mask_bounds(epoch_number, total_epochs):
     return 0.30, 1.0
 
 
-def sample_epoch_mask_prob(batch_size, device, epoch_number, total_epochs):
-    lower_bound, upper_bound = get_epoch_mask_bounds(epoch_number, total_epochs)
+def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
     return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
+
+
+def get_resume_mask_bounds(epoch_number, total_epochs, start_epoch, fixed_epochs):
+    if fixed_epochs is not None and fixed_epochs > 0 and epoch_number <= start_epoch + fixed_epochs:
+        return 0.30, 0.50
+    return get_epoch_mask_bounds(epoch_number, total_epochs)
 
 
 class CodeInstructionDataset(Dataset):
@@ -167,7 +172,7 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     return result
 
 
-def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None, total_epochs=None):
+def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None, total_epochs=None, mask_bounds=None):
     """Loguje próbki: instrukcja, ground-truth, masked ground-truth, predicted (forward on masked), generated (full infer).
     Nie zapisuje już CSV — tylko loguje do Comet (table/text) lub stdout.
     """
@@ -189,11 +194,13 @@ def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, ex
         try:
             code_ids_raw = tokenizer.encode_code(target_code)
             x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
-            if total_epochs is None:
+            if mask_bounds is not None:
+                lower_bound, upper_bound = mask_bounds
+            elif total_epochs is None:
                 lower_bound, upper_bound = 0.30, 1.0
             else:
                 lower_bound, upper_bound = get_epoch_mask_bounds(epoch, total_epochs)
-            mask_prob = lower_bound + torch.rand(1, device=device) * (upper_bound - lower_bound)
+            mask_prob = sample_epoch_mask_prob(1, device, lower_bound, upper_bound)
             rand_matrix = torch.rand(1, x_0.size(1), device=device)
             is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
             x_masked = x_0.clone()
@@ -319,6 +326,7 @@ def train_diffcoder(
     epochs_without_improvement=0,
     best_checkpoint_path=None,
     total_epochs=None,
+    resume_fixed_mask_epochs=0,
 ):
     use_amp = device == "cuda"
     scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
@@ -329,7 +337,7 @@ def train_diffcoder(
     latest_checkpoint_path = checkpoint_dir / "diffcoder_latest.pt"
 
     # training bookkeeping
-    epochs_without_improvement = 0
+    epochs_without_improvement = max(0, int(epochs_without_improvement))
 
     # combined loss (classification + dtw) used by this training loop
     loss_fn = CalculateLoss(
@@ -343,7 +351,12 @@ def train_diffcoder(
         model.train()
         total_loss = 0
         epoch_number = epoch + 1
-        current_mask_lower_bound, current_mask_upper_bound = get_epoch_mask_bounds(epoch_number, effective_total_epochs)
+        current_mask_lower_bound, current_mask_upper_bound = get_resume_mask_bounds(
+            epoch_number,
+            effective_total_epochs,
+            start_epoch,
+            resume_fixed_mask_epochs,
+        )
         print(
             f"Epoka {epoch_number}/{effective_total_epochs} | "
             f"aktualne maskowanie: {current_mask_lower_bound * 100:.1f}% - {current_mask_upper_bound * 100:.1f}%"
@@ -361,7 +374,7 @@ def train_diffcoder(
                 
             batch_size, seq_len = x_0.shape
 
-            mask_prob = sample_epoch_mask_prob(batch_size, device, epoch_number, effective_total_epochs)
+            mask_prob = sample_epoch_mask_prob(batch_size, device, current_mask_lower_bound, current_mask_upper_bound)
             mask_prob = mask_prob.view(batch_size, 1)
             t = mask_prob.view(-1)
             rand_matrix = torch.rand(batch_size, seq_len, device=device)
@@ -432,7 +445,7 @@ def train_diffcoder(
                 prompt_ids = val_batch['prompt_ids'].to(device)
                 batch_size, seq_len = x_0.shape
 
-                mask_prob = sample_epoch_mask_prob(batch_size, device, epoch_number, effective_total_epochs)
+                mask_prob = sample_epoch_mask_prob(batch_size, device, current_mask_lower_bound, current_mask_upper_bound)
                 mask_prob = mask_prob.view(batch_size, 1)
                 t = mask_prob.view(-1)
                 rand_matrix = torch.rand(batch_size, seq_len, device=device)
@@ -558,6 +571,7 @@ def train_diffcoder(
                 experiment=experiment,
                 checkpoint_dir=checkpoint_dir,
                 total_epochs=effective_total_epochs,
+                mask_bounds=(current_mask_lower_bound, current_mask_upper_bound),
             )
 
         if epochs_without_improvement >= early_stopping_patience:
@@ -587,7 +601,7 @@ if __name__ == "__main__":
     NUM_WORKERS = 3
     EPOCHS = 500
     VAL_SPLIT = 0.05
-    EARLY_STOPPING_PATIENCE = 50
+    EARLY_STOPPING_PATIENCE = 100
     HIDDEN_DIM = 512
     NUM_BLOCKS = 6
     DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
@@ -600,6 +614,7 @@ if __name__ == "__main__":
     LR_SCHEDULER_COOLDOWN = 2
     RESUME_FROM_CHECKPOINT = True
     RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
+    RESUME_FIXED_MASK_EPOCHS = int(os.getenv("RESUME_FIXED_MASK_EPOCHS", "15"))
 
     tokenizer = CodeTokenizer()
 
@@ -796,6 +811,7 @@ if __name__ == "__main__":
         epochs_without_improvement=epochs_without_improvement,
         best_checkpoint_path=best_checkpoint_path,
         total_epochs=training_total_epochs,
+        resume_fixed_mask_epochs=RESUME_FIXED_MASK_EPOCHS if RESUME_FROM_CHECKPOINT else 0,
     )
 
     if experiment is not None:
