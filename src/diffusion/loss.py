@@ -44,7 +44,7 @@ class CalculateLoss(nn.Module):
             ce_loss = torch.tensor(0.0, device=full_logits.device, requires_grad=True)
 
         # 2. Jeśli nie liczymy DTW, zwracamy samo CE i urywamy obliczenia
-        if ast_embeddings is None or self.dtw_weight == 0.0:
+        if ast_embeddings is None or self.embedding_matrix is None or self.dtw_weight == 0.0:
             return ce_loss, ce_loss, torch.tensor(0.0, device=full_logits.device)
 
         probs = F.softmax(full_logits, dim=-1) 

@@ -134,12 +134,15 @@ class LocalConvDiffCoder(nn.Module):
         return logits[:, prompt_len:, :]
 
     @torch.no_grad()
-    def generate(self, prompt_ids, steps=50, device="cuda", eos_token_id=None):
+    def generate(self, prompt_ids, steps=50, device="cuda", eos_token_id=None, max_code_len=None):
         if prompt_ids.dim() == 1:
             prompt_ids = prompt_ids.unsqueeze(0)
         prompt_ids = prompt_ids.to(device)
         prompt_len = prompt_ids.size(1)
-        code_len = max(self.max_seq_len - prompt_len, 1)
+        if max_code_len is None:
+            code_len = max(self.max_seq_len - prompt_len, 1)
+        else:
+            code_len = max(1, min(int(max_code_len), self.max_seq_len))
             
         seq = torch.full((1, code_len), self.mask_token_id, dtype=torch.long, device=device)
         
@@ -147,6 +150,9 @@ class LocalConvDiffCoder(nn.Module):
             t = torch.full((1,), (steps - step) / steps, device=device)
             
             logits = self.forward(seq, prompt_ids, t)
+            logits[..., self.mask_token_id] = -torch.inf
+            if eos_token_id is None or self.pad_token_id != eos_token_id:
+                logits[..., self.pad_token_id] = -torch.inf
             
             probs = F.softmax(logits, dim=-1)
             conf, pred = probs.max(dim=-1)
@@ -157,6 +163,12 @@ class LocalConvDiffCoder(nn.Module):
             if num_to_mask > 0:
                 _, mask_idx = torch.topk(conf, k=num_to_mask, largest=False)
                 pred[0, mask_idx[0]] = self.mask_token_id
+
+            if eos_token_id is not None:
+                eos_pos = (pred[0] == eos_token_id).nonzero(as_tuple=False)
+                if eos_pos.numel() > 0:
+                    cut = int(eos_pos[0].item()) + 1
+                    pred[0, cut:] = self.pad_token_id
             
             seq = pred
             
