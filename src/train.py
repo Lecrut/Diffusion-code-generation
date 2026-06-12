@@ -216,6 +216,22 @@ class DiffCoderLightning(pl.LightningModule):
                 "frequency": 1
             }
         }
+    
+    def on_save_checkpoint(self, checkpoint):
+        checkpoint["curriculum_stage"] = self.current_stage
+        checkpoint["curriculum_lb"] = self.current_lower_bound
+        checkpoint["curriculum_ub"] = self.current_upper_bound
+
+    def on_load_checkpoint(self, checkpoint):
+        self.current_stage = checkpoint.get("curriculum_stage", 1)
+        self.current_lower_bound = checkpoint.get("curriculum_lb", 0.10)
+        self.current_upper_bound = checkpoint.get("curriculum_ub", 0.25)
+
+        print(
+            f">>> [RESUME] Przywrócono curriculum: "
+            f"Stage {self.current_stage} | "
+            f"Maskowanie {self.current_lower_bound:.2f}-{self.current_upper_bound:.2f}"
+        )
 
 
 # --- CALLBACK DO PROGRAMU NAUCZANIA (SYNCHRONIZACJA STAGE + LR RESTART) ---
@@ -294,6 +310,29 @@ class AdaptiveCurriculumCallback(Callback):
                     
             self.best_val_loss = float('inf')
             self.patience_counter = 0
+
+    def state_dict(self):
+        return {
+            "best_val_loss": self.best_val_loss,
+            "patience_counter": self.patience_counter,
+        }
+
+    def load_state_dict(self, state_dict):
+        self.best_val_loss = state_dict.get(
+            "best_val_loss",
+            float("inf")
+        )
+
+        self.patience_counter = state_dict.get(
+            "patience_counter",
+            0
+        )
+
+        print(
+            f">>> [RESUME] Przywrócono callback curriculum: "
+            f"best_val_loss={self.best_val_loss:.6f}, "
+            f"patience_counter={self.patience_counter}"
+        )
 
 
 # --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
