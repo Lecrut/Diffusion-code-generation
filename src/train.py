@@ -22,7 +22,7 @@ def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
     return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
 
 
-# --- DATASET & COLLATE ---
+# --- DATASET & COLLATE (POPRAWIONE NA AST BIGRAMY) ---
 
 class CodeInstructionDataset(Dataset):
     def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024, dataset_fraction=1.0, seed=42):
@@ -104,7 +104,7 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     return result
 
 
-# --- LIGHTNING MODULE (Z ADAPTACYJNYM MASKOWANIEM) ---
+# --- LIGHTNING MODULE (POPRAWIONY LOSS I AST) ---
 
 class DiffCoderLightning(pl.LightningModule):
     def __init__(self, model, base_lr=5e-5):
@@ -112,7 +112,6 @@ class DiffCoderLightning(pl.LightningModule):
         self.model = model
         self.base_lr = base_lr
         
-        # Inicjalizacja parametrów początkowych dla pierwszego etapu (Stage 1)
         self.current_stage = 1
         self.current_lower_bound = 0.10
         self.current_upper_bound = 0.25
@@ -120,7 +119,7 @@ class DiffCoderLightning(pl.LightningModule):
         self.loss_fn = CalculateLoss(
             gamma=1.0,
             ce_weight=1.0,
-            dtw_weight=0.1,
+            dtw_weight=1.0,
             embedding_matrix=getattr(model, 'embedding', None).weight if hasattr(model, 'embedding') else None,
         )
 
@@ -147,7 +146,6 @@ class DiffCoderLightning(pl.LightningModule):
         prompt_ids = batch['prompt_ids']
         batch_size, seq_len = x_0.shape
 
-        # Pobranie dynamicznych granic kontrolowanych przez zewnętrzny Callback
         lb = self.current_lower_bound
         ub = self.current_upper_bound
 
@@ -170,18 +168,22 @@ class DiffCoderLightning(pl.LightningModule):
 
         ast_embeddings = self._get_ast_embeddings(batch)
         
-        loss, ce_loss, dtw_loss = self.loss_fn(
+        _, ce_loss, dtw_loss = self.loss_fn(
             full_logits=logits, 
             masked_logits=masked_logits, 
             masked_targets=masked_targets,
             ast_embeddings=ast_embeddings,
         )
+        
+        mean_t = t.mean()
+        weighted_dtw = (0.1 + 0.4 * mean_t) * dtw_loss
+        loss = ce_loss + weighted_dtw
+        
         return loss
 
     def training_step(self, batch, batch_idx):
         loss = self._shared_step(batch)
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        # Logowanie aktualnych metryk poziomu trudności do wykresów
         self.log('curriculum_stage', float(self.current_stage), on_epoch=True)
         self.log('mask_lower_bound', self.current_lower_bound, on_epoch=True)
         self.log('mask_upper_bound', self.current_upper_bound, on_epoch=True)
@@ -211,7 +213,7 @@ class DiffCoderLightning(pl.LightningModule):
         }
 
 
-# --- CALLBACK DO ADAPTACYJNEGO PROGRAMU NAUCZANIA ---
+# --- CALLBACK DO ADAPTACYJNEGO PROGRAMU NAUCZANIA (9 STAGES) ---
 
 class AdaptiveCurriculumCallback(Callback):
     def __init__(self, min_delta=1e-4):
@@ -252,7 +254,7 @@ class AdaptiveCurriculumCallback(Callback):
 
         if current_val_loss < self.best_val_loss - self.min_delta:
             self.best_val_loss = current_val_loss
-            self.patience_counter = 0 
+            self.patience_counter = 0  
         else:
             self.patience_counter += 1  
 
@@ -444,8 +446,6 @@ class DiffCoderTrainer:
         )
         
         lr_monitor = LearningRateMonitor(logging_interval='epoch')
-        
-        # Wdrożenie automatycznego i adaptacyjnego przełączania progów trudności
         curriculum_callback = AdaptiveCurriculumCallback(min_delta=1e-4)
         
         sample_logger_callback = LogGeneratedSamplesCallback(
@@ -503,7 +503,7 @@ def main():
         num_workers = 3
         epochs = 500
         val_split = 0.05
-        early_stopping_patience = 60  # Dostosowane do dłuższego wygrzewania na wyższych etapach
+        early_stopping_patience = 120 
         hidden_dim = 512
         num_blocks = 6
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
