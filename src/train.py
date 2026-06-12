@@ -42,10 +42,13 @@ class CodeInstructionDataset(Dataset):
         for code in self.df['code'].astype(str):
             try:
                 tree = _ast.parse(code)
-                for n in _ast.walk(tree):
-                    t = type(n).__name__
-                    if t not in self.node_vocab:
-                        self.node_vocab[t] = len(self.node_vocab)
+                for parent in _ast.walk(tree):
+                    p_name = type(parent).__name__
+                    for child in _ast.iter_child_nodes(parent):
+                        c_name = type(child).__name__
+                        bigram = f"{p_name}->{c_name}"
+                        if bigram not in self.node_vocab:
+                            self.node_vocab[bigram] = len(self.node_vocab)
             except Exception:
                 continue
         self.ast_dim = len(self.node_vocab)
@@ -64,11 +67,14 @@ class CodeInstructionDataset(Dataset):
         try:
             tree = _ast.parse(row['code'])
             counts = [0] * self.ast_dim
-            for n in _ast.walk(tree):
-                t = type(n).__name__
-                idx_t = self.node_vocab.get(t)
-                if idx_t is not None:
-                    counts[idx_t] += 1
+            for parent in _ast.walk(tree):
+                p_name = type(parent).__name__
+                for child in _ast.iter_child_nodes(parent):
+                    c_name = type(child).__name__
+                    bigram = f"{p_name}->{c_name}"
+                    idx_t = self.node_vocab.get(bigram)
+                    if idx_t is not None:
+                        counts[idx_t] += 1
             ast_vec = torch.tensor(counts, dtype=torch.float)
         except Exception:
             ast_vec = torch.zeros(self.ast_dim, dtype=torch.float)
