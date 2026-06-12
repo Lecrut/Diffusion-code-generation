@@ -228,14 +228,14 @@ class AdaptiveCurriculumCallback(Callback):
         
         # Twoje 9 perfekcyjnych etapów
         self.stages = {
-            1: {"bounds": (0.10, 0.25), "patience": 3},
-            2: {"bounds": (0.20, 0.35), "patience": 5},
-            3: {"bounds": (0.30, 0.45), "patience": 8},
-            4: {"bounds": (0.40, 0.55), "patience": 12},
-            5: {"bounds": (0.50, 0.65), "patience": 15},
-            6: {"bounds": (0.60, 0.75), "patience": 20},
-            7: {"bounds": (0.70, 0.85), "patience": 30},
-            8: {"bounds": (0.80, 0.95), "patience": 50},
+            1: {"bounds": (0.10, 0.25), "patience": 10},
+            2: {"bounds": (0.20, 0.35), "patience": 15},
+            3: {"bounds": (0.30, 0.45), "patience": 25},
+            4: {"bounds": (0.40, 0.55), "patience": 50},
+            5: {"bounds": (0.50, 0.65), "patience": 75},
+            6: {"bounds": (0.60, 0.75), "patience": 100},
+            7: {"bounds": (0.70, 0.85), "patience": 150},
+            8: {"bounds": (0.80, 0.95), "patience": 200},
             9: {"bounds": (0.90, 1.00), "patience": 99999}
         }
 
@@ -517,7 +517,7 @@ def main():
         batch_size = 4
         accumulation_steps = 8
         num_workers = 3
-        epochs = 500
+        epochs = 1500
         val_split = 0.05
         early_stopping_patience = 120  
         hidden_dim = 512
