@@ -214,14 +214,16 @@ class AdaptiveCurriculumCallback(Callback):
         self.best_val_loss = float('inf')
         self.patience_counter = 0
         
-        # Definicja etapów nauki: im wyższy etap, tym dłuższa cierpliwość (patience) przed zmianą progu
         self.stages = {
             1: {"bounds": (0.10, 0.25), "patience": 3},
             2: {"bounds": (0.20, 0.35), "patience": 5},
-            3: {"bounds": (0.30, 0.50), "patience": 8},
-            4: {"bounds": (0.40, 0.70), "patience": 12},
-            5: {"bounds": (0.50, 0.90), "patience": 15},
-            6: {"bounds": (0.30, 1.00), "patience": 99999}  # Ostatni etap trwający do końca treningu
+            3: {"bounds": (0.30, 0.45), "patience": 8},
+            4: {"bounds": (0.40, 0.55), "patience": 12},
+            5: {"bounds": (0.50, 0.65), "patience": 15},
+            6: {"bounds": (0.60, 0.75), "patience": 20},
+            7: {"bounds": (0.70, 0.85), "patience": 30},
+            8: {"bounds": (0.80, 0.95), "patience": 50},
+            9: {"bounds": (0.90, 1.00), "patience": 99999}
         }
 
     def on_validation_epoch_end(self, trainer, pl_module):
@@ -237,35 +239,33 @@ class AdaptiveCurriculumCallback(Callback):
         current_val_loss = current_val_loss.item()
         stage = pl_module.current_stage
         
-        # Jeśli osiągnęliśmy już najwyższy poziom, nie robimy nic
         if stage >= max(self.stages.keys()):
             return
 
         required_patience = self.stages[stage]["patience"]
 
-        # Badanie zmian w stracie walidacyjnej (czy nastąpiło wypłaszczenie)
         if current_val_loss < self.best_val_loss - self.min_delta:
             self.best_val_loss = current_val_loss
-            self.patience_counter = 0  # Resetujemy licznik, bo model wciąż robi widoczne postępy
+            self.patience_counter = 0 
         else:
-            self.pvariance_counter = getattr(self, 'patience_counter', 0) + 1
-            self.patience_counter += 1  # Brak poprawy lub spadek tempa uczenia
+            self.patience_counter += 1  
 
-        # Decyzja o skoku na głębszą wodę (kolejny etap maskowania)
         if self.patience_counter >= required_patience:
             next_stage = stage + 1
             pl_module.current_stage = next_stage
             pl_module.current_lower_bound = self.stages[next_stage]["bounds"][0]
             pl_module.current_upper_bound = self.stages[next_stage]["bounds"][1]
             
-            print(f"\n>>> [CURRICULUM] Strata walidacyjna wypłaszczona na etapie {stage}. Przełączam na STAGE {next_stage}! <<<")
+            print(f"\n>>> [CURRICULUM] Strata wypłaszczona na etapie {stage}. Przełączam na STAGE {next_stage}! <<<")
             print(f">>> Nowy zakres maskowania tokenów: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<\n")
             
-            # Czyszczenie metryk pod nowy etap
+            for callback in trainer.callbacks:
+                if isinstance(callback, EarlyStopping):
+                    callback.wait_count = 0
+                    callback.best_score = torch.tensor(float('inf'))
+            
             self.best_val_loss = float('inf')
             self.patience_counter = 0
-
-
 # --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
 
 class LogGeneratedSamplesCallback(Callback):
