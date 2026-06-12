@@ -18,44 +18,11 @@ from tokenizer import CodeTokenizer
 from diffusion.loss import CalculateLoss
 
 
-def get_epoch_mask_bounds(epoch_number, total_epochs, initial_fixed_epochs=20):
-    if total_epochs <= 1:
-        return 0.30, 1.0
-
-    if initial_fixed_epochs is not None and epoch_number <= initial_fixed_epochs:
-        return 0.30, 0.50
-
-    warmup_end = min(100, total_epochs)
-    full_end = min(250, total_epochs)
-
-    if epoch_number <= warmup_end:
-        lower_start = 0.10
-        lower_end = 0.20 if warmup_end > 1 else 0.30
-        upper_start = 0.30
-        upper_end = 0.60 if warmup_end > 1 else 1.0
-        progress = (epoch_number - 1) / max(1, warmup_end - 1)
-        lower_bound = lower_start + (lower_end - lower_start) * progress
-        upper_bound = upper_start + (upper_end - upper_start) * progress
-        return lower_bound, upper_bound
-
-    if epoch_number <= full_end:
-        lower_start = 0.20
-        lower_end = 0.30
-        upper_start = 0.60
-        upper_end = 1.00
-        progress = (epoch_number - warmup_end) / max(1, full_end - warmup_end)
-        lower_bound = lower_start + (lower_end - lower_start) * progress
-        upper_bound = upper_start + (upper_end - upper_start) * progress
-        return lower_bound, upper_bound
-
-    return 0.30, 1.0
-
-
 def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
     return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
 
 
-# --- DATASET & COLLATE (ZACHOWANE) ---
+# --- DATASET & COLLATE ---
 
 class CodeInstructionDataset(Dataset):
     def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024, dataset_fraction=1.0, seed=42):
@@ -131,17 +98,19 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     return result
 
 
-# --- LIGHTNING MODULE ---
+# --- LIGHTNING MODULE (Z ADAPTACYJNYM MASKOWANIEM) ---
 
 class DiffCoderLightning(pl.LightningModule):
-    def __init__(self, model, base_lr=5e-5, total_epochs=500, initial_fixed_epochs=20):
+    def __init__(self, model, base_lr=5e-5):
         super().__init__()
         self.model = model
         self.base_lr = base_lr
-        self.total_epochs = total_epochs
-        self.initial_fixed_epochs = initial_fixed_epochs
         
-        # Inicjalizacja Twojej funkcji kosztu
+        # Inicjalizacja parametrów początkowych dla pierwszego etapu (Stage 1)
+        self.current_stage = 1
+        self.current_lower_bound = 0.10
+        self.current_upper_bound = 0.25
+        
         self.loss_fn = CalculateLoss(
             gamma=1.0,
             ce_weight=1.0,
@@ -172,15 +141,11 @@ class DiffCoderLightning(pl.LightningModule):
         prompt_ids = batch['prompt_ids']
         batch_size, seq_len = x_0.shape
 
-        # Wyznaczenie przedziałów maskowania na podstawie bieżącej epoki w Lightningu
-        # W Lightningu self.current_epoch zaczyna się od 0, więc podajemy epokę 1-indexed
-        lower_bound, upper_bound = get_epoch_mask_bounds(
-            self.current_epoch + 1, 
-            self.total_epochs, 
-            self.initial_fixed_epochs
-        )
+        # Pobranie dynamicznych granic kontrolowanych przez zewnętrzny Callback
+        lb = self.current_lower_bound
+        ub = self.current_upper_bound
 
-        mask_prob = sample_epoch_mask_prob(batch_size, self.device, lower_bound, upper_bound)
+        mask_prob = sample_epoch_mask_prob(batch_size, self.device, lb, ub)
         mask_prob_expanded = mask_prob.view(batch_size, 1)
         t = mask_prob.view(-1)
         
@@ -210,12 +175,14 @@ class DiffCoderLightning(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         loss = self._shared_step(batch)
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        # Logowanie aktualnych metryk poziomu trudności do wykresów
+        self.log('curriculum_stage', float(self.current_stage), on_epoch=True)
+        self.log('mask_lower_bound', self.current_lower_bound, on_epoch=True)
+        self.log('mask_upper_bound', self.current_upper_bound, on_epoch=True)
         return loss
 
     def on_train_epoch_start(self):
-        # Wyświetlanie aktualnego zakresu w konsoli na początku epoki
-        lb, ub = get_epoch_mask_bounds(self.current_epoch + 1, self.total_epochs, self.initial_fixed_epochs)
-        print(f"\nEpoka {self.current_epoch + 1}/{self.total_epochs} | Aktualne maskowanie: {lb * 100:.1f}% - {ub * 100:.1f}%")
+        print(f"\n[Stage {self.current_stage}] Epoka {self.current_epoch + 1} | Aktualne maskowanie: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
 
     def validation_step(self, batch, batch_idx):
         loss = self._shared_step(batch)
@@ -238,18 +205,76 @@ class DiffCoderLightning(pl.LightningModule):
         }
 
 
-# --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI (ZACHOWANE DETALE) ---
+# --- CALLBACK DO ADAPTACYJNEGO PROGRAMU NAUCZANIA ---
+
+class AdaptiveCurriculumCallback(Callback):
+    def __init__(self, min_delta=1e-4):
+        super().__init__()
+        self.min_delta = min_delta
+        self.best_val_loss = float('inf')
+        self.patience_counter = 0
+        
+        # Definicja etapów nauki: im wyższy etap, tym dłuższa cierpliwość (patience) przed zmianą progu
+        self.stages = {
+            1: {"bounds": (0.10, 0.25), "patience": 3},
+            2: {"bounds": (0.20, 0.35), "patience": 5},
+            3: {"bounds": (0.30, 0.50), "patience": 8},
+            4: {"bounds": (0.40, 0.70), "patience": 12},
+            5: {"bounds": (0.50, 0.90), "patience": 15},
+            6: {"bounds": (0.30, 1.00), "patience": 99999}  # Ostatni etap trwający do końca treningu
+        }
+
+    def on_validation_epoch_end(self, trainer, pl_module):
+        if trainer.sanity_checking:
+            return
+
+        metrics = trainer.callback_metrics
+        current_val_loss = metrics.get("val_loss")
+        
+        if current_val_loss is None:
+            return
+
+        current_val_loss = current_val_loss.item()
+        stage = pl_module.current_stage
+        
+        # Jeśli osiągnęliśmy już najwyższy poziom, nie robimy nic
+        if stage >= max(self.stages.keys()):
+            return
+
+        required_patience = self.stages[stage]["patience"]
+
+        # Badanie zmian w stracie walidacyjnej (czy nastąpiło wypłaszczenie)
+        if current_val_loss < self.best_val_loss - self.min_delta:
+            self.best_val_loss = current_val_loss
+            self.patience_counter = 0  # Resetujemy licznik, bo model wciąż robi widoczne postępy
+        else:
+            self.pvariance_counter = getattr(self, 'patience_counter', 0) + 1
+            self.patience_counter += 1  # Brak poprawy lub spadek tempa uczenia
+
+        # Decyzja o skoku na głębszą wodę (kolejny etap maskowania)
+        if self.patience_counter >= required_patience:
+            next_stage = stage + 1
+            pl_module.current_stage = next_stage
+            pl_module.current_lower_bound = self.stages[next_stage]["bounds"][0]
+            pl_module.current_upper_bound = self.stages[next_stage]["bounds"][1]
+            
+            print(f"\n>>> [CURRICULUM] Strata walidacyjna wypłaszczona na etapie {stage}. Przełączam na STAGE {next_stage}! <<<")
+            print(f">>> Nowy zakres maskowania tokenów: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<\n")
+            
+            # Czyszczenie metryk pod nowy etap
+            self.best_val_loss = float('inf')
+            self.patience_counter = 0
+
+
+# --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
 
 class LogGeneratedSamplesCallback(Callback):
-    def __init__(self, sample_pairs, tokenizer, total_epochs, initial_fixed_epochs):
+    def __init__(self, sample_pairs, tokenizer):
         super().__init__()
         self.samples = sample_pairs
         self.tokenizer = tokenizer
-        self.total_epochs = total_epochs
-        self.initial_fixed_epochs = initial_fixed_epochs
 
     def on_validation_epoch_end(self, trainer, pl_module):
-        # Unikamy logowania przy rozruchu sanity checka lightninga
         if trainer.sanity_checking:
             return
 
@@ -264,7 +289,8 @@ class LogGeneratedSamplesCallback(Callback):
                 comet_logger = logger.experiment
                 break
 
-        lb, ub = get_epoch_mask_bounds(epoch, self.total_epochs, self.initial_fixed_epochs)
+        lb = pl_module.current_lower_bound
+        ub = pl_module.current_upper_bound
 
         for idx, sample in enumerate(self.samples):
             prompt = sample["instruction"]
@@ -332,7 +358,7 @@ class LogGeneratedSamplesCallback(Callback):
         pl_module.train()
 
 
-# --- GLÓWNY PROCES TRENINGOWY (LIGHTNING TRAINER) ---
+# --- GŁÓWNY PROCES TRENINGOWY (LIGHTNING TRAINER) ---
 
 class DiffCoderTrainer:
     def __init__(self, config):
@@ -372,7 +398,6 @@ class DiffCoderTrainer:
             num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
         )
 
-        # Przygotowanie próbek testowych do logowania
         self.sample_pairs = []
         rng = random.Random(42)
         sample_indices = rng.sample(range(len(dataset)), min(3, len(dataset)))
@@ -393,9 +418,7 @@ class DiffCoderTrainer:
         
         self.lightning_model = DiffCoderLightning(
             model=raw_model,
-            base_lr=self.config.base_lr,
-            total_epochs=self.config.epochs,
-            initial_fixed_epochs=self.config.initial_fixed_epochs
+            base_lr=self.config.base_lr
         )
 
     def train(self):
@@ -416,11 +439,12 @@ class DiffCoderTrainer:
         
         lr_monitor = LearningRateMonitor(logging_interval='epoch')
         
+        # Wdrożenie automatycznego i adaptacyjnego przełączania progów trudności
+        curriculum_callback = AdaptiveCurriculumCallback(min_delta=1e-4)
+        
         sample_logger_callback = LogGeneratedSamplesCallback(
             sample_pairs=self.sample_pairs,
-            tokenizer=self.tokenizer,
-            total_epochs=self.config.epochs,
-            initial_fixed_epochs=self.config.initial_fixed_epochs
+            tokenizer=self.tokenizer
         )
 
         loggers = []
@@ -437,13 +461,12 @@ class DiffCoderTrainer:
             accelerator='gpu' if torch.cuda.is_available() else 'cpu',
             devices=1 if torch.cuda.is_available() else "auto",
             accumulate_grad_batches=self.config.accumulation_steps,
-            callbacks=[checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback],
+            callbacks=[checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback, curriculum_callback],
             logger=loggers if loggers else True,
             precision="16-mixed" if torch.cuda.is_available() else 32,
             gradient_clip_val=1.0
         )
 
-        # Automatyczne wznawianie z pliku diffcoder_latest.pt lub best.pt, jeśli plik istnieje
         ckpt_path = Path(self.config.checkpoint_dir) / "diffcoder_latest.pt"
         if not ckpt_path.exists():
             ckpt_path = Path(self.config.checkpoint_dir) / "diffcoder_best.pt"
@@ -473,9 +496,8 @@ def main():
         accumulation_steps = 8
         num_workers = 3
         epochs = 500
-        initial_fixed_epochs = int(os.getenv("INITIAL_FIXED_EPOCHS", "20"))
         val_split = 0.05
-        early_stopping_patience = 100
+        early_stopping_patience = 60  # Dostosowane do dłuższego wygrzewania na wyższych etapach
         hidden_dim = 512
         num_blocks = 6
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
