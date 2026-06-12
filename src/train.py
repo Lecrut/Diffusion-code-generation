@@ -5,6 +5,7 @@ import random
 import ast as _ast
 import torch
 import torch.nn as nn
+import gc 
 import pandas as pd
 from torch.utils.data import Dataset, DataLoader, random_split
 import pytorch_lightning as pl
@@ -286,6 +287,11 @@ class AdaptiveCurriculumCallback(Callback):
                     callback.wait_count = 0
                     callback.best_score = torch.tensor(float('inf'))
             
+            gc.collect()                  
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()    
+                print(">>> [VM CLEANUP] Pamięć RAM i cache VRAM zostały pomyślnie wyczyszczone. <<<")
+                    
             self.best_val_loss = float('inf')
             self.patience_counter = 0
 
@@ -383,7 +389,6 @@ class LogGeneratedSamplesCallback(Callback):
 
 
 # --- GŁÓWNY PROCES TRENINGOWY (LIGHTNING TRAINER) ---
-
 class DiffCoderTrainer:
     def __init__(self, config):
         self.config = config
@@ -446,11 +451,13 @@ class DiffCoderTrainer:
         )
 
     def train(self):
+        # 1. Zmieniamy konfigurację zapisu checkpointów
         checkpoint_callback = ModelCheckpoint(
             monitor='val_loss',
             dirpath=self.config.checkpoint_dir,
-            filename='diffcoder-best-{epoch:02d}-{val_loss:.4f}',
+            filename='diffcoder-{epoch:02d}-{val_loss:.4f}', # Lightning sam doda .ckpt
             save_top_k=1,
+            save_last=True, # KLUCZOWE: Zapisuje zawsze 'last.ckpt' ułatwiający automatyczne wznawianie
             mode='min'
         )
         
@@ -470,6 +477,7 @@ class DiffCoderTrainer:
         )
 
         loggers = []
+        comet_logger = None
         if os.getenv("COMET_API_KEY"):
             comet_logger = CometLogger(
                 api_key=os.getenv("COMET_API_KEY"),
@@ -489,17 +497,42 @@ class DiffCoderTrainer:
             gradient_clip_val=1.0
         )
 
-        ckpt_path = Path(self.config.checkpoint_dir) / "diffcoder_latest.pt"
-        if not ckpt_path.exists():
-            ckpt_path = Path(self.config.checkpoint_dir) / "diffcoder_best.pt"
+        # 2. POPRAWKA WZNAWIANIA: Szukamy dedykowanego pliku last.ckpt lub najlepszego zapisanego przez Lightning
+        ckpt_to_resume = None
+        if self.config.resume_from_checkpoint:
+            checkpoint_dir = Path(self.config.checkpoint_dir)
+            last_ckpt = checkpoint_dir / "last.ckpt"
+            
+            if last_ckpt.exists():
+                ckpt_to_resume = str(last_ckpt)
+            else:
+                # Jeśli nie ma last.ckpt, szukamy jakiegokolwiek pliku .ckpt w folderze
+                all_ckpts = list(checkpoint_dir.glob("*.ckpt"))
+                if all_ckpts:
+                    # Wybieramy najnowszy zmodyfikowany plik
+                    all_ckpts.sort(key=os.path.getmtime)
+                    ckpt_to_resume = str(all_ckpts[-1])
+
+        if ckpt_to_resume:
+            print(f"\n>>> [RESUME] Znaleziono checkpoint. Wznawiam pełny stan nauki z: {ckpt_to_resume} <<<\n")
+        else:
+            print("\n>>> [START] Brak pasujących checkpointów (.ckpt). Rozpoczynam naukę od zera. <<<\n")
         
         trainer.fit(
             self.lightning_model, 
             train_dataloaders=self.train_loader, 
             val_dataloaders=self.val_loader,
-            ckpt_path=str(ckpt_path) if ckpt_path.exists() and self.config.resume_from_checkpoint else None
+            ckpt_path=ckpt_to_resume # Przekazujemy poprawną ścieżkę do .ckpt lub None
         )
         
+        # Rejestracja najlepszego modelu w Comet na koniec udanego treningu
+        if comet_logger is not None and checkpoint_callback.best_model_path:
+            try:
+                print(">>> [COMET] Rejestruję najlepszy model w chmurze Comet ML... <<<")
+                comet_logger.experiment.log_model("LocalConvDiffCoder", checkpoint_callback.best_model_path)
+            except Exception as e:
+                print(f"[COMET WARNING] Nie udało się automatycznie zalogować modelu: {e}")
+
         return checkpoint_callback.best_model_path
 
 
@@ -517,9 +550,9 @@ def main():
         batch_size = 4
         accumulation_steps = 8
         num_workers = 3
-        epochs = 1500
+        epochs = 1500 # Zwiększone dla realnego obsłużenia 9 etapów
         val_split = 0.05
-        early_stopping_patience = 120  
+        early_stopping_patience = 120 
         hidden_dim = 512
         num_blocks = 6
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
