@@ -4,32 +4,25 @@ import os
 import random
 import ast as _ast
 import torch
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader, random_split
+import torch.nn as nn
 import pandas as pd
-from tqdm import tqdm
+from torch.utils.data import Dataset, DataLoader, random_split
+import pytorch_lightning as pl
+from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor, EarlyStopping, Callback
+from pytorch_lightning.loggers import CometLogger
 from dotenv import load_dotenv
 
+# Importy z Twoich modułów
 from diffusion.model import LocalConvDiffCoder
 from tokenizer import CodeTokenizer 
 from diffusion.loss import CalculateLoss
 
-try:
-    from comet_ml import Experiment
-except Exception:
-    Experiment = None
 
-
-# number of initial epochs to keep mask range fixed at 30-50%
-# will be set from env in __main__ (default 10)
-INITIAL_FIXED_EPOCHS = 20
-
-
-def get_epoch_mask_bounds(epoch_number, total_epochs):
+def get_epoch_mask_bounds(epoch_number, total_epochs, initial_fixed_epochs=20):
     if total_epochs <= 1:
         return 0.30, 1.0
 
-    if INITIAL_FIXED_EPOCHS is not None and epoch_number <= INITIAL_FIXED_EPOCHS:
+    if initial_fixed_epochs is not None and epoch_number <= initial_fixed_epochs:
         return 0.30, 0.50
 
     warmup_end = min(100, total_epochs)
@@ -62,22 +55,10 @@ def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
     return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
 
 
-def get_resume_mask_bounds(epoch_number, total_epochs, start_epoch, fixed_epochs):
-    if fixed_epochs is not None and fixed_epochs > 0 and epoch_number <= start_epoch + fixed_epochs:
-        return 0.30, 0.50
-    return get_epoch_mask_bounds(epoch_number, total_epochs)
-
+# --- DATASET & COLLATE (ZACHOWANE) ---
 
 class CodeInstructionDataset(Dataset):
-    def __init__(
-        self,
-        csv_file,
-        tokenizer,
-        max_prompt_len=128,
-        max_code_len=1024,
-        dataset_fraction=1.0,
-        seed=42,
-    ):
+    def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024, dataset_fraction=1.0, seed=42):
         self.df = pd.read_csv(csv_file)
         self.df = self.df[['instruction', 'code']].dropna()
         if not (0.0 < dataset_fraction <= 1.0):
@@ -89,7 +70,7 @@ class CodeInstructionDataset(Dataset):
         self.max_prompt_len = max_prompt_len
         self.max_code_len = max_code_len
         self.pad_id = self.tokenizer.pad_token_id
-        # build simple AST node-type vocabulary across dataset (fast heuristic)
+        
         self.node_vocab = {}
         for code in self.df['code'].astype(str):
             try:
@@ -106,19 +87,13 @@ class CodeInstructionDataset(Dataset):
         return len(self.df)
 
     def _pad_or_truncate(self, ids, max_len):
-        if len(ids) > max_len:
-            return ids[:max_len]
-        return ids
+        return ids[:max_len] if len(ids) > max_len else ids
 
     def __getitem__(self, idx):
         row = self.df.iloc[idx]
+        prompt_ids = self._pad_or_truncate(self.tokenizer.encode_instruction(row['instruction']), self.max_prompt_len)
+        code_ids = self._pad_or_truncate(self.tokenizer.encode_code(row['code']), self.max_code_len)
         
-        prompt_ids_raw = self.tokenizer.encode_instruction(row['instruction'])
-        code_ids_raw = self.tokenizer.encode_code(row['code'])
-        
-        prompt_ids = self._pad_or_truncate(prompt_ids_raw, self.max_prompt_len)
-        code_ids = self._pad_or_truncate(code_ids_raw, self.max_code_len)
-        # extract simple AST bag-of-node-types vector
         try:
             tree = _ast.parse(row['code'])
             counts = [0] * self.ast_dim
@@ -131,11 +106,7 @@ class CodeInstructionDataset(Dataset):
         except Exception:
             ast_vec = torch.zeros(self.ast_dim, dtype=torch.float)
 
-        return {
-            'prompt_ids': prompt_ids,
-            'code_ids': code_ids,
-            'ast_vec': ast_vec,
-        }
+        return {'prompt_ids': prompt_ids, 'code_ids': code_ids, 'ast_vec': ast_vec}
 
 
 def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
@@ -147,672 +118,377 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     for item in batch:
         prompt_ids = item['prompt_ids'][:prompt_max]
         code_ids = item['code_ids'][:code_max]
-
         prompt_pad = prompt_max - len(prompt_ids)
         code_pad = code_max - len(code_ids)
-
-        if prompt_pad > 0:
-            prompt_ids = prompt_ids + [pad_id] * prompt_pad
-        if code_pad > 0:
-            code_ids = code_ids + [pad_id] * code_pad
-
+        if prompt_pad > 0: prompt_ids = prompt_ids + [pad_id] * prompt_pad
+        if code_pad > 0: code_ids = code_ids + [pad_id] * code_pad
         prompt_tensors.append(torch.tensor(prompt_ids, dtype=torch.long))
         code_tensors.append(torch.tensor(code_ids, dtype=torch.long))
 
-    result = {
-        'prompt_ids': torch.stack(prompt_tensors, dim=0),
-        'code_ids': torch.stack(code_tensors, dim=0)
-    }
-
-    # include ast vectors if present
+    result = {'prompt_ids': torch.stack(prompt_tensors, dim=0), 'code_ids': torch.stack(code_tensors, dim=0)}
     if 'ast_vec' in batch[0]:
-        ast_tensors = [item['ast_vec'] for item in batch]
-        result['ast_vec'] = torch.stack(ast_tensors, dim=0)
-
+        result['ast_vec'] = torch.stack([item['ast_vec'] for item in batch], dim=0)
     return result
 
 
-def log_generated_samples(model, tokenizer, samples, device, epoch, steps=50, experiment=None, checkpoint_dir=None, total_epochs=None, mask_bounds=None):
-    """Loguje próbki: instrukcja, ground-truth, masked ground-truth, predicted (forward on masked), generated (full infer).
-    Nie zapisuje już CSV — tylko loguje do Comet (table/text) lub stdout.
-    """
-    model.eval()
-    table_rows = []
+# --- LIGHTNING MODULE ---
 
-    for idx, sample in enumerate(samples):
-        prompt = sample["instruction"]
-        target_code = sample["code"]
-        prompt_ids = torch.tensor(tokenizer.encode_instruction(prompt), dtype=torch.long).to(device)
-        if prompt_ids.dim() == 1:
-            prompt_ids = prompt_ids.unsqueeze(0)
+class DiffCoderLightning(pl.LightningModule):
+    def __init__(self, model, base_lr=5e-5, total_epochs=500, initial_fixed_epochs=20):
+        super().__init__()
+        self.model = model
+        self.base_lr = base_lr
+        self.total_epochs = total_epochs
+        self.initial_fixed_epochs = initial_fixed_epochs
+        
+        # Inicjalizacja Twojej funkcji kosztu
+        self.loss_fn = CalculateLoss(
+            gamma=1.0,
+            ce_weight=1.0,
+            dtw_weight=0.1,
+            embedding_matrix=getattr(model, 'embedding', None).weight if hasattr(model, 'embedding') else None,
+        )
 
-        masked_text = ""
-        predicted_text = ""
-        gen_text = ""
+    def _get_ast_embeddings(self, batch):
+        if 'ast_vec' not in batch or batch.get('ast_vec') is None:
+            return None
+        
+        ast_vec = batch.get('ast_vec')
+        embed_mat = self.loss_fn.embedding_matrix
+        if embed_mat is None:
+            return None
+            
+        embed_mat = embed_mat.to(self.device)
+        if embed_mat.size(0) >= ast_vec.size(1):
+            W = embed_mat[:ast_vec.size(1), :]
+        else:
+            W = embed_mat.mean(dim=0, keepdim=True).repeat(ast_vec.size(1), 1)
+            
+        ast_proj = ast_vec @ W
+        return ast_proj.unsqueeze(1)
 
-        # compute masked ground truth and model's prediction on that masked input
-        try:
-            code_ids_raw = tokenizer.encode_code(target_code)
-            x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
-            if mask_bounds is not None:
-                lower_bound, upper_bound = mask_bounds
-            elif total_epochs is None:
-                lower_bound, upper_bound = 0.30, 1.0
-            else:
-                lower_bound, upper_bound = get_epoch_mask_bounds(epoch, total_epochs)
-            mask_prob = sample_epoch_mask_prob(1, device, lower_bound, upper_bound)
-            rand_matrix = torch.rand(1, x_0.size(1), device=device)
-            is_masked = (rand_matrix < mask_prob) & (x_0 != tokenizer.pad_token_id)
-            x_masked = x_0.clone()
-            x_masked[is_masked] = tokenizer.mask_token_id
-            # keep special tokens (mask) visible when decoding masked ground truth
-            masked_text = tokenizer.decode(x_masked[0].tolist(), skip_special_tokens=False)
+    def _shared_step(self, batch):
+        x_0 = batch['code_ids']
+        prompt_ids = batch['prompt_ids']
+        batch_size, seq_len = x_0.shape
 
-            with torch.no_grad():
-                logits = model(x_masked, prompt_ids, mask_prob.view(-1))
-                pred_ids = logits.argmax(dim=-1)
-                # merge predictions into masked input: replace mask tokens with model preds
-                try:
-                    mask_id = tokenizer.mask_token_id
+        # Wyznaczenie przedziałów maskowania na podstawie bieżącej epoki w Lightningu
+        # W Lightningu self.current_epoch zaczyna się od 0, więc podajemy epokę 1-indexed
+        lower_bound, upper_bound = get_epoch_mask_bounds(
+            self.current_epoch + 1, 
+            self.total_epochs, 
+            self.initial_fixed_epochs
+        )
+
+        mask_prob = sample_epoch_mask_prob(batch_size, self.device, lower_bound, upper_bound)
+        mask_prob_expanded = mask_prob.view(batch_size, 1)
+        t = mask_prob.view(-1)
+        
+        rand_matrix = torch.rand(batch_size, seq_len, device=self.device)
+        is_masked = (rand_matrix < mask_prob_expanded) & (x_0 != self.model.pad_token_id)
+        
+        x_t = x_0.clone()
+        x_t[is_masked] = self.model.mask_token_id
+        
+        logits = self.model(x_t, prompt_ids, t)
+        masked_logits = logits[is_masked]
+        masked_targets = x_0[is_masked]
+
+        if masked_targets.numel() == 0:
+            return torch.tensor(0.0, device=self.device, requires_grad=True)
+
+        ast_embeddings = self._get_ast_embeddings(batch)
+        
+        loss, ce_loss, dtw_loss = self.loss_fn(
+            full_logits=logits, 
+            masked_logits=masked_logits, 
+            masked_targets=masked_targets,
+            ast_embeddings=ast_embeddings,
+        )
+        return loss
+
+    def training_step(self, batch, batch_idx):
+        loss = self._shared_step(batch)
+        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        return loss
+
+    def on_train_epoch_start(self):
+        # Wyświetlanie aktualnego zakresu w konsoli na początku epoki
+        lb, ub = get_epoch_mask_bounds(self.current_epoch + 1, self.total_epochs, self.initial_fixed_epochs)
+        print(f"\nEpoka {self.current_epoch + 1}/{self.total_epochs} | Aktualne maskowanie: {lb * 100:.1f}% - {ub * 100:.1f}%")
+
+    def validation_step(self, batch, batch_idx):
+        loss = self._shared_step(batch)
+        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        return loss
+
+    def configure_optimizers(self):
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.base_lr, weight_decay=0.01)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer, mode="min", factor=0.5, patience=8, threshold=1e-4, cooldown=2, min_lr=1e-6
+        )
+        return {
+            "optimizer": optimizer,
+            "lr_scheduler": {
+                "scheduler": scheduler,
+                "monitor": "val_loss",
+                "interval": "epoch",
+                "frequency": 1
+            }
+        }
+
+
+# --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI (ZACHOWANE DETALE) ---
+
+class LogGeneratedSamplesCallback(Callback):
+    def __init__(self, sample_pairs, tokenizer, total_epochs, initial_fixed_epochs):
+        super().__init__()
+        self.samples = sample_pairs
+        self.tokenizer = tokenizer
+        self.total_epochs = total_epochs
+        self.initial_fixed_epochs = initial_fixed_epochs
+
+    def on_validation_epoch_end(self, trainer, pl_module):
+        # Unikamy logowania przy rozruchu sanity checka lightninga
+        if trainer.sanity_checking:
+            return
+
+        pl_module.eval()
+        epoch = pl_module.current_epoch + 1
+        device = pl_module.device
+        table_rows = []
+        
+        comet_logger = None
+        for logger in trainer.loggers:
+            if isinstance(logger, CometLogger):
+                comet_logger = logger.experiment
+                break
+
+        lb, ub = get_epoch_mask_bounds(epoch, self.total_epochs, self.initial_fixed_epochs)
+
+        for idx, sample in enumerate(self.samples):
+            prompt = sample["instruction"]
+            target_code = sample["code"]
+            prompt_ids = torch.tensor(self.tokenizer.encode_instruction(prompt), dtype=torch.long).to(device).unsqueeze(0)
+
+            try:
+                code_ids_raw = self.tokenizer.encode_code(target_code)
+                x_0 = torch.tensor([code_ids_raw], dtype=torch.long, device=device)
+                
+                mask_prob = sample_epoch_mask_prob(1, device, lb, ub)
+                rand_matrix = torch.rand(1, x_0.size(1), device=device)
+                is_masked = (rand_matrix < mask_prob) & (x_0 != self.tokenizer.pad_token_id)
+                x_masked = x_0.clone()
+                x_masked[is_masked] = self.tokenizer.mask_token_id
+                masked_text = self.tokenizer.decode(x_masked[0].tolist(), skip_special_tokens=False)
+
+                with torch.no_grad():
+                    logits = pl_module.model(x_masked, prompt_ids, mask_prob.view(-1))
+                    pred_ids = logits.argmax(dim=-1)
+                    
+                    mask_id = self.tokenizer.mask_token_id
                     x_masked_cpu = x_masked[0].cpu().tolist()
                     pred_cpu = pred_ids[0].cpu().tolist()
                     merged = []
                     pred_idx = 0
                     for tok in x_masked_cpu:
                         if tok == mask_id:
-                            # take next prediction for this position
                             merged.append(pred_cpu[pred_idx])
                         else:
                             merged.append(tok)
                         pred_idx += 1
-                    # keep special tokens visible to inspect masks/preds
-                    predicted_text = tokenizer.decode(merged, skip_special_tokens=False)
-                except Exception:
-                    predicted_text = tokenizer.decode(pred_ids[0].tolist())
-        except Exception as e:
-            import traceback
-            tb = traceback.format_exc()
-            masked_text = f"<ERROR: {type(e).__name__}: {e}>\n{tb}"
-            predicted_text = masked_text
+                    predicted_text = self.tokenizer.decode(merged, skip_special_tokens=False)
+            except Exception as e:
+                masked_text = f"<ERROR: {type(e).__name__}: {e}>"
+                predicted_text = masked_text
 
-        # also run full generation (separate inference path)
-        try:
-            with torch.no_grad():
-                gen_ids = model.generate(
-                    prompt_ids,
-                    steps=steps,
-                    device=device,
-                    eos_token_id=tokenizer.eos_token_id,
-                )
-            gen_text = tokenizer.decode(gen_ids[0].tolist())
-        except Exception as e:
-            import traceback
-            tb = traceback.format_exc()
-            gen_text = f"<ERROR: {type(e).__name__}: {e}>\n{tb}"
-
-        # log to Comet or stdout
-        if experiment is not None:
-            experiment.log_text(
-                "Epoch "
-                f"{epoch} | sample {idx}\nPROMPT:\n{prompt}"
-                f"\n\nGROUND_TRUTH:\n{target_code}"
-                f"\n\nMASKED_GROUND_TRUTH:\n{masked_text}"
-                f"\n\nPREDICTED_THIS_ITERATION:\n{predicted_text}"
-                f"\n\nGENERATED:\n{gen_text}",
-                step=epoch,
-            )
-            table_rows.append(
-                {
-                    "epoch": epoch,
-                    "sample": idx,
-                    "prompt": prompt,
-                    "ground_truth": target_code,
-                    "masked_ground_truth": masked_text,
-                    "predicted_this_iteration": predicted_text,
-                    "generated": gen_text,
-                }
-            )
-        else:
-            print("-" * 80)
-            print(f"Epoch {epoch} | sample {idx}")
-            print("PROMPT:")
-            print(prompt)
-            print("GROUND_TRUTH:")
-            print(target_code)
-            print("MASKED_GROUND_TRUTH:")
-            print(masked_text)
-            print("PREDICTED_THIS_ITERATION:")
-            print(predicted_text)
-            print("GENERATED:")
-            print(gen_text)
-
-    if experiment is not None and table_rows:
-        experiment.log_table("generated_samples", table_rows, step=epoch)
-
-    model.train()
-
-
-def cleanup_checkpoint_dir(checkpoint_dir, keep_path=None):
-    """Keep only the selected checkpoint file in checkpoints/.
-
-    Removes all diffcoder_best*.pt files except keep_path.
-    """
-    for candidate in checkpoint_dir.glob("diffcoder_best*.pt"):
-        if keep_path is not None and candidate.resolve() == keep_path.resolve():
-            continue
-        try:
-            candidate.unlink()
-            print(f"Usunięto checkpoint: {candidate}")
-        except Exception as e:
-            print(f"Ostrzeżenie: nie udało się usunąć checkpointu {candidate}: {e}")
-
-
-def train_diffcoder(
-    model,
-    train_dataloader,
-    val_dataloader,
-    optimizer,
-    scheduler,
-    epochs,
-    accumulation_steps,
-    early_stopping_patience,
-    device,
-    tokenizer,
-    sample_pairs,
-    checkpoint_dir,
-    experiment=None,
-    start_epoch=0,
-    best_val_loss=None,
-    epochs_without_improvement=0,
-    best_checkpoint_path=None,
-    total_epochs=None,
-    resume_fixed_mask_epochs=0,
-):
-    use_amp = device == "cuda"
-    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
-    if best_val_loss is None:
-        best_val_loss = float("inf")
-    # total epochs used to compute epoch-dependent masking schedule
-    effective_total_epochs = total_epochs or epochs
-    latest_checkpoint_path = checkpoint_dir / "diffcoder_latest.pt"
-
-    # training bookkeeping
-    epochs_without_improvement = max(0, int(epochs_without_improvement))
-
-    # combined loss (classification + dtw) used by this training loop
-    loss_fn = CalculateLoss(
-        gamma=1.0,
-        ce_weight=1.0,
-        dtw_weight=0.1,
-        embedding_matrix=getattr(model, 'embedding', None).weight if hasattr(model, 'embedding') else None,
-    ).to(device)
-    
-    for epoch in range(start_epoch, epochs):
-        model.train()
-        total_loss = 0
-        epoch_number = epoch + 1
-        current_mask_lower_bound, current_mask_upper_bound = get_resume_mask_bounds(
-            epoch_number,
-            effective_total_epochs,
-            start_epoch,
-            resume_fixed_mask_epochs,
-        )
-        print(
-            f"Epoka {epoch_number}/{effective_total_epochs} | "
-            f"aktualne maskowanie: {current_mask_lower_bound * 100:.1f}% - {current_mask_upper_bound * 100:.1f}%"
-        )
-        progress_bar = tqdm(
-            enumerate(train_dataloader),
-            total=len(train_dataloader),
-            desc=f"Epoka {epoch_number}/{effective_total_epochs}",
-        )
-        optimizer.zero_grad()
-            
-        for batch_idx, batch in progress_bar:
-            x_0 = batch['code_ids'].to(device)
-            prompt_ids = batch['prompt_ids'].to(device)
-                
-            batch_size, seq_len = x_0.shape
-
-            mask_prob = sample_epoch_mask_prob(batch_size, device, current_mask_lower_bound, current_mask_upper_bound)
-            mask_prob = mask_prob.view(batch_size, 1)
-            t = mask_prob.view(-1)
-            rand_matrix = torch.rand(batch_size, seq_len, device=device)
-                
-            is_masked = (rand_matrix < mask_prob) & (x_0 != model.pad_token_id)
-            x_t = x_0.clone()
-            x_t[is_masked] = model.mask_token_id
-                
-            with torch.amp.autocast("cuda", enabled=use_amp):
-                logits = model(x_t, prompt_ids, t)
-                    
-                masked_logits = logits[is_masked] 
-                masked_targets = x_0[is_masked]
-                # prepare ast embeddings projection if available
-                ast_embeddings = None
-                if 'ast_vec' in batch and batch.get('ast_vec') is not None:
-                    ast_vec = batch.get('ast_vec').to(device)
-                    embed_mat = loss_fn.embedding_matrix if hasattr(loss_fn, 'embedding_matrix') else None
-                    if embed_mat is not None:
-                        try:
-                            # ensure embed_mat on same device
-                            embed_mat = embed_mat.to(device)
-                        except Exception:
-                            pass
-                    if embed_mat is not None and embed_mat.size(0) >= ast_vec.size(1):
-                        W = embed_mat[:ast_vec.size(1), :]
-                    elif embed_mat is not None:
-                        W = embed_mat.mean(dim=0, keepdim=True).repeat(ast_vec.size(1), 1)
-                    else:
-                        W = None
-
-                    if W is not None:
-                        ast_proj = ast_vec @ W
-                        ast_embeddings = ast_proj.unsqueeze(1)
-
-                loss, ce_loss, dtw_loss = loss_fn(
-                    full_logits=logits, 
-                    masked_logits=masked_logits, 
-                    masked_targets=masked_targets,
-                    ast_embeddings=ast_embeddings,
-                )
-                            
-            current_loss = loss.item()
-            loss = loss / accumulation_steps
-                
-            scaler.scale(loss).backward()
-                
-            if (batch_idx + 1) % accumulation_steps == 0 or (batch_idx + 1) == len(train_dataloader):
-                scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-                scaler.step(optimizer)
-                scaler.update()
-                optimizer.zero_grad()
-                
-            total_loss += current_loss
-            progress_bar.set_postfix({'loss': f"{current_loss:.4f}"})
-            if experiment is not None:
-                step = epoch * len(train_dataloader) + batch_idx
-                experiment.log_metric("train_loss", current_loss, step=step)
-                
-        avg_loss = total_loss / len(train_dataloader)
-        model.eval()
-        val_total_loss = 0.0
-        val_steps = 0
-        with torch.no_grad():
-            for val_batch in val_dataloader:
-                x_0 = val_batch['code_ids'].to(device)
-                prompt_ids = val_batch['prompt_ids'].to(device)
-                batch_size, seq_len = x_0.shape
-
-                mask_prob = sample_epoch_mask_prob(batch_size, device, current_mask_lower_bound, current_mask_upper_bound)
-                mask_prob = mask_prob.view(batch_size, 1)
-                t = mask_prob.view(-1)
-                rand_matrix = torch.rand(batch_size, seq_len, device=device)
-
-                is_masked = (rand_matrix < mask_prob) & (x_0 != model.pad_token_id)
-                x_t = x_0.clone()
-                x_t[is_masked] = model.mask_token_id
-
-                logits = model(x_t, prompt_ids, t)
-                masked_logits = logits[is_masked]
-                masked_targets = x_0[is_masked]
-
-                if masked_targets.numel() > 0:
-                    # prepare ast embeddings for validation batch (same projection as training)
-                    ast_embeddings = None
-                    if val_batch.get('ast_vec') is not None:
-                        ast_vec = val_batch.get('ast_vec').to(device)
-                        embed_mat = loss_fn.embedding_matrix if hasattr(loss_fn, 'embedding_matrix') else None
-                        if embed_mat is not None:
-                            try:
-                                embed_mat = embed_mat.to(device)
-                            except Exception:
-                                pass
-                        if embed_mat is not None and embed_mat.size(0) >= ast_vec.size(1):
-                            W = embed_mat[:ast_vec.size(1), :]
-                        elif embed_mat is not None:
-                            W = embed_mat.mean(dim=0, keepdim=True).repeat(ast_vec.size(1), 1)
-                        else:
-                            W = None
-
-                        if W is not None:
-                            ast_proj = ast_vec @ W
-                            ast_embeddings = ast_proj.unsqueeze(1)
-
-                    val_loss_tensor, _, _ = loss_fn(
-                        full_logits=logits,
-                        masked_logits=masked_logits,
-                        masked_targets=masked_targets,
-                        ast_embeddings=ast_embeddings,
-                    )
-                    batch_val_loss = val_loss_tensor.item()
-                else:
-                    batch_val_loss = 0.0
-
-                val_total_loss += batch_val_loss
-                val_steps += 1
-
-        val_loss = val_total_loss / max(1, val_steps)
-
-        print(f"\n--- Zakończono Epokę {epoch+1} | Średni błąd: {avg_loss:.4f} ---")
-        print(f"Średni loss w epoce {epoch+1}: {avg_loss:.6f}")
-        print(f"Walidacyjny loss w epoce {epoch+1}: {val_loss:.6f}")
-
-        previous_lr = optimizer.param_groups[0]["lr"]
-        if scheduler is not None:
-            scheduler.step(val_loss)
-        current_lr = optimizer.param_groups[0]["lr"]
-
-        if experiment is not None:
-            experiment.log_metric("epoch_loss", avg_loss, step=epoch + 1)
-            experiment.log_metric("epoch_avg_loss", avg_loss, step=epoch + 1)
-            experiment.log_metric("val_loss", val_loss, step=epoch + 1)
-            experiment.log_metric("lr", current_lr, step=epoch + 1)
-
-        if current_lr < previous_lr:
-            print(f"ReduceLROnPlateau obniżył lr: {previous_lr:.8f} -> {current_lr:.8f}")
-
-        improved = val_loss < best_val_loss
-        if improved:
-            best_val_loss = val_loss
-            epochs_without_improvement = 0
-        else:
-            epochs_without_improvement += 1
-
-        checkpoint = {
-            "epoch": epoch + 1,
-            "total_epochs": effective_total_epochs,
-            "mask_lower_bound": current_mask_lower_bound,
-            "mask_upper_bound": current_mask_upper_bound,
-            "val_loss": val_loss,
-            "best_val_loss": best_val_loss,
-            "epochs_without_improvement": epochs_without_improvement,
-            "model_state_dict": model.state_dict(),
-            "optimizer_state_dict": optimizer.state_dict(),
-            "scheduler_state_dict": None if scheduler is None else scheduler.state_dict(),
-        }
-        torch.save(checkpoint, latest_checkpoint_path)
-        print(
-            f"Zapisano checkpoint bieżący: {latest_checkpoint_path} | "
-            f"lr={current_lr:.8f}"
-        )
-
-        if improved:
-            checkpoint_path = checkpoint_dir / "diffcoder_best.pt"
-            torch.save(checkpoint, checkpoint_path)
-            cleanup_checkpoint_dir(checkpoint_dir, keep_path=checkpoint_path)
-            print(f"Nowy najlepszy checkpoint lokalny zapisany: {checkpoint_path}")
-
-            if experiment is not None:
-                print("Kolejkuję model do wysyłki na Comet ML...")
-                experiment.log_other("best_model_epoch", epoch + 1)
-                experiment.log_other("best_model_val_loss", val_loss)
-                experiment.log_model(
-                    name="diffcoder_best",
-                    file_or_folder=str(checkpoint_path),
-                    overwrite=True,
-                )
-
-            best_checkpoint_path = checkpoint_path
-        else:
-            print(
-                f"Brak poprawy val loss przez {epochs_without_improvement} epok(e). "
-                f"Najlepszy val loss: {best_val_loss:.6f}"
-            )
-
-        if sample_pairs:
-            log_generated_samples(
-                model,
-                tokenizer,
-                sample_pairs,
-                device,
-                epoch_number,
-                experiment=experiment,
-                checkpoint_dir=checkpoint_dir,
-                total_epochs=effective_total_epochs,
-                mask_bounds=(current_mask_lower_bound, current_mask_upper_bound),
-            )
-
-        if epochs_without_improvement >= early_stopping_patience:
-            print(
-                f"Early stopping: brak poprawy przez {early_stopping_patience} epok. "
-                f"Kończę trening na epoce {epoch+1}."
-            )
-            break
-
-
-if __name__ == "__main__":
-    load_dotenv()
-    # configure INITIAL_FIXED_EPOCHS after loading dotenv so .env is respected
-    INITIAL_FIXED_EPOCHS = int(os.getenv("INITIAL_FIXED_EPOCHS", "10"))
-    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Rozpoczynam trening na: {DEVICE}")
-
-    if DEVICE == "cuda":
-        torch.backends.cuda.matmul.allow_tf32 = True
-        torch.backends.cudnn.allow_tf32 = True
-        torch.set_float32_matmul_precision("high")
-    
-    MAX_PROMPT_LEN = 96
-    MAX_CODE_LEN = 512
-    BATCH_SIZE = 4
-    ACCUMULATION_STEPS = 8
-    NUM_WORKERS = 3
-    EPOCHS = 500
-    VAL_SPLIT = 0.05
-    EARLY_STOPPING_PATIENCE = 100
-    HIDDEN_DIM = 512
-    NUM_BLOCKS = 6
-    DILATION_FACTOR = int(os.getenv("DILATION_FACTOR", "2"))
-    DATASET_FRACTION = float(os.getenv("DATASET_FRACTION", "1.0")) # size of dataset
-    BASE_LR = 5e-5
-    LR_SCHEDULER_FACTOR = 0.5
-    LR_SCHEDULER_PATIENCE = 8
-    LR_SCHEDULER_MIN_LR = 1e-6
-    LR_SCHEDULER_THRESHOLD = 1e-4
-    LR_SCHEDULER_COOLDOWN = 2
-    RESUME_FROM_CHECKPOINT = True
-    RESUME_CHECKPOINT_NAME = "diffcoder_best.pt"
-    RESUME_FIXED_MASK_EPOCHS = int(os.getenv("RESUME_FIXED_MASK_EPOCHS", "15"))
-
-    tokenizer = CodeTokenizer()
-
-    comet_api_key = os.getenv("COMET_API_KEY")
-    comet_project_name = os.getenv("COMET_PROJECT_NAME")
-    comet_workspace = os.getenv("COMET_WORKSPACE")
-
-    experiment = None
-    if Experiment is not None and comet_api_key and comet_project_name:
-        experiment = Experiment(
-            api_key=comet_api_key,
-            project_name=comet_project_name,
-            workspace=comet_workspace,
-            auto_output_logging="simple",
-        )
-        experiment.log_parameters({
-            "max_prompt_len": MAX_PROMPT_LEN,
-            "max_code_len": MAX_CODE_LEN,
-            "batch_size": BATCH_SIZE,
-            "epochs": EPOCHS,
-            "val_split": VAL_SPLIT,
-            "early_stopping_patience": EARLY_STOPPING_PATIENCE,
-            "hidden_dim": HIDDEN_DIM,
-            "num_blocks": NUM_BLOCKS,
-            "dataset_fraction": DATASET_FRACTION,
-            "base_lr": BASE_LR,
-            "lr_scheduler_factor": LR_SCHEDULER_FACTOR,
-            "lr_scheduler_patience": LR_SCHEDULER_PATIENCE,
-            "lr_scheduler_min_lr": LR_SCHEDULER_MIN_LR,
-            "lr_scheduler_threshold": LR_SCHEDULER_THRESHOLD,
-            "lr_scheduler_cooldown": LR_SCHEDULER_COOLDOWN,
-        })
-    
-    model = LocalConvDiffCoder(
-        vocab_size=tokenizer.vocab_size,
-        mask_token_id=tokenizer.mask_token_id,
-        pad_token_id=tokenizer.pad_token_id,
-        hidden_dim=HIDDEN_DIM,
-        num_blocks=NUM_BLOCKS,
-        max_seq_len=MAX_PROMPT_LEN + MAX_CODE_LEN,
-        dilation_factor=DILATION_FACTOR,
-    ).to(DEVICE)
-
-    repo_root = Path(__file__).resolve().parents[1]
-    checkpoint_dir = repo_root / "checkpoints"
-    checkpoint_dir.mkdir(parents=True, exist_ok=True)
-    dataset_path = repo_root / "data" / "dataset.csv"
-    dataset = CodeInstructionDataset(
-        str(dataset_path),
-        tokenizer,
-        max_prompt_len=MAX_PROMPT_LEN,
-        max_code_len=MAX_CODE_LEN,
-        dataset_fraction=DATASET_FRACTION,
-    )
-    if len(dataset) < 2:
-        raise ValueError("Dataset musi mieć co najmniej 2 próbki, aby wykonać split train/validation.")
-
-    val_size = max(1, int(len(dataset) * VAL_SPLIT))
-    train_size = len(dataset) - val_size
-    if train_size < 1:
-        train_size = 1
-        val_size = len(dataset) - 1
-
-    split_generator = torch.Generator().manual_seed(42)
-    train_dataset, val_dataset = random_split(
-        dataset,
-        [train_size, val_size],
-        generator=split_generator,
-    )
-
-    print(
-        f"Podział danych: train={len(train_dataset)} próbek, val={len(val_dataset)} próbek "
-        f"({VAL_SPLIT * 100:.1f}% walidacji)"
-    )
-
-    collate_fn = partial(
-        collate_batch,
-        pad_id=tokenizer.pad_token_id,
-        max_prompt_len=MAX_PROMPT_LEN,
-        max_code_len=MAX_CODE_LEN,
-    )
-    train_dataloader = DataLoader(
-        train_dataset,
-        batch_size=BATCH_SIZE,
-        shuffle=True,
-        num_workers=NUM_WORKERS,
-        pin_memory=DEVICE == "cuda",
-        persistent_workers=NUM_WORKERS > 0,
-        collate_fn=collate_fn,
-    )
-    val_dataloader = DataLoader(
-        val_dataset,
-        batch_size=BATCH_SIZE,
-        shuffle=False,
-        num_workers=NUM_WORKERS,
-        pin_memory=DEVICE == "cuda",
-        persistent_workers=NUM_WORKERS > 0,
-        collate_fn=collate_fn,
-    )
-    
-    optimizer = torch.optim.AdamW(model.parameters(), lr=BASE_LR, weight_decay=0.01)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer,
-        mode="min",
-        factor=LR_SCHEDULER_FACTOR,
-        patience=LR_SCHEDULER_PATIENCE,
-        threshold=LR_SCHEDULER_THRESHOLD,
-        cooldown=LR_SCHEDULER_COOLDOWN,
-        min_lr=LR_SCHEDULER_MIN_LR,
-    )
-
-    def resolve_resume_checkpoint(path):
-        latest_checkpoint = path / "diffcoder_latest.pt"
-        if latest_checkpoint.exists():
-            return latest_checkpoint
-
-        best_checkpoint = path / "diffcoder_best.pt"
-        if best_checkpoint.exists():
-            return best_checkpoint
-
-        candidates = list(path.glob("diffcoder_best_epoch_*.pt"))
-        if not candidates:
-            return None
-
-        def extract_epoch(p):
             try:
-                return int(p.stem.split("_")[-1])
-            except ValueError:
-                return -1
+                with torch.no_grad():
+                    gen_ids = pl_module.model.generate(
+                        prompt_ids, steps=50, device=device, eos_token_id=self.tokenizer.eos_token_id
+                    )
+                gen_text = self.tokenizer.decode(gen_ids[0].tolist())
+            except Exception as e:
+                gen_text = f"<ERROR: {type(e).__name__}: {e}>"
 
-        return max(candidates, key=extract_epoch)
+            if comet_logger is not None:
+                comet_logger.log_text(
+                    f"Epoch {epoch} | sample {idx}\nPROMPT:\n{prompt}\n\nGROUND_TRUTH:\n{target_code}"
+                    f"\n\nMASKED_GROUND_TRUTH:\n{masked_text}\n\nPREDICTED_THIS_ITERATION:\n{predicted_text}"
+                    f"\n\nGENERATED:\n{gen_text}",
+                    step=epoch,
+                )
+                table_rows.append({
+                    "epoch": epoch, "sample": idx, "prompt": prompt, "ground_truth": target_code,
+                    "masked_ground_truth": masked_text, "predicted_this_iteration": predicted_text, "generated": gen_text
+                })
+            else:
+                print("-" * 80)
+                print(f"Epoch {epoch} | sample {idx}\nMASKED_GROUND_TRUTH:\n{masked_text}\nGENERATED:\n{gen_text}")
 
-    start_epoch = 0
-    best_val_loss = None
-    best_checkpoint_path = None
-    training_total_epochs = EPOCHS
-    epochs_without_improvement = 0
-    if RESUME_FROM_CHECKPOINT:
-        resume_path = None
-        if RESUME_CHECKPOINT_NAME:
-            resume_path = checkpoint_dir / RESUME_CHECKPOINT_NAME
-        else:
-            resume_path = resolve_resume_checkpoint(checkpoint_dir)
-        if resume_path is not None and resume_path.exists():
-            checkpoint = torch.load(resume_path, map_location=DEVICE)
-            model.load_state_dict(checkpoint["model_state_dict"])
-            optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
-            scheduler_state_dict = checkpoint.get("scheduler_state_dict")
-            if scheduler_state_dict is not None:
-                scheduler.load_state_dict(scheduler_state_dict)
-            start_epoch = int(checkpoint.get("epoch", 0))
-            training_total_epochs = int(checkpoint.get("total_epochs", EPOCHS))
-            best_val_loss = float(checkpoint.get("best_val_loss", checkpoint.get("val_loss", "inf")))
-            epochs_without_improvement = int(checkpoint.get("epochs_without_improvement", 0))
-            best_checkpoint_path = resume_path
-            cleanup_checkpoint_dir(checkpoint_dir, keep_path=best_checkpoint_path)
-            print(
-                f"Wznawiam trening z checkpointu: {resume_path} | "
-                f"epoch={start_epoch} | total_epochs={training_total_epochs} | "
-                f"best_val_loss={best_val_loss:.6f} | lr={optimizer.param_groups[0]['lr']:.8f}"
-            )
-        else:
-            print("Nie znaleziono checkpointu do wznowienia. Start od zera.")
+        if comet_logger is not None and table_rows:
+            comet_logger.log_table("generated_samples", table_rows, step=epoch)
+            
+        pl_module.train()
 
-    sample_pairs = []
-    if len(dataset) > 0:
+
+# --- GLÓWNY PROCES TRENINGOWY (LIGHTNING TRAINER) ---
+
+class DiffCoderTrainer:
+    def __init__(self, config):
+        self.config = config
+        self.tokenizer = CodeTokenizer()
+        self.setup_data()
+        self.setup_model()
+
+    def setup_data(self):
+        repo_root = Path(__file__).resolve().parents[1] if '__file__' in locals() else Path(".")
+        dataset_path = repo_root / "data" / "dataset.csv"
+        
+        dataset = CodeInstructionDataset(
+            str(dataset_path), self.tokenizer,
+            max_prompt_len=self.config.max_prompt_len,
+            max_code_len=self.config.max_code_len,
+            dataset_fraction=self.config.dataset_fraction
+        )
+
+        val_size = max(1, int(len(dataset) * self.config.val_split))
+        train_size = len(dataset) - val_size
+        self.train_dataset, self.val_dataset = random_split(
+            dataset, [train_size, val_size], generator=torch.Generator().manual_seed(42)
+        )
+
+        collate_fn = partial(
+            collate_batch, pad_id=self.tokenizer.pad_token_id,
+            max_prompt_len=self.config.max_prompt_len, max_code_len=self.config.max_code_len
+        )
+        
+        self.train_loader = DataLoader(
+            self.train_dataset, batch_size=self.config.batch_size, shuffle=True,
+            num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
+        )
+        self.val_loader = DataLoader(
+            self.val_dataset, batch_size=self.config.batch_size, shuffle=False,
+            num_workers=self.config.num_workers, pin_memory=True, collate_fn=collate_fn
+        )
+
+        # Przygotowanie próbek testowych do logowania
+        self.sample_pairs = []
         rng = random.Random(42)
         sample_indices = rng.sample(range(len(dataset)), min(3, len(dataset)))
         for idx in sample_indices:
             row = dataset.df.iloc[idx]
-            sample_pairs.append(
-                {
-                    "instruction": str(row["instruction"]),
-                    "code": str(row["code"]),
-                }
+            self.sample_pairs.append({"instruction": str(row["instruction"]), "code": str(row["code"])})
+
+    def setup_model(self):
+        raw_model = LocalConvDiffCoder(
+            vocab_size=self.tokenizer.vocab_size,
+            mask_token_id=self.tokenizer.mask_token_id,
+            pad_token_id=self.tokenizer.pad_token_id,
+            hidden_dim=self.config.hidden_dim,
+            num_blocks=self.config.num_blocks,
+            max_seq_len=self.config.max_prompt_len + self.config.max_code_len,
+            dilation_factor=self.config.dilation_factor,
+        )
+        
+        self.lightning_model = DiffCoderLightning(
+            model=raw_model,
+            base_lr=self.config.base_lr,
+            total_epochs=self.config.epochs,
+            initial_fixed_epochs=self.config.initial_fixed_epochs
+        )
+
+    def train(self):
+        checkpoint_callback = ModelCheckpoint(
+            monitor='val_loss',
+            dirpath=self.config.checkpoint_dir,
+            filename='diffcoder-best-{epoch:02d}-{val_loss:.4f}',
+            save_top_k=1,
+            mode='min'
+        )
+        
+        early_stop_callback = EarlyStopping(
+            monitor='val_loss',
+            patience=self.config.early_stopping_patience,
+            mode='min',
+            verbose=True
+        )
+        
+        lr_monitor = LearningRateMonitor(logging_interval='epoch')
+        
+        sample_logger_callback = LogGeneratedSamplesCallback(
+            sample_pairs=self.sample_pairs,
+            tokenizer=self.tokenizer,
+            total_epochs=self.config.epochs,
+            initial_fixed_epochs=self.config.initial_fixed_epochs
+        )
+
+        loggers = []
+        if os.getenv("COMET_API_KEY"):
+            comet_logger = CometLogger(
+                api_key=os.getenv("COMET_API_KEY"),
+                project_name=os.getenv("COMET_PROJECT_NAME"),
+                workspace=os.getenv("COMET_WORKSPACE")
             )
+            loggers.append(comet_logger)
 
-    train_diffcoder(
-        model=model,
-        train_dataloader=train_dataloader,
-        val_dataloader=val_dataloader,
-        optimizer=optimizer,
-        scheduler=scheduler,
-        epochs=EPOCHS,
-        accumulation_steps=ACCUMULATION_STEPS,
-        early_stopping_patience=EARLY_STOPPING_PATIENCE,
-        device=DEVICE,
-        tokenizer=tokenizer,
-        sample_pairs=sample_pairs,
-        checkpoint_dir=checkpoint_dir,
-        experiment=experiment,
-        start_epoch=start_epoch,
-        best_val_loss=best_val_loss,
-        epochs_without_improvement=epochs_without_improvement,
-        best_checkpoint_path=best_checkpoint_path,
-        total_epochs=training_total_epochs,
-        resume_fixed_mask_epochs=RESUME_FIXED_MASK_EPOCHS if RESUME_FROM_CHECKPOINT else 0,
-    )
+        trainer = pl.Trainer(
+            max_epochs=self.config.epochs,
+            accelerator='gpu' if torch.cuda.is_available() else 'cpu',
+            devices=1 if torch.cuda.is_available() else "auto",
+            accumulate_grad_batches=self.config.accumulation_steps,
+            callbacks=[checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback],
+            logger=loggers if loggers else True,
+            precision="16-mixed" if torch.cuda.is_available() else 32,
+            gradient_clip_val=1.0
+        )
 
-    if experiment is not None:
-        experiment.end()
+        # Automatyczne wznawianie z pliku diffcoder_latest.pt lub best.pt, jeśli plik istnieje
+        ckpt_path = Path(self.config.checkpoint_dir) / "diffcoder_latest.pt"
+        if not ckpt_path.exists():
+            ckpt_path = Path(self.config.checkpoint_dir) / "diffcoder_best.pt"
+        
+        trainer.fit(
+            self.lightning_model, 
+            train_dataloaders=self.train_loader, 
+            val_dataloaders=self.val_loader,
+            ckpt_path=str(ckpt_path) if ckpt_path.exists() and self.config.resume_from_checkpoint else None
+        )
+        
+        return checkpoint_callback.best_model_path
+
+
+def main():
+    load_dotenv()
+    
+    if torch.cuda.is_available():
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.backends.cudnn.allow_tf32 = True
+        torch.set_float32_matmul_precision("high")
+
+    class Config:
+        max_prompt_len = 96
+        max_code_len = 512
+        batch_size = 4
+        accumulation_steps = 8
+        num_workers = 3
+        epochs = 500
+        initial_fixed_epochs = int(os.getenv("INITIAL_FIXED_EPOCHS", "20"))
+        val_split = 0.05
+        early_stopping_patience = 100
+        hidden_dim = 512
+        num_blocks = 6
+        dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
+        dataset_fraction = float(os.getenv("DATASET_FRACTION", "1.0"))
+        base_lr = 5e-5
+        checkpoint_dir = 'checkpoints'
+        resume_from_checkpoint = True
+
+    config = Config()
+    trainer = DiffCoderTrainer(config)
+    best_model_path = trainer.train()
+    print(f"\nTrening zakończony. Najlepszy checkpoint: {best_model_path}")
+
+
+if __name__ == "__main__":
+    main()
