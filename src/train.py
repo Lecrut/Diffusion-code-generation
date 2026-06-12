@@ -22,7 +22,7 @@ def sample_epoch_mask_prob(batch_size, device, lower_bound, upper_bound):
     return lower_bound + torch.rand(batch_size, device=device) * (upper_bound - lower_bound)
 
 
-# --- DATASET & COLLATE (POPRAWIONE NA AST BIGRAMY) ---
+# --- DATASET & COLLATE (AST BIGRAMY) ---
 
 class CodeInstructionDataset(Dataset):
     def __init__(self, csv_file, tokenizer, max_prompt_len=128, max_code_len=1024, dataset_fraction=1.0, seed=42):
@@ -104,7 +104,7 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     return result
 
 
-# --- LIGHTNING MODULE (POPRAWIONY LOSS I AST) ---
+# --- LIGHTNING MODULE (Z INTEGRACJĄ COSINE ANNEALING) ---
 
 class DiffCoderLightning(pl.LightningModule):
     def __init__(self, model, base_lr=5e-5):
@@ -190,7 +190,7 @@ class DiffCoderLightning(pl.LightningModule):
         return loss
 
     def on_train_epoch_start(self):
-        print(f"\n[Stage {self.current_stage}] Epoka {self.current_epoch + 1} | Aktualne maskowanie: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
+        print(f"\n[Stage {self.current_stage}] Epoka {self.current_epoch + 1} | Maskowanie: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
 
     def validation_step(self, batch, batch_idx):
         loss = self._shared_step(batch)
@@ -199,21 +199,25 @@ class DiffCoderLightning(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizer = torch.optim.AdamW(self.parameters(), lr=self.base_lr, weight_decay=0.01)
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-            optimizer, mode="min", factor=0.5, patience=8, threshold=1e-4, cooldown=2, min_lr=1e-6
+        
+        # Używamy CosineAnnealingWarmRestarts. 
+        # T_0 ustawiamy wysoko (np. 10000), żeby scheduler sam nie wywoływał restartów w losowych momentach.
+        # Będziemy nim sterować w pełni ręcznie i intencjonalnie przy zmianach etapów (stages).
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+            optimizer, T_0=10000, T_mult=1, eta_min=1e-6
         )
+        
         return {
             "optimizer": optimizer,
             "lr_scheduler": {
                 "scheduler": scheduler,
-                "monitor": "val_loss",
                 "interval": "epoch",
                 "frequency": 1
             }
         }
 
 
-# --- CALLBACK DO ADAPTACYJNEGO PROGRAMU NAUCZANIA (9 STAGES) ---
+# --- CALLBACK DO PROGRAMU NAUCZANIA (SYNCHRONIZACJA STAGE + LR RESTART) ---
 
 class AdaptiveCurriculumCallback(Callback):
     def __init__(self, min_delta=1e-4):
@@ -222,6 +226,7 @@ class AdaptiveCurriculumCallback(Callback):
         self.best_val_loss = float('inf')
         self.patience_counter = 0
         
+        # Twoje 9 perfekcyjnych etapów
         self.stages = {
             1: {"bounds": (0.10, 0.25), "patience": 3},
             2: {"bounds": (0.20, 0.35), "patience": 5},
@@ -265,8 +270,17 @@ class AdaptiveCurriculumCallback(Callback):
             pl_module.current_upper_bound = self.stages[next_stage]["bounds"][1]
             
             print(f"\n>>> [CURRICULUM] Strata wypłaszczona na etapie {stage}. Przełączam na STAGE {next_stage}! <<<")
-            print(f">>> Nowy zakres maskowania tokenów: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<\n")
+            print(f">>> Nowy zakres maskowania tokenów: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<")
             
+            # --- POPRAWKA: Wymuszenie restartu Cosine Annealing (Warm Restart) ---
+            # Resetujemy licznik kroków wewnętrznych schedulera, co gwałtownie podbija LR do wartości początkowej
+            for lr_scheduler_config in trainer.lr_scheduler_configs:
+                sch = lr_scheduler_config.scheduler
+                if isinstance(sch, torch.optim.lr_scheduler.CosineAnnealingWarmRestarts):
+                    sch.T_cur = 0  # Zerujemy czas bieżącego cyklu, prowokując natychmiastowy restart energii LR
+                    print(">>> [SCHEDULER] Wykonano Cosine Warm Restart! Podbito Learning Rate dla nowego etapu. <<<\n")
+            
+            # Reset licznika Early Stopping, chroniący proces przed wzrostem straty wywołanym nowym etapem
             for callback in trainer.callbacks:
                 if isinstance(callback, EarlyStopping):
                     callback.wait_count = 0
@@ -274,6 +288,8 @@ class AdaptiveCurriculumCallback(Callback):
             
             self.best_val_loss = float('inf')
             self.patience_counter = 0
+
+
 # --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
 
 class LogGeneratedSamplesCallback(Callback):
@@ -503,7 +519,7 @@ def main():
         num_workers = 3
         epochs = 500
         val_split = 0.05
-        early_stopping_patience = 120 
+        early_stopping_patience = 120  
         hidden_dim = 512
         num_blocks = 6
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
