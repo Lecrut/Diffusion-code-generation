@@ -241192,3 +241192,3110 @@ if __name__ == '__main__':
         f.write(""Another line without issues.\n"")
     check_for_forbidden_words(sample_filename, forbidden_list)
     os.remove(sample_filename)",True,0,11469,184_12.py
+184,13,Check for specific word presence,Write a concise and highly readable Python function that determines if *at least one* word from a given list exists within a larger input string. The function should prioritize speed and clarity over excessive complexity.,"def check_word_in_string(word_list, text):
+    for word in word_list:
+        if word in text:
+            return True
+    return False
+if __name__ == '__main__':
+    words = [""apple"", ""banana"", ""cherry""]
+    sentence = ""I like apple and banana today.""
+    result = check_word_in_string(words, sentence)
+    print(result)",True,0,11470,184_13.py
+184,13,Check for specific word presence,Write a concise and highly readable Python function that determines if *at least one* word from a given list exists within a larger input string. The function should prioritize speed and clarity over excessive complexity.,"def word_exists(word_list, text):
+    for word in word_list:
+        if word in text:
+            return True
+    return False
+if __name__ == '__main__':
+    words = [""apple"", ""banana"", ""cherry""]
+    sentence = ""I like apple and banana today.""
+    result = word_exists(words, sentence)
+    print(result)",True,1,11471,184_13_1.py
+184,13,Check for specific word presence,Write a concise and highly readable Python function that determines if *at least one* word from a given list exists within a larger input string. The function should prioritize speed and clarity over excessive complexity.,"def check_word_presence(word_list, text):
+    for word in word_list:
+        if word in text:
+            return True
+    return False
+if __name__ == '__main__':
+    words = [""apple"", ""banana"", ""cherry""]
+    sentence = ""I like to eat an apple and a banana.""
+    result = check_word_presence(words, sentence)
+    print(result)",True,2,11472,184_13_2.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    text_lower = text.lower()
+    for target in target_words:
+        if target.lower() in text_lower:
+            found_matches.append(target)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words = [""fox"", ""dog"", ""cat"", ""bird""]
+    overall_present, matches = check_multiple_words(sample_text, target_words)
+    print(f""Overall Presence: {overall_present}"")
+    if overall_present:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,0,11473,184_14.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","import re
+def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    text_lower = text.lower()
+    for word in target_words:
+        if word.lower() in text_lower:
+            found_matches.append(word)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words = [""fox"", ""dog"", ""cat""]
+    overall_present, matches = check_multiple_words(sample_text, target_words)
+    print(f""Overall Presence: {overall_present}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")
+    else:
+        print(""No target words found."")",True,1,11474,184_14_1.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","import re
+def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    text_lower = text.lower()
+    for word in target_words:
+        if word.lower() in text_lower:
+            found_matches.append(word)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    input_string = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words_to_find = [""fox"", ""dog"", ""cat""]
+    overall_present, matches = check_multiple_words(input_string, target_words_to_find)
+    print(f""Overall Presence: {overall_present}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")
+    else:
+        print(""No target words found."")",True,2,11475,184_14_2.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    lower_text = text.lower()
+    for target in target_words:
+        if target.lower() in lower_text:
+            found_matches.append(target)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    input_string = ""The quick brown fox jumps over the lazy dog and the fox is clever.""
+    target_words_to_find = [""fox"", ""dog"", ""cat"", ""bird""]
+    overall_present, matches = check_multiple_words(input_string, target_words_to_find)
+    print(f""Overall Presence: {overall_present}"")
+    if overall_present:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,3,11476,184_14_3.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    lower_text = text.lower()
+    for word in target_words:
+        if word.lower() in lower_text.lower():
+            found_matches.append(word)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words = [""fox"", ""dog"", ""cat"", ""bird""]
+    overall_present, matches = check_multiple_words(sample_text, target_words)
+    print(f""Overall Presence: {overall_present}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,4,11477,184_14_4.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    lower_text = text.lower()
+    for target in target_words:
+        if target.lower() in lower_text:
+            found_matches.append(target)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    input_string = ""The quick brown fox jumps over the lazy dog and the fox is clever.""
+    words_to_find = [""fox"", ""dog"", ""cat"", ""bird""]
+    overall_present, matches = check_multiple_words(input_string, words_to_find)
+    print(f""Overall Presence: {overall_present}"")
+    if overall_present:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,5,11478,184_14_5.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    text_lower = text.lower()
+    for target in target_words:
+        if target.lower() in text_lower:
+            start_index = -1
+            while True:
+                start_index = text_lower.find(target.lower(), start_index + 1)
+                if start_index == -1:
+                    break
+                found_matches.append(text[start_index:start_index + len(target)])
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words = [""fox"", ""dog"", ""cat""]
+    overall_presence, matches = check_multiple_words(sample_text, target_words)
+    print(f""Overall Presence: {overall_presence}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")
+    else:
+        print(""No specific words found."")",True,6,11479,184_14_6.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","import re
+def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    text_lower = text.lower()
+    for word in target_words:
+        if word.lower() in text_lower:
+            found_matches.append(word)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    input_string = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words_list = [""fox"", ""dog"", ""cat""]
+    overall_present, matches = check_multiple_words(input_string, target_words_list)
+    print(f""Overall Presence: {overall_present}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,7,11480,184_14_7.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    lower_text = text.lower()
+    for word in target_words:
+        if word.lower() in lower_text.lower():
+            found_matches.append(word)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog. Fox is clever.""
+    target_words = [""fox"", ""dog"", ""cat""]
+    overall_present, matches = check_multiple_words(sample_text, target_words)
+    print(f""Overall Presence: {overall_present}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,8,11481,184_14_8.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    lower_text = text.lower()
+    for word in target_words:
+        if word.lower() in lower_text.lower():
+            found_matches.append(word)
+    overall_presence = bool(found_matches)
+    return overall_presence, found_matches
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog and the fox is clever.""
+    target_words = [""fox"", ""dog"", ""cat"", ""bird""]
+    overall_result, matches = check_multiple_words(sample_text, target_words)
+    print(f""Overall Presence: {overall_result}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,9,11482,184_14_9.py
+184,14,Check for specific word presence,"Create an optimized algorithm to perform a case-insensitive check for the presence of multiple specific words within a single input string. The output must be a boolean indicating overall presence, and an optional detailed list of all found matches, adhering strictly to Python best practices.","def check_multiple_words(text: str, target_words: list[str]) -> tuple[bool, list[str]]:
+    found_matches = []
+    text_lower = text.lower()
+    for word in target_words:
+        if word.lower() in text_lower.split():
+            found_matches.append(word)
+    return bool(found_matches), found_matches
+if __name__ == '__main__':
+    input_string = ""The quick brown fox jumps over the lazy dog and the fox is quick.""
+    target_words_list = [""quick"", ""fox"", ""lazy"", ""cat""]
+    overall_present, matches = check_multiple_words(input_string, target_words_list)
+    print(f""Overall Presence: {overall_present}"")
+    if matches:
+        print(""Found Matches:"")
+        for match in matches:
+            print(f""- {match}"")",True,10,11483,184_14_10.py
+185,0,Parse simple text data,"Write a complete, production-ready Python script to read a multi-line text file and return a list of individual lines, stripping any leading/trailing whitespace from each line.",,False,0,11484,185_0.py
+185,1,Parse simple text data,"Implement an efficient function named 'parse_data_lines' that takes a string containing structured text where each record is separated by a newline character, and returns a list of dictionaries, where each dictionary represents a line parsed into 'key' and 'value' pairs, handling potential empty lines robustly.",,False,0,11485,185_1.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        result = {}
+        for i in range(len(tokens)):
+            if i % 2 == 0:
+                key = tokens[i]
+                value = tokens[i+1] if i + 1 < len(tokens) else """"
+                result[key] = value
+            else:
+                pass
+        return result
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""apple banana orange grape kiwi""
+    parsed_data = parser.parse_text(sample_text)
+    print(parsed_data)",True,0,11486,185_2.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        result = {}
+        for i in range(len(tokens)):
+            if i < len(tokens) - 1:
+                key = tokens[i]
+                value = tokens[i+1]
+            else:
+                key = tokens[i]
+                value = """"
+            result[key] = value
+        return result
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""This is a sample sentence for text parsing""
+    parsed_data = parser.parse_text(sample_text)
+    print(parsed_data)",True,1,11487,185_2_1.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        parsed_data = {}
+        for i in range(len(tokens)):
+            if i % 2 == 0:
+                key = tokens[i]
+                value = tokens[i+1] if i + 1 < len(tokens) else """"
+                parsed_data[key] = value
+        return parsed_data
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""apple banana orange grape kiwi""
+    result = parser.parse_text(sample_text)
+    print(result)",True,2,11488,185_2_2.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        result = {}
+        for i in range(len(tokens)):
+            if i < len(tokens) - 1:
+                key = tokens[i]
+                value = tokens[i+1]
+            else:
+                key = tokens[i]
+                value = """"
+            result[key] = value
+        return result
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""Hello world this is a test sentence""
+    parsed_data = parser.parse_text(sample_text)
+    print(parsed_data)",True,3,11489,185_2_3.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        result = {}
+        for i in range(len(tokens)):
+            if i % 2 == 0:
+                key = tokens[i]
+                value = tokens[i+1] if i + 1 < len(tokens) else """"
+                result[key] = value
+            else:
+                result[tokens[i]] = """"
+        return result
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""apple banana orange grape kiwi""
+    parsed_data = parser.parse_text(sample_text)
+    print(parsed_data)",True,4,11490,185_2_4.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        parsed_data = {}
+        for i in range(len(tokens)):
+            if i % 2 == 0:
+                key = tokens[i]
+                value = tokens[i+1] if i + 1 < len(tokens) else """"
+                parsed_data[key] = value
+            else:
+                pass
+        return parsed_data
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""Name Alice Age 30 City NewYork""
+    result = parser.parse_text(sample_text)
+    print(result)",True,5,11491,185_2_5.py
+185,2,Parse simple text data,Develop a class named 'TextParser' with a method to ingest raw text data. This method must parse the input string and return a dictionary where keys are determined by simple tokenization and values are the corresponding parsed data.,"class TextParser:
+    def parse_text(self, text):
+        tokens = text.lower().split()
+        parsed_data = {}
+        for i in range(len(tokens)):
+            if i % 2 == 0:
+                key = tokens[i]
+                value = tokens[i+1] if i + 1 < len(tokens) else """"
+                parsed_data[key] = value
+            else:
+                pass
+        return parsed_data
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""Name John Age 30 City NewYork""
+    result = parser.parse_text(sample_text)
+    print(result)",True,6,11492,185_2_6.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    values = []
+    for item in csv_string.split(','):
+        stripped_item = item.strip()
+        if stripped_item:
+            try:
+                values.append(int(stripped_item))
+            except ValueError:
+                values.append(stripped_item)
+    return values
+if __name__ == '__main__':
+    sample_string = "" 10 , 25,  30 , 45 , 50 ""
+    result = parse_csv_optimized(sample_string)
+    print(result)",True,0,11493,185_3.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    if not csv_string:
+        return []
+    values = [item.strip() for item in csv_string.split(',')]
+    typed_values = []
+    for value in values:
+        try:
+            typed_values.append(int(value))
+        except ValueError:
+            typed_values.append(value)
+    return typed_values
+if __name__ == '__main__':
+    sample_string = "" 10 , 25,  30 , 45 , 50 ""
+    result = parse_csv_optimized(sample_string)
+    print(result)",True,1,11494,185_3_1.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    result = []
+    for item in csv_string.split(','):
+        stripped_item = item.strip()
+        if stripped_item:
+            try:
+                result.append(int(stripped_item))
+            except ValueError:
+                result.append(stripped_item)
+    return result
+if __name__ == '__main__':
+    sample_string = "" 10 , 25 , 30 , 45 , 50 ""
+    parsed_data = parse_csv_optimized(sample_string)
+    print(parsed_data)",True,2,11495,185_3_2.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    result = []
+    for item in csv_string.split(','):
+        stripped_item = item.strip()
+        if stripped_item:
+            try:
+                result.append(int(stripped_item))
+            except ValueError:
+                result.append(stripped_item)
+    return result
+if __name__ == '__main__':
+    sample_string = "" 1 , 20 , 300 , 45.5 , 500 ""
+    parsed_data = parse_csv_optimized(sample_string)
+    print(parsed_data)",True,3,11496,185_3_3.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    if not csv_string:
+        return []
+    values = [item.strip() for item in csv_string.split(',')]
+    typed_values = []
+    for value in values:
+        try:
+            typed_values.append(int(value))
+        except ValueError:
+            typed_values.append(value)
+    return typed_values
+if __name__ == '__main__':
+    sample_string = "" 10 , 25, 30a , 45 ""
+    result = parse_csv_optimized(sample_string)
+    print(result)",True,4,11497,185_3_4.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    if not csv_string:
+        return []
+    values = [item.strip() for item in csv_string.split(',')]
+    typed_values = []
+    for value in values:
+        if value:
+            try:
+                typed_values.append(int(value))
+            except ValueError:
+                typed_values.append(value)
+        else:
+            typed_values.append(None)
+    return typed_values
+if __name__ == '__main__':
+    sample_string = "" 10 , 25,  30 , 45 , 50 ""
+    result = parse_csv_optimized(sample_string)
+    print(result)",True,5,11498,185_3_5.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    values = []
+    for item in csv_string.split(','):
+        stripped_item = item.strip()
+        if stripped_item:
+            try:
+                values.append(int(stripped_item))
+            except ValueError:
+                values.append(stripped_item)
+    return values
+if __name__ == '__main__':
+    sample_string = "" 10 , 25 , 30 , 45 , 50 ""
+    result = parse_csv_optimized(sample_string)
+    print(result)",True,6,11499,185_3_6.py
+185,3,Parse simple text data,"Write an optimized Python function to parse a string containing comma-separated values (CSV format), ensuring that all values are stripped of surrounding whitespace and correctly typed as integers where appropriate.","def parse_csv_optimized(csv_string):
+    if not csv_string:
+        return []
+    values = [item.strip() for item in csv_string.split(',')]
+    typed_values = []
+    for value in values:
+        try:
+            typed_values.append(int(value))
+        except ValueError:
+            typed_values.append(value)
+    return typed_values
+if __name__ == '__main__':
+    sample_string = "" 10 , 25, 30 , 45 , 50 ""
+    result = parse_csv_optimized(sample_string)
+    print(result)",True,7,11500,185_3_7.py
+185,4,Parse simple text data,"Generate a script that reads data from standard input (stdin), reads line by line, and filters only the lines that contain the substring 'ERROR', storing the matching lines in a list.",,False,0,11501,185_4.py
+184,8,Check for specific word presence,"Write a command-line interface script that accepts a filename and a search term as arguments, and prints all lines from the file that contain the search term, ensuring the script handles file I/O errors gracefully.","import sys
+def search_file(filename, search_term):
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                if search_term in line:
+                    print(line, end='')
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py <filename> <search_term>"", file=sys.stderr)
+    else:
+        filename = sys.argv[1]
+        search_term = sys.argv[2]
+        search_file(filename, search_term)",True,0,11502,184_8.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            if part:
+                result.append((int(part),))
+        except ValueError:
+            result.append((part,))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10|25|33|42""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(f""Input String: {sample_data}"")
+    print(f""Delimiter: {delimiter}"")
+    print(""Parsed Data (List of Tuples):"")
+    print(parsed_data)
+    sample_data_mixed = ""10.5|25|33.1""
+    parsed_data_mixed = parse_delimited_string(sample_data_mixed, ""|"")
+    print(""\n--- Mixed Data Example ---"")
+    print(f""Input String: {sample_data_mixed}"")
+    print(""Parsed Data (List of Tuples):"")
+    print(parsed_data_mixed)",True,0,11503,185_5.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","from typing import List, Tuple, Any
+def parse_delimited_string(data_string: str, delimiter: str) -> List[Tuple[Any, ...]]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        if part:
+            result.append(tuple(part.split(',')))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10,20|30,40|50,60""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(f""Input String: {sample_data}"")
+    print(f""Delimiter: '{delimiter}'"")
+    print(""Parsed Data:"")
+    for item in parsed_data:
+        print(item)",True,1,11504,185_5_1.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            if part.isdigit():
+                value = int(part)
+            else:
+                value = part
+            result.append((value,))
+        except ValueError:
+            result.append((part,))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10|apple|3.14|banana|20""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(parsed_data)",True,2,11505,185_5_2.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            if part.isdigit():
+                result.append((int(part),))
+            else:
+                result.append((part,))
+        except ValueError:
+            result.append((part,))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10|apple|3.14|banana|20""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(f""Input String: {sample_data}"")
+    print(f""Delimiter: {delimiter}"")
+    print(""Parsed Data:"")
+    for item in parsed_data:
+        print(item)",True,3,11506,185_5_3.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","from typing import List, Tuple, Any
+def parse_delimited_string(data_string: str, delimiter: str) -> List[Tuple[Any, ...]]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        if part:
+            result.append(tuple(part.split(',')))
+    return result
+if __name__ == '__main__':
+    sample_data = ""1,2,3|4,5,6|7,8,9""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(parsed_data)",True,4,11507,185_5_4.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            if delimiter == '|':
+                value1_str, value2_str = part.split(':', 1)
+                value1 = int(value1_str) if value1_str.isdigit() else float(value1_str)
+                value2 = int(value2_str) if value2_str.isdigit() else float(value2_str)
+                result.append((value1, value2))
+            else:
+                result.append((part,))
+        except ValueError:
+            result.append((part,))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10|20:3.5|40:5.0|60""
+    delimiter = '|'
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(parsed_data)",True,5,11508,185_5_5.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","from typing import List, Tuple, Any
+def parse_delimited_string(data_string: str, delimiter: str) -> List[Tuple[Any, ...]]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        if part:
+            result.append(tuple(part.split(',')))
+    return result
+if __name__ == '__main__':
+    sample_data = ""1,2,3|4,5,6|7,8,9""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(f""Input String: {sample_data}"")
+    print(f""Delimiter: '{delimiter}'"")
+    print(""Parsed Data:"")
+    for item in parsed_data:
+        print(item)",True,6,11509,185_5_6.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            value = int(part)
+            result.append((value,))
+        except ValueError:
+            result.append((part,))
+    return result
+if __name__ == '__main__':
+    sample_string = ""10|25|33|42""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_string, delimiter)
+    print(parsed_data)",True,7,11510,185_5_7.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            value = int(part.strip())
+            result.append((value,))
+        except ValueError:
+            result.append((part.strip(),))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10|25|33|42""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(parsed_data)
+    sample_data_mixed = ""10|hello|33|world""
+    parsed_data_mixed = parse_delimited_string(sample_data_mixed, delimiter)
+    print(parsed_data_mixed)
+    sample_data_empty = """"
+    parsed_data_empty = parse_delimited_string(sample_data_empty, delimiter)
+    print(parsed_data_empty)",True,8,11511,185_5_8.py
+185,5,Parse simple text data,"Implement a parser that takes a string where data points are separated by a specific delimiter (e.g., '|'), and outputs a list of tuples, ensuring the output is type-hinted and memory-efficient.","def parse_delimited_string(data_string: str, delimiter: str) -> list[tuple]:
+    if not data_string:
+        return []
+    parts = data_string.split(delimiter)
+    result = []
+    for part in parts:
+        try:
+            if part:
+                result.append((int(part),))
+        except ValueError:
+            result.append((part,))
+    return result
+if __name__ == '__main__':
+    sample_data = ""10|25|33|42""
+    delimiter = ""|""
+    parsed_data = parse_delimited_string(sample_data, delimiter)
+    print(f""Input String: {sample_data}"")
+    print(f""Delimiter: {delimiter}"")
+    print(""Parsed Data:"")
+    print(parsed_data)
+    sample_data_mixed = ""10.5|hello|33""
+    parsed_data_mixed = parse_delimited_string(sample_data_mixed, ""|"")
+    print(""\n--- Mixed Type Example ---"")
+    print(f""Input String: {sample_data_mixed}"")
+    print(f""Delimiter: |"")
+    print(""Parsed Data:"")
+    print(parsed_data_mixed)",True,9,11512,185_5_9.py
+185,6,Parse simple text data,"Write a function that recursively parses a nested string structure (represented by indentation levels) and flattens it into a single, flat list of all textual data entries.",,False,0,11513,185_6.py
+185,7,Parse simple text data,Create a robust method within a parser class that can handle exceptions during text parsing (like `ValueError` for type conversion) and log the problematic line instead of crashing the entire process.,,False,0,11514,185_7.py
+185,8,Parse simple text data,"Develop a function that parses a block of text assumed to be a simple key-value configuration format, where each line is 'key = value', and stores the result in a dictionary.",,False,0,11515,185_8.py
+185,10,Parse simple text data,"Write a complete, robust Python script that reads a multi-line string from standard input and parses it into a list of individual lines, handling potential empty lines gracefully.",,False,0,11516,185_10.py
+185,11,Parse simple text data,"Implement an optimized function named `parse_csv_data` that accepts a string containing comma-separated values and returns a list of dictionaries, using the built-in `csv` module for best performance.","import csv
+from io import StringIO
+def parse_csv_data(csv_string):
+    f = StringIO(csv_string)
+    reader = csv.DictReader(f)
+    return list(reader)
+if __name__ == '__main__':
+    sample_csv = ""header1,header2,header3\nvalue1a,value1b,value1c\nvalue2a,value2b,value2c""
+    result = parse_csv_data(sample_csv)
+    print(result)",True,0,11517,185_11.py
+185,11,Parse simple text data,"Implement an optimized function named `parse_csv_data` that accepts a string containing comma-separated values and returns a list of dictionaries, using the built-in `csv` module for best performance.","import csv
+from io import StringIO
+def parse_csv_data(csv_string):
+    f = StringIO(csv_string)
+    reader = csv.DictReader(f)
+    return list(reader)
+if __name__ == '__main__':
+    sample_csv = ""header1,header2,header3\nvalue1a,value2a,value3a\nvalue1b,value2b,value3b""
+    result = parse_csv_data(sample_csv)
+    print(result)",True,1,11518,185_11_1.py
+185,12,Parse simple text data,"Develop a class named `TextParser` with a method `parse(text_data)` that efficiently splits a block of text into words, ignoring punctuation, and returns a list of cleaned tokens.","class TextParser:
+    def parse(self, text_data):
+        tokens = []
+        for char in text_data:
+            if char.isalnum():
+                tokens.append(char)
+        return tokens
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""Hello world! This is a test, how are you doing?""
+    cleaned_tokens = parser.parse(sample_text)
+    print(cleaned_tokens)",True,0,11519,185_12.py
+185,12,Parse simple text data,"Develop a class named `TextParser` with a method `parse(text_data)` that efficiently splits a block of text into words, ignoring punctuation, and returns a list of cleaned tokens.","class TextParser:
+    def parse(self, text_data):
+        import re
+        tokens = []
+        words = re.findall(r'\b\w+\b', text_data.lower())
+        tokens = [word for word in words if word]
+        return tokens
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""Hello world! This is a test sentence, isn't it? Python programming is fun.""
+    cleaned_tokens = parser.parse(sample_text)
+    print(cleaned_tokens)",True,1,11520,185_12_1.py
+185,12,Parse simple text data,"Develop a class named `TextParser` with a method `parse(text_data)` that efficiently splits a block of text into words, ignoring punctuation, and returns a list of cleaned tokens.","class TextParser:
+    def parse(self, text_data):
+        tokens = []
+        for char in text_data:
+            if char.isalnum():
+                tokens.append(char)
+        return tokens
+if __name__ == '__main__':
+    parser = TextParser()
+    sample_text = ""Hello world! This is a test, how are you?""
+    cleaned_tokens = parser.parse(sample_text)
+    print(cleaned_tokens)",True,2,11521,185_12_2.py
+185,13,Parse simple text data,"Write an efficient Python function to parse a string formatted as 'key: value' pairs, where the input is a single string, and return a dictionary.","def parse_string(data_string):
+    result = {}
+    pairs = data_string.split()
+    for pair in pairs:
+        if ':' in pair:
+            key, value = pair.split(':', 1)
+            result[key] = value
+    return result
+if __name__ == '__main__':
+    sample_input = ""name: Alice age: 30 city: New York""
+    parsed_data = parse_string(sample_input)
+    print(parsed_data)",True,0,11522,185_13.py
+185,13,Parse simple text data,"Write an efficient Python function to parse a string formatted as 'key: value' pairs, where the input is a single string, and return a dictionary.","def parse_key_value_string(data_string):
+    result = {}
+    pairs = data_string.split()
+    for pair in pairs:
+        if ':' in pair:
+            key, value = pair.split(':', 1)
+            result[key] = value
+    return result
+if __name__ == '__main__':
+    test_string_1 = ""name: Alice age: 30 city: New York""
+    parsed_dict_1 = parse_key_value_string(test_string_1)
+    print(f""Input: '{test_string_1}'"")
+    print(f""Output: {parsed_dict_1}"")
+    test_string_2 = ""product: apple, price: 1.00, in_stock: True""
+    parsed_dict_2 = parse_key_value_string(test_string_2)
+    print(f""Input: '{test_string_2}'"")
+    print(f""Output: {parsed_dict_2}"")
+    test_string_3 = ""only_one: value""
+    parsed_dict_3 = parse_key_value_string(test_string_3)
+    print(f""Input: '{test_string_3}'"")
+    print(f""Output: {parsed_dict_3}"")",True,1,11523,185_13_1.py
+185,13,Parse simple text data,"Write an efficient Python function to parse a string formatted as 'key: value' pairs, where the input is a single string, and return a dictionary.","import re
+def parse_key_value_string(data_string):
+    result = {}
+    pairs = data_string.split()
+    for pair in pairs:
+        if ':' in pair:
+            key, value = pair.split(':', 1)
+            result[key.strip()] = value.strip()
+    return result
+if __name__ == '__main__':
+    sample_string = ""name: Alice age: 30 city: New York""
+    parsed_data = parse_key_value_string(sample_string)
+    print(parsed_data)",True,2,11524,185_13_2.py
+185,13,Parse simple text data,"Write an efficient Python function to parse a string formatted as 'key: value' pairs, where the input is a single string, and return a dictionary.","def parse_string(data_string):
+    result = {}
+    pairs = data_string.split()
+    for pair in pairs:
+        if ':' in pair:
+            key, value = pair.split(':', 1)
+            result[key] = value
+    return result
+if __name__ == '__main__':
+    sample_string = ""name: Alice age: 30 city: New York""
+    parsed_data = parse_string(sample_string)
+    print(parsed_data)",True,3,11525,185_13_3.py
+185,13,Parse simple text data,"Write an efficient Python function to parse a string formatted as 'key: value' pairs, where the input is a single string, and return a dictionary.","import re
+def parse_key_value_string(data_string):
+    result = {}
+    pairs = data_string.split()
+    for pair in pairs:
+        if ':' in pair:
+            key, value = pair.split(':', 1)
+            result[key] = value
+    return result
+if __name__ == '__main__':
+    test_string_1 = ""name: Alice age: 30 city: New York""
+    parsed_dict_1 = parse_key_value_string(test_string_1)
+    print(f""Input: '{test_string_1}'"")
+    print(f""Output: {parsed_dict_1}"")
+    test_string_2 = ""product: apple, price: 1.00, in_stock: true""
+    parsed_dict_2 = parse_key_value_string(test_string_2)
+    print(f""Input: '{test_string_2}'"")
+    print(f""Output: {parsed_dict_2}"")
+    test_string_3 = ""only_one: value1 another: value2""
+    parsed_dict_3 = parse_key_value_string(test_string_3)
+    print(f""Input: '{test_string_3}'"")
+    print(f""Output: {parsed_dict_3}"")",True,4,11526,185_13_4.py
+185,14,Parse simple text data,"Create a script that reads a file line by line and parses each line to extract the first five alphanumeric characters, storing the results in a list of strings.",,False,0,11527,185_14.py
+184,6,Check for specific word presence,"Write a decorator for Python that can be applied to a function, which automatically checks if a specific keyword is present in the function's docstring and raises an error if it is missing.","import functools
+def check_docstring_keyword(keyword):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            docstring = func.__doc__
+            if docstring is None or keyword not in docstring:
+                raise TypeError(f""Missing required keyword '{keyword}' in the docstring of function '{func.__name__}'."")
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+@check_docstring_keyword(""Args"")
+def sample_function_with_args(a, b):
+    return a + b
+@check_docstring_keyword(""Returns"")
+def sample_function_with_returns(x, y):
+    return x + y
+def sample_function_missing():
+    pass
+if __name__ == '__main__':
+    try:
+        result1 = sample_function_with_args(5, 3)
+        print(f""Result 1: {result1}"")
+        result2 = sample_function_with_returns(10, 5)
+        print(f""Result 2: {result2}"")
+        sample_function_missing()
+    except TypeError as e:
+        print(f""Caught expected error: {e}"")",True,0,11528,184_6.py
+186,1,Order words in a list,Implement a robust Python function named `order_words` that accepts a list of strings and returns a new list with the words sorted lexicographically.,"def order_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_words = order_words(sample_words)
+    print(sorted_words)",True,0,11529,186_1.py
+186,1,Order words in a list,Implement a robust Python function named `order_words` that accepts a list of strings and returns a new list with the words sorted lexicographically.,"def order_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_list = order_words(sample_words)
+    print(sorted_list)",True,1,11530,186_1_1.py
+186,1,Order words in a list,Implement a robust Python function named `order_words` that accepts a list of strings and returns a new list with the words sorted lexicographically.,"def order_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_result = order_words(sample_words)
+    print(sorted_result)",True,2,11531,186_1_2.py
+186,0,Order words in a list,"Write a complete, efficient Python script that takes a list of unsorted words and sorts them alphabetically in ascending order.","def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    unsorted_words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sort_words(unsorted_words)
+    print(sorted_words)",True,0,11532,186_0.py
+186,0,Order words in a list,"Write a complete, efficient Python script that takes a list of unsorted words and sorts them alphabetically in ascending order.","import random
+def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    unsorted_words = [""banana"", ""apple"", ""zebra"", ""cat"", ""dog"", ""ball""]
+    sorted_words = sort_words(unsorted_words)
+    print(sorted_words)",True,1,11533,186_0_1.py
+186,0,Order words in a list,"Write a complete, efficient Python script that takes a list of unsorted words and sorts them alphabetically in ascending order.","def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    unsorted_words = [""banana"", ""apple"", ""zebra"", ""cat"", ""dog""]
+    sorted_words = sort_words(unsorted_words)
+    print(sorted_words)",True,2,11534,186_0_2.py
+186,3,Order words in a list,Write a class named `WordSorter` with a method to initialize with a list of words and a method to return the words sorted in reverse alphabetical order.,"class WordSorter:
+    def __init__(self, words):
+        self.words = words
+    def sort_reverse_alphabetical(self):
+        self.words.sort(reverse=True)
+        return self.words
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorter = WordSorter(sample_words)
+    sorted_words = sorter.sort_reverse_alphabetical()
+    print(sorted_words)",True,0,11535,186_3.py
+186,2,Order words in a list,"Develop an optimized method to sort a list of words, handling case-insensitivity for the sorting process, and return the sorted list.","def sort_words_case_insensitive(word_list):
+    return sorted(word_list, key=str.lower)
+if __name__ == '__main__':
+    sample_list = [""Apple"", ""banana"", ""Cherry"", ""date"", ""elderberry""]
+    sorted_list = sort_words_case_insensitive(sample_list)
+    print(sorted_list)",True,0,11536,186_2.py
+186,2,Order words in a list,"Develop an optimized method to sort a list of words, handling case-insensitivity for the sorting process, and return the sorted list.","def sort_words_case_insensitive(word_list):
+    return sorted(word_list, key=str.lower)
+if __name__ == '__main__':
+    sample_list = [""Apple"", ""banana"", ""Cherry"", ""date"", ""apricot""]
+    sorted_list = sort_words_case_insensitive(sample_list)
+    print(sorted_list)",True,1,11537,186_2_1.py
+186,2,Order words in a list,"Develop an optimized method to sort a list of words, handling case-insensitivity for the sorting process, and return the sorted list.","import operator
+def case_insensitive_sort(words):
+    return sorted(words, key=str.lower)
+if __name__ == '__main__':
+    sample_list = [""Apple"", ""banana"", ""Cherry"", ""date"", ""apricot""]
+    sorted_list = case_insensitive_sort(sample_list)
+    print(sorted_list)",True,2,11538,186_2_2.py
+186,2,Order words in a list,"Develop an optimized method to sort a list of words, handling case-insensitivity for the sorting process, and return the sorted list.","def case_insensitive_sort(words):
+    return sorted(words, key=str.lower)
+if __name__ == '__main__':
+    sample_list = [""Apple"", ""banana"", ""Cherry"", ""date"", ""apricot""]
+    sorted_list = case_insensitive_sort(sample_list)
+    print(sorted_list)",True,3,11539,186_2_3.py
+186,2,Order words in a list,"Develop an optimized method to sort a list of words, handling case-insensitivity for the sorting process, and return the sorted list.","import operator
+def case_insensitive_sort(words):
+    return sorted(words, key=str.lower)
+if __name__ == '__main__':
+    word_list = [""Apple"", ""banana"", ""Cherry"", ""date"", ""apricot""]
+    sorted_list = case_insensitive_sort(word_list)
+    print(sorted_list)",True,4,11540,186_2_4.py
+186,4,Order words in a list,"Create a function that takes a list of words, removes any duplicate entries, and then returns the unique words sorted in alphabetical order.","def process_words(word_list):
+    unique_words = set(word_list)
+    sorted_words = sorted(list(unique_words))
+    return sorted_words
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""cherry"", ""apple"", ""date"", ""banana""]
+    result = process_words(sample_list)
+    print(result)",True,0,11541,186_4.py
+186,4,Order words in a list,"Create a function that takes a list of words, removes any duplicate entries, and then returns the unique words sorted in alphabetical order.","def process_words(word_list):
+    unique_words = set(word_list)
+    sorted_words = sorted(list(unique_words))
+    return sorted_words
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""apple"", ""cherry"", ""banana"", ""date""]
+    result = process_words(sample_list)
+    print(result)",True,1,11542,186_4_1.py
+186,4,Order words in a list,"Create a function that takes a list of words, removes any duplicate entries, and then returns the unique words sorted in alphabetical order.","def process_words(word_list):
+    unique_words = set(word_list)
+    sorted_words = sorted(list(unique_words))
+    return sorted_words
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""grape""]
+    result = process_words(sample_list)
+    print(result)",True,2,11543,186_4_2.py
+186,4,Order words in a list,"Create a function that takes a list of words, removes any duplicate entries, and then returns the unique words sorted in alphabetical order.","def process_words(word_list):
+    unique_words = set(word_list)
+    sorted_words = sorted(list(unique_words))
+    return sorted_words
+if __name__ == '__main__':
+    sample_words = [""apple"", ""banana"", ""cherry"", ""apple"", ""date"", ""banana"", ""elderberry""]
+    result = process_words(sample_words)
+    print(result)",True,3,11544,186_4_3.py
+186,5,Order words in a list,"Implement a generator function that yields words from an input list in their correctly ordered sequence, assuming the input list needs to be sorted first.","def word_generator(word_list):
+    sorted_list = sorted(word_list)
+    for word in sorted_list:
+        yield word
+if __name__ == '__main__':
+    input_words = [""banana"", ""apple"", ""cherry"", ""date""]
+    generated_words = word_generator(input_words)
+    result = list(generated_words)
+    print(result)",True,0,11545,186_5.py
+186,5,Order words in a list,"Implement a generator function that yields words from an input list in their correctly ordered sequence, assuming the input list needs to be sorted first.","def sorted_word_generator(word_list):
+    sorted_list = sorted(word_list)
+    for word in sorted_list:
+        yield word
+if __name__ == '__main__':
+    input_words = [""banana"", ""apple"", ""cherry"", ""date""]
+    word_generator = sorted_word_generator(input_words)
+    result = list(word_generator)
+    print(result)",True,1,11546,186_5_1.py
+186,5,Order words in a list,"Implement a generator function that yields words from an input list in their correctly ordered sequence, assuming the input list needs to be sorted first.","def word_generator(word_list):
+    sorted_list = sorted(word_list)
+    for word in sorted_list:
+        yield word
+if __name__ == '__main__':
+    input_words = [""banana"", ""apple"", ""date"", ""cherry""]
+    generated_words = word_generator(input_words)
+    result = list(generated_words)
+    print(result)",True,2,11547,186_5_2.py
+186,6,Order words in a list,"Write a script that reads a list of words from standard input, sorts them, and prints the final ordered list to standard output.","import sys
+if __name__ == '__main__':
+    input_data = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_data = sorted(input_data)
+    print("" "".join(sorted_data))",True,0,11548,186_6.py
+186,6,Order words in a list,"Write a script that reads a list of words from standard input, sorts them, and prints the final ordered list to standard output.","import sys
+if __name__ == '__main__':
+    words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    words.sort()
+    print("" "".join(words))",True,1,11549,186_6_1.py
+186,6,Order words in a list,"Write a script that reads a list of words from standard input, sorts them, and prints the final ordered list to standard output.","import sys
+if __name__ == '__main__':
+    input_data = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_data = sorted(input_data)
+    print(*sorted_data)",True,2,11550,186_6_2.py
+186,6,Order words in a list,"Write a script that reads a list of words from standard input, sorts them, and prints the final ordered list to standard output.","import sys
+if __name__ == '__main__':
+    input_data = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_data = sorted(input_data)
+    print(*sorted_data)",True,3,11551,186_6_3.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def custom_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+if __name__ == '__main__':
+    string_list = [""banana"", ""apple"", ""zebra"", ""grape"", ""date""]
+    print(""Original list:"", string_list)
+    custom_sort(string_list)
+    print(""Sorted list:"", string_list)",True,0,11552,186_7.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def custom_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+if __name__ == '__main__':
+    string_list = [""banana"", ""apple"", ""date"", ""cherry"", ""elderberry"", ""fig""]
+    print(""Original list:"", string_list)
+    custom_sort(string_list)
+    print(""Sorted list:"", string_list)",True,1,11553,186_7_1.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def string_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+if __name__ == '__main__':
+    data = [""banana"", ""apple"", ""zebra"", ""grape"", ""kiwi""]
+    print(""Original list:"", data)
+    string_sort(data)
+    print(""Sorted list:"", data)",True,2,11554,186_7_2.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def custom_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+if __name__ == '__main__':
+    string_list = [""banana"", ""apple"", ""zebra"", ""grape"", ""orange""]
+    print(""Original list:"", string_list)
+    custom_sort(string_list)
+    print(""Sorted list:"", string_list)",True,3,11555,186_7_3.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def compare_strings(a, b):
+    if a < b:
+        return -1
+    elif a > b:
+        return 1
+    else:
+        return 0
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
+def merge(arr, l, m, r):
+    n1 = m - l + 1
+    n2 = r - m
+    arr1 = arr[l:m+1]
+    arr2 = arr[m+1:r+1]
+    i = 0
+    j = 0
+    k = l
+    while i < n1 and j < n2:
+        if compare_strings(arr1[i], arr2[j]) <= 0:
+            arr[k] = arr1[i]
+            i += 1
+        else:
+            arr[k] = arr2[j]
+            j += 1
+        k += 1
+    while i < n1:
+        arr[k] = arr1[i]
+        i += 1
+        k += 1
+    while j < n2:
+        arr[k] = arr2[j]
+        j += 1
+        k += 1
+def merge_sort(arr, l, r):
+    if l < r:
+        m = (l + r) // 2
+        merge_sort(arr, l, m)
+        merge_sort(arr, m + 1, r)
+        merge(arr, l, m, r)
+def sort_strings_inplace(arr):
+    n = len(arr)
+    if n <= 1:
+        return
+    merge_sort(arr, 0, n - 1)
+if __name__ == '__main__':
+    string_list = [""banana"", ""apple"", ""date"", ""cherry"", ""fig"", ""grape""]
+    print(""Original list:"", string_list)
+    sort_strings_inplace(string_list)
+    print(""Sorted list:"", string_list)",True,4,11556,186_7_4.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def compare_strings(a, b):
+    if a < b:
+        return -1
+    elif a > b:
+        return 1
+    else:
+        return 0
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
+def insertion_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and compare_strings(arr[j], key) > 0:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+if __name__ == '__main__':
+    data = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    print(""Original list:"", data)
+    insertion_sort(data)
+    print(""Sorted list:"", data)",True,5,11557,186_7_5.py
+186,7,Order words in a list,"Design and implement a highly efficient sorting algorithm for a list of strings, specifically focusing on in-place sorting if possible, and demonstrate its use with an example list.","def custom_string_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+if __name__ == '__main__':
+    string_list = [""banana"", ""apple"", ""zebra"", ""grape"", ""mango""]
+    print(""Original list:"", string_list)
+    sorted_list = custom_string_sort(string_list)
+    print(""Sorted list:"", sorted_list)",True,6,11558,186_7_6.py
+186,8,Order words in a list,"Develop a function that sorts a list of words based on their length in descending order, and use Python's `sort` or `sorted` function for optimal performance.","def sort_words_by_length(word_list):
+    return sorted(word_list, key=len, reverse=True)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""banana"", ""kiwi"", ""orange"", ""grapefruit""]
+    sorted_list = sort_words_by_length(sample_words)
+    print(sorted_list)",True,0,11559,186_8.py
+186,8,Order words in a list,"Develop a function that sorts a list of words based on their length in descending order, and use Python's `sort` or `sorted` function for optimal performance.","def sort_words_by_length(words):
+    return sorted(words, key=len, reverse=True)
+if __name__ == '__main__':
+    word_list = [""apple"", ""banana"", ""kiwi"", ""orange"", ""grapefruit""]
+    sorted_list = sort_words_by_length(word_list)
+    print(sorted_list)",True,1,11560,186_8_1.py
+186,9,Order words in a list,"Write a comprehensive, well-documented Python module that contains a primary function capable of ordering any provided list of strings alphabetically.","def sort_strings(string_list):
+    return sorted(string_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_result = sort_strings(sample_list)
+    print(sorted_result)",True,0,11561,186_9.py
+186,10,Order words in a list,"Write a complete, robust Python script that takes a list of unsorted words as input and sorts them alphabetically in ascending order. Use the built-in `sort()` method or `sorted()` function and include clear comments explaining the logic.","def sort_words(word_list):
+    sorted_list = sorted(word_list)
+    return sorted_list
+if __name__ == '__main__':
+    unsorted_words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sort_words(unsorted_words)
+    print(sorted_words)",True,0,11562,186_10.py
+186,10,Order words in a list,"Write a complete, robust Python script that takes a list of unsorted words as input and sorts them alphabetically in ascending order. Use the built-in `sort()` method or `sorted()` function and include clear comments explaining the logic.","def sort_words(word_list):
+    sorted_list = sorted(word_list)
+    return sorted_list
+if __name__ == '__main__':
+    unsorted_words = [""banana"", ""apple"", ""zebra"", ""cat"", ""dog""]
+    sorted_words = sort_words(unsorted_words)
+    print(sorted_words)",True,1,11563,186_10_1.py
+186,11,Order words in a list,Implement an optimized function named `order_words` that accepts a list of strings and returns a new list with the words sorted lexicographically. The implementation must be highly efficient and adhere to Python best practices.,"import heapq
+def order_words(words):
+    return sorted(words)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_list = order_words(sample_words)
+    print(sorted_list)",True,0,11564,186_11.py
+186,11,Order words in a list,Implement an optimized function named `order_words` that accepts a list of strings and returns a new list with the words sorted lexicographically. The implementation must be highly efficient and adhere to Python best practices.,"def order_words(words):
+    return sorted(words)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_list = order_words(sample_words)
+    print(sorted_list)",True,1,11565,186_11_1.py
+186,11,Order words in a list,Implement an optimized function named `order_words` that accepts a list of strings and returns a new list with the words sorted lexicographically. The implementation must be highly efficient and adhere to Python best practices.,"def order_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_result = order_words(sample_words)
+    print(sorted_result)",True,2,11566,186_11_2.py
+186,12,Order words in a list,"Develop a class named `WordSorter` with a method `sort_list(self, word_list)` that efficiently sorts the provided list of words. Ensure the class design is clean and object-oriented.","class WordSorter:
+    def sort_list(self, word_list):
+        return sorted(word_list)
+if __name__ == '__main__':
+    sorter = WordSorter()
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_words = sorter.sort_list(sample_words)
+    print(sorted_words)",True,0,11567,186_12.py
+186,13,Order words in a list,"Write a concise and efficient Python snippet to demonstrate how to order a given list of words. The solution must prioritize readability and performance, suitable for production use.","def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_words = sort_words(words)
+    print(sorted_words)",True,0,11568,186_13.py
+186,14,Order words in a list,Create a function that takes a list of words and sorts them in reverse alphabetical order. The function must be well-documented and demonstrate the use of appropriate sorting techniques.,"def reverse_alphabetical_sort(word_list):
+    sorted_list = sorted(word_list, reverse=True)
+    return sorted_list
+if __name__ == '__main__':
+    sample_words = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    sorted_words = reverse_alphabetical_sort(sample_words)
+    print(sorted_words)",True,0,11569,186_14.py
+187,0,Find the largest list element,"Write a complete, efficient Python function named `find_largest` that takes a list of numbers as input and returns the largest element. Use the built-in `max()` function for optimal performance.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    largest = find_largest(sample_list)
+    print(largest)",True,0,11570,187_0.py
+187,0,Find the largest list element,"Write a complete, efficient Python function named `find_largest` that takes a list of numbers as input and returns the largest element. Use the built-in `max()` function for optimal performance.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 5, 22, 8, 30]
+    largest = find_largest(sample_list)
+    print(largest)",True,1,11571,187_0_1.py
+187,0,Find the largest list element,"Write a complete, efficient Python function named `find_largest` that takes a list of numbers as input and returns the largest element. Use the built-in `max()` function for optimal performance.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    data1 = [10, 5, 20, 8]
+    result1 = find_largest(data1)
+    print(f""The largest element in {data1} is: {result1}"")
+    data2 = [-5, -1, -10, -3]
+    result2 = find_largest(data2)
+    print(f""The largest element in {data2} is: {result2}"")
+    data3 = [42]
+    result3 = find_largest(data3)
+    print(f""The largest element in {data3} is: {result3}"")",True,2,11572,187_0_2.py
+187,0,Find the largest list element,"Write a complete, efficient Python function named `find_largest` that takes a list of numbers as input and returns the largest element. Use the built-in `max()` function for optimal performance.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 35]
+    largest = find_largest(sample_list)
+    print(largest)",True,3,11573,187_0_3.py
+187,1,Find the largest list element,Implement a standalone Python script that reads a list of integers from standard input and prints the largest element found in that list. Ensure the code is robust and handles potential empty lists gracefully.,"if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    if not input_data:
+        print(""List is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data:
+            if number > largest:
+                largest = number
+        print(largest)",True,0,11574,187_1.py
+187,1,Find the largest list element,Implement a standalone Python script that reads a list of integers from standard input and prints the largest element found in that list. Ensure the code is robust and handles potential empty lists gracefully.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 3 15""
+    try:
+        numbers = list(map(int, input_data.split()))
+        if numbers:
+            largest = max(numbers)
+            print(largest)
+        else:
+            pass
+    except ValueError:
+        pass",True,1,11575,187_1_1.py
+187,1,Find the largest list element,Implement a standalone Python script that reads a list of integers from standard input and prints the largest element found in that list. Ensure the code is robust and handles potential empty lists gracefully.,"if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    if not input_data:
+        print(""List is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,2,11576,187_1_2.py
+187,1,Find the largest list element,Implement a standalone Python script that reads a list of integers from standard input and prints the largest element found in that list. Ensure the code is robust and handles potential empty lists gracefully.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 8 15""
+    try:
+        numbers = list(map(int, input_data.split()))
+        if numbers:
+            largest = max(numbers)
+            print(largest)
+        else:
+            pass
+    except ValueError:
+        pass",True,3,11577,187_1_3.py
+187,1,Find the largest list element,Implement a standalone Python script that reads a list of integers from standard input and prints the largest element found in that list. Ensure the code is robust and handles potential empty lists gracefully.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 22 8 30""
+    try:
+        numbers = list(map(int, input_data.split()))
+        if numbers:
+            largest = max(numbers)
+            print(largest)
+        else:
+            pass
+    except ValueError:
+        pass",True,4,11578,187_1_4.py
+187,1,Find the largest list element,Implement a standalone Python script that reads a list of integers from standard input and prints the largest element found in that list. Ensure the code is robust and handles potential empty lists gracefully.,"import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    if not input_data:
+        print(""List is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data:
+            if number > largest:
+                largest = number
+        print(largest)",True,5,11579,187_1_5.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, 0.577, 9.99]
+    result = get_maximum(sample_list)
+    print(result)",True,0,11580,187_2.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.0]
+    list3 = [42.0]
+    list4 = [1.0, 99.9, 50.5, 100.0]
+    empty_list = []
+    print(f""Maximum of {list1}: {get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {get_maximum(list3)}"")
+    print(f""Maximum of {list4}: {get_maximum(list4)}"")
+    try:
+        get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,11581,187_2_1.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.9]
+    list3 = [42.0, 100.5, 5.5, 99.9]
+    list4 = [7.7]
+    list5 = []
+    print(f""Maximum of {list1}: {get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {get_maximum(list3)}"")
+    print(f""Maximum of {list4}: {get_maximum(list4)}"")
+    try:
+        print(f""Maximum of {list5}: {get_maximum(list5)}"")
+    except ValueError as e:
+        print(f""Error for {list5}: {e}"")",True,2,11582,187_2_2.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    current_max = data[0]
+    for x in data[1:]:
+        if x > current_max:
+            current_max = x
+    return current_max
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.0]
+    list3 = [42.0]
+    list4 = [1.0, 99.9, 5.5, 100.0]
+    empty_list = []
+    print(f""Maximum of {list1}: {get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {get_maximum(list3)}"")
+    print(f""Maximum of {list4}: {get_maximum(list4)}"")
+    try:
+        get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,11583,187_2_3.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, 0.577, -1.0]
+    result = get_maximum(sample_list)
+    print(result)",True,4,11584,187_2_4.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.8, -1.1]
+    list3 = [42.0]
+    list4 = [1.0, 99.9, 50.5, 100.0]
+    empty_list = []
+    print(f""Maximum of {list1}: {get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {get_maximum(list3)}"")
+    print(f""Maximum of {list4}: {get_maximum(list4)}"")
+    try:
+        get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,11585,187_2_5.py
+187,2,Find the largest list element,"Develop an optimized function, `get_maximum`, that finds the largest element in a list of floating-point numbers. The implementation must be time-efficient.","def get_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.9]
+    list3 = [42.0]
+    list4 = [1.0, 1.0, 1.0, 1.0]
+    empty_list = []
+    print(f""Maximum of {list1}: {get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {get_maximum(list3)}"")
+    print(f""Maximum of {list4}: {get_maximum(list4)}"")
+    try:
+        get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,6,11586,187_2_6.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def compare_parsing_methods(text_block):
+    def parse_by_splitting(text):
+        return text.split()
+    def parse_by_regex(text):
+        return re.findall(r'\S+', text)
+    start_time = time.perf_counter()
+    result_split = parse_by_splitting(text_block)
+    time_split = time.perf_counter() - start_time
+    start_time = time.perf_counter()
+    result_regex = parse_by_regex(text_block)
+    time_regex = time.perf_counter() - start_time
+    if time_split < time_regex:
+        return result_split, time_split
+    else:
+        return result_regex, time_regex
+if __name__ == '__main__':
+    large_text = ""this is a sample text block with varying amounts of whitespace between words and some extra spaces"" * 100000
+    result, time_taken = compare_parsing_methods(large_text)
+    print(""Parsing comparison complete."")
+    print(f""Time taken for the chosen method: {time_taken:.6f} seconds"")",True,0,11587,185_9.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def benchmark_parsing_methods(text_block):
+    def parse_split(text):
+        return text.split()
+    def parse_regex(text):
+        return re.findall(r'\S+', text)
+    start_time = time.perf_counter()
+    result_split = parse_split(text_block)
+    time_split = time.perf_counter() - start_time
+    start_time = time.perf_counter()
+    result_regex = parse_regex(text_block)
+    time_regex = time.perf_counter() - start_time
+    if time_split < time_regex:
+        return result_split, time_split, time_regex
+    else:
+        return result_regex, time_regex, time_split
+if __name__ == '__main__':
+    large_text = ""this is a test string with various amounts of whitespace separating the words and some extra spaces here"" * 100000
+    print(""Benchmarking parsing methods..."")
+    result, time_split, time_regex = benchmark_parsing_methods(large_text)
+    print(f""Parsing complete."")
+    print(f""Split method time: {time_split:.6f} seconds"")
+    print(f""Regex method time: {time_regex:.6f} seconds"")
+    print(""Result (first 10 elements):"", result[:10])",True,1,11588,185_9_1.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def benchmark_parsing(text, method_name):
+    start_time = time.perf_counter()
+    if method_name == ""split"":
+        parts = text.split()
+    elif method_name == ""regex"":
+        parts = re.findall(r'\S+', text)
+    else:
+        raise ValueError(""Unknown method"")
+    end_time = time.perf_counter()
+    return parts, (end_time - start_time)
+if __name__ == '__main__':
+    large_text = ""this is a test string with varying amounts of whitespace and multiple words"" * 10000
+    num_runs = 10
+    split_results = []
+    regex_results = []
+    for _ in range(num_runs):
+        split_res, split_time = benchmark_parsing(large_text, ""split"")
+        regex_res, regex_time = benchmark_parsing(large_text, ""regex"")
+        split_results.append((split_res, split_time))
+        regex_results.append((regex_res, regex_time))
+    avg_split_time = sum(t[1] for t in split_results) / num_runs
+    avg_regex_time = sum(t[1] for t in regex_results) / num_runs
+    print(f""Average Split Time: {avg_split_time:.6f} seconds"")
+    print(f""Average Regex Time: {avg_regex_time:.6f} seconds"")
+    if avg_split_time < avg_regex_time:
+        print(""Split method was more performant."")
+    elif avg_regex_time < avg_split_time:
+        print(""Regex method was more performant."")
+    else:
+        print(""Both methods had approximately equal performance."")",True,2,11589,185_9_2.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def benchmark_parsing_methods(text_block):
+    def parse_split(text):
+        return text.split()
+    def parse_regex(text):
+        return re.findall(r'\S+', text)
+    start_time = time.perf_counter()
+    result_split = parse_split(text_block)
+    time_split = time.perf_counter() - start_time
+    start_time = time.perf_counter()
+    result_regex = parse_regex(text_block)
+    time_regex = time.perf_counter() - start_time
+    if time_split < time_regex:
+        return result_split, time_split, time_regex
+    else:
+        return result_regex, time_regex, time_split
+if __name__ == '__main__':
+    large_text = ""this is a test string with varying amounts of whitespace and multiple words separated by spaces"" * 100000
+    print(f""Benchmarking parsing methods on text length: {len(large_text)}"")
+    result, time_split, time_regex = benchmark_parsing_methods(large_text)
+    print(f""Parsing complete."")
+    print(f""Split method time: {time_split:.6f} seconds"")
+    print(f""Regex method time: {time_regex:.6f} seconds"")
+    print(""Result (from faster method):"", result)",True,3,11590,185_9_3.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def compare_parsing_methods(text_block):
+    def parse_split(text):
+        return text.split()
+    def parse_regex(text):
+        return re.findall(r'\S+', text)
+    start_time = time.perf_counter()
+    result_split = parse_split(text_block)
+    time_split = time.perf_counter() - start_time
+    start_time = time.perf_counter()
+    result_regex = parse_regex(text_block)
+    time_regex = time.perf_counter() - start_time
+    if time_split < time_regex:
+        return result_split, time_split
+    else:
+        return result_regex, time_regex
+if __name__ == '__main__':
+    large_text = ""this is a test string with varying amounts of whitespace and multiple words separated by spaces"" * 100000
+    print(""Starting benchmark..."")
+    result, time_taken = compare_parsing_methods(large_text)
+    print(f""Parsing completed in {time_taken:.6f} seconds."")
+    print(""Result (first 10 elements):"", result[:10])",True,4,11591,185_9_4.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def benchmark_parsing_methods(text_block):
+    def parse_split(text):
+        return text.split()
+    def parse_regex(text):
+        return re.findall(r'\S+', text)
+    start_time = time.perf_counter()
+    result_split = parse_split(text_block)
+    time_split = time.perf_counter() - start_time
+    start_time = time.perf_counter()
+    result_regex = parse_regex(text_block)
+    time_regex = time.perf_counter() - start_time
+    if time_split < time_regex:
+        return result_split, time_split, time_regex
+    else:
+        return result_regex, time_regex, time_split
+if __name__ == '__main__':
+    large_text = ""this is a test string with varying amounts of whitespace separating the words and some extra spaces to test the robustness of both parsing techniques for large blocks of text"" * 10000
+    print(f""Benchmarking parsing methods on text length: {len(large_text)}"")
+    result, time_split, time_regex = benchmark_parsing_methods(large_text)
+    print(f""Result found (method based on speed): {result}"")
+    print(f""Time taken by split method: {time_split:.6f} seconds"")
+    print(f""Time taken by regex method: {time_regex:.6f} seconds"")",True,5,11592,185_9_5.py
+185,9,Parse simple text data,"Write a benchmark-ready function that compares two different parsing methods (e.g., using string splitting vs. regex) for parsing large blocks of simple, whitespace-delimited text, and return the more performant result.","import re
+import time
+def compare_parsing_methods(text_block):
+    def parse_split(text):
+        return text.split()
+    def parse_regex(text):
+        return re.findall(r'\S+', text)
+    start_time = time.perf_counter()
+    result_split = parse_split(text_block)
+    time_split = time.perf_counter() - start_time
+    start_time = time.perf_counter()
+    result_regex = parse_regex(text_block)
+    time_regex = time.perf_counter() - start_time
+    if time_split < time_regex:
+        return result_split, time_split
+    else:
+        return result_regex, time_regex
+if __name__ == '__main__':
+    large_text = ""this is a test string with various amounts of whitespace separating the words and some extra spaces"" * 100000
+    print(""Starting benchmark..."")
+    result, time_taken = compare_parsing_methods(large_text)
+    print(f""Parsing completed in {time_taken:.6f} seconds."")
+    print(""Result (from faster method):"", result)",True,6,11593,185_9_6.py
+187,5,Find the largest list element,Write a function that iterates through a list of mixed data types (integers and strings) and correctly identifies and returns the largest numerical element. Handle potential `TypeError` exceptions during comparison.,"def find_largest_number(data):
+    largest = None
+    for item in data:
+        if isinstance(item, int):
+            if largest is None or item > largest:
+                largest = item
+    return largest
+if __name__ == '__main__':
+    mixed_list = [10, ""apple"", 5, ""banana"", 22, ""cherry""]
+    result = find_largest_number(mixed_list)
+    print(result)",True,0,11594,187_5.py
+187,5,Find the largest list element,Write a function that iterates through a list of mixed data types (integers and strings) and correctly identifies and returns the largest numerical element. Handle potential `TypeError` exceptions during comparison.,"def find_largest_number(data):
+    largest = None
+    for item in data:
+        if isinstance(item, int):
+            if largest is None or item > largest:
+                largest = item
+    return largest
+if __name__ == '__main__':
+    mixed_list = [10, ""apple"", 5, ""banana"", 20, ""cherry""]
+    result = find_largest_number(mixed_list)
+    print(result)",True,1,11595,187_5_1.py
+187,3,Find the largest list element,Write a class named `ListAnalyzer` with a method `find_largest` that accepts a list and returns the maximum value. The class design must adhere to object-oriented best practices.,"class ListAnalyzer:
+    def find_largest(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data[0]
+        for item in data[1:]:
+            if item > largest:
+                largest = item
+        return largest
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list1 = [10, 5, 20, 8, 15]
+    sample_list2 = [-5, -1, -10, -3]
+    sample_list3 = [42]
+    sample_list4 = []
+    result1 = analyzer.find_largest(sample_list1)
+    print(f""The largest value in {sample_list1} is: {result1}"")
+    result2 = analyzer.find_largest(sample_list2)
+    print(f""The largest value in {sample_list2} is: {result2}"")
+    result3 = analyzer.find_largest(sample_list3)
+    print(f""The largest value in {sample_list3} is: {result3}"")
+    try:
+        analyzer.find_largest(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,0,11596,187_3.py
+187,3,Find the largest list element,Write a class named `ListAnalyzer` with a method `find_largest` that accepts a list and returns the maximum value. The class design must adhere to object-oriented best practices.,"class ListAnalyzer:
+    def find_largest(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data[0]
+        for item in data[1:]:
+            if item > largest:
+                largest = item
+        return largest
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list_one = [10, 5, 20, 8, 15]
+    sample_list_two = [-5, -1, -10, -3]
+    sample_list_three = [42]
+    sample_list_empty = []
+    result_one = analyzer.find_largest(sample_list_one)
+    print(f""The largest value in {sample_list_one} is: {result_one}"")
+    result_two = analyzer.find_largest(sample_list_two)
+    print(f""The largest value in {sample_list_two} is: {result_two}"")
+    result_three = analyzer.find_largest(sample_list_three)
+    print(f""The largest value in {sample_list_three} is: {result_three}"")
+    try:
+        analyzer.find_largest(sample_list_empty)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,11597,187_3_1.py
+187,3,Find the largest list element,Write a class named `ListAnalyzer` with a method `find_largest` that accepts a list and returns the maximum value. The class design must adhere to object-oriented best practices.,"class ListAnalyzer:
+    def find_largest(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data[0]
+        for item in data[1:]:
+            if item > largest:
+                largest = item
+        return largest
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list_1 = [10, 5, 20, 8, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""Largest in {sample_list_1}: {analyzer.find_largest(sample_list_1)}"")
+    print(f""Largest in {sample_list_2}: {analyzer.find_largest(sample_list_2)}"")
+    print(f""Largest in {sample_list_3}: {analyzer.find_largest(sample_list_3)}"")
+    try:
+        analyzer.find_largest(sample_list_4)
+    except ValueError as e:
+        print(f""Error for {sample_list_4}: {e}"")",True,2,11598,187_3_2.py
+187,3,Find the largest list element,Write a class named `ListAnalyzer` with a method `find_largest` that accepts a list and returns the maximum value. The class design must adhere to object-oriented best practices.,"class ListAnalyzer:
+    def find_largest(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data[0]
+        for item in data[1:]:
+            if item > largest:
+                largest = item
+        return largest
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list1 = [10, 5, 20, 8, 15]
+    sample_list2 = [-5, -1, -10, -3]
+    sample_list3 = [42]
+    sample_list4 = []
+    print(f""Largest in {sample_list1}: {analyzer.find_largest(sample_list1)}"")
+    print(f""Largest in {sample_list2}: {analyzer.find_largest(sample_list2)}"")
+    print(f""Largest in {sample_list3}: {analyzer.find_largest(sample_list3)}"")
+    try:
+        analyzer.find_largest(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,3,11599,187_3_3.py
+187,3,Find the largest list element,Write a class named `ListAnalyzer` with a method `find_largest` that accepts a list and returns the maximum value. The class design must adhere to object-oriented best practices.,"class ListAnalyzer:
+    def find_largest(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data[0]
+        for item in data[1:]:
+            if item > largest:
+                largest = item
+        return largest
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list_1 = [10, 5, 20, 8, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    result_1 = analyzer.find_largest(sample_list_1)
+    print(f""The largest value in {sample_list_1} is: {result_1}"")
+    result_2 = analyzer.find_largest(sample_list_2)
+    print(f""The largest value in {sample_list_2} is: {result_2}"")
+    result_3 = analyzer.find_largest(sample_list_3)
+    print(f""The largest value in {sample_list_3} is: {result_3}"")
+    try:
+        analyzer.find_largest(sample_list_4)
+    except ValueError as e:
+        print(f""Error for {sample_list_4}: {e}"")",True,4,11600,187_3_4.py
+187,3,Find the largest list element,Write a class named `ListAnalyzer` with a method `find_largest` that accepts a list and returns the maximum value. The class design must adhere to object-oriented best practices.,"class ListAnalyzer:
+    def find_largest(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data[0]
+        for item in data:
+            if item > largest:
+                largest = item
+        return largest
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list1 = [10, 5, 20, 8, 15]
+    sample_list2 = [-5, -1, -10, -3]
+    sample_list3 = [42]
+    sample_list4 = []
+    print(f""Largest in {sample_list1}: {analyzer.find_largest(sample_list1)}"")
+    print(f""Largest in {sample_list2}: {analyzer.find_largest(sample_list2)}"")
+    print(f""Largest in {sample_list3}: {analyzer.find_largest(sample_list3)}"")
+    try:
+        analyzer.find_largest(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,5,11601,187_3_5.py
+187,4,Find the largest list element,Create a recursive Python function to determine the largest element in a list of integers without using any built-in `max()` functions. Provide an explanation of the recursive logic.,"def find_largest(data):
+    if not data:
+        return None
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        max_of_rest = find_largest(rest)
+        if max_of_rest is None:
+            return first
+        if first > max_of_rest:
+            return first
+        else:
+            return max_of_rest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_largest(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_largest(list2))
+    list3 = [7]
+    print(find_largest(list3))
+    list4 = []
+    print(find_largest(list4))",True,0,11602,187_4.py
+187,4,Find the largest list element,Create a recursive Python function to determine the largest element in a list of integers without using any built-in `max()` functions. Provide an explanation of the recursive logic.,"def find_largest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        largest_of_rest = find_largest(rest)
+        if first > largest_of_rest:
+            return first
+        else:
+            return largest_of_rest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_largest(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_largest(list2))
+    list3 = [7]
+    print(find_largest(list3))
+    list4 = [100]
+    print(find_largest(list4))",True,1,11603,187_4_1.py
+187,4,Find the largest list element,Create a recursive Python function to determine the largest element in a list of integers without using any built-in `max()` functions. Provide an explanation of the recursive logic.,"def find_largest(data):
+    if not data:
+        return None
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        max_of_rest = find_largest(rest)
+        if max_of_rest is None:
+            return first
+        if first > max_of_rest:
+            return first
+        else:
+            return max_of_rest
+if __name__ == '__main__':
+    list1 = [10, 5, 20, 8]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    print(f""Largest in {list4}: {find_largest(list4)}"")",True,2,11604,187_4_2.py
+187,4,Find the largest list element,Create a recursive Python function to determine the largest element in a list of integers without using any built-in `max()` functions. Provide an explanation of the recursive logic.,"def find_largest(data):
+    if not data:
+        return None
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        max_of_rest = find_largest(rest)
+        if max_of_rest is None:
+            return first
+        if first > max_of_rest:
+            return first
+        else:
+            return max_of_rest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, -5, -20, -1]
+    list3 = [7]
+    list4 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    print(f""Largest in {list4}: {find_largest(list4)}"")",True,3,11605,187_4_3.py
+187,4,Find the largest list element,Create a recursive Python function to determine the largest element in a list of integers without using any built-in `max()` functions. Provide an explanation of the recursive logic.,"def find_largest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        largest_of_rest = find_largest(rest)
+        if first > largest_of_rest:
+            return first
+        else:
+            return largest_of_rest
+if __name__ == '__main__':
+    list1 = [10, 5, 20, 8, 15]
+    print(find_largest(list1))
+    list2 = [-5, -1, -10, -3]
+    print(find_largest(list2))
+    list3 = [42]
+    print(find_largest(list3))
+    list4 = [100]
+    print(find_largest(list4))",True,4,11606,187_4_4.py
+187,4,Find the largest list element,Create a recursive Python function to determine the largest element in a list of integers without using any built-in `max()` functions. Provide an explanation of the recursive logic.,"def find_largest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        largest_of_rest = find_largest(rest)
+        if first > largest_of_rest:
+            return first
+        else:
+            return largest_of_rest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_largest(list1))
+    list2 = [-10, -5, -8, -2]
+    print(find_largest(list2))
+    list3 = [7]
+    print(find_largest(list3))
+    list4 = []
+    try:
+        print(find_largest(list4))
+    except ValueError as e:
+        print(e)",True,5,11607,187_4_5.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+            yield largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    print(""Largest elements from sample list:"")
+    for num in largest_element_generator(sample_list):
+        print(num)
+    large_sample = [100, 50, 200, 10, 300, 150]
+    print(""\nLargest elements from large sample list:"")
+    for num in largest_element_generator(large_sample):
+        print(num)
+    empty_list = []
+    print(""\nLargest elements from empty list:"")
+    for num in largest_element_generator(empty_list):
+        print(num)",True,0,11608,187_6.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+            yield largest
+if __name__ == '__main__':
+    large_list = [3, 1, 4, 1, 5, 9, 2, 6, 8, 7]
+    print(""Largest elements from large list:"")
+    for item in largest_element_generator(large_list):
+        print(item)
+    empty_list = []
+    print(""\nLargest elements from empty list:"")
+    for item in largest_element_generator(empty_list):
+        print(item)",True,1,11609,187_6_1.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    yield largest
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    generator = largest_element_generator(large_list)
+    print(""Elements yielded by the generator:"")
+    for num in generator:
+        print(num)",True,2,11610,187_6_2.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+            yield largest
+if __name__ == '__main__':
+    large_list = [3, 1, 4, 1, 5, 9, 2, 6, 8, 7]
+    print(""Largest elements from large list:"")
+    for item in largest_element_generator(large_list):
+        print(item)
+    another_list = [100, 50, 200, 10]
+    print(""\nLargest elements from another list:"")
+    for item in largest_element_generator(another_list):
+        print(item)
+    empty_list = []
+    print(""\nLargest elements from empty list:"")
+    for item in largest_element_generator(empty_list):
+        print(item)",True,3,11611,187_6_3.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+            yield largest
+if __name__ == '__main__':
+    large_list = [3, 1, 4, 1, 5, 9, 2, 6, 8, 7]
+    print(""Largest elements yielded:"")
+    for item in largest_element_generator(large_list):
+        print(item)
+    empty_list = []
+    print(""\nTesting empty list:"")
+    for item in largest_element_generator(empty_list):
+        print(item)",True,4,11612,187_6_4.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    yield largest
+if __name__ == '__main__':
+    large_list = [3, 1, 4, 1, 5, 9, 2, 6, 8, 7]
+    generator = largest_element_generator(large_list)
+    print(""Largest elements yielded:"")
+    for element in generator:
+        print(element)
+    another_list = [100, -50, 200, 10]
+    generator2 = largest_element_generator(another_list)
+    print(""\nLargest elements yielded for another list:"")
+    for element in generator2:
+        print(element)
+    empty_list = []
+    generator3 = largest_element_generator(empty_list)
+    print(""\nLargest elements yielded for an empty list:"")
+    for element in generator3:
+        print(element)",True,5,11613,187_6_5.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for item in data[1:]:
+        if item > largest:
+            largest = item
+    yield largest
+if __name__ == '__main__':
+    large_list = [3, 1, 4, 1, 5, 9, 2, 8, 7, 6]
+    generator = largest_element_generator(large_list)
+    print(""Largest elements yielded:"")
+    for element in generator:
+        print(element)
+    another_list = [100, 50, 200, 10]
+    generator2 = largest_element_generator(another_list)
+    print(""\nLargest elements yielded for another list:"")
+    for element in generator2:
+        print(element)
+    empty_list = []
+    generator3 = largest_element_generator(empty_list)
+    print(""\nLargest elements yielded for an empty list:"")
+    for element in generator3:
+        print(element)",True,6,11614,187_6_6.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+            yield largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    print(""Largest elements from sample list:"")
+    for item in largest_element_generator(sample_list):
+        print(item)
+    large_sample = [100, 5, 200, 1, 300, 150]
+    print(""\nLargest elements from large sample list:"")
+    for item in largest_element_generator(large_sample):
+        print(item)
+    empty_list = []
+    print(""\nLargest elements from empty list:"")
+    for item in largest_element_generator(empty_list):
+        print(item)",True,7,11615,187_6_7.py
+187,6,Find the largest list element,"Implement a generator function that yields the largest element of an input list one by one, optimizing for memory usage when dealing with very large lists.","def largest_element_generator(data):
+    if not data:
+        return
+    largest = data[0]
+    yield largest
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    yield largest
+if __name__ == '__main__':
+    large_list = [3, 1, 4, 1, 5, 9, 2, 6, 8, 7]
+    generator = largest_element_generator(large_list)
+    print(""Elements yielded by the generator:"")
+    for item in generator:
+        print(item)",True,8,11616,187_6_8.py
+187,8,Find the largest list element,"Develop an iterative solution, using only a single loop, to find the largest element in a list of arbitrary length. Ensure the time complexity is O(n).","def find_largest(data):
+    if not data:
+        return None
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_largest(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_largest(list2))
+    list3 = [7]
+    print(find_largest(list3))
+    list4 = []
+    print(find_largest(list4))",True,0,11617,187_8.py
+187,8,Find the largest list element,"Develop an iterative solution, using only a single loop, to find the largest element in a list of arbitrary length. Ensure the time complexity is O(n).","if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2, 6]
+    n = len(data)
+    largest = data[0]
+    for i in range(1, n):
+        if data[i] > largest:
+            largest = data[i]
+    print(largest)",True,1,11618,187_8_1.py
+187,8,Find the largest list element,"Develop an iterative solution, using only a single loop, to find the largest element in a list of arbitrary length. Ensure the time complexity is O(n).","def find_largest(data):
+    if not data:
+        return None
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_largest(sample_list)
+    print(result)",True,2,11619,187_8_2.py
+187,8,Find the largest list element,"Develop an iterative solution, using only a single loop, to find the largest element in a list of arbitrary length. Ensure the time complexity is O(n).","def find_largest(data):
+    if not data:
+        return None
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""List: {list1}, Largest element: {find_largest(list1)}"")
+    list2 = [-10, -5, -20, -1]
+    print(f""List: {list2}, Largest element: {find_largest(list2)}"")
+    list3 = [7]
+    print(f""List: {list3}, Largest element: {find_largest(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Largest element: {find_largest(list4)}"")",True,3,11620,187_8_3.py
+187,10,Find the largest list element,"Write a complete, robust Python script to find and print the largest element in a given unsorted list of integers. Use the most efficient built-in method.","import random
+if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2, 6]
+    largest_element = max(data)
+    print(largest_element)",True,0,11621,187_10.py
+187,10,Find the largest list element,"Write a complete, robust Python script to find and print the largest element in a given unsorted list of integers. Use the most efficient built-in method.","import random
+if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2, 6]
+    largest = max(data)
+    print(largest)",True,1,11622,187_10_1.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_one = [10, 4, 25, 8, 30]
+    sample_list_two = [-5, -1, -10, -2]
+    sample_list_three = [7]
+    sample_list_empty = []
+    print(f""List 1: {sample_list_one}"")
+    print(f""Largest in List 1: {find_largest(sample_list_one)}"")
+    print(""-"" * 20)
+    print(f""List 2: {sample_list_two}"")
+    print(f""Largest in List 2: {find_largest(sample_list_two)}"")
+    print(""-"" * 20)
+    print(f""List 3: {sample_list_three}"")
+    print(f""Largest in List 3: {find_largest(sample_list_three)}"")
+    print(""-"" * 20)
+    try:
+        find_largest(sample_list_empty)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,11623,187_9.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest_element(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -2]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        result_1 = find_largest_element(sample_list_1)
+        print(f""Largest element in List 1: {result_1}"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}"")
+    print(""-"" * 20)
+    print(f""List 2: {sample_list_2}"")
+    try:
+        result_2 = find_largest_element(sample_list_2)
+        print(f""Largest element in List 2: {result_2}"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}"")
+    print(""-"" * 20)
+    print(f""List 3: {sample_list_3}"")
+    try:
+        result_3 = find_largest_element(sample_list_3)
+        print(f""Largest element in List 3: {result_3}"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}"")
+    print(""-"" * 20)
+    print(f""List 4: {sample_list_4}"")
+    try:
+        result_4 = find_largest_element(sample_list_4)
+        print(f""Largest element in List 4: {result_4}"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}"")",True,1,11624,187_9_1.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest_element(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""Sample List 1: {sample_list_1}"")
+    try:
+        result_1 = find_largest_element(sample_list_1)
+        print(f""Largest element in Sample List 1: {result_1}"")
+    except ValueError as e:
+        print(f""Error for Sample List 1: {e}"")
+    print(""-"" * 20)
+    print(f""Sample List 2: {sample_list_2}"")
+    try:
+        result_2 = find_largest_element(sample_list_2)
+        print(f""Largest element in Sample List 2: {result_2}"")
+    except ValueError as e:
+        print(f""Error for Sample List 2: {e}"")
+    print(""-"" * 20)
+    print(f""Sample List 3: {sample_list_3}"")
+    try:
+        result_3 = find_largest_element(sample_list_3)
+        print(f""Largest element in Sample List 3: {result_3}"")
+    except ValueError as e:
+        print(f""Error for Sample List 3: {e}"")
+    print(""-"" * 20)
+    print(f""Sample List 4: {sample_list_4}"")
+    try:
+        result_4 = find_largest_element(sample_list_4)
+        print(f""Largest element in Sample List 4: {result_4}"")
+    except ValueError as e:
+        print(f""Error for Sample List 4: {e}"")",True,2,11625,187_9_2.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 4, 25, 8, 30]
+    sample_list_2 = [-5, -1, -10, -2]
+    sample_list_3 = [7]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        result_1 = find_largest(sample_list_1)
+        print(f""Largest element in List 1: {result_1}"")
+    except ValueError as e:
+        print(f""Error processing List 1: {e}"")
+    print(""-"" * 20)
+    print(f""List 2: {sample_list_2}"")
+    try:
+        result_2 = find_largest(sample_list_2)
+        print(f""Largest element in List 2: {result_2}"")
+    except ValueError as e:
+        print(f""Error processing List 2: {e}"")
+    print(""-"" * 20)
+    print(f""List 3: {sample_list_3}"")
+    try:
+        result_3 = find_largest(sample_list_3)
+        print(f""Largest element in List 3: {result_3}"")
+    except ValueError as e:
+        print(f""Error processing List 3: {e}"")
+    print(""-"" * 20)
+    print(f""List 4: {sample_list_4}"")
+    try:
+        result_4 = find_largest(sample_list_4)
+        print(f""Largest element in List 4: {result_4}"")
+    except ValueError as e:
+        print(f""Error processing List 4: {e}"")",True,3,11626,187_9_3.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest_element(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 8, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        result_1 = find_largest_element(sample_list_1)
+        print(f""Largest element in List 1: {result_1}"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}"")
+    print(""-"" * 20)
+    print(f""List 2: {sample_list_2}"")
+    try:
+        result_2 = find_largest_element(sample_list_2)
+        print(f""Largest element in List 2: {result_2}"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}"")
+    print(""-"" * 20)
+    print(f""List 3: {sample_list_3}"")
+    try:
+        result_3 = find_largest_element(sample_list_3)
+        print(f""Largest element in List 3: {result_3}"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}"")
+    print(""-"" * 20)
+    print(f""List 4: {sample_list_4}"")
+    try:
+        result_4 = find_largest_element(sample_list_4)
+        print(f""Largest element in List 4: {result_4}"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}"")",True,4,11627,187_9_4.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest_element(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        result_1 = find_largest_element(sample_list_1)
+        print(f""Largest element in List 1: {result_1}"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}"")
+    print(""-"" * 20)
+    print(f""List 2: {sample_list_2}"")
+    try:
+        result_2 = find_largest_element(sample_list_2)
+        print(f""Largest element in List 2: {result_2}"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}"")
+    print(""-"" * 20)
+    print(f""List 3: {sample_list_3}"")
+    try:
+        result_3 = find_largest_element(sample_list_3)
+        print(f""Largest element in List 3: {result_3}"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}"")
+    print(""-"" * 20)
+    print(f""List 4: {sample_list_4}"")
+    try:
+        result_4 = find_largest_element(sample_list_4)
+        print(f""Largest element in List 4: {result_4}"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}"")",True,5,11628,187_9_5.py
+187,9,Find the largest list element,"Write a complete, well-documented Python module that provides a function to find the largest element, suitable for use in a larger data processing pipeline. Focus on clarity and adherence to PEP 8.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 22, 8, 30]
+    sample_list_2 = [-5, -1, -10, -2]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        result_1 = find_largest(sample_list_1)
+        print(f""Largest element in List 1: {result_1}"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}"")
+    print(f""\nList 2: {sample_list_2}"")
+    try:
+        result_2 = find_largest(sample_list_2)
+        print(f""Largest element in List 2: {result_2}"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}"")
+    print(f""\nList 3: {sample_list_3}"")
+    try:
+        result_3 = find_largest(sample_list_3)
+        print(f""Largest element in List 3: {result_3}"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}"")
+    print(f""\nList 4: {sample_list_4}"")
+    try:
+        result_4 = find_largest(sample_list_4)
+        print(f""Largest element in List 4: {result_4}"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}"")",True,6,11629,187_9_6.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, 0.577, 9.99]
+    try:
+        max_value = find_maximum(sample_list)
+        print(max_value)
+    except ValueError as e:
+        print(e)",True,0,11630,187_12.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_max(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = numbers[0]
+    for number in numbers:
+        if number > max_value:
+            max_value = number
+    return max_value
+if __name__ == '__main__':
+    data1 = [3.14, 1.618, 2.718, 0.577]
+    data2 = [-10.5, -5.2, -20.1, -1.9]
+    data3 = [42.0]
+    data4 = []
+    print(f""Max of {data1}: {find_max(data1)}"")
+    print(f""Max of {data2}: {find_max(data2)}"")
+    print(f""Max of {data3}: {find_max(data3)}"")
+    try:
+        print(f""Max of {data4}: {find_max(data4)}"")
+    except ValueError as e:
+        print(f""Error for {data4}: {e}"")",True,1,11631,187_12_1.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for number in data:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, 0.577, 9.81]
+    max_value = find_maximum(sample_list)
+    print(max_value)",True,2,11632,187_12_2.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    data1 = [3.14, 1.618, 2.718, 0.577]
+    data2 = [-10.5, -5.2, -20.1, -1.9]
+    data3 = [42.0, 100.5, 33.3, 99.9]
+    empty_data = []
+    print(f""Maximum of {data1}: {find_maximum(data1)}"")
+    print(f""Maximum of {data2}: {find_maximum(data2)}"")
+    print(f""Maximum of {data3}: {find_maximum(data3)}"")
+    try:
+        find_maximum(empty_data)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,11633,187_12_3.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_max(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = numbers[0]
+    for number in numbers:
+        if number > max_value:
+            max_value = number
+    return max_value
+if __name__ == '__main__':
+    data1 = [3.14, 1.618, 2.718, 0.577]
+    data2 = [-10.5, -5.2, -20.1, -1.9]
+    data3 = [42.0, 100.5, 33.3, 99.9]
+    empty_data = []
+    print(f""Max of {data1}: {find_max(data1)}"")
+    print(f""Max of {data2}: {find_max(data2)}"")
+    print(f""Max of {data3}: {find_max(data3)}"")
+    try:
+        find_max(empty_data)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,11634,187_12_4.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_max(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = numbers[0]
+    for number in numbers:
+        if number > max_value:
+            max_value = number
+    return max_value
+if __name__ == '__main__':
+    data1 = [3.14, 1.618, 2.718, 0.577]
+    data2 = [-10.5, -5.2, -20.1, -1.9]
+    data3 = [42.0, 12.5, 88.9, 33.3]
+    empty_data = []
+    print(f""Max of {data1}: {find_max(data1)}"")
+    print(f""Max of {data2}: {find_max(data2)}"")
+    print(f""Max of {data3}: {find_max(data3)}"")
+    try:
+        find_max(empty_data)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,11635,187_12_5.py
+187,12,Find the largest list element,"Develop a Python function that determines the maximum value in a list of floating-point numbers. Ensure the code is clean, readable, and follows Python best practices.","def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, 0.577, 9.99]
+    max_value = find_maximum(sample_list)
+    print(max_value)",True,6,11636,187_12_6.py
+187,11,Find the largest list element,Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number. The implementation must be time-efficient (O(n)).,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, -5, -20, -1]
+    list3 = [7]
+    list4 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    try:
+        print(f""Largest in {list4}: {find_largest(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,11637,187_11.py
+187,11,Find the largest list element,Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number. The implementation must be time-efficient (O(n)).,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""The largest number in {list1} is: {find_largest(list1)}"")
+    list2 = [-10, -5, -20, -1]
+    print(f""The largest number in {list2} is: {find_largest(list2)}"")
+    list3 = [42]
+    print(f""The largest number in {list3} is: {find_largest(list3)}"")
+    list4 = [100, 50, 200, 150]
+    print(f""The largest number in {list4} is: {find_largest(list4)}"")",True,1,11638,187_11_1.py
+187,11,Find the largest list element,Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number. The implementation must be time-efficient (O(n)).,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""The largest number in {list1} is: {find_largest(list1)}"")
+    list2 = [-10, -5, -20, -1]
+    print(f""The largest number in {list2} is: {find_largest(list2)}"")
+    list3 = [42]
+    print(f""The largest number in {list3} is: {find_largest(list3)}"")
+    list4 = [100, 50, 200, 10]
+    print(f""The largest number in {list4} is: {find_largest(list4)}"")",True,2,11639,187_11_2.py
+187,11,Find the largest list element,Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number. The implementation must be time-efficient (O(n)).,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_largest(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_largest(list2))
+    list3 = [42]
+    print(find_largest(list3))
+    list4 = [100]
+    print(find_largest(list4))
+    list5 = []
+    try:
+        print(find_largest(list5))
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,11640,187_11_3.py
+187,13,Find the largest list element,Write a concise and efficient one-line expression or function to find the largest element in a list. Demonstrate its use with an example list.,"if __name__ == '__main__':
+    data = [10, 5, 20, 8]
+    largest = max(data)
+    print(largest)",True,0,11641,187_13.py
+187,13,Find the largest list element,Write a concise and efficient one-line expression or function to find the largest element in a list. Demonstrate its use with an example list.,"if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2]
+    largest = max(data)
+    print(largest)",True,1,11642,187_13_1.py
+187,13,Find the largest list element,Write a concise and efficient one-line expression or function to find the largest element in a list. Demonstrate its use with an example list.,"if __name__ == '__main__':
+    data = [10, 5, 22, 8, 30]
+    largest = max(data)
+    print(largest)",True,2,11643,187_13_2.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""Cannot find maximum of an empty list."")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_val_one = analyzer_one.find_maximum()
+        print(f""Maximum value in {sample_list_one}: {max_val_one}"")
+    except ValueError as e:
+        print(f""Error for sample list one: {e}"")
+    sample_list_two = [-5, -1, -10]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_val_two = analyzer_two.find_maximum()
+        print(f""Maximum value in {sample_list_two}: {max_val_two}"")
+    except ValueError as e:
+        print(f""Error for sample list two: {e}"")
+    empty_list = []
+    analyzer_empty = ListAnalyzer(empty_list)
+    try:
+        max_val_empty = analyzer_empty.find_maximum()
+        print(f""Maximum value in empty list: {max_val_empty}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,11644,187_14.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""Cannot find the maximum value in an empty list."")
+        maximum_value = self._data[0]
+        for value in self._data[1:]:
+            if value > maximum_value:
+                maximum_value = value
+        return maximum_value
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8, 15]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_one = analyzer_one.find_maximum()
+        print(f""The maximum value in {sample_list_one} is: {max_one}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [3, 9, 1, 5]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_two = analyzer_two.find_maximum()
+        print(f""The maximum value in {sample_list_two} is: {max_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_empty = []
+    analyzer_empty = ListAnalyzer(sample_list_empty)
+    try:
+        max_empty = analyzer_empty.find_maximum()
+        print(f""The maximum value in {sample_list_empty} is: {max_empty}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,11645,187_14_1.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""Cannot find maximum value in an empty list."")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_val_one = analyzer_one.find_maximum()
+        print(f""The maximum value in {sample_list_one} is: {max_val_one}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [3, 1, 4, 1, 5, 9, 2]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_val_two = analyzer_two.find_maximum()
+        print(f""The maximum value in {sample_list_two} is: {max_val_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_empty = []
+    analyzer_empty = ListAnalyzer(sample_list_empty)
+    try:
+        max_val_empty = analyzer_empty.find_maximum()
+        print(f""The maximum value in {sample_list_empty} is: {max_val_empty}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,11646,187_14_2.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""The list is empty, cannot find the maximum value."")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_val_one = analyzer_one.find_maximum()
+        print(f""The maximum value in {sample_list_one} is: {max_val_one}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [3, 99, -5, 42]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_val_two = analyzer_two.find_maximum()
+        print(f""The maximum value in {sample_list_two} is: {max_val_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_empty = []
+    analyzer_empty = ListAnalyzer(sample_list_empty)
+    try:
+        max_val_empty = analyzer_empty.find_maximum()
+        print(f""The maximum value in {sample_list_empty} is: {max_val_empty}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,11647,187_14_3.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""The list is empty, cannot find the maximum value."")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_val_one = analyzer_one.find_maximum()
+        print(f""The maximum value in {sample_list_one} is: {max_val_one}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [3, 99, 42]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_val_two = analyzer_two.find_maximum()
+        print(f""The maximum value in {sample_list_two} is: {max_val_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_empty = []
+    analyzer_empty = ListAnalyzer(sample_list_empty)
+    try:
+        max_val_empty = analyzer_empty.find_maximum()
+        print(f""The maximum value in {sample_list_empty} is: {max_val_empty}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,11648,187_14_4.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""The list is empty, cannot find the maximum value."")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_val_one = analyzer_one.find_maximum()
+        print(f""The maximum value in {sample_list_one} is: {max_val_one}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [3, 9, 1, 5]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_val_two = analyzer_two.find_maximum()
+        print(f""The maximum value in {sample_list_two} is: {max_val_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_empty = []
+    analyzer_empty = ListAnalyzer(sample_list_empty)
+    try:
+        max_val_empty = analyzer_empty.find_maximum()
+        print(f""The maximum value in {sample_list_empty} is: {max_val_empty}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,5,11649,187_14_5.py
+187,14,Find the largest list element,Create a class method within a class designed to find the maximum value in an internal list attribute. Ensure the method is well-documented and handles empty lists gracefully by raising an appropriate error.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def find_maximum(self):
+        if not self._data:
+            raise ValueError(""Cannot find the maximum value in an empty list."")
+        maximum = self._data[0]
+        for item in self._data[1:]:
+            if item > maximum:
+                maximum = item
+        return maximum
+if __name__ == '__main__':
+    sample_list_one = [10, 5, 20, 8, 15]
+    analyzer_one = ListAnalyzer(sample_list_one)
+    try:
+        max_val_one = analyzer_one.find_maximum()
+        print(f""The maximum value in {sample_list_one} is: {max_val_one}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [-5, -1, -10, -2]
+    analyzer_two = ListAnalyzer(sample_list_two)
+    try:
+        max_val_two = analyzer_two.find_maximum()
+        print(f""The maximum value in {sample_list_two} is: {max_val_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    empty_list = []
+    analyzer_empty = ListAnalyzer(empty_list)
+    try:
+        max_val_empty = analyzer_empty.find_maximum()
+        print(f""The maximum value in {empty_list} is: {max_val_empty}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,6,11650,187_14_6.py
+188,1,Reverse a given list easily,"Implement a function that reverses a list without modifying the original list, returning a new reversed list. Use list slicing for efficiency.","def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    original = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(original)
+    print(reversed_list)
+    print(original)",True,0,11651,188_1.py
+188,1,Reverse a given list easily,"Implement a function that reverses a list without modifying the original list, returning a new reversed list. Use list slicing for efficiency.","def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    original = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(original)
+    print(f""Original list: {original}"")
+    print(f""Reversed list: {reversed_list}"")",True,1,11652,188_1_1.py
+188,1,Reverse a given list easily,"Implement a function that reverses a list without modifying the original list, returning a new reversed list. Use list slicing for efficiency.","def reverse_list_slicing(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    original = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list_slicing(original)
+    print(reversed_list)
+    print(original)",True,2,11653,188_1_2.py
+188,0,Reverse a given list easily,"Write a complete, highly optimized Python function to reverse a given list in-place using two pointers.","def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7]
+    print(""Original list:"", data)
+    reverse_list_inplace(data)
+    print(""Reversed list:"", data)
+    data2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", data2)
+    reverse_list_inplace(data2)
+    print(""Reversed list:"", data2)
+    data3 = [1, 2, 1, 3, 5, 4]
+    print(""Original list:"", data3)
+    reverse_list_inplace(data3)
+    print(""Reversed list:"", data3)",True,0,11654,188_0.py
+188,0,Reverse a given list easily,"Write a complete, highly optimized Python function to reverse a given list in-place using two pointers.","def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7]
+    print(""Original list:"", data)
+    reverse_list_inplace(data)
+    print(""Reversed list:"", data)
+    data2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", data2)
+    reverse_list_inplace(data2)
+    print(""Reversed list:"", data2)
+    data3 = [1, 2, 1, 3, 5]
+    print(""Original list:"", data3)
+    reverse_list_inplace(data3)
+    print(""Reversed list:"", data3)",True,1,11655,188_0_1.py
+188,0,Reverse a given list easily,"Write a complete, highly optimized Python function to reverse a given list in-place using two pointers.","def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7]
+    print(""Original list:"", data)
+    reverse_list_inplace(data)
+    print(""Reversed list:"", data)
+    data2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", data2)
+    reverse_list_inplace(data2)
+    print(""Reversed list:"", data2)
+    data3 = [1, 2, 1, 3, 1]
+    print(""Original list:"", data3)
+    reverse_list_inplace(data3)
+    print(""Reversed list:"", data3)",True,2,11656,188_0_2.py
+188,0,Reverse a given list easily,"Write a complete, highly optimized Python function to reverse a given list in-place using two pointers.","def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5, 6, 7]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", my_list_2)
+    reverse_list_inplace(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 1, 3, 5]
+    print(""Original list:"", my_list_3)
+    reverse_list_inplace(my_list_3)
+    print(""Reversed list:"", my_list_3)",True,3,11657,188_0_3.py
+188,0,Reverse a given list easily,"Write a complete, highly optimized Python function to reverse a given list in-place using two pointers.","def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5, 6, 7]
+    print(""Original list:"", data)
+    reverse_list_inplace(data)
+    print(""Reversed list:"", data)
+    data2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", data2)
+    reverse_list_inplace(data2)
+    print(""Reversed list:"", data2)
+    data3 = [1, 2, 1, 3, 2, 1]
+    print(""Original list:"", data3)
+    reverse_list_inplace(data3)
+    print(""Reversed list:"", data3)",True,4,11658,188_0_4.py
+188,0,Reverse a given list easily,"Write a complete, highly optimized Python function to reverse a given list in-place using two pointers.","def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Original list 1: {list1}"")
+    reverse_list_inplace(list1)
+    print(f""Reversed list 1: {list1}"")
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(f""Original list 2: {list2}"")
+    reverse_list_inplace(list2)
+    print(f""Reversed list 2: {list2}"")
+    list3 = [1, 2, 2, 3, 4]
+    print(f""Original list 3: {list3}"")
+    reverse_list_inplace(list3)
+    print(f""Reversed list 3: {list3}"")
+    list4 = [5]
+    print(f""Original list 4: {list4}"")
+    reverse_list_inplace(list4)
+    print(f""Reversed list 4: {list4}"")",True,5,11659,188_0_5.py
+188,2,Reverse a given list easily,Develop a Python function named 'reverse_list' that takes a list as input and returns the reversed list. Ensure the implementation is clean and idiomatic.,"def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)",True,0,11660,188_2.py
+188,2,Reverse a given list easily,Develop a Python function named 'reverse_list' that takes a list as input and returns the reversed list. Ensure the implementation is clean and idiomatic.,"def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample = [1, 2, 3, 4, 5]
+    reversed_sample = reverse_list(sample)
+    print(reversed_sample)",True,1,11661,188_2_1.py
+188,2,Reverse a given list easily,Develop a Python function named 'reverse_list' that takes a list as input and returns the reversed list. Ensure the implementation is clean and idiomatic.,"def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_sample = reverse_list(sample_list)
+    print(reversed_sample)",True,2,11662,188_2_2.py
+188,4,Reverse a given list easily,Implement an iterative approach to reverse a list. The solution must be efficient (O(n) time complexity) and suitable for competitive programming.,"def reverse_list(lst):
+    n = len(lst)
+    result = [0] * n
+    for i in range(n):
+        result[i] = lst[n - 1 - i]
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    reversed_list_2 = reverse_list(sample_list_2)
+    print(reversed_list_2)
+    sample_list_3 = [10, 20, 30]
+    reversed_list_3 = reverse_list(sample_list_3)
+    print(reversed_list_3)",True,0,11663,188_4.py
+188,4,Reverse a given list easily,Implement an iterative approach to reverse a list. The solution must be efficient (O(n) time complexity) and suitable for competitive programming.,"def reverse_list(data):
+    n = len(data)
+    result = [0] * n
+    for i in range(n):
+        result[i] = data[n - 1 - i]
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    reversed_list_2 = reverse_list(sample_list_2)
+    print(reversed_list_2)
+    sample_list_3 = [10, 20, 30]
+    reversed_list_3 = reverse_list(sample_list_3)
+    print(reversed_list_3)",True,1,11664,188_4_1.py
+188,4,Reverse a given list easily,Implement an iterative approach to reverse a list. The solution must be efficient (O(n) time complexity) and suitable for competitive programming.,"def reverse_list(lst):
+    n = len(lst)
+    for i in range(n // 2):
+        lst[i], lst[n - 1 - i] = lst[n - 1 - i], lst[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(f""Original list: {sample_list}"")
+    reverse_list(sample_list)
+    print(f""Reversed list: {sample_list}"")
+    sample_list_2 = [10, 20, 30, 40]
+    print(f""Original list: {sample_list_2}"")
+    reverse_list(sample_list_2)
+    print(f""Reversed list: {sample_list_2}"")
+    sample_list_3 = [1, 2, 3, 4]
+    print(f""Original list: {sample_list_3}"")
+    reverse_list(sample_list_3)
+    print(f""Reversed list: {sample_list_3}"")
+    sample_list_4 = [5]
+    print(f""Original list: {sample_list_4}"")
+    reverse_list(sample_list_4)
+    print(f""Reversed list: {sample_list_4}"")",True,2,11665,188_4_2.py
+188,4,Reverse a given list easily,Implement an iterative approach to reverse a list. The solution must be efficient (O(n) time complexity) and suitable for competitive programming.,"def reverse_list(lst):
+    n = len(lst)
+    left = 0
+    right = n - 1
+    while left < right:
+        lst[left], lst[right] = lst[right], lst[left]
+        left += 1
+        right -= 1
+    return lst
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)
+    sample_list_2 = [10, 20, 30, 40]
+    reversed_list_2 = reverse_list(sample_list_2)
+    print(reversed_list_2)
+    sample_list_3 = [1, 2, 2, 3, 1]
+    reversed_list_3 = reverse_list(sample_list_3)
+    print(reversed_list_3)",True,3,11666,188_4_3.py
+188,5,Reverse a given list easily,"Create a class method within a 'ListUtility' class that provides a method to reverse the list object it is called upon, ensuring the operation is performed in-place.","class ListUtility:
+    @staticmethod
+    def reverse_list(data):
+        data.reverse()
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    ListUtility.reverse_list(my_list)
+    print(""Reversed list:"", my_list)
+    another_list = ['a', 'b', 'c', 'd']
+    print(""Original list:"", another_list)
+    ListUtility.reverse_list(another_list)
+    print(""Reversed list:"", another_list)",True,0,11667,188_5.py
+188,6,Reverse a given list easily,"Write a function that reverses a list of strings. The input is a list of strings, and the output is a list where the order of strings is reversed.","def reverse_list_of_strings(string_list):
+    return string_list[::-1]
+if __name__ == '__main__':
+    input_list = [""hello"", ""world"", ""python"", ""code""]
+    reversed_list = reverse_list_of_strings(input_list)
+    print(reversed_list)",True,0,11668,188_6.py
