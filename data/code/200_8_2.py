@@ -1,0 +1,18 @@
+def find_first_occurrence(data_list, target):
+    for i in range(len(data_list)):
+        if data_list[i] == target:
+            return i
+    return -1
+if __name__ == '__main__':
+    my_list = [10, 25, 30, 25, 40, 55]
+    target_value = 25
+    index = find_first_occurrence(my_list, target_value)
+    print(index)
+    my_list_2 = [1, 5, 8, 3, 9]
+    target_value_2 = 10
+    index_2 = find_first_occurrence(my_list_2, target_value_2)
+    print(index_2)
+    my_list_3 = [7, 4, 2, 9, 1]
+    target_value_3 = 5
+    index_3 = find_first_occurrence(my_list_3, target_value_3)
+    print(index_3)
