@@ -248411,3 +248411,3125 @@ if __name__ == '__main__':
     combined_generator = combine_lists(list_a, list_b)
     result = list(combined_generator)
     print(result)",True,3,11892,191_5_3.py
+191,6,Combine two simple lists,"Write a highly efficient Python function to combine two lists of strings, list_alpha and list_beta, into a single list, ensuring the resulting list maintains the original order of elements from both inputs.","def combine_lists(list_alpha, list_beta):
+    return list_alpha + list_beta
+if __name__ == '__main__':
+    list_a = [""apple"", ""banana""]
+    list_b = [""cherry"", ""date""]
+    combined = combine_lists(list_a, list_b)
+    print(combined)",True,0,11893,191_6.py
+191,6,Combine two simple lists,"Write a highly efficient Python function to combine two lists of strings, list_alpha and list_beta, into a single list, ensuring the resulting list maintains the original order of elements from both inputs.","def combine_lists(list_alpha, list_beta):
+    combined = []
+    for item in list_alpha:
+        combined.append(item)
+    for item in list_beta:
+        combined.append(item)
+    return combined
+if __name__ == '__main__':
+    list_a = [""apple"", ""banana""]
+    list_b = [""cherry"", ""date""]
+    result = combine_lists(list_a, list_b)
+    print(result)",True,1,11894,191_6_1.py
+191,6,Combine two simple lists,"Write a highly efficient Python function to combine two lists of strings, list_alpha and list_beta, into a single list, ensuring the resulting list maintains the original order of elements from both inputs.","def combine_lists(list_alpha, list_beta):
+    return list_alpha + list_beta
+if __name__ == '__main__':
+    list_alpha = [""apple"", ""banana""]
+    list_beta = [""cherry"", ""date""]
+    combined = combine_lists(list_alpha, list_beta)
+    print(combined)",True,2,11895,191_6_2.py
+191,7,Combine two simple lists,"Develop a function that combines two lists, list_x and list_y, and returns the result as a new list, prioritizing time complexity O(n+m).","def combine_lists(list_x, list_y):
+    result = []
+    for item in list_x:
+        result.append(item)
+    for item in list_y:
+        result.append(item)
+    return result
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = ['a', 'b', 'c']
+    combined = combine_lists(list_a, list_b)
+    print(combined)",True,0,11896,191_7.py
+191,7,Combine two simple lists,"Develop a function that combines two lists, list_x and list_y, and returns the result as a new list, prioritizing time complexity O(n+m).","def combine_lists(list_x, list_y):
+    result = []
+    for item in list_x:
+        result.append(item)
+    for item in list_y:
+        result.append(item)
+    return result
+if __name__ == '__main__':
+    list_x_sample = [1, 2, 3]
+    list_y_sample = ['a', 'b', 'c']
+    combined = combine_lists(list_x_sample, list_y_sample)
+    print(combined)",True,1,11897,191_7_1.py
+189,6,Remove an item from list,"Write a detailed explanation and accompanying Python code demonstrating the difference between using the .remove() method and the del keyword for removing items from a list, focusing on performance implications.","my_list = [1, 2, 3, 4, 5]
+list_to_modify = [1, 2, 3, 4, 5]
+print(""--- Demonstration of .remove() ---"")
+list_for_remove = list_to_modify[:]
+print(f""Original list before removal: {list_for_remove}"")
+item_to_remove_remove = 3
+try:
+    list_for_remove.remove(item_to_remove_remove)
+    print(f""After .remove({item_to_remove_remove}): {list_for_remove}"")
+except ValueError as e:
+    print(f""Error during .remove(): {e}"")
+print(""\n--- Demonstration of del keyword ---"")
+list_for_del = list_to_modify[:]
+print(f""Original list before deletion: {list_for_del}"")
+item_to_delete_del = 2
+del list_for_del[1]
+print(f""After del list_for_del[1]: {list_for_del}"")
+print(""\n--- Performance and Immutability Comparison ---"")
+list_perf_remove = [10, 20, 30, 40, 50]
+item_remove_val = 30
+import time
+start_time = time.perf_counter()
+list_perf_remove.remove(item_remove_val)
+end_time = time.perf_counter()
+print(f""Time taken for .remove({item_remove_val}): {end_time - start_time:.6f} seconds"")
+list_perf_del = [10, 20, 30, 40, 50]
+index_del = 2
+start_time = time.perf_counter()
+del list_perf_del[index_del]
+end_time = time.perf_counter()
+print(f""Time taken for del list_perf_del[{index_del}]: {end_time - start_time:.6f} seconds"")
+list_to_compare = [10, 20, 30, 40, 50]
+item_val = 30
+index_of_item = list_to_compare.index(item_val)
+start_time = time.perf_counter()
+del list_to_compare[index_of_item]
+end_time = time.perf_counter()
+print(f""Time taken for del using index ({index_of_item}): {end_time - start_time:.6f} seconds"")
+if __name__ == '__main__':
+    pass",True,0,11898,189_6.py
+189,6,Remove an item from list,"Write a detailed explanation and accompanying Python code demonstrating the difference between using the .remove() method and the del keyword for removing items from a list, focusing on performance implications.","initial_list = [10, 20, 30, 40, 50]
+item_to_remove = 30
+list_with_remove = list(initial_list)
+list_with_del = list(initial_list)
+print(""--- Testing .remove() ---"")
+print(""Original List:"", list_with_remove)
+print(""Item to remove:"", item_to_remove)
+try:
+    list_with_remove.remove(item_to_remove)
+    print(""List after .remove():"", list_with_remove)
+except ValueError as e:
+    print(""Error during .remove():"", e)
+print(""\n--- Testing del keyword ---"")
+print(""Original List:"", list_with_del)
+del list_with_del[2]
+print(""List after del [2]:"", list_with_del)
+print(""\n--- Performance Consideration (In-place vs Deletion) ---"")
+list_a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+list_b = list(list_a)
+print(""List A initial:"", list_a)
+print(""List B initial:"", list_b)
+list_c = list(list_a)
+item_c = 5
+try:
+    list_c.remove(item_c)
+except ValueError:
+    pass
+print(""List C after .remove(5):"", list_c)
+list_d = list(list_a)
+del list_d[4]
+print(""List D after del [4]:"", list_d)
+print(""\nPerformance Summary:"")
+print(""The .remove(value) operation requires a linear search (O(n)) to find the element before deletion."")
+print(""The del/pop operations, when using an index, are typically O(1) for direct deletion at that location."")
+if __name__ == '__main__':
+    pass",True,1,11899,189_6_1.py
+191,9,Combine two simple lists,"Implement a function that combines two lists, list_one and list_two, and handles the case where the lists might contain overlapping elements by using a set to ensure the final result contains only unique elements.","def combine_unique_lists(list_one, list_two):
+    combined_set = set(list_one)
+    combined_set.update(list_two)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_unique_lists(list_a, list_b)
+    print(result)
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['cherry', 'date', 'elderberry']
+    result2 = combine_unique_lists(list_c, list_d)
+    print(result2)",True,0,11900,191_9.py
+191,9,Combine two simple lists,"Implement a function that combines two lists, list_one and list_two, and handles the case where the lists might contain overlapping elements by using a set to ensure the final result contains only unique elements.","def combine_lists(list_one, list_two):
+    combined_set = set(list_one)
+    combined_set.update(list_two)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_lists(list_a, list_b)
+    print(result)",True,1,11901,191_9_1.py
+191,9,Combine two simple lists,"Implement a function that combines two lists, list_one and list_two, and handles the case where the lists might contain overlapping elements by using a set to ensure the final result contains only unique elements.","def combine_unique_lists(list_one, list_two):
+    combined_set = set(list_one)
+    combined_set.update(list_two)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_unique_lists(list_a, list_b)
+    print(result)
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'elderberry']
+    result2 = combine_unique_lists(list_c, list_d)
+    print(result2)",True,2,11902,191_9_2.py
+191,9,Combine two simple lists,"Implement a function that combines two lists, list_one and list_two, and handles the case where the lists might contain overlapping elements by using a set to ensure the final result contains only unique elements.","def combine_lists(list_one, list_two):
+    combined_set = set(list_one)
+    combined_set.update(list_two)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_lists(list_a, list_b)
+    print(result)
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'elderberry']
+    result2 = combine_lists(list_c, list_d)
+    print(result2)",True,3,11903,191_9_3.py
+191,9,Combine two simple lists,"Implement a function that combines two lists, list_one and list_two, and handles the case where the lists might contain overlapping elements by using a set to ensure the final result contains only unique elements.","def combine_unique_lists(list_one, list_two):
+    combined_set = set(list_one)
+    combined_set.update(list_two)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_unique_lists(list_a, list_b)
+    print(result)
+    list_c = ['a', 'b', 'c']
+    list_d = ['c', 'd', 'e']
+    result2 = combine_unique_lists(list_c, list_d)
+    print(result2)",True,4,11904,191_9_4.py
+191,10,Combine two simple lists,Write a robust Python function named 'combine_lists' that accepts two lists as arguments and returns a new list containing all elements from both input lists. Implement this using the most efficient and Pythonic method.,"def combine_lists(list1, list2):
+    return list1 + list2
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    result = combine_lists(list_a, list_b)
+    print(result)",True,0,11905,191_10.py
+191,10,Combine two simple lists,Write a robust Python function named 'combine_lists' that accepts two lists as arguments and returns a new list containing all elements from both input lists. Implement this using the most efficient and Pythonic method.,"def combine_lists(list1, list2):
+    return list1 + list2
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    combined = combine_lists(list_a, list_b)
+    print(combined)",True,1,11906,191_10_1.py
+191,11,Combine two simple lists,"Implement an optimized function to combine two lists, list_a and list_b, ensuring the resulting list contains only unique elements. Use set operations for maximum efficiency.","def combine_unique(list_a, list_b):
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_unique(list_a, list_b)
+    print(result)",True,0,11907,191_11.py
+191,11,Combine two simple lists,"Implement an optimized function to combine two lists, list_a and list_b, ensuring the resulting list contains only unique elements. Use set operations for maximum efficiency.","def combine_unique(list_a, list_b):
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 1]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = combine_unique(list_a, list_b)
+    print(result)",True,1,11908,191_11_1.py
+191,11,Combine two simple lists,"Implement an optimized function to combine two lists, list_a and list_b, ensuring the resulting list contains only unique elements. Use set operations for maximum efficiency.","import time
+def combine_unique(list_a, list_b):
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 8]
+    start_time = time.perf_counter()
+    result = combine_unique(list_a, list_b)
+    end_time = time.perf_counter()
+    print(result)",True,2,11909,191_11_2.py
+191,11,Combine two simple lists,"Implement an optimized function to combine two lists, list_a and list_b, ensuring the resulting list contains only unique elements. Use set operations for maximum efficiency.","def combine_unique(list_a, list_b):
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 1]
+    list_b_sample = [4, 5, 6, 7, 8, 4]
+    result = combine_unique(list_a_sample, list_b_sample)
+    print(result)",True,3,11910,191_11_3.py
+191,11,Combine two simple lists,"Implement an optimized function to combine two lists, list_a and list_b, ensuring the resulting list contains only unique elements. Use set operations for maximum efficiency.","import time
+def combine_unique(list_a, list_b):
+    combined_set = set(list_a)
+    combined_set.update(list_b)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 1]
+    list_b_sample = [4, 5, 6, 7, 8, 4]
+    start_time = time.perf_counter()
+    result = combine_unique(list_a_sample, list_b_sample)
+    end_time = time.perf_counter()
+    print(f""List A: {list_a_sample}"")
+    print(f""List B: {list_b_sample}"")
+    print(f""Combined Unique List: {result}"")
+    print(f""Execution Time: {(end_time - start_time):.6f} seconds"")",True,4,11911,191_11_4.py
+191,12,Combine two simple lists,"Write a complete, well-documented Python script that defines a function to merge two lists of strings. The function must handle potential duplicates gracefully if the input lists contain them, and the output should be a single sorted list.","def merge_and_sort_strings(list1, list2):
+    merged_set = set(list1)
+    merged_set.update(list2)
+    sorted_list = sorted(list(merged_set))
+    return sorted_list
+if __name__ == '__main__':
+    list_a = [""apple"", ""banana"", ""cherry"", ""apple""]
+    list_b = [""date"", ""banana"", ""elderberry"", ""apple""]
+    result = merge_and_sort_strings(list_a, list_b)
+    print(result)",True,0,11912,191_12.py
+191,12,Combine two simple lists,"Write a complete, well-documented Python script that defines a function to merge two lists of strings. The function must handle potential duplicates gracefully if the input lists contain them, and the output should be a single sorted list.","def merge_and_sort_strings(list1, list2):
+    merged_set = set(list1)
+    merged_set.update(list2)
+    sorted_list = sorted(list(merged_set))
+    return sorted_list
+if __name__ == '__main__':
+    list_a = [""apple"", ""banana"", ""cherry"", ""apple""]
+    list_b = [""date"", ""banana"", ""fig"", ""apple""]
+    result = merge_and_sort_strings(list_a, list_b)
+    print(result)",True,1,11913,191_12_1.py
+191,8,Combine two simple lists,"Write a comprehensive example demonstrating how to combine two lists of numbers using list comprehension, focusing on readability and Pythonic style.","def combine_lists(list1, list2):
+    combined = [x + y for x in list1 for y in list2]
+    return combined
+list_a = [1, 2, 3]
+list_b = [10, 20]
+result = combine_lists(list_a, list_b)
+if __name__ == '__main__':
+    print(result)",True,0,11914,191_8.py
+191,8,Combine two simple lists,"Write a comprehensive example demonstrating how to combine two lists of numbers using list comprehension, focusing on readability and Pythonic style.","list1 = [1, 2, 3, 4, 5]
+list2 = [10, 20, 30, 40, 50]
+combined_list = [x + y for x, y in zip(list1, list2)]
+if __name__ == '__main__':
+    print(f""List 1: {list1}"")
+    print(f""List 2: {list2}"")
+    print(f""Combined List (using zip and list comprehension): {combined_list}"")",True,1,11915,191_8_1.py
+191,13,Combine two simple lists,"Develop an efficient method to combine two lists of integers, list1 and list2, into a single list. The implementation must avoid the use of the built-in `extend` method if possible, focusing on list comprehension or unpacking for performance.","def combine_lists(list1, list2):
+    return [item for item in list1 for item in list2]
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = [4, 5, 6]
+    combined = combine_lists(list1, list2)
+    print(combined)",True,0,11916,191_13.py
+191,13,Combine two simple lists,"Develop an efficient method to combine two lists of integers, list1 and list2, into a single list. The implementation must avoid the use of the built-in `extend` method if possible, focusing on list comprehension or unpacking for performance.","def combine_lists(list1, list2):
+    return [item for item in list1 for item in list2]
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    combined = combine_lists(list_a, list_b)
+    print(combined)",True,1,11917,191_13_1.py
+191,13,Combine two simple lists,"Develop an efficient method to combine two lists of integers, list1 and list2, into a single list. The implementation must avoid the use of the built-in `extend` method if possible, focusing on list comprehension or unpacking for performance.","def combine_lists(list1, list2):
+    return [item for sublist in (list1, list2) for item in sublist]
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = [4, 5, 6]
+    combined = combine_lists(list1, list2)
+    print(combined)",True,2,11918,191_13_2.py
+191,13,Combine two simple lists,"Develop an efficient method to combine two lists of integers, list1 and list2, into a single list. The implementation must avoid the use of the built-in `extend` method if possible, focusing on list comprehension or unpacking for performance.","def combine_lists(list1, list2):
+    return [item for item in list1] + [item for item in list2]
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4]
+    list_b = [5, 6, 7, 8]
+    combined = combine_lists(list_a, list_b)
+    print(combined)",True,3,11919,191_13_3.py
+191,13,Combine two simple lists,"Develop an efficient method to combine two lists of integers, list1 and list2, into a single list. The implementation must avoid the use of the built-in `extend` method if possible, focusing on list comprehension or unpacking for performance.","def combine_lists(list1, list2):
+    return [item for sublist in (list1, list2) for item in sublist]
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    combined = combine_lists(list_a, list_b)
+    print(combined)",True,4,11920,191_13_4.py
+191,14,Combine two simple lists,"Create a class method within a class designed to combine two internal lists. The method should be named 'merge_data' and should return a new list containing the concatenation of the two input lists, adhering strictly to object-oriented programming best practices.","class ListCombiner:
+    def __init__(self, list1, list2):
+        self.list1 = list1
+        self.list2 = list2
+    def merge_data(self):
+        return self.list1 + self.list2
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = [4, 5, 6]
+    combiner = ListCombiner(list_a, list_b)
+    result = combiner.merge_data()
+    print(result)",True,0,11921,191_14.py
+191,14,Combine two simple lists,"Create a class method within a class designed to combine two internal lists. The method should be named 'merge_data' and should return a new list containing the concatenation of the two input lists, adhering strictly to object-oriented programming best practices.","class ListCombiner:
+    def __init__(self, list1, list2):
+        self._list1 = list1
+        self._list2 = list2
+    def merge_data(self):
+        return self._list1 + self._list2
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = ['a', 'b', 'c']
+    combiner = ListCombiner(list_a, list_b)
+    result = combiner.merge_data()
+    print(result)",True,1,11922,191_14_1.py
+191,14,Combine two simple lists,"Create a class method within a class designed to combine two internal lists. The method should be named 'merge_data' and should return a new list containing the concatenation of the two input lists, adhering strictly to object-oriented programming best practices.","class ListCombiner:
+    def __init__(self, list1, list2):
+        self.list1 = list1
+        self.list2 = list2
+    def merge_data(self):
+        return self.list1 + self.list2
+if __name__ == '__main__':
+    list_a = [1, 2, 3]
+    list_b = ['a', 'b', 'c']
+    combiner = ListCombiner(list_a, list_b)
+    result = combiner.merge_data()
+    print(result)",True,2,11923,191_14_2.py
+191,14,Combine two simple lists,"Create a class method within a class designed to combine two internal lists. The method should be named 'merge_data' and should return a new list containing the concatenation of the two input lists, adhering strictly to object-oriented programming best practices.","class ListCombiner:
+    def __init__(self):
+        pass
+    def merge_data(self, list1, list2):
+        return list1 + list2
+if __name__ == '__main__':
+    combiner = ListCombiner()
+    list_a = [1, 2, 3]
+    list_b = ['a', 'b', 'c']
+    result = combiner.merge_data(list_a, list_b)
+    print(result)",True,3,11924,191_14_3.py
+192,0,Find common elements in lists,"Write a complete, efficient Python function named `find_common_elements` that accepts two lists as input and returns a new list containing only the elements present in both lists. Use set operations for optimal performance.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,0,11925,192_0.py
+192,1,Find common elements in lists,"Implement a function that finds the intersection of two lists of integers. The implementation must prioritize time complexity, aiming for O(n+m) complexity by utilizing hash sets.","import time
+def find_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    intersection = set1.intersection(set2)
+    return list(intersection)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 6]
+    list_b = [5, 6, 7, 8, 9, 1]
+    result = find_intersection(list_a, list_b)
+    print(result)",True,0,11926,192_1.py
+192,1,Find common elements in lists,"Implement a function that finds the intersection of two lists of integers. The implementation must prioritize time complexity, aiming for O(n+m) complexity by utilizing hash sets.","import time
+def find_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    intersection_set = set1.intersection(set2)
+    return list(intersection_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 6]
+    list_b = [5, 6, 7, 8, 9, 1]
+    result = find_intersection(list_a, list_b)
+    print(result)",True,1,11927,192_1_1.py
+192,1,Find common elements in lists,"Implement a function that finds the intersection of two lists of integers. The implementation must prioritize time complexity, aiming for O(n+m) complexity by utilizing hash sets.","def find_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    intersection = set1.intersection(set2)
+    return list(intersection)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = find_intersection(list_a, list_b)
+    print(result)",True,2,11928,192_1_2.py
+192,3,Find common elements in lists,"Create a class named `ListComparator` with a method `get_intersection(list1, list2)` that efficiently determines and returns the common elements between the two input lists. Ensure the method is well-documented.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.get_intersection(list_a, list_b)
+    print(result)",True,0,11929,192_3.py
+192,3,Find common elements in lists,"Create a class named `ListComparator` with a method `get_intersection(list1, list2)` that efficiently determines and returns the common elements between the two input lists. Ensure the method is well-documented.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 1]
+    result = comparator.get_intersection(list_a, list_b)
+    print(result)",True,1,11930,192_3_1.py
+192,3,Find common elements in lists,"Create a class named `ListComparator` with a method `get_intersection(list1, list2)` that efficiently determines and returns the common elements between the two input lists. Ensure the method is well-documented.","class ListComparator:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        return list(intersection)
+if __name__ == '__main__':
+    comparator = ListComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = comparator.get_intersection(list_a, list_b)
+    print(f""Intersection of {list_a} and {list_b}: {result1}"")
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'apple']
+    result2 = comparator.get_intersection(list_c, list_d)
+    print(f""Intersection of {list_c} and {list_d}: {result2}"")
+    list_e = [10, 20, 30]
+    list_f = [40, 50, 60]
+    result3 = comparator.get_intersection(list_e, list_f)
+    print(f""Intersection of {list_e} and {list_f}: {result3}"")",True,2,11931,192_3_2.py
+192,4,Find common elements in lists,"Write an optimized function that finds the common elements between three input lists (list_a, list_b, list_c). The result should be the elements present in all three lists.","def find_common_elements(list_a, list_b, list_c):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    set_c = set(list_c)
+    common_elements = set_a.intersection(set_b).intersection(set_c)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [3, 4, 5, 6, 7]
+    list_c = [4, 5, 8, 1]
+    result = find_common_elements(list_a, list_b, list_c)
+    print(result)",True,0,11932,192_4.py
+192,4,Find common elements in lists,"Write an optimized function that finds the common elements between three input lists (list_a, list_b, list_c). The result should be the elements present in all three lists.","def find_common_elements(list_a, list_b, list_c):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    set_c = set(list_c)
+    common_elements = set_a.intersection(set_b).intersection(set_c)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [3, 4, 5, 6, 7]
+    list_c = [4, 5, 8, 1, 9]
+    result = find_common_elements(list_a, list_b, list_c)
+    print(result)",True,1,11933,192_4_1.py
+192,5,Find common elements in lists,"Implement a function that finds the elements common to two lists, but instead of returning a list, return a set containing the common elements. Provide the most Pythonic and efficient solution.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    return set1.intersection(set2)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    common = find_common_elements(list_a, list_b)
+    print(common)",True,0,11934,192_5.py
+192,5,Find common elements in lists,"Implement a function that finds the elements common to two lists, but instead of returning a list, return a set containing the common elements. Provide the most Pythonic and efficient solution.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    return set1.intersection(set2)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    common = find_common_elements(list_a, list_b)
+    print(common)
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'elderberry']
+    common2 = find_common_elements(list_c, list_d)
+    print(common2)",True,1,11935,192_5_1.py
+192,5,Find common elements in lists,"Implement a function that finds the elements common to two lists, but instead of returning a list, return a set containing the common elements. Provide the most Pythonic and efficient solution.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    return set1.intersection(set2)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    common = find_common_elements(list_a, list_b)
+    print(common)",True,2,11936,192_5_2.py
+192,6,Find common elements in lists,"Write a script that takes two lists of numbers, removes any duplicate elements from each list first, and then finds and prints the unique common elements between the two lists.","import itertools
+def find_common_unique(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 2, 3, 4, 4, 5]
+    list_b = [3, 4, 5, 6, 7, 4]
+    common = find_common_unique(list_a, list_b)
+    print(common)",True,0,11937,192_6.py
+192,6,Find common elements in lists,"Write a script that takes two lists of numbers, removes any duplicate elements from each list first, and then finds and prints the unique common elements between the two lists.","import numpy as np
+def find_common_elements(list1, list2):
+    unique_list1 = set(list1)
+    unique_list2 = set(list2)
+    common_elements = unique_list1.intersection(unique_list2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 2, 3, 4, 4, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,1,11938,192_6_1.py
+192,6,Find common elements in lists,"Write a script that takes two lists of numbers, removes any duplicate elements from each list first, and then finds and prints the unique common elements between the two lists.","import itertools
+def find_common_unique(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 2, 3, 4, 4, 5]
+    list_b = [3, 4, 5, 6, 7, 7]
+    common = find_common_unique(list_a, list_b)
+    print(common)",True,2,11939,192_6_2.py
+192,6,Find common elements in lists,"Write a script that takes two lists of numbers, removes any duplicate elements from each list first, and then finds and prints the unique common elements between the two lists.","import itertools
+def find_common_unique(list1, list2):
+    unique1 = set(list1)
+    unique2 = set(list2)
+    common_elements = unique1.intersection(unique2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 2, 3, 4, 4, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = find_common_unique(list_a, list_b)
+    print(result)",True,3,11940,192_6_3.py
+192,6,Find common elements in lists,"Write a script that takes two lists of numbers, removes any duplicate elements from each list first, and then finds and prints the unique common elements between the two lists.","import itertools
+def find_common_unique(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 2, 3, 4, 4, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    common = find_common_unique(list_a, list_b)
+    print(common)",True,4,11941,192_6_4.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3, 9, 4, 7]
+    list_b = [8, 3, 1, 9, 6, 2, 10, 5]
+    common_elements = find_common_elements(list_a, list_b)
+    print(common_elements)",True,0,11942,192_7.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3, 9, 4]
+    list_b = [8, 3, 1, 7, 5, 10, 2]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,1,11943,192_7_1.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3, 9, 4, 7]
+    list_b = [8, 3, 1, 9, 5, 10, 6, 2]
+    common_elements = find_common_elements(list_a, list_b)
+    print(common_elements)",True,2,11944,192_7_2.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 3, 7, 9, 10, 11, 15]
+    list_b = [10, 3, 8, 15, 2, 11, 4]
+    common_elements = find_common_elements(list_a, list_b)
+    print(common_elements)",True,3,11945,192_7_3.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 3, 7, 9, 2, 8]
+    list_b = [9, 7, 4, 1, 10, 6, 3]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,4,11946,192_7_4.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3, 9, 4, 7]
+    list_b = [8, 3, 1, 9, 10, 2, 6, 5]
+    common_elements = find_common_elements(list_a, list_b)
+    print(common_elements)",True,5,11947,192_7_5.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = list(range(1000000))
+    list_b = list(range(500000, 1500001))
+    common_elements = find_common_elements(list_a, list_b)
+    print(f""Number of common elements found: {len(common_elements)}"")
+    print(""First 10 common elements:"")
+    for i in range(min(10, len(common_elements))):
+        print(common_elements[i])
+    if len(common_elements) > 10:
+        print(""..."")",True,6,11948,192_7_6.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 3, 7, 9, 10, 11, 12]
+    list_b = [10, 3, 8, 1, 12, 4, 6]
+    common_elements = find_common_elements(list_a, list_b)
+    print(common_elements)",True,7,11949,192_7_7.py
+192,7,Find common elements in lists,"Design and implement a function that finds the common elements between two lists of arbitrary, potentially large, unsorted data. The solution must be highly memory-efficient.","import sys
+def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common = set1.intersection(set2)
+    return list(common)
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3, 9, 4, 5]
+    list_b = [5, 8, 1, 9, 10, 3, 7]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,8,11950,192_7_8.py
+192,8,Find common elements in lists,"Write a function that finds the elements present in both list A and list B, and also identifies which elements are unique to list A and which are unique to list B. Return a dictionary with keys 'common', 'only_in_A', and 'only_in_B'.","def find_set_differences(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    common = set_a.intersection(set_b)
+    only_in_a = set_a.difference(set_b)
+    only_in_b = set_b.difference(set_a)
+    return {
+        'common': list(common),
+        'only_in_A': list(only_in_a),
+        'only_in_B': list(only_in_b)
+    }
+if __name__ == '__main__':
+    list_a_sample = [1, 2, 3, 4, 5, 6]
+    list_b_sample = [4, 5, 6, 7, 8, 9]
+    result = find_set_differences(list_a_sample, list_b_sample)
+    print(result)",True,0,11951,192_8.py
+192,8,Find common elements in lists,"Write a function that finds the elements present in both list A and list B, and also identifies which elements are unique to list A and which are unique to list B. Return a dictionary with keys 'common', 'only_in_A', and 'only_in_B'.","def find_set_differences(A, B):
+    set_A = set(A)
+    set_B = set(B)
+    common = set_A.intersection(set_B)
+    only_in_A = set_A.difference(set_B)
+    only_in_B = set_B.difference(set_A)
+    return {
+        'common': list(common),
+        'only_in_A': list(only_in_A),
+        'only_in_B': list(only_in_B)
+    }
+if __name__ == '__main__':
+    list_A = [1, 2, 3, 4, 5, 6]
+    list_B = [4, 5, 6, 7, 8, 9]
+    result = find_set_differences(list_A, list_B)
+    print(result)",True,1,11952,192_8_1.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 11, 12]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common to {list1}, {list2}, {list3}: {common1}"")
+    common2 = find_common_elements(list1, list4)
+    print(f""Common to {list1}, {list4}: {common2}"")
+    common3 = find_common_elements(list1)
+    print(f""Common to {list1}: {common3}"")
+    common_empty = find_common_elements()
+    print(f""Common to no lists: {common_empty}"")
+    list_a = ['a', 'b', 'c']
+    list_b = ['c', 'd', 'e']
+    list_c = ['c', 'f', 'g']
+    common_letters = find_common_elements(list_a, list_b, list_c)
+    print(f""Common to {list_a}, {list_b}, {list_c}: {common_letters}"")",True,0,11953,192_9.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 11, 12]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common elements in {list1}, {list2}, {list3}: {common1}"")
+    common2 = find_common_elements(list1, list4)
+    print(f""Common elements in {list1}, {list4}: {common2}"")
+    common3 = find_common_elements([10, 20], [30, 40])
+    print(f""Common elements in [10, 20], [30, 40]: {common3}"")
+    common_empty = find_common_elements([1, 2], [3, 4], [5, 6])
+    print(f""Common elements in [1, 2], [3, 4], [5, 6]: {common_empty}"")
+    common_single = find_common_elements([1, 2, 3], [2, 3, 4])
+    print(f""Common elements in [1, 2, 3], [2, 3, 4]: {common_single}"")",True,1,11954,192_9_1.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 8]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common elements in {list1}, {list2}, and {list3}: {common1}"")
+    common2 = find_common_elements(list1, list4)
+    print(f""Common elements in {list1} and {list4}: {common2}"")
+    common3 = find_common_elements([10, 20], [30, 40])
+    print(f""Common elements in [10, 20] and [30, 40]: {common3}"")
+    common_empty = find_common_elements([1, 2], [3, 4], [5, 6])
+    print(f""Common elements in [1, 2], [3, 4], and [5, 6]: {common_empty}"")
+    common_single = find_common_elements([1, 2, 3], [3, 4, 5])
+    print(f""Common elements in [1, 2, 3] and [3, 4, 5]: {common_single}"")",True,2,11955,192_9_2.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 8]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common elements in {list1}, {list2}, and {list3}: {common1}"")
+    common2 = find_common_elements(list1, list4)
+    print(f""Common elements in {list1} and {list4}: {common2}"")
+    common3 = find_common_elements([10, 20], [30, 40])
+    print(f""Common elements in [10, 20] and [30, 40]: {common3}"")
+    common4 = find_common_elements([1, 2, 3])
+    print(f""Common elements in [1, 2, 3]: {common4}"")
+    common5 = find_common_elements()
+    print(f""Common elements in no lists: {common5}"")",True,3,11956,192_9_3.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return set()
+    return first_set
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 11, 12]
+    common1 = find_common_elements(list1, list2, list3, list4)
+    print(f""Common elements: {common1}"")
+    list_a = ['apple', 'banana', 'cherry']
+    list_b = ['banana', 'date', 'apple']
+    list_c = ['apple', 'grape', 'banana']
+    common2 = find_common_elements(list_a, list_b, list_c)
+    print(f""Common elements: {common2}"")
+    list_x = [10, 20]
+    list_y = [30, 40]
+    common3 = find_common_elements(list_x, list_y)
+    print(f""Common elements: {common3}"")
+    empty_lists = []
+    common4 = find_common_elements(empty_lists, [1, 2], [])
+    print(f""Common elements (with empty list): {common4}"")",True,4,11957,192_9_4.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 8]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common elements in {list1}, {list2}, and {list3}: {common1}"")
+    common2 = find_common_elements(list1, list4)
+    print(f""Common elements in {list1} and {list4}: {common2}"")
+    common3 = find_common_elements([10, 20], [30, 40])
+    print(f""Common elements in [10, 20] and [30, 40]: {common3}"")
+    common4 = find_common_elements([1, 2], [3, 4], [5, 6])
+    print(f""Common elements in [1, 2], [3, 4], and [5, 6]: {common4}"")
+    common5 = find_common_elements([])
+    print(f""Common elements in an empty set of lists: {common5}"")",True,5,11958,192_9_5.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 8]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common elements in {list1}, {list2}, {list3}: {common1}"")
+    common2 = find_common_elements(list1, list4)
+    print(f""Common elements in {list1}, {list4}: {common2}"")
+    common3 = find_common_elements([10, 20], [30, 40])
+    print(f""Common elements in [10, 20], [30, 40]: {common3}"")
+    common_empty = find_common_elements([1, 2], [3, 4], [5, 6])
+    print(f""Common elements in [1, 2], [3, 4], [5, 6]: {common_empty}"")
+    common_single = find_common_elements([1, 2, 3], [2, 3, 4])
+    print(f""Common elements in [1, 2, 3], [2, 3, 4]: {common_single}"")",True,6,11959,192_9_6.py
+192,9,Find common elements in lists,Develop a general-purpose utility function that accepts any number of lists and returns the elements that are common to *all* provided lists. The function signature must be flexible to handle variable list inputs.,"def find_common_elements(*lists):
+    if not lists:
+        return set()
+    first_set = set(lists[0])
+    for lst in lists[1:]:
+        current_set = set(lst)
+        first_set = first_set.intersection(current_set)
+        if not first_set:
+            return []
+    return list(first_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [3, 4, 5, 6, 7]
+    list3 = [4, 5, 8, 9, 10]
+    list4 = [5, 6, 7, 8]
+    common1 = find_common_elements(list1, list2, list3)
+    print(f""Common to {list1}, {list2}, {list3}: {common1}"")
+    common2 = find_common_elements(list2, list3, list4)
+    print(f""Common to {list2}, {list3}, {list4}: {common2}"")
+    common3 = find_common_elements([10, 20], [30, 40])
+    print(f""Common to [10, 20], [30, 40]: {common3}"")
+    common4 = find_common_elements([1, 2, 3], [4, 5, 6])
+    print(f""Common to [1, 2, 3], [4, 5, 6]: {common4}"")
+    common5 = find_common_elements([1, 2], [1, 2, 3])
+    print(f""Common to [1, 2], [1, 2, 3]: {common5}"")
+    common6 = find_common_elements([])
+    print(f""Common to []: {common6}"")",True,7,11960,192_9_7.py
+192,10,Find common elements in lists,"Write a complete, efficient Python function named `find_common_elements` that accepts two lists as input and returns a new list containing only the elements present in both input lists. Implement the solution using set operations for optimal time complexity.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 4]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,0,11961,192_10.py
+192,10,Find common elements in lists,"Write a complete, efficient Python function named `find_common_elements` that accepts two lists as input and returns a new list containing only the elements present in both input lists. Implement the solution using set operations for optimal time complexity.","def find_common_elements(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    common_elements = set1.intersection(set2)
+    return list(common_elements)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5, 5]
+    list_b = [4, 5, 6, 7, 8, 1]
+    result = find_common_elements(list_a, list_b)
+    print(result)",True,1,11962,192_10_1.py
+192,11,Find common elements in lists,"Implement a robust Python function that finds the intersection of two lists, `list_a` and `list_b`. The function must handle potential duplicates within the input lists correctly and return a list of unique common elements. Use the most Pythonic and efficient method.","def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    return list(intersection)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 2, 5]
+    list2 = [4, 5, 6, 2, 1]
+    result = find_intersection(list1, list2)
+    print(result)",True,0,11963,192_11.py
+192,11,Find common elements in lists,"Implement a robust Python function that finds the intersection of two lists, `list_a` and `list_b`. The function must handle potential duplicates within the input lists correctly and return a list of unique common elements. Use the most Pythonic and efficient method.","def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    return list(intersection)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 2, 5]
+    list2 = [4, 5, 6, 2, 3, 7]
+    result = find_intersection(list1, list2)
+    print(result)",True,1,11964,192_11_1.py
+192,11,Find common elements in lists,"Implement a robust Python function that finds the intersection of two lists, `list_a` and `list_b`. The function must handle potential duplicates within the input lists correctly and return a list of unique common elements. Use the most Pythonic and efficient method.","def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    return list(intersection)
+if __name__ == '__main__':
+    list1 = [1, 2, 2, 3, 4, 4]
+    list2 = [3, 4, 4, 5, 6]
+    result = find_intersection(list1, list2)
+    print(result)",True,2,11965,192_11_2.py
+192,11,Find common elements in lists,"Implement a robust Python function that finds the intersection of two lists, `list_a` and `list_b`. The function must handle potential duplicates within the input lists correctly and return a list of unique common elements. Use the most Pythonic and efficient method.","def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection_set = set_a.intersection(set_b)
+    return list(intersection_set)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 2, 5]
+    list2 = [4, 5, 6, 7, 2, 8]
+    result = find_intersection(list1, list2)
+    print(result)",True,3,11966,192_11_3.py
+192,11,Find common elements in lists,"Implement a robust Python function that finds the intersection of two lists, `list_a` and `list_b`. The function must handle potential duplicates within the input lists correctly and return a list of unique common elements. Use the most Pythonic and efficient method.","def find_intersection(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    return list(intersection)
+if __name__ == '__main__':
+    list1 = [1, 2, 2, 3, 4, 4]
+    list2 = [2, 4, 4, 5, 6]
+    result = find_intersection(list1, list2)
+    print(result)",True,4,11967,192_11_4.py
+191,4,Combine two simple lists,"Create a script that reads two separate lists of integers from standard input and prints the combined list, utilizing list concatenation for simplicity and efficiency.",,False,0,11968,191_4.py
+192,13,Find common elements in lists,"Write an optimized class method within a class named `ListUtils` called `get_intersection(self, list1, list2)` that efficiently determines and returns the common elements between `list1` and `list2`. The implementation must prioritize time efficiency (O(min(n, m))) and adhere to object-oriented best practices.","class ListUtils:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        return list(set1.intersection(set2))
+if __name__ == '__main__':
+    utils = ListUtils()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = utils.get_intersection(list_a, list_b)
+    print(f""Intersection of {list_a} and {list_b}: {result1}"")
+    list_c = [10, 20, 30, 40]
+    list_d = [30, 40, 50, 60]
+    result2 = utils.get_intersection(list_c, list_d)
+    print(f""Intersection of {list_c} and {list_d}: {result2}"")
+    list_e = ['a', 'b', 'c']
+    list_f = ['c', 'd', 'e']
+    result3 = utils.get_intersection(list_e, list_f)
+    print(f""Intersection of {list_e} and {list_f}: {result3}"")",True,0,11969,192_13.py
+192,13,Find common elements in lists,"Write an optimized class method within a class named `ListUtils` called `get_intersection(self, list1, list2)` that efficiently determines and returns the common elements between `list1` and `list2`. The implementation must prioritize time efficiency (O(min(n, m))) and adhere to object-oriented best practices.","class ListUtils:
+    def get_intersection(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        return list(set1.intersection(set2))
+if __name__ == '__main__':
+    utils = ListUtils()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result1 = utils.get_intersection(list_a, list_b)
+    print(f""Intersection of {list_a} and {list_b}: {result1}"")
+    list_c = ['apple', 'banana', 'cherry']
+    list_d = ['banana', 'date', 'apple']
+    result2 = utils.get_intersection(list_c, list_d)
+    print(f""Intersection of {list_c} and {list_d}: {result2}"")
+    list_e = [10, 20, 30]
+    list_f = [30, 10, 40]
+    result3 = utils.get_intersection(list_e, list_f)
+    print(f""Intersection of {list_e} and {list_f}: {result3}"")",True,1,11970,192_13_1.py
+192,14,Find common elements in lists,Create a standalone Python program that defines a function to find common elements between two arbitrary lists of strings. The function should handle case-insensitivity for comparison and return the common elements in a sorted list.,"def find_common_elements(list1, list2):
+    set1 = {item.lower() for item in list1}
+    set2 = {item.lower() for item in list2}
+    common = set1.intersection(set2)
+    return sorted([item.capitalize() for item in common])
+if __name__ == '__main__':
+    list_a = [""Apple"", ""Banana"", ""Cherry"", ""Date""]
+    list_b = [""apple"", ""Elderberry"", ""Banana"", ""Fig""]
+    common_items = find_common_elements(list_a, list_b)
+    print(common_items)",True,0,11971,192_14.py
+192,14,Find common elements in lists,Create a standalone Python program that defines a function to find common elements between two arbitrary lists of strings. The function should handle case-insensitivity for comparison and return the common elements in a sorted list.,"def find_common_elements(list1, list2):
+    set1 = {item.lower() for item in list1}
+    set2 = {item.lower() for item in list2}
+    common = set1.intersection(set2)
+    return sorted([item.capitalize() for item in common])
+if __name__ == '__main__':
+    list_a = [""Apple"", ""Banana"", ""Cherry"", ""Date""]
+    list_b = [""apple"", ""Fig"", ""Banana"", ""Grape""]
+    common_items = find_common_elements(list_a, list_b)
+    print(common_items)",True,1,11972,192_14_1.py
+193,0,Sum all elements in a list,"Write a complete, efficient Python script that takes a list of integers as input and calculates their total sum. Use a clear function definition.","def calculate_sum(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    result = calculate_sum(sample_list)
+    print(result)",True,0,11973,193_0.py
+193,0,Sum all elements in a list,"Write a complete, efficient Python script that takes a list of integers as input and calculates their total sum. Use a clear function definition.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    result = calculate_sum(sample_list)
+    print(result)",True,1,11974,193_0_1.py
+193,0,Sum all elements in a list,"Write a complete, efficient Python script that takes a list of integers as input and calculates their total sum. Use a clear function definition.","def calculate_sum(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 15, 20]
+    result = calculate_sum(sample_list)
+    print(result)",True,2,11975,193_0_2.py
+193,1,Sum all elements in a list,Implement a Python function named `calculate_list_sum` that accepts any iterable (like a list) and returns the sum of all its numeric elements. Ensure the implementation is the most Pythonic and efficient method.,"def calculate_list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20.5, 30.5]
+    list3 = [-1, 5, -10, 2]
+    empty_list = []
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    print(f""Sum of {list3}: {calculate_list_sum(list3)}"")
+    print(f""Sum of {empty_list}: {calculate_list_sum(empty_list)}"")",True,0,11976,193_1.py
+193,1,Sum all elements in a list,Implement a Python function named `calculate_list_sum` that accepts any iterable (like a list) and returns the sum of all its numeric elements. Ensure the implementation is the most Pythonic and efficient method.,"def calculate_list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, -5, 20, 0]
+    empty_list = []
+    float_list = [1.5, 2.5, 3.0]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    print(f""Sum of {empty_list}: {calculate_list_sum(empty_list)}"")
+    print(f""Sum of {float_list}: {calculate_list_sum(float_list)}"")",True,1,11977,193_1_1.py
+193,1,Sum all elements in a list,Implement a Python function named `calculate_list_sum` that accepts any iterable (like a list) and returns the sum of all its numeric elements. Ensure the implementation is the most Pythonic and efficient method.,"def calculate_list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, -5, 20, 0]
+    list3 = []
+    list4 = [3.5, 1.5, 5.0]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    print(f""Sum of {list3}: {calculate_list_sum(list3)}"")
+    print(f""Sum of {list4}: {calculate_list_sum(list4)}"")",True,2,11978,193_1_2.py
+193,1,Sum all elements in a list,Implement a Python function named `calculate_list_sum` that accepts any iterable (like a list) and returns the sum of all its numeric elements. Ensure the implementation is the most Pythonic and efficient method.,"def calculate_list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, -5, 2.5, 100]
+    empty_list = []
+    float_list = [1.5, 2.5, 3.0]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    print(f""Sum of {empty_list}: {calculate_list_sum(empty_list)}"")
+    print(f""Sum of {float_list}: {calculate_list_sum(float_list)}"")",True,3,11979,193_1_3.py
+193,1,Sum all elements in a list,Implement a Python function named `calculate_list_sum` that accepts any iterable (like a list) and returns the sum of all its numeric elements. Ensure the implementation is the most Pythonic and efficient method.,"def calculate_list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(calculate_list_sum(list1))
+    list2 = [10, -5, 20.5, 0]
+    print(calculate_list_sum(list2))
+    empty_list = []
+    print(calculate_list_sum(empty_list))
+    tuple1 = (100, 200)
+    print(calculate_list_sum(tuple1))",True,4,11980,193_1_4.py
+193,1,Sum all elements in a list,Implement a Python function named `calculate_list_sum` that accepts any iterable (like a list) and returns the sum of all its numeric elements. Ensure the implementation is the most Pythonic and efficient method.,"def calculate_list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, -5, 20.5]
+    empty_list = []
+    float_list = [1.5, 2.5, 3.0]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    print(f""Sum of {empty_list}: {calculate_list_sum(empty_list)}"")
+    print(f""Sum of {float_list}: {calculate_list_sum(float_list)}"")",True,5,11981,193_1_5.py
+193,2,Sum all elements in a list,Develop a robust Python function to sum all elements in a given list of numbers. The function must handle empty lists gracefully by returning 0.,"def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10, -5, 20]
+    list4 = []
+    print(sum_list(list1))
+    print(sum_list(list2))
+    print(sum_list(list3))
+    print(sum_list(list4))",True,0,11982,193_2.py
+193,2,Sum all elements in a list,Develop a robust Python function to sum all elements in a given list of numbers. The function must handle empty lists gracefully by returning 0.,"def sum_list(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [-10, 20, 30]
+    list4 = []
+    print(sum_list(list1))
+    print(sum_list(list2))
+    print(sum_list(list3))
+    print(sum_list(list4))",True,1,11983,193_2_1.py
+193,3,Sum all elements in a list,"Write a single line, highly optimized Python expression to compute the sum of elements in the list `[10, 20, 30, 40]`. Explain the underlying mechanism briefly.","if __name__ == '__main__':
+    print(sum([10, 20, 30, 40]))",True,0,11984,193_3.py
+193,3,Sum all elements in a list,"Write a single line, highly optimized Python expression to compute the sum of elements in the list `[10, 20, 30, 40]`. Explain the underlying mechanism briefly.","if __name__ == '__main__':
+    result = sum([10, 20, 30, 40])
+    print(result)",True,1,11985,193_3_1.py
+193,4,Sum all elements in a list,Create a class named `ListSummer` with a method `sum_elements` that calculates and returns the sum of the list instance's contents. Ensure the class design adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self.data = data
+    def sum_elements(self):
+        return sum(self.data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    summer = ListSummer(sample_list)
+    result = summer.sum_elements()
+    print(result)",True,0,11986,193_4.py
+193,4,Sum all elements in a list,Create a class named `ListSummer` with a method `sum_elements` that calculates and returns the sum of the list instance's contents. Ensure the class design adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self._data = data
+    def sum_elements(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    summer = ListSummer(sample_list)
+    result = summer.sum_elements()
+    print(result)",True,1,11987,193_4_1.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: Invalid input '{num}'. Only numbers are allowed."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_numbers = [10, 25, 3.5, ""hello"", 42]
+    print(""Sample numbers to process:"", sample_numbers)
+    result = calculate_sum(sample_numbers)
+    if result is not None:
+        print(""Total sum:"", result)",True,0,11988,193_5.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: Invalid input '{num}'. Only numbers are allowed."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_numbers = [10, 5.5, 20, ""a"", 3.5]
+    result = calculate_sum(sample_numbers)
+    if result is not None:
+        print(f""The sum of the valid numbers is: {result}"")",True,1,11989,193_5_1.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: Invalid input '{num}'. Only numbers are allowed."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, 20, ""a"", 3.5]
+    numbers_to_sum = []
+    error_occurred = False
+    for item in sample_input:
+        try:
+            if isinstance(item, str):
+                raise ValueError(""String encountered"")
+            numbers_to_sum.append(float(item))
+        except ValueError:
+            print(f""Error: Could not convert '{item}' to a number. Skipping this value."")
+            error_occurred = True
+    if numbers_to_sum:
+        final_sum = sum(numbers_to_sum)
+        print(f""The list of valid numbers is: {numbers_to_sum}"")
+        print(f""The total sum is: {final_sum}"")
+    else:
+        print(""No valid numbers were successfully processed."")",True,2,11990,193_5_2.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: '{num}' is not a valid number."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_numbers = [10, 5.5, 20, ""a"", 3.5]
+    result = calculate_sum(sample_numbers)
+    if result is not None:
+        print(f""The sum of the valid numbers is: {result}"")",True,3,11991,193_5_3.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8""
+    try:
+        number_list = [int(x) for x in sample_input.split()]
+        result = calculate_sum(number_list)
+        print(result)
+    except ValueError:
+        print(""Error: Input contained non-integer values."")",True,4,11992,193_5_4.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: '{num}' is not a valid number."")
+    return total
+if __name__ == '__main__':
+    sample_numbers = [10, 5.5, 20, ""a"", 3.5]
+    print(""Input list:"", sample_numbers)
+    result = calculate_sum(sample_numbers)
+    print(""Total sum:"", result)",True,5,11993,193_5_5.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: Invalid input '{num}'. Only numbers are allowed."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_numbers = [10, 5.5, 20, ""hello"", 3.5]
+    result = calculate_sum(sample_numbers)
+    if result is not None:
+        print(f""The sum of the valid numbers is: {result}"")",True,6,11994,193_5_6.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: Invalid input '{num}'. Only numbers are allowed."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_numbers = [10, 25.5, 3, ""a"", 8]
+    result = calculate_sum(sample_numbers)
+    if result is not None:
+        print(result)",True,7,11995,193_5_7.py
+193,5,Sum all elements in a list,"Write a script that prompts the user to input a list of numbers, parses the input, and then prints the total sum. Include necessary error handling for non-integer inputs.","def calculate_sum(numbers):
+    total = 0
+    for num in numbers:
+        if isinstance(num, int) or isinstance(num, float):
+            total += num
+        else:
+            print(f""Error: Invalid input '{num}'. Only numbers are allowed."")
+            return None
+    return total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, 20, ""a"", 3.5]
+    numbers_to_sum = []
+    error_occurred = False
+    for item in sample_input:
+        try:
+            if isinstance(item, str):
+                raise ValueError(""String encountered"")
+            numbers_to_sum.append(float(item))
+        except ValueError:
+            print(f""Error: Could not convert '{item}' to a number. Skipping this item."")
+            error_occurred = True
+    if not error_occurred:
+        result = calculate_sum(numbers_to_sum)
+        if result is not None:
+            print(result)",True,8,11996,193_5_8.py
+192,2,Find common elements in lists,"Develop a robust Python script that reads two separate lists of strings from standard input and prints all the common strings found between them, handling potential duplicates within the input lists correctly.",,False,0,11997,192_2.py
+193,7,Sum all elements in a list,"Refactor the previous summation code to use the built-in `sum()` function. Provide the final, production-ready code block.","if __name__ == '__main__':
+    numbers = [10, 25, 32, 8]
+    total = sum(numbers)
+    print(total)",True,0,11998,193_7.py
+193,7,Sum all elements in a list,"Refactor the previous summation code to use the built-in `sum()` function. Provide the final, production-ready code block.","if __name__ == '__main__':
+    numbers = [1, 5, 10, 15, 20]
+    total = sum(numbers)
+    print(total)",True,1,11999,193_7_1.py
+193,7,Sum all elements in a list,"Refactor the previous summation code to use the built-in `sum()` function. Provide the final, production-ready code block.","def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    data = [10, 25, 30, 45, 50]
+    result = calculate_sum(data)
+    print(result)",True,2,12000,193_7_2.py
+193,7,Sum all elements in a list,"Refactor the previous summation code to use the built-in `sum()` function. Provide the final, production-ready code block.","if __name__ == '__main__':
+    numbers = [10, 25, 32, 48, 15]
+    total = sum(numbers)
+    print(total)",True,3,12001,193_7_3.py
+193,7,Sum all elements in a list,"Refactor the previous summation code to use the built-in `sum()` function. Provide the final, production-ready code block.","def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    data = [10, 25, 32, 8, 15]
+    result = calculate_sum(data)
+    print(result)",True,4,12002,193_7_4.py
+193,8,Sum all elements in a list,Design and write a decorator for Python that automatically calculates and logs the sum of the list passed to the decorated function before execution.,"def sum_and_log(func):
+    def wrapper(*args, **kwargs):
+        if args and isinstance(args[0], list):
+            result = sum(args[0])
+            print(f""Sum before execution: {result}"")
+        return func(*args, **kwargs)
+    return wrapper
+@sum_and_log
+def add(numbers):
+    return numbers[0] + numbers[1]
+@sum_and_log
+def multiply(numbers):
+    return numbers[0] * numbers[1]
+if __name__ == '__main__':
+    print(""Testing add function:"")
+    add([1, 2, 3])
+    print(""\nTesting multiply function:"")
+    multiply([4, 5])",True,0,12003,193_8.py
+193,8,Sum all elements in a list,Design and write a decorator for Python that automatically calculates and logs the sum of the list passed to the decorated function before execution.,"def sum_and_log(func):
+    def wrapper(*args, **kwargs):
+        if args and isinstance(args[0], list):
+            result = sum(args[0])
+            print(f""Sum before execution: {result}"")
+        return func(*args, **kwargs)
+    return wrapper
+@sum_and_log
+def add(numbers):
+    return numbers[0] + numbers[1]
+@sum_and_log
+def multiply(numbers):
+    return numbers[0] * numbers[1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4]
+    print(""Testing add function:"")
+    result_add = add(list1)
+    print(f""Result of add: {result_add}\n"")
+    list2 = [10, 20]
+    print(""Testing multiply function:"")
+    result_multiply = multiply(list2)
+    print(f""Result of multiply: {result_multiply}"")",True,1,12004,193_8_1.py
+193,8,Sum all elements in a list,Design and write a decorator for Python that automatically calculates and logs the sum of the list passed to the decorated function before execution.,"def sum_and_log(func):
+    def wrapper(*args, **kwargs):
+        if args and isinstance(args[0], list):
+            result = sum(args[0])
+            print(f""Sum before execution: {result}"")
+        return func(*args, **kwargs)
+    return wrapper
+@sum_and_log
+def add(numbers):
+    return numbers[0] + numbers[1]
+@sum_and_log
+def multiply(numbers):
+    return numbers[0] * numbers[1]
+if __name__ == '__main__':
+    add([1, 2, 3])
+    print(""-"" * 20)
+    multiply([4, 5])",True,2,12005,193_8_2.py
+193,8,Sum all elements in a list,Design and write a decorator for Python that automatically calculates and logs the sum of the list passed to the decorated function before execution.,"def sum_and_log(func):
+    def wrapper(*args, **kwargs):
+        if args and isinstance(args[0], list):
+            result = sum(args[0])
+            print(f""Sum before execution: {result}"")
+        return func(*args, **kwargs)
+    return wrapper
+@sum_and_log
+def add(numbers):
+    return numbers[0] + numbers[1]
+@sum_and_log
+def multiply(numbers):
+    return numbers[0] * numbers[1]
+if __name__ == '__main__':
+    add([1, 2, 3])
+    multiply([10, 5])",True,3,12006,193_8_3.py
+193,8,Sum all elements in a list,Design and write a decorator for Python that automatically calculates and logs the sum of the list passed to the decorated function before execution.,"def sum_and_log(func):
+    def wrapper(*args, **kwargs):
+        if args and isinstance(args[0], list):
+            result = sum(args[0])
+            print(f""Sum before execution: {result}"")
+        return func(*args, **kwargs)
+    return wrapper
+@sum_and_log
+def add(numbers):
+    return numbers[0] + numbers[1]
+@sum_and_log
+def multiply(numbers):
+    return numbers[0] * numbers[1]
+if __name__ == '__main__':
+    add([1, 2, 3])
+    multiply([4, 5])",True,4,12007,193_8_4.py
+192,12,Find common elements in lists,"Develop a script that reads two separate lists of integers from standard input. The script must then calculate and print all the elements that are common to both lists, ensuring the output is sorted and contains no duplicates.",,False,0,12008,192_12.py
+193,10,Sum all elements in a list,"Write a complete, robust Python script that takes a list of integers as input and calculates their sum. The script must include clear comments and handle the case of an empty list gracefully.","def calculate_sum(numbers):
+    if not numbers:
+        return 0
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, -3, 8]
+    result = calculate_sum(sample_list)
+    print(result)
+    empty_list = []
+    result_empty = calculate_sum(empty_list)
+    print(result_empty)",True,0,12009,193_10.py
+193,10,Sum all elements in a list,"Write a complete, robust Python script that takes a list of integers as input and calculates their sum. The script must include clear comments and handle the case of an empty list gracefully.","def calculate_sum(numbers):
+    if not numbers:
+        return 0
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, -3, 7]
+    result = calculate_sum(sample_list)
+    print(result)
+    empty_list = []
+    result_empty = calculate_sum(empty_list)
+    print(result_empty)",True,1,12010,193_10_1.py
+193,10,Sum all elements in a list,"Write a complete, robust Python script that takes a list of integers as input and calculates their sum. The script must include clear comments and handle the case of an empty list gracefully.","def calculate_sum(numbers):
+    if not numbers:
+        return 0
+    total = 0
+    for num in numbers:
+        total += num
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, -3, 8]
+    result = calculate_sum(sample_list)
+    print(result)
+    empty_list = []
+    result_empty = calculate_sum(empty_list)
+    print(result_empty)",True,2,12011,193_10_2.py
+193,11,Sum all elements in a list,Implement an optimized Python function named 'list_sum' that accepts any iterable (like a list) and returns the sum of all its numeric elements using the most efficient built-in method.,"def list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(list_sum(list1))
+    list2 = [10, -5, 20.5, 0]
+    print(list_sum(list2))
+    list3 = []
+    print(list_sum(list3))
+    list4 = [100]
+    print(list_sum(list4))",True,0,12012,193_11.py
+193,11,Sum all elements in a list,Implement an optimized Python function named 'list_sum' that accepts any iterable (like a list) and returns the sum of all its numeric elements using the most efficient built-in method.,"def list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, -5, 20, 0]
+    list3 = []
+    list4 = [3.5, 1.5, 5.0]
+    print(f""Sum of {list1}: {list_sum(list1)}"")
+    print(f""Sum of {list2}: {list_sum(list2)}"")
+    print(f""Sum of {list3}: {list_sum(list3)}"")
+    print(f""Sum of {list4}: {list_sum(list4)}"")",True,1,12013,193_11_1.py
+193,11,Sum all elements in a list,Implement an optimized Python function named 'list_sum' that accepts any iterable (like a list) and returns the sum of all its numeric elements using the most efficient built-in method.,"def list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(list_sum(list1))
+    list2 = [10.5, 20.5, 30.0]
+    print(list_sum(list2))
+    list3 = [-1, 5, -3, 10]
+    print(list_sum(list3))
+    empty_list = []
+    print(list_sum(empty_list))",True,2,12014,193_11_2.py
+193,11,Sum all elements in a list,Implement an optimized Python function named 'list_sum' that accepts any iterable (like a list) and returns the sum of all its numeric elements using the most efficient built-in method.,"def list_sum(iterable):
+    return sum(iterable)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {list_sum(list1)}"")
+    list2 = [10, -5, 20.5, 0]
+    print(f""Sum of {list2}: {list_sum(list2)}"")
+    empty_list = []
+    print(f""Sum of {empty_list}: {list_sum(empty_list)}"")
+    tuple_data = (100, 200, 300)
+    print(f""Sum of {tuple_data}: {list_sum(tuple_data)}"")",True,3,12015,193_11_3.py
+193,6,Sum all elements in a list,"Implement a generator function that yields the sum of elements from an input list iteratively, optimizing for memory efficiency.","def list_sum_generator(data):
+    total = 0
+    for item in data:
+        total += item
+        yield total
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    generator = list_sum_generator(sample_list)
+    result_iterator = list(generator)
+    print(result_iterator)",True,0,12016,193_6.py
+193,6,Sum all elements in a list,"Implement a generator function that yields the sum of elements from an input list iteratively, optimizing for memory efficiency.","def list_sum_generator(data):
+    total = 0
+    for item in data:
+        total += item
+        yield total
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    generator = list_sum_generator(sample_list)
+    results = list(generator)
+    print(results)",True,1,12017,193_6_1.py
+193,12,Sum all elements in a list,Develop a class method within a class that calculates and returns the total sum of all elements in an internal list. Ensure the implementation is clean and adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self._data = data
+    def calculate_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 5]
+    summer = ListSummer(sample_list)
+    total = summer.calculate_sum()
+    print(total)",True,0,12018,193_12.py
+193,12,Sum all elements in a list,Develop a class method within a class that calculates and returns the total sum of all elements in an internal list. Ensure the implementation is clean and adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self._data = data
+    def calculate_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    summer = ListSummer(sample_list)
+    total = summer.calculate_sum()
+    print(total)",True,1,12019,193_12_1.py
+193,12,Sum all elements in a list,Develop a class method within a class that calculates and returns the total sum of all elements in an internal list. Ensure the implementation is clean and adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self._data = data
+    def calculate_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 25, 3, 8]
+    summer = ListSummer(sample_list)
+    total = summer.calculate_sum()
+    print(total)",True,2,12020,193_12_2.py
+193,12,Sum all elements in a list,Develop a class method within a class that calculates and returns the total sum of all elements in an internal list. Ensure the implementation is clean and adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self._data = data
+    def calculate_total(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 5]
+    summer = ListSummer(sample_list)
+    total = summer.calculate_total()
+    print(total)",True,3,12021,193_12_3.py
+193,12,Sum all elements in a list,Develop a class method within a class that calculates and returns the total sum of all elements in an internal list. Ensure the implementation is clean and adheres to object-oriented best practices.,"class ListSummer:
+    def __init__(self, data):
+        self._data = data
+    def calculate_sum(self):
+        return sum(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 45, 50]
+    summer = ListSummer(sample_list)
+    total = summer.calculate_sum()
+    print(total)",True,4,12022,193_12_4.py
+193,13,Sum all elements in a list,"Write a concise and idiomatic Python expression to calculate the sum of elements in a given list, demonstrating the use of a generator expression or built-in functions.","if __name__ == '__main__':
+    data = [1, 5, 2, 8, 3]
+    total_sum = sum(data)
+    print(total_sum)",True,0,12023,193_13.py
+193,13,Sum all elements in a list,"Write a concise and idiomatic Python expression to calculate the sum of elements in a given list, demonstrating the use of a generator expression or built-in functions.","if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    total_sum = sum(data)
+    print(total_sum)",True,1,12024,193_13_1.py
+194,0,Find the longest list item,"Write a complete, robust Python script that takes a list of strings and finds and prints the longest string in the list. Use the most efficient method possible.","def find_longest_string(string_list):
+    if not string_list:
+        return None
+    longest_string = """"
+    max_length = -1
+    for s in string_list:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_string(sample_strings)
+    print(result)",True,0,12025,194_0.py
+194,0,Find the longest list item,"Write a complete, robust Python script that takes a list of strings and finds and prints the longest string in the list. Use the most efficient method possible.","def find_longest_string(string_list):
+    if not string_list:
+        return None
+    longest_string = """"
+    max_length = -1
+    for s in string_list:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = find_longest_string(sample_strings)
+    print(result)",True,1,12026,194_0_1.py
+194,0,Find the longest list item,"Write a complete, robust Python script that takes a list of strings and finds and prints the longest string in the list. Use the most efficient method possible.","import sys
+def find_longest_string(string_list):
+    if not string_list:
+        return None
+    longest_string = """"
+    max_length = -1
+    for s in string_list:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = find_longest_string(sample_strings)
+    print(result)",True,2,12027,194_0_2.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20, 30.5]
+    list3 = [1, 'a', 3]
+    list4 = [1, 2, None, 4]
+    print(f""Sum of {list1}: {calculate_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_sum(list2)}"")
+    try:
+        calculate_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")
+    try:
+        calculate_sum(list4)
+    except TypeError as e:
+        print(f""Error for {list4}: {e}"")",True,0,12028,193_14.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types"")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_sum(list1)}"")
+    list2 = [10.5, 20, 30.5]
+    print(f""Sum of {list2}: {calculate_sum(list2)}"")
+    list3 = [1, 2, ""three"", 4]
+    try:
+        calculate_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,1,12029,193_14_1.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_list_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    list2 = [10.5, 20, 3.5]
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    list3 = [1, 2, ""a"", 4]
+    try:
+        calculate_list_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,2,12030,193_14_2.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_list_sum(data):
+    total = 0
+    for item in data:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    list2 = [10.5, 20, 30.5]
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    list3 = [1, 2, ""three"", 4]
+    try:
+        calculate_list_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,3,12031,193_14_3.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_list_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types"")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    list2 = [10.5, 20, 30.5]
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    list3 = [1, 2, ""three"", 4]
+    try:
+        calculate_list_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,4,12032,193_14_4.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_list_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20, -5.5]
+    list3 = [1, 'a', 3]
+    list4 = [10, 20, ""error""]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    try:
+        calculate_list_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")
+    try:
+        calculate_list_sum(list4)
+    except TypeError as e:
+        print(f""Error for {list4}: {e}"")",True,5,12033,193_14_5.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_list_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    list2 = [10.5, 20, -5.5]
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    list3 = [1, 'a', 3]
+    try:
+        calculate_list_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,6,12034,193_14_6.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_sum(list1)}"")
+    list2 = [10.5, 20, 30.5]
+    print(f""Sum of {list2}: {calculate_sum(list2)}"")
+    list3 = [1, 'a', 3]
+    try:
+        calculate_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,7,12035,193_14_7.py
+193,14,Sum all elements in a list,Create a standalone function that iterates through a provided list of numbers and calculates the total sum. The function must be highly readable and handle potential non-integer types by raising a TypeError if encountered.,"def calculate_list_sum(numbers):
+    total = 0
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(""List contains non-numeric types."")
+        total += item
+    return total
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(f""Sum of {list1}: {calculate_list_sum(list1)}"")
+    list2 = [10.5, 20, -5.5]
+    print(f""Sum of {list2}: {calculate_list_sum(list2)}"")
+    list3 = [1, 2, ""three"", 4]
+    try:
+        calculate_list_sum(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")",True,8,12036,193_14_8.py
+194,1,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Ensure the time complexity is O(n).,"def find_longest_list_item(string_list):
+    if not string_list:
+        return """"
+    longest_string = """"
+    for s in string_list:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,0,12037,194_1.py
+194,1,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Ensure the time complexity is O(n).,"import time
+def find_longest_list_item(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    for s in list_of_strings:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,1,12038,194_1_1.py
+194,1,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Ensure the time complexity is O(n).,"def find_longest_list_item(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    for s in list_of_strings:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,2,12039,194_1_2.py
+194,1,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Ensure the time complexity is O(n).,"import time
+def find_longest_list_item(string_list):
+    if not string_list:
+        return """"
+    longest_string = string_list[0]
+    for item in string_list:
+        if len(item) > len(longest_string):
+            longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,3,12040,194_1_3.py
+194,2,Find the longest list item,Develop a class named `ListAnalyzer` with a method `get_longest_item` that efficiently finds and returns the longest string from an input list of strings.,"class ListAnalyzer:
+    def get_longest_item(self, string_list):
+        if not string_list:
+            return """"
+        longest_string = """"
+        for s in string_list:
+            if len(s) > len(longest_string):
+                longest_string = s
+        return longest_string
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = analyzer.get_longest_item(sample_list)
+    print(result)",True,0,12041,194_2.py
+194,2,Find the longest list item,Develop a class named `ListAnalyzer` with a method `get_longest_item` that efficiently finds and returns the longest string from an input list of strings.,"class ListAnalyzer:
+    def get_longest_item(self, string_list):
+        if not string_list:
+            return """"
+        longest_string = """"
+        max_length = -1
+        for item in string_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = analyzer.get_longest_item(sample_list)
+    print(result)",True,1,12042,194_2_1.py
+194,2,Find the longest list item,Develop a class named `ListAnalyzer` with a method `get_longest_item` that efficiently finds and returns the longest string from an input list of strings.,"class ListAnalyzer:
+    def get_longest_item(self, string_list):
+        if not string_list:
+            return """"
+        longest_item = """"
+        max_length = -1
+        for item in string_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_item = item
+        return longest_item
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = analyzer.get_longest_item(sample_list)
+    print(result)",True,2,12043,194_2_2.py
+194,2,Find the longest list item,Develop a class named `ListAnalyzer` with a method `get_longest_item` that efficiently finds and returns the longest string from an input list of strings.,"class ListAnalyzer:
+    def get_longest_item(self, string_list):
+        if not string_list:
+            return """"
+        longest_string = """"
+        for item in string_list:
+            if len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = analyzer.get_longest_item(sample_list)
+    print(result)",True,3,12044,194_2_3.py
+194,2,Find the longest list item,Develop a class named `ListAnalyzer` with a method `get_longest_item` that efficiently finds and returns the longest string from an input list of strings.,"class ListAnalyzer:
+    def get_longest_item(self, string_list):
+        if not string_list:
+            return """"
+        longest_string = """"
+        max_length = -1
+        for item in string_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = analyzer.get_longest_item(sample_list)
+    print(result)",True,4,12045,194_2_4.py
+194,2,Find the longest list item,Develop a class named `ListAnalyzer` with a method `get_longest_item` that efficiently finds and returns the longest string from an input list of strings.,"class ListAnalyzer:
+    def get_longest_item(self, string_list):
+        if not string_list:
+            return """"
+        longest_string = """"
+        for item in string_list:
+            if len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = analyzer.get_longest_item(sample_list)
+    print(result)",True,5,12046,194_2_5.py
+194,3,Find the longest list item,"Write a concise and Pythonic one-liner expression to determine the longest item in a given list of strings, assuming the list is not empty.","if __name__ == '__main__':
+    data = [""apple"", ""banana"", ""kiwi"", ""orange""]
+    longest_item = max(data, key=len)
+    print(longest_item)",True,0,12047,194_3.py
+194,4,Find the longest list item,Create a function that iterates through a list of strings and returns a tuple containing the longest string and its index. Optimize the iteration for performance.,"def find_longest_string(string_list):
+    if not string_list:
+        return None, -1
+    longest_string = """"
+    max_length = -1
+    max_index = -1
+    for index, s in enumerate(string_list):
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+            max_index = index
+    return longest_string, max_index
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_string(sample_list)
+    print(result)",True,0,12048,194_4.py
+194,4,Find the longest list item,Create a function that iterates through a list of strings and returns a tuple containing the longest string and its index. Optimize the iteration for performance.,"def find_longest_string(string_list):
+    if not string_list:
+        return None, -1
+    longest_string = """"
+    max_length = -1
+    max_index = -1
+    for index, s in enumerate(string_list):
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+            max_index = index
+    return longest_string, max_index
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = find_longest_string(sample_list)
+    print(result)",True,1,12049,194_4_1.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    file_content = ""apple banana programming algorithm supercalifragilisticexpialid""
+    with open(sample_filename, 'w') as f:
+        f.write(file_content)
+    longest = find_longest_word(sample_filename)
+    if longest:
+        print(longest)
+    else:
+        print(""No words found or file error"")",True,0,12050,194_5.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    sample_content = ""apple banana programming algorithm shortest longestword""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_content)
+    longest = find_longest_word(sample_filename)
+    if longest is not None:
+        print(longest)",True,1,12051,194_5_1.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return ""Error: File not found""
+    except Exception as e:
+        return f""An error occurred: {e}""
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""apple banana programming algorithm supercalifragilisticexpialid"")
+        result = find_longest_word(sample_filename)
+        print(result)
+    except Exception as e:
+        print(f""Setup error: {e}"")",True,2,12052,194_5_2.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return ""Error: File not found""
+    except Exception as e:
+        return f""An error occurred: {e}""
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    file_content = ""apple banana programming algorithm supercalifragilisticexpialid""
+    with open(sample_filename, 'w') as f:
+        f.write(file_content)
+    result = find_longest_word(sample_filename)
+    print(result)",True,3,12053,194_5_3.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    sample_content = ""apple banana programming algorithm supercalifragilisticexpialid""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_content)
+    longest = find_longest_word(sample_filename)
+    if longest:
+        print(longest)",True,4,12054,194_5_4.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return ""Error: File not found""
+    except Exception as e:
+        return f""An error occurred: {e}""
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    file_content = ""apple banana programming algorithm shortest longestword""
+    with open(sample_filename, 'w') as f:
+        f.write(file_content)
+    result = find_longest_word(sample_filename)
+    print(result)",True,5,12055,194_5_5.py
+194,5,Find the longest list item,Write a comprehensive script that reads a list of words from a file and identifies and prints the longest word found.,"def find_longest_word(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            if not words:
+                return None
+            longest_word = """"
+            max_length = 0
+            for word in words:
+                if len(word) > max_length:
+                    max_length = len(word)
+                    longest_word = word
+            return longest_word
+    except FileNotFoundError:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""words.txt""
+    sample_content = ""apple banana programming algorithm shortest longestword example""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_content)
+    longest = find_longest_word(sample_filename)
+    if longest:
+        print(longest)
+    else:
+        print(""No words found or file error"")",True,6,12056,194_5_6.py
+194,6,Find the longest list item,"Implement a generator function that yields the longest string from an iterable of strings, stopping as soon as the longest one is determined, for memory efficiency.","def find_longest_string(iterable):
+    if not iterable:
+        return None
+    longest_string = """"
+    max_length = -1
+    for s in iterable:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    yield longest_string
+if __name__ == '__main__':
+    data = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result_generator = find_longest_string(data)
+    longest = None
+    for item in result_generator:
+        longest = item
+    print(longest)",True,0,12057,194_6.py
+194,6,Find the longest list item,"Implement a generator function that yields the longest string from an iterable of strings, stopping as soon as the longest one is determined, for memory efficiency.","def find_longest_string(string_iterable):
+    if not string_iterable:
+        return
+    longest_string = """"
+    max_length = -1
+    for s in string_iterable:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    yield longest_string
+if __name__ == '__main__':
+    data = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result_generator = find_longest_string(data)
+    longest = next(result_generator)
+    print(longest)",True,1,12058,194_6_1.py
+194,6,Find the longest list item,"Implement a generator function that yields the longest string from an iterable of strings, stopping as soon as the longest one is determined, for memory efficiency.","def find_longest_string(iterable):
+    if not iterable:
+        return None
+    longest_string = """"
+    for s in iterable:
+        if len(s) > len(longest_string):
+            longest_string = s
+    yield longest_string
+if __name__ == '__main__':
+    data = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result_generator = find_longest_string(data)
+    longest = None
+    for item in result_generator:
+        longest = item
+        break
+    print(longest)
+    data2 = [""short"", ""longer"", ""longest_one"", ""medium""]
+    result_generator2 = find_longest_string(data2)
+    longest2 = None
+    for item in result_generator2:
+        longest2 = item
+        break
+    print(longest2)
+    data3 = []
+    result_generator3 = find_longest_string(data3)
+    longest3 = None
+    for item in result_generator3:
+        longest3 = item
+        break
+    print(longest3)",True,2,12059,194_6_2.py
+194,6,Find the longest list item,"Implement a generator function that yields the longest string from an iterable of strings, stopping as soon as the longest one is determined, for memory efficiency.","def find_longest_string(iterable):
+    if not iterable:
+        return None
+    longest_string = """"
+    for s in iterable:
+        if len(s) > len(longest_string):
+            longest_string = s
+    yield longest_string
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result_generator = find_longest_string(sample_data)
+    longest = None
+    for item in result_generator:
+        longest = item
+    print(longest)",True,3,12060,194_6_3.py
+194,6,Find the longest list item,"Implement a generator function that yields the longest string from an iterable of strings, stopping as soon as the longest one is determined, for memory efficiency.","def find_longest_string(iterable):
+    if not iterable:
+        return None
+    longest_string = """"
+    max_length = -1
+    for s in iterable:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    yield longest_string
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result_generator = find_longest_string(sample_data)
+    longest = None
+    for item in result_generator:
+        longest = item
+    print(longest)",True,4,12061,194_6_4.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    my_list = MyList(sample_list)
+    result = my_list.find_longest_string()
+    print(result)
+    sample_list_2 = [""short"", ""longer"", ""longest_one"", ""medium""]
+    my_list_2 = MyList(sample_list_2)
+    result_2 = my_list_2.find_longest_string()
+    print(result_2)
+    sample_list_3 = [""one"", 123, ""four"", ""five""]
+    my_list_3 = MyList(sample_list_3)
+    result_3 = my_list_3.find_longest_string()
+    print(result_3)
+    sample_list_4 = []
+    my_list_4 = MyList(sample_list_4)
+    result_4 = my_list_4.find_longest_string()
+    print(result_4)",True,0,12062,194_7.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, items):
+        self.items = items
+    def find_longest_string(self):
+        if not self.items:
+            return None
+        longest_string = """"
+        for item in self.items:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    list1 = MyList([""apple"", ""banana"", ""kiwi"", ""strawberry""])
+    print(f""Longest string in list1: {list1.find_longest_string()}"")
+    list2 = MyList([""short"", ""longer"", ""longest"", ""test""])
+    print(f""Longest string in list2: {list2.find_longest_string()}"")
+    list3 = MyList([""one"", ""two"", ""three""])
+    print(f""Longest string in list3: {list3.find_longest_string()}"")
+    list4 = MyList([""a"", ""bb"", ""ccc""])
+    print(f""Longest string in list4: {list4.find_longest_string()}"")
+    list5 = MyList([1, 2, 3])
+    print(f""Longest string in list5: {list5.find_longest_string()}"")
+    list6 = MyList([])
+    print(f""Longest string in list6: {list6.find_longest_string()}"")",True,1,12063,194_7_1.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    list1 = MyList([""apple"", ""banana"", ""kiwi"", ""strawberry""])
+    print(list1.find_longest_string())
+    list2 = MyList([""short"", ""longer"", ""longest"", ""medium""])
+    print(list2.find_longest_string())
+    list3 = MyList([1, 2, 3, ""hello"", ""world""])
+    print(list3.find_longest_string())
+    list4 = MyList([])
+    print(list4.find_longest_string())
+    list5 = MyList([""a"", ""bb"", ""ccc""])
+    print(list5.find_longest_string())",True,2,12064,194_7_2.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    list1 = MyList([""apple"", ""banana"", ""kiwi"", ""strawberry""])
+    print(list1.find_longest_string())
+    list2 = MyList([""short"", ""longer"", ""longest"", ""test""])
+    print(list2.find_longest_string())
+    list3 = MyList([""one"", ""two"", ""three""])
+    print(list3.find_longest_string())
+    list4 = MyList([1, 2, 3, ""medium""])
+    print(list4.find_longest_string())
+    list5 = MyList([])
+    print(list5.find_longest_string())",True,3,12065,194_7_3.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    list1 = MyList([""apple"", ""banana"", ""kiwi"", ""strawberry""])
+    print(list1.find_longest_string())
+    list2 = MyList([""short"", ""longer"", ""longest"", ""test""])
+    print(list2.find_longest_string())
+    list3 = MyList([""one"", ""two"", ""three""])
+    print(list3.find_longest_string())
+    list4 = MyList([1, 2, 3, ""a"", ""bb"", ""ccc""])
+    print(list4.find_longest_string())
+    list5 = MyList([])
+    print(list5.find_longest_string())",True,4,12066,194_7_4.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    list1 = MyList([""apple"", ""banana"", ""kiwi"", ""strawberry""])
+    print(f""Longest string in list1: {list1.find_longest_string()}"")
+    list2 = MyList([""short"", ""longer"", ""longest"", ""test""])
+    print(f""Longest string in list2: {list2.find_longest_string()}"")
+    list3 = MyList([""one"", ""two"", ""three""])
+    print(f""Longest string in list3: {list3.find_longest_string()}"")
+    list4 = MyList([1, 2, 3, ""hello""])
+    print(f""Longest string in list4: {list4.find_longest_string()}"")
+    list5 = MyList([])
+    print(f""Longest string in list5: {list5.find_longest_string()}"")",True,5,12067,194_7_5.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    my_list = MyList(sample_list)
+    result = my_list.find_longest_string()
+    print(result)
+    sample_list_2 = [""short"", ""longer"", ""longestword"", ""medium""]
+    my_list_2 = MyList(sample_list_2)
+    result_2 = my_list_2.find_longest_string()
+    print(result_2)
+    sample_list_3 = [1, 2, 3, ""a"", ""bb"", ""ccc""]
+    my_list_3 = MyList(sample_list_3)
+    result_3 = my_list_3.find_longest_string()
+    print(result_3)
+    sample_list_4 = []
+    my_list_4 = MyList(sample_list_4)
+    result_4 = my_list_4.find_longest_string()
+    print(result_4)",True,6,12068,194_7_6.py
+194,7,Find the longest list item,Design and implement a method within a list class that can automatically identify and return the longest string element within the list upon calling a specific method.,"class MyList:
+    def __init__(self, data):
+        self.data = data
+    def find_longest_string(self):
+        if not self.data:
+            return None
+        longest_string = """"
+        for item in self.data:
+            if isinstance(item, str) and len(item) > len(longest_string):
+                longest_string = item
+        return longest_string
+if __name__ == '__main__':
+    list1 = MyList([""apple"", ""banana"", ""kiwi"", ""strawberry""])
+    print(list1.find_longest_string())
+    list2 = MyList([""short"", ""longer"", ""longest"", ""medium""])
+    print(list2.find_longest_string())
+    list3 = MyList([""one"", ""two"", ""three""])
+    print(list3.find_longest_string())
+    list4 = MyList([1, 2, 3, ""a"", ""bb"", ""ccc""])
+    print(list4.find_longest_string())
+    list5 = MyList([])
+    print(list5.find_longest_string())",True,7,12069,194_7_7.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = list_of_strings[0]
+    max_length = len(list_of_strings[0])
+    for s in list_of_strings[1:]:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_strings_of_identical_length(self):
+        data = [""abc"", ""def"", ""ghi""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,12070,194_8.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    max_length = -1
+    for s in list_of_strings:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_list_with_identical_lengths(self):
+        data = [""abc"", ""def"", ""ghi""]
+        result = find_longest_string(data)
+        self.assertTrue(result in data)
+        self.assertEqual(len(result), 3)
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,12071,194_8_1.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = list_of_strings[0]
+    max_length = len(list_of_strings[0])
+    for s in list_of_strings[1:]:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_longest_string_basic(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_longest_string_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_longest_string_single_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_longest_string_identical_lengths(self):
+        data = [""abc"", ""def"", ""ghi""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_string_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_longest_string_all_empty(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,12072,194_8_2.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    max_length = -1
+    for s in list_of_strings:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_list_with_identical_lengths(self):
+        data = [""abc"", ""def"", ""ghi""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_list_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,12073,194_8_3.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = list_of_strings[0]
+    max_length = len(list_of_strings[0])
+    for s in list_of_strings[1:]:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_strings_of_identical_length(self):
+        data = [""abc"", ""xyz"", ""def""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_mixed_lengths(self):
+        data = [""a"", ""bb"", ""ccc"", ""dddd""]
+        self.assertEqual(find_longest_string(data), ""dddd"")
+    def test_empty_strings(self):
+        data = ["""", ""a"", """"]
+        self.assertEqual(find_longest_string(data), ""a"")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,12074,194_8_4.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = list_of_strings[0]
+    max_length = len(list_of_strings[0])
+    for s in list_of_strings[1:]:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_strings_of_equal_length(self):
+        data = [""abc"", ""def"", ""ghi""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_list_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,12075,194_8_5.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    max_length = -1
+    for s in list_of_strings:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_list_with_identical_lengths(self):
+        data = [""abc"", ""xyz"", ""def""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_list_with_ties_and_longest(self):
+        data = [""short"", ""longest"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_list_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,12076,194_8_6.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = list_of_strings[0]
+    max_length = len(list_of_strings[0])
+    for s in list_of_strings[1:]:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_list_with_identical_lengths(self):
+        data = [""abc"", ""def"", ""ghi""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_list_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,12077,194_8_7.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    max_length = -1
+    for s in list_of_strings:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_list_with_identical_lengths(self):
+        data = [""abc"", ""xyz"", ""def""]
+        self.assertIn(find_longest_string(data), [""abc"", ""xyz"", ""def""])
+        self.assertEqual(len(find_longest_string(data)), 3)
+    def test_longest_at_start(self):
+        data = [""longest"", ""short"", ""medium""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_longest_at_end(self):
+        data = [""short"", ""medium"", ""longest""]
+        self.assertEqual(find_longest_string(data), ""longest"")
+    def test_with_empty_strings(self):
+        data = [""a"", """", ""bb""]
+        self.assertEqual(find_longest_string(data), ""bb"")
+    def test_all_empty_strings(self):
+        data = ["""", """", """"]
+        self.assertEqual(find_longest_string(data), """")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,8,12078,194_8_8.py
+194,8,Find the longest list item,"Write a unit test suite using `unittest` for a function that finds the longest string in a list, covering edge cases like empty lists and lists with identical lengths.","import unittest
+def find_longest_string(list_of_strings):
+    if not list_of_strings:
+        return """"
+    longest_string = """"
+    max_length = -1
+    for s in list_of_strings:
+        if len(s) > max_length:
+            max_length = len(s)
+            longest_string = s
+    return longest_string
+class TestFindLongestString(unittest.TestCase):
+    def test_basic_case(self):
+        data = [""apple"", ""banana"", ""kiwi""]
+        self.assertEqual(find_longest_string(data), ""banana"")
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(find_longest_string(data), """")
+    def test_list_with_one_element(self):
+        data = [""hello""]
+        self.assertEqual(find_longest_string(data), ""hello"")
+    def test_list_with_identical_lengths(self):
+        data = [""abc"", ""def"", ""ghi""]
+        self.assertEqual(find_longest_string(data), ""abc"")
+    def test_longest_at_start(self):
+        data = [""zzzzz"", ""a"", ""bb""]
+        self.assertEqual(find_longest_string(data), ""zzzzz"")
+    def test_longest_at_end(self):
+        data = [""a"", ""b"", ""zzzzz""]
+        self.assertEqual(find_longest_string(data), ""zzzzz"")
+    def test_all_same_length(self):
+        data = [""cat"", ""dog"", ""fish""]
+        self.assertEqual(find_longest_string(data), ""cat"")
+    def test_empty_strings(self):
+        data = ["""", ""a"", """"]
+        self.assertEqual(find_longest_string(data), ""a"")
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,9,12079,194_8_9.py
+194,10,Find the longest list item,"Write a complete, robust Python script that reads a list of strings and finds and prints the longest string in the list. The script must handle edge cases like an empty list.","def find_longest_string(string_list):
+    if not string_list:
+        return None
+    longest_string = """"
+    for s in string_list:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = find_longest_string(sample_list)
+    print(result)
+    empty_list = []
+    result_empty = find_longest_string(empty_list)
+    print(result_empty)",True,0,12080,194_10.py
+194,10,Find the longest list item,"Write a complete, robust Python script that reads a list of strings and finds and prints the longest string in the list. The script must handle edge cases like an empty list.","def find_longest_string(string_list):
+    if not string_list:
+        return None
+    longest_string = """"
+    for s in string_list:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_string(sample_list)
+    print(result)
+    empty_list = []
+    result_empty = find_longest_string(empty_list)
+    print(result_empty)",True,1,12081,194_10_1.py
+194,10,Find the longest list item,"Write a complete, robust Python script that reads a list of strings and finds and prints the longest string in the list. The script must handle edge cases like an empty list.","def find_longest_string(string_list):
+    if not string_list:
+        return None
+    longest_string = """"
+    for s in string_list:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result = find_longest_string(sample_list)
+    print(result)
+    empty_list = []
+    result_empty = find_longest_string(empty_list)
+    print(result_empty)
+    single_item_list = [""longest""]
+    result_single = find_longest_string(single_item_list)
+    print(result_single)",True,2,12082,194_10_2.py
+194,11,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Use the most efficient built-in methods or algorithmic approaches.,"def find_longest_list_item(string_list):
+    if not string_list:
+        return """"
+    longest_string = string_list[0]
+    for s in string_list:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,0,12083,194_11.py
+194,11,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Use the most efficient built-in methods or algorithmic approaches.,"def find_longest_list_item(string_list):
+    if not string_list:
+        return """"
+    longest_string = string_list[0]
+    for item in string_list:
+        if len(item) > len(longest_string):
+            longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,1,12084,194_11_1.py
+194,11,Find the longest list item,Implement an optimized function named `find_longest_list_item` that accepts a list of strings and returns the longest string. Use the most efficient built-in methods or algorithmic approaches.,"def find_longest_list_item(string_list):
+    if not string_list:
+        return """"
+    longest_string = """"
+    for s in string_list:
+        if len(s) > len(longest_string):
+            longest_string = s
+    return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = find_longest_list_item(sample_list)
+    print(result)",True,2,12085,194_11_2.py
+194,12,Find the longest list item,Develop a class method within a class that efficiently determines and returns the longest item from an input list of strings. Ensure the implementation is clean and follows object-oriented programming best practices.,"class StringAnalyzer:
+    @staticmethod
+    def find_longest_string(string_list):
+        if not string_list:
+            return None
+        longest_string = """"
+        for s in string_list:
+            if len(s) > len(longest_string):
+                longest_string = s
+        return longest_string
+if __name__ == '__main__':
+    data1 = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result1 = StringAnalyzer.find_longest_string(data1)
+    print(f""Data: {data1}"")
+    print(f""Longest string: {result1}"")
+    data2 = [""short"", ""longer"", ""longest"", ""test""]
+    result2 = StringAnalyzer.find_longest_string(data2)
+    print(f""Data: {data2}"")
+    print(f""Longest string: {result2}"")
+    data3 = []
+    result3 = StringAnalyzer.find_longest_string(data3)
+    print(f""Data: {data3}"")
+    print(f""Longest string: {result3}"")
+    data4 = [""a"", ""bb"", ""ccc""]
+    result4 = StringAnalyzer.find_longest_string(data4)
+    print(f""Data: {data4}"")
+    print(f""Longest string: {result4}"")",True,0,12086,194_12.py
+194,12,Find the longest list item,Develop a class method within a class that efficiently determines and returns the longest item from an input list of strings. Ensure the implementation is clean and follows object-oriented programming best practices.,"class StringAnalyzer:
+    @staticmethod
+    def find_longest_string(string_list):
+        if not string_list:
+            return None
+        longest_string = """"
+        for s in string_list:
+            if len(s) > len(longest_string):
+                longest_string = s
+        return longest_string
+if __name__ == '__main__':
+    data1 = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grape""]
+    result1 = StringAnalyzer.find_longest_string(data1)
+    print(f""Data: {data1}"")
+    print(f""Longest string: {result1}"")
+    data2 = [""short"", ""longer"", ""longest"", ""a"", ""test""]
+    result2 = StringAnalyzer.find_longest_string(data2)
+    print(f""Data: {data2}"")
+    print(f""Longest string: {result2}"")
+    data3 = []
+    result3 = StringAnalyzer.find_longest_string(data3)
+    print(f""Data: {data3}"")
+    print(f""Longest string: {result3}"")
+    data4 = [""hello"", ""world""]
+    result4 = StringAnalyzer.find_longest_string(data4)
+    print(f""Data: {data4}"")
+    print(f""Longest string: {result4}"")",True,1,12087,194_12_1.py
+194,12,Find the longest list item,Develop a class method within a class that efficiently determines and returns the longest item from an input list of strings. Ensure the implementation is clean and follows object-oriented programming best practices.,"class StringAnalyzer:
+    @staticmethod
+    def find_longest_string(string_list):
+        if not string_list:
+            return None
+        longest_string = """"
+        for s in string_list:
+            if len(s) > len(longest_string):
+                longest_string = s
+        return longest_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    result = StringAnalyzer.find_longest_string(sample_list)
+    print(result)",True,2,12088,194_12_2.py
+194,12,Find the longest list item,Develop a class method within a class that efficiently determines and returns the longest item from an input list of strings. Ensure the implementation is clean and follows object-oriented programming best practices.,"class StringAnalyzer:
+    @staticmethod
+    def find_longest_string(string_list):
+        if not string_list:
+            return None
+        longest_string = """"
+        for s in string_list:
+            if len(s) > len(longest_string):
+                longest_string = s
+        return longest_string
+if __name__ == '__main__':
+    data1 = [""apple"", ""banana"", ""kiwi"", ""strawberry""]
+    result1 = StringAnalyzer.find_longest_string(data1)
+    print(f""Data: {data1}"")
+    print(f""Longest string: {result1}"")
+    data2 = [""short"", ""longer"", ""longestword"", ""medium""]
+    result2 = StringAnalyzer.find_longest_string(data2)
+    print(f""Data: {data2}"")
+    print(f""Longest string: {result2}"")
+    data3 = []
+    result3 = StringAnalyzer.find_longest_string(data3)
+    print(f""Data: {data3}"")
+    print(f""Longest string: {result3}"")
+    data4 = [""a"", ""bb"", ""ccc""]
+    result4 = StringAnalyzer.find_longest_string(data4)
+    print(f""Data: {data4}"")
+    print(f""Longest string: {result4}"")",True,3,12089,194_12_3.py
+194,12,Find the longest list item,Develop a class method within a class that efficiently determines and returns the longest item from an input list of strings. Ensure the implementation is clean and follows object-oriented programming best practices.,"class StringAnalyzer:
+    @staticmethod
+    def find_longest_string(string_list):
+        if not string_list:
+            return None
+        longest_string = """"
+        for s in string_list:
+            if len(s) > len(longest_string):
+                longest_string = s
+        return longest_string
+if __name__ == '__main__':
+    data1 = [""apple"", ""banana"", ""kiwi"", ""strawberry""]
+    result1 = StringAnalyzer.find_longest_string(data1)
+    print(f""Data: {data1}"")
+    print(f""Longest string: {result1}"")
+    data2 = [""short"", ""longer"", ""longest"", ""test""]
+    result2 = StringAnalyzer.find_longest_string(data2)
+    print(f""Data: {data2}"")
+    print(f""Longest string: {result2}"")
+    data3 = []
+    result3 = StringAnalyzer.find_longest_string(data3)
+    print(f""Data: {data3}"")
+    print(f""Longest string: {result3}"")
+    data4 = [""a"", ""bb"", ""ccc""]
+    result4 = StringAnalyzer.find_longest_string(data4)
+    print(f""Data: {data4}"")
+    print(f""Longest string: {result4}"")",True,4,12090,194_12_4.py
+194,13,Find the longest list item,Write a concise and highly Pythonic one-line solution to find the longest item in a given list of strings using the `max` function with a custom `key`.,"if __name__ == '__main__':
+    data = [""apple"", ""banana"", ""kiwi"", ""orange""]
+    longest_item = max(data, key=len)
+    print(longest_item)",True,0,12091,194_13.py
+193,9,Sum all elements in a list,Write a comprehensive example demonstrating how to use a list comprehension combined with the `sum()` function to achieve the summation of a list of squares.,,False,0,12092,193_9.py
+194,14,Find the longest list item,Create a function that iterates through a list of list items (where each item is a string) and identifies the list item (string) that has the maximum length. Provide comprehensive docstrings explaining the parameters and return value.,"def find_longest_string(list_of_lists):
+    longest_string = """"
+    max_length = -1
+    for inner_list in list_of_lists:
+        for item in inner_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_data = [
+        [""apple"", ""banana"", ""kiwi""],
+        [""grapefruit"", ""orange"", ""melon""],
+        [""strawberry"", ""pineapple"", ""avocado""]
+    ]
+    result = find_longest_string(sample_data)
+    print(result)",True,0,12093,194_14.py
+194,14,Find the longest list item,Create a function that iterates through a list of list items (where each item is a string) and identifies the list item (string) that has the maximum length. Provide comprehensive docstrings explaining the parameters and return value.,"def find_longest_string(list_of_lists):
+    longest_string = """"
+    max_length = -1
+    for inner_list in list_of_lists:
+        for item in inner_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_data = [
+        [""apple"", ""banana"", ""kiwi""],
+        [""grapefruit"", ""orange"", ""melon""],
+        [""strawberry"", ""blueberry"", ""raspberry""]
+    ]
+    result = find_longest_string(sample_data)
+    print(result)",True,1,12094,194_14_1.py
+194,14,Find the longest list item,Create a function that iterates through a list of list items (where each item is a string) and identifies the list item (string) that has the maximum length. Provide comprehensive docstrings explaining the parameters and return value.,"def find_longest_string(list_of_lists):
+    longest_string = """"
+    max_length = -1
+    for inner_list in list_of_lists:
+        for item in inner_list:
+            if isinstance(item, str) and len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_data = [
+        [""apple"", ""banana"", ""kiwi""],
+        [""grapefruit"", ""orange"", ""melon""],
+        [""strawberry"", ""pineapple"", ""avocado""]
+    ]
+    result = find_longest_string(sample_data)
+    print(result)",True,2,12095,194_14_2.py
+194,14,Find the longest list item,Create a function that iterates through a list of list items (where each item is a string) and identifies the list item (string) that has the maximum length. Provide comprehensive docstrings explaining the parameters and return value.,"def find_longest_string(list_of_lists):
+    longest_string = """"
+    max_length = -1
+    for inner_list in list_of_lists:
+        for item in inner_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_data = [
+        [""apple"", ""banana"", ""kiwi""],
+        [""grapefruit"", ""melon"", ""orange""],
+        [""strawberry"", ""fig""]
+    ]
+    result = find_longest_string(sample_data)
+    print(result)",True,3,12096,194_14_3.py
+194,14,Find the longest list item,Create a function that iterates through a list of list items (where each item is a string) and identifies the list item (string) that has the maximum length. Provide comprehensive docstrings explaining the parameters and return value.,"def find_longest_string(list_of_lists):
+    longest_string = """"
+    max_length = -1
+    for inner_list in list_of_lists:
+        for item in inner_list:
+            if len(item) > max_length:
+                max_length = len(item)
+                longest_string = item
+    return longest_string
+if __name__ == '__main__':
+    sample_data = [
+        [""apple"", ""banana"", ""kiwi""],
+        [""grapefruit"", ""orange"", ""melon""],
+        [""strawberry"", ""fig""]
+    ]
+    result = find_longest_string(sample_data)
+    print(result)",True,4,12097,194_14_4.py
