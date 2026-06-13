@@ -222983,3 +222983,494 @@ if __name__ == '__main__':
         inventory.get_item(""xyz"")
     except (ValueError, KeyError) as e:
         print(f""Caught expected error: {e}"")",True,10,10490,170_8_10.py
+170,11,Create a basic inventory system,"Implement a command-line interface (CLI) script using the 'Inventory' class developed previously. The script must allow the user to interactively add new items and view the entire inventory, handling user input efficiently.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, name, quantity):
+        if name in self.items:
+            self.items[name] += quantity
+        else:
+            self.items[name] = quantity
+    def view_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.view_inventory()",True,0,10491,170_11.py
+170,11,Create a basic inventory system,"Implement a command-line interface (CLI) script using the 'Inventory' class developed previously. The script must allow the user to interactively add new items and view the entire inventory, handling user input efficiently.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, name, quantity):
+        if name in self.items:
+            self.items[name] += quantity
+        else:
+            self.items[name] = quantity
+    def view_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 10)
+    my_inventory.add_item(""Bananas"", 5)
+    my_inventory.add_item(""Oranges"", 12)
+    print(""--- Current Inventory ---"")
+    my_inventory.view_inventory()",True,1,10492,170_11_1.py
+170,11,Create a basic inventory system,"Implement a command-line interface (CLI) script using the 'Inventory' class developed previously. The script must allow the user to interactively add new items and view the entire inventory, handling user input efficiently.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, name, quantity):
+        if name in self.items:
+            self.items[name] += quantity
+        else:
+            self.items[name] = quantity
+    def view_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    inventory = Inventory()
+    inventory.add_item(""Apples"", 50)
+    inventory.add_item(""Bananas"", 120)
+    inventory.add_item(""Oranges"", 75)
+    inventory.view_inventory()",True,2,10493,170_11_2.py
+170,11,Create a basic inventory system,"Implement a command-line interface (CLI) script using the 'Inventory' class developed previously. The script must allow the user to interactively add new items and view the entire inventory, handling user input efficiently.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, name, quantity):
+        if name in self.items:
+            self.items[name] += quantity
+        else:
+            self.items[name] = quantity
+    def view_inventory(self):
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 10)
+    my_inventory.add_item(""Bananas"", 25)
+    my_inventory.add_item(""Oranges"", 15)
+    my_inventory.view_inventory()",True,3,10494,170_11_3.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Not enough quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    my_inventory.add_item(""Apples"", 20)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Bananas"", 30)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Grapes"", 10)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Apples"", 100)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Oranges"", 100)
+    my_inventory.display_inventory()",True,0,10495,170_10.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Not enough quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    my_inventory.add_item(""Apples"", 30)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Bananas"", 20)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Grapes"", 10)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Apples"", 100)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Oranges"", 100)
+    my_inventory.display_inventory()",True,1,10496,170_10_1.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""Current Inventory:"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    print(""\n--- Removing Items ---"")
+    removed1 = my_inventory.remove_item(""Apples"", 10)
+    print(f""Attempted to remove 10 Apples. Success: {removed1}"")
+    my_inventory.display_inventory()
+    removed2 = my_inventory.remove_item(""Bananas"", 200)
+    print(f""Attempted to remove 200 Bananas. Success: {removed2}"")
+    my_inventory.display_inventory()
+    removed3 = my_inventory.remove_item(""Grapes"", 5)
+    print(f""Attempted to remove 5 Grapes. Success: {removed3}"")
+    my_inventory.display_inventory()",True,2,10497,170_10_2.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Not enough quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    my_inventory.add_item(""Apples"", 20)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Bananas"", 30)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Grapes"", 10)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Apples"", 100)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Oranges"", 50)
+    my_inventory.display_inventory()",True,3,10498,170_10_3.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if self.items[item_name] >= quantity:
+                self.items[item_name] -= quantity
+                if self.items[item_name] == 0:
+                    del self.items[item_name]
+            else:
+                print(f""Error: Not enough quantity of {item_name} to remove."")
+        else:
+            print(f""Error: {item_name} not found in inventory."")
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 100)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    my_inventory.add_item(""Apples"", 20)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Bananas"", 30)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Oranges"", 100)
+    my_inventory.display_inventory()
+    my_inventory.remove_item(""Grapes"", 5)
+    my_inventory.display_inventory()",True,4,10499,170_10_4.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""-------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    print(""\nAttempting to remove items:"")
+    success = my_inventory.remove_item(""Apples"", 10)
+    print(f""Removed 10 Apples: {success}"")
+    success = my_inventory.remove_item(""Bananas"", 50)
+    print(f""Removed 50 Bananas: {success}"")
+    success = my_inventory.remove_item(""Grapes"", 10)
+    print(f""Removed 10 Grapes (non-existent): {success}"")
+    my_inventory.display_inventory()
+    success = my_inventory.remove_item(""Oranges"", 200)
+    print(f""Removed 200 Oranges (insufficient stock): {success}"")
+    my_inventory.display_inventory()",True,5,10500,170_10_5.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""-------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    print(""\nAttempting to remove items:"")
+    removed1 = my_inventory.remove_item(""Apples"", 10)
+    print(f""Removed 10 Apples: {removed1}"")
+    removed2 = my_inventory.remove_item(""Bananas"", 50)
+    print(f""Removed 50 Bananas: {removed2}"")
+    removed3 = my_inventory.remove_item(""Grapes"", 10)
+    print(f""Attempted to remove 10 Grapes (not found): {removed3}"")
+    my_inventory.display_inventory()
+    removed4 = my_inventory.remove_item(""Oranges"", 100)
+    print(f""Attempted to remove 100 Oranges (insufficient stock): {removed4}"")
+    my_inventory.display_inventory()",True,6,10501,170_10_6.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""-------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    print(""\nAttempting to remove items:"")
+    success = my_inventory.remove_item(""Apples"", 10)
+    print(f""Removed 10 Apples: {success}"")
+    success = my_inventory.remove_item(""Bananas"", 50)
+    print(f""Removed 50 Bananas: {success}"")
+    success = my_inventory.remove_item(""Grapes"", 20)
+    print(f""Removed 20 Grapes (non-existent): {success}"")
+    my_inventory.display_inventory()
+    success = my_inventory.remove_item(""Oranges"", 100)
+    print(f""Removed 100 Oranges: {success}"")
+    my_inventory.display_inventory()",True,7,10502,170_10_7.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""-------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    print(""\nAttempting to remove items:"")
+    success = my_inventory.remove_item(""Apples"", 10)
+    print(f""Removed 10 Apples: {success}"")
+    success = my_inventory.remove_item(""Bananas"", 50)
+    print(f""Removed 50 Bananas: {success}"")
+    success = my_inventory.remove_item(""Grapes"", 10)
+    print(f""Removed 10 Grapes (non-existent): {success}"")
+    my_inventory.display_inventory()
+    success = my_inventory.remove_item(""Oranges"", 200)
+    print(f""Attempted to remove too many Oranges: {success}"")
+    my_inventory.display_inventory()",True,8,10503,170_10_8.py
+170,10,Create a basic inventory system,"Write a complete, object-oriented Python class named 'Inventory' to manage items, including methods for adding, removing, and displaying inventory. Ensure the implementation is robust and follows best practices.","class Inventory:
+    def __init__(self):
+        self.items = {}
+    def add_item(self, item_name, quantity):
+        if item_name in self.items:
+            self.items[item_name] += quantity
+        else:
+            self.items[item_name] = quantity
+    def remove_item(self, item_name, quantity):
+        if item_name not in self.items:
+            return False
+        if self.items[item_name] >= quantity:
+            self.items[item_name] -= quantity
+            if self.items[item_name] == 0:
+                del self.items[item_name]
+            return True
+        else:
+            return False
+    def display_inventory(self):
+        if not self.items:
+            print(""Inventory is empty."")
+            return
+        print(""--- Current Inventory ---"")
+        for item, quantity in self.items.items():
+            print(f""{item}: {quantity}"")
+        print(""-------------------------"")
+if __name__ == '__main__':
+    my_inventory = Inventory()
+    my_inventory.add_item(""Apples"", 50)
+    my_inventory.add_item(""Bananas"", 120)
+    my_inventory.add_item(""Oranges"", 75)
+    my_inventory.display_inventory()
+    print(""\nAttempting to remove items:"")
+    removed1 = my_inventory.remove_item(""Apples"", 10)
+    print(f""Removed 10 Apples: {removed1}"")
+    removed2 = my_inventory.remove_item(""Bananas"", 50)
+    print(f""Removed 50 Bananas: {removed2}"")
+    removed3 = my_inventory.remove_item(""Grapes"", 10)
+    print(f""Removed 10 Grapes (non-existent): {removed3}"")
+    my_inventory.display_inventory()
+    removed4 = my_inventory.remove_item(""Oranges"", 200)
+    print(f""Attempted to remove too many Oranges: {removed4}"")
+    my_inventory.display_inventory()",True,9,10504,170_10_9.py
