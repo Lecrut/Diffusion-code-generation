@@ -12,6 +12,7 @@ import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor, EarlyStopping, Callback
 from pytorch_lightning.loggers import CometLogger
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Importy z Twoich modułów
 from diffusion.model import LocalConvDiffCoder
@@ -497,7 +498,8 @@ class DiffCoderTrainer:
             filename='diffcoder-{epoch:02d}-{val_loss:.4f}', # Lightning sam doda .ckpt
             save_top_k=1,
             save_last=True, # KLUCZOWE: Zapisuje zawsze 'last.ckpt' ułatwiający automatyczne wznawianie
-            mode='min'
+            mode='min',
+            train_time_interval=timedelta(minutes=15)
         )
         
         early_stop_callback = EarlyStopping(
