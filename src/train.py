@@ -227,12 +227,16 @@ class DiffCoderLightning(pl.LightningModule):
         self.current_stage = checkpoint.get("curriculum_stage", 1)
         self.current_lower_bound = checkpoint.get("curriculum_lb", 0.10)
         self.current_upper_bound = checkpoint.get("curriculum_ub", 0.25)
+        
+        epoch = checkpoint.get("epoch", "Nieznana")
+        global_step = checkpoint.get("global_step", "Nieznany")
 
-        print(
-            f">>> [RESUME] Przywrócono curriculum: "
-            f"Stage {self.current_stage} | "
-            f"Maskowanie {self.current_lower_bound:.2f}-{self.current_upper_bound:.2f}"
-        )
+        print("\n" + "="*70)
+        print("[RESUME - MODEL STATE] Pomyślnie wczytano wagi i stan modelu!")
+        print(f" ➔ Wznawianie treningu od epoki: {epoch} (Global Step: {global_step})")
+        print(f" ➔ Aktualny etap nauczania (Stage): {self.current_stage}")
+        print(f" ➔ Zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
+        print("="*70)
 
 
 # --- CALLBACK DO PROGRAMU NAUCZANIA (SYNCHRONIZACJA STAGE + LR RESTART) ---
@@ -329,11 +333,11 @@ class AdaptiveCurriculumCallback(Callback):
             0
         )
 
-        print(
-            f">>> [RESUME] Przywrócono callback curriculum: "
-            f"best_val_loss={self.best_val_loss:.6f}, "
-            f"patience_counter={self.patience_counter}"
-        )
+        print("\n" + "="*70)
+        print("[RESUME - CALLBACK STATE] Pomyślnie odtworzono stan curriculum!")
+        print(f"Najlepszy dotychczasowy val_loss: {self.best_val_loss:.6f}")
+        print(f"Licznik cierpliwości (patience): {self.patience_counter} / {self.stages.get(self.current_stage if hasattr(self, 'current_stage') else 1, {}).get('patience', '???')}")
+        print("="*70 + "\n")
 
 
 # --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
@@ -492,16 +496,33 @@ class DiffCoderTrainer:
 
     def train(self):
         # 1. Zmieniamy konfigurację zapisu checkpointów
-        checkpoint_callback = ModelCheckpoint(
+        # checkpoint_callback = ModelCheckpoint(
+        #     monitor='val_loss',
+        #     dirpath=self.config.checkpoint_dir,
+        #     filename='diffcoder-{epoch:02d}-{val_loss:.4f}', # Lightning sam doda .ckpt
+        #     save_top_k=1,
+        #     save_last=True, # KLUCZOWE: Zapisuje zawsze 'last.ckpt' ułatwiający automatyczne wznawianie
+        #     mode='min',
+        #     train_time_interval=timedelta(minutes=15)
+        # )
+        
+        best_checkpoint_callback = ModelCheckpoint(
             monitor='val_loss',
             dirpath=self.config.checkpoint_dir,
-            filename='diffcoder-{epoch:02d}-{val_loss:.4f}', # Lightning sam doda .ckpt
+            filename='diffcoder-{epoch:02d}-{val_loss:.4f}',
             save_top_k=1,
-            save_last=True, # KLUCZOWE: Zapisuje zawsze 'last.ckpt' ułatwiający automatyczne wznawianie
-            mode='min',
-            train_time_interval=timedelta(minutes=15)
+            mode='min'
+            # Usunięto train_time_interval oraz save_last=True
         )
-        
+
+        last_checkpoint_callback = ModelCheckpoint(
+            dirpath=self.config.checkpoint_dir,
+            filename='last', 
+            save_top_k=1,
+            every_n_epochs=1,
+            save_on_train_epoch_end=True # Gwarantuje zapis zaraz po zakończeniu pętli treningowej dla epoki
+        )
+
         early_stop_callback = EarlyStopping(
             monitor='val_loss',
             patience=self.config.early_stopping_patience,
@@ -532,7 +553,7 @@ class DiffCoderTrainer:
             accelerator='gpu' if torch.cuda.is_available() else 'cpu',
             devices=1 if torch.cuda.is_available() else "auto",
             accumulate_grad_batches=self.config.accumulation_steps,
-            callbacks=[checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback, curriculum_callback],
+            callbacks=[best_checkpoint_callback, last_checkpoint_callback, early_stop_callback, lr_monitor, sample_logger_callback, curriculum_callback],
             logger=loggers if loggers else True,
             precision="16-mixed" if torch.cuda.is_available() else 32,
             gradient_clip_val=1.0
@@ -567,14 +588,14 @@ class DiffCoderTrainer:
         )
         
         # Rejestracja najlepszego modelu w Comet na koniec udanego treningu
-        if comet_logger is not None and checkpoint_callback.best_model_path:
+        if comet_logger is not None and best_checkpoint_callback.best_model_path:
             try:
                 print(">>> [COMET] Rejestruję najlepszy model w chmurze Comet ML... <<<")
-                comet_logger.experiment.log_model("LocalConvDiffCoder", checkpoint_callback.best_model_path)
+                comet_logger.experiment.log_model("LocalConvDiffCoder", best_checkpoint_callback.best_model_path)
             except Exception as e:
                 print(f"[COMET WARNING] Nie udało się automatycznie zalogować modelu: {e}")
 
-        return checkpoint_callback.best_model_path
+        return best_checkpoint_callback.best_model_path
 
 
 def main():
