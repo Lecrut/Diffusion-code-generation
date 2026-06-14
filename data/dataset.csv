@@ -298292,3 +298292,2810 @@ if __name__ == '__main__':
 if __name__ == '__main__':
     sample_patterns = [""hello"", ""world"", ""python""]
     print_pattern_twice(sample_patterns)",True,0,14766,236_9.py
+236,10,Repeat a shape multiple times,"Write a complete, efficient Python script that generates a square pattern of a specified size using asterisks, repeating the shape multiple times.","import sys
+def generate_square_pattern(size, repetitions):
+    pattern = []
+    for _ in range(repetitions):
+        row = """"
+        for i in range(size):
+            row += ""*"" * size
+        pattern.append(row)
+    return ""\n"".join(pattern)
+if __name__ == '__main__':
+    square_size = 5
+    repetitions = 3
+    result = generate_square_pattern(square_size, repetitions)
+    print(result)",True,0,14767,236_10.py
+236,10,Repeat a shape multiple times,"Write a complete, efficient Python script that generates a square pattern of a specified size using asterisks, repeating the shape multiple times.","def generate_square_pattern(size, repetitions):
+    pattern = []
+    for _ in range(repetitions):
+        row = ""*"" * size
+        pattern.append(row)
+    return ""\n"".join(pattern)
+if __name__ == '__main__':
+    square_size = 5
+    repetitions = 3
+    result = generate_square_pattern(square_size, repetitions)
+    print(result)",True,1,14768,236_10_1.py
+236,11,Repeat a shape multiple times,"Implement a function named 'repeat_shape' that accepts a shape (represented as a list of strings or a 2D list) and an integer count, and returns the shape repeated that many times vertically, optimizing for readability and performance.","def repeat_shape(shape, count):
+    if not shape:
+        return []
+    rows = len(shape)
+    cols = len(shape[0])
+    new_shape = []
+    for _ in range(count):
+        new_shape.extend(shape)
+    return new_shape
+if __name__ == '__main__':
+    sample_shape_list = [""A"", ""B""]
+    sample_count = 3
+    result1 = repeat_shape(sample_shape_list, sample_count)
+    print(f""Shape: {sample_shape_list}, Count: {sample_count}"")
+    print(""Result 1:"")
+    for row in result1:
+        print(row)
+    print(""-"" * 20)
+    sample_shape_2d = [
+        [""X"", ""Y""],
+        [""Z"", ""W""]
+    ]
+    sample_count_2 = 2
+    result2 = repeat_shape(sample_shape_2d, sample_count_2)
+    print(f""Shape: {sample_shape_2d}, Count: {sample_count_2}"")
+    print(""Result 2:"")
+    for row in result2:
+        print(row)
+    print(""-"" * 20)
+    sample_shape_empty = []
+    sample_count_3 = 5
+    result3 = repeat_shape(sample_shape_empty, sample_count_3)
+    print(f""Shape: {sample_shape_empty}, Count: {sample_count_3}"")
+    print(""Result 3:"")
+    print(result3)
+    print(""-"" * 20)
+    sample_shape_single = [""H""]
+    sample_count_4 = 2
+    result4 = repeat_shape(sample_shape_single, sample_count_4)
+    print(f""Shape: {sample_shape_single}, Count: {sample_count_4}"")
+    print(""Result 4:"")
+    for row in result4:
+        print(row)
+    print(""-"" * 20)",True,0,14769,236_11.py
+236,11,Repeat a shape multiple times,"Implement a function named 'repeat_shape' that accepts a shape (represented as a list of strings or a 2D list) and an integer count, and returns the shape repeated that many times vertically, optimizing for readability and performance.","def repeat_shape(shape, count):
+    if not shape:
+        return []
+    rows = len(shape)
+    cols = len(shape[0])
+    repeated_shape = []
+    for _ in range(count):
+        repeated_shape.extend(shape)
+    return repeated_shape
+if __name__ == '__main__':
+    sample_shape_list = [""A"", ""B""]
+    sample_count = 3
+    result1 = repeat_shape(sample_shape_list, sample_count)
+    print(f""Shape: {sample_shape_list}, Count: {sample_count}"")
+    print(f""Result (List of Lists): {result1}"")
+    sample_shape_2d = [
+        [""X"", ""Y""],
+        [""Z"", ""W""]
+    ]
+    sample_count_2 = 2
+    result2 = repeat_shape(sample_shape_2d, sample_count_2)
+    print(f""\nShape: {sample_shape_2d}, Count: {sample_count_2}"")
+    print(f""Result (List of Lists): {result2}"")
+    sample_shape_single = [""H""]
+    sample_count_3 = 4
+    result3 = repeat_shape(sample_shape_single, sample_count_3)
+    print(f""\nShape: {sample_shape_single}, Count: {sample_count_3}"")
+    print(f""Result (List of Lists): {result3}"")",True,1,14770,236_11_1.py
+236,11,Repeat a shape multiple times,"Implement a function named 'repeat_shape' that accepts a shape (represented as a list of strings or a 2D list) and an integer count, and returns the shape repeated that many times vertically, optimizing for readability and performance.","def repeat_shape(shape, count):
+    if not shape:
+        return []
+    rows = len(shape)
+    cols = len(shape[0])
+    repeated_shape = []
+    for _ in range(count):
+        repeated_shape.extend(shape)
+    return repeated_shape
+if __name__ == '__main__':
+    sample_shape_list = [""A"", ""B""]
+    sample_count = 3
+    result1 = repeat_shape(sample_shape_list, sample_count)
+    print(f""Shape: {sample_shape_list}, Count: {sample_count}"")
+    print(f""Result 1: {result1}"")
+    sample_shape_2d = [
+        [""X"", ""Y""],
+        [""Z"", ""W""]
+    ]
+    sample_count_2 = 2
+    result2 = repeat_shape(sample_shape_2d, sample_count_2)
+    print(f""\nShape: {sample_shape_2d}, Count: {sample_count_2}"")
+    print(f""Result 2: {result2}"")
+    sample_shape_empty = []
+    sample_count_3 = 5
+    result3 = repeat_shape(sample_shape_empty, sample_count_3)
+    print(f""\nShape: {sample_shape_empty}, Count: {sample_count_3}"")
+    print(f""Result 3: {result3}"")",True,2,14771,236_11_2.py
+236,11,Repeat a shape multiple times,"Implement a function named 'repeat_shape' that accepts a shape (represented as a list of strings or a 2D list) and an integer count, and returns the shape repeated that many times vertically, optimizing for readability and performance.","def repeat_shape(shape, count):
+    if not shape:
+        return []
+    rows = len(shape)
+    cols = len(shape[0])
+    new_shape = []
+    for _ in range(count):
+        new_shape.extend(shape)
+    return new_shape
+if __name__ == '__main__':
+    sample_shape_list = [""A"", ""B""]
+    sample_count = 3
+    result1 = repeat_shape(sample_shape_list, sample_count)
+    print(f""Shape: {sample_shape_list}, Count: {sample_count}"")
+    print(""Result 1:"")
+    for row in result1:
+        print(row)
+    print(""-"" * 20)
+    sample_shape_2d = [
+        [""X"", ""Y""],
+        [""Z"", ""W""]
+    ]
+    sample_count_2 = 2
+    result2 = repeat_shape(sample_shape_2d, sample_count_2)
+    print(f""Shape: {sample_shape_2d}, Count: {sample_count_2}"")
+    print(""Result 2:"")
+    for row in result2:
+        print(row)
+    print(""-"" * 20)
+    sample_shape_empty = []
+    sample_count_3 = 5
+    result3 = repeat_shape(sample_shape_empty, sample_count_3)
+    print(f""Shape: {sample_shape_empty}, Count: {sample_count_3}"")
+    print(""Result 3:"")
+    print(result3)",True,3,14772,236_11_3.py
+236,11,Repeat a shape multiple times,"Implement a function named 'repeat_shape' that accepts a shape (represented as a list of strings or a 2D list) and an integer count, and returns the shape repeated that many times vertically, optimizing for readability and performance.","def repeat_shape(shape, count):
+    if not shape:
+        return []
+    rows = len(shape)
+    cols = len(shape[0])
+    new_shape = []
+    for _ in range(count):
+        new_shape.extend(shape)
+    return new_shape
+if __name__ == '__main__':
+    sample_shape_list = [""A"", ""B""]
+    sample_count = 3
+    result1 = repeat_shape(sample_shape_list, sample_count)
+    print(f""Shape: {sample_shape_list}, Count: {sample_count}"")
+    print(f""Result (List of Lists): {result1}"")
+    sample_shape_2d = [
+        [""X"", ""Y""],
+        [""Z"", ""W""]
+    ]
+    sample_count_2 = 2
+    result2 = repeat_shape(sample_shape_2d, sample_count_2)
+    print(f""\nShape: {sample_shape_2d}, Count: {sample_count_2}"")
+    print(f""Result (List of Lists): {result2}"")",True,4,14773,236_11_4.py
+236,11,Repeat a shape multiple times,"Implement a function named 'repeat_shape' that accepts a shape (represented as a list of strings or a 2D list) and an integer count, and returns the shape repeated that many times vertically, optimizing for readability and performance.","def repeat_shape(shape, count):
+    if not shape:
+        return []
+    rows = len(shape)
+    cols = len(shape[0])
+    new_shape = []
+    for _ in range(count):
+        new_shape.extend(shape)
+    return new_shape
+if __name__ == '__main__':
+    sample_shape_list = [""A"", ""B""]
+    sample_count = 3
+    result_list = repeat_shape(sample_shape_list, sample_count)
+    print(result_list)
+    sample_shape_2d = [
+        [""X"", ""Y""],
+        [""Z"", ""W""]
+    ]
+    sample_count_2d = 2
+    result_2d = repeat_shape(sample_shape_2d, sample_count_2d)
+    print(result_2d)",True,5,14774,236_11_5.py
+236,12,Repeat a shape multiple times,"Develop an optimized Python solution to print a repeating pattern of a triangle shape (using stars) where the base size is determined by a given input, ensuring the code is clean and adheres to best practices.","import sys
+def print_triangle(n):
+    for i in range(1, n + 1):
+        print(""*"" * i)
+if __name__ == '__main__':
+    base_size = 5
+    print_triangle(base_size)",True,0,14775,236_12.py
+236,12,Repeat a shape multiple times,"Develop an optimized Python solution to print a repeating pattern of a triangle shape (using stars) where the base size is determined by a given input, ensuring the code is clean and adheres to best practices.","def print_triangle(n):
+    for i in range(1, n + 1):
+        print(""*"" * i)
+if __name__ == '__main__':
+    base_size = 5
+    print_triangle(base_size)",True,1,14776,236_12_1.py
+236,13,Repeat a shape multiple times,"Write a class named 'ShapeRepeater' with a method to generate and print a specified geometric shape (e.g., a right-angled triangle) repeated N times, focusing on object-oriented design principles.","class ShapeRepeater:
+    def generate_and_print_triangle(self, shape_type, repetitions):
+        if shape_type == ""right-angled triangle"":
+            for i in range(repetitions):
+                print(f""--- Triangle {i + 1} ---"")
+                print(""Side A: 3"")
+                print(""Side B: 4"")
+                print(""Hypotenuse: 5"")
+        else:
+            print(f""Unsupported shape type: {shape_type}"")
+if __name__ == '__main__':
+    repeater = ShapeRepeater()
+    shape_to_repeat = ""right-angled triangle""
+    num_repetitions = 3
+    repeater.generate_and_print_triangle(shape_to_repeat, num_repetitions)",True,0,14777,236_13.py
+236,13,Repeat a shape multiple times,"Write a class named 'ShapeRepeater' with a method to generate and print a specified geometric shape (e.g., a right-angled triangle) repeated N times, focusing on object-oriented design principles.","class ShapeRepeater:
+    def generate_and_print_triangle(self, shape_type, repetitions):
+        if shape_type == ""right-angled triangle"":
+            for i in range(repetitions):
+                print(f""--- Triangle {i + 1} ---"")
+                print(""Side A: 3"")
+                print(""Side B: 4"")
+                print(""Hypotenuse: 5"")
+        else:
+            print(f""Unsupported shape type: {shape_type}"")
+if __name__ == '__main__':
+    repeater = ShapeRepeater()
+    shape_to_repeat = ""right-angled triangle""
+    n_repetitions = 3
+    repeater.generate_and_print_triangle(shape_to_repeat, n_repetitions)",True,1,14778,236_13_1.py
+236,13,Repeat a shape multiple times,"Write a class named 'ShapeRepeater' with a method to generate and print a specified geometric shape (e.g., a right-angled triangle) repeated N times, focusing on object-oriented design principles.","class ShapeRepeater:
+    def generate_and_print_triangle(self, shape_type, repetitions):
+        if shape_type == ""right-angled triangle"":
+            for i in range(repetitions):
+                print(f""--- Triangle {i + 1} ---"")
+                print(""Side A: 3"")
+                print(""Side B: 4"")
+                print(""Hypotenuse: 5"")
+                print(""-"" * 20)
+        else:
+            print(f""Unsupported shape type: {shape_type}"")
+if __name__ == '__main__':
+    repeater = ShapeRepeater()
+    shape = ""right-angled triangle""
+    n = 3
+    repeater.generate_and_print_triangle(shape, n)",True,2,14779,236_13_2.py
+236,13,Repeat a shape multiple times,"Write a class named 'ShapeRepeater' with a method to generate and print a specified geometric shape (e.g., a right-angled triangle) repeated N times, focusing on object-oriented design principles.","class ShapeRepeater:
+    def generate_and_print(self, shape_type, repetitions):
+        if shape_type == ""right_angled_triangle"":
+            for i in range(repetitions):
+                print(f""--- Triangle {i + 1} ---"")
+                print(""Side A: 3"")
+                print(""Side B: 4"")
+                print(""Hypotenuse: 5"")
+        else:
+            print(f""Unsupported shape type: {shape_type}"")
+if __name__ == '__main__':
+    repeater = ShapeRepeater()
+    shape_to_repeat = ""right_angled_triangle""
+    num_repetitions = 3
+    repeater.generate_and_print(shape_to_repeat, num_repetitions)",True,3,14780,236_13_3.py
+236,13,Repeat a shape multiple times,"Write a class named 'ShapeRepeater' with a method to generate and print a specified geometric shape (e.g., a right-angled triangle) repeated N times, focusing on object-oriented design principles.","class ShapeRepeater:
+    def generate_and_print_triangle(self, shape_type, repetitions):
+        if shape_type == ""right-angled triangle"":
+            for i in range(repetitions):
+                print(f""--- Triangle {i + 1} ---"")
+                print(""Side A: 3 units"")
+                print(""Side B: 4 units"")
+                print(""Hypotenuse: 5 units"")
+        else:
+            print(f""Unsupported shape type: {shape_type}"")
+if __name__ == '__main__':
+    repeater = ShapeRepeater()
+    shape_to_repeat = ""right-angled triangle""
+    num_repetitions = 3
+    repeater.generate_and_print_triangle(shape_to_repeat, num_repetitions)",True,4,14781,236_13_4.py
+236,14,Repeat a shape multiple times,"Create a standalone Python program that takes the number of rows and the pattern string (e.g., '#') as input, and prints the resulting shape repeated 5 times, ensuring the output is perfectly aligned and efficient.","import sys
+def print_pattern(rows, pattern):
+    output = []
+    for _ in range(5):
+        line = """"
+        for i in range(rows):
+            if i < len(pattern):
+                line += pattern[i] + "" ""
+            else:
+                line += ""  ""
+        output.append(line.rstrip())
+    print('\n'.join(output))
+if __name__ == '__main__':
+    num_rows = 10
+    pattern_string = '#'
+    print_pattern(num_rows, pattern_string)",True,0,14782,236_14.py
+236,14,Repeat a shape multiple times,"Create a standalone Python program that takes the number of rows and the pattern string (e.g., '#') as input, and prints the resulting shape repeated 5 times, ensuring the output is perfectly aligned and efficient.","import sys
+def print_pattern_repeated(rows, pattern, repetitions):
+    line = """"
+    for _ in range(repetitions):
+        line += pattern * rows + ""\n""
+    print(line, end="""")
+if __name__ == '__main__':
+    rows = 5
+    pattern = '#'
+    repetitions = 5
+    print_pattern_repeated(rows, pattern, repetitions)",True,1,14783,236_14_1.py
+237,0,Show a growing sequence pattern,"Write a complete, efficient Python script that generates and prints the Fibonacci sequence up to the 20th term, using an iterative approach.","if __name__ == '__main__':
+    n = 20
+    a = 0
+    b = 1
+    sequence = []
+    for _ in range(n):
+        sequence.append(a)
+        next_val = a + b
+        a = b
+        b = next_val
+    print(sequence)",True,0,14784,237_0.py
+237,0,Show a growing sequence pattern,"Write a complete, efficient Python script that generates and prints the Fibonacci sequence up to the 20th term, using an iterative approach.","import sys
+def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    sequence = [0, 1]
+    for i in range(2, n):
+        next_fib = sequence[-1] + sequence[-2]
+        sequence.append(next_fib)
+    return sequence
+if __name__ == '__main__':
+    n = 20
+    fib_sequence = generate_fibonacci(n)
+    print(*fib_sequence)",True,1,14785,237_0_1.py
+237,0,Show a growing sequence pattern,"Write a complete, efficient Python script that generates and prints the Fibonacci sequence up to the 20th term, using an iterative approach.","if __name__ == '__main__':
+    n = 20
+    a = 0
+    b = 1
+    sequence = []
+    for _ in range(n):
+        sequence.append(a)
+        next_val = a + b
+        a = b
+        b = next_val
+    for _ in range(n):
+        if len(sequence) < n:
+            sequence.append(b)
+    print(*sequence)",True,2,14786,237_0_2.py
+237,1,Show a growing sequence pattern,"Implement a function named `generate_geometric_sequence` that takes the first term, the common ratio, and the number of terms as input, and returns the sequence using a generator for memory efficiency.","def generate_geometric_sequence(a, r, n):
+    current_term = a
+    for _ in range(n):
+        yield current_term
+        current_term *= r
+if __name__ == '__main__':
+    first_term = 2
+    common_ratio = 3
+    num_terms = 5
+    sequence = generate_geometric_sequence(first_term, common_ratio, num_terms)
+    result = list(sequence)
+    print(result)",True,0,14787,237_1.py
+237,1,Show a growing sequence pattern,"Implement a function named `generate_geometric_sequence` that takes the first term, the common ratio, and the number of terms as input, and returns the sequence using a generator for memory efficiency.","def generate_geometric_sequence(a, r, n):
+    current = a
+    for _ in range(n):
+        yield current
+        current *= r
+if __name__ == '__main__':
+    first_term = 2
+    common_ratio = 3
+    num_terms = 5
+    sequence_generator = generate_geometric_sequence(first_term, common_ratio, num_terms)
+    result = list(sequence_generator)
+    print(result)",True,1,14788,237_1_1.py
+237,1,Show a growing sequence pattern,"Implement a function named `generate_geometric_sequence` that takes the first term, the common ratio, and the number of terms as input, and returns the sequence using a generator for memory efficiency.","def generate_geometric_sequence(a, r, n):
+    current_term = a
+    for _ in range(n):
+        yield current_term
+        current_term *= r
+if __name__ == '__main__':
+    first_term = 2
+    common_ratio = 3
+    num_terms = 5
+    sequence = generate_geometric_sequence(first_term, common_ratio, num_terms)
+    result_list = list(sequence)
+    print(result_list)",True,2,14789,237_1_2.py
+235,11,Generate a simple line pattern,"Develop an optimized Python solution to print a solid square pattern of '*' characters of size N x N, ensuring the output is clean and uses efficient string manipulation or print statements.",,False,0,14790,235_11.py
+237,2,Show a growing sequence pattern,"Develop a class named `SequenceGenerator` with a method `generate_arithmetic_progression` that produces an arithmetic sequence given the starting value, the common difference, and the number of elements.","class SequenceGenerator:
+    def generate_arithmetic_progression(self, a1, d, n):
+        sequence = []
+        for i in range(n):
+            term = a1 + i * d
+            sequence.append(term)
+        return sequence
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    start_value = 2
+    common_difference = 3
+    number_of_elements = 5
+    result = generator.generate_arithmetic_progression(start_value, common_difference, number_of_elements)
+    print(result)",True,0,14791,237_2.py
+237,2,Show a growing sequence pattern,"Develop a class named `SequenceGenerator` with a method `generate_arithmetic_progression` that produces an arithmetic sequence given the starting value, the common difference, and the number of elements.","class SequenceGenerator:
+    def generate_arithmetic_progression(self, start, diff, n):
+        sequence = []
+        for i in range(n):
+            term = start + i * diff
+            sequence.append(term)
+        return sequence
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    start_value = 2
+    common_difference = 3
+    number_of_elements = 5
+    result = generator.generate_arithmetic_progression(start_value, common_difference, number_of_elements)
+    print(result)",True,1,14792,237_2_1.py
+237,3,Show a growing sequence pattern,"Write a robust Python function that takes a starting number and a multiplier, and generates the first 15 terms of a geometric sequence, ensuring floating-point precision is handled correctly.","def generate_geometric_sequence(start, multiplier):
+    sequence = []
+    current_term = float(start)
+    for _ in range(15):
+        sequence.append(current_term)
+        current_term *= multiplier
+    return sequence
+if __name__ == '__main__':
+    start_number = 2.0
+    multiplier = 1.5
+    result = generate_geometric_sequence(start_number, multiplier)
+    print(result)",True,0,14793,237_3.py
+237,3,Show a growing sequence pattern,"Write a robust Python function that takes a starting number and a multiplier, and generates the first 15 terms of a geometric sequence, ensuring floating-point precision is handled correctly.","import math
+def generate_geometric_sequence(start, multiplier):
+    sequence = []
+    current_term = float(start)
+    for _ in range(15):
+        sequence.append(current_term)
+        current_term *= multiplier
+    return sequence
+if __name__ == '__main__':
+    start_number = 2.0
+    multiplier = 1.5
+    result = generate_geometric_sequence(start_number, multiplier)
+    print(result)",True,1,14794,237_3_1.py
+237,4,Show a growing sequence pattern,Create a script that reads a list of integers from standard input and calculates and prints the running product of all elements in the sequence.,"import sys
+if __name__ == '__main__':
+    input_data = [2, 3, 4, 5]
+    running_product = 1
+    for number in input_data:
+        running_product *= number
+    print(running_product)",True,0,14795,237_4.py
+237,4,Show a growing sequence pattern,Create a script that reads a list of integers from standard input and calculates and prints the running product of all elements in the sequence.,"import sys
+if __name__ == '__main__':
+    input_data = [1, 2, 3, 4, 5]
+    running_product = 1
+    for number in input_data:
+        running_product *= number
+    print(running_product)",True,1,14796,237_4_1.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""None"", sequence
+    is_arithmetic = True
+    diff = sequence[1] - sequence[0]
+    for i in range(2, n):
+        if sequence[i] - sequence[i-1] != diff:
+            is_arithmetic = False
+            break
+    if is_arithmetic:
+        return ""Arithmetic"", sequence
+    is_geometric = True
+    if sequence[0] == 0 and any(x != 0 for x in sequence):
+        pass
+    if sequence[0] != 0:
+        ratio = sequence[1] / sequence[0]
+        for i in range(2, n):
+            if sequence[i-1] == 0:
+                if sequence[i] != 0:
+                    is_geometric = False
+                    break
+                else:
+                    continue
+            elif (sequence[i] / sequence[i-1]) != ratio:
+                is_geometric = False
+                break
+    if is_geometric:
+        if sequence[0] != 0:
+            ratio = sequence[1] / sequence[0]
+            for i in range(2, n):
+                expected = sequence[i-1] * ratio
+                if abs(sequence[i] - expected) > 1e-9:
+                    is_geometric = False
+                    break
+        elif all(x == 0 for x in sequence):
+            pass
+        if is_geometric:
+            return ""Geometric"", sequence
+    return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [3, 6, 12, 24]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [1, 2, 3, 4]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [2, 4, 8, 16]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [1, 3, 5, 7]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [1, 2, 4, 7]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [5, 10, 15, 20]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")
+    sequence8 = [1, 1, 1, 1]
+    print(f""Sequence: {sequence8}, Pattern: {find_pattern_sequence(sequence8)}"")
+    sequence9 = [10, 5, 0, -5]
+    print(f""Sequence: {sequence9}, Pattern: {find_pattern_sequence(sequence9)}"")",True,0,14797,237_5.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""None"", sequence
+    is_arithmetic = True
+    diff = sequence[1] - sequence[0]
+    for i in range(2, n):
+        if sequence[i] - sequence[i-1] != diff:
+            is_arithmetic = False
+            break
+    if is_arithmetic:
+        return ""arithmetic"", sequence
+    is_geometric = True
+    if sequence[0] == 0 and any(x != 0 for x in sequence):
+        pass
+    else:
+        for i in range(1, n):
+            if sequence[i-1] != 0:
+                if sequence[i] / sequence[i-1] != sequence[1] / sequence[0]:
+                    is_geometric = False
+                    break
+            elif sequence[i] != 0:
+                is_geometric = False
+                break
+    if is_geometric:
+        return ""geometric"", sequence
+    return ""none"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8, 10]
+    result1 = find_pattern_sequence(sequence1)
+    print(f""Sequence: {sequence1}, Pattern: {result1[0]}, Sequence: {result1[1]}"")
+    sequence2 = [3, 6, 12, 24, 48]
+    result2 = find_pattern_sequence(sequence2)
+    print(f""Sequence: {sequence2}, Pattern: {result2[0]}, Sequence: {result2[1]}"")
+    sequence3 = [1, 2, 4, 8, 16]
+    result3 = find_pattern_sequence(sequence3)
+    print(f""Sequence: {sequence3}, Pattern: {result3[0]}, Sequence: {result3[1]}"")
+    sequence4 = [1, 3, 5, 7, 9]
+    result4 = find_pattern_sequence(sequence4)
+    print(f""Sequence: {sequence4}, Pattern: {result4[0]}, Sequence: {result4[1]}"")
+    sequence5 = [1, 2, 3, 5, 8]
+    result5 = find_pattern_sequence(sequence5)
+    print(f""Sequence: {sequence5}, Pattern: {result5[0]}, Sequence: {result5[1]}"")
+    sequence6 = [1, 2, 3, 4]
+    result6 = find_pattern_sequence(sequence6)
+    print(f""Sequence: {sequence6}, Pattern: {result6[0]}, Sequence: {result6[1]}"")",True,1,14798,237_5_1.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""None"", sequence
+    diffs = [sequence[i+1] - sequence[i] for i in range(n - 1)]
+    ratios = []
+    is_arithmetic = True
+    is_geometric = True
+    if n > 1:
+        first_diff = diffs[0]
+        for diff in diffs[1:]:
+            if diff != first_diff:
+                is_arithmetic = False
+                break
+        if is_arithmetic:
+            return ""Arithmetic"", sequence
+    for i in range(n - 1):
+        if sequence[i] != 0:
+            ratio = sequence[i+1] / sequence[i]
+            ratios.append(ratio)
+        elif sequence[i+1] != 0:
+            is_geometric = False
+            break
+        else:
+            pass
+    if is_geometric and n > 1:
+        first_ratio = None
+        for ratio in ratios:
+            if first_ratio is None:
+                first_ratio = ratio
+            elif abs(ratio - first_ratio) > 1e-9:
+                is_geometric = False
+                break
+        if is_geometric:
+            return ""Geometric"", sequence
+    return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [3, 6, 9, 12]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [2, 4, 8, 16]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [1, 2, 4, 7]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [5, 10, 15, 20]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [1, 3, 7, 15]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [1, 2, 3, 4, 5]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")
+    sequence8 = [10, 5, 0, -5]
+    print(f""Sequence: {sequence8}, Pattern: {find_pattern_sequence(sequence8)}"")
+    sequence9 = [2, 4, 6]
+    print(f""Sequence: {sequence9}, Pattern: {find_pattern_sequence(sequence9)}"")
+    sequence10 = [5, 5, 5]
+    print(f""Sequence: {sequence10}, Pattern: {find_pattern_sequence(sequence10)}"")",True,2,14799,237_5_2.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n <= 1:
+        return ""None"", sequence
+    diffs = [sequence[i+1] - sequence[i] for i in range(n - 1)]
+    ratios = []
+    for i in range(n - 1):
+        if sequence[i] != 0:
+            ratios.append(sequence[i+1] / sequence[i])
+        else:
+            ratios.append(None)
+    is_arithmetic = True
+    if n > 1:
+        first_diff = diffs[0]
+        for diff in diffs[1:]:
+            if diff != first_diff:
+                is_arithmetic = False
+                break
+    if is_arithmetic:
+        return ""Arithmetic"", sequence
+    is_geometric = True
+    if n > 1:
+        first_ratio = ratios[0]
+        if first_ratio is None:
+            is_geometric = False
+        else:
+            for ratio in ratios[1:]:
+                if ratio is None:
+                    is_geometric = False
+                    break
+                if abs(ratio - first_ratio) > 1e-9:
+                    is_geometric = False
+                    break
+    if is_geometric:
+        return ""Geometric"", sequence
+    return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8, 10]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [2, 4, 8, 16, 32]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [1, 3, 5, 7, 9]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [1, 2, 4, 8, 16]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [1, 2, 3, 4, 5]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [1, 2, 3, 5, 7]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [10, 8, 6, 4, 2]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")
+    sequence8 = [5, 10, 15, 22, 29]
+    print(f""Sequence: {sequence8}, Pattern: {find_pattern_sequence(sequence8)}"")",True,3,14800,237_5_3.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""None"", sequence
+    diffs = [sequence[i+1] - sequence[i] for i in range(n - 1)]
+    ratios = []
+    is_arithmetic = True
+    is_geometric = True
+    if n > 1:
+        first_diff = diffs[0]
+        for diff in diffs[1:]:
+            if diff != first_diff:
+                is_arithmetic = False
+                break
+        if is_arithmetic:
+            return ""Arithmetic"", sequence
+    for i in range(n - 1):
+        if sequence[i] != 0:
+            ratio = sequence[i+1] / sequence[i]
+            ratios.append(ratio)
+        elif sequence[i+1] == 0:
+            pass
+        else:
+            is_geometric = False                                                                        
+    if is_geometric:
+        if not ratios:
+            return ""Arithmetic"", sequence                                              
+        first_ratio = ratios[0]
+        for ratio in ratios[1:]:
+            if abs(ratio - first_ratio) > 1e-9:
+                is_geometric = False
+                break
+        if is_geometric:
+            return ""Geometric"", sequence
+    return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [3, 6, 12, 24]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [1, 2, 4, 8]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [1, 3, 5, 7]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [1, 2, 3, 5]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [10, 5, 0, -5]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [5, 5, 5, 5]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")
+    sequence8 = [1, 2, 3, 4, 6]
+    print(f""Sequence: {sequence8}, Pattern: {find_pattern_sequence(sequence8)}"")",True,4,14801,237_5_4.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""Unknown"", sequence
+    is_arithmetic = True
+    diff = sequence[1] - sequence[0]
+    for i in range(2, n):
+        if sequence[i] - sequence[i-1] != diff:
+            is_arithmetic = False
+            break
+    if is_arithmetic:
+        return ""Arithmetic"", sequence
+    is_geometric = True
+    if sequence[0] == 0 and any(x != 0 for x in sequence):
+        is_geometric = False
+    else:
+        ratio = None
+        try:
+            ratio = sequence[1] / sequence[0]
+        except ZeroDivisionError:
+            pass
+        if ratio is not None:
+            for i in range(2, n):
+                if sequence[i-1] == 0:
+                    if sequence[i] != 0:
+                        is_geometric = False
+                        break
+                    else:
+                        continue
+                elif sequence[i] / sequence[i-1] != ratio:
+                    is_geometric = False
+                    break
+            if is_geometric:
+                return ""Geometric"", sequence
+        if not is_geometric:
+             pass
+    return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    result1 = find_pattern_sequence(sequence1)
+    print(f""Sequence: {sequence1}, Pattern: {result1[0]}, Sequence: {result1[1]}"")
+    sequence2 = [3, 6, 12, 24]
+    result2 = find_pattern_sequence(sequence2)
+    print(f""Sequence: {sequence2}, Pattern: {result2[0]}, Sequence: {result2[1]}"")
+    sequence3 = [1, 3, 5, 7]
+    result3 = find_pattern_sequence(sequence3)
+    print(f""Sequence: {sequence3}, Pattern: {result3[0]}, Sequence: {result3[1]}"")
+    sequence4 = [2, 4, 8, 16]
+    result4 = find_pattern_sequence(sequence4)
+    print(f""Sequence: {sequence4}, Pattern: {result4[0]}, Sequence: {result4[1]}"")
+    sequence5 = [1, 2, 4, 7]
+    result5 = find_pattern_sequence(sequence5)
+    print(f""Sequence: {sequence5}, Pattern: {result5[0]}, Sequence: {result5[1]}"")
+    sequence6 = [5, 10, 15, 22]
+    result6 = find_pattern_sequence(sequence6)
+    print(f""Sequence: {sequence6}, Pattern: {result6[0]}, Sequence: {result6[1]}"")
+    sequence7 = [1, 1, 1, 1]
+    result7 = find_pattern_sequence(sequence7)
+    print(f""Sequence: {sequence7}, Pattern: {result7[0]}, Sequence: {result7[1]}"")",True,5,14802,237_5_5.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n <= 1:
+        return ""Unknown"", sequence
+    if n == 2:
+        if sequence[0] != 0:
+            if sequence[1] - sequence[0] != 0:
+                return ""Arithmetic"", sequence
+        return ""Arithmetic"", sequence
+    diff = sequence[1] - sequence[0]
+    is_arithmetic = True
+    for i in range(2, n):
+        if sequence[i] - sequence[i-1] != diff:
+            is_arithmetic = False
+            break
+    if is_arithmetic:
+        return ""Arithmetic"", sequence
+    if sequence[0] == 0:
+        all_zero = all(x == 0 for x in sequence)
+        if all_zero:
+            return ""Arithmetic"", sequence
+        pass
+    if sequence[0] != 0:
+        ratio = sequence[1] / sequence[0]
+        is_geometric = True
+        for i in range(2, n):
+            if sequence[i-1] == 0:
+                is_geometric = False
+                break
+            current_ratio = sequence[i] / sequence[i-1]
+            if abs(current_ratio - ratio) > 1e-9:
+                is_geometric = False
+                break
+        if is_geometric:
+            return ""Geometric"", sequence
+    return ""Unknown"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    result1 = find_pattern_sequence(sequence1)
+    print(f""Sequence: {sequence1}, Pattern: {result1[0]}, Sequence: {result1[1]}"")
+    sequence2 = [3, 6, 12, 24]
+    result2 = find_pattern_sequence(sequence2)
+    print(f""Sequence: {sequence2}, Pattern: {result2[0]}, Sequence: {result2[1]}"")
+    sequence3 = [1, 2, 4, 8]
+    result3 = find_pattern_sequence(sequence3)
+    print(f""Sequence: {sequence3}, Pattern: {result3[0]}, Sequence: {result3[1]}"")
+    sequence4 = [1, 3, 5, 7]
+    result4 = find_pattern_sequence(sequence4)
+    print(f""Sequence: {sequence4}, Pattern: {result4[0]}, Sequence: {result4[1]}"")
+    sequence5 = [1, 2, 3, 5]
+    result5 = find_pattern_sequence(sequence5)
+    print(f""Sequence: {sequence5}, Pattern: {result5[0]}, Sequence: {result5[1]}"")
+    sequence6 = [10, 5, 0, -5]
+    result6 = find_pattern_sequence(sequence6)
+    print(f""Sequence: {sequence6}, Pattern: {result6[0]}, Sequence: {result6[1]}"")
+    sequence7 = [5, 5, 5, 5]
+    result7 = find_pattern_sequence(sequence7)
+    print(f""Sequence: {sequence7}, Pattern: {result7[0]}, Sequence: {result7[1]}"")",True,6,14803,237_5_6.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""Neither"", sequence
+    is_arithmetic = True
+    diff = sequence[1] - sequence[0]
+    for i in range(2, n):
+        if sequence[i] - sequence[i-1] != diff:
+            is_arithmetic = False
+            break
+    if is_arithmetic:
+        return ""Arithmetic"", sequence
+    is_geometric = True
+    if sequence[0] == 0 and any(x != 0 for x in sequence):
+        pass
+    else:
+        for i in range(1, n):
+            if sequence[i-1] == 0:
+                if sequence[i] != 0:
+                    is_geometric = False
+                    break
+            elif sequence[i] % sequence[i-1] != 0:
+                is_geometric = False
+                break
+            elif sequence[i] / sequence[i-1] != sequence[i] / sequence[i-1]:
+                 pass                                                                                                         
+    if not is_geometric:
+        return ""Neither"", sequence
+    first_term = sequence[0]
+    if first_term == 0:
+        if all(x == 0 for x in sequence):
+            return ""Arithmetic"", sequence                        
+        else:
+            return ""Neither"", sequence
+    ratio = sequence[1] / sequence[0]
+    for i in range(2, n):
+        if abs(sequence[i] / sequence[i-1] - ratio) > 1e-9:
+            is_geometric = False
+            break
+    if is_geometric:
+        return ""Geometric"", sequence
+    else:
+        return ""Neither"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [3, 6, 9, 12]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [2, 4, 8, 16]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [1, 2, 4, 7]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [5, 10, 15, 20]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [1, 3, 7, 15]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [2, 3, 5, 8]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")
+    sequence8 = [1, 1, 1, 1]
+    print(f""Sequence: {sequence8}, Pattern: {find_pattern_sequence(sequence8)}"")
+    sequence9 = [10, 5, 2.5, 1.25]
+    print(f""Sequence: {sequence9}, Pattern: {find_pattern_sequence(sequence9)}"")",True,7,14804,237_5_7.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""None"", sequence
+    diffs = [sequence[i+1] - sequence[i] for i in range(n - 1)]
+    ratios = []
+    is_arithmetic = True
+    is_geometric = True
+    if all(d == diffs[0] for d in diffs):
+        return ""Arithmetic"", sequence
+    for i in range(n - 1):
+        if sequence[i] != 0:
+            ratio = sequence[i+1] / sequence[i]
+            ratios.append(ratio)
+        else:
+            ratios.append(float('inf') if sequence[i+1] != 0 else float('nan'))
+    if len(ratios) > 0:
+        first_ratio = ratios[0]
+        is_geometric = True
+        for i in range(1, len(ratios)):
+            current_ratio = ratios[i]
+            if not (abs(current_ratio - first_ratio) < 1e-9):
+                is_geometric = False
+                break
+    if is_geometric:
+        return ""Geometric"", sequence
+    else:
+        return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [3, 6, 12, 24]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [1, 2, 4, 8]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [1, 3, 5, 7]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [1, 2, 3, 5]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [10, 5, 0, -5]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [5, 5, 5, 5]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")",True,8,14805,237_5_8.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n < 2:
+        return ""None"", sequence
+    diffs = [sequence[i+1] - sequence[i] for i in range(n - 1)]
+    ratios = []
+    is_arithmetic = True
+    is_geometric = True
+    for i in range(n - 1):
+        if sequence[i] == 0:
+            if sequence[i+1] != 0:
+                is_geometric = False
+            else:
+                ratios.append(1.0)                                                                                                         
+        else:
+            ratio = sequence[i+1] / sequence[i]
+            ratios.append(ratio)
+    if all(d == diffs[0] for d in diffs):
+        return ""Arithmetic"", sequence
+    elif all(abs(r - ratios[0]) < 1e-9 for r in ratios):
+        return ""Geometric"", sequence
+    else:
+        return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}"")
+    print(find_pattern_sequence(sequence1))
+    sequence2 = [3, 6, 12, 24]
+    print(f""Sequence: {sequence2}"")
+    print(find_pattern_sequence(sequence2))
+    sequence3 = [1, 2, 4, 8]
+    print(f""Sequence: {sequence3}"")
+    print(find_pattern_sequence(sequence3))
+    sequence4 = [1, 3, 5, 7]
+    print(f""Sequence: {sequence4}"")
+    print(find_pattern_sequence(sequence4))
+    sequence5 = [1, 2, 3, 5]
+    print(f""Sequence: {sequence5}"")
+    print(find_pattern_sequence(sequence5))
+    sequence6 = [10, 8, 6, 4]
+    print(f""Sequence: {sequence6}"")
+    print(find_pattern_sequence(sequence6))
+    sequence7 = [2, 3, 5, 8]
+    print(f""Sequence: {sequence7}"")
+    print(find_pattern_sequence(sequence7))",True,9,14806,237_5_9.py
+237,5,Show a growing sequence pattern,"Implement an optimized function `find_pattern_sequence` that accepts a list of numbers and determines if the sequence follows a simple linear progression (arithmetic) or a simple exponential progression (geometric), returning the detected pattern type and the sequence itself.","def find_pattern_sequence(sequence):
+    n = len(sequence)
+    if n <= 1:
+        return ""None"", sequence
+    is_arithmetic = True
+    diff = sequence[1] - sequence[0]
+    for i in range(2, n):
+        if sequence[i] - sequence[i-1] != diff:
+            is_arithmetic = False
+            break
+    if is_arithmetic:
+        return ""Arithmetic"", sequence
+    is_geometric = True
+    if sequence[0] != 0:
+        ratio = sequence[1] / sequence[0]
+        for i in range(2, n):
+            if sequence[i-1] == 0:
+                is_geometric = False
+                break
+            current_ratio = sequence[i] / sequence[i-1]
+            if abs(current_ratio - ratio) > 1e-9:
+                is_geometric = False
+                break
+        if is_geometric:
+            return ""Geometric"", sequence
+    if all(x == sequence[0] for x in sequence):
+        return ""Arithmetic"", sequence
+    return ""None"", sequence
+if __name__ == '__main__':
+    sequence1 = [2, 4, 6, 8]
+    print(f""Sequence: {sequence1}, Pattern: {find_pattern_sequence(sequence1)}"")
+    sequence2 = [1, 2, 3, 4]
+    print(f""Sequence: {sequence2}, Pattern: {find_pattern_sequence(sequence2)}"")
+    sequence3 = [2, 4, 8, 16]
+    print(f""Sequence: {sequence3}, Pattern: {find_pattern_sequence(sequence3)}"")
+    sequence4 = [1, 3, 5, 7]
+    print(f""Sequence: {sequence4}, Pattern: {find_pattern_sequence(sequence4)}"")
+    sequence5 = [1, 2, 4, 8]
+    print(f""Sequence: {sequence5}, Pattern: {find_pattern_sequence(sequence5)}"")
+    sequence6 = [3, 6, 9, 12]
+    print(f""Sequence: {sequence6}, Pattern: {find_pattern_sequence(sequence6)}"")
+    sequence7 = [1, 2, 3, 5]
+    print(f""Sequence: {sequence7}, Pattern: {find_pattern_sequence(sequence7)}"")
+    sequence8 = [5, 5, 5, 5]
+    print(f""Sequence: {sequence8}, Pattern: {find_pattern_sequence(sequence8)}"")
+    sequence9 = [10, 5, 0, -5]
+    print(f""Sequence: {sequence9}, Pattern: {find_pattern_sequence(sequence9)}"")",True,10,14807,237_5_10.py
+237,6,Show a growing sequence pattern,"Write a function that generates a sequence where each term is the sum of the previous two terms (Fibonacci style), and print the first 12 terms.","def generate_fibonacci(n):
+    sequence = [0, 1]
+    if n <= 2:
+        return sequence
+    for i in range(2, n):
+        next_term = sequence[-1] + sequence[-2]
+        sequence.append(next_term)
+    return sequence
+if __name__ == '__main__':
+    n = 12
+    result = generate_fibonacci(n)
+    print(*result)",True,0,14808,237_6.py
+237,6,Show a growing sequence pattern,"Write a function that generates a sequence where each term is the sum of the previous two terms (Fibonacci style), and print the first 12 terms.","def generate_fibonacci_sequence(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        for i in range(2, n):
+            next_term = sequence[-1] + sequence[-2]
+            sequence.append(next_term)
+        return sequence
+if __name__ == '__main__':
+    n_terms = 12
+    fib_sequence = generate_fibonacci_sequence(n_terms)
+    print(*fib_sequence)",True,1,14809,237_6_1.py
+237,6,Show a growing sequence pattern,"Write a function that generates a sequence where each term is the sum of the previous two terms (Fibonacci style), and print the first 12 terms.","def generate_fibonacci(n):
+    sequence = [0, 1]
+    if n <= 2:
+        if n >= 1:
+            return sequence[:n]
+        else:
+            return []
+    while len(sequence) < n:
+        next_term = sequence[-1] + sequence[-2]
+        sequence.append(next_term)
+    return sequence
+if __name__ == '__main__':
+    n = 12
+    result = generate_fibonacci(n)
+    print(*result)",True,2,14810,237_6_2.py
+237,6,Show a growing sequence pattern,"Write a function that generates a sequence where each term is the sum of the previous two terms (Fibonacci style), and print the first 12 terms.","def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    sequence = [0, 1]
+    while len(sequence) < n:
+        next_term = sequence[-1] + sequence[-2]
+        sequence.append(next_term)
+    return sequence
+if __name__ == '__main__':
+    n = 12
+    fib_sequence = generate_fibonacci(n)
+    print(*fib_sequence)",True,3,14811,237_6_3.py
+237,7,Show a growing sequence pattern,"Develop a method within a class to recursively generate a sequence where the next term is double the current term, starting from an initial value, and stop the recursion after a specified length.","class SequenceGenerator:
+    def generate_doubling_sequence(self, start_value, length):
+        sequence = []
+        current_value = start_value
+        for _ in range(length):
+            sequence.append(current_value)
+            current_value *= 2
+        return sequence
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    start = 3
+    length = 5
+    result = generator.generate_doubling_sequence(start, length)
+    print(result)",True,0,14812,237_7.py
+237,7,Show a growing sequence pattern,"Develop a method within a class to recursively generate a sequence where the next term is double the current term, starting from an initial value, and stop the recursion after a specified length.","class SequenceGenerator:
+    def generate_doubling_sequence(self, initial_value, length):
+        sequence = []
+        current_term = initial_value
+        for _ in range(length):
+            sequence.append(current_term)
+            current_term *= 2
+        return sequence
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    initial = 3
+    length = 5
+    result = generator.generate_doubling_sequence(initial, length)
+    print(result)",True,1,14813,237_7_1.py
+237,7,Show a growing sequence pattern,"Develop a method within a class to recursively generate a sequence where the next term is double the current term, starting from an initial value, and stop the recursion after a specified length.","class SequenceGenerator:
+    def generate_doubling_sequence(self, start_value, length):
+        sequence = []
+        current_value = start_value
+        count = 0
+        while count < length:
+            sequence.append(current_value)
+            current_value *= 2
+            count += 1
+        return sequence
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    start = 3
+    length = 5
+    result = generator.generate_doubling_sequence(start, length)
+    print(result)",True,2,14814,237_7_2.py
+237,8,Show a growing sequence pattern,"Implement a function that takes a starting value and a growth factor, and generates an infinite sequence of numbers, printing only the first 10 terms to the console.","def generate_sequence(start_value, growth_factor):
+    current_value = start_value
+    for _ in range(10):
+        print(current_value)
+        current_value *= growth_factor
+if __name__ == '__main__':
+    generate_sequence(1, 2)",True,0,14815,237_8.py
+237,8,Show a growing sequence pattern,"Implement a function that takes a starting value and a growth factor, and generates an infinite sequence of numbers, printing only the first 10 terms to the console.","def generate_sequence(start_value, growth_factor):
+    current_value = start_value
+    for _ in range(10):
+        print(current_value)
+        current_value *= growth_factor
+if __name__ == '__main__':
+    start = 2
+    factor = 1.5
+    generate_sequence(start, factor)",True,1,14816,237_8_1.py
+237,8,Show a growing sequence pattern,"Implement a function that takes a starting value and a growth factor, and generates an infinite sequence of numbers, printing only the first 10 terms to the console.","def generate_sequence(start_value, growth_factor):
+    sequence = []
+    current_value = start_value
+    for _ in range(10):
+        sequence.append(current_value)
+        current_value *= growth_factor
+    return sequence
+if __name__ == '__main__':
+    start = 2
+    factor = 1.5
+    result = generate_sequence(start, factor)
+    for term in result:
+        print(term)",True,2,14817,237_8_2.py
+237,10,Show a growing sequence pattern,"Write a complete, efficient Python script that generates and prints the first 10 terms of the Fibonacci sequence, demonstrating a clear growing pattern.","if __name__ == '__main__':
+    a = 0
+    b = 1
+    sequence = []
+    for _ in range(10):
+        sequence.append(a)
+        next_term = a + b
+        a = b
+        b = next_term
+    print(sequence)",True,0,14818,237_10.py
+237,10,Show a growing sequence pattern,"Write a complete, efficient Python script that generates and prints the first 10 terms of the Fibonacci sequence, demonstrating a clear growing pattern.","if __name__ == '__main__':
+    a = 0
+    b = 1
+    sequence = []
+    for _ in range(10):
+        sequence.append(a)
+        next_term = a + b
+        a = b
+        b = next_term
+    for term in sequence:
+        print(term)",True,1,14819,237_10_1.py
+237,11,Show a growing sequence pattern,"Implement an optimized function named 'generate_geometric_sequence' that accepts the first term, the common ratio, and the number of terms, and returns the resulting sequence as a list.","def generate_geometric_sequence(a, r, n):
+    sequence = []
+    for i in range(n):
+        term = a * (r ** i)
+        sequence.append(term)
+    return sequence
+if __name__ == '__main__':
+    first_term = 2
+    common_ratio = 3
+    num_terms = 5
+    result = generate_geometric_sequence(first_term, common_ratio, num_terms)
+    print(result)",True,0,14820,237_11.py
+237,12,Show a growing sequence pattern,"Develop a class named 'SequenceGenerator' with a method to generate an arithmetic progression, ensuring the implementation is robust and handles edge cases correctly.",,False,0,14821,237_12.py
+237,13,Show a growing sequence pattern,"Write a script to visualize the growth of powers of two (2^n) for n from 0 to 15 using Python, printing the sequence clearly to show the exponential growth pattern.","import math
+if __name__ == '__main__':
+    for n in range(16):
+        power_of_two = 2**n
+        print(f""n={n}, 2^n = {power_of_two}"")",True,0,14822,237_13.py
+237,13,Show a growing sequence pattern,"Write a script to visualize the growth of powers of two (2^n) for n from 0 to 15 using Python, printing the sequence clearly to show the exponential growth pattern.","import math
+if __name__ == '__main__':
+    for n in range(16):
+        power_of_two = 2**n
+        print(f""n={n}, 2^n={power_of_two}"")",True,1,14823,237_13_1.py
+237,13,Show a growing sequence pattern,"Write a script to visualize the growth of powers of two (2^n) for n from 0 to 15 using Python, printing the sequence clearly to show the exponential growth pattern.","import math
+if __name__ == '__main__':
+    for n in range(16):
+        power_of_two = 2 ** n
+        print(f""n={n}: 2^{n} = {power_of_two}"")",True,2,14824,237_13_2.py
+237,13,Show a growing sequence pattern,"Write a script to visualize the growth of powers of two (2^n) for n from 0 to 15 using Python, printing the sequence clearly to show the exponential growth pattern.","if __name__ == '__main__':
+    for n in range(16):
+        power_of_two = 2**n
+        print(f""n={n}, 2^n={power_of_two}"")",True,3,14825,237_13_3.py
+237,14,Show a growing sequence pattern,"Create an optimized function to calculate and return a list representing the sequence of perfect squares up to a specified limit, showcasing a clear growing pattern.","def generate_perfect_squares(limit):
+    squares = []
+    n = 1
+    while n * n <= limit:
+        squares.append(n * n)
+        n += 1
+    return squares
+if __name__ == '__main__':
+    limit_value = 100
+    result = generate_perfect_squares(limit_value)
+    print(result)",True,0,14826,237_14.py
+237,14,Show a growing sequence pattern,"Create an optimized function to calculate and return a list representing the sequence of perfect squares up to a specified limit, showcasing a clear growing pattern.","def generate_perfect_squares(limit):
+    squares = []
+    n = 1
+    while True:
+        square = n * n
+        if square > limit:
+            break
+        squares.append(square)
+        n += 1
+    return squares
+if __name__ == '__main__':
+    limit_value = 100
+    result = generate_perfect_squares(limit_value)
+    print(result)",True,1,14827,237_14_1.py
+238,0,Fill a simple box design,"Write a complete, well-documented Python script that uses the `tkinter` library to create a simple graphical window and a box design using Canvas widgets.","import tkinter as tk
+def create_box(master, x1, y1, x2, y2, fill_color):
+    canvas = tk.Canvas(master, width=300, height=200, bg=""white"")
+    canvas.pack()
+    canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color, outline=""black"")
+if __name__ == '__main__':
+    root = tk.Tk()
+    root.title(""Simple Canvas Box"")
+    create_box(root, 50, 50, 250, 150, ""lightblue"")
+    root.mainloop()",True,0,14828,238_0.py
+238,0,Fill a simple box design,"Write a complete, well-documented Python script that uses the `tkinter` library to create a simple graphical window and a box design using Canvas widgets.","import tkinter as tk
+def create_box_design():
+    root = tk.Tk()
+    root.title(""Canvas Box Design"")
+    canvas_width = 400
+    canvas_height = 300
+    canvas = tk.Canvas(root, width=canvas_width, height=canvas_height, bg=""white"")
+    canvas.pack(padx=10, pady=10)
+    x1, y1 = 50, 50
+    x2, y2 = 350, 250
+    color1 = ""lightblue""
+    color2 = ""lightgreen""
+    canvas.create_rectangle(x1, y1, x2, y2, fill=color1, outline=""black"")
+    canvas.create_rectangle(x1 + 20, y1 + 20, x2 - 20, y2 - 20, fill=color2, outline=""black"")
+    root.mainloop()
+if __name__ == '__main__':
+    create_box_design()",True,1,14829,238_0_1.py
+238,0,Fill a simple box design,"Write a complete, well-documented Python script that uses the `tkinter` library to create a simple graphical window and a box design using Canvas widgets.","import tkinter as tk
+def create_box(master, x1, y1, x2, y2, fill_color):
+    canvas = tk.Canvas(master, width=300, height=200, bg=""white"")
+    canvas.pack()
+    canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color, outline=""black"")
+if __name__ == '__main__':
+    root = tk.Tk()
+    root.title(""Simple Canvas Box"")
+    root.geometry(""400x300"")
+    create_box(root, 50, 50, 250, 150, ""lightblue"")
+    create_box(root, 100, 170, 300, 250, ""lightgreen"")
+    root.mainloop()",True,2,14830,238_0_2.py
+238,0,Fill a simple box design,"Write a complete, well-documented Python script that uses the `tkinter` library to create a simple graphical window and a box design using Canvas widgets.","import tkinter as tk
+def create_box_design():
+    root = tk.Tk()
+    root.title(""Canvas Box Design"")
+    canvas_width = 400
+    canvas_height = 300
+    canvas = tk.Canvas(root, width=canvas_width, height=canvas_height, bg=""white"")
+    canvas.pack(padx=10, pady=10)
+    x1, y1 = 50, 50
+    x2, y2 = 350, 250
+    color1 = ""lightblue""
+    color2 = ""lightgreen""
+    canvas.create_rectangle(x1, y1, x2, y2, fill=color1, outline=""black"")
+    canvas.create_rectangle(x1 + 10, y1 + 10, x2 - 10, y2 - 10, fill=color2, outline=""black"")
+    root.mainloop()
+if __name__ == '__main__':
+    create_box_design()",True,3,14831,238_0_3.py
+238,0,Fill a simple box design,"Write a complete, well-documented Python script that uses the `tkinter` library to create a simple graphical window and a box design using Canvas widgets.","import tkinter as tk
+def create_box(root, x1, y1, x2, y2, fill_color):
+    canvas = tk.Canvas(root, width=300, height=200, bg=""white"")
+    canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color, outline=""black"")
+    return canvas
+if __name__ == '__main__':
+    root = tk.Tk()
+    root.title(""Simple Canvas Box"")
+    box_x1 = 50
+    box_y1 = 50
+    box_x2 = 250
+    box_y2 = 150
+    fill_color = ""lightblue""
+    canvas_widget = create_box(root, box_x1, box_y1, box_x2, box_y2, fill_color)
+    canvas_widget.pack(pady=20)
+    root.mainloop()",True,4,14832,238_0_4.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    current_diff = 1
+    for i in range(1, n):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+if __name__ == '__main__':
+    N = 10
+    sequence = generate_sequence(N)
+    x_values = list(range(1, N + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence where difference increases by 1 each time')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.show()",True,0,14833,237_9.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    diff = 1
+    for i in range(2, n + 1):
+        next_term = sequence[-1] + diff
+        sequence.append(next_term)
+        diff += 1
+    return sequence
+if __name__ == '__main__':
+    N = 10
+    sequence_values = generate_sequence(N)
+    x_values = list(range(1, N + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence_values, marker='o', linestyle='-', color='b')
+    plt.title('Sequence where differences increase by 1')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.show()",True,1,14834,237_9_1.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    diff = 1
+    for i in range(2, n + 1):
+        next_term = sequence[-1] + diff
+        sequence.append(next_term)
+        diff += 1
+    return sequence
+if __name__ == '__main__':
+    N = 10
+    sequence = generate_sequence(N)
+    x_values = list(range(1, N + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence where difference increases by 1 each time')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.show()",True,2,14835,237_9_2.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    sequence.append(1)
+    current_diff = 1
+    for i in range(1, n):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+def visualize_sequence(n):
+    sequence = generate_sequence(n)
+    x_values = list(range(1, n + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence with Increasing Differences')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.tight_layout()
+    plt.show()
+if __name__ == '__main__':
+    N = 10
+    visualize_sequence(N)",True,3,14836,237_9_3.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    current_diff = 1
+    for i in range(1, n):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+def visualize_sequence(n):
+    sequence = generate_sequence(n)
+    x_values = list(range(1, n + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence where difference increases by 1')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Term Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.tight_layout()
+    plt.show()
+if __name__ == '__main__':
+    N = 10
+    visualize_sequence(N)",True,4,14837,237_9_4.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    current_diff = 1
+    for i in range(1, n):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+def visualize_sequence(n):
+    sequence = generate_sequence(n)
+    x_values = list(range(1, n + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence with Increasing Differences')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Term Value ($a_n$)')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.tight_layout()
+    plt.show()
+if __name__ == '__main__':
+    N = 10
+    visualize_sequence(N)",True,5,14838,237_9_5.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    current_diff = 1
+    for i in range(2, n + 1):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+if __name__ == '__main__':
+    N = 10
+    sequence = generate_sequence(N)
+    x_values = list(range(1, N + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence where difference increases by 1 each time')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.show()",True,6,14839,237_9_6.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    current_diff = 1
+    for i in range(2, n + 1):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+if __name__ == '__main__':
+    N = 10
+    sequence = generate_sequence(N)
+    x_values = list(range(1, N + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence with Increasing Differences')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.tight_layout()
+    plt.show()",True,7,14840,237_9_7.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    sequence.append(1)
+    current_diff = 1
+    for i in range(1, n):
+        current_diff += 1
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+    return sequence
+def visualize_sequence(n):
+    terms = generate_sequence(n)
+    x_values = list(range(1, n + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, terms, marker='o', linestyle='-', color='b')
+    plt.title('Sequence where difference increases by 1')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.yscale('log')
+    plt.show()
+if __name__ == '__main__':
+    N = 10
+    visualize_sequence(N)",True,8,14841,237_9_8.py
+237,9,Show a growing sequence pattern,"Write a complete, well-documented Python program that generates and visualizes the first 10 terms of a sequence where the difference between consecutive terms increases by 1 each time (a quadratic-like growth pattern).","import matplotlib.pyplot as plt
+def generate_sequence(n):
+    sequence = []
+    if n <= 0:
+        return sequence
+    a1 = 1
+    sequence.append(a1)
+    current_diff = 1
+    for i in range(2, n + 1):
+        next_term = sequence[-1] + current_diff
+        sequence.append(next_term)
+        current_diff += 1
+    return sequence
+if __name__ == '__main__':
+    N = 10
+    sequence = generate_sequence(N)
+    x_values = list(range(1, N + 1))
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, sequence, marker='o', linestyle='-', color='b')
+    plt.title('Sequence with Increasing Differences')
+    plt.xlabel('Term Number (n)')
+    plt.ylabel('Sequence Value')
+    plt.grid(True)
+    plt.xticks(x_values)
+    plt.yscale('log')
+    plt.show()",True,9,14842,237_9_9.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with width {self.width} and height {self.height}"")
+        print(f""Coordinates for drawing: (x1={x1}, y1={y1}, x2={x2}, y2={y2})"")
+if __name__ == '__main__':
+    box1 = Box(10, 20, 50, 30)
+    print(""--- Box 1 ---"")
+    box1.draw(0, 0)
+    box2 = Box(100, 50, 20, 75)
+    print(""\n--- Box 2 ---"")
+    box2.draw(0, 0)",True,0,14843,238_1.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with dimensions {self.width}x{self.height}"")
+        print(f""Coordinates for drawing: (x1={x1}, y1={y1}, x2={x2}, y2={y2})"")
+if __name__ == '__main__':
+    my_box = Box(10, 20, 50, 30)
+    print(""--- Testing Box Object ---"")
+    my_box.draw(0, 0)
+    print(""\n--- Another Box ---"")
+    another_box = Box(100, 50, 10, 20)
+    another_box.draw(0, 0)",True,1,14844,238_1_1.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with width {self.width} and height {self.height}"")
+        print(f""Bounding box coordinates: (x1={x1}, y1={y1}, x2={x2}, y2={y2})"")
+if __name__ == '__main__':
+    my_box = Box(10, 20, 50, 30)
+    my_box.draw(0, 0)",True,2,14845,238_1_2.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with dimensions {self.width}x{self.height}"")
+        print(f""Coordinates: Top-Left=({x1}, {y1}), Bottom-Right=({x2}, {y2})"")
+if __name__ == '__main__':
+    my_box = Box(10, 20, 50, 30)
+    print(""--- Testing Box Drawing ---"")
+    my_box.draw(0, 0)",True,3,14846,238_1_3.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with dimensions {self.width}x{self.height}"")
+        print(f""Coordinates: (x1={x1}, y1={y1}, x2={x2}, y2={y2})"")
+if __name__ == '__main__':
+    my_box = Box(10, 20, 50, 30)
+    print(""--- Testing Box Drawing ---"")
+    my_box.draw(0, 0)",True,4,14847,238_1_4.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"import math
+class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing Box at ({x1}, {y1}) with dimensions ({self.width}, {self.height}) onto canvas starting at ({canvas_x}, {canvas_y}):"")
+        print(f""  Top-Left: ({x1}, {y1})"")
+        print(f""  Bottom-Right: ({x2}, {y2})"")
+if __name__ == '__main__':
+    my_box = Box(10, 20, 5, 3)
+    canvas_x = 0
+    canvas_y = 0
+    my_box.draw(canvas_x, canvas_y)",True,5,14848,238_1_5.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_width, canvas_height):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        if x1 < 0 or y1 < 0 or x2 > canvas_width or y2 > canvas_height:
+            return
+        print(f""Drawing box at ({x1}, {y1}) with dimensions {self.width}x{self.height} on canvas {canvas_width}x{canvas_height}"")
+if __name__ == '__main__':
+    box1 = Box(10, 20, 50, 30)
+    print(""--- Drawing Box 1 ---"")
+    box1.draw(100, 100)
+    box2 = Box(50, 50, 20, 40)
+    print(""\n--- Drawing Box 2 ---"")
+    box2.draw(100, 100)",True,6,14849,238_1_6.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with dimensions {self.width}x{self.height} onto canvas starting at ({canvas_x}, {canvas_y})."")
+        print(f""  Top-left corner of box: ({x1}, {y1})"")
+        print(f""  Bottom-right corner of box: ({x2}, {y2})"")
+if __name__ == '__main__':
+    box1 = Box(10, 20, 50, 30)
+    box2 = Box(100, 50, 20, 75)
+    print(""--- Drawing Box 1 ---"")
+    box1.draw(0, 0)
+    print(""\n--- Drawing Box 2 ---"")
+    box2.draw(50, 50)",True,7,14850,238_1_7.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_x, canvas_y):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        print(f""Drawing box at ({x1}, {y1}) with dimensions {self.width}x{self.height}"")
+        print(f""Coordinates for drawing: (x={x1}, y={y1}), (x={x2}, y={y2})"")
+if __name__ == '__main__':
+    my_box = Box(10, 20, 50, 30)
+    print(""--- Testing Box Object ---"")
+    my_box.draw(0, 0)
+    print(""\n--- Another Test ---"")
+    another_box = Box(100, 50, 10, 10)
+    another_box.draw(0, 0)",True,8,14851,238_1_8.py
+238,1,Fill a simple box design,Implement a class-based solution in Python to define a 'Box' object with methods to set its dimensions and draw it onto a 2D coordinate system using basic geometry principles.,"import math
+class Box:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas_width, canvas_height):
+        x1 = self.x
+        y1 = self.y
+        x2 = self.x + self.width
+        y2 = self.y + self.height
+        if x1 < 0 or y1 < 0 or x2 > canvas_width or y2 > canvas_height:
+            return
+        print(f""Drawing Box at ({x1}, {y1}) with dimensions {self.width}x{self.height}"")
+def main():
+    box = Box(x=10, y=20, width=50, height=30)
+    canvas_width = 100
+    canvas_height = 100
+    print(""--- Drawing Box ---"")
+    box.draw(canvas_width, canvas_height)
+if __name__ == '__main__':
+    main()",True,9,14852,238_1_9.py
+238,2,Fill a simple box design,"Develop an optimized function that generates a list of coordinates representing the vertices of a rectangle, ensuring the output is a list of tuples and adheres to efficient list comprehension.","def generate_rectangle_vertices(x1, y1, x2, y2):
+    return [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+if __name__ == '__main__':
+    x_min = 0
+    y_min = 0
+    x_max = 4
+    y_max = 3
+    vertices = [(x, y) for x in [x_min, x_max] for y in [y_min, y_max]]
+    print(vertices)",True,0,14853,238_2.py
+238,2,Fill a simple box design,"Develop an optimized function that generates a list of coordinates representing the vertices of a rectangle, ensuring the output is a list of tuples and adheres to efficient list comprehension.","def generate_rectangle_vertices(x1, y1, x2, y2):
+    return [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+if __name__ == '__main__':
+    x_min = 0
+    y_min = 0
+    x_max = 4
+    y_max = 3
+    vertices = [
+        (x_min, y_min),
+        (x_max, y_min),
+        (x_max, y_max),
+        (x_min, y_max)
+    ]
+    print(vertices)",True,1,14854,238_2_1.py
+238,2,Fill a simple box design,"Develop an optimized function that generates a list of coordinates representing the vertices of a rectangle, ensuring the output is a list of tuples and adheres to efficient list comprehension.","def generate_rectangle_vertices(x1, y1, x2, y2):
+    return [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+if __name__ == '__main__':
+    x_min = 0
+    y_min = 0
+    x_max = 5
+    y_max = 10
+    vertices = [(x, y) for x in [x_min, x_max] for y in [y_min, y_max]]
+    print(vertices)",True,2,14855,238_2_2.py
+238,2,Fill a simple box design,"Develop an optimized function that generates a list of coordinates representing the vertices of a rectangle, ensuring the output is a list of tuples and adheres to efficient list comprehension.","def generate_rectangle_vertices(x1, y1, x2, y2):
+    return [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+if __name__ == '__main__':
+    x_min = 1
+    y_min = 5
+    x_max = 10
+    y_max = 8
+    vertices = [(x, y) for x in [x_min, x_max] for y in [y_min, y_max]]
+    print(vertices)",True,3,14856,238_2_3.py
+238,3,Fill a simple box design,Write a procedural Python script that prompts the user for the width and height of a box and then prints the ASCII representation of that box using characters.,"if __name__ == '__main__':
+    width = 10
+    height = 5
+    box_chars = ""#""
+    for y in range(height):
+        line = """"
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                line += box_chars
+            else:
+                line += "" ""
+        print(line)",True,0,14857,238_3.py
+238,3,Fill a simple box design,Write a procedural Python script that prompts the user for the width and height of a box and then prints the ASCII representation of that box using characters.,"if __name__ == '__main__':
+    width = 10
+    height = 5
+    for y in range(height):
+        line = """"
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                line += ""#""
+            else:
+                line += "" ""
+        print(line)",True,1,14858,238_3_1.py
+238,3,Fill a simple box design,Write a procedural Python script that prompts the user for the width and height of a box and then prints the ASCII representation of that box using characters.,"def draw_box(width, height):
+    if width <= 0 or height <= 0:
+        return ""Invalid dimensions""
+    border = ""*""
+    top_bottom = border * width
+    side = border * (height - 2)
+    top_line = border + "" "" * (width - 2) + border
+    middle_line = border + "" "" * (width - 2) + border
+    bottom_line = border + "" "" * (width - 2) + border
+    box = [top_line, side, middle_line, side, bottom_line]
+    return ""\n"".join(box)
+if __name__ == '__main__':
+    box_width = 10
+    box_height = 5
+    print(draw_box(box_width, box_height))",True,2,14859,238_3_2.py
+238,3,Fill a simple box design,Write a procedural Python script that prompts the user for the width and height of a box and then prints the ASCII representation of that box using characters.,"def draw_box(width, height):
+    for y in range(height):
+        line = """"
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                line += ""#""
+            else:
+                line += "" ""
+        print(line)
+if __name__ == '__main__':
+    box_width = 10
+    box_height = 5
+    draw_box(box_width, box_height)",True,3,14860,238_3_3.py
+238,5,Fill a simple box design,"Implement a class named `SimpleBox` that encapsulates the logic for drawing a box on a specified canvas, accepting x, y, width, and height as parameters.","class SimpleBox:
+    def __init__(self):
+        pass
+    def draw(self, canvas, x, y, width, height):
+        for i in range(y, y + height):
+            for j in range(x, x + width):
+                canvas[i][j] = '*'
+if __name__ == '__main__':
+    canvas_size = 20
+    canvas = [[' ' for _ in range(canvas_size)] for _ in range(canvas_size)]
+    box = SimpleBox()
+    x = 5
+    y = 5
+    width = 10
+    height = 8
+    box.draw(canvas, x, y, width, height)
+    for row in canvas:
+        print("""".join(row))",True,0,14861,238_5.py
+238,5,Fill a simple box design,"Implement a class named `SimpleBox` that encapsulates the logic for drawing a box on a specified canvas, accepting x, y, width, and height as parameters.","class SimpleBox:
+    def __init__(self):
+        pass
+    def draw(self, canvas, x, y, width, height):
+        for i in range(y, y + height):
+            for j in range(x, x + width):
+                canvas[i][j] = '*'
+if __name__ == '__main__':
+    canvas_size = 20
+    test_canvas = [[' ' for _ in range(canvas_size)] for _ in range(canvas_size)]
+    box = SimpleBox()
+    x = 5
+    y = 5
+    width = 10
+    height = 8
+    box.draw(test_canvas, x, y, width, height)
+    for row in test_canvas:
+        print("""".join(row))",True,1,14862,238_5_1.py
+238,5,Fill a simple box design,"Implement a class named `SimpleBox` that encapsulates the logic for drawing a box on a specified canvas, accepting x, y, width, and height as parameters.","class SimpleBox:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas):
+        for i in range(self.y, self.y + self.height):
+            for j in range(self.x, self.x + self.width):
+                canvas[i][j] = '*'
+if __name__ == '__main__':
+    canvas_width = 20
+    canvas_height = 15
+    canvas = [[' ' for _ in range(canvas_width)] for _ in range(canvas_height)]
+    box = SimpleBox(5, 5, 8, 4)
+    box.draw(canvas)
+    for row in canvas:
+        print(''.join(row))",True,2,14863,238_5_2.py
+238,5,Fill a simple box design,"Implement a class named `SimpleBox` that encapsulates the logic for drawing a box on a specified canvas, accepting x, y, width, and height as parameters.","class SimpleBox:
+    def __init__(self):
+        pass
+    def draw(self, canvas, x, y, width, height):
+        for i in range(y, y + height):
+            for j in range(x, x + width):
+                canvas[i][j] = '*'
+if __name__ == '__main__':
+    canvas_size = 20
+    canvas = [[' ' for _ in range(canvas_size)] for _ in range(canvas_size)]
+    box = SimpleBox()
+    x1, y1, w1, h1 = 5, 5, 10, 10
+    box.draw(canvas, x1, y1, w1, h1)
+    for row in canvas:
+        print("""".join(row))",True,3,14864,238_5_3.py
+238,5,Fill a simple box design,"Implement a class named `SimpleBox` that encapsulates the logic for drawing a box on a specified canvas, accepting x, y, width, and height as parameters.","class SimpleBox:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas):
+        for i in range(self.y, self.y + self.height):
+            for j in range(self.x, self.x + self.width):
+                canvas[i][j] = '*'
+if __name__ == '__main__':
+    canvas_size = 20
+    canvas = [[' ' for _ in range(canvas_size)] for _ in range(canvas_size)]
+    box = SimpleBox(5, 5, 10, 10)
+    box.draw(canvas)
+    for row in canvas:
+        print(''.join(row))",True,4,14865,238_5_4.py
+238,5,Fill a simple box design,"Implement a class named `SimpleBox` that encapsulates the logic for drawing a box on a specified canvas, accepting x, y, width, and height as parameters.","class SimpleBox:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, canvas):
+        for i in range(self.y, self.y + self.height):
+            for j in range(self.x, self.x + self.width):
+                canvas[i][j] = '*'
+if __name__ == '__main__':
+    canvas_width = 20
+    canvas_height = 15
+    canvas = [[' ' for _ in range(canvas_width)] for _ in range(canvas_height)]
+    box = SimpleBox(5, 5, 10, 8)
+    box.draw(canvas)
+    for row in canvas:
+        print("""".join(row))",True,5,14866,238_5_5.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    x_coords = [coord[0] for coord in coordinates]
+    y_coords = [coord[1] for coord in coordinates]
+    min_x = min(x_coords)
+    max_x = max(x_coords)
+    min_y = min(y_coords)
+    max_y = max(y_coords)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coordinates = [
+        (1, 2),
+        (5, 2),
+        (5, 8),
+        (1, 8),
+        (3, 5)
+    ]
+    box_boundaries = draw_box(sample_coordinates)
+    print(box_boundaries)",True,0,14867,238_6.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    min_x = min(c[0] for c in coordinates)
+    max_x = max(c[0] for c in coordinates)
+    min_y = min(c[1] for c in coordinates)
+    max_y = max(c[1] for c in coordinates)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 5),
+        (3, 2),
+        (6, 8),
+        (4, 7),
+        (2, 6)
+    ]
+    box_boundaries = draw_box(sample_coords)
+    print(box_boundaries)",True,1,14868,238_6_1.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    x_coords = [coord[0] for coord in coordinates]
+    y_coords = [coord[1] for coord in coordinates]
+    min_x = min(x_coords)
+    max_x = max(x_coords)
+    min_y = min(y_coords)
+    max_y = max(y_coords)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coordinates = [
+        (1, 2),
+        (5, 2),
+        (5, 7),
+        (1, 7),
+        (3, 4)
+    ]
+    box_boundaries = draw_box(sample_coordinates)
+    print(box_boundaries)",True,2,14869,238_6_2.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    x_coords = [coord[0] for coord in coordinates]
+    y_coords = [coord[1] for coord in coordinates]
+    min_x = min(x_coords)
+    max_x = max(x_coords)
+    min_y = min(y_coords)
+    max_y = max(y_coords)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 5),
+        (3, 5),
+        (3, 7),
+        (1, 7),
+        (2, 6)
+    ]
+    box_bounds = draw_box(sample_coords)
+    print(box_bounds)",True,3,14870,238_6_3.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    min_x = min(c[0] for c in coordinates)
+    max_x = max(c[0] for c in coordinates)
+    min_y = min(c[1] for c in coordinates)
+    max_y = max(c[1] for c in coordinates)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 5),
+        (3, 2),
+        (7, 8),
+        (5, 4),
+        (2, 6)
+    ]
+    box_bounds = draw_box(sample_coords)
+    print(box_bounds)",True,4,14871,238_6_4.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    x_coords = [coord[0] for coord in coordinates]
+    y_coords = [coord[1] for coord in coordinates]
+    min_x = min(x_coords)
+    max_x = max(x_coords)
+    min_y = min(y_coords)
+    max_y = max(y_coords)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coordinates = [
+        (1, 1),
+        (5, 1),
+        (5, 4),
+        (1, 4),
+        (3, 2)
+    ]
+    box_boundaries = draw_box(sample_coordinates)
+    print(box_boundaries)",True,5,14872,238_6_5.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    min_x = min(c[0] for c in coordinates)
+    max_x = max(c[0] for c in coordinates)
+    min_y = min(c[1] for c in coordinates)
+    max_y = max(c[1] for c in coordinates)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 5),
+        (3, 2),
+        (5, 8),
+        (2, 7),
+        (4, 4)
+    ]
+    box_boundaries = draw_box(sample_coords)
+    print(box_boundaries)",True,6,14873,238_6_6.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    x_coords = [coord[0] for coord in coordinates]
+    y_coords = [coord[1] for coord in coordinates]
+    min_x = min(x_coords)
+    max_x = max(x_coords)
+    min_y = min(y_coords)
+    max_y = max(y_coords)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 2),
+        (5, 2),
+        (5, 6),
+        (1, 6),
+        (3, 4)
+    ]
+    box_boundaries = draw_box(sample_coords)
+    print(box_boundaries)",True,7,14874,238_6_7.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    min_x = min(c[0] for c in coordinates)
+    max_x = max(c[0] for c in coordinates)
+    min_y = min(c[1] for c in coordinates)
+    max_y = max(c[1] for c in coordinates)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 5),
+        (3, 2),
+        (6, 8),
+        (4, 1)
+    ]
+    box_bounds = draw_box(sample_coords)
+    print(box_bounds)",True,8,14875,238_6_8.py
+238,6,Fill a simple box design,"Write a clean and efficient Python function that takes a list of coordinates and draws a closed, filled box shape on a conceptual grid, returning the coordinates of the box boundaries.","def draw_box(coordinates):
+    if not coordinates:
+        return None
+    min_x = min(c[0] for c in coordinates)
+    max_x = max(c[0] for c in coordinates)
+    min_y = min(c[1] for c in coordinates)
+    max_y = max(c[1] for c in coordinates)
+    return (min_x, min_y, max_x, max_y)
+if __name__ == '__main__':
+    sample_coords = [
+        (1, 5),
+        (3, 2),
+        (7, 8),
+        (5, 10),
+        (2, 6)
+    ]
+    box_bounds = draw_box(sample_coords)
+    print(box_bounds)",True,9,14876,238_6_9.py
+238,4,Fill a simple box design,"Create a functional Python program using the `pygame` library to render a static, filled rectangular box on the screen, focusing on efficient drawing calls.",,False,0,14877,238_4.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, position, dimensions):
+        self._position = tuple(position)
+        self._dimensions = tuple(dimensions)
+    @property
+    def position(self):
+        return self._position
+    @property
+    def dimensions(self):
+        return self._dimensions
+    def __repr__(self):
+        return f""Box(position={self._position}, dimensions={self._dimensions})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return self._position == other._position and self._dimensions == other._dimensions
+    def __hash__(self):
+        return hash((self._position, self._dimensions))
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        raise TypeError(""Subtraction is not supported between Box objects and other types"")
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_pos = tuple(self._position[i] + other._position[i] for i in range(len(self._position)))
+        new_dims = tuple(self._dimensions[i] + other._dimensions[i] for i in range(len(self._dimensions)))
+        return Box(new_pos, new_dims)
+if __name__ == '__main__':
+    box1 = Box((0, 0, 0), (10, 5, 2))
+    box2 = Box((3, 1, 4), (8, 6, 3))
+    box3 = Box((0, 0, 0), (10, 5, 2))
+    print(box1)
+    print(box2)
+    print(box3)
+    print(f""Box1 == Box3: {box1 == box3}"")
+    print(f""Hash of Box1: {hash(box1)}"")
+    box_sum = box1 + box2
+    print(f""Box1 + Box2: {box_sum}"")",True,0,14878,238_8.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, x, y, z, length, width, height):
+        self._x = x
+        self._y = y
+        self._z = z
+        self._length = length
+        self._width = width
+        self._height = height
+    @property
+    def x(self):
+        return self._x
+    @property
+    def y(self):
+        return self._y
+    @property
+    def z(self):
+        return self._z
+    @property
+    def length(self):
+        return self._length
+    @property
+    def width(self):
+        return self._width
+    @property
+    def height(self):
+        return self._height
+    def __repr__(self):
+        return f""Box(x={self.x}, y={self.y}, z={self.z}, l={self.length}, w={self.width}, h={self.height})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return (self._x == other._x and self._y == other._y and self._z == other._z and
+                self._length == other._length and self._width == other._width and self._height == other._height)
+    def __hash__(self):
+        return hash((self._x, self._y, self._z, self._length, self._width, self._height))
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_x = self._x + other._x
+        new_y = self._y + other._y
+        new_z = self._z + other._z
+        new_l = self._length + other._length
+        new_w = self._width + other._width
+        new_h = self._height + other._height
+        return Box(new_x, new_y, new_z, new_l, new_w, new_h)
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_x = self._x - other._x
+        new_y = self._y - other._y
+        new_z = self._z - other._z
+        new_l = self._length - other._length
+        new_w = self._width - other._width
+        new_h = self._height - other._height
+        return Box(new_x, new_y, new_z, new_l, new_w, new_h)
+if __name__ == '__main__':
+    box1 = Box(0, 0, 0, 10, 5, 2)
+    box2 = Box(3, 4, 1, 4, 6, 3)
+    box3 = Box(1, 1, 1, 2, 2, 2)
+    print(box1)
+    print(box2)
+    print(box3)
+    box_sum = box1 + box2
+    print(""\nBox 1 + Box 2:"")
+    print(box_sum)
+    box_diff = box1 - box3
+    print(""\nBox 1 - Box 3:"")
+    print(box_diff)",True,1,14879,238_8_1.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, x, y, z, length, width, height):
+        self._x = x
+        self._y = y
+        self._z = z
+        self._length = length
+        self._width = width
+        self._height = height
+    @property
+    def x(self):
+        return self._x
+    @property
+    def y(self):
+        return self._y
+    @property
+    def z(self):
+        return self._z
+    @property
+    def length(self):
+        return self._length
+    @property
+    def width(self):
+        return self._width
+    @property
+    def height(self):
+        return self._height
+    def __repr__(self):
+        return f""Box(x={self.x}, y={self.y}, z={self.z}, l={self.length}, w={self.width}, h={self.height})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return (self._x == other._x and self._y == other._y and self._z == other._z and
+                self._length == other._length and self._width == other._width and self._height == other._height)
+    def __hash__(self):
+        return hash((self._x, self._y, self._z, self._length, self._width, self._height))
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_x = self._x + other._x
+        new_y = self._y + other._y
+        new_z = self._z + other._z
+        new_l = self._length + other._length
+        new_w = self._width + other._width
+        new_h = self._height + other._height
+        return Box(new_x, new_y, new_z, new_l, new_w, new_h)
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_x = self._x - other._x
+        new_y = self._y - other._y
+        new_z = self._z - other._z
+        new_l = self._length - other._length
+        new_w = self._width - other._width
+        new_h = self._height - other._height
+        return Box(new_x, new_y, new_z, new_l, new_w, new_h)
+if __name__ == '__main__':
+    box1 = Box(0, 0, 0, 2, 3, 4)
+    box2 = Box(5, 1, 1, 2, 3, 4)
+    box3 = Box(1, 1, 1, 1, 1, 1)
+    print(box1)
+    print(box2)
+    print(box3)
+    box_sum = box1 + box2
+    print(""\nSum of box1 and box2:"")
+    print(box_sum)
+    box_diff = box1 - box3
+    print(""\nDifference of box1 and box3:"")
+    print(box_diff)",True,2,14880,238_8_2.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, position, dimensions):
+        self._position = tuple(position)
+        self._dimensions = tuple(dimensions)
+    @property
+    def position(self):
+        return self._position
+    @property
+    def dimensions(self):
+        return self._dimensions
+    def __repr__(self):
+        return f""Box(position={self._position}, dimensions={self._dimensions})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return self._position == other._position and self._dimensions == other._dimensions
+    def __hash__(self):
+        return hash((self._position, self._dimensions))
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        raise TypeError(""Subtraction is not supported between Box objects and other types"")
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_pos = tuple(self._position[i] + other._position[i] for i in range(len(self._position)))
+        new_dims = tuple(self._dimensions[i] + other._dimensions[i] for i in range(len(self._dimensions)))
+        return Box(new_pos, new_dims)
+if __name__ == '__main__':
+    box1 = Box((0, 0, 0), (10, 5, 2))
+    box2 = Box((3, 1, 4), (7, 6, 3))
+    box3 = Box((0, 0, 0), (10, 5, 2))
+    print(box1)
+    print(box2)
+    print(box3)
+    box_sum = box1 + box2
+    print(f""Box1 + Box2 = {box_sum}"")
+    print(f""Is box1 equal to box3? {box1 == box3}"")
+    print(f""Hash of box1: {hash(box1)}"")
+    print(f""Hash of box3: {hash(box3)}"")",True,3,14881,238_8_3.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, position, dimensions):
+        self._position = tuple(position)
+        self._dimensions = tuple(dimensions)
+    @property
+    def position(self):
+        return self._position
+    @property
+    def dimensions(self):
+        return self._dimensions
+    def __repr__(self):
+        return f""Box(position={self._position}, dimensions={self._dimensions})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return self._position == other._position and self._dimensions == other._dimensions
+    def __hash__(self):
+        return hash((self._position, self._dimensions))
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        raise TypeError(""Subtraction between Box objects is not supported"")
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_pos = tuple(self._position[i] + other._position[i] for i in range(len(self._position)))
+        new_dims = tuple(self._dimensions[i] + other._dimensions[i] for i in range(len(self._dimensions)))
+        return Box(new_pos, new_dims)
+if __name__ == '__main__':
+    box1 = Box((0, 0, 0), (10, 5, 2))
+    box2 = Box((5, 5, 5), (3, 4, 1))
+    box3 = Box((0, 0, 0), (10, 5, 2))
+    print(box1)
+    print(box2)
+    print(box3)
+    print(f""Box1 == Box3: {box1 == box3}"")
+    print(f""Hash of Box1: {hash(box1)}"")
+    try:
+        box4 = box1 - box2
+        print(f""Box1 - Box2: {box4}"")
+    except TypeError as e:
+        print(f""Error during subtraction: {e}"")",True,4,14882,238_8_4.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, x, y, z, length, width, height):
+        self._x = x
+        self._y = y
+        self._z = z
+        self._length = length
+        self._width = width
+        self._height = height
+    @property
+    def x(self):
+        return self._x
+    @property
+    def y(self):
+        return self._y
+    @property
+    def z(self):
+        return self._z
+    @property
+    def length(self):
+        return self._length
+    @property
+    def width(self):
+        return self._width
+    @property
+    def height(self):
+        return self._height
+    def __repr__(self):
+        return f""Box(x={self._x}, y={self._y}, z={self._z}, l={self._length}, w={self._width}, h={self._height})""
+    def translate(self, dx, dy, dz):
+        new_x = self._x + dx
+        new_y = self._y + dy
+        new_z = self._z + dz
+        return Box(new_x, new_y, new_z, self._length, self._width, self._height)
+    def scale(self, factor):
+        new_length = self._length * factor
+        new_width = self._width * factor
+        new_height = self._height * factor
+        return Box(self._x, self._y, self._z, new_length, new_width, new_height)
+if __name__ == '__main__':
+    box1 = Box(0, 0, 0, 10, 5, 2)
+    print(f""Original Box: {box1}"")
+    box2 = box1.translate(3, -1, 5)
+    print(f""Translated Box: {box2}"")
+    box3 = box1.scale(2.5)
+    print(f""Scaled Box: {box3}"")
+    box4 = Box(100, 200, 300, 1, 1, 1)
+    print(f""New Independent Box: {box4}"")",True,5,14883,238_8_5.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, position, dimensions):
+        self._position = tuple(position)
+        self._dimensions = tuple(dimensions)
+    @property
+    def position(self):
+        return self._position
+    @property
+    def dimensions(self):
+        return self._dimensions
+    def __repr__(self):
+        return f""Box(position={self._position}, dimensions={self._dimensions})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return self._position == other._position and self._dimensions == other._dimensions
+    def __hash__(self):
+        return hash((self._position, self._dimensions))
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        raise TypeError(""Subtraction is not supported between Box objects and other types"")
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_pos = tuple(self._position[i] + other._position[i] for i in range(len(self._position)))
+        new_dims = tuple(self._dimensions[i] + other._dimensions[i] for i in range(len(self._dimensions)))
+        return Box(new_pos, new_dims)
+if __name__ == '__main__':
+    box1 = Box((0, 0, 0), (10, 5, 2))
+    box2 = Box((3, 4, 1), (4, 6, 3))
+    box3 = Box((1, 1, 1), (1, 1, 1))
+    print(box1)
+    print(box2)
+    print(box3)
+    box4 = Box((0, 0, 0), (10, 5, 2))
+    print(f""Box1 == Box4: {box1 == box4}"")
+    try:
+        result = box1 - box2
+        print(f""Box1 - Box2: {result}"")
+    except TypeError as e:
+        print(f""Error during subtraction: {e}"")",True,6,14884,238_8_6.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, x, y, z, length, width, height):
+        self._x = x
+        self._y = y
+        self._z = z
+        self._length = length
+        self._width = width
+        self._height = height
+    @property
+    def x(self):
+        return self._x
+    @property
+    def y(self):
+        return self._y
+    @property
+    def z(self):
+        return self._z
+    @property
+    def length(self):
+        return self._length
+    @property
+    def width(self):
+        return self._width
+    @property
+    def height(self):
+        return self._height
+    def __repr__(self):
+        return f""Box(x={self.x}, y={self.y}, z={self.z}, l={self.length}, w={self.width}, h={self.height})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return (self._x == other._x and self._y == other._y and self._z == other._z and
+                self._length == other._length and self._width == other._width and self._height == other._height)
+    def __hash__(self):
+        return hash((self._x, self._y, self._z, self._length, self._width, self._height))
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return Box(self._x - other._x, self._y - other._y, self._z - other._z,
+                   self._length - other._length, self._width - other._width, self._height - other._height)
+    def __mul__(self, scalar):
+        if isinstance(scalar, (int, float)):
+            return Box(self._x * scalar, self._y * scalar, self._z * scalar,
+                       self._length * scalar, self._width * scalar, self._height * scalar)
+        return NotImplemented
+    def __rmul__(self, scalar):
+        return self.__mul__(scalar)
+if __name__ == '__main__':
+    box1 = Box(0, 0, 0, 10, 5, 2)
+    box2 = Box(3, 4, 1, 8, 6, 3)
+    box3 = Box(0, 0, 0, 10, 5, 2)
+    print(box1)
+    print(box2)
+    print(box3)
+    box_diff = box1 - box2
+    print(""\nBox1 - Box2:"")
+    print(box_diff)
+    box_scaled = box1 * 2.5
+    print(""\nBox1 * 2.5:"")
+    print(box_scaled)
+    print(""\nEquality check (box1 == box3):"", box1 == box3)
+    print(""Hash check (hash(box1) == hash(box3)):"", hash(box1) == hash(box3))",True,7,14885,238_8_7.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, position, dimensions):
+        self._position = tuple(position)
+        self._dimensions = tuple(dimensions)
+    @property
+    def position(self):
+        return self._position
+    @property
+    def dimensions(self):
+        return self._dimensions
+    def __repr__(self):
+        return f""Box(position={self._position}, dimensions={self._dimensions})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return self._position == other._position and self._dimensions == other._dimensions
+    def __hash__(self):
+        return hash((self._position, self._dimensions))
+    def copy(self):
+        return Box(self._position, self._dimensions)
+if __name__ == '__main__':
+    box1 = Box(position=(1, 2, 3), dimensions=(10, 5, 2))
+    box2 = Box((1, 2, 3), (10, 5, 2))
+    box3 = Box((4, 5, 6), (8, 4, 3))
+    print(box1)
+    print(box2)
+    print(box3)
+    print(f""Box1 == Box2: {box1 == box2}"")
+    print(f""Box1 == Box3: {box1 == box3}"")
+    box1_copy = box1.copy()
+    print(box1_copy)
+    print(f""Box1 == Box1_copy: {box1 == box1_copy}"")",True,8,14886,238_8_8.py
+238,8,Fill a simple box design,"Design and write the core logic for a data structure in Python that can represent a box, storing its position and dimensions, prioritizing immutability where appropriate.","class Box:
+    def __init__(self, x, y, z, length, width, height):
+        self._x = x
+        self._y = y
+        self._z = z
+        self._length = length
+        self._width = width
+        self._height = height
+    @property
+    def x(self):
+        return self._x
+    @property
+    def y(self):
+        return self._y
+    @property
+    def z(self):
+        return self._z
+    @property
+    def length(self):
+        return self._length
+    @property
+    def width(self):
+        return self._width
+    @property
+    def height(self):
+        return self._height
+    def __repr__(self):
+        return f""Box(x={self.x}, y={self.y}, z={self.z}, l={self.length}, w={self.width}, h={self.height})""
+    def __eq__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        return (self._x == other._x and self._y == other._y and self._z == other._z and
+                self._length == other._length and self._width == other._width and self._height == other._height)
+    def __hash__(self):
+        return hash((self._x, self._y, self._z, self._length, self._width, self._height))
+    def __add__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_x = self._x + other._x
+        new_y = self._y + other._y
+        new_z = self._z + other._z
+        new_l = self._length + other._length
+        new_w = self._width + other._width
+        new_h = self._height + other._height
+        return Box(new_x, new_y, new_z, new_l, new_w, new_h)
+    def __sub__(self, other):
+        if not isinstance(other, Box):
+            return NotImplemented
+        new_x = self._x - other._x
+        new_y = self._y - other._y
+        new_z = self._z - other._z
+        new_l = self._length - other._length
+        new_w = self._width - other._width
+        new_h = self._height - other._height
+        return Box(new_x, new_y, new_z, new_l, new_w, new_h)
+if __name__ == '__main__':
+    box1 = Box(0, 0, 0, 10, 5, 2)
+    box2 = Box(3, 4, 1, 4, 6, 3)
+    box3 = Box(1, 1, 1, 2, 2, 2)
+    print(box1)
+    print(box2)
+    print(box3)
+    box_sum = box1 + box2
+    print(""\nSum of box1 and box2:"")
+    print(box_sum)
+    box_diff = box1 - box3
+    print(""\nDifference of box1 and box3:"")
+    print(box_diff)",True,9,14887,238_8_9.py
+238,9,Fill a simple box design,"Write a robust script that reads box dimensions from a file and prints a formatted description of each box, demonstrating efficient file I/O and string formatting.",,False,0,14888,238_9.py
+238,10,Fill a simple box design,"Write a complete, robust Python script that prompts the user to enter dimensions for a box and calculates its volume, surface area, and the volume of the material required to construct it, ensuring the output is clearly formatted.",,False,0,14889,238_10.py
+238,11,Fill a simple box design,"Implement an optimized class named 'Box' that has a constructor to accept length, width, and height, and methods to calculate the volume and surface area. Ensure the implementation is clean, efficient, and adheres to object-oriented programming best practices.","class Box:
+    def __init__(self, length, width, height):
+        self.length = length
+        self.width = width
+        self.height = height
+    def calculate_volume(self):
+        return self.length * self.width * self.height
+    def calculate_surface_area(self):
+        return 2 * (self.length * self.width + self.length * self.height + self.width * self.height)
+if __name__ == '__main__':
+    box1 = Box(10, 5, 2)
+    print(f""Box 1 Volume: {box1.calculate_volume()}"")
+    print(f""Box 1 Surface Area: {box1.calculate_surface_area()}"")
+    box2 = Box(3, 4, 5)
+    print(f""Box 2 Volume: {box2.calculate_volume()}"")
+    print(f""Box 2 Surface Area: {box2.calculate_surface_area()}"")",True,0,14890,238_11.py
+238,11,Fill a simple box design,"Implement an optimized class named 'Box' that has a constructor to accept length, width, and height, and methods to calculate the volume and surface area. Ensure the implementation is clean, efficient, and adheres to object-oriented programming best practices.","class Box:
+    def __init__(self, length, width, height):
+        self.length = length
+        self.width = width
+        self.height = height
+    def calculate_volume(self):
+        return self.length * self.width * self.height
+    def calculate_surface_area(self):
+        return 2 * (self.length * self.width + self.length * self.height + self.width * self.height)
+if __name__ == '__main__':
+    box1 = Box(10, 5, 3)
+    print(f""Box 1 Volume: {box1.calculate_volume()}"")
+    print(f""Box 1 Surface Area: {box1.calculate_surface_area()}"")
+    box2 = Box(4, 6, 2)
+    print(f""Box 2 Volume: {box2.calculate_volume()}"")
+    print(f""Box 2 Surface Area: {box2.calculate_surface_area()}"")",True,1,14891,238_11_1.py
+238,12,Fill a simple box design,"Develop a function named 'calculate_box_properties' that takes the length, width, and height as arguments and returns a dictionary containing the box's volume, surface area, and a custom calculated 'material_cost' based on a unit cost input, prioritizing computational efficiency.","def calculate_box_properties(length, width, height, unit_cost):
+    volume = length * width * height
+    surface_area = 2 * (length * width + length * height + width * height)
+    material_cost = surface_area * unit_cost
+    return {
+        ""volume"": volume,
+        ""surface_area"": surface_area,
+        ""material_cost"": material_cost
+    }
+if __name__ == '__main__':
+    L = 10
+    W = 5
+    H = 4
+    UC = 2.5
+    properties = calculate_box_properties(L, W, H, UC)
+    print(properties)",True,0,14892,238_12.py
+238,12,Fill a simple box design,"Develop a function named 'calculate_box_properties' that takes the length, width, and height as arguments and returns a dictionary containing the box's volume, surface area, and a custom calculated 'material_cost' based on a unit cost input, prioritizing computational efficiency.","def calculate_box_properties(length, width, height, unit_cost):
+    volume = length * width * height
+    surface_area = 2 * (length * width + length * height + width * height)
+    material_cost = surface_area * unit_cost
+    return {
+        ""volume"": volume,
+        ""surface_area"": surface_area,
+        ""material_cost"": material_cost
+    }
+if __name__ == '__main__':
+    L = 10
+    W = 5
+    H = 2
+    UC = 10.50
+    properties = calculate_box_properties(L, W, H, UC)
+    print(properties)",True,1,14893,238_12_1.py
+238,12,Fill a simple box design,"Develop a function named 'calculate_box_properties' that takes the length, width, and height as arguments and returns a dictionary containing the box's volume, surface area, and a custom calculated 'material_cost' based on a unit cost input, prioritizing computational efficiency.","def calculate_box_properties(length, width, height, unit_cost):
+    volume = length * width * height
+    surface_area = 2 * (length * width + length * height + width * height)
+    material_cost = surface_area * unit_cost
+    return {
+        ""volume"": volume,
+        ""surface_area"": surface_area,
+        ""material_cost"": material_cost
+    }
+if __name__ == '__main__':
+    L = 10
+    W = 5
+    H = 4
+    UC = 10.50
+    properties = calculate_box_properties(L, W, H, UC)
+    print(properties)",True,2,14894,238_12_2.py
+238,12,Fill a simple box design,"Develop a function named 'calculate_box_properties' that takes the length, width, and height as arguments and returns a dictionary containing the box's volume, surface area, and a custom calculated 'material_cost' based on a unit cost input, prioritizing computational efficiency.","def calculate_box_properties(length, width, height, unit_cost):
+    volume = length * width * height
+    surface_area = 2 * (length * width + length * height + width * height)
+    material_cost = surface_area * unit_cost
+    return {
+        ""volume"": volume,
+        ""surface_area"": surface_area,
+        ""material_cost"": material_cost
+    }
+if __name__ == '__main__':
+    L = 10.0
+    W = 5.0
+    H = 2.0
+    UC = 10.0
+    properties = calculate_box_properties(L, W, H, UC)
+    print(properties)",True,3,14895,238_12_3.py
+238,13,Fill a simple box design,"Write a standalone Python program that uses a loop to iteratively ask the user for the length, width, and height of a box, validates the input to ensure they are positive numbers, and then prints the calculated volume and surface area for each box entered.",,False,0,14896,238_13.py
+238,14,Fill a simple box design,"Create a highly efficient function that accepts a list of dimensions (length, width, height) and returns a tuple containing the total surface area and the volume of the resulting box, utilizing direct mathematical formulas without unnecessary intermediate variables.","def calculate_box_properties(dims):
+    l, w, h = dims
+    surface_area = 2 * (l * w + l * h + w * h)
+    volume = l * w * h
+    return (surface_area, volume)
+if __name__ == '__main__':
+    dimensions = [10, 5, 4]
+    result = calculate_box_properties(dimensions)
+    print(result)",True,0,14897,238_14.py
+238,14,Fill a simple box design,"Create a highly efficient function that accepts a list of dimensions (length, width, height) and returns a tuple containing the total surface area and the volume of the resulting box, utilizing direct mathematical formulas without unnecessary intermediate variables.","def calculate_box_properties(dims):
+    l, w, h = dims
+    surface_area = 2 * (l * w + l * h + w * h)
+    volume = l * w * h
+    return (surface_area, volume)
+if __name__ == '__main__':
+    dimensions = [10, 5, 2]
+    result = calculate_box_properties(dimensions)
+    print(result)",True,1,14898,238_14_1.py
+239,0,Calculate rectangle perimeter simply,"Write a complete, well-documented Python script that prompts the user to input the length and width of a rectangle and then calculates and prints its perimeter.",,False,0,14899,239_0.py
+239,1,Calculate rectangle perimeter simply,Implement an optimized function named 'calculate_rectangle_perimeter' that accepts length and width as arguments and returns the perimeter. Ensure the function is highly efficient.,"def calculate_rectangle_perimeter(length, width):
+    return 2 * (length + width)
+if __name__ == '__main__':
+    length_val = 10
+    width_val = 5
+    perimeter = calculate_rectangle_perimeter(length_val, width_val)
+    print(perimeter)",True,0,14900,239_1.py
+239,1,Calculate rectangle perimeter simply,Implement an optimized function named 'calculate_rectangle_perimeter' that accepts length and width as arguments and returns the perimeter. Ensure the function is highly efficient.,"import math
+def calculate_rectangle_perimeter(length, width):
+    return 2 * (length + width)
+if __name__ == '__main__':
+    length_val = 10
+    width_val = 5
+    perimeter = calculate_rectangle_perimeter(length_val, width_val)
+    print(perimeter)",True,1,14901,239_1_1.py
