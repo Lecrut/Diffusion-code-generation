@@ -302986,3 +302986,2256 @@ if __name__ == '__main__':
     area_d, area_e, comparison_de = compare_areas(shape_d, shape_e)
     print(f""Comparing {shape_d} and {shape_e}: Area D = {area_d}, Area E = {area_e}. Result: {comparison_de}"")",True,9,15030,242_4_9.py
 241,10,Find the area of a rectangle,"Write a complete, well-documented Python script that prompts the user to input the length and width of a rectangle and then calculates and prints its area. Use appropriate input validation.",,False,0,15031,241_10.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    s = side_lengths[0]
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [10.0, 10.0, 10.0]
+    list3 = [7.0, 7.0, 7.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")
+    if area2 > area3:
+        print(""Area2 is greater than Area3"")
+    elif area2 < area3:
+        print(""Area2 is less than Area3"")
+    else:
+        print(""Area2 is equal to Area3"")",True,0,15032,242_6.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    s = side_lengths[0]
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [10.0, 10.0, 10.0]
+    list3 = [7.0, 7.0, 7.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")
+    if area3 > area1:
+        print(""Area3 is greater than Area1"")
+    elif area3 < area1:
+        print(""Area3 is less than Area1"")
+    else:
+        print(""Area3 is equal to Area1"")",True,1,15033,242_6_1.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n == 0:
+        return 0.0
+    s = side_lengths[0]
+    N = n
+    if s <= 0:
+        return 0.0
+    area = (N * s**2) / (4 * math.tan(math.pi / N))
+    return area
+def compare_polygon_areas(list1, list2):
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    comparison = {
+        ""area1"": area1,
+        ""area2"": area2,
+        ""difference"": area1 - area2,
+        ""result"": ""Area 1 is greater"" if area1 > area2 else (""Area 2 is greater"" if area2 > area1 else ""Areas are equal"")
+    }
+    return comparison
+if __name__ == '__main__':
+    list_a = [5.0, 5.0, 5.0]
+    list_b = [6.0, 6.0, 6.0]
+    list_c = [10.0, 10.0]
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""List C: {list_c}\n"")
+    comparison_ab = compare_polygon_areas(list_a, list_b)
+    print(""Comparison between List A and List B:"")
+    print(f""Area 1: {comparison_ab['area1']}"")
+    print(f""Area 2: {comparison_ab['area2']}"")
+    print(f""Difference (A - B): {comparison_ab['difference']}"")
+    print(f""Result: {comparison_ab['result']}\n"")
+    comparison_ac = compare_polygon_areas(list_a, list_c)
+    print(""Comparison between List A and List C:"")
+    print(f""Area 1: {comparison_ac['area1']}"")
+    print(f""Area 2: {comparison_ac['area2']}"")
+    print(f""Difference (A - C): {comparison_ac['difference']}"")
+    print(f""Result: {comparison_ac['result']}"")",True,2,15034,242_6_2.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    if not all(s == side_lengths[0] for s in side_lengths):
+        avg_side = sum(side_lengths) / n
+    else:
+        avg_side = side_lengths[0]
+    s = avg_side
+    n = len(side_lengths)
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [6.0, 6.0, 6.0]
+    list3 = [4.0, 4.0, 4.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")",True,3,15035,242_6_3.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    s = side_lengths[0]
+    n = len(side_lengths)                                                     
+    if len(side_lengths) == 0:
+        return 0.0
+    avg_s = sum(side_lengths) / len(side_lengths)
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    area = (n * avg_s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [10.0, 10.0]
+    list3 = [7.0, 8.0, 9.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2 and area1 > area3:
+        print(""List 1 yields the largest area."")
+    elif area2 > area1 and area2 > area3:
+        print(""List 2 yields the largest area."")
+    else:
+        print(""Areas are comparable."")",True,4,15036,242_6_4.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    s = side_lengths[0]
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [10.0, 10.0, 10.0]
+    list3 = [7.0, 7.0, 7.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")",True,5,15037,242_6_5.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    s = side_lengths[0]
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [10.0, 10.0, 10.0]
+    list3 = [7.0, 7.0, 7.0, 7.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")
+    if area3 > area1:
+        print(""Area3 is greater than Area1"")
+    else:
+        print(""Area3 is less than or equal to Area1"")",True,6,15038,242_6_6.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    average_side = sum(side_lengths) / n
+    if average_side <= 0:
+        return 0.0
+    area = (n * average_side**2) / (4 * math.tan(math.pi / n))
+    return area
+def compare_polygon_areas(sides1, sides2):
+    area1 = calculate_regular_polygon_area(sides1)
+    area2 = calculate_regular_polygon_area(sides2)
+    if area1 > area2:
+        return f""Area 1 ({area1:.4f}) is greater than Area 2 ({area2:.4f})""
+    elif area1 < area2:
+        return f""Area 1 ({area1:.4f}) is less than Area 2 ({area2:.4f})""
+    else:
+        return f""Areas are equal: {area1:.4f}""
+if __name__ == '__main__':
+    sides_a = [5.0, 5.0, 5.0]
+    sides_b = [6.0, 6.0, 6.0]
+    sides_c = [4.0, 4.0, 4.0]
+    print(compare_polygon_areas(sides_a, sides_b))
+    print(compare_polygon_areas(sides_a, sides_c))
+    print(compare_polygon_areas(sides_b, sides_c))",True,7,15039,242_6_7.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    s = side_lengths[0]
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [6.0, 6.0, 6.0]
+    list3 = [4.0, 4.0, 4.0, 4.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")
+    if area3 > area1:
+        print(""Area3 is greater than Area1"")
+    elif area3 < area1:
+        print(""Area3 is less than Area1"")
+    else:
+        print(""Area3 is equal to Area1"")",True,8,15040,242_6_8.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    s = side_lengths[0]
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+if __name__ == '__main__':
+    list1 = [5.0, 5.0, 5.0]
+    list2 = [6.0, 6.0, 6.0]
+    list3 = [4.0, 4.0, 4.0]
+    area1 = calculate_regular_polygon_area(list1)
+    area2 = calculate_regular_polygon_area(list2)
+    area3 = calculate_regular_polygon_area(list3)
+    print(f""Area for list1: {area1}"")
+    print(f""Area for list2: {area2}"")
+    print(f""Area for list3: {area3}"")
+    if area1 > area2:
+        print(""Area1 is greater than Area2"")
+    elif area1 < area2:
+        print(""Area1 is less than Area2"")
+    else:
+        print(""Area1 is equal to Area2"")
+    if area3 > area1:
+        print(""Area3 is greater than Area1"")
+    else:
+        print(""Area3 is less than or equal to Area1"")",True,9,15041,242_6_9.py
+242,6,Compare two shape areas,"Implement an optimized function that takes two lists of side lengths and calculates the area of a regular polygon for each list, then compares the resulting areas.","import math
+def calculate_regular_polygon_area(side_lengths):
+    if not side_lengths:
+        return 0.0
+    n = len(side_lengths)
+    if n < 3:
+        return 0.0
+    if len(side_lengths) == 1:
+        s = side_lengths[0]
+        n = 1                                        
+        return 0.0
+    s = side_lengths[0]
+    n = len(side_lengths)
+    if s <= 0 or n < 3:
+        return 0.0
+    area = (n * s**2) / (4 * math.tan(math.pi / n))
+    return area
+def compare_polygon_areas(sides1, sides2):
+    area1 = calculate_regular_polygon_area(sides1)
+    area2 = calculate_regular_polygon_area(sides2)
+    if area1 > area2:
+        return f""Area 1 ({area1:.4f}) is greater than Area 2 ({area2:.4f})""
+    elif area1 < area2:
+        return f""Area 1 ({area1:.4f}) is less than Area 2 ({area2:.4f})""
+    else:
+        return f""Areas are equal: {area1:.4f}""
+if __name__ == '__main__':
+    list_a = [5.0, 5.0, 5.0]
+    list_b = [6.0, 6.0, 6.0]
+    print(compare_polygon_areas(list_a, list_b))
+    list_c = [10.0, 10.0]
+    list_d = [5.0, 5.0, 5.0]
+    print(compare_polygon_areas(list_c, list_d))",True,10,15042,242_6_10.py
+242,5,Compare two shape areas,"Write a robust script that uses the `math` module to calculate the areas of a circle and an ellipse, and then prints the result along with the difference between the two areas.",,False,0,15043,242_5.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        radius = length / 2
+        return math.pi * (radius ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3.5
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}): Area = {area1}"")
+    print(f""Shape 2 ({shape2_type}): Area = {area2}"")
+    if area1 > area2:
+        print(""Comparison: Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""Comparison: Shape 2 has the greater area."")
+    else:
+        print(""Comparison: Both shapes have equal areas."")",True,0,15044,242_8.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        return math.pi * (length ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}) Area: {area1}"")
+    print(f""Shape 2 ({shape2_type}) Area: {area2}"")
+    if area1 > area2:
+        print(""Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""Shape 2 has the greater area."")
+    else:
+        print(""Both shapes have equal area."")",True,1,15045,242_8_1.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        radius = length
+        return math.pi * (radius ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3.5
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}): Area = {area1}"")
+    print(f""Shape 2 ({shape2_type}): Area = {area2}"")
+    if area1 > area2:
+        print(""Comparison Result: Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""Comparison Result: Shape 2 has the greater area."")
+    else:
+        print(""Comparison Result: Both shapes have equal area."")",True,2,15046,242_8_2.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        radius = length
+        return math.pi * (radius ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3.5
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}) dimensions: Length={shape1_length}, Width={shape1_width}"")
+    print(f""Area 1: {area1}"")
+    print(""-"" * 30)
+    print(f""Shape 2 ({shape2_type}) radius: {shape2_radius}"")
+    print(f""Area 2: {area2}"")
+    if area1 > area2:
+        print(""\nComparison Result:"")
+        print(""Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""\nComparison Result:"")
+        print(""Shape 2 has the greater area."")
+    else:
+        print(""\nComparison Result:"")
+        print(""Both shapes have equal areas."")",True,3,15047,242_8_3.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        return math.pi * (length ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}): Area = {area1}"")
+    print(f""Shape 2 ({shape2_type}): Area = {area2}"")
+    if area1 > area2:
+        print(""Comparison Result: Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""Comparison Result: Shape 2 has the greater area."")
+    else:
+        print(""Comparison Result: Both shapes have equal area."")",True,4,15048,242_8_4.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        radius = length
+        return math.pi * (radius ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3.0
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}) dimensions: Length={shape1_length}, Width={shape1_width}"")
+    print(f""Area of Shape 1: {area1}"")
+    print(""-"" * 30)
+    print(f""Shape 2 ({shape2_type}) radius: {shape2_radius}"")
+    print(f""Area of Shape 2: {area2}"")
+    if area1 > area2:
+        print(""\nComparison Result:"")
+        print(""Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""\nComparison Result:"")
+        print(""Shape 2 has the greater area."")
+    else:
+        print(""\nComparison Result:"")
+        print(""Both shapes have equal areas."")",True,5,15049,242_8_5.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        radius = length
+        return math.pi * (radius ** 2)
+    else:
+        return 0
+def main():
+    data1 = {
+        ""shape"": ""rectangle"",
+        ""length"": 10,
+        ""width"": 5
+    }
+    data2 = {
+        ""shape"": ""circle"",
+        ""radius"": 4
+    }
+    area1 = calculate_area(data1[""shape""], data1[""length""], data1[""width""])
+    area2 = calculate_area(data2[""shape""], data2[""radius""], 0)
+    print(f""Shape 1 ({data1['shape']}) Area: {area1}"")
+    print(f""Shape 2 ({data2['shape']}) Area: {area2}"")
+    if area1 > area2:
+        print(""\nComparison Result:"")
+        print(""Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""\nComparison Result:"")
+        print(""Shape 2 has the greater area."")
+    else:
+        print(""\nComparison Result:"")
+        print(""Both shapes have equal areas."")
+if __name__ == '__main__':
+    main()",True,6,15050,242_8_6.py
+242,8,Compare two shape areas,"Write a complete, production-ready Python program that reads area data for two distinct geometric shapes from standard input and outputs a clear, comparative analysis of which shape has the greater area.","import sys
+def calculate_area(shape_type, length, width):
+    if shape_type == ""rectangle"":
+        return length * width
+    elif shape_type == ""circle"":
+        import math
+        return math.pi * (length ** 2)
+    else:
+        return 0
+if __name__ == '__main__':
+    shape1_type = ""rectangle""
+    shape1_length = 10
+    shape1_width = 5
+    shape2_type = ""circle""
+    shape2_radius = 3.0
+    area1 = calculate_area(shape1_type, shape1_length, shape1_width)
+    area2 = calculate_area(shape2_type, shape2_radius, 0)
+    print(f""Shape 1 ({shape1_type}): Area = {area1}"")
+    print(f""Shape 2 ({shape2_type}): Area = {area2}"")
+    if area1 > area2:
+        print(""Comparison Result: Shape 1 has the greater area."")
+    elif area2 > area1:
+        print(""Comparison Result: Shape 2 has the greater area."")
+    else:
+        print(""Comparison Result: Both shapes have equal area."")",True,7,15051,242_8_7.py
+242,9,Compare two shape areas,"Implement a class structure where a base `Shape` class defines an abstract method for area calculation, and derive two concrete classes (e.g., `Circle` and `Square`) to demonstrate the comparison of their areas.","class Shape:
+    def area(self):
+        raise NotImplementedError
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def area(self):
+        return 3.14159 * self.radius * self.radius
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def area(self):
+        return self.side * self.side
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.area()
+    square_area = square.area()
+    print(f""Circle Area: {circle_area}"")
+    print(f""Square Area: {square_area}"")",True,0,15052,242_9.py
+242,9,Compare two shape areas,"Implement a class structure where a base `Shape` class defines an abstract method for area calculation, and derive two concrete classes (e.g., `Circle` and `Square`) to demonstrate the comparison of their areas.","class Shape:
+    def area(self):
+        raise NotImplementedError
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def area(self):
+        return 3.14159 * self.radius * self.radius
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def area(self):
+        return self.side * self.side
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.area()
+    square_area = square.area()
+    print(f""Circle area: {circle_area}"")
+    print(f""Square area: {square_area}"")",True,1,15053,242_9_1.py
+242,9,Compare two shape areas,"Implement a class structure where a base `Shape` class defines an abstract method for area calculation, and derive two concrete classes (e.g., `Circle` and `Square`) to demonstrate the comparison of their areas.","class Shape:
+    def area(self):
+        raise NotImplementedError
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def area(self):
+        return 3.14159 * self.radius ** 2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def area(self):
+        return self.side ** 2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.area()
+    square_area = square.area()
+    print(f""Circle Area: {circle_area}"")
+    print(f""Square Area: {square_area}"")",True,2,15054,242_9_2.py
+242,7,Compare two shape areas,Create a Python function that accepts two shape definitions (represented by dictionaries specifying their formulas and dimensions) and returns a dictionary detailing the comparison of their areas.,"def compare_areas(shape1, shape2):
+    area1 = shape1['formula'](shape1['dimensions'])
+    area2 = shape2['formula'](shape2['dimensions'])
+    comparison = {
+        ""shape1_area"": area1,
+        ""shape2_area"": area2,
+        ""difference"": area1 - area2
+    }
+    return comparison
+if __name__ == '__main__':
+    shape_a = {
+        'formula': lambda d: d[0] * d[1],
+        'dimensions': [10, 5]
+    }
+    import math
+    shape_b = {
+        'formula': lambda d: math.pi * d[0]**2,
+        'dimensions': [7]
+    }
+    results = compare_areas(shape_a, shape_b)
+    print(results)",True,0,15055,242_7.py
+242,11,Compare two shape areas,"Develop a class named 'Shape' with a method to calculate the area, and create two instances of this class representing a circle and a square, then compare their calculated areas.","import math
+class Shape:
+    def calculate_area(self):
+        raise NotImplementedError(""Subclasses must implement this method"")
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return math.pi * self.radius**2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side**2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.calculate_area()
+    square_area = square.calculate_area()
+    print(f""Circle Area: {circle_area}"")
+    print(f""Square Area: {square_area}"")",True,0,15056,242_11.py
+242,11,Compare two shape areas,"Develop a class named 'Shape' with a method to calculate the area, and create two instances of this class representing a circle and a square, then compare their calculated areas.","import math
+class Shape:
+    def calculate_area(self):
+        raise NotImplementedError(""Subclasses must implement this method"")
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return math.pi * self.radius ** 2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side ** 2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.calculate_area()
+    square_area = square.calculate_area()
+    print(f""Circle area: {circle_area}"")
+    print(f""Square area: {square_area}"")
+    if circle_area > square_area:
+        print(""The circle has a larger area."")
+    elif square_area > circle_area:
+        print(""The square has a larger area."")
+    else:
+        print(""The areas are equal."")",True,1,15057,242_11_1.py
+242,11,Compare two shape areas,"Develop a class named 'Shape' with a method to calculate the area, and create two instances of this class representing a circle and a square, then compare their calculated areas.","import math
+class Shape:
+    def calculate_area(self):
+        raise NotImplementedError
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return math.pi * self.radius ** 2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side ** 2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.calculate_area()
+    square_area = square.calculate_area()
+    print(f""Circle area: {circle_area}"")
+    print(f""Square area: {square_area}"")
+    if circle_area > square_area:
+        print(""The circle has a larger area."")
+    elif square_area > circle_area:
+        print(""The square has a larger area."")
+    else:
+        print(""The areas are equal."")",True,2,15058,242_11_2.py
+242,11,Compare two shape areas,"Develop a class named 'Shape' with a method to calculate the area, and create two instances of this class representing a circle and a square, then compare their calculated areas.","import math
+class Shape:
+    def calculate_area(self):
+        raise NotImplementedError(""Subclasses must implement this method"")
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return math.pi * self.radius ** 2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side ** 2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.calculate_area()
+    square_area = square.calculate_area()
+    print(f""Circle Area: {circle_area}"")
+    print(f""Square Area: {square_area}"")
+    if circle_area > square_area:
+        print(""The circle has a larger area."")
+    elif square_area > circle_area:
+        print(""The square has a larger area."")
+    else:
+        print(""The areas are equal."")",True,3,15059,242_11_3.py
+242,11,Compare two shape areas,"Develop a class named 'Shape' with a method to calculate the area, and create two instances of this class representing a circle and a square, then compare their calculated areas.","import math
+class Shape:
+    def calculate_area(self):
+        return 0
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return math.pi * self.radius ** 2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side ** 2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.calculate_area()
+    square_area = square.calculate_area()
+    print(f""Circle area: {circle_area}"")
+    print(f""Square area: {square_area}"")
+    if circle_area > square_area:
+        print(""The circle has a larger area."")
+    elif square_area > circle_area:
+        print(""The square has a larger area."")
+    else:
+        print(""The areas are equal."")",True,4,15060,242_11_4.py
+242,11,Compare two shape areas,"Develop a class named 'Shape' with a method to calculate the area, and create two instances of this class representing a circle and a square, then compare their calculated areas.","import math
+class Shape:
+    def calculate_area(self):
+        raise NotImplementedError(""Subclasses must implement this method"")
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return math.pi * self.radius**2
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side**2
+if __name__ == '__main__':
+    circle = Circle(5)
+    square = Square(4)
+    circle_area = circle.calculate_area()
+    square_area = square.calculate_area()
+    print(f""Circle area: {circle_area}"")
+    print(f""Square area: {square_area}"")",True,5,15061,242_11_5.py
+242,10,Compare two shape areas,"Write a Python function to calculate the area of a rectangle given its length and width, and then use it to compare the areas of two predefined rectangles.",,False,0,15062,242_10.py
+242,13,Compare two shape areas,"Create a function that accepts two tuples, where each tuple represents the side lengths of a triangle and a quadrilateral, respectively, calculate their respective areas using Heron's formula for the triangle and the shoelace formula for the quadrilateral, and return the difference between the two areas.","import math
+def calculate_area_difference(triangle_sides, quadrilateral_sides):
+    a, b, c = triangle_sides
+    s = (a + b + c) / 2
+    area_triangle = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    x1, y1, x2, y2, x3, y3, x4, y4 = quadrilateral_sides
+    area_quadrilateral = 0.5 * abs((x1*y2 + x2*y3 + x3*y4 + x4*y1) - (y1*x2 + y2*x3 + y3*x4 + y4*x1))
+    return abs(area_triangle - area_quadrilateral)
+if __name__ == '__main__':
+    triangle = (3, 4, 5)
+    quadrilateral = (0, 0, 2, 4, 6, 3, 4, 0)
+    difference = calculate_area_difference(triangle, quadrilateral)
+    print(difference)",True,0,15063,242_13.py
+242,13,Compare two shape areas,"Create a function that accepts two tuples, where each tuple represents the side lengths of a triangle and a quadrilateral, respectively, calculate their respective areas using Heron's formula for the triangle and the shoelace formula for the quadrilateral, and return the difference between the two areas.","import math
+def calculate_area_difference(triangle_sides, quadrilateral_sides):
+    a, b, c = triangle_sides
+    s = (a + b + c) / 2
+    area_triangle = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    x1, y1, x2, y2, x3, y3, x4, y4 = quadrilateral_sides
+    area_quadrilateral = 0.5 * abs((x1*y2 + x2*y3 + x3*y4 + x4*y1) - (y1*x2 + y2*x3 + y3*x4 + y4*x1))
+    return abs(area_triangle - area_quadrilateral)
+if __name__ == '__main__':
+    triangle = (3, 4, 5)
+    quadrilateral = (0, 0, 4, 3, 7, 1, 2, 5)
+    difference = calculate_area_difference(triangle, quadrilateral)
+    print(difference)",True,1,15064,242_13_1.py
+242,13,Compare two shape areas,"Create a function that accepts two tuples, where each tuple represents the side lengths of a triangle and a quadrilateral, respectively, calculate their respective areas using Heron's formula for the triangle and the shoelace formula for the quadrilateral, and return the difference between the two areas.","import math
+def calculate_area_difference(triangle_sides, quadrilateral_sides):
+    a, b, c = triangle_sides
+    s = (a + b + c) / 2
+    area_triangle = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    x1, y1, x2, y2, x3, y3, x4, y4 = quadrilateral_sides
+    area_quadrilateral = 0.5 * abs((x1*y2 + x2*y3 + x3*y4 + x4*y1) - (y1*x2 + y2*x3 + y3*x4 + y4*x1))
+    return abs(area_triangle - area_quadrilateral)
+if __name__ == '__main__':
+    triangle = (3, 4, 5)
+    quadrilateral = (0, 0, 2, 4, 6, 4, 8, 0)
+    difference = calculate_area_difference(triangle, quadrilateral)
+    print(difference)",True,2,15065,242_13_2.py
+242,13,Compare two shape areas,"Create a function that accepts two tuples, where each tuple represents the side lengths of a triangle and a quadrilateral, respectively, calculate their respective areas using Heron's formula for the triangle and the shoelace formula for the quadrilateral, and return the difference between the two areas.","import math
+def calculate_area_difference(triangle_sides, quadrilateral_sides):
+    a, b, c = triangle_sides
+    s = (a + b + c) / 2
+    area_triangle = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    x1, y1, x2, y2, x3, y3, x4, y4 = quadrilateral_sides
+    area_quadrilateral = 0.5 * abs((x1*y2 + x2*y3 + x3*y4 + x4*y1) - (y1*x2 + y2*x3 + y3*x4 + y4*x1))
+    return abs(area_triangle - area_quadrilateral)
+if __name__ == '__main__':
+    triangle = (3, 4, 5)
+    quadrilateral = (0, 0, 2, 4, 6, 1, 4, 3)
+    difference = calculate_area_difference(triangle, quadrilateral)
+    print(difference)",True,3,15066,242_13_3.py
+242,14,Compare two shape areas,"Write an optimized program to compare the areas of two polygons defined by lists of coordinates (vertices). Assume the input polygons are convex, and use the Shoelace formula for accurate area calculation for both shapes.","import math
+def polygon_area(vertices):
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
+if __name__ == '__main__':
+    polygon1_vertices = [
+        [0, 0],
+        [4, 0],
+        [2, 3]
+    ]
+    polygon2_vertices = [
+        [1, 1],
+        [5, 1],
+        [3, 4]
+    ]
+    area1 = polygon_area(polygon1_vertices)
+    area2 = polygon_area(polygon2_vertices)
+    print(f""Area of Polygon 1: {area1}"")
+    print(f""Area of Polygon 2: {area2}"")",True,0,15067,242_14.py
+242,14,Compare two shape areas,"Write an optimized program to compare the areas of two polygons defined by lists of coordinates (vertices). Assume the input polygons are convex, and use the Shoelace formula for accurate area calculation for both shapes.","import math
+def polygon_area(vertices):
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
+if __name__ == '__main__':
+    polygon1_vertices = [
+        [0, 0],
+        [1, 0],
+        [0, 1]
+    ]
+    polygon2_vertices = [
+        [2, 1],
+        [4, 1],
+        [3, 3]
+    ]
+    area1 = polygon_area(polygon1_vertices)
+    area2 = polygon_area(polygon2_vertices)
+    print(f""Area of Polygon 1: {area1}"")
+    print(f""Area of Polygon 2: {area2}"")",True,1,15068,242_14_1.py
+242,14,Compare two shape areas,"Write an optimized program to compare the areas of two polygons defined by lists of coordinates (vertices). Assume the input polygons are convex, and use the Shoelace formula for accurate area calculation for both shapes.","import math
+def polygon_area(vertices):
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
+if __name__ == '__main__':
+    polygon1_vertices = [
+        [0, 0],
+        [1, 0],
+        [0, 1]
+    ]
+    polygon2_vertices = [
+        [1, 1],
+        [3, 1],
+        [2, 3]
+    ]
+    area1 = polygon_area(polygon1_vertices)
+    area2 = polygon_area(polygon2_vertices)
+    print(f""Area of Polygon 1: {area1}"")
+    print(f""Area of Polygon 2: {area2}"")",True,2,15069,242_14_2.py
+242,14,Compare two shape areas,"Write an optimized program to compare the areas of two polygons defined by lists of coordinates (vertices). Assume the input polygons are convex, and use the Shoelace formula for accurate area calculation for both shapes.","import math
+def polygon_area(vertices):
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
+if __name__ == '__main__':
+    polygon1_vertices = [(0, 0), (1, 0), (0, 1)]
+    polygon2_vertices = [(2, 3), (4, 3), (3, 5)]
+    area1 = polygon_area(polygon1_vertices)
+    area2 = polygon_area(polygon2_vertices)
+    print(f""Area of Polygon 1: {area1}"")
+    print(f""Area of Polygon 2: {area2}"")",True,3,15070,242_14_3.py
+242,14,Compare two shape areas,"Write an optimized program to compare the areas of two polygons defined by lists of coordinates (vertices). Assume the input polygons are convex, and use the Shoelace formula for accurate area calculation for both shapes.","import math
+def polygon_area(vertices):
+    n = len(vertices)
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += vertices[i][0] * vertices[j][1]
+        area -= vertices[j][0] * vertices[i][1]
+    return abs(area) / 2.0
+if __name__ == '__main__':
+    polygon1_vertices = [(0, 0), (1, 0), (0, 1)]
+    polygon2_vertices = [(1, 1), (3, 1), (2, 3)]
+    area1 = polygon_area(polygon1_vertices)
+    area2 = polygon_area(polygon2_vertices)
+    print(f""Area of Polygon 1: {area1}"")
+    print(f""Area of Polygon 2: {area2}"")",True,4,15071,242_14_4.py
+243,0,Calculate the perimeter of a circle,"Write a Python function to calculate the circumference of a circle given its radius, using the value of pi from the `math` module.","import math
+def calculate_circumference(radius):
+    return 2 * math.pi * radius
+if __name__ == '__main__':
+    radius_value = 5.0
+    circumference = calculate_circumference(radius_value)
+    print(circumference)",True,0,15072,243_0.py
+243,0,Calculate the perimeter of a circle,"Write a Python function to calculate the circumference of a circle given its radius, using the value of pi from the `math` module.","import math
+def calculate_circumference(radius):
+    return 2 * math.pi * radius
+if __name__ == '__main__':
+    radius = 5
+    circumference = calculate_circumference(radius)
+    print(circumference)",True,1,15073,243_0_1.py
+243,0,Calculate the perimeter of a circle,"Write a Python function to calculate the circumference of a circle given its radius, using the value of pi from the `math` module.","import math
+def calculate_circumference(radius):
+    return 2 * math.pi * radius
+if __name__ == '__main__':
+    sample_radius = 5
+    circumference = calculate_circumference(sample_radius)
+    print(circumference)",True,2,15074,243_0_2.py
+243,0,Calculate the perimeter of a circle,"Write a Python function to calculate the circumference of a circle given its radius, using the value of pi from the `math` module.","import math
+def calculate_circumference(radius):
+    return 2 * math.pi * radius
+if __name__ == '__main__':
+    radius_value = 5
+    circumference = calculate_circumference(radius_value)
+    print(circumference)",True,3,15075,243_0_3.py
+243,0,Calculate the perimeter of a circle,"Write a Python function to calculate the circumference of a circle given its radius, using the value of pi from the `math` module.","import math
+def calculate_circumference(radius):
+    return 2 * math.pi * radius
+if __name__ == '__main__':
+    sample_radius = 5.0
+    circumference = calculate_circumference(sample_radius)
+    print(circumference)",True,4,15076,243_0_4.py
+243,1,Calculate the perimeter of a circle,"Create a function that accepts the diameter of a circle and calculates its perimeter (circumference), ensuring the use of the $\pi$ constant.","import math
+def calculate_circumference(diameter):
+    circumference = 2 * math.pi * diameter
+    return circumference
+if __name__ == '__main__':
+    sample_diameter = 10
+    result = calculate_circumference(sample_diameter)
+    print(result)",True,0,15077,243_1.py
+242,12,Compare two shape areas,"Implement a script that takes the dimensions for a triangle (base and height) and a rectangle (length and width) as input, calculates both areas, and prints which shape has the larger area, ensuring floating-point comparison is accurate.",,False,0,15078,242_12.py
+243,3,Calculate the perimeter of a circle,"Implement a class named `Circle` with an initializer that accepts the radius, and a method to calculate and return the perimeter.","class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        import math
+        return 2 * math.pi * self.radius
+if __name__ == '__main__':
+    circle1 = Circle(5)
+    print(circle1.perimeter())
+    circle2 = Circle(10.5)
+    print(circle2.perimeter())",True,0,15079,243_3.py
+243,3,Calculate the perimeter of a circle,"Implement a class named `Circle` with an initializer that accepts the radius, and a method to calculate and return the perimeter.","class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+if __name__ == '__main__':
+    circle1 = Circle(5)
+    print(circle1.perimeter())
+    circle2 = Circle(10)
+    print(circle2.perimeter())",True,1,15080,243_3_1.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    return 2 * (radius ** 1) * math.pi
+if __name__ == '__main__':
+    sample_radius = 5
+    circumference = calculate_circumference(sample_radius)
+    print(circumference)",True,0,15081,243_4.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    circumference = 2 * (radius ** 1) * math.pi
+    return circumference
+if __name__ == '__main__':
+    sample_radius = 5
+    result = calculate_circumference(sample_radius)
+    print(result)",True,1,15082,243_4_1.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    pi = 3.141592653589793                                                                                                                  
+    return 2 * pi * radius
+if __name__ == '__main__':
+    radius_value = 5.0
+    circumference = 2 * math.pi * radius_value
+    print(circumference)",True,2,15083,243_4_2.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    return 2 * (radius ** 1) * math.pi
+if __name__ == '__main__':
+    sample_radius = 5.0
+    circumference = calculate_circumference(sample_radius)
+    print(circumference)",True,3,15084,243_4_3.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    pi = 3.141592653589793                                                                                             
+    circumference = 2 * radius * pi
+    return circumference
+if __name__ == '__main__':
+    radius_value = 5.0
+    circumference_result = 2 * radius_value * math.pi
+    print(circumference_result)",True,4,15085,243_4_4.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    pi = 3.141592653589793                                                                                                       
+    return 2 * (radius ** 2) * pi
+if __name__ == '__main__':
+    radius = 5
+    circumference = 2 * radius * math.pi
+    print(f""Radius: {radius}"")
+    print(f""Circumference: {circumference}"")",True,5,15086,243_4_5.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    pi = 3.141592653589793                                                                                                                                             
+    return 2 * pi * radius
+if __name__ == '__main__':
+    radius = 5.0
+    circumference = 2 * math.pi * radius
+    print(circumference)",True,6,15087,243_4_6.py
+243,4,Calculate the perimeter of a circle,"Refactor the circumference calculation to use the `**` operator instead of the `math.pi` constant directly, demonstrating understanding of exponentiation if possible (though standard $\pi r$ is preferred).","import math
+def calculate_circumference(radius):
+    pi = 3.141592653589793                                                                                                                                                  
+    return 2 * (radius ** 2) * (math.pi / radius)
+if __name__ == '__main__':
+    sample_radius = 5.0
+    circumference = 2 * sample_radius * math.pi
+    print(f""Radius: {sample_radius}"")
+    print(f""Circumference: {circumference}"")",True,7,15088,243_4_7.py
+243,5,Calculate the perimeter of a circle,"Write an optimized function to calculate the area of a circle given its radius, as a supplementary calculation.","import math
+def calculate_circle_area(radius):
+    return math.pi * radius**2
+if __name__ == '__main__':
+    sample_radius = 5.0
+    area = calculate_circle_area(sample_radius)
+    print(area)",True,0,15089,243_5.py
+243,2,Calculate the perimeter of a circle,"Develop a script that prompts the user to input the radius of a circle and then prints the calculated circumference, handling floating-point input.",,False,0,15090,243_2.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive number."")
+    return 2 * 3.14159 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference for radius 5: {result1}"")
+        result2 = calculate_circumference(0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_circumference(-2)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,15091,243_7.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive value."")
+    return 2 * 3.14159 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference for radius 5: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result2 = calculate_circumference(-2)
+        print(f""Circumference for radius -2: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result3 = calculate_circumference(0)
+        print(f""Circumference for radius 0: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,15092,243_7_1.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive number."")
+    return 2 * 3.141592653589793 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference for radius 5: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result2 = calculate_circumference(-2)
+        print(f""Circumference for radius -2: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result3 = calculate_circumference(0)
+        print(f""Circumference for radius 0: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,15093,243_7_2.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive value."")
+    return 2 * 3.14159 * radius
+if __name__ == '__main__':
+    valid_radius = 5
+    invalid_radius_zero = 0
+    invalid_radius_negative = -2
+    try:
+        circumference_valid = calculate_circumference(valid_radius)
+        print(f""Circumference for radius {valid_radius}: {circumference_valid}"")
+    except ValueError as e:
+        print(f""Error calculating circumference for {valid_radius}: {e}"")
+    try:
+        calculate_circumference(invalid_radius_zero)
+    except ValueError as e:
+        print(f""Error calculating circumference for {invalid_radius_zero}: {e}"")
+    try:
+        calculate_circumference(invalid_radius_negative)
+    except ValueError as e:
+        print(f""Error calculating circumference for {invalid_radius_negative}: {e}"")",True,3,15094,243_7_3.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive value."")
+    return 2 * 3.14159 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference for radius 5: {result1}"")
+        result2 = calculate_circumference(0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        result3 = calculate_circumference(-2)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,4,15095,243_7_4.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive number."")
+    return 2 * 3.14159 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference for radius 5: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result2 = calculate_circumference(-2)
+        print(f""Circumference for radius -2: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result3 = calculate_circumference(0)
+        print(f""Circumference for radius 0: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,5,15096,243_7_5.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive number."")
+    return 2 * 3.141592653589793 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference for radius 5: {result1}"")
+        result2 = calculate_circumference(0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_circumference(-2)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,6,15097,243_7_6.py
+243,7,Calculate the perimeter of a circle,Implement error handling in the circumference calculation function to raise a `ValueError` if a non-positive radius is provided.,"def calculate_circumference(radius):
+    if radius <= 0:
+        raise ValueError(""Radius must be a positive number."")
+    return 2 * 3.141592653589793 * radius
+if __name__ == '__main__':
+    try:
+        result1 = calculate_circumference(5)
+        print(f""Circumference with radius 5: {result1}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result2 = calculate_circumference(-2)
+        print(f""Circumference with radius -2: {result2}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    try:
+        result3 = calculate_circumference(0)
+        print(f""Circumference with radius 0: {result3}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,7,15098,243_7_7.py
+243,8,Calculate the perimeter of a circle,"Design a function that calculates the radius of a circle when the perimeter (circumference) is known, utilizing the inverse relationship.","import math
+def calculate_radius(circumference):
+    if circumference > 0:
+        radius = circumference / (2 * math.pi)
+        return radius
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_circumference = 62.831853
+    radius = calculate_radius(sample_circumference)
+    print(radius)",True,0,15099,243_8.py
+243,8,Calculate the perimeter of a circle,"Design a function that calculates the radius of a circle when the perimeter (circumference) is known, utilizing the inverse relationship.","import math
+def calculate_radius(circumference):
+    radius = circumference / (2 * math.pi)
+    return radius
+if __name__ == '__main__':
+    sample_circumference = 62.831853
+    radius = calculate_radius(sample_circumference)
+    print(radius)",True,1,15100,243_8_1.py
+243,8,Calculate the perimeter of a circle,"Design a function that calculates the radius of a circle when the perimeter (circumference) is known, utilizing the inverse relationship.","import math
+def calculate_radius(circumference):
+    if circumference > 0:
+        radius = circumference / (2 * math.pi)
+        return radius
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_circumference = 314.159
+    radius = calculate_radius(sample_circumference)
+    print(radius)",True,2,15101,243_8_2.py
+243,8,Calculate the perimeter of a circle,"Design a function that calculates the radius of a circle when the perimeter (circumference) is known, utilizing the inverse relationship.","import math
+def calculate_radius(circumference):
+    if circumference > 0:
+        radius = circumference / (2 * math.pi)
+        return radius
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_circumference = 62.831853
+    radius = calculate_radius(sample_circumference)
+    print(f""Circumference: {sample_circumference}"")
+    print(f""Radius: {radius}"")",True,3,15102,243_8_3.py
+243,8,Calculate the perimeter of a circle,"Design a function that calculates the radius of a circle when the perimeter (circumference) is known, utilizing the inverse relationship.","import math
+def calculate_radius_from_circumference(circumference):
+    if circumference > 0:
+        radius = circumference / (2 * math.pi)
+        return radius
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_circumference = 31.4159
+    radius = calculate_radius_from_circumference(sample_circumference)
+    print(radius)",True,4,15103,243_8_4.py
+243,9,Calculate the perimeter of a circle,"Write a generator function that yields the circumference for a sequence of radii from 1 to 10, using the `math` module.","import math
+def radius_circumference_generator():
+    for radius in range(1, 11):
+        circumference = 2 * math.pi * radius
+        yield circumference
+if __name__ == '__main__':
+    circumferences = radius_circumference_generator()
+    for c in circumferences:
+        print(c)",True,0,15104,243_9.py
+243,6,Calculate the perimeter of a circle,"Create a program that calculates the perimeter for three different circles, each defined by a separate radius input from the user.",,False,0,15105,243_6.py
+243,11,Calculate the perimeter of a circle,Extend the `Circle` class from task 4 to include a method that calculates and returns both the perimeter and the area.,"class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+    def area(self):
+        return 3.14159 * self.radius ** 2
+if __name__ == '__main__':
+    r = 5.0
+    c = Circle(r)
+    print(f""Radius: {r}"")
+    print(f""Perimeter: {c.perimeter()}"")
+    print(f""Area: {c.area()}"")",True,0,15106,243_11.py
+243,11,Calculate the perimeter of a circle,Extend the `Circle` class from task 4 to include a method that calculates and returns both the perimeter and the area.,"class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        import math
+        return 2 * math.pi * self.radius
+    def area(self):
+        import math
+        return math.pi * self.radius ** 2
+if __name__ == '__main__':
+    circle1 = Circle(5)
+    print(f""Circle 1 Perimeter: {circle1.perimeter()}"")
+    print(f""Circle 1 Area: {circle1.area()}"")
+    circle2 = Circle(10)
+    print(f""Circle 2 Perimeter: {circle2.perimeter()}"")
+    print(f""Circle 2 Area: {circle2.area()}"")",True,1,15107,243_11_1.py
+243,11,Calculate the perimeter of a circle,Extend the `Circle` class from task 4 to include a method that calculates and returns both the perimeter and the area.,"class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        import math
+        return 2 * math.pi * self.radius
+    def area(self):
+        import math
+        return math.pi * self.radius**2
+if __name__ == '__main__':
+    r = 5.0
+    c = Circle(r)
+    print(f""Radius: {r}"")
+    print(f""Perimeter: {c.perimeter()}"")
+    print(f""Area: {c.area()}"")",True,2,15108,243_11_2.py
+243,11,Calculate the perimeter of a circle,Extend the `Circle` class from task 4 to include a method that calculates and returns both the perimeter and the area.,"import math
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_perimeter(self):
+        return 2 * math.pi * self.radius
+    def calculate_area(self):
+        return math.pi * (self.radius ** 2)
+if __name__ == '__main__':
+    sample_radius = 5.0
+    my_circle = Circle(sample_radius)
+    perimeter = my_circle.calculate_perimeter()
+    area = my_circle.calculate_area()
+    print(f""Radius: {sample_radius}"")
+    print(f""Perimeter: {perimeter}"")
+    print(f""Area: {area}"")",True,3,15109,243_11_3.py
+243,11,Calculate the perimeter of a circle,Extend the `Circle` class from task 4 to include a method that calculates and returns both the perimeter and the area.,"class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+    def area(self):
+        return 3.14159 * self.radius**2
+if __name__ == '__main__':
+    circle1 = Circle(5)
+    print(f""Circle 1 Perimeter: {circle1.perimeter()}"")
+    print(f""Circle 1 Area: {circle1.area()}"")
+    circle2 = Circle(10)
+    print(f""Circle 2 Perimeter: {circle2.perimeter()}"")
+    print(f""Circle 2 Area: {circle2.area()}"")",True,4,15110,243_11_4.py
+243,11,Calculate the perimeter of a circle,Extend the `Circle` class from task 4 to include a method that calculates and returns both the perimeter and the area.,"class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+    def area(self):
+        return 3.14159 * self.radius ** 2
+if __name__ == '__main__':
+    r = 5.0
+    c = Circle(r)
+    p = c.perimeter()
+    a = c.area()
+    print(f""Radius: {r}"")
+    print(f""Perimeter: {p}"")
+    print(f""Area: {a}"")",True,5,15111,243_11_5.py
+243,12,Calculate the perimeter of a circle,Develop a command-line interface (CLI) script that reads the radius from command-line arguments and outputs the calculated perimeter to standard output.,,False,0,15112,243_12.py
+243,13,Calculate the perimeter of a circle,"Write a concise, single-line expression using `math.pi` to calculate the circumference when the radius is dynamically assigned within the expression itself.","import math
+if __name__ == '__main__':
+    radius = 5
+    circumference = 2 * math.pi * radius
+    print(circumference)",True,0,15113,243_13.py
+243,13,Calculate the perimeter of a circle,"Write a concise, single-line expression using `math.pi` to calculate the circumference when the radius is dynamically assigned within the expression itself.","import math
+radius = 5
+circumference = 2 * math.pi * radius
+if __name__ == '__main__':
+    print(circumference)",True,1,15114,243_13_1.py
+243,10,Calculate the perimeter of a circle,Compare the performance of calculating the perimeter using a direct formula versus using a pre-defined constant for $\pi$ in a loop of 1000 iterations.,,False,0,15115,243_10.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    if data.ndim < 2:
+        return None
+    mean_val = np.mean(data, axis=0)
+    std_dev = np.std(data, axis=0)
+    covariance = np.cov(data, rowvar=False)
+    return mean_val, std_dev, covariance
+if __name__ == '__main__':
+    sample_data = np.array([
+        [1.0, 2.5, 3.0],
+        [2.0, 4.5, 5.5],
+        [3.0, 6.0, 7.5],
+        [4.0, 8.0, 9.5]
+    ])
+    mean, std, cov = analyze_and_optimize(sample_data)
+    print(""Mean:\n"", mean)
+    print(""\nStandard Deviation:\n"", std)
+    print(""\nCovariance:\n"", cov)",True,0,15116,243_14.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    if data.ndim < 2:
+        raise ValueError(""Input data must be at least two-dimensional."")
+    mean_vals = np.mean(data, axis=0)
+    std_devs = np.std(data, axis=0)
+    covariance = np.cov(data, rowvar=False)
+    if data.shape[1] > 0:
+        squared_diffs = (data - mean_vals)**2
+        sum_of_squared_diffs = np.sum(squared_diffs, axis=0)
+        ratio = np.divide(std_devs, mean_vals, out=np.zeros_like(std_devs), where=mean_vals!=0)
+        return {
+            ""mean"": mean_vals,
+            ""std_dev"": std_devs,
+            ""covariance"": covariance,
+            ""sum_of_squared_diffs"": sum_of_squared_diffs,
+            ""ratio_std_to_mean"": ratio
+        }
+    else:
+        return {""mean"": mean_vals, ""std_dev"": std_devs, ""covariance"": covariance}
+if __name__ == '__main__':
+    sample_data = np.array([
+        [10.5, 2.1],
+        [11.2, 2.3],
+        [9.8, 1.9],
+        [10.1, 2.0],
+        [12.5, 2.5]
+    ])
+    results = analyze_and_optimize(sample_data)
+    print(results)",True,1,15117,243_14_1.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    if data.ndim != 2:
+        raise ValueError(""Input must be a 2D array."")
+    means = np.mean(data, axis=1)
+    stds = np.std(data, axis=1)
+    centered_data = data - np.mean(data, axis=1, keepdims=True)
+    n_rows = data.shape[0]
+    if n_rows == 0:
+        return None, None, None
+    cov_matrix = np.cov(data, rowvar=False)
+    return means, stds, cov_matrix
+if __name__ == '__main__':
+    sample_data = np.array([
+        [1.0, 2.0, 3.0],
+        [4.0, 5.0, 6.0],
+        [7.0, 8.0, 9.0],
+        [10.0, 11.0, 12.0]
+    ])
+    means, stds, cov_matrix = analyze_and_optimize(sample_data)
+    print(f""Means: {means}"")
+    print(f""Standard Deviations: {stds}"")
+    print(f""Covariance Matrix:\n{cov_matrix}"")",True,2,15118,243_14_2.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    mean_val = np.mean(data)
+    std_dev = np.std(data)
+    variance = np.var(data)
+    return mean_val, std_dev, variance
+if __name__ == '__main__':
+    sample_data = [10, 12, 23, 23, 16, 23, 21, 16]
+    results = analyze_and_optimize(sample_data)
+    mean, std, var = results
+    print(f""Mean: {mean}"")
+    print(f""Standard Deviation: {std}"")
+    print(f""Variance: {var}"")",True,3,15119,243_14_3.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    if data.ndim != 2:
+        raise ValueError(""Input must be a 2D array."")
+    means = np.mean(data, axis=1)
+    stds = np.std(data, axis=1)
+    overall_variance = np.var(data)
+    return means, stds, overall_variance
+if __name__ == '__main__':
+    sample_data = np.array([
+        [1.0, 2.0, 3.0],
+        [4.0, 5.0, 6.0],
+        [7.0, 8.0, 9.0],
+        [10.0, 11.0, 12.0]
+    ])
+    means, stds, overall_variance = analyze_and_optimize(sample_data)
+    print(f""Means per row: {means}"")
+    print(f""Standard Deviations per row: {stds}"")
+    print(f""Overall Variance of the dataset: {overall_variance}"")",True,4,15120,243_14_4.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    if data.ndim != 2:
+        raise ValueError(""Input must be a 2D array."")
+    means = np.mean(data, axis=1)
+    stds = np.std(data, axis=1)
+    sum_sq_diffs = np.sum((data - means[:, None])**2, axis=1)
+    return means, stds, sum_sq_diffs
+if __name__ == '__main__':
+    sample_data = np.array([
+        [1.0, 2.0, 3.0],
+        [4.0, 5.0, 6.0],
+        [7.0, 8.0, 9.0],
+        [10.0, 11.0, 12.0]
+    ])
+    means, stds, sum_sq_diffs = analyze_and_optimize(sample_data)
+    print(""Means:"")
+    print(means)
+    print(""\nStandard Deviations:"")
+    print(stds)
+    print(""\nSum of Squared Differences from Mean (per row):"")
+    print(sum_sq_diffs)",True,5,15121,243_14_5.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    if not isinstance(data, np.ndarray):
+        data = np.array(data)
+    mean_val = np.mean(data)
+    std_dev = np.std(data)
+    variance = np.var(data)
+    sum_sq_diff = np.sum((data - mean_val)**2)
+    return {
+        ""mean"": mean_val,
+        ""std_dev"": std_dev,
+        ""variance"": variance,
+        ""sum_sq_diff"": sum_sq_diff
+    }
+if __name__ == '__main__':
+    sample_data = [1.5, 2.5, 3.5, 4.5, 5.5]
+    results = analyze_and_optimize(sample_data)
+    print(results)",True,6,15122,243_14_6.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    a = data['a']
+    b = data['b']
+    c = data['c']
+    try:
+        result1 = (a**2 + b**2) / c
+        result2 = np.sqrt(result1)
+        result3 = a * result2 - b
+        return result1, result2, result3
+    except ZeroDivisionError:
+        return None, None, None
+    except ValueError:
+        return None, None, None
+if __name__ == '__main__':
+    sample_data = {
+        'a': 3,
+        'b': 4,
+        'c': 5
+    }
+    result1, result2, result3 = analyze_and_optimize(sample_data)
+    if result1 is not None:
+        print(f""Result 1: {result1}"")
+        print(f""Result 2: {result2}"")
+        print(f""Result 3: {result3}"")",True,7,15123,243_14_7.py
+243,14,Calculate the perimeter of a circle,Analyze and optimize the code from task 3 by ensuring all mathematical operations are performed efficiently and adhere to Python best practices for numerical calculations.,"import numpy as np
+def analyze_and_optimize(data):
+    a = data['a']
+    b = data['b']
+    c = data['c']
+    try:
+        result1 = (a**2 + b**2) / c
+        result2 = np.sqrt(result1)
+        result3 = result1 * 2
+        return {
+            ""result1"": result1,
+            ""result2"": result2,
+            ""result3"": result3
+        }
+    except ZeroDivisionError:
+        return {""error"": ""Division by zero encountered""}
+    except ValueError:
+        return {""error"": ""Invalid input for square root or other math operation""}
+if __name__ == '__main__':
+    sample_data = {
+        'a': 3,
+        'b': 4,
+        'c': 5
+    }
+    results = analyze_and_optimize(sample_data)
+    print(results)",True,8,15124,243_14_8.py
+244,1,Sum the areas of two shapes,"Implement a standalone Python function named `sum_areas` that accepts two tuples, where each tuple represents the length and width of a shape, and returns the total sum of their areas. Ensure the function is highly efficient.","def sum_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1 + area2
+if __name__ == '__main__':
+    sample1 = (5, 10)
+    sample2 = (3, 7)
+    result = sum_areas(sample1, sample2)
+    print(result)",True,0,15125,244_1.py
+244,1,Sum the areas of two shapes,"Implement a standalone Python function named `sum_areas` that accepts two tuples, where each tuple represents the length and width of a shape, and returns the total sum of their areas. Ensure the function is highly efficient.","def sum_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1 + area2
+if __name__ == '__main__':
+    a = (5, 10)
+    b = (3, 7)
+    result = sum_areas(a, b)
+    print(result)",True,1,15126,244_1_1.py
+244,2,Sum the areas of two shapes,Develop a class named `ShapeCalculator` with a method `calculate_total_area` that takes two shape objects (each having an `area` attribute) and returns their combined area. Use object-oriented programming principles.,"class Shape:
+    def __init__(self, area):
+        self.area = area
+class ShapeCalculator:
+    def calculate_total_area(self, shape1, shape2):
+        return shape1.area + shape2.area
+if __name__ == '__main__':
+    shape_a = Shape(10)
+    shape_b = Shape(15)
+    calculator = ShapeCalculator()
+    total_area = calculator.calculate_total_area(shape_a, shape_b)
+    print(total_area)",True,0,15127,244_2.py
+244,2,Sum the areas of two shapes,Develop a class named `ShapeCalculator` with a method `calculate_total_area` that takes two shape objects (each having an `area` attribute) and returns their combined area. Use object-oriented programming principles.,"class Shape:
+    def __init__(self, area):
+        self.area = area
+class ShapeCalculator:
+    def calculate_total_area(self, shape1, shape2):
+        return shape1.area + shape2.area
+if __name__ == '__main__':
+    shape_a = Shape(10)
+    shape_b = Shape(25)
+    calculator = ShapeCalculator()
+    total_area = calculator.calculate_total_area(shape_a, shape_b)
+    print(total_area)",True,1,15128,244_2_1.py
+244,2,Sum the areas of two shapes,Develop a class named `ShapeCalculator` with a method `calculate_total_area` that takes two shape objects (each having an `area` attribute) and returns their combined area. Use object-oriented programming principles.,"class Shape:
+    def __init__(self, area):
+        self.area = area
+class ShapeCalculator:
+    def calculate_total_area(self, shape1, shape2):
+        return shape1.area + shape2.area
+if __name__ == '__main__':
+    shape_a = Shape(10)
+    shape_b = Shape(25)
+    calculator = ShapeCalculator()
+    total = calculator.calculate_total_area(shape_a, shape_b)
+    print(total)",True,2,15129,244_2_2.py
+244,3,Sum the areas of two shapes,"Write an optimized Python function that calculates the sum of the areas of two squares, given their side lengths as input. The function must handle floating-point inputs correctly.","import math
+def sum_of_square_areas(side1, side2):
+    area1 = side1 * side1
+    area2 = side2 * side2
+    return area1 + area2
+if __name__ == '__main__':
+    s1 = 3.5
+    s2 = 4.2
+    result = sum_of_square_areas(s1, s2)
+    print(result)",True,0,15130,244_3.py
+244,3,Sum the areas of two shapes,"Write an optimized Python function that calculates the sum of the areas of two squares, given their side lengths as input. The function must handle floating-point inputs correctly.","import math
+def calculate_sum_of_square_areas(side1, side2):
+    area1 = side1 * side1
+    area2 = side2 * side2
+    return area1 + area2
+if __name__ == '__main__':
+    s1 = 3.5
+    s2 = 4.2
+    result = calculate_sum_of_square_areas(s1, s2)
+    print(result)",True,1,15131,244_3_1.py
+244,3,Sum the areas of two shapes,"Write an optimized Python function that calculates the sum of the areas of two squares, given their side lengths as input. The function must handle floating-point inputs correctly.","def calculate_sum_of_square_areas(side1, side2):
+    area1 = side1 * side1
+    area2 = side2 * side2
+    return area1 + area2
+if __name__ == '__main__':
+    s1 = 3.5
+    s2 = 4.2
+    result = calculate_sum_of_square_areas(s1, s2)
+    print(result)",True,2,15132,244_3_2.py
+244,4,Sum the areas of two shapes,"Create a Python program that reads the length and width for Shape A and Shape B from the standard input, calculates their respective areas, and prints the final sum in a clear, readable format.","if __name__ == '__main__':
+    length_a = 10
+    width_a = 5
+    length_b = 8
+    width_b = 4
+    area_a = length_a * width_a
+    area_b = length_b * width_b
+    total_area = area_a + area_b
+    print(f""Shape A Length: {length_a}"")
+    print(f""Shape A Width: {width_a}"")
+    print(f""Area of Shape A: {area_a}"")
+    print(f""Shape B Length: {length_b}"")
+    print(f""Shape B Width: {width_b}"")
+    print(f""Area of Shape B: {area_b}"")
+    print(f""Total Area: {total_area}"")",True,0,15133,244_4.py
+244,4,Sum the areas of two shapes,"Create a Python program that reads the length and width for Shape A and Shape B from the standard input, calculates their respective areas, and prints the final sum in a clear, readable format.","if __name__ == '__main__':
+    length_a = 10
+    width_a = 5
+    length_b = 8
+    width_b = 4
+    area_a = length_a * width_a
+    area_b = length_b * width_b
+    total_area = area_a + area_b
+    print(f""Length of Shape A: {length_a}"")
+    print(f""Width of Shape A: {width_a}"")
+    print(f""Area of Shape A: {area_a}"")
+    print(f""Length of Shape B: {length_b}"")
+    print(f""Width of Shape B: {width_b}"")
+    print(f""Area of Shape B: {area_b}"")
+    print(f""Total Area: {total_area}"")",True,1,15134,244_4_1.py
+244,4,Sum the areas of two shapes,"Create a Python program that reads the length and width for Shape A and Shape B from the standard input, calculates their respective areas, and prints the final sum in a clear, readable format.","if __name__ == '__main__':
+    length_a = 10
+    width_a = 5
+    length_b = 8
+    width_b = 4
+    area_a = length_a * width_a
+    area_b = length_b * width_b
+    total_area = area_a + area_b
+    print(f""Shape A Length: {length_a}, Width: {width_a}, Area: {area_a}"")
+    print(f""Shape B Length: {length_b}, Width: {width_b}, Area: {area_b}"")
+    print(f""Total Area: {total_area}"")",True,2,15135,244_4_2.py
+244,5,Sum the areas of two shapes,"Implement a function `add_two_areas(area1, area2)` that performs the area summation. Ensure this function is mathematically sound and optimized for speed.","def add_two_areas(area1, area2):
+    return area1 + area2
+if __name__ == '__main__':
+    a = 10
+    b = 25
+    result = add_two_areas(a, b)
+    print(result)",True,0,15136,244_5.py
+244,6,Sum the areas of two shapes,"Write a robust script that reads two lines of input, where each line contains the dimensions (length and width) of a rectangle, and computes and prints the sum of the two areas. Include error checking for non-numeric input.","def calculate_area_sum(line1, line2):
+    try:
+        dims1 = line1.split()
+        if len(dims1) != 2:
+            raise ValueError(""First line must contain exactly two dimensions."")
+        length1 = float(dims1[0])
+        width1 = float(dims1[1])
+        area1 = length1 * width1
+        dims2 = line2.split()
+        if len(dims2) != 2:
+            raise ValueError(""Second line must contain exactly two dimensions."")
+        length2 = float(dims2[0])
+        width2 = float(dims2[1])
+        area2 = length2 * width2
+        return area1 + area2
+    except ValueError as e:
+        raise ValueError(f""Error processing input: {e}"")
+    except IndexError:
+        raise ValueError(""Input lines must be separated by spaces and contain two values each."")
+    except Exception as e:
+        raise ValueError(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    input_line1 = ""10 5""
+    input_line2 = ""4 6""
+    try:
+        result = calculate_area_sum(input_line1, input_line2)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,15137,244_6.py
+244,6,Sum the areas of two shapes,"Write a robust script that reads two lines of input, where each line contains the dimensions (length and width) of a rectangle, and computes and prints the sum of the two areas. Include error checking for non-numeric input.","def calculate_area_sum(line1, line2):
+    try:
+        dims1 = line1.split()
+        if len(dims1) != 2:
+            raise ValueError(""First line must contain exactly two dimensions."")
+        length1 = float(dims1[0])
+        width1 = float(dims1[1])
+        area1 = length1 * width1
+        dims2 = line2.split()
+        if len(dims2) != 2:
+            raise ValueError(""Second line must contain exactly two dimensions."")
+        length2 = float(dims2[0])
+        width2 = float(dims2[1])
+        area2 = length2 * width2
+        return area1 + area2
+    except ValueError as e:
+        raise ValueError(f""Error processing input: {e}"")
+    except Exception as e:
+        raise ValueError(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    input_line1 = ""10 5""
+    input_line2 = ""4 6""
+    try:
+        result = calculate_area_sum(input_line1, input_line2)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,15138,244_6_1.py
+244,6,Sum the areas of two shapes,"Write a robust script that reads two lines of input, where each line contains the dimensions (length and width) of a rectangle, and computes and prints the sum of the two areas. Include error checking for non-numeric input.","def calculate_area_sum(line1, line2):
+    try:
+        dims1 = line1.split()
+        if len(dims1) != 2:
+            raise ValueError(""First line must contain exactly two dimensions."")
+        length1 = float(dims1[0])
+        width1 = float(dims1[1])
+        area1 = length1 * width1
+        dims2 = line2.split()
+        if len(dims2) != 2:
+            raise ValueError(""Second line must contain exactly two dimensions."")
+        length2 = float(dims2[0])
+        width2 = float(dims2[1])
+        area2 = length2 * width2
+        return area1 + area2
+    except ValueError as e:
+        raise ValueError(f""Error processing input: {e}"")
+    except IndexError:
+        raise ValueError(""Input lines do not contain enough values."")
+    except Exception as e:
+        raise ValueError(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    input_line1 = ""10 5""
+    input_line2 = ""4 6""
+    try:
+        result = calculate_area_sum(input_line1, input_line2)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,15139,244_6_2.py
+244,6,Sum the areas of two shapes,"Write a robust script that reads two lines of input, where each line contains the dimensions (length and width) of a rectangle, and computes and prints the sum of the two areas. Include error checking for non-numeric input.","def calculate_area_sum(line1, line2):
+    try:
+        l1, w1 = map(float, line1.split())
+        l2, w2 = map(float, line2.split())
+        area1 = l1 * w1
+        area2 = l2 * w2
+        return area1 + area2
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    input1 = ""10 5""
+    input2 = ""4 6""
+    result = calculate_area_sum(input1, input2)
+    if result is not None:
+        print(result)",True,3,15140,244_6_3.py
+244,6,Sum the areas of two shapes,"Write a robust script that reads two lines of input, where each line contains the dimensions (length and width) of a rectangle, and computes and prints the sum of the two areas. Include error checking for non-numeric input.","def calculate_area_sum(line1, line2):
+    try:
+        dims1 = line1.split()
+        if len(dims1) != 2:
+            raise ValueError(""First line must contain exactly two dimensions."")
+        length1 = float(dims1[0])
+        width1 = float(dims1[1])
+        area1 = length1 * width1
+        dims2 = line2.split()
+        if len(dims2) != 2:
+            raise ValueError(""Second line must contain exactly two dimensions."")
+        length2 = float(dims2[0])
+        width2 = float(dims2[1])
+        area2 = length2 * width2
+        return area1 + area2
+    except ValueError as e:
+        raise ValueError(f""Error processing input: {e}"")
+    except IndexError:
+        raise ValueError(""Input lines must contain two space-separated values."")
+    except Exception as e:
+        raise ValueError(f""An unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    input_line1 = ""10 5""
+    input_line2 = ""4 6""
+    try:
+        result = calculate_area_sum(input_line1, input_line2)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,15141,244_6_4.py
+244,7,Sum the areas of two shapes,Design and code a method within a `Shapes` class that can store and calculate the total area when provided with two distinct shape definitions.,"class Shapes:
+    def calculate_total_area(self, shape1_type, shape1_value, shape2_type, shape2_value):
+        if shape1_type == ""rectangle"":
+            area1 = shape1_value[0] * shape1_value[1]
+        elif shape1_type == ""circle"":
+            import math
+            radius = shape1_value[0]
+            area1 = math.pi * (radius ** 2)
+        else:
+            raise ValueError(""Unsupported shape type for shape1"")
+        if shape2_type == ""rectangle"":
+            area2 = shape2_value[0] * shape2_value[1]
+        elif shape2_type == ""circle"":
+            import math
+            radius = shape2_value[0]
+            area2 = math.pi * (radius ** 2)
+        else:
+            raise ValueError(""Unsupported shape type for shape2"")
+        return area1 + area2
+if __name__ == '__main__':
+    shapes = Shapes()
+    shape1_type = ""rectangle""
+    shape1_value = [4, 5]
+    shape2_type = ""circle""
+    shape2_value = [3]
+    total_area = shapes.calculate_total_area(shape1_type, shape1_value, shape2_type, shape2_value)
+    print(total_area)",True,0,15142,244_7.py
+244,7,Sum the areas of two shapes,Design and code a method within a `Shapes` class that can store and calculate the total area when provided with two distinct shape definitions.,"class Shapes:
+    def calculate_total_area(self, shape1_type, shape1_value, shape2_type, shape2_value):
+        if shape1_type == ""rectangle"":
+            area1 = shape1_value[0] * shape1_value[1]
+        elif shape1_type == ""circle"":
+            import math
+            radius = shape1_value
+            area1 = math.pi * (radius ** 2)
+        else:
+            raise ValueError(""Unsupported shape type for shape1"")
+        if shape2_type == ""rectangle"":
+            area2 = shape2_value[0] * shape2_value[1]
+        elif shape2_type == ""circle"":
+            import math
+            radius = shape2_value
+            area2 = math.pi * (radius ** 2)
+        else:
+            raise ValueError(""Unsupported shape type for shape2"")
+        return area1 + area2
+if __name__ == '__main__':
+    shapes = Shapes()
+    shape1_type = ""rectangle""
+    shape1_value = [4, 5]
+    shape2_type = ""circle""
+    shape2_value = 3
+    total_area = shapes.calculate_total_area(shape1_type, shape1_value, shape2_type, shape2_value)
+    print(total_area)",True,1,15143,244_7_1.py
+244,0,Sum the areas of two shapes,"Write a complete, well-documented Python script that prompts the user for the dimensions of two rectangles and calculates the sum of their areas. Use efficient input handling.",,False,0,15144,244_0.py
+244,8,Sum the areas of two shapes,"Generate a single, highly efficient one-line expression or function body that takes the dimensions (l1, w1, l2, w2) of two rectangles and directly returns the sum of Area1 + Area2.","if __name__ == '__main__':
+    l1, w1, l2, w2 = 10, 5, 4, 8
+    print(l1 * w1 + l2 * w2)",True,0,15145,244_8.py
+241,14,Find the area of a rectangle,"Create a robust script that reads dimensions (length and width) from standard input, calculates the area, and displays the result in a clear, formatted manner. Include error handling for invalid numerical input.","import sys
+def calculate_area(length, width):
+    try:
+        area = float(length) * float(width)
+        print(f""Length: {length}"")
+        print(f""Width: {width}"")
+        print(f""Area: {area}"")
+    except ValueError:
+        print(""Error: Invalid numerical input provided."")
+if __name__ == '__main__':
+    sample_length = 10.5
+    sample_width = 4.2
+    calculate_area(sample_length, sample_width)",True,0,15146,241_14.py
+241,14,Find the area of a rectangle,"Create a robust script that reads dimensions (length and width) from standard input, calculates the area, and displays the result in a clear, formatted manner. Include error handling for invalid numerical input.","import sys
+def calculate_area(length, width):
+    try:
+        area = float(length) * float(width)
+        print(f""Length: {length}"")
+        print(f""Width: {width}"")
+        print(f""Area: {area}"")
+    except ValueError:
+        print(""Error: Invalid numerical input provided."")
+if __name__ == '__main__':
+    length_input = ""10.5""
+    width_input = ""4""
+    calculate_area(length_input, width_input)",True,1,15147,241_14_1.py
+241,14,Find the area of a rectangle,"Create a robust script that reads dimensions (length and width) from standard input, calculates the area, and displays the result in a clear, formatted manner. Include error handling for invalid numerical input.","import sys
+def calculate_area(length, width):
+    try:
+        area = float(length) * float(width)
+        print(f""Length: {length}"")
+        print(f""Width: {width}"")
+        print(f""Area: {area}"")
+    except ValueError:
+        print(""Error: Invalid numerical input provided."")
+if __name__ == '__main__':
+    length = 10.5
+    width = 4.2
+    calculate_area(length, width)",True,2,15148,241_14_2.py
+244,11,Sum the areas of two shapes,"Implement a reusable Python function named 'sum_areas' that accepts two tuples, where each tuple represents the (length, width) of a shape, and returns the sum of their respective areas. The function must be highly optimized.","def sum_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1 + area2
+if __name__ == '__main__':
+    a = (5, 10)
+    b = (3, 7)
+    result = sum_areas(a, b)
+    print(result)",True,0,15149,244_11.py
+244,11,Sum the areas of two shapes,"Implement a reusable Python function named 'sum_areas' that accepts two tuples, where each tuple represents the (length, width) of a shape, and returns the sum of their respective areas. The function must be highly optimized.","def sum_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1 + area2
+if __name__ == '__main__':
+    s1 = (10, 5)
+    s2 = (3, 8)
+    result = sum_areas(s1, s2)
+    print(result)",True,1,15150,244_11_1.py
+244,11,Sum the areas of two shapes,"Implement a reusable Python function named 'sum_areas' that accepts two tuples, where each tuple represents the (length, width) of a shape, and returns the sum of their respective areas. The function must be highly optimized.","def sum_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1 + area2
+if __name__ == '__main__':
+    a = (10, 5)
+    b = (3, 7)
+    result = sum_areas(a, b)
+    print(result)",True,2,15151,244_11_2.py
+244,9,Sum the areas of two shapes,"Write a comprehensive solution that defines a general function to sum the areas of any two provided geometric shapes, assuming the shapes are defined by their respective area values.","import math
+def sum_areas(area1, area2):
+    return area1 + area2
+if __name__ == '__main__':
+    shape1_area = 10.5
+    shape2_area = 25.75
+    total_area = sum_areas(shape1_area, shape2_area)
+    print(total_area)",True,0,15152,244_9.py
+244,9,Sum the areas of two shapes,"Write a comprehensive solution that defines a general function to sum the areas of any two provided geometric shapes, assuming the shapes are defined by their respective area values.","def sum_areas(area1, area2):
+    return area1 + area2
+if __name__ == '__main__':
+    shape1_area = 15.5
+    shape2_area = 22.3
+    total_area = sum_areas(shape1_area, shape2_area)
+    print(total_area)",True,1,15153,244_9_1.py
+244,12,Sum the areas of two shapes,Develop a class named 'ShapeCalculator' with a method 'calculate_total_area'. This method should take a list of shape definitions (where each definition is a dictionary containing 'shape_type' and 'dimensions') and return the sum of all their areas. Ensure the code demonstrates object-oriented best practices.,"class ShapeCalculator:
+    def calculate_total_area(self, shapes):
+        total_area = 0
+        for shape in shapes:
+            shape_type = shape['shape_type']
+            dimensions = shape['dimensions']
+            area = 0
+            if shape_type == 'rectangle':
+                area = dimensions['length'] * dimensions['width']
+            elif shape_type == 'circle':
+                area = 3.14159 * (dimensions['radius'] ** 2)
+            elif shape_type == 'triangle':
+                area = 0.5 * dimensions['base'] * dimensions['height']
+            else:
+                continue
+            total_area += area
+        return total_area
+if __name__ == '__main__':
+    calculator = ShapeCalculator()
+    shape_definitions = [
+        {'shape_type': 'rectangle', 'dimensions': {'length': 10, 'width': 5}},
+        {'shape_type': 'circle', 'dimensions': {'radius': 4}},
+        {'shape_type': 'triangle', 'dimensions': {'base': 8, 'height': 6}},
+        {'shape_type': 'square', 'dimensions': {'side': 7}}
+    ]
+    total = calculator.calculate_total_area(shape_definitions)
+    print(total)",True,0,15154,244_12.py
+244,12,Sum the areas of two shapes,Develop a class named 'ShapeCalculator' with a method 'calculate_total_area'. This method should take a list of shape definitions (where each definition is a dictionary containing 'shape_type' and 'dimensions') and return the sum of all their areas. Ensure the code demonstrates object-oriented best practices.,"class ShapeCalculator:
+    def calculate_total_area(self, shapes):
+        total_area = 0
+        for shape in shapes:
+            shape_type = shape.get('shape_type')
+            dimensions = shape.get('dimensions', {})
+            area = 0
+            if shape_type == 'rectangle':
+                length = dimensions.get('length', 0)
+                width = dimensions.get('width', 0)
+                area = length * width
+            elif shape_type == 'circle':
+                radius = dimensions.get('radius', 0)
+                area = 3.14159 * (radius ** 2)
+            elif shape_type == 'triangle':
+                base = dimensions.get('base', 0)
+                height = dimensions.get('height', 0)
+                area = 0.5 * base * height
+            else:
+                continue
+            total_area += area
+        return total_area
+if __name__ == '__main__':
+    calculator = ShapeCalculator()
+    shape_definitions = [
+        {'shape_type': 'rectangle', 'dimensions': {'length': 10, 'width': 5}},
+        {'shape_type': 'circle', 'dimensions': {'radius': 4}},
+        {'shape_type': 'triangle', 'dimensions': {'base': 8, 'height': 6}},
+        {'shape_type': 'square', 'dimensions': {'side': 7}}
+    ]
+    total = calculator.calculate_total_area(shape_definitions)
+    print(total)",True,1,15155,244_12_1.py
+244,14,Sum the areas of two shapes,"Implement an optimized function using lambda expressions to calculate the sum of the areas of two polygons, where the area calculation for each polygon is defined by a separate lambda function taking the corresponding dimensions. Focus on functional programming style.","import math
+def calculate_sum_of_areas(poly1_dims, poly2_dims):
+    area1 = lambda d: 0.5 * d[0] * d[1]
+    area2 = lambda d: 10 * d[0] + d[1]
+    sum_area = area1(poly1_dims) + area2(poly2_dims)
+    return sum_area
+if __name__ == '__main__':
+    polygon1 = (10, 5)
+    polygon2 = (4, 8)
+    result = calculate_sum_of_areas(polygon1, polygon2)
+    print(result)",True,0,15156,244_14.py
+244,14,Sum the areas of two shapes,"Implement an optimized function using lambda expressions to calculate the sum of the areas of two polygons, where the area calculation for each polygon is defined by a separate lambda function taking the corresponding dimensions. Focus on functional programming style.","import math
+def calculate_sum_of_areas(poly1_dims, poly2_dims):
+    area1 = lambda d: 0.5 * d[0] * d[1]
+    area2 = lambda d: 10 * d[0] + d[1]
+    total_area = area1(poly1_dims) + area2(poly2_dims)
+    return total_area
+if __name__ == '__main__':
+    polygon1 = (10, 5)
+    polygon2 = (4, 8)
+    result = calculate_sum_of_areas(polygon1, polygon2)
+    print(result)",True,1,15157,244_14_1.py
+244,14,Sum the areas of two shapes,"Implement an optimized function using lambda expressions to calculate the sum of the areas of two polygons, where the area calculation for each polygon is defined by a separate lambda function taking the corresponding dimensions. Focus on functional programming style.","import math
+def calculate_sum_of_areas(poly1_dims, poly2_dims):
+    area1 = lambda d: 0.5 * d[0] * d[1]
+    area2 = lambda d: 10 * d[0] + 5 * d[1]
+    sum_area = area1(poly1_dims) + area2(poly2_dims)
+    return sum_area
+if __name__ == '__main__':
+    polygon1 = (10, 5)
+    polygon2 = (4, 8)
+    result = calculate_sum_of_areas(polygon1, polygon2)
+    print(result)",True,2,15158,244_14_2.py
+245,0,Check if shapes have equal area,"Write a complete, well-documented Python script that defines functions to calculate the area of a circle and a rectangle, and then checks if the areas of two given shapes are equal.","import math
+def calculate_circle_area(radius):
+    return math.pi * (radius ** 2)
+def calculate_rectangle_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    circle_radius = 5.0
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_area = calculate_circle_area(circle_radius)
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    if circle_area == rectangle_area:
+        print(""The areas of the circle and the rectangle are equal."")
+    else:
+        print(""The areas of the circle and the rectangle are not equal."")",True,0,15159,245_0.py
+245,0,Check if shapes have equal area,"Write a complete, well-documented Python script that defines functions to calculate the area of a circle and a rectangle, and then checks if the areas of two given shapes are equal.","import math
+def calculate_circle_area(radius):
+    return math.pi * (radius ** 2)
+def calculate_rectangle_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    circle_radius = 5.0
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_area = calculate_circle_area(circle_radius)
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    print(f""Circle Area: {circle_area}"")
+    print(f""Rectangle Area: {rectangle_area}"")
+    if circle_area == rectangle_area:
+        print(""The areas of the two shapes are equal."")
+    else:
+        print(""The areas of the two shapes are not equal."")",True,1,15160,245_0_1.py
+245,0,Check if shapes have equal area,"Write a complete, well-documented Python script that defines functions to calculate the area of a circle and a rectangle, and then checks if the areas of two given shapes are equal.","import math
+def calculate_circle_area(radius):
+    return math.pi * (radius ** 2)
+def calculate_rectangle_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    circle_radius = 5.0
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_area = calculate_circle_area(circle_radius)
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    print(f""Circle Area: {circle_area}"")
+    print(f""Rectangle Area: {rectangle_area}"")
+    if circle_area == rectangle_area:
+        print(""The areas of the circle and the rectangle are equal."")
+    else:
+        print(""The areas of the circle and the rectangle are not equal."")",True,2,15161,245_0_2.py
+245,0,Check if shapes have equal area,"Write a complete, well-documented Python script that defines functions to calculate the area of a circle and a rectangle, and then checks if the areas of two given shapes are equal.","import math
+def calculate_circle_area(radius):
+    return math.pi * (radius ** 2)
+def calculate_rectangle_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    circle_radius = 5.0
+    rectangle_length = 4.0
+    rectangle_width = 6.0
+    circle_area = calculate_circle_area(circle_radius)
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    print(f""Area of the circle: {circle_area}"")
+    print(f""Area of the rectangle: {rectangle_area}"")
+    if circle_area == rectangle_area:
+        print(""The areas of the two shapes are equal."")
+    else:
+        print(""The areas of the two shapes are not equal."")",True,3,15162,245_0_3.py
+245,0,Check if shapes have equal area,"Write a complete, well-documented Python script that defines functions to calculate the area of a circle and a rectangle, and then checks if the areas of two given shapes are equal.","import math
+def calculate_circle_area(radius):
+    return math.pi * (radius ** 2)
+def calculate_rectangle_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    circle_radius = 5.0
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_area = calculate_circle_area(circle_radius)
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    print(f""Circle Area: {circle_area}"")
+    print(f""Rectangle Area: {rectangle_area}"")
+    if circle_area == rectangle_area:
+        print(""The areas are equal."")
+    else:
+        print(""The areas are not equal."")",True,4,15163,245_0_4.py
+245,1,Check if shapes have equal area,"Implement an optimized Python function named 'check_equal_area' that accepts two shape definitions (e.g., radius and length/width) and returns True if their areas are equal, assuming the input shapes are circles and rectangles respectively.","import math
+def check_equal_area(radius, length):
+    circle_area = math.pi * (radius ** 2)
+    rectangle_area = length * length
+    return circle_area == rectangle_area
+if __name__ == '__main__':
+    r1 = 5.0
+    l1 = 7.0
+    print(f""Radius: {r1}, Length: {l1}, Areas Equal: {check_equal_area(r1, l1)}"")
+    r2 = 3.0
+    l2 = math.pi * 3.0                                                     
+    print(f""Radius: {r2}, Length: {l2}, Areas Equal: {check_equal_area(r2, l2)}"")
+    r3 = 1.0
+    l3 = math.pi                                                     
+    print(f""Radius: {r3}, Length: {l3}, Areas Equal: {check_equal_area(r3, l3)}"")",True,0,15164,245_1.py
+245,1,Check if shapes have equal area,"Implement an optimized Python function named 'check_equal_area' that accepts two shape definitions (e.g., radius and length/width) and returns True if their areas are equal, assuming the input shapes are circles and rectangles respectively.","import math
+def check_equal_area(radius, length):
+    circle_area = math.pi * (radius ** 2)
+    rectangle_area = length * length
+    return circle_area == rectangle_area
+if __name__ == '__main__':
+    r1 = 5.0
+    l1 = 25.0
+    print(f""Radius: {r1}, Length: {l1}, Areas Equal: {check_equal_area(r1, l1)}"")
+    r2 = 1.0
+    l2 = math.pi
+    print(f""Radius: {r2}, Length: {l2}, Areas Equal: {check_equal_area(r2, l2)}"")
+    r3 = 3.0
+    l3 = 9.0
+    print(f""Radius: {r3}, Length: {l3}, Areas Equal: {check_equal_area(r3, l3)}"")",True,1,15165,245_1_1.py
+245,1,Check if shapes have equal area,"Implement an optimized Python function named 'check_equal_area' that accepts two shape definitions (e.g., radius and length/width) and returns True if their areas are equal, assuming the input shapes are circles and rectangles respectively.","import math
+def check_equal_area(radius, length):
+    circle_area = math.pi * (radius ** 2)
+    rectangle_area = length * length
+    return circle_area == rectangle_area
+if __name__ == '__main__':
+    r1 = 5.0
+    l1 = 7.0
+    print(f""Radius: {r1}, Length: {l1}, Areas Equal: {check_equal_area(r1, l1)}"")
+    r2 = 3.0
+    l2 = math.pi * 3.0                                                     
+    print(f""Radius: {r2}, Length: {l2}, Areas Equal: {check_equal_area(r2, l2)}"")
+    r3 = 1.0
+    l3 = math.pi                                                     
+    print(f""Radius: {r3}, Length: {l3}, Areas Equal: {check_equal_area(r3, l3)}"")
+    r4 = 2.0
+    l4 = 4.0                                                      
+    print(f""Radius: {r4}, Length: {l4}, Areas Equal: {check_equal_area(r4, l4)}"")",True,2,15166,245_1_2.py
+245,1,Check if shapes have equal area,"Implement an optimized Python function named 'check_equal_area' that accepts two shape definitions (e.g., radius and length/width) and returns True if their areas are equal, assuming the input shapes are circles and rectangles respectively.","import math
+def check_equal_area(radius, length):
+    circle_area = math.pi * (radius ** 2)
+    rectangle_area = length * length
+    return circle_area == rectangle_area
+if __name__ == '__main__':
+    r1 = 5.0
+    l1 = 25.0
+    print(f""Radius: {r1}, Length: {l1}, Equal Area: {check_equal_area(r1, l1)}"")
+    r2 = 1.0
+    l2 = math.pi
+    print(f""Radius: {r2}, Length: {l2}, Equal Area: {check_equal_area(r2, l2)}"")
+    r3 = 3.0
+    l3 = 9.0
+    print(f""Radius: {r3}, Length: {l3}, Equal Area: {check_equal_area(r3, l3)}"")",True,3,15167,245_1_3.py
