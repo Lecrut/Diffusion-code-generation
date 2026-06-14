@@ -301099,3 +301099,1890 @@ if __name__ == '__main__':
     width_val = 5
     perimeter = calculate_rectangle_perimeter(length_val, width_val)
     print(perimeter)",True,1,14901,239_1_1.py
+239,2,Calculate rectangle perimeter simply,"Develop a class named 'Rectangle' with an initializer that takes length and width, and a method to calculate and return the perimeter. Use best-practice object-oriented programming principles.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def calculate_perimeter(self):
+        return 2 * (self.length + self.width)
+if __name__ == '__main__':
+    rect = Rectangle(10, 5)
+    perimeter = rect.calculate_perimeter()
+    print(perimeter)",True,0,14902,239_2.py
+239,2,Calculate rectangle perimeter simply,"Develop a class named 'Rectangle' with an initializer that takes length and width, and a method to calculate and return the perimeter. Use best-practice object-oriented programming principles.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def calculate_perimeter(self):
+        return 2 * (self.length + self.width)
+if __name__ == '__main__':
+    rect1 = Rectangle(10, 5)
+    perimeter1 = rect1.calculate_perimeter()
+    print(f""Perimeter of rectangle 1: {perimeter1}"")
+    rect2 = Rectangle(7, 3)
+    perimeter2 = rect2.calculate_perimeter()
+    print(f""Perimeter of rectangle 2: {perimeter2}"")",True,1,14903,239_2_1.py
+239,3,Calculate rectangle perimeter simply,"Write a concise Python function that calculates the perimeter of a rectangle, assuming the input values are provided directly to the function.","def calculate_rectangle_perimeter(length, width):
+    return 2 * (length + width)
+if __name__ == '__main__':
+    length = 10
+    width = 5
+    perimeter = calculate_rectangle_perimeter(length, width)
+    print(perimeter)",True,0,14904,239_3.py
+239,3,Calculate rectangle perimeter simply,"Write a concise Python function that calculates the perimeter of a rectangle, assuming the input values are provided directly to the function.","def calculate_rectangle_perimeter(length, width):
+    return 2 * (length + width)
+if __name__ == '__main__':
+    length_val = 10
+    width_val = 5
+    perimeter = calculate_rectangle_perimeter(length_val, width_val)
+    print(perimeter)",True,1,14905,239_3_1.py
+239,4,Calculate rectangle perimeter simply,Create a command-line interface (CLI) script that reads the length and width from command-line arguments and outputs the calculated perimeter. Use the 'sys' module for input handling.,"import sys
+if __name__ == '__main__':
+    length = 10
+    width = 5
+    perimeter = 2 * (length + width)
+    print(perimeter)",True,0,14906,239_4.py
+239,4,Calculate rectangle perimeter simply,Create a command-line interface (CLI) script that reads the length and width from command-line arguments and outputs the calculated perimeter. Use the 'sys' module for input handling.,"import sys
+if __name__ == '__main__':
+    try:
+        length = int(sys.argv[1])
+        width = int(sys.argv[2])
+        perimeter = 2 * (length + width)
+        print(perimeter)
+    except IndexError:
+        print(""Usage: python script_name.py <length> <width>"")
+    except ValueError:
+        print(""Error: Length and width must be integers."")",True,1,14907,239_4_1.py
+239,4,Calculate rectangle perimeter simply,Create a command-line interface (CLI) script that reads the length and width from command-line arguments and outputs the calculated perimeter. Use the 'sys' module for input handling.,"import sys
+if __name__ == '__main__':
+    try:
+        length = int(sys.argv[1])
+        width = int(sys.argv[2])
+        perimeter = 2 * (length + width)
+        print(perimeter)
+    except IndexError:
+        print(""Usage: python script_name.py <length> <width>"", file=sys.stderr)
+    except ValueError:
+        print(""Error: Length and width must be integers."", file=sys.stderr)",True,2,14908,239_4_2.py
+239,5,Calculate rectangle perimeter simply,"Refactor the perimeter calculation logic into a static method within a class structure, ensuring the code remains clean and adheres to Pythonic style.","class PerimeterCalculator:
+    @staticmethod
+    def calculate_rectangle_perimeter(length, width):
+        return 2 * (length + width)
+if __name__ == '__main__':
+    length = 10
+    width = 5
+    perimeter = PerimeterCalculator.calculate_rectangle_perimeter(length, width)
+    print(perimeter)",True,0,14909,239_5.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-2, 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,0,14910,239_6.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-2, 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,14911,239_6_1.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Both length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-10, 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,2,14912,239_6_2.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Both length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative values."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(""a"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(10, ""b"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-5, 10)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,3,14913,239_6_3.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Both length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative values."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-2, 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,4,14914,239_6_4.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-10, 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,5,14915,239_6_5.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+        if length < 0 or width < 0:
+            raise ValueError(""Dimensions cannot be negative"")
+        return 2 * (length + width)
+    except ValueError as e:
+        raise TypeError(f""Invalid input type or value: {e}"") from e
+    except Exception as e:
+        raise TypeError(f""An unexpected error occurred: {e}"") from e
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-10, 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,6,14916,239_6_6.py
+239,6,Calculate rectangle perimeter simply,"Write a robust function that handles potential non-numeric input gracefully when calculating the perimeter of a rectangle, raising appropriate exceptions if necessary.","def calculate_rectangle_perimeter(length, width):
+    try:
+        length = float(length)
+        width = float(width)
+    except ValueError:
+        raise TypeError(""Both length and width must be numeric values."")
+    if length < 0 or width < 0:
+        raise ValueError(""Length and width must be non-negative values."")
+    perimeter = 2 * (length + width)
+    return perimeter
+if __name__ == '__main__':
+    print(calculate_rectangle_perimeter(10, 5))
+    try:
+        calculate_rectangle_perimeter(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(-10, 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_perimeter(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,7,14917,239_6_7.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments (length, width, height) are required."")
+        length, width, height = args[0], args[1], args[2]
+        if not all(isinstance(d, (int, float)) and d > 0 for d in [length, width, height]):
+            raise ValueError(""All dimensions must be positive numbers."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    perimeter = 2 * (length + width + height)
+    return perimeter
+if __name__ == '__main__':
+    try:
+        result1 = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter for (10, 5, 2): {result1}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error calculating perimeter 1: {e}"")
+    try:
+        result2 = calculate_perimeter(-10, 5, 2)
+        print(f""Perimeter for (-10, 5, 2): {result2}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error calculating perimeter 2: {e}"")
+    try:
+        result3 = calculate_perimeter(10, 0, 2)
+        print(f""Perimeter for (10, 0, 2): {result3}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error calculating perimeter 3: {e}"")
+    try:
+        result4 = calculate_perimeter(5)
+        print(f""Perimeter for (5): {result4}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error calculating perimeter 4: {e}"")",True,0,14918,239_7.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments are required (perimeter calculation requires length, width, and height)."")
+        length = args[0]
+        width = args[1]
+        height = args[2]
+        if not all(isinstance(dim, (int, float)) for dim in [length, width, height]):
+            raise TypeError(""All dimensions must be numeric."")
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError(""Dimensions must be positive values."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    return 2 * (length + width + height)
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-10, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(5)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,1,14919,239_7_1.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments are required (perimeter calculation requires length, width, and height)."")
+        length = args[0]
+        width = args[1]
+        height = args[2]
+        if not all(isinstance(dim, (int, float)) for dim in [length, width, height]):
+            raise TypeError(""Dimensions must be numeric."")
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError(""All dimensions must be positive values."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    return 2 * (length + width + height)
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-10, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,2,14920,239_7_2.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""Function requires at least three arguments (length, width, height)."")
+        length, width, height = args[0], args[1], args[2]
+        if not all(isinstance(d, (int, float)) and d > 0 for d in [length, width, height]):
+            raise ValueError(""All dimensions must be positive numbers."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    perimeter = 2 * (length + width + height)
+    return perimeter
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-10, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(5)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,3,14921,239_7_3.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments are required (length, width, height)."")
+        length, width, height = args[0], args[1], args[2]
+        if not all(isinstance(d, (int, float)) for d in [length, width, height]):
+            raise TypeError(""Dimensions must be numeric."")
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError(""All dimensions must be positive values."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    perimeter = 2 * (length + width + height)
+    return perimeter
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-10, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(5)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,4,14922,239_7_4.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments are required for perimeter calculation."")
+        dimensions = args[0:3]
+        for dim in dimensions:
+            if not isinstance(dim, (int, float)) or dim <= 0:
+                raise ValueError(""All dimensions must be positive numbers."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    return 2 * (length + width + height)
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-10, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,5,14923,239_7_5.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments are required (perimeter calculation needs length, width, and height)."")
+        length = args[0]
+        width = args[1]
+        height = args[2]
+        if not all(isinstance(dim, (int, float)) for dim in [length, width, height]):
+            raise TypeError(""All dimensions must be numeric."")
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError(""Dimensions must be positive values."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    return 2 * (length + width + height)
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-1, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,6,14924,239_7_6.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_positive_dimensions(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 3:
+            raise TypeError(""At least three arguments are required (length, width, height)."")
+        length, width, height = args[0], args[1], args[2]
+        if not all(isinstance(d, (int, float)) for d in [length, width, height]):
+            raise TypeError(""Dimensions must be numeric."")
+        if length <= 0 or width <= 0 or height <= 0:
+            raise ValueError(""All dimensions must be positive values."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_positive_dimensions
+def calculate_perimeter(length, width, height):
+    perimeter = 2 * (length + width + height)
+    return perimeter
+if __name__ == '__main__':
+    try:
+        result = calculate_perimeter(10, 5, 2)
+        print(f""Perimeter: {result}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(-1, 5, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10, 0, 2)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")
+    try:
+        calculate_perimeter(10)
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,7,14925,239_7_7.py
+239,7,Calculate rectangle perimeter simply,Implement a decorator for the perimeter calculation function that automatically handles the input validation for positive dimensions.,"def validate_perimeter(func):
+    def wrapper(*args, **kwargs):
+        if len(args) < 2:
+            raise ValueError(""Perimeter calculation requires at least two dimensions."")
+        dimensions = [d for d in args if isinstance(d, (int, float))]
+        if len(dimensions) != len(args):
+            raise TypeError(""All arguments must be numeric."")
+        for dim in dimensions:
+            if dim <= 0:
+                raise ValueError(""Dimensions must be positive numbers."")
+        return func(*args, **kwargs)
+    return wrapper
+@validate_perimeter
+def calculate_perimeter(length, width):
+    return 2 * (length + width)
+if __name__ == '__main__':
+    try:
+        result1 = calculate_perimeter(10, 5)
+        print(f""Perimeter of 10 and 5: {result1}"")
+        result2 = calculate_perimeter(7.5, 3)
+        print(f""Perimeter of 7.5 and 3: {result2}"")
+        try:
+            calculate_perimeter(-10, 5)
+        except ValueError as e:
+            print(f""Error caught for negative input: {e}"")
+        try:
+            calculate_perimeter(10, 0)
+        except ValueError as e:
+            print(f""Error caught for zero input: {e}"")
+        try:
+            calculate_perimeter(10)
+        except ValueError as e:
+            print(f""Error caught for insufficient arguments: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,8,14926,239_7_8.py
+239,8,Calculate rectangle perimeter simply,"Generate an interactive Python program that continuously asks the user for dimensions until valid positive numbers are entered, and then calculates and displays the perimeter.",,False,0,14927,239_8.py
+239,9,Calculate rectangle perimeter simply,Provide the most mathematically direct and simplest possible Python expression or one-line function to calculate the perimeter given length (L) and width (W).,"if __name__ == '__main__':
+    L = 10
+    W = 5
+    perimeter = 2 * (L + W)
+    print(perimeter)",True,0,14928,239_9.py
+239,10,Calculate rectangle perimeter simply,"Write a complete, well-documented Python script that prompts the user to input the length and width of a rectangle and then calculates and prints its perimeter. Use clear variable names and handle input conversion robustly.",,False,0,14929,239_10.py
+239,11,Calculate rectangle perimeter simply,Implement an optimized function named 'calculate_rectangle_perimeter' that accepts the length and width as arguments and returns the perimeter. Ensure the function is highly efficient and adheres to best practices.,"def calculate_rectangle_perimeter(length, width):
+    return 2 * (length + width)
+if __name__ == '__main__':
+    length_val = 10
+    width_val = 5
+    perimeter = calculate_rectangle_perimeter(length_val, width_val)
+    print(perimeter)",True,0,14930,239_11.py
+236,6,Repeat a shape multiple times,"Write a robust script that uses nested loops to draw a solid filled square, and then repeat the drawing of that square 4 times in a grid layout.",,False,0,14931,236_6.py
+239,12,Calculate rectangle perimeter simply,"Develop a class named 'Rectangle' with an initializer that accepts length and width, and a method to calculate and return the perimeter. Ensure the implementation is object-oriented and clean.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def calculate_perimeter(self):
+        return 2 * (self.length + self.width)
+if __name__ == '__main__':
+    rect = Rectangle(10, 5)
+    perimeter = rect.calculate_perimeter()
+    print(perimeter)",True,0,14932,239_12.py
+239,13,Calculate rectangle perimeter simply,"Write a concise, single-line Python expression or function that calculates the perimeter of a rectangle given its length (L) and width (W), assuming L and W are provided as input variables.","if __name__ == '__main__':
+    L = 10
+    W = 5
+    perimeter = 2 * (L + W)
+    print(perimeter)",True,0,14933,239_13.py
+240,0,Find the area of a square,"Write a complete, well-documented Python script that prompts the user to enter the side length of a square and calculates its area.","def calculate_square_area(side):
+    return side * side
+if __name__ == '__main__':
+    sample_side = 5
+    area = calculate_square_area(sample_side)
+    print(f""The side length entered is: {sample_side}"")
+    print(f""The area of the square is: {area}"")",True,0,14934,240_0.py
+240,1,Find the area of a square,"Implement a robust function named 'calculate_square_area' that accepts a side length (float or int) and returns the area, ensuring type hinting and clear docstrings.","def calculate_square_area(side: float | int) -> float:
+    return side * side
+if __name__ == '__main__':
+    side1 = 5.0
+    area1 = calculate_square_area(side1)
+    print(f""The area of a square with side {side1} is: {area1}"")
+    side2 = 10
+    area2 = calculate_square_area(side2)
+    print(f""The area of a square with side {side2} is: {area2}"")
+    side3 = 3.5
+    area3 = calculate_square_area(side3)
+    print(f""The area of a square with side {side3} is: {area3}"")",True,0,14935,240_1.py
+240,2,Find the area of a square,"Develop an optimized class named 'Square' with an initializer to set the side length, and a method to calculate and return the area, adhering to object-oriented programming best practices.","class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+    def area(self):
+        return self.side_length * self.side_length
+if __name__ == '__main__':
+    square1 = Square(5)
+    print(square1.area())
+    square2 = Square(10.5)
+    print(square2.area())",True,0,14936,240_2.py
+240,2,Find the area of a square,"Develop an optimized class named 'Square' with an initializer to set the side length, and a method to calculate and return the area, adhering to object-oriented programming best practices.","class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+    def area(self):
+        return self.side_length * self.side_length
+if __name__ == '__main__':
+    my_square = Square(5)
+    print(my_square.area())",True,1,14937,240_2_1.py
+239,14,Calculate rectangle perimeter simply,Create a command-line interface (CLI) program using Python that reads the length and width from command-line arguments and outputs the calculated perimeter. Use the 'sys' module or 'argparse' for professional input handling.,,False,0,14938,239_14.py
+240,3,Find the area of a square,Write a single-line Python expression to calculate the area of a square given a variable named 'side'. Use the most direct and efficient syntax.,"if __name__ == '__main__':
+    side = 5
+    area = side ** 2
+    print(area)",True,0,14939,240_3.py
+240,4,Find the area of a square,Create a function that takes a list of side lengths and returns a list containing the calculated areas for each square. Ensure the function is highly efficient.,"def calculate_square_areas(side_lengths):
+    areas = []
+    for side in side_lengths:
+        areas.append(side * side)
+    return areas
+if __name__ == '__main__':
+    sample_sides = [2, 3, 5, 8]
+    result = calculate_square_areas(sample_sides)
+    print(result)",True,0,14940,240_4.py
+240,4,Find the area of a square,Create a function that takes a list of side lengths and returns a list containing the calculated areas for each square. Ensure the function is highly efficient.,"def calculate_square_areas(side_lengths):
+    areas = []
+    for side in side_lengths:
+        areas.append(side * side)
+    return areas
+if __name__ == '__main__':
+    sample_sides = [3, 5, 10, 12]
+    result = calculate_square_areas(sample_sides)
+    print(result)",True,1,14941,240_4_1.py
+240,4,Find the area of a square,Create a function that takes a list of side lengths and returns a list containing the calculated areas for each square. Ensure the function is highly efficient.,"def calculate_square_areas(side_lengths):
+    areas = []
+    for side in side_lengths:
+        areas.append(side * side)
+    return areas
+if __name__ == '__main__':
+    sample_sides = [3, 4, 5, 10]
+    result = calculate_square_areas(sample_sides)
+    print(result)",True,2,14942,240_4_2.py
+240,4,Find the area of a square,Create a function that takes a list of side lengths and returns a list containing the calculated areas for each square. Ensure the function is highly efficient.,"def calculate_square_areas(side_lengths):
+    areas = []
+    for side in side_lengths:
+        areas.append(side * side)
+    return areas
+if __name__ == '__main__':
+    sample_sides = [2, 3, 5, 8]
+    result_areas = calculate_square_areas(sample_sides)
+    print(result_areas)",True,3,14943,240_4_3.py
+240,6,Find the area of a square,"Implement the mathematical formula for the area of a square within a function, ensuring the code is self-contained and highly readable.","import math
+def calculate_square_area(side):
+    return side * side
+if __name__ == '__main__':
+    side_length = 5.0
+    area = calculate_square_area(side_length)
+    print(f""The side length of the square is: {side_length}"")
+    print(f""The area of the square is: {area}"")",True,0,14944,240_6.py
+240,6,Find the area of a square,"Implement the mathematical formula for the area of a square within a function, ensuring the code is self-contained and highly readable.","import math
+def calculate_square_area(side):
+    return side * side
+if __name__ == '__main__':
+    sample_side = 5.0
+    area = calculate_square_area(sample_side)
+    print(f""The side of the square is: {sample_side}"")
+    print(f""The area of the square is: {area}"")",True,1,14945,240_6_1.py
+240,6,Find the area of a square,"Implement the mathematical formula for the area of a square within a function, ensuring the code is self-contained and highly readable.","import math
+def calculate_square_area(side):
+    area = side * side
+    return area
+if __name__ == '__main__':
+    side_length = 5.0
+    area_result = calculate_square_area(side_length)
+    print(f""The side length of the square is: {side_length}"")
+    print(f""The area of the square is: {area_result}"")",True,2,14946,240_6_2.py
+240,7,Find the area of a square,"Design and implement a Python module containing a single, highly efficient function to compute the area of a square, designed for easy import by other scripts.","def compute_square_area(side):
+    return side * side
+if __name__ == '__main__':
+    test_side = 5
+    area = compute_square_area(test_side)
+    print(f""The area of a square with side {test_side} is {area}"")",True,0,14947,240_7.py
+240,7,Find the area of a square,"Design and implement a Python module containing a single, highly efficient function to compute the area of a square, designed for easy import by other scripts.","def square_area(side):
+    return side * side
+if __name__ == '__main__':
+    test_side = 5
+    result = square_area(test_side)
+    print(f""The area of a square with side {test_side} is: {result}"")",True,1,14948,240_7_1.py
+240,7,Find the area of a square,"Design and implement a Python module containing a single, highly efficient function to compute the area of a square, designed for easy import by other scripts.","def compute_square_area(side):
+    return side * side
+if __name__ == '__main__':
+    test_side = 5
+    result = compute_square_area(test_side)
+    print(f""The area of a square with side {test_side} is: {result}"")",True,2,14949,240_7_2.py
+240,8,Find the area of a square,Write a unit test using the `unittest` framework to verify the correctness of a function that calculates the area of a square.,"import unittest
+class TestSquareArea(unittest.TestCase):
+    def calculate_square_area(self, side):
+        return side * side
+    def test_area_of_positive_number(self):
+        self.assertEqual(self.calculate_square_area(5), 25)
+    def test_area_of_zero(self):
+        self.assertEqual(self.calculate_square_area(0), 0)
+    def test_area_of_large_number(self):
+        self.assertEqual(self.calculate_square_area(100), 10000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,14950,240_8.py
+240,8,Find the area of a square,Write a unit test using the `unittest` framework to verify the correctness of a function that calculates the area of a square.,"import unittest
+class TestSquareArea(unittest.TestCase):
+    def calculate_square_area(self, side):
+        return side * side
+    def test_square_area_positive(self):
+        self.assertEqual(self.calculate_square_area(5), 25)
+    def test_square_area_zero(self):
+        self.assertEqual(self.calculate_square_area(0), 0)
+    def test_square_area_large(self):
+        self.assertEqual(self.calculate_square_area(100), 10000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,14951,240_8_1.py
+240,8,Find the area of a square,Write a unit test using the `unittest` framework to verify the correctness of a function that calculates the area of a square.,"import unittest
+class TestSquareArea(unittest.TestCase):
+    def calculate_square_area(self, side):
+        return side * side
+    def test_square_area_positive(self):
+        self.assertEqual(self.calculate_square_area(5), 25)
+        self.assertEqual(self.calculate_square_area(10), 100)
+    def test_square_area_zero(self):
+        self.assertEqual(self.calculate_square_area(0), 0)
+    def test_square_area_float(self):
+        self.assertAlmostEqual(self.calculate_square_area(2.5), 6.25)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,14952,240_8_2.py
+240,8,Find the area of a square,Write a unit test using the `unittest` framework to verify the correctness of a function that calculates the area of a square.,"import unittest
+class TestSquareArea(unittest.TestCase):
+    def calculate_square_area(self, side):
+        return side * side
+    def test_area_of_positive_number(self):
+        self.assertEqual(self.calculate_square_area(5), 25)
+    def test_area_of_zero(self):
+        self.assertEqual(self.calculate_square_area(0), 0)
+    def test_area_of_larger_number(self):
+        self.assertEqual(self.calculate_square_area(10), 100)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,14953,240_8_3.py
+240,5,Find the area of a square,"Write a script that reads input from the console to determine the area of a square, handling potential `ValueError` exceptions if the input is not a valid number.","def calculate_square_area(side):
+    try:
+        side = float(side)
+        if side < 0:
+            raise ValueError(""Side cannot be negative"")
+        return side * side
+    except ValueError as e:
+        return f""Error: Invalid input. {e}""
+if __name__ == '__main__':
+    sample_inputs = [10, 5.5, ""abc"", -3]
+    for input_val in sample_inputs:
+        result = calculate_square_area(input_val)
+        print(f""Input: {input_val}, Area: {result}"")",True,0,14954,240_5.py
+240,9,Find the area of a square,"Generate an interactive Python program that continuously asks the user for input until a non-numeric input is provided, and then calculates and prints the area of that square.",,False,0,14955,240_9.py
+240,11,Find the area of a square,Implement an optimized function named `calculate_square_area` that accepts a single numerical argument (the side length) and returns the area of the square. Ensure the function is highly efficient and adheres to best practices.,"def calculate_square_area(side):
+    return side * side
+if __name__ == '__main__':
+    test_side1 = 5
+    result1 = calculate_square_area(test_side1)
+    print(f""Side: {test_side1}, Area: {result1}"")
+    test_side2 = 12.5
+    result2 = calculate_square_area(test_side2)
+    print(f""Side: {test_side2}, Area: {result2}"")",True,0,14956,240_11.py
+240,12,Find the area of a square,Develop a class named `Square` with an initializer that accepts the side length. Implement a method within this class to calculate and return the square's area. Ensure the code is object-oriented and clean.,"class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+    def calculate_area(self):
+        return self.side_length * self.side_length
+if __name__ == '__main__':
+    square1 = Square(5)
+    area1 = square1.calculate_area()
+    print(f""Area of square 1: {area1}"")
+    square2 = Square(10.5)
+    area2 = square2.calculate_area()
+    print(f""Area of square 2: {area2}"")",True,0,14957,240_12.py
+240,12,Find the area of a square,Develop a class named `Square` with an initializer that accepts the side length. Implement a method within this class to calculate and return the square's area. Ensure the code is object-oriented and clean.,"class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+    def calculate_area(self):
+        return self.side_length * self.side_length
+if __name__ == '__main__':
+    square1 = Square(5)
+    area1 = square1.calculate_area()
+    print(f""The area of the first square is: {area1}"")
+    square2 = Square(10.5)
+    area2 = square2.calculate_area()
+    print(f""The area of the second square is: {area2}"")",True,1,14958,240_12_1.py
+240,12,Find the area of a square,Develop a class named `Square` with an initializer that accepts the side length. Implement a method within this class to calculate and return the square's area. Ensure the code is object-oriented and clean.,"class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+    def calculate_area(self):
+        return self.side_length * self.side_length
+if __name__ == '__main__':
+    side = 5
+    my_square = Square(side)
+    area = my_square.calculate_area()
+    print(area)",True,2,14959,240_12_2.py
+240,12,Find the area of a square,Develop a class named `Square` with an initializer that accepts the side length. Implement a method within this class to calculate and return the square's area. Ensure the code is object-oriented and clean.,"class Square:
+    def __init__(self, side_length):
+        self.side_length = side_length
+    def calculate_area(self):
+        return self.side_length * self.side_length
+if __name__ == '__main__':
+    square1 = Square(5)
+    area1 = square1.calculate_area()
+    print(area1)
+    square2 = Square(10.5)
+    area2 = square2.calculate_area()
+    print(area2)",True,3,14960,240_12_3.py
+240,13,Find the area of a square,"Write a concise, single-line Python expression to calculate the area of a square given a variable named `side`. Then, write a short script demonstrating its use with an example value.","if __name__ == '__main__':
+    side = 5
+    area = side * side
+    print(area)",True,0,14961,240_13.py
+240,14,Find the area of a square,"Create a robust Python function that takes a side length as input and returns the area of the square. The function must include type hinting and docstrings explaining its purpose, parameters, and return value.","def calculate_square_area(side_length: float) -> float:
+    return side_length * side_length
+if __name__ == '__main__':
+    sample_side = 5.0
+    area = calculate_square_area(sample_side)
+    print(f""The area of the square with side length {sample_side} is {area}"")",True,0,14962,240_14.py
+240,14,Find the area of a square,"Create a robust Python function that takes a side length as input and returns the area of the square. The function must include type hinting and docstrings explaining its purpose, parameters, and return value.","def calculate_square_area(side_length: float) -> float:
+    return side_length * side_length
+if __name__ == '__main__':
+    sample_side = 5.0
+    area = calculate_square_area(sample_side)
+    print(f""The area of the square with side length {sample_side} is {area}"")
+    sample_side_2 = 10.5
+    area_2 = calculate_square_area(sample_side_2)
+    print(f""The area of the square with side length {sample_side_2} is {area_2}"")",True,1,14963,240_14_1.py
+240,10,Find the area of a square,"Write a complete, well-documented Python script that prompts the user to input the side length of a square and then calculates and prints its area. Use the `input()` function and handle potential errors gracefully.","def calculate_square_area(side):
+    area = side * side
+    return area
+if __name__ == '__main__':
+    sample_side = 5
+    try:
+        input_side = int(sample_side)
+        if input_side < 0:
+            raise ValueError(""Side length cannot be negative."")
+        area = calculate_square_area(input_side)
+        print(f""The side length entered is: {input_side}"")
+        print(f""The area of the square is: {area}"")
+    except ValueError as e:
+        print(f""Error: Invalid input. {e}"")
+    except TypeError:
+        print(""Error: Input must be a valid integer."")",True,0,14964,240_10.py
+240,10,Find the area of a square,"Write a complete, well-documented Python script that prompts the user to input the side length of a square and then calculates and prints its area. Use the `input()` function and handle potential errors gracefully.","def calculate_square_area(side):
+    area = side * side
+    return area
+if __name__ == '__main__':
+    sample_side = 5
+    try:
+        input_side = int(sample_side)
+        if input_side < 0:
+            raise ValueError(""Side length cannot be negative."")
+        area = calculate_square_area(input_side)
+        print(f""The side length entered is: {input_side}"")
+        print(f""The area of the square is: {area}"")
+    except ValueError as e:
+        print(f""Error: Invalid input. {e}"")
+    except TypeError:
+        print(""Error: Input must be an integer."")",True,1,14965,240_10_1.py
+241,1,Find the area of a rectangle,Implement an optimized function named 'calculate_rectangle_area' that accepts length and width as arguments and returns their product. Ensure the function is highly efficient.,"def calculate_rectangle_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    length_val = 10
+    width_val = 5
+    area = calculate_rectangle_area(length_val, width_val)
+    print(area)",True,0,14966,241_1.py
+241,2,Find the area of a rectangle,"Develop a class named 'Rectangle' with an initializer that accepts length and width, and include a method to calculate and return the area. Use best-practice object-oriented programming principles.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def area(self):
+        return self.length * self.width
+if __name__ == '__main__':
+    rect = Rectangle(10, 5)
+    area_result = rect.area()
+    print(area_result)",True,0,14967,241_2.py
+241,2,Find the area of a rectangle,"Develop a class named 'Rectangle' with an initializer that accepts length and width, and include a method to calculate and return the area. Use best-practice object-oriented programming principles.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def area(self):
+        return self.length * self.width
+if __name__ == '__main__':
+    rect = Rectangle(10, 5)
+    print(rect.area())",True,1,14968,241_2_1.py
+241,2,Find the area of a rectangle,"Develop a class named 'Rectangle' with an initializer that accepts length and width, and include a method to calculate and return the area. Use best-practice object-oriented programming principles.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def calculate_area(self):
+        return self.length * self.width
+if __name__ == '__main__':
+    rect = Rectangle(10, 5)
+    area = rect.calculate_area()
+    print(area)",True,2,14969,241_2_2.py
+241,2,Find the area of a rectangle,"Develop a class named 'Rectangle' with an initializer that accepts length and width, and include a method to calculate and return the area. Use best-practice object-oriented programming principles.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def area(self):
+        return self.length * self.width
+if __name__ == '__main__':
+    rect1 = Rectangle(10, 5)
+    print(rect1.area())
+    rect2 = Rectangle(7, 3)
+    print(rect2.area())",True,3,14970,241_2_3.py
+241,3,Find the area of a rectangle,"Write a concise and efficient Python function that takes two floating-point numbers, length and width, and returns the area. Assume input validation is handled externally.","def calculate_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    length_val = 10.5
+    width_val = 5.0
+    area = calculate_area(length_val, width_val)
+    print(area)",True,0,14971,241_3.py
+241,3,Find the area of a rectangle,"Write a concise and efficient Python function that takes two floating-point numbers, length and width, and returns the area. Assume input validation is handled externally.","def calculate_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    length_val = 10.5
+    width_val = 4.2
+    area = calculate_area(length_val, width_val)
+    print(area)",True,1,14972,241_3_1.py
+241,3,Find the area of a rectangle,"Write a concise and efficient Python function that takes two floating-point numbers, length and width, and returns the area. Assume input validation is handled externally.","def calculate_area(length, width):
+    return length * width
+if __name__ == '__main__':
+    area1 = calculate_area(10.5, 5.0)
+    print(area1)",True,2,14973,241_3_2.py
+241,0,Find the area of a rectangle,"Write a complete, well-documented Python script that prompts the user to input the length and width of a rectangle and then calculates and prints its area.",,False,0,14974,241_0.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 2),
+        (4, 8)
+    ]
+    area_generator = rectangle_area_generator(sample_dimensions)
+    print(""Areas:"")
+    for area in area_generator:
+        print(area)",True,0,14975,241_5.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 2),
+        (4, 8)
+    ]
+    area_generator = rectangle_area_generator(sample_dimensions)
+    areas = list(area_generator)
+    print(areas)",True,1,14976,241_5_1.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 4),
+        (8, 8)
+    ]
+    area_generator = rectangle_area_generator(sample_dimensions)
+    results = list(area_generator)
+    print(results)",True,2,14977,241_5_2.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 2),
+        (8, 5)
+    ]
+    area_generator = rectangle_area_generator(sample_dimensions)
+    results = list(area_generator)
+    print(results)",True,3,14978,241_5_3.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 2),
+        (4, 8)
+    ]
+    areas = rectangle_area_generator(sample_dimensions)
+    for area in areas:
+        print(area)",True,4,14979,241_5_4.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_rectangles = [
+        (5, 10),
+        (3, 7),
+        (12, 4),
+        (8, 8)
+    ]
+    areas = rectangle_area_generator(sample_rectangles)
+    for area in areas:
+        print(area)",True,5,14980,241_5_5.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 4),
+        (8, 8)
+    ]
+    areas = rectangle_area_generator(sample_dimensions)
+    for area in areas:
+        print(area)",True,6,14981,241_5_6.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (2, 3),
+        (5, 10),
+        (1, 1),
+        (7, 4)
+    ]
+    area_generator = rectangle_area_generator(sample_dimensions)
+    areas = list(area_generator)
+    print(areas)",True,7,14982,241_5_7.py
+241,5,Find the area of a rectangle,"Implement a generator function that yields the area for a series of predefined rectangle dimensions, demonstrating an efficient way to calculate the area iteratively.","def rectangle_area_generator(dimensions):
+    for length, width in dimensions:
+        yield length * width
+if __name__ == '__main__':
+    sample_dimensions = [
+        (5, 10),
+        (3, 7),
+        (12, 2),
+        (4, 8)
+    ]
+    area_generator = rectangle_area_generator(sample_dimensions)
+    print(""Areas calculated:"")
+    for area in area_generator:
+        print(area)",True,8,14983,241_5_8.py
+241,6,Find the area of a rectangle,"Refactor the previous area calculation logic into a static method within a utility class named 'Geometry', ensuring the code remains clean and adheres to Pythonic conventions.","class Geometry:
+    @staticmethod
+    def calculate_area(length, width):
+        return length * width
+if __name__ == '__main__':
+    length_val = 10
+    width_val = 5
+    area = Geometry.calculate_area(length_val, width_val)
+    print(area)",True,0,14984,241_6.py
+241,6,Find the area of a rectangle,"Refactor the previous area calculation logic into a static method within a utility class named 'Geometry', ensuring the code remains clean and adheres to Pythonic conventions.","class Geometry:
+    @staticmethod
+    def calculate_area_rectangle(length, width):
+        return length * width
+if __name__ == '__main__':
+    length = 10
+    width = 5
+    area = Geometry.calculate_area_rectangle(length, width)
+    print(area)",True,1,14985,241_6_1.py
+241,7,Find the area of a rectangle,"Write a testable Python module containing a function to calculate the area, and include unit tests using the 'unittest' framework to verify correctness for various positive integer inputs.","import unittest
+def calculate_area(length, width):
+    return length * width
+class TestAreaCalculator(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(calculate_area(5, 10), 50)
+        self.assertEqual(calculate_area(2, 3), 6)
+        self.assertEqual(calculate_area(1, 1), 1)
+        self.assertEqual(calculate_area(100, 5), 500)
+        self.assertEqual(calculate_area(7, 7), 49)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,14986,241_7.py
+241,7,Find the area of a rectangle,"Write a testable Python module containing a function to calculate the area, and include unit tests using the 'unittest' framework to verify correctness for various positive integer inputs.","import unittest
+def calculate_area(length, width):
+    return length * width
+class TestAreaCalculator(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(calculate_area(5, 10), 50)
+        self.assertEqual(calculate_area(2, 3), 6)
+        self.assertEqual(calculate_area(1, 1), 1)
+        self.assertEqual(calculate_area(100, 200), 20000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,14987,241_7_1.py
+241,7,Find the area of a rectangle,"Write a testable Python module containing a function to calculate the area, and include unit tests using the 'unittest' framework to verify correctness for various positive integer inputs.","import unittest
+def calculate_area(length, width):
+    return length * width
+class TestAreaCalculator(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(calculate_area(5, 10), 50)
+        self.assertEqual(calculate_area(2, 3), 6)
+        self.assertEqual(calculate_area(1, 1), 1)
+        self.assertEqual(calculate_area(100, 1), 100)
+        self.assertEqual(calculate_area(7, 7), 49)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,14988,241_7_2.py
+241,8,Find the area of a rectangle,"Design a flexible solution where the area calculation can handle both integer and float inputs gracefully, returning a float result, and provide clear type hinting for all function signatures.","def calculate_area(length: float | int, width: float | int) -> float:
+    return float(length * width)
+if __name__ == '__main__':
+    print(calculate_area(5, 10))
+    print(calculate_area(3.5, 4))
+    print(calculate_area(7, 2.5))
+    print(calculate_area(10, 10))",True,0,14989,241_8.py
+241,8,Find the area of a rectangle,"Design a flexible solution where the area calculation can handle both integer and float inputs gracefully, returning a float result, and provide clear type hinting for all function signatures.","def calculate_area(side1: float | int, side2: float | int) -> float:
+    return float(side1 * side2)
+if __name__ == '__main__':
+    print(calculate_area(5, 4))
+    print(calculate_area(3.5, 2))
+    print(calculate_area(10, 7.5))
+    print(calculate_area(1, 1))",True,1,14990,241_8_1.py
+241,8,Find the area of a rectangle,"Design a flexible solution where the area calculation can handle both integer and float inputs gracefully, returning a float result, and provide clear type hinting for all function signatures.","def calculate_area(side1: float | int, side2: float | int) -> float:
+    return float(side1 * side2)
+if __name__ == '__main__':
+    area1 = calculate_area(5, 4)
+    print(f""Area of 5 and 4: {area1}"")
+    area2 = calculate_area(3.5, 2)
+    print(f""Area of 3.5 and 2: {area2}"")
+    area3 = calculate_area(10, 10.5)
+    print(f""Area of 10 and 10.5: {area3}"")
+    area4 = calculate_area(7, 8)
+    print(f""Area of 7 and 8: {area4}"")",True,2,14991,241_8_2.py
+241,9,Find the area of a rectangle,"Generate the most concise, single-line Python expression to calculate the area given two variables, and then write a short explanation of why this approach is optimal for this specific task.",,False,0,14992,241_9.py
+238,7,Fill a simple box design,"Generate the complete, runnable Python code using the `turtle` module to draw a square box of a specified side length, ensuring the drawing process is smooth and correct.",,False,0,14993,238_7.py
+241,11,Find the area of a rectangle,Implement an optimized function named `calculate_rectangle_area` that accepts the length and width as arguments and returns the area. Ensure the function is efficient and handles non-positive inputs by raising a ValueError.,"def calculate_rectangle_area(length, width):
+    if length <= 0 or width <= 0:
+        raise ValueError(""Length and width must be positive numbers."")
+    return length * width
+if __name__ == '__main__':
+    print(calculate_rectangle_area(5, 10))
+    try:
+        calculate_rectangle_area(-5, 10)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_area(5, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,14994,241_11.py
+241,11,Find the area of a rectangle,Implement an optimized function named `calculate_rectangle_area` that accepts the length and width as arguments and returns the area. Ensure the function is efficient and handles non-positive inputs by raising a ValueError.,"def calculate_rectangle_area(length, width):
+    if length <= 0 or width <= 0:
+        raise ValueError(""Length and width must be positive values."")
+    return length * width
+if __name__ == '__main__':
+    print(calculate_rectangle_area(5, 10))
+    try:
+        calculate_rectangle_area(-5, 10)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_area(5, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    print(calculate_rectangle_area(3.5, 2))",True,1,14995,241_11_1.py
+241,11,Find the area of a rectangle,Implement an optimized function named `calculate_rectangle_area` that accepts the length and width as arguments and returns the area. Ensure the function is efficient and handles non-positive inputs by raising a ValueError.,"def calculate_rectangle_area(length, width):
+    if length <= 0 or width <= 0:
+        raise ValueError(""Length and width must be positive numbers."")
+    return length * width
+if __name__ == '__main__':
+    print(calculate_rectangle_area(5, 10))
+    try:
+        calculate_rectangle_area(-5, 10)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_area(5, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    print(calculate_rectangle_area(3.5, 2))",True,2,14996,241_11_2.py
+241,11,Find the area of a rectangle,Implement an optimized function named `calculate_rectangle_area` that accepts the length and width as arguments and returns the area. Ensure the function is efficient and handles non-positive inputs by raising a ValueError.,"def calculate_rectangle_area(length, width):
+    if length <= 0 or width <= 0:
+        raise ValueError(""Length and width must be positive values."")
+    return length * width
+if __name__ == '__main__':
+    print(calculate_rectangle_area(5, 10))
+    try:
+        calculate_rectangle_area(-5, 10)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        calculate_rectangle_area(5, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    print(calculate_rectangle_area(3.5, 4))",True,3,14997,241_11_3.py
+241,12,Find the area of a rectangle,"Develop a class named `Rectangle` with an initializer that accepts length and width, and include a method to calculate and return the rectangle's area. Ensure the implementation follows object-oriented best practices.","class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def area(self):
+        return self.length * self.width
+if __name__ == '__main__':
+    rect = Rectangle(10, 5)
+    area_result = rect.area()
+    print(area_result)",True,0,14998,241_12.py
+241,13,Find the area of a rectangle,"Write a concise, single-line Python expression or function definition that calculates the area of a rectangle given its length and width, assuming they are provided as variables.","if __name__ == '__main__':
+    length = 10
+    width = 5
+    area = length * width
+    print(area)",True,0,14999,241_13.py
+241,4,Find the area of a rectangle,"Create a command-line interface (CLI) script using the 'argparse' module to accept length and width as command-line arguments and calculate the area, ensuring robust error handling for non-numeric input.",,False,0,15000,241_4.py
+242,0,Compare two shape areas,"Write a complete, well-documented Python script that calculates and compares the areas of a rectangle and a circle, given their respective dimensions.","import math
+def calculate_areas(length, width, radius):
+    rectangle_area = length * width
+    circle_area = math.pi * (radius ** 2)
+    return rectangle_area, circle_area
+if __name__ == '__main__':
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_radius = 4.0
+    rect_area, circ_area = calculate_areas(rectangle_length, rectangle_width, circle_radius)
+    print(f""Rectangle Length: {rectangle_length}"")
+    print(f""Rectangle Width: {rectangle_width}"")
+    print(f""Circle Radius: {circle_radius}"")
+    print(""-"" * 30)
+    print(f""Area of Rectangle: {rect_area}"")
+    print(f""Area of Circle: {circ_area}"")
+    if rect_area > circ_area:
+        print(""The rectangle has a larger area."")
+    elif circ_area > rect_area:
+        print(""The circle has a larger area."")
+    else:
+        print(""The areas of the rectangle and the circle are equal."")",True,0,15001,242_0.py
+242,0,Compare two shape areas,"Write a complete, well-documented Python script that calculates and compares the areas of a rectangle and a circle, given their respective dimensions.","import math
+def calculate_areas(length, width, radius):
+    rectangle_area = length * width
+    circle_area = math.pi * (radius ** 2)
+    return rectangle_area, circle_area
+if __name__ == '__main__':
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_radius = 4.0
+    rect_area, circ_area = calculate_areas(rectangle_length, rectangle_width, circle_radius)
+    print(f""Rectangle Length: {rectangle_length}"")
+    print(f""Rectangle Width: {rectangle_width}"")
+    print(f""Circle Radius: {circle_radius}"")
+    print(""-"" * 30)
+    print(f""Area of the Rectangle: {rect_area}"")
+    print(f""Area of the Circle: {circ_area}"")
+    if rect_area > circ_area:
+        print(""The rectangle has a larger area."")
+    elif circ_area > rect_area:
+        print(""The circle has a larger area."")
+    else:
+        print(""The areas of the rectangle and the circle are equal."")",True,1,15002,242_0_1.py
+242,0,Compare two shape areas,"Write a complete, well-documented Python script that calculates and compares the areas of a rectangle and a circle, given their respective dimensions.","import math
+def calculate_areas(length, width, radius):
+    rectangle_area = length * width
+    circle_area = math.pi * (radius ** 2)
+    return rectangle_area, circle_area
+if __name__ == '__main__':
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    circle_radius = 4.0
+    rect_area, circ_area = calculate_areas(rectangle_length, rectangle_width, circle_radius)
+    print(f""Rectangle Length: {rectangle_length}"")
+    print(f""Rectangle Width: {rectangle_width}"")
+    print(f""Circle Radius: {circle_radius}"")
+    print(""-"" * 30)
+    print(f""Area of the Rectangle: {rect_area}"")
+    print(f""Area of the Circle: {circ_area}"")
+    if rect_area > circ_area:
+        print(""The rectangle has a larger area."")
+    elif circ_area > rect_area:
+        print(""The circle has a larger area."")
+    else:
+        print(""The areas are equal."")",True,2,15003,242_0_2.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1, area2):
+    if area1 > area2:
+        return f""Shape with area {area1} has a larger area.""
+    elif area2 > area1:
+        return f""Shape with area {area2} has a larger area.""
+    else:
+        return ""Both shapes have equal areas.""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.56788
+    print(compare_areas(area_a, area_b))
+    area_c = 42.0
+    area_d = 39.99999999999999
+    print(compare_areas(area_c, area_d))
+    area_e = 5.123
+    area_f = 5.123
+    print(compare_areas(area_e, area_f))",True,0,15004,242_1.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1: float, area2: float) -> str:
+    if area1 > area2:
+        return ""Shape 1 has a larger area.""
+    elif area2 > area1:
+        return ""Shape 2 has a larger area.""
+    else:
+        return ""Both shapes have equal areas.""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.567890000000001
+    area_c = 5.0
+    area_d = 12.345
+    print(f""Comparing Area A ({area_a}) and Area B ({area_b}): {compare_areas(area_a, area_b)}"")
+    print(f""Comparing Area C ({area_c}) and Area D ({area_d}): {compare_areas(area_c, area_d)}"")
+    print(f""Comparing Area A ({area_a}) and Area C ({area_c}): {compare_areas(area_a, area_c)}"")
+    print(f""Comparing Area B ({area_b}) and Area D ({area_d}): {compare_areas(area_b, area_d)}"")",True,1,15005,242_1_1.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1: float, area2: float) -> str:
+    if area1 > area2:
+        return ""Shape 1 has a larger area.""
+    elif area2 > area1:
+        return ""Shape 2 has a larger area.""
+    else:
+        return ""Both shapes have equal areas.""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.567890000000001
+    area_c = 5.21
+    area_d = 5.21
+    print(f""Comparing Area A ({area_a}) and Area B ({area_b}): {compare_areas(area_a, area_b)}"")
+    print(f""Comparing Area C ({area_c}) and Area D ({area_d}): {compare_areas(area_c, area_d)}"")
+    print(f""Comparing Area A ({area_a}) and Area C ({area_c}): {compare_areas(area_a, area_c)}"")
+    print(f""Comparing Area B ({area_b}) and Area D ({area_d}): {compare_areas(area_b, area_d)}"")",True,2,15006,242_1_2.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1: float, area2: float) -> str:
+    if area1 > area2:
+        return f""Shape 1 has a larger area ({area1:.4f} vs {area2:.4f})""
+    elif area2 > area1:
+        return f""Shape 2 has a larger area ({area2:.4f} vs {area1:.4f})""
+    else:
+        return f""Both shapes have equal areas ({area1:.4f})""
+if __name__ == '__main__':
+    shape_a_area = 10.56789
+    shape_b_area = 10.56788
+    print(compare_areas(shape_a_area, shape_b_area))
+    shape_c_area = 42.0
+    shape_d_area = 39.99999999999999
+    print(compare_areas(shape_c_area, shape_d_area))
+    shape_e_area = 5.123
+    shape_f_area = 5.123
+    print(compare_areas(shape_e_area, shape_f_area))",True,3,15007,242_1_3.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1, area2):
+    if area1 > area2:
+        return f""Shape 1 has a larger area ({area1} vs {area2})""
+    elif area2 > area1:
+        return f""Shape 2 has a larger area ({area2} vs {area1})""
+    else:
+        return f""Both shapes have equal areas ({area1})""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.567890000000001
+    area_c = 5.0
+    area_d = 4.999999999999999
+    print(compare_areas(area_a, area_b))
+    print(compare_areas(area_c, area_d))
+    print(compare_areas(area_a, area_c))
+    print(compare_areas(area_b, area_d))",True,4,15008,242_1_4.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1: float, area2: float) -> str:
+    if area1 > area2:
+        return ""Shape 1 has a larger area.""
+    elif area2 > area1:
+        return ""Shape 2 has a larger area.""
+    else:
+        return ""Both shapes have equal areas.""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.56789000000001
+    area_c = 5.0
+    area_d = 5.0
+    print(f""Comparing Area A ({area_a}) and Area B ({area_b}): {compare_areas(area_a, area_b)}"")
+    print(f""Comparing Area C ({area_c}) and Area D ({area_d}): {compare_areas(area_c, area_d)}"")
+    print(f""Comparing Area A ({area_a}) and Area C ({area_c}): {compare_areas(area_a, area_c)}"")",True,5,15009,242_1_5.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1, area2):
+    if area1 > area2:
+        return f""Shape with area {area1} has a larger area.""
+    elif area2 > area1:
+        return f""Shape with area {area2} has a larger area.""
+    else:
+        return ""Both shapes have equal areas.""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.567890000000001
+    area_c = 5.0
+    area_d = 12.345
+    print(f""Comparing {area_a} and {area_b}: {compare_areas(area_a, area_b)}"")
+    print(f""Comparing {area_c} and {area_d}: {compare_areas(area_c, area_d)}"")
+    print(f""Comparing {area_a} and {area_c}: {compare_areas(area_a, area_c)}"")
+    print(f""Comparing {area_b} and {area_d}: {compare_areas(area_b, area_d)}"")",True,6,15010,242_1_6.py
+242,1,Compare two shape areas,"Implement an optimized function named `compare_areas` that accepts the area of two arbitrary shapes (represented by their area values) and returns a descriptive string indicating which shape has the larger area, ensuring floating-point comparison accuracy.","import math
+def compare_areas(area1, area2):
+    if area1 > area2:
+        return f""Shape with area {area1} has a larger area than the other shape with area {area2}.""
+    elif area2 > area1:
+        return f""Shape with area {area2} has a larger area than the other shape with area {area1}.""
+    else:
+        return f""Both shapes have equal areas of {area1}.""
+if __name__ == '__main__':
+    area_a = 10.56789
+    area_b = 10.56788
+    print(compare_areas(area_a, area_b))
+    area_c = 42.0
+    area_d = 39.99999999999999
+    print(compare_areas(area_c, area_d))
+    area_e = 5.123
+    area_f = 5.123
+    print(compare_areas(area_e, area_f))",True,7,15011,242_1_7.py
+242,2,Compare two shape areas,"Develop a class-based solution in Python to represent two shapes (e.g., Square and Triangle) and include a method to calculate and compare their respective areas efficiently.","class Shape:
+    def calculate_area(self):
+        raise NotImplementedError
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side * self.side
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
+class AreaComparator:
+    def compare_areas(self, shape1: Shape, shape2: Shape):
+        area1 = shape1.calculate_area()
+        area2 = shape2.calculate_area()
+        if area1 > area2:
+            return f""{shape1.__class__.__name__} has a larger area ({area1:.2f} vs {area2:.2f})""
+        elif area1 < area2:
+            return f""{shape1.__class__.__name__} has a smaller area ({area1:.2f} vs {area2:.2f})""
+        else:
+            return f""{shape1.__class__.__name__} and {shape2.__class__.__name__} have equal areas ({area1:.2f})""
+if __name__ == '__main__':
+    square = Square(side=5)
+    triangle = Triangle(base=6, height=4)
+    comparator = AreaComparator()
+    print(comparator.compare_areas(square, triangle))",True,0,15012,242_2.py
+242,2,Compare two shape areas,"Develop a class-based solution in Python to represent two shapes (e.g., Square and Triangle) and include a method to calculate and compare their respective areas efficiently.","class Shape:
+    def calculate_area(self):
+        raise NotImplementedError
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side * self.side
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
+class ShapeComparator:
+    def compare_areas(self, shape1: Shape, shape2: Shape):
+        area1 = shape1.calculate_area()
+        area2 = shape2.calculate_area()
+        if area1 > area2:
+            return f""{shape1.__class__.__name__} has a larger area ({area1:.2f} vs {area2:.2f})""
+        elif area1 < area2:
+            return f""{shape1.__class__.__name__} has a smaller area ({area1:.2f} vs {area2:.2f})""
+        else:
+            return f""{shape1.__class__.__name__} and {shape2.__class__.__name__} have equal areas ({area1:.2f})""
+if __name__ == '__main__':
+    square = Square(side=5)
+    triangle = Triangle(base=6, height=4)
+    comparator = ShapeComparator()
+    print(comparator.compare_areas(square, triangle))",True,1,15013,242_2_1.py
+242,2,Compare two shape areas,"Develop a class-based solution in Python to represent two shapes (e.g., Square and Triangle) and include a method to calculate and compare their respective areas efficiently.","class Shape:
+    def calculate_area(self):
+        raise NotImplementedError
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def calculate_area(self):
+        return self.side * self.side
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
+class ShapeComparator:
+    def compare_areas(self, shape1, shape2):
+        area1 = shape1.calculate_area()
+        area2 = shape2.calculate_area()
+        if area1 > area2:
+            return f""{shape1.__class__.__name__} has a larger area ({area1:.2f} vs {area2:.2f})""
+        elif area1 < area2:
+            return f""{shape1.__class__.__name__} has a smaller area ({area1:.2f} vs {area2:.2f})""
+        else:
+            return f""{shape1.__class__.__name__} and {shape2.__class__.__name__} have equal areas ({area1:.2f})""
+if __name__ == '__main__':
+    square = Square(5)
+    triangle = Triangle(4, 6)
+    comparator = ShapeComparator()
+    print(comparator.compare_areas(square, triangle))",True,2,15014,242_2_2.py
+242,3,Compare two shape areas,"Write a program that prompts the user to input dimensions for two different shapes (e.g., a rectangle and a triangle) and then prints a detailed comparison of their calculated areas.","import math
+def calculate_rectangle_area(length, width):
+    return length * width
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+if __name__ == '__main__':
+    rectangle_length = 10
+    rectangle_width = 5
+    triangle_base = 8
+    triangle_height = 6
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    triangle_area = calculate_triangle_area(triangle_base, triangle_height)
+    print(""--- Shape Area Comparison ---"")
+    print(f""Rectangle Dimensions: Length = {rectangle_length}, Width = {rectangle_width}"")
+    print(f""Calculated Rectangle Area: {rectangle_area}"")
+    print(""-"" * 30)
+    print(f""Triangle Dimensions: Base = {triangle_base}, Height = {triangle_height}"")
+    print(f""Calculated Triangle Area: {triangle_area}"")
+    if rectangle_area > triangle_area:
+        difference = rectangle_area - triangle_area
+        print(f""\nComparison: The rectangle area is larger by {difference:.2f}"")
+    elif triangle_area > rectangle_area:
+        difference = triangle_area - rectangle_area
+        print(f""\nComparison: The triangle area is larger by {difference:.2f}"")
+    else:
+        print(""\nComparison: The areas are equal."")",True,0,15015,242_3.py
+242,3,Compare two shape areas,"Write a program that prompts the user to input dimensions for two different shapes (e.g., a rectangle and a triangle) and then prints a detailed comparison of their calculated areas.","import math
+def calculate_rectangle_area(length, width):
+    return length * width
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+if __name__ == '__main__':
+    rectangle_length = 10.0
+    rectangle_width = 5.0
+    triangle_base = 8.0
+    triangle_height = 6.0
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    triangle_area = calculate_triangle_area(triangle_base, triangle_height)
+    print(""--- Shape Area Comparison ---"")
+    print(f""Rectangle Dimensions: Length = {rectangle_length}, Width = {rectangle_width}"")
+    print(f""Calculated Rectangle Area: {rectangle_area}"")
+    print(""-"" * 30)
+    print(f""Triangle Dimensions: Base = {triangle_base}, Height = {triangle_height}"")
+    print(f""Calculated Triangle Area: {triangle_area}"")
+    if rectangle_area > triangle_area:
+        difference = rectangle_area - triangle_area
+        print(f""\nComparison: The rectangle area is larger by {difference:.2f}."")
+    elif triangle_area > rectangle_area:
+        difference = triangle_area - rectangle_area
+        print(f""\nComparison: The triangle area is larger by {difference:.2f}."")
+    else:
+        print(""\nComparison: The areas are equal."")",True,1,15016,242_3_1.py
+242,3,Compare two shape areas,"Write a program that prompts the user to input dimensions for two different shapes (e.g., a rectangle and a triangle) and then prints a detailed comparison of their calculated areas.","import math
+def calculate_rectangle_area(length, width):
+    return length * width
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+if __name__ == '__main__':
+    rectangle_length = 10
+    rectangle_width = 5
+    triangle_base = 8
+    triangle_height = 6
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    triangle_area = calculate_triangle_area(triangle_base, triangle_height)
+    print(""--- Shape Area Comparison ---"")
+    print(""Rectangle Dimensions: Length ="", rectangle_length, "", Width ="", rectangle_width)
+    print(""Calculated Rectangle Area:"", rectangle_area)
+    print(""\nTriangle Dimensions: Base ="", triangle_base, "", Height ="", triangle_height)
+    print(""Calculated Triangle Area:"", triangle_area)
+    if rectangle_area > triangle_area:
+        difference = rectangle_area - triangle_area
+        print(f""\nThe rectangle has a larger area by: {difference}"")
+    elif triangle_area > rectangle_area:
+        difference = triangle_area - rectangle_area
+        print(f""\nThe triangle has a larger area by: {difference}"")
+    else:
+        print(""\nBoth shapes have equal areas."")",True,2,15017,242_3_2.py
+242,3,Compare two shape areas,"Write a program that prompts the user to input dimensions for two different shapes (e.g., a rectangle and a triangle) and then prints a detailed comparison of their calculated areas.","import math
+def calculate_rectangle_area(length, width):
+    return length * width
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+if __name__ == '__main__':
+    rectangle_length = 10
+    rectangle_width = 5
+    triangle_base = 8
+    triangle_height = 6
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    triangle_area = calculate_triangle_area(triangle_base, triangle_height)
+    print(""--- Shape Area Comparison ---"")
+    print(f""Rectangle Dimensions: Length = {rectangle_length}, Width = {rectangle_width}"")
+    print(f""Calculated Rectangle Area: {rectangle_area}"")
+    print(""-"" * 30)
+    print(f""Triangle Dimensions: Base = {triangle_base}, Height = {triangle_height}"")
+    print(f""Calculated Triangle Area: {triangle_area}"")
+    if rectangle_area > triangle_area:
+        difference = rectangle_area - triangle_area
+        print(f""\nComparison: The rectangle area is larger by {difference:.2f}."")
+    elif triangle_area > rectangle_area:
+        difference = triangle_area - rectangle_area
+        print(f""\nComparison: The triangle area is larger by {difference:.2f}."")
+    else:
+        print(""\nComparison: The areas are equal."")",True,3,15018,242_3_3.py
+242,3,Compare two shape areas,"Write a program that prompts the user to input dimensions for two different shapes (e.g., a rectangle and a triangle) and then prints a detailed comparison of their calculated areas.","import math
+def calculate_rectangle_area(length, width):
+    return length * width
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+if __name__ == '__main__':
+    rectangle_length = 10
+    rectangle_width = 5
+    triangle_base = 8
+    triangle_height = 6
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    triangle_area = calculate_triangle_area(triangle_base, triangle_height)
+    print(""--- Shape Area Comparison ---"")
+    print(""Rectangle Dimensions: Length ="", rectangle_length, "", Width ="", rectangle_width)
+    print(""Calculated Rectangle Area:"", rectangle_area)
+    print(""\nTriangle Dimensions: Base ="", triangle_base, "", Height ="", triangle_height)
+    print(""Calculated Triangle Area:"", triangle_area)
+    if rectangle_area > triangle_area:
+        difference = rectangle_area - triangle_area
+        print(""\nThe Rectangle has a larger area by:"", difference)
+    elif triangle_area > rectangle_area:
+        difference = triangle_area - rectangle_area
+        print(""\nThe Triangle has a larger area by:"", difference)
+    else:
+        print(""\nThe areas of the rectangle and the triangle are equal."")",True,4,15019,242_3_4.py
+242,3,Compare two shape areas,"Write a program that prompts the user to input dimensions for two different shapes (e.g., a rectangle and a triangle) and then prints a detailed comparison of their calculated areas.","import math
+def calculate_rectangle_area(length, width):
+    return length * width
+def calculate_triangle_area(base, height):
+    return 0.5 * base * height
+if __name__ == '__main__':
+    rectangle_length = 10
+    rectangle_width = 5
+    triangle_base = 8
+    triangle_height = 6
+    rectangle_area = calculate_rectangle_area(rectangle_length, rectangle_width)
+    triangle_area = calculate_triangle_area(triangle_base, triangle_height)
+    print(""Rectangle Dimensions:"")
+    print(f""Length: {rectangle_length}"")
+    print(f""Width: {rectangle_width}"")
+    print(f""Calculated Area: {rectangle_area}"")
+    print(""\nTriangle Dimensions:"")
+    print(f""Base: {triangle_base}"")
+    print(f""Height: {triangle_height}"")
+    print(f""Calculated Area: {triangle_area}"")
+    if rectangle_area > triangle_area:
+        difference = rectangle_area - triangle_area
+        print(""\nComparison:"")
+        print(f""The rectangle area ({rectangle_area}) is greater than the triangle area ({triangle_area}) by {difference}."")
+    elif triangle_area > rectangle_area:
+        difference = triangle_area - rectangle_area
+        print(""\nComparison:"")
+        print(f""The triangle area ({triangle_area}) is greater than the rectangle area ({rectangle_area}) by {difference}."")
+    else:
+        print(""\nComparison:"")
+        print(""The areas of the rectangle and the triangle are equal."")",True,5,15020,242_3_5.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def calculate_and_compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Area1 is greater than Area2"" if area1 > area2 else (""Area1 is less than Area2"" if area1 < area2 else ""Areas are equal"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 8)
+    area_a, area_b, comparison_result = calculate_and_compare_areas(shape_a, shape_b)
+    print(f""Shape A dimensions: {shape_a}, Area A: {area_a}"")
+    print(f""Shape B dimensions: {shape_b}, Area B: {area_b}"")
+    print(comparison_result)
+    shape_c = (6, 6)
+    shape_d = (5, 10)
+    area_c, area_d, comparison_result2 = calculate_and_compare_areas(shape_c, shape_d)
+    print(f""\nShape C dimensions: {shape_c}, Area C: {area_c}"")
+    print(f""Shape D dimensions: {shape_d}, Area D: {area_d}"")
+    print(comparison_result2)
+    shape_e = (3, 5)
+    shape_f = (3, 5)
+    area_e, area_f, comparison_result3 = calculate_and_compare_areas(shape_e, shape_f)
+    print(f""\nShape E dimensions: {shape_e}, Area E: {area_e}"")
+    print(f""Shape F dimensions: {shape_f}, Area F: {area_f}"")
+    print(comparison_result3)",True,0,15021,242_4.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def calculate_and_compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Area 1 is greater"" if area1 > area2 else (""Area 1 is less"" if area1 < area2 else ""Areas are equal"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 12)
+    area_a, area_b, comparison_result = calculate_and_compare_areas(shape_a, shape_b)
+    print(f""Shape A dimensions: {shape_a}, Area A: {area_a}"")
+    print(f""Shape B dimensions: {shape_b}, Area B: {area_b}"")
+    print(f""Comparison: {comparison_result}"")
+    shape_c = (7, 7)
+    shape_d = (5, 10)
+    area_c, area_d, comparison_result2 = calculate_and_compare_areas(shape_c, shape_d)
+    print(f""\nShape C dimensions: {shape_c}, Area C: {area_c}"")
+    print(f""Shape D dimensions: {shape_d}, Area D: {area_d}"")
+    print(f""Comparison: {comparison_result2}"")
+    shape_e = (3, 5)
+    shape_f = (3, 5)
+    area_e, area_f, comparison_result3 = calculate_and_compare_areas(shape_e, shape_f)
+    print(f""\nShape E dimensions: {shape_e}, Area E: {area_e}"")
+    print(f""Shape F dimensions: {shape_f}, Area F: {area_f}"")
+    print(f""Comparison: {comparison_result3}"")",True,1,15022,242_4_1.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def calculate_and_compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Area 1 is greater"" if area1 > area2 else (""Area 1 is less"" if area1 < area2 else ""Areas are equal"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 8)
+    area_a, area_b, comparison_result = calculate_and_compare_areas(shape_a, shape_b)
+    print(f""Shape A dimensions: {shape_a}, Area: {area_a}"")
+    print(f""Shape B dimensions: {shape_b}, Area: {area_b}"")
+    print(f""Comparison: {comparison_result}"")
+    shape_c = (6, 6)
+    shape_d = (5, 5)
+    area_c, area_d, comparison_result2 = calculate_and_compare_areas(shape_c, shape_d)
+    print(f""\nShape C dimensions: {shape_c}, Area: {area_c}"")
+    print(f""Shape D dimensions: {shape_d}, Area: {area_d}"")
+    print(f""Comparison: {comparison_result2}"")
+    shape_e = (10, 10)
+    shape_f = (10, 10)
+    area_e, area_f, comparison_result3 = calculate_and_compare_areas(shape_e, shape_f)
+    print(f""\nShape E dimensions: {shape_e}, Area: {area_e}"")
+    print(f""Shape F dimensions: {shape_f}, Area: {area_f}"")
+    print(f""Comparison: {comparison_result3}"")",True,2,15023,242_4_2.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def calculate_and_compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Area 1 is greater"" if area1 > area2 else (""Area 1 is less"" if area1 < area2 else ""Areas are equal"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 8)
+    area_a, area_b, comparison_result = calculate_and_compare_areas(shape_a, shape_b)
+    print(f""Shape A dimensions: {shape_a}, Area A: {area_a}"")
+    print(f""Shape B dimensions: {shape_b}, Area B: {area_b}"")
+    print(f""Comparison: {comparison_result}"")
+    shape_c = (6, 6)
+    shape_d = (5, 10)
+    area_c, area_d, comparison_result2 = calculate_and_compare_areas(shape_c, shape_d)
+    print(f""\nShape C dimensions: {shape_c}, Area C: {area_c}"")
+    print(f""Shape D dimensions: {shape_d}, Area D: {area_d}"")
+    print(f""Comparison: {comparison_result2}"")
+    shape_e = (3, 5)
+    shape_f = (3, 5)
+    area_e, area_f, comparison_result3 = calculate_and_compare_areas(shape_e, shape_f)
+    print(f""\nShape E dimensions: {shape_e}, Area E: {area_e}"")
+    print(f""Shape F dimensions: {shape_f}, Area F: {area_f}"")
+    print(f""Comparison: {comparison_result3}"")",True,3,15024,242_4_3.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1, area2
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 8)
+    area_a, area_b = compare_areas(shape_a, shape_b)
+    print(f""Area of shape A: {area_a}"")
+    print(f""Area of shape B: {area_b}"")
+    shape_c = (6, 3)
+    shape_d = (5, 10)
+    area_c, area_d = compare_areas(shape_c, shape_d)
+    print(f""Area of shape C: {area_c}"")
+    print(f""Area of shape D: {area_d}"")",True,4,15025,242_4_4.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def calculate_and_compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Area 1 is greater"" if area1 > area2 else (""Area 1 is less"" if area1 < area2 else ""Areas are equal"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 12)
+    area_a, area_b, comparison_result = calculate_and_compare_areas(shape_a, shape_b)
+    print(f""Shape A dimensions: {shape_a}, Area A: {area_a}"")
+    print(f""Shape B dimensions: {shape_b}, Area B: {area_b}"")
+    print(f""Comparison: {comparison_result}"")
+    shape_c = (6, 8)
+    shape_d = (6, 8)
+    area_c, area_d, comparison_result_2 = calculate_and_compare_areas(shape_c, shape_d)
+    print(f""\nShape C dimensions: {shape_c}, Area C: {area_c}"")
+    print(f""Shape D dimensions: {shape_d}, Area D: {area_d}"")
+    print(f""Comparison: {comparison_result_2}"")
+    shape_e = (1, 1)
+    shape_f = (5, 5)
+    area_e, area_f, comparison_result_3 = calculate_and_compare_areas(shape_e, shape_f)
+    print(f""\nShape E dimensions: {shape_e}, Area E: {area_e}"")
+    print(f""Shape F dimensions: {shape_f}, Area F: {area_f}"")
+    print(f""Comparison: {comparison_result_3}"")",True,5,15026,242_4_5.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def calculate_and_compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Area 1 is greater"" if area1 > area2 else (""Area 1 is less"" if area1 < area2 else ""Areas are equal"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 12)
+    area_a, area_b, comparison_result = calculate_and_compare_areas(shape_a, shape_b)
+    print(f""Shape A dimensions: {shape_a}, Area A: {area_a}"")
+    print(f""Shape B dimensions: {shape_b}, Area B: {area_b}"")
+    print(f""Comparison: {comparison_result}"")
+    shape_c = (7, 7)
+    shape_d = (5, 10)
+    area_c, area_d, comparison_result2 = calculate_and_compare_areas(shape_c, shape_d)
+    print(f""Shape C dimensions: {shape_c}, Area C: {area_c}"")
+    print(f""Shape D dimensions: {shape_d}, Area D: {area_d}"")
+    print(f""Comparison: {comparison_result2}"")
+    shape_e = (3, 5)
+    shape_f = (3, 5)
+    area_e, area_f, comparison_result3 = calculate_and_compare_areas(shape_e, shape_f)
+    print(f""Shape E dimensions: {shape_e}, Area E: {area_e}"")
+    print(f""Shape F dimensions: {shape_f}, Area F: {area_f}"")
+    print(f""Comparison: {comparison_result3}"")",True,6,15027,242_4_6.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    if area1 > area2:
+        return f""Shape 1 area ({area1}) is greater than Shape 2 area ({area2})""
+    elif area1 < area2:
+        return f""Shape 1 area ({area1}) is less than Shape 2 area ({area2})""
+    else:
+        return f""Shape 1 area ({area1}) is equal to Shape 2 area ({area2})""
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 12)
+    result1 = compare_areas(shape_a, shape_b)
+    print(result1)
+    shape_c = (7, 3)
+    shape_d = (6, 5)
+    result2 = compare_areas(shape_c, shape_d)
+    print(result2)
+    shape_e = (8, 8)
+    shape_f = (8, 8)
+    result3 = compare_areas(shape_e, shape_f)
+    print(result3)",True,7,15028,242_4_7.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    return area1, area2
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 8)
+    area_a, area_b = compare_areas(shape_a, shape_b)
+    print(f""Area of shape A: {area_a}"")
+    print(f""Area of shape B: {area_b}"")
+    shape_c = (3, 7)
+    shape_d = (5, 5)
+    area_c, area_d = compare_areas(shape_c, shape_d)
+    print(f""Area of shape C: {area_c}"")
+    print(f""Area of shape D: {area_d}"")",True,8,15029,242_4_8.py
+242,4,Compare two shape areas,"Implement a function that takes two tuples, where each tuple represents the dimensions of a shape, and calculates and compares the areas, assuming the input format is consistent for both shapes.","def compare_areas(shape1, shape2):
+    area1 = shape1[0] * shape1[1]
+    area2 = shape2[0] * shape2[1]
+    comparison = ""Equal"" if area1 == area2 else (f""Shape 1 area ({area1}) is greater than Shape 2 area ({area2})"" if area1 > area2 else f""Shape 1 area ({area1}) is less than Shape 2 area ({area2})"")
+    return area1, area2, comparison
+if __name__ == '__main__':
+    shape_a = (5, 10)
+    shape_b = (4, 15)
+    shape_c = (5, 10)
+    area_a, area_b, comparison_ab = compare_areas(shape_a, shape_b)
+    print(f""Comparing {shape_a} and {shape_b}: Area A = {area_a}, Area B = {area_b}. Result: {comparison_ab}"")
+    area_a, area_c, comparison_ac = compare_areas(shape_a, shape_c)
+    print(f""Comparing {shape_a} and {shape_c}: Area A = {area_a}, Area C = {area_c}. Result: {comparison_ac}"")
+    shape_d = (6, 8)
+    shape_e = (10, 12)
+    area_d, area_e, comparison_de = compare_areas(shape_d, shape_e)
+    print(f""Comparing {shape_d} and {shape_e}: Area D = {area_d}, Area E = {area_e}. Result: {comparison_de}"")",True,9,15030,242_4_9.py
+241,10,Find the area of a rectangle,"Write a complete, well-documented Python script that prompts the user to input the length and width of a rectangle and then calculates and prints its area. Use appropriate input validation.",,False,0,15031,241_10.py
