@@ -268617,3 +268617,3105 @@ if __name__ == '__main__':
     data3 = []
     result3 = analyzer.get_average(data3)
     print(f""Average of {data3}: {result3}"")",True,3,13025,209_2_3.py
+209,3,Find the average of samples,"Write a concise, one-line Python expression to calculate the average of a pre-defined list of numbers, assuming the list is non-empty.","if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    print(sum(numbers) / len(numbers))",True,0,13026,209_3.py
+209,3,Find the average of samples,"Write a concise, one-line Python expression to calculate the average of a pre-defined list of numbers, assuming the list is non-empty.","if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    average = sum(numbers) / len(numbers)
+    print(average)",True,1,13027,209_3_1.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    count = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+            count += 1
+        else:
+            raise TypeError(""Input contains non-numeric data."")
+    if count == 0:
+        return 0
+    return total / count
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40)
+    data2 = [5.5, 10.5, 15.5]
+    data3 = (1, 2, ""three"", 4)
+    data4 = []
+    data5 = (10, ""error"", 30)
+    print(f""Average of {data1}: {calculate_average(data1)}"")
+    print(f""Average of {data2}: {calculate_average(data2)}"")
+    try:
+        print(f""Average of {data3}: {calculate_average(data3)}"")
+    except TypeError as e:
+        print(f""Error for {data3}: {e}"")
+    print(f""Average of {data4}: {calculate_average(data4)}"")
+    try:
+        print(f""Average of {data5}: {calculate_average(data5)}"")
+    except TypeError as e:
+        print(f""Error for {data5}: {e}"")",True,0,13028,209_4.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    count = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+            count += 1
+        else:
+            raise TypeError(""Input contains non-numeric data."")
+    if count == 0:
+        return 0
+    return total / count
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40)
+    data2 = [5.5, 10.5, 15.5]
+    data3 = (1, 2, ""three"", 4)
+    data4 = []
+    data5 = (10, ""error"", 30)
+    print(f""Average of {data1}: {calculate_average(data1)}"")
+    print(f""Average of {data2}: {calculate_average(data2)}"")
+    try:
+        print(f""Average of {data3}: {calculate_average(data3)}"")
+    except TypeError as e:
+        print(f""Error calculating average for {data3}: {e}"")
+    print(f""Average of {data4}: {calculate_average(data4)}"")
+    try:
+        print(f""Average of {data5}: {calculate_average(data5)}"")
+    except TypeError as e:
+        print(f""Error calculating average for {data5}: {e}"")",True,1,13029,209_4_1.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+        else:
+            raise TypeError(""Input contains non-numeric data"")
+    if not data:
+        return 0
+    return total / len(data)
+if __name__ == '__main__':
+    list1 = [10, 20, 30, 40]
+    list2 = [5.5, 10.5, 15.5]
+    list3 = [1, 2, ""three"", 4]
+    list4 = []
+    print(f""Average of {list1}: {calculate_average(list1)}"")
+    print(f""Average of {list2}: {calculate_average(list2)}"")
+    try:
+        calculate_average(list3)
+    except TypeError as e:
+        print(f""Error for {list3}: {e}"")
+    print(f""Average of {list4}: {calculate_average(list4)}"")",True,2,13030,209_4_2.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    count = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+            count += 1
+        else:
+            raise TypeError(""Input contains non-numeric data."")
+    if count == 0:
+        return 0
+    return total / count
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40)
+    data2 = [5.5, 10.5, 15.5]
+    data3 = (1, 2, ""three"", 4)
+    data4 = []
+    data5 = (10, ""error"", 30)
+    print(f""Average of {data1}: {calculate_average(data1)}"")
+    print(f""Average of {data2}: {calculate_average(data2)}"")
+    try:
+        calculate_average(data3)
+    except TypeError as e:
+        print(f""Error for {data3}: {e}"")
+    print(f""Average of {data4}: {calculate_average(data4)}"")
+    try:
+        calculate_average(data5)
+    except TypeError as e:
+        print(f""Error for {data5}: {e}"")",True,3,13031,209_4_3.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+        else:
+            raise TypeError(""Input contains non-numeric data"")
+    if not data:
+        return 0
+    return total / len(data)
+if __name__ == '__main__':
+    sample_list_valid = [10, 20, 30, 40, 50]
+    sample_list_empty = []
+    sample_list_mixed = [10, 20, ""a"", 40]
+    sample_tuple_valid = (5.5, 6.5, 7.5)
+    print(f""Average of {sample_list_valid}: {calculate_average(sample_list_valid)}"")
+    print(f""Average of {sample_list_empty}: {calculate_average(sample_list_empty)}"")
+    try:
+        calculate_average(sample_list_mixed)
+    except TypeError as e:
+        print(f""Error for {sample_list_mixed}: {e}"")
+    print(f""Average of {sample_tuple_valid}: {calculate_average(sample_tuple_valid)}"")",True,4,13032,209_4_4.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    count = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+            count += 1
+        else:
+            raise TypeError(""Input contains non-numeric data"")
+    if count == 0:
+        return 0
+    return total / count
+if __name__ == '__main__':
+    data1 = (10, 20, 30, 40)
+    data2 = [5.5, 10.5, 15.5]
+    data3 = (1, 2, ""three"", 4)
+    data4 = []
+    try:
+        avg1 = calculate_average(data1)
+        print(f""Average of {data1}: {avg1}"")
+        avg2 = calculate_average(data2)
+        print(f""Average of {data2}: {avg2}"")
+        print(""Attempting to calculate average for data3..."")
+        avg3 = calculate_average(data3)
+        print(f""Average of {data3}: {avg3}"")
+    except TypeError as e:
+        print(f""Caught expected error for data3: {e}"")
+    try:
+        avg4 = calculate_average(data4)
+        print(f""Average of {data4}: {avg4}"")
+    except TypeError as e:
+        print(f""Caught expected error for data4: {e}"")",True,5,13033,209_4_5.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+        else:
+            raise TypeError(""Input contains non-numeric data"")
+    if not data:
+        return 0
+    return total / len(data)
+if __name__ == '__main__':
+    sample1 = [10, 20, 30, 40]
+    sample2 = (5.5, 10.5, 15.5)
+    sample3 = [1, 2, ""a"", 4]
+    sample4 = []
+    print(f""Average of {sample1}: {calculate_average(sample1)}"")
+    print(f""Average of {sample2}: {calculate_average(sample2)}"")
+    try:
+        calculate_average(sample3)
+    except TypeError as e:
+        print(f""Error for {sample3}: {e}"")
+    print(f""Average of {sample4}: {calculate_average(sample4)}"")",True,6,13034,209_4_6.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    try:
+        if not data:
+            return 0
+        return sum(data) / len(data)
+    except TypeError:
+        raise TypeError(""Input iterable contains non-numeric data."")
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    sample2 = (10.5, 20.5, 30.5)
+    sample3 = [1, 2, 'a', 4]
+    sample4 = []
+    print(f""Average of {sample1}: {calculate_average(sample1)}"")
+    print(f""Average of {sample2}: {calculate_average(sample2)}"")
+    try:
+        calculate_average(sample3)
+    except TypeError as e:
+        print(f""Error for {sample3}: {e}"")
+    print(f""Average of {sample4}: {calculate_average(sample4)}"")",True,7,13035,209_4_7.py
+209,4,Find the average of samples,"Create a robust function that takes an iterable (like a tuple or list) of numbers and calculates the average, explicitly handling potential `TypeError` exceptions if non-numeric data is present in the input.","def calculate_average(data):
+    total = 0
+    count = 0
+    for item in data:
+        if isinstance(item, (int, float)):
+            total += item
+            count += 1
+        else:
+            raise TypeError(""Input contains non-numeric data"")
+    if count == 0:
+        return None
+    return total / count
+if __name__ == '__main__':
+    data1 = [10, 20, 30, 40]
+    data2 = (5.5, 10.5, 15.5)
+    data3 = [1, 2, ""three"", 4]
+    data4 = []
+    data5 = [""a"", ""b"", ""c""]
+    print(f""Average of {data1}: {calculate_average(data1)}"")
+    print(f""Average of {data2}: {calculate_average(data2)}"")
+    try:
+        calculate_average(data3)
+    except TypeError as e:
+        print(f""Error for {data3}: {e}"")
+    print(f""Average of {data4}: {calculate_average(data4)}"")
+    try:
+        calculate_average(data5)
+    except TypeError as e:
+        print(f""Error for {data5}: {e}"")",True,8,13036,209_4_8.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70]
+    running_avg_gen = running_average_generator(sample_data)
+    results = list(running_avg_gen)
+    print(results)",True,0,13037,209_5.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70]
+    average_gen = running_average_generator(sample_data)
+    print(""Running Averages:"")
+    for avg in average_gen:
+        print(avg)",True,1,13038,209_5_1.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70]
+    running_avg = running_average_generator(sample_data)
+    print(""Running Averages:"")
+    for avg in running_avg:
+        print(avg)",True,2,13039,209_5_2.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70]
+    running_avg = running_average_generator(sample_data)
+    for avg in running_avg:
+        print(avg)",True,3,13040,209_5_3.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    average_gen = running_average_generator(sample_data)
+    print(""Running Averages:"")
+    for avg in average_gen:
+        print(avg)",True,4,13041,209_5_4.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(samples):
+    if not samples:
+        return
+    current_sum = 0
+    count = 0
+    for sample in samples:
+        current_sum += sample
+        count += 1
+        yield current_sum / count
+if __name__ == '__main__':
+    data_stream = [10, 20, 30, 40, 50, 60]
+    average_gen = running_average_generator(data_stream)
+    print(""Running Averages:"")
+    for avg in average_gen:
+        print(avg)",True,5,13042,209_5_5.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70]
+    running_avg_gen = running_average_generator(sample_data)
+    print(""Running Averages:"")
+    for avg in running_avg_gen:
+        print(avg)",True,6,13043,209_5_6.py
+209,5,Find the average of samples,"Design and implement a generator function that yields the running average of a stream of incoming samples, requiring minimal memory usage for large datasets.","def running_average_generator(data_stream):
+    total = 0
+    count = 0
+    for sample in data_stream:
+        total += sample
+        count += 1
+        yield total / count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70]
+    avg_generator = running_average_generator(sample_data)
+    print(""Running Averages:"")
+    for avg in avg_generator:
+        print(avg)",True,7,13044,209_5_7.py
+209,6,Find the average of samples,"Write a script that prompts the user to enter multiple samples separated by spaces, reads them, and computes the average. Include input validation to ensure all inputs are valid numbers.","def calculate_average(samples):
+    if not samples:
+        return 0
+    return sum(samples) / len(samples)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    try:
+        samples = [float(x) for x in sample_input.split()]
+        average = calculate_average(samples)
+        print(f""The average is: {average}"")
+    except ValueError:
+        print(""Error: One or more inputs were not valid numbers."")",True,0,13045,209_6.py
+209,6,Find the average of samples,"Write a script that prompts the user to enter multiple samples separated by spaces, reads them, and computes the average. Include input validation to ensure all inputs are valid numbers.","def compute_average(samples):
+    if not samples:
+        return 0
+    return sum(samples) / len(samples)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        sample_strings = sample_input.split()
+        numbers = []
+        for s in sample_strings:
+            numbers.append(float(s))
+        average = compute_average(numbers)
+        print(f""The average is: {average}"")
+    except ValueError:
+        print(""Error: One or more inputs were not valid numbers."")",True,1,13046,209_6_1.py
+209,6,Find the average of samples,"Write a script that prompts the user to enter multiple samples separated by spaces, reads them, and computes the average. Include input validation to ensure all inputs are valid numbers.","def calculate_average(samples):
+    if not samples:
+        return 0
+    return sum(samples) / len(samples)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        samples = [float(x) for x in sample_input.split()]
+        average = calculate_average(samples)
+        print(f""The average is: {average}"")
+    except ValueError:
+        print(""Error: One or more inputs were not valid numbers."")",True,2,13047,209_6_2.py
+209,6,Find the average of samples,"Write a script that prompts the user to enter multiple samples separated by spaces, reads them, and computes the average. Include input validation to ensure all inputs are valid numbers.","def compute_average(samples):
+    if not samples:
+        return 0
+    return sum(samples) / len(samples)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    try:
+        samples = [float(x) for x in sample_input.split()]
+        average = compute_average(samples)
+        print(f""The average is: {average}"")
+    except ValueError:
+        print(""Error: One or more inputs were not valid numbers."")",True,3,13048,209_6_3.py
+209,6,Find the average of samples,"Write a script that prompts the user to enter multiple samples separated by spaces, reads them, and computes the average. Include input validation to ensure all inputs are valid numbers.","def calculate_average(samples):
+    if not samples:
+        return 0
+    return sum(samples) / len(samples)
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    try:
+        samples = [float(x) for x in sample_input.split()]
+        average = calculate_average(samples)
+        print(average)
+    except ValueError:
+        print(""Error: One or more inputs were not valid numbers."")",True,4,13049,209_6_4.py
+209,6,Find the average of samples,"Write a script that prompts the user to enter multiple samples separated by spaces, reads them, and computes the average. Include input validation to ensure all inputs are valid numbers.","def calculate_average(samples):
+    total = 0
+    count = 0
+    for sample in samples:
+        if isinstance(sample, (int, float)):
+            total += sample
+            count += 1
+    if count > 0:
+        return total / count
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 50""
+    try:
+        samples = [float(x) for x in sample_input.split()]
+        average = calculate_average(samples)
+        print(average)
+    except ValueError:
+        print(""Error: One or more inputs were not valid numbers."")",True,5,13050,209_6_5.py
+209,7,Find the average of samples,"Implement a method within a NumPy-like structure (using standard Python lists for compatibility) to compute the mean of a potentially very large list of samples, focusing on performance for large inputs.","def compute_mean(data):
+    if not data:
+        return None
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_data = list(range(1000000))
+    mean_value = compute_mean(large_data)
+    print(mean_value)",True,0,13051,209_7.py
+209,7,Find the average of samples,"Implement a method within a NumPy-like structure (using standard Python lists for compatibility) to compute the mean of a potentially very large list of samples, focusing on performance for large inputs.","def compute_mean(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_list = list(range(10**6)) + [1, 2, 3]
+    mean_value = compute_mean(large_list)
+    print(mean_value)",True,1,13052,209_7_1.py
+209,7,Find the average of samples,"Implement a method within a NumPy-like structure (using standard Python lists for compatibility) to compute the mean of a potentially very large list of samples, focusing on performance for large inputs.","def compute_mean(data):
+    if not data:
+        return None
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    mean_value = compute_mean(large_list)
+    print(mean_value)",True,2,13053,209_7_2.py
+209,7,Find the average of samples,"Implement a method within a NumPy-like structure (using standard Python lists for compatibility) to compute the mean of a potentially very large list of samples, focusing on performance for large inputs.","def compute_mean(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_data = list(range(10**6))
+    mean_value = compute_mean(large_data)
+    print(mean_value)",True,3,13054,209_7_3.py
+209,7,Find the average of samples,"Implement a method within a NumPy-like structure (using standard Python lists for compatibility) to compute the mean of a potentially very large list of samples, focusing on performance for large inputs.","def compute_mean(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_data = list(range(1000000))
+    mean_value = compute_mean(large_data)
+    print(mean_value)",True,4,13055,209_7_4.py
+209,7,Find the average of samples,"Implement a method within a NumPy-like structure (using standard Python lists for compatibility) to compute the mean of a potentially very large list of samples, focusing on performance for large inputs.","def compute_mean(data):
+    if not data:
+        return 0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    mean_value = compute_mean(large_list)
+    print(mean_value)",True,5,13056,209_7_5.py
+209,8,Find the average of samples,"Refactor the previous average calculation to use list comprehensions or built-in functions for maximum Pythonic efficiency, assuming the input is a list of floats.","if __name__ == '__main__':
+    data = [10.5, 20.0, 30.5, 40.0]
+    average = sum(data) / len(data)
+    print(average)",True,0,13057,209_8.py
+209,8,Find the average of samples,"Refactor the previous average calculation to use list comprehensions or built-in functions for maximum Pythonic efficiency, assuming the input is a list of floats.","if __name__ == '__main__':
+    data = [10.5, 20.5, 30.5, 40.5]
+    average = sum(data) / len(data)
+    print(average)",True,1,13058,209_8_1.py
+208,4,Calculate the mean of entries,"Create a generator function that yields the sum and the count of elements from an input iterable, and then use this generator to calculate the mean of the numbers.","def element_sum_count(iterable):
+    total = 0
+    count = 0
+    for item in iterable:
+        total += item
+        count += 1
+    yield total, count
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    generator = element_sum_count(sample_data)
+    total_sum = 0
+    element_count = 0
+    for current_sum, current_count in generator:
+        total_sum = current_sum
+        element_count = current_count
+    if element_count > 0:
+        mean = total_sum / element_count
+        print(f""Sum: {total_sum}"")
+        print(f""Count: {element_count}"")
+        print(f""Mean: {mean}"")
+    else:
+        print(""The iterable is empty"")",True,0,13059,208_4.py
+209,11,Find the average of samples,Implement an optimized function named `calculate_average` that accepts a list of numbers and returns their average. The function must use efficient built-in functions and handle the edge case of an empty list by raising a `ValueError`.,"def calculate_average(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20.5, 30.5]
+    empty_list = []
+    try:
+        avg1 = calculate_average(list1)
+        print(f""Average of {list1}: {avg1}"")
+        avg2 = calculate_average(list2)
+        print(f""Average of {list2}: {avg2}"")
+        calculate_average(empty_list)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,13060,209_11.py
+209,11,Find the average of samples,Implement an optimized function named `calculate_average` that accepts a list of numbers and returns their average. The function must use efficient built-in functions and handle the edge case of an empty list by raising a `ValueError`.,"def calculate_average(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10.5, 20.5, 30.5]
+    empty_list = []
+    try:
+        avg1 = calculate_average(list1)
+        print(f""Average of {list1}: {avg1}"")
+        avg2 = calculate_average(list2)
+        print(f""Average of {list2}: {avg2}"")
+        calculate_average(empty_list)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,13061,209_11_1.py
+209,12,Find the average of samples,"Develop a class named `SampleAnalyzer` with a method `get_average(self, data_list)` that calculates and returns the average of the provided list of samples. Ensure the implementation is clean, object-oriented, and adheres to best practices.","class SampleAnalyzer:
+    def get_average(self, data_list):
+        if not data_list:
+            return 0
+        return sum(data_list) / len(data_list)
+if __name__ == '__main__':
+    analyzer = SampleAnalyzer()
+    sample1 = [10, 20, 30, 40, 50]
+    sample2 = [5, 15, 25, 35]
+    sample3 = []
+    average1 = analyzer.get_average(sample1)
+    print(f""Average of sample1: {average1}"")
+    average2 = analyzer.get_average(sample2)
+    print(f""Average of sample2: {average2}"")
+    average3 = analyzer.get_average(sample3)
+    print(f""Average of sample3: {average3}"")",True,0,13062,209_12.py
+209,12,Find the average of samples,"Develop a class named `SampleAnalyzer` with a method `get_average(self, data_list)` that calculates and returns the average of the provided list of samples. Ensure the implementation is clean, object-oriented, and adheres to best practices.","class SampleAnalyzer:
+    def get_average(self, data_list):
+        if not data_list:
+            return 0
+        return sum(data_list) / len(data_list)
+if __name__ == '__main__':
+    analyzer = SampleAnalyzer()
+    sample1 = [10, 20, 30, 40, 50]
+    sample2 = [5, 15, 25, 35]
+    sample3 = []
+    print(f""Average of sample1: {analyzer.get_average(sample1)}"")
+    print(f""Average of sample2: {analyzer.get_average(sample2)}"")
+    print(f""Average of sample3: {analyzer.get_average(sample3)}"")",True,1,13063,209_12_1.py
+209,12,Find the average of samples,"Develop a class named `SampleAnalyzer` with a method `get_average(self, data_list)` that calculates and returns the average of the provided list of samples. Ensure the implementation is clean, object-oriented, and adheres to best practices.","class SampleAnalyzer:
+    def get_average(self, data_list):
+        if not data_list:
+            return 0
+        return sum(data_list) / len(data_list)
+if __name__ == '__main__':
+    analyzer = SampleAnalyzer()
+    sample1 = [10, 20, 30, 40, 50]
+    sample2 = [5, 15, 25]
+    sample3 = []
+    print(f""Average of sample1: {analyzer.get_average(sample1)}"")
+    print(f""Average of sample2: {analyzer.get_average(sample2)}"")
+    print(f""Average of sample3: {analyzer.get_average(sample3)}"")",True,2,13064,209_12_2.py
+209,12,Find the average of samples,"Develop a class named `SampleAnalyzer` with a method `get_average(self, data_list)` that calculates and returns the average of the provided list of samples. Ensure the implementation is clean, object-oriented, and adheres to best practices.","class SampleAnalyzer:
+    def get_average(self, data_list):
+        if not data_list:
+            return 0
+        return sum(data_list) / len(data_list)
+if __name__ == '__main__':
+    analyzer = SampleAnalyzer()
+    sample1 = [10, 20, 30, 40, 50]
+    sample2 = [5.5, 6.5, 7.5]
+    sample3 = []
+    average1 = analyzer.get_average(sample1)
+    print(f""Average of sample1: {average1}"")
+    average2 = analyzer.get_average(sample2)
+    print(f""Average of sample2: {average2}"")
+    average3 = analyzer.get_average(sample3)
+    print(f""Average of sample3: {average3}"")",True,3,13065,209_12_3.py
+209,13,Find the average of samples,"Write a concise and highly efficient one-line expression or short function to compute the average of a given list of floating-point numbers, assuming the list is non-empty.","if __name__ == '__main__':
+    data = [1.5, 2.5, 3.0, 4.5]
+    average = sum(data) / len(data)
+    print(average)",True,0,13066,209_13.py
+209,14,Find the average of samples,"Create a script that reads a file containing numerical samples, parses the numbers, and computes the average. The script should use file I/O operations and include comprehensive error handling for file reading and non-numeric data.","import os
+def calculate_average(filename):
+    numbers = []
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    stripped_line = line.strip()
+                    if stripped_line:
+                        number = float(stripped_line)
+                        numbers.append(number)
+                except ValueError:
+                    print(f""Error: Skipping non-numeric data found on line: {line.strip()}"")
+                except Exception as e:
+                    print(f""An unexpected error occurred while processing a line: {line.strip()}. Error: {e}"")
+        if not numbers:
+            return None
+        else:
+            return sum(numbers) / len(numbers)
+    except FileNotFoundError:
+        print(f""Error: File not found at {filename}"")
+        return None
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"")
+        return None
+if __name__ == '__main__':
+    test_filename = ""sample_data.txt""
+    try:
+        with open(test_filename, 'w') as f:
+            f.write(""10.5\n"")
+            f.write(""20\n"")
+            f.write(""3.14\n"")
+            f.write(""invalid_data\n"")
+            f.write(""40\n"")
+            f.write(""\n"")
+            f.write(""-5.5\n"")
+        average = calculate_average(test_filename)
+        if average is not None:
+            print(f""The calculated average is: {average}"")
+        else:
+            print(""Could not calculate the average."")
+    except Exception as e:
+        print(f""An error occurred during setup or execution: {e}"")
+    finally:
+        if os.path.exists(test_filename):
+            os.remove(test_filename)",True,0,13067,209_14.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","def find_min_max(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = file.read().split()
+            if not data:
+                return None, None
+            numbers = [float(x) for x in data]
+            if not numbers:
+                return None, None
+            minimum = min(numbers)
+            maximum = max(numbers)
+            return minimum, maximum
+    except FileNotFoundError:
+        return None, None
+    except ValueError:
+        return None, None
+if __name__ == '__main__':
+    sample_data = ""10 5 22 8 15 3""
+    filename = ""sample_numbers.txt""
+    with open(filename, 'w') as f:
+        f.write(sample_data)
+    minimum, maximum = find_min_max(filename)
+    if minimum is not None and maximum is not None:
+        print(f""Minimum value: {minimum}"")
+        print(f""Maximum value: {maximum}"")
+    else:
+        print(""Error processing file or no data found."")",True,0,13068,210_0.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","import os
+def find_min_max(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f""File not found: {filename}"")
+    with open(filename, 'r') as file:
+        data = file.read().split()
+        if not data:
+            return None, None
+        numbers = [int(x) for x in data]
+        minimum = min(numbers)
+        maximum = max(numbers)
+        return minimum, maximum
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    sample_data = ""10 5 22 8 30 1""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_data)
+    min_val, max_val = find_min_max(sample_filename)
+    print(f""Minimum value: {min_val}"")
+    print(f""Maximum value: {max_val}"")",True,1,13069,210_0_1.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","def find_min_max(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = file.read().split()
+            if not data:
+                return None, None
+            numbers = [float(x) for x in data]
+            if not numbers:
+                return None, None
+            minimum = min(numbers)
+            maximum = max(numbers)
+            return minimum, maximum
+    except FileNotFoundError:
+        return None, None
+    except ValueError:
+        return None, None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""10 5 22 8 30 1"")
+    minimum_val, maximum_val = find_min_max(sample_filename)
+    if minimum_val is not None and maximum_val is not None:
+        print(f""Minimum value: {minimum_val}"")
+        print(f""Maximum value: {maximum_val}"")
+    else:
+        print(""Error reading or processing the file."")",True,2,13070,210_0_2.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","def find_min_max(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = file.read().split()
+            if not data:
+                return None, None
+            numbers = [int(x) for x in data]
+            if not numbers:
+                return None, None
+            minimum = min(numbers)
+            maximum = max(numbers)
+            return minimum, maximum
+    except FileNotFoundError:
+        return None, None
+    except ValueError:
+        return None, None
+if __name__ == '__main__':
+    sample_data = ""10 5 22 8 30 1""
+    filename = ""sample_numbers.txt""
+    with open(filename, 'w') as f:
+        f.write(sample_data)
+    minimum_val, maximum_val = find_min_max(filename)
+    if minimum_val is not None and maximum_val is not None:
+        print(f""Minimum value: {minimum_val}"")
+        print(f""Maximum value: {maximum_val}"")
+    else:
+        print(""Error reading or processing the file."")",True,3,13071,210_0_3.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","def find_min_max(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = file.read().split()
+            if not data:
+                return None, None
+            numbers = [float(x) for x in data]
+            if not numbers:
+                return None, None
+            minimum = min(numbers)
+            maximum = max(numbers)
+            return minimum, maximum
+    except FileNotFoundError:
+        return None, None
+    except ValueError:
+        return None, None
+if __name__ == '__main__':
+    sample_data = ""10 5 22 8 15 3""
+    filename = ""sample_numbers.txt""
+    with open(filename, 'w') as f:
+        f.write(sample_data)
+    minimum_val, maximum_val = find_min_max(filename)
+    if minimum_val is not None and maximum_val is not None:
+        print(f""Minimum value: {minimum_val}"")
+        print(f""Maximum value: {maximum_val}"")
+    else:
+        print(""Error reading or processing the file."")",True,4,13072,210_0_4.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","import os
+def find_min_max(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f""File not found: {filename}"")
+    numbers = []
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    numbers.append(float(line.strip()))
+                except ValueError:
+                    continue
+    except IOError as e:
+        raise IOError(f""Error reading file: {e}"")
+    if not numbers:
+        return None, None
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    sample_data = [10, 5, 22, 8, 30, 1]
+    try:
+        with open(sample_filename, 'w') as f:
+            for num in sample_data:
+                f.write(str(num) + '\n')
+        minimum_val, maximum_val = find_min_max(sample_filename)
+        if minimum_val is not None and maximum_val is not None:
+            print(f""Minimum value: {minimum_val}"")
+            print(f""Maximum value: {maximum_val}"")
+        else:
+            print(""No valid numbers found in the file."")
+    except FileNotFoundError as e:
+        print(e)
+    except IOError as e:
+        print(f""An I/O error occurred: {e}"")",True,5,13073,210_0_5.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","def find_min_max(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = file.read().split()
+            if not data:
+                return None, None
+            numbers = [float(x) for x in data]
+            if not numbers:
+                return None, None
+            minimum = min(numbers)
+            maximum = max(numbers)
+            return minimum, maximum
+    except FileNotFoundError:
+        return None, None
+    except ValueError:
+        return None, None
+if __name__ == '__main__':
+    sample_data = ""10 5 22 8 30 1""
+    filename = ""sample_numbers.txt""
+    with open(filename, 'w') as f:
+        f.write(sample_data)
+    minimum_val, maximum_val = find_min_max(filename)
+    if minimum_val is not None and maximum_val is not None:
+        print(f""Minimum value: {minimum_val}"")
+        print(f""Maximum value: {maximum_val}"")
+    else:
+        print(""Error reading or processing the file."")",True,6,13074,210_0_6.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","import os
+def find_min_max(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f""File not found: {filename}"")
+    with open(filename, 'r') as file:
+        data = []
+        for line in file:
+            try:
+                data.append(float(line.strip()))
+            except ValueError:
+                continue
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""10\n"")
+        f.write(""5\n"")
+        f.write(""22\n"")
+        f.write(""-3\n"")
+        f.write(""45\n"")
+    min_val, max_val = find_min_max(sample_filename)
+    if min_val is not None and max_val is not None:
+        print(f""Minimum value: {min_val}"")
+        print(f""Maximum value: {max_val}"")
+    else:
+        print(""No valid numbers found in the file."")",True,7,13075,210_0_7.py
+210,0,Determine the range of data,"Write a complete, robust Python script that reads a list of numbers from a file and determines the minimum and maximum values in that dataset. Use efficient file handling.","import os
+def find_min_max(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f""File not found: {filename}"")
+    numbers = []
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    numbers.append(float(line.strip()))
+                except ValueError:
+                    continue
+    except IOError as e:
+        raise IOError(f""Error reading file: {e}"")
+    if not numbers:
+        return None, None
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    sample_data = [10, 5, 22, 8, 30, 1]
+    with open(sample_filename, 'w') as f:
+        for num in sample_data:
+            f.write(str(num) + '\n')
+    min_val, max_val = find_min_max(sample_filename)
+    if min_val is not None and max_val is not None:
+        print(f""Minimum value: {min_val}"")
+        print(f""Maximum value: {max_val}"")
+    else:
+        print(""No valid numbers found in the file."")",True,8,13076,210_0_8.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.8, 2.1]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 1.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [3.14, 3.14, 3.14]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,0,13077,210_1.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.8, 2.1]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 15.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7, 7.7, 7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,1,13078,210_1_1.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.8, 2.1]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 1.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7, 7.7, 7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,2,13079,210_1_2.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.8, 2.1]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 15.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,3,13080,210_1_3.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.1, 2.7]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 15.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,4,13081,210_1_4.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 4.1, 2.8]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 1.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7, 7.7, 7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,5,13082,210_1_5.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.8, 2.1]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 15.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,6,13083,210_1_6.py
+210,1,Determine the range of data,"Implement an optimized function named `find_data_range` that accepts a list of floating-point numbers and returns the range (maximum minus minimum) in a single, efficient operation.","def find_data_range(data):
+    if not data:
+        return 0.0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data1 = [1.5, 3.2, 0.9, 5.1, 2.8]
+    result1 = find_data_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [10.0, 5.0, 20.0, 15.0]
+    result2 = find_data_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7.7]
+    result3 = find_data_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = find_data_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,7,13084,210_1_7.py
+210,2,Determine the range of data,"Develop a class named `DataAnalyzer` with a method `calculate_range` that takes a list of data and returns the range, ensuring the implementation is clean and object-oriented.","class DataAnalyzer:
+    def calculate_range(self, data):
+        if not data:
+            return None
+        minimum = min(data)
+        maximum = max(data)
+        return maximum - minimum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 5, 20, 15]
+    result1 = analyzer.calculate_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [3, 1, 4, 1, 5, 9, 2, 6]
+    result2 = analyzer.calculate_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = []
+    result3 = analyzer.calculate_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = [5]
+    result4 = analyzer.calculate_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,0,13085,210_2.py
+210,2,Determine the range of data,"Develop a class named `DataAnalyzer` with a method `calculate_range` that takes a list of data and returns the range, ensuring the implementation is clean and object-oriented.","class DataAnalyzer:
+    def calculate_range(self, data):
+        if not data:
+            return None
+        return max(data) - min(data)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 20, 30, 40, 50]
+    sample_data2 = [5, 2, 8, 1]
+    sample_data3 = []
+    range1 = analyzer.calculate_range(sample_data1)
+    print(f""Range of {sample_data1}: {range1}"")
+    range2 = analyzer.calculate_range(sample_data2)
+    print(f""Range of {sample_data2}: {range2}"")
+    range3 = analyzer.calculate_range(sample_data3)
+    print(f""Range of {sample_data3}: {range3}"")",True,1,13086,210_2_1.py
+210,2,Determine the range of data,"Develop a class named `DataAnalyzer` with a method `calculate_range` that takes a list of data and returns the range, ensuring the implementation is clean and object-oriented.","class DataAnalyzer:
+    def calculate_range(self, data):
+        if not data:
+            return None
+        minimum = min(data)
+        maximum = max(data)
+        return maximum - minimum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 25, 32, 8, 40]
+    result1 = analyzer.calculate_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [5, 5, 5, 5]
+    result2 = analyzer.calculate_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = []
+    result3 = analyzer.calculate_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = [100, 0, -50]
+    result4 = analyzer.calculate_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,2,13087,210_2_2.py
+210,2,Determine the range of data,"Develop a class named `DataAnalyzer` with a method `calculate_range` that takes a list of data and returns the range, ensuring the implementation is clean and object-oriented.","class DataAnalyzer:
+    def calculate_range(self, data):
+        if not data:
+            return None
+        return max(data) - min(data)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data = [10, 5, 20, 15, 8]
+    range_value = analyzer.calculate_range(sample_data)
+    print(range_value)",True,3,13088,210_2_3.py
+210,2,Determine the range of data,"Develop a class named `DataAnalyzer` with a method `calculate_range` that takes a list of data and returns the range, ensuring the implementation is clean and object-oriented.","class DataAnalyzer:
+    def calculate_range(self, data):
+        if not data:
+            return None
+        return max(data) - min(data)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 20, 30, 40, 5]
+    sample_data2 = [5, 5, 5, 5]
+    sample_data3 = []
+    range1 = analyzer.calculate_range(sample_data1)
+    print(f""Range of {sample_data1}: {range1}"")
+    range2 = analyzer.calculate_range(sample_data2)
+    print(f""Range of {sample_data2}: {range2}"")
+    range3 = analyzer.calculate_range(sample_data3)
+    print(f""Range of {sample_data3}: {range3}"")",True,4,13089,210_2_4.py
+210,2,Determine the range of data,"Develop a class named `DataAnalyzer` with a method `calculate_range` that takes a list of data and returns the range, ensuring the implementation is clean and object-oriented.","class DataAnalyzer:
+    def calculate_range(self, data):
+        if not data:
+            return None
+        minimum = min(data)
+        maximum = max(data)
+        return maximum - minimum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 5, 20, 15]
+    result1 = analyzer.calculate_range(sample_data1)
+    print(f""Range of {sample_data1}: {result1}"")
+    sample_data2 = [3, 8, 1, 9, 4]
+    result2 = analyzer.calculate_range(sample_data2)
+    print(f""Range of {sample_data2}: {result2}"")
+    sample_data3 = [50]
+    result3 = analyzer.calculate_range(sample_data3)
+    print(f""Range of {sample_data3}: {result3}"")
+    sample_data4 = []
+    result4 = analyzer.calculate_range(sample_data4)
+    print(f""Range of {sample_data4}: {result4}"")",True,5,13090,210_2_5.py
+209,9,Find the average of samples,"Generate a complete, runnable example demonstrating the use of the `statistics` module to find the mean of a manually defined set of sample data points, ensuring the code is fully self-contained and professional.",,False,0,13091,209_9.py
+210,4,Determine the range of data,"Create a pure Python function that determines the range of a potentially empty list of integers. The function must handle the edge case of an empty list by returning an appropriate value (e.g., None or raising an error, specify the most appropriate handling).","def find_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return (minimum, maximum)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = []
+    list3 = [10]
+    list4 = [-5, 0, 5]
+    print(f""Range of {list1}: {find_range(list1)}"")
+    print(f""Range of {list2}: {find_range(list2)}"")
+    print(f""Range of {list3}: {find_range(list3)}"")
+    print(f""Range of {list4}: {find_range(list4)}"")",True,0,13092,210_4.py
+210,4,Determine the range of data,"Create a pure Python function that determines the range of a potentially empty list of integers. The function must handle the edge case of an empty list by returning an appropriate value (e.g., None or raising an error, specify the most appropriate handling).","def find_range(data):
+    if not data:
+        return None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return (minimum, maximum)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = []
+    list3 = [10]
+    list4 = [-5, -10, 0]
+    print(f""Range of {list1}: {find_range(list1)}"")
+    print(f""Range of {list2}: {find_range(list2)}"")
+    print(f""Range of {list3}: {find_range(list3)}"")
+    print(f""Range of {list4}: {find_range(list4)}"")",True,1,13093,210_4_1.py
+210,4,Determine the range of data,"Create a pure Python function that determines the range of a potentially empty list of integers. The function must handle the edge case of an empty list by returning an appropriate value (e.g., None or raising an error, specify the most appropriate handling).","def find_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return (minimum, maximum)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = []
+    list3 = [100]
+    list4 = [-5, 0, 10]
+    print(f""Range of {list1}: {find_range(list1)}"")
+    print(f""Range of {list2}: {find_range(list2)}"")
+    print(f""Range of {list3}: {find_range(list3)}"")
+    print(f""Range of {list4}: {find_range(list4)}"")",True,2,13094,210_4_2.py
+210,4,Determine the range of data,"Create a pure Python function that determines the range of a potentially empty list of integers. The function must handle the edge case of an empty list by returning an appropriate value (e.g., None or raising an error, specify the most appropriate handling).","def find_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return (minimum, maximum)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8]
+    list2 = [10]
+    list3 = []
+    list4 = [-5, 0, 100]
+    print(f""Range of {list1}: {find_range(list1)}"")
+    print(f""Range of {list2}: {find_range(list2)}"")
+    print(f""Range of {list3}: {find_range(list3)}"")
+    print(f""Range of {list4}: {find_range(list4)}"")",True,3,13095,210_4_3.py
+210,4,Determine the range of data,"Create a pure Python function that determines the range of a potentially empty list of integers. The function must handle the edge case of an empty list by returning an appropriate value (e.g., None or raising an error, specify the most appropriate handling).","def find_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return (minimum, maximum)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8]
+    list2 = []
+    list3 = [10]
+    list4 = [-5, 0, 5]
+    print(f""Range of {list1}: {find_range(list1)}"")
+    print(f""Range of {list2}: {find_range(list2)}"")
+    print(f""Range of {list3}: {find_range(list3)}"")
+    print(f""Range of {list4}: {find_range(list4)}"")",True,4,13096,210_4_4.py
+210,4,Determine the range of data,"Create a pure Python function that determines the range of a potentially empty list of integers. The function must handle the edge case of an empty list by returning an appropriate value (e.g., None or raising an error, specify the most appropriate handling).","def find_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return (minimum, maximum)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8]
+    list2 = [-10, 0, 5, -3]
+    list3 = []
+    list4 = [42]
+    print(f""Range of {list1}: {find_range(list1)}"")
+    print(f""Range of {list2}: {find_range(list2)}"")
+    print(f""Range of {list3}: {find_range(list3)}"")
+    print(f""Range of {list4}: {find_range(list4)}"")",True,5,13097,210_4_5.py
+210,5,Determine the range of data,"Implement a generator function that yields the minimum and maximum values from an iterable of data, optimizing memory usage for very large datasets.","def find_min_max(data):
+    if not data:
+        return
+    min_val = data[0]
+    max_val = data[0]
+    for item in data:
+        if item < min_val:
+            min_val = item
+        if item > max_val:
+            max_val = item
+    yield min_val
+    yield max_val
+if __name__ == '__main__':
+    large_dataset = range(1000000)
+    min_and_max_generator = find_min_max(large_dataset)
+    results = list(min_and_max_generator)
+    print(f""Minimum value: {results[0]}"")
+    print(f""Maximum value: {results[1]}"")",True,0,13098,210_5.py
+210,5,Determine the range of data,"Implement a generator function that yields the minimum and maximum values from an iterable of data, optimizing memory usage for very large datasets.","def min_max_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    current_max = data[0]
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+        elif item > current_max:
+            current_max = item
+    yield current_min
+    yield current_max
+if __name__ == '__main__':
+    large_dataset = range(1000000)
+    min_max_gen = min_max_generator(large_dataset)
+    print(""Minimum value:"", next(min_max_gen))
+    print(""Maximum value:"", next(min_max_gen))",True,1,13099,210_5_1.py
+210,5,Determine the range of data,"Implement a generator function that yields the minimum and maximum values from an iterable of data, optimizing memory usage for very large datasets.","def min_max_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    current_max = data[0]
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+        elif item > current_max:
+            current_max = item
+    yield current_min
+    yield current_max
+if __name__ == '__main__':
+    large_dataset = range(1000000)
+    min_max_gen = min_max_generator(large_dataset)
+    print(""Minimum:"", next(min_max_gen))
+    print(""Maximum:"", next(min_max_gen))",True,2,13100,210_5_2.py
+210,5,Determine the range of data,"Implement a generator function that yields the minimum and maximum values from an iterable of data, optimizing memory usage for very large datasets.","def min_max_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    current_max = data[0]
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+        elif item > current_max:
+            current_max = item
+    yield current_min
+    yield current_max
+if __name__ == '__main__':
+    large_dataset = range(1000000)
+    min_max_gen = min_max_generator(large_dataset)
+    results = list(min_max_gen)
+    print(f""Minimum value: {results[0]}"")
+    print(f""Maximum value: {results[1]}"")
+    another_dataset = [5, 1, 99, -10, 42]
+    min_max_gen_2 = min_max_generator(another_dataset)
+    results_2 = list(min_max_gen_2)
+    print(f""Minimum value for second set: {results_2[0]}"")
+    print(f""Maximum value for second set: {results_2[1]}"")
+    empty_dataset = []
+    min_max_gen_3 = min_max_generator(empty_dataset)
+    results_3 = list(min_max_gen_3)
+    print(f""Results for empty set: {results_3}"")",True,3,13101,210_5_3.py
+210,6,Determine the range of data,"Write a highly efficient, one-line expression to calculate the range of a given list of numbers in Python, assuming the list is non-empty.","if __name__ == '__main__':
+    numbers = [10, 5, 20, 15, 30]
+    print(max(numbers) - min(numbers))",True,0,13102,210_6.py
+210,6,Determine the range of data,"Write a highly efficient, one-line expression to calculate the range of a given list of numbers in Python, assuming the list is non-empty.","if __name__ == '__main__':
+    data = [10, 5, 20, 15, 30]
+    print(max(data) - min(data))",True,1,13103,210_6_1.py
+210,6,Determine the range of data,"Write a highly efficient, one-line expression to calculate the range of a given list of numbers in Python, assuming the list is non-empty.","if __name__ == '__main__':
+    data = [10, 5, 20, 15]
+    print(max(data) - min(data))",True,2,13104,210_6_2.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [10, 5.5, 20, 3.14]
+    result1 = calculate_range(list1)
+    print(f""Range of {list1}: {result1}"")
+    list2 = [-5, 100, 0.5, -10]
+    result2 = calculate_range(list2)
+    print(f""Range of {list2}: {result2}"")
+    list3 = [7]
+    result3 = calculate_range(list3)
+    print(f""Range of {list3}: {result3}"")
+    list4 = []
+    result4 = calculate_range(list4)
+    print(f""Range of {list4}: {result4}"")",True,0,13105,210_7.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [10, 5.5, 20, 3.14]
+    result1 = calculate_range(list1)
+    print(f""List: {list1}, Range: {result1}"")
+    list2 = [-5, 100, 0.5, -10]
+    result2 = calculate_range(list2)
+    print(f""List: {list2}, Range: {result2}"")
+    list3 = [7, 7, 7]
+    result3 = calculate_range(list3)
+    print(f""List: {list3}, Range: {result3}"")
+    list4 = []
+    result4 = calculate_range(list4)
+    print(f""List: {list4}, Range: {result4}"")",True,1,13106,210_7_1.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_range(data):
+    if not data:
+        return None
+    min_val = data[0]
+    max_val = data[0]
+    for x in data:
+        if x < min_val:
+            min_val = x
+        if x > max_val:
+            max_val = x
+    return (min_val, max_val)
+if __name__ == '__main__':
+    sample_data = [10, 3.5, -5, 22.1, 0]
+    result = calculate_range(sample_data)
+    print(result)",True,2,13107,210_7_2.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.5, 20, -5.2, 15]
+    result = calculate_range(sample_list)
+    print(result)",True,3,13108,210_7_3.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_numeric_range(data):
+    if not data:
+        return None
+    min_val = float('inf')
+    max_val = float('-inf')
+    for item in data:
+        if isinstance(item, (int, float)):
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+    if min_val == float('inf'):
+        return None
+    return (min_val, max_val)
+if __name__ == '__main__':
+    sample_data = [10, 3.5, -5, 22.1, 0, -100]
+    result = calculate_numeric_range(sample_data)
+    print(result)",True,4,13109,210_7_4.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.5, 20, -5.2, 15]
+    result = calculate_range(sample_list)
+    print(result)
+    sample_list_empty = []
+    result_empty = calculate_range(sample_list_empty)
+    print(result_empty)
+    sample_list_single = [42]
+    result_single = calculate_range(sample_list_single)
+    print(result_single)",True,5,13110,210_7_5.py
+210,7,Determine the range of data,"Develop a function that calculates the range of a list of mixed data types (integers and floats), ensuring the comparison logic correctly handles all numeric types.","def calculate_range(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [10, 5.5, 20, 3.14]
+    result1 = calculate_range(list1)
+    print(f""Range of {list1}: {result1}"")
+    list2 = [-5, 100, 0.5, -10]
+    result2 = calculate_range(list2)
+    print(f""Range of {list2}: {result2}"")
+    list3 = [7, 7, 7]
+    result3 = calculate_range(list3)
+    print(f""Range of {list3}: {result3}"")
+    list4 = []
+    result4 = calculate_range(list4)
+    print(f""Range of {list4}: {result4}"")",True,6,13111,210_7_6.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        data = [1, 5, 2, 8, 3]
+        self.assertEqual(calculate_range(data), 7)
+    def test_list_with_negative_numbers(self):
+        data = [-5, 10, -2, 3]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_all_negative_numbers(self):
+        data = [-10, -5, -20]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_mixed_signs(self):
+        data = [-10, 0, 10]
+        self.assertEqual(calculate_range(data), 20)
+    def test_list_with_duplicates(self):
+        data = [5, 5, 5, 5]
+        self.assertEqual(calculate_range(data), 0)
+    def test_single_element_list(self):
+        data = [42]
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,13112,210_8.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        data = [1, 5, 2, 8]
+        self.assertEqual(calculate_range(data), 7)
+    def test_list_with_negative_numbers(self):
+        data = [-5, 10, -2, 3]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_all_negative_numbers(self):
+        data = [-10, -5, -20]
+        self.assertEqual(calculate_range(data), 10)
+    def test_list_with_mixed_signs(self):
+        data = [-10, 0, 10]
+        self.assertEqual(calculate_range(data), 20)
+    def test_list_with_duplicates(self):
+        data = [3, 3, 3, 3]
+        self.assertEqual(calculate_range(data), 0)
+    def test_single_element_list(self):
+        data = [42]
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,13113,210_8_1.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        self.assertEqual(calculate_range([1, 2, 3, 4, 5]), 4)
+    def test_mixed_positive_and_negative_numbers(self):
+        self.assertEqual(calculate_range([-5, 0, 5, 10]), 15)
+    def test_all_negative_numbers(self):
+        self.assertEqual(calculate_range([-10, -5, -20]), 10)
+    def test_single_element_list(self):
+        self.assertEqual(calculate_range([7]), 0)
+    def test_empty_list(self):
+        self.assertEqual(calculate_range([]), 0)
+    def test_with_duplicates(self):
+        self.assertEqual(calculate_range([1, 5, 2, 5]), 4)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,13114,210_8_2.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        data = [1, 5, 2, 8, 3]
+        self.assertEqual(calculate_range(data), 7)
+    def test_list_with_negative_numbers(self):
+        data = [-5, 10, -2, 3]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_mixed_numbers(self):
+        data = [0, 10, -5, 5]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_all_same_numbers(self):
+        data = [7, 7, 7, 7]
+        self.assertEqual(calculate_range(data), 0)
+    def test_single_element_list(self):
+        data = [42]
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list_with_negatives(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,13115,210_8_3.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        self.assertEqual(calculate_range([1, 2, 3, 4, 5]), 4)
+    def test_mixed_positive_and_negative_numbers(self):
+        self.assertEqual(calculate_range([-5, 0, 5, 10]), 15)
+    def test_all_negative_numbers(self):
+        self.assertEqual(calculate_range([-10, -5, -1]), 9)
+    def test_single_element(self):
+        self.assertEqual(calculate_range([7]), 0)
+    def test_empty_list(self):
+        self.assertEqual(calculate_range([]), 0)
+    def test_with_duplicates(self):
+        self.assertEqual(calculate_range([1, 5, 2, 5, 1]), 4)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,13116,210_8_4.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        data = [1, 5, 2, 8, 3]
+        self.assertEqual(calculate_range(data), 7)
+    def test_list_with_negative_numbers(self):
+        data = [-5, 10, -2, 3]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_mixed_numbers(self):
+        data = [-10, 0, 5, -5]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_all_same_numbers(self):
+        data = [7, 7, 7, 7]
+        self.assertEqual(calculate_range(data), 0)
+    def test_single_element_list(self):
+        data = [42]
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+    def test_range_of_negative_numbers(self):
+        data = [-10, -5, -20]
+        self.assertEqual(calculate_range(data), 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,13117,210_8_5.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        data = [1, 5, 2, 8]
+        self.assertEqual(calculate_range(data), 7)
+    def test_list_with_negative_numbers(self):
+        data = [-5, 0, 5, 10]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_mixed_numbers(self):
+        data = [-10, 20, -5, 5]
+        self.assertEqual(calculate_range(data), 25)
+    def test_list_with_all_same_numbers(self):
+        data = [3, 3, 3, 3]
+        self.assertEqual(calculate_range(data), 0)
+    def test_single_element_list(self):
+        data = [42]
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+    def test_list_with_only_negatives(self):
+        data = [-10, -5, -20]
+        self.assertEqual(calculate_range(data), 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,13118,210_8_6.py
+210,8,Determine the range of data,"Write a comprehensive test suite using `unittest` for a function designed to calculate the range of a list, covering standard cases, negative numbers, and empty lists.","import unittest
+def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+class TestCalculateRange(unittest.TestCase):
+    def test_standard_positive_numbers(self):
+        data = [1, 5, 2, 8, 3]
+        self.assertEqual(calculate_range(data), 7)
+    def test_list_with_negative_numbers(self):
+        data = [-5, 10, -2, 3]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_mixed_numbers(self):
+        data = [-10, 0, 5, -5]
+        self.assertEqual(calculate_range(data), 15)
+    def test_list_with_all_same_numbers(self):
+        data = [7, 7, 7, 7]
+        self.assertEqual(calculate_range(data), 0)
+    def test_single_element_list(self):
+        data = [42]
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+    def test_empty_list_with_negatives(self):
+        data = []
+        self.assertEqual(calculate_range(data), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,13119,210_8_7.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset1 = [10, 5, 20, 15]
+    sample_dataset2 = [3, 8, 1, 9, 4]
+    sample_empty = []
+    stats_calculator.add_data(sample_dataset1)
+    range1 = stats_calculator.calculate_range()
+    print(f""Range of dataset 1: {range1}"")
+    stats_calculator.add_data(sample_dataset2)
+    range2 = stats_calculator.calculate_range()
+    print(f""Range of dataset 2: {range2}"")
+    stats_calculator.add_data(sample_empty)
+    range3 = stats_calculator.calculate_range()
+    print(f""Range of empty dataset: {range3}"")",True,0,13120,210_9.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset_1 = [10, 5, 20, 15, 8]
+    sample_dataset_2 = [3, 9, 1, 5, 7]
+    sample_empty_dataset = []
+    stats_calculator.add_data(sample_dataset_1)
+    range1 = stats_calculator.calculate_range()
+    print(f""Range of dataset 1: {range1}"")
+    stats_calculator.add_data(sample_dataset_2)
+    range2 = stats_calculator.calculate_range()
+    print(f""Range of dataset 2: {range2}"")
+    stats_calculator.add_data(sample_empty_dataset)
+    range3 = stats_calculator.calculate_range()
+    print(f""Range of empty dataset: {range3}"")",True,1,13121,210_9_1.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = None
+        self._range = None
+    def set_data(self, data):
+        if not isinstance(data, list) or not data:
+            raise ValueError(""Input must be a non-empty list of numbers."")
+        self._data = data
+        self.calculate_range()
+    def calculate_range(self):
+        if self._data is None:
+            self._range = None
+            return
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+    def get_range(self):
+        if self._range is None:
+            raise AttributeError(""Range has not been calculated. Set data first."")
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_data_1 = [10, 5, 20, 15, 8]
+    print(f""Data set 1: {sample_data_1}"")
+    stats_calculator.set_data(sample_data_1)
+    range_1 = stats_calculator.get_range()
+    print(f""Range of data set 1: {range_1}"")
+    sample_data_2 = [3, 9, 1, 5, 7]
+    print(f""\nData set 2: {sample_data_2}"")
+    stats_calculator.set_data(sample_data_2)
+    range_2 = stats_calculator.get_range()
+    print(f""Range of data set 2: {range_2}"")
+    try:
+        stats_calculator.get_range()
+    except AttributeError as e:
+        print(f""\nCaught expected error: {e}"")",True,2,13122,210_9_2.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset_1 = [10, 5, 20, 15]
+    sample_dataset_2 = [3, 8, 1, 9, 4]
+    sample_empty_dataset = []
+    stats_calculator.add_data(sample_dataset_1)
+    range1 = stats_calculator.calculate_range()
+    print(f""Range for dataset 1: {range1}"")
+    stats_calculator.add_data(sample_dataset_2)
+    range2 = stats_calculator.calculate_range()
+    print(f""Range for dataset 2: {range2}"")
+    stats_calculator.add_data(sample_empty_dataset)
+    range3 = stats_calculator.calculate_range()
+    print(f""Range for empty dataset: {range3}"")",True,3,13123,210_9_3.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset_1 = [10, 5, 20, 15, 8]
+    sample_dataset_2 = [3, 1, 9, 4, 7]
+    sample_empty_dataset = []
+    stats_calculator.add_data(sample_dataset_1)
+    range1 = stats_calculator.calculate_range()
+    print(f""Range of dataset 1: {range1}"")
+    stats_calculator.add_data(sample_dataset_2)
+    range2 = stats_calculator.calculate_range()
+    print(f""Range of dataset 2: {range2}"")
+    stats_calculator.add_data(sample_empty_dataset)
+    range3 = stats_calculator.calculate_range()
+    print(f""Range of empty dataset: {range3}"")",True,4,13124,210_9_4.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = None
+        self._range = None
+    def set_data(self, data):
+        if not isinstance(data, list) or not data:
+            raise ValueError(""Input must be a non-empty list of numbers."")
+        self._data = data
+        self.calculate_range()
+    def calculate_range(self):
+        if self._data is None:
+            self._range = None
+            return
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+    def get_range(self):
+        if self._range is None:
+            raise AttributeError(""Range has not been calculated. Set data first."")
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_data_1 = [10, 5, 20, 15, 8]
+    print(f""Data set 1: {sample_data_1}"")
+    stats_calculator.set_data(sample_data_1)
+    range_1 = stats_calculator.get_range()
+    print(f""Range for data set 1: {range_1}"")
+    sample_data_2 = [3, 9, 1, 5, 7]
+    print(f""\nData set 2: {sample_data_2}"")
+    stats_calculator.set_data(sample_data_2)
+    range_2 = stats_calculator.get_range()
+    print(f""Range for data set 2: {range_2}"")
+    try:
+        stats_calculator.get_range()
+    except AttributeError as e:
+        print(f""\nCaught expected error: {e}"")",True,5,13125,210_9_5.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset_1 = [10, 5, 20, 15]
+    sample_dataset_2 = [3, 8, 1, 12, 5]
+    sample_empty_dataset = []
+    stats_calculator.add_data(sample_dataset_1)
+    range1 = stats_calculator.calculate_range()
+    print(f""Range for dataset 1: {range1}"")
+    stats_calculator.add_data(sample_dataset_2)
+    range2 = stats_calculator.calculate_range()
+    print(f""Range for dataset 2: {range2}"")
+    stats_calculator.add_data(sample_empty_dataset)
+    range3 = stats_calculator.calculate_range()
+    print(f""Range for empty dataset: {range3}"")",True,6,13126,210_9_6.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset_1 = [10, 5, 20, 15]
+    sample_dataset_2 = [3, 8, 1, 9, 4]
+    sample_empty_dataset = []
+    stats_calculator.add_data(sample_dataset_1)
+    range_1 = stats_calculator.calculate_range()
+    print(f""Range for dataset 1: {range_1}"")
+    stats_calculator.add_data(sample_dataset_2)
+    range_2 = stats_calculator.calculate_range()
+    print(f""Range for dataset 2: {range_2}"")
+    stats_calculator.add_data(sample_empty_dataset)
+    range_3 = stats_calculator.calculate_range()
+    print(f""Range for empty dataset: {range_3}"")",True,7,13127,210_9_7.py
+210,9,Determine the range of data,"Design and implement a class method within a `Statistics` class to calculate and store the range of a dataset, focusing on best practices for data encapsulation.","class Statistics:
+    def __init__(self):
+        self._data = []
+        self._range = None
+    def add_data(self, data):
+        self._data.extend(data)
+    def calculate_range(self):
+        if not self._data:
+            self._range = None
+            return None
+        minimum = min(self._data)
+        maximum = max(self._data)
+        self._range = maximum - minimum
+        return self._range
+if __name__ == '__main__':
+    stats_calculator = Statistics()
+    sample_dataset_1 = [10, 5, 20, 15, 8]
+    sample_dataset_2 = [3, 7, 1, 9, 4]
+    sample_empty_dataset = []
+    stats_calculator.add_data(sample_dataset_1)
+    range_1 = stats_calculator.calculate_range()
+    print(f""Range of dataset 1: {range_1}"")
+    stats_calculator.add_data(sample_dataset_2)
+    range_2 = stats_calculator.calculate_range()
+    print(f""Range of dataset 2: {range_2}"")
+    stats_calculator.add_data(sample_empty_dataset)
+    range_3 = stats_calculator.calculate_range()
+    print(f""Range of empty dataset: {range_3}"")",True,8,13128,210_9_8.py
+210,10,Determine the range of data,"Write a complete, robust Python script that reads a list of numerical data from a file and calculates the minimum, maximum, and range of the dataset. Use the built-in `min()` and `max()` functions for efficiency.","def analyze_data(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = [float(line.strip()) for line in file]
+        if not data:
+            return None, None, None
+        minimum = min(data)
+        maximum = max(data)
+        data_range = maximum - minimum
+        return minimum, maximum, data_range
+    except FileNotFoundError:
+        return None, None, None
+    except ValueError:
+        return None, None, None
+if __name__ == '__main__':
+    sample_filename = ""sample_data.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""10\n"")
+        f.write(""5\n"")
+        f.write(""22\n"")
+        f.write(""3\n"")
+        f.write(""18\n"")
+    minimum_val, maximum_val, data_range = analyze_data(sample_filename)
+    if minimum_val is not None:
+        print(f""Minimum: {minimum_val}"")
+        print(f""Maximum: {maximum_val}"")
+        print(f""Range: {data_range}"")
+    else:
+        print(""Error processing file or data was empty."")",True,0,13129,210_10.py
+210,10,Determine the range of data,"Write a complete, robust Python script that reads a list of numerical data from a file and calculates the minimum, maximum, and range of the dataset. Use the built-in `min()` and `max()` functions for efficiency.","def analyze_data(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = [float(line.strip()) for line in file]
+        if not data:
+            return None, None, None
+        minimum = min(data)
+        maximum = max(data)
+        data_range = maximum - minimum
+        return minimum, maximum, data_range
+    except FileNotFoundError:
+        return None, None, None
+    except ValueError:
+        return None, None, None
+if __name__ == '__main__':
+    sample_filename = ""sample_data.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""10\n"")
+        f.write(""5\n"")
+        f.write(""22\n"")
+        f.write(""3\n"")
+        f.write(""18\n"")
+    minimum_val, maximum_val, data_range = analyze_data(sample_filename)
+    if minimum_val is not None:
+        print(f""Minimum: {minimum_val}"")
+        print(f""Maximum: {maximum_val}"")
+        print(f""Range: {data_range}"")",True,1,13130,210_10_1.py
+210,10,Determine the range of data,"Write a complete, robust Python script that reads a list of numerical data from a file and calculates the minimum, maximum, and range of the dataset. Use the built-in `min()` and `max()` functions for efficiency.","def analyze_data(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = [float(line.strip()) for line in file]
+        if not data:
+            return None, None, None
+        minimum = min(data)
+        maximum = max(data)
+        data_range = maximum - minimum
+        return minimum, maximum, data_range
+    except FileNotFoundError:
+        return None, None, None
+    except ValueError:
+        return None, None, None
+if __name__ == '__main__':
+    sample_filename = ""sample_data.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""10\n"")
+        f.write(""5\n"")
+        f.write(""20\n"")
+        f.write(""3\n"")
+        f.write(""15\n"")
+    minimum_val, maximum_val, data_range = analyze_data(sample_filename)
+    if minimum_val is not None:
+        print(f""Minimum: {minimum_val}"")
+        print(f""Maximum: {maximum_val}"")
+        print(f""Range: {data_range}"")",True,2,13131,210_10_2.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 20, 5, 15]
+    empty_list = []
+    try:
+        range1 = calculate_data_range(list1)
+        print(f""Data Range for {list1}: {range1}"")
+        range2 = calculate_data_range(list2)
+        print(f""Data Range for {list2}: {range2}"")
+        calculate_data_range(empty_list)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,13132,210_11.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 20, 5, 30]
+    empty_list = []
+    try:
+        range1 = calculate_data_range(list1)
+        print(f""Data: {list1}, Range: {range1}"")
+        range2 = calculate_data_range(list2)
+        print(f""Data: {list2}, Range: {range2}"")
+        calculate_data_range(empty_list)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,13133,210_11_1.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 20, 5, 15]
+    empty_list = []
+    try:
+        range1 = calculate_data_range(list1)
+        print(f""Data: {list1}, Range: {range1}"")
+        range2 = calculate_data_range(list2)
+        print(f""Data: {list2}, Range: {range2}"")
+        calculate_data_range(empty_list)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,2,13134,210_11_2.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, 0, 5, -5]
+    empty_list = []
+    try:
+        range1 = calculate_data_range(list1)
+        print(f""Data: {list1}, Range: {range1}"")
+        range2 = calculate_data_range(list2)
+        print(f""Data: {list2}, Range: {range2}"")
+        calculate_data_range(empty_list)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,3,13135,210_11_3.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 2, 5, 1]
+    empty_list = []
+    list3 = [42]
+    print(f""Data Range for {list1}: {calculate_data_range(list1)}"")
+    print(f""Data Range for {list2}: {calculate_data_range(list2)}"")
+    print(f""Data Range for {empty_list}: Error raised"")
+    print(f""Data Range for {list3}: {calculate_data_range(list3)}"")",True,4,13136,210_11_4.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [100, 50, 200, 10]
+    empty_list = []
+    list3 = [42]
+    print(f""Range of {list1}: {calculate_data_range(list1)}"")
+    print(f""Range of {list2}: {calculate_data_range(list2)}"")
+    try:
+        print(f""Range of {empty_list}: {calculate_data_range(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for {empty_list}: {e}"")
+    print(f""Range of {list3}: {calculate_data_range(list3)}"")",True,5,13137,210_11_5.py
+210,11,Determine the range of data,Implement an optimized function named `calculate_data_range` that accepts a list of numbers and returns the difference between the maximum and minimum values. The function must handle empty lists gracefully by raising a descriptive error.,"def calculate_data_range(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 4, 15, 2]
+    empty_list = []
+    list3 = [7]
+    print(f""Range of {list1}: {calculate_data_range(list1)}"")
+    print(f""Range of {list2}: {calculate_data_range(list2)}"")
+    try:
+        print(f""Range of {empty_list}: {calculate_data_range(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for {empty_list}: {e}"")
+    print(f""Range of {list3}: {calculate_data_range(list3)}"")",True,6,13138,210_11_6.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            elif x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 5, 20, 15, 8]
+    result1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [3.14, -1.5, 9.8, 0.5]
+    result2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [7]
+    result3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = analyzer.determine_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,0,13139,210_12.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 3.2, 8.9, 1.1, 5.0]
+    sample_data2 = [42, 15, 88, 3, 99]
+    sample_data3 = []
+    sample_data4 = [7]
+    min1, max1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Min: {min1}, Max: {max1}"")
+    min2, max2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Min: {min2}, Max: {max2}"")
+    min3, max3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Min: {min3}, Max: {max3}"")
+    min4, max4 = analyzer.determine_range(sample_data4)
+    print(f""Data: {sample_data4}, Min: {min4}, Max: {max4}"")",True,1,13140,210_12_1.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            elif x > maximum:
+                maximum = x
+        return (minimum, maximum)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 3.2, 9.8, 4.1, 7.0]
+    sample_data2 = [1, 5, 2, 8, 3]
+    sample_data3 = [42]
+    sample_data4 = []
+    result1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    result2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    result3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    result4 = analyzer.determine_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,2,13141,210_12_2.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            elif x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 5, 20, 15, 8]
+    result1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [3.14, 1.618, 2.718, 0.577]
+    result2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [42]
+    result3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = analyzer.determine_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,3,13142,210_12_3.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            elif x > maximum:
+                maximum = x
+        return (minimum, maximum)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 3.2, 8.9, 1.1, 5.0]
+    sample_data2 = [42, 15, 88, 3, 99]
+    sample_data3 = []
+    print(analyzer.determine_range(sample_data1))
+    print(analyzer.determine_range(sample_data2))
+    print(analyzer.determine_range(sample_data3))",True,4,13143,210_12_4.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return (minimum, maximum)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 2.1, 99.0, 45.3, 12.8]
+    sample_data2 = [5, -10, 0, 33, -50, 100]
+    sample_data3 = []
+    result1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    result2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    result3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")",True,5,13144,210_12_5.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return (minimum, maximum)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 3.2, 8.9, 1.1, 5.0]
+    sample_data2 = [42, 15, 88, 3, 99]
+    sample_data3 = []
+    result1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    result2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    result3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")",True,6,13145,210_12_6.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 3.2, 9.8, 4.1, 7.6]
+    sample_data2 = [5, 1, 8, 3, 10]
+    sample_data3 = []
+    min1, max1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}"")
+    print(f""Range (Min, Max): ({min1}, {max1})"")
+    min2, max2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}"")
+    print(f""Range (Min, Max): ({min2}, {max2})"")
+    min3, max3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}"")
+    print(f""Range (Min, Max): ({min3}, {max3})"")",True,7,13146,210_12_7.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10.5, 3.2, 8.9, 1.1, 5.0]
+    sample_data2 = [42, 15, 78, 33, 9]
+    sample_data3 = []
+    min1, max1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}"")
+    print(f""Range (Min, Max): ({min1}, {max1})"")
+    min2, max2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}"")
+    print(f""Range (Min, Max): ({min2}, {max2})"")
+    min3, max3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}"")
+    print(f""Range (Min, Max): ({min3}, {max3})"")",True,8,13147,210_12_8.py
+210,12,Determine the range of data,Develop a class named `DataAnalyzer` with a method `determine_range`. This method should take a list of floats or integers and return a tuple containing the minimum and maximum values of the input data. Ensure the implementation is highly efficient.,"class DataAnalyzer:
+    def determine_range(self, data):
+        if not data:
+            return None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data[1:]:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return (minimum, maximum)
+if __name__ == '__main__':
+    analyzer = DataAnalyzer()
+    sample_data1 = [10, 5, 20, 15, 30]
+    result1 = analyzer.determine_range(sample_data1)
+    print(f""Data: {sample_data1}, Range: {result1}"")
+    sample_data2 = [5.5, 1.2, 9.8, 3.3]
+    result2 = analyzer.determine_range(sample_data2)
+    print(f""Data: {sample_data2}, Range: {result2}"")
+    sample_data3 = [42]
+    result3 = analyzer.determine_range(sample_data3)
+    print(f""Data: {sample_data3}, Range: {result3}"")
+    sample_data4 = []
+    result4 = analyzer.determine_range(sample_data4)
+    print(f""Data: {sample_data4}, Range: {result4}"")",True,9,13148,210_12_9.py
+210,3,Determine the range of data,"Write a command-line Python script that prompts the user to input a sequence of numbers, reads them, and prints the calculated range. Handle potential input errors gracefully.","def calculate_range(numbers):
+    if not numbers:
+        return ""No numbers provided.""
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return f""The range is: {maximum - minimum}""
+if __name__ == '__main__':
+    sample_numbers = [10, 5, 22, 8, 15]
+    result = calculate_range(sample_numbers)
+    print(result)",True,0,13149,210_3.py
+210,3,Determine the range of data,"Write a command-line Python script that prompts the user to input a sequence of numbers, reads them, and prints the calculated range. Handle potential input errors gracefully.","import sys
+def calculate_range(numbers):
+    if not numbers:
+        return 0
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_numbers = [10, 5, 22, 3, 18]
+    result = calculate_range(sample_numbers)
+    print(result)",True,1,13150,210_3_1.py
+210,3,Determine the range of data,"Write a command-line Python script that prompts the user to input a sequence of numbers, reads them, and prints the calculated range. Handle potential input errors gracefully.","import sys
+def calculate_range(numbers):
+    if not numbers:
+        return None
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8 15""
+    try:
+        numbers = list(map(int, sample_input.split()))
+        if not numbers:
+            print(""No numbers provided."")
+        else:
+            range_val = calculate_range(numbers)
+            print(range_val)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,2,13151,210_3_2.py
+210,3,Determine the range of data,"Write a command-line Python script that prompts the user to input a sequence of numbers, reads them, and prints the calculated range. Handle potential input errors gracefully.","import sys
+def calculate_range(numbers):
+    if not numbers:
+        return 0
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_numbers = [10, 5, 22, 8, 15]
+    try:
+        input_sequence = sample_numbers
+        result = calculate_range(input_sequence)
+        print(result)
+    except Exception as e:
+        print(""An error occurred during calculation:"", e)",True,3,13152,210_3_3.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_data_1 = [10, 5, 20, 3, 15]
+    span_1 = find_data_span(sample_data_1)
+    print(f""Data: {sample_data_1}"")
+    print(f""Span: {span_1}"")
+    sample_data_2 = [5.5, 1.2, 8.9, 3.0]
+    span_2 = find_data_span(sample_data_2)
+    print(f""\nData: {sample_data_2}"")
+    print(f""Span: {span_2}"")
+    sample_data_3 = [42]
+    span_3 = find_data_span(sample_data_3)
+    print(f""\nData: {sample_data_3}"")
+    print(f""Span: {span_3}"")
+    sample_data_4 = []
+    span_4 = find_data_span(sample_data_4)
+    print(f""\nData: {sample_data_4}"")
+    print(f""Span: {span_4}"")",True,0,13153,210_14.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [5]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Data: {sample_list_1}, Span: {span_1}"")
+    print(f""Data: {sample_list_2}, Span: {span_2}"")
+    print(f""Data: {sample_list_3}, Span: {span_3}"")
+    print(f""Data: {sample_list_4}, Span: {span_4}"")",True,1,13154,210_14_1.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [5]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Span of {sample_list_1}: {span_1}"")
+    print(f""Span of {sample_list_2}: {span_2}"")
+    print(f""Span of {sample_list_3}: {span_3}"")
+    print(f""Span of {sample_list_4}: {span_4}"")",True,2,13155,210_14_2.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    return max(data) - min(data)
+if __name__ == '__main__':
+    sample_data_1 = [10, 5, 20, 15]
+    result_1 = find_data_span(sample_data_1)
+    print(f""Data: {sample_data_1}"")
+    print(f""Span: {result_1}"")
+    sample_data_2 = [3.14, 1.618, 2.718]
+    result_2 = find_data_span(sample_data_2)
+    print(f""Data: {sample_data_2}"")
+    print(f""Span: {result_2}"")
+    sample_data_3 = [5]
+    result_3 = find_data_span(sample_data_3)
+    print(f""Data: {sample_data_3}"")
+    print(f""Span: {result_3}"")
+    sample_data_4 = []
+    result_4 = find_data_span(sample_data_4)
+    print(f""Data: {sample_data_4}"")
+    print(f""Span: {result_4}"")",True,3,13156,210_14_3.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    return max(data) - min(data)
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [5]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Data: {sample_list_1}, Span: {span_1}"")
+    print(f""Data: {sample_list_2}, Span: {span_2}"")
+    print(f""Data: {sample_list_3}, Span: {span_3}"")
+    print(f""Data: {sample_list_4}, Span: {span_4}"")",True,4,13157,210_14_4.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [5]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Span for {sample_list_1}: {span_1}"")
+    print(f""Span for {sample_list_2}: {span_2}"")
+    print(f""Span for {sample_list_3}: {span_3}"")
+    print(f""Span for {sample_list_4}: {span_4}"")",True,5,13158,210_14_5.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [7]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Data: {sample_list_1}, Span: {span_1}"")
+    print(f""Data: {sample_list_2}, Span: {span_2}"")
+    print(f""Data: {sample_list_3}, Span: {span_3}"")
+    print(f""Data: {sample_list_4}, Span: {span_4}"")",True,6,13159,210_14_6.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    return max(data) - min(data)
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [5]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Span for {sample_list_1}: {span_1}"")
+    print(f""Span for {sample_list_2}: {span_2}"")
+    print(f""Span for {sample_list_3}: {span_3}"")
+    print(f""Span for {sample_list_4}: {span_4}"")",True,7,13160,210_14_7.py
+210,14,Determine the range of data,"Create a pure Python function, `find_data_span`, that accepts an iterable (like a list or tuple) of numerical data and returns the range (max - min). The code must be clean, well-documented with docstrings, and demonstrate best practices for readability.","def find_data_span(data):
+    if not data:
+        return None
+    minimum = min(data)
+    maximum = max(data)
+    return maximum - minimum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 15]
+    sample_list_2 = [3.14, 1.618, 2.718]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    span_1 = find_data_span(sample_list_1)
+    span_2 = find_data_span(sample_list_2)
+    span_3 = find_data_span(sample_list_3)
+    span_4 = find_data_span(sample_list_4)
+    print(f""Span of {sample_list_1}: {span_1}"")
+    print(f""Span of {sample_list_2}: {span_2}"")
+    print(f""Span of {sample_list_3}: {span_3}"")
+    print(f""Span of {sample_list_4}: {span_4}"")",True,8,13161,210_14_8.py
+211,0,Compare two sample sets,"Write a complete, optimized Python script to compare two sample sets of integers, calculating the intersection, union, and symmetric difference for each pair.","import collections
+def compare_sets(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    symmetric_difference = set1.symmetric_difference(set2)
+    return intersection, union, symmetric_difference
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    intersection_ab, union_ab, symmetric_difference_ab = compare_sets(set_a, set_b)
+    print(""Set A:"", set_a)
+    print(""Set B:"", set_b)
+    print(""Intersection (A and B):"", intersection_ab)
+    print(""Union (A or B):"", union_ab)
+    print(""Symmetric Difference (A XOR B):"", symmetric_difference_ab)",True,0,13162,211_0.py
+211,0,Compare two sample sets,"Write a complete, optimized Python script to compare two sample sets of integers, calculating the intersection, union, and symmetric difference for each pair.","import collections
+def compare_sets(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    symmetric_difference = set1.symmetric_difference(set2)
+    return intersection, union, symmetric_difference
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    inter, uni, sym = compare_sets(set_a, set_b)
+    print(f""Set A: {set_a}"")
+    print(f""Set B: {set_b}"")
+    print(f""Intersection: {inter}"")
+    print(f""Union: {uni}"")
+    print(f""Symmetric Difference: {sym}"")",True,1,13163,211_0_1.py
+211,0,Compare two sample sets,"Write a complete, optimized Python script to compare two sample sets of integers, calculating the intersection, union, and symmetric difference for each pair.","import collections
+def compare_sets(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    symmetric_difference = set1.symmetric_difference(set2)
+    return intersection, union, symmetric_difference
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    inter, uni, sym_diff = compare_sets(set_a, set_b)
+    print(""Set A:"", set_a)
+    print(""Set B:"", set_b)
+    print(""Intersection:"", inter)
+    print(""Union:"", uni)
+    print(""Symmetric Difference:"", sym_diff)",True,2,13164,211_0_2.py
+211,1,Compare two sample sets,"Implement a class named SetComparator with a method to compare two input lists, treating them as sets, and return a dictionary containing the size of the intersection, union, and difference.","class SetComparator:
+    def compare_sets(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference1 = set1.difference(set2)
+        difference2 = set2.difference(set1)
+        return {
+            ""intersection_size"": len(intersection),
+            ""union_size"": len(union),
+            ""difference_set1_only_size"": len(difference1),
+            ""difference_set2_only_size"": len(difference2)
+        }
+if __name__ == '__main__':
+    comparator = SetComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.compare_sets(list_a, list_b)
+    print(result)",True,0,13165,211_1.py
+211,1,Compare two sample sets,"Implement a class named SetComparator with a method to compare two input lists, treating them as sets, and return a dictionary containing the size of the intersection, union, and difference.","class SetComparator:
+    def compare_sets(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference1 = set1.difference(set2)
+        difference2 = set2.difference(set1)
+        return {
+            ""intersection_size"": len(intersection),
+            ""union_size"": len(union),
+            ""difference1_size"": len(difference1),
+            ""difference2_size"": len(difference2)
+        }
+if __name__ == '__main__':
+    comparator = SetComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    results = comparator.compare_sets(list_a, list_b)
+    print(results)",True,1,13166,211_1_1.py
+211,1,Compare two sample sets,"Implement a class named SetComparator with a method to compare two input lists, treating them as sets, and return a dictionary containing the size of the intersection, union, and difference.","class SetComparator:
+    def compare_sets(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference1 = set1.difference(set2)
+        difference2 = set2.difference(set1)
+        return {
+            ""intersection_size"": len(intersection),
+            ""union_size"": len(union),
+            ""difference_list1_only_size"": len(difference1),
+            ""difference_list2_only_size"": len(difference2)
+        }
+if __name__ == '__main__':
+    comparator = SetComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.compare_sets(list_a, list_b)
+    print(result)",True,2,13167,211_1_2.py
+211,1,Compare two sample sets,"Implement a class named SetComparator with a method to compare two input lists, treating them as sets, and return a dictionary containing the size of the intersection, union, and difference.","class SetComparator:
+    def compare_sets(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference1 = set1.difference(set2)
+        difference2 = set2.difference(set1)
+        return {
+            ""intersection_size"": len(intersection),
+            ""union_size"": len(union),
+            ""difference_list1_only_size"": len(difference1),
+            ""difference_list2_only_size"": len(difference2)
+        }
+if __name__ == '__main__':
+    comparator = SetComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    results = comparator.compare_sets(list_a, list_b)
+    print(results)",True,3,13168,211_1_3.py
+211,1,Compare two sample sets,"Implement a class named SetComparator with a method to compare two input lists, treating them as sets, and return a dictionary containing the size of the intersection, union, and difference.","class SetComparator:
+    def compare_sets(self, list1, list2):
+        set1 = set(list1)
+        set2 = set(list2)
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference1 = set1.difference(set2)
+        difference2 = set2.difference(set1)
+        return {
+            ""intersection_size"": len(intersection),
+            ""union_size"": len(union),
+            ""difference1_size"": len(difference1),
+            ""difference2_size"": len(difference2)
+        }
+if __name__ == '__main__':
+    comparator = SetComparator()
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = comparator.compare_sets(list_a, list_b)
+    print(result)",True,4,13169,211_1_4.py
+211,2,Compare two sample sets,Develop an efficient function that takes two unsorted lists of numbers and returns a sorted list containing only the elements unique to each list (symmetric difference).,"def symmetric_difference(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    return list(set1.symmetric_difference(set2))
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = symmetric_difference(list_a, list_b)
+    print(result)",True,0,13170,211_2.py
+211,2,Compare two sample sets,Develop an efficient function that takes two unsorted lists of numbers and returns a sorted list containing only the elements unique to each list (symmetric difference).,"import collections
+def symmetric_difference(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    return list(set1.symmetric_difference(set2))
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = symmetric_difference(list_a, list_b)
+    print(result)",True,1,13171,211_2_1.py
+211,2,Compare two sample sets,Develop an efficient function that takes two unsorted lists of numbers and returns a sorted list containing only the elements unique to each list (symmetric difference).,"import collections
+def symmetric_difference(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    symmetric_diff = set1.symmetric_difference(set2)
+    return sorted(list(symmetric_diff))
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = symmetric_difference(list_a, list_b)
+    print(result)",True,2,13172,211_2_2.py
+211,2,Compare two sample sets,Develop an efficient function that takes two unsorted lists of numbers and returns a sorted list containing only the elements unique to each list (symmetric difference).,"import collections
+def symmetric_difference(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    symmetric_diff_set = set1.symmetric_difference(set2)
+    return sorted(list(symmetric_diff_set))
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = symmetric_difference(list_a, list_b)
+    print(result)",True,3,13173,211_2_3.py
+211,3,Compare two sample sets,"Write a robust Python function to compare two sample sets, focusing on performance. The function must use set operations and clearly return the resulting sets.","def compare_sets_performance(set1, set2):
+    result1 = set1.intersection(set2)
+    result2 = set1.union(set2)
+    return result1, result2
+if __name__ == '__main__':
+    sample_set_a = {1, 2, 3, 4, 5}
+    sample_set_b = {4, 5, 6, 7, 8}
+    intersection_result, union_result = compare_sets_performance(sample_set_a, sample_set_b)
+    print(f""Sample Set A: {sample_set_a}"")
+    print(f""Sample Set B: {sample_set_b}"")
+    print(f""Intersection (A and B): {intersection_result}"")
+    print(f""Union (A or B): {union_result}"")",True,0,13174,211_3.py
+211,3,Compare two sample sets,"Write a robust Python function to compare two sample sets, focusing on performance. The function must use set operations and clearly return the resulting sets.","def compare_sets(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    difference1 = set1.difference(set2)
+    difference2 = set2.difference(set1)
+    return intersection, union, difference1, difference2
+if __name__ == '__main__':
+    sample_set1 = {1, 2, 3, 4, 5, 6}
+    sample_set2 = {4, 5, 6, 7, 8, 9}
+    intersection_result, union_result, diff1_result, diff2_result = compare_sets(sample_set1, sample_set2)
+    print(f""Set 1: {sample_set1}"")
+    print(f""Set 2: {sample_set2}"")
+    print(f""Intersection: {intersection_result}"")
+    print(f""Union: {union_result}"")
+    print(f""Difference (Set 1 - Set 2): {diff1_result}"")
+    print(f""Difference (Set 2 - Set 1): {diff2_result}"")",True,1,13175,211_3_1.py
+211,3,Compare two sample sets,"Write a robust Python function to compare two sample sets, focusing on performance. The function must use set operations and clearly return the resulting sets.","def compare_sets(set1, set2):
+    result1 = set1.intersection(set2)
+    result2 = set1.union(set2)
+    return result1, result2
+if __name__ == '__main__':
+    sample_set_a = {1, 2, 3, 4, 5}
+    sample_set_b = {4, 5, 6, 7, 8}
+    intersection_result, union_result = compare_sets(sample_set_a, sample_set_b)
+    print(f""Set A: {sample_set_a}"")
+    print(f""Set B: {sample_set_b}"")
+    print(f""Intersection (A and B): {intersection_result}"")
+    print(f""Union (A or B): {union_result}"")",True,2,13176,211_3_2.py
+211,3,Compare two sample sets,"Write a robust Python function to compare two sample sets, focusing on performance. The function must use set operations and clearly return the resulting sets.","def compare_sets(set1, set2):
+    result1 = set1.intersection(set2)
+    result2 = set1.union(set2)
+    return result1, result2
+if __name__ == '__main__':
+    sample_set1 = {1, 2, 3, 4, 5}
+    sample_set2 = {4, 5, 6, 7, 8}
+    intersection_result, union_result = compare_sets(sample_set1, sample_set2)
+    print(f""Sample Set 1: {sample_set1}"")
+    print(f""Sample Set 2: {sample_set2}"")
+    print(f""Intersection (Set1 and Set2): {intersection_result}"")
+    print(f""Union (Set1 or Set2): {union_result}"")",True,3,13177,211_3_3.py
+211,4,Compare two sample sets,"Generate Python code to compare two sample sets and determine if they are equal, and if not, calculate the cardinality of their symmetric difference.",,False,0,13178,211_4.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","import sys
+def compare_sets(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    diff1 = set1 - set2
+    diff2 = set2 - set1
+    print(""Elements in the first set but not the second set:"")
+    for item in diff1:
+        print(item)
+    print(""\nElements in the second set but not the first set:"")
+    for item in diff2:
+        print(item)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    compare_sets(list_a, list_b)",True,0,13179,211_5.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","import sys
+def compare_sets(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    only_in_set1 = set1 - set2
+    only_in_set2 = set2 - set1
+    print(""Elements present in the first set but not the second set:"")
+    for item in sorted(list(only_in_set1)):
+        print(item)
+    print(""\nElements present in the second set but not the first set:"")
+    for item in sorted(list(only_in_set2)):
+        print(item)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    compare_sets(list_a, list_b)",True,1,13180,211_5_1.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","import sys
+def set_difference_and_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    diff1 = set1 - set2
+    diff2 = set2 - set1
+    print(""Elements in the first set but not the second set:"")
+    for item in sorted(list(diff1)):
+        print(item)
+    print(""\nElements in the second set but not the first set:"")
+    for item in sorted(list(diff2)):
+        print(item)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    set_difference_and_intersection(list_a, list_b)",True,2,13181,211_5_2.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","import sys
+def compare_sets(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    diff1 = set1 - set2
+    diff2 = set2 - set1
+    print(""Elements in the first set but not the second set:"")
+    for item in sorted(list(diff1)):
+        print(item)
+    print(""\nElements in the second set but not the first set:"")
+    for item in sorted(list(diff2)):
+        print(item)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    compare_sets(list_a, list_b)",True,3,13182,211_5_3.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","def compare_sets(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    diff1 = set1 - set2
+    diff2 = set2 - set1
+    print(""Elements in the first set but not the second set:"")
+    for item in diff1:
+        print(item)
+    print(""\nElements in the second set but not the first set:"")
+    for item in diff2:
+        print(item)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    compare_sets(list_a, list_b)",True,4,13183,211_5_4.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","def compare_sets(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    only_in_set1 = set1 - set2
+    only_in_set2 = set2 - set1
+    print(""Elements present in the first set but not the second set:"")
+    print(sorted(list(only_in_set1)))
+    print(""\nElements present in the second set but not the first set:"")
+    print(sorted(list(only_in_set2)))
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    compare_sets(list_a, list_b)",True,5,13184,211_5_5.py
+211,5,Compare two sample sets,"Implement a function that takes two lists, converts them to sets, and prints the elements present in the first set but not the second set, and vice versa.","import sys
+def find_difference(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    diff1 = set1 - set2
+    diff2 = set2 - set1
+    print(""Elements in the first set but not the second set:"")
+    for item in diff1:
+        print(item)
+    print(""\nElements in the second set but not the first set:"")
+    for item in diff2:
+        print(item)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    find_difference(list_a, list_b)",True,6,13185,211_5_6.py
+211,6,Compare two sample sets,"Write a script to compare two sample sets of strings, calculating the common elements (intersection) and the elements unique to each set (difference).",,False,0,13186,211_6.py
+211,7,Compare two sample sets,"Implement an optimized function that compares two sample sets by calculating the Jaccard Index, defined as the size of the intersection divided by the size of the union.","import itertools
+def jaccard_index(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    if not union:
+        return 1.0 if not set1 and not set2 else 0.0
+    return len(intersection) / len(union)
+if __name__ == '__main__':
+    sample_set1 = {1, 2, 3, 4, 5}
+    sample_set2 = {4, 5, 6, 7, 8}
+    print(jaccard_index(sample_set1, sample_set2))
+    sample_set3 = {'a', 'b', 'c'}
+    sample_set4 = {'c', 'd', 'e'}
+    print(jaccard_index(sample_set3, sample_set4))
+    sample_set5 = {10, 20}
+    sample_set6 = {30, 40}
+    print(jaccard_index(sample_set5, sample_set6))
+    sample_set7 = {1, 2}
+    sample_set8 = {1, 2}
+    print(jaccard_index(sample_set7, sample_set8))
+    sample_set9 = set()
+    sample_set10 = set()
+    print(jaccard_index(sample_set9, sample_set10))",True,0,13187,211_7.py
+211,7,Compare two sample sets,"Implement an optimized function that compares two sample sets by calculating the Jaccard Index, defined as the size of the intersection divided by the size of the union.","import itertools
+def jaccard_index(set1, set2):
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    if not union:
+        return 0.0
+    return len(intersection) / len(union)
+if __name__ == '__main__':
+    sample_set1 = {1, 2, 3, 4, 5}
+    sample_set2 = {4, 5, 6, 7, 8}
+    result = jaccard_index(sample_set1, sample_set2)
+    print(result)",True,1,13188,211_7_1.py
+211,7,Compare two sample sets,"Implement an optimized function that compares two sample sets by calculating the Jaccard Index, defined as the size of the intersection divided by the size of the union.","import numpy as np
+def jaccard_index(set1, set2):
+    intersection = len(set1.intersection(set2))
+    union = len(set1.union(set2))
+    if union == 0:
+        return 1.0 if intersection == 0 else 0.0
+    return intersection / union
+if __name__ == '__main__':
+    sample_set1 = {1, 2, 3, 4, 5}
+    sample_set2 = {4, 5, 6, 7, 8}
+    print(jaccard_index(sample_set1, sample_set2))
+    sample_set3 = {10, 20, 30}
+    sample_set4 = {30, 40, 50}
+    print(jaccard_index(sample_set3, sample_set4))
+    sample_set5 = {1, 2, 3}
+    sample_set6 = {1, 2, 3}
+    print(jaccard_index(sample_set5, sample_set6))
+    sample_set7 = set()
+    sample_set8 = set()
+    print(jaccard_index(sample_set7, sample_set8))",True,2,13189,211_7_2.py
+210,13,Determine the range of data,"Write a command-line Python script that prompts the user to enter a series of numbers, stores them in a list, and then prints the calculated range of those numbers. The script must use appropriate input validation to ensure all inputs are valid numbers.",,False,0,13190,210_13.py
+211,9,Compare two sample sets,Develop a function to compare two sample sets and identify all elements that exist in one set but not the other (asymmetric difference).,"def asymmetric_difference(set1, set2):
+    diff1 = set1 - set2
+    diff2 = set2 - set1
+    return diff1.union(diff2)
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    result = asymmetric_difference(set_a, set_b)
+    print(result)",True,0,13191,211_9.py
+211,8,Compare two sample sets,"Write a complete, best-practice Python program that reads two sample sets from standard input and prints a detailed comparison report including all set operations.","import sys
+def compare_sets(set1, set2):
+    comparison = {}
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    difference1 = set1.difference(set2)
+    difference2 = set2.difference(set1)
+    symmetric_difference = set1.symmetric_difference(set2)
+    comparison['Set 1'] = sorted(list(set1))
+    comparison['Set 2'] = sorted(list(set2))
+    comparison['Intersection'] = sorted(list(intersection))
+    comparison['Union'] = sorted(list(union))
+    comparison['Difference (Set 1 - Set 2)'] = sorted(list(difference1))
+    comparison['Difference (Set 2 - Set 1)'] = sorted(list(difference2))
+    comparison['Symmetric Difference'] = sorted(list(symmetric_difference))
+    return comparison
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    report = compare_sets(set_a, set_b)
+    print(""--- Set Comparison Report ---"")
+    for key, value in report.items():
+        print(f""{key}: {value}"")",True,0,13192,211_8.py
+211,8,Compare two sample sets,"Write a complete, best-practice Python program that reads two sample sets from standard input and prints a detailed comparison report including all set operations.","import sys
+def compare_sets(set1, set2):
+    print(""--- Set Comparison Report ---"")
+    print(f""Set 1: {sorted(list(set1))}"")
+    print(f""Set 2: {sorted(list(set2))}"")
+    print(""\n--- Set Operations ---"")
+    intersection = set1.intersection(set2)
+    union = set1.union(set2)
+    difference_1_2 = set1.difference(set2)
+    difference_2_1 = set2.difference(set1)
+    symmetric_difference = set1.symmetric_difference(set2)
+    print(f""Intersection (Set1 & Set2): {sorted(list(intersection))}"")
+    print(f""Union (Set1 | Set2): {sorted(list(union))}"")
+    print(f""Difference (Set1 - Set2): {sorted(list(difference_1_2))}"")
+    print(f""Difference (Set2 - Set1): {sorted(list(difference_2_1))}"")
+    print(f""Symmetric Difference (Set1 ^ Set2): {sorted(list(symmetric_difference))}"")
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    compare_sets(set_a, set_b)",True,1,13193,211_8_1.py
+211,8,Compare two sample sets,"Write a complete, best-practice Python program that reads two sample sets from standard input and prints a detailed comparison report including all set operations.","import sys
+def compare_sets(set1, set2):
+    print(""--- Set Comparison Report ---"")
+    print(f""Set 1: {set1}"")
+    print(f""Set 2: {set2}"")
+    print(""\n--- Basic Set Operations ---"")
+    print(f""Union (Set1 | Set2): {set1.union(set2)}"")
+    print(f""Intersection (Set1 & Set2): {set1.intersection(set2)}"")
+    print(f""Difference (Set1 - Set2): {set1.difference(set2)}"")
+    print(f""Difference (Set2 - Set1): {set2.difference(set1)}"")
+    print(f""Symmetric Difference (Set1 ^ Set2): {set1.symmetric_difference(set2)}"")
+    print(""\n--- Set Subset/Superset Relations ---"")
+    print(f""Is Set1 a subset of Set2? ({set1} <= {set2}): {set1.issubset(set2)}"")
+    print(f""Is Set2 a subset of Set1? ({set2} <= {set1}): {set2.issubset(set1)}"")
+    print(f""Is Set1 a superset of Set2? ({set1} >= {set2}): {set1.issuperset(set2)}"")
+    print(f""Is Set2 a superset of Set1? ({set2} >= {set1}): {set2.issuperset(set1)}"")
+    print(""\n--- Set Size Comparison ---"")
+    print(f""Size of Set 1: {len(set1)}"")
+    print(f""Size of Set 2: {len(set2)}"")
+if __name__ == '__main__':
+    sample_set_a = {1, 2, 3, 4, 5}
+    sample_set_b = {4, 5, 6, 7, 8}
+    compare_sets(sample_set_a, sample_set_b)",True,2,13194,211_8_2.py
