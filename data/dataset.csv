@@ -275467,3 +275467,4066 @@ if __name__ == '__main__':
     large_list = [3.14159, -0.5, 100.0, -12.34567, 0.001, 99.999]
     minimum_value = find_minimum(large_list)
     print(minimum_value)",True,8,13375,214_2_8.py
+214,4,Determine the smallest value found,"Write a concise and Pythonic one-liner expression to find the smallest number in the list [15, 3, 8, 22, 1]. Explain the logic briefly in comments.","if __name__ == '__main__':
+    numbers = [15, 3, 8, 22, 1]
+    smallest = min(numbers)
+    print(smallest)",True,0,13376,214_4.py
+214,4,Determine the smallest value found,"Write a concise and Pythonic one-liner expression to find the smallest number in the list [15, 3, 8, 22, 1]. Explain the logic briefly in comments.","if __name__ == '__main__':
+    smallest = min([15, 3, 8, 22, 1])",True,1,13377,214_4_1.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import itertools
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        min_val = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    for value in iterator:
+        if value < min_val:
+            min_val = value
+    return min_val
+if __name__ == '__main__':
+    data1 = [5, 2, 8, 1, 9]
+    print(f""Data: {data1}, Minimum: {find_absolute_minimum(data1)}"")
+    data2 = [-10, -5, -20, -1]
+    print(f""Data: {data2}, Minimum: {find_absolute_minimum(data2)}"")
+    data3 = [100, 50, 25, 75]
+    print(f""Data: {data3}, Minimum: {find_absolute_minimum(data3)}"")
+    data4 = [42]
+    print(f""Data: {data4}, Minimum: {find_absolute_minimum(data4)}"")
+    try:
+        data5 = []
+        find_absolute_minimum(data5)
+    except ValueError as e:
+        print(f""Data: {data5}, Error: {e}"")",True,0,13378,214_5.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import math
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        first_value = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    minimum = first_value
+    for value in iterator:
+        if value < minimum:
+            minimum = value
+    return minimum
+if __name__ == '__main__':
+    sample1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""Sample 1: {find_absolute_minimum(sample1)}"")
+    sample2 = (x for x in [10, -5, 20, -100, 3])
+    print(f""Sample 2: {find_absolute_minimum(sample2)}"")
+    sample3 = [42]
+    print(f""Sample 3: {find_absolute_minimum(sample3)}"")
+    sample4 = []
+    try:
+        print(f""Sample 4: {find_absolute_minimum(sample4)}"")
+    except ValueError as e:
+        print(f""Sample 4 Error: {e}"")",True,1,13379,214_5_1.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import itertools
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        min_val = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    for value in iterator:
+        if value < min_val:
+            min_val = value
+    return min_val
+if __name__ == '__main__':
+    data1 = [5, 2, 8, 1, 9, 3]
+    result1 = find_absolute_minimum(data1)
+    print(f""Data: {data1}, Minimum: {result1}"")
+    def sample_generator():
+        yield 10
+        yield -5
+        yield 20
+        yield 0
+        yield 15
+    gen = sample_generator()
+    result2 = find_absolute_minimum(gen)
+    print(f""Generator values, Minimum: {result2}"")
+    try:
+        data3 = []
+        result3 = find_absolute_minimum(data3)
+        print(f""Data: {data3}, Minimum: {result3}"")
+    except ValueError as e:
+        print(f""Data: {data3}, Error: {e}"")
+    data4 = [42]
+    result4 = find_absolute_minimum(data4)
+    print(f""Data: {data4}, Minimum: {result4}"")",True,2,13380,214_5_2.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import math
+def find_absolute_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Iterable cannot be empty"")
+    iterator = iter(iterable)
+    try:
+        min_val = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    for value in iterator:
+        if value < min_val:
+            min_val = value
+    return min_val
+if __name__ == '__main__':
+    sample1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""Sample 1: {find_absolute_minimum(sample1)}"")
+    sample2 = (7.5, 1.2, 8.0, -3.5, 0.1)
+    print(f""Sample 2: {find_absolute_minimum(sample2)}"")
+    sample3 = [100]
+    print(f""Sample 3: {find_absolute_minimum(sample3)}"")
+    sample4 = [-5, -10, -1, -20]
+    print(f""Sample 4: {find_absolute_minimum(sample4)}"")
+    sample5 = []
+    try:
+        find_absolute_minimum(sample5)
+    except ValueError as e:
+        print(f""Sample 5 Error: {e}"")",True,3,13381,214_5_3.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import itertools
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        min_val = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    for value in iterator:
+        if value < min_val:
+            min_val = value
+    return min_val
+if __name__ == '__main__':
+    data1 = [5, 2, 9, 1, 7]
+    result1 = find_absolute_minimum(data1)
+    print(f""Minimum of {data1}: {result1}"")
+    def sample_generator():
+        yield 10
+        yield 4
+        yield 20
+        yield 1
+        yield 15
+    gen = sample_generator()
+    result2 = find_absolute_minimum(gen)
+    print(f""Minimum of generator: {result2}"")
+    data3 = []
+    try:
+        result3 = find_absolute_minimum(data3)
+        print(f""Minimum of {data3}: {result3}"")
+    except ValueError as e:
+        print(f""Error for {data3}: {e}"")
+    data4 = [-10, 50, -3, 100]
+    result4 = find_absolute_minimum(data4)
+    print(f""Minimum of {data4}: {result4}"")",True,4,13382,214_5_4.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import itertools
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        min_val = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    for value in iterator:
+        if value < min_val:
+            min_val = value
+    return min_val
+if __name__ == '__main__':
+    data1 = [5, 2, 8, 1, 9]
+    print(f""Data: {data1}, Minimum: {find_absolute_minimum(data1)}"")
+    data2 = [-10, -5, -20, -1]
+    print(f""Data: {data2}, Minimum: {find_absolute_minimum(data2)}"")
+    data3 = [3.14, 1.618, 2.718, 0.577]
+    print(f""Data: {data3}, Minimum: {find_absolute_minimum(data3)}"")
+    data4 = [42]
+    print(f""Data: {data4}, Minimum: {find_absolute_minimum(data4)}"")
+    try:
+        data5 = []
+        find_absolute_minimum(data5)
+    except ValueError as e:
+        print(f""Data: {data5}, Error: {e}"")",True,5,13383,214_5_5.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import math
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        first_value = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    minimum = first_value
+    for value in iterator:
+        if value < minimum:
+            minimum = value
+    return minimum
+if __name__ == '__main__':
+    sample1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""Sample 1: {find_absolute_minimum(sample1)}"")
+    sample2 = (x for x in [10, -5, 20, -100, 3])
+    print(f""Sample 2: {find_absolute_minimum(sample2)}"")
+    sample3 = [42]
+    print(f""Sample 3: {find_absolute_minimum(sample3)}"")
+    sample4 = []
+    try:
+        print(f""Sample 4 (Empty): {find_absolute_minimum(sample4)}"")
+    except ValueError as e:
+        print(f""Sample 4 (Empty): Error - {e}"")",True,6,13384,214_5_6.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import math
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        first_value = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    minimum = first_value
+    for value in iterator:
+        if value < minimum:
+            minimum = value
+    return minimum
+if __name__ == '__main__':
+    sample1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""Sample 1: {find_absolute_minimum(sample1)}"")
+    sample2 = (x for x in [100, -50, 0, 200, -10])
+    print(f""Sample 2: {find_absolute_minimum(sample2)}"")
+    sample3 = iter([5])
+    print(f""Sample 3: {find_absolute_minimum(sample3)}"")
+    sample4 = []
+    try:
+        print(f""Sample 4 (Empty): {find_absolute_minimum(sample4)}"")
+    except ValueError as e:
+        print(f""Sample 4 (Empty): Error - {e}"")",True,7,13385,214_5_7.py
+214,5,Determine the smallest value found,"Implement a function that takes an iterable (like a generator or iterator) and determines the absolute minimum value it contains, ensuring optimal time complexity.","import math
+def find_absolute_minimum(iterable):
+    try:
+        iterator = iter(iterable)
+        first_value = next(iterator)
+    except StopIteration:
+        raise ValueError(""Iterable is empty"")
+    minimum = first_value
+    for value in iterator:
+        if value < minimum:
+            minimum = value
+    return minimum
+if __name__ == '__main__':
+    data1 = [5, -2, 8, -10, 3]
+    print(f""Data: {data1}, Minimum: {find_absolute_minimum(data1)}"")
+    data2 = [10, 5, 20, 1]
+    print(f""Data: {data2}, Minimum: {find_absolute_minimum(data2)}"")
+    data3 = [-5, -1, -10, -3]
+    print(f""Data: {data3}, Minimum: {find_absolute_minimum(data3)}"")
+    data4 = [42]
+    print(f""Data: {data4}, Minimum: {find_absolute_minimum(data4)}"")
+    def number_generator():
+        yield 100
+        yield 50
+        yield -20
+        yield 75
+    data5 = number_generator()
+    print(f""Data (Generator): Iterating through values, Minimum: {find_absolute_minimum(data5)}"")
+    try:
+        data6 = []
+        find_absolute_minimum(data6)
+    except ValueError as e:
+        print(f""Data: {data6}, Error: {e}"")",True,8,13386,214_5_8.py
+214,6,Determine the smallest value found,Write a script that reads a sequence of numbers from standard input and outputs only the smallest number found.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 2 8 1""
+    numbers = [int(x) for x in input_data.split()]
+    if numbers:
+        smallest = min(numbers)
+        print(smallest)",True,0,13387,214_6.py
+214,6,Determine the smallest value found,Write a script that reads a sequence of numbers from standard input and outputs only the smallest number found.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 2 8 1""
+    numbers = [int(x) for x in input_data.split()]
+    if numbers:
+        smallest = numbers[0]
+        for number in numbers:
+            if number < smallest:
+                smallest = number
+        print(smallest)",True,1,13388,214_6_1.py
+214,6,Determine the smallest value found,Write a script that reads a sequence of numbers from standard input and outputs only the smallest number found.,"def find_smallest():
+    data = [10, 5, 20, 3, 15]
+    if not data:
+        return None
+    smallest = data[0]
+    for number in data:
+        if number < smallest:
+            smallest = number
+    return smallest
+if __name__ == '__main__':
+    result = find_smallest()
+    print(result)",True,2,13389,214_6_2.py
+214,6,Determine the smallest value found,Write a script that reads a sequence of numbers from standard input and outputs only the smallest number found.,"import sys
+if __name__ == '__main__':
+    data = [15, 3, 8, 2, 20]
+    smallest = data[0]
+    for num in data:
+        if num < smallest:
+            smallest = num
+    print(smallest)",True,3,13390,214_6_3.py
+214,6,Determine the smallest value found,Write a script that reads a sequence of numbers from standard input and outputs only the smallest number found.,"import sys
+def find_smallest():
+    data = [10, 5, 20, 3, 15]
+    if not data:
+        return None
+    smallest = data[0]
+    for number in data:
+        if number < smallest:
+            smallest = number
+    return smallest
+if __name__ == '__main__':
+    result = find_smallest()
+    print(result)",True,4,13391,214_6_4.py
+214,6,Determine the smallest value found,Write a script that reads a sequence of numbers from standard input and outputs only the smallest number found.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 2 8 1""
+    numbers = list(map(int, input_data.split()))
+    if numbers:
+        smallest = min(numbers)
+        print(smallest)",True,5,13392,214_6_5.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 12, 87, 33]
+    list3 = [7]
+    list4 = [1]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")",True,0,13393,214_7.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 99, 12]
+    list3 = [7]
+    list4 = [3, 3, 3, 3]
+    list5 = [99, 1, 50, 2]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")
+    print(f""Smallest in {list5}: {find_smallest(list5)}"")",True,1,13394,214_7_1.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 23, 10, 101, 50]
+    list3 = [7]
+    list4 = [1]
+    list5 = [99, 100, 50, 25]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")
+    print(f""Smallest in {list5}: {find_smallest(list5)}"")",True,2,13395,214_7_2.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 23, 10, 101, 50]
+    list3 = [7]
+    list4 = [3, 3, 3, 3]
+    list5 = [99, 1]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")
+    print(f""Smallest in {list5}: {find_smallest(list5)}"")",True,3,13396,214_7_3.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 42, 3, 77, 15]
+    list3 = [5]
+    list4 = [9]
+    list5 = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")
+    try:
+        print(f""Smallest in {list5}: {find_smallest(list5)}"")
+    except ValueError as e:
+        print(e)",True,4,13397,214_7_4.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 22, 78]
+    list3 = [3]
+    list4 = [99]
+    list5 = [1, 5, 10, 20]
+    list6 = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")
+    print(f""Smallest in {list5}: {find_smallest(list5)}"")
+    try:
+        find_smallest(list6)
+    except ValueError as e:
+        print(f""Error for {list6}: {e}"")",True,5,13398,214_7_5.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 12, 88, 3]
+    list3 = [7]
+    list4 = [1]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")",True,6,13399,214_7_6.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 12, 88, 3]
+    list3 = [7]
+    list4 = [10]
+    list5 = []
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")
+    try:
+        print(f""Smallest in {list5}: {find_smallest(list5)}"")
+    except ValueError as e:
+        print(e)",True,7,13400,214_7_7.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 23, 101, 50]
+    list3 = [7]
+    list4 = [1]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")",True,8,13401,214_7_8.py
+214,7,Determine the smallest value found,Design and implement a recursive function to find the smallest element in a list of positive integers.,"def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    if len(data) == 1:
+        return data[0]
+    else:
+        first = data[0]
+        rest = data[1:]
+        smallest_of_rest = find_smallest(rest)
+        if smallest_of_rest < first:
+            return smallest_of_rest
+        else:
+            return first
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [100, 45, 23, 10, 101, 50]
+    list3 = [7]
+    list4 = [1]
+    print(f""Smallest in {list1}: {find_smallest(list1)}"")
+    print(f""Smallest in {list2}: {find_smallest(list2)}"")
+    print(f""Smallest in {list3}: {find_smallest(list3)}"")
+    print(f""Smallest in {list4}: {find_smallest(list4)}"")",True,9,13402,214_7_9.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 5, 2, 8], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, 0, 5, -10], -10),
+        ([7], 7),
+        ([], None)                                                                                       
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_minimum(input_list)
+            assert result == expected, f""Input: {input_list}, Expected: {expected}, Got: {result}""
+            print(f""Test Passed for {input_list}: Result = {result}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""Test Passed for {input_list}: Caught expected error: {e}"")
+            else:
+                print(f""Test Failed for {input_list}: Unexpected ValueError: {e}"")
+        except AssertionError as e:
+            print(f""Test Failed for {input_list}: Assertion Error: {e}"")
+        except Exception as e:
+            print(f""Test Failed for {input_list}: Unexpected Error: {e}"")",True,0,13403,214_8.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 5, 2, 8], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, 0, 5, -10], -10),
+        ([7], 7),
+        ([], ""Error: Input list cannot be empty""),
+        ([100, 50, 25], 25)
+    ]
+    for input_list, expected_output in test_cases:
+        try:
+            actual_output = find_minimum(input_list)
+            if actual_output == expected_output:
+                print(f""Test Passed for {input_list}: Expected {expected_output}, Got {actual_output}"")
+            else:
+                print(f""Test Failed for {input_list}: Expected {expected_output}, Got {actual_output}"")
+        except ValueError as e:
+            if expected_output.startswith(""Error""):
+                print(f""Test Passed (Exception Handled) for {input_list}: {e}"")
+            else:
+                print(f""Test Failed (Unexpected Exception) for {input_list}: {e}"")
+        except Exception as e:
+            print(f""An unexpected error occurred for {input_list}: {e}"")",True,1,13404,214_8_1.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 5, 2, 8], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, 0, 5, -10], -10),
+        ([7], 7),
+        ([], ""Error: Input list cannot be empty""),
+        ([5, 5, 5], 5)
+    ]
+    for input_list, expected_output in test_cases:
+        try:
+            actual_output = find_minimum(input_list)
+            if actual_output == expected_output:
+                print(f""Test Passed for {input_list}: Expected {expected_output}, Got {actual_output}"")
+            else:
+                print(f""Test Failed for {input_list}: Expected {expected_output}, Got {actual_output}"")
+        except ValueError as e:
+            if expected_output.startswith(""Error""):
+                print(f""Test Passed (Expected Error) for {input_list}: {e}"")
+            else:
+                print(f""Test Failed unexpectedly for {input_list}: {e}"")
+        except Exception as e:
+            print(f""An unexpected error occurred for {input_list}: {e}"")",True,2,13405,214_8_2.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 5, 2, 8], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, 0, 5, -10], -10),
+        ([7], 7),
+        ([], None)                                                                                                                           
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_minimum(input_list)
+            assert result == expected, f""Input: {input_list}, Expected: {expected}, Got: {result}""
+            print(f""Test Passed for {input_list}: Result = {result}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""Test Passed for {input_list}: Raised expected error: {e}"")
+            else:
+                print(f""Test Failed for {input_list}: Unexpected error raised: {e}"")
+        except AssertionError as e:
+            print(f""Test Failed for {input_list}: Assertion Error: {e}"")",True,3,13406,214_8_3.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([5, 2, 8, 1], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5.5, -10.2, -3.1], -10.2),
+        ([0, 0, 0, 0], 0),
+        ([7], 7),
+        ([], ""Error: Input list cannot be empty""),
+    ]
+    for input_data, expected in test_cases:
+        try:
+            result = find_minimum(input_data)
+            assert result == expected, f""Input: {input_data}, Expected: {expected}, Got: {result}""
+            print(f""Test Passed for input {input_data}. Result: {result}"")
+        except ValueError as e:
+            if expected.startswith(""Error""):
+                print(f""Test Passed (Expected Error) for input {input_data}. Error: {e}"")
+            else:
+                print(f""Test Failed unexpectedly for input {input_data}. Error: {e}"")
+        except AssertionError as e:
+            print(f""Test Failed for input {input_data}. Assertion Error: {e}"")
+        except Exception as e:
+            print(f""An unexpected error occurred for input {input_data}: {e}"")",True,4,13407,214_8_4.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 5, 2, 8], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, 0, 5, -10], -10),
+        ([100], 100),
+        ([], None)                                                                                      
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_minimum(input_list)
+            assert result == expected, f""Input: {input_list}, Expected: {expected}, Got: {result}""
+            print(f""Test Passed for {input_list}: Result = {result}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""Test Passed for {input_list}: Caught expected error: {e}"")
+            else:
+                print(f""Test Failed for {input_list}: Unexpected error: {e}"")
+        except AssertionError as e:
+            print(f""Test Failed for {input_list}: Assertion Error: {e}"")
+        except Exception as e:
+            print(f""Test Failed for {input_list}: Unexpected Exception: {e}"")",True,5,13408,214_8_5.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([5, 2, 8, 1], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, -1, -100, -50], -100),
+        ([0, 0, 0, 0], 0),
+        ([42], 42),
+        ([], None)                                                                                       
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_minimum(input_list)
+            assert result == expected, f""Input: {input_list}, Expected: {expected}, Got: {result}""
+            print(f""Test Passed for {input_list}. Result: {result}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""Test Passed for {input_list}. Caught expected error: {e}"")
+            else:
+                print(f""Test Failed for {input_list}. Unexpected Error: {e}"")
+        except AssertionError as e:
+            print(f""Test Failed for {input_list}. Assertion Error: {e}"")
+        except Exception as e:
+            print(f""Test Failed for {input_list}. Unexpected Exception: {e}"")",True,6,13409,214_8_6.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([5, 2, 8, 1], 1),
+        ([-5, -10, -2, -1], -10),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-10, 0, 5, -15], -15),
+        ([7], 7),
+        ([], ValueError)
+    ]
+    for input_list, expected_result in test_cases:
+        try:
+            actual_result = find_minimum(input_list)
+            if isinstance(expected_result, type):
+                assert isinstance(actual_result, type), f""Expected error type, got {type(actual_result)}""
+                print(f""Test Passed for input {input_list}: Raised expected error."")
+            else:
+                assert actual_result == expected_result, f""Input: {input_list}, Expected: {expected_result}, Got: {actual_result}""
+                print(f""Test Passed for input {input_list}: Result {actual_result}"")
+        except ValueError as e:
+            if isinstance(expected_result, type) and expected_result is ValueError:
+                print(f""Test Passed for input {input_list}: Raised expected error: {e}"")
+            else:
+                print(f""Test Failed for input {input_list}: Unexpected ValueError: {e}"")
+        except AssertionError as e:
+            print(f""Test Failed for input {input_list}: Assertion Error: {e}"")
+        except Exception as e:
+            print(f""Test Failed for input {input_list}: Unexpected Error: {e}"")",True,7,13410,214_8_7.py
+214,8,Determine the smallest value found,"Write a testable Python function for finding the minimum value, including docstrings and example test cases demonstrating correct behavior for positive, negative, and mixed number lists.","def find_minimum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 5, 2, 8], 1),
+        ([-10, -5, -20, -1], -20),
+        ([3.14, 1.618, 2.718], 1.618),
+        ([-5, 0, 5, -10], -10),
+        ([7], 7),
+        ([], ""Error""),
+        ([5, 5, 5], 5)
+    ]
+    for input_list, expected_output in test_cases:
+        try:
+            result = find_minimum(input_list)
+            if result == expected_output:
+                print(f""Test Passed for {input_list}: Result={result}, Expected={expected_output}"")
+            else:
+                print(f""Test Failed for {input_list}: Result={result}, Expected={expected_output}"")
+        except ValueError as e:
+            if expected_output == ""Error"":
+                 print(f""Test Passed (Exception Handled) for {input_list}: Caught expected error: {e}"")
+            else:
+                print(f""Test Failed for {input_list}: Unexpected Error: {e}"")
+        except Exception as e:
+            print(f""Test Failed for {input_list}: An unexpected error occurred: {e}"")",True,8,13411,214_8_8.py
+214,9,Determine the smallest value found,Develop an algorithm to find the smallest value in a list of strings based on lexicographical (alphabetical) order.,"import sys
+def find_smallest_string(string_list):
+    if not string_list:
+        return None
+    smallest = string_list[0]
+    for s in string_list[1:]:
+        if s < smallest:
+            smallest = s
+    return smallest
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat"", ""apricot""]
+    result = find_smallest_string(sample_list)
+    print(result)",True,0,13412,214_9.py
+214,9,Determine the smallest value found,Develop an algorithm to find the smallest value in a list of strings based on lexicographical (alphabetical) order.,"def find_smallest_string(list_of_strings):
+    if not list_of_strings:
+        return None
+    smallest = list_of_strings[0]
+    for s in list_of_strings[1:]:
+        if s < smallest:
+            smallest = s
+    return smallest
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""zebra"", ""cat"", ""apricot""]
+    result = find_smallest_string(sample_list)
+    print(result)",True,1,13413,214_9_1.py
+214,9,Determine the smallest value found,Develop an algorithm to find the smallest value in a list of strings based on lexicographical (alphabetical) order.,"import sys
+def find_smallest_string(string_list):
+    if not string_list:
+        return None
+    smallest = string_list[0]
+    for s in string_list[1:]:
+        if s < smallest:
+            smallest = s
+    return smallest
+if __name__ == '__main__':
+    data = [""banana"", ""apple"", ""zebra"", ""cat"", ""apricot""]
+    result = find_smallest_string(data)
+    print(result)",True,2,13414,214_9_2.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8]
+    result = find_minimum(sample_list)
+    print(result)",True,0,13415,214_11.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [5, 12, 3, 8, 1, 9]
+    result = find_minimum(sample_list)
+    print(result)
+    sample_tuple = (42, 10, 77, 5, 99)
+    result_tuple = find_minimum(sample_tuple)
+    print(result_tuple)
+    sample_single = [100]
+    result_single = find_minimum(sample_single)
+    print(result_single)
+    sample_negative = [-5, -10, 0, -2]
+    result_negative = find_minimum(sample_negative)
+    print(result_negative)",True,1,13416,214_11_1.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 77, 22]
+    result = find_minimum(sample_list)
+    print(result)
+    sample_tuple = (100, 50, 200, 10, 150)
+    result_tuple = find_minimum(sample_tuple)
+    print(result_tuple)
+    sample_single = [99]
+    result_single = find_minimum(sample_single)
+    print(result_single)
+    sample_negative = [-5, 10, -20, 3]
+    result_negative = find_minimum(sample_negative)
+    print(result_negative)",True,2,13417,214_11_2.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8]
+    result = find_minimum(sample_list)
+    print(result)
+    sample_tuple = (100, 50, 200, 10, 300)
+    result_tuple = find_minimum(sample_tuple)
+    print(result_tuple)
+    sample_single = [42]
+    result_single = find_minimum(sample_single)
+    print(result_single)
+    sample_negative = [-5, 10, -2, 8]
+    result_negative = find_minimum(sample_negative)
+    print(result_negative)",True,3,13418,214_11_3.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [5, 12, 3, 8, 1, 9]
+    result = find_minimum(sample_list)
+    print(result)
+    sample_tuple = (42, 100, 5, 99, 7)
+    result_tuple = find_minimum(sample_tuple)
+    print(result_tuple)
+    sample_single = [42]
+    result_single = find_minimum(sample_single)
+    print(result_single)
+    sample_negatives = [-10, -5, -20, -1]
+    result_negatives = find_minimum(sample_negatives)
+    print(result_negatives)",True,4,13419,214_11_4.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9, 3]
+    list2 = [-10, 50, 0, -5, 100]
+    list3 = [42]
+    list4 = [7]
+    empty_list = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,13420,214_11_5.py
+214,11,Determine the smallest value found,"Implement an optimized function named `find_minimum` that accepts an iterable (like a list or tuple) of numbers and returns the smallest value using a single pass iteration, avoiding unnecessary sorting.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [45, 12, 89, 3, 56, 7]
+    result = find_minimum(sample_list)
+    print(result)
+    sample_tuple = (100, 5, 200, 1, 99)
+    result_tuple = find_minimum(sample_tuple)
+    print(result_tuple)
+    empty_list = []
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(e)",True,6,13421,214_11_6.py
+214,10,Determine the smallest value found,"Write a complete, efficient Python script that takes a list of integers as input and determines the smallest value present. Use the most straightforward and readable method.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for x in data:
+        if x < smallest:
+            smallest = x
+    return smallest
+if __name__ == '__main__':
+    numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_smallest(numbers)
+    print(result)",True,0,13422,214_10.py
+214,10,Determine the smallest value found,"Write a complete, efficient Python script that takes a list of integers as input and determines the smallest value present. Use the most straightforward and readable method.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for x in data:
+        if x < smallest:
+            smallest = x
+    return smallest
+if __name__ == '__main__':
+    numbers = [15, 3, 8, 22, 1, 45, 9]
+    result = find_smallest(numbers)
+    print(result)",True,1,13423,214_10_1.py
+214,12,Determine the smallest value found,Develop a robust Python function that finds the minimum value in a potentially very large list of floating-point numbers. Ensure the function is highly performant and handles edge cases like empty lists gracefully by raising an appropriate error.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, 5.2, -3.14, 9.9]
+    list3 = [42.0]
+    empty_list = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,13424,214_12.py
+214,12,Determine the smallest value found,Develop a robust Python function that finds the minimum value in a potentially very large list of floating-point numbers. Ensure the function is highly performant and handles edge cases like empty lists gracefully by raising an appropriate error.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, 5.2, -20.1, 3.3]
+    list3 = [100.0]
+    empty_list = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,13425,214_12_1.py
+214,12,Determine the smallest value found,Develop a robust Python function that finds the minimum value in a potentially very large list of floating-point numbers. Ensure the function is highly performant and handles edge cases like empty lists gracefully by raising an appropriate error.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, 5.2, -3.14, 9.8]
+    list3 = [42.0]
+    empty_list = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error handling empty list: {e}"")",True,2,13426,214_12_2.py
+214,12,Determine the smallest value found,Develop a robust Python function that finds the minimum value in a potentially very large list of floating-point numbers. Ensure the function is highly performant and handles edge cases like empty lists gracefully by raising an appropriate error.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, 5.2, -3.1, 9.9]
+    list3 = [42.0]
+    empty_list = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,13427,214_12_3.py
+214,13,Determine the smallest value found,"Write a class named `MinFinder` with a method `get_smallest(self, data_list)` that encapsulates the logic to find the smallest element in the provided list. Ensure the implementation adheres to object-oriented best practices.","class MinFinder:
+    def get_smallest(self, data_list):
+        if not data_list:
+            return None
+        smallest = data_list[0]
+        for item in data_list[1:]:
+            if item < smallest:
+                smallest = item
+        return smallest
+if __name__ == '__main__':
+    finder = MinFinder()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 5, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Smallest in {list1}: {finder.get_smallest(list1)}"")
+    print(f""Smallest in {list2}: {finder.get_smallest(list2)}"")
+    print(f""Smallest in {list3}: {finder.get_smallest(list3)}"")
+    print(f""Smallest in {list4}: {finder.get_smallest(list4)}"")",True,0,13428,214_13.py
+214,13,Determine the smallest value found,"Write a class named `MinFinder` with a method `get_smallest(self, data_list)` that encapsulates the logic to find the smallest element in the provided list. Ensure the implementation adheres to object-oriented best practices.","class MinFinder:
+    def get_smallest(self, data_list):
+        if not data_list:
+            raise ValueError(""Input list cannot be empty"")
+        smallest = data_list[0]
+        for item in data_list[1:]:
+            if item < smallest:
+                smallest = item
+        return smallest
+if __name__ == '__main__':
+    finder = MinFinder()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 5, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Smallest in {list1}: {finder.get_smallest(list1)}"")
+    print(f""Smallest in {list2}: {finder.get_smallest(list2)}"")
+    print(f""Smallest in {list3}: {finder.get_smallest(list3)}"")
+    try:
+        finder.get_smallest(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,1,13429,214_13_1.py
+214,13,Determine the smallest value found,"Write a class named `MinFinder` with a method `get_smallest(self, data_list)` that encapsulates the logic to find the smallest element in the provided list. Ensure the implementation adheres to object-oriented best practices.","class MinFinder:
+    def get_smallest(self, data_list):
+        if not data_list:
+            raise ValueError(""Input list cannot be empty"")
+        smallest = data_list[0]
+        for item in data_list[1:]:
+            if item < smallest:
+                smallest = item
+        return smallest
+if __name__ == '__main__':
+    finder = MinFinder()
+    sample_data_1 = [5, 2, 8, 1, 9]
+    sample_data_2 = [-10, 0, 50, -5]
+    sample_data_3 = [42]
+    sample_data_4 = []
+    result_1 = finder.get_smallest(sample_data_1)
+    print(f""Smallest in {sample_data_1}: {result_1}"")
+    result_2 = finder.get_smallest(sample_data_2)
+    print(f""Smallest in {sample_data_2}: {result_2}"")
+    result_3 = finder.get_smallest(sample_data_3)
+    print(f""Smallest in {sample_data_3}: {result_3}"")
+    try:
+        finder.get_smallest(sample_data_4)
+    except ValueError as e:
+        print(f""Error for {sample_data_4}: {e}"")",True,2,13430,214_13_2.py
+214,14,Determine the smallest value found,"Create a concise and idiomatic Python expression or one-liner to determine the smallest value within a given list of integers, assuming the list is non-empty.","if __name__ == '__main__':
+    data = [5, 2, 8, 1, 9]
+    smallest = min(data)
+    print(smallest)",True,0,13431,214_14.py
+214,14,Determine the smallest value found,"Create a concise and idiomatic Python expression or one-liner to determine the smallest value within a given list of integers, assuming the list is non-empty.","if __name__ == '__main__':
+    data = [5, 1, 9, 3, 7]
+    smallest = min(data)
+    print(smallest)",True,1,13432,214_14_1.py
+215,0,Identify the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and identifies and prints the largest number present.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 42, 3, 99, 21]
+    largest_number = max(input_data)
+    print(largest_number)",True,0,13433,215_0.py
+215,0,Identify the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and identifies and prints the largest number present.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 22, 8, 30, 15]
+    largest_number = max(input_data)
+    print(largest_number)",True,1,13434,215_0_1.py
+215,0,Identify the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and identifies and prints the largest number present.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 42, 3, 99, 21]
+    if not input_data:
+        print(""Error: Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,2,13435,215_0_2.py
+215,0,Identify the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and identifies and prints the largest number present.","import sys
+if __name__ == '__main__':
+    input_data = [15, 8, 42, 3, 99, 27]
+    largest_number = max(input_data)
+    print(largest_number)",True,3,13436,215_0_3.py
+215,0,Identify the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and identifies and prints the largest number present.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 42, 3, 99, 27]
+    largest_number = max(input_data)
+    print(largest_number)",True,4,13437,215_0_4.py
+213,10,Analyze simple number sets,"Write a complete, well-documented Python script that takes a list of integers as input and calculates the sum, average, and range of the set. Use efficient built-in functions.","def analyze_list(data):
+    total_sum = sum(data)
+    count = len(data)
+    average = total_sum / count if count > 0 else 0
+    range_val = max(data) - min(data) if count > 0 else 0
+    return total_sum, average, range_val
+if __name__ == '__main__':
+    sample_list = [10, 25, 32, 8, 45]
+    total, avg, r = analyze_list(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Sum: {total}"")
+    print(f""Average: {avg}"")
+    print(f""Range: {r}"")",True,0,13438,213_10.py
+213,10,Analyze simple number sets,"Write a complete, well-documented Python script that takes a list of integers as input and calculates the sum, average, and range of the set. Use efficient built-in functions.","def analyze_list(numbers):
+    if not numbers:
+        return None, None, None
+    total_sum = sum(numbers)
+    count = len(numbers)
+    average = total_sum / count
+    minimum = min(numbers)
+    maximum = max(numbers)
+    data_range = maximum - minimum
+    return total_sum, average, data_range
+if __name__ == '__main__':
+    sample_list = [10, 25, 32, 8, 41, 15]
+    total, avg, rng = analyze_list(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Sum: {total}"")
+    print(f""Average: {avg}"")
+    print(f""Range: {rng}"")",True,1,13439,213_10_1.py
+213,10,Analyze simple number sets,"Write a complete, well-documented Python script that takes a list of integers as input and calculates the sum, average, and range of the set. Use efficient built-in functions.","def analyze_list(data):
+    total_sum = sum(data)
+    count = len(data)
+    average = total_sum / count if count > 0 else 0
+    range_val = max(data) - min(data) if count > 0 else 0
+    return total_sum, average, range_val
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 15, 30]
+    total, avg, r = analyze_list(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Sum: {total}"")
+    print(f""Average: {avg}"")
+    print(f""Range: {r}"")",True,2,13440,213_10_2.py
+213,10,Analyze simple number sets,"Write a complete, well-documented Python script that takes a list of integers as input and calculates the sum, average, and range of the set. Use efficient built-in functions.","def analyze_list(data):
+    if not data:
+        return None, None, None
+    total_sum = sum(data)
+    count = len(data)
+    average = total_sum / count
+    minimum = min(data)
+    maximum = max(data)
+    data_range = maximum - minimum
+    return total_sum, average, data_range
+if __name__ == '__main__':
+    sample_list = [10, 25, 32, 8, 45]
+    total, avg, rng = analyze_list(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Sum: {total}"")
+    print(f""Average: {avg}"")
+    print(f""Range: {rng}"")",True,3,13441,213_10_3.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 3""
+    numbers = input_line.split()
+    integer_list = [int(x) for x in numbers]
+    maximum_value = max(integer_list)
+    print(maximum_value)",True,0,13442,215_2.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 3""
+    numbers = list(map(int, input_line.split()))
+    maximum = max(numbers)
+    print(maximum)",True,1,13443,215_2_1.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 8 15""
+    numbers = list(map(int, input_line.split()))
+    maximum = max(numbers)
+    print(maximum)",True,2,13444,215_2_2.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 3""
+    numbers = input_line.split()
+    integer_list = [int(x) for x in numbers]
+    maximum = max(integer_list)
+    print(maximum)",True,3,13445,215_2_3.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 8 15""
+    numbers = input_line.split()
+    if numbers:
+        integer_list = [int(x) for x in numbers]
+        maximum_value = max(integer_list)
+        print(maximum_value)",True,4,13446,215_2_4.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 22 8 30""
+    try:
+        numbers = list(map(int, input_line.split()))
+        if numbers:
+            maximum = max(numbers)
+            print(maximum)
+        else:
+            print(""No numbers provided"")
+    except ValueError:
+        print(""Invalid input: Please ensure all inputs are integers separated by spaces."")",True,5,13447,215_2_5.py
+215,2,Identify the largest number present,Develop a standalone Python program that takes a single line of space-separated integers as input and determines the maximum value among them. Use best practices for input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 22 8 30""
+    numbers = input_line.split()
+    integer_list = [int(x) for x in numbers]
+    maximum_value = max(integer_list)
+    print(maximum_value)",True,6,13448,215_2_6.py
+215,1,Identify the largest number present,"Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number using the built-in `max()` function, ensuring the code is highly efficient.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    largest = find_largest(sample_list)
+    print(largest)",True,0,13449,215_1.py
+215,1,Identify the largest number present,"Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number using the built-in `max()` function, ensuring the code is highly efficient.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    data1 = [10, 5, 20, 8]
+    result1 = find_largest(data1)
+    print(result1)
+    data2 = [-5, -1, -10, -3]
+    result2 = find_largest(data2)
+    print(result2)
+    data3 = [42]
+    result3 = find_largest(data3)
+    print(result3)
+    data4 = [3.14, 2.71, 1.618]
+    result4 = find_largest(data4)
+    print(result4)",True,1,13450,215_1_1.py
+215,1,Identify the largest number present,"Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number using the built-in `max()` function, ensuring the code is highly efficient.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    data1 = [10, 5, 20, 8]
+    result1 = find_largest(data1)
+    print(result1)
+    data2 = [-5, -1, -10, -3]
+    result2 = find_largest(data2)
+    print(result2)
+    data3 = [42]
+    result3 = find_largest(data3)
+    print(result3)
+    data4 = [1.5, 3.14, 2.71]
+    result4 = find_largest(data4)
+    print(result4)",True,2,13451,215_1_2.py
+215,1,Identify the largest number present,"Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number using the built-in `max()` function, ensuring the code is highly efficient.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    data1 = [10, 5, 20, 8]
+    result1 = find_largest(data1)
+    print(result1)
+    data2 = [-5, -1, -10, -3]
+    result2 = find_largest(data2)
+    print(result2)
+    data3 = [42]
+    result3 = find_largest(data3)
+    print(result3)
+    data4 = [1.5, 3.7, 2.1]
+    result4 = find_largest(data4)
+    print(result4)",True,3,13452,215_1_3.py
+215,1,Identify the largest number present,"Implement an optimized function named `find_largest` that accepts a list of numbers and returns the largest number using the built-in `max()` function, ensuring the code is highly efficient.","def find_largest(numbers):
+    return max(numbers)
+if __name__ == '__main__':
+    data1 = [10, 5, 20, 8]
+    result1 = find_largest(data1)
+    print(result1)
+    data2 = [-5, -1, -10, -3]
+    result2 = find_largest(data2)
+    print(result2)
+    data3 = [42]
+    result3 = find_largest(data3)
+    print(result3)",True,4,13453,215_1_4.py
+215,3,Identify the largest number present,"Write a class named `NumberAnalyzer` with a method `get_largest(self, data_list)` that efficiently finds and returns the largest element in the provided list. Ensure the implementation is clean and object-oriented.","class NumberAnalyzer:
+    def get_largest(self, data_list):
+        if not data_list:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data_list[0]
+        for number in data_list[1:]:
+            if number > largest:
+                largest = number
+        return largest
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Largest in {list1}: {analyzer.get_largest(list1)}"")
+    print(f""Largest in {list2}: {analyzer.get_largest(list2)}"")
+    print(f""Largest in {list3}: {analyzer.get_largest(list3)}"")
+    try:
+        analyzer.get_largest(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,13454,215_3.py
+215,3,Identify the largest number present,"Write a class named `NumberAnalyzer` with a method `get_largest(self, data_list)` that efficiently finds and returns the largest element in the provided list. Ensure the implementation is clean and object-oriented.","class NumberAnalyzer:
+    def get_largest(self, data_list):
+        if not data_list:
+            raise ValueError(""Input list cannot be empty"")
+        largest = data_list[0]
+        for number in data_list[1:]:
+            if number > largest:
+                largest = number
+        return largest
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    sample_data1 = [10, 5, 20, 8, 15]
+    sample_data2 = [-5, -1, -10, -3]
+    sample_data3 = [42]
+    sample_data4 = []
+    print(f""Largest in {sample_data1}: {analyzer.get_largest(sample_data1)}"")
+    print(f""Largest in {sample_data2}: {analyzer.get_largest(sample_data2)}"")
+    print(f""Largest in {sample_data3}: {analyzer.get_largest(sample_data3)}"")
+    try:
+        analyzer.get_largest(sample_data4)
+    except ValueError as e:
+        print(f""Error for {sample_data4}: {e}"")",True,1,13455,215_3_1.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [10, 4, 25, 8, 30, 15]
+    sample_tuple = (77, 12, 99, 3, 50)
+    empty_list = []
+    single_element = [42]
+    print(f""Maximum of {sample_list}: {determine_maximum(sample_list)}"")
+    print(f""Maximum of {sample_tuple}: {determine_maximum(sample_tuple)}"")
+    try:
+        print(f""Maximum of {empty_list}: {determine_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {single_element}: {determine_maximum(single_element)}"")",True,0,13456,215_4.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    sample_tuple = (33, 1, 99, 42, 7)
+    empty_list = []
+    single_element = [42]
+    print(f""Maximum of {sample_list}: {determine_maximum(sample_list)}"")
+    print(f""Maximum of {sample_tuple}: {determine_maximum(sample_tuple)}"")
+    try:
+        print(f""Maximum of {empty_list}: {determine_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {single_element}: {determine_maximum(single_element)}"")",True,1,13457,215_4_1.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 35, 12]
+    sample_tuple = (42, 15, 99, 3, 7)
+    empty_list = []
+    single_element = [42]
+    print(f""Maximum of {sample_list}: {determine_maximum(sample_list)}"")
+    print(f""Maximum of {sample_tuple}: {determine_maximum(sample_tuple)}"")
+    try:
+        print(f""Maximum of {empty_list}: {determine_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {single_element}: {determine_maximum(single_element)}"")",True,2,13458,215_4_2.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [10, 4, 20, 5, 30]
+    list2 = [-5, -1, -10, -2]
+    list3 = [7]
+    empty_list = []
+    print(f""Maximum of {list1}: {determine_maximum(list1)}"")
+    print(f""Maximum of {list2}: {determine_maximum(list2)}"")
+    print(f""Maximum of {list3}: {determine_maximum(list3)}"")
+    try:
+        determine_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,13459,215_4_3.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 30, 15]
+    sample_tuple = (42, 11, 99, 3, 55)
+    empty_list = []
+    single_element = [7]
+    print(f""Maximum of {sample_list}: {determine_maximum(sample_list)}"")
+    print(f""Maximum of {sample_tuple}: {determine_maximum(sample_tuple)}"")
+    try:
+        print(f""Maximum of {empty_list}: {determine_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {single_element}: {determine_maximum(single_element)}"")",True,4,13460,215_4_4.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 35, 12]
+    sample_tuple = (42, 15, 99, 3, 77)
+    empty_list = []
+    single_element = [42]
+    print(f""Maximum of {sample_list}: {determine_maximum(sample_list)}"")
+    print(f""Maximum of {sample_tuple}: {determine_maximum(sample_tuple)}"")
+    try:
+        print(f""Maximum of {empty_list}: {determine_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {single_element}: {determine_maximum(single_element)}"")",True,5,13461,215_4_5.py
+215,4,Identify the largest number present,Create a function `determine_maximum` that accepts an iterable (like a list or tuple) of numbers and uses a single pass (or the most efficient method) to identify the maximum value. Provide docstrings explaining the parameters and return value.,"def determine_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input iterable cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    sample_tuple = (33, 1, 99, 42, 50)
+    empty_list = []
+    single_element = [42]
+    print(f""Maximum of {sample_list}: {determine_maximum(sample_list)}"")
+    print(f""Maximum of {sample_tuple}: {determine_maximum(sample_tuple)}"")
+    try:
+        print(f""Maximum of {empty_list}: {determine_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {single_element}: {determine_maximum(single_element)}"")",True,6,13462,215_4_6.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_largest(sample_list)
+    print(result)",True,0,13463,215_5.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for element in data[1:]:
+        if element > largest:
+            largest = element
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_largest(sample_list)
+    print(result)",True,1,13464,215_5_1.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for number in data[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_largest(sample_list)
+    print(result)",True,2,13465,215_5_2.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    result = find_largest(sample_list)
+    print(result)",True,3,13466,215_5_3.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","import sys
+def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8, 7, 6]
+    result = find_largest(sample_list)
+    print(result)",True,4,13467,215_5_4.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for number in data[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    result = find_largest(sample_list)
+    print(result)",True,5,13468,215_5_5.py
+215,5,Identify the largest number present,"Implement an iterative solution, without using the built-in `max()` function, to find the largest number in a given list of integers. Focus on algorithmic efficiency.","import sys
+def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_largest(sample_list)
+    print(result)",True,6,13469,215_5_6.py
+215,6,Identify the largest number present,"Write a script that reads a file containing numbers, parses them, and outputs the single largest number found in the file to the console. Handle potential file reading errors gracefully.","def find_largest_number(filename):
+    try:
+        with open(filename, 'r') as file:
+            numbers = []
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    numbers.append(number)
+                except ValueError:
+                    continue
+            if not numbers:
+                return None
+            return max(numbers)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""10\n"")
+            f.write(""5\n"")
+            f.write(""42\n"")
+            f.write(""99\n"")
+            f.write(""3.14\n"")
+            f.write(""100.5\n"")
+            f.write(""error_line\n"")
+        largest = find_largest_number(sample_filename)
+        if largest is not None:
+            print(largest)
+        else:
+            print(""No valid numbers found or an error occurred."")
+    except Exception:
+        print(""An unexpected error occurred during file setup or execution."")",True,0,13470,215_6.py
+215,6,Identify the largest number present,"Write a script that reads a file containing numbers, parses them, and outputs the single largest number found in the file to the console. Handle potential file reading errors gracefully.","def find_largest_number(filename):
+    try:
+        with open(filename, 'r') as file:
+            numbers = []
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    numbers.append(number)
+                except ValueError:
+                    continue
+            if not numbers:
+                return None
+            return max(numbers)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(""10\n"")
+        f.write(""5\n"")
+        f.write(""42\n"")
+        f.write(""99\n"")
+        f.write(""3\n"")
+    largest = find_largest_number(sample_filename)
+    if largest is not None:
+        print(largest)
+    else:
+        print(""Error reading file or no numbers found."")",True,1,13471,215_6_1.py
+215,6,Identify the largest number present,"Write a script that reads a file containing numbers, parses them, and outputs the single largest number found in the file to the console. Handle potential file reading errors gracefully.","def find_largest_number(filename):
+    try:
+        with open(filename, 'r') as file:
+            numbers = []
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    numbers.append(number)
+                except ValueError:
+                    continue
+            if not numbers:
+                return None
+            return max(numbers)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""10\n"")
+            f.write(""5\n"")
+            f.write(""99\n"")
+            f.write(""32.5\n"")
+            f.write(""42\n"")
+        largest = find_largest_number(sample_filename)
+        if largest is not None:
+            print(largest)
+        else:
+            print(""No valid numbers found or an error occurred."")
+    except Exception as e:
+        print(f""An unexpected error occurred during file setup or execution: {e}"")",True,2,13472,215_6_2.py
+215,6,Identify the largest number present,"Write a script that reads a file containing numbers, parses them, and outputs the single largest number found in the file to the console. Handle potential file reading errors gracefully.","def find_largest_number(filename):
+    try:
+        with open(filename, 'r') as file:
+            numbers = []
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    numbers.append(number)
+                except ValueError:
+                    continue
+            if not numbers:
+                return None
+            return max(numbers)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""10\n"")
+            f.write(""5\n"")
+            f.write(""42\n"")
+            f.write(""99\n"")
+            f.write(""3.14\n"")
+            f.write(""100.5\n"")
+        largest = find_largest_number(sample_filename)
+        if largest is not None:
+            print(largest)
+        else:
+            print(""No valid numbers found or an error occurred."")
+    except Exception as e:
+        print(f""An unexpected error occurred during setup: {e}"")",True,3,13473,215_6_3.py
+215,6,Identify the largest number present,"Write a script that reads a file containing numbers, parses them, and outputs the single largest number found in the file to the console. Handle potential file reading errors gracefully.","def find_largest_number(filename):
+    try:
+        with open(filename, 'r') as file:
+            numbers = []
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    numbers.append(number)
+                except ValueError:
+                    continue
+            if not numbers:
+                return None
+            return max(numbers)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""10\n"")
+            f.write(""5\n"")
+            f.write(""42\n"")
+            f.write(""99\n"")
+            f.write(""3.5\n"")
+            f.write(""100.1\n"")
+        largest = find_largest_number(sample_filename)
+        if largest is not None:
+            print(largest)
+        else:
+            print(""No valid numbers found or an error occurred."")
+    except Exception as e:
+        print(f""An error occurred during file setup or execution: {e}"")",True,4,13474,215_6_4.py
+215,6,Identify the largest number present,"Write a script that reads a file containing numbers, parses them, and outputs the single largest number found in the file to the console. Handle potential file reading errors gracefully.","def find_largest_number(filename):
+    try:
+        with open(filename, 'r') as file:
+            numbers = []
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    numbers.append(number)
+                except ValueError:
+                    continue
+            if not numbers:
+                return None
+            return max(numbers)
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return None
+if __name__ == '__main__':
+    sample_filename = ""numbers.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""10\n"")
+            f.write(""5\n"")
+            f.write(""42\n"")
+            f.write(""99\n"")
+            f.write(""3.14\n"")
+            f.write(""100.5\n"")
+        largest = find_largest_number(sample_filename)
+        if largest is not None:
+            print(largest)
+        else:
+            print(""No valid numbers found or an error occurred."")
+    except Exception as e:
+        print(f""An unexpected error occurred during setup or execution: {e}"")",True,5,13475,215_6_5.py
+215,8,Identify the largest number present,Develop a Python function that accepts a variable number of arguments (using `*args`) and finds the maximum value among all provided arguments.,"def find_maximum(*args):
+    if not args:
+        return None
+    maximum = args[0]
+    for num in args[1:]:
+        if num > maximum:
+            maximum = num
+    return maximum
+if __name__ == '__main__':
+    result1 = find_maximum(10, 5, 20, 8)
+    print(f""Maximum of (10, 5, 20, 8): {result1}"")
+    result2 = find_maximum(-3, -1, -5, -10)
+    print(f""Maximum of (-3, -1, -5, -10): {result2}"")
+    result3 = find_maximum(42)
+    print(f""Maximum of (42): {result3}"")
+    result4 = find_maximum()
+    print(f""Maximum of (): {result4}"")
+    result5 = find_maximum(100, 50, 75)
+    print(f""Maximum of (100, 50, 75): {result5}"")",True,0,13476,215_8.py
+215,8,Identify the largest number present,Develop a Python function that accepts a variable number of arguments (using `*args`) and finds the maximum value among all provided arguments.,"def find_maximum(*args):
+    if not args:
+        return None
+    maximum = args[0]
+    for arg in args[1:]:
+        if arg > maximum:
+            maximum = arg
+    return maximum
+if __name__ == '__main__':
+    result1 = find_maximum(10, 5, 20, 8)
+    print(f""Maximum of (10, 5, 20, 8): {result1}"")
+    result2 = find_maximum(-5, -1, -10)
+    print(f""Maximum of (-5, -1, -10): {result2}"")
+    result3 = find_maximum(42)
+    print(f""Maximum of (42): {result3}"")
+    result4 = find_maximum()
+    print(f""Maximum of (): {result4}"")
+    result5 = find_maximum(3.14, 2.71, 1.618)
+    print(f""Maximum of (3.14, 2.71, 1.618): {result5}"")",True,1,13477,215_8_1.py
+215,8,Identify the largest number present,Develop a Python function that accepts a variable number of arguments (using `*args`) and finds the maximum value among all provided arguments.,"def find_maximum(*args):
+    if not args:
+        return None
+    maximum = args[0]
+    for arg in args[1:]:
+        if arg > maximum:
+            maximum = arg
+    return maximum
+if __name__ == '__main__':
+    result1 = find_maximum(10, 5, 20, 8)
+    print(f""Maximum of (10, 5, 20, 8): {result1}"")
+    result2 = find_maximum(-5, -1, -10)
+    print(f""Maximum of (-5, -1, -10): {result2}"")
+    result3 = find_maximum(42)
+    print(f""Maximum of (42): {result3}"")
+    result4 = find_maximum()
+    print(f""Maximum of (): {result4}"")",True,2,13478,215_8_2.py
+215,8,Identify the largest number present,Develop a Python function that accepts a variable number of arguments (using `*args`) and finds the maximum value among all provided arguments.,"def find_maximum(*args):
+    if not args:
+        return None
+    maximum = args[0]
+    for num in args[1:]:
+        if num > maximum:
+            maximum = num
+    return maximum
+if __name__ == '__main__':
+    print(find_maximum(10, 5, 20, 8))
+    print(find_maximum(-3, -1, -5))
+    print(find_maximum(42))
+    print(find_maximum())",True,3,13479,215_8_3.py
+215,8,Identify the largest number present,Develop a Python function that accepts a variable number of arguments (using `*args`) and finds the maximum value among all provided arguments.,"def find_maximum(*args):
+    if not args:
+        return None
+    maximum = args[0]
+    for arg in args:
+        if arg > maximum:
+            maximum = arg
+    return maximum
+if __name__ == '__main__':
+    result1 = find_maximum(10, 5, 20, 8)
+    print(f""Maximum of (10, 5, 20, 8): {result1}"")
+    result2 = find_maximum(-5, -1, -10)
+    print(f""Maximum of (-5, -1, -10): {result2}"")
+    result3 = find_maximum(42)
+    print(f""Maximum of (42): {result3}"")
+    result4 = find_maximum()
+    print(f""Maximum of (): {result4}"")",True,4,13480,215_8_4.py
+215,7,Identify the largest number present,"Design and write a highly optimized function that finds the largest number in a list of potentially very large integers, focusing on minimizing computational steps.","def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [123456789, 987654321, 555555555]
+    list2 = [-100, -5, -1000]
+    list3 = [0]
+    list4 = [999999999999999999999, 1000000000000000000000, 500000000000000000000]
+    list5 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    print(f""Largest in {list4}: {find_largest(list4)}"")
+    try:
+        print(f""Largest in {list5}: {find_largest(list5)}"")
+    except ValueError as e:
+        print(e)",True,0,13481,215_7.py
+215,7,Identify the largest number present,"Design and write a highly optimized function that finds the largest number in a list of potentially very large integers, focusing on minimizing computational steps.","def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [123456789, 987654321, 543210987]
+    list2 = [-100, -50, -200, -1]
+    list3 = [1, 2, 3, 4, 5]
+    list4 = [999999999999999999999, 123456789]
+    list5 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    print(f""Largest in {list4}: {find_largest(list4)}"")
+    try:
+        print(f""Largest in {list5}: {find_largest(list5)}"")
+    except ValueError as e:
+        print(e)",True,1,13482,215_7_1.py
+215,7,Identify the largest number present,"Design and write a highly optimized function that finds the largest number in a list of potentially very large integers, focusing on minimizing computational steps.","def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [123456789, 987654321, 543210987]
+    list2 = [-100, -50, -200, -1]
+    list3 = [1000000000000, 5, 999999999999]
+    list4 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    try:
+        print(f""Largest in {list4}: {find_largest(list4)}"")
+    except ValueError as e:
+        print(e)",True,2,13483,215_7_2.py
+215,7,Identify the largest number present,"Design and write a highly optimized function that finds the largest number in a list of potentially very large integers, focusing on minimizing computational steps.","import sys
+def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    test_list_small = [10, 5, 20, 8]
+    print(find_largest(test_list_small))
+    test_list_large = [999999999999999999999, 123456789012345678901, 555555555555555555555]
+    print(find_largest(test_list_large))
+    test_list_neg = [-10, -5, -20]
+    print(find_largest(test_list_neg))",True,3,13484,215_7_3.py
+215,7,Identify the largest number present,"Design and write a highly optimized function that finds the largest number in a list of potentially very large integers, focusing on minimizing computational steps.","import sys
+def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    data1 = [1234567890123456789, 9876543210987654321, 5555555555555555555]
+    data2 = [-100, -50, -1, -200]
+    data3 = [10000000000000000000, 9999999999999999999, 10000000000000000000]
+    data4 = []
+    print(f""Largest in data1: {find_largest(data1)}"")
+    print(f""Largest in data2: {find_largest(data2)}"")
+    print(f""Largest in data3: {find_largest(data3)}"")
+    try:
+        find_largest(data4)
+    except ValueError as e:
+        print(f""Error for data4: {e}"")",True,4,13485,215_7_4.py
+215,7,Identify the largest number present,"Design and write a highly optimized function that finds the largest number in a list of potentially very large integers, focusing on minimizing computational steps.","def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    list1 = [123456789, 987654321, 543210987]
+    list2 = [-100, -50, -200, -1]
+    list3 = [1, 2, 3, 4, 5]
+    list4 = [999999999999999999999, 1234567890123456789]
+    empty_list = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    print(f""Largest in {list4}: {find_largest(list4)}"")
+    try:
+        find_largest(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,13486,215_7_5.py
+215,10,Identify the largest number present,"Write a complete, efficient Python script that reads a list of integers from standard input and identifies and prints the largest number present. The script must handle potential empty input gracefully.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    if not input_data:
+        print(""Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,0,13487,215_10.py
+215,10,Identify the largest number present,"Write a complete, efficient Python script that reads a list of integers from standard input and identifies and prints the largest number present. The script must handle potential empty input gracefully.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 22, 8, 30, 15]
+    if not input_data:
+        print(""No numbers provided."")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,1,13488,215_10_1.py
+215,10,Identify the largest number present,"Write a complete, efficient Python script that reads a list of integers from standard input and identifies and prints the largest number present. The script must handle potential empty input gracefully.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 22, 8, 30, 15]
+    if not input_data:
+        print(""Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,2,13489,215_10_2.py
+215,10,Identify the largest number present,"Write a complete, efficient Python script that reads a list of integers from standard input and identifies and prints the largest number present. The script must handle potential empty input gracefully.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 22, 8, 30]
+    if not input_data:
+        print(""Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,3,13490,215_10_3.py
+215,10,Identify the largest number present,"Write a complete, efficient Python script that reads a list of integers from standard input and identifies and prints the largest number present. The script must handle potential empty input gracefully.","import sys
+if __name__ == '__main__':
+    input_data = [42, 10, 99, 5, 78]
+    if not input_data:
+        print(""No numbers provided."")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,4,13491,215_10_4.py
+215,10,Identify the largest number present,"Write a complete, efficient Python script that reads a list of integers from standard input and identifies and prints the largest number present. The script must handle potential empty input gracefully.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    if not input_data:
+        print(""No numbers provided."")
+    else:
+        largest = input_data[0]
+        for number in input_data:
+            if number > largest:
+                largest = number
+        print(largest)",True,5,13492,215_10_5.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 5, 20, 8, 15]
+    result_int = find_maximum(sample_list_int)
+    print(f""The maximum element in {sample_list_int} is: {result_int}"")
+    sample_list_float = [3.14, 1.618, 2.718]
+    result_float = find_maximum(sample_list_float)
+    print(f""The maximum element in {sample_list_float} is: {result_float}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""Caught expected error for empty list: {e}"")",True,0,13493,215_9.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [3, 1, 4, 1, 5, 9, 2]
+    print(f""The maximum element in {sample_list_int} is: {find_maximum(sample_list_int)}"")
+    sample_list_float = [3.14, 1.618, 2.718, 0.577]
+    print(f""The maximum element in {sample_list_float} is: {find_maximum(sample_list_float)}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""Error caught for empty list: {e}"")",True,1,13494,215_9_1.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 5, 20, 8, 15]
+    result_int = find_maximum(sample_list_int)
+    print(f""The maximum element in {sample_list_int} is: {result_int}"")
+    sample_list_float = [3.14, 1.618, 2.718]
+    result_float = find_maximum(sample_list_float)
+    print(f""The maximum element in {sample_list_float} is: {result_float}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""Error caught for empty list: {e}"")",True,2,13495,215_9_2.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 4, 25, 8, 30]
+    result_int = find_maximum(sample_list_int)
+    print(f""The maximum element in {sample_list_int} is: {result_int}"")
+    sample_list_float = [3.14, 1.618, 2.718]
+    result_float = find_maximum(sample_list_float)
+    print(f""The maximum element in {sample_list_float} is: {result_float}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""Caught expected error for empty list: {e}"")",True,3,13496,215_9_3.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 4, 25, 8, 30]
+    print(f""List: {sample_list_int}"")
+    max_int = find_maximum(sample_list_int)
+    print(f""Maximum element in {sample_list_int}: {max_int}"")
+    sample_list_float = [3.14, 1.618, 2.718]
+    print(f""\nList: {sample_list_float}"")
+    max_float = find_maximum(sample_list_float)
+    print(f""Maximum element in {sample_list_float}: {max_float}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""\nError handling for empty list: {e}"")",True,4,13497,215_9_4.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 5, 20, 8, 15]
+    result_int = find_maximum(sample_list_int)
+    print(f""The maximum element in {sample_list_int} is: {result_int}"")
+    sample_list_float = [3.14, 1.618, 2.718, 0.577]
+    result_float = find_maximum(sample_list_float)
+    print(f""The maximum element in {sample_list_float} is: {result_float}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""Caught expected error for empty list: {e}"")",True,5,13498,215_9_5.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 5, 20, 8, 15]
+    sample_list_float = [3.14, 1.618, 2.718, 0.577]
+    sample_list_empty: List[int] = []
+    max_int = find_maximum(sample_list_int)
+    print(f""Maximum of {sample_list_int}: {max_int}"")
+    max_float = find_maximum(sample_list_float)
+    print(f""Maximum of {sample_list_float}: {max_float}"")
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""Error handling empty list: {e}"")",True,6,13499,215_9_6.py
+215,9,Identify the largest number present,"Write a complete, production-ready Python module that contains a function to find the maximum element in a list, ensuring adherence to all PEP 8 style guidelines and providing comprehensive type hinting.","from typing import List, TypeVar
+T = TypeVar('T')
+def find_maximum(data: List[T]) -> T:
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_int = [10, 5, 20, 8, 15]
+    print(f""List: {sample_list_int}"")
+    max_int = find_maximum(sample_list_int)
+    print(f""Maximum element in {sample_list_int}: {max_int}"")
+    sample_list_float = [3.14, 1.618, 2.718]
+    print(f""\nList: {sample_list_float}"")
+    max_float = find_maximum(sample_list_float)
+    print(f""Maximum element in {sample_list_float}: {max_float}"")
+    sample_list_empty: List[int] = []
+    try:
+        find_maximum(sample_list_empty)
+    except ValueError as e:
+        print(f""\nError for empty list: {e}"")",True,7,13500,215_9_7.py
+215,11,Identify the largest number present,Implement a robust function named 'find_largest' that accepts a list of integers and returns the largest integer. The implementation must be optimized for time and space complexity (O(n)).,"def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for x in data[1:]:
+        if x > largest:
+            largest = x
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""The largest in {list1} is: {find_largest(list1)}"")
+    list2 = [-10, -5, -20, -1]
+    print(f""The largest in {list2} is: {find_largest(list2)}"")
+    list3 = [42]
+    print(f""The largest in {list3} is: {find_largest(list3)}"")
+    list4 = [100, 50, 200, 10]
+    print(f""The largest in {list4} is: {find_largest(list4)}"")",True,0,13501,215_11.py
+215,11,Identify the largest number present,Implement a robust function named 'find_largest' that accepts a list of integers and returns the largest integer. The implementation must be optimized for time and space complexity (O(n)).,"def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for x in data[1:]:
+        if x > largest:
+            largest = x
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, -5, -20, -1]
+    list3 = [7]
+    list4 = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    try:
+        print(f""Largest in {list4}: {find_largest(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,1,13502,215_11_1.py
+215,11,Identify the largest number present,Implement a robust function named 'find_largest' that accepts a list of integers and returns the largest integer. The implementation must be optimized for time and space complexity (O(n)).,"def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for x in data[1:]:
+        if x > largest:
+            largest = x
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(f""The largest in {list1} is: {find_largest(list1)}"")
+    list2 = [-10, -5, -20, -1]
+    print(f""The largest in {list2} is: {find_largest(list2)}"")
+    list3 = [42]
+    print(f""The largest in {list3} is: {find_largest(list3)}"")
+    list4 = [100, 50, 200, 150]
+    print(f""The largest in {list4} is: {find_largest(list4)}"")",True,2,13503,215_11_2.py
+215,11,Identify the largest number present,Implement a robust function named 'find_largest' that accepts a list of integers and returns the largest integer. The implementation must be optimized for time and space complexity (O(n)).,"def find_largest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    largest = data[0]
+    for x in data[1:]:
+        if x > largest:
+            largest = x
+    return largest
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, -5, -20, -1]
+    list3 = [42]
+    list4 = [100, 50, 25]
+    empty_list = []
+    print(f""Largest in {list1}: {find_largest(list1)}"")
+    print(f""Largest in {list2}: {find_largest(list2)}"")
+    print(f""Largest in {list3}: {find_largest(list3)}"")
+    print(f""Largest in {list4}: {find_largest(list4)}"")
+    try:
+        find_largest(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,13504,215_11_3.py
+215,13,Identify the largest number present,"Write a concise and idiomatic Python expression or one-line solution to find the largest number in a predefined list: [15, 4, 99, 23, 1]. Demonstrate the most Pythonic way to achieve this.","if __name__ == '__main__':
+    numbers = [15, 4, 99, 23, 1]
+    largest = max(numbers)
+    print(largest)",True,0,13505,215_13.py
+215,14,Identify the largest number present,Create a standalone program that takes a single line of space-separated integers as input from the command line and determines and prints the maximum value among those integers. Use efficient input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 3""
+    numbers = list(map(int, input_line.split()))
+    if numbers:
+        maximum = max(numbers)
+        print(maximum)",True,0,13506,215_14.py
+215,14,Identify the largest number present,Create a standalone program that takes a single line of space-separated integers as input from the command line and determines and prints the maximum value among those integers. Use efficient input handling.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 3""
+    numbers = list(map(int, input_data.split()))
+    if numbers:
+        maximum = max(numbers)
+        print(maximum)",True,1,13507,215_14_1.py
+215,14,Identify the largest number present,Create a standalone program that takes a single line of space-separated integers as input from the command line and determines and prints the maximum value among those integers. Use efficient input handling.,"import sys
+if __name__ == '__main__':
+    input_line = ""10 5 20 8 15""
+    numbers = list(map(int, input_line.split()))
+    if numbers:
+        maximum = max(numbers)
+        print(maximum)",True,2,13508,215_14_2.py
+216,0,Calculate the middle value easily,"Write a complete, well-documented Python script to calculate the middle value of a list of numbers, handling both odd and even list lengths efficiently.","def find_middle_value(data):
+    n = len(data)
+    if n == 0:
+        return None
+    elif n % 2 != 0:
+        return data[n // 2]
+    else:
+        mid1 = data[n // 2 - 1]
+        mid2 = data[n // 2]
+        return (mid1 + mid2) / 2
+if __name__ == '__main__':
+    sample_list_odd = [1, 5, 3, 7, 9]
+    sample_list_even = [10, 20, 30, 40]
+    sample_list_single = [42]
+    sample_list_empty = []
+    print(f""Middle value of {sample_list_odd}: {find_middle_value(sample_list_odd)}"")
+    print(f""Middle value of {sample_list_even}: {find_middle_value(sample_list_even)}"")
+    print(f""Middle value of {sample_list_single}: {find_middle_value(sample_list_single)}"")
+    print(f""Middle value of {sample_list_empty}: {find_middle_value(sample_list_empty)}"")",True,0,13509,216_0.py
+216,0,Calculate the middle value easily,"Write a complete, well-documented Python script to calculate the middle value of a list of numbers, handling both odd and even list lengths efficiently.","def find_middle_value(data):
+    n = len(data)
+    if n == 0:
+        return None
+    elif n % 2 != 0:
+        return data[n // 2]
+    else:
+        mid1 = data[n // 2 - 1]
+        mid2 = data[n // 2]
+        return (mid1 + mid2) / 2
+if __name__ == '__main__':
+    sample_list_odd = [1, 5, 3, 7, 9]
+    sample_list_even = [10, 20, 30, 40]
+    sample_list_empty = []
+    result_odd = find_middle_value(sample_list_odd)
+    result_even = find_middle_value(sample_list_even)
+    result_empty = find_middle_value(sample_list_empty)
+    print(f""Middle value of {sample_list_odd}: {result_odd}"")
+    print(f""Middle value of {sample_list_even}: {result_even}"")
+    print(f""Middle value of {sample_list_empty}: {result_empty}"")",True,1,13510,216_0_1.py
+216,0,Calculate the middle value easily,"Write a complete, well-documented Python script to calculate the middle value of a list of numbers, handling both odd and even list lengths efficiently.","def find_middle_value(data):
+    n = len(data)
+    if n == 0:
+        return None
+    elif n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        return (data[middle_left_index] + data[middle_right_index]) / 2
+if __name__ == '__main__':
+    sample_list_odd = [1, 5, 3, 7, 9]
+    sample_list_even = [10, 20, 30, 40]
+    sample_list_empty = []
+    result_odd = find_middle_value(sample_list_odd)
+    result_even = find_middle_value(sample_list_even)
+    result_empty = find_middle_value(sample_list_empty)
+    print(f""Middle value of {sample_list_odd}: {result_odd}"")
+    print(f""Middle value of {sample_list_even}: {result_even}"")
+    print(f""Middle value of {sample_list_empty}: {result_empty}"")",True,2,13511,216_0_2.py
+216,0,Calculate the middle value easily,"Write a complete, well-documented Python script to calculate the middle value of a list of numbers, handling both odd and even list lengths efficiently.","import math
+def find_middle_value(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    elif n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_index_right = n // 2
+        middle_index_left = middle_index_right - 1
+        middle_value = (data[middle_index_left] + data[middle_index_right]) / 2.0
+        return middle_value
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5.5, 6.5, 7.5]
+    list4 = [1, 2, 3, 4]
+    list5 = []
+    print(f""Middle value of {list1}: {find_middle_value(list1)}"")
+    print(f""Middle value of {list2}: {find_middle_value(list2)}"")
+    print(f""Middle value of {list3}: {find_middle_value(list3)}"")
+    print(f""Middle value of {list4}: {find_middle_value(list4)}"")
+    try:
+        find_middle_value(list5)
+    except ValueError as e:
+        print(f""Error for list5: {e}"")",True,3,13512,216_0_3.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    print(f""Sample List 1: {sample_list1}"")
+    median1 = find_median(sample_list1)
+    print(f""Median 1: {median1}"")
+    sample_list2 = [10.0, 5.0, 2.0, 8.0, 1.0]
+    print(f""Sample List 2: {sample_list2}"")
+    median2 = find_median(sample_list2)
+    print(f""Median 2: {median2}"")
+    sample_list3 = [7.0, 7.0, 1.0, 3.0]
+    print(f""Sample List 3: {sample_list3}"")
+    median3 = find_median(sample_list3)
+    print(f""Median 3: {median3}"")
+    sample_list4 = [1.5, 2.5]
+    print(f""Sample List 4: {sample_list4}"")
+    median4 = find_median(sample_list4)
+    print(f""Median 4: {median4}"")
+    sample_list5 = []
+    print(f""Sample List 5: {sample_list5}"")
+    median5 = find_median(sample_list5)
+    print(f""Median 5: {median5}"")",True,0,13513,216_2.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    sample_list2 = [10.0, 5.0, 2.0, 7.0, 1.0]
+    sample_list3 = [1.0, 2.0, 3.0, 4.0]
+    sample_list4 = [1.5, 2.5]
+    sample_list5 = [100.0]
+    sample_list6 = []
+    print(f""Median of {sample_list1}: {find_median(sample_list1)}"")
+    print(f""Median of {sample_list2}: {find_median(sample_list2)}"")
+    print(f""Median of {sample_list3}: {find_median(sample_list3)}"")
+    print(f""Median of {sample_list4}: {find_median(sample_list4)}"")
+    print(f""Median of {sample_list5}: {find_median(sample_list5)}"")
+    print(f""Median of {sample_list6}: {find_median(sample_list6)}"")",True,1,13514,216_2_1.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    sample_list2 = [10.0, 5.0, 2.0, 7.0, 1.0]
+    sample_list3 = [1.0, 2.0, 3.0, 4.0]
+    sample_list4 = [1.5, 2.5, 3.5, 4.5]
+    print(f""Median of {sample_list1}: {find_median(sample_list1)}"")
+    print(f""Median of {sample_list2}: {find_median(sample_list2)}"")
+    print(f""Median of {sample_list3}: {find_median(sample_list3)}"")
+    print(f""Median of {sample_list4}: {find_median(sample_list4)}"")",True,2,13515,216_2_2.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    sample_list2 = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
+    sample_list3 = [7.0, 1.0, 9.0, 3.0, 5.0]
+    sample_list4 = [1.5, 2.5]
+    sample_list5 = [100.1, 50.5, 25.0]
+    print(f""Median of {sample_list1}: {find_median(sample_list1)}"")
+    print(f""Median of {sample_list2}: {find_median(sample_list2)}"")
+    print(f""Median of {sample_list3}: {find_median(sample_list3)}"")
+    print(f""Median of {sample_list4}: {find_median(sample_list4)}"")
+    print(f""Median of {sample_list5}: {find_median(sample_list5)}"")",True,3,13516,216_2_3.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    sample_list2 = [10.0, 5.0, 2.0, 7.0, 1.0]
+    sample_list3 = [1.0, 2.0, 3.0, 4.0]
+    sample_list4 = [1.5, 2.5]
+    sample_list5 = []
+    print(f""Median of {sample_list1}: {find_median(sample_list1)}"")
+    print(f""Median of {sample_list2}: {find_median(sample_list2)}"")
+    print(f""Median of {sample_list3}: {find_median(sample_list3)}"")
+    print(f""Median of {sample_list4}: {find_median(sample_list4)}"")
+    print(f""Median of {sample_list5}: {find_median(sample_list5)}"")",True,4,13517,216_2_4.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    print(f""Sample List 1: {sample_list1}"")
+    median1 = find_median(sample_list1)
+    print(f""Median 1: {median1}"")
+    sample_list2 = [10.0, 5.0, 2.0, 8.0, 1.0]
+    print(f""\nSample List 2: {sample_list2}"")
+    median2 = find_median(sample_list2)
+    print(f""Median 2: {median2}"")
+    sample_list3 = [7.0, 7.0, 1.0, 4.0]
+    print(f""\nSample List 3: {sample_list3}"")
+    median3 = find_median(sample_list3)
+    print(f""Median 3: {median3}"")
+    sample_list4 = [1.5, 2.5, 3.5, 4.5]
+    print(f""\nSample List 4: {sample_list4}"")
+    median4 = find_median(sample_list4)
+    print(f""Median 4: {median4}"")",True,5,13518,216_2_5.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    sample_list2 = [10.0, 5.0, 20.0, 15.0]
+    sample_list3 = [7.0]
+    sample_list4 = [1.0, 2.0, 3.0, 4.0]
+    sample_list5 = []
+    print(f""Median of {sample_list1}: {find_median(sample_list1)}"")
+    print(f""Median of {sample_list2}: {find_median(sample_list2)}"")
+    print(f""Median of {sample_list3}: {find_median(sample_list3)}"")
+    print(f""Median of {sample_list4}: {find_median(sample_list4)}"")
+    print(f""Median of {sample_list5}: {find_median(sample_list5)}"")",True,6,13519,216_2_6.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.0, 4.5, 2.0, 3.0]
+    sample_list2 = [7.1, 2.2, 9.8, 4.4, 1.1]
+    sample_list3 = [1.0, 5.0, 2.0, 8.0, 3.0, 6.0]
+    print(f""Median of {sample_list1}: {find_median(sample_list1)}"")
+    print(f""Median of {sample_list2}: {find_median(sample_list2)}"")
+    print(f""Median of {sample_list3}: {find_median(sample_list3)}"")",True,7,13520,216_2_7.py
+216,2,Calculate the middle value easily,"Develop a robust Python function that determines the median (middle value) of an unsorted list of floating-point numbers, ensuring the result is accurate.","import math
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    sample_list1 = [3.5, 1.2, 8.9, 4.1, 2.3]
+    print(f""List: {sample_list1}"")
+    median1 = find_median(sample_list1)
+    print(f""Median: {median1}"")
+    sample_list2 = [10.0, 5.0, 2.0, 8.0, 1.0]
+    print(f""\nList: {sample_list2}"")
+    median2 = find_median(sample_list2)
+    print(f""Median: {median2}"")
+    sample_list3 = [7.0, 7.0, 7.0, 7.0]
+    print(f""\nList: {sample_list3}"")
+    median3 = find_median(sample_list3)
+    print(f""Median: {median3}"")
+    sample_list4 = [1.5, 2.5, 3.5, 4.5]
+    print(f""\nList: {sample_list4}"")
+    median4 = find_median(sample_list4)
+    print(f""Median: {median4}"")",True,8,13521,216_2_8.py
+216,3,Calculate the middle value easily,"Write a concise and highly readable Python function to find the middle element of a list, explicitly handling the case where the list has an even number of elements by returning the average of the two middle elements.","def find_middle(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_value = (data[middle_left_index] + data[middle_right_index]) / 2.0
+        return middle_value
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2]
+    list4 = [1, 2, 3]
+    print(f""Middle of {list1}: {find_middle(list1)}"")
+    print(f""Middle of {list2}: {find_middle(list2)}"")
+    print(f""Middle of {list3}: {find_middle(list3)}"")
+    print(f""Middle of {list4}: {find_middle(list4)}"")",True,0,13522,216_3.py
+216,3,Calculate the middle value easily,"Write a concise and highly readable Python function to find the middle element of a list, explicitly handling the case where the list has an even number of elements by returning the average of the two middle elements.","def find_middle_element(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_left = data[middle_left_index]
+        middle_right = data[middle_right_index]
+        return (middle_left + middle_right) / 2
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2]
+    list4 = [1, 2, 3]
+    print(f""Middle of {list1}: {find_middle_element(list1)}"")
+    print(f""Middle of {list2}: {find_middle_element(list2)}"")
+    print(f""Middle of {list3}: {find_middle_element(list3)}"")
+    print(f""Middle of {list4}: {find_middle_element(list4)}"")",True,1,13523,216_3_1.py
+216,3,Calculate the middle value easily,"Write a concise and highly readable Python function to find the middle element of a list, explicitly handling the case where the list has an even number of elements by returning the average of the two middle elements.","def find_middle(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle = (data[middle_left_index] + data[middle_right_index]) / 2.0
+        return middle
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [1, 2, 3, 4]
+    list3 = [10, 20, 30, 40, 50, 60]
+    list4 = [1, 2]
+    print(f""Middle of {list1}: {find_middle(list1)}"")
+    print(f""Middle of {list2}: {find_middle(list2)}"")
+    print(f""Middle of {list3}: {find_middle(list3)}"")
+    print(f""Middle of {list4}: {find_middle(list4)}"")",True,2,13524,216_3_2.py
+216,3,Calculate the middle value easily,"Write a concise and highly readable Python function to find the middle element of a list, explicitly handling the case where the list has an even number of elements by returning the average of the two middle elements.","def find_middle_element(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_left = data[middle_left_index]
+        middle_right = data[middle_right_index]
+        return (middle_left + middle_right) / 2
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2]
+    list4 = [1, 2, 3, 4]
+    print(f""Middle of {list1}: {find_middle_element(list1)}"")
+    print(f""Middle of {list2}: {find_middle_element(list2)}"")
+    print(f""Middle of {list3}: {find_middle_element(list3)}"")
+    print(f""Middle of {list4}: {find_middle_element(list4)}"")",True,3,13525,216_3_3.py
+216,3,Calculate the middle value easily,"Write a concise and highly readable Python function to find the middle element of a list, explicitly handling the case where the list has an even number of elements by returning the average of the two middle elements.","def find_middle(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_left = data[middle_left_index]
+        middle_right = data[middle_right_index]
+        return (middle_left + middle_right) / 2
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2]
+    list4 = [1, 2, 3]
+    print(f""Middle of {list1}: {find_middle(list1)}"")
+    print(f""Middle of {list2}: {find_middle(list2)}"")
+    print(f""Middle of {list3}: {find_middle(list3)}"")
+    print(f""Middle of {list4}: {find_middle(list4)}"")",True,4,13526,216_3_4.py
+216,3,Calculate the middle value easily,"Write a concise and highly readable Python function to find the middle element of a list, explicitly handling the case where the list has an even number of elements by returning the average of the two middle elements.","def find_middle_element(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_left = data[middle_left_index]
+        middle_right = data[middle_right_index]
+        return (middle_left + middle_right) / 2
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2]
+    list4 = [1, 2, 3]
+    print(f""Middle element of {list1}: {find_middle_element(list1)}"")
+    print(f""Middle element of {list2}: {find_middle_element(list2)}"")
+    print(f""Middle element of {list3}: {find_middle_element(list3)}"")
+    print(f""Middle element of {list4}: {find_middle_element(list4)}"")",True,5,13527,216_3_5.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return (data[middle_left_index] + data[middle_right_index]) / 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [1, 2, 3, 4]
+    list5 = []
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")
+    print(f""Middle of {list5}: {analyzer.find_middle(list5)}"")",True,0,13528,216_4.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        else:
+            middle_index = n // 2
+            if n % 2 == 1:
+                return data[middle_index]
+            else:
+                return (data[middle_index - 1] + data[middle_index]) // 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    list3 = [1, 2, 3, 4]
+    list4 = [5, 15]
+    list5 = []
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")
+    print(f""Middle of {list5}: {analyzer.find_middle(list5)}"")",True,1,13529,216_4_1.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        else:
+            middle_index = n // 2
+            if n % 2 == 1:
+                return data[middle_index]
+            else:
+                return (data[middle_index - 1] + data[middle_index]) // 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [1, 2, 3, 4]
+    list5 = [100]
+    list6 = []
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")
+    print(f""Middle of {list5}: {analyzer.find_middle(list5)}"")
+    print(f""Middle of {list6}: {analyzer.find_middle(list6)}"")",True,2,13530,216_4_2.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        if n % 2 != 0:
+            middle = data[n // 2]
+        else:
+            middle1 = data[n // 2 - 1]
+            middle2 = data[n // 2]
+            middle = (middle1 + middle2) / 2
+        return middle
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5]
+    list4 = []
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")",True,3,13531,216_4_3.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        else:
+            middle_index = n // 2
+            if n % 2 == 1:
+                return data[middle_index]
+            else:
+                return (data[middle_index - 1] + data[middle_index]) // 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [1, 2, 3, 4]
+    list5 = [100]
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")
+    print(f""Middle of {list5}: {analyzer.find_middle(list5)}"")",True,4,13532,216_4_4.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        if n % 2 != 0:
+            return data[n // 2]
+        else:
+            middle1 = data[n // 2 - 1]
+            middle2 = data[n // 2]
+            return (middle1 + middle2) // 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [1, 2, 3, 4]
+    list5 = []
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")
+    print(f""Middle of {list5}: {analyzer.find_middle(list5)}"")",True,5,13533,216_4_5.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return (data[middle_left_index] + data[middle_right_index]) // 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 9, 12, 15, 18]
+    list4 = [1, 2, 3, 4]
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")",True,6,13534,216_4_6.py
+216,4,Calculate the middle value easily,Create an optimized class named 'ListAnalyzer' with a method to calculate and return the middle value of any provided list of integers.,"class ListAnalyzer:
+    def find_middle(self, data):
+        n = len(data)
+        if n == 0:
+            return None
+        if n % 2 != 0:
+            return data[n // 2]
+        else:
+            middle1 = data[n // 2 - 1]
+            middle2 = data[n // 2]
+            return (middle1 + middle2) / 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [1, 2, 3, 4]
+    list5 = []
+    print(f""Middle of {list1}: {analyzer.find_middle(list1)}"")
+    print(f""Middle of {list2}: {analyzer.find_middle(list2)}"")
+    print(f""Middle of {list3}: {analyzer.find_middle(list3)}"")
+    print(f""Middle of {list4}: {analyzer.find_middle(list4)}"")
+    print(f""Middle of {list5}: {analyzer.find_middle(list5)}"")",True,7,13535,216_4_7.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    generator = middle_value_generator(sample_list)
+    print(list(generator))
+    sample_list_odd = [1, 2, 3, 4, 5]
+    generator_odd = middle_value_generator(sample_list_odd)
+    print(list(generator_odd))
+    sample_list_large = list(range(1000000))
+    generator_large = middle_value_generator(sample_list_large)
+    print(list(generator_large))",True,0,13536,216_5.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    print(""Middle values for sample list:"", list(middle_value_generator(sample_list)))
+    large_list = list(range(1000000))
+    print(""\nFirst few middle values for large list:"", list(middle_value_generator(large_list))[:5])
+    odd_list = list(range(1, 1001))
+    print(""\nMiddle value for odd length list:"", list(middle_value_generator(odd_list)))",True,1,13537,216_5_1.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    generator = middle_value_generator(sample_list)
+    print(""Middle values:"")
+    for middle in generator:
+        print(middle)
+    sample_list_odd = [10, 20, 30, 40, 50]
+    generator_odd = middle_value_generator(sample_list_odd)
+    print(""\nMiddle values for odd length list:"")
+    for middle in generator_odd:
+        print(middle)
+    sample_list_large = list(range(1000))
+    generator_large = middle_value_generator(sample_list_large)
+    print(""\nFirst few middle values for large list:"")
+    for i, middle in enumerate(generator_large):
+        if i < 3:
+            print(middle)
+        else:
+            break",True,2,13538,216_5_2.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    print(""Middle values for sample list (even length):"")
+    for middle in middle_value_generator(sample_list):
+        print(middle)
+    sample_list_odd = [10, 20, 30, 40, 50]
+    print(""\nMiddle value for sample list (odd length):"")
+    for middle in middle_value_generator(sample_list_odd):
+        print(middle)
+    large_list = list(range(1000000))
+    print(""\nFirst few middle values for large list:"")
+    count = 0
+    for middle in middle_value_generator(large_list):
+        if count < 5:
+            print(middle)
+            count += 1
+        else:
+            break",True,3,13539,216_5_3.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    large_list = list(range(1000000))
+    middle_values = middle_value_generator(large_list)
+    result_list = list(middle_values)
+    print(result_list)",True,4,13540,216_5_4.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    generator = middle_value_generator(sample_list)
+    result = list(generator)
+    print(result)
+    sample_list_odd = [1, 2, 3, 4, 5]
+    generator_odd = middle_value_generator(sample_list_odd)
+    result_odd = list(generator_odd)
+    print(result_odd)
+    sample_list_large = list(range(1000000))
+    generator_large = middle_value_generator(sample_list_large)
+    result_large = list(generator_large)
+    print(result_large)",True,5,13541,216_5_5.py
+216,5,Calculate the middle value easily,"Implement a generator function that yields the middle value of an input list, designed to be memory-efficient for very large datasets.","def middle_value_generator(data):
+    n = len(data)
+    if n == 0:
+        return
+    for i in range(n // 2):
+        yield data[i]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    print(list(middle_value_generator(sample_list)))
+    large_list = list(range(1000000))
+    print(list(middle_value_generator(large_list)))
+    empty_list = []
+    print(list(middle_value_generator(empty_list)))",True,6,13542,216_5_6.py
+216,6,Calculate the middle value easily,Write a script that prompts the user to input a list of numbers and then calculates and prints the exact middle value using only built-in Python features.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    n = len(numbers)
+    middle_index = n // 2
+    middle_value = numbers[middle_index]
+    print(middle_value)",True,0,13543,216_6.py
+216,6,Calculate the middle value easily,Write a script that prompts the user to input a list of numbers and then calculates and prints the exact middle value using only built-in Python features.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    n = len(numbers)
+    if n % 2 == 1:
+        middle_index = n // 2
+        middle_value = numbers[middle_index]
+        print(middle_value)
+    else:
+        middle_left_index = n // 2 - 1
+        middle_right_index = n // 2
+        middle_left_value = numbers[middle_left_index]
+        middle_right_value = numbers[middle_right_index]
+        print((middle_left_value + middle_right_value) / 2)",True,1,13544,216_6_1.py
+216,6,Calculate the middle value easily,Write a script that prompts the user to input a list of numbers and then calculates and prints the exact middle value using only built-in Python features.,"if __name__ == '__main__':
+    numbers = [10, 25, 32, 48, 55]
+    n = len(numbers)
+    if n % 2 == 1:
+        middle_index = n // 2
+        middle_value = numbers[middle_index]
+        print(middle_value)
+    else:
+        middle_left_index = n // 2 - 1
+        middle_right_index = n // 2
+        middle_left_value = numbers[middle_left_index]
+        middle_right_value = numbers[middle_right_index]
+        middle_value = (middle_left_value + middle_right_value) / 2
+        print(middle_value)",True,2,13545,216_6_2.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 2, 15]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        print(f""Median of {list4}: {calculate_median(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")
+    print(f""Median of {list5}: {calculate_median(list5)}"")",True,0,13546,216_7.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 20, 30, 40, 50]
+    list4 = []
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        calculate_median(list4)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,13547,216_7_1.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 2, 5]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        print(f""Median of {list4}: {calculate_median(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")
+    print(f""Median of {list5}: {calculate_median(list5)}"")",True,2,13548,216_7_2.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 1, 9]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        print(f""Median of {list4}: {calculate_median(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")
+    print(f""Median of {list5}: {calculate_median(list5)}"")",True,3,13549,216_7_3.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 2, 1]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        print(f""Median of {list4}: {calculate_median(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")
+    print(f""Median of {list5}: {calculate_median(list5)}"")",True,4,13550,216_7_4.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    list2 = [5, 2, 8, 1, 9]
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    list3 = [10, 4, 7, 2, 1]
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    list4 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list4}: {calculate_median(list4)}"")
+    list5 = []
+    try:
+        calculate_median(list5)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,13551,216_7_5.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [4, 1, 5, 2, 3]
+    list3 = [10, 20, 30, 40]
+    list4 = []
+    list5 = [7]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        print(f""Median of {list4}: {calculate_median(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")
+    print(f""Median of {list5}: {calculate_median(list5)}"")",True,6,13552,216_7_6.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 1, 9]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5]
+    list6 = [10, 20, 30]
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        print(f""Median of {list4}: {calculate_median(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")
+    print(f""Median of {list5}: {calculate_median(list5)}"")
+    print(f""Median of {list6}: {calculate_median(list6)}"")",True,7,13553,216_7_7.py
+216,7,Calculate the middle value easily,"Design and implement a function that calculates the median of a list, prioritizing time complexity O(n) or better, and handle potential errors if the input list is empty.","def calculate_median(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""Input list cannot be empty"")
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 2, 1]
+    list4 = []
+    print(f""Median of {list1}: {calculate_median(list1)}"")
+    print(f""Median of {list2}: {calculate_median(list2)}"")
+    print(f""Median of {list3}: {calculate_median(list3)}"")
+    try:
+        calculate_median(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,8,13554,216_7_8.py
+216,1,Calculate the middle value easily,Implement an optimized function named 'find_middle' that accepts a list of integers and returns the exact middle value. Use slicing for efficiency.,"def find_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    middle_value = find_middle(sample_list)
+    print(middle_value)",True,0,13555,216_1.py
+216,1,Calculate the middle value easily,Implement an optimized function named 'find_middle' that accepts a list of integers and returns the exact middle value. Use slicing for efficiency.,"def find_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(find_middle(list1))
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(find_middle(list2))
+    list3 = [7]
+    print(find_middle(list3))
+    list4 = [100, 200]
+    print(find_middle(list4))",True,1,13556,216_1_1.py
+216,1,Calculate the middle value easily,Implement an optimized function named 'find_middle' that accepts a list of integers and returns the exact middle value. Use slicing for efficiency.,"def find_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(find_middle(list1))
+    list2 = [10, 20, 30, 40, 50, 60]
+    print(find_middle(list2))
+    list3 = [7]
+    print(find_middle(list3))
+    list4 = [99, 88]
+    print(find_middle(list4))",True,2,13557,216_1_2.py
+216,1,Calculate the middle value easily,Implement an optimized function named 'find_middle' that accepts a list of integers and returns the exact middle value. Use slicing for efficiency.,"def find_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40, 50, 60]
+    list3 = [7]
+    list4 = [99, 88]
+    print(find_middle(list1))
+    print(find_middle(list2))
+    print(find_middle(list3))
+    print(find_middle(list4))",True,3,13558,216_1_3.py
+216,9,Calculate the middle value easily,"Provide the most Pythonic and efficient way to calculate the middle value of a list, assuming the list is already sorted, and explain the logic behind the implementation.","def calculate_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sorted_list = [1, 5, 8, 12, 15]
+    middle_value = calculate_middle(sorted_list)
+    print(middle_value)",True,0,13559,216_9.py
+216,9,Calculate the middle value easily,"Provide the most Pythonic and efficient way to calculate the middle value of a list, assuming the list is already sorted, and explain the logic behind the implementation.","def calculate_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sorted_list = [1, 5, 8, 12, 16]
+    middle_value = calculate_middle(sorted_list)
+    print(middle_value)",True,1,13560,216_9_1.py
+216,9,Calculate the middle value easily,"Provide the most Pythonic and efficient way to calculate the middle value of a list, assuming the list is already sorted, and explain the logic behind the implementation.","def find_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sorted_list = [1, 5, 8, 12, 16]
+    middle_value = find_middle(sorted_list)
+    print(middle_value)",True,2,13561,216_9_2.py
+216,9,Calculate the middle value easily,"Provide the most Pythonic and efficient way to calculate the middle value of a list, assuming the list is already sorted, and explain the logic behind the implementation.","def calculate_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sorted_list = [2, 4, 6, 8, 10]
+    middle_value = calculate_middle(sorted_list)
+    print(middle_value)
+    sorted_list_odd = [1, 3, 5, 7, 9]
+    middle_value_odd = calculate_middle(sorted_list_odd)
+    print(middle_value_odd)
+    sorted_list_even = [2, 4, 6, 8]
+    middle_value_even = calculate_middle(sorted_list_even)
+    print(middle_value_even)",True,3,13562,216_9_3.py
+216,9,Calculate the middle value easily,"Provide the most Pythonic and efficient way to calculate the middle value of a list, assuming the list is already sorted, and explain the logic behind the implementation.","def calculate_middle(data):
+    n = len(data)
+    middle_index = n // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sorted_list1 = [2, 4, 6, 8, 10]
+    sorted_list2 = [1, 5, 9, 13, 17, 21]
+    sorted_list3 = [5]
+    sorted_list4 = [10, 20, 30]
+    print(calculate_middle(sorted_list1))
+    print(calculate_middle(sorted_list2))
+    print(calculate_middle(sorted_list3))
+    print(calculate_middle(sorted_list4))",True,4,13563,216_9_4.py
+215,12,Identify the largest number present,Develop a class named 'NumberAnalyzer' with a method 'get_maximum' that takes an iterable (like a list or tuple) of numbers and returns the single largest value. Ensure the class adheres to object-oriented best practices.,"class NumberAnalyzer:
+    def get_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input iterable cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    tuple2 = (3, -1, 99, 42)
+    empty_list = []
+    print(f""Maximum of {list1}: {analyzer.get_maximum(list1)}"")
+    print(f""Maximum of {tuple2}: {analyzer.get_maximum(tuple2)}"")
+    try:
+        analyzer.get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,13564,215_12.py
+215,12,Identify the largest number present,Develop a class named 'NumberAnalyzer' with a method 'get_maximum' that takes an iterable (like a list or tuple) of numbers and returns the single largest value. Ensure the class adheres to object-oriented best practices.,"class NumberAnalyzer:
+    def get_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input iterable cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    empty_list = []
+    print(f""Maximum of {list1}: {analyzer.get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {analyzer.get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {analyzer.get_maximum(list3)}"")
+    try:
+        analyzer.get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,13565,215_12_1.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 4, 7, 2, 9]
+    list3 = [1, 2, 3, 4, 5, 6]
+    list4 = [10]
+    list5 = []
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")",True,0,13566,216_11.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [4, 1, 5, 2, 8]
+    list3 = [10]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")",True,1,13567,216_11_1.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 2, 1]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")",True,2,13568,216_11_2.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [4, 1, 5, 2, 8]
+    list3 = [10]
+    list4 = []
+    list5 = [1, 2, 3, 4, 5, 6]
+    list6 = [1, 1, 2, 2]
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")
+    print(f""Median of {list6}: {find_median(list6)}"")",True,3,13569,216_11_3.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    print(f""Median of {list1}: {find_median(list1)}"")
+    list2 = [10, 4, 7, 2, 9]
+    print(f""Median of {list2}: {find_median(list2)}"")
+    list3 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list3}: {find_median(list3)}"")
+    list4 = [10, 20, 30]
+    print(f""Median of {list4}: {find_median(list4)}"")
+    list5 = []
+    print(f""Median of {list5}: {find_median(list5)}"")
+    list6 = [1, 5, 2, 8, 9, 3]
+    print(f""Median of {list6}: {find_median(list6)}"")",True,4,13570,216_11_4.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 4, 7, 2, 9]
+    list3 = [1, 2, 3, 4, 5, 6]
+    list4 = [100]
+    list5 = []
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")",True,5,13571,216_11_5.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [10, 4, 7, 2, 1]
+    list3 = [3, 1, 4, 1, 5, 9, 2, 8]
+    list4 = []
+    list5 = [1, 2, 3, 4]
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")",True,6,13572,216_11_6.py
+216,11,Calculate the middle value easily,Implement an optimized function using slicing to find the median (middle value) of a list of integers. The function must be highly efficient and handle edge cases where the input list is empty.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [10, 4, 7, 2, 9]
+    list3 = [1, 2, 3, 4, 5, 6]
+    list4 = [10, 20, 30]
+    list5 = []
+    print(f""Median of {list1}: {find_median(list1)}"")
+    print(f""Median of {list2}: {find_median(list2)}"")
+    print(f""Median of {list3}: {find_median(list3)}"")
+    print(f""Median of {list4}: {find_median(list4)}"")
+    print(f""Median of {list5}: {find_median(list5)}"")",True,7,13573,216_11_7.py
+216,8,Calculate the middle value easily,"Write a testable Python function to find the middle element of a list, including comprehensive unit tests for edge cases like single-element lists and empty lists.","def find_middle(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""List is empty"")
+    if n % 2 != 0:
+        return data[n // 2]
+    else:
+        return data[n // 2 - 1]
+def test_find_middle():
+    test_cases = [
+        ([1, 2, 3, 4, 5], 3),
+        ([1, 2, 3, 4], 2),
+        ([10], 10),
+        ([], None)                                                                                                       
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_middle(input_list)
+            if result == expected:
+                print(f""PASS: Input {input_list}, Expected {expected}, Got {result}"")
+            else:
+                print(f""FAIL: Input {input_list}, Expected {expected}, Got {result}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""PASS: Input {input_list}, Expected None, Caught expected error: {e}"")
+            else:
+                print(f""FAIL: Input {input_list}, Expected {expected}, Caught unexpected error: {e}"")
+        except Exception as e:
+            print(f""ERROR: Input {input_list} caused an unexpected exception: {e}"")
+if __name__ == '__main__':
+    test_find_middle()",True,0,13574,216_8.py
+216,8,Calculate the middle value easily,"Write a testable Python function to find the middle element of a list, including comprehensive unit tests for edge cases like single-element lists and empty lists.","def find_middle(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""List is empty"")
+    middle_index = n // 2
+    return data[middle_index]
+def test_find_middle():
+    test_cases = [
+        ([1, 2, 3, 4, 5], 3),
+        ([10, 20, 30], 20),
+        ([7], 7),
+        ([], None)                                                          
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_middle(input_list)
+            if result == expected:
+                print(f""Test Passed for input {input_list}: Result {result} == Expected {expected}"")
+            else:
+                print(f""Test Failed for input {input_list}: Result {result} != Expected {expected}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""Test Passed for input {input_list}: Caught expected error {e}"")
+            else:
+                print(f""Test Failed for input {input_list}: Unexpected error caught: {e}"")
+if __name__ == '__main__':
+    test_find_middle()",True,1,13575,216_8_1.py
+216,8,Calculate the middle value easily,"Write a testable Python function to find the middle element of a list, including comprehensive unit tests for edge cases like single-element lists and empty lists.","def find_middle(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""List is empty"")
+    middle_index = n // 2
+    return data[middle_index]
+def test_find_middle():
+    test_cases = [
+        ([1, 2, 3, 4, 5], 3),
+        ([10, 20, 30], 20),
+        ([7], 7),
+        ([], None)                                                          
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_middle(input_list)
+            if result == expected:
+                print(f""Test Passed for input {input_list}: Result {result} == Expected {expected}"")
+            else:
+                print(f""Test Failed for input {input_list}: Result {result} != Expected {expected}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""Test Passed for input {input_list}: Caught expected error {e}"")
+            else:
+                print(f""Test Failed for input {input_list}: Unexpected error {e}"")
+if __name__ == '__main__':
+    test_find_middle()",True,2,13576,216_8_2.py
+216,8,Calculate the middle value easily,"Write a testable Python function to find the middle element of a list, including comprehensive unit tests for edge cases like single-element lists and empty lists.","def find_middle(data):
+    n = len(data)
+    if n == 0:
+        raise ValueError(""List is empty"")
+    middle_index = n // 2
+    return data[middle_index]
+def test_find_middle():
+    test_cases = [
+        ([1, 2, 3, 4, 5], 3),
+        ([10, 20, 30], 20),
+        ([7], 7),
+        ([], None)                                                                                 
+    ]
+    for input_list, expected in test_cases:
+        try:
+            result = find_middle(input_list)
+            if result == expected:
+                print(f""PASS: Input {input_list}, Expected {expected}, Got {result}"")
+            else:
+                print(f""FAIL: Input {input_list}, Expected {expected}, Got {result}"")
+        except ValueError as e:
+            if expected is None:
+                print(f""PASS: Input {input_list}, Caught expected error: {e}"")
+            else:
+                print(f""FAIL: Input {input_list}, Unexpected error: {e}"")
+        except Exception as e:
+            print(f""ERROR: Input {input_list} raised unexpected exception: {e}"")
+if __name__ == '__main__':
+    test_find_middle()",True,3,13577,216_8_3.py
+216,13,Calculate the middle value easily,"Write a class named 'ListAnalyzer' with a method 'get_middle_value(self, data_list)' that calculates the middle value. Ensure the implementation is object-oriented and adheres to best practices for method design.","class ListAnalyzer:
+    def get_middle_value(self, data_list):
+        n = len(data_list)
+        if n == 0:
+            return None
+        else:
+            middle_index = n // 2
+            if n % 2 == 1:
+                return data_list[middle_index]
+            else:
+                return (data_list[middle_index - 1] + data_list[middle_index]) / 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list_odd = [1, 2, 3, 4, 5]
+    sample_list_even = [10, 20, 30, 40]
+    sample_list_single = [99]
+    sample_list_empty = []
+    print(f""Middle value of {sample_list_odd}: {analyzer.get_middle_value(sample_list_odd)}"")
+    print(f""Middle value of {sample_list_even}: {analyzer.get_middle_value(sample_list_even)}"")
+    print(f""Middle value of {sample_list_single}: {analyzer.get_middle_value(sample_list_single)}"")
+    print(f""Middle value of {sample_list_empty}: {analyzer.get_middle_value(sample_list_empty)}"")",True,0,13578,216_13.py
+216,13,Calculate the middle value easily,"Write a class named 'ListAnalyzer' with a method 'get_middle_value(self, data_list)' that calculates the middle value. Ensure the implementation is object-oriented and adheres to best practices for method design.","class ListAnalyzer:
+    def get_middle_value(self, data_list):
+        n = len(data_list)
+        if n == 0:
+            return None
+        else:
+            middle_index = n // 2
+            if n % 2 == 1:
+                return data_list[middle_index]
+            else:
+                return (data_list[middle_index - 1] + data_list[middle_index]) / 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list1 = [1, 2, 3, 4, 5]
+    sample_list2 = [10, 20, 30, 40]
+    sample_list3 = [5, 8, 12, 15]
+    sample_list4 = [7]
+    sample_list5 = []
+    print(f""Middle value of {sample_list1}: {analyzer.get_middle_value(sample_list1)}"")
+    print(f""Middle value of {sample_list2}: {analyzer.get_middle_value(sample_list2)}"")
+    print(f""Middle value of {sample_list3}: {analyzer.get_middle_value(sample_list3)}"")
+    print(f""Middle value of {sample_list4}: {analyzer.get_middle_value(sample_list4)}"")
+    print(f""Middle value of {sample_list5}: {analyzer.get_middle_value(sample_list5)}"")",True,1,13579,216_13_1.py
+216,13,Calculate the middle value easily,"Write a class named 'ListAnalyzer' with a method 'get_middle_value(self, data_list)' that calculates the middle value. Ensure the implementation is object-oriented and adheres to best practices for method design.","class ListAnalyzer:
+    def get_middle_value(self, data_list):
+        n = len(data_list)
+        if n == 0:
+            return None
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data_list[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return (data_list[middle_left_index] + data_list[middle_right_index]) / 2
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15, 25, 35, 45]
+    list4 = [1, 2, 3, 4]
+    print(f""Middle value of {list1}: {analyzer.get_middle_value(list1)}"")
+    print(f""Middle value of {list2}: {analyzer.get_middle_value(list2)}"")
+    print(f""Middle value of {list3}: {analyzer.get_middle_value(list3)}"")
+    print(f""Middle value of {list4}: {analyzer.get_middle_value(list4)}"")",True,2,13580,216_13_2.py
+216,10,Calculate the middle value easily,"Write a robust Python function named 'calculate_middle_value' that accepts a list of numbers and returns the exact middle value. Handle both odd and even list lengths gracefully by returning the appropriate middle element or the average of the two middle elements, respectively.","def calculate_middle_value(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_value = (data[middle_left_index] + data[middle_right_index]) / 2.0
+        return middle_value
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [1, 2, 3, 4]
+    list5 = [100]
+    print(f""List: {list1}, Middle Value: {calculate_middle_value(list1)}"")
+    print(f""List: {list2}, Middle Value: {calculate_middle_value(list2)}"")
+    print(f""List: {list3}, Middle Value: {calculate_middle_value(list3)}"")
+    print(f""List: {list4}, Middle Value: {calculate_middle_value(list4)}"")
+    print(f""List: {list5}, Middle Value: {calculate_middle_value(list5)}"")",True,0,13581,216_10.py
+216,10,Calculate the middle value easily,"Write a robust Python function named 'calculate_middle_value' that accepts a list of numbers and returns the exact middle value. Handle both odd and even list lengths gracefully by returning the appropriate middle element or the average of the two middle elements, respectively.","def calculate_middle_value(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_value = (data[middle_left_index] + data[middle_right_index]) / 2.0
+        return middle_value
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2, 3, 4]
+    list4 = [5, 15]
+    list5 = [100]
+    print(f""List: {list1}, Middle Value: {calculate_middle_value(list1)}"")
+    print(f""List: {list2}, Middle Value: {calculate_middle_value(list2)}"")
+    print(f""List: {list3}, Middle Value: {calculate_middle_value(list3)}"")
+    print(f""List: {list4}, Middle Value: {calculate_middle_value(list4)}"")
+    print(f""List: {list5}, Middle Value: {calculate_middle_value(list5)}"")",True,1,13582,216_10_1.py
+216,10,Calculate the middle value easily,"Write a robust Python function named 'calculate_middle_value' that accepts a list of numbers and returns the exact middle value. Handle both odd and even list lengths gracefully by returning the appropriate middle element or the average of the two middle elements, respectively.","def calculate_middle_value(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_left_value = data[middle_left_index]
+        middle_right_value = data[middle_right_index]
+        return (middle_left_value + middle_right_value) / 2
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2, 3, 4]
+    list4 = [5, 10]
+    print(f""Middle value of {list1}: {calculate_middle_value(list1)}"")
+    print(f""Middle value of {list2}: {calculate_middle_value(list2)}"")
+    print(f""Middle value of {list3}: {calculate_middle_value(list3)}"")
+    print(f""Middle value of {list4}: {calculate_middle_value(list4)}"")",True,2,13583,216_10_2.py
+216,10,Calculate the middle value easily,"Write a robust Python function named 'calculate_middle_value' that accepts a list of numbers and returns the exact middle value. Handle both odd and even list lengths gracefully by returning the appropriate middle element or the average of the two middle elements, respectively.","def calculate_middle_value(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_value = (data[middle_left_index] + data[middle_right_index]) / 2.0
+        return middle_value
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2, 3, 4]
+    list4 = [5, 15]
+    list5 = [7]
+    print(f""List: {list1}, Middle Value: {calculate_middle_value(list1)}"")
+    print(f""List: {list2}, Middle Value: {calculate_middle_value(list2)}"")
+    print(f""List: {list3}, Middle Value: {calculate_middle_value(list3)}"")
+    print(f""List: {list4}, Middle Value: {calculate_middle_value(list4)}"")
+    print(f""List: {list5}, Middle Value: {calculate_middle_value(list5)}"")",True,3,13584,216_10_3.py
+216,10,Calculate the middle value easily,"Write a robust Python function named 'calculate_middle_value' that accepts a list of numbers and returns the exact middle value. Handle both odd and even list lengths gracefully by returning the appropriate middle element or the average of the two middle elements, respectively.","def calculate_middle_value(data):
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        middle_value = (data[middle_left_index] + data[middle_right_index]) / 2
+        return middle_value
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [1, 2, 3, 4]
+    list4 = [5, 10, 15, 20, 25]
+    print(f""Middle value of {list1}: {calculate_middle_value(list1)}"")
+    print(f""Middle value of {list2}: {calculate_middle_value(list2)}"")
+    print(f""Middle value of {list3}: {calculate_middle_value(list3)}"")
+    print(f""Middle value of {list4}: {calculate_middle_value(list4)}"")",True,4,13585,216_10_4.py
+217,0,Compare two simple numbers now,"Write a complete, well-documented Python script that takes two integer inputs from the user and prints their sum and difference.","def calculate_sum_difference():
+    a = 15
+    b = 7
+    sum_result = a + b
+    difference_result = a - b
+    print(f""Sum: {sum_result}"")
+    print(f""Difference: {difference_result}"")
+if __name__ == '__main__':
+    calculate_sum_difference()",True,0,13586,217_0.py
