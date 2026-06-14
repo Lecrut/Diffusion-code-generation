@@ -263403,3 +263403,1305 @@ if __name__ == '__main__':
     print(find_middle(list3))
     list4 = []
     print(find_middle(list4))",True,4,12716,204_7_4.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_right_index - 1]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 5)
+    def test_odd_length(self):
+        data = [1, 2, 3, 4, 5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+    def test_odd_length_larger(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_even_length(self):
+        data = [1, 2, 3, 4]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 2)
+    def test_even_length_larger(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 20)
+    def test_even_length_two_elements(self):
+        data = [10, 20]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 10)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,12717,204_8.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_left_index]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [42]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 42)
+    def test_odd_length_list(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_even_length_list(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 20)
+    def test_even_length_list_longer(self):
+        data = [1, 2, 3, 4, 5, 6]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,12718,204_8_1.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+def calculate_middle(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    n = len(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return data[middle_index]
+    else:
+        middle_index_right = n // 2
+        middle_index_left = middle_index_right - 1
+        return data[middle_index_left]
+class TestMiddleValue(unittest.TestCase):
+    def test_empty_list(self):
+        with self.assertRaises(ValueError):
+            calculate_middle([])
+    def test_single_element(self):
+        self.assertEqual(calculate_middle([5]), 5)
+    def test_odd_length(self):
+        self.assertEqual(calculate_middle([1, 2, 3, 4, 5]), 3)
+        self.assertEqual(calculate_middle([10, 20, 30]), 20)
+    def test_even_length(self):
+        self.assertEqual(calculate_middle([1, 2, 3, 4]), 2)
+        self.assertEqual(calculate_middle([10, 20, 30, 40]), 20)
+    def test_two_elements(self):
+        self.assertEqual(calculate_middle([5, 10]), 5)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,12719,204_8_2.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_left_index]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 5)
+    def test_odd_length(self):
+        data = [1, 2, 3, 4, 5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+    def test_odd_length_larger(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_even_length(self):
+        data = [1, 2, 3, 4]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 2)
+    def test_even_length_larger(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 20)
+    def test_even_length_two_elements(self):
+        data = [10, 20]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 10)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,12720,204_8_3.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle1_index = n // 2 - 1
+            middle2_index = n // 2
+            return (data[middle1_index] + data[middle2_index]) / 2
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        self.assertIsNone(self.calculator.find_middle([]))
+    def test_single_element(self):
+        self.assertEqual(self.calculator.find_middle([5]), 5)
+    def test_odd_length(self):
+        self.assertEqual(self.calculator.find_middle([1, 2, 10, 4, 5]), 10)
+        self.assertEqual(self.calculator.find_middle([1, 2, 3, 4, 5, 6, 7]), 4)
+    def test_even_length(self):
+        self.assertAlmostEqual(self.calculator.find_middle([1, 2, 10, 20]), 15.0)
+        self.assertAlmostEqual(self.calculator.find_middle([1, 2, 3, 4, 40, 50]), 45.0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,12721,204_8_4.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_left_index]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 5)
+    def test_odd_length(self):
+        data = [1, 2, 3, 4, 5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+    def test_odd_length_larger(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_even_length(self):
+        data = [1, 2, 3, 4]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 2)
+    def test_even_length_larger(self):
+        data = [100, 200, 300, 400]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 200)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,12722,204_8_5.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return (data[middle_left_index] + data[middle_right_index]) / 2
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        self.assertIsNone(self.calculator.find_middle([]))
+    def test_single_element(self):
+        self.assertEqual(self.calculator.find_middle([5]), 5)
+    def test_odd_length(self):
+        self.assertEqual(self.calculator.find_middle([1, 2, 3, 4, 5]), 3)
+        self.assertEqual(self.calculator.find_middle([1, 2, 10, 4, 5]), 10)
+    def test_even_length(self):
+        self.assertAlmostEqual(self.calculator.find_middle([1, 2, 3, 4]), 2.5)
+        self.assertAlmostEqual(self.calculator.find_middle([10, 20, 30, 40]), 25.0)
+    def test_even_length_with_floats(self):
+        self.assertAlmostEqual(self.calculator.find_middle([1.5, 2.5]), 2.0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,12723,204_8_6.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_left_index]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 5)
+    def test_odd_length(self):
+        data = [1, 2, 3, 4, 5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+    def test_odd_length_larger(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_even_length(self):
+        data = [1, 2, 3, 4]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 2)
+    def test_even_length_larger(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 20)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,12724,204_8_7.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_left_index]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [42]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 42)
+    def test_odd_length(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_odd_length_larger(self):
+        data = [1, 2, 3, 4, 5, 6, 7]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 4)
+    def test_even_length(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 20)
+    def test_even_length_larger(self):
+        data = [1, 2, 3, 4, 5, 6]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,8,12725,204_8_8.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return (data[middle_left_index] + data[middle_right_index]) / 2
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 5)
+    def test_odd_length(self):
+        data = [1, 2, 3, 4, 5]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 3)
+    def test_odd_length_larger(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_even_length(self):
+        data = [1, 2, 3, 4]
+        result = self.calculator.find_middle(data)
+        self.assertAlmostEqual(result, 2.5)
+    def test_even_length_larger(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertAlmostEqual(result, 25.0)
+    def test_even_length_floats(self):
+        data = [1, 10, 11, 20]
+        result = self.calculator.find_middle(data)
+        self.assertAlmostEqual(result, 10.5)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-action', 'excec'], exit=False)",True,9,12726,204_8_9.py
+204,8,Find the middle value simply,"Write a testable Python module containing a function that calculates the middle value for various list scenarios (empty list, single element, odd length, even length) and include comprehensive unit tests using `unittest`.","import unittest
+class ListMiddleCalculator:
+    def find_middle(self, data):
+        if not data:
+            return None
+        n = len(data)
+        if n % 2 != 0:
+            middle_index = n // 2
+            return data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            return data[middle_left_index]
+class TestListMiddleCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = ListMiddleCalculator()
+    def test_empty_list(self):
+        data = []
+        result = self.calculator.find_middle(data)
+        self.assertIsNone(result)
+    def test_single_element(self):
+        data = [42]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 42)
+    def test_odd_length_list(self):
+        data = [10, 20, 30, 40, 50]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 30)
+    def test_odd_length_larger(self):
+        data = [1, 2, 3, 4, 5, 6, 7]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 4)
+    def test_even_length_list(self):
+        data = [10, 20, 30, 40]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 20)
+    def test_even_length_larger(self):
+        data = [5, 15, 25, 35]
+        result = self.calculator.find_middle(data)
+        self.assertEqual(result, 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,10,12727,204_8_10.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N % 2 == 1:
+        middle_index = N // 2
+    else:
+        floor_index = N // 2 - 1
+        ceiling_index = N // 2
+        middle_index = (floor_index + ceiling_index) // 2
+    return middle_index
+if __name__ == '__main__':
+    list_length_odd = 5
+    result_odd = find_middle_index(list_length_odd)
+    print(f""List Length: {list_length_odd}"")
+    print(f""Middle Index (Floor/Ceiling consideration): {result_odd}"")
+    list_length_even = 6
+    result_even = find_middle_index(list_length_even)
+    print(f""\nList Length: {list_length_even}"")
+    print(f""Middle Index (Floor/Ceiling consideration): {result_even}"")",True,0,12728,204_9.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    middle_floor = math.floor((N - 1) / 2)
+    middle_ceil = math.ceil((N - 1) / 2)
+    return middle_floor, middle_ceil
+if __name__ == '__main__':
+    list_length = 5
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""List Length N: {list_length}"")
+    print(f""Floor Index (N-1)/2: {floor_index}"")
+    print(f""Ceiling Index (N-1)/2: {ceil_index}"")
+    list_length = 6
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""\nList Length N: {list_length}"")
+    print(f""Floor Index (N-1)/2: {floor_index}"")
+    print(f""Ceiling Index (N-1)/2: {ceil_index}"")",True,1,12729,204_9_1.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    floor_index = math.floor((N - 1) / 2)
+    ceiling_index = math.ceil((N - 1) / 2)
+    return floor_index, ceiling_index
+if __name__ == '__main__':
+    list_length = 5
+    floor_idx, ceil_idx = find_middle_index(list_length)
+    print(f""List length: {list_length}"")
+    print(f""Floor middle index: {floor_idx}"")
+    print(f""Ceiling middle index: {ceil_idx}"")
+    list_length = 6
+    floor_idx, ceil_idx = find_middle_index(list_length)
+    print(f""\nList length: {list_length}"")
+    print(f""Floor middle index: {floor_idx}"")
+    print(f""Ceiling middle index: {ceil_idx}"")",True,2,12730,204_9_2.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    floor_index = math.floor((N - 1) / 2)
+    ceiling_index = math.ceil((N - 1) / 2)
+    return floor_index, ceiling_index
+if __name__ == '__main__':
+    list_length = 5
+    floor_idx, ceil_idx = find_middle_index(list_length)
+    print(f""List Length N: {list_length}"")
+    print(f""Floor Index: {floor_idx}"")
+    print(f""Ceiling Index: {ceil_idx}"")
+    list_length = 6
+    floor_idx, ceil_idx = find_middle_index(list_length)
+    print(f""\nList Length N: {list_length}"")
+    print(f""Floor Index: {floor_idx}"")
+    print(f""Ceiling Index: {ceil_idx}"")",True,3,12731,204_9_3.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    middle_floor = math.floor((N - 1) / 2)
+    middle_ceil = math.ceil((N - 1) / 2)
+    return middle_floor, middle_ceil
+if __name__ == '__main__':
+    list_length = 5
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""List Length N: {list_length}"")
+    print(f""Floor Index: {floor_index}"")
+    print(f""Ceiling Index: {ceil_index}"")
+    list_length = 6
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""\nList Length N: {list_length}"")
+    print(f""Floor Index: {floor_index}"")
+    print(f""Ceiling Index: {ceil_index}"")",True,4,12732,204_9_4.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    mid_floor = math.floor((N - 1) / 2)
+    mid_ceil = math.ceil((N - 1) / 2)
+    return mid_floor, mid_ceil
+if __name__ == '__main__':
+    list_length = 5
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""List Length N: {list_length}"")
+    print(f""Floor Index: {floor_index}"")
+    print(f""Ceiling Index: {ceil_index}"")
+    list_length = 6
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""\nList Length N: {list_length}"")
+    print(f""Floor Index: {floor_index}"")
+    print(f""Ceiling Index: {ceil_index}"")",True,5,12733,204_9_5.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    middle_floor = math.floor((N - 1) / 2)
+    middle_ceiling = math.ceil((N - 1) / 2)
+    return middle_floor, middle_ceiling
+if __name__ == '__main__':
+    list_length = 5
+    floor_index, ceiling_index = find_middle_index(list_length)
+    print(f""List Length: {list_length}"")
+    print(f""Floor Index: {floor_index}"")
+    print(f""Ceiling Index: {ceiling_index}"")
+    list_length = 6
+    floor_index, ceiling_index = find_middle_index(list_length)
+    print(f""\nList Length: {list_length}"")
+    print(f""Floor Index: {floor_index}"")
+    print(f""Ceiling Index: {ceiling_index}"")",True,6,12734,204_9_6.py
+204,9,Find the middle value simply,"Implement the mathematical solution to find the middle index for a list of length N, considering both the floor and ceiling of the result, and explain the difference between the middle element and the median for even-length lists in the comments.","import math
+def find_middle_index(N):
+    if N <= 0:
+        return None
+    mid_floor = math.floor((N - 1) / 2)
+    mid_ceil = math.ceil((N - 1) / 2)
+    return mid_floor, mid_ceil
+if __name__ == '__main__':
+    list_length = 5
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""List Length N: {list_length}"")
+    print(f""Floor Index (for 0-based indexing): {floor_index}"")
+    print(f""Ceiling Index (for 0-based indexing): {ceil_index}"")
+    list_length = 6
+    floor_index, ceil_index = find_middle_index(list_length)
+    print(f""\nList Length N: {list_length}"")
+    print(f""Floor Index (for 0-based indexing): {floor_index}"")
+    print(f""Ceiling Index (for 0-based indexing): {ceil_index}"")",True,7,12735,204_9_7.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"import math
+def find_middle_value(data):
+    n = len(data)
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [1, 2, 3, 4]
+    list3 = [5, 1, 8, 2, 9]
+    list4 = [10, 20, 30, 40, 50]
+    list5 = [1, 5, 2, 8, 9]
+    print(f""Median of {list1}: {find_middle_value(list1)}"")
+    print(f""Median of {list2}: {find_middle_value(list2)}"")
+    print(f""Median of {list3}: {find_middle_value(list3)}"")
+    print(f""Median of {list4}: {find_middle_value(list4)}"")
+    print(f""Median of {list5}: {find_middle_value(list5)}"")",True,0,12736,204_10.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"def find_middle_value(data):
+    n = len(data)
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        mid1_index = n // 2 - 1
+        mid2_index = n // 2
+        middle1 = sorted_data[mid1_index]
+        middle2 = sorted_data[mid2_index]
+        return (middle1 + middle2) / 2
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    print(find_middle_value(list1))
+    list2 = [1, 5, 3, 4, 2]
+    print(find_middle_value(list2))
+    list3 = [10, 20, 30, 40]
+    print(find_middle_value(list3))
+    list4 = [1, 2, 3, 4, 5]
+    print(find_middle_value(list4))
+    list5 = [1, 1, 2, 3, 4]
+    print(find_middle_value(list5))",True,1,12737,204_10_1.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"def find_middle_value(data):
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        middle_right_index = n // 2
+        middle_left_index = middle_right_index - 1
+        median = (sorted_data[middle_left_index] + sorted_data[middle_right_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [1, 2, 3, 4]
+    list3 = [5, 1, 8, 2, 9]
+    list4 = [10, 20, 30, 40, 50, 60]
+    print(f""Median of {list1}: {find_middle_value(list1)}"")
+    print(f""Median of {list2}: {find_middle_value(list2)}"")
+    print(f""Median of {list3}: {find_middle_value(list3)}"")
+    print(f""Median of {list4}: {find_middle_value(list4)}"")",True,2,12738,204_10_2.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"import math
+def find_middle_value(data):
+    n = len(data)
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        return sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        return (mid1 + mid2) / 2
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    print(find_middle_value(list1))
+    list2 = [1, 2, 3, 4]
+    print(find_middle_value(list2))
+    list3 = [5, 2, 8, 1, 9]
+    print(find_middle_value(list3))
+    list4 = [10, 20, 30, 40, 50]
+    print(find_middle_value(list4))
+    list5 = [1, 5, 2, 8, 9]
+    print(find_middle_value(list5))",True,3,12739,204_10_3.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"def find_middle_value(data):
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        middle1 = sorted_data[lower_middle_index]
+        middle2 = sorted_data[upper_middle_index]
+        return (middle1 + middle2) / 2
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    print(find_middle_value(list1))
+    list2 = [1, 5, 3, 4, 2]
+    print(find_middle_value(list2))
+    list3 = [10, 20, 30, 40, 50]
+    print(find_middle_value(list3))
+    list4 = [1, 2, 3, 4]
+    print(find_middle_value(list4))
+    list5 = [7, 1, 8, 2, 9, 3]
+    print(find_middle_value(list5))",True,4,12740,204_10_4.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"def find_middle_value(data):
+    n = len(data)
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        mid1_index = n // 2 - 1
+        mid2_index = n // 2
+        middle1 = sorted_data[mid1_index]
+        middle2 = sorted_data[mid2_index]
+        return (middle1 + middle2) / 2
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [1, 2, 3, 4]
+    list3 = [5, 1, 8, 2, 9]
+    list4 = [10, 20, 30, 40, 50]
+    list5 = [1, 1, 2, 2, 3, 3]
+    print(f""Median of {list1}: {find_middle_value(list1)}"")
+    print(f""Median of {list2}: {find_middle_value(list2)}"")
+    print(f""Median of {list3}: {find_middle_value(list3)}"")
+    print(f""Median of {list4}: {find_middle_value(list4)}"")
+    print(f""Median of {list5}: {find_middle_value(list5)}"")",True,5,12741,204_10_5.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"def find_middle_value(data):
+    n = len(data)
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        mid1_index = n // 2 - 1
+        mid2_index = n // 2
+        median = (sorted_data[mid1_index] + sorted_data[mid2_index]) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [1, 5, 3, 7]
+    list3 = [10, 20, 30, 40, 50]
+    list4 = [1, 2, 3, 4, 5, 6]
+    list5 = [1, 2, 3, 4]
+    print(f""Median of {list1}: {find_middle_value(list1)}"")
+    print(f""Median of {list2}: {find_middle_value(list2)}"")
+    print(f""Median of {list3}: {find_middle_value(list3)}"")
+    print(f""Median of {list4}: {find_middle_value(list4)}"")
+    print(f""Median of {list5}: {find_middle_value(list5)}"")",True,6,12742,204_10_6.py
+204,10,Find the middle value simply,Write a robust Python function named 'find_middle_value' that accepts a list of numbers and returns the median value. The implementation must be efficient and handle both odd and even list lengths correctly.,"import math
+def find_middle_value(data):
+    n = len(data)
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        return sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        return (mid1 + mid2) / 2
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    print(f""Median of {list1}: {find_middle_value(list1)}"")
+    list2 = [1, 5, 3, 4, 2]
+    print(f""Median of {list2}: {find_middle_value(list2)}"")
+    list3 = [10, 20, 30, 40]
+    print(f""Median of {list3}: {find_middle_value(list3)}"")
+    list4 = [5]
+    print(f""Median of {list4}: {find_middle_value(list4)}"")
+    list5 = [1, 2, 3, 4, 5, 6]
+    print(f""Median of {list5}: {find_middle_value(list5)}"")",True,7,12743,204_10_7.py
+204,11,Find the middle value simply,Implement an optimized Python function to find the middle value (median) of an unsorted list of integers. Use slicing techniques for efficiency.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        median = sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2.0
+    return median
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    print(find_median(list1))
+    list2 = [3, 1, 4, 1, 5, 9, 2, 6, 5]
+    print(find_median(list2))
+    list3 = [10, 20, 30, 40]
+    print(find_median(list3))
+    list4 = [7]
+    print(find_median(list4))
+    list5 = []
+    print(find_median(list5))",True,0,12744,204_11.py
+204,11,Find the middle value simply,Implement an optimized Python function to find the middle value (median) of an unsorted list of integers. Use slicing techniques for efficiency.,"import random
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        return sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        return (mid1 + mid2) / 2
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8, 7, 6]
+    median_value = find_median(sample_list)
+    print(median_value)",True,1,12745,204_11_1.py
+204,11,Find the middle value simply,Implement an optimized Python function to find the middle value (median) of an unsorted list of integers. Use slicing techniques for efficiency.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        right_middle_index = n // 2
+        left_middle_index = right_middle_index - 1
+        median = (sorted_data[left_middle_index] + sorted_data[right_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]
+    median_value = find_median(sample_list)
+    print(median_value)",True,2,12746,204_11_2.py
+204,11,Find the middle value simply,Implement an optimized Python function to find the middle value (median) of an unsorted list of integers. Use slicing techniques for efficiency.,"import random
+def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8, 7, 6]
+    median_value = find_median(sample_list)
+    print(median_value)",True,3,12747,204_11_3.py
+204,11,Find the middle value simply,Implement an optimized Python function to find the middle value (median) of an unsorted list of integers. Use slicing techniques for efficiency.,"def find_median(data):
+    n = len(data)
+    if n == 0:
+        return None
+    sorted_data = sorted(data)
+    if n % 2 == 1:
+        middle_index = n // 2
+        return sorted_data[middle_index]
+    else:
+        upper_middle_index = n // 2
+        lower_middle_index = upper_middle_index - 1
+        median = (sorted_data[lower_middle_index] + sorted_data[upper_middle_index]) / 2
+        return median
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8, 7, 6]
+    median_value = find_median(sample_list)
+    print(median_value)",True,4,12748,204_11_4.py
+204,5,Find the middle value simply,"Implement a generator function that yields the middle element of an iterable (like a list) without storing the entire list in memory, if the iterable is a generator itself. Assume the input is a list for simplicity initially.","def middle_element(iterable):
+    n = len(iterable)
+    if n % 2 == 1:
+        yield iterable[n // 2]
+    else:
+        yield iterable[n // 2 - 1]
+    return
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(list1)
+    for element in middle_element(list1):
+        print(element)
+    list2 = [10, 20, 30, 40]
+    print(list2)
+    for element in middle_element(list2):
+        print(element)
+    list3 = [100]
+    print(list3)
+    for element in middle_element(list3):
+        print(element)",True,0,12749,204_5.py
+204,5,Find the middle value simply,"Implement a generator function that yields the middle element of an iterable (like a list) without storing the entire list in memory, if the iterable is a generator itself. Assume the input is a list for simplicity initially.","def middle_element(iterable):
+    n = len(iterable)
+    if n % 2 == 1:
+        yield iterable[n // 2]
+    else:
+        yield iterable[n // 2 - 1]
+    return
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    print(list_a)
+    for element in middle_element(list_a):
+        print(element)
+    list_b = [10, 20, 30, 40]
+    print(list_b)
+    for element in middle_element(list_b):
+        print(element)",True,1,12750,204_5_1.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Cannot calculate median of an empty list"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            median = sorted_data[n // 2]
+        else:
+            mid1 = sorted_data[n // 2 - 1]
+            mid2 = sorted_data[n // 2]
+            median = (mid1 + mid2) / 2
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 5, 7, 9]
+    list2 = [1, 2, 3, 4, 5, 6]
+    list3 = [10, 20, 30]
+    list4 = [1, 2, 3, 4]
+    list5 = []
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    try:
+        print(f""Median of {list5}: {ListAnalyzer.get_median(list5)}"")
+    except ValueError as e:
+        print(f""Error for {list5}: {e}"")",True,0,12751,204_13.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return sorted_data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            median = (sorted_data[middle_left_index] + sorted_data[middle_right_index]) / 2
+            return median
+if __name__ == '__main__':
+    list1 = [1, 3, 5, 7, 9]
+    list2 = [1, 2, 3, 4, 5, 6]
+    list3 = [10, 40, 20, 30]
+    list4 = [7, 2, 9, 4, 1]
+    list5 = [5]
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    print(f""Median of {list5}: {ListAnalyzer.get_median(list5)}"")",True,1,12752,204_13_1.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return sorted_data[middle_index]
+        else:
+            mid1_index = n // 2 - 1
+            mid2_index = n // 2
+            median = (sorted_data[mid1_index] + sorted_data[mid2_index]) / 2
+            return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 20, 30, 40, 50]
+    list4 = [7]
+    list5 = []
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    try:
+        ListAnalyzer.get_median(list5)
+    except ValueError as e:
+        print(f""Error for {list5}: {e}"")",True,2,12753,204_13_2.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return sorted_data[middle_index]
+        else:
+            mid1_index = n // 2 - 1
+            mid2_index = n // 2
+            median = (sorted_data[mid1_index] + sorted_data[mid2_index]) / 2
+            return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 4, 7, 2, 1]
+    list4 = [1, 2, 3, 4, 5]
+    list5 = [1, 2, 3, 4]
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    print(f""Median of {list5}: {ListAnalyzer.get_median(list5)}"")",True,3,12754,204_13_3.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            median = sorted_data[n // 2]
+        else:
+            mid1 = sorted_data[n // 2 - 1]
+            mid2 = sorted_data[n // 2]
+            median = (mid1 + mid2) / 2.0
+        return median
+if __name__ == '__main__':
+    list1 = [1, 3, 5, 7, 9]
+    list2 = [1, 2, 3, 4]
+    list3 = [5, 2, 8, 1, 9]
+    list4 = [10, 20, 30, 40, 50, 60]
+    list5 = [7]
+    list6 = []
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    print(f""Median of {list5}: {ListAnalyzer.get_median(list5)}"")
+    try:
+        ListAnalyzer.get_median(list6)
+    except ValueError as e:
+        print(f""Error for {list6}: {e}"")",True,4,12755,204_13_4.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return sorted_data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            median = (sorted_data[middle_left_index] + sorted_data[middle_right_index]) / 2
+            return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [1, 5, 2, 4, 3]
+    list3 = [10, 20, 30, 40]
+    list4 = [7, 8, 9, 10]
+    list5 = [5]
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    print(f""Median of {list5}: {ListAnalyzer.get_median(list5)}"")",True,5,12756,204_13_5.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return sorted_data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            median = (sorted_data[middle_left_index] + sorted_data[middle_right_index]) / 2
+            return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [5, 2, 8, 1, 9]
+    list3 = [10, 20, 30, 40, 50]
+    list4 = [7]
+    list5 = []
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    try:
+        ListAnalyzer.get_median(list5)
+    except ValueError as e:
+        print(f""Error for {list5}: {e}"")",True,6,12757,204_13_6.py
+204,13,Find the middle value simply,"Write a class method within a 'ListAnalyzer' class called 'get_median' that calculates and returns the middle value of the list instance. Ensure the method is clean, well-documented, and highly efficient.","class ListAnalyzer:
+    @staticmethod
+    def get_median(data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        sorted_data = sorted(data)
+        n = len(sorted_data)
+        if n % 2 == 1:
+            middle_index = n // 2
+            return sorted_data[middle_index]
+        else:
+            middle_right_index = n // 2
+            middle_left_index = middle_right_index - 1
+            median = (sorted_data[middle_left_index] + sorted_data[middle_right_index]) / 2
+            return median
+if __name__ == '__main__':
+    list1 = [1, 3, 2]
+    list2 = [1, 5, 2, 4, 3]
+    list3 = [10, 20, 30, 40]
+    list4 = [7, 8, 9, 10]
+    list5 = [5]
+    list6 = []
+    print(f""Median of {list1}: {ListAnalyzer.get_median(list1)}"")
+    print(f""Median of {list2}: {ListAnalyzer.get_median(list2)}"")
+    print(f""Median of {list3}: {ListAnalyzer.get_median(list3)}"")
+    print(f""Median of {list4}: {ListAnalyzer.get_median(list4)}"")
+    print(f""Median of {list5}: {ListAnalyzer.get_median(list5)}"")
+    try:
+        print(f""Median of {list6}: {ListAnalyzer.get_median(list6)}"")
+    except ValueError as e:
+        print(f""Error for {list6}: {e}"")",True,7,12758,204_13_7.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index - 1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5.5, 6.6, 7.7]
+    list4 = [100]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    print(f""List: {list1}, Middle Value: {find_middle(list1)}"")
+    print(f""List: {list2}, Middle Value: {find_middle(list2)}"")
+    print(f""List: {list3}, Middle Value: {find_middle(list3)}"")
+    print(f""List: {list4}, Middle Value: {find_middle(list4)}"")
+    print(f""List: {list5}, Middle Value: {find_middle(list5)}"")
+    print(f""List: {list6}, Middle Value: {find_middle(list6)}"")",True,0,12759,204_14.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index - 1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5.5, 6.6, 7.7]
+    list4 = [99]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    list7 = [100, 200]
+    print(f""List: {list1}, Middle Value: {find_middle(list1)}"")
+    print(f""List: {list2}, Middle Value: {find_middle(list2)}"")
+    print(f""List: {list3}, Middle Value: {find_middle(list3)}"")
+    print(f""List: {list4}, Middle Value: {find_middle(list4)}"")
+    print(f""List: {list5}, Middle Value: {find_middle(list5)}"")
+    print(f""List: {list6}, Middle Value: {find_middle(list6)}"")
+    print(f""List: {list7}, Middle Value: {find_middle(list7)}"")",True,1,12760,204_14_1.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index - 1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5.5, 6.6, 7.7]
+    list4 = [100]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    list7 = [10, 20, 30, 40, 50]
+    print(f""List: {list1}, Middle Value: {find_middle(list1)}"")
+    print(f""List: {list2}, Middle Value: {find_middle(list2)}"")
+    print(f""List: {list3}, Middle Value: {find_middle(list3)}"")
+    print(f""List: {list4}, Middle Value: {find_middle(list4)}"")
+    print(f""List: {list5}, Middle Value: {find_middle(list5)}"")
+    print(f""List: {list6}, Middle Value: {find_middle(list6)}"")
+    print(f""List: {list7}, Middle Value: {find_middle(list7)}"")",True,2,12761,204_14_2.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index - 1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [100]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    print(f""List: {list1}, Middle Value: {find_middle(list1)}"")
+    print(f""List: {list2}, Middle Value: {find_middle(list2)}"")
+    print(f""List: {list3}, Middle Value: {find_middle(list3)}"")
+    print(f""List: {list4}, Middle Value: {find_middle(list4)}"")
+    print(f""List: {list5}, Middle Value: {find_middle(list5)}"")
+    print(f""List: {list6}, Middle Value: {find_middle(list6)}"")",True,3,12762,204_14_3.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5.5, 6.6, 7.7]
+    list4 = [100]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    print(f""List: {list1}, Middle Value: {find_middle(list1)}"")
+    print(f""List: {list2}, Middle Value: {find_middle(list2)}"")
+    print(f""List: {list3}, Middle Value: {find_middle(list3)}"")
+    print(f""List: {list4}, Middle Value: {find_middle(list4)}"")
+    print(f""List: {list5}, Middle Value: {find_middle(list5)}"")
+    print(f""List: {list6}, Middle Value: {find_middle(list6)}"")",True,4,12763,204_14_4.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [50]
+    list4 = []
+    list5 = [100, 200]
+    list6 = [1, 2]
+    list7 = [1, 2, 3, 4]
+    print(f""List: {list1}, Middle Value: {find_middle(list1)}"")
+    print(f""List: {list2}, Middle Value: {find_middle(list2)}"")
+    print(f""List: {list3}, Middle Value: {find_middle(list3)}"")
+    print(f""List: {list4}, Middle Value: {find_middle(list4)}"")
+    print(f""List: {list5}, Middle Value: {find_middle(list5)}"")
+    print(f""List: {list6}, Middle Value: {find_middle(list6)}"")
+    print(f""List: {list7}, Middle Value: {find_middle(list7)}"")",True,5,12764,204_14_5.py
+204,14,Find the middle value simply,Create a standalone Python script that defines a function to find the middle value. Test this function with several sample lists of different sizes (odd and even) and print the results clearly.,"def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index - 1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [100]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    list7 = [1, 2]
+    print(""List:"", list1, ""Middle Value:"", find_middle(list1))
+    print(""List:"", list2, ""Middle Value:"", find_middle(list2))
+    print(""List:"", list3, ""Middle Value:"", find_middle(list3))
+    print(""List:"", list4, ""Middle Value:"", find_middle(list4))
+    print(""List:"", list5, ""Middle Value:"", find_middle(list5))
+    print(""List:"", list6, ""Middle Value:"", find_middle(list6))
+    print(""List:"", list7, ""Middle Value:"", find_middle(list7))",True,6,12765,204_14_6.py
+205,0,Sort a small set of items,"Write a complete, robust Python script that reads a list of integers from standard input and sorts them in ascending order, printing the result.","import sys
+if __name__ == '__main__':
+    input_data = [5, 2, 8, 1, 9, 3]
+    sorted_data = sorted(input_data)
+    print(*sorted_data)",True,0,12766,205_0.py
+205,1,Sort a small set of items,"Implement an optimized function named `sort_small_list` that takes a list of numbers and returns a new list sorted in descending order, using the built-in `sort` method or `sorted` function.","def sort_small_list(data):
+    return sorted(data, reverse=True)
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 1, 9]
+    sorted_list = sort_small_list(sample_list)
+    print(sorted_list)",True,0,12767,205_1.py
+205,1,Sort a small set of items,"Implement an optimized function named `sort_small_list` that takes a list of numbers and returns a new list sorted in descending order, using the built-in `sort` method or `sorted` function.","def sort_small_list(data):
+    new_list = sorted(data, reverse=True)
+    return new_list
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 1, 9]
+    sorted_list = sort_small_list(sample_list)
+    print(sorted_list)",True,1,12768,205_1_1.py
+205,2,Sort a small set of items,Develop a function that accepts a small list of strings and sorts them alphabetically. Ensure the implementation is clean and adheres to Python best practices.,"def sort_strings(string_list):
+    return sorted(string_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_list = sort_strings(sample_list)
+    print(sorted_list)",True,0,12769,205_2.py
+205,2,Sort a small set of items,Develop a function that accepts a small list of strings and sorts them alphabetically. Ensure the implementation is clean and adheres to Python best practices.,"def sort_strings(string_list):
+    return sorted(string_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_result = sort_strings(sample_list)
+    print(sorted_result)",True,1,12770,205_2_1.py
