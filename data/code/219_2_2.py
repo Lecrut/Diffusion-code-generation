@@ -1,0 +1,23 @@
+class MaxFinder:
+    def __init__(self):
+        self._data = []
+    def add_data(self, data):
+        self._data.extend(data)
+    def get_maximum(self):
+        if not self._data:
+            raise ValueError("The list is empty")
+        return max(self._data)
+if __name__ == '__main__':
+    mf = MaxFinder()
+    sample_data1 = [10, 5, 20, 8]
+    sample_data2 = [3, 99, 42, 1]
+    sample_data3 = [-5, -10, -2, -1]
+    mf.add_data(sample_data1)
+    max1 = mf.get_maximum()
+    print(f"Maximum of {sample_data1}: {max1}")
+    mf.add_data(sample_data2)
+    max2 = mf.get_maximum()
+    print(f"Maximum of {sample_data2}: {max2}")
+    mf.add_data(sample_data3)
+    max3 = mf.get_maximum()
+    print(f"Maximum of {sample_data3}: {max3}")
