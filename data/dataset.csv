@@ -286442,3 +286442,3245 @@ if __name__ == '__main__':
         analyzer.get_minimum(empty_list)
     except ValueError as e:
         print(f""Error for empty list: {e}"")",True,4,13973,222_11_4.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    min_element = data[0]
+    for element in data[1:]:
+        if element < min_element:
+            min_element = element
+    return min_element
+if __name__ == '__main__':
+    large_list = [45, 12, 89, 3, 67, 22, 90, -5, 101, 33]
+    minimum = find_minimum(large_list)
+    print(minimum)",True,0,13974,222_14.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [45, 12, 89, 3, 67, 22, 90, 1]
+    min_element = find_minimum(large_list)
+    print(min_element)",True,1,13975,222_14_1.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2, 6]
+    list2 = [-10, 5, 0, -20, 100]
+    list3 = [7]
+    list4 = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    except ValueError as e:
+        print(e)",True,2,13976,222_14_2.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [45, 12, 89, 3, 56, 91, 22, 78, 10]
+    min_element = find_minimum(large_list)
+    print(min_element)",True,3,13977,222_14_3.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    min_element = data[0]
+    for element in data[1:]:
+        if element < min_element:
+            min_element = element
+    return min_element
+if __name__ == '__main__':
+    large_list = [45, 12, 89, 3, 56, 7, 91, 22, 100, 1]
+    minimum = find_minimum(large_list)
+    print(minimum)",True,4,13978,222_14_4.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    min_element = data[0]
+    for element in data[1:]:
+        if element < min_element:
+            min_element = element
+    return min_element
+if __name__ == '__main__':
+    large_list = [45, 12, 89, 3, 67, 22, 90, 1]
+    minimum = find_minimum(large_list)
+    print(minimum)",True,5,13979,222_14_5.py
+222,14,Find the minimum of a list,Create an optimized algorithm to find the minimum element in a potentially very large list. Analyze the time complexity of your solution and provide the fully optimized Python implementation.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2, 6]
+    list2 = [-10, 5, 0, -20, 15]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    except ValueError as e:
+        print(e)",True,6,13980,222_14_6.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 -3 22 8""
+    try:
+        numbers = input_data.split()
+        numeric_list = []
+        for item in numbers:
+            if item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
+                numeric_list.append(int(item))
+            else:
+                raise ValueError(f""Invalid character found: {item}"")
+        if not numeric_list:
+            raise ValueError(""No valid numbers were extracted."")
+        minimum_value = find_minimum(numeric_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,0,13981,222_13.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 -2 8 1""
+    numbers = []
+    is_valid = True
+    for item in input_data.split():
+        try:
+            number = float(item)
+            numbers.append(number)
+        except ValueError:
+            is_valid = False
+            break
+    if not is_valid:
+        print(""Error: Input contains non-numeric data."")
+    elif not numbers:
+        print(""Error: No valid numeric data found."")
+    else:
+        try:
+            minimum_value = find_minimum(numbers)
+            print(minimum_value)
+        except ValueError as e:
+            print(f""Error processing data: {e}"")",True,1,13982,222_13_1.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_input = ""10 5 -3 22 8""
+    try:
+        input_data = sample_input.split()
+        numeric_list = []
+        for item in input_data:
+            if item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
+                numeric_list.append(int(item))
+            else:
+                raise ValueError(f""Invalid non-numeric input found: {item}"")
+        if not numeric_list:
+            raise ValueError(""No valid numbers were extracted from the input."")
+        minimum_value = find_minimum(numeric_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,2,13983,222_13_2.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list is empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 22 3 8""
+    try:
+        numbers = [int(x) for x in input_data.split()]
+        if not numbers:
+            print(""Error: No valid numbers found."")
+        else:
+            minimum_value = find_minimum(numbers)
+            print(minimum_value)
+    except ValueError:
+        print(""Error: Input contains non-numeric data."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,3,13984,222_13_3.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list is empty"")
+    minimum = data[0]
+    for number in data:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_input = ""10 5 22 3 8""
+    try:
+        input_data = sample_input.split()
+        numeric_list = []
+        for item in input_data:
+            if item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
+                numeric_list.append(int(item))
+            else:
+                raise ValueError(f""Invalid non-numeric input found: {item}"")
+        if not numeric_list:
+            raise ValueError(""No valid numbers were parsed from the input."")
+        minimum_value = find_minimum(numeric_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,4,13985,222_13_4.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list is empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 22 3 8""
+    try:
+        numbers = [int(x) for x in input_data.split()]
+        if not numbers:
+            print(""Error: No valid numbers found."")
+        else:
+            minimum_value = find_minimum(numbers)
+            print(minimum_value)
+    except ValueError as e:
+        print(f""Error: Invalid input detected. Ensure all provided values are numeric. Details: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,5,13986,222_13_5.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 -3 22 8""
+    try:
+        numbers = input_data.split()
+        numeric_list = []
+        for item in numbers:
+            if item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
+                numeric_list.append(int(item))
+            else:
+                raise ValueError(f""Invalid non-numeric input found: {item}"")
+        if not numeric_list:
+            raise ValueError(""No valid numbers were extracted from the input."")
+        minimum_value = find_minimum(numeric_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,6,13987,222_13_6.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list is empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 22 3 8""
+    try:
+        numbers = input_data.split()
+        numeric_list = []
+        for item in numbers:
+            if item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
+                numeric_list.append(int(item))
+            else:
+                raise ValueError(f""Invalid non-numeric input found: {item}"")
+        if not numeric_list:
+            raise ValueError(""No valid numbers were extracted."")
+        minimum_value = find_minimum(numeric_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(f""Error processing input: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,7,13988,222_13_7.py
+222,13,Find the minimum of a list,"Write a robust script that reads a list of numbers from standard input, validates that the input consists only of numeric data, and then prints the true minimum value found in the list. Prioritize error handling.","import sys
+def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for number in data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    input_data = ""10 5 22 3 8""
+    try:
+        numbers = input_data.split()
+        numeric_list = []
+        for item in numbers:
+            if item.isdigit() or (item.startswith('-') and item[1:].isdigit()):
+                numeric_list.append(int(item))
+            else:
+                raise ValueError(f""Invalid non-numeric input found: {item}"")
+        if not numeric_list:
+            raise ValueError(""No valid numbers were extracted."")
+        minimum_value = find_minimum(numeric_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,8,13989,222_13_8.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_maximum(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_maximum(list2))
+    list3 = [7]
+    print(find_maximum(list3))
+    list4 = [42]
+    print(find_maximum(list4))
+    list5 = []
+    try:
+        print(find_maximum(list5))
+    except ValueError as e:
+        print(e)",True,0,13990,223_0.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, -5, -20, -1]
+    list3 = [7]
+    list4 = []
+    print(f""Maximum of {list1}: {find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {find_maximum(list3)}"")
+    try:
+        print(f""Maximum of {list4}: {find_maximum(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,1,13991,223_0_1.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_maximum(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_maximum(list2))
+    list3 = [7]
+    print(find_maximum(list3))
+    list4 = []
+    try:
+        print(find_maximum(list4))
+    except ValueError as e:
+        print(e)",True,2,13992,223_0_2.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for element in data[1:]:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_maximum(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_maximum(list2))
+    list3 = [7]
+    print(find_maximum(list3))
+    list4 = []
+    try:
+        print(find_maximum(list4))
+    except ValueError as e:
+        print(e)",True,3,13993,223_0_3.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    result = find_maximum(sample_list)
+    print(result)",True,4,13994,223_0_4.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(find_maximum(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_maximum(list2))
+    list3 = [42]
+    print(find_maximum(list3))
+    list4 = [100]
+    print(find_maximum(list4))
+    list5 = []
+    try:
+        print(find_maximum(list5))
+    except ValueError as e:
+        print(e)",True,5,13995,223_0_5.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = numbers[0]
+    for number in numbers[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(find_maximum(list1))
+    list2 = [-10, -5, -20, -1]
+    print(find_maximum(list2))
+    list3 = [42]
+    print(find_maximum(list3))
+    list4 = [99, 1, 50, 3]
+    print(find_maximum(list4))",True,6,13996,223_0_6.py
+223,0,Find the maximum of a list,Implement a function named `find_maximum` that takes a list of numbers and returns the largest element. Ensure the implementation is the most time-efficient method possible.,"def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    sample_list1 = [3, 1, 4, 1, 5, 9, 2]
+    print(find_maximum(sample_list1))
+    sample_list2 = [-10, -5, -20, -1]
+    print(find_maximum(sample_list2))
+    sample_list3 = [42]
+    print(find_maximum(sample_list3))
+    sample_list4 = [7]
+    print(find_maximum(sample_list4))",True,7,13997,223_0_7.py
+223,2,Find the maximum of a list,"Develop a general-purpose function to find the maximum value in a list, handling the edge case where the input list is empty by raising a `ValueError`.","def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for item in data[1:]:
+        if item > maximum:
+            maximum = item
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, -5, -20, -1]
+    list3 = [42]
+    empty_list = []
+    print(f""Maximum of {list1}: {find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {find_maximum(list3)}"")
+    try:
+        find_maximum(empty_list)
+    except ValueError as e:
+        print(f""Caught expected error for empty list: {e}"")",True,0,13998,223_2.py
+223,2,Find the maximum of a list,"Develop a general-purpose function to find the maximum value in a list, handling the edge case where the input list is empty by raising a `ValueError`.","def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for item in data[1:]:
+        if item > maximum:
+            maximum = item
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, -5, -20, -1]
+    list3 = [42]
+    empty_list = []
+    print(f""Maximum of {list1}: {find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {find_maximum(list3)}"")
+    try:
+        find_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,13999,223_2_1.py
+223,3,Find the maximum of a list,"Create an optimized algorithm, without using the built-in `max()` function, to find the maximum element in a list of integers using a single pass through the list.","if __name__ == '__main__':
+    data = [3, 1, 8, 4, 2, 9, 5]
+    if not data:
+        max_element = None
+    else:
+        max_element = data[0]
+        for i in range(1, len(data)):
+            if data[i] > max_element:
+                max_element = data[i]
+    print(max_element)",True,0,14000,223_3.py
+223,3,Find the maximum of a list,"Create an optimized algorithm, without using the built-in `max()` function, to find the maximum element in a list of integers using a single pass through the list.","if __name__ == '__main__':
+    data = [3, 1, 9, 4, 7, 2]
+    if not data:
+        max_element = None
+    else:
+        max_element = data[0]
+        for i in range(1, len(data)):
+            if data[i] > max_element:
+                max_element = data[i]
+    print(max_element)",True,1,14001,223_3_1.py
+223,3,Find the maximum of a list,"Create an optimized algorithm, without using the built-in `max()` function, to find the maximum element in a list of integers using a single pass through the list.","if __name__ == '__main__':
+    data = [3, 1, 8, 4, 5]
+    if not data:
+        max_element = None
+    else:
+        max_element = data[0]
+        for i in range(1, len(data)):
+            if data[i] > max_element:
+                max_element = data[i]
+    print(max_element)",True,2,14002,223_3_2.py
+223,3,Find the maximum of a list,"Create an optimized algorithm, without using the built-in `max()` function, to find the maximum element in a list of integers using a single pass through the list.","if __name__ == '__main__':
+    data = [3, 1, 8, 4, 10, 2]
+    if not data:
+        max_element = None
+    else:
+        max_element = data[0]
+        for i in range(1, len(data)):
+            if data[i] > max_element:
+                max_element = data[i]
+    print(max_element)",True,3,14003,223_3_3.py
+223,3,Find the maximum of a list,"Create an optimized algorithm, without using the built-in `max()` function, to find the maximum element in a list of integers using a single pass through the list.","if __name__ == '__main__':
+    data = [3, 1, 8, 4, 5]
+    if not data:
+        max_value = None
+    else:
+        max_value = data[0]
+        for i in range(1, len(data)):
+            if data[i] > max_value:
+                max_value = data[i]
+    print(max_value)",True,4,14004,223_3_4.py
+223,4,Find the maximum of a list,Write a class named `ListAnalyzer` with a method `get_maximum` that efficiently finds and returns the maximum value from an internally stored list.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def get_maximum(self):
+        if not self._data:
+            raise ValueError(""The list is empty"")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    analyzer = ListAnalyzer(sample_list)
+    maximum_value = analyzer.get_maximum()
+    print(maximum_value)",True,0,14005,223_4.py
+223,4,Find the maximum of a list,Write a class named `ListAnalyzer` with a method `get_maximum` that efficiently finds and returns the maximum value from an internally stored list.,"class ListAnalyzer:
+    def __init__(self, data):
+        self._data = data
+    def get_maximum(self):
+        if not self._data:
+            raise ValueError(""List is empty"")
+        return max(self._data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    analyzer = ListAnalyzer(sample_list)
+    maximum_value = analyzer.get_maximum()
+    print(maximum_value)",True,1,14006,223_4_1.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_value:
+            max_value = data[i]
+    return max_value
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 4.0]
+    list2 = [-5.5, -1.2, -8.9, -3.3]
+    list3 = [100.0, 50.0, 150.0, 75.0]
+    list4 = [0.0, -1.0, 0.0]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,14007,223_5.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.71828]
+    list2 = [-5.0, -10.5, -2.0, -1.5]
+    list3 = [100.0, 50.5, 99.999, 100.001]
+    list4 = [0.0, -1.0, 5.0, -3.0]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,14008,223_5_1.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.71828]
+    list2 = [-5.0, -10.5, -2.0, -1.5]
+    list3 = [0.0, 0.0, 0.0]
+    list4 = [100.0, 50.0, 75.0, 25.0]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,2,14009,223_5_2.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.71828]
+    list2 = [-5.0, -10.5, -2.0, -1.0]
+    list3 = [100.0, 50.0, 200.0, 150.0]
+    list4 = [0.0, -0.0000000000000001, 0.0]
+    print(f""Max in {list1}: {find_max_stable(list1)}"")
+    print(f""Max in {list2}: {find_max_stable(list2)}"")
+    print(f""Max in {list3}: {find_max_stable(list3)}"")
+    print(f""Max in {list4}: {find_max_stable(list4)}"")",True,3,14010,223_5_3.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.0]
+    list2 = [-5.5, -10.2, -3.3, -8.8]
+    list3 = [1.0, 1.0000000000000001, 1.0000000000000002]
+    list4 = [0.5, -0.5, 0.0]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,14011,223_5_4.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_value:
+            max_value = data[i]
+    return max_value
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.718]
+    list2 = [-5.0, -10.5, -2.0, -8.8]
+    list3 = [1.0, 1.0000000000000001, 1.0000000000000002]
+    list4 = [0.5, -0.5, 1.0, -1.0]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,14012,223_5_5.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_value:
+            max_value = data[i]
+    return max_value
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 4.0]
+    list2 = [-5.5, -10.2, -3.3, -1.1]
+    list3 = [1.0, 1.0000000000000001, 0.9999999999999999]
+    list4 = [123.456e-10, 123.457e-10, 123.455e-10]
+    empty_list = []
+    print(f""Max in {list1}: {find_max_stable(list1)}"")
+    print(f""Max in {list2}: {find_max_stable(list2)}"")
+    print(f""Max in {list3}: {find_max_stable(list3)}"")
+    print(f""Max in {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,6,14013,223_5_6.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.71828]
+    list2 = [-5.0, -1.0, -10.5, -2.0]
+    list3 = [100.0, 50.5, 99.999]
+    list4 = [0.0, -0.001, 0.0]
+    empty_list = []
+    print(f""Max in {list1}: {find_max_stable(list1)}"")
+    print(f""Max in {list2}: {find_max_stable(list2)}"")
+    print(f""Max in {list3}: {find_max_stable(list3)}"")
+    print(f""Max in {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,7,14014,223_5_7.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.71828]
+    list2 = [-5.0, -10.5, -2.0, -1.5]
+    list3 = [100.0, 50.0, 200.0, 150.0]
+    list4 = [0.0, -1.0, 5.0, -3.0]
+    empty_list = []
+    print(f""Max in {list1}: {find_max_stable(list1)}"")
+    print(f""Max in {list2}: {find_max_stable(list2)}"")
+    print(f""Max in {list3}: {find_max_stable(list3)}"")
+    print(f""Max in {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,8,14015,223_5_8.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_value = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_value:
+            max_value = data[i]
+    return max_value
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 2.0]
+    list2 = [-5.5, -1.2, -10.0, -3.3]
+    list3 = [100.0, 50.0, 200.0, 150.0]
+    list4 = [0.0, -1.0, 5.0, -10.0]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,9,14016,223_5_9.py
+223,5,Find the maximum of a list,"Implement a function that finds the maximum value in a list of floating-point numbers, ensuring the comparison logic is numerically stable.","def find_max_stable(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    max_val = data[0]
+    for i in range(1, len(data)):
+        if data[i] > max_val:
+            max_val = data[i]
+    return max_val
+if __name__ == '__main__':
+    list1 = [3.14, 2.718, 1.618, 4.0]
+    list2 = [-5.5, -1.2, -8.9, -3.3]
+    list3 = [1e-10, 1e-12, 1e-11]
+    list4 = [0.0, -0.001, 0.0000001]
+    empty_list = []
+    print(f""Max of {list1}: {find_max_stable(list1)}"")
+    print(f""Max of {list2}: {find_max_stable(list2)}"")
+    print(f""Max of {list3}: {find_max_stable(list3)}"")
+    print(f""Max of {list4}: {find_max_stable(list4)}"")
+    try:
+        find_max_stable(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,10,14017,223_5_10.py
+223,1,Find the maximum of a list,"Write a complete, robust Python script that prompts the user to input a list of numbers and then uses the built-in `max()` function to determine and print the maximum value.","if __name__ == '__main__':
+    numbers = [15, 8, 22, 4, 30, 11]
+    maximum_value = max(numbers)
+    print(maximum_value)",True,0,14018,223_1.py
+223,7,Find the maximum of a list,"Write a function that finds the maximum value in a list of strings, based on lexicographical (alphabetical) order.","def find_max_string(list_of_strings):
+    if not list_of_strings:
+        return None
+    max_string = list_of_strings[0]
+    for s in list_of_strings:
+        if s > max_string:
+            max_string = s
+    return max_string
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat""]
+    result = find_max_string(sample_list)
+    print(result)",True,0,14019,223_7.py
+223,8,Find the maximum of a list,"Write a highly readable, documented Python function to find the maximum element in a list, including clear docstrings explaining parameters and return values.","def find_maximum(data_list):
+    if not data_list:
+        raise ValueError(""Input list cannot be empty."")
+    maximum = data_list[0]
+    for element in data_list:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 8, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        max1 = find_maximum(sample_list_1)
+        print(f""Maximum of List 1: {max1}"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}"")
+    print(f""\nList 2: {sample_list_2}"")
+    try:
+        max2 = find_maximum(sample_list_2)
+        print(f""Maximum of List 2: {max2}"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}"")
+    print(f""\nList 3: {sample_list_3}"")
+    try:
+        max3 = find_maximum(sample_list_3)
+        print(f""Maximum of List 3: {max3}"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}"")
+    print(f""\nList 4: {sample_list_4}"")
+    try:
+        max4 = find_maximum(sample_list_4)
+        print(f""Maximum of List 4: {max4}"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}"")",True,0,14020,223_8.py
+223,8,Find the maximum of a list,"Write a highly readable, documented Python function to find the maximum element in a list, including clear docstrings explaining parameters and return values.","def find_maximum(data_list):
+    if not data_list:
+        raise ValueError(""Input list cannot be empty."")
+    maximum = data_list[0]
+    for element in data_list:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 8, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        max1 = find_maximum(sample_list_1)
+        print(f""Maximum of List 1: {max1}\n"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}\n"")
+    print(f""List 2: {sample_list_2}"")
+    try:
+        max2 = find_maximum(sample_list_2)
+        print(f""Maximum of List 2: {max2}\n"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}\n"")
+    print(f""List 3: {sample_list_3}"")
+    try:
+        max3 = find_maximum(sample_list_3)
+        print(f""Maximum of List 3: {max3}\n"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}\n"")
+    print(f""List 4: {sample_list_4}"")
+    try:
+        max4 = find_maximum(sample_list_4)
+        print(f""Maximum of List 4: {max4}\n"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}\n"")",True,1,14021,223_8_1.py
+223,8,Find the maximum of a list,"Write a highly readable, documented Python function to find the maximum element in a list, including clear docstrings explaining parameters and return values.","def find_maximum(data_list):
+    if not data_list:
+        raise ValueError(""Input list cannot be empty."")
+    maximum = data_list[0]
+    for element in data_list:
+        if element > maximum:
+            maximum = element
+    return maximum
+if __name__ == '__main__':
+    sample_list_1 = [10, 4, 25, 8, 30]
+    sample_list_2 = [-5, -1, -10, -2]
+    sample_list_3 = [7]
+    sample_list_4 = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        max1 = find_maximum(sample_list_1)
+        print(f""Maximum of List 1: {max1}"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}"")
+    print(f""\nList 2: {sample_list_2}"")
+    try:
+        max2 = find_maximum(sample_list_2)
+        print(f""Maximum of List 2: {max2}"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}"")
+    print(f""\nList 3: {sample_list_3}"")
+    try:
+        max3 = find_maximum(sample_list_3)
+        print(f""Maximum of List 3: {max3}"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}"")
+    print(f""\nList 4: {sample_list_4}"")
+    try:
+        max4 = find_maximum(sample_list_4)
+        print(f""Maximum of List 4: {max4}"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}"")",True,2,14022,223_8_2.py
+223,8,Find the maximum of a list,"Write a highly readable, documented Python function to find the maximum element in a list, including clear docstrings explaining parameters and return values.","def find_maximum(data_list):
+    if not data_list:
+        raise ValueError(""Input list cannot be empty."")
+    max_element = data_list[0]
+    for element in data_list[1:]:
+        if element > max_element:
+            max_element = element
+    return max_element
+if __name__ == '__main__':
+    sample_list_1 = [10, 5, 20, 8, 15]
+    sample_list_2 = [-5, -1, -10, -3]
+    sample_list_3 = [42]
+    sample_list_4 = [3.14, 2.71, 1.618]
+    empty_list = []
+    print(f""List 1: {sample_list_1}"")
+    try:
+        max1 = find_maximum(sample_list_1)
+        print(f""Maximum of List 1: {max1}\n"")
+    except ValueError as e:
+        print(f""Error for List 1: {e}\n"")
+    print(f""List 2: {sample_list_2}"")
+    try:
+        max2 = find_maximum(sample_list_2)
+        print(f""Maximum of List 2: {max2}\n"")
+    except ValueError as e:
+        print(f""Error for List 2: {e}\n"")
+    print(f""List 3: {sample_list_3}"")
+    try:
+        max3 = find_maximum(sample_list_3)
+        print(f""Maximum of List 3: {max3}\n"")
+    except ValueError as e:
+        print(f""Error for List 3: {e}\n"")
+    print(f""List 4: {sample_list_4}"")
+    try:
+        max4 = find_maximum(sample_list_4)
+        print(f""Maximum of List 4: {max4}\n"")
+    except ValueError as e:
+        print(f""Error for List 4: {e}\n"")
+    print(f""Empty List: {empty_list}"")
+    try:
+        max_empty = find_maximum(empty_list)
+        print(f""Maximum of Empty List: {max_empty}\n"")
+    except ValueError as e:
+        print(f""Error for Empty List: {e}\n"")",True,3,14023,223_8_3.py
+223,9,Find the maximum of a list,"Write a complete, runnable program that reads a list of integers from standard input and outputs the largest integer found in that list.","if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    largest = input_data[0]
+    for number in input_data:
+        if number > largest:
+            largest = number
+    print(largest)",True,0,14024,223_9.py
+223,9,Find the maximum of a list,"Write a complete, runnable program that reads a list of integers from standard input and outputs the largest integer found in that list.","import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 3 15""
+    numbers = list(map(int, input_data.split()))
+    if numbers:
+        largest = max(numbers)
+        print(largest)
+    else:
+        print(""List is empty"")",True,1,14025,223_9_1.py
+223,9,Find the maximum of a list,"Write a complete, runnable program that reads a list of integers from standard input and outputs the largest integer found in that list.","if __name__ == '__main__':
+    input_data = [10, 5, 22, 8, 30]
+    largest = input_data[0]
+    for number in input_data:
+        if number > largest:
+            largest = number
+    print(largest)",True,2,14026,223_9_2.py
+223,10,Find the maximum of a list,Write a robust and highly efficient Python function named 'find_maximum' that takes a list of numbers as input and returns the largest number. The implementation must handle empty lists gracefully by raising a ValueError.,"def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for number in data[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, -5, -20, -1]
+    list3 = [42]
+    empty_list = []
+    print(f""Maximum of {list1}: {find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {find_maximum(list3)}"")
+    try:
+        find_maximum(empty_list)
+    except ValueError as e:
+        print(f""Handling empty list error: {e}"")",True,0,14027,223_10.py
+223,10,Find the maximum of a list,Write a robust and highly efficient Python function named 'find_maximum' that takes a list of numbers as input and returns the largest number. The implementation must handle empty lists gracefully by raising a ValueError.,"def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for number in data[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, -5, -20, -1]
+    list3 = [42]
+    empty_list = []
+    print(f""Maximum of {list1}: {find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {find_maximum(list3)}"")
+    try:
+        find_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,14028,223_10_1.py
+223,10,Find the maximum of a list,Write a robust and highly efficient Python function named 'find_maximum' that takes a list of numbers as input and returns the largest number. The implementation must handle empty lists gracefully by raising a ValueError.,"def find_maximum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    maximum = data[0]
+    for number in data[1:]:
+        if number > maximum:
+            maximum = number
+    return maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, -5, -20, -1]
+    empty_list = []
+    list3 = [42]
+    print(f""Maximum of {list1}: {find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {find_maximum(list2)}"")
+    try:
+        print(f""Maximum of {empty_list}: {find_maximum(empty_list)}"")
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Maximum of {list3}: {find_maximum(list3)}"")",True,2,14029,223_10_2.py
+223,11,Find the maximum of a list,"Implement an optimized, single-line Python expression using the built-in `max()` function to find the maximum value in a given list of integers. Include docstrings explaining the function's purpose and complexity.","def find_max(data):
+    return max(data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    result = find_max(sample_list)
+    print(result)",True,0,14030,223_11.py
+223,11,Find the maximum of a list,"Implement an optimized, single-line Python expression using the built-in `max()` function to find the maximum value in a given list of integers. Include docstrings explaining the function's purpose and complexity.","def find_max(data):
+    return max(data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 22, 8, 30]
+    result = find_max(sample_list)
+    print(result)",True,1,14031,223_11_1.py
+223,12,Find the maximum of a list,"Write a complete Python script that prompts the user to enter a list of numbers, reads the input, and then uses an iterative approach (without using the built-in `max()` function) to determine and print the maximum value. Ensure the code is clean and follows best practices.","def find_maximum(numbers):
+    if not numbers:
+        return None
+    current_max = numbers[0]
+    for number in numbers[1:]:
+        if number > current_max:
+            current_max = number
+    return current_max
+if __name__ == '__main__':
+    sample_numbers = [15, 7, 22, 3, 45, 10]
+    maximum_value = find_maximum(sample_numbers)
+    print(maximum_value)",True,0,14032,223_12.py
+223,12,Find the maximum of a list,"Write a complete Python script that prompts the user to enter a list of numbers, reads the input, and then uses an iterative approach (without using the built-in `max()` function) to determine and print the maximum value. Ensure the code is clean and follows best practices.","def find_maximum(numbers):
+    if not numbers:
+        return None
+    current_max = numbers[0]
+    for number in numbers[1:]:
+        if number > current_max:
+            current_max = number
+    return current_max
+if __name__ == '__main__':
+    sample_numbers = [15, 8, 22, 4, 30, 11]
+    maximum_value = find_maximum(sample_numbers)
+    print(maximum_value)",True,1,14033,223_12_1.py
+223,12,Find the maximum of a list,"Write a complete Python script that prompts the user to enter a list of numbers, reads the input, and then uses an iterative approach (without using the built-in `max()` function) to determine and print the maximum value. Ensure the code is clean and follows best practices.","if __name__ == '__main__':
+    numbers = [15, 8, 22, 4, 30, 11]
+    if not numbers:
+        print(""The list is empty."")
+    else:
+        current_max = numbers[0]
+        for number in numbers[1:]:
+            if number > current_max:
+                current_max = number
+        print(f""The maximum value is: {current_max}"")",True,2,14034,223_12_2.py
+223,12,Find the maximum of a list,"Write a complete Python script that prompts the user to enter a list of numbers, reads the input, and then uses an iterative approach (without using the built-in `max()` function) to determine and print the maximum value. Ensure the code is clean and follows best practices.","if __name__ == '__main__':
+    numbers = [15, 8, 22, 3, 45, 11]
+    if not numbers:
+        print(""The list is empty."")
+    else:
+        current_max = numbers[0]
+        for number in numbers[1:]:
+            if number > current_max:
+                current_max = number
+        print(f""The maximum value is: {current_max}"")",True,3,14035,223_12_3.py
+223,13,Find the maximum of a list,Develop a class named 'ListAnalyzer' with a method 'get_maximum' that efficiently finds and returns the maximum element from an internal list. The class should handle initialization with an empty list by returning negative infinity or raising an appropriate error.,"import math
+class ListAnalyzer:
+    def __init__(self, data=None):
+        if data is None:
+            self._data = []
+        else:
+            self._data = list(data)
+    def get_maximum(self):
+        if not self._data:
+            return -math.inf
+        return max(self._data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    analyzer1 = ListAnalyzer(list1)
+    print(f""Maximum of {list1}: {analyzer1.get_maximum()}"")
+    list2 = [-10, -5, -20, -1]
+    analyzer2 = ListAnalyzer(list2)
+    print(f""Maximum of {list2}: {analyzer2.get_maximum()}"")
+    empty_list = []
+    analyzer3 = ListAnalyzer(empty_list)
+    print(f""Maximum of empty list: {analyzer3.get_maximum()}"")
+    list3 = [42]
+    analyzer4 = ListAnalyzer(list3)
+    print(f""Maximum of {list3}: {analyzer4.get_maximum()}"")",True,0,14036,223_13.py
+223,13,Find the maximum of a list,Develop a class named 'ListAnalyzer' with a method 'get_maximum' that efficiently finds and returns the maximum element from an internal list. The class should handle initialization with an empty list by returning negative infinity or raising an appropriate error.,"import math
+class ListAnalyzer:
+    def __init__(self, data=None):
+        if data is None:
+            self._data = []
+        elif isinstance(data, list):
+            self._data = data
+        else:
+            self._data = []
+    def get_maximum(self):
+        if not self._data:
+            return -math.inf
+        return max(self._data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    analyzer1 = ListAnalyzer(list1)
+    print(f""Maximum of {list1}: {analyzer1.get_maximum()}"")
+    list2 = [-10, -5, -20, -1]
+    analyzer2 = ListAnalyzer(list2)
+    print(f""Maximum of {list2}: {analyzer2.get_maximum()}"")
+    list3 = []
+    analyzer3 = ListAnalyzer(list3)
+    print(f""Maximum of {list3}: {analyzer3.get_maximum()}"")
+    list4 = [42]
+    analyzer4 = ListAnalyzer(list4)
+    print(f""Maximum of {list4}: {analyzer4.get_maximum()}"")",True,1,14037,223_13_1.py
+223,13,Find the maximum of a list,Develop a class named 'ListAnalyzer' with a method 'get_maximum' that efficiently finds and returns the maximum element from an internal list. The class should handle initialization with an empty list by returning negative infinity or raising an appropriate error.,"import math
+class ListAnalyzer:
+    def __init__(self, data=None):
+        if data is None:
+            self._data = []
+        else:
+            self._data = list(data)
+    def get_maximum(self):
+        if not self._data:
+            return -math.inf
+        return max(self._data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    analyzer1 = ListAnalyzer(list1)
+    print(f""Maximum of {list1}: {analyzer1.get_maximum()}"")
+    list2 = [-10, -5, -20, -1]
+    analyzer2 = ListAnalyzer(list2)
+    print(f""Maximum of {list2}: {analyzer2.get_maximum()}"")
+    empty_list = []
+    analyzer3 = ListAnalyzer(empty_list)
+    print(f""Maximum of empty list: {analyzer3.get_maximum()}"")",True,2,14038,223_13_2.py
+223,13,Find the maximum of a list,Develop a class named 'ListAnalyzer' with a method 'get_maximum' that efficiently finds and returns the maximum element from an internal list. The class should handle initialization with an empty list by returning negative infinity or raising an appropriate error.,"import math
+class ListAnalyzer:
+    def __init__(self, data=None):
+        if data is None:
+            self._data = []
+        elif isinstance(data, list):
+            self._data = data
+        else:
+            self._data = []
+    def get_maximum(self):
+        if not self._data:
+            return -math.inf
+        return max(self._data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    analyzer1 = ListAnalyzer(list1)
+    print(f""Maximum of {list1}: {analyzer1.get_maximum()}"")
+    list2 = [-10, -5, -20, -1]
+    analyzer2 = ListAnalyzer(list2)
+    print(f""Maximum of {list2}: {analyzer2.get_maximum()}"")
+    empty_list = []
+    analyzer3 = ListAnalyzer(empty_list)
+    print(f""Maximum of empty list: {analyzer3.get_maximum()}"")
+    list3 = [42]
+    analyzer4 = ListAnalyzer(list3)
+    print(f""Maximum of {list3}: {analyzer4.get_maximum()}"")",True,3,14039,223_13_3.py
+223,13,Find the maximum of a list,Develop a class named 'ListAnalyzer' with a method 'get_maximum' that efficiently finds and returns the maximum element from an internal list. The class should handle initialization with an empty list by returning negative infinity or raising an appropriate error.,"import math
+class ListAnalyzer:
+    def __init__(self, data=None):
+        self._data = data if data is not None else []
+    def get_maximum(self):
+        if not self._data:
+            return -math.inf
+        return max(self._data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    analyzer1 = ListAnalyzer(list1)
+    print(f""Maximum of {list1}: {analyzer1.get_maximum()}"")
+    list2 = [-10, -5, -20, -1]
+    analyzer2 = ListAnalyzer(list2)
+    print(f""Maximum of {list2}: {analyzer2.get_maximum()}"")
+    empty_list = []
+    analyzer3 = ListAnalyzer(empty_list)
+    print(f""Maximum of empty list: {analyzer3.get_maximum()}"")
+    list3 = [42]
+    analyzer4 = ListAnalyzer(list3)
+    print(f""Maximum of {list3}: {analyzer4.get_maximum()}"")",True,4,14040,223_13_4.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 3, 88, 42, 9, 71]
+    print(f""Sample List: {sample_list}\n"")
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(f""Method 1 (Iterative): Maximum element is {max_iterative}"")
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(f""Method 2 (Sorting): Maximum element is {max_sorting}"")
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(f""Method 3 (max()): Maximum element is {max_builtin}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,14041,223_14.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 3, 88, 42, 9, 71]
+    print(f""Sample List: {sample_list}\n"")
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(f""Method (Iterative): Maximum element found is {max_iterative}"")
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(f""Method (Sorting): Maximum element found is {max_sorting}"")
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(f""Method (max()): Maximum element found is {max_builtin}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,14042,223_14_1.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 3, 88, 42, 9, 71]
+    print(""Sample List:"", sample_list)
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(""Max (Iterative Method):"", max_iterative)
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(""Max (Sorting Method):"", max_sorting)
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(""Max (Built-in max() Method):"", max_builtin)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,14043,223_14_2.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListAnalyzer:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_max(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    sample_list = [15, 8, 22, 4, 30, 11]
+    print(f""Sample List: {sample_list}\n"")
+    try:
+        max_iterative = analyzer.find_max_iterative(sample_list)
+        print(f""Method 1 (Iterative): Maximum element is {max_iterative}"")
+        max_sorting = analyzer.find_max_sorting(sample_list)
+        print(f""Method 2 (Sorting): Maximum element is {max_sorting}"")
+        max_builtin = analyzer.find_max_max(sample_list)
+        print(f""Method 3 (max()): Maximum element is {max_builtin}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,14044,223_14_3.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 8, 42, 3, 99, 27]
+    print(""Sample List:"", sample_list)
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(""Max (Iterative Method):"", max_iterative)
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(""Max (Sorting Method):"", max_sorting)
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(""Max (Built-in max() Method):"", max_builtin)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,14045,223_14_4.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 3, 88, 42, 9, 71]
+    print(f""Sample List: {sample_list}\n"")
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(f""Method (Iterative): Maximum element is {max_iterative}"")
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(f""Method (Sorting): Maximum element is {max_sorting}"")
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(f""Method (max()): Maximum element is {max_builtin}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,5,14046,223_14_5.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [10, 5, 42, 8, 33]
+    print(""Sample List:"", sample_list)
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(""Max (Iterative Method):"", max_iterative)
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(""Max (Sorting Method):"", max_sorting)
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(""Max (Built-in max() Method):"", max_builtin)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,6,14047,223_14_6.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 8, 42, 3, 99, 27]
+    print(f""Sample List: {sample_list}\n"")
+    try:
+        max_iterative = finder.find_max_iterative(sample_list)
+        print(f""Method (Iterative): Maximum element is {max_iterative}"")
+        max_sorting = finder.find_max_sorting(sample_list)
+        print(f""Method (Sorting): Maximum element is {max_sorting}"")
+        max_builtin = finder.find_max_builtin(sample_list)
+        print(f""Method (max()): Maximum element is {max_builtin}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,7,14048,223_14_7.py
+223,14,Find the maximum of a list,"Provide three distinct, well-commented methods (one iterative, one using sorting, and one using `max()`) within a single Python class to find the maximum element of a list. Demonstrate the usage of all three methods with a sample list.","class ListMaxFinder:
+    def find_max_iterative(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        max_val = data[0]
+        for item in data[1:]:
+            if item > max_val:
+                max_val = item
+        return max_val
+    def find_max_sorting(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        sorted_data = sorted(data)
+        return sorted_data[-1]
+    def find_max_builtin(self, data):
+        if not data:
+            raise ValueError(""List cannot be empty"")
+        return max(data)
+if __name__ == '__main__':
+    finder = ListMaxFinder()
+    sample_list = [15, 3, 88, 42, 9, 71]
+    print(""Sample List:"", sample_list)
+    max_iterative = finder.find_max_iterative(sample_list)
+    print(""Max (Iterative Method):"", max_iterative)
+    max_sorting = finder.find_max_sorting(sample_list)
+    print(""Max (Sorting Method):"", max_sorting)
+    max_builtin = finder.find_max_builtin(sample_list)
+    print(""Max (Built-in max() Method):"", max_builtin)",True,8,14049,223_14_8.py
+223,6,Find the maximum of a list,Generate a Python snippet that takes a list of mixed data types (integers and floats) and correctly identifies the largest numerical value within it.,"if __name__ == '__main__':
+    data = [10, 3.14, 5, 22.9, -1.5]
+    largest = data[0]
+    for item in data:
+        if item > largest:
+            largest = item
+    print(largest)",True,0,14050,223_6.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","if __name__ == '__main__':
+    scores = [10, 20, 30, 40, 50]
+    if not scores:
+        mean_score = 0
+    else:
+        mean_score = sum(scores) / len(scores)
+    print(mean_score)",True,0,14051,224_0.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","if __name__ == '__main__':
+    scores = [10, 20, 30, 40, 50]
+    if not scores:
+        mean = 0
+    else:
+        mean = sum(scores) / len(scores)
+    print(mean)",True,1,14052,224_0_1.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","if __name__ == '__main__':
+    scores = [10, 25, 30, 45, 50]
+    if not scores:
+        mean_score = 0
+    else:
+        total_score = sum(scores)
+        count = len(scores)
+        mean_score = total_score / count
+    print(mean_score)",True,2,14053,224_0_2.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","if __name__ == '__main__':
+    scores = [10, 20, 35, 40, 55]
+    if not scores:
+        mean_score = 0
+    else:
+        mean_score = sum(scores) / len(scores)
+    print(mean_score)",True,3,14054,224_0_3.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","if __name__ == '__main__':
+    scores = [10, 25, 30, 45, 50]
+    if not scores:
+        mean_score = 0
+    else:
+        mean_score = sum(scores) / len(scores)
+    print(mean_score)",True,4,14055,224_0_4.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","import random
+scores = [75, 88, 92, 65, 80]
+if __name__ == '__main__':
+    mean_score = sum(scores) / len(scores)
+    print(mean_score)",True,5,14056,224_0_5.py
+224,0,Calculate the mean of scores,"Write a complete, robust Python script that prompts the user to enter a list of numerical scores and then calculates and prints the arithmetic mean of those scores. Use efficient input handling.","if __name__ == '__main__':
+    scores = [10, 25, 30, 15, 40]
+    if not scores:
+        mean_score = 0
+    else:
+        mean_score = sum(scores) / len(scores)
+    print(mean_score)",True,6,14057,224_0_6.py
+224,1,Calculate the mean of scores,Implement an optimized Python function named `calculate_mean` that accepts a list of numbers and returns their arithmetic mean. The function must handle an empty list by returning 0.,"def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    list4 = [-1, 5, 10, -5]
+    print(f""Mean of {list1}: {calculate_mean(list1)}"")
+    print(f""Mean of {list2}: {calculate_mean(list2)}"")
+    print(f""Mean of {list3}: {calculate_mean(list3)}"")
+    print(f""Mean of {list4}: {calculate_mean(list4)}"")",True,0,14058,224_1.py
+224,1,Calculate the mean of scores,Implement an optimized Python function named `calculate_mean` that accepts a list of numbers and returns their arithmetic mean. The function must handle an empty list by returning 0.,"def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    list4 = [-1, 5, 10, -5]
+    mean1 = calculate_mean(list1)
+    mean2 = calculate_mean(list2)
+    mean3 = calculate_mean(list3)
+    mean4 = calculate_mean(list4)
+    print(f""Mean of {list1}: {mean1}"")
+    print(f""Mean of {list2}: {mean2}"")
+    print(f""Mean of {list3}: {mean3}"")
+    print(f""Mean of {list4}: {mean4}"")",True,1,14059,224_1_1.py
+224,1,Calculate the mean of scores,Implement an optimized Python function named `calculate_mean` that accepts a list of numbers and returns their arithmetic mean. The function must handle an empty list by returning 0.,"def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    mean1 = calculate_mean(list1)
+    mean2 = calculate_mean(list2)
+    mean3 = calculate_mean(list3)
+    print(f""Mean of {list1}: {mean1}"")
+    print(f""Mean of {list2}: {mean2}"")
+    print(f""Mean of {list3}: {mean3}"")",True,2,14060,224_1_2.py
+224,1,Calculate the mean of scores,Implement an optimized Python function named `calculate_mean` that accepts a list of numbers and returns their arithmetic mean. The function must handle an empty list by returning 0.,"def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [-10, 20, 30]
+    list4 = []
+    print(f""Mean of {list1}: {calculate_mean(list1)}"")
+    print(f""Mean of {list2}: {calculate_mean(list2)}"")
+    print(f""Mean of {list3}: {calculate_mean(list3)}"")
+    print(f""Mean of {list4}: {calculate_mean(list4)}"")",True,3,14061,224_1_3.py
+224,1,Calculate the mean of scores,Implement an optimized Python function named `calculate_mean` that accepts a list of numbers and returns their arithmetic mean. The function must handle an empty list by returning 0.,"def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    list4 = [-1, 5, 10]
+    mean1 = calculate_mean(list1)
+    mean2 = calculate_mean(list2)
+    mean3 = calculate_mean(list3)
+    mean4 = calculate_mean(list4)
+    print(f""Mean of {list1}: {mean1}"")
+    print(f""Mean of {list2}: {mean2}"")
+    print(f""Mean of {list3}: {mean3}"")
+    print(f""Mean of {list4}: {mean4}"")",True,4,14062,224_1_4.py
+222,8,Find the minimum of a list,"Design and write a benchmark comparison between using the built-in `min()` function and a manually implemented loop for finding the minimum of a list of 100,000 random integers. Report the time taken for both methods.",,False,0,14063,222_8.py
+224,3,Calculate the mean of scores,"Write a single, concise Python expression that calculates the mean of the following list of scores: [85, 92, 78, 95, 88]. Provide the result directly.","if __name__ == '__main__':
+    print((85 + 92 + 78 + 95 + 88) / 5)",True,0,14064,224_3.py
+224,4,Calculate the mean of scores,"Write a script that reads scores from a predefined list and calculates the mean, utilizing the built-in `sum()` function for efficiency. Include clear print statements for the final result.","if __name__ == '__main__':
+    scores = [85, 92, 78, 88, 95]
+    total_score = sum(scores)
+    count = len(scores)
+    mean_score = total_score / count
+    print(f""The scores are: {scores}"")
+    print(f""The sum of the scores is: {total_score}"")
+    print(f""The number of scores is: {count}"")
+    print(f""The mean score is: {mean_score}"")",True,0,14065,224_4.py
+224,4,Calculate the mean of scores,"Write a script that reads scores from a predefined list and calculates the mean, utilizing the built-in `sum()` function for efficiency. Include clear print statements for the final result.","if __name__ == '__main__':
+    scores = [85, 92, 78, 88, 95]
+    total_score = sum(scores)
+    number_of_scores = len(scores)
+    mean_score = total_score / number_of_scores
+    print(f""The scores are: {scores}"")
+    print(f""The sum of the scores is: {total_score}"")
+    print(f""The number of scores is: {number_of_scores}"")
+    print(f""The mean score is: {mean_score}"")",True,1,14066,224_4_1.py
+224,2,Calculate the mean of scores,"Develop a class named `ScoreAnalyzer` with a method `get_mean(self, scores)` that calculates the average score from an input list. Ensure the implementation is clean and adheres to object-oriented principles.","class ScoreAnalyzer:
+    def get_mean(self, scores):
+        if not scores:
+            return 0
+        return sum(scores) / len(scores)
+if __name__ == '__main__':
+    analyzer = ScoreAnalyzer()
+    sample_scores1 = [85, 92, 78, 88]
+    mean1 = analyzer.get_mean(sample_scores1)
+    print(f""Mean of {sample_scores1}: {mean1}"")
+    sample_scores2 = [10, 20, 30, 40, 50]
+    mean2 = analyzer.get_mean(sample_scores2)
+    print(f""Mean of {sample_scores2}: {mean2}"")
+    sample_scores3 = []
+    mean3 = analyzer.get_mean(sample_scores3)
+    print(f""Mean of {sample_scores3}: {mean3}"")",True,0,14067,224_2.py
+224,2,Calculate the mean of scores,"Develop a class named `ScoreAnalyzer` with a method `get_mean(self, scores)` that calculates the average score from an input list. Ensure the implementation is clean and adheres to object-oriented principles.","class ScoreAnalyzer:
+    def get_mean(self, scores):
+        if not scores:
+            return 0
+        return sum(scores) / len(scores)
+if __name__ == '__main__':
+    analyzer = ScoreAnalyzer()
+    sample_scores = [85, 92, 78, 88, 95]
+    mean_score = analyzer.get_mean(sample_scores)
+    print(mean_score)",True,1,14068,224_2_1.py
+224,2,Calculate the mean of scores,"Develop a class named `ScoreAnalyzer` with a method `get_mean(self, scores)` that calculates the average score from an input list. Ensure the implementation is clean and adheres to object-oriented principles.","class ScoreAnalyzer:
+    def get_mean(self, scores):
+        if not scores:
+            return 0
+        return sum(scores) / len(scores)
+if __name__ == '__main__':
+    analyzer = ScoreAnalyzer()
+    sample_scores1 = [85, 90, 78, 88]
+    mean1 = analyzer.get_mean(sample_scores1)
+    print(f""Mean of {sample_scores1}: {mean1}"")
+    sample_scores2 = [10, 20, 30, 40, 50]
+    mean2 = analyzer.get_mean(sample_scores2)
+    print(f""Mean of {sample_scores2}: {mean2}"")
+    sample_scores3 = []
+    mean3 = analyzer.get_mean(sample_scores3)
+    print(f""Mean of {sample_scores3}: {mean3}"")",True,2,14069,224_2_2.py
+224,6,Calculate the mean of scores,Create a high-performance function using NumPy to calculate the mean of an array of scores. Assume the input is a standard Python list that needs conversion.,"import numpy as np
+def calculate_mean(scores):
+    np_array = np.array(scores)
+    return np.mean(np_array)
+if __name__ == '__main__':
+    sample_scores = [10, 20, 30, 40, 50]
+    mean_score = calculate_mean(sample_scores)
+    print(mean_score)",True,0,14070,224_6.py
+224,6,Calculate the mean of scores,Create a high-performance function using NumPy to calculate the mean of an array of scores. Assume the input is a standard Python list that needs conversion.,"import numpy as np
+def calculate_mean(score_list):
+    score_array = np.array(score_list)
+    return np.mean(score_array)
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88, 95]
+    mean_score = calculate_mean(sample_scores)
+    print(mean_score)",True,1,14071,224_6_1.py
+224,6,Calculate the mean of scores,Create a high-performance function using NumPy to calculate the mean of an array of scores. Assume the input is a standard Python list that needs conversion.,"import numpy as np
+def calculate_mean(scores):
+    np_array = np.array(scores)
+    return np.mean(np_array)
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88, 95]
+    mean_score = calculate_mean(sample_scores)
+    print(mean_score)",True,2,14072,224_6_2.py
+224,6,Calculate the mean of scores,Create a high-performance function using NumPy to calculate the mean of an array of scores. Assume the input is a standard Python list that needs conversion.,"import numpy as np
+def calculate_mean(score_list):
+    scores = np.array(score_list)
+    return np.mean(scores)
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88, 95]
+    mean_score = calculate_mean(sample_scores)
+    print(mean_score)",True,3,14073,224_6_3.py
+224,5,Calculate the mean of scores,"Implement a generator function that yields the running total and the count of scores as it iterates through an input list of scores. Then, calculate the final mean from these generated values.","def score_generator(scores):
+    running_total = 0
+    count = 0
+    for score in scores:
+        running_total += score
+        count += 1
+        yield running_total, count
+if __name__ == '__main__':
+    sample_scores = [10, 20, 30, 40, 50]
+    generator = score_generator(sample_scores)
+    results = []
+    for total, count in generator:
+        results.append((total, count))
+    final_mean = 0
+    if results:
+        total_sum = sum(r[0] for r in results)
+        total_count = sum(r[1] for r in results)
+        final_mean = total_sum / total_count
+    print(f""Generated running totals and counts: {results}"")
+    print(f""Final mean: {final_mean}"")",True,0,14074,224_5.py
+224,5,Calculate the mean of scores,"Implement a generator function that yields the running total and the count of scores as it iterates through an input list of scores. Then, calculate the final mean from these generated values.","def score_generator(scores):
+    running_total = 0
+    count = 0
+    for score in scores:
+        running_total += score
+        count += 1
+        yield running_total, count
+if __name__ == '__main__':
+    sample_scores = [10, 20, 30, 40, 50]
+    generator = score_generator(sample_scores)
+    results = []
+    for total, count in generator:
+        results.append((total, count))
+    final_mean = 0
+    if results:
+        total_sum = sum(r[0] for r in results)
+        total_count = sum(r[1] for r in results)
+        final_mean = total_sum / total_count
+    print(f""Generated values (Running Total, Count): {results}"")
+    print(f""Final Mean: {final_mean}"")",True,1,14075,224_5_1.py
+224,5,Calculate the mean of scores,"Implement a generator function that yields the running total and the count of scores as it iterates through an input list of scores. Then, calculate the final mean from these generated values.","def score_tracker(scores):
+    running_total = 0
+    count = 0
+    for score in scores:
+        running_total += score
+        count += 1
+        yield running_total, count
+if __name__ == '__main__':
+    sample_scores = [10, 20, 30, 40, 50]
+    tracker = score_tracker(sample_scores)
+    results = []
+    for total, count in tracker:
+        results.append((total, count))
+    if results:
+        final_running_total = results[-1][0]
+        final_count = results[-1][1]
+        final_mean = final_running_total / final_count
+        print(f""Running totals and counts: {results}"")
+        print(f""Final mean: {final_mean}"")
+    else:
+        print(""No scores provided."")",True,2,14076,224_5_2.py
+224,5,Calculate the mean of scores,"Implement a generator function that yields the running total and the count of scores as it iterates through an input list of scores. Then, calculate the final mean from these generated values.","def score_generator(scores):
+    running_total = 0
+    count = 0
+    for score in scores:
+        running_total += score
+        count += 1
+        yield running_total, count
+if __name__ == '__main__':
+    sample_scores = [10, 20, 30, 40, 50]
+    generated_values = list(score_generator(sample_scores))
+    final_mean = 0
+    for running_total, count in generated_values:
+        pass
+    if generated_values:
+        final_running_total, final_count = generated_values[-1]
+        if final_count > 0:
+            final_mean = final_running_total / final_count
+    print(f""Generated values (running total, count): {generated_values}"")
+    print(f""Final mean: {final_mean}"")",True,3,14077,224_5_3.py
+224,5,Calculate the mean of scores,"Implement a generator function that yields the running total and the count of scores as it iterates through an input list of scores. Then, calculate the final mean from these generated values.","def score_tracker(scores):
+    running_total = 0
+    count = 0
+    for score in scores:
+        running_total += score
+        count += 1
+        yield running_total, count
+if __name__ == '__main__':
+    sample_scores = [10, 20, 30, 40, 50]
+    tracker = score_tracker(sample_scores)
+    results = []
+    for total, count in tracker:
+        results.append((total, count))
+    final_mean = 0
+    if results:
+        total_sum = sum(r[0] for r in results)
+        total_count = sum(r[1] for r in results)
+        final_mean = total_sum / total_count
+    print(f""Generated values (Running Total, Count): {results}"")
+    print(f""Final Mean: {final_mean}"")",True,4,14078,224_5_4.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    mean_value = calculate_mean(sample_input)
+    print(f""The mean of {sample_input} is: {mean_value}"")
+    sample_input_error = ""10 20 hello 40""
+    mean_value_error = calculate_mean(sample_input_error)
+    print(f""The mean of {sample_input_error} is: {mean_value_error}"")
+    sample_input_empty = """"
+    mean_value_empty = calculate_mean(sample_input_empty)
+    print(f""The mean of '{sample_input_empty}' is: {mean_value_empty}"")
+    sample_input_only_text = ""abc def""
+    mean_value_text = calculate_mean(sample_input_only_text)
+    print(f""The mean of '{sample_input_only_text}' is: {mean_value_text}"")",True,0,14079,224_7.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return ""Error: Invalid number found""
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    result = calculate_mean(sample_input)
+    print(result)
+    sample_input_error = ""10 20 hello 40""
+    result_error = calculate_mean(sample_input_error)
+    print(result_error)
+    sample_input_empty = """"
+    result_empty = calculate_mean(sample_input_empty)
+    print(result_empty)
+    sample_input_only_text = ""abc def""
+    result_text = calculate_mean(sample_input_only_text)
+    print(result_text)",True,1,14080,224_7_1.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    test_string_1 = ""10 20 30 40""
+    result_1 = calculate_mean(test_string_1)
+    print(f""Input: '{test_string_1}', Mean: {result_1}"")
+    test_string_2 = ""5.5 10.5 15.0""
+    result_2 = calculate_mean(test_string_2)
+    print(f""Input: '{test_string_2}', Mean: {result_2}"")
+    test_string_3 = ""1 2 three 4""
+    result_3 = calculate_mean(test_string_3)
+    print(f""Input: '{test_string_3}', Mean: {result_3}"")
+    test_string_4 = """"
+    result_4 = calculate_mean(test_string_4)
+    print(f""Input: '{test_string_4}', Mean: {result_4}"")",True,2,14081,224_7_2.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    test_string_1 = ""10 20 30 40""
+    result_1 = calculate_mean(test_string_1)
+    print(f""Input: '{test_string_1}', Mean: {result_1}"")
+    test_string_2 = ""5.5 10.5 15.5""
+    result_2 = calculate_mean(test_string_2)
+    print(f""Input: '{test_string_2}', Mean: {result_2}"")
+    test_string_3 = ""1 2 three 4""
+    result_3 = calculate_mean(test_string_3)
+    print(f""Input: '{test_string_3}', Mean: {result_3}"")
+    test_string_4 = """"
+    result_4 = calculate_mean(test_string_4)
+    print(f""Input: '{test_string_4}', Mean: {result_4}"")
+    test_string_5 = ""100""
+    result_5 = calculate_mean(test_string_5)
+    print(f""Input: '{test_string_5}', Mean: {result_5}"")",True,3,14082,224_7_3.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return ""Error: Invalid number found""
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    mean_value = calculate_mean(sample_input)
+    print(f""The mean of {sample_input} is: {mean_value}"")
+    sample_input_error = ""10 20 hello 40""
+    mean_value_error = calculate_mean(sample_input_error)
+    print(f""The mean of {sample_input_error} is: {mean_value_error}"")
+    sample_input_empty = """"
+    mean_value_empty = calculate_mean(sample_input_empty)
+    print(f""The mean of '{sample_input_empty}' is: {mean_value_empty}"")",True,4,14083,224_7_4.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return ""Error: Invalid number found in the input string""
+    except Exception:
+        return ""Error: An unexpected error occurred""
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    result = calculate_mean(sample_input)
+    print(result)
+    sample_input_with_error = ""10 20 hello 40""
+    result_error = calculate_mean(sample_input_with_error)
+    print(result_error)
+    sample_input_empty = """"
+    result_empty = calculate_mean(sample_input_empty)
+    print(result_empty)
+    sample_input_only_text = ""abc def""
+    result_text = calculate_mean(sample_input_only_text)
+    print(result_text)",True,5,14084,224_7_5.py
+224,7,Calculate the mean of scores,"Write a function that takes a string of space-separated numbers as input, parses them into a list of floats, and then calculates the mean of those numbers. Handle potential `ValueError` during conversion gracefully.","def calculate_mean(input_string):
+    numbers = []
+    try:
+        parts = input_string.split()
+        for part in parts:
+            numbers.append(float(part))
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40""
+    mean_value = calculate_mean(sample_input)
+    print(f""The mean of {sample_input} is: {mean_value}"")
+    sample_input_error = ""10 20 five 40""
+    mean_value_error = calculate_mean(sample_input_error)
+    print(f""The mean of {sample_input_error} is: {mean_value_error}"")
+    sample_input_empty = """"
+    mean_value_empty = calculate_mean(sample_input_empty)
+    print(f""The mean of '{sample_input_empty}' is: {mean_value_empty}"")
+    sample_input_only_text = ""abc def""
+    mean_value_text = calculate_mean(sample_input_only_text)
+    print(f""The mean of {sample_input_only_text} is: {mean_value_text}"")",True,6,14085,224_7_6.py
+224,8,Calculate the mean of scores,"Write a complete, production-ready script that reads scores from standard input, validates that all inputs are numbers, and calculates the mean, displaying the result formatted to two decimal places.","import sys
+def calculate_mean(input_data):
+    scores = []
+    for line in input_data.strip().split('\n'):
+        try:
+            score = float(line.strip())
+            scores.append(score)
+        except ValueError:
+            pass
+    if not scores:
+        return None
+    mean = sum(scores) / len(scores)
+    return mean
+if __name__ == '__main__':
+    sample_input = ""10\n20.5\n30\n40""
+    result = calculate_mean(sample_input)
+    if result is not None:
+        print(f""{result:.2f}"")",True,0,14086,224_8.py
+224,8,Calculate the mean of scores,"Write a complete, production-ready script that reads scores from standard input, validates that all inputs are numbers, and calculates the mean, displaying the result formatted to two decimal places.","import sys
+if __name__ == '__main__':
+    input_data = ""10 20 30 40 50""
+    scores = input_data.split()
+    total_sum = 0
+    valid_count = 0
+    for score in scores:
+        try:
+            total_sum += float(score)
+            valid_count += 1
+        except ValueError:
+            pass
+    if valid_count > 0:
+        mean = total_sum / valid_count
+        print(f""{mean:.2f}"")
+    else:
+        print(""No valid scores found"")",True,1,14087,224_8_1.py
+224,8,Calculate the mean of scores,"Write a complete, production-ready script that reads scores from standard input, validates that all inputs are numbers, and calculates the mean, displaying the result formatted to two decimal places.","import sys
+def calculate_mean(data):
+    if not data:
+        return 0.0
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    input_data = [10, 20.5, ""30"", ""40""]
+    scores = []
+    all_valid = True
+    for item in input_data:
+        try:
+            score = float(item)
+            scores.append(score)
+        except ValueError:
+            all_valid = False
+            break
+    if not all_valid:
+        sys.stderr.write(""Error: One or more inputs were not valid numbers.\n"")
+    else:
+        mean = calculate_mean(scores)
+        print(f""{mean:.2f}"")",True,2,14088,224_8_2.py
+224,8,Calculate the mean of scores,"Write a complete, production-ready script that reads scores from standard input, validates that all inputs are numbers, and calculates the mean, displaying the result formatted to two decimal places.","import sys
+if __name__ == '__main__':
+    input_data = [10, 20.5, ""30"", ""error"", 40]
+    scores = []
+    for item in input_data:
+        try:
+            scores.append(float(item))
+        except ValueError:
+            pass
+    if scores:
+        mean_score = sum(scores) / len(scores)
+        print(f""{mean_score:.2f}"")
+    else:
+        print(""No valid scores found"")",True,3,14089,224_8_3.py
+224,9,Calculate the mean of scores,"Refactor the previous mean calculation logic into a static method within a utility class, ensuring the code is maximally readable and adheres to the most efficient Python practices.","class MathUtils:
+    @staticmethod
+    def calculate_mean(numbers):
+        if not numbers:
+            return 0
+        return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [10, 20, 30, 40, 50]
+    data2 = [5, 15, 25]
+    data3 = []
+    print(f""Mean of {data1}: {MathUtils.calculate_mean(data1)}"")
+    print(f""Mean of {data2}: {MathUtils.calculate_mean(data2)}"")
+    print(f""Mean of {data3}: {MathUtils.calculate_mean(data3)}"")",True,0,14090,224_9.py
+224,9,Calculate the mean of scores,"Refactor the previous mean calculation logic into a static method within a utility class, ensuring the code is maximally readable and adheres to the most efficient Python practices.","class MathUtils:
+    @staticmethod
+    def calculate_mean(numbers):
+        if not numbers:
+            return 0
+        return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [10, 20, 30, 40, 50]
+    data2 = [5.5, 6.5, 7.5]
+    data3 = []
+    print(f""Mean of {data1}: {MathUtils.calculate_mean(data1)}"")
+    print(f""Mean of {data2}: {MathUtils.calculate_mean(data2)}"")
+    print(f""Mean of {data3}: {MathUtils.calculate_mean(data3)}"")",True,1,14091,224_9_1.py
+224,9,Calculate the mean of scores,"Refactor the previous mean calculation logic into a static method within a utility class, ensuring the code is maximally readable and adheres to the most efficient Python practices.","class MathUtils:
+    @staticmethod
+    def calculate_mean(numbers):
+        if not numbers:
+            return 0
+        return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [10, 20, 30, 40, 50]
+    data2 = [5, 15, 25]
+    data3 = []
+    mean1 = MathUtils.calculate_mean(data1)
+    mean2 = MathUtils.calculate_mean(data2)
+    mean3 = MathUtils.calculate_mean(data3)
+    print(f""Mean of {data1}: {mean1}"")
+    print(f""Mean of {data2}: {mean2}"")
+    print(f""Mean of {data3}: {mean3}"")",True,2,14092,224_9_2.py
+224,9,Calculate the mean of scores,"Refactor the previous mean calculation logic into a static method within a utility class, ensuring the code is maximally readable and adheres to the most efficient Python practices.","class MathUtils:
+    @staticmethod
+    def calculate_mean(numbers):
+        if not numbers:
+            return 0
+        return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    data1 = [10, 20, 30, 40, 50]
+    data2 = [5.5, 6.5, 7.5]
+    data3 = []
+    mean1 = MathUtils.calculate_mean(data1)
+    mean2 = MathUtils.calculate_mean(data2)
+    mean3 = MathUtils.calculate_mean(data3)
+    print(f""Mean of {data1}: {mean1}"")
+    print(f""Mean of {data2}: {mean2}"")
+    print(f""Mean of {data3}: {mean3}"")",True,3,14093,224_9_3.py
+224,9,Calculate the mean of scores,"Refactor the previous mean calculation logic into a static method within a utility class, ensuring the code is maximally readable and adheres to the most efficient Python practices.","class MathUtils:
+    @staticmethod
+    def calculate_mean(numbers):
+        if not numbers:
+            return 0
+        return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    mean_value = MathUtils.calculate_mean(sample_data)
+    print(mean_value)",True,4,14094,224_9_4.py
+224,10,Calculate the mean of scores,"Implement an optimized Python function named 'calculate_mean' that accepts a list of numbers and returns their mean. The function must handle an empty list gracefully by returning 0, and ensure the calculation uses efficient built-in functions.","def calculate_mean(numbers):
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = []
+    list3 = [10.5, 20.5, 30.5]
+    mean1 = calculate_mean(list1)
+    mean2 = calculate_mean(list2)
+    mean3 = calculate_mean(list3)
+    print(f""Mean of {list1}: {mean1}"")
+    print(f""Mean of {list2}: {mean2}"")
+    print(f""Mean of {list3}: {mean3}"")",True,0,14095,224_10.py
+224,12,Calculate the mean of scores,"Write a concise and highly efficient one-line expression or short function to compute the mean of a pre-defined list of scores, demonstrating the most Pythonic way to achieve this calculation.","if __name__ == '__main__':
+    scores = [10, 20, 30, 40, 50]
+    mean_score = sum(scores) / len(scores)
+    print(mean_score)",True,0,14096,224_12.py
+224,11,Calculate the mean of scores,"Develop a class named 'ScoreAnalyzer' with a method 'get_average' that calculates the mean of a list of scores provided during object initialization. Ensure the implementation is clean, object-oriented, and follows best practices.","class ScoreAnalyzer:
+    def __init__(self, scores):
+        self.scores = scores
+    def get_average(self):
+        if not self.scores:
+            return 0
+        return sum(self.scores) / len(self.scores)
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88, 95]
+    analyzer = ScoreAnalyzer(sample_scores)
+    average = analyzer.get_average()
+    print(average)",True,0,14097,224_11.py
+224,13,Calculate the mean of scores,"Create a script that reads scores from a file named 'scores.txt', assumes each line contains one score, and calculates the overall mean. Include necessary error handling for non-numeric input.",,False,0,14098,224_13.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_numbers = [15, 3, 8, 22, 1, 45]
+    min_val, max_val = find_min_max(sample_numbers)
+    print(f""The list of numbers is: {sample_numbers}"")
+    print(f""The minimum value is: {min_val}"")
+    print(f""The maximum value is: {max_val}"")",True,0,14099,225_0.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    print(f""Minimum value: {minimum}"")
+    print(f""Maximum value: {maximum}"")
+if __name__ == '__main__':
+    sample_numbers = [15, 3, 88, 42, 9, 76]
+    find_min_max(sample_numbers)",True,1,14100,225_0_1.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    print(f""Minimum value: {minimum}"")
+    print(f""Maximum value: {maximum}"")
+if __name__ == '__main__':
+    data = [15, 3, 88, 42, 9, 76]
+    find_min_max(data)",True,2,14101,225_0_2.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    print(f""Minimum value: {minimum}"")
+    print(f""Maximum value: {maximum}"")
+if __name__ == '__main__':
+    sample_numbers = [15, 3, 88, 42, 9, 71]
+    find_min_max(sample_numbers)",True,3,14102,225_0_3.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    print(f""Minimum value: {minimum}"")
+    print(f""Maximum value: {maximum}"")
+if __name__ == '__main__':
+    sample_list = [15, 3, 88, 42, 9, 71]
+    find_min_max(sample_list)",True,4,14103,225_0_4.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_numbers = [15, 3, 88, 42, 9, 76]
+    minimum_val, maximum_val = find_min_max(sample_numbers)
+    print(f""The list of numbers is: {sample_numbers}"")
+    print(f""The minimum value is: {minimum_val}"")
+    print(f""The maximum value is: {maximum_val}"")",True,5,14104,225_0_5.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    print(f""Minimum value: {minimum}"")
+    print(f""Maximum value: {maximum}"")
+if __name__ == '__main__':
+    sample_list = [15, 3, 88, 42, 9]
+    find_min_max(sample_list)",True,6,14105,225_0_6.py
+225,0,Compare minimum and maximum values,"Write a complete, well-documented Python script that takes a list of numbers and calculates and prints the minimum and maximum values using built-in functions.","def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    print(f""Minimum value: {minimum}"")
+    print(f""Maximum value: {maximum}"")
+if __name__ == '__main__':
+    sample_numbers = [15, 3, 8, 22, 1, 45]
+    find_min_max(sample_numbers)",True,7,14106,225_0_7.py
+225,1,Compare minimum and maximum values,Implement an optimized function named `find_min_max` that accepts a list of integers and returns a tuple containing the minimum and maximum values. Use the most efficient algorithmic approach.,"def find_min_max(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    result = find_min_max(sample_list)
+    print(result)",True,0,14107,225_1.py
+225,1,Compare minimum and maximum values,Implement an optimized function named `find_min_max` that accepts a list of integers and returns a tuple containing the minimum and maximum values. Use the most efficient algorithmic approach.,"def find_min_max(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    maximum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8]
+    result = find_min_max(sample_list)
+    print(result)",True,1,14108,225_1_1.py
+225,1,Compare minimum and maximum values,Implement an optimized function named `find_min_max` that accepts a list of integers and returns a tuple containing the minimum and maximum values. Use the most efficient algorithmic approach.,"def find_min_max(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8]
+    result = find_min_max(sample_list)
+    print(result)",True,2,14109,225_1_2.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.618, 2.718, 0.577, 9.99]
+    min_val, max_val, diff = finder.calculate_range(sample_data)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")
+    print(f""Range (Max - Min): {diff}"")
+    sample_data_2 = [-10.5, 5.2, 0.0, 15.8]
+    min_val_2, max_val_2, diff_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {min_val_2}"")
+    print(f""Maximum: {max_val_2}"")
+    print(f""Range (Max - Min): {diff_2}"")
+    empty_data = []
+    min_val_3, max_val_3, diff_3 = finder.calculate_range(empty_data)
+    print(f""Empty list result: Minimum: {min_val_3}, Maximum: {max_val_3}, Range: {diff_3}"")",True,0,14110,225_2.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.618, 2.718, 0.577, 4.0]
+    minimum_val, maximum_val, difference = finder.calculate_range(sample_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    print(f""Range (Max - Min): {difference}"")",True,1,14111,225_2_1.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    data1 = [1.5, 3.14, 2.71, 0.99, 5.0]
+    min1, max1, range1 = finder.calculate_range(data1)
+    print(f""Data: {data1}"")
+    print(f""Minimum: {min1}"")
+    print(f""Maximum: {max1}"")
+    print(f""Range: {range1}"")
+    data2 = [-10.5, 0.0, 5.5, -3.2]
+    min2, max2, range2 = finder.calculate_range(data2)
+    print(f""\nData: {data2}"")
+    print(f""Minimum: {min2}"")
+    print(f""Maximum: {max2}"")
+    print(f""Range: {range2}"")
+    data3 = [42.0]
+    min3, max3, range3 = finder.calculate_range(data3)
+    print(f""\nData: {data3}"")
+    print(f""Minimum: {min3}"")
+    print(f""Maximum: {max3}"")
+    print(f""Range: {range3}"")
+    data4 = []
+    min4, max4, range4 = finder.calculate_range(data4)
+    print(f""\nData: {data4}"")
+    print(f""Minimum: {min4}"")
+    print(f""Maximum: {max4}"")
+    print(f""Range: {range4}"")",True,2,14112,225_2_2.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 5.5, 2.718]
+    minimum, maximum, range_val = finder.calculate_range(sample_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")
+    print(f""Range (Max - Min): {range_val}"")
+    sample_data_2 = [-10.5, 0.0, 5.2, -3.8]
+    minimum_2, maximum_2, range_val_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {minimum_2}"")
+    print(f""Maximum: {maximum_2}"")
+    print(f""Range (Max - Min): {range_val_2}"")
+    sample_data_3 = []
+    minimum_3, maximum_3, range_val_3 = finder.calculate_range(sample_data_3)
+    print(f""Minimum: {minimum_3}"")
+    print(f""Maximum: {maximum_3}"")
+    print(f""Range (Max - Min): {range_val_3}"")",True,3,14113,225_2_3.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 5.5, 2.71]
+    min_val, max_val, diff = finder.calculate_range(sample_data)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")
+    print(f""Range (Max - Min): {diff}"")
+    sample_data_2 = [100.5, 50.2, 200.0]
+    min_val_2, max_val_2, diff_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {min_val_2}"")
+    print(f""Maximum: {max_val_2}"")
+    print(f""Range (Max - Min): {diff_2}"")
+    empty_data = []
+    min_val_3, max_val_3, diff_3 = finder.calculate_range(empty_data)
+    print(f""Empty List Result: Minimum={min_val_3}, Maximum={max_val_3}, Range={diff_3}"")",True,4,14114,225_2_4.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 4.5, 6.2]
+    minimum, maximum, range_val = finder.calculate_range(sample_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")
+    print(f""Range: {range_val}"")
+    sample_data_empty = []
+    minimum_e, maximum_e, range_e = finder.calculate_range(sample_data_empty)
+    print(f""Empty list result (Min, Max, Range): ({minimum_e}, {maximum_e}, {range_e})"")",True,5,14115,225_2_5.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 5.5, 2.718]
+    min_val, max_val, diff = finder.calculate_range(sample_data)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")
+    print(f""Range (Max - Min): {diff}"")
+    sample_data_2 = [-10.5, 0.0, 5.2, -3.14]
+    min_val_2, max_val_2, diff_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {min_val_2}"")
+    print(f""Maximum: {max_val_2}"")
+    print(f""Range (Max - Min): {diff_2}"")
+    empty_data = []
+    min_val_3, max_val_3, diff_3 = finder.calculate_range(empty_data)
+    print(f""Empty list result: Minimum: {min_val_3}, Maximum: {max_val_3}, Range: {diff_3}"")",True,6,14116,225_2_6.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 4.5, 6.2]
+    minimum_val, maximum_val, difference = finder.calculate_range(sample_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    print(f""Range (Max - Min): {difference}"")
+    sample_data_2 = [-5.5, 10.2, 0.0, -1.3]
+    minimum_val_2, maximum_val_2, difference_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {minimum_val_2}"")
+    print(f""Maximum: {maximum_val_2}"")
+    print(f""Range (Max - Min): {difference_2}"")
+    sample_data_3 = []
+    minimum_val_3, maximum_val_3, difference_3 = finder.calculate_range(sample_data_3)
+    print(f""Minimum: {minimum_val_3}"")
+    print(f""Maximum: {maximum_val_3}"")
+    print(f""Range (Max - Min): {difference_3}"")",True,7,14117,225_2_7.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.618, 2.718, 0.577, 4.0]
+    min_val, max_val, diff = finder.calculate_range(sample_data)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")
+    print(f""Range (Max - Min): {diff}"")
+    sample_data_2 = [-10.5, 0.0, 5.5, -3.2]
+    min_val_2, max_val_2, diff_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {min_val_2}"")
+    print(f""Maximum: {max_val_2}"")
+    print(f""Range (Max - Min): {diff_2}"")
+    empty_data = []
+    min_val_3, max_val_3, diff_3 = finder.calculate_range(empty_data)
+    print(f""Empty list result: Minimum={min_val_3}, Maximum={max_val_3}, Range={diff_3}"")",True,8,14118,225_2_8.py
+225,2,Compare minimum and maximum values,"Develop a class named `MinMaxFinder` with a method `calculate_range` that efficiently determines the minimum, maximum, and the difference between them for a given list of floating-point numbers.","class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 5.5, 2.718]
+    minimum_val, maximum_val, difference = finder.calculate_range(sample_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    print(f""Range (Max - Min): {difference}"")
+    sample_data_2 = [-10.5, 0.0, 5.2, -3.14]
+    minimum_val_2, maximum_val_2, difference_2 = finder.calculate_range(sample_data_2)
+    print(f""Minimum: {minimum_val_2}"")
+    print(f""Maximum: {maximum_val_2}"")
+    print(f""Range (Max - Min): {difference_2}"")
+    empty_data = []
+    min_val_3, max_val_3, diff_3 = finder.calculate_range(empty_data)
+    print(f""Empty list result: Minimum={min_val_3}, Maximum={max_val_3}, Range={diff_3}"")",True,9,14119,225_2_9.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [10, -5, 22, 0, -15, 33]
+    if not input_data:
+        minimum = None
+        maximum = None
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")",True,0,14120,225_3.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [10, -5, 22, 0, -15, 30]
+    if not input_data:
+        minimum = None
+        maximum = None
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+    print(f""Input sequence: {input_data}"")
+    print(f""Absolute minimum: {minimum}"")
+    print(f""Absolute maximum: {maximum}"")",True,1,14121,225_3_1.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [10, -5, 20, -1, 15, 3]
+    if not input_data:
+        minimum = None
+        maximum = None
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")",True,2,14122,225_3_2.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [10, -5, 22, 8, -1]
+    if not input_data:
+        minimum = None
+        maximum = None
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")",True,3,14123,225_3_3.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [10, -5, 22, 0, -15, 30]
+    if not input_data:
+        minimum = None
+        maximum = None
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")",True,4,14124,225_3_4.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [15, -3, 88, -102, 45, 0, 99]
+    if not input_data:
+        minimum = None
+        maximum = None
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")",True,5,14125,225_3_5.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 -3 22 8""
+    numbers = []
+    for item in input_data.split():
+        numbers.append(int(item))
+    if not numbers:
+        print(""No numbers provided."")
+    else:
+        minimum = min(numbers)
+        maximum = max(numbers)
+        print(f""Minimum: {minimum}"")
+        print(f""Maximum: {maximum}"")",True,6,14126,225_3_6.py
+225,3,Compare minimum and maximum values,Write a standalone Python program that reads a sequence of numbers from standard input and determines the absolute minimum and maximum values present in the input stream.,"if __name__ == '__main__':
+    input_data = [10, -5, 22, 0, -15, 30]
+    if not input_data:
+        print(""Input list is empty"")
+    else:
+        minimum = min(input_data)
+        maximum = max(input_data)
+        print(f""Minimum value: {minimum}"")
+        print(f""Maximum value: {maximum}"")",True,7,14127,225_3_7.py
+225,4,Compare minimum and maximum values,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    current_min = None
+    current_max = None
+    for item in iterable:
+        if current_min is None:
+            current_min = item
+            current_max = item
+        else:
+            if item < current_min:
+                current_min = item
+            if item > current_max:
+                current_max = item
+        yield current_min, current_max
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    generator = min_max_generator(sample_data)
+    for minimum, maximum in generator:
+        print(f""Min: {minimum}, Max: {maximum}"")",True,0,14128,225_4.py
+225,4,Compare minimum and maximum values,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    min_val = None
+    max_val = None
+    for item in iterable:
+        if min_val is None:
+            min_val = item
+            max_val = item
+        else:
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+        yield min_val, max_val
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    generator = min_max_generator(sample_data)
+    for current_min, current_max in generator:
+        print(f""Min: {current_min}, Max: {current_max}"")",True,1,14129,225_4_1.py
+225,4,Compare minimum and maximum values,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    current_min = None
+    current_max = None
+    for item in iterable:
+        if current_min is None:
+            current_min = item
+            current_max = item
+        else:
+            if item < current_min:
+                current_min = item
+            if item > current_max:
+                current_max = item
+        yield current_min, current_max
+if __name__ == '__main__':
+    sample_data = [3, 1, 4, 1, 5, 9, 2, 8]
+    generator = min_max_generator(sample_data)
+    for minimum, maximum in generator:
+        print(f""Min: {minimum}, Max: {maximum}"")",True,2,14130,225_4_2.py
+225,4,Compare minimum and maximum values,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    current_min = None
+    current_max = None
+    for item in iterable:
+        if current_min is None:
+            current_min = item
+            current_max = item
+        else:
+            if item < current_min:
+                current_min = item
+            if item > current_max:
+                current_max = item
+        yield current_min, current_max
+if __name__ == '__main__':
+    data1 = [5, 2, 8, 1, 9, 3]
+    print(""Data 1:"")
+    for minimum, maximum in min_max_generator(data1):
+        print(f""Min: {minimum}, Max: {maximum}"")
+    data2 = [100, 50, 200, 10, 150]
+    print(""\nData 2:"")
+    for minimum, maximum in min_max_generator(data2):
+        print(f""Min: {minimum}, Max: {maximum}"")
+    data3 = [7]
+    print(""\nData 3:"")
+    for minimum, maximum in min_max_generator(data3):
+        print(f""Min: {minimum}, Max: {maximum}"")
+    data4 = []
+    print(""\nData 4 (Empty):"")
+    for minimum, maximum in min_max_generator(data4):
+        print(f""Min: {minimum}, Max: {maximum}"")",True,3,14131,225_4_3.py
+225,4,Compare minimum and maximum values,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    min_val = None
+    max_val = None
+    for item in iterable:
+        if min_val is None:
+            min_val = item
+            max_val = item
+        else:
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+        yield min_val, max_val
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    generator = min_max_generator(sample_data)
+    print(""Input:"", sample_data)
+    for current_min, current_max in generator:
+        print(f""Min: {current_min}, Max: {current_max}"")",True,4,14132,225_4_4.py
+225,4,Compare minimum and maximum values,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    min_val = None
+    max_val = None
+    for item in iterable:
+        if min_val is None:
+            min_val = item
+            max_val = item
+        else:
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+        yield min_val, max_val
+if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2, 8]
+    generator = min_max_generator(data)
+    for current_min, current_max in generator:
+        print(f""Min: {current_min}, Max: {current_max}"")",True,5,14133,225_4_5.py
+225,6,Compare minimum and maximum values,Write a highly efficient one-line expression or lambda function to find the minimum and maximum elements in a given list of numbers.,"if __name__ == '__main__':
+    data = [10, 5, 20, 3, 15]
+    min_max = lambda lst: (min(lst), max(lst))
+    print(min_max(data))",True,0,14134,225_6.py
+225,6,Compare minimum and maximum values,Write a highly efficient one-line expression or lambda function to find the minimum and maximum elements in a given list of numbers.,"if __name__ == '__main__':
+    data = [10, 5, 20, 8, 15]
+    min_max = lambda lst: (min(lst), max(lst))
+    print(min_max(data))",True,1,14135,225_6_1.py
+225,6,Compare minimum and maximum values,Write a highly efficient one-line expression or lambda function to find the minimum and maximum elements in a given list of numbers.,"if __name__ == '__main__':
+    data = [10, 5, 22, 8, 30]
+    min_max = lambda lst: (min(lst), max(lst))
+    print(min_max(data))",True,2,14136,225_6_2.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -5]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [42]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")
+    list6 = [-5.5, 10.2, -0.1]
+    print(f""List: {list6}, Min: {compare_extremes(list6)}, Max: {compare_extremes(list6)}"")",True,0,14137,225_5.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -5]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [42]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")",True,1,14138,225_5_1.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [10, 5, 20, -3, 15]
+    list2 = []
+    list3 = [7.5, 1.2, 9.8, 3.3]
+    list4 = [-100, 0, 50, -50]
+    list5 = [42]
+    print(f""List 1: {list1}"")
+    min1, max1 = compare_extremes(list1)
+    print(f""Min: {min1}, Max: {max1}\n"")
+    print(f""List 2: {list2}"")
+    min2, max2 = compare_extremes(list2)
+    print(f""Min: {min2}, Max: {max2}\n"")
+    print(f""List 3: {list3}"")
+    min3, max3 = compare_extremes(list3)
+    print(f""Min: {min3}, Max: {max3}\n"")
+    print(f""List 4: {list4}"")
+    min4, max4 = compare_extremes(list4)
+    print(f""Min: {min4}, Max: {max4}\n"")
+    print(f""List 5: {list5}"")
+    min5, max5 = compare_extremes(list5)
+    print(f""Min: {min5}, Max: {max5}\n"")",True,2,14139,225_5_2.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -20, 3]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [42]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")
+    list6 = [-5.5, -10.2, -3.3]
+    print(f""List: {list6}, Min: {compare_extremes(list6)}, Max: {compare_extremes(list6)}"")",True,3,14140,225_5_3.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -20, 1]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [42]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")
+    list6 = [-5.5, -10.2, -3.3]
+    print(f""List: {list6}, Min: {compare_extremes(list6)}, Max: {compare_extremes(list6)}"")",True,4,14141,225_5_4.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -20, 3]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [7]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")",True,5,14142,225_5_5.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -20, 3]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [42]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")
+    list6 = [-5.5, -1.1, -3.3]
+    print(f""List: {list6}, Min: {compare_extremes(list6)}, Max: {compare_extremes(list6)}"")",True,6,14143,225_5_6.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -20, 15]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = [42]
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = []
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [3.14, 1.618, 2.718]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")
+    list6 = [-5.5, -10.2, -3.3]
+    print(f""List: {list6}, Min: {compare_extremes(list6)}, Max: {compare_extremes(list6)}"")",True,7,14144,225_5_7.py
+225,5,Compare minimum and maximum values,"Implement a function `compare_extremes(data_list)` that handles edge cases, such as empty lists, and returns the minimum and maximum values, ensuring the code is robust and handles all numeric types.","def compare_extremes(data_list):
+    if not data_list:
+        return None, None
+    minimum = data_list[0]
+    maximum = data_list[0]
+    for item in data_list:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(f""List: {list1}, Min: {compare_extremes(list1)}, Max: {compare_extremes(list1)}"")
+    list2 = [-10, 0, 5, -20]
+    print(f""List: {list2}, Min: {compare_extremes(list2)}, Max: {compare_extremes(list2)}"")
+    list3 = []
+    print(f""List: {list3}, Min: {compare_extremes(list3)}, Max: {compare_extremes(list3)}"")
+    list4 = [42]
+    print(f""List: {list4}, Min: {compare_extremes(list4)}, Max: {compare_extremes(list4)}"")
+    list5 = [""apple"", ""banana"", ""cherry""]
+    print(f""List: {list5}, Min: {compare_extremes(list5)}, Max: {compare_extremes(list5)}"")
+    list6 = [3.14, 1.618, 2.718]
+    print(f""List: {list6}, Min: {compare_extremes(list6)}, Max: {compare_extremes(list6)}"")",True,8,14145,225_5_8.py
+225,7,Compare minimum and maximum values,"Design and implement a method within a Python class to store a list of values and provide methods to retrieve the minimum, maximum, and the range of those values.","class ValueStore:
+    def __init__(self, values):
+        self.values = values
+    def get_minimum(self):
+        return min(self.values)
+    def get_maximum(self):
+        return max(self.values)
+    def get_range(self):
+        return self.get_maximum() - self.get_minimum()
+if __name__ == '__main__':
+    sample_data = [15, 3, 8, 22, 1, 10]
+    store = ValueStore(sample_data)
+    print(f""Values: {sample_data}"")
+    print(f""Minimum: {store.get_minimum()}"")
+    print(f""Maximum: {store.get_maximum()}"")
+    print(f""Range: {store.get_range()}"")",True,0,14146,225_7.py
+225,7,Compare minimum and maximum values,"Design and implement a method within a Python class to store a list of values and provide methods to retrieve the minimum, maximum, and the range of those values.","class ValueStore:
+    def __init__(self, values):
+        self.values = values
+    def get_minimum(self):
+        return min(self.values)
+    def get_maximum(self):
+        return max(self.values)
+    def get_range(self):
+        return self.get_maximum() - self.get_minimum()
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 8, 15]
+    store = ValueStore(sample_data)
+    print(f""Values: {sample_data}"")
+    print(f""Minimum: {store.get_minimum()}"")
+    print(f""Maximum: {store.get_maximum()}"")
+    print(f""Range: {store.get_range()}"")",True,1,14147,225_7_1.py
+225,7,Compare minimum and maximum values,"Design and implement a method within a Python class to store a list of values and provide methods to retrieve the minimum, maximum, and the range of those values.","class ValueStore:
+    def __init__(self, values):
+        self.values = values
+    def get_min(self):
+        return min(self.values)
+    def get_max(self):
+        return max(self.values)
+    def get_range(self):
+        return self.get_max() - self.get_min()
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 15, 3]
+    store = ValueStore(sample_data)
+    print(f""Values: {sample_data}"")
+    print(f""Minimum value: {store.get_min()}"")
+    print(f""Maximum value: {store.get_max()}"")
+    print(f""Range: {store.get_range()}"")",True,2,14148,225_7_2.py
+225,7,Compare minimum and maximum values,"Design and implement a method within a Python class to store a list of values and provide methods to retrieve the minimum, maximum, and the range of those values.","class ValueStore:
+    def __init__(self, values):
+        self.values = values
+    def get_minimum(self):
+        return min(self.values)
+    def get_maximum(self):
+        return max(self.values)
+    def get_range(self):
+        return self.get_maximum() - self.get_minimum()
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 15, 30]
+    store = ValueStore(sample_data)
+    print(f""Values: {sample_data}"")
+    print(f""Minimum: {store.get_minimum()}"")
+    print(f""Maximum: {store.get_maximum()}"")
+    print(f""Range: {store.get_range()}"")",True,3,14149,225_7_3.py
+225,7,Compare minimum and maximum values,"Design and implement a method within a Python class to store a list of values and provide methods to retrieve the minimum, maximum, and the range of those values.","class ValueStore:
+    def __init__(self, values):
+        self.values = values
+    def get_minimum(self):
+        return min(self.values)
+    def get_maximum(self):
+        return max(self.values)
+    def get_range(self):
+        return self.get_maximum() - self.get_minimum()
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15]
+    store = ValueStore(sample_data)
+    print(f""Values: {sample_data}"")
+    print(f""Minimum: {store.get_minimum()}"")
+    print(f""Maximum: {store.get_maximum()}"")
+    print(f""Range: {store.get_range()}"")",True,4,14150,225_7_4.py
+225,7,Compare minimum and maximum values,"Design and implement a method within a Python class to store a list of values and provide methods to retrieve the minimum, maximum, and the range of those values.","class ValueStore:
+    def __init__(self, values):
+        self.values = values
+    def find_minimum(self):
+        return min(self.values)
+    def find_maximum(self):
+        return max(self.values)
+    def find_range(self):
+        return self.find_maximum() - self.find_minimum()
+if __name__ == '__main__':
+    sample_data = [15, 8, 22, 4, 30, 11]
+    store = ValueStore(sample_data)
+    print(f""Values: {sample_data}"")
+    print(f""Minimum value: {store.find_minimum()}"")
+    print(f""Maximum value: {store.find_maximum()}"")
+    print(f""Range: {store.find_range()}"")",True,5,14151,225_7_5.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 15, 6, 9]
+    result = compare_min_max(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Result: {result}"")
+    list_c = [-5, -10, 0]
+    list_d = [100, 200, 300]
+    result2 = compare_min_max(list_c, list_d)
+    print(f""\nList C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Result 2: {result2}"")",True,0,14152,225_8.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 2, 7, 4, 9]
+    result = compare_min_max(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Result: {result}"")
+    list_c = [-5, 0, 10]
+    list_d = [3, -1, 7]
+    result2 = compare_min_max(list_c, list_d)
+    print(f""\nList C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Result 2: {result2}"")",True,1,14153,225_8_1.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 15, 6, 9]
+    result = compare_min_max(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Result: {result}"")
+    list_c = [-5, -10, 0]
+    list_d = [3, 7, 1]
+    result2 = compare_min_max(list_c, list_d)
+    print(f""\nList C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Result 2: {result2}"")",True,2,14154,225_8_2.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 15, 7, 9]
+    result = compare_min_max(list_a, list_b)
+    print(result)",True,3,14155,225_8_3.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 9, 6, 7]
+    result = compare_min_max(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Comparison Result: {result}"")",True,4,14156,225_8_4.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 15, 6, 9]
+    result = compare_min_max(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Result: {result}"")",True,5,14157,225_8_5.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 9, 1, 7]
+    result = compare_min_max(list_a, list_b)
+    print(f""List A: {list_a}"")
+    print(f""List B: {list_b}"")
+    print(f""Result: {result}"")
+    list_c = [100, 200]
+    list_d = [50, 150]
+    result2 = compare_min_max(list_c, list_d)
+    print(f""\nList C: {list_c}"")
+    print(f""List D: {list_d}"")
+    print(f""Result 2: {result2}"")",True,6,14158,225_8_6.py
+225,8,Compare minimum and maximum values,"Write a testable Python module containing a function that compares the minimum and maximum of two separate, pre-defined lists of integers, and include example test cases.","def compare_min_max(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1},
+        ""list2"": {""min"": min2, ""max"": max2}
+    }
+if __name__ == '__main__':
+    list_a = [1, 5, 2, 8, 3]
+    list_b = [10, 4, 12, 6, 9]
+    result = compare_min_max(list_a, list_b)
+    print(result)",True,7,14159,225_8_7.py
