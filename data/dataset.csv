@@ -296013,3 +296013,2282 @@ if __name__ == '__main__':
     print(""\n"" + ""=""*10 + ""\n"")
     rect2 = Rectangle(8, 2, '#')
     rect2.draw()",True,5,14613,233_12_5.py
+233,13,Fill a rectangle with symbols,"Write a command-line interface (CLI) script using Python that prompts the user to input the width, height, and symbol. The script must dynamically generate and print the filled rectangle based on user input, focusing on robust input validation.","import sys
+def draw_rectangle(width, height, symbol):
+    for y in range(height):
+        line = """"
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                line += ""#""
+            else:
+                line += "" ""
+        print(line)
+if __name__ == '__main__':
+    width = 10
+    height = 5
+    symbol = ""*""
+    if not isinstance(width, int) or width <= 0:
+        print(""Error: Width must be a positive integer."")
+        sys.exit(1)
+    if not isinstance(height, int) or height <= 0:
+        print(""Error: Height must be a positive integer."")
+        sys.exit(1)
+    if not isinstance(symbol, str) or len(symbol) != 1:
+        print(""Error: Symbol must be a single character."")
+        sys.exit(1)
+    print(f""Drawing rectangle of size {width}x{height} with symbol '{symbol}':"")
+    for y in range(height):
+        line = """"
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                line += ""#""
+            else:
+                line += "" ""
+        print(line)",True,0,14614,233_13.py
+233,13,Fill a rectangle with symbols,"Write a command-line interface (CLI) script using Python that prompts the user to input the width, height, and symbol. The script must dynamically generate and print the filled rectangle based on user input, focusing on robust input validation.","import sys
+def draw_rectangle(width, height, symbol):
+    for y in range(height):
+        line = """"
+        for x in range(width):
+            if (x == 0 or x == width - 1 or y == 0 or y == height - 1) or (x == 1 or x == width - 2 and y == 1 or y == height - 2):
+                line += symbol
+            else:
+                line += "" ""
+        print(line)
+if __name__ == '__main__':
+    width = 10
+    height = 5
+    symbol = ""*""
+    if not isinstance(width, int) or width <= 0:
+        print(""Error: Width must be a positive integer."")
+        sys.exit(1)
+    if not isinstance(height, int) or height <= 0:
+        print(""Error: Height must be a positive integer."")
+        sys.exit(1)
+    if not isinstance(symbol, str) or len(symbol) != 1:
+        print(""Error: Symbol must be a single character."")
+        sys.exit(1)
+    draw_rectangle(width, height, symbol)",True,1,14615,233_13_1.py
+233,14,Fill a rectangle with symbols,"Create a generator function that yields the rows of a rectangle filled with a given symbol. This implementation must be memory-efficient, suitable for very large rectangles, and demonstrate a clear understanding of Python generators.","def rectangle_generator(rows, cols, symbol):
+    for r in range(rows):
+        for c in range(cols):
+            yield symbol
+if __name__ == '__main__':
+    R = 5
+    C = 10
+    S = '*'
+    gen = rectangle_generator(R, C, S)
+    result = list(gen)
+    print(result)",True,0,14616,233_14.py
+233,14,Fill a rectangle with symbols,"Create a generator function that yields the rows of a rectangle filled with a given symbol. This implementation must be memory-efficient, suitable for very large rectangles, and demonstrate a clear understanding of Python generators.","def rectangle_generator(rows, cols, symbol):
+    for r in range(rows):
+        for c in range(cols):
+            yield symbol
+if __name__ == '__main__':
+    R = 5
+    C = 10
+    S = '*'
+    generator = rectangle_generator(R, C, S)
+    result_list = list(generator)
+    print(result_list)",True,1,14617,233_14_1.py
+233,14,Fill a rectangle with symbols,"Create a generator function that yields the rows of a rectangle filled with a given symbol. This implementation must be memory-efficient, suitable for very large rectangles, and demonstrate a clear understanding of Python generators.","def rectangle_generator(rows, cols, symbol):
+    for r in range(rows):
+        for c in range(cols):
+            yield symbol
+if __name__ == '__main__':
+    R = 5
+    C = 10
+    S = '*'
+    gen = rectangle_generator(R, C, S)
+    result_list = list(gen)
+    print(result_list)",True,2,14618,233_14_2.py
+233,14,Fill a rectangle with symbols,"Create a generator function that yields the rows of a rectangle filled with a given symbol. This implementation must be memory-efficient, suitable for very large rectangles, and demonstrate a clear understanding of Python generators.","def rectangle_generator(rows, cols, symbol):
+    for r in range(rows):
+        for c in range(cols):
+            yield symbol
+if __name__ == '__main__':
+    R = 5
+    C = 10
+    S = '#'
+    gen = rectangle_generator(R, C, S)
+    result_list = list(gen)
+    print(result_list)",True,3,14619,233_14_3.py
+234,0,Create a basic checkerboard,"Write a complete, runnable Python script to generate and print a 5x5 checkerboard using only nested loops.","if __name__ == '__main__':
+    size = 5
+    for i in range(size):
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                print("" "" * j + ""*"" + "" "" * (size - 1 - j))
+            else:
+                print("" "" * j + "" "" + "" "" * (size - 1 - j))",True,0,14620,234_0.py
+234,0,Create a basic checkerboard,"Write a complete, runnable Python script to generate and print a 5x5 checkerboard using only nested loops.","if __name__ == '__main__':
+    size = 5
+    for i in range(size):
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                print("" "" * j + ""#"", end="""")
+            else:
+                print(""  "", end="""")
+        print()",True,1,14621,234_0_1.py
+234,0,Create a basic checkerboard,"Write a complete, runnable Python script to generate and print a 5x5 checkerboard using only nested loops.","if __name__ == '__main__':
+    size = 5
+    for i in range(size):
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                print("" "" * j + ""*"" + "" "" * (size - 1 - j))
+            else:
+                print("" "" * j + ""#"" + "" "" * (size - 1 - j))",True,2,14622,234_0_2.py
+233,6,Fill a rectangle with symbols,Write a robust Python solution that reads the dimensions from standard input and fills the resulting grid with the character 'X'. The code must handle potential non-integer inputs gracefully.,,False,0,14623,233_6.py
+234,1,Create a basic checkerboard,"Implement a function named `create_checkerboard(size)` that returns a list of lists representing an N x N checkerboard, optimized for clarity and efficiency.","def create_checkerboard(size):
+    board = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row.append(1)
+            else:
+                row.append(0)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_size = 4
+    checkerboard = create_checkerboard(sample_size)
+    for row in checkerboard:
+        print(row)",True,0,14624,234_1.py
+234,1,Create a basic checkerboard,"Implement a function named `create_checkerboard(size)` that returns a list of lists representing an N x N checkerboard, optimized for clarity and efficiency.","def create_checkerboard(size):
+    board = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row.append(1)
+            else:
+                row.append(0)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    size = 4
+    checkerboard = create_checkerboard(size)
+    for row in checkerboard:
+        print(row)",True,1,14625,234_1_1.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+        else:
+            raise IndexError(""Row or column index out of bounds"")
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        else:
+            raise IndexError(""Row or column index out of bounds"")
+    def display(self):
+        for row in self.board:
+            print(row)
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    for i in range(size):
+        for j in range(size):
+            cb.set_value(i, j, i + j)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual cell values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 2): {cb.get_value(1, 2)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")",True,0,14626,234_2.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        return None
+    def display(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                print(self.board[i][j], end="" "")
+            print()
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    cb.set_value(0, 0, 1)
+    cb.set_value(0, 1, 0)
+    cb.set_value(1, 0, 0)
+    cb.set_value(1, 1, 1)
+    cb.set_value(2, 2, 0)
+    cb.set_value(3, 3, 1)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 1): {cb.get_value(1, 1)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")
+    print(f""Value at (2, 0) (uninitialized): {cb.get_value(2, 0)}"")",True,1,14627,234_2_1.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        return None
+    def display(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                print(self.board[i][j], end="" "")
+            print()
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    cb.set_value(0, 0, 1)
+    cb.set_value(0, 1, 0)
+    cb.set_value(1, 0, 0)
+    cb.set_value(1, 1, 1)
+    cb.set_value(2, 2, 0)
+    cb.set_value(3, 3, 1)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual cell values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 1): {cb.get_value(1, 1)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")
+    print(f""Value at (2, 0) (uninitialized): {cb.get_value(2, 0)}"")",True,2,14628,234_2_2.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        return None
+    def display(self):
+        for row in self.board:
+            print(row)
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    cb.set_value(0, 0, 1)
+    cb.set_value(0, 1, 0)
+    cb.set_value(1, 0, 0)
+    cb.set_value(1, 1, 1)
+    cb.set_value(2, 2, 0)
+    cb.set_value(3, 3, 1)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 1): {cb.get_value(1, 1)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")
+    print(f""Value at (2, 0) (uninitialized): {cb.get_value(2, 0)}"")",True,3,14629,234_2_3.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        return None
+    def display(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                print(self.board[i][j], end="" "")
+            print()
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    cb.set_value(0, 0, 1)
+    cb.set_value(0, 1, 0)
+    cb.set_value(1, 0, 0)
+    cb.set_value(1, 1, 1)
+    cb.set_value(2, 2, 0)
+    cb.set_value(3, 3, 1)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual cell values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 1): {cb.get_value(1, 1)}"")
+    print(f""Value at (2, 2): {cb.get_value(2, 2)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")
+    print(f""Value at (0, 2): {cb.get_value(0, 2)}"")",True,4,14630,234_2_4.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        return None
+    def display(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                print(self.board[i][j], end=' ')
+            print()
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    cb.set_value(0, 0, 1)
+    cb.set_value(0, 1, 0)
+    cb.set_value(1, 0, 0)
+    cb.set_value(1, 1, 1)
+    cb.set_value(2, 2, 0)
+    cb.set_value(3, 3, 1)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing specific values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 1): {cb.get_value(1, 1)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")
+    print(f""Value at (2, 0) (uninitialized): {cb.get_value(2, 0)}"")",True,5,14631,234_2_5.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+        else:
+            raise IndexError(""Row or column index out of bounds"")
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        else:
+            raise IndexError(""Row or column index out of bounds"")
+    def display(self):
+        for row in self.board:
+            print(row)
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    for i in range(size):
+        for j in range(size):
+            cb.set_value(i, j, i + j)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual cells:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 2): {cb.get_value(1, 2)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")",True,6,14632,234_2_6.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+        else:
+            raise IndexError(""Row or column index out of bounds"")
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        else:
+            raise IndexError(""Row or column index out of bounds"")
+    def display(self):
+        for row in self.board:
+            print(row)
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    for i in range(size):
+        for j in range(size):
+            cb.set_value(i, j, (i + j) % 2)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 2): {cb.get_value(1, 2)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")",True,7,14633,234_2_7.py
+234,2,Create a basic checkerboard,"Develop a Python class named `Checkerboard` that initializes and stores an N x N checkerboard, providing methods to display the board and access individual cell values.","class Checkerboard:
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0 for _ in range(n)] for _ in range(n)]
+    def set_value(self, row, col, value):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            self.board[row][col] = value
+    def get_value(self, row, col):
+        if 0 <= row < self.n and 0 <= col < self.n:
+            return self.board[row][col]
+        return None
+    def display(self):
+        for i in range(self.n):
+            for j in range(self.n):
+                print(self.board[i][j], end="" "")
+            print()
+if __name__ == '__main__':
+    size = 4
+    cb = Checkerboard(size)
+    cb.set_value(0, 0, 1)
+    cb.set_value(0, 1, 0)
+    cb.set_value(1, 0, 0)
+    cb.set_value(1, 1, 1)
+    cb.set_value(2, 2, 0)
+    cb.set_value(3, 3, 1)
+    print(""Checkerboard:"")
+    cb.display()
+    print(""\nAccessing individual cell values:"")
+    print(f""Value at (0, 0): {cb.get_value(0, 0)}"")
+    print(f""Value at (1, 1): {cb.get_value(1, 1)}"")
+    print(f""Value at (3, 3): {cb.get_value(3, 3)}"")
+    print(f""Value at (2, 1) (uninitialized): {cb.get_value(2, 1)}"")",True,8,14634,234_2_8.py
+234,3,Create a basic checkerboard,"Write a function that generates a checkerboard pattern as a flat 1D list of integers (0s and 1s) for a given board dimension, ensuring the pattern alternates correctly.","def generate_checkerboard(rows, cols):
+    pattern = []
+    for r in range(rows):
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                pattern.append(0)
+            else:
+                pattern.append(1)
+    return pattern
+if __name__ == '__main__':
+    rows = 4
+    cols = 5
+    checkerboard_pattern = generate_checkerboard(rows, cols)
+    print(checkerboard_pattern)",True,0,14635,234_3.py
+234,3,Create a basic checkerboard,"Write a function that generates a checkerboard pattern as a flat 1D list of integers (0s and 1s) for a given board dimension, ensuring the pattern alternates correctly.","def generate_checkerboard(rows, cols):
+    pattern = []
+    for r in range(rows):
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                pattern.append(0)
+            else:
+                pattern.append(1)
+    return pattern
+if __name__ == '__main__':
+    rows_val = 4
+    cols_val = 5
+    checkerboard_pattern = generate_checkerboard(rows_val, cols_val)
+    print(checkerboard_pattern)",True,1,14636,234_3_1.py
+234,3,Create a basic checkerboard,"Write a function that generates a checkerboard pattern as a flat 1D list of integers (0s and 1s) for a given board dimension, ensuring the pattern alternates correctly.","def generate_checkerboard(rows, cols):
+    pattern = []
+    for r in range(rows):
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                pattern.append(0)
+            else:
+                pattern.append(1)
+    return pattern
+if __name__ == '__main__':
+    rows_val = 4
+    cols_val = 5
+    checkerboard_list = generate_checkerboard(rows_val, cols_val)
+    print(checkerboard_list)",True,2,14637,234_3_2.py
+234,3,Create a basic checkerboard,"Write a function that generates a checkerboard pattern as a flat 1D list of integers (0s and 1s) for a given board dimension, ensuring the pattern alternates correctly.","def generate_checkerboard(rows, cols):
+    board = []
+    for i in range(rows):
+        for j in range(cols):
+            if (i + j) % 2 == 0:
+                board.append(0)
+            else:
+                board.append(1)
+    return board
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    checkerboard_pattern = generate_checkerboard(rows, cols)
+    print(checkerboard_pattern)",True,3,14638,234_3_3.py
+234,3,Create a basic checkerboard,"Write a function that generates a checkerboard pattern as a flat 1D list of integers (0s and 1s) for a given board dimension, ensuring the pattern alternates correctly.","def generate_checkerboard(rows, cols):
+    board = []
+    for i in range(rows):
+        for j in range(cols):
+            if (i + j) % 2 == 0:
+                board.append(0)
+            else:
+                board.append(1)
+    return board
+if __name__ == '__main__':
+    rows = 4
+    cols = 5
+    checkerboard_pattern = generate_checkerboard(rows, cols)
+    print(checkerboard_pattern)",True,4,14639,234_3_4.py
+234,4,Create a basic checkerboard,Create an optimized function that takes an integer `n` and returns a 2D list representing an $n 	imes n$ checkerboard where the pattern alternates based on the sum of the row and column indices.,"def create_checkerboard(n):
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append(1)
+            else:
+                row.append(0)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    n_sample = 4
+    result = create_checkerboard(n_sample)
+    print(result)",True,0,14640,234_4.py
+234,4,Create a basic checkerboard,Create an optimized function that takes an integer `n` and returns a 2D list representing an $n 	imes n$ checkerboard where the pattern alternates based on the sum of the row and column indices.,"def create_checkerboard(n):
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append(1)
+            else:
+                row.append(0)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    n1 = 3
+    result1 = create_checkerboard(n1)
+    print(f""n={n1}:\n{result1}"")
+    n2 = 4
+    result2 = create_checkerboard(n2)
+    print(f""n={n2}:\n{result2}"")
+    n3 = 1
+    result3 = create_checkerboard(n3)
+    print(f""n={n3}:\n{result3}"")",True,1,14641,234_4_1.py
+233,9,Fill a rectangle with symbols,"Develop an interactive program that continuously asks the user for input until they enter 'exit', allowing them to define the dimensions and symbol for a new rectangle to be drawn each time.",,False,0,14642,233_9.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [3, 4, 0, -2, 5]
+    for n in sample_inputs:
+        result = generate_checkerboard(n)
+        print(f""Input N={n}: {result}"")",True,0,14643,234_6.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [3, 5, 0, -2, 4]
+    for n in sample_inputs:
+        result = generate_checkerboard(n)
+        print(f""Input N={n}:"")
+        if result is not None:
+            for row in result:
+                print("" "".join(row))
+        else:
+            print(""Invalid input. Checkerboard not generated."")
+        print(""-"" * 10)",True,1,14644,234_6_1.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [3, 5, 0, -2, 4]
+    for n in sample_inputs:
+        result = generate_checkerboard(n)
+        print(f""Input N: {n}, Checkerboard:"")
+        if result is not None:
+            for row in result:
+                print("" "".join(row))
+        else:
+            print(""Invalid input. Cannot generate checkerboard."")
+        print(""-"" * 10)",True,2,14645,234_6_2.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [3, 5, -2, 0, 4]
+    for n in sample_inputs:
+        result = generate_checkerboard(n)
+        print(f""Input N: {n}"")
+        if result is not None:
+            for row in result:
+                print("" "".join(row))
+        else:
+            print(""Invalid input: N must be a positive integer."")
+        print(""-"" * 10)",True,3,14646,234_6_3.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return ""Invalid input: N must be a positive integer.""
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append("" "")
+            else:
+                row.append(""X"")
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [4, 0, -2, 3]
+    for n in sample_inputs:
+        result = generate_checkerboard(n)
+        print(f""Input N={n}:"")
+        if isinstance(result, list):
+            for row in result:
+                print("""".join(row))
+        else:
+            print(result)
+        print(""-"" * 10)",True,4,14647,234_6_4.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [3, 5, 0, -2, 4]
+    for n in sample_inputs:
+        result = generate_checkerboard(n)
+        print(f""Input N: {n}"")
+        if result is not None:
+            for row in result:
+                print("" "".join(row))
+        else:
+            print(""Invalid input: N must be a positive integer."")
+        print(""-"" * 10)",True,5,14648,234_6_5.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [5, 3, -2, 0, 4]
+    for n in sample_inputs:
+        checkerboard = generate_checkerboard(n)
+        print(f""Input N: {n}"")
+        if checkerboard is not None:
+            for row in checkerboard:
+                print("" "".join(row))
+        else:
+            print(""Invalid input: N must be a positive integer."")
+        print(""-"" * 10)",True,6,14649,234_6_6.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [4, 5, 0, -2, 3]
+    for n in sample_inputs:
+        checkerboard = generate_checkerboard(n)
+        print(f""Input N: {n}"")
+        if checkerboard is not None:
+            for row in checkerboard:
+                print("" "".join(row))
+        else:
+            print(""Invalid input: N must be a positive integer."")
+        print(""-"" * 10)",True,7,14650,234_6_7.py
+234,6,Create a basic checkerboard,"Write a robust script that reads an integer input from the user and generates a checkerboard of size $N 	imes N$, handling potential non-positive integer inputs gracefully.","def generate_checkerboard(n):
+    if not isinstance(n, int) or n <= 0:
+        return None
+    board = []
+    for i in range(n):
+        row = []
+        for j in range(n):
+            if (i + j) % 2 == 0:
+                row.append('A')
+            else:
+                row.append('B')
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    sample_inputs = [3, 5, -2, 0, 4]
+    for n in sample_inputs:
+        checkerboard = generate_checkerboard(n)
+        print(f""Input N: {n}"")
+        if checkerboard is not None:
+            for row in checkerboard:
+                print("" "".join(row))
+        else:
+            print(""Invalid input: N must be a positive integer."")
+        print(""-"" * 10)",True,8,14651,234_6_8.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_data = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_data.append(' ' if r % 2 == 0 else 'X')
+            else:
+                row_data.append('X' if r % 2 == 0 else ' ')
+        board.append(row_data)
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = [('X' if (r + c) % 2 == 0 else ' ') for c in range(cols)]
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    rows = 5
+    cols = 7
+    checkerboard = generate_checkerboard_pythonic(rows, cols)
+    for row in checkerboard:
+        print("""".join(row))",True,0,14652,234_8.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_str = """"
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_str += "" ""
+            else:
+                row_str += ""#""
+        board.append(row_str)
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = ["" "" if (r + c) % 2 == 0 else ""#"" for c in range(cols)]
+        board.append("""".join(row))
+    return board
+if __name__ == '__main__':
+    R = 5
+    C = 8
+    checkerboard = generate_checkerboard_pythonic(R, C)
+    for row in checkerboard:
+        print(row)",True,1,14653,234_8_1.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"if __name__ == '__main__':
+    size = 5
+    board = []
+    for i in range(size):
+        row = [i % 2 for j in range(size)]
+        board.append(row)
+    print(board)",True,2,14654,234_8_2.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_str = """"
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_str += "" ""
+            else:
+                row_str += ""#""
+        board.append(row_str)
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = ["" "" if (r + c) % 2 == 0 else ""#"" for c in range(cols)]
+        board.append("""".join(row))
+    return board
+if __name__ == '__main__':
+    rows_val = 5
+    cols_val = 8
+    checkerboard = generate_checkerboard_pythonic(rows_val, cols_val)
+    for row in checkerboard:
+        print(row)",True,3,14655,234_8_3.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_str = """"
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_str += "" ""
+            else:
+                row_str += ""#""
+        board.append(row_str)
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = ["" "" if (r + c) % 2 == 0 else ""#"" for c in range(cols)]
+        board.append("""".join(row))
+    return board
+if __name__ == '__main__':
+    rows = 5
+    cols = 8
+    checkerboard = generate_checkerboard_pythonic(rows, cols)
+    for row in checkerboard:
+        print(row)",True,4,14656,234_8_4.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_list = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_list.append(' ' if r % 2 == 0 else 'X')
+            else:
+                row_list.append('X' if r % 2 == 0 else ' ')
+        board.append(row_list)
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = [('X' if (r + c) % 2 == 0 else ' ') for c in range(cols)]
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    R = 5
+    C = 8
+    checkerboard = generate_checkerboard_pythonic(R, C)
+    for row in checkerboard:
+        print("""".join(row))",True,5,14657,234_8_5.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_str = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_str.append(' ' if r % 2 == 0 else 'X')
+            else:
+                row_str.append('X' if r % 2 == 0 else ' ')
+        board.append("""".join(row_str))
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row.append('X')
+            else:
+                row.append(' ')
+        board.append("""".join(row))
+    return board
+def generate_checkerboard_list_comprehension(rows, cols):
+    board = []
+    for r in range(rows):
+        row_chars = [('X' if (r + c) % 2 == 0 else ' ') for c in range(cols)]
+        board.append("""".join(row_chars))
+    return board
+if __name__ == '__main__':
+    R = 5
+    C = 8
+    checkerboard = generate_checkerboard_list_comprehension(R, C)
+    for row in checkerboard:
+        print(row)",True,6,14658,234_8_6.py
+234,8,Create a basic checkerboard,Refactor the previous checkerboard generation logic to use list comprehensions for maximum Pythonic efficiency and conciseness.,"def generate_checkerboard(rows, cols):
+    board = []
+    for r in range(rows):
+        row_data = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_data.append(' ' if r % 2 == 0 else 'X')
+            else:
+                row_data.append('X' if r % 2 == 0 else ' ')
+        board.append(row_data)
+    return board
+def generate_checkerboard_pythonic(rows, cols):
+    board = []
+    for r in range(rows):
+        row = [('X' if (r + c) % 2 == 0 else ' ') for c in range(cols)]
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    R = 5
+    C = 7
+    checkerboard = generate_checkerboard_pythonic(R, C)
+    for row in checkerboard:
+        print("""".join(row))",True,7,14659,234_8_7.py
+234,9,Create a basic checkerboard,"Write a complete program that takes user input for the board size and prints the resulting checkerboard in a clear, matrix format.","def print_checkerboard(size):
+    for i in range(size):
+        row = """"
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row += "" ""
+            else:
+                row += ""#""
+        print(row)
+if __name__ == '__main__':
+    board_size = 5
+    print_checkerboard(board_size)",True,0,14660,234_9.py
+234,9,Create a basic checkerboard,"Write a complete program that takes user input for the board size and prints the resulting checkerboard in a clear, matrix format.","import numpy as np
+if __name__ == '__main__':
+    board_size = 8
+    checkerboard = np.zeros((board_size, board_size), dtype=int)
+    for i in range(board_size):
+        for j in range(board_size):
+            if (i + j) % 2 == 0:
+                checkerboard[i, j] = 1
+            else:
+                checkerboard[i, j] = 0
+    print(checkerboard)",True,1,14661,234_9_1.py
+234,9,Create a basic checkerboard,"Write a complete program that takes user input for the board size and prints the resulting checkerboard in a clear, matrix format.","import numpy as np
+if __name__ == '__main__':
+    board_size = 5
+    board = np.zeros((board_size, board_size), dtype=int)
+    for i in range(board_size):
+        for j in range(board_size):
+            if (i + j) % 2 == 0:
+                board[i, j] = 1
+            else:
+                board[i, j] = 0
+    for row in board:
+        print("" "".join(map(str, row)))",True,2,14662,234_9_2.py
+234,9,Create a basic checkerboard,"Write a complete program that takes user input for the board size and prints the resulting checkerboard in a clear, matrix format.","import numpy as np
+def print_checkerboard(size):
+    board = np.zeros((size, size), dtype=str)
+    for i in range(size):
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                board[i, j] = ' '
+            else:
+                board[i, j] = 'X'
+    for row in board:
+        print("" "".join(row))
+if __name__ == '__main__':
+    board_size = 5
+    print_checkerboard(board_size)",True,3,14663,234_9_3.py
+234,10,Create a basic checkerboard,"Write a complete, well-commented Python script to generate and print a 5x5 checkerboard pattern using only standard Python features.","def generate_checkerboard():
+    size = 5
+    board = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row.append(' ' * 3)
+            else:
+                row.append('*' * 3)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    checkerboard = generate_checkerboard()
+    for row in checkerboard:
+        print("""".join(row))",True,0,14664,234_10.py
+234,10,Create a basic checkerboard,"Write a complete, well-commented Python script to generate and print a 5x5 checkerboard pattern using only standard Python features.","def generate_checkerboard(size=5):
+    board = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row.append(' ' * 3)
+            else:
+                row.append('X' * 3)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    checkerboard_pattern = generate_checkerboard(5)
+    for row in checkerboard_pattern:
+        print("""".join(row))",True,1,14665,234_10_1.py
+234,10,Create a basic checkerboard,"Write a complete, well-commented Python script to generate and print a 5x5 checkerboard pattern using only standard Python features.","if __name__ == '__main__':
+    size = 5
+    checkerboard = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row.append("" "" * 3)
+            else:
+                row.append(""X"")
+        checkerboard.append(row)
+    for row in checkerboard:
+        print("" "".join(row))",True,2,14666,234_10_2.py
+234,10,Create a basic checkerboard,"Write a complete, well-commented Python script to generate and print a 5x5 checkerboard pattern using only standard Python features.","def generate_checkerboard(size=5):
+    board = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row.append(' ' * 3)
+            else:
+                row.append('*' * 3)
+        board.append(row)
+    return board
+if __name__ == '__main__':
+    checkerboard = generate_checkerboard(5)
+    for row in checkerboard:
+        print("""".join(row))",True,3,14667,234_10_3.py
+234,11,Create a basic checkerboard,"Implement an optimized function named 'generate_checkerboard' that takes an integer 'n' as input and returns a list of lists representing an n x n checkerboard, ensuring the use of list comprehensions for efficiency.","def generate_checkerboard(n):
+    return [[(i + j) % 2 for j in range(n)] for i in range(n)]
+if __name__ == '__main__':
+    n1 = 3
+    result1 = generate_checkerboard(n1)
+    print(f""Checkerboard for n={n1}:"")
+    for row in result1:
+        print(row)
+    n2 = 4
+    result2 = generate_checkerboard(n2)
+    print(f""\nCheckerboard for n={n2}:"")
+    for row in result2:
+        print(row)",True,0,14668,234_11.py
+234,12,Create a basic checkerboard,"Develop a class named 'Checkerboard' that initializes with a size parameter and provides a method to return the 2D grid representation of the checkerboard, prioritizing clean object-oriented design.","class Checkerboard:
+    def __init__(self, size):
+        self.size = size
+    def get_board(self):
+        board = []
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                if (i + j) % 2 == 0:
+                    row.append(' ')
+                else:
+                    row.append('X')
+            board.append(row)
+        return board
+if __name__ == '__main__':
+    board1 = Checkerboard(4)
+    print(""Checkerboard of size 4:"")
+    for row in board1.get_board():
+        print(row)
+    board2 = Checkerboard(3)
+    print(""\nCheckerboard of size 3:"")
+    for row in board2.get_board():
+        print(row)",True,0,14669,234_12.py
+234,12,Create a basic checkerboard,"Develop a class named 'Checkerboard' that initializes with a size parameter and provides a method to return the 2D grid representation of the checkerboard, prioritizing clean object-oriented design.","class Checkerboard:
+    def __init__(self, size):
+        self.size = size
+    def get_board(self):
+        board = []
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                if (i + j) % 2 == 0:
+                    row.append('A')
+                else:
+                    row.append('B')
+            board.append(row)
+        return board
+if __name__ == '__main__':
+    board_size = 4
+    cb = Checkerboard(board_size)
+    grid = cb.get_board()
+    for row in grid:
+        print(row)",True,1,14670,234_12_1.py
+234,12,Create a basic checkerboard,"Develop a class named 'Checkerboard' that initializes with a size parameter and provides a method to return the 2D grid representation of the checkerboard, prioritizing clean object-oriented design.","class Checkerboard:
+    def __init__(self, size):
+        self.size = size
+    def get_board(self):
+        board = []
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                if (i + j) % 2 == 0:
+                    row.append(' ')
+                else:
+                    row.append('X')
+            board.append(row)
+        return board
+if __name__ == '__main__':
+    board_size = 5
+    cb = Checkerboard(board_size)
+    grid = cb.get_board()
+    for row in grid:
+        print("" "".join(row))",True,2,14671,234_12_2.py
+234,12,Create a basic checkerboard,"Develop a class named 'Checkerboard' that initializes with a size parameter and provides a method to return the 2D grid representation of the checkerboard, prioritizing clean object-oriented design.","class Checkerboard:
+    def __init__(self, size):
+        self.size = size
+    def get_grid(self):
+        grid = []
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                if (i + j) % 2 == 0:
+                    row.append(1)
+                else:
+                    row.append(0)
+            grid.append(row)
+        return grid
+if __name__ == '__main__':
+    board_size = 4
+    cb = Checkerboard(board_size)
+    board = cb.get_grid()
+    for row in board:
+        print(row)",True,3,14672,234_12_3.py
+234,12,Create a basic checkerboard,"Develop a class named 'Checkerboard' that initializes with a size parameter and provides a method to return the 2D grid representation of the checkerboard, prioritizing clean object-oriented design.","class Checkerboard:
+    def __init__(self, size):
+        self.size = size
+    def get_board(self):
+        board = []
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                if (i + j) % 2 == 0:
+                    row.append(' ')
+                else:
+                    row.append('X')
+            board.append(row)
+        return board
+if __name__ == '__main__':
+    board1 = Checkerboard(4)
+    print(""Checkerboard of size 4:"")
+    for row in board1.get_board():
+        print("" "".join(row))
+    board2 = Checkerboard(3)
+    print(""\nCheckerboard of size 3:"")
+    for row in board2.get_board():
+        print("" "".join(row))",True,4,14673,234_12_4.py
+234,12,Create a basic checkerboard,"Develop a class named 'Checkerboard' that initializes with a size parameter and provides a method to return the 2D grid representation of the checkerboard, prioritizing clean object-oriented design.","class Checkerboard:
+    def __init__(self, size):
+        self.size = size
+    def get_board(self):
+        board = []
+        for i in range(self.size):
+            row = []
+            for j in range(self.size):
+                if (i + j) % 2 == 0:
+                    row.append(' ')
+                else:
+                    row.append('X')
+            board.append(row)
+        return board
+if __name__ == '__main__':
+    board_size = 4
+    cb = Checkerboard(board_size)
+    grid = cb.get_board()
+    for row in grid:
+        print(row)",True,5,14674,234_12_5.py
+234,13,Create a basic checkerboard,"Write a single, concise Python function that accepts an integer 'size' and uses bitwise operations or modulo arithmetic to print a visual representation of a square checkerboard pattern to the console.","def print_checkerboard(size):
+    for i in range(size):
+        row = """"
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row += "" ""
+            else:
+                row += ""#""
+        print(row)
+if __name__ == '__main__':
+    print(""Checkerboard for size 4:"")
+    print_checkerboard(4)
+    print(""\nCheckerboard for size 5:"")
+    print_checkerboard(5)",True,0,14675,234_13.py
+234,13,Create a basic checkerboard,"Write a single, concise Python function that accepts an integer 'size' and uses bitwise operations or modulo arithmetic to print a visual representation of a square checkerboard pattern to the console.","def print_checkerboard(size):
+    for i in range(size):
+        line = """"
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                line += "" ""
+            else:
+                line += ""#""
+        print(line)
+if __name__ == '__main__':
+    print(""Checkerboard for size 4:"")
+    print_checkerboard(4)
+    print(""\nCheckerboard for size 5:"")
+    print_checkerboard(5)",True,1,14676,234_13_1.py
+234,14,Create a basic checkerboard,"Create a robust Python solution to generate a checkerboard pattern where the cells alternate between two distinct characters (e.g., 'X' and 'O') for a given grid dimension, ensuring the output is a perfectly formatted grid.","def generate_checkerboard(rows, cols, char1='X', char2='O'):
+    grid = []
+    for r in range(rows):
+        row_data = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_data.append(char1)
+            else:
+                row_data.append(char2)
+        grid.append("" "".join(row_data))
+    return ""\n"".join(grid)
+if __name__ == '__main__':
+    rows = 5
+    cols = 7
+    result = generate_checkerboard(rows, cols, 'X', 'O')
+    print(result)",True,0,14677,234_14.py
+234,14,Create a basic checkerboard,"Create a robust Python solution to generate a checkerboard pattern where the cells alternate between two distinct characters (e.g., 'X' and 'O') for a given grid dimension, ensuring the output is a perfectly formatted grid.","def generate_checkerboard(rows, cols, char1='X', char2='O'):
+    grid = []
+    for r in range(rows):
+        row_data = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_data.append(char1)
+            else:
+                row_data.append(char2)
+        grid.append("" "".join(row_data))
+    return ""\n"".join(grid)
+if __name__ == '__main__':
+    rows = 5
+    cols = 7
+    result = generate_checkerboard(rows, cols)
+    print(result)",True,1,14678,234_14_1.py
+234,14,Create a basic checkerboard,"Create a robust Python solution to generate a checkerboard pattern where the cells alternate between two distinct characters (e.g., 'X' and 'O') for a given grid dimension, ensuring the output is a perfectly formatted grid.","def generate_checkerboard(rows, cols, char1='X', char2='O'):
+    grid = []
+    for r in range(rows):
+        row_data = []
+        for c in range(cols):
+            if (r + c) % 2 == 0:
+                row_data.append(char1)
+            else:
+                row_data.append(char2)
+        grid.append("" "".join(row_data))
+    return ""\n"".join(grid)
+if __name__ == '__main__':
+    rows = 5
+    cols = 8
+    pattern = generate_checkerboard(rows, cols, 'X', 'O')
+    print(pattern)",True,2,14679,234_14_2.py
+234,5,Create a basic checkerboard,"Implement the logic to print a visual checkerboard to the console for a 6x6 grid, using appropriate spacing for visual separation.","def print_checkerboard(size=6):
+    for i in range(size):
+        row = """"
+        for j in range(size):
+            if (i + j) % 2 == 0:
+                row += ""  ""
+            else:
+                row += "" ""
+        print(row)
+        if i < size - 1:
+            print()
+if __name__ == '__main__':
+    print_checkerboard(6)",True,0,14680,234_5.py
+235,1,Generate a simple line pattern,Implement an optimized function named 'generate_line_pattern' that accepts an integer N and prints a right-angled triangle pattern of '*' characters using nested loops. Ensure the code is clean and follows best practices.,"import sys
+def generate_line_pattern(N):
+    for i in range(1, N + 1):
+        for j in range(1, i + 1):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    generate_line_pattern(5)",True,0,14681,235_1.py
+235,1,Generate a simple line pattern,Implement an optimized function named 'generate_line_pattern' that accepts an integer N and prints a right-angled triangle pattern of '*' characters using nested loops. Ensure the code is clean and follows best practices.,"import sys
+def generate_line_pattern(N):
+    for i in range(1, N + 1):
+        for j in range(i):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    generate_line_pattern(5)",True,1,14682,235_1_1.py
+235,0,Generate a simple line pattern,"Write a complete, efficient Python script that generates a simple line pattern of asterisks, where the pattern is a right-angled triangle of height N, where N is provided by user input.","def generate_triangle(n):
+    for i in range(1, n + 1):
+        print(""*"" * i)
+if __name__ == '__main__':
+    N = 5
+    generate_triangle(N)",True,0,14683,235_0.py
+235,3,Generate a simple line pattern,Write a robust Python function that takes an integer 'rows' as input and prints a solid square pattern of '*' characters of size rows x rows.,"def print_square(rows):
+    for i in range(rows):
+        for j in range(rows):
+            print('*', end='')
+        print()
+if __name__ == '__main__':
+    print(""--- 3x3 Square ---"")
+    print_square(3)
+    print(""\n--- 5x5 Square ---"")
+    print_square(5)",True,0,14684,235_3.py
+235,3,Generate a simple line pattern,Write a robust Python function that takes an integer 'rows' as input and prints a solid square pattern of '*' characters of size rows x rows.,"def print_square(rows):
+    for i in range(rows):
+        for j in range(rows):
+            print(""*"", end="""")
+            if j < rows - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print(""--- Test Case 1 (rows=3) ---"")
+    print_square(3)
+    print(""\n--- Test Case 2 (rows=5) ---"")
+    print_square(5)",True,1,14685,235_3_1.py
+235,3,Generate a simple line pattern,Write a robust Python function that takes an integer 'rows' as input and prints a solid square pattern of '*' characters of size rows x rows.,"def print_square(rows):
+    for i in range(rows):
+        for j in range(rows):
+            print(""*"", end="""")
+            if j < rows - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print(""--- Test Case 1 (rows=4) ---"")
+    print_square(4)
+    print(""\n--- Test Case 2 (rows=3) ---"")
+    print_square(3)
+    print(""\n--- Test Case 3 (rows=1) ---"")
+    print_square(1)",True,2,14686,235_3_2.py
+235,3,Generate a simple line pattern,Write a robust Python function that takes an integer 'rows' as input and prints a solid square pattern of '*' characters of size rows x rows.,"def print_square(rows):
+    for i in range(rows):
+        for j in range(rows):
+            print(""*"", end="""")
+            if j < rows - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print_square(5)",True,3,14687,235_3_3.py
+235,4,Generate a simple line pattern,"Create an optimized function to generate a pattern of inverted right-angled triangles of '*' characters, where the base is N and the height is N, ensuring the output is perfectly centered or aligned.","import math
+def generate_inverted_triangle(n):
+    lines = []
+    for i in range(n):
+        line = """"
+        leading_spaces = n - 1 - i
+        stars = 2 * i + 1
+        spaces = (n - stars) // 2
+        line = "" "" * leading_spaces + ""*"" * stars
+        lines.append(line)
+    return lines
+if __name__ == '__main__':
+    N = 5
+    pattern = generate_inverted_triangle(N)
+    for line in pattern:
+        print(line)",True,0,14688,235_4.py
+235,4,Generate a simple line pattern,"Create an optimized function to generate a pattern of inverted right-angled triangles of '*' characters, where the base is N and the height is N, ensuring the output is perfectly centered or aligned.","def generate_inverted_triangle(n):
+    lines = []
+    for i in range(n):
+        line = """"
+        for j in range(n - i):
+            line += ""*""
+        lines.append(line)
+    return lines
+if __name__ == '__main__':
+    N = 5
+    pattern = generate_inverted_triangle(N)
+    for line in pattern:
+        print(line)",True,1,14689,235_4_1.py
+235,4,Generate a simple line pattern,"Create an optimized function to generate a pattern of inverted right-angled triangles of '*' characters, where the base is N and the height is N, ensuring the output is perfectly centered or aligned.","def generate_inverted_triangle_pattern(n):
+    rows = []
+    for i in range(n):
+        row = """"
+        for j in range(n - i):
+            row += ""*""
+        rows.append(row)
+    return rows
+if __name__ == '__main__':
+    N = 5
+    pattern = generate_inverted_triangle_pattern(N)
+    for row in pattern:
+        print(row)",True,2,14690,235_4_2.py
+235,4,Generate a simple line pattern,"Create an optimized function to generate a pattern of inverted right-angled triangles of '*' characters, where the base is N and the height is N, ensuring the output is perfectly centered or aligned.","import math
+def generate_inverted_triangle(n):
+    lines = []
+    for i in range(n):
+        line = """"
+        leading_spaces = n - 1 - i
+        stars = 2 * i + 1
+        spaces = (n - stars) // 2
+        line = "" "" * leading_spaces + ""*"" * stars + "" "" * spaces
+        lines.append(line)
+    return lines
+if __name__ == '__main__':
+    N = 5
+    pattern = generate_inverted_triangle(N)
+    for line in pattern:
+        print(line)",True,3,14691,235_4_3.py
+235,4,Generate a simple line pattern,"Create an optimized function to generate a pattern of inverted right-angled triangles of '*' characters, where the base is N and the height is N, ensuring the output is perfectly centered or aligned.","def generate_inverted_triangle(n):
+    lines = []
+    for i in range(n):
+        line = """"
+        padding = "" "" * (n - 1 - i)
+        stars = ""*"" * (2 * i + 1)
+        line = padding + stars
+        lines.append(line)
+    return lines
+if __name__ == '__main__':
+    N = 5
+    pattern = generate_inverted_triangle(N)
+    for line in pattern:
+        print(line)",True,4,14692,235_4_4.py
+234,7,Create a basic checkerboard,"Design and implement a generator function that yields the elements of an infinitely large checkerboard pattern, allowing for lazy evaluation.","def checkerboard_generator():
+    n = 0
+    while True:
+        yield n
+        n += 1
+if __name__ == '__main__':
+    checkerboard = checkerboard_generator()
+    first_ten = [next(checkerboard) for _ in range(10)]
+    print(first_ten)",True,0,14693,234_7.py
+234,7,Create a basic checkerboard,"Design and implement a generator function that yields the elements of an infinitely large checkerboard pattern, allowing for lazy evaluation.","def checkerboard_generator():
+    n = 0
+    while True:
+        yield n
+        n += 1
+if __name__ == '__main__':
+    checkerboard = checkerboard_generator()
+    print(""First 10 elements:"")
+    for i in range(10):
+        print(next(checkerboard))
+    print(""\nNext 10 elements:"")
+    for i in range(10):
+        print(next(checkerboard))",True,1,14694,234_7_1.py
+234,7,Create a basic checkerboard,"Design and implement a generator function that yields the elements of an infinitely large checkerboard pattern, allowing for lazy evaluation.","def checkerboard():
+    n = 0
+    while True:
+        yield n
+        n += 1
+if __name__ == '__main__':
+    board_generator = checkerboard()
+    print(""First 10 elements:"")
+    for i in range(10):
+        print(next(board_generator))
+    print(""\nNext 10 elements:"")
+    for i in range(10):
+        print(next(board_generator))",True,2,14695,234_7_2.py
+234,7,Create a basic checkerboard,"Design and implement a generator function that yields the elements of an infinitely large checkerboard pattern, allowing for lazy evaluation.","def checkerboard():
+    n = 0
+    while True:
+        yield n % 2
+if __name__ == '__main__':
+    board_generator = checkerboard()
+    print(""First 10 elements:"")
+    for i in range(10):
+        print(next(board_generator))
+    print(""\nNext 10 elements:"")
+    for i in range(10):
+        print(next(board_generator))",True,3,14696,234_7_3.py
+235,6,Generate a simple line pattern,"Implement a generator function that yields the lines for a right-angled triangle pattern of height N, focusing on memory efficiency.","def triangle_generator(n):
+    for i in range(1, n + 1):
+        yield ""*"" * i
+if __name__ == '__main__':
+    N = 5
+    triangle = triangle_generator(N)
+    for line in triangle:
+        print(line)",True,0,14697,235_6.py
+235,6,Generate a simple line pattern,"Implement a generator function that yields the lines for a right-angled triangle pattern of height N, focusing on memory efficiency.","def triangle_generator(n):
+    for i in range(1, n + 1):
+        yield ""*"" * i
+if __name__ == '__main__':
+    N = 5
+    for line in triangle_generator(N):
+        print(line)",True,1,14698,235_6_1.py
+235,6,Generate a simple line pattern,"Implement a generator function that yields the lines for a right-angled triangle pattern of height N, focusing on memory efficiency.","def triangle_generator(n):
+    for i in range(1, n + 1):
+        for j in range(i):
+            yield ""*""
+if __name__ == '__main__':
+    N = 5
+    for line in triangle_generator(N):
+        print(line)",True,2,14699,235_6_2.py
+235,6,Generate a simple line pattern,"Implement a generator function that yields the lines for a right-angled triangle pattern of height N, focusing on memory efficiency.","def triangle_generator(n):
+    for i in range(1, n + 1):
+        line = ""*"" * i
+        yield line
+if __name__ == '__main__':
+    N = 5
+    triangle = triangle_generator(N)
+    for line in triangle:
+        print(line)",True,3,14700,235_6_3.py
+235,7,Generate a simple line pattern,"Write a script that prompts the user for an integer and then generates a pattern of lines where the length of each line increases sequentially, starting from 1, up to the user-defined number of lines.","def generate_pattern(n):
+    for i in range(1, n + 1):
+        print("" "" * (n - i) + ""#"" * i)
+if __name__ == '__main__':
+    sample_number = 5
+    generate_pattern(sample_number)",True,0,14701,235_7.py
+235,7,Generate a simple line pattern,"Write a script that prompts the user for an integer and then generates a pattern of lines where the length of each line increases sequentially, starting from 1, up to the user-defined number of lines.","def generate_pattern(n):
+    for i in range(1, n + 1):
+        print("" "" * (n - i) + ""#"" * i)
+if __name__ == '__main__':
+    user_input = 5
+    generate_pattern(user_input)",True,1,14702,235_7_1.py
+235,8,Generate a simple line pattern,"Develop an optimized solution using string multiplication or join operations to generate a pattern of N rows, where the i-th row is composed of i stars, and print the final result.","def generate_star_pattern(n):
+    result = """"
+    for i in range(1, n + 1):
+        result += ""*"" * i + ""\n""
+    return result
+if __name__ == '__main__':
+    n_rows = 5
+    output = generate_star_pattern(n_rows)
+    print(output.rstrip())",True,0,14703,235_8.py
+235,8,Generate a simple line pattern,"Develop an optimized solution using string multiplication or join operations to generate a pattern of N rows, where the i-th row is composed of i stars, and print the final result.","def generate_star_pattern(n):
+    result = """"
+    for i in range(1, n + 1):
+        result += ""*"" * i + ""\n""
+    return result
+if __name__ == '__main__':
+    N = 5
+    print(generate_star_pattern(N))",True,1,14704,235_8_1.py
+235,8,Generate a simple line pattern,"Develop an optimized solution using string multiplication or join operations to generate a pattern of N rows, where the i-th row is composed of i stars, and print the final result.","def generate_star_pattern(n):
+    result = """"
+    for i in range(1, n + 1):
+        result += ""*"" * i + ""\n""
+    return result
+if __name__ == '__main__':
+    n = 5
+    print(generate_star_pattern(n))",True,2,14705,235_8_2.py
+235,8,Generate a simple line pattern,"Develop an optimized solution using string multiplication or join operations to generate a pattern of N rows, where the i-th row is composed of i stars, and print the final result.","def generate_star_pattern(n):
+    result = """"
+    for i in range(1, n + 1):
+        result += ""*"" * i + ""\n""
+    return result
+if __name__ == '__main__':
+    N = 5
+    output = generate_star_pattern(N)
+    print(output.rstrip())",True,3,14706,235_8_3.py
+235,8,Generate a simple line pattern,"Develop an optimized solution using string multiplication or join operations to generate a pattern of N rows, where the i-th row is composed of i stars, and print the final result.","def generate_star_pattern(n):
+    result = """"
+    for i in range(1, n + 1):
+        result += ""*"" * i + ""\n""
+    return result
+if __name__ == '__main__':
+    n = 5
+    output = generate_star_pattern(n)
+    print(output.rstrip())",True,4,14707,235_8_4.py
+235,9,Generate a simple line pattern,"Write a class method within a 'PatternGenerator' class that generates and prints a diamond shape pattern of '*' characters of a specified size N, ensuring the implementation is highly optimized.","class PatternGenerator:
+    @staticmethod
+    def generate_diamond(n):
+        for i in range(1, n + 1):
+            print(""*"" * (2 * i - 1))
+            if i < n:
+                print("" "" * (n - i) * 2)
+            else:
+                pass
+if __name__ == '__main__':
+    PatternGenerator.generate_diamond(5)",True,0,14708,235_9.py
+235,9,Generate a simple line pattern,"Write a class method within a 'PatternGenerator' class that generates and prints a diamond shape pattern of '*' characters of a specified size N, ensuring the implementation is highly optimized.","class PatternGenerator:
+    @staticmethod
+    def generate_diamond(n):
+        for i in range(n):
+            print(""*"" * (2 * i + 1))
+            print(""*"" * (2 * n - 2 * i - 1))
+if __name__ == '__main__':
+    PatternGenerator.generate_diamond(5)",True,1,14709,235_9_1.py
+235,9,Generate a simple line pattern,"Write a class method within a 'PatternGenerator' class that generates and prints a diamond shape pattern of '*' characters of a specified size N, ensuring the implementation is highly optimized.","class PatternGenerator:
+    @staticmethod
+    def generate_diamond(n):
+        for i in range(1, n + 1):
+            print(""*"" * (2 * i - 1))
+            if i < n:
+                print("" "" * (n - i) + ""*"" * (2 * i - 1))
+if __name__ == '__main__':
+    PatternGenerator.generate_diamond(5)",True,2,14710,235_9_2.py
+235,9,Generate a simple line pattern,"Write a class method within a 'PatternGenerator' class that generates and prints a diamond shape pattern of '*' characters of a specified size N, ensuring the implementation is highly optimized.","class PatternGenerator:
+    @staticmethod
+    def generate_diamond(n):
+        for i in range(n):
+            print(""*"" * (2 * i + 1))
+            print("" "" * i * 2)
+            print(""*"" * (2 * (n - 1 - i) + 1))
+if __name__ == '__main__':
+    PatternGenerator.generate_diamond(5)",True,3,14711,235_9_3.py
+235,9,Generate a simple line pattern,"Write a class method within a 'PatternGenerator' class that generates and prints a diamond shape pattern of '*' characters of a specified size N, ensuring the implementation is highly optimized.","class PatternGenerator:
+    @staticmethod
+    def generate_diamond(N):
+        for i in range(N):
+            spaces = N - 1 - i
+            stars = 2 * i + 1
+            line = "" "" * spaces + ""*"" * stars
+            print(line)
+            print("" "" * spaces + ""*"" * (2 * (N - 1 - i) + 1))
+if __name__ == '__main__':
+    PatternGenerator.generate_diamond(5)",True,4,14712,235_9_4.py
+235,9,Generate a simple line pattern,"Write a class method within a 'PatternGenerator' class that generates and prints a diamond shape pattern of '*' characters of a specified size N, ensuring the implementation is highly optimized.","class PatternGenerator:
+    @staticmethod
+    def generate_diamond(N):
+        for i in range(N):
+            spaces = N - 1 - i
+            stars = 2 * i + 1
+            line = "" "" * spaces + ""*"" * stars
+            print(line)
+            print("" "" * (N - 1 - i) + ""*"" * (2 * (N - i) - 1))
+if __name__ == '__main__':
+    PatternGenerator.generate_diamond(5)",True,5,14713,235_9_5.py
+235,10,Generate a simple line pattern,Implement a function named 'generate_line_pattern' that accepts an integer 'n' and prints a right-angled triangle pattern of '*' characters using nested loops. Ensure the code is highly readable and follows best practices.,"def generate_line_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(i):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    generate_line_pattern(5)",True,0,14714,235_10.py
+235,10,Generate a simple line pattern,Implement a function named 'generate_line_pattern' that accepts an integer 'n' and prints a right-angled triangle pattern of '*' characters using nested loops. Ensure the code is highly readable and follows best practices.,"def generate_line_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, i + 1):
+            print('*', end='')
+        print()
+if __name__ == '__main__':
+    generate_line_pattern(5)",True,1,14715,235_10_1.py
+235,10,Generate a simple line pattern,Implement a function named 'generate_line_pattern' that accepts an integer 'n' and prints a right-angled triangle pattern of '*' characters using nested loops. Ensure the code is highly readable and follows best practices.,"import sys
+def generate_line_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(i):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    generate_line_pattern(5)",True,2,14716,235_10_2.py
+235,2,Generate a simple line pattern,"Develop a Python program that generates a pattern of lines where the i-th line consists of i asterisks, up to a specified number of lines M. Use list comprehensions for maximum efficiency.","def generate_pattern(M):
+    lines = [[""*"" * i] for i in range(1, M + 1)]
+    return lines
+if __name__ == '__main__':
+    M = 5
+    pattern = generate_pattern(M)
+    for line in pattern:
+        print(line)",True,0,14717,235_2.py
+235,12,Generate a simple line pattern,"Write a robust Python program that prompts the user for an integer and then generates a pattern of lines where the i-th line contains i asterisks, up to the user-specified number of lines.","def generate_star_pattern(n):
+    pattern = []
+    for i in range(1, n + 1):
+        pattern.append(""*"" * i)
+    return ""\n"".join(pattern)
+if __name__ == '__main__':
+    sample_number = 5
+    result = generate_star_pattern(sample_number)
+    print(result)",True,0,14718,235_12.py
+235,12,Generate a simple line pattern,"Write a robust Python program that prompts the user for an integer and then generates a pattern of lines where the i-th line contains i asterisks, up to the user-specified number of lines.","def generate_pattern(n):
+    lines = []
+    for i in range(1, n + 1):
+        lines.append(""*"" * i)
+    return ""\n"".join(lines)
+if __name__ == '__main__':
+    sample_number = 5
+    pattern = generate_pattern(sample_number)
+    print(pattern)",True,1,14719,235_12_1.py
+235,12,Generate a simple line pattern,"Write a robust Python program that prompts the user for an integer and then generates a pattern of lines where the i-th line contains i asterisks, up to the user-specified number of lines.","def generate_star_pattern(n):
+    lines = []
+    for i in range(1, n + 1):
+        lines.append(""*"" * i)
+    return ""\n"".join(lines)
+if __name__ == '__main__':
+    sample_number = 5
+    pattern = generate_star_pattern(sample_number)
+    print(pattern)",True,2,14720,235_12_2.py
+235,13,Generate a simple line pattern,"Create a class named 'PatternGenerator' with a method to generate and print a simple diagonal line pattern of '*' characters based on an input size, ensuring the implementation is object-oriented and professional.","class PatternGenerator:
+    def generate_diagonal_pattern(self, size):
+        for i in range(size):
+            for j in range(size):
+                if i == j:
+                    print(""*"", end="""")
+                else:
+                    print("" "", end="""")
+            print()
+if __name__ == '__main__':
+    generator = PatternGenerator()
+    size = 5
+    generator.generate_diagonal_pattern(size)",True,0,14721,235_13.py
+235,13,Generate a simple line pattern,"Create a class named 'PatternGenerator' with a method to generate and print a simple diagonal line pattern of '*' characters based on an input size, ensuring the implementation is object-oriented and professional.","class PatternGenerator:
+    def generate_diagonal_pattern(self, size):
+        for i in range(size):
+            for j in range(size):
+                if i == j:
+                    print(""*"", end="""")
+                else:
+                    print("" "", end="""")
+            print()
+if __name__ == '__main__':
+    generator = PatternGenerator()
+    generator.generate_diagonal_pattern(5)",True,1,14722,235_13_1.py
+235,14,Generate a simple line pattern,"Write a complete, well-documented Python script that generates a simple, repeating line pattern using nested loops, printing the pattern to the console.","def generate_pattern(rows, cols):
+    for i in range(rows):
+        for j in range(cols):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    num_rows = 5
+    num_cols = 10
+    generate_pattern(num_rows, num_cols)",True,0,14723,235_14.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    square = """"
+    for i in range(size):
+        square += ""*"" * (2 * i + 1)
+    return square
+if __name__ == '__main__':
+    num_squares = 5
+    all_squares = []
+    for i in range(num_squares):
+        side_length = i + 1
+        square = """"
+        for j in range(side_length):
+            square += ""*"" * side_length
+        all_squares.append(square)
+    for square in all_squares:
+        print(square)",True,0,14724,236_0.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    square = """"
+    for i in range(size):
+        square += ""*"" * (2 * i + 1)
+        square += ""\n""
+    return square
+if __name__ == '__main__':
+    num_squares = 5
+    all_squares = []
+    for i in range(num_squares):
+        square_size = i + 1
+        square_output = """"
+        for j in range(square_size):
+            row = """"
+            for k in range(square_size):
+                if j == k:
+                    row += ""*""
+                else:
+                    row += "" ""
+            square_output += row + ""\n""
+        all_squares.append(square_output)
+    for sq in all_squares:
+        print(sq)",True,1,14725,236_0_1.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    square = """"
+    for i in range(size):
+        square += ""*"" * (2 * i + 1)
+    return square
+if __name__ == '__main__':
+    num_squares = 5
+    all_squares = []
+    for i in range(num_squares):
+        side_length = i + 1
+        square_pattern = """"
+        for row in range(side_length):
+            square_pattern += ""*"" * side_length
+            if row < side_length - 1:
+                square_pattern += ""\n""
+        all_squares.append(square_pattern)
+    for square in all_squares:
+        print(square)",True,2,14726,236_0_2.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    for i in range(size):
+        print('*' * (2 * i + 1))
+if __name__ == '__main__':
+    num_squares = 5
+    for _ in range(num_squares):
+        generate_square(5)",True,3,14727,236_0_3.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    square = """"
+    for i in range(size):
+        square += ""*"" * (2 * i + 1)
+    return square
+if __name__ == '__main__':
+    num_squares = 5
+    all_squares = []
+    for i in range(num_squares):
+        square_size = i + 1
+        square = """"
+        for j in range(square_size):
+            square += ""*"" * (2 * j + 1)
+        all_squares.append(square)
+    for square in all_squares:
+        print(square)",True,4,14728,236_0_4.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    square = """"
+    for i in range(size):
+        square += ""*"" * (2 * i + 1)
+    return square
+if __name__ == '__main__':
+    num_squares = 5
+    output = []
+    for i in range(num_squares):
+        square_size = i + 1
+        generated_square = """"
+        for j in range(square_size):
+            generated_square += ""*"" * (2 * j + 1)
+        output.append(generated_square)
+    for s in output:
+        print(s)",True,5,14729,236_0_5.py
+236,0,Repeat a shape multiple times,"Write a complete, well-documented Python script that generates a square shape using asterisks and repeats it exactly 5 times.","def generate_square(size):
+    square = """"
+    for i in range(size):
+        square += ""*"" * (2 * i + 1)
+        square += ""\n""
+    return square
+if __name__ == '__main__':
+    num_squares = 5
+    all_squares = []
+    for i in range(num_squares):
+        square_size = i + 1
+        generated_square = """"
+        for j in range(square_size):
+            generated_square += ""*"" * (2 * j + 1)
+            generated_square += ""\n""
+        all_squares.append(generated_square)
+    for square in all_squares:
+        print(square)",True,6,14730,236_0_6.py
+236,1,Repeat a shape multiple times,"Implement an optimized function named 'repeat_shape' that accepts a shape definition (e.g., a list of strings) and an integer repetition count, returning the final concatenated output string.","def repeat_shape(shape_definition, repetition_count):
+    result = """"
+    for shape in shape_definition:
+        result += shape
+    return result * repetition_count
+if __name__ == '__main__':
+    shape1 = [""A"", ""B""]
+    count1 = 3
+    output1 = repeat_shape(shape1, count1)
+    print(f""Shape: {shape1}, Count: {count1}, Output: {output1}"")
+    shape2 = [""X"", ""Y"", ""Z""]
+    count2 = 2
+    output2 = repeat_shape(shape2, count2)
+    print(f""Shape: {shape2}, Count: {count2}, Output: {output2}"")
+    shape3 = [""Hello"", ""World""]
+    count3 = 4
+    output3 = repeat_shape(shape3, count3)
+    print(f""Shape: {shape3}, Count: {count3}, Output: {output3}"")",True,0,14731,236_1.py
+236,1,Repeat a shape multiple times,"Implement an optimized function named 'repeat_shape' that accepts a shape definition (e.g., a list of strings) and an integer repetition count, returning the final concatenated output string.","def repeat_shape(shape_definition, repetition_count):
+    result = """"
+    for shape in shape_definition:
+        result += shape
+    return result * repetition_count
+if __name__ == '__main__':
+    shape1 = [""A"", ""B""]
+    count1 = 3
+    output1 = repeat_shape(shape1, count1)
+    print(f""Shape: {shape1}, Count: {count1}, Output: {output1}"")
+    shape2 = [""X"", ""Y"", ""Z""]
+    count2 = 2
+    output2 = repeat_shape(shape2, count2)
+    print(f""Shape: {shape2}, Count: {count2}, Output: {output2}"")
+    shape3 = [""Hello"", ""World""]
+    count3 = 5
+    output3 = repeat_shape(shape3, count3)
+    print(f""Shape: {shape3}, Count: {count3}, Output: {output3}"")",True,1,14732,236_1_1.py
+236,1,Repeat a shape multiple times,"Implement an optimized function named 'repeat_shape' that accepts a shape definition (e.g., a list of strings) and an integer repetition count, returning the final concatenated output string.","def repeat_shape(shape_definition, repetition_count):
+    result = """"
+    for shape in shape_definition:
+        result += shape
+    return result * repetition_count
+if __name__ == '__main__':
+    shape1 = [""A"", ""B""]
+    count1 = 3
+    output1 = repeat_shape(shape1, count1)
+    print(f""Shape: {shape1}, Count: {count1}"")
+    print(f""Output: {output1}"")
+    shape2 = [""Hello"", ""World""]
+    count2 = 2
+    output2 = repeat_shape(shape2, count2)
+    print(f""Shape: {shape2}, Count: {count2}"")
+    print(f""Output: {output2}"")
+    shape3 = [""X"", ""Y"", ""Z""]
+    count3 = 4
+    output3 = repeat_shape(shape3, count3)
+    print(f""Shape: {shape3}, Count: {count3}"")
+    print(f""Output: {output3}"")",True,2,14733,236_1_2.py
+236,2,Repeat a shape multiple times,"Develop a class named 'ShapeGenerator' with a method that can draw a specified character pattern, and implement a method to repeat that pattern N times.","class ShapeGenerator:
+    def draw_pattern(self, pattern):
+        print(pattern)
+    def repeat_pattern(self, pattern, n):
+        result = """"
+        for _ in range(n):
+            result += pattern + ""\n""
+        return result
+if __name__ == '__main__':
+    generator = ShapeGenerator()
+    sample_pattern = ""###\n###\n###""
+    repeat_count = 3
+    repeated_shape = generator.repeat_pattern(sample_pattern, repeat_count)
+    print(""--- Repeated Pattern ---"")
+    print(repeated_shape)",True,0,14734,236_2.py
+236,2,Repeat a shape multiple times,"Develop a class named 'ShapeGenerator' with a method that can draw a specified character pattern, and implement a method to repeat that pattern N times.","class ShapeGenerator:
+    def draw_pattern(self, pattern):
+        print(pattern)
+    def repeat_pattern(self, pattern, n):
+        result = """"
+        for _ in range(n):
+            result += pattern + ""\n""
+        return result
+if __name__ == '__main__':
+    generator = ShapeGenerator()
+    sample_pattern = ""#""
+    sample_repetitions = 3
+    repeated_output = generator.repeat_pattern(sample_pattern, sample_repetitions)
+    print(""--- Repeated Pattern ---"")
+    print(repeated_output)",True,1,14735,236_2_1.py
+236,2,Repeat a shape multiple times,"Develop a class named 'ShapeGenerator' with a method that can draw a specified character pattern, and implement a method to repeat that pattern N times.","class ShapeGenerator:
+    def draw_pattern(self, pattern):
+        print(pattern)
+    def repeat_pattern(self, pattern, n):
+        result = """"
+        for _ in range(n):
+            result += pattern + ""\n""
+        return result
+if __name__ == '__main__':
+    generator = ShapeGenerator()
+    sample_pattern = ""###\n###\n###""
+    repeat_count = 3
+    repeated_output = generator.repeat_pattern(sample_pattern, repeat_count)
+    print(""--- Repeated Pattern ---"")
+    print(repeated_output)",True,2,14736,236_2_2.py
+236,2,Repeat a shape multiple times,"Develop a class named 'ShapeGenerator' with a method that can draw a specified character pattern, and implement a method to repeat that pattern N times.","class ShapeGenerator:
+    def draw_pattern(self, pattern):
+        print(pattern)
+    def repeat_pattern(self, pattern, n):
+        result = """"
+        for _ in range(n):
+            result += pattern + ""\n""
+        return result
+if __name__ == '__main__':
+    generator = ShapeGenerator()
+    sample_pattern = ""##\n##\n##""
+    num_repetitions = 3
+    repeated_output = generator.repeat_pattern(sample_pattern, num_repetitions)
+    print(""--- Repeated Pattern ---"")
+    print(repeated_output)",True,3,14737,236_2_3.py
+236,3,Repeat a shape multiple times,"Write a concise and efficient Python solution to print a triangle shape of height N, where the base is determined by N, repeating the base pattern N times.","def print_triangle(n):
+    for i in range(1, n + 1):
+        print(""*"" * (2 * i - 1))
+if __name__ == '__main__':
+    N = 5
+    print_triangle(N)",True,0,14738,236_3.py
+236,3,Repeat a shape multiple times,"Write a concise and efficient Python solution to print a triangle shape of height N, where the base is determined by N, repeating the base pattern N times.","def print_triangle(n):
+    for i in range(1, n + 1):
+        print(""*"" * i)
+if __name__ == '__main__':
+    N = 5
+    print_triangle(N)",True,1,14739,236_3_1.py
+236,3,Repeat a shape multiple times,"Write a concise and efficient Python solution to print a triangle shape of height N, where the base is determined by N, repeating the base pattern N times.","if __name__ == '__main__':
+    N = 3
+    for i in range(N):
+        print(""*"" * (2 * i + 1))",True,2,14740,236_3_2.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords
+    for _ in range(3):
+        print(f""{x1}, {y1}, {x2}, {y2}"")
+if __name__ == '__main__':
+    sample_coords = [1, 1, 5, 5]
+    print_shape_repeated(sample_coords)",True,0,14741,236_4.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords
+    shape = f""({x1}, {y1}) to ({x2}, {y2})""
+    for _ in range(3):
+        print(shape)
+if __name__ == '__main__':
+    sample_coords = [0, 0, 5, 10]
+    print_shape_repeated(sample_coords)",True,1,14742,236_4_1.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords
+    shape = f""({x1}, {y1}) to ({x2}, {y2})""
+    for _ in range(3):
+        print(shape)
+if __name__ == '__main__':
+    sample_coords_rect = (0, 0, 5, 10)
+    print_shape_repeated(sample_coords_rect)",True,2,14743,236_4_2.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords
+    points = [
+        (x1, y1),
+        (x2, y1),
+        (x2, y2),
+        (x1, y2)
+    ]
+    for _ in range(3):
+        for x, y in points:
+            print(f""{x} {y}"")
+if __name__ == '__main__':
+    sample_coords = (0, 0, 4, 2)
+    print_shape_repeated(sample_coords)",True,3,14744,236_4_3.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords
+    for _ in range(3):
+        print(f""{x1}, {y1}, {x2}, {y2}"")
+if __name__ == '__main__':
+    sample_coords = (0, 0, 4, 2)
+    print_shape_repeated(sample_coords)",True,4,14745,236_4_4.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords[0], coords[1], coords[2], coords[3]
+    for _ in range(3):
+        print(f""{x1}, {y1}, {x2}, {y2}"")
+if __name__ == '__main__':
+    shape_coords = [1, 1, 5, 5]
+    print_shape_repeated(shape_coords)",True,5,14746,236_4_5.py
+236,4,Repeat a shape multiple times,"Create a function that takes a list of coordinates defining a simple shape (e.g., a rectangle defined by (x1, y1) and (x2, y2)) and prints that shape repeated 3 times on separate lines.","def print_shape_repeated(coords):
+    x1, y1, x2, y2 = coords
+    points = [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+    for _ in range(3):
+        for x, y in points:
+            print(f""{x} {y}"")
+if __name__ == '__main__':
+    sample_coords = [0, 0, 4, 2]
+    print_shape_repeated(sample_coords)",True,6,14747,236_4_6.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""##"",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Error: Unknown shape""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    print(f""Pattern for {target_shape}:"")
+    for _ in range(3):
+        for row in pattern_generator:
+            print("""".join(row))
+        print(""-"" * 5)",True,0,14748,236_5.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""#  "",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Shape not found""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    count = 3
+    for i in range(count):
+        print(f""--- Pattern for {target_shape}, repetition {i + 1} ---"")
+        for line in pattern_generator:
+            print(line)
+        print(""-"" * 20)",True,1,14749,236_5_1.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""#  "",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Error: Shape not found""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    count = 3
+    for i in range(count):
+        print(f""--- Pattern for {target_shape}, Iteration {i + 1} ---"")
+        for line in pattern_generator:
+            print(line)
+        print(""-"" * 20)",True,2,14750,236_5_2.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""#  "",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Shape not found""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    print(f""Pattern for {target_shape}:"")
+    for _ in range(3):
+        for line in pattern_generator:
+            print(line)
+        print(""-"" * 5)",True,3,14751,236_5_3.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""##"",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Error: Unknown shape""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    count = 3
+    for i in range(count):
+        print(f""--- Pattern for {target_shape}, Iteration {i + 1} ---"")
+        for row in pattern_generator:
+            print("""".join(row))
+        print(""-"" * 20)",True,4,14752,236_5_4.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""#  "",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Shape not found""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    count = 3
+    for i in range(count):
+        print(f""--- Pattern for {target_shape}, Iteration {i + 1} ---"")
+        for line in pattern_generator:
+            print(line)
+        print(""-"" * 20)",True,5,14753,236_5_5.py
+236,5,Repeat a shape multiple times,"Implement a generator function that yields the pattern for a specific shape, and use a loop to yield that pattern multiple times.","def shape_pattern_generator(shape):
+    if shape == ""square"":
+        yield [""##"",
+               ""#  "",
+               ""##""]
+    elif shape == ""triangle"":
+        yield [""#"",
+               ""##"",
+               ""###""]
+    else:
+        yield [""Shape not found""]
+if __name__ == '__main__':
+    target_shape = ""square""
+    pattern_generator = shape_pattern_generator(target_shape)
+    count = 3
+    for i in range(count):
+        print(f""--- Pattern for {target_shape} (Iteration {i+1}) ---"")
+        for line in pattern_generator:
+            print(line)
+        print(""-"" * 20)",True,6,14754,236_5_6.py
+235,5,Generate a simple line pattern,"Generate the complete, high-quality Python code to print a pattern where each line 'i' prints 'i' number of spaces followed by 'i' asterisks, for a given input size N.",,False,0,14755,235_5.py
+236,7,Repeat a shape multiple times,"Design an algorithm to generate a pattern consisting of a single line of 'X' characters, and then repeat this entire line pattern 10 times vertically.","def generate_pattern():
+    line = ""X""
+    repeated_pattern = line * 10
+    final_pattern = ""\n"".join([repeated_pattern] * 10)
+    return final_pattern
+if __name__ == '__main__':
+    result = generate_pattern()
+    print(result)",True,0,14756,236_7.py
+236,7,Repeat a shape multiple times,"Design an algorithm to generate a pattern consisting of a single line of 'X' characters, and then repeat this entire line pattern 10 times vertically.","import sys
+def generate_pattern():
+    line = ""X""
+    pattern = line * 10
+    return pattern
+if __name__ == '__main__':
+    result = generate_pattern()
+    print(result)",True,1,14757,236_7_1.py
+236,7,Repeat a shape multiple times,"Design an algorithm to generate a pattern consisting of a single line of 'X' characters, and then repeat this entire line pattern 10 times vertically.","import sys
+def generate_pattern(line):
+    pattern = """"
+    for _ in range(10):
+        pattern += line + ""\n""
+    return pattern
+if __name__ == '__main__':
+    single_line = ""X""
+    result = generate_pattern(single_line)
+    print(result)",True,2,14758,236_7_2.py
+236,7,Repeat a shape multiple times,"Design an algorithm to generate a pattern consisting of a single line of 'X' characters, and then repeat this entire line pattern 10 times vertically.","import sys
+def generate_pattern(line_content, repetitions):
+    full_pattern = """"
+    for _ in range(repetitions):
+        full_pattern += line_content + ""\n""
+    return full_pattern
+if __name__ == '__main__':
+    line = ""X""
+    repetitions = 10
+    result = generate_pattern(line, repetitions)
+    print(result)",True,3,14759,236_7_3.py
+236,7,Repeat a shape multiple times,"Design an algorithm to generate a pattern consisting of a single line of 'X' characters, and then repeat this entire line pattern 10 times vertically.","def generate_pattern():
+    line = ""X""
+    pattern = line * 10
+    return pattern
+if __name__ == '__main__':
+    result = generate_pattern()
+    print(result)",True,4,14760,236_7_4.py
+236,8,Repeat a shape multiple times,"Write an optimized function that takes a string representing a base pattern and an integer multiplier, and returns the string with the pattern repeated exactly 'multiplier' times consecutively.","def repeat_pattern(base_pattern: str, multiplier: int) -> str:
+    if multiplier <= 0:
+        return """"
+    return base_pattern * multiplier
+if __name__ == '__main__':
+    pattern1 = ""abc""
+    multiplier1 = 3
+    result1 = repeat_pattern(pattern1, multiplier1)
+    print(f""Pattern: '{pattern1}', Multiplier: {multiplier1}, Result: '{result1}'"")
+    pattern2 = ""hello""
+    multiplier2 = 2
+    result2 = repeat_pattern(pattern2, multiplier2)
+    print(f""Pattern: '{pattern2}', Multiplier: {multiplier2}, Result: '{result2}'"")
+    pattern3 = ""xyz""
+    multiplier3 = 5
+    result3 = repeat_pattern(pattern3, multiplier3)
+    print(f""Pattern: '{pattern3}', Multiplier: {multiplier3}, Result: '{result3}'"")
+    pattern4 = ""a""
+    multiplier4 = 0
+    result4 = repeat_pattern(pattern4, multiplier4)
+    print(f""Pattern: '{pattern4}', Multiplier: {multiplier4}, Result: '{result4}'"")",True,0,14761,236_8.py
+236,8,Repeat a shape multiple times,"Write an optimized function that takes a string representing a base pattern and an integer multiplier, and returns the string with the pattern repeated exactly 'multiplier' times consecutively.","def repeat_pattern(base_pattern: str, multiplier: int) -> str:
+    if multiplier <= 0:
+        return """"
+    return base_pattern * multiplier
+if __name__ == '__main__':
+    pattern1 = ""abc""
+    multiplier1 = 3
+    result1 = repeat_pattern(pattern1, multiplier1)
+    print(f""Pattern: '{pattern1}', Multiplier: {multiplier1}, Result: '{result1}'"")
+    pattern2 = ""hello""
+    multiplier2 = 2
+    result2 = repeat_pattern(pattern2, multiplier2)
+    print(f""Pattern: '{pattern2}', Multiplier: {multiplier2}, Result: '{result2}'"")
+    pattern3 = ""x""
+    multiplier3 = 5
+    result3 = repeat_pattern(pattern3, multiplier3)
+    print(f""Pattern: '{pattern3}', Multiplier: {multiplier3}, Result: '{result3}'"")
+    pattern4 = ""test""
+    multiplier4 = 0
+    result4 = repeat_pattern(pattern4, multiplier4)
+    print(f""Pattern: '{pattern4}', Multiplier: {multiplier4}, Result: '{result4}'"")",True,1,14762,236_8_1.py
+236,8,Repeat a shape multiple times,"Write an optimized function that takes a string representing a base pattern and an integer multiplier, and returns the string with the pattern repeated exactly 'multiplier' times consecutively.","def repeat_pattern(base_pattern: str, multiplier: int) -> str:
+    return base_pattern * multiplier
+if __name__ == '__main__':
+    base = ""abc""
+    multiplier_val = 3
+    result = repeat_pattern(base, multiplier_val)
+    print(result)",True,2,14763,236_8_2.py
+236,8,Repeat a shape multiple times,"Write an optimized function that takes a string representing a base pattern and an integer multiplier, and returns the string with the pattern repeated exactly 'multiplier' times consecutively.","def repeat_pattern(base_pattern: str, multiplier: int) -> str:
+    if multiplier <= 0:
+        return """"
+    return base_pattern * multiplier
+if __name__ == '__main__':
+    pattern1 = ""abc""
+    multiplier1 = 3
+    result1 = repeat_pattern(pattern1, multiplier1)
+    print(f""Pattern: '{pattern1}', Multiplier: {multiplier1}, Result: '{result1}'"")
+    pattern2 = ""hello""
+    multiplier2 = 2
+    result2 = repeat_pattern(pattern2, multiplier2)
+    print(f""Pattern: '{pattern2}', Multiplier: {multiplier2}, Result: '{result2}'"")
+    pattern3 = ""x""
+    multiplier3 = 5
+    result3 = repeat_pattern(pattern3, multiplier3)
+    print(f""Pattern: '{pattern3}', Multiplier: {multiplier3}, Result: '{result3}'"")
+    pattern4 = """"
+    multiplier4 = 4
+    result4 = repeat_pattern(pattern4, multiplier4)
+    print(f""Pattern: '{pattern4}', Multiplier: {multiplier4}, Result: '{result4}'"")",True,3,14764,236_8_3.py
+236,8,Repeat a shape multiple times,"Write an optimized function that takes a string representing a base pattern and an integer multiplier, and returns the string with the pattern repeated exactly 'multiplier' times consecutively.","def repeat_pattern(base_pattern: str, multiplier: int) -> str:
+    if multiplier <= 0:
+        return """"
+    return base_pattern * multiplier
+if __name__ == '__main__':
+    pattern1 = ""abc""
+    multiplier1 = 3
+    result1 = repeat_pattern(pattern1, multiplier1)
+    print(f""Pattern: '{pattern1}', Multiplier: {multiplier1}, Result: '{result1}'"")
+    pattern2 = ""hello""
+    multiplier2 = 2
+    result2 = repeat_pattern(pattern2, multiplier2)
+    print(f""Pattern: '{pattern2}', Multiplier: {multiplier2}, Result: '{result2}'"")
+    pattern3 = ""a""
+    multiplier3 = 5
+    result3 = repeat_pattern(pattern3, multiplier3)
+    print(f""Pattern: '{pattern3}', Multiplier: {multiplier3}, Result: '{result3}'"")
+    pattern4 = ""test""
+    multiplier4 = 0
+    result4 = repeat_pattern(pattern4, multiplier4)
+    print(f""Pattern: '{pattern4}', Multiplier: {multiplier4}, Result: '{result4}'"")",True,4,14765,236_8_4.py
+236,9,Repeat a shape multiple times,"Implement a function that takes a list of strings representing a pattern and prints each pattern exactly twice, ensuring clean line breaks between repetitions.","def print_pattern_twice(pattern_list):
+    for pattern in pattern_list:
+        print(pattern)
+        print()
+if __name__ == '__main__':
+    sample_patterns = [""hello"", ""world"", ""python""]
+    print_pattern_twice(sample_patterns)",True,0,14766,236_9.py
