@@ -283150,3 +283150,3295 @@ if __name__ == '__main__':
         print(maximum)
     except ValueError as e:
         print(e)",True,8,13778,219_11_8.py
+219,12,Locate the maximum value quickly,Develop a class named 'MaxFinder' with a method 'get_maximum' that stores a list of data and provides an $O(1)$ lookup for the maximum element after an initial $O(n)$ setup.,"class MaxFinder:
+    def __init__(self, data):
+        self._data = data
+        self._maximum = None
+        self._setup()
+    def _setup(self):
+        if not self._data:
+            self._maximum = None
+            return
+        self._maximum = self._data[0]
+        for item in self._data[1:]:
+            if item > self._maximum:
+                self._maximum = item
+    def get_maximum(self):
+        if self._maximum is None:
+            raise ValueError(""The list is empty"")
+        return self._maximum
+if __name__ == '__main__':
+    sample_data1 = [10, 5, 20, 8, 15]
+    mf1 = MaxFinder(sample_data1)
+    print(f""Maximum of {sample_data1}: {mf1.get_maximum()}"")
+    sample_data2 = [-5, -1, -10, -3]
+    mf2 = MaxFinder(sample_data2)
+    print(f""Maximum of {sample_data2}: {mf2.get_maximum()}"")
+    sample_data3 = [42]
+    mf3 = MaxFinder(sample_data3)
+    print(f""Maximum of {sample_data3}: {mf3.get_maximum()}"")
+    sample_data4 = []
+    mf4 = MaxFinder(sample_data4)
+    try:
+        mf4.get_maximum()
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,13779,219_12.py
+219,12,Locate the maximum value quickly,Develop a class named 'MaxFinder' with a method 'get_maximum' that stores a list of data and provides an $O(1)$ lookup for the maximum element after an initial $O(n)$ setup.,"class MaxFinder:
+    def __init__(self, data):
+        self._data = data
+        self._maximum = None
+        self._setup()
+    def _setup(self):
+        if not self._data:
+            self._maximum = None
+            return
+        self._maximum = self._data[0]
+        for x in self._data[1:]:
+            if x > self._maximum:
+                self._maximum = x
+    def get_maximum(self):
+        if self._maximum is None:
+            raise ValueError(""The list is empty"")
+        return self._maximum
+if __name__ == '__main__':
+    sample_data1 = [10, 4, 20, 5, 30]
+    mf1 = MaxFinder(sample_data1)
+    print(f""Maximum of {sample_data1}: {mf1.get_maximum()}"")
+    sample_data2 = [-5, -1, -10, -2]
+    mf2 = MaxFinder(sample_data2)
+    print(f""Maximum of {sample_data2}: {mf2.get_maximum()}"")
+    sample_data3 = [7]
+    mf3 = MaxFinder(sample_data3)
+    print(f""Maximum of {sample_data3}: {mf3.get_maximum()}"")
+    sample_data4 = []
+    mf4 = MaxFinder(sample_data4)
+    try:
+        mf4.get_maximum()
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,13780,219_12_1.py
+219,12,Locate the maximum value quickly,Develop a class named 'MaxFinder' with a method 'get_maximum' that stores a list of data and provides an $O(1)$ lookup for the maximum element after an initial $O(n)$ setup.,"class MaxFinder:
+    def __init__(self, data):
+        if not data:
+            self._data = []
+            self._max_element = None
+        else:
+            self._data = data
+            self._max_element = self._find_initial_max(data)
+    def _find_initial_max(self, data):
+        if not data:
+            return None
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+    def get_maximum(self):
+        if self._max_element is None:
+            raise ValueError(""Data list is empty"")
+        return self._max_element
+if __name__ == '__main__':
+    sample_data1 = [10, 5, 20, 8, 15]
+    mf1 = MaxFinder(sample_data1)
+    print(f""Maximum of {sample_data1}: {mf1.get_maximum()}"")
+    sample_data2 = [-5, -1, -10, -3]
+    mf2 = MaxFinder(sample_data2)
+    print(f""Maximum of {sample_data2}: {mf2.get_maximum()}"")
+    sample_data3 = [42]
+    mf3 = MaxFinder(sample_data3)
+    print(f""Maximum of {sample_data3}: {mf3.get_maximum()}"")
+    sample_data4 = []
+    mf4 = MaxFinder(sample_data4)
+    try:
+        mf4.get_maximum()
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,2,13781,219_12_2.py
+219,12,Locate the maximum value quickly,Develop a class named 'MaxFinder' with a method 'get_maximum' that stores a list of data and provides an $O(1)$ lookup for the maximum element after an initial $O(n)$ setup.,"class MaxFinder:
+    def __init__(self, data):
+        self._data = data
+        self._maximum = None
+        self._setup()
+    def _setup(self):
+        if not self._data:
+            self._maximum = None
+            return
+        self._maximum = self._data[0]
+        for x in self._data[1:]:
+            if x > self._maximum:
+                self._maximum = x
+    def get_maximum(self):
+        if self._maximum is None:
+            raise ValueError(""The list is empty"")
+        return self._maximum
+if __name__ == '__main__':
+    sample_data1 = [10, 5, 20, 8, 15]
+    mf1 = MaxFinder(sample_data1)
+    print(f""Maximum of {sample_data1}: {mf1.get_maximum()}"")
+    sample_data2 = [-5, -1, -10, -3]
+    mf2 = MaxFinder(sample_data2)
+    print(f""Maximum of {sample_data2}: {mf2.get_maximum()}"")
+    sample_data3 = [42]
+    mf3 = MaxFinder(sample_data3)
+    print(f""Maximum of {sample_data3}: {mf3.get_maximum()}"")
+    sample_data4 = []
+    mf4 = MaxFinder(sample_data4)
+    try:
+        mf4.get_maximum()
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,13782,219_12_3.py
+219,12,Locate the maximum value quickly,Develop a class named 'MaxFinder' with a method 'get_maximum' that stores a list of data and provides an $O(1)$ lookup for the maximum element after an initial $O(n)$ setup.,"class MaxFinder:
+    def __init__(self, data):
+        self.data = data
+        self._max_value = None
+        self._setup()
+    def _setup(self):
+        if not self.data:
+            self._max_value = None
+            return
+        self._max_value = self.data[0]
+        for x in self.data[1:]:
+            if x > self._max_value:
+                self._max_value = x
+    def get_maximum(self):
+        if self._max_value is None:
+            raise ValueError(""The list is empty"")
+        return self._max_value
+if __name__ == '__main__':
+    sample_data1 = [10, 5, 20, 8, 15]
+    mf1 = MaxFinder(sample_data1)
+    print(f""Maximum of {sample_data1}: {mf1.get_maximum()}"")
+    sample_data2 = [-5, -1, -10, -3]
+    mf2 = MaxFinder(sample_data2)
+    print(f""Maximum of {sample_data2}: {mf2.get_maximum()}"")
+    sample_data3 = [42]
+    mf3 = MaxFinder(sample_data3)
+    print(f""Maximum of {sample_data3}: {mf3.get_maximum()}"")
+    sample_data4 = []
+    mf4 = MaxFinder(sample_data4)
+    try:
+        mf4.get_maximum()
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,13783,219_12_4.py
+219,13,Locate the maximum value quickly,"Write a concise and Pythonic one-liner expression using built-in functions to determine the maximum value in a given iterable, demonstrating the fastest possible implementation.","if __name__ == '__main__':
+    data = [10, 5, 20, 8]
+    print(max(data))",True,0,13784,219_13.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+if __name__ == '__main__':
+    data = [15, 8, 42, 3, 99, 27, 50]
+    if not data:
+        print(""Error: Input list is empty"")
+    else:
+        largest = data[0]
+        for number in data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,0,13785,219_14.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    input_data = [15, 8, 42, 3, 99, 21, 7]
+    result = find_largest(input_data)
+    print(result)",True,1,13786,219_14_1.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    input_data = [15, 8, 42, 3, 99, 21]
+    result = find_largest(input_data)
+    print(result)",True,2,13787,219_14_2.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    input_data = [15, 8, 22, 4, 30, 11]
+    result = find_largest(input_data)
+    print(result)",True,3,13788,219_14_3.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    input_data = [15, 8, 42, 3, 99, 22, 7]
+    result = find_largest(input_data)
+    print(result)",True,4,13789,219_14_4.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    input_data = [15, 8, 42, 3, 99, 27, 5]
+    result = find_largest(input_data)
+    print(result)",True,5,13790,219_14_5.py
+219,14,Locate the maximum value quickly,Create a complete script that reads a sequence of numbers from standard input and uses an iterative approach to quickly locate and print the single largest number.,"import sys
+def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    input_data = [12, 45, 67, 89, 34, 91, 50]
+    result = find_largest(input_data)
+    print(result)",True,6,13791,219_14_6.py
+220,0,Find the average of small sets,"Write a complete, efficient Python script that takes a list of small sets as input and calculates the average of all elements across all sets. Use the built-in `sum()` and `len()` functions for optimal performance.","import itertools
+def calculate_average_of_all_elements(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    average = calculate_average_of_all_elements(sample_sets)
+    print(average)",True,0,13792,220_0.py
+220,0,Find the average of small sets,"Write a complete, efficient Python script that takes a list of small sets as input and calculates the average of all elements across all sets. Use the built-in `sum()` and `len()` functions for optimal performance.","def calculate_average_of_all_elements(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    average = calculate_average_of_all_elements(sample_sets)
+    print(average)",True,1,13793,220_0_1.py
+220,0,Find the average of small sets,"Write a complete, efficient Python script that takes a list of small sets as input and calculates the average of all elements across all sets. Use the built-in `sum()` and `len()` functions for optimal performance.","def calculate_average(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    average = calculate_average(sample_sets)
+    print(average)",True,2,13794,220_0_2.py
+220,0,Find the average of small sets,"Write a complete, efficient Python script that takes a list of small sets as input and calculates the average of all elements across all sets. Use the built-in `sum()` and `len()` functions for optimal performance.","def calculate_average_of_all_elements(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2},
+        {3, 4, 5},
+        {6}
+    ]
+    average = calculate_average_of_all_elements(sample_sets)
+    print(average)",True,3,13795,220_0_3.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"import itertools
+def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    return sum(all_elements) / len(all_elements)
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    average = calculate_average_of_sets(sample_sets)
+    print(average)",True,0,13796,220_1.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"import itertools
+def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    total_sum = sum(all_elements)
+    count = len(all_elements)
+    return total_sum / count
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    average = calculate_average_of_sets(sample_sets)
+    print(average)",True,1,13797,220_1_1.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"import itertools
+def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    return sum(all_elements) / len(all_elements)
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    result = calculate_average_of_sets(sample_data)
+    print(result)",True,2,13798,220_1_2.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"import itertools
+def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    return sum(all_elements) / len(all_elements)
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6, 7}
+    ]
+    result = calculate_average_of_sets(sample_data)
+    print(result)",True,3,13799,220_1_3.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"import itertools
+def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    return sum(all_elements) / len(all_elements)
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    result = calculate_average_of_sets(sample_sets)
+    print(result)",True,4,13800,220_1_4.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    return sum(all_elements) / len(all_elements)
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6, 7}
+    ]
+    result = calculate_average_of_sets(sample_data)
+    print(result)",True,5,13801,220_1_5.py
+220,1,Find the average of small sets,Implement a robust Python function named `calculate_average_of_sets` that accepts a list of sets and returns the arithmetic mean of all unique elements found across all sets. The implementation must be highly optimized.,"def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    return sum(all_elements) / len(all_elements)
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    average = calculate_average_of_sets(sample_sets)
+    print(average)",True,6,13802,220_1_6.py
+220,2,Find the average of small sets,Develop a class named `SetAverager` with a method `get_overall_average(list_of_sets)` that computes the average of all elements contained within the provided list of sets. Ensure the class design is object-oriented and follows best practices.,"class SetAverager:
+    def get_overall_average(self, list_of_sets):
+        total_sum = 0
+        total_count = 0
+        for s in list_of_sets:
+            for element in s:
+                total_sum += element
+                total_count += 1
+        if total_count == 0:
+            return 0
+        return total_sum / total_count
+if __name__ == '__main__':
+    averager = SetAverager()
+    set1 = {1, 2, 3}
+    set2 = {4, 5}
+    set3 = {6, 7, 8}
+    set4 = {}
+    list_of_sets = [set1, set2, set3, set4]
+    average = averager.get_overall_average(list_of_sets)
+    print(average)",True,0,13803,220_2.py
+220,2,Find the average of small sets,Develop a class named `SetAverager` with a method `get_overall_average(list_of_sets)` that computes the average of all elements contained within the provided list of sets. Ensure the class design is object-oriented and follows best practices.,"class SetAverager:
+    def get_overall_average(self, list_of_sets):
+        total_sum = 0
+        total_count = 0
+        for s in list_of_sets:
+            total_sum += sum(s)
+            total_count += len(s)
+        if total_count == 0:
+            return 0
+        else:
+            return total_sum / total_count
+if __name__ == '__main__':
+    averager = SetAverager()
+    set1 = {1, 2, 3}
+    set2 = {4, 5}
+    set3 = {6, 7, 8}
+    list_of_sets = [set1, set2, set3]
+    average = averager.get_overall_average(list_of_sets)
+    print(average)",True,1,13804,220_2_1.py
+220,2,Find the average of small sets,Develop a class named `SetAverager` with a method `get_overall_average(list_of_sets)` that computes the average of all elements contained within the provided list of sets. Ensure the class design is object-oriented and follows best practices.,"class SetAverager:
+    def get_overall_average(self, list_of_sets):
+        total_sum = 0
+        total_count = 0
+        for s in list_of_sets:
+            for element in s:
+                total_sum += element
+                total_count += 1
+        if total_count == 0:
+            return 0
+        return total_sum / total_count
+if __name__ == '__main__':
+    averager = SetAverager()
+    set1 = {1, 2, 3}
+    set2 = {4, 5}
+    set3 = {6, 7, 8}
+    list_of_sets = [set1, set2, set3]
+    average = averager.get_overall_average(list_of_sets)
+    print(average)",True,2,13805,220_2_2.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for x in s:
+            total_sum += x
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2},
+        {3, 4, 5},
+        {6}
+    ]
+    result = average_of_sets(data)
+    print(result)
+    empty_data = []
+    result_empty = average_of_sets(empty_data)
+    print(result_empty)
+    single_element_data = [{10}]
+    result_single = average_of_sets(single_element_data)
+    print(result_single)",True,0,13806,220_3.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data1 = [ {1, 2}, {3, 4} ]
+    data2 = [ {5}, {6, 7, 8} ]
+    data3 = []
+    data4 = [ set(), {10} ]
+    print(f""Average of data1: {average_of_sets(data1)}"")
+    print(f""Average of data2: {average_of_sets(data2)}"")
+    print(f""Average of data3: {average_of_sets(data3)}"")
+    print(f""Average of data4: {average_of_sets(data4)}"")",True,1,13807,220_3_1.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for item in s:
+            total_sum += item
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2},
+        {3, 4, 5},
+        {6}
+    ]
+    result = average_of_sets(data)
+    print(result)
+    empty_data = []
+    result_empty = average_of_sets(empty_data)
+    print(result_empty)
+    single_element_data = [{10}]
+    result_single = average_of_sets(single_element_data)
+    print(result_single)",True,2,13808,220_3_2.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for x in s:
+            total_sum += x
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2},
+        {3, 4, 5},
+        {6}
+    ]
+    result = average_of_sets(data)
+    print(result)
+    empty_data = []
+    result_empty = average_of_sets(empty_data)
+    print(result_empty)
+    single_element_data = [{10}, {20}]
+    result_single = average_of_sets(single_element_data)
+    print(result_single)",True,3,13809,220_3_3.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for x in s:
+            total_sum += x
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2},
+        {3, 4, 5},
+        {6}
+    ]
+    result = average_of_sets(data)
+    print(result)
+    empty_data = []
+    result_empty = average_of_sets(empty_data)
+    print(result_empty)
+    single_element_sets = [
+        {10},
+        {20}
+    ]
+    result_single = average_of_sets(single_element_sets)
+    print(result_single)",True,4,13810,220_3_4.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for num in s:
+            total_sum += num
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data1 = [ {1, 2}, {3, 4} ]
+    data2 = [ {5}, {6, 7, 8} ]
+    data3 = []
+    data4 = [ set(), {10} ]
+    print(f""Average of data1: {average_of_sets(data1)}"")
+    print(f""Average of data2: {average_of_sets(data2)}"")
+    print(f""Average of data3: {average_of_sets(data3)}"")
+    print(f""Average of data4: {average_of_sets(data4)}"")",True,5,13811,220_3_5.py
+220,3,Find the average of small sets,Write a concise and highly readable Python function to find the average value of all numbers present in a collection of small sets. The function should handle the case where the input list of sets is empty.,"def average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data1 = [ {1, 2}, {3, 4} ]
+    data2 = [ {10, 20, 30}, {5, 15} ]
+    data3 = []
+    data4 = [ set(), {100} ]
+    print(f""Average of data1: {average_of_sets(data1)}"")
+    print(f""Average of data2: {average_of_sets(data2)}"")
+    print(f""Average of data3: {average_of_sets(data3)}"")
+    print(f""Average of data4: {average_of_sets(data4)}"")",True,6,13812,220_3_6.py
+220,5,Find the average of small sets,"Generate a full, runnable Python program that prompts the user to input a list of sets, reads the input, and then prints the calculated average of all elements from those sets.","if __name__ == '__main__':
+    list_of_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for element in s:
+            total_sum += element
+            total_count += 1
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""The average of all elements from the sets is: {average}"")
+    else:
+        print(""No elements found in the sets."")",True,0,13813,220_5.py
+220,5,Find the average of small sets,"Generate a full, runnable Python program that prompts the user to input a list of sets, reads the input, and then prints the calculated average of all elements from those sets.","if __name__ == '__main__':
+    list_of_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8}
+    ]
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for element in s:
+            total_sum += element
+            total_count += 1
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""The average of all elements from the sets is: {average}"")
+    else:
+        print(""No elements found in the sets."")",True,1,13814,220_5_1.py
+220,5,Find the average of small sets,"Generate a full, runnable Python program that prompts the user to input a list of sets, reads the input, and then prints the calculated average of all elements from those sets.","if __name__ == '__main__':
+    list_of_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for element in s:
+            total_sum += element
+            total_count += 1
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""The sets provided are: {list_of_sets}"")
+        print(f""The sum of all elements is: {total_sum}"")
+        print(f""The total number of elements is: {total_count}"")
+        print(f""The average of all elements from those sets is: {average}"")
+    else:
+        print(""No elements were found in the provided sets."")",True,2,13815,220_5_2.py
+220,5,Find the average of small sets,"Generate a full, runnable Python program that prompts the user to input a list of sets, reads the input, and then prints the calculated average of all elements from those sets.","if __name__ == '__main__':
+    list_of_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8}
+    ]
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for element in s:
+            total_sum += element
+            total_count += 1
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""The average of all elements from the sets is: {average}"")
+    else:
+        print(""No elements found in the provided sets."")",True,3,13816,220_5_3.py
+220,5,Find the average of small sets,"Generate a full, runnable Python program that prompts the user to input a list of sets, reads the input, and then prints the calculated average of all elements from those sets.","if __name__ == '__main__':
+    list_of_sets = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for element in s:
+            total_sum += element
+            total_count += 1
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""The average of all elements is: {average}"")
+    else:
+        print(""No elements found to calculate the average."")",True,4,13817,220_5_4.py
+220,6,Find the average of small sets,"Implement a generator function that yields the total sum and the total count of elements from a list of input sets, which can then be used to calculate the final average.","def set_sum_count_generator(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    yield total_sum
+    yield total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    results = set_sum_count_generator(data)
+    total_sum = None
+    total_count = None
+    for result in results:
+        if total_sum is None:
+            total_sum = result
+        else:
+            total_count = result
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""Total Sum: {total_sum}"")
+        print(f""Total Count: {total_count}"")
+        print(f""Average: {average}"")
+    else:
+        print(""Total count is zero, cannot calculate average."")",True,0,13818,220_6.py
+220,6,Find the average of small sets,"Implement a generator function that yields the total sum and the total count of elements from a list of input sets, which can then be used to calculate the final average.","def set_sum_count_generator(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    yield total_sum
+    yield total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    results = set_sum_count_generator(data)
+    total_sum = next(results)
+    total_count = next(results)
+    if total_count > 0:
+        average = total_sum / total_count
+        print(f""Total Sum: {total_sum}"")
+        print(f""Total Count: {total_count}"")
+        print(f""Average: {average}"")
+    else:
+        print(""Total count is zero, cannot calculate average."")",True,1,13819,220_6_1.py
+220,6,Find the average of small sets,"Implement a generator function that yields the total sum and the total count of elements from a list of input sets, which can then be used to calculate the final average.","def sum_and_count_sets(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    yield total_sum
+    yield total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    results_generator = sum_and_count_sets(data)
+    total_sum_result = 0
+    total_count_result = 0
+    for result in results_generator:
+        if isinstance(result, int):
+            if total_sum_result == 0:
+                total_sum_result = result
+            else:
+                total_count_result = result
+        else:
+            total_sum_result = result
+    if total_count_result > 0:
+        average = total_sum_result / total_count_result
+        print(f""Total Sum: {total_sum_result}"")
+        print(f""Total Count: {total_count_result}"")
+        print(f""Average: {average}"")
+    else:
+        print(""Total count is zero, cannot calculate average."")",True,2,13820,220_6_2.py
+220,6,Find the average of small sets,"Implement a generator function that yields the total sum and the total count of elements from a list of input sets, which can then be used to calculate the final average.","def set_sum_count_generator(list_of_sets):
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    yield total_sum
+    yield total_count
+if __name__ == '__main__':
+    data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    results = set_sum_count_generator(data)
+    total_sum_result = next(results)
+    total_count_result = next(results)
+    if total_count_result > 0:
+        average = total_sum_result / total_count_result
+        print(f""Total Sum: {total_sum_result}"")
+        print(f""Total Count: {total_count_result}"")
+        print(f""Average: {average}"")
+    else:
+        print(""Total count is zero, cannot calculate average."")",True,3,13821,220_6_3.py
+219,3,Locate the maximum value quickly,"Write a script that reads a line of space-separated numbers from standard input and determines the largest number present, handling potential input errors gracefully.","import sys
+def find_largest(input_line):
+    if not input_line.strip():
+        return None
+    try:
+        numbers = [int(x) for x in input_line.split()]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return ""Error: Invalid input detected""
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8 30""
+    result = find_largest(sample_input)
+    print(result)",True,0,13822,219_3.py
+219,3,Locate the maximum value quickly,"Write a script that reads a line of space-separated numbers from standard input and determines the largest number present, handling potential input errors gracefully.","import sys
+def find_largest(input_line):
+    if not input_line.strip():
+        return None
+    try:
+        numbers = [float(x) for x in input_line.split()]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return ""Error: Invalid input detected""
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8 30""
+    result = find_largest(sample_input)
+    print(result)",True,1,13823,219_3_1.py
+219,3,Locate the maximum value quickly,"Write a script that reads a line of space-separated numbers from standard input and determines the largest number present, handling potential input errors gracefully.","import sys
+def find_largest(input_line):
+    if not input_line:
+        return None
+    try:
+        numbers = input_line.split()
+        if not numbers:
+            return None
+        nums = [int(n) for n in numbers]
+        return max(nums)
+    except ValueError:
+        return ""Error: Invalid input detected""
+    except Exception:
+        return ""Error: An unexpected error occurred""
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8 30""
+    result = find_largest(sample_input)
+    print(result)",True,2,13824,219_3_2.py
+220,7,Find the average of small sets,"Write a function that takes a list of sets of integers and returns the average of the set of all unique numbers combined. The code must be clean, professional, and adhere to all Python best practices.","def calculate_average_of_combined_sets(list_of_sets):
+    all_numbers = set()
+    for s in list_of_sets:
+        all_numbers.update(s)
+    if not all_numbers:
+        return 0
+    return sum(all_numbers) / len(all_numbers)
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    average = calculate_average_of_combined_sets(sample_data)
+    print(average)",True,0,13825,220_7.py
+220,7,Find the average of small sets,"Write a function that takes a list of sets of integers and returns the average of the set of all unique numbers combined. The code must be clean, professional, and adhere to all Python best practices.","def calculate_average_of_combined_sets(list_of_sets):
+    all_numbers = set()
+    for s in list_of_sets:
+        all_numbers.update(s)
+    if not all_numbers:
+        return 0
+    return sum(all_numbers) / len(all_numbers)
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    result = calculate_average_of_combined_sets(sample_data)
+    print(result)",True,1,13826,220_7_1.py
+220,7,Find the average of small sets,"Write a function that takes a list of sets of integers and returns the average of the set of all unique numbers combined. The code must be clean, professional, and adhere to all Python best practices.","def calculate_average_of_combined_set(list_of_sets):
+    combined_set = set()
+    for s in list_of_sets:
+        combined_set.update(s)
+    if not combined_set:
+        return 0
+    total_sum = sum(combined_set)
+    count = len(combined_set)
+    return total_sum / count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6, 7}
+    ]
+    average = calculate_average_of_combined_set(sample_data)
+    print(average)",True,2,13827,220_7_2.py
+220,8,Find the average of small sets,Refactor the previous solution to use a list comprehension combined with the `itertools.chain` module for an extremely efficient calculation of the average of elements from multiple small sets.,"import itertools
+def calculate_average_of_sets(list_of_lists):
+    all_elements = itertools.chain.from_iterable(list_of_lists)
+    total_sum = sum(all_elements)
+    total_count = sum(len(lst) for lst in list_of_lists)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data1 = [1, 2, 3]
+    data2 = [4, 5]
+    data3 = [6, 7, 8, 9]
+    sets = [data1, data2, data3]
+    average = calculate_average_of_sets(sets)
+    print(average)",True,0,13828,220_8.py
+220,8,Find the average of small sets,Refactor the previous solution to use a list comprehension combined with the `itertools.chain` module for an extremely efficient calculation of the average of elements from multiple small sets.,"import itertools
+def calculate_average_of_sets(sets):
+    all_elements = itertools.chain(*sets)
+    total_sum = sum(all_elements)
+    total_count = sum(len(s) for s in sets)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    set1 = [1, 2, 3]
+    set2 = [4, 5]
+    set3 = [6, 7, 8, 9]
+    sets_to_average = [set1, set2, set3]
+    average = calculate_average_of_sets(sets_to_average)
+    print(average)",True,1,13829,220_8_1.py
+220,8,Find the average of small sets,Refactor the previous solution to use a list comprehension combined with the `itertools.chain` module for an extremely efficient calculation of the average of elements from multiple small sets.,"import itertools
+def calculate_average_of_sets(list_of_lists):
+    all_elements = itertools.chain.from_iterable(list_of_lists)
+    total_sum = sum(all_elements)
+    total_count = sum(len(lst) for lst in list_of_lists)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sets = [
+        [1, 2, 3],
+        [4, 5],
+        [6, 7, 8, 9]
+    ]
+    average = calculate_average_of_sets(sets)
+    print(average)",True,2,13830,220_8_2.py
+220,8,Find the average of small sets,Refactor the previous solution to use a list comprehension combined with the `itertools.chain` module for an extremely efficient calculation of the average of elements from multiple small sets.,"import itertools
+def calculate_average_of_multiple_sets(list_of_lists):
+    all_elements = itertools.chain.from_iterable(list_of_lists)
+    total_sum = sum(all_elements)
+    total_count = sum(len(lst) for lst in list_of_lists)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data1 = [1, 2, 3]
+    data2 = [4, 5]
+    data3 = [6, 7, 8, 9]
+    sets = [data1, data2, data3]
+    average = calculate_average_of_multiple_sets(sets)
+    print(average)",True,3,13831,220_8_3.py
+220,8,Find the average of small sets,Refactor the previous solution to use a list comprehension combined with the `itertools.chain` module for an extremely efficient calculation of the average of elements from multiple small sets.,"import itertools
+def calculate_average_of_multiple_sets(sets):
+    all_elements = itertools.chain.from_iterable(s for s in sets)
+    total_sum = sum(all_elements)
+    total_count = sum(len(s) for s in sets)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    data1 = [1, 2, 3]
+    data2 = [4, 5]
+    data3 = [6, 7, 8, 9]
+    sets_to_average = [data1, data2, data3]
+    average = calculate_average_of_multiple_sets(sets_to_average)
+    print(average)",True,4,13832,220_8_4.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+def calculate_averages(data):
+    results = []
+    for number_set in data:
+        if not number_set:
+            average = 0
+        else:
+            average = sum(number_set) / len(number_set)
+        results.append(average)
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20, 30, 40],
+        [5],
+        [],
+        [1, 1, 1, 1]
+    ]
+    averages = calculate_averages(sample_data)
+    for avg in averages:
+        print(avg)",True,0,13833,220_10.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+def calculate_averages(data):
+    results = []
+    for number_set in data:
+        if not number_set:
+            average = 0
+        else:
+            average = sum(number_set) / len(number_set)
+        results.append(average)
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20, 30, 40],
+        [5],
+        [],
+        [1.5, 2.5]
+    ]
+    averages = calculate_averages(sample_data)
+    for avg in averages:
+        print(avg)",True,1,13834,220_10_1.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+def calculate_averages(data):
+    results = []
+    for number_set in data:
+        if not number_set:
+            average = 0
+        else:
+            average = sum(number_set) / len(number_set)
+        results.append(average)
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20, 30, 40],
+        [5, 5, 5, 5]
+    ]
+    averages = calculate_averages(sample_data)
+    for avg in averages:
+        print(avg)",True,2,13835,220_10_2.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+if __name__ == '__main__':
+    input_data = [
+        [1, 2, 3],
+        [10, 20, 30, 40],
+        [5, 5, 5]
+    ]
+    for data_set in input_data:
+        if data_set:
+            average = sum(data_set) / len(data_set)
+            print(average)",True,3,13836,220_10_3.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+def calculate_averages(data):
+    results = []
+    for number_set in data:
+        if not number_set:
+            average = 0
+        else:
+            average = sum(number_set) / len(number_set)
+        results.append(average)
+    return results
+if __name__ == '__main__':
+    sample_input = [
+        [1, 2, 3],
+        [10, 20, 30, 40],
+        [5],
+        [],
+        [1.5, 2.5]
+    ]
+    averages = calculate_averages(sample_input)
+    for avg in averages:
+        print(avg)",True,4,13837,220_10_4.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+def calculate_averages(data):
+    results = []
+    for number_set in data:
+        if number_set:
+            average = sum(number_set) / len(number_set)
+            results.append(average)
+        else:
+            results.append(0)
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20],
+        [5, 5, 5, 5],
+        [],
+        [100]
+    ]
+    averages = calculate_averages(sample_data)
+    for avg in averages:
+        print(avg)",True,5,13838,220_10_5.py
+220,10,Find the average of small sets,"Write a complete, well-documented Python script that reads a list of small integer sets (lists) from standard input and calculates the average of each set, printing the results.","import sys
+def calculate_averages(data):
+    results = []
+    for s in data:
+        if s:
+            average = sum(s) / len(s)
+            results.append(average)
+        else:
+            results.append(0)
+    return results
+if __name__ == '__main__':
+    sample_input = [
+        [1, 2, 3],
+        [10, 20],
+        [5, 5, 5, 5],
+        [],
+        [100]
+    ]
+    averages = calculate_averages(sample_input)
+    for avg in averages:
+        print(avg)",True,6,13839,220_10_6.py
+220,11,Find the average of small sets,Implement an optimized Python function named 'calculate_small_set_average' that accepts a list of lists (representing sets) of integers and returns a list containing the average of each inner set. Ensure the implementation uses efficient built-in functions.,"def calculate_small_set_average(list_of_lists):
+    averages = []
+    for inner_list in list_of_lists:
+        if inner_list:
+            average = sum(inner_list) / len(inner_list)
+            averages.append(average)
+        else:
+            averages.append(0)
+    return averages
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20],
+        [5, 5, 5, 5]
+    ]
+    result = calculate_small_set_average(sample_data)
+    print(result)",True,0,13840,220_11.py
+220,11,Find the average of small sets,Implement an optimized Python function named 'calculate_small_set_average' that accepts a list of lists (representing sets) of integers and returns a list containing the average of each inner set. Ensure the implementation uses efficient built-in functions.,"def calculate_small_set_average(list_of_lists):
+    averages = []
+    for inner_list in list_of_lists:
+        if inner_list:
+            average = sum(inner_list) / len(inner_list)
+            averages.append(average)
+    return averages
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20],
+        [5, 5, 5, 5]
+    ]
+    result = calculate_small_set_average(sample_data)
+    print(result)",True,1,13841,220_11_1.py
+220,11,Find the average of small sets,Implement an optimized Python function named 'calculate_small_set_average' that accepts a list of lists (representing sets) of integers and returns a list containing the average of each inner set. Ensure the implementation uses efficient built-in functions.,"def calculate_small_set_average(list_of_lists):
+    averages = []
+    for inner_list in list_of_lists:
+        if inner_list:
+            average = sum(inner_list) / len(inner_list)
+            averages.append(average)
+        else:
+            averages.append(0)
+    return averages
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20],
+        [5, 5, 5, 5],
+        []
+    ]
+    result = calculate_small_set_average(sample_data)
+    print(result)",True,2,13842,220_11_2.py
+220,11,Find the average of small sets,Implement an optimized Python function named 'calculate_small_set_average' that accepts a list of lists (representing sets) of integers and returns a list containing the average of each inner set. Ensure the implementation uses efficient built-in functions.,"def calculate_small_set_average(list_of_lists):
+    averages = []
+    for inner_list in list_of_lists:
+        if inner_list:
+            average = sum(inner_list) / len(inner_list)
+            averages.append(average)
+        else:
+            averages.append(0)
+    return averages
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2, 3],
+        [10, 20],
+        [5, 5, 5, 5],
+        [],
+        [100]
+    ]
+    result = calculate_small_set_average(sample_data)
+    print(result)",True,3,13843,220_11_3.py
+220,12,Find the average of small sets,Develop a class named 'AverageCalculator' with a method 'get_averages' that takes a list of sets as input and returns a dictionary where keys are the input sets and values are their respective averages. Ensure the code is professionally structured and efficient.,"class AverageCalculator:
+    def get_averages(self, list_of_sets):
+        averages = {}
+        for s in list_of_sets:
+            if s:
+                average = sum(s) / len(s)
+                averages[frozenset(s)] = average
+            else:
+                averages[frozenset(s)] = 0.0
+        return averages
+if __name__ == '__main__':
+    calculator = AverageCalculator()
+    sample_data = [
+        {1, 2, 3},
+        {4, 5, 6, 7},
+        {8, 9}
+    ]
+    results = calculator.get_averages(sample_data)
+    print(results)",True,0,13844,220_12.py
+220,12,Find the average of small sets,Develop a class named 'AverageCalculator' with a method 'get_averages' that takes a list of sets as input and returns a dictionary where keys are the input sets and values are their respective averages. Ensure the code is professionally structured and efficient.,"class AverageCalculator:
+    def get_averages(self, list_of_sets):
+        averages = {}
+        for s in list_of_sets:
+            if s:
+                average = sum(s) / len(s)
+                averages[frozenset(s)] = average
+            else:
+                averages[frozenset(s)] = 0.0
+        return averages
+if __name__ == '__main__':
+    calculator = AverageCalculator()
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    results = calculator.get_averages(sample_data)
+    print(results)",True,1,13845,220_12_1.py
+220,12,Find the average of small sets,Develop a class named 'AverageCalculator' with a method 'get_averages' that takes a list of sets as input and returns a dictionary where keys are the input sets and values are their respective averages. Ensure the code is professionally structured and efficient.,"class AverageCalculator:
+    def get_averages(self, list_of_sets):
+        averages = {}
+        for s in list_of_sets:
+            if s:
+                average = sum(s) / len(s)
+                averages[frozenset(s)] = average
+            else:
+                averages[frozenset(s)] = 0.0
+        return averages
+if __name__ == '__main__':
+    calculator = AverageCalculator()
+    sample_data = [
+        {1, 2, 3},
+        {10, 20, 30, 40},
+        {5, 5}
+    ]
+    result = calculator.get_averages(sample_data)
+    print(result)",True,2,13846,220_12_2.py
+220,12,Find the average of small sets,Develop a class named 'AverageCalculator' with a method 'get_averages' that takes a list of sets as input and returns a dictionary where keys are the input sets and values are their respective averages. Ensure the code is professionally structured and efficient.,"class AverageCalculator:
+    def get_averages(self, list_of_sets):
+        averages = {}
+        for s in list_of_sets:
+            if s:
+                average = sum(s) / len(s)
+                averages[frozenset(s)] = average
+            else:
+                averages[frozenset(s)] = 0.0
+        return averages
+if __name__ == '__main__':
+    calculator = AverageCalculator()
+    sample_data = [
+        {1, 2, 3},
+        {10, 20, 30, 40},
+        {5, 5}
+    ]
+    results = calculator.get_averages(sample_data)
+    print(results)",True,3,13847,220_12_3.py
+220,12,Find the average of small sets,Develop a class named 'AverageCalculator' with a method 'get_averages' that takes a list of sets as input and returns a dictionary where keys are the input sets and values are their respective averages. Ensure the code is professionally structured and efficient.,"class AverageCalculator:
+    def get_averages(self, list_of_sets):
+        averages = {}
+        for s in list_of_sets:
+            if s:
+                average = sum(s) / len(s)
+                averages[frozenset(s)] = average
+            else:
+                averages[frozenset(s)] = 0.0
+        return averages
+if __name__ == '__main__':
+    calculator = AverageCalculator()
+    sample_data = [
+        {1, 2, 3},
+        {10, 20, 30, 40},
+        {5, 5, 5}
+    ]
+    results = calculator.get_averages(sample_data)
+    print(results)",True,4,13848,220_12_4.py
+220,12,Find the average of small sets,Develop a class named 'AverageCalculator' with a method 'get_averages' that takes a list of sets as input and returns a dictionary where keys are the input sets and values are their respective averages. Ensure the code is professionally structured and efficient.,"class AverageCalculator:
+    def get_averages(self, list_of_sets):
+        averages = {}
+        for s in list_of_sets:
+            if s:
+                average = sum(s) / len(s)
+                averages[frozenset(s)] = average
+            else:
+                averages[frozenset(s)] = 0.0
+        return averages
+if __name__ == '__main__':
+    calculator = AverageCalculator()
+    sample_data = [
+        {1, 2, 3},
+        {4, 5, 6, 7},
+        {8, 9}
+    ]
+    result = calculator.get_averages(sample_data)
+    print(result)",True,5,13849,220_12_5.py
+220,4,Find the average of small sets,Create an optimized solution using set union operations to find the average of all elements across a list of sets. Prioritize time complexity efficiency.,"def average_of_set_union(list_of_sets):
+    if not list_of_sets:
+        return 0.0
+    union_set = set()
+    for s in list_of_sets:
+        union_set.update(s)
+    total_sum = sum(union_set)
+    total_count = len(union_set)
+    if total_count == 0:
+        return 0.0
+    else:
+        return total_sum / total_count
+if __name__ == '__main__':
+    list_of_sets_sample = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6, 7}
+    ]
+    result = average_of_set_union(list_of_sets_sample)
+    print(result)",True,0,13850,220_4.py
+220,4,Find the average of small sets,Create an optimized solution using set union operations to find the average of all elements across a list of sets. Prioritize time complexity efficiency.,"def find_average_of_set_elements(list_of_sets):
+    union_set = set()
+    for s in list_of_sets:
+        union_set.update(s)
+    if not union_set:
+        return 0.0
+    total_sum = sum(union_set)
+    count = len(union_set)
+    return total_sum / count
+if __name__ == '__main__':
+    list_of_sets_sample = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6, 7}
+    ]
+    average = find_average_of_set_elements(list_of_sets_sample)
+    print(average)",True,1,13851,220_4_1.py
+220,4,Find the average of small sets,Create an optimized solution using set union operations to find the average of all elements across a list of sets. Prioritize time complexity efficiency.,"def average_of_set_union(list_of_sets):
+    if not list_of_sets:
+        return 0.0
+    union_set = set()
+    for s in list_of_sets:
+        union_set.update(s)
+    total_sum = sum(union_set)
+    total_count = len(union_set)
+    if total_count == 0:
+        return 0.0
+    return total_sum / total_count
+if __name__ == '__main__':
+    list_of_sets_sample = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    result = average_of_set_union(list_of_sets_sample)
+    print(result)",True,2,13852,220_4_2.py
+220,4,Find the average of small sets,Create an optimized solution using set union operations to find the average of all elements across a list of sets. Prioritize time complexity efficiency.,"def find_average_of_set_elements(list_of_sets):
+    union_set = set()
+    for s in list_of_sets:
+        union_set.update(s)
+    if not union_set:
+        return 0.0
+    total_sum = sum(union_set)
+    count = len(union_set)
+    return total_sum / count
+if __name__ == '__main__':
+    sets1 = [{1, 2}, {3, 4}, {2, 5}]
+    print(find_average_of_set_elements(sets1))
+    sets2 = [{10, 20}, {30, 40}, {50}]
+    print(find_average_of_set_elements(sets2))
+    sets3 = [set(), {1, 2, 3}, {4, 5}]
+    print(find_average_of_set_elements(sets3))
+    sets4 = [set(), set()]
+    print(find_average_of_set_elements(sets4))",True,3,13853,220_4_3.py
+220,4,Find the average of small sets,Create an optimized solution using set union operations to find the average of all elements across a list of sets. Prioritize time complexity efficiency.,"def find_average_of_set_union(list_of_sets):
+    if not list_of_sets:
+        return 0.0
+    union_set = set()
+    for s in list_of_sets:
+        union_set.update(s)
+    total_sum = sum(union_set)
+    total_count = len(union_set)
+    if total_count == 0:
+        return 0.0
+    else:
+        return total_sum / total_count
+if __name__ == '__main__':
+    list_of_sets_sample = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    average = find_average_of_set_union(list_of_sets_sample)
+    print(average)",True,4,13854,220_4_4.py
+220,14,Find the average of small sets,"Create an efficient Python function that takes an iterable of sets and computes the overall average of all numbers contained within those sets combined, and return the final average. Handle the case where the input list of sets is empty gracefully.","def compute_average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for num in s:
+            total_sum += num
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    result = compute_average_of_sets(sample_data)
+    print(result)
+    empty_data = []
+    result_empty = compute_average_of_sets(empty_data)
+    print(result_empty)
+    single_set_data = [{10, 20}]
+    result_single = compute_average_of_sets(single_set_data)
+    print(result_single)",True,0,13855,220_14.py
+220,14,Find the average of small sets,"Create an efficient Python function that takes an iterable of sets and computes the overall average of all numbers contained within those sets combined, and return the final average. Handle the case where the input list of sets is empty gracefully.","def compute_average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for x in s:
+            total_sum += x
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    result = compute_average_of_sets(sample_data)
+    print(result)
+    empty_data = []
+    result_empty = compute_average_of_sets(empty_data)
+    print(result_empty)
+    single_set_data = [{10, 20}]
+    result_single = compute_average_of_sets(single_set_data)
+    print(result_single)",True,1,13856,220_14_1.py
+220,14,Find the average of small sets,"Create an efficient Python function that takes an iterable of sets and computes the overall average of all numbers contained within those sets combined, and return the final average. Handle the case where the input list of sets is empty gracefully.","def compute_average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    result1 = compute_average_of_sets(sample_data)
+    print(result1)
+    empty_data = []
+    result2 = compute_average_of_sets(empty_data)
+    print(result2)
+    single_set_data = [{10, 20}]
+    result3 = compute_average_of_sets(single_set_data)
+    print(result3)",True,2,13857,220_14_2.py
+220,14,Find the average of small sets,"Create an efficient Python function that takes an iterable of sets and computes the overall average of all numbers contained within those sets combined, and return the final average. Handle the case where the input list of sets is empty gracefully.","def compute_average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        total_sum += sum(s)
+        total_count += len(s)
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    empty_data = []
+    single_element_data = [{10}]
+    average1 = compute_average_of_sets(sample_data)
+    print(f""Average of sample data: {average1}"")
+    average2 = compute_average_of_sets(empty_data)
+    print(f""Average of empty data: {average2}"")
+    average3 = compute_average_of_sets(single_element_data)
+    print(f""Average of single element data: {average3}"")",True,3,13858,220_14_3.py
+220,14,Find the average of small sets,"Create an efficient Python function that takes an iterable of sets and computes the overall average of all numbers contained within those sets combined, and return the final average. Handle the case where the input list of sets is empty gracefully.","def compute_average_of_sets(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for item in s:
+            total_sum += item
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    average = compute_average_of_sets(sample_data)
+    print(average)
+    empty_data = []
+    average_empty = compute_average_of_sets(empty_data)
+    print(average_empty)
+    single_set_data = [{10, 20}]
+    average_single = compute_average_of_sets(single_set_data)
+    print(average_single)",True,4,13859,220_14_4.py
+220,14,Find the average of small sets,"Create an efficient Python function that takes an iterable of sets and computes the overall average of all numbers contained within those sets combined, and return the final average. Handle the case where the input list of sets is empty gracefully.","def calculate_combined_average(list_of_sets):
+    if not list_of_sets:
+        return 0
+    total_sum = 0
+    total_count = 0
+    for s in list_of_sets:
+        for item in s:
+            total_sum += item
+            total_count += 1
+    if total_count == 0:
+        return 0
+    return total_sum / total_count
+if __name__ == '__main__':
+    sample_data = [
+        {1, 2, 3},
+        {4, 5},
+        {6, 7, 8, 9}
+    ]
+    result = calculate_combined_average(sample_data)
+    print(result)
+    empty_data = []
+    result_empty = calculate_combined_average(empty_data)
+    print(result_empty)
+    single_set_data = [{10, 20}]
+    result_single = calculate_combined_average(single_set_data)
+    print(result_single)",True,5,13860,220_14_5.py
+221,0,Order three given numbers now,"Write a complete, highly optimized Python script that takes three numbers as input from the command line and prints them in ascending order.","import sys
+if __name__ == '__main__':
+    numbers = [15, 7, 22]
+    numbers.sort()
+    print(*numbers)",True,0,13861,221_0.py
+221,0,Order three given numbers now,"Write a complete, highly optimized Python script that takes three numbers as input from the command line and prints them in ascending order.","import sys
+if __name__ == '__main__':
+    numbers = [15, 3, 8]
+    numbers.sort()
+    print(*numbers)",True,1,13862,221_0_1.py
+221,0,Order three given numbers now,"Write a complete, highly optimized Python script that takes three numbers as input from the command line and prints them in ascending order.","import sys
+if __name__ == '__main__':
+    nums = [15, 7, 22]
+    nums.sort()
+    print(*nums)",True,2,13863,221_0_2.py
+221,1,Order three given numbers now,"Implement a robust Python function named `order_three_numbers` that accepts three arbitrary numbers and returns them sorted in ascending order, using the most efficient built-in methods.","def order_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sorted_result = order_three_numbers(num1, num2, num3)
+    print(sorted_result)",True,0,13864,221_1.py
+221,1,Order three given numbers now,"Implement a robust Python function named `order_three_numbers` that accepts three arbitrary numbers and returns them sorted in ascending order, using the most efficient built-in methods.","def order_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 9
+    sorted_result = order_three_numbers(num1, num2, num3)
+    print(sorted_result)",True,1,13865,221_1_1.py
+221,1,Order three given numbers now,"Implement a robust Python function named `order_three_numbers` that accepts three arbitrary numbers and returns them sorted in ascending order, using the most efficient built-in methods.","def order_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 9
+    result = order_three_numbers(num1, num2, num3)
+    print(result)",True,2,13866,221_1_2.py
+221,1,Order three given numbers now,"Implement a robust Python function named `order_three_numbers` that accepts three arbitrary numbers and returns them sorted in ascending order, using the most efficient built-in methods.","def order_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers
+if __name__ == '__main__':
+    result = order_three_numbers(5, 2, 8)
+    print(result)",True,3,13867,221_1_3.py
+221,1,Order three given numbers now,"Implement a robust Python function named `order_three_numbers` that accepts three arbitrary numbers and returns them sorted in ascending order, using the most efficient built-in methods.","def order_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 3
+    sorted_result = order_three_numbers(num1, num2, num3)
+    print(sorted_result)",True,4,13868,221_1_4.py
+221,1,Order three given numbers now,"Implement a robust Python function named `order_three_numbers` that accepts three arbitrary numbers and returns them sorted in ascending order, using the most efficient built-in methods.","def order_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 9
+    sorted_numbers = order_three_numbers(num1, num2, num3)
+    print(sorted_numbers)",True,5,13869,221_1_5.py
+221,2,Order three given numbers now,"Develop an optimized function that sorts three given numbers without using the built-in `sort()` method, demonstrating an understanding of comparison logic.",,False,0,13870,221_2.py
+221,3,Order three given numbers now,"Write a class named `NumberSorter` with a method `sort_three(a, b, c)` that internally ensures the three input numbers are returned in sorted order.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        numbers = sorted([a, b, c])
+        return numbers
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    result1 = sorter.sort_three(5, 2, 8)
+    print(f""Sorted (5, 2, 8): {result1}"")
+    result2 = sorter.sort_three(-10, 0, 3)
+    print(f""Sorted (-10, 0, 3): {result2}"")
+    result3 = sorter.sort_three(7, 7, 7)
+    print(f""Sorted (7, 7, 7): {result3}"")",True,0,13871,221_3.py
+221,3,Order three given numbers now,"Write a class named `NumberSorter` with a method `sort_three(a, b, c)` that internally ensures the three input numbers are returned in sorted order.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        numbers = sorted([a, b, c])
+        return numbers
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    result1 = sorter.sort_three(5, 2, 8)
+    print(f""Sorted (5, 2, 8): {result1}"")
+    result2 = sorter.sort_three(100, -5, 33)
+    print(f""Sorted (100, -5, 33): {result2}"")
+    result3 = sorter.sort_three(7, 7, 7)
+    print(f""Sorted (7, 7, 7): {result3}"")",True,1,13872,221_3_1.py
+221,3,Order three given numbers now,"Write a class named `NumberSorter` with a method `sort_three(a, b, c)` that internally ensures the three input numbers are returned in sorted order.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        numbers = sorted([a, b, c])
+        return numbers
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    result1 = sorter.sort_three(5, 2, 8)
+    print(f""Sorted [5, 2, 8]: {result1}"")
+    result2 = sorter.sort_three(100, -5, 33)
+    print(f""Sorted [100, -5, 33]: {result2}"")
+    result3 = sorter.sort_three(-1, -50, 0)
+    print(f""Sorted [-1, -50, 0]: {result3}"")",True,2,13873,221_3_2.py
+221,3,Order three given numbers now,"Write a class named `NumberSorter` with a method `sort_three(a, b, c)` that internally ensures the three input numbers are returned in sorted order.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        numbers = sorted([a, b, c])
+        return numbers
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    result1 = sorter.sort_three(5, 2, 8)
+    print(f""Sorted (5, 2, 8): {result1}"")
+    result2 = sorter.sort_three(100, -5, 30)
+    print(f""Sorted (100, -5, 30): {result2}"")
+    result3 = sorter.sort_three(-1, -10, -5)
+    print(f""Sorted (-1, -10, -5): {result3}"")",True,3,13874,221_3_3.py
+221,4,Order three given numbers now,Create a standalone Python program that reads three space-separated integers from standard input and prints the ordered sequence.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 20 5""
+    numbers = list(map(int, input_data.split()))
+    print(*numbers)",True,0,13875,221_4.py
+221,4,Order three given numbers now,Create a standalone Python program that reads three space-separated integers from standard input and prints the ordered sequence.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 20 30""
+    numbers = list(map(int, input_data.split()))
+    print(*numbers)",True,1,13876,221_4_1.py
+221,4,Order three given numbers now,Create a standalone Python program that reads three space-separated integers from standard input and prints the ordered sequence.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 25 5""
+    numbers = list(map(int, input_data.split()))
+    print(*numbers)",True,2,13877,221_4_2.py
+221,5,Order three given numbers now,Implement a function that takes a list of exactly three numbers and returns a new sorted list containing those numbers in non-decreasing order. Ensure the implementation is clean and professional.,"def sort_three_numbers(numbers):
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    sorted_list = sort_three_numbers(sample_list)
+    print(sorted_list)
+    sample_list_2 = [100, 1, 50]
+    sorted_list_2 = sort_three_numbers(sample_list_2)
+    print(sorted_list_2)
+    sample_list_3 = [3, 3, 3]
+    sorted_list_3 = sort_three_numbers(sample_list_3)
+    print(sorted_list_3)",True,0,13878,221_5.py
+221,5,Order three given numbers now,Implement a function that takes a list of exactly three numbers and returns a new sorted list containing those numbers in non-decreasing order. Ensure the implementation is clean and professional.,"def sort_three_numbers(numbers):
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_list = [5, 1, 8]
+    sorted_list = sort_three_numbers(sample_list)
+    print(sorted_list)",True,1,13879,221_5_1.py
+221,5,Order three given numbers now,Implement a function that takes a list of exactly three numbers and returns a new sorted list containing those numbers in non-decreasing order. Ensure the implementation is clean and professional.,"def sort_three_numbers(numbers):
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    sorted_list = sort_three_numbers(sample_list)
+    print(sorted_list)
+    sample_list_2 = [100, 42, 34]
+    sorted_list_2 = sort_three_numbers(sample_list_2)
+    print(sorted_list_2)
+    sample_list_3 = [7, 7, 7]
+    sorted_list_3 = sort_three_numbers(sample_list_3)
+    print(sorted_list_3)",True,2,13880,221_5_2.py
+221,5,Order three given numbers now,Implement a function that takes a list of exactly three numbers and returns a new sorted list containing those numbers in non-decreasing order. Ensure the implementation is clean and professional.,"def sort_three_numbers(numbers):
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    sorted_list = sort_three_numbers(sample_list)
+    print(sorted_list)",True,3,13881,221_5_3.py
+221,5,Order three given numbers now,Implement a function that takes a list of exactly three numbers and returns a new sorted list containing those numbers in non-decreasing order. Ensure the implementation is clean and professional.,"def sort_three_numbers(numbers):
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    sorted_list = sort_three_numbers(sample_list)
+    print(sorted_list)
+    sample_list_2 = [100, 4, 50]
+    sorted_list_2 = sort_three_numbers(sample_list_2)
+    print(sorted_list_2)
+    sample_list_3 = [3, 3, 3]
+    sorted_list_3 = sort_three_numbers(sample_list_3)
+    print(sorted_list_3)",True,4,13882,221_5_4.py
+221,6,Order three given numbers now,"Write an efficient algorithm to order three integers provided as arguments, ensuring the solution has optimal time complexity.","def order_three(a, b, c):
+    nums = [a, b, c]
+    nums.sort()
+    return nums
+if __name__ == '__main__':
+    x = 5
+    y = 2
+    z = 8
+    result = order_three(x, y, z)
+    print(result)",True,0,13883,221_6.py
+221,6,Order three given numbers now,"Write an efficient algorithm to order three integers provided as arguments, ensuring the solution has optimal time complexity.","def sort_three(a, b, c):
+    nums = [a, b, c]
+    nums.sort()
+    return nums
+if __name__ == '__main__':
+    x = 5
+    y = 2
+    z = 8
+    result = sort_three(x, y, z)
+    print(result)",True,1,13884,221_6_1.py
+221,6,Order three given numbers now,"Write an efficient algorithm to order three integers provided as arguments, ensuring the solution has optimal time complexity.","def order_three(a, b, c):
+    nums = [a, b, c]
+    nums.sort()
+    return nums
+if __name__ == '__main__':
+    x = 5
+    y = 1
+    z = 8
+    result = order_three(x, y, z)
+    print(result)",True,2,13885,221_6_2.py
+221,7,Order three given numbers now,"Develop a method within a Python class to handle the sorting of three numbers, focusing on error handling for non-numeric inputs.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        try:
+            num1 = float(a)
+            num2 = float(b)
+            num3 = float(c)
+            sorted_numbers = sorted([num1, num2, num3])
+            return sorted_numbers
+        except ValueError:
+            raise TypeError(""All inputs must be convertible to numbers."")
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    print(f""Sorting (1, 5, 3): {sorter.sort_three(1, 5, 3)}"")
+    print(f""Sorting (10, -2, 7): {sorter.sort_three(10, -2, 7)}"")
+    try:
+        print(f""Sorting ('a', 5, 3): {sorter.sort_three('a', 5, 3)}"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        print(f""Sorting (10, 'b', 7): {sorter.sort_three(10, 'b', 7)}"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,0,13886,221_7.py
+221,7,Order three given numbers now,"Develop a method within a Python class to handle the sorting of three numbers, focusing on error handling for non-numeric inputs.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        try:
+            num1 = float(a)
+            num2 = float(b)
+            num3 = float(c)
+            sorted_numbers = sorted([num1, num2, num3])
+            return sorted_numbers
+        except ValueError:
+            raise TypeError(""All inputs must be convertible to numbers."")
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    print(f""Sorting (1, 5, 3): {sorter.sort_three(1, 5, 3)}"")
+    print(f""Sorting (10, -2, 7): {sorter.sort_three(10, -2, 7)}"")
+    try:
+        print(f""Sorting ('a', 5, 3): {sorter.sort_three('a', 5, 3)}"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        print(f""Sorting (1, 'b', 3): {sorter.sort_three(1, 'b', 3)}"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,1,13887,221_7_1.py
+221,7,Order three given numbers now,"Develop a method within a Python class to handle the sorting of three numbers, focusing on error handling for non-numeric inputs.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        try:
+            num1 = float(a)
+            num2 = float(b)
+            num3 = float(c)
+            sorted_numbers = sorted([num1, num2, num3])
+            return sorted_numbers
+        except ValueError:
+            raise TypeError(""All inputs must be convertible to numbers."")
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    print(f""Sorting (1, 5, 3): {sorter.sort_three(1, 5, 3)}"")
+    print(f""Sorting (10.5, -2.1, 0): {sorter.sort_three(10.5, -2.1, 0)}"")
+    try:
+        print(f""Sorting ('a', 5, 3): {sorter.sort_three('a', 5, 3)}"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        print(f""Sorting(1, 'b', 3): {sorter.sort_three(1, 'b', 3)}"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,2,13888,221_7_2.py
+221,7,Order three given numbers now,"Develop a method within a Python class to handle the sorting of three numbers, focusing on error handling for non-numeric inputs.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        try:
+            num1 = float(a)
+            num2 = float(b)
+            num3 = float(c)
+            sorted_numbers = sorted([num1, num2, num3])
+            return sorted_numbers
+        except ValueError:
+            raise ValueError(""All inputs must be numeric."")
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    print(f""Sorting (1, 5, 2): {sorter.sort_three(1, 5, 2)}"")
+    print(f""Sorting (-3.5, 0, 1.2): {sorter.sort_three(-3.5, 0, 1.2)}"")
+    try:
+        print(f""Sorting ('a', 5, 2): {sorter.sort_three('a', 5, 2)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        print(f""Sorting (10, 'b', 3): {sorter.sort_three(10, 'b', 3)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,3,13889,221_7_3.py
+221,7,Order three given numbers now,"Develop a method within a Python class to handle the sorting of three numbers, focusing on error handling for non-numeric inputs.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        try:
+            num1 = float(a)
+            num2 = float(b)
+            num3 = float(c)
+            sorted_list = sorted([num1, num2, num3])
+            return sorted_list
+        except ValueError:
+            raise ValueError(""All inputs must be numeric."")
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    print(f""Sorting (1, 5, 3): {sorter.sort_three(1, 5, 3)}"")
+    print(f""Sorting (10, -2, 7): {sorter.sort_three(10, -2, 7)}"")
+    try:
+        print(f""Sorting ('a', 5, 3): {sorter.sort_three('a', 5, 3)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        print(f""Sorting (1, 'b', 3): {sorter.sort_three(1, 'b', 3)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,4,13890,221_7_4.py
+221,7,Order three given numbers now,"Develop a method within a Python class to handle the sorting of three numbers, focusing on error handling for non-numeric inputs.","class NumberSorter:
+    def sort_three(self, a, b, c):
+        try:
+            nums = [float(a), float(b), float(c)]
+            nums.sort()
+            return nums
+        except ValueError:
+            raise ValueError(""All inputs must be numeric."")
+if __name__ == '__main__':
+    sorter = NumberSorter()
+    print(f""Sorting (1, 5, 3): {sorter.sort_three(1, 5, 3)}"")
+    print(f""Sorting (10, -2, 7): {sorter.sort_three(10, -2, 7)}"")
+    try:
+        print(f""Sorting ('a', 5, 3): {sorter.sort_three('a', 5, 3)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        print(f""Sorting (1, 'b', 3): {sorter.sort_three(1, 'b', 3)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,5,13891,221_7_5.py
+220,9,Find the average of small sets,"Develop a comprehensive script that demonstrates how to find the average of small sets by processing a predefined list of sample sets, ensuring the output is clearly formatted and mathematically correct.",,False,0,13892,220_9.py
+221,9,Order three given numbers now,"Implement the logic to order three given numbers iteratively, avoiding the use of direct sorting functions, and present the final result clearly.","def custom_sort(a, b, c):
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    else:
+        temp = a
+        a = b
+        b = temp
+    if a > c:
+        temp = a
+        a = c
+        c = temp
+    else:
+        temp = a
+        a = c
+        c = temp
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    return a, b, c
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sorted_num1, sorted_num2, sorted_num3 = custom_sort(num1, num2, num3)
+    print(f""The sorted numbers are: {sorted_num1}, {sorted_num2}, {sorted_num3}"")",True,0,13893,221_9.py
+221,9,Order three given numbers now,"Implement the logic to order three given numbers iteratively, avoiding the use of direct sorting functions, and present the final result clearly.","def custom_sort(a, b, c):
+    if a > b:
+        if a > c:
+            if b > c:
+                return a, c, b
+            else:
+                return a, b, c
+        else:
+            if b > c:
+                return c, a, b
+            else:
+                return c, b, a
+    else:
+        if b > a:
+            if b > c:
+                return b, a, c
+            else:
+                return b, c, a
+        else:
+            if a > c:
+                return c, a, b
+            else:
+                return c, b, a
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sorted_nums = custom_sort(num1, num2, num3)
+    print(f""The sorted numbers are: {sorted_nums[0]}, {sorted_nums[1]}, {sorted_nums[2]}"")",True,1,13894,221_9_1.py
+221,9,Order three given numbers now,"Implement the logic to order three given numbers iteratively, avoiding the use of direct sorting functions, and present the final result clearly.","def custom_sort(a, b, c):
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    else:
+        temp = a
+        a = b
+        b = temp
+    if a > c:
+        temp = a
+        a = c
+        c = temp
+    else:
+        temp = a
+        a = c
+        c = temp
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    return a, b, c
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sorted_num1, sorted_num2, sorted_num3 = custom_sort(num1, num2, num3)
+    print(f""Original numbers: {num1}, {num2}, {num3}"")
+    print(f""Sorted numbers: {sorted_num1}, {sorted_num2}, {sorted_num3}"")",True,2,13895,221_9_2.py
+221,9,Order three given numbers now,"Implement the logic to order three given numbers iteratively, avoiding the use of direct sorting functions, and present the final result clearly.","def iterative_sort(a, b, c):
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    else:
+        temp = a
+        a = b
+        b = temp
+    if a > c:
+        temp = a
+        a = c
+        c = temp
+    else:
+        temp = a
+        a = c
+        c = temp
+    if b > c:
+        temp = b
+        b = c
+        c = temp
+    return a, b, c
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sorted_num1, sorted_num2, sorted_num3 = iterative_sort(num1, num2, num3)
+    print(f""Original numbers: {num1}, {num2}, {num3}"")
+    print(f""Sorted numbers: {sorted_num1}, {sorted_num2}, {sorted_num3}"")",True,3,13896,221_9_3.py
+221,9,Order three given numbers now,"Implement the logic to order three given numbers iteratively, avoiding the use of direct sorting functions, and present the final result clearly.","def custom_sort(a, b, c):
+    if a > b:
+        if a > c:
+            if b > c:
+                return a, c, b
+            else:
+                return a, b, c
+        else:
+            if b > c:
+                return c, a, b
+            else:
+                return c, b, a
+    else:
+        if b > a:
+            if b > c:
+                if a > c:
+                    return b, a, c
+                else:
+                    return b, c, a
+            else:
+                if a > c:
+                    return b, c, a
+                else:
+                    return b, a, c
+        else:
+            if a > c:
+                return a, b, c
+            else:
+                return c, b, a
+if __name__ == '__main__':
+    numbers = [15, 8, 22]
+    a = numbers[0]
+    b = numbers[1]
+    c = numbers[2]
+    sorted_a, sorted_b, sorted_c = custom_sort(a, b, c)
+    print(f""Original numbers: {numbers}"")
+    print(f""Sorted numbers: {sorted_a}, {sorted_b}, {sorted_c}"")",True,4,13897,221_9_4.py
+221,9,Order three given numbers now,"Implement the logic to order three given numbers iteratively, avoiding the use of direct sorting functions, and present the final result clearly.","def custom_sort(a, b, c):
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    else:
+        temp = a
+        a = b
+        b = temp
+    if a > c:
+        temp = a
+        a = c
+        c = temp
+    else:
+        temp = a
+        a = c
+        c = temp
+    if a > b:
+        temp = a
+        a = b
+        b = temp
+    return a, b, c
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sorted_num1, sorted_num2, sorted_num3 = custom_sort(num1, num2, num3)
+    print(f""The original numbers are: {num1}, {num2}, {num3}"")
+    print(f""The sorted numbers are: {sorted_num1}, {sorted_num2}, {sorted_num3}"")",True,5,13898,221_9_5.py
+220,13,Find the average of small sets,"Write a standalone Python script that defines a function to compute the arithmetic mean of a single small set of numbers, and then demonstrate its use by calculating and printing the average for three predefined small sets.",,False,0,13899,220_13.py
+221,11,Order three given numbers now,Implement an optimized function named 'order_three' that accepts three numerical arguments and returns a new list containing those numbers sorted in ascending order. Ensure the function uses the most efficient sorting method.,"def order_three(a, b, c):
+    return sorted([a, b, c])
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 3
+    result = order_three(num1, num2, num3)
+    print(result)",True,0,13900,221_11.py
+221,11,Order three given numbers now,Implement an optimized function named 'order_three' that accepts three numerical arguments and returns a new list containing those numbers sorted in ascending order. Ensure the function uses the most efficient sorting method.,"def order_three(a, b, c):
+    return sorted([a, b, c])
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    result = order_three(num1, num2, num3)
+    print(result)",True,1,13901,221_11_1.py
+221,12,Order three given numbers now,"Develop a class named 'NumberSorter' with a method 'sort_numbers' that takes three numbers during initialization and stores them internally, providing a method to return the sorted sequence. Ensure the implementation is object-oriented and follows best practices.","class NumberSorter:
+    def __init__(self, a, b, c):
+        self.numbers = [a, b, c]
+    def sort_numbers(self):
+        self.numbers.sort()
+        return self.numbers
+if __name__ == '__main__':
+    sorter = NumberSorter(5, 2, 8)
+    sorted_list = sorter.sort_numbers()
+    print(sorted_list)",True,0,13902,221_12.py
+221,13,Order three given numbers now,"Write a single, self-contained Python script that reads three space-separated integers from standard input, sorts them, and prints the result. Focus on clean, readable, and efficient code.","import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20""
+    numbers = list(map(int, input_data.split()))
+    numbers.sort()
+    print(*(numbers))",True,0,13903,221_13.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(f""Original list: {sample_list}"")
+    sort_three_numbers(sample_list)
+    print(f""Sorted list: {sample_list}"")
+    sample_list_2 = [100, 42, 34]
+    print(f""\nOriginal list: {sample_list_2}"")
+    sort_three_numbers(sample_list_2)
+    print(f""Sorted list: {sample_list_2}"")
+    sample_list_3 = [7, 7, 7]
+    print(f""\nOriginal list: {sample_list_3}"")
+    sort_three_numbers(sample_list_3)
+    print(f""Sorted list: {sample_list_3}"")",True,0,13904,221_14.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(f""Original list: {sample_list}"")
+    sort_three_numbers(sample_list)
+    print(f""Sorted list: {sample_list}"")
+    sample_list_2 = [10, 4, 1]
+    print(f""\nOriginal list: {sample_list_2}"")
+    sort_three_numbers(sample_list_2)
+    print(f""Sorted list: {sample_list_2}"")
+    sample_list_3 = [99, 50, 10]
+    print(f""\nOriginal list: {sample_list_3}"")
+    sort_three_numbers(sample_list_3)
+    print(f""Sorted list: {sample_list_3}"")",True,1,13905,221_14_1.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(""Original list:"", sample_list)
+    sort_three_numbers(sample_list)
+    print(""Sorted list:"", sample_list)
+    sample_list_2 = [100, 4, 50]
+    print(""\nOriginal list:"", sample_list_2)
+    sort_three_numbers(sample_list_2)
+    print(""Sorted list:"", sample_list_2)
+    sample_list_3 = [3, 1, 2]
+    print(""\nOriginal list:"", sample_list_3)
+    sort_three_numbers(sample_list_3)
+    print(""Sorted list:"", sample_list_3)",True,2,13906,221_14_2.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(f""Original list: {sample_list}"")
+    sort_three_numbers(sample_list)
+    print(f""Sorted list: {sample_list}"")
+    sample_list_2 = [100, -5, 33]
+    print(f""\nOriginal list: {sample_list_2}"")
+    sort_three_numbers(sample_list_2)
+    print(f""Sorted list: {sample_list_2}"")
+    sample_list_3 = [7, 7, 7]
+    print(f""\nOriginal list: {sample_list_3}"")
+    sort_three_numbers(sample_list_3)
+    print(f""Sorted list: {sample_list_3}"")",True,3,13907,221_14_3.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    list1 = [5, 2, 8]
+    print(f""Original list 1: {list1}"")
+    sort_three_numbers(list1)
+    print(f""Sorted list 1: {list1}\n"")
+    list2 = [100, 42, 34]
+    print(f""Original list 2: {list2}"")
+    sort_three_numbers(list2)
+    print(f""Sorted list 2: {list2}\n"")
+    list3 = [-5, 0, 10]
+    print(f""Original list 3: {list3}"")
+    sort_three_numbers(list3)
+    print(f""Sorted list 3: {list3}\n"")",True,4,13908,221_14_4.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 1, 4]
+    print(f""Original list: {sample_list}"")
+    sort_three_numbers(sample_list)
+    print(f""Sorted list: {sample_list}"")
+    sample_list_2 = [100, 50, 25]
+    print(f""\nOriginal list: {sample_list_2}"")
+    sort_three_numbers(sample_list_2)
+    print(f""Sorted list: {sample_list_2}"")
+    sample_list_3 = [3, 1, 4]
+    print(f""\nOriginal list: {sample_list_3}"")
+    sort_three_numbers(sample_list_3)
+    print(f""Sorted list: {sample_list_3}"")",True,5,13909,221_14_5.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(f""Original list: {sample_list}"")
+    sort_three_numbers(sample_list)
+    print(f""Sorted list: {sample_list}"")
+    sample_list_2 = [100, 4, 50]
+    print(f""\nOriginal list: {sample_list_2}"")
+    sort_three_numbers(sample_list_2)
+    print(f""Sorted list: {sample_list_2}"")
+    sample_list_3 = [3.14, 1.618, 2.718]
+    print(f""\nOriginal list: {sample_list_3}"")
+    sort_three_numbers(sample_list_3)
+    print(f""Sorted list: {sample_list_3}"")",True,6,13910,221_14_6.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(""Original list:"", sample_list)
+    sort_three_numbers(sample_list)
+    print(""Sorted list:"", sample_list)
+    sample_list_2 = [100, 42, 34]
+    print(""\nOriginal list:"", sample_list_2)
+    sort_three_numbers(sample_list_2)
+    print(""Sorted list:"", sample_list_2)
+    sample_list_3 = [7, 7, 7]
+    print(""\nOriginal list:"", sample_list_3)
+    sort_three_numbers(sample_list_3)
+    print(""Sorted list:"", sample_list_3)",True,7,13911,221_14_7.py
+221,14,Order three given numbers now,Implement a function that accepts a list of exactly three numbers and sorts the list in-place using Python's built-in sorting mechanism. Provide comprehensive docstrings explaining the function's purpose and complexity.,"def sort_three_numbers(numbers):
+    numbers.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    print(""Original list:"", sample_list)
+    sort_three_numbers(sample_list)
+    print(""Sorted list:"", sample_list)
+    sample_list_2 = [100, 4, 50]
+    print(""\nOriginal list:"", sample_list_2)
+    sort_three_numbers(sample_list_2)
+    print(""Sorted list:"", sample_list_2)
+    sample_list_3 = [3, 1, 4]
+    print(""\nOriginal list:"", sample_list_3)
+    sort_three_numbers(sample_list_3)
+    print(""Sorted list:"", sample_list_3)",True,8,13912,221_14_8.py
+222,0,Find the minimum of a list,"Write a complete, highly optimized Python function named 'find_minimum' that accepts a list of numbers and returns the smallest element. Use the built-in `min()` function for efficiency.","def find_minimum(data):
+    return min(data)
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    result = find_minimum(sample_list)
+    print(result)",True,0,13913,222_0.py
+222,0,Find the minimum of a list,"Write a complete, highly optimized Python function named 'find_minimum' that accepts a list of numbers and returns the smallest element. Use the built-in `min()` function for efficiency.","def find_minimum(data):
+    return min(data)
+if __name__ == '__main__':
+    numbers1 = [3, 1, 4, 1, 5, 9, 2]
+    result1 = find_minimum(numbers1)
+    print(result1)
+    numbers2 = [-10, 0, 50, -3]
+    result2 = find_minimum(numbers2)
+    print(result2)
+    numbers3 = [42]
+    result3 = find_minimum(numbers3)
+    print(result3)",True,1,13914,222_0_1.py
+222,1,Find the minimum of a list,Implement a standalone Python script that reads a list of integers from standard input and prints the minimum value found in that list. Ensure the code is robust.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 3 15""
+    try:
+        numbers = list(map(int, input_data.split()))
+        if numbers:
+            minimum = min(numbers)
+            print(minimum)
+        else:
+            print(""Input list is empty"")
+    except ValueError:
+        print(""Error: Input must contain only integers."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,13915,222_1.py
+222,1,Find the minimum of a list,Implement a standalone Python script that reads a list of integers from standard input and prints the minimum value found in that list. Ensure the code is robust.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 3 15""
+    try:
+        numbers = list(map(int, input_data.split()))
+        if numbers:
+            minimum = min(numbers)
+            print(minimum)
+        else:
+            print(""Input list is empty"")
+    except ValueError:
+        print(""Error: Input contains non-integer values."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,13916,222_1_1.py
+222,1,Find the minimum of a list,Implement a standalone Python script that reads a list of integers from standard input and prints the minimum value found in that list. Ensure the code is robust.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 5 20 3 15""
+    try:
+        numbers = list(map(int, input_data.split()))
+        if numbers:
+            minimum = min(numbers)
+            print(minimum)
+        else:
+            print(""Input list is empty."")
+    except ValueError:
+        print(""Error: Input contains non-integer values."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,2,13917,222_1_2.py
+222,2,Find the minimum of a list,"Develop a function, 'find_min_manual', that manually iterates through a list to determine the minimum value without using the built-in `min()` function. Provide the most efficient implementation.","def find_min_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    sample_list = [45, 12, 89, 3, 56, 7]
+    result = find_min_manual(sample_list)
+    print(result)",True,0,13918,222_2.py
+222,2,Find the minimum of a list,"Develop a function, 'find_min_manual', that manually iterates through a list to determine the minimum value without using the built-in `min()` function. Provide the most efficient implementation.","def find_min_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [45, 12, 89, 3, 56, 7]
+    result = find_min_manual(sample_list)
+    print(result)",True,1,13919,222_2_1.py
+222,2,Find the minimum of a list,"Develop a function, 'find_min_manual', that manually iterates through a list to determine the minimum value without using the built-in `min()` function. Provide the most efficient implementation.","def find_min_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    sample_list = [45, 12, 88, 3, 56, 21]
+    result = find_min_manual(sample_list)
+    print(result)",True,2,13920,222_2_2.py
+222,2,Find the minimum of a list,"Develop a function, 'find_min_manual', that manually iterates through a list to determine the minimum value without using the built-in `min()` function. Provide the most efficient implementation.","def find_min_manual(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    current_min = data[0]
+    for i in range(1, len(data)):
+        if data[i] < current_min:
+            current_min = data[i]
+    return current_min
+if __name__ == '__main__':
+    sample_list = [45, 12, 89, 3, 56, 7]
+    minimum = find_min_manual(sample_list)
+    print(minimum)",True,3,13921,222_2_3.py
+222,3,Find the minimum of a list,Write a class named 'ListAnalyzer' with a method 'get_minimum' that efficiently finds and returns the minimum value from any list passed to the class instance.,"class ListAnalyzer:
+    def __init__(self):
+        pass
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 3, -5]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,13922,222_3.py
+222,3,Find the minimum of a list,Write a class named 'ListAnalyzer' with a method 'get_minimum' that efficiently finds and returns the minimum value from any list passed to the class instance.,"class ListAnalyzer:
+    def __init__(self):
+        pass
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,1,13923,222_3_1.py
+222,3,Find the minimum of a list,Write a class named 'ListAnalyzer' with a method 'get_minimum' that efficiently finds and returns the minimum value from any list passed to the class instance.,"class ListAnalyzer:
+    def __init__(self):
+        pass
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -5]
+    list3 = [33, 11, 44, 22]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,2,13924,222_3_2.py
+221,10,Order three given numbers now,"Write a complete, robust Python script that takes three numbers as input from the user and prints them in ascending order. Use efficient input handling.","import sys
+if __name__ == '__main__':
+    numbers = [15, 7, 22]
+    numbers.sort()
+    print(*numbers)",True,0,13925,221_10.py
+221,10,Order three given numbers now,"Write a complete, robust Python script that takes three numbers as input from the user and prints them in ascending order. Use efficient input handling.","import sys
+def sort_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    print(*numbers)
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    sort_numbers(num1, num2, num3)",True,1,13926,221_10_1.py
+221,10,Order three given numbers now,"Write a complete, robust Python script that takes three numbers as input from the user and prints them in ascending order. Use efficient input handling.","import sys
+def sort_three_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers[0], numbers[1], numbers[2]
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 8
+    sorted_nums = sort_three_numbers(num1, num2, num3)
+    print(f""{sorted_nums[0]}, {sorted_nums[1]}, {sorted_nums[2]}"")",True,2,13927,221_10_2.py
+221,10,Order three given numbers now,"Write a complete, robust Python script that takes three numbers as input from the user and prints them in ascending order. Use efficient input handling.","import sys
+def sort_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    print(*numbers)
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 8
+    sort_numbers(num1, num2, num3)",True,3,13928,221_10_3.py
+221,10,Order three given numbers now,"Write a complete, robust Python script that takes three numbers as input from the user and prints them in ascending order. Use efficient input handling.","import sys
+def sort_numbers(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    print(*numbers)
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 3
+    sort_numbers(num1, num2, num3)",True,4,13929,221_10_4.py
+222,4,Find the minimum of a list,"Create a Python function that handles an empty list gracefully. If the input list is empty, the function should return an appropriate indicator (e.g., raise a ValueError or return None). Optimize for clarity and error handling.","def process_list(data):
+    if not data:
+        return None
+    return sum(data)
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = []
+    list3 = [10, 20]
+    result1 = process_list(list1)
+    result2 = process_list(list2)
+    result3 = process_list(list3)
+    print(f""Result for {list1}: {result1}"")
+    print(f""Result for {list2}: {result2}"")
+    print(f""Result for {list3}: {result3}"")",True,0,13930,222_4.py
+222,4,Find the minimum of a list,"Create a Python function that handles an empty list gracefully. If the input list is empty, the function should return an appropriate indicator (e.g., raise a ValueError or return None). Optimize for clarity and error handling.","def process_list(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return sum(data)
+if __name__ == '__main__':
+    list1 = [1, 2, 3]
+    list2 = []
+    try:
+        result1 = process_list(list1)
+        print(f""Result for {list1}: {result1}"")
+        result2 = process_list(list2)
+        print(f""Result for {list2}: {result2}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,13931,222_4_1.py
+222,5,Find the minimum of a list,"Generate a concise, one-line Python expression to find the minimum element in a given list, assuming the list is non-empty.","if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2]
+    minimum = min(data)
+    print(minimum)",True,0,13932,222_5.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, -4, 9, 0, 22]
+    minimum_generator = find_minimum_generator(large_list)
+    print(""Minimum values yielded:"")
+    for min_val in minimum_generator:
+        print(min_val)",True,0,13933,222_7.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, -2, 9, 0, 4]
+    minimum_generator = find_minimum_generator(large_list)
+    result = []
+    for min_val in minimum_generator:
+        result.append(min_val)
+    print(result)
+    another_list = [100, 50, 200, 10]
+    minimum_generator_2 = find_minimum_generator(another_list)
+    result_2 = []
+    for min_val in minimum_generator_2:
+        result_2.append(min_val)
+    print(result_2)
+    empty_list = []
+    minimum_generator_3 = find_minimum_generator(empty_list)
+    result_3 = []
+    for min_val in minimum_generator_3:
+        result_3.append(min_val)
+    print(result_3)",True,1,13934,222_7_1.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, -2, 9, 0, 4]
+    minimum_values = find_minimum_generator(large_list)
+    result = []
+    for min_val in minimum_values:
+        result.append(min_val)
+    print(result)
+    another_list = [100, 50, 200, 10]
+    minimum_values_2 = find_minimum_generator(another_list)
+    result_2 = []
+    for min_val in minimum_values_2:
+        result_2.append(min_val)
+    print(result_2)
+    empty_list = []
+    minimum_values_3 = find_minimum_generator(empty_list)
+    result_3 = []
+    for min_val in minimum_values_3:
+        result_3.append(min_val)
+    print(result_3)",True,2,13935,222_7_2.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, 9, 4, 20, -5]
+    minimum_generator = find_minimum_generator(large_list)
+    print(""Minimum values yielded:"")
+    for min_val in minimum_generator:
+        print(min_val)",True,3,13936,222_7_3.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, -4, 9, 0, 22]
+    minimum_generator = find_minimum_generator(large_list)
+    result = []
+    for min_val in minimum_generator:
+        result.append(min_val)
+    print(result)
+    another_list = [100, 50, 200, 10]
+    minimum_generator_2 = find_minimum_generator(another_list)
+    result_2 = []
+    for min_val in minimum_generator_2:
+        result_2.append(min_val)
+    print(result_2)
+    empty_list = []
+    minimum_generator_3 = find_minimum_generator(empty_list)
+    result_3 = []
+    for min_val in minimum_generator_3:
+        result_3.append(min_val)
+    print(result_3)",True,4,13937,222_7_4.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, 9, 2]
+    minimum_values = find_minimum_generator(large_list)
+    result = []
+    for min_val in minimum_values:
+        result.append(min_val)
+    print(result)
+    another_list = [42, 10, 50, 30, 20]
+    minimum_values_2 = find_minimum_generator(another_list)
+    result_2 = []
+    for min_val in minimum_values_2:
+        result_2.append(min_val)
+    print(result_2)
+    empty_list = []
+    minimum_values_3 = find_minimum_generator(empty_list)
+    result_3 = []
+    for min_val in minimum_values_3:
+        result_3.append(min_val)
+    print(result_3)",True,5,13938,222_7_5.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, -2, 9, 0, 7]
+    minimum_generator = find_minimum_generator(large_list)
+    print(""Minimum values yielded:"")
+    for min_val in minimum_generator:
+        print(min_val)",True,6,13939,222_7_6.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, -4, 9, 0, 7]
+    minimum_generator = find_minimum_generator(large_list)
+    print(""Minimum value found:"")
+    for min_val in minimum_generator:
+        print(min_val)",True,7,13940,222_7_7.py
+222,7,Find the minimum of a list,"Implement a generator function to yield the minimum value encountered while iterating over a potentially very large list, optimizing memory usage.","def find_minimum_generator(data):
+    if not data:
+        return
+    current_min = data[0]
+    yield current_min
+    for item in data[1:]:
+        if item < current_min:
+            current_min = item
+            yield current_min
+if __name__ == '__main__':
+    large_list = [5, 12, 3, 8, 1, 15, 9, 4, 10]
+    minimum_values = find_minimum_generator(large_list)
+    result_list = list(minimum_values)
+    print(result_list)
+    another_list = [100, 50, 200, 10]
+    minimum_values_2 = find_minimum_generator(another_list)
+    result_list_2 = list(minimum_values_2)
+    print(result_list_2)
+    empty_list = []
+    minimum_values_3 = find_minimum_generator(empty_list)
+    result_list_3 = list(minimum_values_3)
+    print(result_list_3)",True,8,13941,222_7_8.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        return None
+    numerical_data = []
+    for item in data:
+        if isinstance(item, (int, float)):
+            numerical_data.append(item)
+    if not numerical_data:
+        return None
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.14, 5, -2.5, 100, ""a"", 0]
+    result = find_numerical_minimum(sample_list)
+    print(result)",True,0,13942,222_6.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = [x for x in data if isinstance(x, (int, float))]
+    if not numerical_data:
+        raise TypeError(""No numerical data found in the list"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.14, 5, -2.5, ""a"", 8]
+    try:
+        result = find_numerical_minimum(sample_list)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,1,13943,222_6_1.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = []
+    for item in data:
+        if isinstance(item, (int, float)):
+            numerical_data.append(item)
+    if not numerical_data:
+        raise TypeError(""No numerical data found in the list"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.5, -5, 8.1, ""a"", 2]
+    try:
+        result = find_numerical_minimum(sample_list)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,2,13944,222_6_2.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = [x for x in data if isinstance(x, (int, float))]
+    if not numerical_data:
+        raise TypeError(""No numerical data found in the list"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.5, 7, -2.1, 9, ""a"", 4.0]
+    try:
+        result = find_numerical_minimum(sample_list)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,3,13945,222_6_3.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = [x for x in data if isinstance(x, (int, float))]
+    if not numerical_data:
+        raise TypeError(""No numerical data found in the list"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_list = [10, 3.5, 7, ""a"", 2.1, -5, 9]
+    try:
+        result = find_numerical_minimum(sample_list)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,4,13946,222_6_4.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = [x for x in data if isinstance(x, (int, float))]
+    if not numerical_data:
+        raise TypeError(""List contains no numerical data"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_data = [10, 5.5, 2, 8.1, ""a"", 3]
+    try:
+        result = find_numerical_minimum(sample_data)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,5,13947,222_6_5.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = [x for x in data if isinstance(x, (int, float))]
+    if not numerical_data:
+        raise TypeError(""No numerical data found in the list"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_data = [10, 3.5, 7, ""a"", 2.1, -5, 9]
+    try:
+        result = find_numerical_minimum(sample_data)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,6,13948,222_6_6.py
+222,6,Find the minimum of a list,Write a script that takes a list of potentially mixed data types (integers and floats) and correctly identifies the numerical minimum. Ensure type safety is considered.,"def find_numerical_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    numerical_data = []
+    for item in data:
+        if isinstance(item, (int, float)):
+            numerical_data.append(item)
+    if not numerical_data:
+        raise TypeError(""No numerical data found in the list"")
+    minimum = numerical_data[0]
+    for number in numerical_data[1:]:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    sample_data = [10, 3.5, 7, -2.1, 9.9]
+    try:
+        result = find_numerical_minimum(sample_data)
+        print(result)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")
+    sample_data_mixed = [5, ""a"", 1.2, -8, None, 0]
+    try:
+        result_mixed = find_numerical_minimum(sample_data_mixed)
+        print(result_mixed)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")
+    sample_data_empty = []
+    try:
+        result_empty = find_numerical_minimum(sample_data_empty)
+        print(result_empty)
+    except (ValueError, TypeError) as e:
+        print(f""Error: {e}"")",True,7,13949,222_6_7.py
+221,8,Order three given numbers now,"Generate a complete Python script that reads three numbers from a single line of input and prints the result, ensuring the sorting logic is clearly documented with comments.",,False,0,13950,221_8.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = iterable[0]
+    for item in iterable[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (100, 45, 33, 99)
+    empty_list = []
+    single_item = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum of {single_item}: {find_minimum(single_item)}"")",True,0,13951,222_9.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = iterable[0]
+    for item in iterable[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (100, 30, 50, 40)
+    empty_list = []
+    single_item = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum of {single_item}: {find_minimum(single_item)}"")",True,1,13952,222_9_1.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = iterable[0]
+    for item in iterable[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (100, 45, 72, 33)
+    empty_list = []
+    single_element = [42]
+    print(f""Minimum in {list1}: {find_minimum(list1)}"")
+    print(f""Minimum in {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum in {single_element}: {find_minimum(single_element)}"")",True,2,13953,222_9_2.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Iterable cannot be empty"")
+    current_min = iterable[0]
+    for item in iterable[1:]:
+        if item < current_min:
+            current_min = item
+    return current_min
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (100, 45, 33, 99)
+    empty_list = []
+    single_element = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum of {single_element}: {find_minimum(single_element)}"")",True,3,13954,222_9_3.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = iterable[0]
+    for item in iterable[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (100, 45, 33, 99)
+    empty_list = []
+    single_element = [42]
+    print(f""Minimum in {list1}: {find_minimum(list1)}"")
+    print(f""Minimum in {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum in {single_element}: {find_minimum(single_element)}"")",True,4,13955,222_9_4.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = iterable[0]
+    for item in iterable[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (42, 10, 33, 50)
+    empty_list = []
+    single_item = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum of {single_item}: {find_minimum(single_item)}"")",True,5,13956,222_9_5.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Iterable cannot be empty"")
+    min_value = iterable[0]
+    for item in iterable[1:]:
+        if item < min_value:
+            min_value = item
+    return min_value
+if __name__ == '__main__':
+    list1 = [5, 2, 9, 1, 7]
+    tuple2 = (100, 45, 88, 3)
+    empty_list = []
+    single_item = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum of {single_item}: {find_minimum(single_item)}"")",True,6,13957,222_9_6.py
+222,9,Find the minimum of a list,"Write a reusable utility function that finds the minimum value in a list, accepting any iterable type (list, tuple) as input, and document its time complexity.","def find_minimum(iterable):
+    if not iterable:
+        raise ValueError(""Input iterable cannot be empty"")
+    minimum = iterable[0]
+    for item in iterable[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    tuple2 = (100, 45, 33, 99)
+    empty_list = []
+    single_item = [42]
+    print(f""Minimum in {list1}: {find_minimum(list1)}"")
+    print(f""Minimum in {tuple2}: {find_minimum(tuple2)}"")
+    try:
+        find_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")
+    print(f""Minimum in {single_item}: {find_minimum(single_item)}"")",True,7,13958,222_9_7.py
+222,10,Find the minimum of a list,"Write a complete, highly optimized Python function named `find_minimum` that accepts a list of numbers and returns the smallest element. Implement the logic using built-in functions or the most efficient iterative approach.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 5, 0, -20, 100]
+    list3 = [7]
+    list4 = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,13959,222_10.py
+222,10,Find the minimum of a list,"Write a complete, highly optimized Python function named `find_minimum` that accepts a list of numbers and returns the smallest element. Implement the logic using built-in functions or the most efficient iterative approach.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 0, 5, -2, 8]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,1,13960,222_10_1.py
+222,10,Find the minimum of a list,"Write a complete, highly optimized Python function named `find_minimum` that accepts a list of numbers and returns the smallest element. Implement the logic using built-in functions or the most efficient iterative approach.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+    return minimum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8]
+    result = find_minimum(sample_list)
+    print(result)",True,2,13961,222_10_2.py
+222,10,Find the minimum of a list,"Write a complete, highly optimized Python function named `find_minimum` that accepts a list of numbers and returns the smallest element. Implement the logic using built-in functions or the most efficient iterative approach.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 0, 5, -20, 3]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,3,13962,222_10_3.py
+222,10,Find the minimum of a list,"Write a complete, highly optimized Python function named `find_minimum` that accepts a list of numbers and returns the smallest element. Implement the logic using built-in functions or the most efficient iterative approach.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    return min(data)
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    minimum_value = find_minimum(sample_list)
+    print(minimum_value)",True,4,13963,222_10_4.py
+222,10,Find the minimum of a list,"Write a complete, highly optimized Python function named `find_minimum` that accepts a list of numbers and returns the smallest element. Implement the logic using built-in functions or the most efficient iterative approach.","def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 5, 0, -20, 15]
+    list3 = [42]
+    list4 = []
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    try:
+        find_minimum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,5,13964,222_10_5.py
+222,12,Find the minimum of a list,"Develop a concise, one-line Python expression or lambda function to find the minimum value in a given list of integers. Demonstrate its usage with an example list.","if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2]
+    min_value = min(data)
+    print(min_value)",True,0,13965,222_12.py
+222,12,Find the minimum of a list,"Develop a concise, one-line Python expression or lambda function to find the minimum value in a given list of integers. Demonstrate its usage with an example list.","if __name__ == '__main__':
+    data = [5, 2, 8, 1, 9]
+    min_value = min(data)
+    print(min_value)",True,1,13966,222_12_1.py
+222,12,Find the minimum of a list,"Develop a concise, one-line Python expression or lambda function to find the minimum value in a given list of integers. Demonstrate its usage with an example list.","if __name__ == '__main__':
+    data = [45, 12, 89, 3, 67]
+    min_value = min(data)
+    print(min_value)",True,2,13967,222_12_2.py
+222,12,Find the minimum of a list,"Develop a concise, one-line Python expression or lambda function to find the minimum value in a given list of integers. Demonstrate its usage with an example list.","if __name__ == '__main__':
+    data = [5, 2, 9, 1, 7]
+    min_value = min(data)
+    print(min_value)",True,3,13968,222_12_3.py
+222,11,Find the minimum of a list,Implement a class named `ListAnalyzer` with a method `get_minimum` that efficiently finds and returns the minimum value from an input list of numbers. Ensure the implementation is robust for empty lists by raising an appropriate exception.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -3]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,13969,222_11.py
+222,11,Find the minimum of a list,Implement a class named `ListAnalyzer` with a method `get_minimum` that efficiently finds and returns the minimum value from an input list of numbers. Ensure the implementation is robust for empty lists by raising an appropriate exception.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, -5, 3]
+    list3 = [42]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,13970,222_11_1.py
+222,11,Find the minimum of a list,Implement a class named `ListAnalyzer` with a method `get_minimum` that efficiently finds and returns the minimum value from an input list of numbers. Ensure the implementation is robust for empty lists by raising an appropriate exception.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 3, -5]
+    list3 = [42]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,2,13971,222_11_2.py
+222,11,Find the minimum of a list,Implement a class named `ListAnalyzer` with a method `get_minimum` that efficiently finds and returns the minimum value from an input list of numbers. Ensure the implementation is robust for empty lists by raising an appropriate exception.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -3]
+    list3 = [42]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    print(f""Minimum of {list3}: {analyzer.get_minimum(list3)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,13972,222_11_3.py
+222,11,Find the minimum of a list,Implement a class named `ListAnalyzer` with a method `get_minimum` that efficiently finds and returns the minimum value from an input list of numbers. Ensure the implementation is robust for empty lists by raising an appropriate exception.,"class ListAnalyzer:
+    def get_minimum(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        minimum = data[0]
+        for item in data[1:]:
+            if item < minimum:
+                minimum = item
+        return minimum
+if __name__ == '__main__':
+    analyzer = ListAnalyzer()
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 50, 3, 100, -5]
+    empty_list = []
+    print(f""Minimum of {list1}: {analyzer.get_minimum(list1)}"")
+    print(f""Minimum of {list2}: {analyzer.get_minimum(list2)}"")
+    try:
+        analyzer.get_minimum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,13973,222_11_4.py
