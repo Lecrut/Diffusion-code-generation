@@ -295205,3 +295205,811 @@ if __name__ == '__main__':
         print(f""Term {i+1}: {term}"")
 if __name__ == '__main__':
     generate_growing_sequence(2, 3)",True,2,14556,232_11_2.py
+232,12,Print a growing number sequence,"Develop a class named 'SequenceGenerator' with a method to generate and print a geometric sequence, starting at 2 and multiplying by 1.5 in each step, ensuring the implementation is clean and object-oriented.","class SequenceGenerator:
+    def generate_and_print_geometric_sequence(self, start, multiplier, n):
+        current_term = start
+        sequence = []
+        for _ in range(n):
+            sequence.append(current_term)
+            current_term *= multiplier
+        print(""Geometric Sequence:"")
+        for term in sequence:
+            print(term)
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    generator.generate_and_print_geometric_sequence(2, 1.5, 5)",True,0,14557,232_12.py
+232,12,Print a growing number sequence,"Develop a class named 'SequenceGenerator' with a method to generate and print a geometric sequence, starting at 2 and multiplying by 1.5 in each step, ensuring the implementation is clean and object-oriented.","class SequenceGenerator:
+    def generate_and_print_geometric_sequence(self, start, multiplier):
+        current_term = start
+        sequence = []
+        while current_term < 100:
+            sequence.append(current_term)
+            current_term *= multiplier
+        print(""Geometric Sequence:"")
+        for term in sequence:
+            print(term)
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    generator.generate_and_print_geometric_sequence(2, 1.5)",True,1,14558,232_12_1.py
+232,12,Print a growing number sequence,"Develop a class named 'SequenceGenerator' with a method to generate and print a geometric sequence, starting at 2 and multiplying by 1.5 in each step, ensuring the implementation is clean and object-oriented.","class SequenceGenerator:
+    def generate_and_print_geometric_sequence(self, start, multiplier, terms):
+        current_term = start
+        for _ in range(terms):
+            print(current_term)
+            current_term *= multiplier
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    generator.generate_and_print_geometric_sequence(2, 1.5, 5)",True,2,14559,232_12_2.py
+232,12,Print a growing number sequence,"Develop a class named 'SequenceGenerator' with a method to generate and print a geometric sequence, starting at 2 and multiplying by 1.5 in each step, ensuring the implementation is clean and object-oriented.","class SequenceGenerator:
+    def generate_and_print_geometric_sequence(self, start, multiplier, n):
+        current_term = start
+        for _ in range(n):
+            print(current_term)
+            current_term *= multiplier
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    start_value = 2
+    multiplier_value = 1.5
+    number_of_terms = 5
+    generator.generate_and_print_geometric_sequence(start_value, multiplier_value, number_of_terms)",True,3,14560,232_12_3.py
+232,12,Print a growing number sequence,"Develop a class named 'SequenceGenerator' with a method to generate and print a geometric sequence, starting at 2 and multiplying by 1.5 in each step, ensuring the implementation is clean and object-oriented.","class SequenceGenerator:
+    def generate_and_print_geometric_sequence(self, start, multiplier, count):
+        current_term = start
+        for _ in range(count):
+            print(current_term)
+            current_term *= multiplier
+if __name__ == '__main__':
+    generator = SequenceGenerator()
+    generator.generate_and_print_geometric_sequence(2, 1.5, 5)",True,4,14561,232_12_4.py
+232,13,Print a growing number sequence,"Write a script that generates and prints the sequence of powers of 2 (1, 2, 4, 8, 16, ...) up to $2^{30}$, utilizing bitwise operations for maximum efficiency.","import sys
+def generate_powers_of_two():
+    n = 30
+    current_power = 1
+    for i in range(n + 1):
+        if i == 0:
+            print(current_power)
+        else:
+            current_power <<= 1
+            print(current_power)
+if __name__ == '__main__':
+    generate_powers_of_two()",True,0,14562,232_13.py
+232,13,Print a growing number sequence,"Write a script that generates and prints the sequence of powers of 2 (1, 2, 4, 8, 16, ...) up to $2^{30}$, utilizing bitwise operations for maximum efficiency.","import sys
+if __name__ == '__main__':
+    limit = 30
+    for i in range(limit + 1):
+        power_of_two = 1 << i
+        print(power_of_two)",True,1,14563,232_13_1.py
+232,13,Print a growing number sequence,"Write a script that generates and prints the sequence of powers of 2 (1, 2, 4, 8, 16, ...) up to $2^{30}$, utilizing bitwise operations for maximum efficiency.","import sys
+def generate_powers_of_two():
+    n = 30
+    current_power = 1
+    for i in range(n + 1):
+        print(current_power)
+        current_power <<= 1
+if __name__ == '__main__':
+    generate_powers_of_two()",True,2,14564,232_13_2.py
+232,14,Print a growing number sequence,"Create a recursive Python function to print a growing sequence where each subsequent number is the sum of the previous two (starting with 1 and 1), and handle the base case correctly.","def fibonacci_sequence(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [1]
+    else:
+        sequence = [1, 1]
+        for i in range(2, n):
+            next_val = sequence[-1] + sequence[-2]
+            sequence.append(next_val)
+        return sequence
+if __name__ == '__main__':
+    n_terms = 10
+    result = fibonacci_sequence(n_terms)
+    print(result)",True,0,14565,232_14.py
+232,14,Print a growing number sequence,"Create a recursive Python function to print a growing sequence where each subsequent number is the sum of the previous two (starting with 1 and 1), and handle the base case correctly.","def print_fibonacci_sequence(n):
+    if n <= 0:
+        return
+    if n == 1:
+        print(1)
+        print(1)
+        return
+    a, b = 1, 1
+    for _ in range(n - 2):
+        next_val = a + b
+        print(next_val)
+        a = b
+        b = next_val
+if __name__ == '__main__':
+    print_fibonacci_sequence(8)",True,1,14566,232_14_1.py
+232,14,Print a growing number sequence,"Create a recursive Python function to print a growing sequence where each subsequent number is the sum of the previous two (starting with 1 and 1), and handle the base case correctly.","def print_fibonacci_sequence(n):
+    if n <= 0:
+        return
+    if n == 1:
+        print(1)
+        print(1)
+        return
+    a, b = 1, 1
+    for _ in range(n):
+        print(a)
+        next_val = a + b
+        a = b
+        b = next_val
+if __name__ == '__main__':
+    print_fibonacci_sequence(10)",True,2,14567,232_14_2.py
+232,14,Print a growing number sequence,"Create a recursive Python function to print a growing sequence where each subsequent number is the sum of the previous two (starting with 1 and 1), and handle the base case correctly.","def print_fibonacci_sequence(n):
+    if n <= 0:
+        return
+    if n == 1:
+        print(1)
+        print(1)
+        return
+    a, b = 1, 1
+    for _ in range(n - 2):
+        next_val = a + b
+        print(next_val)
+        a = b
+        b = next_val
+if __name__ == '__main__':
+    print_fibonacci_sequence(10)",True,3,14568,232_14_3.py
+233,0,Fill a rectangle with symbols,"Write a complete, well-documented Python script that defines a function to fill a rectangle with a specific character, given its width and height.","def fill_rectangle(width, height, char):
+    grid = []
+    for _ in range(height):
+        row = [char] * width
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    w = 5
+    h = 3
+    c = '#'
+    result = fill_rectangle(w, h, c)
+    for row in result:
+        print("""".join(row))",True,0,14569,233_0.py
+231,10,Generate a simple repeating pattern,"Write a complete, high-quality, and optimized Python script that generates and prints a repeating pattern of asterisks (*) with a specified number of rows and columns.",,False,0,14570,231_10.py
+233,1,Fill a rectangle with symbols,"Implement an optimized Python function named `fill_rectangle` that takes integer arguments for width, height, and the symbol to use, and prints the resulting rectangle to the console.","import sys
+def fill_rectangle(width, height, symbol):
+    for _ in range(height):
+        print(symbol * width)
+if __name__ == '__main__':
+    fill_rectangle(5, 3, '*')",True,0,14571,233_1.py
+233,1,Fill a rectangle with symbols,"Implement an optimized Python function named `fill_rectangle` that takes integer arguments for width, height, and the symbol to use, and prints the resulting rectangle to the console.","def fill_rectangle(width, height, symbol):
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end="""")
+        print()
+if __name__ == '__main__':
+    fill_rectangle(5, 7, ""#"")",True,1,14572,233_1_1.py
+233,1,Fill a rectangle with symbols,"Implement an optimized Python function named `fill_rectangle` that takes integer arguments for width, height, and the symbol to use, and prints the resulting rectangle to the console.","def fill_rectangle(width, height, symbol):
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end="""")
+        print()
+if __name__ == '__main__':
+    fill_rectangle(5, 7, '*')",True,2,14573,233_1_2.py
+233,1,Fill a rectangle with symbols,"Implement an optimized Python function named `fill_rectangle` that takes integer arguments for width, height, and the symbol to use, and prints the resulting rectangle to the console.","def fill_rectangle(width, height, symbol):
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end="""")
+        print()
+if __name__ == '__main__':
+    fill_rectangle(5, 10, '*')",True,3,14574,233_1_3.py
+233,2,Fill a rectangle with symbols,Develop a class named `RectangleFiller` with a constructor to set the dimensions and a method to display the rectangle filled with a user-specified symbol. Ensure the implementation is object-oriented and efficient.,"class RectangleFiller:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    def display(self, symbol):
+        for _ in range(self.height):
+            row = """"
+            for _ in range(self.width):
+                row += symbol
+            print(row)
+if __name__ == '__main__':
+    rect = RectangleFiller(5, 3)
+    rect.display('*')",True,0,14575,233_2.py
+233,2,Fill a rectangle with symbols,Develop a class named `RectangleFiller` with a constructor to set the dimensions and a method to display the rectangle filled with a user-specified symbol. Ensure the implementation is object-oriented and efficient.,"class RectangleFiller:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    def display(self, symbol):
+        for _ in range(self.height):
+            print(symbol * self.width)
+if __name__ == '__main__':
+    rect = RectangleFiller(5, 3)
+    rect.display('*')",True,1,14576,233_2_1.py
+233,2,Fill a rectangle with symbols,Develop a class named `RectangleFiller` with a constructor to set the dimensions and a method to display the rectangle filled with a user-specified symbol. Ensure the implementation is object-oriented and efficient.,"class RectangleFiller:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    def display(self, symbol):
+        for y in range(self.height):
+            row = """"
+            for x in range(self.width):
+                row += symbol
+            print(row)
+if __name__ == '__main__':
+    rect = RectangleFiller(5, 7)
+    rect.display('*')",True,2,14577,233_2_2.py
+233,2,Fill a rectangle with symbols,Develop a class named `RectangleFiller` with a constructor to set the dimensions and a method to display the rectangle filled with a user-specified symbol. Ensure the implementation is object-oriented and efficient.,"class RectangleFiller:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    def display(self, symbol):
+        for i in range(self.height):
+            row = """"
+            for j in range(self.width):
+                row += symbol
+            print(row)
+if __name__ == '__main__':
+    rect = RectangleFiller(5, 7)
+    rect.display('*')",True,3,14578,233_2_3.py
+233,4,Fill a rectangle with symbols,"Create a single, highly efficient Python function that accepts a string representing the desired symbol and two integers for width and height, and returns the fully constructed rectangle as a single string.","def create_rectangle(symbol, width, height):
+    row = """"
+    for _ in range(height):
+        row += symbol * width
+        row += ""\n""
+    return row
+if __name__ == '__main__':
+    symbol = ""#""
+    width = 10
+    height = 3
+    result = create_rectangle(symbol, width, height)
+    print(result)",True,0,14579,233_4.py
+233,4,Fill a rectangle with symbols,"Create a single, highly efficient Python function that accepts a string representing the desired symbol and two integers for width and height, and returns the fully constructed rectangle as a single string.","def create_rectangle(symbol, width, height):
+    line = """"
+    for _ in range(height):
+        line += symbol * width + ""\n""
+    return line.rstrip('\n')
+if __name__ == '__main__':
+    symbol = ""#""
+    width = 10
+    height = 5
+    result = create_rectangle(symbol, width, height)
+    print(result)",True,1,14580,233_4_1.py
+233,4,Fill a rectangle with symbols,"Create a single, highly efficient Python function that accepts a string representing the desired symbol and two integers for width and height, and returns the fully constructed rectangle as a single string.","def create_rectangle(symbol, width, height):
+    rectangle = """"
+    for _ in range(height):
+        rectangle += symbol * width + ""\n""
+    return rectangle.rstrip('\n')
+if __name__ == '__main__':
+    print(create_rectangle(""X"", 5, 3))
+    print(""\n"" + create_rectangle(""#"", 10, 2))",True,2,14581,233_4_2.py
+233,4,Fill a rectangle with symbols,"Create a single, highly efficient Python function that accepts a string representing the desired symbol and two integers for width and height, and returns the fully constructed rectangle as a single string.","def create_rectangle(symbol, width, height):
+    rect = """"
+    for _ in range(height):
+        rect += symbol * width + ""\n""
+    return rect.rstrip('\n')
+if __name__ == '__main__':
+    symbol_val = ""#""
+    width_val = 10
+    height_val = 3
+    result = create_rectangle(symbol_val, width_val, height_val)
+    print(result)",True,3,14582,233_4_3.py
+233,4,Fill a rectangle with symbols,"Create a single, highly efficient Python function that accepts a string representing the desired symbol and two integers for width and height, and returns the fully constructed rectangle as a single string.","def create_rectangle(symbol, width, height):
+    line = """"
+    for _ in range(height):
+        line += symbol * width + ""\n""
+    return line
+if __name__ == '__main__':
+    symbol = ""#""
+    width = 10
+    height = 3
+    result = create_rectangle(symbol, width, height)
+    print(result)",True,4,14583,233_4_4.py
+233,4,Fill a rectangle with symbols,"Create a single, highly efficient Python function that accepts a string representing the desired symbol and two integers for width and height, and returns the fully constructed rectangle as a single string.","def create_rectangle(symbol, width, height):
+    line = """"
+    for _ in range(height):
+        line += symbol * width + ""\n""
+    return line
+if __name__ == '__main__':
+    symbol = ""#""
+    width = 10
+    height = 5
+    result = create_rectangle(symbol, width, height)
+    print(result)",True,5,14584,233_4_5.py
+233,5,Fill a rectangle with symbols,"Implement the logic to generate and print a rectangle of size $N 	imes M$ filled with the symbol '#', where $N$ and $M$ are provided by the function arguments. Prioritize performance.","def generate_rectangle(N, M):
+    for i in range(N):
+        for j in range(M):
+            print('#', end='')
+        print()
+if __name__ == '__main__':
+    N = 5
+    M = 10
+    generate_rectangle(N, M)",True,0,14585,233_5.py
+233,3,Fill a rectangle with symbols,"Write a command-line script that prompts the user to input the width and height of a rectangle, and then fills that rectangle with the asterisk symbol ('*'). Use efficient input handling.",,False,0,14586,233_3.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    num_cols = len(rows[0])
+    filled_rectangle = []
+    for row in rows:
+        filled_row = """".join([symbol if char != ' ' else char for char in row])
+        filled_rectangle.append(filled_row)
+    return filled_rectangle
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****"",
+        ""*****"",
+        ""*****"",
+        ""*****"",
+        ""*****""
+    ]
+    sample_symbol = ""*""
+    result = fill_rectangle(sample_rows, sample_symbol)
+    print(result)",True,0,14587,233_7.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    if num_rows == 0:
+        return []
+    num_cols = len(rows[0])
+    result = []
+    for row in rows:
+        filled_row = """".join([symbol if char != ' ' else char for char in row])
+        result.append(filled_row)
+    return result
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****  "",
+        "" *   * "",
+        ""*****  "",
+        "" *   * ""
+    ]
+    symbol = ""*""
+    filled = fill_rectangle(sample_rows, symbol)
+    print(filled)",True,1,14588,233_7_1.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    result = []
+    for row in rows:
+        filled_row = """"
+        for char in row:
+            if char == '*':
+                filled_row += symbol
+            else:
+                filled_row += char
+        result.append(filled_row)
+    return result
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****""
+    ]
+    symbol_to_fill = ""#""
+    filled_rectangle = fill_rectangle(sample_rows, symbol_to_fill)
+    print(filled_rectangle)
+    sample_rows_2 = [
+        ""***--"",
+        ""--**-""
+    ]
+    symbol_to_fill_2 = ""X""
+    filled_rectangle_2 = fill_rectangle(sample_rows_2, symbol_to_fill_2)
+    print(filled_rectangle_2)
+    sample_rows_3 = [
+        ""abcde"",
+        ""fghij"",
+        ""klmno""
+    ]
+    symbol_to_fill_3 = ""@""
+    filled_rectangle_3 = fill_rectangle(sample_rows_3, symbol_to_fill_3)
+    print(filled_rectangle_3)",True,2,14589,233_7_2.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    if num_rows == 0:
+        return []
+    num_cols = len(rows[0])
+    result = []
+    for i in range(num_rows):
+        new_row = []
+        for j in range(num_cols):
+            if rows[i][j] == '*':
+                new_row.append(symbol)
+            else:
+                new_row.append(rows[i][j])
+        result.append("""".join(new_row))
+    return result
+if __name__ == '__main__':
+    sample_rows = [
+        ""***"",
+        ""*.*"",
+        ""***""
+    ]
+    symbol_to_fill = ""#""
+    filled_rectangle = fill_rectangle(sample_rows, symbol_to_fill)
+    print(filled_rectangle)
+    sample_rows_2 = [
+        ""*****"",
+        ""*.*.*"",
+        ""*****"",
+        ""*.*.*""
+    ]
+    symbol_to_fill_2 = ""X""
+    filled_rectangle_2 = fill_rectangle(sample_rows_2, symbol_to_fill_2)
+    print(filled_rectangle_2)
+    sample_rows_3 = [
+        ""abc"",
+        ""def"",
+        ""ghi""
+    ]
+    symbol_to_fill_3 = ""0""
+    filled_rectangle_3 = fill_rectangle(sample_rows_3, symbol_to_fill_3)
+    print(filled_rectangle_3)",True,3,14590,233_7_3.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    num_cols = len(rows[0])
+    filled_rectangle = []
+    for row in rows:
+        filled_row = """".join([symbol if char != ' ' else char for char in row])
+        filled_rectangle.append(filled_row)
+    return filled_rectangle
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****  "",
+        "" *   * "",
+        "" *   * "",
+        ""*****  ""
+    ]
+    sample_symbol = ""*""
+    result = fill_rectangle(sample_rows, sample_symbol)
+    print(result)",True,4,14591,233_7_4.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    num_cols = len(rows[0])
+    filled_rectangle = []
+    for row in rows:
+        filled_row = """".join([symbol if char != ' ' else char for char in row])
+        filled_rectangle.append(filled_row)
+    return filled_rectangle
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****"",
+        ""*****"",
+        ""*****"",
+        ""*****"",
+        ""*****""
+    ]
+    symbol = ""*""
+    result = fill_rectangle(sample_rows, symbol)
+    print(result)",True,5,14592,233_7_5.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    if num_rows == 0:
+        return []
+    num_cols = len(rows[0])
+    filled_rectangle = []
+    for row in rows:
+        filled_row = """".join([symbol if char != ' ' else ' ' for char in row])
+        filled_rectangle.append(filled_row)
+    return filled_rectangle
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****  "",
+        "" *   * "",
+        ""*****  ""
+    ]
+    symbol = ""*""
+    result = fill_rectangle(sample_rows, symbol)
+    print(result)",True,6,14593,233_7_6.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    num_cols = len(rows[0])
+    filled = []
+    for i in range(num_rows):
+        row_str = """"
+        for j in range(num_cols):
+            if rows[i][j] == '*':
+                row_str += symbol
+            else:
+                row_str += rows[i][j]
+        filled.append(row_str)
+    return filled
+if __name__ == '__main__':
+    sample_rows = [
+        ""***"",
+        ""*.*"",
+        ""***""
+    ]
+    symbol_to_fill = ""#""
+    result = fill_rectangle(sample_rows, symbol_to_fill)
+    print(result)",True,7,14594,233_7_7.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    num_cols = len(rows[0])
+    filled_rectangle = []
+    for row in rows:
+        filled_row = """".join([symbol if char != ' ' else char for char in row])
+        filled_rectangle.append(filled_row)
+    return filled_rectangle
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****"",
+        ""*****"",
+        ""*****"",
+        ""*****"",
+        ""*****""
+    ]
+    symbol_to_fill = ""*""
+    result = fill_rectangle(sample_rows, symbol_to_fill)
+    print(result)",True,8,14595,233_7_8.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    if num_rows == 0:
+        return []
+    num_cols = len(rows[0])
+    result = []
+    for i in range(num_rows):
+        new_row = []
+        for j in range(num_cols):
+            if rows[i][j] == '*':
+                new_row.append(symbol)
+            else:
+                new_row.append(rows[i][j])
+        result.append("""".join(new_row))
+    return result
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****"",
+        ""*    "",
+        ""*****""
+    ]
+    sample_symbol = ""#""
+    filled = fill_rectangle(sample_rows, sample_symbol)
+    print(filled)",True,9,14596,233_7_9.py
+233,7,Fill a rectangle with symbols,"Design and implement a function that takes a list of strings representing rows and a symbol, and returns a list of strings representing the filled rectangle. Assume the input list already defines the shape.","def fill_rectangle(rows, symbol):
+    if not rows:
+        return []
+    num_rows = len(rows)
+    num_cols = len(rows[0])
+    filled_rectangle = []
+    for row in rows:
+        new_row = """"
+        for char in row:
+            if char == '*':
+                new_row += symbol
+            else:
+                new_row += char
+        filled_rectangle.append(new_row)
+    return filled_rectangle
+if __name__ == '__main__':
+    sample_rows = [
+        ""*****""
+    ]
+    symbol = ""#""
+    result1 = fill_rectangle(sample_rows, symbol)
+    print(f""Input rows: {sample_rows}"")
+    print(f""Symbol: {symbol}"")
+    print(f""Result: {result1}"")
+    sample_rows2 = [
+        ""*****"",
+        ""*****""
+    ]
+    symbol2 = ""@""
+    result2 = fill_rectangle(sample_rows2, symbol2)
+    print(f""\nInput rows: {sample_rows2}"")
+    print(f""Symbol: {symbol2}"")
+    print(f""Result: {result2}"")
+    sample_rows3 = [
+        ""abcde"",
+        ""fghij""
+    ]
+    symbol3 = ""X""
+    result3 = fill_rectangle(sample_rows3, symbol3)
+    print(f""\nInput rows: {sample_rows3}"")
+    print(f""Symbol: {symbol3}"")
+    print(f""Result: {result3}"")",True,10,14597,233_7_10.py
+233,8,Fill a rectangle with symbols,Write an optimized solution using nested loops to create and print a rectangle of size $W 	imes H$ filled with the symbol '$'. The solution must be clean and adhere to Python best practices.,"def create_rectangle(W, H):
+    for i in range(W):
+        for j in range(H):
+            print(""$"", end="""")
+        print()
+if __name__ == '__main__':
+    W = 5
+    H = 3
+    create_rectangle(W, H)",True,0,14598,233_8.py
+233,8,Fill a rectangle with symbols,Write an optimized solution using nested loops to create and print a rectangle of size $W 	imes H$ filled with the symbol '$'. The solution must be clean and adhere to Python best practices.,"def create_rectangle(W, H):
+    for i in range(H):
+        for j in range(W):
+            print(""$"", end="""")
+        print()
+if __name__ == '__main__':
+    W = 5
+    H = 4
+    create_rectangle(W, H)",True,1,14599,233_8_1.py
+233,8,Fill a rectangle with symbols,Write an optimized solution using nested loops to create and print a rectangle of size $W 	imes H$ filled with the symbol '$'. The solution must be clean and adhere to Python best practices.,"def create_rectangle(W, H):
+    for i in range(H):
+        for j in range(W):
+            print(""$"", end="""")
+        print()
+if __name__ == '__main__':
+    W = 5
+    H = 3
+    create_rectangle(W, H)",True,2,14600,233_8_2.py
+232,1,Print a growing number sequence,"Implement a function named 'generate_sequence' that accepts a starting number and a step value, and prints the resulting arithmetic sequence.",,False,0,14601,232_1.py
+233,10,Fill a rectangle with symbols,"Write a complete, optimized Python script that takes the dimensions (width and height) of a rectangle as input and fills it with a specified symbol, printing the resulting grid to the console. Use nested loops for efficient grid generation.","def fill_rectangle(width, height, symbol):
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end="""")
+        print()
+if __name__ == '__main__':
+    width = 10
+    height = 5
+    symbol = ""*""
+    fill_rectangle(width, height, symbol)",True,0,14602,233_10.py
+233,10,Fill a rectangle with symbols,"Write a complete, optimized Python script that takes the dimensions (width and height) of a rectangle as input and fills it with a specified symbol, printing the resulting grid to the console. Use nested loops for efficient grid generation.","def fill_rectangle(width, height, symbol):
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end="""")
+        print()
+if __name__ == '__main__':
+    W = 10
+    H = 5
+    S = ""*""
+    fill_rectangle(W, H, S)",True,1,14603,233_10_1.py
+233,10,Fill a rectangle with symbols,"Write a complete, optimized Python script that takes the dimensions (width and height) of a rectangle as input and fills it with a specified symbol, printing the resulting grid to the console. Use nested loops for efficient grid generation.","def fill_rectangle(width, height, symbol):
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end="""")
+            if x < width - 1 or y < height - 1:
+                print("" "", end="""")
+    print(""\n"")
+if __name__ == '__main__':
+    width = 10
+    height = 5
+    symbol = ""*""
+    fill_rectangle(width, height, symbol)",True,2,14604,233_10_2.py
+233,11,Fill a rectangle with symbols,"Implement a function named 'fill_rectangle' that accepts integer arguments for width, height, and the symbol to use. The function must return a list of strings representing the rectangle, ensuring the output is a list of lists or a 2D list of characters, adhering to best practices.","def fill_rectangle(width, height, symbol):
+    rectangle = []
+    for i in range(height):
+        row = []
+        for j in range(width):
+            row.append(symbol)
+        rectangle.append(row)
+    return rectangle
+if __name__ == '__main__':
+    width_val = 5
+    height_val = 4
+    symbol_val = '*'
+    result = fill_rectangle(width_val, height_val, symbol_val)
+    print(result)",True,0,14605,233_11.py
+233,11,Fill a rectangle with symbols,"Implement a function named 'fill_rectangle' that accepts integer arguments for width, height, and the symbol to use. The function must return a list of strings representing the rectangle, ensuring the output is a list of lists or a 2D list of characters, adhering to best practices.","def fill_rectangle(width, height, symbol):
+    grid = []
+    for _ in range(height):
+        row = [symbol] * width
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    width_val = 5
+    height_val = 3
+    symbol_val = '#'
+    result = fill_rectangle(width_val, height_val, symbol_val)
+    print(result)",True,1,14606,233_11_1.py
+233,11,Fill a rectangle with symbols,"Implement a function named 'fill_rectangle' that accepts integer arguments for width, height, and the symbol to use. The function must return a list of strings representing the rectangle, ensuring the output is a list of lists or a 2D list of characters, adhering to best practices.","def fill_rectangle(width, height, symbol):
+    rectangle = []
+    for i in range(height):
+        row = []
+        for j in range(width):
+            row.append(symbol)
+        rectangle.append(row)
+    return rectangle
+if __name__ == '__main__':
+    width_val = 5
+    height_val = 3
+    symbol_val = '*'
+    result = fill_rectangle(width_val, height_val, symbol_val)
+    print(result)",True,2,14607,233_11_2.py
+233,12,Fill a rectangle with symbols,"Develop an object-oriented approach to solve the 'fill a rectangle with symbols' problem. Create a 'Rectangle' class with a method to draw the rectangle using a chosen symbol, making the code highly reusable and object-oriented.","class Rectangle:
+    def __init__(self, width, height, symbol):
+        self.width = width
+        self.height = height
+        self.symbol = symbol
+    def draw(self):
+        for _ in range(self.height):
+            print(self.symbol * self.width)
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 3, '*')
+    rect1.draw()
+    print(""-"" * 10)
+    rect2 = Rectangle(8, 2, '#')
+    rect2.draw()
+    print(""-"" * 10)
+    rect3 = Rectangle(4, 4, '@')
+    rect3.draw()",True,0,14608,233_12.py
+233,12,Fill a rectangle with symbols,"Develop an object-oriented approach to solve the 'fill a rectangle with symbols' problem. Create a 'Rectangle' class with a method to draw the rectangle using a chosen symbol, making the code highly reusable and object-oriented.","class Rectangle:
+    def __init__(self, width, height, symbol):
+        self.width = width
+        self.height = height
+        self.symbol = symbol
+    def draw(self):
+        for _ in range(self.height):
+            print(self.symbol * self.width)
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 3, '*')
+    rect1.draw()
+    print(""-"" * 10)
+    rect2 = Rectangle(4, 2, '#')
+    rect2.draw()
+    print(""-"" * 10)
+    rect3 = Rectangle(6, 4, '@')
+    rect3.draw()",True,1,14609,233_12_1.py
+233,12,Fill a rectangle with symbols,"Develop an object-oriented approach to solve the 'fill a rectangle with symbols' problem. Create a 'Rectangle' class with a method to draw the rectangle using a chosen symbol, making the code highly reusable and object-oriented.","class Rectangle:
+    def __init__(self, width, height, symbol):
+        self.width = width
+        self.height = height
+        self.symbol = symbol
+    def draw(self):
+        for _ in range(self.height):
+            print(self.symbol * self.width)
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 3, '*')
+    rect1.draw()
+    print(""-"" * 20)
+    rect2 = Rectangle(8, 2, '#')
+    rect2.draw()
+    print(""-"" * 20)
+    rect3 = Rectangle(4, 4, '@')
+    rect3.draw()",True,2,14610,233_12_2.py
+233,12,Fill a rectangle with symbols,"Develop an object-oriented approach to solve the 'fill a rectangle with symbols' problem. Create a 'Rectangle' class with a method to draw the rectangle using a chosen symbol, making the code highly reusable and object-oriented.","class Rectangle:
+    def __init__(self, width, height, symbol):
+        self.width = width
+        self.height = height
+        self.symbol = symbol
+    def draw(self):
+        for y in range(self.height):
+            line = """"
+            for x in range(self.width):
+                if x == 0 or y == 0 or x == self.width - 1 or y == self.height - 1:
+                    line += self.symbol
+                else:
+                    line += "" ""
+            print(line)
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 5, ""#"")
+    print(""Rectangle 1:"")
+    rect1.draw()
+    print(""\n"" + ""=""*10 + ""\n"")
+    rect2 = Rectangle(8, 4, ""@"")
+    print(""Rectangle 2:"")
+    rect2.draw()",True,3,14611,233_12_3.py
+233,12,Fill a rectangle with symbols,"Develop an object-oriented approach to solve the 'fill a rectangle with symbols' problem. Create a 'Rectangle' class with a method to draw the rectangle using a chosen symbol, making the code highly reusable and object-oriented.","class Rectangle:
+    def __init__(self, width, height, symbol):
+        self.width = width
+        self.height = height
+        self.symbol = symbol
+    def draw(self):
+        for _ in range(self.height):
+            print(self.symbol * self.width)
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 3, '*')
+    rect1.draw()
+    print(""-"" * 10)
+    rect2 = Rectangle(8, 2, '#')
+    rect2.draw()
+    print(""-"" * 10)
+    rect3 = Rectangle(4, 4, 'X')
+    rect3.draw()",True,4,14612,233_12_4.py
+233,12,Fill a rectangle with symbols,"Develop an object-oriented approach to solve the 'fill a rectangle with symbols' problem. Create a 'Rectangle' class with a method to draw the rectangle using a chosen symbol, making the code highly reusable and object-oriented.","class Rectangle:
+    def __init__(self, width, height, symbol):
+        self.width = width
+        self.height = height
+        self.symbol = symbol
+    def draw(self):
+        for _ in range(self.height):
+            print(self.symbol * self.width)
+if __name__ == '__main__':
+    rect1 = Rectangle(5, 3, '*')
+    rect1.draw()
+    print(""\n"" + ""=""*10 + ""\n"")
+    rect2 = Rectangle(8, 2, '#')
+    rect2.draw()",True,5,14613,233_12_5.py
