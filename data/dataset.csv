@@ -271719,3 +271719,3751 @@ if __name__ == '__main__':
     sample_set_a = {1, 2, 3, 4, 5}
     sample_set_b = {4, 5, 6, 7, 8}
     compare_sets(sample_set_a, sample_set_b)",True,2,13194,211_8_2.py
+211,11,Compare two sample sets,"Implement a robust Python function named `compare_sets` that accepts two lists of numbers, `list_a` and `list_b`, and returns a dictionary containing the size of the intersection, the size of the union, and the elements unique to each list (as separate sets).","def compare_sets(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    union = set_a.union(set_b)
+    unique_a = set_a - set_b
+    unique_b = set_b - set_a
+    return {
+        ""intersection_size"": len(intersection),
+        ""union_size"": len(union),
+        ""unique_to_a"": unique_a,
+        ""unique_to_b"": unique_b
+    }
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [4, 5, 6, 7, 8]
+    result = compare_sets(list1, list2)
+    print(result)",True,0,13195,211_11.py
+211,11,Compare two sample sets,"Implement a robust Python function named `compare_sets` that accepts two lists of numbers, `list_a` and `list_b`, and returns a dictionary containing the size of the intersection, the size of the union, and the elements unique to each list (as separate sets).","def compare_sets(list_a, list_b):
+    set_a = set(list_a)
+    set_b = set(list_b)
+    intersection = set_a.intersection(set_b)
+    union = set_a.union(set_b)
+    unique_a = set_a - set_b
+    unique_b = set_b - set_a
+    return {
+        ""intersection_size"": len(intersection),
+        ""union_size"": len(union),
+        ""unique_to_a"": unique_a,
+        ""unique_to_b"": unique_b
+    }
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [4, 5, 6, 7, 8]
+    results = compare_sets(list1, list2)
+    print(results)",True,1,13196,211_11_1.py
+211,12,Compare two sample sets,"Develop an efficient Python function that takes two unsorted lists, `sample1` and `sample2`, and returns a sorted list containing only the elements present in `sample1` but not in `sample2` (the set difference). Ensure the implementation is time-efficient.","import time
+def set_difference_sorted(sample1, sample2):
+    set1 = set(sample1)
+    set2 = set(sample2)
+    difference = set1 - set2
+    return sorted(list(difference))
+if __name__ == '__main__':
+    sample1 = [5, 1, 8, 3, 5, 9]
+    sample2 = [3, 5, 7, 1, 10]
+    result = set_difference_sorted(sample1, sample2)
+    print(result)",True,0,13197,211_12.py
+211,12,Compare two sample sets,"Develop an efficient Python function that takes two unsorted lists, `sample1` and `sample2`, and returns a sorted list containing only the elements present in `sample1` but not in `sample2` (the set difference). Ensure the implementation is time-efficient.","import time
+def set_difference_sorted(sample1, sample2):
+    set1 = set(sample1)
+    set2 = set(sample2)
+    difference = set1 - set2
+    return sorted(list(difference))
+if __name__ == '__main__':
+    sample1 = [3, 1, 4, 1, 5, 9, 2, 6]
+    sample2 = [4, 1, 8, 5]
+    result = set_difference_sorted(sample1, sample2)
+    print(result)",True,1,13198,211_12_1.py
+211,12,Compare two sample sets,"Develop an efficient Python function that takes two unsorted lists, `sample1` and `sample2`, and returns a sorted list containing only the elements present in `sample1` but not in `sample2` (the set difference). Ensure the implementation is time-efficient.","import time
+def set_difference_sorted(sample1, sample2):
+    set1 = set(sample1)
+    set2 = set(sample2)
+    difference = set1 - set2
+    return sorted(list(difference))
+if __name__ == '__main__':
+    sample1 = [5, 1, 8, 3, 5, 9]
+    sample2 = [3, 5, 7, 1, 4]
+    result = set_difference_sorted(sample1, sample2)
+    print(result)",True,2,13199,211_12_2.py
+211,12,Compare two sample sets,"Develop an efficient Python function that takes two unsorted lists, `sample1` and `sample2`, and returns a sorted list containing only the elements present in `sample1` but not in `sample2` (the set difference). Ensure the implementation is time-efficient.","def set_difference_sorted(sample1, sample2):
+    set1 = set(sample1)
+    set2 = set(sample2)
+    difference = set1 - set2
+    return sorted(list(difference))
+if __name__ == '__main__':
+    sample1 = [1, 5, 2, 8, 3, 5]
+    sample2 = [5, 9, 2, 4, 1]
+    result = set_difference_sorted(sample1, sample2)
+    print(result)",True,3,13200,211_12_3.py
+211,12,Compare two sample sets,"Develop an efficient Python function that takes two unsorted lists, `sample1` and `sample2`, and returns a sorted list containing only the elements present in `sample1` but not in `sample2` (the set difference). Ensure the implementation is time-efficient.","def set_difference_sorted(sample1, sample2):
+    set1 = set(sample1)
+    set2 = set(sample2)
+    difference = set1 - set2
+    return sorted(list(difference))
+if __name__ == '__main__':
+    sample1 = [1, 5, 2, 8, 3, 5]
+    sample2 = [5, 2, 9, 1, 4, 7]
+    result = set_difference_sorted(sample1, sample2)
+    print(result)",True,4,13201,211_12_4.py
+211,13,Compare two sample sets,"Write a class named `SetComparator` with a method `analyze(set1, set2)` that compares two input sets. The method must return a tuple containing the intersection, the union, and the difference of set1 relative to set2.","class SetComparator:
+    def analyze(self, set1, set2):
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference = set1.difference(set2)
+        return (intersection, union, difference)
+if __name__ == '__main__':
+    comparator = SetComparator()
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    result = comparator.analyze(set_a, set_b)
+    print(result)",True,0,13202,211_13.py
+211,13,Compare two sample sets,"Write a class named `SetComparator` with a method `analyze(set1, set2)` that compares two input sets. The method must return a tuple containing the intersection, the union, and the difference of set1 relative to set2.","class SetComparator:
+    def analyze(self, set1, set2):
+        intersection = set1.intersection(set2)
+        union = set1.union(set2)
+        difference = set1.difference(set2)
+        return (intersection, union, difference)
+if __name__ == '__main__':
+    set_a = {1, 2, 3, 4, 5}
+    set_b = {4, 5, 6, 7, 8}
+    comparator = SetComparator()
+    result = comparator.analyze(set_a, set_b)
+    print(result)",True,1,13203,211_13_1.py
+211,10,Compare two sample sets,"Write a complete, optimized Python script to compare two sample sets of integers, Set A and Set B, and calculate the symmetric difference and the intersection. Use sets for maximum efficiency.","import timeit
+set_a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+set_b = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+intersection = set_a.intersection(set_b)
+symmetric_difference = set_a.symmetric_difference(set_b)
+if __name__ == '__main__':
+    start_time = timeit.default_timer()
+    result_intersection = set_a.intersection(set_b)
+    result_symmetric_difference = set_a.symmetric_difference(set_b)
+    end_time = timeit.default_timer()
+    print(f""Set A: {set_a}"")
+    print(f""Set B: {set_b}"")
+    print(f""Intersection: {result_intersection}"")
+    print(f""Symmetric Difference (A - B): {result_symmetric_difference}"")
+    print(f""Time taken for operations: {(end_time - start_time):.6f} seconds"")",True,0,13204,211_10.py
+212,0,Find the minimum and maximum,Write a robust Python function named 'find_min_max' that accepts a list of integers and returns the minimum and maximum values efficiently.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8]
+    min_val, max_val = find_min_max(sample_list)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")
+    sample_list_empty = []
+    min_val_empty, max_val_empty = find_min_max(sample_list_empty)
+    print(f""Minimum (Empty List): {min_val_empty}"")
+    print(f""Maximum (Empty List): {max_val_empty}"")",True,0,13205,212_0.py
+212,0,Find the minimum and maximum,Write a robust Python function named 'find_min_max' that accepts a list of integers and returns the minimum and maximum values efficiently.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 6]
+    min_val, max_val = find_min_max(sample_list)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")
+    sample_list_empty = []
+    min_val_empty, max_val_empty = find_min_max(sample_list_empty)
+    print(f""Minimum (Empty List): {min_val_empty}"")
+    print(f""Maximum (Empty List): {max_val_empty}"")",True,1,13206,212_0_1.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -0.5, 100.75, -99.999, 50.0]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    another_list = [1.0, 2.5, -3.2, 4.8, 0.9]
+    minimum_val_2, maximum_val_2 = find_min_max(another_list)
+    print(f""Minimum: {minimum_val_2}"")
+    print(f""Maximum: {maximum_val_2}"")
+    empty_list = []
+    minimum_val_3, maximum_val_3 = find_min_max(empty_list)
+    print(f""Empty list result (Min): {minimum_val_3}"")
+    print(f""Empty list result (Max): {maximum_val_3}"")",True,0,13207,212_1.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -10.5, 0.0, 99.999999999, -5.2345, 12345.6789]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,1,13208,212_1_1.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -0.5, 100.75, -99.999, 50.0]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    another_list = [1.23e-10, 4567890123.45, -1.0]
+    minimum_val_2, maximum_val_2 = find_min_max(another_list)
+    print(f""Minimum: {minimum_val_2}"")
+    print(f""Maximum: {maximum_val_2}"")
+    empty_list = []
+    minimum_val_3, maximum_val_3 = find_min_max(empty_list)
+    print(f""Empty List Minimum: {minimum_val_3}"")
+    print(f""Empty List Maximum: {maximum_val_3}"")",True,2,13209,212_1_2.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -0.5, 100.789, -99.999, 55.555]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,3,13210,212_1_3.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -0.5, 100.75, -99.99, 5.0, 12345.6789]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    empty_list = []
+    min_empty, max_empty = find_min_max(empty_list)
+    print(f""Empty List Minimum: {min_empty}"")
+    print(f""Empty List Maximum: {max_empty}"")",True,4,13211,212_1_4.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -0.5, 100.75, -99.999, 5.0, 12345.6789]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,5,13212,212_1_5.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"import math
+def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.141592653589793, -1.0, 100.5, 0.0, -99.999999999, 50.2]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,6,13213,212_1_6.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -10.5, 0.001, 99.99999999, -123.456789]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    empty_list = []
+    min_empty, max_empty = find_min_max(empty_list)
+    print(f""Empty List Minimum: {min_empty}"")
+    print(f""Empty List Maximum: {max_empty}"")",True,7,13214,212_1_7.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.75, -12.34, 55.0, 0.001, 99.999]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    empty_list = []
+    min_val_empty, max_val_empty = find_min_max(empty_list)
+    print(f""Empty List Minimum: {min_val_empty}"")
+    print(f""Empty List Maximum: {max_val_empty}"")",True,8,13215,212_1_8.py
+212,1,Find the minimum and maximum,Implement an optimized function to find the minimum and maximum elements in a potentially very large list of floating-point numbers using built-in functions for maximum performance.,"def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    large_list = [3.1415926535, -0.5, 100.75, -99.999, 50.0]
+    minimum_val, maximum_val = find_min_max(large_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,9,13216,212_1_9.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 40]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")
+    sample_list_2 = [-5, 100, 0, -10]
+    minimum_val_2, maximum_val_2 = finder.find_min_max(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum value: {minimum_val_2}"")
+    print(f""Maximum value: {maximum_val_2}"")
+    empty_list = []
+    minimum_val_3, maximum_val_3 = finder.find_min_max(empty_list)
+    print(f""\nList: {empty_list}"")
+    print(f""Minimum value: {minimum_val_3}"")
+    print(f""Maximum value: {maximum_val_3}"")",True,0,13217,212_2.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 40]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""The list is: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")
+    sample_list_2 = [-5, 100, 0, -10]
+    minimum_val_2, maximum_val_2 = finder.find_min_max(sample_list_2)
+    print(f""\nThe list is: {sample_list_2}"")
+    print(f""Minimum value: {minimum_val_2}"")
+    print(f""Maximum value: {maximum_val_2}"")",True,1,13218,212_2_1.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 9]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")
+    sample_list_2 = [-5, 10, 0, -100]
+    minimum_val_2, maximum_val_2 = finder.find_min_max(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum value: {minimum_val_2}"")
+    print(f""Maximum value: {maximum_val_2}"")
+    empty_list = []
+    minimum_val_3, maximum_val_3 = finder.find_min_max(empty_list)
+    print(f""\nList: {empty_list}"")
+    print(f""Minimum value: {minimum_val_3}"")
+    print(f""Maximum value: {maximum_val_3}"")",True,2,13219,212_2_2.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for num in data:
+            if num < minimum:
+                minimum = num
+            if num > maximum:
+                maximum = num
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 10]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""The list is: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")
+    sample_list_2 = [-5, 100, 0, -50]
+    minimum_val_2, maximum_val_2 = finder.find_min_max(sample_list_2)
+    print(f""\nThe list is: {sample_list_2}"")
+    print(f""Minimum value: {minimum_val_2}"")
+    print(f""Maximum value: {maximum_val_2}"")",True,3,13220,212_2_3.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 40]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""The list is: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")",True,4,13221,212_2_4.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, data):
+        if not data:
+            return None, None
+        minimum = data[0]
+        maximum = data[0]
+        for x in data:
+            if x < minimum:
+                minimum = x
+            if x > maximum:
+                maximum = x
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 40]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")
+    sample_list_2 = [-5, 10, 0, -100]
+    minimum_val_2, maximum_val_2 = finder.find_min_max(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum value: {minimum_val_2}"")
+    print(f""Maximum value: {maximum_val_2}"")",True,5,13222,212_2_5.py
+212,2,Find the minimum and maximum,Develop a class named 'MinMaxFinder' with a method to calculate and return the minimum and maximum values from an input list of numbers.,"class MinMaxFinder:
+    def find_min_max(self, numbers):
+        if not numbers:
+            return None, None
+        minimum = numbers[0]
+        maximum = numbers[0]
+        for number in numbers:
+            if number < minimum:
+                minimum = number
+            if number > maximum:
+                maximum = number
+        return minimum, maximum
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_list = [15, 3, 8, 22, 1, 10]
+    minimum_val, maximum_val = finder.find_min_max(sample_list)
+    print(f""The list is: {sample_list}"")
+    print(f""Minimum value: {minimum_val}"")
+    print(f""Maximum value: {maximum_val}"")
+    sample_list_2 = [-5, 100, 0, -10]
+    minimum_val_2, maximum_val_2 = finder.find_min_max(sample_list_2)
+    print(f""\nThe list is: {sample_list_2}"")
+    print(f""Minimum value: {minimum_val_2}"")
+    print(f""Maximum value: {maximum_val_2}"")
+    empty_list = []
+    minimum_val_3, maximum_val_3 = finder.find_min_max(empty_list)
+    print(f""\nThe list is: {empty_list}"")
+    print(f""Minimum value: {minimum_val_3}"")
+    print(f""Maximum value: {maximum_val_3}"")",True,6,13223,212_2_6.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [15, 3, 88, 42, 9, 71]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,0,13224,212_3.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [15, 3, 88, -5, 42, 9]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,1,13225,212_3_1.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [15, 3, 88, 42, 9, 77]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,2,13226,212_3_2.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [15, 3, 88, 42, 9, 71, 20]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,3,13227,212_3_3.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [15, 3, 88, 42, 9, 71, 22]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,4,13228,212_3_4.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [10, 5, 22, 3, 45, 8]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,5,13229,212_3_5.py
+212,3,Find the minimum and maximum,Write a script that reads a sequence of numbers from standard input and determines the overall minimum and maximum values present in that sequence.,"import sys
+def find_min_max(numbers):
+    if not numbers:
+        return None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return minimum, maximum
+if __name__ == '__main__':
+    input_data = [10, 5, 22, 8, 30, 1]
+    minimum_val, maximum_val = find_min_max(input_data)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,6,13230,212_3_6.py
+212,4,Find the minimum and maximum,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    current_min = None
+    current_max = None
+    for item in iterable:
+        if current_min is None:
+            current_min = item
+            current_max = item
+        else:
+            if item < current_min:
+                current_min = item
+            if item > current_max:
+                current_max = item
+        yield current_min, current_max
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    generator = min_max_generator(sample_data)
+    for minimum, maximum in generator:
+        print(f""Min: {minimum}, Max: {maximum}"")",True,0,13231,212_4.py
+212,4,Find the minimum and maximum,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    current_min = None
+    current_max = None
+    for item in iterable:
+        if current_min is None:
+            current_min = item
+            current_max = item
+        else:
+            if item < current_min:
+                current_min = item
+            if item > current_max:
+                current_max = item
+        yield current_min, current_max
+if __name__ == '__main__':
+    data1 = [5, 2, 8, 1, 9, 3]
+    print(""Data 1:"")
+    for minimum, maximum in min_max_generator(data1):
+        print(f""Min: {minimum}, Max: {maximum}"")
+    data2 = [100, 50, 200, 10, 150]
+    print(""\nData 2:"")
+    for minimum, maximum in min_max_generator(data2):
+        print(f""Min: {minimum}, Max: {maximum}"")
+    data3 = [7]
+    print(""\nData 3:"")
+    for minimum, maximum in min_max_generator(data3):
+        print(f""Min: {minimum}, Max: {maximum}"")
+    data4 = []
+    print(""\nData 4 (Empty):"")
+    for minimum, maximum in min_max_generator(data4):
+        print(f""Min: {minimum}, Max: {maximum}"")",True,1,13232,212_4_1.py
+212,4,Find the minimum and maximum,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    current_min = None
+    current_max = None
+    for item in iterable:
+        if current_min is None:
+            current_min = item
+            current_max = item
+        else:
+            if item < current_min:
+                current_min = item
+            if item > current_max:
+                current_max = item
+        yield current_min, current_max
+if __name__ == '__main__':
+    sample_data = [3, 1, 4, 1, 5, 9, 2, 8]
+    generator = min_max_generator(sample_data)
+    for minimum, maximum in generator:
+        print(f""Min: {minimum}, Max: {maximum}"")",True,2,13233,212_4_2.py
+212,4,Find the minimum and maximum,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    min_val = None
+    max_val = None
+    for item in iterable:
+        if min_val is None:
+            min_val = item
+            max_val = item
+        else:
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+        yield min_val, max_val
+if __name__ == '__main__':
+    data = [3, 1, 4, 1, 5, 9, 2, 8]
+    generator = min_max_generator(data)
+    for current_min, current_max in generator:
+        print(f""Min: {current_min}, Max: {current_max}"")",True,3,13234,212_4_3.py
+212,4,Find the minimum and maximum,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    min_val = None
+    max_val = None
+    for item in iterable:
+        if min_val is None:
+            min_val = item
+            max_val = item
+        else:
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+        yield min_val, max_val
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    generator = min_max_generator(sample_data)
+    for current_min, current_max in generator:
+        print(f""Min: {current_min}, Max: {current_max}"")",True,4,13235,212_4_4.py
+212,4,Find the minimum and maximum,"Create a generator function that yields the minimum and maximum values encountered so far as it iterates through an input iterable, optimizing for memory efficiency.","def min_max_generator(iterable):
+    if not iterable:
+        return
+    min_val = None
+    max_val = None
+    for item in iterable:
+        if min_val is None:
+            min_val = item
+            max_val = item
+        else:
+            if item < min_val:
+                min_val = item
+            if item > max_val:
+                max_val = item
+        yield min_val, max_val
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    generator = min_max_generator(sample_data)
+    print(""Input:"", sample_data)
+    for current_min, current_max in generator:
+        print(f""Min: {current_min}, Max: {current_max}"")",True,5,13236,212_4_5.py
+212,5,Find the minimum and maximum,Implement a function that finds the minimum and maximum values in a list of strings based on lexicographical order.,"def find_min_max_strings(string_list):
+    if not string_list:
+        return None, None
+    minimum = string_list[0]
+    maximum = string_list[0]
+    for s in string_list:
+        if s < minimum:
+            minimum = s
+        if s > maximum:
+            maximum = s
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat"", ""ant""]
+    min_val, max_val = find_min_max_strings(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum lexicographical value: {min_val}"")
+    print(f""Maximum lexicographical value: {max_val}"")
+    sample_list_2 = [""zoo"", ""ant"", ""bear"", ""cat""]
+    min_val_2, max_val_2 = find_min_max_strings(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum lexicographical value: {min_val_2}"")
+    print(f""Maximum lexicographical value: {max_val_2}"")",True,0,13237,212_5.py
+212,5,Find the minimum and maximum,Implement a function that finds the minimum and maximum values in a list of strings based on lexicographical order.,"def find_min_max_strings(string_list):
+    if not string_list:
+        return None, None
+    minimum = string_list[0]
+    maximum = string_list[0]
+    for s in string_list:
+        if s < minimum:
+            minimum = s
+        if s > maximum:
+            maximum = s
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    min_val, max_val = find_min_max_strings(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum lexicographical value: {min_val}"")
+    print(f""Maximum lexicographical value: {max_val}"")
+    sample_list_2 = [""zoo"", ""ant"", ""bear"", ""lion""]
+    min_val_2, max_val_2 = find_min_max_strings(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum lexicographical value: {min_val_2}"")
+    print(f""Maximum lexicographical value: {max_val_2}"")
+    sample_list_3 = [""a"", ""b"", ""c""]
+    min_val_3, max_val_3 = find_min_max_strings(sample_list_3)
+    print(f""\nList: {sample_list_3}"")
+    print(f""Minimum lexicographical value: {min_val_3}"")
+    print(f""Maximum lexicographical value: {max_val_3}"")
+    sample_list_4 = []
+    min_val_4, max_val_4 = find_min_max_strings(sample_list_4)
+    print(f""\nList: {sample_list_4}"")
+    print(f""Minimum lexicographical value: {min_val_4}"")
+    print(f""Maximum lexicographical value: {max_val_4}"")",True,1,13238,212_5_1.py
+212,5,Find the minimum and maximum,Implement a function that finds the minimum and maximum values in a list of strings based on lexicographical order.,"def find_min_max_strings(string_list):
+    if not string_list:
+        return None, None
+    minimum = string_list[0]
+    maximum = string_list[0]
+    for s in string_list:
+        if s < minimum:
+            minimum = s
+        if s > maximum:
+            maximum = s
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat"", ""ant""]
+    min_val, max_val = find_min_max_strings(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum lexicographical value: {min_val}"")
+    print(f""Maximum lexicographical value: {max_val}"")
+    sample_list_2 = [""zoo"", ""ant"", ""bear"", ""lion""]
+    min_val_2, max_val_2 = find_min_max_strings(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum lexicographical value: {min_val_2}"")
+    print(f""Maximum lexicographical value: {max_val_2}"")",True,2,13239,212_5_2.py
+212,5,Find the minimum and maximum,Implement a function that finds the minimum and maximum values in a list of strings based on lexicographical order.,"def find_min_max_strings(string_list):
+    if not string_list:
+        return None, None
+    minimum = string_list[0]
+    maximum = string_list[0]
+    for s in string_list:
+        if s < minimum:
+            minimum = s
+        if s > maximum:
+            maximum = s
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat"", ""ant""]
+    min_val, max_val = find_min_max_strings(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum lexicographical value: {min_val}"")
+    print(f""Maximum lexicographical value: {max_val}"")
+    sample_list_2 = [""zoo"", ""ant"", ""bear"", ""lion""]
+    min_val_2, max_val_2 = find_min_max_strings(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum lexicographical value: {min_val_2}"")
+    print(f""Maximum lexicographical value: {max_val_2}"")
+    empty_list = []
+    min_val_3, max_val_3 = find_min_max_strings(empty_list)
+    print(f""\nList: {empty_list}"")
+    print(f""Minimum lexicographical value: {min_val_3}"")
+    print(f""Maximum lexicographical value: {max_val_3}"")",True,3,13240,212_5_3.py
+212,5,Find the minimum and maximum,Implement a function that finds the minimum and maximum values in a list of strings based on lexicographical order.,"def find_min_max_strings(string_list):
+    if not string_list:
+        return None, None
+    minimum = string_list[0]
+    maximum = string_list[0]
+    for s in string_list:
+        if s < minimum:
+            minimum = s
+        if s > maximum:
+            maximum = s
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [""apple"", ""zebra"", ""banana"", ""cat"", ""dog""]
+    minimum_val, maximum_val = find_min_max_strings(sample_list)
+    print(f""List: {sample_list}"")
+    print(f""Minimum lexicographical value: {minimum_val}"")
+    print(f""Maximum lexicographical value: {maximum_val}"")
+    sample_list_2 = [""zoo"", ""ant"", ""bear"", ""lion""]
+    minimum_val_2, maximum_val_2 = find_min_max_strings(sample_list_2)
+    print(f""\nList: {sample_list_2}"")
+    print(f""Minimum lexicographical value: {minimum_val_2}"")
+    print(f""Maximum lexicographical value: {maximum_val_2}"")
+    sample_list_3 = []
+    minimum_val_3, maximum_val_3 = find_min_max_strings(sample_list_3)
+    print(f""\nList: {sample_list_3}"")
+    print(f""Minimum lexicographical value: {minimum_val_3}"")
+    print(f""Maximum lexicographical value: {maximum_val_3}"")",True,4,13241,212_5_4.py
+212,6,Find the minimum and maximum,Write a concise and highly readable Python expression or one-liner to find the minimum and maximum values in a given list of numbers.,"if __name__ == '__main__':
+    data = [15, 3, 8, 22, 1]
+    minimum = min(data)
+    maximum = max(data)
+    print(f""Minimum: {minimum}, Maximum: {maximum}"")",True,0,13242,212_6.py
+212,6,Find the minimum and maximum,Write a concise and highly readable Python expression or one-liner to find the minimum and maximum values in a given list of numbers.,"if __name__ == '__main__':
+    data = [15, 3, 88, 42, 9]
+    minimum = min(data)
+    maximum = max(data)
+    print(f""Minimum: {minimum}, Maximum: {maximum}"")",True,1,13243,212_6_1.py
+212,6,Find the minimum and maximum,Write a concise and highly readable Python expression or one-liner to find the minimum and maximum values in a given list of numbers.,"if __name__ == '__main__':
+    data = [10, 5, 20, 8, 15]
+    minimum = min(data)
+    maximum = max(data)
+    print(f""Minimum: {minimum}, Maximum: {maximum}"")",True,2,13244,212_6_2.py
+212,7,Find the minimum and maximum,"Design and implement a function that handles edge cases, such as empty lists, when finding the minimum and maximum values of a list of integers.","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for item in data:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    min1, max1 = find_min_max(list1)
+    print(f""List: {list1}, Minimum: {min1}, Maximum: {max1}"")
+    list2 = []
+    min2, max2 = find_min_max(list2)
+    print(f""List: {list2}, Minimum: {min2}, Maximum: {max2}"")
+    list3 = [42]
+    min3, max3 = find_min_max(list3)
+    print(f""List: {list3}, Minimum: {min3}, Maximum: {max3}"")
+    list4 = [-10, -5, -20, 0]
+    min4, max4 = find_min_max(list4)
+    print(f""List: {list4}, Minimum: {min4}, Maximum: {max4}"")",True,0,13245,212_7.py
+212,7,Find the minimum and maximum,"Design and implement a function that handles edge cases, such as empty lists, when finding the minimum and maximum values of a list of integers.","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for item in data:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = []
+    list3 = [42]
+    list4 = [-10, -5, -20]
+    list5 = [7]
+    min1, max1 = find_min_max(list1)
+    print(f""List: {list1}, Min: {min1}, Max: {max1}"")
+    min2, max2 = find_min_max(list2)
+    print(f""List: {list2}, Min: {min2}, Max: {max2}"")
+    min3, max3 = find_min_max(list3)
+    print(f""List: {list3}, Min: {min3}, Max: {max3}"")
+    min4, max4 = find_min_max(list4)
+    print(f""List: {list4}, Min: {min4}, Max: {max4}"")
+    min5, max5 = find_min_max(list5)
+    print(f""List: {list5}, Min: {min5}, Max: {max5}"")",True,1,13246,212_7_1.py
+212,7,Find the minimum and maximum,"Design and implement a function that handles edge cases, such as empty lists, when finding the minimum and maximum values of a list of integers.","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for item in data:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    min1, max1 = find_min_max(list1)
+    print(f""List: {list1}, Min: {min1}, Max: {max1}"")
+    list2 = []
+    min2, max2 = find_min_max(list2)
+    print(f""List: {list2}, Min: {min2}, Max: {max2}"")
+    list3 = [42]
+    min3, max3 = find_min_max(list3)
+    print(f""List: {list3}, Min: {min3}, Max: {max3}"")
+    list4 = [-10, -5, -20, 0]
+    min4, max4 = find_min_max(list4)
+    print(f""List: {list4}, Min: {min4}, Max: {max4}"")",True,2,13247,212_7_2.py
+212,7,Find the minimum and maximum,"Design and implement a function that handles edge cases, such as empty lists, when finding the minimum and maximum values of a list of integers.","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for item in data:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = []
+    list3 = [100]
+    list4 = [-5, -1, -10]
+    list5 = []
+    min1, max1 = find_min_max(list1)
+    print(f""List: {list1}, Min: {min1}, Max: {max1}"")
+    min2, max2 = find_min_max(list2)
+    print(f""List: {list2}, Min: {min2}, Max: {max2}"")
+    min3, max3 = find_min_max(list3)
+    print(f""List: {list3}, Min: {min3}, Max: {max3}"")
+    min4, max4 = find_min_max(list4)
+    print(f""List: {list4}, Min: {min4}, Max: {max4}"")
+    min5, max5 = find_min_max(list5)
+    print(f""List: {list5}, Min: {min5}, Max: {max5}"")",True,3,13248,212_7_3.py
+212,7,Find the minimum and maximum,"Design and implement a function that handles edge cases, such as empty lists, when finding the minimum and maximum values of a list of integers.","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for item in data:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    return minimum, maximum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    min1, max1 = find_min_max(list1)
+    print(f""List: {list1}, Minimum: {min1}, Maximum: {max1}"")
+    list2 = [-10, 0, 5, -20]
+    min2, max2 = find_min_max(list2)
+    print(f""List: {list2}, Minimum: {min2}, Maximum: {max2}"")
+    list3 = []
+    min3, max3 = find_min_max(list3)
+    print(f""List: {list3}, Minimum: {min3}, Maximum: {max3}"")
+    list4 = [7]
+    min4, max4 = find_min_max(list4)
+    print(f""List: {list4}, Minimum: {min4}, Maximum: {max4}"")",True,4,13249,212_7_4.py
+211,14,Compare two sample sets,"Generate a script that defines two distinct sample sets, `data_set_x` and `data_set_y`, and then prints a detailed comparison report. The report must explicitly show the common elements, the unique elements in X, and the unique elements in Y.",,False,0,13250,211_14.py
+212,9,Find the minimum and maximum,"Write a comparison function that takes two separate lists of numbers and returns a dictionary containing the minimum, maximum, and sum for both lists.","def compare_lists(list1, list2):
+    min1 = min(list1)
+    max1 = max(list1)
+    sum1 = sum(list1)
+    min2 = min(list2)
+    max2 = max(list2)
+    sum2 = sum(list2)
+    return {
+        ""list1"": {""min"": min1, ""max"": max1, ""sum"": sum1},
+        ""list2"": {""min"": min2, ""max"": max2, ""sum"": sum2}
+    }
+if __name__ == '__main__':
+    list_a = [10, 5, 20, 15]
+    list_b = [3, 8, 1, 12]
+    result = compare_lists(list_a, list_b)
+    print(result)",True,0,13251,212_9.py
+212,10,Find the minimum and maximum,Write a robust Python function named `find_min_max` that accepts a list of numbers and returns the minimum and maximum values in the list. Implement it using built-in functions for optimal performance.,"def find_min_max(data):
+    minimum = min(data)
+    maximum = max(data)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    min_val, max_val = find_min_max(sample_list)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")",True,0,13252,212_10.py
+212,10,Find the minimum and maximum,Write a robust Python function named `find_min_max` that accepts a list of numbers and returns the minimum and maximum values in the list. Implement it using built-in functions for optimal performance.,"def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [10, 4, 25, 8, 15]
+    min_val, max_val = find_min_max(sample_list)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")",True,1,13253,212_10_1.py
+212,10,Find the minimum and maximum,Write a robust Python function named `find_min_max` that accepts a list of numbers and returns the minimum and maximum values in the list. Implement it using built-in functions for optimal performance.,"def find_min_max(numbers):
+    minimum = min(numbers)
+    maximum = max(numbers)
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    min_val, max_val = find_min_max(sample_list)
+    print(f""Minimum: {min_val}"")
+    print(f""Maximum: {max_val}"")",True,2,13254,212_10_2.py
+212,10,Find the minimum and maximum,Write a robust Python function named `find_min_max` that accepts a list of numbers and returns the minimum and maximum values in the list. Implement it using built-in functions for optimal performance.,"def find_min_max(data):
+    return min(data), max(data)
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2, 8, 7, 6]
+    minimum, maximum = find_min_max(sample_list)
+    print(f""Minimum: {minimum}"")
+    print(f""Maximum: {maximum}"")",True,3,13255,212_10_3.py
+212,11,Find the minimum and maximum,Implement an optimized function `calculate_range` that takes a single list of integers and efficiently returns the difference between the maximum and minimum values in the list.,"def calculate_range(data):
+    if not data:
+        return 0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 9, 1, 7]
+    print(calculate_range(list1))
+    list2 = [-10, 5, 0, -3, 8]
+    print(calculate_range(list2))
+    list3 = [42]
+    print(calculate_range(list3))
+    list4 = []
+    print(calculate_range(list4))",True,0,13256,212_11.py
+212,11,Find the minimum and maximum,Implement an optimized function `calculate_range` that takes a single list of integers and efficiently returns the difference between the maximum and minimum values in the list.,"def calculate_range(data):
+    if not data:
+        return 0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    print(calculate_range(list1))
+    list2 = [-10, 0, 5, -3]
+    print(calculate_range(list2))
+    list3 = [7]
+    print(calculate_range(list3))
+    list4 = []
+    print(calculate_range(list4))",True,1,13257,212_11_1.py
+212,11,Find the minimum and maximum,Implement an optimized function `calculate_range` that takes a single list of integers and efficiently returns the difference between the maximum and minimum values in the list.,"def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 3, 15]
+    result = calculate_range(sample_list)
+    print(result)",True,2,13258,212_11_2.py
+212,11,Find the minimum and maximum,Implement an optimized function `calculate_range` that takes a single list of integers and efficiently returns the difference between the maximum and minimum values in the list.,"def calculate_range(data):
+    if not data:
+        return 0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    list2 = [-10, 0, 5, -5, 10]
+    list3 = [7]
+    list4 = []
+    print(calculate_range(list1))
+    print(calculate_range(list2))
+    print(calculate_range(list3))
+    print(calculate_range(list4))",True,3,13259,212_11_3.py
+212,11,Find the minimum and maximum,Implement an optimized function `calculate_range` that takes a single list of integers and efficiently returns the difference between the maximum and minimum values in the list.,"def calculate_range(data):
+    if not data:
+        return 0
+    return max(data) - min(data)
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(calculate_range(list1))
+    list2 = [-10, 0, 5, -5]
+    print(calculate_range(list2))
+    list3 = [7]
+    print(calculate_range(list3))
+    list4 = []
+    print(calculate_range(list4))",True,4,13260,212_11_4.py
+212,11,Find the minimum and maximum,Implement an optimized function `calculate_range` that takes a single list of integers and efficiently returns the difference between the maximum and minimum values in the list.,"def calculate_range(data):
+    if not data:
+        return 0
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return maximum - minimum
+if __name__ == '__main__':
+    list1 = [1, 5, 2, 8, 3]
+    print(calculate_range(list1))
+    list2 = [10, 4, 1, 9, 2]
+    print(calculate_range(list2))
+    list3 = [5]
+    print(calculate_range(list3))
+    list4 = []
+    print(calculate_range(list4))",True,5,13261,212_11_5.py
+209,10,Find the average of samples,"Write a complete, robust Python script that reads a list of numerical samples from standard input and calculates their arithmetic mean. The script must handle potential input errors gracefully.","import sys
+def calculate_mean(data):
+    if not data:
+        return None
+    return sum(data) / len(data)
+if __name__ == '__main__':
+    input_data_str = ""10 20 30 40 50""
+    try:
+        data = [float(x) for x in input_data_str.split()]
+        mean_value = calculate_mean(data)
+        if mean_value is not None:
+            print(mean_value)
+        else:
+            print(""No valid numerical data found."")
+    except ValueError:
+        print(""Error: Input contained non-numerical values."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,13262,209_10.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        if not self.numbers:
+            return None
+        minimum = min(self.numbers)
+        maximum = max(self.numbers)
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [10, 4, 25, 8, 30, 15]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,0,13263,212_13.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        if not self.numbers:
+            return None
+        minimum = self.numbers[0]
+        maximum = self.numbers[0]
+        for number in self.numbers:
+            if number < minimum:
+                minimum = number
+            if number > maximum:
+                maximum = number
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,1,13264,212_13_1.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        minimum = min(self.numbers)
+        maximum = max(self.numbers)
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [10, 4, 25, 8, 30, 15]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,2,13265,212_13_2.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        if not self.numbers:
+            return None
+        minimum = min(self.numbers)
+        maximum = max(self.numbers)
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [10, 4, 25, 8, 15]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,3,13266,212_13_3.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        if not self.numbers:
+            return None
+        minimum = self.numbers[0]
+        maximum = self.numbers[0]
+        for number in self.numbers:
+            if number < minimum:
+                minimum = number
+            if number > maximum:
+                maximum = number
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [15, 3, 88, 42, 9, 77]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,4,13267,212_13_4.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        minimum = min(self.numbers)
+        maximum = max(self.numbers)
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [10, 4, 22, 5, 30, 1]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,5,13268,212_13_5.py
+212,13,Find the minimum and maximum,Develop a class named `MinMaxFinder` with an initializer that accepts a list of numbers. Implement a method `get_min_max` that returns a tuple containing the minimum and maximum values found in the list. Ensure the implementation is clean and object-oriented.,"class MinMaxFinder:
+    def __init__(self, numbers):
+        self.numbers = numbers
+    def get_min_max(self):
+        if not self.numbers:
+            return None
+        minimum = min(self.numbers)
+        maximum = max(self.numbers)
+        return (minimum, maximum)
+if __name__ == '__main__':
+    sample_list = [10, 4, 22, 8, 15]
+    finder = MinMaxFinder(sample_list)
+    result = finder.get_min_max()
+    print(result)",True,6,13269,212_13_6.py
+212,8,Find the minimum and maximum,"Write a complete, well-documented Python program that prompts the user to enter a series of numbers and then prints the calculated minimum and maximum values.",,False,0,13270,212_8.py
+213,0,Analyze simple number sets,"Write a complete, efficient Python script to find all prime numbers up to a given limit N using the Sieve of Eratosthenes algorithm.","import math
+def sieve_of_eratosthenes(n):
+    if n < 2:
+        return []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    for p in range(2, int(math.sqrt(n)) + 1):
+        if is_prime[p]:
+            for i in range(p * p, n + 1, p):
+                is_prime[i] = False
+    primes = [p for p in range(2, n + 1) if is_prime[p]]
+    return primes
+if __name__ == '__main__':
+    limit = 50
+    primes = sieve_of_eratosthenes(limit)
+    print(primes)",True,0,13271,213_0.py
+213,0,Analyze simple number sets,"Write a complete, efficient Python script to find all prime numbers up to a given limit N using the Sieve of Eratosthenes algorithm.","import math
+def sieve_of_eratosthenes(n):
+    if n < 2:
+        return []
+    is_prime = [True] * (n + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    for p in range(2, int(math.sqrt(n)) + 1):
+        if is_prime[p]:
+            for i in range(p * p, n + 1, p):
+                is_prime[i] = False
+    primes = [p for p in range(2, n + 1) if is_prime[p]]
+    return primes
+if __name__ == '__main__':
+    limit = 50
+    prime_numbers = sieve_of_eratosthenes(limit)
+    print(prime_numbers)",True,1,13272,213_0_1.py
+212,14,Find the minimum and maximum,"Write an efficient algorithm to find the minimum and maximum elements in a potentially very large, unsorted list of floating-point numbers, prioritizing time complexity O(n).","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, -0.5, 100.0, -50.2]
+    minimum_val, maximum_val = find_min_max(sample_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,0,13273,212_14.py
+212,14,Find the minimum and maximum,"Write an efficient algorithm to find the minimum and maximum elements in a potentially very large, unsorted list of floating-point numbers, prioritizing time complexity O(n).","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for element in data:
+        if element < minimum:
+            minimum = element
+        if element > maximum:
+            maximum = element
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, -0.5, 10.0, -3.14159, 0.0]
+    minimum_val, maximum_val = find_min_max(sample_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,1,13274,212_14_1.py
+212,14,Find the minimum and maximum,"Write an efficient algorithm to find the minimum and maximum elements in a potentially very large, unsorted list of floating-point numbers, prioritizing time complexity O(n).","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, -0.5, 100.0, -99.9]
+    minimum_val, maximum_val = find_min_max(sample_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,2,13275,212_14_2.py
+212,14,Find the minimum and maximum,"Write an efficient algorithm to find the minimum and maximum elements in a potentially very large, unsorted list of floating-point numbers, prioritizing time complexity O(n).","def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, -0.5, 99.9, -100.0, 5.0]
+    minimum_val, maximum_val = find_min_max(sample_list)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")",True,3,13276,212_14_3.py
+212,14,Find the minimum and maximum,"Write an efficient algorithm to find the minimum and maximum elements in a potentially very large, unsorted list of floating-point numbers, prioritizing time complexity O(n).","def find_min_max(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    maximum = data[0]
+    for x in data[1:]:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [3.14, 1.618, 2.718, -0.5, 99.9, -100.0, 5.0]
+    min_val, max_val = find_min_max(sample_list)
+    print(f""Sample List: {sample_list}"")
+    print(f""Minimum element: {min_val}"")
+    print(f""Maximum element: {max_val}"")",True,4,13277,212_14_4.py
+213,1,Analyze simple number sets,"Implement an optimized function named `analyze_set` that takes a list of integers and returns a dictionary detailing the count of even, odd, positive, and negative numbers in the set.","def analyze_set(data):
+    even_count = 0
+    odd_count = 0
+    positive_count = 0
+    negative_count = 0
+    for num in data:
+        if num % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if num > 0:
+            positive_count += 1
+        elif num < 0:
+            negative_count += 1
+    return {
+        ""even"": even_count,
+        ""odd"": odd_count,
+        ""positive"": positive_count,
+        ""negative"": negative_count
+    }
+if __name__ == '__main__':
+    sample_data = [1, -2, 3, -4, 5, 6, -7, 8]
+    result = analyze_set(sample_data)
+    print(result)",True,0,13278,213_1.py
+213,1,Analyze simple number sets,"Implement an optimized function named `analyze_set` that takes a list of integers and returns a dictionary detailing the count of even, odd, positive, and negative numbers in the set.","def analyze_set(data):
+    even_count = 0
+    odd_count = 0
+    positive_count = 0
+    negative_count = 0
+    for num in data:
+        if num % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if num > 0:
+            positive_count += 1
+        elif num < 0:
+            negative_count += 1
+    return {
+        ""even"": even_count,
+        ""odd"": odd_count,
+        ""positive"": positive_count,
+        ""negative"": negative_count
+    }
+if __name__ == '__main__':
+    sample_data = [1, 2, -3, 4, 5, -6, 7, 8, 0]
+    result = analyze_set(sample_data)
+    print(result)",True,1,13279,213_1_1.py
+213,1,Analyze simple number sets,"Implement an optimized function named `analyze_set` that takes a list of integers and returns a dictionary detailing the count of even, odd, positive, and negative numbers in the set.","def analyze_set(data):
+    even_count = 0
+    odd_count = 0
+    positive_count = 0
+    negative_count = 0
+    for num in data:
+        if num % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if num > 0:
+            positive_count += 1
+        elif num < 0:
+            negative_count += 1
+    return {
+        ""even"": even_count,
+        ""odd"": odd_count,
+        ""positive"": positive_count,
+        ""negative"": negative_count
+    }
+if __name__ == '__main__':
+    sample_data = [1, -2, 4, -5, 6, 7, -8, 0]
+    result = analyze_set(sample_data)
+    print(result)",True,2,13280,213_1_2.py
+213,1,Analyze simple number sets,"Implement an optimized function named `analyze_set` that takes a list of integers and returns a dictionary detailing the count of even, odd, positive, and negative numbers in the set.","def analyze_set(data):
+    even_count = 0
+    odd_count = 0
+    positive_count = 0
+    negative_count = 0
+    for num in data:
+        if num % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if num > 0:
+            positive_count += 1
+        else:
+            negative_count += 1
+    return {
+        ""even"": even_count,
+        ""odd"": odd_count,
+        ""positive"": positive_count,
+        ""negative"": negative_count
+    }
+if __name__ == '__main__':
+    sample_data = [1, 2, -3, 4, -5, 6, 7, -8]
+    result = analyze_set(sample_data)
+    print(result)",True,3,13281,213_1_3.py
+213,1,Analyze simple number sets,"Implement an optimized function named `analyze_set` that takes a list of integers and returns a dictionary detailing the count of even, odd, positive, and negative numbers in the set.","def analyze_set(data):
+    even_count = 0
+    odd_count = 0
+    positive_count = 0
+    negative_count = 0
+    for num in data:
+        if num % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if num > 0:
+            positive_count += 1
+        elif num < 0:
+            negative_count += 1
+    return {
+        ""even"": even_count,
+        ""odd"": odd_count,
+        ""positive"": positive_count,
+        ""negative"": negative_count
+    }
+if __name__ == '__main__':
+    sample_data = [1, 2, -3, 4, -5, 6, 7, -8]
+    result = analyze_set(sample_data)
+    print(result)",True,4,13282,213_1_4.py
+213,2,Analyze simple number sets,"Develop a class named `NumberSetAnalyzer` with a method to analyze a provided list of numbers, calculating the mean, median, and mode.","class NumberSetAnalyzer:
+    def analyze(self, numbers):
+        if not numbers:
+            return {""mean"": None, ""median"": None, ""mode"": None}
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        mean = sum(sorted_numbers) / n
+        if n % 2 == 1:
+            median = sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            median = (mid1 + mid2) / 2
+        counts = {}
+        for x in sorted_numbers:
+            counts[x] = counts.get(x, 0) + 1
+        max_count = 0
+        modes = []
+        for num, count in counts.items():
+            if count > max_count:
+                max_count = count
+                modes = [num]
+            elif count == max_count:
+                modes.append(num)
+        mode = modes if max_count > 1 else None
+        return {""mean"": mean, ""median"": median, ""mode"": mode}
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    sample_data = [1, 2, 2, 3, 4, 4, 4, 5, 5]
+    results = analyzer.analyze(sample_data)
+    print(results)
+    sample_data_2 = [10, 20, 30, 40, 50]
+    results_2 = analyzer.analyze(sample_data_2)
+    print(results_2)
+    sample_data_3 = [1, 1, 2, 2, 3, 4]
+    results_3 = analyzer.analyze(sample_data_3)
+    print(results_3)
+    sample_data_4 = []
+    results_4 = analyzer.analyze(sample_data_4)
+    print(results_4)",True,0,13283,213_2.py
+213,2,Analyze simple number sets,"Develop a class named `NumberSetAnalyzer` with a method to analyze a provided list of numbers, calculating the mean, median, and mode.","class NumberSetAnalyzer:
+    def analyze(self, numbers):
+        if not numbers:
+            return {""mean"": None, ""median"": None, ""mode"": None}
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        mean = sum(sorted_numbers) / n
+        if n % 2 == 1:
+            median = sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            median = (mid1 + mid2) / 2
+        counts = {}
+        for x in numbers:
+            counts[x] = counts.get(x, 0) + 1
+        max_count = 0
+        modes = []
+        for num, count in counts.items():
+            if count > max_count:
+                max_count = count
+                modes = [num]
+            elif count == max_count:
+                modes.append(num)
+        mode = modes if max_count > 1 else None
+        return {""mean"": mean, ""median"": median, ""mode"": mode}
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    sample_data = [1, 2, 3, 4, 5, 5, 6, 7, 8, 8, 8]
+    results = analyzer.analyze(sample_data)
+    print(results)
+    sample_data_2 = [10, 20, 30, 40, 50]
+    results_2 = analyzer.analyze(sample_data_2)
+    print(results_2)
+    sample_data_3 = [1, 1, 2, 2, 3, 4]
+    results_3 = analyzer.analyze(sample_data_3)
+    print(results_3)
+    sample_data_4 = []
+    results_4 = analyzer.analyze(sample_data_4)
+    print(results_4)",True,1,13284,213_2_1.py
+213,2,Analyze simple number sets,"Develop a class named `NumberSetAnalyzer` with a method to analyze a provided list of numbers, calculating the mean, median, and mode.","class NumberSetAnalyzer:
+    def analyze(self, numbers):
+        if not numbers:
+            return {""mean"": None, ""median"": None, ""mode"": None}
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        mean = sum(sorted_numbers) / n
+        if n % 2 == 1:
+            median = sorted_numbers[n // 2]
+        else:
+            median = (sorted_numbers[n // 2 - 1] + sorted_numbers[n // 2]) / 2
+        counts = {}
+        for x in sorted_numbers:
+            counts[x] = counts.get(x, 0) + 1
+        max_count = 0
+        modes = []
+        for num, count in counts.items():
+            if count > max_count:
+                max_count = count
+                modes = [num]
+            elif count == max_count:
+                modes.append(num)
+        mode = modes if max_count > 1 else (sorted_numbers[0] if n > 0 else None)
+        return {""mean"": mean, ""median"": median, ""mode"": modes}
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    data1 = [1, 2, 3, 4, 5]
+    results1 = analyzer.analyze(data1)
+    print(f""Data: {data1}"")
+    print(f""Results: {results1}"")
+    data2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    results2 = analyzer.analyze(data2)
+    print(f""\nData: {data2}"")
+    print(f""Results: {results2}"")
+    data3 = [10, 20, 30, 40, 10, 20]
+    results3 = analyzer.analyze(data3)
+    print(f""\nData: {data3}"")
+    print(f""Results: {results3}"")
+    data4 = []
+    results4 = analyzer.analyze(data4)
+    print(f""\nData: {data4}"")
+    print(f""Results: {results4}"")",True,2,13285,213_2_2.py
+213,2,Analyze simple number sets,"Develop a class named `NumberSetAnalyzer` with a method to analyze a provided list of numbers, calculating the mean, median, and mode.","class NumberSetAnalyzer:
+    def analyze(self, numbers):
+        if not numbers:
+            return {""mean"": None, ""median"": None, ""mode"": None}
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        mean = sum(sorted_numbers) / n
+        if n % 2 == 1:
+            median = sorted_numbers[n // 2]
+        else:
+            median = (sorted_numbers[n // 2 - 1] + sorted_numbers[n // 2]) / 2
+        counts = {}
+        for x in sorted_numbers:
+            counts[x] = counts.get(x, 0) + 1
+        max_count = 0
+        modes = []
+        for num, count in counts.items():
+            if count > max_count:
+                max_count = count
+                modes = [num]
+            elif count == max_count:
+                modes.append(num)
+        mode = modes if max_count > 1 else None
+        return {""mean"": mean, ""median"": median, ""mode"": mode}
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    sample_data = [1, 2, 2, 3, 4, 4, 4, 5]
+    results = analyzer.analyze(sample_data)
+    print(results)",True,3,13286,213_2_3.py
+213,2,Analyze simple number sets,"Develop a class named `NumberSetAnalyzer` with a method to analyze a provided list of numbers, calculating the mean, median, and mode.","class NumberSetAnalyzer:
+    def analyze(self, numbers):
+        if not numbers:
+            return {""mean"": None, ""median"": None, ""mode"": None}
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        mean = sum(sorted_numbers) / n
+        if n % 2 == 1:
+            median = sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            median = (mid1 + mid2) / 2
+        counts = {}
+        for x in numbers:
+            counts[x] = counts.get(x, 0) + 1
+        max_count = 0
+        modes = []
+        for num, count in counts.items():
+            if count > max_count:
+                max_count = count
+                modes = [num]
+            elif count == max_count:
+                modes.append(num)
+        mode = modes if max_count > 1 else None
+        return {""mean"": mean, ""median"": median, ""mode"": mode}
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    sample_data = [1, 2, 2, 3, 4, 4, 4, 5]
+    results = analyzer.analyze(sample_data)
+    print(results)
+    sample_data_2 = [10, 20, 30, 40, 50]
+    results_2 = analyzer.analyze(sample_data_2)
+    print(results_2)
+    sample_data_3 = [1, 1, 2, 2, 3, 4]
+    results_3 = analyzer.analyze(sample_data_3)
+    print(results_3)
+    sample_data_4 = []
+    results_4 = analyzer.analyze(sample_data_4)
+    print(results_4)",True,4,13287,213_2_4.py
+213,2,Analyze simple number sets,"Develop a class named `NumberSetAnalyzer` with a method to analyze a provided list of numbers, calculating the mean, median, and mode.","class NumberSetAnalyzer:
+    def analyze(self, numbers):
+        if not numbers:
+            return {""mean"": None, ""median"": None, ""mode"": None}
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        mean = sum(sorted_numbers) / n
+        if n % 2 == 1:
+            median = sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            median = (mid1 + mid2) / 2
+        counts = {}
+        for num in sorted_numbers:
+            counts[num] = counts.get(num, 0) + 1
+        max_count = 0
+        modes = []
+        for num, count in counts.items():
+            if count > max_count:
+                max_count = count
+                modes = [num]
+            elif count == max_count:
+                modes.append(num)
+        mode = modes if max_count > 1 else None
+        return {""mean"": mean, ""median"": median, ""mode"": mode}
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    sample_data = [1, 2, 3, 4, 5, 5, 6, 7, 8, 8, 8]
+    results = analyzer.analyze(sample_data)
+    print(results)
+    sample_data_2 = [10, 20, 30, 40, 50]
+    results_2 = analyzer.analyze(sample_data_2)
+    print(results_2)
+    sample_data_3 = [1, 1, 2, 2, 3, 4]
+    results_3 = analyzer.analyze(sample_data_3)
+    print(results_3)
+    sample_data_4 = []
+    results_4 = analyzer.analyze(sample_data_4)
+    print(results_4)",True,5,13288,213_2_5.py
+212,12,Find the minimum and maximum,"Write a complete, well-documented Python script that reads user input to create a list of numbers and then uses a single pass (or equivalent efficient method) to determine and print the minimum, maximum, and sum of the numbers.","import math
+def analyze_numbers(numbers):
+    if not numbers:
+        return None, None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    total_sum = 0
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+        total_sum += number
+    return minimum, maximum, total_sum
+if __name__ == '__main__':
+    sample_numbers = [15, 8, 22, 4, 30, 11]
+    minimum_val, maximum_val, sum_val = analyze_numbers(sample_numbers)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    print(f""Sum: {sum_val}"")",True,0,13289,212_12.py
+212,12,Find the minimum and maximum,"Write a complete, well-documented Python script that reads user input to create a list of numbers and then uses a single pass (or equivalent efficient method) to determine and print the minimum, maximum, and sum of the numbers.","import math
+def analyze_numbers(numbers):
+    if not numbers:
+        return None, None, None
+    minimum = numbers[0]
+    maximum = numbers[0]
+    total_sum = 0
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+        total_sum += number
+    return minimum, maximum, total_sum
+if __name__ == '__main__':
+    sample_numbers = [15, 8, 22, 4, 30, 11]
+    minimum_val, maximum_val, total_sum = analyze_numbers(sample_numbers)
+    print(f""Minimum: {minimum_val}"")
+    print(f""Maximum: {maximum_val}"")
+    print(f""Sum: {total_sum}"")",True,1,13290,212_12_1.py
+213,4,Analyze simple number sets,Implement a function to identify and group numbers from a list based on their parity (even/odd) and magnitude (positive/negative) and return the resulting categorized lists.,"def categorize_numbers(numbers):
+    even_positive = []
+    even_negative = []
+    odd_positive = []
+    odd_negative = []
+    for num in numbers:
+        if num % 2 == 0:
+            if num > 0:
+                even_positive.append(num)
+            else:
+                even_negative.append(num)
+        else:
+            if num > 0:
+                odd_positive.append(num)
+            else:
+                odd_negative.append(num)
+    return {
+        ""even_positive"": even_positive,
+        ""even_negative"": even_negative,
+        ""odd_positive"": odd_positive,
+        ""odd_negative"": odd_negative
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, -3, 4, -5, 6, 7, -8, 9, 10]
+    result = categorize_numbers(sample_list)
+    print(result)",True,0,13291,213_4.py
+213,4,Analyze simple number sets,Implement a function to identify and group numbers from a list based on their parity (even/odd) and magnitude (positive/negative) and return the resulting categorized lists.,"def categorize_numbers(numbers):
+    even_positive = []
+    even_negative = []
+    odd_positive = []
+    odd_negative = []
+    for num in numbers:
+        if num % 2 == 0:
+            if num > 0:
+                even_positive.append(num)
+            else:
+                even_negative.append(num)
+        else:
+            if num > 0:
+                odd_positive.append(num)
+            else:
+                odd_negative.append(num)
+    return {
+        ""even_positive"": even_positive,
+        ""even_negative"": even_negative,
+        ""odd_positive"": odd_positive,
+        ""odd_negative"": odd_negative
+    }
+if __name__ == '__main__':
+    sample_numbers = [1, 2, -3, 4, -5, 6, 7, -8]
+    result = categorize_numbers(sample_numbers)
+    print(result)",True,1,13292,213_4_1.py
+213,4,Analyze simple number sets,Implement a function to identify and group numbers from a list based on their parity (even/odd) and magnitude (positive/negative) and return the resulting categorized lists.,"def categorize_numbers(numbers):
+    even_positive = []
+    even_negative = []
+    odd_positive = []
+    odd_negative = []
+    for num in numbers:
+        if num % 2 == 0:
+            if num > 0:
+                even_positive.append(num)
+            else:
+                even_negative.append(num)
+        else:
+            if num > 0:
+                odd_positive.append(num)
+            else:
+                odd_negative.append(num)
+    return {
+        ""even_positive"": even_positive,
+        ""even_negative"": even_negative,
+        ""odd_positive"": odd_positive,
+        ""odd_negative"": odd_negative
+    }
+if __name__ == '__main__':
+    sample_list = [1, -2, 4, -3, 5, -6, 0, 7, -8]
+    result = categorize_numbers(sample_list)
+    print(result)",True,2,13293,213_4_2.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","import math
+def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 22.333333333333332, 4.1, 15.0, 8.9]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")",True,0,13294,213_3.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 20.1, 30.0, 40.7, 50.2, 60.8]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")
+    sample_data_even = [1, 2, 3, 4]
+    mean_val_e, median_val_e, range_val_e = calculate_stats(sample_data_even)
+    print(f""\nData: {sample_data_even}"")
+    print(f""Arithmetic Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")
+    empty_data = []
+    mean_val_e, median_val_e, range_val_e = calculate_stats(empty_data)
+    print(f""\nData: {empty_data}"")
+    print(f""Arithmetic Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")",True,1,13295,213_3_1.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","import math
+def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 20.1, 30.0, 40.9, 50.2, 60.8]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")",True,2,13296,213_3_2.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","import math
+def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 20.1, 30.0, 40.7, 50.2]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")
+    sample_data_even = [1, 2, 3, 4]
+    mean_val_e, median_val_e, range_val_e = calculate_stats(sample_data_even)
+    print(f""\nData: {sample_data_even}"")
+    print(f""Arithmetic Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")
+    sample_data_single = [100]
+    mean_val_s, median_val_s, range_val_s = calculate_stats(sample_data_single)
+    print(f""\nData: {sample_data_single}"")
+    print(f""Arithmetic Mean: {mean_val_s}"")
+    print(f""Median: {median_val_s}"")
+    print(f""Range: {range_val_s}"")
+    sample_data_empty = []
+    mean_val_e, median_val_e, range_val_e = calculate_stats(sample_data_empty)
+    print(f""\nData: {sample_data_empty}"")
+    print(f""Arithmetic Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")",True,3,13297,213_3_3.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 22.333333333333332, 4.1, 15.0, 8.9]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")",True,4,13298,213_3_4.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 2.1, 8.0, 4.5, 10.5, 3.0]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")",True,5,13299,213_3_5.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","import math
+def calculate_stats(data):
+    if not data:
+        return None, None, None
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    mean = sum(sorted_data) / n
+    if n % 2 == 1:
+        median = sorted_data[n // 2]
+    else:
+        mid1 = sorted_data[n // 2 - 1]
+        mid2 = sorted_data[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_data[-1] - sorted_data[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 22.1, 3.0, 15.8, 4.2, 20.0, 11.9]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")",True,6,13300,213_3_6.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","def calculate_stats(numbers):
+    if not numbers:
+        return None, None, None
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+    mean = sum(sorted_numbers) / n
+    if n % 2 == 1:
+        median = sorted_numbers[n // 2]
+    else:
+        mid1 = sorted_numbers[n // 2 - 1]
+        mid2 = sorted_numbers[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_numbers[-1] - sorted_numbers[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 20.1, 30.0, 40.5, 50.0]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Sample Data: {sample_data}"")
+    print(f""Arithmetic Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")
+    sample_data_even = [1, 2, 3, 4]
+    mean_val_e, median_val_e, range_val_e = calculate_stats(sample_data_even)
+    print(f""\nSample Data: {sample_data_even}"")
+    print(f""Arithmetic Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")
+    empty_data = []
+    mean_val_e, median_val_e, range_val_e = calculate_stats(empty_data)
+    print(f""\nSample Data: {empty_data}"")
+    print(f""Arithmetic Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")",True,7,13301,213_3_7.py
+213,3,Analyze simple number sets,"Write a function that takes a list of numbers and calculates the arithmetic mean, median, and range, handling potential floating-point precision issues robustly.","def calculate_stats(numbers):
+    if not numbers:
+        return None, None, None
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+    mean = sum(sorted_numbers) / n
+    if n % 2 == 1:
+        median = sorted_numbers[n // 2]
+    else:
+        mid1 = sorted_numbers[n // 2 - 1]
+        mid2 = sorted_numbers[n // 2]
+        median = (mid1 + mid2) / 2.0
+    range_val = sorted_numbers[-1] - sorted_numbers[0]
+    return mean, median, range_val
+if __name__ == '__main__':
+    sample_data = [10.5, 20.1, 30.0, 40.9, 50.2]
+    mean_val, median_val, range_val = calculate_stats(sample_data)
+    print(f""Data: {sample_data}"")
+    print(f""Mean: {mean_val}"")
+    print(f""Median: {median_val}"")
+    print(f""Range: {range_val}"")
+    sample_data_even = [1, 2, 3, 4]
+    mean_val_e, median_val_e, range_val_e = calculate_stats(sample_data_even)
+    print(f""\nData: {sample_data_even}"")
+    print(f""Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")
+    empty_data = []
+    mean_val_e, median_val_e, range_val_e = calculate_stats(empty_data)
+    print(f""\nData: {empty_data}"")
+    print(f""Mean: {mean_val_e}"")
+    print(f""Median: {median_val_e}"")
+    print(f""Range: {range_val_e}"")",True,8,13302,213_3_8.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return 0, 1, 0.0
+    n = len(data)
+    total_sum = sum(data)
+    total_product = 1
+    for x in data:
+        total_product *= x
+    mean = total_sum / n
+    variance = sum((x - mean) ** 2 for x in data) / n
+    return total_sum, total_product, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    total_sum, total_product, variance = analyze_sequence(input_sequence)
+    print(f""Sum: {total_sum}"")
+    print(f""Product: {total_product}"")
+    print(f""Variance: {variance}"")",True,0,13303,213_5.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return 0, 0, 0
+    n = len(data)
+    total_sum = sum(data)
+    total_product = 1
+    for x in data:
+        total_product *= x
+    mean = total_sum / n
+    variance = sum((x - mean) ** 2 for x in data) / n
+    return total_sum, total_product, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    data_to_analyze = input_sequence
+    s, p, v = analyze_sequence(data_to_analyze)
+    print(f""Sum: {s}"")
+    print(f""Product: {p}"")
+    print(f""Variance: {v}"")",True,1,13304,213_5_1.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return 0, 1, 0.0
+    n = len(data)
+    total_sum = sum(data)
+    total_product = 1
+    for x in data:
+        total_product *= x
+    mean = total_sum / n
+    variance = sum([(x - mean) ** 2 for x in data]) / n
+    return total_sum, total_product, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    total_sum, total_product, variance = analyze_sequence(input_sequence)
+    print(f""Sum: {total_sum}"")
+    print(f""Product: {total_product}"")
+    print(f""Variance: {variance}"")",True,2,13305,213_5_2.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return None, None, None
+    n = len(data)
+    total_sum = sum(data)
+    total_product = 1
+    for x in data:
+        total_product *= x
+    mean = total_sum / n
+    variance = sum((x - mean) ** 2 for x in data) / n
+    return total_sum, total_product, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    total_sum, total_product, variance = analyze_sequence(input_sequence)
+    print(f""Input Sequence: {input_sequence}"")
+    print(f""Sum: {total_sum}"")
+    print(f""Product: {total_product}"")
+    print(f""Variance: {variance}"")",True,3,13306,213_5_3.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return None, None, None
+    n = len(data)
+    total_sum = sum(data)
+    total_product = 1
+    for x in data:
+        total_product *= x
+    mean = total_sum / n
+    variance = sum([(x - mean) ** 2 for x in data]) / n
+    return total_sum, total_product, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    total_sum, total_product, variance = analyze_sequence(input_sequence)
+    print(f""Input Sequence: {input_sequence}"")
+    print(f""Sum: {total_sum}"")
+    print(f""Product: {total_product}"")
+    print(f""Variance: {variance}"")",True,4,13307,213_5_4.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return 0, 0, 0
+    n = len(data)
+    s = sum(data)
+    p = 1
+    for x in data:
+        p *= x
+    mean = s / n
+    variance = sum([(x - mean) ** 2 for x in data]) / n
+    return s, p, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    total_sum, total_product, variance = analyze_sequence(input_sequence)
+    print(f""Sum: {total_sum}"")
+    print(f""Product: {total_product}"")
+    print(f""Variance: {variance}"")",True,5,13308,213_5_5.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+def analyze_sequence(data):
+    if not data:
+        return 0, 0, 0
+    n = len(data)
+    total_sum = sum(data)
+    total_product = 1
+    for x in data:
+        total_product *= x
+    mean = total_sum / n
+    variance = sum([(x - mean) ** 2 for x in data]) / n
+    return total_sum, total_product, variance
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    sum_val, product_val, variance_val = analyze_sequence(input_sequence)
+    print(f""Sum: {sum_val}"")
+    print(f""Product: {product_val}"")
+    print(f""Variance: {variance_val}"")",True,6,13309,213_5_6.py
+213,5,Analyze simple number sets,"Write a script that reads a sequence of integers from standard input and prints statistical analysis, including the sum, product, and variance of the input set.","import math
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    n = len(data)
+    s = sum(data)
+    p = 1
+    for x in data:
+        p *= x
+    mean = s / n
+    variance = sum([(x - mean) ** 2 for x in data]) / n
+    print(f""Sum: {s}"")
+    print(f""Product: {p}"")
+    print(f""Variance: {variance}"")",True,7,13310,213_5_7.py
+213,6,Analyze simple number sets,Implement a method within an existing list processing function that efficiently calculates the frequency distribution of all unique numbers present in the input list.,"def process_list(data):
+    unique_numbers = set(data)
+    frequency_distribution = {}
+    for number in unique_numbers:
+        frequency_distribution[number] = data.count(number)
+    return frequency_distribution
+if __name__ == '__main__':
+    sample_list = [1, 2, 2, 3, 1, 4, 2, 5, 3, 1]
+    result = process_list(sample_list)
+    print(result)",True,0,13311,213_6.py
+213,6,Analyze simple number sets,Implement a method within an existing list processing function that efficiently calculates the frequency distribution of all unique numbers present in the input list.,"def process_list(data):
+    unique_numbers = set(data)
+    frequency_distribution = {}
+    for number in unique_numbers:
+        frequency_distribution[number] = data.count(number)
+    return frequency_distribution
+if __name__ == '__main__':
+    sample_list = [1, 2, 2, 3, 4, 2, 1, 5, 3, 2]
+    result = process_list(sample_list)
+    print(result)",True,1,13312,213_6_1.py
+213,6,Analyze simple number sets,Implement a method within an existing list processing function that efficiently calculates the frequency distribution of all unique numbers present in the input list.,"def process_and_calculate_frequency(data):
+    unique_numbers = set(data)
+    frequency_distribution = {}
+    for number in unique_numbers:
+        frequency_distribution[number] = data.count(number)
+    return frequency_distribution
+if __name__ == '__main__':
+    sample_list = [1, 2, 2, 3, 1, 4, 2, 5, 3, 1, 6]
+    result = process_and_calculate_frequency(sample_list)
+    print(result)",True,2,13313,213_6_2.py
+213,6,Analyze simple number sets,Implement a method within an existing list processing function that efficiently calculates the frequency distribution of all unique numbers present in the input list.,"def process_list(data):
+    unique_numbers = set(data)
+    frequency_distribution = {}
+    for number in unique_numbers:
+        frequency_distribution[number] = data.count(number)
+    return frequency_distribution
+if __name__ == '__main__':
+    sample_list = [1, 2, 2, 3, 1, 4, 2, 5, 1, 3, 3]
+    result = process_list(sample_list)
+    print(result)",True,3,13314,213_6_3.py
+213,7,Analyze simple number sets,"Create a function that takes a list of numbers and returns a tuple containing the smallest, largest, and the count of distinct elements in the set.","def analyze_list(numbers):
+    if not numbers:
+        return (None, None, 0)
+    smallest = min(numbers)
+    largest = max(numbers)
+    distinct_count = len(set(numbers))
+    return (smallest, largest, distinct_count)
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2]
+    result = analyze_list(sample_list)
+    print(result)",True,0,13315,213_7.py
+213,7,Analyze simple number sets,"Create a function that takes a list of numbers and returns a tuple containing the smallest, largest, and the count of distinct elements in the set.","def analyze_list(numbers):
+    if not numbers:
+        return None
+    smallest = min(numbers)
+    largest = max(numbers)
+    distinct_count = len(set(numbers))
+    return (smallest, largest, distinct_count)
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2]
+    result = analyze_list(sample_list)
+    print(result)",True,1,13316,213_7_1.py
+213,8,Analyze simple number sets,"Write a generator function that yields the square of every integer from 1 to 100, optimizing for memory efficiency.","def square_generator():
+    for i in range(1, 101):
+        yield i * i
+if __name__ == '__main__':
+    results = list(square_generator())
+    print(results)",True,0,13317,213_8.py
+213,9,Analyze simple number sets,"Implement a function to analyze a set of integers and determine if the set contains any numbers that are multiples of 3 or 5, returning a boolean result.","def analyze_multiples(numbers):
+    for num in numbers:
+        if num % 3 == 0 or num % 5 == 0:
+            return True
+    return False
+if __name__ == '__main__':
+    set1 = [1, 2, 4, 7, 8]
+    set2 = [3, 5, 6, 10, 11]
+    set3 = [10, 15, 20, 25]
+    set4 = [1, 2, 3, 4, 5]
+    print(f""Set {set1}: {analyze_multiples(set1)}"")
+    print(f""Set {set2}: {analyze_multiples(set2)}"")
+    print(f""Set {set3}: {analyze_multiples(set3)}"")
+    print(f""Set {set4}: {analyze_multiples(set4)}"")",True,0,13318,213_9.py
+213,9,Analyze simple number sets,"Implement a function to analyze a set of integers and determine if the set contains any numbers that are multiples of 3 or 5, returning a boolean result.","def analyze_multiples(numbers):
+    for number in numbers:
+        if number % 3 == 0 or number % 5 == 0:
+            return True
+    return False
+if __name__ == '__main__':
+    set1 = [1, 2, 4, 7, 8]
+    set2 = [3, 5, 6, 10, 11]
+    set3 = [10, 15, 20, 25]
+    set4 = [1, 2, 3, 4, 5]
+    print(f""Set {set1}: {analyze_multiples(set1)}"")
+    print(f""Set {set2}: {analyze_multiples(set2)}"")
+    print(f""Set {set3}: {analyze_multiples(set3)}"")
+    print(f""Set {set4}: {analyze_multiples(set4)}"")",True,1,13319,213_9_1.py
+213,9,Analyze simple number sets,"Implement a function to analyze a set of integers and determine if the set contains any numbers that are multiples of 3 or 5, returning a boolean result.","def analyze_multiples(numbers):
+    for number in numbers:
+        if number % 3 == 0 or number % 5 == 0:
+            return True
+    return False
+if __name__ == '__main__':
+    set1 = [1, 2, 4, 7, 8]
+    set2 = [3, 5, 6, 10, 11]
+    set3 = [10, 12, 15, 16]
+    set4 = [1, 2, 3, 4, 5]
+    print(f""Set {set1}: {analyze_multiples(set1)}"")
+    print(f""Set {set2}: {analyze_multiples(set2)}"")
+    print(f""Set {set3}: {analyze_multiples(set3)}"")
+    print(f""Set {set4}: {analyze_multiples(set4)}"")",True,2,13320,213_9_2.py
+213,11,Analyze simple number sets,"Implement an optimized function named 'analyze_number_set' that accepts a list of numbers and returns a dictionary containing the count of even numbers, the count of odd numbers, the sum of all numbers, and the minimum and maximum values in the set. Ensure the implementation is time-efficient.","def analyze_number_set(numbers):
+    if not numbers:
+        return {
+            ""even_count"": 0,
+            ""odd_count"": 0,
+            ""sum"": 0,
+            ""min"": None,
+            ""max"": None
+        }
+    even_count = 0
+    odd_count = 0
+    total_sum = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        total_sum += number
+        if number % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return {
+        ""even_count"": even_count,
+        ""odd_count"": odd_count,
+        ""sum"": total_sum,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = analyze_number_set(sample_list)
+    print(result)
+    sample_list_2 = [10, 20, 3, 7, 1]
+    result_2 = analyze_number_set(sample_list_2)
+    print(result_2)
+    sample_list_3 = []
+    result_3 = analyze_number_set(sample_list_3)
+    print(result_3)",True,0,13321,213_11.py
+213,11,Analyze simple number sets,"Implement an optimized function named 'analyze_number_set' that accepts a list of numbers and returns a dictionary containing the count of even numbers, the count of odd numbers, the sum of all numbers, and the minimum and maximum values in the set. Ensure the implementation is time-efficient.","def analyze_number_set(numbers):
+    if not numbers:
+        return {
+            ""even_count"": 0,
+            ""odd_count"": 0,
+            ""sum"": 0,
+            ""min"": None,
+            ""max"": None
+        }
+    even_count = 0
+    odd_count = 0
+    total_sum = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        total_sum += number
+        if number % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return {
+        ""even_count"": even_count,
+        ""odd_count"": odd_count,
+        ""sum"": total_sum,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = analyze_number_set(sample_list)
+    print(result)",True,1,13322,213_11_1.py
+213,11,Analyze simple number sets,"Implement an optimized function named 'analyze_number_set' that accepts a list of numbers and returns a dictionary containing the count of even numbers, the count of odd numbers, the sum of all numbers, and the minimum and maximum values in the set. Ensure the implementation is time-efficient.","import math
+def analyze_number_set(numbers):
+    if not numbers:
+        return {
+            ""even_count"": 0,
+            ""odd_count"": 0,
+            ""sum"": 0,
+            ""min"": None,
+            ""max"": None
+        }
+    even_count = 0
+    odd_count = 0
+    total_sum = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        total_sum += number
+        if number % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return {
+        ""even_count"": even_count,
+        ""odd_count"": odd_count,
+        ""sum"": total_sum,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = analyze_number_set(sample_list)
+    print(result)
+    sample_list_2 = [10, 20, 3, 5, 8]
+    result_2 = analyze_number_set(sample_list_2)
+    print(result_2)
+    sample_list_3 = []
+    result_3 = analyze_number_set(sample_list_3)
+    print(result_3)",True,2,13323,213_11_2.py
+213,11,Analyze simple number sets,"Implement an optimized function named 'analyze_number_set' that accepts a list of numbers and returns a dictionary containing the count of even numbers, the count of odd numbers, the sum of all numbers, and the minimum and maximum values in the set. Ensure the implementation is time-efficient.","def analyze_number_set(numbers):
+    if not numbers:
+        return {
+            ""even_count"": 0,
+            ""odd_count"": 0,
+            ""sum"": 0,
+            ""min"": None,
+            ""max"": None
+        }
+    even_count = 0
+    odd_count = 0
+    total_sum = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        total_sum += number
+        if number % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return {
+        ""even_count"": even_count,
+        ""odd_count"": odd_count,
+        ""sum"": total_sum,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = analyze_number_set(sample_list)
+    print(result)
+    sample_list_2 = [10, 20, 3, 5, 1]
+    result_2 = analyze_number_set(sample_list_2)
+    print(result_2)
+    sample_list_3 = []
+    result_3 = analyze_number_set(sample_list_3)
+    print(result_3)",True,3,13324,213_11_3.py
+213,11,Analyze simple number sets,"Implement an optimized function named 'analyze_number_set' that accepts a list of numbers and returns a dictionary containing the count of even numbers, the count of odd numbers, the sum of all numbers, and the minimum and maximum values in the set. Ensure the implementation is time-efficient.","import math
+def analyze_number_set(numbers):
+    if not numbers:
+        return {
+            ""even_count"": 0,
+            ""odd_count"": 0,
+            ""sum"": 0,
+            ""min"": None,
+            ""max"": None
+        }
+    even_count = 0
+    odd_count = 0
+    total_sum = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        total_sum += number
+        if number % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return {
+        ""even_count"": even_count,
+        ""odd_count"": odd_count,
+        ""sum"": total_sum,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = analyze_number_set(sample_list)
+    print(result)
+    sample_list_2 = [10, 20, 3, 5, 1]
+    result_2 = analyze_number_set(sample_list_2)
+    print(result_2)
+    sample_list_3 = []
+    result_3 = analyze_number_set(sample_list_3)
+    print(result_3)",True,4,13325,213_11_4.py
+213,11,Analyze simple number sets,"Implement an optimized function named 'analyze_number_set' that accepts a list of numbers and returns a dictionary containing the count of even numbers, the count of odd numbers, the sum of all numbers, and the minimum and maximum values in the set. Ensure the implementation is time-efficient.","def analyze_number_set(numbers):
+    if not numbers:
+        return {
+            ""even_count"": 0,
+            ""odd_count"": 0,
+            ""sum"": 0,
+            ""min"": None,
+            ""max"": None
+        }
+    even_count = 0
+    odd_count = 0
+    total_sum = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+    for number in numbers:
+        total_sum += number
+        if number % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+        if number < minimum:
+            minimum = number
+        if number > maximum:
+            maximum = number
+    return {
+        ""even_count"": even_count,
+        ""odd_count"": odd_count,
+        ""sum"": total_sum,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = analyze_number_set(sample_list)
+    print(result)
+    sample_list_2 = [100, 5, 22, 1, -50]
+    result_2 = analyze_number_set(sample_list_2)
+    print(result_2)
+    sample_list_3 = []
+    result_3 = analyze_number_set(sample_list_3)
+    print(result_3)",True,5,13326,213_11_5.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    data1 = [1, 2, 3, 4, 5]
+    print(""Data Set 1:"", data1)
+    print(""Mean:"", analyzer.calculate_mean(data1))
+    print(""Median:"", analyzer.calculate_median(data1))
+    print(""Mode:"", analyzer.calculate_mode(data1))
+    data2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(""\nData Set 2:"", data2)
+    print(""Mean:"", analyzer.calculate_mean(data2))
+    print(""Median:"", analyzer.calculate_median(data2))
+    print(""Mode:"", analyzer.calculate_mode(data2))
+    data3 = [10, 20, 30]
+    print(""\nData Set 3:"", data3)
+    print(""Mean:"", analyzer.calculate_mean(data3))
+    print(""Median:"", analyzer.calculate_median(data3))
+    print(""Mode:"", analyzer.calculate_mode(data3))
+    data4 = []
+    print(""\nData Set 4 (Empty):"", data4)
+    print(""Mean:"", analyzer.calculate_mean(data4))
+    print(""Median:"", analyzer.calculate_median(data4))
+    print(""Mode:"", analyzer.calculate_mode(data4))
+    data5 = [5, 5, 5, 1, 2]
+    print(""\nData Set 5 (Multimodal):"", data5)
+    print(""Mean:"", analyzer.calculate_mean(data5))
+    print(""Median:"", analyzer.calculate_median(data5))
+    print(""Mode:"", analyzer.calculate_mode(data5))",True,0,13327,213_12.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    set1 = [1, 2, 3, 4, 5]
+    print(""Set 1:"", set1)
+    print(""Mean of Set 1:"", analyzer.calculate_mean(set1))
+    print(""Median of Set 1:"", analyzer.calculate_median(set1))
+    print(""Mode of Set 1:"", analyzer.calculate_mode(set1))
+    set2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(""\nSet 2:"", set2)
+    print(""Mean of Set 2:"", analyzer.calculate_mean(set2))
+    print(""Median of Set 2:"", analyzer.calculate_median(set2))
+    print(""Mode of Set 2:"", analyzer.calculate_mode(set2))
+    set3 = [10, 20, 30]
+    print(""\nSet 3:"", set3)
+    print(""Mean of Set 3:"", analyzer.calculate_mean(set3))
+    print(""Median of Set 3:"", analyzer.calculate_median(set3))
+    print(""Mode of Set 3:"", analyzer.calculate_mode(set3))
+    set4 = []
+    print(""\nSet 4:"", set4)
+    print(""Mean of Set 4:"", analyzer.calculate_mean(set4))
+    print(""Median of Set 4:"", analyzer.calculate_median(set4))
+    print(""Mode of Set 4:"", analyzer.calculate_mode(set4))
+    set5 = [5, 5, 5, 1, 2, 3]
+    print(""\nSet 5:"", set5)
+    print(""Mean of Set 5:"", analyzer.calculate_mean(set5))
+    print(""Median of Set 5:"", analyzer.calculate_median(set5))
+    print(""Mode of Set 5:"", analyzer.calculate_mode(set5))",True,1,13328,213_12_1.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def __init__(self):
+        pass
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    data1 = [1, 2, 3, 4, 5]
+    print(""Data Set 1:"", data1)
+    print(""Mean:"", analyzer.calculate_mean(data1))
+    print(""Median:"", analyzer.calculate_median(data1))
+    print(""Mode:"", analyzer.calculate_mode(data1))
+    print(""-"" * 20)
+    data2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(""Data Set 2:"", data2)
+    print(""Mean:"", analyzer.calculate_mean(data2))
+    print(""Median:"", analyzer.calculate_median(data2))
+    print(""Mode:"", analyzer.calculate_mode(data2))
+    print(""-"" * 20)
+    data3 = [10, 20, 30]
+    print(""Data Set 3:"", data3)
+    print(""Mean:"", analyzer.calculate_mean(data3))
+    print(""Median:"", analyzer.calculate_median(data3))
+    print(""Mode:"", analyzer.calculate_mode(data3))
+    print(""-"" * 20)
+    data4 = []
+    print(""Data Set 4 (Empty):"", data4)
+    print(""Mean:"", analyzer.calculate_mean(data4))
+    print(""Median:"", analyzer.calculate_median(data4))
+    print(""Mode:"", analyzer.calculate_mode(data4))
+    print(""-"" * 20)
+    data5 = [5, 5, 5, 1, 2, 3]
+    print(""Data Set 5 (Multimodal):"", data5)
+    print(""Mean:"", analyzer.calculate_mean(data5))
+    print(""Median:"", analyzer.calculate_median(data5))
+    print(""Mode:"", analyzer.calculate_mode(data5))
+    print(""-"" * 20)",True,2,13329,213_12_2.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    data1 = [1, 2, 3, 4, 5]
+    print(""Data Set 1:"", data1)
+    print(""Mean:"", analyzer.calculate_mean(data1))
+    print(""Median:"", analyzer.calculate_median(data1))
+    print(""Mode:"", analyzer.calculate_mode(data1))
+    data2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(""\nData Set 2:"", data2)
+    print(""Mean:"", analyzer.calculate_mean(data2))
+    print(""Median:"", analyzer.calculate_median(data2))
+    print(""Mode:"", analyzer.calculate_mode(data2))
+    data3 = [10, 20, 30]
+    print(""\nData Set 3:"", data3)
+    print(""Mean:"", analyzer.calculate_mean(data3))
+    print(""Median:"", analyzer.calculate_median(data3))
+    print(""Mode:"", analyzer.calculate_mode(data3))
+    data4 = []
+    print(""\nData Set 4 (Empty):"", data4)
+    print(""Mean:"", analyzer.calculate_mean(data4))
+    print(""Median:"", analyzer.calculate_median(data4))
+    print(""Mode:"", analyzer.calculate_mode(data4))
+    data5 = [5, 5, 5, 1, 2, 3]
+    print(""\nData Set 5 (Multimodal):"", data5)
+    print(""Mean:"", analyzer.calculate_mean(data5))
+    print(""Median:"", analyzer.calculate_median(data5))
+    print(""Mode:"", analyzer.calculate_mode(data5))",True,3,13330,213_12_3.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    data1 = [1, 2, 3, 4, 5]
+    print(f""Data: {data1}"")
+    print(f""Mean: {analyzer.calculate_mean(data1)}"")
+    print(f""Median: {analyzer.calculate_median(data1)}"")
+    print(f""Mode: {analyzer.calculate_mode(data1)}"")
+    data2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(f""\nData: {data2}"")
+    print(f""Mean: {analyzer.calculate_mean(data2)}"")
+    print(f""Median: {analyzer.calculate_median(data2)}"")
+    print(f""Mode: {analyzer.calculate_mode(data2)}"")
+    data3 = [10, 20, 30]
+    print(f""\nData: {data3}"")
+    print(f""Mean: {analyzer.calculate_mean(data3)}"")
+    print(f""Median: {analyzer.calculate_median(data3)}"")
+    print(f""Mode: {analyzer.calculate_mode(data3)}"")
+    data4 = []
+    print(f""\nData: {data4}"")
+    print(f""Mean: {analyzer.calculate_mean(data4)}"")
+    print(f""Median: {analyzer.calculate_median(data4)}"")
+    print(f""Mode: {analyzer.calculate_mode(data4)}"")
+    data5 = [5, 5, 5, 1, 2, 3]
+    print(f""\nData: {data5}"")
+    print(f""Mean: {analyzer.calculate_mean(data5)}"")
+    print(f""Median: {analyzer.calculate_median(data5)}"")
+    print(f""Mode: {analyzer.calculate_mode(data5)}"")",True,4,13331,213_12_4.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def __init__(self):
+        pass
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    set1 = [1, 2, 3, 4, 5]
+    print(""Set 1:"", set1)
+    print(""Mean of Set 1:"", analyzer.calculate_mean(set1))
+    print(""Median of Set 1:"", analyzer.calculate_median(set1))
+    print(""Mode of Set 1:"", analyzer.calculate_mode(set1))
+    set2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(""\nSet 2:"", set2)
+    print(""Mean of Set 2:"", analyzer.calculate_mean(set2))
+    print(""Median of Set 2:"", analyzer.calculate_median(set2))
+    print(""Mode of Set 2:"", analyzer.calculate_mode(set2))
+    set3 = [10, 20, 30]
+    print(""\nSet 3:"", set3)
+    print(""Mean of Set 3:"", analyzer.calculate_mean(set3))
+    print(""Median of Set 3:"", analyzer.calculate_median(set3))
+    print(""Mode of Set 3:"", analyzer.calculate_mode(set3))
+    set4 = []
+    print(""\nSet 4 (Empty):"", set4)
+    print(""Mean of Set 4:"", analyzer.calculate_mean(set4))
+    print(""Median of Set 4:"", analyzer.calculate_median(set4))
+    print(""Mode of Set 4:"", analyzer.calculate_mode(set4))
+    set5 = [5, 5, 5, 1, 2]
+    print(""\nSet 5 (Multimodal):"", set5)
+    print(""Mean of Set 5:"", analyzer.calculate_mean(set5))
+    print(""Median of Set 5:"", analyzer.calculate_median(set5))
+    print(""Mode of Set 5:"", analyzer.calculate_mode(set5))",True,5,13332,213_12_5.py
+213,12,Analyze simple number sets,"Develop a class named 'NumberSetAnalyzer' with a method to process a list of integers. The method should provide methods to calculate the mean, median, and mode of the provided set, handling potential edge cases like empty lists or multimodal data appropriately.","class NumberSetAnalyzer:
+    def calculate_mean(self, numbers):
+        if not numbers:
+            return None
+        return sum(numbers) / len(numbers)
+    def calculate_median(self, numbers):
+        if not numbers:
+            return None
+        sorted_numbers = sorted(numbers)
+        n = len(sorted_numbers)
+        if n % 2 == 1:
+            return sorted_numbers[n // 2]
+        else:
+            mid1 = sorted_numbers[n // 2 - 1]
+            mid2 = sorted_numbers[n // 2]
+            return (mid1 + mid2) / 2
+    def calculate_mode(self, numbers):
+        if not numbers:
+            return []
+        frequency = {}
+        for x in numbers:
+            frequency[x] = frequency.get(x, 0) + 1
+        if not frequency:
+            return []
+        max_frequency = 0
+        for count in frequency.values():
+            if count > max_frequency:
+                max_frequency = count
+        modes = [key for key, value in frequency.items() if value == max_frequency]
+        return modes
+if __name__ == '__main__':
+    analyzer = NumberSetAnalyzer()
+    set1 = [1, 2, 3, 4, 5]
+    print(""Set 1:"", set1)
+    print(""Mean of Set 1:"", analyzer.calculate_mean(set1))
+    print(""Median of Set 1:"", analyzer.calculate_median(set1))
+    print(""Mode of Set 1:"", analyzer.calculate_mode(set1))
+    set2 = [1, 2, 2, 3, 4, 4, 4, 5]
+    print(""\nSet 2:"", set2)
+    print(""Mean of Set 2:"", analyzer.calculate_mean(set2))
+    print(""Median of Set 2:"", analyzer.calculate_median(set2))
+    print(""Mode of Set 2:"", analyzer.calculate_mode(set2))
+    set3 = [10, 20, 30]
+    print(""\nSet 3:"", set3)
+    print(""Mean of Set 3:"", analyzer.calculate_mean(set3))
+    print(""Median of Set 3:"", analyzer.calculate_median(set3))
+    print(""Mode of Set 3:"", analyzer.calculate_mode(set3))
+    set4 = []
+    print(""\nSet 4 (Empty):"", set4)
+    print(""Mean of Set 4:"", analyzer.calculate_mean(set4))
+    print(""Median of Set 4:"", analyzer.calculate_median(set4))
+    print(""Mode of Set 4:"", analyzer.calculate_mode(set4))
+    set5 = [5, 5, 5, 1, 2, 3]
+    print(""\nSet 5 (Multimodal):"", set5)
+    print(""Mean of Set 5:"", analyzer.calculate_mean(set5))
+    print(""Median of Set 5:"", analyzer.calculate_median(set5))
+    print(""Mode of Set 5:"", analyzer.calculate_mode(set5))",True,6,13333,213_12_6.py
+213,13,Analyze simple number sets,"Write a standalone Python program that reads a sequence of numbers from standard input, stores them in a list, and then prints a detailed analysis: the total count, the sum, the arithmetic mean, and the range of the numbers. Prioritize clean, readable, and efficient I/O operations.","if __name__ == '__main__':
+    input_data = ""10 20 35 42 50""
+    numbers = [int(x) for x in input_data.split()]
+    if not numbers:
+        print(""No numbers provided."")
+    else:
+        count = len(numbers)
+        total_sum = sum(numbers)
+        arithmetic_mean = total_sum / count
+        minimum = min(numbers)
+        maximum = max(numbers)
+        data_range = maximum - minimum
+        print(f""Total Count: {count}"")
+        print(f""Sum: {total_sum}"")
+        print(f""Arithmetic Mean: {arithmetic_mean:.2f}"")
+        print(f""Range: {data_range}"")",True,0,13334,213_13.py
+213,13,Analyze simple number sets,"Write a standalone Python program that reads a sequence of numbers from standard input, stores them in a list, and then prints a detailed analysis: the total count, the sum, the arithmetic mean, and the range of the numbers. Prioritize clean, readable, and efficient I/O operations.","import sys
+if __name__ == '__main__':
+    input_data = ""10 20 35 42 50""
+    numbers = [int(x) for x in input_data.split()]
+    count = len(numbers)
+    total_sum = sum(numbers)
+    if count > 0:
+        arithmetic_mean = total_sum / count
+    else:
+        arithmetic_mean = 0
+    if count > 1:
+        minimum = min(numbers)
+        maximum = max(numbers)
+        data_range = maximum - minimum
+    else:
+        data_range = 0
+    print(f""Sequence: {numbers}"")
+    print(f""Total Count: {count}"")
+    print(f""Sum: {total_sum}"")
+    print(f""Arithmetic Mean: {arithmetic_mean:.2f}"")
+    print(f""Range: {data_range}"")",True,1,13335,213_13_1.py
+213,13,Analyze simple number sets,"Write a standalone Python program that reads a sequence of numbers from standard input, stores them in a list, and then prints a detailed analysis: the total count, the sum, the arithmetic mean, and the range of the numbers. Prioritize clean, readable, and efficient I/O operations.","if __name__ == '__main__':
+    input_data = ""10 25 32 8 40 15""
+    numbers = []
+    try:
+        data_list = input_data.split()
+        if not data_list:
+            numbers = []
+        else:
+            numbers = [int(x) for x in data_list]
+    except ValueError:
+        numbers = []
+    if not numbers:
+        total_count = 0
+        total_sum = 0
+        arithmetic_mean = 0.0
+        number_range = 0
+    else:
+        total_count = len(numbers)
+        total_sum = sum(numbers)
+        arithmetic_mean = total_sum / total_count
+        number_range = max(numbers) - min(numbers)
+    print(f""Total Count: {total_count}"")
+    print(f""Sum: {total_sum}"")
+    print(f""Arithmetic Mean: {arithmetic_mean:.2f}"")
+    print(f""Range: {number_range}"")",True,2,13336,213_13_2.py
+213,13,Analyze simple number sets,"Write a standalone Python program that reads a sequence of numbers from standard input, stores them in a list, and then prints a detailed analysis: the total count, the sum, the arithmetic mean, and the range of the numbers. Prioritize clean, readable, and efficient I/O operations.","if __name__ == '__main__':
+    input_data = ""10 20 35 42 50""
+    numbers = []
+    try:
+        data_list = input_data.split()
+        if not data_list:
+            numbers = []
+        else:
+            numbers = [int(x) for x in data_list]
+    except ValueError:
+        numbers = []
+    if not numbers:
+        total_count = 0
+        total_sum = 0
+        arithmetic_mean = 0.0
+        number_range = 0
+    else:
+        total_count = len(numbers)
+        total_sum = sum(numbers)
+        arithmetic_mean = total_sum / total_count
+        number_range = max(numbers) - min(numbers)
+    print(f""Total Count: {total_count}"")
+    print(f""Sum: {total_sum}"")
+    print(f""Arithmetic Mean: {arithmetic_mean:.2f}"")
+    print(f""Range: {number_range}"")",True,3,13337,213_13_3.py
+213,13,Analyze simple number sets,"Write a standalone Python program that reads a sequence of numbers from standard input, stores them in a list, and then prints a detailed analysis: the total count, the sum, the arithmetic mean, and the range of the numbers. Prioritize clean, readable, and efficient I/O operations.","import sys
+if __name__ == '__main__':
+    input_data = ""10 25 32 8 40""
+    numbers = [int(x) for x in input_data.split()]
+    if not numbers:
+        print(""No numbers provided."")
+    else:
+        count = len(numbers)
+        total_sum = sum(numbers)
+        arithmetic_mean = total_sum / count
+        minimum = min(numbers)
+        maximum = max(numbers)
+        data_range = maximum - minimum
+        print(f""Total Count: {count}"")
+        print(f""Sum: {total_sum}"")
+        print(f""Arithmetic Mean: {arithmetic_mean:.2f}"")
+        print(f""Range: {data_range}"")",True,4,13338,213_13_4.py
+213,13,Analyze simple number sets,"Write a standalone Python program that reads a sequence of numbers from standard input, stores them in a list, and then prints a detailed analysis: the total count, the sum, the arithmetic mean, and the range of the numbers. Prioritize clean, readable, and efficient I/O operations.","import sys
+if __name__ == '__main__':
+    input_data = ""10 20 35 40 55""
+    numbers = [int(x) for x in input_data.split()]
+    if not numbers:
+        print(""No numbers provided."")
+    else:
+        count = len(numbers)
+        total_sum = sum(numbers)
+        arithmetic_mean = total_sum / count
+        minimum = min(numbers)
+        maximum = max(numbers)
+        data_range = maximum - minimum
+        print(f""Total Count: {count}"")
+        print(f""Sum: {total_sum}"")
+        print(f""Arithmetic Mean: {arithmetic_mean:.2f}"")
+        print(f""Range: {data_range}"")",True,5,13339,213_13_5.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","import collections
+def analyze_list(data):
+    counts = collections.Counter(data)
+    unique_sorted_elements = sorted(counts.keys())
+    result = []
+    for element in unique_sorted_elements:
+        result.append((element, counts[element]))
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2, 10, 5, 3]
+    output = analyze_list(sample_list)
+    print(output)",True,0,13340,213_14.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","from collections import Counter
+def process_numbers(data):
+    counts = Counter(data)
+    sorted_unique_elements = sorted(counts.keys())
+    result = []
+    for item in sorted_unique_elements:
+        result.append((item, counts[item]))
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 5, 2, 8, 5, 1, 9, 2, 8, 10, 3, 10]
+    output = process_numbers(sample_data)
+    print(output)",True,1,13341,213_14_1.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","import collections
+def analyze_list(data):
+    counts = collections.Counter(data)
+    sorted_unique_elements = sorted(counts.keys())
+    result = []
+    for item in sorted_unique_elements:
+        result.append((item, counts[item]))
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 5, 2, 8, 1, 5, 9, 2, 8, 10, 5]
+    output = analyze_list(sample_data)
+    print(output)",True,2,13342,213_14_2.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","import collections
+def analyze_list(data):
+    counts = collections.Counter(data)
+    sorted_unique_elements = sorted(counts.keys())
+    result = []
+    for element in sorted_unique_elements:
+        result.append((element, counts[element]))
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 5, 2, 8, 5, 1, 9, 2, 5, 3, 8, 1]
+    output = analyze_list(sample_data)
+    print(output)",True,3,13343,213_14_3.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","import collections
+def analyze_list(data):
+    counts = collections.Counter(data)
+    unique_sorted = sorted(counts.keys())
+    result = []
+    for item in unique_sorted:
+        result.append((item, counts[item]))
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 5, 2, 8, 5, 1, 9, 2, 5, 3, 8, 10, 2]
+    output = analyze_list(sample_data)
+    print(output)",True,4,13344,213_14_4.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","import collections
+def analyze_list(data):
+    counts = collections.Counter(data)
+    unique_sorted = sorted(counts.keys())
+    result = []
+    for item in unique_sorted:
+        result.append((item, counts[item]))
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2, 3, 8, 10, 5]
+    output = analyze_list(sample_list)
+    print(output)",True,5,13345,213_14_5.py
+213,14,Analyze simple number sets,"Create a function that takes a list of numbers and returns a sorted list of the unique elements, along with the frequency count of each unique element. The function must be highly optimized for large input sets.","import collections
+def analyze_list(data):
+    counts = collections.Counter(data)
+    sorted_unique_elements = sorted(counts.keys())
+    result = []
+    for element in sorted_unique_elements:
+        result.append((element, counts[element]))
+    return result
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 5, 1, 9, 2, 3, 8, 10, 2]
+    output = analyze_list(sample_list)
+    print(output)",True,6,13346,213_14_6.py
+214,1,Determine the smallest value found,"Implement a robust function named 'find_minimum' that accepts a list of numbers and returns the smallest value, handling empty lists gracefully.","def find_minimum(numbers):
+    if not numbers:
+        return None
+    minimum = numbers[0]
+    for number in numbers:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -3]
+    list3 = []
+    list4 = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")",True,0,13347,214_1.py
+214,1,Determine the smallest value found,"Implement a robust function named 'find_minimum' that accepts a list of numbers and returns the smallest value, handling empty lists gracefully.","def find_minimum(data):
+    if not data:
+        return None
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -3]
+    list3 = []
+    list4 = [42]
+    list5 = [7]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    print(f""Minimum of {list5}: {find_minimum(list5)}"")",True,1,13348,214_1_1.py
+214,1,Determine the smallest value found,"Implement a robust function named 'find_minimum' that accepts a list of numbers and returns the smallest value, handling empty lists gracefully.","def find_minimum(data):
+    if not data:
+        return None
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, -5, 3]
+    list3 = []
+    list4 = [42]
+    list5 = [7.5, 3.14, 1.618]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    print(f""Minimum of {list5}: {find_minimum(list5)}"")",True,2,13349,214_1_2.py
+214,1,Determine the smallest value found,"Implement a robust function named 'find_minimum' that accepts a list of numbers and returns the smallest value, handling empty lists gracefully.","def find_minimum(data):
+    if not data:
+        return None
+    minimum = data[0]
+    for number in data:
+        if number < minimum:
+            minimum = number
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 50, -3]
+    list3 = []
+    list4 = [42]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")",True,3,13350,214_1_3.py
+214,1,Determine the smallest value found,"Implement a robust function named 'find_minimum' that accepts a list of numbers and returns the smallest value, handling empty lists gracefully.","def find_minimum(data):
+    if not data:
+        return None
+    minimum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+    return minimum
+if __name__ == '__main__':
+    list1 = [3, 1, 4, 1, 5, 9, 2]
+    list2 = [-10, 5, 0, -3, 8]
+    list3 = []
+    list4 = [42]
+    list5 = [-50, -100, -50]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    print(f""Minimum of {list5}: {find_minimum(list5)}"")",True,4,13351,214_1_4.py
+214,1,Determine the smallest value found,"Implement a robust function named 'find_minimum' that accepts a list of numbers and returns the smallest value, handling empty lists gracefully.","def find_minimum(data):
+    if not data:
+        return None
+    minimum = data[0]
+    for item in data[1:]:
+        if item < minimum:
+            minimum = item
+    return minimum
+if __name__ == '__main__':
+    list1 = [5, 2, 8, 1, 9]
+    list2 = [-10, 0, 5, -3]
+    list3 = []
+    list4 = [42]
+    list5 = [7.5, 3.14, 1.618]
+    print(f""Minimum of {list1}: {find_minimum(list1)}"")
+    print(f""Minimum of {list2}: {find_minimum(list2)}"")
+    print(f""Minimum of {list3}: {find_minimum(list3)}"")
+    print(f""Minimum of {list4}: {find_minimum(list4)}"")
+    print(f""Minimum of {list5}: {find_minimum(list5)}"")",True,5,13352,214_1_5.py
+214,0,Determine the smallest value found,"Write a complete, efficient Python script to find the smallest value in a given list of integers.","def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 77, 21]
+    result = find_smallest(sample_list)
+    print(result)",True,0,13353,214_0.py
+214,0,Determine the smallest value found,"Write a complete, efficient Python script to find the smallest value in a given list of integers.","def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 77, 5]
+    result = find_smallest(sample_list)
+    print(result)",True,1,13354,214_0_1.py
+214,0,Determine the smallest value found,"Write a complete, efficient Python script to find the smallest value in a given list of integers.","def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 77, 101]
+    result = find_smallest(sample_list)
+    print(result)",True,2,13355,214_0_2.py
+214,0,Determine the smallest value found,"Write a complete, efficient Python script to find the smallest value in a given list of integers.","import math
+def find_smallest(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    smallest = data[0]
+    for x in data[1:]:
+        if x < smallest:
+            smallest = x
+    return smallest
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 77, 9]
+    result = find_smallest(sample_list)
+    print(result)",True,3,13356,214_0_3.py
+214,0,Determine the smallest value found,"Write a complete, efficient Python script to find the smallest value in a given list of integers.","def find_smallest(data):
+    if not data:
+        raise ValueError(""List cannot be empty"")
+    smallest = data[0]
+    for item in data[1:]:
+        if item < smallest:
+            smallest = item
+    return smallest
+if __name__ == '__main__':
+    sample_list = [42, 15, 89, 3, 77, 5]
+    smallest_value = find_smallest(sample_list)
+    print(smallest_value)",True,4,13357,214_0_4.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data):
+        self.data = list(data)
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min_1 = mf.find_min()
+    print(f""The minimum value in {sample_list_1} is: {min_1}"")
+    sample_list_2 = [42, 100, 55, 3]
+    mf.store_list(sample_list_2)
+    min_2 = mf.find_min()
+    print(f""The minimum value in {sample_list_2} is: {min_2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min_empty = mf.find_min()
+    print(f""The minimum value in an empty list is: {min_empty}"")",True,0,13358,214_3.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data):
+        self.data = list(data)
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min1 = mf.find_min()
+    print(f""The minimum value in {sample_list_1} is: {min1}"")
+    sample_list_2 = [42, 10, 33, 5]
+    mf.store_list(sample_list_2)
+    min2 = mf.find_min()
+    print(f""The minimum value in {sample_list_2} is: {min2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min3 = mf.find_min()
+    print(f""The minimum value in an empty list is: {min3}"")",True,1,13359,214_3_1.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data_list):
+        self.data = data_list
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min1 = mf.find_min()
+    print(f""The smallest value in {sample_list_1} is: {min1}"")
+    sample_list_2 = [42, 100, 5, 33]
+    mf.store_list(sample_list_2)
+    min2 = mf.find_min()
+    print(f""The smallest value in {sample_list_2} is: {min2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min3 = mf.find_min()
+    print(f""The smallest value in {empty_list} is: {min3}"")",True,2,13360,214_3_2.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data):
+        self.data = data
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min_1 = mf.find_min()
+    print(f""The minimum value in {sample_list_1} is: {min_1}"")
+    sample_list_2 = [42, 10, 33, 99, 5]
+    mf.store_list(sample_list_2)
+    min_2 = mf.find_min()
+    print(f""The minimum value in {sample_list_2} is: {min_2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min_empty = mf.find_min()
+    print(f""The minimum value in an empty list is: {min_empty}"")",True,3,13361,214_3_3.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data):
+        self.data = list(data)
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min1 = mf.find_min()
+    print(f""The minimum value in {sample_list_1} is: {min1}"")
+    sample_list_2 = [42, 10, 55, 3]
+    mf.store_list(sample_list_2)
+    min2 = mf.find_min()
+    print(f""The minimum value in {sample_list_2} is: {min2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min3 = mf.find_min()
+    print(f""The minimum value in an empty list is: {min3}"")",True,4,13362,214_3_4.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data_list):
+        self.data = data_list
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min1 = mf.find_min()
+    print(f""The minimum value in {sample_list_1} is: {min1}"")
+    sample_list_2 = [42, 10, 33, 7]
+    mf.store_list(sample_list_2)
+    min2 = mf.find_min()
+    print(f""The minimum value in {sample_list_2} is: {min2}"")
+    sample_list_3 = [100]
+    mf.store_list(sample_list_3)
+    min3 = mf.find_min()
+    print(f""The minimum value in {sample_list_3} is: {min3}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min4 = mf.find_min()
+    print(f""The minimum value in {empty_list} is: {min4}"")",True,5,13363,214_3_5.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data_list):
+        self.data = data_list
+    def find_min(self):
+        if not self.data:
+            return None
+        min_value = self.data[0]
+        for value in self.data[1:]:
+            if value < min_value:
+                min_value = value
+        return min_value
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list)
+    smallest = mf.find_min()
+    print(smallest)",True,6,13364,214_3_6.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data_list):
+        self.data = data_list
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min1 = mf.find_min()
+    print(f""The minimum value in {sample_list_1} is: {min1}"")
+    sample_list_2 = [42, 10, 55, 33]
+    mf.store_list(sample_list_2)
+    min2 = mf.find_min()
+    print(f""The minimum value in {sample_list_2} is: {min2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min3 = mf.find_min()
+    print(f""The minimum value in an empty list is: {min3}"")",True,7,13365,214_3_7.py
+214,3,Determine the smallest value found,Create a class named 'MinFinder' with a method to store a list and a method to calculate and return the smallest value in that list.,"class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data_list):
+        self.data = data_list
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min1 = mf.find_min()
+    print(f""The smallest value in {sample_list_1} is: {min1}"")
+    sample_list_2 = [42, 10, 33, 5]
+    mf.store_list(sample_list_2)
+    min2 = mf.find_min()
+    print(f""The smallest value in {sample_list_2} is: {min2}"")
+    empty_list = []
+    mf.store_list(empty_list)
+    min3 = mf.find_min()
+    print(f""The smallest value in an empty list is: {min3}"")",True,8,13366,214_3_8.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.0, -99.999, 2.71828, -1.0]
+    try:
+        min_value = find_minimum(large_list)
+        print(min_value)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,13367,214_2.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.0, -99.999, 5.2]
+    try:
+        min_value = find_minimum(large_list)
+        print(min_value)
+    except ValueError as e:
+        print(e)",True,1,13368,214_2_1.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.0, -12.3456789, 0.00001, 99.999]
+    minimum_value = find_minimum(large_list)
+    print(minimum_value)",True,2,13369,214_2_2.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.0, -12.3456789, 0.001, 42.0]
+    minimum_value = find_minimum(large_list)
+    print(minimum_value)",True,3,13370,214_2_3.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.2, -15.789, 3.14159e-6, 0.0]
+    minimum_value = find_minimum(large_list)
+    print(minimum_value)",True,4,13371,214_2_4.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.2, -99.999, 5.00001, 0.0]
+    minimum_value = find_minimum(large_list)
+    print(minimum_value)",True,5,13372,214_2_5.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.78, -12.34567, 5.0, 0.0001, 99.9]
+    try:
+        minimum_value = find_minimum(large_list)
+        print(minimum_value)
+    except ValueError as e:
+        print(e)",True,6,13373,214_2_6.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.0, -99.999, 3.14158]
+    minimum_value = find_minimum(large_list)
+    print(minimum_value)",True,7,13374,214_2_7.py
+214,2,Determine the smallest value found,Develop an optimized method to determine the minimum element in a potentially very large list of floating-point numbers using built-in functions or efficient iteration.,"def find_minimum(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty"")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    large_list = [3.14159, -0.5, 100.0, -12.34567, 0.001, 99.999]
+    minimum_value = find_minimum(large_list)
+    print(minimum_value)",True,8,13375,214_2_8.py

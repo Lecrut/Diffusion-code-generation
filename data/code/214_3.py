@@ -1,0 +1,27 @@
+class MinFinder:
+    def __init__(self):
+        self.data = []
+    def store_list(self, data):
+        self.data = list(data)
+    def find_min(self):
+        if not self.data:
+            return None
+        min_val = self.data[0]
+        for val in self.data[1:]:
+            if val < min_val:
+                min_val = val
+        return min_val
+if __name__ == '__main__':
+    mf = MinFinder()
+    sample_list_1 = [5, 2, 8, 1, 9]
+    mf.store_list(sample_list_1)
+    min_1 = mf.find_min()
+    print(f"The minimum value in {sample_list_1} is: {min_1}")
+    sample_list_2 = [42, 100, 55, 3]
+    mf.store_list(sample_list_2)
+    min_2 = mf.find_min()
+    print(f"The minimum value in {sample_list_2} is: {min_2}")
+    empty_list = []
+    mf.store_list(empty_list)
+    min_empty = mf.find_min()
+    print(f"The minimum value in an empty list is: {min_empty}")
