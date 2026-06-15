@@ -1,0 +1,13 @@
+import sys
+def find_maximum(data_string):
+    try:
+        numbers = [float(x.strip()) for x in data_string.split(',')]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return "Error: Invalid input. Please ensure all values are numerical."
+if __name__ == '__main__':
+    input_data = "10,5,22,8,15"
+    result = find_maximum(input_data)
+    print(result)

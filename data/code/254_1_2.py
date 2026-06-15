@@ -1,0 +1,12 @@
+def find_minimum(data):
+    if not data:
+        raise ValueError("Input list cannot be empty")
+    minimum = data[0]
+    for i in range(1, len(data)):
+        if data[i] < minimum:
+            minimum = data[i]
+    return minimum
+if __name__ == '__main__':
+    sample_list = [34, 12, 56, 9, 87, 23, 45]
+    result = find_minimum(sample_list)
+    print(result)
