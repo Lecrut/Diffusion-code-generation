@@ -1489,3 +1489,459 @@ if __name__ == '__main__':
     num2 = 543210987654321
     division_result = divide_large_integers(num1, num2)
     print(division_result)",True,5,132,3_3_5.py
+2,14,Multiply two given amounts,Create a concise and efficient one-line expression or lambda function that takes two arguments and returns their product. Provide an example usage demonstrating its application with sample values.,,False,0,133,2_14.py
+2,13,Multiply two given amounts,"Write a complete, runnable Python program that reads two numbers from standard input, performs the multiplication, and includes comprehensive error handling for non-numeric input using try-except blocks.","def multiply_numbers(num1, num2):
+    try:
+        n1 = float(num1)
+        n2 = float(num2)
+        result = n1 * n2
+        return result
+    except ValueError:
+        return ""Error: Invalid input. Please enter numeric values.""
+if __name__ == '__main__':
+    input_str1 = ""10""
+    input_str2 = ""5""
+    result = multiply_numbers(input_str1, input_str2)
+    print(result)",True,0,134,2_13.py
+3,6,Divide one total by another,Write a pure Python function to calculate the result of dividing two arbitrary numbers (integers or floats) and return a tuple containing the result and an error flag indicating if division by zero occurred.,"def safe_divide(a, b):
+    if b == 0:
+        return (None, True)
+    result = a / b
+    return (result, False)
+if __name__ == '__main__':
+    print(safe_divide(10, 2))
+    print(safe_divide(10, 0))
+    print(safe_divide(5.5, 2))
+    print(safe_divide(0, 5))
+    print(safe_divide(0, 0))",True,0,135,3_6.py
+3,6,Divide one total by another,Write a pure Python function to calculate the result of dividing two arbitrary numbers (integers or floats) and return a tuple containing the result and an error flag indicating if division by zero occurred.,"def safe_divide(a, b):
+    if b == 0:
+        return (None, True)
+    result = a / b
+    return (result, False)
+if __name__ == '__main__':
+    print(safe_divide(10, 2))
+    print(safe_divide(10, 0))
+    print(safe_divide(5.5, 2))
+    print(safe_divide(0, 0))
+    print(safe_divide(-15, 3))",True,1,136,3_6_1.py
+3,5,Divide one total by another,Implement a decorator function that wraps a division operation. The decorator must automatically catch `ZeroDivisionError` and return a specific error message instead of raising the exception.,"def safe_division(func):
+    def wrapper(*args):
+        try:
+            result = func(*args)
+            return result
+        except ZeroDivisionError:
+            return ""Error: Cannot divide by zero""
+    return wrapper
+@safe_division
+def divide(a, b):
+    return a / b
+if __name__ == '__main__':
+    print(divide(10, 2))
+    print(divide(10, 0))",True,0,137,3_5.py
+3,7,Divide one total by another,"Design and implement a simple calculator module where the core function is `divide(a, b)`, which returns the quotient only if $b 
+eq 0$. Use type hinting extensively for clarity and correctness.","from typing import Union
+def divide(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    result1 = divide(10, 2)
+    print(f""10 / 2 = {result1}"")
+    result2 = divide(15, 3)
+    print(f""15 / 3 = {result2}"")
+    result3 = divide(7, 2)
+    print(f""7 / 2 = {result3}"")
+    try:
+        result4 = divide(5, 0)
+        print(f""5 / 0 = {result4}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")",True,0,138,3_7.py
+3,7,Divide one total by another,"Design and implement a simple calculator module where the core function is `divide(a, b)`, which returns the quotient only if $b 
+eq 0$. Use type hinting extensively for clarity and correctness.","from typing import Union
+def divide(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    result1 = divide(10, 2)
+    print(f""10 divided by 2 is: {result1}"")
+    result2 = divide(15, 3)
+    print(f""15 divided by 3 is: {result2}"")
+    result3 = divide(7, 2)
+    print(f""7 divided by 2 is: {result3}"")
+    try:
+        result4 = divide(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")",True,1,139,3_7_1.py
+3,7,Divide one total by another,"Design and implement a simple calculator module where the core function is `divide(a, b)`, which returns the quotient only if $b 
+eq 0$. Use type hinting extensively for clarity and correctness.","from typing import Union
+def divide(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    result1 = divide(10, 2)
+    print(f""10 divided by 2 is: {result1}"")
+    result2 = divide(15, 3)
+    print(f""15 divided by 3 is: {result2}"")
+    result3 = divide(7, 2)
+    print(f""7 divided by 2 is: {result3}"")
+    try:
+        result4 = divide(5, 0)
+        print(f""5 divided by 0 is: {result4}"")
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")",True,2,140,3_7_2.py
+3,7,Divide one total by another,"Design and implement a simple calculator module where the core function is `divide(a, b)`, which returns the quotient only if $b 
+eq 0$. Use type hinting extensively for clarity and correctness.","from typing import Union
+def divide(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    result1 = divide(10, 2)
+    print(f""10 divided by 2 is: {result1}"")
+    result2 = divide(15, 3)
+    print(f""15 divided by 3 is: {result2}"")
+    result3 = divide(7, 2)
+    print(f""7 divided by 2 is: {result3}"")
+    try:
+        result4 = divide(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")",True,3,141,3_7_3.py
+3,9,Divide one total by another,"Develop a testable unit test suite using `unittest` for a function that divides two numbers, ensuring tests cover successful division and the specific case of division by zero.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ValueError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_successful_division(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertEqual(divide(7, 3), 2.3333333333333335)
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ValueError, ""Cannot divide by zero""):
+            divide(10, 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,142,3_9.py
+3,9,Divide one total by another,"Develop a testable unit test suite using `unittest` for a function that divides two numbers, ensuring tests cover successful division and the specific case of division by zero.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ValueError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_successful_division(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertEqual(divide(7, 3), 2.3333333333333335)
+    def test_division_by_zero(self):
+        with self.assertRaises(ValueError):
+            divide(10, 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,143,3_9_1.py
+3,9,Divide one total by another,"Develop a testable unit test suite using `unittest` for a function that divides two numbers, ensuring tests cover successful division and the specific case of division by zero.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ValueError(""Cannot divide by zero"")
+    return a / b
+class TestDivide(unittest.TestCase):
+    def test_successful_division(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertEqual(divide(7, 3), 2.3333333333333335)
+        self.assertEqual(divide(-10, 5), -2.0)
+        self.assertEqual(divide(0, 5), 0.0)
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ValueError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ValueError, ""Cannot divide by zero""):
+            divide(0, 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,144,3_9_2.py
+3,9,Divide one total by another,"Develop a testable unit test suite using `unittest` for a function that divides two numbers, ensuring tests cover successful division and the specific case of division by zero.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ValueError(""Cannot divide by zero"")
+    return a / b
+class TestDivide(unittest.TestCase):
+    def test_successful_division(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertEqual(divide(7, 3), 2.3333333333333335)
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ValueError, ""Cannot divide by zero""):
+            divide(10, 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,145,3_9_3.py
+3,9,Divide one total by another,"Develop a testable unit test suite using `unittest` for a function that divides two numbers, ensuring tests cover successful division and the specific case of division by zero.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivide(unittest.TestCase):
+    def test_successful_division(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertEqual(divide(7, 3), 2.3333333333333335)
+    def test_division_by_zero(self):
+        with self.assertRaises(ZeroDivisionError):
+            divide(10, 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,146,3_9_4.py
+3,4,Divide one total by another,Create a command-line interface (CLI) script using the `argparse` module that accepts two numerical arguments from the command line and prints the result of dividing the first argument by the second.,"import argparse
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(""num1"", type=float, help=""The first number to be divided"")
+    parser.add_argument(""num2"", type=float, help=""The second number to divide by"")
+    args = parser.parse_args([""10.0"", ""2.5""])
+    result = args.num1 / args.num2
+    print(result)",True,0,147,3_4.py
+3,11,Divide one total by another,Implement an optimized function named 'divide_two_numbers' that accepts two floating-point numbers as arguments and returns their division. The function must handle potential DivisionByZeroError gracefully by raising a specific ValueError.,"def divide_two_numbers(a, b):
+    if b == 0:
+        raise ValueError(""Division by zero is not allowed"")
+    return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    try:
+        divide_two_numbers(10.0, 0.0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,148,3_11.py
+3,11,Divide one total by another,Implement an optimized function named 'divide_two_numbers' that accepts two floating-point numbers as arguments and returns their division. The function must handle potential DivisionByZeroError gracefully by raising a specific ValueError.,"def divide_two_numbers(a, b):
+    if b == 0:
+        raise ValueError(""Division by zero is not allowed."")
+    return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    try:
+        divide_two_numbers(10.0, 0.0)
+    except ValueError as e:
+        print(f""Caught error: {e}"")",True,1,149,3_11_1.py
+3,11,Divide one total by another,Implement an optimized function named 'divide_two_numbers' that accepts two floating-point numbers as arguments and returns their division. The function must handle potential DivisionByZeroError gracefully by raising a specific ValueError.,"def divide_two_numbers(a, b):
+    if b == 0:
+        raise ValueError(""Division by zero is not allowed."")
+    return a / b
+if __name__ == '__main__':
+    print(divide_two_numbers(10.0, 2.0))
+    try:
+        divide_two_numbers(10.0, 0.0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,2,150,3_11_2.py
+3,12,Divide one total by another,Develop a class named 'RatioCalculator' with an initializer that takes two values (numerator and denominator) and a method to calculate and return the ratio. Ensure the implementation is efficient and adheres to object-oriented best practices.,"class RatioCalculator:
+    def __init__(self, numerator, denominator):
+        self.numerator = numerator
+        self.denominator = denominator
+    def calculate_ratio(self):
+        if self.denominator == 0:
+            raise ValueError(""Denominator cannot be zero"")
+        return self.numerator / self.denominator
+if __name__ == '__main__':
+    num = 10
+    den = 5
+    calculator = RatioCalculator(num, den)
+    ratio = calculator.calculate_ratio()
+    print(ratio)",True,0,151,3_12.py
+3,12,Divide one total by another,Develop a class named 'RatioCalculator' with an initializer that takes two values (numerator and denominator) and a method to calculate and return the ratio. Ensure the implementation is efficient and adheres to object-oriented best practices.,"class RatioCalculator:
+    def __init__(self, numerator, denominator):
+        self.numerator = numerator
+        self.denominator = denominator
+    def calculate_ratio(self):
+        if self.denominator == 0:
+            raise ValueError(""Denominator cannot be zero"")
+        return self.numerator / self.denominator
+if __name__ == '__main__':
+    num = 10
+    den = 2
+    calculator = RatioCalculator(num, den)
+    ratio = calculator.calculate_ratio()
+    print(ratio)",True,1,152,3_12_1.py
+3,8,Divide one total by another,"Write an optimized script that reads two numbers from standard input, performs the division, and prints the result formatted to exactly six decimal places. Assume valid numeric input is provided by the user.","import sys
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 3
+    result = num1 / num2
+    print(f""{result:.6f}"")",True,0,153,3_8.py
+3,10,Divide one total by another,"Write a complete, robust Python script that prompts the user to input two numbers and then calculates and prints the result of dividing the first number by the second. Include thorough error handling for non-numeric input.","def calculate_division(num1, num2):
+    try:
+        result = num1 / num2
+        print(f""The result of dividing {num1} by {num2} is: {result}"")
+    except ZeroDivisionError:
+        print(""Error: Cannot divide by zero."")
+    except TypeError:
+        print(""Error: One or both inputs were not valid numbers."")
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    calculate_division(num1, num2)",True,0,154,3_10.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","import sys
+def calculate_sum(num1, num2, num3):
+    return num1 + num2 + num3
+if __name__ == '__main__':
+    sample_number_1 = 10
+    sample_number_2 = 25
+    sample_number_3 = 7
+    try:
+        num1 = int(sample_number_1)
+        num2 = int(sample_number_2)
+        num3 = int(sample_number_3)
+        total_sum = calculate_sum(num1, num2, num3)
+        print(total_sum)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."")",True,0,155,4_0.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","import sys
+def calculate_sum(num1, num2, num3):
+    return num1 + num2 + num3
+if __name__ == '__main__':
+    sample_num1 = 10
+    sample_num2 = 25
+    sample_num3 = 5
+    try:
+        number1 = int(sample_num1)
+        number2 = int(sample_num2)
+        number3 = int(sample_num3)
+        total_sum = calculate_sum(number1, number2, number3)
+        print(total_sum)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."")",True,1,156,4_0_1.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","import sys
+def calculate_sum(num1, num2, num3):
+    return num1 + num2 + num3
+if __name__ == '__main__':
+    number1 = 10
+    number2 = 25
+    number3 = 5
+    try:
+        if not all(isinstance(n, int) for n in [number1, number2, number3]):
+            raise ValueError(""All inputs must be integers."")
+        total_sum = calculate_sum(number1, number2, number3)
+        print(f""The sum of {number1}, {number2}, and {number3} is: {total_sum}"")
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)",True,2,157,4_0_2.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","def calculate_sum(num1, num2, num3):
+    return num1 + num2 + num3
+if __name__ == '__main__':
+    try:
+        number1 = 10
+        number2 = 25
+        number3 = 7
+        result = calculate_sum(number1, number2, number3)
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid integers."")",True,3,158,4_0_3.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","import sys
+def calculate_sum(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    try:
+        num1 = 10
+        num2 = 20
+        num3 = 30
+        result = calculate_sum(num1, num2, num3)
+        print(result)
+    except Exception as e:
+        print(f""An error occurred: {e}"", file=sys.stderr)",True,4,159,4_0_4.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","import sys
+def calculate_sum(num1, num2, num3):
+    return num1 + num2 + num3
+if __name__ == '__main__':
+    sample_number_1 = 10
+    sample_number_2 = 25
+    sample_number_3 = 5
+    try:
+        number_a = int(sample_number_1)
+        number_b = int(sample_number_2)
+        number_c = int(sample_number_3)
+        result = calculate_sum(number_a, number_b, number_c)
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."")",True,5,160,4_0_5.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","if __name__ == '__main__':
+    num1 = 10
+    num2 = 25
+    num3 = 7
+    try:
+        sum_result = num1 + num2 + num3
+        print(sum_result)
+    except TypeError:
+        print(""Error: One or more inputs were not valid numbers."")",True,6,161,4_0_6.py
+4,0,Find the sum of three items,"Write a complete, robust Python script that prompts the user to enter three numbers and then calculates and prints their sum. Use clear variable names and appropriate error handling for non-integer input.","import sys
+def calculate_sum(num1, num2, num3):
+    return num1 + num2 + num3
+if __name__ == '__main__':
+    sample_number_1 = 10
+    sample_number_2 = 25
+    sample_number_3 = 5
+    try:
+        num1 = int(sample_number_1)
+        num2 = int(sample_number_2)
+        num3 = int(sample_number_3)
+        total_sum = calculate_sum(num1, num2, num3)
+        print(total_sum)
+    except ValueError:
+        print(""Error: Invalid input. Please ensure all inputs are integers."")",True,7,162,4_0_7.py
+4,1,Find the sum of three items,Implement an optimized function named `calculate_three_sum` that accepts three numerical arguments and returns their total sum. Ensure the implementation is highly efficient.,"import time
+def calculate_three_sum(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 20
+    num3 = 30
+    result = calculate_three_sum(num1, num2, num3)
+    print(result)",True,0,163,4_1.py
+4,1,Find the sum of three items,Implement an optimized function named `calculate_three_sum` that accepts three numerical arguments and returns their total sum. Ensure the implementation is highly efficient.,"import timeit
+def calculate_three_sum(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    x = 10
+    y = 20
+    z = 30
+    result = calculate_three_sum(x, y, z)
+    print(result)",True,1,164,4_1_1.py
+4,1,Find the sum of three items,Implement an optimized function named `calculate_three_sum` that accepts three numerical arguments and returns their total sum. Ensure the implementation is highly efficient.,"import time
+def calculate_three_sum(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    x = 10
+    y = 20
+    z = 30
+    result = calculate_three_sum(x, y, z)
+    print(result)",True,2,165,4_1_2.py
+4,1,Find the sum of three items,Implement an optimized function named `calculate_three_sum` that accepts three numerical arguments and returns their total sum. Ensure the implementation is highly efficient.,"def calculate_three_sum(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    x = 1
+    y = 2
+    z = 3
+    result = calculate_three_sum(x, y, z)
+    print(result)",True,3,166,4_1_3.py
+4,2,Find the sum of three items,Develop a class named `SumCalculator` with a method `find_total_sum` that takes three values as input and returns their sum. The class should be designed for object-oriented best practices.,"class SumCalculator:
+    def find_total_sum(self, a, b, c):
+        return a + b + c
+if __name__ == '__main__':
+    calculator = SumCalculator()
+    result = calculator.find_total_sum(10, 20, 30)
+    print(result)",True,0,167,4_2.py
+4,3,Find the sum of three items,"Write a concise Python one-liner expression to find the sum of three predefined integer variables: a, b, and c. Assume these variables are defined.","if __name__ == '__main__':
+    a, b, c = 10, 20, 30
+    print(a + b + c)",True,0,168,4_3.py
+3,13,Divide one total by another,"Write a single, highly efficient Python expression that takes predefined variables 'total_a' and 'total_b' and calculates their division, ensuring the result is handled as a float if necessary, without defining an explicit function.","total_a = 10
+total_b = 3
+result = float(total_a) / total_b
+if __name__ == '__main__':
+    print(result)",True,0,169,3_13.py
+4,5,Find the sum of three items,Write a function using list comprehension to calculate the sum of three elements from an input list of three numbers. Demonstrate its use with an example.,"def sum_three(numbers):
+    return numbers[0] + numbers[1] + numbers[2]
+if __name__ == '__main__':
+    input_list = [10, 20, 30]
+    result = sum_three(input_list)
+    print(result)",True,0,170,4_5.py
+4,6,Find the sum of three items,Implement a decorator for a function that automatically calculates and logs the sum of three passed arguments before executing the decorated function. Ensure this is idiomatic Python.,,False,0,171,4_6.py
+3,14,Divide one total by another,"Create a script that reads two integers from standard input, validates that the divisor is not zero, performs the division operation, and prints the final quotient formatted to two decimal places.",,False,0,172,3_14.py
+4,8,Find the sum of three items,Write a function that takes a tuple containing exactly three numbers and returns their sum. Use tuple unpacking for clean access to the elements.,"def sum_three(data):
+    a, b, c = data
+    return a + b + c
+if __name__ == '__main__':
+    sample_tuple = (10, 20, 30)
+    result = sum_three(sample_tuple)
+    print(result)",True,0,173,4_8.py
+4,8,Find the sum of three items,Write a function that takes a tuple containing exactly three numbers and returns their sum. Use tuple unpacking for clean access to the elements.,"def calculate_sum(data):
+    a, b, c = data
+    return a + b + c
+if __name__ == '__main__':
+    sample_tuple = (10, 20, 30)
+    result = calculate_sum(sample_tuple)
+    print(result)",True,1,174,4_8_1.py
