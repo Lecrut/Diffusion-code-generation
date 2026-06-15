@@ -341520,3 +341520,2889 @@ if __name__ == '__main__':
     sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     result = process_collection(sample_list)
     print(result)",True,0,17148,275_1.py
+275,2,Iterate through a small collection,"Write a robust Python function to iterate through a dictionary and print the key-value pairs in a formatted manner, ensuring the output is clean and readable.","def print_dict_formatted(data):
+    for key, value in data.items():
+        print(f""Key: {key}, Value: {value}"")
+if __name__ == '__main__':
+    sample_dict = {
+        ""name"": ""Alice"",
+        ""age"": 30,
+        ""city"": ""New York"",
+        ""occupation"": ""Engineer""
+    }
+    print_dict_formatted(sample_dict)",True,0,17149,275_2.py
+275,2,Iterate through a small collection,"Write a robust Python function to iterate through a dictionary and print the key-value pairs in a formatted manner, ensuring the output is clean and readable.","def print_dict_pairs(data):
+    for key, value in data.items():
+        print(f""Key: {key}, Value: {value}"")
+if __name__ == '__main__':
+    sample_dict = {
+        ""name"": ""Alice"",
+        ""age"": 30,
+        ""city"": ""New York"",
+        ""occupation"": ""Engineer""
+    }
+    print_dict_pairs(sample_dict)",True,1,17150,275_2_1.py
+275,3,Iterate through a small collection,Develop an optimized method to iterate over a collection of objects (instances of a simple class) and calculate the total sum of their attributes. Assume the class has an `attribute` method.,"class SimpleObject:
+    def __init__(self, value):
+        self._value = value
+    def attribute(self):
+        return self._value
+def calculate_total_attribute_sum(collection):
+    total_sum = 0
+    for obj in collection:
+        total_sum += obj.attribute()
+    return total_sum
+if __name__ == '__main__':
+    data = [SimpleObject(10), SimpleObject(25), SimpleObject(15), SimpleObject(30)]
+    result = calculate_total_attribute_sum(data)
+    print(result)",True,0,17151,275_3.py
+275,3,Iterate through a small collection,Develop an optimized method to iterate over a collection of objects (instances of a simple class) and calculate the total sum of their attributes. Assume the class has an `attribute` method.,"class SimpleObject:
+    def __init__(self, value):
+        self._value = value
+    def attribute(self):
+        return self._value
+def calculate_total_attribute_sum(collection):
+    total_sum = 0
+    for obj in collection:
+        total_sum += obj.attribute()
+    return total_sum
+if __name__ == '__main__':
+    data = [SimpleObject(10), SimpleObject(25), SimpleObject(7)]
+    result = calculate_total_attribute_sum(data)
+    print(result)",True,1,17152,275_3_1.py
+275,3,Iterate through a small collection,Develop an optimized method to iterate over a collection of objects (instances of a simple class) and calculate the total sum of their attributes. Assume the class has an `attribute` method.,"class SimpleObject:
+    def __init__(self, value):
+        self._value = value
+    def attribute(self):
+        return self._value
+def calculate_total_attribute_sum(collection):
+    total_sum = 0
+    for obj in collection:
+        total_sum += obj.attribute()
+    return total_sum
+if __name__ == '__main__':
+    data = [SimpleObject(10), SimpleObject(25), SimpleObject(7), SimpleObject(18)]
+    result = calculate_total_attribute_sum(data)
+    print(result)",True,2,17153,275_3_2.py
+275,3,Iterate through a small collection,Develop an optimized method to iterate over a collection of objects (instances of a simple class) and calculate the total sum of their attributes. Assume the class has an `attribute` method.,"class SimpleObject:
+    def __init__(self, value):
+        self._value = value
+    def attribute(self):
+        return self._value
+def calculate_total_sum(collection):
+    total = 0
+    for obj in collection:
+        total += obj.attribute()
+    return total
+if __name__ == '__main__':
+    data = [SimpleObject(10), SimpleObject(25), SimpleObject(7)]
+    result = calculate_total_sum(data)
+    print(result)",True,3,17154,275_3_3.py
+275,3,Iterate through a small collection,Develop an optimized method to iterate over a collection of objects (instances of a simple class) and calculate the total sum of their attributes. Assume the class has an `attribute` method.,"class MyObject:
+    def __init__(self, value):
+        self.value = value
+    def attribute(self):
+        return self.value
+def calculate_total_attribute_sum(collection):
+    total_sum = 0
+    for obj in collection:
+        total_sum += obj.attribute()
+    return total_sum
+if __name__ == '__main__':
+    data = [MyObject(10), MyObject(25), MyObject(7)]
+    result = calculate_total_attribute_sum(data)
+    print(result)",True,4,17155,275_3_4.py
+275,5,Iterate through a small collection,"Implement an iterator pattern using a generator function to yield the elements of a provided list one by one, avoiding the creation of an intermediate list.","def list_iterator(data):
+    for item in data:
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    iterator = list_iterator(sample_list)
+    result_list = []
+    for element in iterator:
+        result_list.append(element)
+    print(result_list)",True,0,17156,275_5.py
+275,5,Iterate through a small collection,"Implement an iterator pattern using a generator function to yield the elements of a provided list one by one, avoiding the creation of an intermediate list.","def list_iterator(data):
+    for item in data:
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    iterator = list_iterator(sample_list)
+    result = []
+    for element in iterator:
+        result.append(element)
+    print(result)",True,1,17157,275_5_1.py
+275,4,Iterate through a small collection,Write a script that iterates through a given tuple of mixed data types and uses conditional logic to separate the strings from the numbers into two distinct lists.,"def separate_data(data_tuple):
+    strings = []
+    numbers = []
+    for item in data_tuple:
+        if isinstance(item, str):
+            strings.append(item)
+        elif isinstance(item, (int, float)):
+            numbers.append(item)
+    return strings, numbers
+if __name__ == '__main__':
+    sample_data = (10, ""apple"", 3.14, ""banana"", 5, ""cherry"")
+    strings_list, numbers_list = separate_data(sample_data)
+    print(""Strings:"", strings_list)
+    print(""Numbers:"", numbers_list)",True,0,17158,275_4.py
+275,4,Iterate through a small collection,Write a script that iterates through a given tuple of mixed data types and uses conditional logic to separate the strings from the numbers into two distinct lists.,"def separate_data(data):
+    strings = []
+    numbers = []
+    for item in data:
+        if isinstance(item, str):
+            strings.append(item)
+        elif isinstance(item, (int, float)):
+            numbers.append(item)
+    return strings, numbers
+if __name__ == '__main__':
+    sample_tuple = (1, ""hello"", 3.14, ""world"", 5, True)
+    strings_list, numbers_list = separate_data(sample_tuple)
+    print(""Strings:"", strings_list)
+    print(""Numbers:"", numbers_list)",True,1,17159,275_4_1.py
+275,4,Iterate through a small collection,Write a script that iterates through a given tuple of mixed data types and uses conditional logic to separate the strings from the numbers into two distinct lists.,"def separate_data(data_tuple):
+    strings = []
+    numbers = []
+    for item in data_tuple:
+        if isinstance(item, str):
+            strings.append(item)
+        elif isinstance(item, (int, float)):
+            numbers.append(item)
+    return strings, numbers
+if __name__ == '__main__':
+    sample_data = (10, ""hello"", 3.14, ""world"", 5, True, ""test"")
+    strings_list, numbers_list = separate_data(sample_data)
+    print(""Strings:"", strings_list)
+    print(""Numbers:"", numbers_list)",True,2,17160,275_4_2.py
+275,4,Iterate through a small collection,Write a script that iterates through a given tuple of mixed data types and uses conditional logic to separate the strings from the numbers into two distinct lists.,"def separate_data(data):
+    strings = []
+    numbers = []
+    for item in data:
+        if isinstance(item, str):
+            strings.append(item)
+        elif isinstance(item, (int, float)):
+            numbers.append(item)
+    return strings, numbers
+if __name__ == '__main__':
+    sample_tuple = (10, ""hello"", 3.14, ""world"", 5, True)
+    strings_list, numbers_list = separate_data(sample_tuple)
+    print(""Strings:"", strings_list)
+    print(""Numbers:"", numbers_list)",True,3,17161,275_4_3.py
+275,6,Iterate through a small collection,Write a class method within a class that iterates over its internal collection and sorts the elements in place based on their values.,"class DataSorter:
+    def __init__(self, data):
+        self.data = data
+    def sort_in_place(self):
+        self.data.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 1, 9]
+    sorter = DataSorter(sample_list)
+    sorter.sort_in_place()
+    print(sample_list)",True,0,17162,275_6.py
+275,6,Iterate through a small collection,Write a class method within a class that iterates over its internal collection and sorts the elements in place based on their values.,"class MySorter:
+    def __init__(self, data):
+        self.data = data
+    def sort_in_place(self):
+        self.data.sort()
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 1, 9]
+    sorter = MySorter(sample_list)
+    sorter.sort_in_place()
+    print(sample_list)",True,1,17163,275_6_1.py
+275,7,Iterate through a small collection,Create a function that takes a list of strings and uses a `for` loop with an index to print the elements with their corresponding index number starting from zero.,"def print_with_index(string_list):
+    for i in range(len(string_list)):
+        print(f""Index {i}: {string_list[i]}"")
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    print_with_index(sample_list)",True,0,17164,275_7.py
+275,7,Iterate through a small collection,Create a function that takes a list of strings and uses a `for` loop with an index to print the elements with their corresponding index number starting from zero.,"def print_indexed_strings(string_list):
+    for i in range(len(string_list)):
+        print(f""Index {i}: {string_list[i]}"")
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    print_indexed_strings(sample_list)",True,1,17165,275_7_1.py
+275,8,Iterate through a small collection,"Write a complete program that iterates through a predefined set of filenames in a directory and filters only those files ending with the '.txt' extension, printing the names found.","import os
+def filter_txt_files(directory):
+    for filename in os.listdir(directory):
+        if filename.endswith("".txt""):
+            print(filename)
+if __name__ == '__main__':
+    test_directory = "".""
+    filter_txt_files(test_directory)",True,0,17166,275_8.py
+275,8,Iterate through a small collection,"Write a complete program that iterates through a predefined set of filenames in a directory and filters only those files ending with the '.txt' extension, printing the names found.","import os
+def filter_txt_files(directory):
+    filenames = os.listdir(directory)
+    for filename in filenames:
+        if filename.endswith("".txt""):
+            print(filename)
+if __name__ == '__main__':
+    sample_directory = "".""
+    filter_txt_files(sample_directory)",True,1,17167,275_8_1.py
+275,8,Iterate through a small collection,"Write a complete program that iterates through a predefined set of filenames in a directory and filters only those files ending with the '.txt' extension, printing the names found.","import os
+def filter_txt_files(directory):
+    for filename in os.listdir(directory):
+        if filename.endswith("".txt""):
+            print(filename)
+if __name__ == '__main__':
+    sample_directory = "".""
+    filter_txt_files(sample_directory)",True,2,17168,275_8_2.py
+275,9,Iterate through a small collection,Implement an iterative approach to find the maximum value within a list of floating-point numbers without using the built-in `max()` function.,"if __name__ == '__main__':
+    data = [3.14, 1.618, 2.718, 0.577, 4.0]
+    if not data:
+        max_value = None
+    else:
+        max_value = data[0]
+        for number in data[1:]:
+            if number > max_value:
+                max_value = number
+    print(max_value)",True,0,17169,275_9.py
+275,9,Iterate through a small collection,Implement an iterative approach to find the maximum value within a list of floating-point numbers without using the built-in `max()` function.,"if __name__ == '__main__':
+    data = [3.14, 1.618, 2.718, 0.577, 4.0]
+    if not data:
+        maximum = None
+    else:
+        maximum = data[0]
+        for number in data[1:]:
+            if number > maximum:
+                maximum = number
+    print(maximum)",True,1,17170,275_9_1.py
+275,9,Iterate through a small collection,Implement an iterative approach to find the maximum value within a list of floating-point numbers without using the built-in `max()` function.,"if __name__ == '__main__':
+    data = [3.14, 1.618, 2.718, 0.577, 4.0]
+    if not data:
+        max_value = None
+    else:
+        max_value = data[0]
+        for i in range(1, len(data)):
+            if data[i] > max_value:
+                max_value = data[i]
+    print(max_value)",True,2,17171,275_9_2.py
+275,9,Iterate through a small collection,Implement an iterative approach to find the maximum value within a list of floating-point numbers without using the built-in `max()` function.,"if __name__ == '__main__':
+    data = [3.14, 1.618, 2.718, 0.577, 9.99]
+    if not data:
+        maximum = None
+    else:
+        maximum = data[0]
+        for number in data[1:]:
+            if number > maximum:
+                maximum = number
+    print(maximum)",True,3,17172,275_9_3.py
+275,10,Iterate through a small collection,"Write a complete, robust Python script that iterates through a list of strings and prints each string in uppercase. Use a for loop and ensure the output is clean and efficient.","def process_strings(string_list):
+    for s in string_list:
+        print(s.upper())
+if __name__ == '__main__':
+    sample_strings = [""hello"", ""world"", ""python"", ""scripting""]
+    process_strings(sample_strings)",True,0,17173,275_10.py
+275,11,Iterate through a small collection,Implement an optimized function named 'process_collection' that takes a list of integers and returns a new list containing only the even numbers from the input collection. Use a list comprehension for maximum efficiency.,"def process_collection(data):
+    return [x for x in data if x % 2 == 0]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = process_collection(sample_list)
+    print(result)",True,0,17174,275_11.py
+275,12,Iterate through a small collection,"Write a class method within a Python class designed to iterate over an instance's internal dictionary, printing the key-value pairs to the console in a formatted manner. Ensure the implementation is object-oriented and follows best practices.","class DictionaryPrinter:
+    def __init__(self, data):
+        self._data = data
+    def print_dictionary(self):
+        for key, value in self._data.items():
+            print(f""Key: {key}, Value: {value}"")
+if __name__ == '__main__':
+    sample_dict = {
+        ""apple"": 1,
+        ""banana"": 2,
+        ""cherry"": 3,
+        ""date"": 4
+    }
+    printer = DictionaryPrinter(sample_dict)
+    printer.print_dictionary()",True,0,17175,275_12.py
+275,12,Iterate through a small collection,"Write a class method within a Python class designed to iterate over an instance's internal dictionary, printing the key-value pairs to the console in a formatted manner. Ensure the implementation is object-oriented and follows best practices.","class DictionaryPrinter:
+    def __init__(self, data):
+        self._data = data
+    def print_dictionary(self):
+        for key, value in self._data.items():
+            print(f""Key: {key}, Value: {value}"")
+if __name__ == '__main__':
+    sample_data = {
+        ""apple"": 1,
+        ""banana"": 2,
+        ""cherry"": 3,
+        ""date"": 4
+    }
+    printer = DictionaryPrinter(sample_data)
+    printer.print_dictionary()",True,1,17176,275_12_1.py
+275,13,Iterate through a small collection,Develop a function that iterates through a given tuple of mixed data types (strings and numbers) and calculates the total sum of all numerical elements found within it. The solution must be highly efficient.,"def sum_numbers(data_tuple):
+    total = 0
+    for item in data_tuple:
+        if isinstance(item, (int, float)):
+            total += item
+    return total
+if __name__ == '__main__':
+    sample_data = (""apple"", 10, ""banana"", 5.5, ""cherry"", 20)
+    result = sum_numbers(sample_data)
+    print(result)",True,0,17177,275_13.py
+275,13,Iterate through a small collection,Develop a function that iterates through a given tuple of mixed data types (strings and numbers) and calculates the total sum of all numerical elements found within it. The solution must be highly efficient.,"def sum_numerics(data_tuple):
+    total = 0
+    for item in data_tuple:
+        if isinstance(item, (int, float)):
+            total += item
+    return total
+if __name__ == '__main__':
+    sample_data = (10, ""a"", 5.5, ""b"", 20, 3.14)
+    result = sum_numerics(sample_data)
+    print(result)",True,1,17178,275_13_1.py
+275,13,Iterate through a small collection,Develop a function that iterates through a given tuple of mixed data types (strings and numbers) and calculates the total sum of all numerical elements found within it. The solution must be highly efficient.,"def sum_numbers(data_tuple):
+    total = 0
+    for item in data_tuple:
+        if isinstance(item, (int, float)):
+            total += item
+    return total
+if __name__ == '__main__':
+    sample_data = (""apple"", 10, ""banana"", 5.5, ""cherry"", -3)
+    result = sum_numbers(sample_data)
+    print(result)",True,2,17179,275_13_2.py
+275,14,Iterate through a small collection,"Write a script that demonstrates iterating over a small collection (e.g., a set of names) and uses the 'enumerate' function to print both the index and the item for each entry. Provide clear comments explaining the iteration process.","def main():
+    names = [""Alice"", ""Bob"", ""Charlie"", ""David""]
+    for index, name in enumerate(names):
+        print(f""Index {index}: {name}"")
+if __name__ == '__main__':
+    main()",True,0,17180,275_14.py
+275,14,Iterate through a small collection,"Write a script that demonstrates iterating over a small collection (e.g., a set of names) and uses the 'enumerate' function to print both the index and the item for each entry. Provide clear comments explaining the iteration process.","def demonstrate_enumerate():
+    names = [""Alice"", ""Bob"", ""Charlie"", ""David""]
+    for index, name in enumerate(names):
+        print(f""Index {index}: {name}"")
+if __name__ == '__main__':
+    demonstrate_enumerate()",True,1,17181,275_14_1.py
+275,14,Iterate through a small collection,"Write a script that demonstrates iterating over a small collection (e.g., a set of names) and uses the 'enumerate' function to print both the index and the item for each entry. Provide clear comments explaining the iteration process.","def demonstrate_enumerate():
+    names = [""Alice"", ""Bob"", ""Charlie"", ""David""]
+    print(""Demonstrating iteration using enumerate:"")
+    for index, name in enumerate(names):
+        print(f""Index: {index}, Name: {name}"")
+if __name__ == '__main__':
+    demonstrate_enumerate()",True,2,17182,275_14_2.py
+276,1,Repeat a set of instructions often,"Implement an optimized function named 'repeat_action' that takes an action (a callable) and a number of repetitions, executing the action exactly that many times efficiently.","def repeat_action(action, repetitions):
+    for _ in range(repetitions):
+        action()
+if __name__ == '__main__':
+    def print_hello():
+        print(""Hello"")
+    repeat_action(print_hello, 3)",True,0,17183,276_1.py
+276,1,Repeat a set of instructions often,"Implement an optimized function named 'repeat_action' that takes an action (a callable) and a number of repetitions, executing the action exactly that many times efficiently.","def repeat_action(action, repetitions):
+    for _ in range(repetitions):
+        action()
+if __name__ == '__main__':
+    def print_hello():
+        print(""Hello"")
+    print_hello()
+    repeat_action(print_hello, 3)",True,1,17184,276_1_1.py
+276,2,Repeat a set of instructions often,"Develop a class in Python to manage a sequence of instructions, allowing for the repetition of any instruction within the sequence multiple times. Ensure object-oriented best practices are followed.","class InstructionSequence:
+    def __init__(self):
+        self.instructions = []
+    def add_instruction(self, instruction):
+        self.instructions.append(instruction)
+    def repeat_instruction(self, instruction, times):
+        for _ in range(times):
+            self.add_instruction(instruction)
+    def get_sequence(self):
+        return self.instructions
+if __name__ == '__main__':
+    sequence_manager = InstructionSequence()
+    sequence_manager.add_instruction(""Move Forward"")
+    sequence_manager.add_instruction(""Turn Right"")
+    sequence_manager.repeat_instruction(""Move Forward"", 3)
+    sequence_manager.repeat_instruction(""Turn Right"", 1)
+    sequence_manager.repeat_instruction(""Move Forward"", 2)
+    final_sequence = sequence_manager.get_sequence()
+    for instruction in final_sequence:
+        print(instruction)",True,0,17185,276_2.py
+276,2,Repeat a set of instructions often,"Develop a class in Python to manage a sequence of instructions, allowing for the repetition of any instruction within the sequence multiple times. Ensure object-oriented best practices are followed.","class InstructionSequence:
+    def __init__(self):
+        self.instructions = []
+    def add_instruction(self, instruction):
+        self.instructions.append(instruction)
+    def repeat_instruction(self, index, count):
+        if 0 <= index < len(self.instructions):
+            instruction_to_repeat = self.instructions[index]
+            for _ in range(count):
+                self.instructions.append(instruction_to_repeat)
+        else:
+            raise IndexError(""Instruction index out of bounds"")
+    def display_sequence(self):
+        return self.instructions
+if __name__ == '__main__':
+    sequence_manager = InstructionSequence()
+    sequence_manager.add_instruction(""Move Forward"")
+    sequence_manager.add_instruction(""Turn Right"")
+    sequence_manager.add_instruction(""Move Forward"")
+    print(""Initial sequence:"")
+    print(sequence_manager.display_sequence())
+    sequence_manager.repeat_instruction(0, 2)
+    print(""\nSequence after repeating instruction at index 0 twice:"")
+    print(sequence_manager.display_sequence())",True,1,17186,276_2_1.py
+276,2,Repeat a set of instructions often,"Develop a class in Python to manage a sequence of instructions, allowing for the repetition of any instruction within the sequence multiple times. Ensure object-oriented best practices are followed.","class InstructionSequence:
+    def __init__(self):
+        self.instructions = []
+    def add_instruction(self, instruction):
+        self.instructions.append(instruction)
+    def repeat_instruction(self, instruction, times):
+        for _ in range(times):
+            self.add_instruction(instruction)
+    def get_sequence(self):
+        return self.instructions
+if __name__ == '__main__':
+    sequence_manager = InstructionSequence()
+    sequence_manager.add_instruction(""Move forward"")
+    sequence_manager.add_instruction(""Turn left"")
+    sequence_manager.repeat_instruction(""Move forward"", 3)
+    sequence_manager.repeat_instruction(""Turn left"", 2)
+    sequence_manager.repeat_instruction(""Move forward"", 1)
+    final_sequence = sequence_manager.get_sequence()
+    print(""Instruction Sequence:"")
+    for instruction in final_sequence:
+        print(instruction)",True,2,17187,276_2_2.py
+276,2,Repeat a set of instructions often,"Develop a class in Python to manage a sequence of instructions, allowing for the repetition of any instruction within the sequence multiple times. Ensure object-oriented best practices are followed.","class InstructionSequence:
+    def __init__(self):
+        self.instructions = []
+    def add_instruction(self, instruction):
+        self.instructions.append(instruction)
+    def repeat_instruction(self, index, count):
+        if 0 <= index < len(self.instructions):
+            for _ in range(count):
+                self.instructions.insert(index, self.instructions[index])
+        else:
+            raise IndexError(""Instruction index out of bounds"")
+    def display_sequence(self):
+        return self.instructions
+if __name__ == '__main__':
+    sequence_manager = InstructionSequence()
+    sequence_manager.add_instruction(""Move Forward"")
+    sequence_manager.add_instruction(""Turn Right"")
+    sequence_manager.add_instruction(""Move Forward"")
+    print(""Initial Sequence:"")
+    print(sequence_manager.display_sequence())
+    sequence_manager.repeat_instruction(1, 2)
+    print(""\nSequence after repeating 'Turn Right' twice at index 1:"")
+    print(sequence_manager.display_sequence())",True,3,17188,276_2_3.py
+276,2,Repeat a set of instructions often,"Develop a class in Python to manage a sequence of instructions, allowing for the repetition of any instruction within the sequence multiple times. Ensure object-oriented best practices are followed.","class InstructionSequence:
+    def __init__(self):
+        self.instructions = []
+    def add_instruction(self, instruction):
+        self.instructions.append(instruction)
+    def repeat_instruction(self, instruction, times):
+        for _ in range(times):
+            self.add_instruction(instruction)
+    def get_sequence(self):
+        return self.instructions
+if __name__ == '__main__':
+    seq = InstructionSequence()
+    seq.add_instruction(""Move forward"")
+    seq.repeat_instruction(""Turn right"", 3)
+    seq.add_instruction(""Jump"")
+    seq.repeat_instruction(""Move forward"", 2)
+    final_sequence = seq.get_sequence()
+    for instruction in final_sequence:
+        print(instruction)",True,4,17189,276_2_4.py
+276,3,Repeat a set of instructions often,"Write a generator function that yields results by repeating a specific calculation or operation a specified number of times, minimizing memory usage.","def repeat_calculation(operation, number):
+    for _ in range(number):
+        yield operation()
+if __name__ == '__main__':
+    def multiply_by_two():
+        return 2
+    def add_one():
+        return 1
+    print(""Repeating multiplication by two 3 times:"")
+    for result in repeat_calculation(multiply_by_two, 3):
+        print(result)
+    print(""\nRepeating addition of one 4 times:"")
+    for result in repeat_calculation(add_one, 4):
+        print(result)",True,0,17190,276_3.py
+276,3,Repeat a set of instructions often,"Write a generator function that yields results by repeating a specific calculation or operation a specified number of times, minimizing memory usage.","def repeat_calculation(operation, number):
+    for _ in range(number):
+        yield operation()
+if __name__ == '__main__':
+    def add_one():
+        return 1
+    print(""Repeating add_one() 5 times:"")
+    results = list(repeat_calculation(add_one, 5))
+    print(results)
+    def multiply_by_two():
+        return 2
+    print(""\nRepeating multiply_by_two() 3 times:"")
+    results = list(repeat_calculation(multiply_by_two, 3))
+    print(results)",True,1,17191,276_3_1.py
+276,3,Repeat a set of instructions often,"Write a generator function that yields results by repeating a specific calculation or operation a specified number of times, minimizing memory usage.","def repeat_calculation(operation, number):
+    for _ in range(number):
+        yield operation()
+if __name__ == '__main__':
+    def add_one():
+        return 1
+    print(""Repeating add_one() 5 times:"")
+    for result in repeat_calculation(add_one, 5):
+        print(result)
+    def multiply_by_two():
+        return 2
+    print(""\nRepeating multiply_by_two() 3 times:"")
+    for result in repeat_calculation(multiply_by_two, 3):
+        print(result)",True,2,17192,276_3_2.py
+276,3,Repeat a set of instructions often,"Write a generator function that yields results by repeating a specific calculation or operation a specified number of times, minimizing memory usage.","def repeat_calculation(operation, number):
+    for _ in range(number):
+        yield operation()
+if __name__ == '__main__':
+    def add_one():
+        return 1
+    print(list(repeat_calculation(add_one, 5)))",True,3,17193,276_3_3.py
+276,3,Repeat a set of instructions often,"Write a generator function that yields results by repeating a specific calculation or operation a specified number of times, minimizing memory usage.","def repeat_calculation(calculation, num_times):
+    for _ in range(num_times):
+        yield calculation()
+if __name__ == '__main__':
+    def multiply_by_two():
+        return 2
+    def add_one():
+        return 1
+    print(""Repeating multiplication by two 3 times:"")
+    for result in repeat_calculation(multiply_by_two, 3):
+        print(result)
+    print(""\nRepeating addition of one 4 times:"")
+    for result in repeat_calculation(add_one, 4):
+        print(result)",True,4,17194,276_3_4.py
+276,3,Repeat a set of instructions often,"Write a generator function that yields results by repeating a specific calculation or operation a specified number of times, minimizing memory usage.","def repeat_calculation(operation, number):
+    n = 0
+    while n < number:
+        yield operation(n)
+        n += 1
+if __name__ == '__main__':
+    def square(x):
+        return x * x
+    print(list(repeat_calculation(square, 5)))
+    print(list(repeat_calculation(square, 3)))",True,5,17195,276_3_5.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Executing greet for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""--- Testing greet function ---"")
+    output = greet(""World"")
+    print(f""Final result: {output}"")",True,0,17196,276_4.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Executing greet for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""Starting execution..."")
+    output = greet(""World"")
+    print(""Final result:"", output)",True,1,17197,276_4_1.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Executing greet for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""--- Testing repeat decorator ---"")
+    output = greet(""World"")
+    print(""Final result:"", output)",True,2,17198,276_4_2.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Executing greet for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""--- Testing repeat decorator ---"")
+    output1 = greet(""Alice"")
+    print(f""Final result 1: {output1}"")
+    print(""-"" * 20)
+    output2 = greet(""Bob"")
+    print(f""Final result 2: {output2}"")",True,3,17199,276_4_3.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Greeting for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""Testing the decorated function:"")
+    final_result = greet(""World"")
+    print(""\nFinal result after 3 repetitions:"")
+    print(final_result)",True,4,17200,276_4_4.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Executing greet for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""--- Testing repeat decorator ---"")
+    output = greet(""World"")
+    print(f""Final result: {output}"")",True,5,17201,276_4_5.py
+276,4,Repeat a set of instructions often,Create a decorator in Python that wraps a function and automatically repeats the execution of the wrapped function a specified number of times before returning the final result.,"def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(n):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Executing greet for {name}"")
+    return f""Hello, {name}""
+if __name__ == '__main__':
+    print(""Testing repeated execution:"")
+    output = greet(""World"")
+    print(""Final result:"", output)",True,6,17202,276_4_6.py
+276,5,Repeat a set of instructions often,Implement an iterative solution to process a list of data by repeating a specific transformation operation on each element a fixed number of times.,"def iterative_transform(data, repetitions, transform_func):
+    result = []
+    for item in data:
+        current_item = item
+        for _ in range(repetitions):
+            current_item = transform_func(current_item)
+        result.append(current_item)
+    return result
+def double(x):
+    return x * 2
+if __name__ == '__main__':
+    sample_data = [1, 5, 10]
+    repetitions = 3
+    processed_data = iterative_transform(sample_data, repetitions, double)
+    print(processed_data)",True,0,17203,276_5.py
+276,5,Repeat a set of instructions often,Implement an iterative solution to process a list of data by repeating a specific transformation operation on each element a fixed number of times.,"def iterative_repeat_transformation(data, repetitions, transformation):
+    result = []
+    for item in data:
+        current_item = item
+        for _ in range(repetitions):
+            current_item = transformation(current_item)
+        result.append(current_item)
+    return result
+def double(x):
+    return x * 2
+def add_one(x):
+    return x + 1
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4]
+    repetitions = 3
+    transformed_data = iterative_repeat_transformation(sample_data, repetitions, double)
+    print(transformed_data)",True,1,17204,276_5_1.py
+276,5,Repeat a set of instructions often,Implement an iterative solution to process a list of data by repeating a specific transformation operation on each element a fixed number of times.,"def iterative_transform(data, repetitions):
+    result = []
+    for item in data:
+        current_item = item
+        for _ in range(repetitions):
+            current_item = item * 2 + 1
+        result.append(current_item)
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 5, 10]
+    repetitions = 3
+    output = iterative_transform(sample_data, repetitions)
+    print(output)",True,2,17205,276_5_2.py
+276,5,Repeat a set of instructions often,Implement an iterative solution to process a list of data by repeating a specific transformation operation on each element a fixed number of times.,"def iterative_transform(data, repetitions, transformation):
+    result = []
+    for item in data:
+        current_item = item
+        for _ in range(repetitions):
+            current_item = transformation(current_item)
+        result.append(current_item)
+    return result
+def double(x):
+    return x * 2
+def add_one(x):
+    return x + 1
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4]
+    repetitions = 3
+    result = iterative_transform(sample_data, repetitions, double)
+    print(result)",True,3,17206,276_5_3.py
+276,5,Repeat a set of instructions often,Implement an iterative solution to process a list of data by repeating a specific transformation operation on each element a fixed number of times.,"def iterative_transform(data, repetitions, transformation):
+    result = []
+    for item in data:
+        current_item = item
+        for _ in range(repetitions):
+            current_item = transformation(current_item)
+        result.append(current_item)
+    return result
+def double(x):
+    return x * 2
+def add_one(x):
+    return x + 1
+if __name__ == '__main__':
+    sample_data = [1, 5, 10]
+    repetitions = 3
+    transformed_data = iterative_transform(sample_data, repetitions, double)
+    print(transformed_data)",True,4,17207,276_5_4.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        if args:
+                            print(f""Executing instruction {line_number + 1}: {command} with argument '{args[0]}' (Run {i + 1}/10)"")
+                        else:
+                            print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                    else:
+                        print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                except Exception as e:
+                    print(f""Error executing line {line_number + 1}, iteration {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing instruction on line {line_number + 1}: '{instruction}'. Error: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""# This is a sample instruction file\n"")
+            f.write(""execute value_a\n"")
+            f.write(""print message\n"")
+            f.write(""set flag true\n"")
+            f.write(""\n"")
+            f.write(""execute another_value\n"")
+    except IOError as e:
+        print(f""Could not create sample file {sample_filename}: {e}"", file=sys.stderr)
+        sys.exit(1)
+    execute_instructions(sample_filename)",True,0,17208,276_6.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        if args:
+                            print(f""Executing instruction {line_number + 1}: {command} with argument '{args[0]}' (Run {i + 1}/10)"")
+                        else:
+                            print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                    else:
+                        print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                except Exception as e:
+                    print(f""Error executing instruction {line_number + 1} iteration {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing instruction on line {line_number + 1}: '{instruction}'. Error: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""# This is a sample instruction file\n"")
+            f.write(""execute value_a\n"")
+            f.write(""print_result\n"")
+            f.write(""set_flag true\n"")
+            f.write(""\n"")
+            f.write(""execute another_value\n"")
+    except IOError as e:
+        print(f""Could not create sample file {sample_filename}: {e}"", file=sys.stderr)
+        sys.exit(1)
+    execute_instructions(sample_filename)",True,1,17209,276_6_1.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filepath}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                print(f""Executing instruction {line_number + 1}: {instruction} (Attempt {i + 1})"")
+                if command == ""add"":
+                    result = sum(float(arg) for arg in args)
+                    print(f""  Result: {result}"")
+                elif command == ""multiply"":
+                    if len(args) == 2:
+                        result = float(args[0]) * float(args[1])
+                        print(f""  Result: {result}"")
+                    else:
+                        print(""  Error: multiply requires two arguments."")
+                else:
+                    print(f""  Unknown command encountered: {command}"")
+        except ValueError as e:
+            print(f""Error processing line {line_number + 1} ('{instruction}'): Invalid numeric argument. Details: {e}"", file=sys.stderr)
+        except IndexError:
+            print(f""Error processing line {line_number + 1} ('{instruction}'): Missing arguments for command."", file=sys.stderr)
+        except Exception as e:
+            print(f""An unexpected error occurred while executing instruction {line_number + 1}: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""add 10 5\n"")
+            f.write(""multiply 3.5 2\n"")
+            f.write(""unknown command\n"")
+            f.write(""# This is a comment\n"")
+            f.write(""add 1 1\n"")
+    except IOError as e:
+        print(f""Could not create sample file {sample_filename}: {e}"", file=sys.stderr)
+        sys.exit(1)
+    execute_instructions(sample_filename)",True,2,17210,276_6_2.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_num, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        print(f""Executing instruction '{instruction}' (Attempt {i + 1}/10)"")
+                    else:
+                        print(f""Warning: Unknown command '{command}' in line {line_num + 1}"", file=sys.stderr)
+                except Exception as e:
+                    print(f""Error executing instruction on line {line_num + 1}, attempt {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing instruction on line {line_num + 1}: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""execute step_a\n"")
+            f.write(""execute step_b\n"")
+            f.write(""# This is a comment line\n"")
+            f.write(""execute step_c\n"")
+            f.write(""invalid command\n"")
+            f.write(""\n"")
+        execute_instructions(sample_filename)
+    except IOError as e:
+        print(f""Fatal error setting up sample file: {e}"", file=sys.stderr)",True,3,17211,276_6_3.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        if args:
+                            print(f""Executing instruction {line_number + 1}: {command} with argument '{args[0]}' (Run {i + 1}/10)"")
+                        else:
+                            print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                    else:
+                        print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                except Exception as e:
+                    print(f""Error executing line {line_number + 1}, iteration {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing instruction on line {line_number + 1}: '{instruction}': {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""execute value_a\n"")
+            f.write(""print message\n"")
+            f.write(""# This is a comment\n"")
+            f.write(""execute another_value\n"")
+    except IOError as e:
+        print(f""Could not create sample file {sample_filename}: {e}"", file=sys.stderr)
+        sys.exit(1)
+    execute_instructions(sample_filename)",True,4,17212,276_6_4.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        if args:
+                            print(f""Executing instruction {line_number + 1}: {command} with argument '{args[0]}' (Run {i + 1}/10)"")
+                        else:
+                            print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                    else:
+                        print(f""Executing instruction {line_number + 1}: {command} (Run {i + 1}/10)"")
+                except Exception as e:
+                    print(f""Error executing line {line_number + 1}, iteration {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing instruction on line {line_number + 1}: '{instruction}'. Error: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""# This is a sample instruction file\n"")
+            f.write(""execute value_a\n"")
+            f.write(""print result\n"")
+            f.write(""set flag true\n"")
+            f.write(""\n"")
+        execute_instructions(sample_filename)
+    except IOError as e:
+        print(f""Fatal error setting up sample file: {e}"", file=sys.stderr)",True,5,17213,276_6_5.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filepath}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            for i in range(10):
+                print(f""Executing instruction '{instruction}' (Run {i + 1}/10)"")
+        except Exception as e:
+            print(f""Error executing instruction on line {line_number + 1}: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""Add 1\n"")
+            f.write(""Multiply by 2\n"")
+            f.write(""Subtract 5\n"")
+            f.write(""# This is a comment\n"")
+            f.write(""Divide by 3\n"")
+        execute_instructions(sample_filename)
+    except IOError as e:
+        print(f""Fatal error setting up sample file: {e}"", file=sys.stderr)",True,6,17214,276_6_6.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        print(f""Executing instruction {line_number + 1}: {instruction} (Attempt {i + 1}/10)"")
+                    else:
+                        print(f""Warning: Unknown command '{command}' in line {line_number + 1}"", file=sys.stderr)
+                except Exception as e:
+                    print(f""Error executing instruction on line {line_number + 1}, attempt {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing instruction on line {line_number + 1}: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""set_value 10\n"")
+            f.write(""execute set_value 10\n"")
+            f.write(""calculate 5 * 2\n"")
+            f.write(""# This is a comment\n"")
+            f.write(""execute calculate 5 * 2\n"")
+            f.write(""invalid_command\n"")
+            f.write(""\n"")
+        execute_instructions(sample_filename)
+    except IOError as e:
+        print(f""Fatal error setting up sample file: {e}"", file=sys.stderr)",True,7,17215,276_6_7.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction:
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            action = instruction_parts[0]
+            value = None
+            if len(instruction_parts) > 1:
+                try:
+                    value = float(instruction_parts[1])
+                except ValueError:
+                    print(f""Warning: Could not parse value for instruction '{instruction}' on line {line_number + 1}. Skipping."", file=sys.stderr)
+                    continue
+            if action == ""execute"":
+                for i in range(10):
+                    try:
+                        if value is not None:
+                            result = value * (i + 1)
+                            print(f""Executing instruction '{instruction}' (Attempt {i+1}): Result = {result}"")
+                        else:
+                            print(f""Executing instruction '{instruction}' (Attempt {i+1}): No value provided."")
+                    except Exception as e:
+                        print(f""Error during execution of instruction '{instruction}' on attempt {i+1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error processing line {line_number + 1} ('{instruction}'): {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""execute 2.5\n"")
+            f.write(""execute 10\n"")
+            f.write(""execute 3.14\n"")
+            f.write(""invalid instruction\n"")
+            f.write(""execute hello\n"")
+    except IOError as e:
+        print(f""Error setting up sample file: {e}"", file=sys.stderr)
+        sys.exit(1)
+    execute_instructions(sample_filename)",True,8,17216,276_6_8.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            command = instruction_parts[0]
+            args = instruction_parts[1:]
+            for i in range(10):
+                try:
+                    if command == ""execute"":
+                        print(f""Executing instruction {line_number + 1}: {instruction} (Run {i + 1}/10)"")
+                    else:
+                        print(f""Warning: Unknown command '{command}' in line {line_number + 1}. Skipping execution."", file=sys.stderr)
+                except Exception as e:
+                    print(f""Error executing instruction on line {line_number + 1} during run {i + 1}: {e}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error parsing or processing line {line_number + 1}: '{instruction}'. Error: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""# This is a sample instruction file\n"")
+            f.write(""execute step_a\n"")
+            f.write(""execute step_b\n"")
+            f.write(""skip_this\n"")
+            f.write(""\n"")
+        execute_instructions(sample_filename)
+    except IOError as e:
+        print(f""Fatal error setting up sample file: {e}"", file=sys.stderr)",True,9,17217,276_6_9.py
+276,6,Repeat a set of instructions often,"Write a script that reads instructions from a file and executes each instruction exactly ten times, handling potential file I/O errors gracefully. Use best-practice error handling.","import sys
+def execute_instructions(filename):
+    try:
+        with open(filename, 'r') as f:
+            instructions = f.readlines()
+    except IOError as e:
+        print(f""Error reading file {filename}: {e}"", file=sys.stderr)
+        return
+    for line_number, instruction in enumerate(instructions):
+        instruction = instruction.strip()
+        if not instruction or instruction.startswith('#'):
+            continue
+        try:
+            instruction_parts = instruction.split()
+            if not instruction_parts:
+                continue
+            operation = instruction_parts[0]
+            value = None
+            if len(instruction_parts) > 1:
+                value = float(instruction_parts[1])
+            else:
+                pass
+            if operation == ""add"" and value is not None:
+                for _ in range(10):
+                    result = 5 + value
+                    pass
+            elif operation == ""multiply"" and value is not None:
+                for _ in range(10):
+                    result = value * 2
+                    pass
+            elif operation == ""print"" and value is not None:
+                for _ in range(10):
+                    print(f""Executed print instruction {line_number + 1}: {value}"")
+        except ValueError as e:
+            print(f""Error parsing value on line {line_number + 1}: '{instruction}'. Error: {e}"", file=sys.stderr)
+        except IndexError:
+            print(f""Error: Malformed instruction on line {line_number + 1}: '{instruction}'"", file=sys.stderr)
+        except Exception as e:
+            print(f""An unexpected error occurred while executing line {line_number + 1}: {e}"", file=sys.stderr)
+if __name__ == '__main__':
+    sample_filename = ""instructions.txt""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""# This is a sample instruction file\n"")
+            f.write(""add 5.5\n"")
+            f.write(""multiply 3\n"")
+            f.write(""print 100\n"")
+            f.write(""invalid_command\n"")
+            f.write(""add abc\n"")
+        execute_instructions(sample_filename)
+    except IOError as e:
+        print(f""Fatal error setting up sample file: {e}"", file=sys.stderr)",True,10,17218,276_6_10.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","def simulate_sequence(sequence, operations):
+    result = []
+    for item in sequence:
+        for op in operations:
+            if op == 'add':
+                result.append(item + 1)
+            elif op == 'multiply':
+                result.append(item * 2)
+            elif op == 'subtract':
+                result.append(item - 1)
+            else:
+                result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_sequence = [1, 2, 3, 4, 5]
+    sample_operations = ['add', 'multiply', 'subtract']
+    simulation_result = simulate_sequence(sample_sequence, sample_operations)
+    print(simulation_result)",True,0,17219,276_7.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","def simulate_sequence(sequence, repetitions):
+    result = []
+    for _ in range(repetitions):
+        current_sequence = []
+        for operation in sequence:
+            if operation == 'add':
+                current_sequence.append(1)
+                current_sequence.append(2)
+            elif operation == 'subtract':
+                current_sequence.append(-1)
+                current_sequence.append(-2)
+            elif operation == 'multiply':
+                current_sequence.append(3)
+                current_sequence.append(4)
+            else:
+                current_sequence.append(0)
+        result.extend(current_sequence)
+    return result
+if __name__ == '__main__':
+    sample_sequence = ['add', 'subtract', 'multiply', 'other']
+    sample_repetitions = 3
+    simulation_result = simulate_sequence(sample_sequence, sample_repetitions)
+    print(simulation_result)",True,1,17220,276_7_1.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","import sys
+def simulate_sequence(sequence, repetitions):
+    result = []
+    for _ in range(repetitions):
+        current_sequence = []
+        for operation in sequence:
+            if operation == 'A':
+                current_sequence.append(1)
+            elif operation == 'B':
+                current_sequence.append(2)
+            elif operation == 'C':
+                current_sequence.append(3)
+            else:
+                current_sequence.append(0)
+        result.extend(current_sequence)
+    return result
+if __name__ == '__main__':
+    SEQUENCE = ['A', 'B', 'C', 'A']
+    REPETITIONS = 1000
+    simulation_result = simulate_sequence(SEQUENCE, REPETITIONS)
+    print(f""Total length of simulated sequence: {len(simulation_result)}"")",True,2,17221,276_7_2.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","def simulate_sequence(operations, repetitions):
+    result = []
+    for _ in range(repetitions):
+        current_sequence = []
+        for op in operations:
+            if op == 'A':
+                current_sequence.append(1)
+            elif op == 'B':
+                current_sequence.append(2)
+            elif op == 'C':
+                current_sequence.append(3)
+            else:
+                raise ValueError(""Unknown operation"")
+        result.extend(current_sequence)
+    return result
+if __name__ == '__main__':
+    sample_operations = ['A', 'B', 'C']
+    sample_repetitions = 5
+    simulation_result = simulate_sequence(sample_operations, sample_repetitions)
+    print(simulation_result)",True,3,17222,276_7_3.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","def simulate_sequence(sequence, repetitions):
+    result = []
+    for _ in range(repetitions):
+        current_cycle = []
+        for operation in sequence:
+            if operation == 'A':
+                current_cycle.append(1)
+            elif operation == 'B':
+                current_cycle.append(2)
+            elif operation == 'C':
+                current_cycle.append(3)
+            else:
+                current_cycle.append(0)
+        result.extend(current_cycle)
+    return result
+if __name__ == '__main__':
+    sample_sequence = ['A', 'B', 'C', 'A']
+    sample_repetitions = 5
+    simulation_result = simulate_sequence(sample_sequence, sample_repetitions)
+    print(simulation_result)",True,4,17223,276_7_4.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","def simulate_sequence(sequence, repetition_count):
+    result = []
+    for _ in range(repetition_count):
+        current_iteration = []
+        for operation in sequence:
+            if operation == 'add':
+                current_iteration.append(1)
+            elif operation == 'subtract':
+                current_iteration.append(-1)
+            elif operation == 'multiply':
+                current_iteration.append(2)
+            elif operation == 'divide':
+                current_iteration.append(0)
+            else:
+                current_iteration.append(operation)
+        result.extend(current_iteration)
+    return result
+if __name__ == '__main__':
+    sequence = ['add', 'subtract', 'multiply', 'divide', 'unknown']
+    repetition_count = 5
+    simulated_output = simulate_sequence(sequence, repetition_count)
+    print(simulated_output)",True,5,17224,276_7_5.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","def simulate_sequence(sequence, repetitions):
+    result = []
+    for _ in range(repetitions):
+        current_run = []
+        for operation in sequence:
+            if operation == 'A':
+                current_run.append(1)
+            elif operation == 'B':
+                current_run.append(2)
+            elif operation == 'C':
+                current_run.append(3)
+            else:
+                current_run.append(0)
+        result.extend(current_run)
+    return result
+if __name__ == '__main__':
+    sample_sequence = ['A', 'B', 'C', 'A']
+    sample_repetitions = 5
+    simulation_result = simulate_sequence(sample_sequence, sample_repetitions)
+    print(simulation_result)",True,6,17225,276_7_6.py
+276,7,Repeat a set of instructions often,"Design and implement an algorithm to simulate the repetition of a complex sequence of operations, focusing on algorithmic efficiency (Big O notation).","import time
+def simulate_sequence(operations, repetitions):
+    start_time = time.perf_counter()
+    for _ in range(repetitions):
+        for op in operations:
+            if op == 'A':
+                pass
+            elif op == 'B':
+                pass
+            elif op == 'C':
+                pass
+            else:
+                pass
+    end_time = time.perf_counter()
+    return end_time - start_time
+if __name__ == '__main__':
+    sequence = ['A', 'B', 'C']
+    repetitions = 100000
+    simulation_time = simulate_sequence(sequence, repetitions)
+    print(f""Simulation time: {simulation_time:.6f} seconds"")",True,7,17226,276_7_7.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i * iteration
+    return result
+if __name__ == '__main__':
+    iterations = [1, 2, 3, 4, 5]
+    total_sum = 0
+    start_time = time.perf_counter()
+    for k in iterations:
+        result = execute_task(k)
+        total_sum += result
+    end_time = time.perf_counter()
+    print(f""Total sum of results: {total_sum}"")
+    print(f""Execution time: {end_time - start_time:.6f} seconds"")",True,0,17227,276_0.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i
+    print(f""Iteration {iteration}: Result calculated."")
+    time.sleep(0.01)
+    return result
+if __name__ == '__main__':
+    num_iterations = 5
+    for i in range(num_iterations):
+        start_time = time.perf_counter()
+        result = execute_task(i + 1)
+        end_time = time.perf_counter()
+        print(f""Finished iteration {i + 1} in {end_time - start_time:.4f} seconds."")",True,1,17228,276_0_1.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i
+    print(f""Iteration {iteration}: Result calculated."")
+    time.sleep(0.001)
+    return result
+if __name__ == '__main__':
+    num_iterations = 5
+    for i in range(num_iterations):
+        start_time = time.perf_counter()
+        result = execute_task(i + 1)
+        end_time = time.perf_counter()
+        print(f""Finished iteration {i + 1} in {end_time - start_time:.6f} seconds."")",True,2,17229,276_0_2.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i
+    time.sleep(0.01)
+    return result + iteration
+if __name__ == '__main__':
+    num_iterations = 5
+    start_time = time.perf_counter()
+    for i in range(num_iterations):
+        execute_task(i)
+    end_time = time.perf_counter()
+    print(f""Execution finished in {end_time - start_time:.4f} seconds"")",True,3,17230,276_0_3.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i
+    time.sleep(0.01)
+    return result + iteration
+if __name__ == '__main__':
+    num_iterations = 5
+    start_time = time.perf_counter()
+    for i in range(num_iterations):
+        execute_task(i)
+    end_time = time.perf_counter()
+    print(f""Total execution time: {end_time - start_time}"")",True,4,17231,276_0_4.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i * iteration
+    return result
+if __name__ == '__main__':
+    iterations_to_run = [1, 2, 3, 4, 5]
+    start_time = time.perf_counter()
+    total_result = 0
+    for iteration in iterations_to_run:
+        result = execute_task(iteration)
+        total_result += result
+    end_time = time.perf_counter()
+    print(f""Total Result: {total_result}"")
+    print(f""Execution Time: {end_time - start_time:.6f} seconds"")",True,5,17232,276_0_5.py
+276,0,Repeat a set of instructions often,"Write a complete, production-ready Python script that repeatedly executes a predefined set of instructions using a loop structure. Optimize for performance.","import time
+def execute_task(iteration):
+    result = 0
+    for i in range(1000000):
+        result += i
+    time.sleep(0.001)
+    return result
+if __name__ == '__main__':
+    num_iterations = 5
+    start_time = time.perf_counter()
+    for i in range(num_iterations):
+        result = execute_task(i)
+        pass",True,6,17233,276_0_6.py
+276,8,Repeat a set of instructions often,"Write a highly readable Python function that uses recursion or a loop to repeat printing a specific string exactly N times, ensuring clean and efficient execution.","def repeat_print(text, n):
+    for _ in range(n):
+        print(text)
+if __name__ == '__main__':
+    string_to_repeat = ""Hello World""
+    number_of_repeats = 5
+    repeat_print(string_to_repeat, number_of_repeats)",True,0,17234,276_8.py
+276,8,Repeat a set of instructions often,"Write a highly readable Python function that uses recursion or a loop to repeat printing a specific string exactly N times, ensuring clean and efficient execution.","def repeat_print(text, n):
+    for _ in range(n):
+        print(text)
+if __name__ == '__main__':
+    message = ""Hello World""
+    count = 5
+    repeat_print(message, count)",True,1,17235,276_8_1.py
+276,8,Repeat a set of instructions often,"Write a highly readable Python function that uses recursion or a loop to repeat printing a specific string exactly N times, ensuring clean and efficient execution.","def repeat_print(text, n):
+    for _ in range(n):
+        print(text)
+if __name__ == '__main__':
+    text_to_print = ""Hello World""
+    number_of_repeats = 5
+    repeat_print(text_to_print, number_of_repeats)",True,2,17236,276_8_2.py
+276,8,Repeat a set of instructions often,"Write a highly readable Python function that uses recursion or a loop to repeat printing a specific string exactly N times, ensuring clean and efficient execution.","def repeat_print(text, n):
+    for _ in range(n):
+        print(text)
+if __name__ == '__main__':
+    text_to_repeat = ""Hello World""
+    number_of_repeats = 5
+    repeat_print(text_to_repeat, number_of_repeats)",True,3,17237,276_8_3.py
+276,10,Repeat a set of instructions often,"Write a complete, production-ready Python script that reads a predefined set of instructions from a file and then prints each instruction exactly three times. Ensure the code is highly readable and follows all Python best practices.","def main():
+    instructions_file = ""instructions.txt""
+    instructions = []
+    try:
+        with open(instructions_file, 'r') as f:
+            instructions = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: File '{instructions_file}' not found."")
+        return
+    for instruction in instructions:
+        for _ in range(3):
+            print(instruction)
+if __name__ == '__main__':
+    main()",True,0,17238,276_10.py
+276,10,Repeat a set of instructions often,"Write a complete, production-ready Python script that reads a predefined set of instructions from a file and then prints each instruction exactly three times. Ensure the code is highly readable and follows all Python best practices.","def main():
+    instructions_file = ""instructions.txt""
+    repeated_count = 3
+    try:
+        with open(instructions_file, 'r') as f:
+            instructions = f.readlines()
+    except FileNotFoundError:
+        print(f""Error: The file {instructions_file} was not found."")
+        return
+    for instruction in instructions:
+        print(instruction.strip())
+        for _ in range(repeated_count - 1):
+            print(instruction.strip())
+if __name__ == '__main__':
+    main()",True,1,17239,276_10_1.py
+276,10,Repeat a set of instructions often,"Write a complete, production-ready Python script that reads a predefined set of instructions from a file and then prints each instruction exactly three times. Ensure the code is highly readable and follows all Python best practices.","import os
+def read_instructions(filepath):
+    try:
+        with open(filepath, 'r') as f:
+            return f.readlines()
+    except FileNotFoundError:
+        return []
+def main():
+    instructions_file = ""instructions.txt""
+    sample_content = [
+        ""Instruction one"",
+        ""Instruction two"",
+        ""Instruction three""
+    ]
+    with open(instructions_file, 'w') as f:
+        for line in sample_content:
+            f.write(line + '\n')
+    instructions = read_instructions(instructions_file)
+    if not instructions:
+        return
+    for instruction in instructions:
+        print(instruction)
+        print(instruction)
+        print(instruction)
+if __name__ == '__main__':
+    main()",True,2,17240,276_10_2.py
+276,10,Repeat a set of instructions often,"Write a complete, production-ready Python script that reads a predefined set of instructions from a file and then prints each instruction exactly three times. Ensure the code is highly readable and follows all Python best practices.","def main():
+    instructions_file = ""instructions.txt""
+    instructions = []
+    try:
+        with open(instructions_file, 'r') as f:
+            instructions = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f""Error: The file {instructions_file} was not found."")
+        return
+    for instruction in instructions:
+        for _ in range(3):
+            print(instruction)
+if __name__ == '__main__':
+    main()",True,3,17241,276_10_3.py
+276,10,Repeat a set of instructions often,"Write a complete, production-ready Python script that reads a predefined set of instructions from a file and then prints each instruction exactly three times. Ensure the code is highly readable and follows all Python best practices.","def main():
+    instructions_file = ""instructions.txt""
+    repeated_count = 3
+    try:
+        with open(instructions_file, 'r') as f:
+            instructions = f.readlines()
+    except FileNotFoundError:
+        print(f""Error: The file {instructions_file} was not found."")
+        return
+    for instruction in instructions:
+        if instruction.strip():
+            for _ in range(repeated_count):
+                print(instruction.strip())
+if __name__ == '__main__':
+    main()",True,4,17242,276_10_4.py
+276,11,Repeat a set of instructions often,Implement an optimized Python function named 'repeat_instructions' that accepts a list of strings (the instructions) and an integer (the repetition count). The function must return a new list containing the repeated instructions. Optimize for time and memory efficiency.,"def repeat_instructions(instructions, count):
+    return instructions * count
+if __name__ == '__main__':
+    sample_instructions = [""step 1"", ""step 2"", ""step 3""]
+    repetition_count = 3
+    result = repeat_instructions(sample_instructions, repetition_count)
+    print(result)",True,0,17243,276_11.py
+276,11,Repeat a set of instructions often,Implement an optimized Python function named 'repeat_instructions' that accepts a list of strings (the instructions) and an integer (the repetition count). The function must return a new list containing the repeated instructions. Optimize for time and memory efficiency.,"def repeat_instructions(instructions, count):
+    return instructions * count
+if __name__ == '__main__':
+    sample_instructions = [""A"", ""B"", ""C""]
+    repetition_count = 3
+    result = repeat_instructions(sample_instructions, repetition_count)
+    print(result)",True,1,17244,276_11_1.py
+276,11,Repeat a set of instructions often,Implement an optimized Python function named 'repeat_instructions' that accepts a list of strings (the instructions) and an integer (the repetition count). The function must return a new list containing the repeated instructions. Optimize for time and memory efficiency.,"def repeat_instructions(instructions, count):
+    return instructions * count
+if __name__ == '__main__':
+    sample_instructions = [""Step 1"", ""Step 2"", ""Step 3""]
+    repetition_count = 3
+    result = repeat_instructions(sample_instructions, repetition_count)
+    print(result)",True,2,17245,276_11_2.py
+276,11,Repeat a set of instructions often,Implement an optimized Python function named 'repeat_instructions' that accepts a list of strings (the instructions) and an integer (the repetition count). The function must return a new list containing the repeated instructions. Optimize for time and memory efficiency.,"def repeat_instructions(instructions, count):
+    result = []
+    for instruction in instructions:
+        result.extend([instruction] * count)
+    return result
+if __name__ == '__main__':
+    sample_instructions = [""A"", ""B"", ""C""]
+    repetition_count = 3
+    repeated_list = repeat_instructions(sample_instructions, repetition_count)
+    print(repeated_list)",True,3,17246,276_11_3.py
+276,12,Repeat a set of instructions often,"Develop a class named 'InstructionRepeater' with a method that takes a sequence of instructions and a repetition factor. Implement this method to repeat each instruction the specified number of times, ensuring the implementation is object-oriented and robust.","class InstructionRepeater:
+    def repeat_instructions(self, instructions, repetition_factor):
+        repeated_instructions = []
+        for instruction in instructions:
+            repeated_instructions.extend([instruction] * repetition_factor)
+        return repeated_instructions
+if __name__ == '__main__':
+    repeater = InstructionRepeater()
+    sample_instructions = [""Step 1"", ""Step 2"", ""Step 3""]
+    repetition = 3
+    result = repeater.repeat_instructions(sample_instructions, repetition)
+    print(result)",True,0,17247,276_12.py
+276,12,Repeat a set of instructions often,"Develop a class named 'InstructionRepeater' with a method that takes a sequence of instructions and a repetition factor. Implement this method to repeat each instruction the specified number of times, ensuring the implementation is object-oriented and robust.","class InstructionRepeater:
+    def repeat_instructions(self, instructions, repetition_factor):
+        repeated_instructions = []
+        for instruction in instructions:
+            repeated_instructions.extend([instruction] * repetition_factor)
+        return repeated_instructions
+if __name__ == '__main__':
+    repeater = InstructionRepeater()
+    sample_instructions = [""move forward"", ""turn left"", ""jump""]
+    repetition = 3
+    result = repeater.repeat_instructions(sample_instructions, repetition)
+    print(result)",True,1,17248,276_12_1.py
+276,12,Repeat a set of instructions often,"Develop a class named 'InstructionRepeater' with a method that takes a sequence of instructions and a repetition factor. Implement this method to repeat each instruction the specified number of times, ensuring the implementation is object-oriented and robust.","class InstructionRepeater:
+    def repeat_instructions(self, instructions, repetition_factor):
+        repeated_instructions = []
+        for instruction in instructions:
+            repeated_instructions.extend([instruction] * repetition_factor)
+        return repeated_instructions
+if __name__ == '__main__':
+    repeater = InstructionRepeater()
+    sample_instructions = [""Step 1"", ""Step 2"", ""Step 3""]
+    repetition_factor = 3
+    result = repeater.repeat_instructions(sample_instructions, repetition_factor)
+    print(result)",True,2,17249,276_12_2.py
+274,14,Print all items in a list,"Generate the best practice Python code to iterate over a predefined list of mixed data types (strings, integers) and print each item clearly, prioritizing readability and execution speed.",,False,0,17250,274_14.py
+276,14,Repeat a set of instructions often,"Create a generator function that yields each instruction from an input list multiple times, based on a provided repetition factor. Design this generator to be lazy and memory-efficient for handling very large sets of instructions.","def instruction_repeater(instructions, repetition_factor):
+    for instruction in instructions:
+        for _ in range(repetition_factor):
+            yield instruction
+if __name__ == '__main__':
+    sample_instructions = [""A"", ""B"", ""C""]
+    repetition = 3
+    repeater = instruction_repeater(sample_instructions, repetition)
+    result_list = list(repeater)
+    print(result_list)",True,0,17251,276_14.py
+276,14,Repeat a set of instructions often,"Create a generator function that yields each instruction from an input list multiple times, based on a provided repetition factor. Design this generator to be lazy and memory-efficient for handling very large sets of instructions.","def instruction_repeater(instructions, repetition_factor):
+    for instruction in instructions:
+        for _ in range(repetition_factor):
+            yield instruction
+if __name__ == '__main__':
+    sample_instructions = [""A"", ""B"", ""C""]
+    repetition = 3
+    repeater = instruction_repeater(sample_instructions, repetition)
+    results = list(repeater)
+    print(results)",True,1,17252,276_14_1.py
+276,14,Repeat a set of instructions often,"Create a generator function that yields each instruction from an input list multiple times, based on a provided repetition factor. Design this generator to be lazy and memory-efficient for handling very large sets of instructions.","def instruction_repeater(instructions, repetition_factor):
+    for instruction in instructions:
+        for _ in range(repetition_factor):
+            yield instruction
+if __name__ == '__main__':
+    sample_instructions = [""move_forward"", ""turn_left"", ""move_forward"", ""jump""]
+    repetition = 3
+    repeater = instruction_repeater(sample_instructions, repetition)
+    result_list = []
+    for item in repeater:
+        result_list.append(item)
+    print(result_list)",True,2,17253,276_14_2.py
+276,14,Repeat a set of instructions often,"Create a generator function that yields each instruction from an input list multiple times, based on a provided repetition factor. Design this generator to be lazy and memory-efficient for handling very large sets of instructions.","def instruction_repeater(instructions, repetition_factor):
+    for instruction in instructions:
+        for _ in range(repetition_factor):
+            yield instruction
+if __name__ == '__main__':
+    sample_instructions = [""move"", ""jump"", ""push"", ""pop""]
+    repetition = 3
+    repeater = instruction_repeater(sample_instructions, repetition)
+    result_list = list(repeater)
+    print(result_list)",True,3,17254,276_14_3.py
+276,14,Repeat a set of instructions often,"Create a generator function that yields each instruction from an input list multiple times, based on a provided repetition factor. Design this generator to be lazy and memory-efficient for handling very large sets of instructions.","def instruction_repeater(instructions, repetition_factor):
+    for instruction in instructions:
+        for _ in range(repetition_factor):
+            yield instruction
+if __name__ == '__main__':
+    sample_instructions = [""A"", ""B"", ""C""]
+    repetition = 3
+    repeater = instruction_repeater(sample_instructions, repetition)
+    result_list = []
+    for item in repeater:
+        result_list.append(item)
+    print(result_list)",True,4,17255,276_14_4.py
+277,0,Count items using a loop structure,"Write a complete, efficient Python script that prompts the user to enter a specific number of items and then uses a `for` loop to calculate and print the total sum. The code must be robust.","if __name__ == '__main__':
+    num_items = 10
+    total_sum = 0
+    for i in range(num_items):
+        total_sum += i + 1
+    print(f""The number of items entered is: {num_items}"")
+    print(f""The total sum is: {total_sum}"")",True,0,17256,277_0.py
+277,0,Count items using a loop structure,"Write a complete, efficient Python script that prompts the user to enter a specific number of items and then uses a `for` loop to calculate and print the total sum. The code must be robust.","if __name__ == '__main__':
+    number_of_items = 5
+    total_sum = 0
+    for i in range(number_of_items):
+        total_sum += i + 1
+    print(f""The number of items entered is: {number_of_items}"")
+    print(f""The total sum is: {total_sum}"")",True,1,17257,277_0_1.py
+277,0,Count items using a loop structure,"Write a complete, efficient Python script that prompts the user to enter a specific number of items and then uses a `for` loop to calculate and print the total sum. The code must be robust.","if __name__ == '__main__':
+    number_of_items = 5
+    total_sum = 0
+    for i in range(number_of_items):
+        total_sum += i + 1
+    print(f""The number of items entered is: {number_of_items}"")
+    print(f""The calculated total sum is: {total_sum}"")",True,2,17258,277_0_2.py
+277,0,Count items using a loop structure,"Write a complete, efficient Python script that prompts the user to enter a specific number of items and then uses a `for` loop to calculate and print the total sum. The code must be robust.","if __name__ == '__main__':
+    number_of_items = 5
+    total_sum = 0
+    for i in range(number_of_items):
+        total_sum += i + 1
+    print(f""The total sum is: {total_sum}"")",True,3,17259,277_0_3.py
+277,0,Count items using a loop structure,"Write a complete, efficient Python script that prompts the user to enter a specific number of items and then uses a `for` loop to calculate and print the total sum. The code must be robust.","def calculate_sum(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+if __name__ == '__main__':
+    sample_numbers = [15, 27, 8, 42, 11]
+    result = calculate_sum(sample_numbers)
+    print(result)",True,4,17260,277_0_4.py
+277,1,Count items using a loop structure,Implement an optimized function named `count_items` that accepts a list of numbers and returns the total count of all elements using a `for` loop. Ensure the implementation is highly efficient.,"def count_items(data):
+    count = 0
+    for item in data:
+        count += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 15, 20]
+    result = count_items(sample_list)
+    print(result)",True,0,17261,277_1.py
+277,1,Count items using a loop structure,Implement an optimized function named `count_items` that accepts a list of numbers and returns the total count of all elements using a `for` loop. Ensure the implementation is highly efficient.,"def count_items(data):
+    count = 0
+    for item in data:
+        count += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    result = count_items(sample_list)
+    print(result)",True,1,17262,277_1_1.py
+276,13,Repeat a set of instructions often,Write a command-line Python application that prompts the user to input a string of instructions and an integer repetition count. The program must then output the full set of repeated instructions clearly to the console. Use efficient input/output methods.,,False,0,17263,276_13.py
+277,3,Count items using a loop structure,"Write a function that takes an iterable (e.g., a string or a list) and uses a `while` loop to iterate through it and count the total number of characters/elements. Ensure this is the most Pythonic way for iteration.","def count_elements(iterable):
+    count = 0
+    iterator = iter(iterable)
+    while True:
+        try:
+            next(iterator)
+            count += 1
+        except StopIteration:
+            break
+    return count
+if __name__ == '__main__':
+    sample_string = ""hello""
+    sample_list = [1, 2, 3, 4, 5]
+    result_string = count_elements(sample_string)
+    print(f""Count for '{sample_string}': {result_string}"")
+    result_list = count_elements(sample_list)
+    print(f""Count for {sample_list}: {result_list}"")",True,0,17264,277_3.py
+277,3,Count items using a loop structure,"Write a function that takes an iterable (e.g., a string or a list) and uses a `while` loop to iterate through it and count the total number of characters/elements. Ensure this is the most Pythonic way for iteration.","def count_elements(iterable):
+    count = 0
+    iterator = iter(iterable)
+    while True:
+        try:
+            next(iterator)
+            count += 1
+        except StopIteration:
+            break
+    return count
+if __name__ == '__main__':
+    sample_string = ""hello""
+    sample_list = [1, 2, 3, 4, 5]
+    print(f""Count for '{sample_string}': {count_elements(sample_string)}"")
+    print(f""Count for {sample_list}: {count_elements(sample_list)}"")",True,1,17265,277_3_1.py
+277,3,Count items using a loop structure,"Write a function that takes an iterable (e.g., a string or a list) and uses a `while` loop to iterate through it and count the total number of characters/elements. Ensure this is the most Pythonic way for iteration.","def count_elements(iterable):
+    count = 0
+    iterator = iter(iterable)
+    while True:
+        try:
+            next(iterator)
+            count += 1
+        except StopIteration:
+            break
+    return count
+if __name__ == '__main__':
+    sample_string = ""hello""
+    print(f""Counting elements in '{sample_string}': {count_elements(sample_string)}"")
+    sample_list = [1, 2, 3, 4, 5]
+    print(f""Counting elements in {sample_list}: {count_elements(sample_list)}"")
+    sample_empty = """"
+    print(f""Counting elements in '{sample_empty}': {count_elements(sample_empty)}"")
+    sample_list_empty = []
+    print(f""Counting elements in {sample_list_empty}: {count_elements(sample_list_empty)}"")",True,2,17266,277_3_2.py
+277,3,Count items using a loop structure,"Write a function that takes an iterable (e.g., a string or a list) and uses a `while` loop to iterate through it and count the total number of characters/elements. Ensure this is the most Pythonic way for iteration.","def count_elements(iterable):
+    count = 0
+    iterator = iter(iterable)
+    while True:
+        try:
+            next(iterator)
+            count += 1
+        except StopIteration:
+            break
+    return count
+if __name__ == '__main__':
+    sample_string = ""hello""
+    sample_list = [1, 2, 3, 4, 5]
+    result_string = count_elements(sample_string)
+    print(f""The number of characters in '{sample_string}' is: {result_string}"")
+    result_list = count_elements(sample_list)
+    print(f""The number of elements in {sample_list} is: {result_list}"")",True,3,17267,277_3_3.py
+277,2,Count items using a loop structure,"Develop a Python program that reads integers from standard input until a sentinel value (like 0) is entered, and then use a loop structure to count how many positive integers were entered. Provide full error handling.","if __name__ == '__main__':
+    input_data = [10, -5, 20, 0, 3, -1, 40, 0]
+    sentinel = 0
+    positive_count = 0
+    for number in input_data:
+        if number == sentinel:
+            break
+        if number > 0:
+            positive_count += 1
+        else:
+            print(f""Warning: Non-positive number {number} encountered. Continuing..."")
+    print(f""Total positive integers entered: {positive_count}"")",True,0,17268,277_2.py
+277,2,Count items using a loop structure,"Develop a Python program that reads integers from standard input until a sentinel value (like 0) is entered, and then use a loop structure to count how many positive integers were entered. Provide full error handling.","if __name__ == '__main__':
+    sample_input = [10, -5, 20, 0, 3, 15, -1, 0]
+    sentinel = 0
+    positive_count = 0
+    for number in sample_input:
+        if number == sentinel:
+            break
+        if number > 0:
+            positive_count += 1
+        else:
+            print(f""Warning: Non-positive number {number} encountered, continuing."")
+    print(f""Total positive integers entered: {positive_count}"")",True,1,17269,277_2_1.py
+277,5,Count items using a loop structure,Implement an optimized class method within a class that counts the occurrences of a specific item within an input list using an iterative approach (a loop). The function must handle cases where the item is not present.,"class ListCounter:
+    def count_occurrences(self, data_list, item):
+        count = 0
+        for element in data_list:
+            if element == item:
+                count += 1
+        return count
+if __name__ == '__main__':
+    counter = ListCounter()
+    sample_list = [1, 2, 3, 2, 4, 2, 5]
+    item_to_find_present = 2
+    item_to_find_absent = 99
+    count1 = counter.count_occurrences(sample_list, item_to_find_present)
+    print(f""Occurrences of {item_to_find_present} in {sample_list}: {count1}"")
+    count2 = counter.count_occurrences(sample_list, item_to_find_absent)
+    print(f""Occurrences of {item_to_find_absent} in {sample_list}: {count2}"")",True,0,17270,277_5.py
+277,5,Count items using a loop structure,Implement an optimized class method within a class that counts the occurrences of a specific item within an input list using an iterative approach (a loop). The function must handle cases where the item is not present.,"class ListCounter:
+    def count_occurrences(self, data_list, item):
+        count = 0
+        for element in data_list:
+            if element == item:
+                count += 1
+        return count
+if __name__ == '__main__':
+    counter = ListCounter()
+    sample_list = [1, 2, 3, 2, 4, 2, 5]
+    item_to_find_present = 2
+    item_to_find_absent = 99
+    result_present = counter.count_occurrences(sample_list, item_to_find_present)
+    result_absent = counter.count_occurrences(sample_list, item_to_find_absent)
+    print(f""List: {sample_list}"")
+    print(f""Occurrences of {item_to_find_present}: {result_present}"")
+    print(f""Occurrences of {item_to_find_absent}: {result_absent}"")",True,1,17271,277_5_1.py
+277,5,Count items using a loop structure,Implement an optimized class method within a class that counts the occurrences of a specific item within an input list using an iterative approach (a loop). The function must handle cases where the item is not present.,"class ListCounter:
+    def count_occurrences(self, data_list, item):
+        count = 0
+        for element in data_list:
+            if element == item:
+                count += 1
+        return count
+if __name__ == '__main__':
+    counter = ListCounter()
+    list1 = [1, 2, 3, 2, 4, 2, 5]
+    item1 = 2
+    result1 = counter.count_occurrences(list1, item1)
+    print(f""List: {list1}, Item: {item1}, Count: {result1}"")
+    list2 = ['a', 'b', 'c', 'd']
+    item2 = 'z'
+    result2 = counter.count_occurrences(list2, item2)
+    print(f""List: {list2}, Item: {item2}, Count: {result2}"")
+    list3 = [10, 20, 10, 30, 10]
+    item3 = 10
+    result3 = counter.count_occurrences(list3, item3)
+    print(f""List: {list3}, Item: {item3}, Count: {result3}"")",True,2,17272,277_5_2.py
+277,5,Count items using a loop structure,Implement an optimized class method within a class that counts the occurrences of a specific item within an input list using an iterative approach (a loop). The function must handle cases where the item is not present.,"class ListCounter:
+    def count_occurrences(self, data_list, item):
+        count = 0
+        for element in data_list:
+            if element == item:
+                count += 1
+        return count
+if __name__ == '__main__':
+    counter = ListCounter()
+    sample_list = [1, 5, 2, 5, 8, 5, 3]
+    item_to_find_present = 5
+    item_to_find_absent = 99
+    count1 = counter.count_occurrences(sample_list, item_to_find_present)
+    print(f""Occurrences of {item_to_find_present} in {sample_list}: {count1}"")
+    count2 = counter.count_occurrences(sample_list, item_to_find_absent)
+    print(f""Occurrences of {item_to_find_absent} in {sample_list}: {count2}"")",True,3,17273,277_5_3.py
+277,6,Count items using a loop structure,"Write a recursive Python function that counts the number of elements in a nested list structure, demonstrating a counting mechanism via a loop within the recursion base case or step. Focus on clarity and correctness.","def count_nested_elements(nested_list):
+    count = 0
+    for element in nested_list:
+        if isinstance(element, list):
+            count += count_nested_elements(element)
+        else:
+            count += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, [2, 3], [4, [5]], 6]
+    result = count_nested_elements(sample_list)
+    print(result)",True,0,17274,277_6.py
+277,6,Count items using a loop structure,"Write a recursive Python function that counts the number of elements in a nested list structure, demonstrating a counting mechanism via a loop within the recursion base case or step. Focus on clarity and correctness.","def count_nested_elements(nested_list):
+    count = 0
+    for element in nested_list:
+        if isinstance(element, list):
+            count += count_nested_elements(element)
+        else:
+            count += 1
+    return count
+if __name__ == '__main__':
+    data = [1, [2, 3], [4, [5, 6]], 7]
+    result = count_nested_elements(data)
+    print(result)",True,1,17275,277_6_1.py
+277,6,Count items using a loop structure,"Write a recursive Python function that counts the number of elements in a nested list structure, demonstrating a counting mechanism via a loop within the recursion base case or step. Focus on clarity and correctness.","def count_nested_elements(nested_list):
+    count = 0
+    for element in nested_list:
+        if isinstance(element, list):
+            count += count_nested_elements(element)
+        else:
+            count += 1
+    return count
+if __name__ == '__main__':
+    data1 = [1, 2, [3, 4], 5]
+    print(count_nested_elements(data1))
+    data2 = [1, [2, [3, 4]], 5]
+    print(count_nested_elements(data2))
+    data3 = [1, 2, 3]
+    print(count_nested_elements(data3))
+    data4 = [[1], [2, [3]], [4]]
+    print(count_nested_elements(data4))",True,2,17276,277_6_2.py
+277,6,Count items using a loop structure,"Write a recursive Python function that counts the number of elements in a nested list structure, demonstrating a counting mechanism via a loop within the recursion base case or step. Focus on clarity and correctness.","def count_nested_elements(nested_list):
+    count = 0
+    for element in nested_list:
+        if isinstance(element, list):
+            count += count_nested_elements(element)
+        else:
+            count += 1
+    return count
+if __name__ == '__main__':
+    data1 = [1, 2, [3, 4], 5]
+    data2 = [1, [2, [3, 4]], 5]
+    data3 = [1, 2, 3]
+    data4 = [[1, [2]], 3]
+    print(f""Data 1: {count_nested_elements(data1)}"")
+    print(f""Data 2: {count_nested_elements(data2)}"")
+    print(f""Data 3: {count_nested_elements(data3)}"")
+    print(f""Data 4: {count_nested_elements(data4)}"")",True,3,17277,277_6_3.py
+277,7,Count items using a loop structure,"Develop an iterative solution using a `while` loop to traverse a pre-defined sequence (e.g., numbers 100 down to 0) and count how many iterations are performed before the loop terminates.","def count_iterations(start, end):
+    count = 0
+    current = start
+    while current >= end:
+        count += 1
+        current -= 1
+    return count
+if __name__ == '__main__':
+    start_value = 100
+    end_value = 0
+    result = count_iterations(start_value, end_value)
+    print(result)",True,0,17278,277_7.py
+277,7,Count items using a loop structure,"Develop an iterative solution using a `while` loop to traverse a pre-defined sequence (e.g., numbers 100 down to 0) and count how many iterations are performed before the loop terminates.","def count_iterations(start, end):
+    count = 0
+    current = start
+    while current >= end:
+        count += 1
+        current -= 1
+    return count
+if __name__ == '__main__':
+    start_value = 100
+    end_value = 0
+    total_iterations = count_iterations(start_value, end_value)
+    print(total_iterations)",True,1,17279,277_7_1.py
+277,7,Count items using a loop structure,"Develop an iterative solution using a `while` loop to traverse a pre-defined sequence (e.g., numbers 100 down to 0) and count how many iterations are performed before the loop terminates.","def count_iterations():
+    current_number = 100
+    iterations = 0
+    while current_number >= 0:
+        iterations += 1
+        current_number -= 1
+    return iterations
+if __name__ == '__main__':
+    result = count_iterations()
+    print(result)",True,2,17280,277_7_2.py
+277,7,Count items using a loop structure,"Develop an iterative solution using a `while` loop to traverse a pre-defined sequence (e.g., numbers 100 down to 0) and count how many iterations are performed before the loop terminates.","def count_iterations():
+    current = 100
+    iterations = 0
+    while current >= 0:
+        iterations += 1
+        current -= 1
+    return iterations
+if __name__ == '__main__':
+    result = count_iterations()
+    print(result)",True,3,17281,277_7_3.py
+277,7,Count items using a loop structure,"Develop an iterative solution using a `while` loop to traverse a pre-defined sequence (e.g., numbers 100 down to 0) and count how many iterations are performed before the loop terminates.","def count_iterations(start, end):
+    current = start
+    iterations = 0
+    while current >= end:
+        current -= 1
+        iterations += 1
+    return iterations
+if __name__ == '__main__':
+    start_value = 100
+    end_value = 0
+    result = count_iterations(start_value, end_value)
+    print(result)",True,4,17282,277_7_4.py
+277,7,Count items using a loop structure,"Develop an iterative solution using a `while` loop to traverse a pre-defined sequence (e.g., numbers 100 down to 0) and count how many iterations are performed before the loop terminates.","def count_iterations(start, stop):
+    current = start
+    count = 0
+    while current >= stop:
+        current -= 1
+        count += 1
+    return count
+if __name__ == '__main__':
+    start_value = 100
+    stop_value = 0
+    iterations = count_iterations(start_value, stop_value)
+    print(iterations)",True,5,17283,277_7_5.py
+277,8,Count items using a loop structure,Generate a script that reads a single line of space-separated integers from the user and uses a loop structure to calculate the sum of all those integers. Prioritize readability and best practices.,"if __name__ == '__main__':
+    input_line = ""10 20 30 40 50""
+    numbers = input_line.split()
+    total_sum = 0
+    for num_str in numbers:
+        number = int(num_str)
+        total_sum += number
+    print(total_sum)",True,0,17284,277_8.py
+277,8,Count items using a loop structure,Generate a script that reads a single line of space-separated integers from the user and uses a loop structure to calculate the sum of all those integers. Prioritize readability and best practices.,"if __name__ == '__main__':
+    input_line = ""10 20 30 40 50""
+    numbers_as_strings = input_line.split()
+    numbers = []
+    for item in numbers_as_strings:
+        numbers.append(int(item))
+    total_sum = 0
+    for number in numbers:
+        total_sum += number
+    print(total_sum)",True,1,17285,277_8_1.py
+277,9,Count items using a loop structure,Implement a generator function that yields the count of numbers in a given list as it iterates over the list using a `for` loop. Ensure the implementation is memory efficient.,"def count_generator(data):
+    count = 0
+    for item in data:
+        yield count
+        count += 1
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    generator = count_generator(sample_list)
+    results = list(generator)
+    print(results)",True,0,17286,277_9.py
+277,9,Count items using a loop structure,Implement a generator function that yields the count of numbers in a given list as it iterates over the list using a `for` loop. Ensure the implementation is memory efficient.,"def count_generator(data):
+    count = 0
+    for item in data:
+        yield count
+        count += 1
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    result_generator = count_generator(sample_list)
+    result_list = list(result_generator)
+    print(result_list)",True,1,17287,277_9_1.py
+277,9,Count items using a loop structure,Implement a generator function that yields the count of numbers in a given list as it iterates over the list using a `for` loop. Ensure the implementation is memory efficient.,"def count_generator(data):
+    count = 0
+    for item in data:
+        yield count
+        count += 1
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    generator = count_generator(sample_list)
+    result_list = list(generator)
+    print(result_list)",True,2,17288,277_9_2.py
+277,4,Count items using a loop structure,"Create a script that initializes an empty list and then uses a `for` loop with the `range()` function to populate it with numbers from 1 to 10. Finally, print the length of the resulting list.",,False,0,17289,277_4.py
+277,11,Count items using a loop structure,Implement an optimized function named `count_items` that accepts a list of numbers and returns the total count of elements in the list using a `while` loop structure. Ensure the implementation is efficient.,"def count_items(data):
+    count = 0
+    index = 0
+    while index < len(data):
+        count += 1
+        index += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    result = count_items(sample_list)
+    print(result)
+    sample_list_empty = []
+    result_empty = count_items(sample_list_empty)
+    print(result_empty)
+    sample_list_with_negatives = [10, -5, 0, 3.14]
+    result_negatives = count_items(sample_list_with_negatives)
+    print(result_negatives)",True,0,17290,277_11.py
+277,11,Count items using a loop structure,Implement an optimized function named `count_items` that accepts a list of numbers and returns the total count of elements in the list using a `while` loop structure. Ensure the implementation is efficient.,"def count_items(data):
+    count = 0
+    index = 0
+    while index < len(data):
+        count += 1
+        index += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    result = count_items(sample_list)
+    print(result)",True,1,17291,277_11_1.py
+277,11,Count items using a loop structure,Implement an optimized function named `count_items` that accepts a list of numbers and returns the total count of elements in the list using a `while` loop structure. Ensure the implementation is efficient.,"def count_items(data):
+    count = 0
+    index = 0
+    while index < len(data):
+        count += 1
+        index += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    result = count_items(sample_list)
+    print(result)
+    sample_list_empty = []
+    result_empty = count_items(sample_list_empty)
+    print(result_empty)
+    sample_list_with_negatives = [-10, 20, -5, 30]
+    result_negatives = count_items(sample_list_with_negatives)
+    print(result_negatives)",True,2,17292,277_11_2.py
+277,11,Count items using a loop structure,Implement an optimized function named `count_items` that accepts a list of numbers and returns the total count of elements in the list using a `while` loop structure. Ensure the implementation is efficient.,"def count_items(data):
+    count = 0
+    index = 0
+    while index < len(data):
+        count += 1
+        index += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    result = count_items(sample_list)
+    print(result)
+    sample_list_empty = []
+    result_empty = count_items(sample_list_empty)
+    print(result_empty)
+    sample_list_with_negatives = [-10, 0, 5.5, -3]
+    result_negatives = count_items(sample_list_with_negatives)
+    print(result_negatives)",True,3,17293,277_11_3.py
+277,12,Count items using a loop structure,"Develop a Python function that takes a string of characters and uses a `for` loop to count the total number of vowels (a, e, i, o, u, case-insensitive) present in the string. Provide clear docstrings.","def count_vowels(text):
+    vowel_count = 0
+    vowels = ""aeiou""
+    for char in text:
+        if char.lower() in vowels:
+            vowel_count += 1
+    return vowel_count
+if __name__ == '__main__':
+    sample_string_1 = ""Hello World""
+    result_1 = count_vowels(sample_string_1)
+    print(f""The string: '{sample_string_1}' has {result_1} vowels."")
+    sample_string_2 = ""Programming is Fun""
+    result_2 = count_vowels(sample_string_2)
+    print(f""The string: '{sample_string_2}' has {result_2} vowels."")
+    sample_string_3 = ""AEIOUaeiou""
+    result_3 = count_vowels(sample_string_3)
+    print(f""The string: '{sample_string_3}' has {result_3} vowels."")",True,0,17294,277_12.py
+277,12,Count items using a loop structure,"Develop a Python function that takes a string of characters and uses a `for` loop to count the total number of vowels (a, e, i, o, u, case-insensitive) present in the string. Provide clear docstrings.","def count_vowels(text):
+    vowel_count = 0
+    vowels = ""aeiou""
+    for char in text:
+        if char.lower() in vowels:
+            vowel_count += 1
+    return vowel_count
+if __name__ == '__main__':
+    sample_string = ""Hello World""
+    result = count_vowels(sample_string)
+    print(f""The string is: '{sample_string}'"")
+    print(f""The number of vowels is: {result}"")
+    sample_string_2 = ""Programming is Fun""
+    result_2 = count_vowels(sample_string_2)
+    print(f""The string is: '{sample_string_2}'"")
+    print(f""The number of vowels is: {result_2}"")",True,1,17295,277_12_1.py
+277,12,Count items using a loop structure,"Develop a Python function that takes a string of characters and uses a `for` loop to count the total number of vowels (a, e, i, o, u, case-insensitive) present in the string. Provide clear docstrings.","def count_vowels(text):
+    vowel_count = 0
+    vowels = ""aeiou""
+    for char in text:
+        if char.lower() in vowels:
+            vowel_count += 1
+    return vowel_count
+if __name__ == '__main__':
+    sample_string_1 = ""Hello World""
+    result_1 = count_vowels(sample_string_1)
+    print(f""The number of vowels in '{sample_string_1}' is: {result_1}"")
+    sample_string_2 = ""Programming is Fun""
+    result_2 = count_vowels(sample_string_2)
+    print(f""The number of vowels in '{sample_string_2}' is: {result_2}"")
+    sample_string_3 = ""AEIOUaeiou""
+    result_3 = count_vowels(sample_string_3)
+    print(f""The number of vowels in '{sample_string_3}' is: {result_3}"")",True,2,17296,277_12_2.py
+277,12,Count items using a loop structure,"Develop a Python function that takes a string of characters and uses a `for` loop to count the total number of vowels (a, e, i, o, u, case-insensitive) present in the string. Provide clear docstrings.","def count_vowels(text):
+    vowel_count = 0
+    vowels = ""aeiou""
+    for char in text:
+        if char.lower() in vowels:
+            vowel_count += 1
+    return vowel_count
+if __name__ == '__main__':
+    sample_string = ""Hello World! This is a Test.""
+    result = count_vowels(sample_string)
+    print(result)",True,3,17297,277_12_3.py
+277,13,Count items using a loop structure,Write an efficient Python program that iterates through a predefined list of integers and uses a `for` loop to count only the even numbers. The output should be the final count of even numbers found.,"def count_even_numbers():
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    count = 0
+    for number in numbers:
+        if number % 2 == 0:
+            count += 1
+    return count
+if __name__ == '__main__':
+    result = count_even_numbers()
+    print(result)",True,0,17298,277_13.py
+277,13,Count items using a loop structure,Write an efficient Python program that iterates through a predefined list of integers and uses a `for` loop to count only the even numbers. The output should be the final count of even numbers found.,"def count_even_numbers(numbers):
+    count = 0
+    for number in numbers:
+        if number % 2 == 0:
+            count += 1
+    return count
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = count_even_numbers(sample_list)
+    print(result)",True,1,17299,277_13_1.py
+277,13,Count items using a loop structure,Write an efficient Python program that iterates through a predefined list of integers and uses a `for` loop to count only the even numbers. The output should be the final count of even numbers found.,"if __name__ == '__main__':
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    even_count = 0
+    for number in numbers:
+        if number % 2 == 0:
+            even_count += 1
+    print(even_count)",True,2,17300,277_13_2.py
+277,14,Count items using a loop structure,"Create a function that accepts an iterable (like a tuple or list) and uses a `while` loop with an index to iterate through it, counting and printing the index of every element encountered. Ensure the code is best-practice Python.","def index_iterator(iterable):
+    index = 0
+    for element in iterable:
+        print(index)
+        index += 1
+if __name__ == '__main__':
+    sample_data = (10, 20, 30, 40, 50)
+    index_iterator(sample_data)",True,0,17301,277_14.py
+277,14,Count items using a loop structure,"Create a function that accepts an iterable (like a tuple or list) and uses a `while` loop with an index to iterate through it, counting and printing the index of every element encountered. Ensure the code is best-practice Python.","def index_iterator(iterable):
+    index = 0
+    for item in iterable:
+        print(index)
+        index += 1
+if __name__ == '__main__':
+    sample_data = (10, 20, 30, 40, 50)
+    index_iterator(sample_data)",True,1,17302,277_14_1.py
+277,14,Count items using a loop structure,"Create a function that accepts an iterable (like a tuple or list) and uses a `while` loop with an index to iterate through it, counting and printing the index of every element encountered. Ensure the code is best-practice Python.","def print_indices_with_while(iterable):
+    index = 0
+    while index < len(iterable):
+        print(index)
+        index += 1
+if __name__ == '__main__':
+    sample_data = (10, 20, 30, 40, 50)
+    print_indices_with_while(sample_data)",True,2,17303,277_14_2.py
+277,10,Count items using a loop structure,"Write a complete, robust Python script that prompts the user to enter a positive integer and then uses a `for` loop to count how many times the user enters a number less than 100.",,False,0,17304,277_10.py
+278,1,Print each item separately now,Implement an optimized function named 'print_separately' that accepts an iterable (like a list or tuple) and prints every element of the iterable on its own separate line using the most efficient method.,"def print_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4]
+    print_separately(data1)
+    data2 = ('a', 'b', 'c')
+    print_separately(data2)
+    data3 = [10.5, 20.1, 30.9]
+    print_separately(data3)",True,0,17305,278_1.py
+278,1,Print each item separately now,Implement an optimized function named 'print_separately' that accepts an iterable (like a list or tuple) and prints every element of the iterable on its own separate line using the most efficient method.,"def print_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    print_separately(data1)
+    data2 = ('a', 'b', 'c', 'd')
+    print_separately(data2)
+    data3 = [10.5, 20.1, 30.9]
+    print_separately(data3)",True,1,17306,278_1_1.py
+278,1,Print each item separately now,Implement an optimized function named 'print_separately' that accepts an iterable (like a list or tuple) and prints every element of the iterable on its own separate line using the most efficient method.,"def print_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4]
+    print_separately(data1)
+    data2 = ('a', 'b', 'c')
+    print_separately(data2)
+    data3 = [10, 20.5, 300]
+    print_separately(data3)",True,2,17307,278_1_2.py
+278,2,Print each item separately now,Develop a class named 'LinePrinter' with a method to accept a list of items and print each item individually. Ensure the implementation is clean and adheres to object-oriented principles.,"class LinePrinter:
+    def print_items(self, items):
+        for item in items:
+            print(item)
+if __name__ == '__main__':
+    printer = LinePrinter()
+    sample_list = [""Hello"", ""World"", ""Python"", ""OOP""]
+    printer.print_items(sample_list)",True,0,17308,278_2.py
+278,2,Print each item separately now,Develop a class named 'LinePrinter' with a method to accept a list of items and print each item individually. Ensure the implementation is clean and adheres to object-oriented principles.,"class LinePrinter:
+    def print_lines(self, items):
+        for item in items:
+            print(item)
+if __name__ == '__main__':
+    printer = LinePrinter()
+    sample_list = [""Hello"", ""World"", ""Python"", ""OOP""]
+    printer.print_lines(sample_list)",True,1,17309,278_2_1.py
+278,3,Print each item separately now,Write a standalone Python program that takes user input as a single line of text and prints every character of that input string on a new line.,"if __name__ == '__main__':
+    input_string = ""Hello World""
+    for char in input_string:
+        print(char)",True,0,17310,278_3.py
+276,9,Repeat a set of instructions often,"Develop a framework for instruction repetition where the repetition logic can be dynamically configured at runtime, favoring modularity and extensibility.","class RepetitionStrategy:
+    def execute(self, sequence):
+        raise NotImplementedError
+class SimpleRepeat(RepetitionStrategy):
+    def execute(self, sequence):
+        return sequence * 2
+class InterleavedRepeat(RepetitionStrategy):
+    def execute(self, sequence):
+        if not sequence:
+            return []
+        result = []
+        for item in sequence:
+            result.append(item)
+            result.append(item)
+        return result
+class AlternatingRepeat(RepetitionStrategy):
+    def execute(self, sequence):
+        if not sequence:
+            return []
+        result = []
+        for i, item in enumerate(sequence):
+            if i % 2 == 0:
+                result.append(item)
+            else:
+                result.append(item)
+        return result
+class RepetitionEngine:
+    def __init__(self, strategy_name):
+        self.strategies = {
+            ""simple"": SimpleRepeat(),
+            ""interleaved"": InterleavedRepeat(),
+            ""alternating"": AlternatingRepeat()
+        }
+        self._strategy = self.strategies.get(strategy_name)
+        if not self._strategy:
+            raise ValueError(f""Unknown repetition strategy: {strategy_name}"")
+    def set_strategy(self, strategy_name):
+        if strategy_name in self.strategies:
+            self._strategy = self.strategies[strategy_name]
+        else:
+            raise ValueError(f""Unknown repetition strategy: {strategy_name}"")
+    def repeat(self, sequence):
+        return self._strategy.execute(sequence)
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4]
+    engine = RepetitionEngine(""simple"")
+    print(""--- Initial State (Simple Repeat) ---"")
+    result_simple = engine.repeat(sample_data)
+    print(f""Input: {sample_data}"")
+    print(f""Result: {result_simple}\n"")
+    engine.set_strategy(""interleaved"")
+    print(""--- Runtime Change (Interleaved Repeat) ---"")
+    result_interleaved = engine.repeat(sample_data)
+    print(f""Input: {sample_data}"")
+    print(f""Result: {result_interleaved}\n"")
+    engine.set_strategy(""alternating"")
+    print(""--- Runtime Change (Alternating Repeat) ---"")
+    result_alternating = engine.repeat(sample_data)
+    print(f""Input: {sample_data}"")
+    print(f""Result: {result_alternating}\n"")
+    try:
+        engine.set_strategy(""unknown_strategy"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,17311,276_9.py
+276,9,Repeat a set of instructions often,"Develop a framework for instruction repetition where the repetition logic can be dynamically configured at runtime, favoring modularity and extensibility.","class Instruction:
+    def __init__(self, instruction_type, parameters):
+        self.instruction_type = instruction_type
+        self.parameters = parameters
+class RepetitionRule:
+    def __init__(self, condition, repetition_count, action):
+        self.condition = condition
+        self.repetition_count = repetition_count
+        self.action = action
+class InstructionRepeter:
+    def __init__(self, rules):
+        self.rules = rules
+    def execute(self, instructions):
+        results = []
+        for instruction in instructions:
+            for rule in self.rules:
+                if self._check_condition(instruction, rule.condition):
+                    for i in range(rule.repetition_count):
+                        result = self._apply_action(instruction, rule.action, i)
+                        results.append(result)
+        return results
+    def _check_condition(self, instruction, condition):
+        if condition == ""always"":
+            return True
+        if condition == ""if_true"":
+            return bool(instruction.parameters.get('value', False))
+        return False
+    def _apply_action(self, instruction, action, index):
+        if action == ""print"":
+            return f""Repeated execution of {instruction.instruction_type} (Index: {index})""
+        elif action == ""modify"":
+            new_value = instruction.parameters.get('value', 0) + index
+            instruction.parameters['value'] = new_value
+            return f""Modified {instruction.instruction_type} to {new_value}""
+        else:
+            return f""Unknown action: {action}""
+if __name__ == '__main__':
+    sample_instructions = [
+        Instruction(""ADD"", {""value"": 10}),
+        Instruction(""MULTIPLY"", {""value"": 5}),
+        Instruction(""SUBTRACT"", {""value"": 20})
+    ]
+    repetition_rules = [
+        RepetitionRule(condition=""always"", repetition_count=3, action=""print""),
+        RepetitionRule(condition=""if_true"", repetition_count=2, action=""modify"")
+    ]
+    reputer = InstructionRepeter(repetition_rules)
+    final_results = reputer.execute(sample_instructions)
+    for result in final_results:
+        print(result)",True,1,17312,276_9_1.py
+276,9,Repeat a set of instructions often,"Develop a framework for instruction repetition where the repetition logic can be dynamically configured at runtime, favoring modularity and extensibility.","class Instruction:
+    def __init__(self, name, action):
+        self.name = name
+        self.action = action
+class RepetitionRule:
+    def __init__(self, condition, repetition_count, repetition_type):
+        self.condition = condition
+        self.repetition_count = repetition_count
+        self.repetition_type = repetition_type
+class InstructionSet:
+    def __init__(self, instructions):
+        self.instructions = instructions
+class RepetitionEngine:
+    def __init__(self, rules):
+        self.rules = rules
+    def execute(self, instruction, context):
+        if not self.rules:
+            return instruction.action
+        for rule in self.rules:
+            if instruction.action == rule.condition:
+                result = """"
+                for _ in range(rule.repetition_count):
+                    result += f""Repeat: {instruction.name} -> {instruction.action}\n""
+                return result
+        return instruction.action
+if __name__ == '__main__':
+    sample_instructions = [
+        Instruction(""increment"", ""add 1 to value""),
+        Instruction(""print"", ""display current value"")
+    ]
+    sample_rules = [
+        RepetitionRule(""add 1 to value"", 3, ""count""),
+        RepetitionRule(""display current value"", 2, ""repeat_action"")
+    ]
+    instruction_set = InstructionSet(sample_instructions)
+    repetition_engine = RepetitionEngine(sample_rules)
+    initial_context = {""value"": 10}
+    current_context = initial_context.copy()
+    print(""--- Execution Start ---"")
+    for instruction in sample_instructions:
+        print(f""\nExecuting Instruction: {instruction.name}"")
+        if instruction.action == ""add 1 to value"":
+            current_context[""value""] += 1
+        elif instruction.action == ""display current value"":
+            print(f""Result: {current_context['value']}"")
+        output = repetition_engine.execute(instruction, current_context)
+        if output:
+            print(""Repetition Output:"")
+            print(output)
+    print(""\n--- Execution End ---"")",True,2,17313,276_9_2.py
+278,4,Print each item separately now,"Create an efficient function that iterates over a provided list of data and prints each element sequentially, ensuring minimal overhead.","def print_list_elements(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_data = [1, ""hello"", 3.14, True, [5, 6]]
+    print_list_elements(sample_data)",True,0,17314,278_4.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(""Printing elements using generator:"")
+    for number in item_generator(data):
+        print(number)",True,0,17315,278_5.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    generator = item_generator(data)
+    print(""Printing elements individually:"")
+    for element in generator:
+        print(element)",True,1,17316,278_5_1.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(""Printing items using generator:"")
+    for number in item_generator(sample_list):
+        print(number)",True,2,17317,278_5_2.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(""Printing elements using generator:"")
+    for num in item_generator(data):
+        print(num)",True,3,17318,278_5_3.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    gen = item_generator(data)
+    result = []
+    for item in gen:
+        result.append(item)
+    print(result)",True,4,17319,278_5_4.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    generator = item_generator(data)
+    print(""Printing items using generator:"")
+    for number in generator:
+        print(number)",True,5,17320,278_5_5.py
+278,5,Print each item separately now,"Implement a generator function that yields each item from an input sequence individually, suitable for memory-efficient printing operations.","def item_generator(sequence):
+    for item in sequence:
+        yield item
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(""Printing items individually:"")
+    for num in item_generator(data):
+        print(num)",True,6,17321,278_5_6.py
+278,0,Print each item separately now,"Write a complete, robust Python script that reads a list of strings from standard input and prints each string on a new line, ensuring optimal file handling practices.","import sys
+if __name__ == '__main__':
+    input_data = [
+        ""Hello World"",
+        ""This is a test."",
+        ""Python scripting is fun."",
+        ""Optimal file handling matters.""
+    ]
+    for line in input_data:
+        print(line)",True,0,17322,278_0.py
+278,0,Print each item separately now,"Write a complete, robust Python script that reads a list of strings from standard input and prints each string on a new line, ensuring optimal file handling practices.","import sys
+if __name__ == '__main__':
+    input_data = [
+        ""Hello World"",
+        ""This is a test"",
+        ""Python scripting"",
+        ""Optimal file handling""
+    ]
+    for line in input_data:
+        print(line)",True,1,17323,278_0_1.py
+278,0,Print each item separately now,"Write a complete, robust Python script that reads a list of strings from standard input and prints each string on a new line, ensuring optimal file handling practices.","import sys
+if __name__ == '__main__':
+    input_data = [
+        ""Hello World"",
+        ""This is a test."",
+        ""Python scripting is fun."",
+        ""Optimal file handling practices.""
+    ]
+    for line in input_data:
+        print(line)",True,2,17324,278_0_2.py
+278,0,Print each item separately now,"Write a complete, robust Python script that reads a list of strings from standard input and prints each string on a new line, ensuring optimal file handling practices.","import sys
+if __name__ == '__main__':
+    input_data = [
+        ""Hello world"",
+        ""This is a test"",
+        ""Python scripting"",
+        ""File handling practice""
+    ]
+    for line in input_data:
+        print(line)",True,3,17325,278_0_3.py
+278,0,Print each item separately now,"Write a complete, robust Python script that reads a list of strings from standard input and prints each string on a new line, ensuring optimal file handling practices.","import sys
+if __name__ == '__main__':
+    input_data = [
+        ""Hello World"",
+        ""This is a test"",
+        ""Optimal file handling practices"",
+        ""Python script execution""
+    ]
+    for line in input_data:
+        print(line)",True,4,17326,278_0_4.py
+278,7,Print each item separately now,"Design and code a utility function that takes a list of strings and prints each string followed by a newline character, optimizing for speed.","def print_strings_fast(string_list):
+    for s in string_list:
+        print(s)
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""speed""]
+    print_strings_fast(sample_list)",True,0,17327,278_7.py
+278,7,Print each item separately now,"Design and code a utility function that takes a list of strings and prints each string followed by a newline character, optimizing for speed.","import sys
+def print_strings_fast(string_list):
+    sys.stdout.write('\n'.join(string_list) + '\n')
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""speed""]
+    print_strings_fast(sample_list)",True,1,17328,278_7_1.py
+278,7,Print each item separately now,"Design and code a utility function that takes a list of strings and prints each string followed by a newline character, optimizing for speed.","import sys
+def print_strings_fast(string_list):
+    sys.stdout.write('\n'.join(string_list) + '\n')
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""optimization""]
+    print_strings_fast(sample_list)",True,2,17329,278_7_2.py
+278,7,Print each item separately now,"Design and code a utility function that takes a list of strings and prints each string followed by a newline character, optimizing for speed.","def print_strings_fast(string_list):
+    for s in string_list:
+        print(s)
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""optimization""]
+    print_strings_fast(sample_list)",True,3,17330,278_7_3.py
+278,6,Print each item separately now,"Write a script that reads a multi-line string and prints every line as a distinct output, handling potential newline characters correctly.","if __name__ == '__main__':
+    multi_line_string = ""This is the first line.\nThis is the second line.\nAnd this is the third.""
+    for line in multi_line_string.splitlines():
+        print(line)",True,0,17331,278_6.py
+278,6,Print each item separately now,"Write a script that reads a multi-line string and prints every line as a distinct output, handling potential newline characters correctly.","if __name__ == '__main__':
+    multi_line_string = ""This is the first line.\nThis is the second line.\nAnd this is the third one.""
+    for line in multi_line_string.splitlines():
+        print(line)",True,1,17332,278_6_1.py
+278,8,Print each item separately now,Develop an interactive command-line tool that prompts the user to enter multiple items separated by spaces and then prints each item on its own line.,"import sys
+def process_items(input_string):
+    items = input_string.split()
+    for item in items:
+        print(item)
+if __name__ == '__main__':
+    sample_input = ""apple banana cherry date""
+    process_items(sample_input)",True,0,17333,278_8.py
+278,9,Print each item separately now,Write a highly optimized loop structure in Python to iterate over a list of arbitrary objects and print each object separately using f-strings for clear output formatting.,"def process_list(data):
+    for item in data:
+        print(f""Object: {item}"")
+if __name__ == '__main__':
+    sample_list = [10, ""hello"", 3.14, [1, 2], {""a"": 1}]
+    process_list(sample_list)",True,0,17334,278_9.py
+278,9,Print each item separately now,Write a highly optimized loop structure in Python to iterate over a list of arbitrary objects and print each object separately using f-strings for clear output formatting.,"def process_objects(data):
+    for item in data:
+        print(f""Object: {item}"")
+if __name__ == '__main__':
+    sample_list = [10, ""hello"", 3.14, [1, 2], {""a"": 1}]
+    process_objects(sample_list)",True,1,17335,278_9_1.py
+278,9,Print each item separately now,Write a highly optimized loop structure in Python to iterate over a list of arbitrary objects and print each object separately using f-strings for clear output formatting.,"def print_objects(data):
+    for item in data:
+        print(f""Object: {item}"")
+if __name__ == '__main__':
+    sample_list = [10, ""hello"", 3.14, [1, 2], {""a"": 1}]
+    print_objects(sample_list)",True,2,17336,278_9_2.py
+278,11,Print each item separately now,Implement an optimized function named 'print_items_separately' that accepts an iterable (like a list or tuple) as input and prints every element of the iterable on its own separate line. The implementation must be highly efficient.,"def print_items_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    print_items_separately(data1)
+    data2 = ('a', 'b', 'c', 'd')
+    print_items_separately(data2)
+    data3 = [10.5, 20.1, 33.9]
+    print_items_separately(data3)",True,0,17337,278_11.py
+278,11,Print each item separately now,Implement an optimized function named 'print_items_separately' that accepts an iterable (like a list or tuple) as input and prints every element of the iterable on its own separate line. The implementation must be highly efficient.,"def print_items_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    sample_tuple = ('a', 'b', 'c', 'd')
+    print(""Printing list items separately:"")
+    print_items_separately(sample_list)
+    print(""\nPrinting tuple items separately:"")
+    print_items_separately(sample_tuple)",True,1,17338,278_11_1.py
+278,11,Print each item separately now,Implement an optimized function named 'print_items_separately' that accepts an iterable (like a list or tuple) as input and prints every element of the iterable on its own separate line. The implementation must be highly efficient.,"def print_items_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    print_items_separately(data1)
+    data2 = ('a', 'b', 'c', 'd')
+    print_items_separately(data2)
+    data3 = [10.5, 20.1, 30.9]
+    print_items_separately(data3)",True,2,17339,278_11_2.py
+278,11,Print each item separately now,Implement an optimized function named 'print_items_separately' that accepts an iterable (like a list or tuple) as input and prints every element of the iterable on its own separate line. The implementation must be highly efficient.,"def print_items_separately(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    sample_tuple = ('a', 'b', 'c', 'd')
+    print(""--- Printing List Separately ---"")
+    print_items_separately(sample_list)
+    print(""\n--- Printing Tuple Separately ---"")
+    print_items_separately(sample_tuple)",True,3,17340,278_11_3.py
+278,10,Print each item separately now,"Write a complete, professional, and fully commented Python script that reads a list of items from standard input and prints each item on a new line, ensuring robust error handling for invalid input.","import sys
+def process_input(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_items = [
+        ""Apple"",
+        ""Banana"",
+        ""Cherry"",
+        123,
+        ""Date"",
+        """",
+        None
+    ]
+    valid_items = []
+    for item in sample_items:
+        if isinstance(item, str):
+            valid_items.append(item)
+        else:
+            print(f""Error: Invalid input type encountered: {item}"", file=sys.stderr)
+    process_input(valid_items)",True,0,17341,278_10.py
+278,10,Print each item separately now,"Write a complete, professional, and fully commented Python script that reads a list of items from standard input and prints each item on a new line, ensuring robust error handling for invalid input.","import sys
+def process_input(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_items = [
+        ""apple"",
+        ""banana"",
+        ""cherry"",
+        123,
+        ""date"",
+        None,
+        ""elderberry""
+    ]
+    for item in sample_items:
+        if isinstance(item, str):
+            print(item)
+        else:
+            print(f""Error: Invalid input type encountered: {item}"")",True,1,17342,278_10_1.py
+278,10,Print each item separately now,"Write a complete, professional, and fully commented Python script that reads a list of items from standard input and prints each item on a new line, ensuring robust error handling for invalid input.","import sys
+def read_and_print_items(input_data):
+    for item in input_data:
+        print(item)
+if __name__ == '__main__':
+    sample_items = [""apple"", ""banana"", ""cherry"", 123, ""date""]
+    try:
+        read_and_print_items(sample_items)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"", file=sys.stderr)",True,2,17343,278_10_2.py
+278,10,Print each item separately now,"Write a complete, professional, and fully commented Python script that reads a list of items from standard input and prints each item on a new line, ensuring robust error handling for invalid input.","import sys
+def read_and_print_items(input_data):
+    for item in input_data:
+        print(item)
+if __name__ == '__main__':
+    sample_input = [
+        ""Apple"",
+        ""Banana"",
+        ""Cherry"",
+        123,
+        ""Date""
+    ]
+    valid_items = []
+    for item in sample_input:
+        try:
+            if isinstance(item, str):
+                valid_items.append(item)
+            else:
+                print(f""Error: Invalid data type encountered: {item}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error processing item '{item}': {e}"", file=sys.stderr)
+    read_and_print_items(valid_items)",True,3,17344,278_10_3.py
+278,10,Print each item separately now,"Write a complete, professional, and fully commented Python script that reads a list of items from standard input and prints each item on a new line, ensuring robust error handling for invalid input.","import sys
+def process_input(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_items = [
+        ""Apple"",
+        ""Banana"",
+        ""Cherry"",
+        123,
+        ""Date"",
+        None,
+        ""Elderberry""
+    ]
+    for item in sample_items:
+        if isinstance(item, str):
+            print(item)
+        elif isinstance(item, int):
+            print(str(item))
+        else:
+            print(""Invalid input encountered."")",True,4,17345,278_10_4.py
+278,10,Print each item separately now,"Write a complete, professional, and fully commented Python script that reads a list of items from standard input and prints each item on a new line, ensuring robust error handling for invalid input.","import sys
+def process_input(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_items = [
+        ""Apple"",
+        ""Banana"",
+        ""Cherry"",
+        123,
+        ""Date"",
+        """",
+        3.14
+    ]
+    valid_items = []
+    for item in sample_items:
+        try:
+            if isinstance(item, str):
+                valid_items.append(item)
+            elif isinstance(item, int) or isinstance(item, float):
+                valid_items.append(str(item))
+            else:
+                print(f""Error: Invalid data type encountered: {item}"", file=sys.stderr)
+        except Exception as e:
+            print(f""Error processing item '{item}': {e}"", file=sys.stderr)
+    process_input(valid_items)",True,5,17346,278_10_5.py
+278,13,Print each item separately now,"Write an object-oriented Python class named 'ItemPrinter' with a method to process an internal list of strings and display each string from the list on a new line. Ensure the code is clean, efficient, and adheres to OOP principles.","class ItemPrinter:
+    def __init__(self, items):
+        self._items = items
+    def print_items(self):
+        for item in self._items:
+            print(item)
+if __name__ == '__main__':
+    sample_data = [""Apple"", ""Banana"", ""Cherry"", ""Date""]
+    printer = ItemPrinter(sample_data)
+    printer.print_items()",True,0,17347,278_13.py
+278,13,Print each item separately now,"Write an object-oriented Python class named 'ItemPrinter' with a method to process an internal list of strings and display each string from the list on a new line. Ensure the code is clean, efficient, and adheres to OOP principles.","class ItemPrinter:
+    def __init__(self, items):
+        self._items = items
+    def print_all(self):
+        for item in self._items:
+            print(item)
+if __name__ == '__main__':
+    sample_data = [""Apple"", ""Banana"", ""Cherry"", ""Date""]
+    printer = ItemPrinter(sample_data)
+    printer.print_all()",True,1,17348,278_13_1.py
+278,14,Print each item separately now,"Generate the most concise and pythonic way to achieve the goal of printing every element of an input iterable separately, assuming the input is already provided as a list. Provide an optimized one-liner solution and a slightly more verbose, equally efficient function implementation.","if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(*data)
+def print_elements(input_list):
+    for element in input_list:
+        print(element)",True,0,17349,278_14.py
+278,14,Print each item separately now,"Generate the most concise and pythonic way to achieve the goal of printing every element of an input iterable separately, assuming the input is already provided as a list. Provide an optimized one-liner solution and a slightly more verbose, equally efficient function implementation.","if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(*data)
+def print_elements(input_list):
+    for item in input_list:
+        print(item)",True,1,17350,278_14_1.py
+278,14,Print each item separately now,"Generate the most concise and pythonic way to achieve the goal of printing every element of an input iterable separately, assuming the input is already provided as a list. Provide an optimized one-liner solution and a slightly more verbose, equally efficient function implementation.","if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(*data)
+def print_elements(input_list):
+    for item in input_list:
+        print(item)
+    return print_elements(data)",True,2,17351,278_14_2.py
