@@ -582,8 +582,8 @@ def main():
     load_dotenv()
     
     if torch.cuda.is_available():
-        torch.backends.cuda.matmul.allow_tf32 = True
-        torch.backends.cudnn.allow_tf32 = True
+        # torch.backends.cuda.matmul.allow_tf32 = True
+        # torch.backends.cudnn.allow_tf32 = True
         torch.set_float32_matmul_precision("high")
 
     class Config:
@@ -591,7 +591,7 @@ def main():
         max_code_len = 512
         batch_size = 4
         accumulation_steps = 8
-        num_workers = 3
+        num_workers = 0
         epochs = 1500 
         val_split = 0.05
         early_stopping_patience = 120 
