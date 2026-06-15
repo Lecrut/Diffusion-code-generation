@@ -106,13 +106,14 @@ def collate_batch(batch, pad_id, max_prompt_len, max_code_len):
     return result
 
 
-# --- LIGHTNING MODULE (Z INTEGRACJĄ COSINE ANNEALING) ---
+# --- LIGHTNING MODULE ---
 
 class DiffCoderLightning(pl.LightningModule):
-    def __init__(self, model, base_lr=5e-5):
+    def __init__(self, model, base_lr=5e-5, rollback_stage=None):
         super().__init__()
         self.model = model
         self.base_lr = base_lr
+        self.rollback_stage = rollback_stage
         
         self.current_stage = 1
         self.current_lower_bound = 0.10
@@ -201,20 +202,14 @@ class DiffCoderLightning(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizer = torch.optim.AdamW(self.parameters(), lr=self.base_lr, weight_decay=0.01)
-        
-        steps_per_epoch = 312  # Dla 10k danych / 32 efektywnego batcha
         scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
-            optimizer, 
-            T_0=steps_per_epoch * 5, 
-            T_mult=1, 
-            eta_min=1e-6
+            optimizer, T_0=10000, T_mult=1, eta_min=1e-6
         )
-        
         return {
             "optimizer": optimizer,
             "lr_scheduler": {
                 "scheduler": scheduler,
-                "interval": "step",
+                "interval": "epoch",
                 "frequency": 1
             }
         }
@@ -225,46 +220,55 @@ class DiffCoderLightning(pl.LightningModule):
         checkpoint["curriculum_ub"] = self.current_upper_bound
 
     def on_load_checkpoint(self, checkpoint):
-        self.current_stage = checkpoint.get("curriculum_stage", 1)
-        self.current_lower_bound = checkpoint.get("curriculum_lb", 0.10)
-        self.current_upper_bound = checkpoint.get("curriculum_ub", 0.25)
-        
-        epoch = checkpoint.get("epoch", "Nieznana")
-        global_step = checkpoint.get("global_step", "Nieznany")
+        # Wymuszenie nowego etapu przy wznawianiu treningu
+        if self.rollback_stage is not None:
+            stage_bounds = {
+                1: (0.10, 0.25), 2: (0.20, 0.35), 3: (0.30, 0.45),
+                4: (0.40, 0.55), 5: (0.50, 0.65), 6: (0.60, 0.75),
+                7: (0.70, 0.85), 8: (0.80, 0.95), 9: (0.90, 1.00)
+            }
+            self.current_stage = self.rollback_stage
+            bounds = stage_bounds.get(self.rollback_stage, (0.10, 0.25))
+            self.current_lower_bound = bounds[0]
+            self.current_upper_bound = bounds[1]
+            
+            print("\n" + "="*70)
+            print("[RESUME OVERRIDE] Załadowano wagi modelu, ale NADPISANO stan curriculum!")
+            print(f" ➔ Cofałem model do Stage: {self.current_stage}")
+            print(f" ➔ Nowy zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
+            print("="*70)
+        else:
+            self.current_stage = checkpoint.get("curriculum_stage", 1)
+            self.current_lower_bound = checkpoint.get("curriculum_lb", 0.10)
+            self.current_upper_bound = checkpoint.get("curriculum_ub", 0.25)
+            
+            print("\n" + "="*70)
+            print("[RESUME - MODEL STATE] Pomyślnie wczytano wagi i stan modelu!")
+            print(f" ➔ Aktualny etap nauczania (Stage): {self.current_stage}")
+            print(f" ➔ Zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
+            print("="*70)
 
-        print("\n" + "="*70)
-        print("[RESUME - MODEL STATE] Pomyślnie wczytano wagi i stan modelu!")
-        print(f" ➔ Wznawianie treningu od epoki: {epoch} (Global Step: {global_step})")
-        print(f" ➔ Aktualny etap nauczania (Stage): {self.current_stage}")
-        print(f" ➔ Zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
-        print("="*70)
 
-
-# --- CALLBACK DO PROGRAMU NAUCZANIA (SYNCHRONIZACJA STAGE + LR RESTART) ---
-
-import numpy as np
+# --- CALLBACK DO PROGRAMU NAUCZANIA ---
 
 class AdaptiveCurriculumCallback(Callback):
-    def __init__(self, min_delta=1e-4, plateau_patience=15):
+    def __init__(self, min_delta=1e-4, reset_state_on_load=False):
         super().__init__()
         self.min_delta = min_delta
-        self.plateau_patience = plateau_patience # Ile epok bez poprawy oznacza plateau
-        
+        self.reset_state_on_load = reset_state_on_load
         self.best_val_loss = float('inf')
         self.patience_counter = 0
-        self.loss_history = [] # Przechowuje loss z ostatnich epok na danym etapie
         
-        # Zakresy maskowania dla etapów
         self.stages = {
-            1: (0.10, 0.25),
-            2: (0.20, 0.35),
-            3: (0.30, 0.45),
-            4: (0.40, 0.55),
-            5: (0.50, 0.65),
-            6: (0.60, 0.75),
-            7: (0.70, 0.85),
-            8: (0.80, 0.95),
-            9: (0.90, 1.00)
+            1: {"bounds": (0.10, 0.25), "patience": 10},
+            2: {"bounds": (0.20, 0.35), "patience": 15},
+            3: {"bounds": (0.30, 0.45), "patience": 25},
+            4: {"bounds": (0.40, 0.55), "patience": 50},
+            5: {"bounds": (0.50, 0.65), "patience": 75},
+            6: {"bounds": (0.60, 0.75), "patience": 100},
+            7: {"bounds": (0.70, 0.85), "patience": 150},
+            8: {"bounds": (0.80, 0.95), "patience": 200},
+            9: {"bounds": (0.90, 1.00), "patience": 99999}
         }
 
     def on_validation_epoch_end(self, trainer, pl_module):
@@ -283,7 +287,7 @@ class AdaptiveCurriculumCallback(Callback):
         if stage >= max(self.stages.keys()):
             return
 
-        self.loss_history.append(current_val_loss)
+        required_patience = self.stages[stage]["patience"]
 
         if current_val_loss < self.best_val_loss - self.min_delta:
             self.best_val_loss = current_val_loss
@@ -291,51 +295,33 @@ class AdaptiveCurriculumCallback(Callback):
         else:
             self.patience_counter += 1  
 
-        # Jeśli przez `plateau_patience` epok strata nie spadła, sprawdzamy czy wykres się wypłaszczył
-        if self.patience_counter >= self.plateau_patience:
-            # Bierzemy pod uwagę historię z ostatnich N epok na tym etapie
-            recent_losses = self.loss_history[-self.plateau_patience:]
+        if self.patience_counter >= required_patience:
+            next_stage = stage + 1
+            pl_module.current_stage = next_stage
+            pl_module.current_lower_bound = self.stages[next_stage]["bounds"][0]
+            pl_module.current_upper_bound = self.stages[next_stage]["bounds"][1]
             
-            # Obliczamy zmienność (odchylenie standardowe) w tym oknie czasowym
-            loss_stability = np.std(recent_losses)
+            print(f"\n>>> [CURRICULUM] Strata wypłaszczona na etapie {stage}. Przełączam na STAGE {next_stage}! <<<")
+            print(f">>> Nowy zakres maskowania tokenów: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<")
             
-            # Jeśli odchylenie standardowe jest bardzo małe (np. < 0.005), 
-            # oznacza to, że model nie "skacze" chaotycznie, tylko realnie utknął na płaskowyżu (plateau)
-            if loss_stability < 0.005: 
-                next_stage = stage + 1
-                pl_module.current_stage = next_stage
-                pl_module.current_lower_bound = self.stages[next_stage][0]
-                pl_module.current_upper_bound = self.stages[next_stage][1]
-                
-                print(f"\n>>> [CURRICULUM] Model w pełni nasycił wiedzę na etapie {stage} (Plateau std: {loss_stability:.5f}).")
-                print(f">>> Awansuję automatycznie do STAGE {next_stage}! Nowe maskowanie: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<\n")
-                
-                # Resetujemy metryki i historię pod nowy etap
-                self.best_val_loss = float('inf')
-                self.patience_counter = 0
-                self.loss_history = []
-                
-                # Łagodny reset LR i czyszczenie pamięci
-                for lr_scheduler_config in trainer.lr_scheduler_configs:
-                    sch = lr_scheduler_config.scheduler
-                    if isinstance(sch, torch.optim.lr_scheduler.CosineAnnealingWarmRestarts):
-                        sch.T_cur = 0  
-                        for param_group in trainer.optimizers[0].param_groups:
-                            param_group['lr'] = param_group['lr'] * 0.9
-                
-                for callback in trainer.callbacks:
-                    if isinstance(callback, EarlyStopping):
-                        callback.wait_count = 0
-                        callback.best_score = torch.tensor(float('inf'))
-                        
-                gc.collect()
-                if torch.cuda.is_available():
-                    torch.cuda.empty_cache()
-            else:
-                # Jeśli strata nie spada, ale zmienność jest wciąż duża (wykres skacze, model walczy),
-                # dajemy mu jeszcze czas i nie awansujemy go na siłę.
-                print(f"[CURRICULUM INFO] Model na etapie {stage} nie poprawia minimum, ale wciąż dynamicznie się chwieje (std: {loss_stability:.5f}). Kontynuuję naukę...")
-
+            for lr_scheduler_config in trainer.lr_scheduler_configs:
+                sch = lr_scheduler_config.scheduler
+                if isinstance(sch, torch.optim.lr_scheduler.CosineAnnealingWarmRestarts):
+                    sch.T_cur = 0  
+                    print(">>> [SCHEDULER] Wykonano Cosine Warm Restart! Podbito Learning Rate dla nowego etapu. <<<\n")
+            
+            for callback in trainer.callbacks:
+                if isinstance(callback, EarlyStopping):
+                    callback.wait_count = 0
+                    callback.best_score = torch.tensor(float('inf'))
+            
+            gc.collect()                  
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()    
+                print(">>> [VM CLEANUP] Pamięć RAM i cache VRAM zostały pomyślnie wyczyszczone. <<<")
+                    
+            self.best_val_loss = float('inf')
+            self.patience_counter = 0
 
     def state_dict(self):
         return {
@@ -344,21 +330,14 @@ class AdaptiveCurriculumCallback(Callback):
         }
 
     def load_state_dict(self, state_dict):
-        self.best_val_loss = state_dict.get(
-            "best_val_loss",
-            float("inf")
-        )
-
-        self.patience_counter = state_dict.get(
-            "patience_counter",
-            0
-        )
-
-        print("\n" + "="*70)
-        print("[RESUME - CALLBACK STATE] Pomyślnie odtworzono stan curriculum!")
-        print(f"Najlepszy dotychczasowy val_loss: {self.best_val_loss:.6f}")
-        print(f"Licznik cierpliwości (patience): {self.patience_counter} / {self.stages.get(self.current_stage if hasattr(self, 'current_stage') else 1, {}).get('patience', '???')}")
-        print("="*70 + "\n")
+        if self.reset_state_on_load:
+            self.best_val_loss = float("inf")
+            self.patience_counter = 0
+            print("\n[RESUME - CALLBACK STATE] Zresetowano statystyki val_loss. Model uczy się na świeżym zbiorze!")
+        else:
+            self.best_val_loss = state_dict.get("best_val_loss", float("inf"))
+            self.patience_counter = state_dict.get("patience_counter", 0)
+            print("\n[RESUME - CALLBACK STATE] Pomyślnie odtworzono stan curriculum z checkpointu.")
 
 
 # --- CUSTOM CALLBACK DO LOGOWANIA GENERACJI ---
@@ -453,7 +432,8 @@ class LogGeneratedSamplesCallback(Callback):
         pl_module.train()
 
 
-# --- GŁÓWNY PROCES TRENINGOWY (LIGHTNING TRAINER) ---
+# --- GŁÓWNY PROCES TRENINGOWY ---
+
 class DiffCoderTrainer:
     def __init__(self, config):
         self.config = config
@@ -512,28 +492,17 @@ class DiffCoderTrainer:
         
         self.lightning_model = DiffCoderLightning(
             model=raw_model,
-            base_lr=self.config.base_lr
+            base_lr=self.config.base_lr,
+            rollback_stage=self.config.rollback_stage # Przekazanie etapu do nadpisania
         )
 
     def train(self):
-        # 1. Zmieniamy konfigurację zapisu checkpointów
-        # checkpoint_callback = ModelCheckpoint(
-        #     monitor='val_loss',
-        #     dirpath=self.config.checkpoint_dir,
-        #     filename='diffcoder-{epoch:02d}-{val_loss:.4f}', # Lightning sam doda .ckpt
-        #     save_top_k=1,
-        #     save_last=True, # KLUCZOWE: Zapisuje zawsze 'last.ckpt' ułatwiający automatyczne wznawianie
-        #     mode='min',
-        #     train_time_interval=timedelta(minutes=15)
-        # )
-        
         best_checkpoint_callback = ModelCheckpoint(
             monitor='val_loss',
             dirpath=self.config.checkpoint_dir,
             filename='diffcoder-{epoch:02d}-{val_loss:.4f}',
             save_top_k=1,
             mode='min'
-            # Usunięto train_time_interval oraz save_last=True
         )
 
         last_checkpoint_callback = ModelCheckpoint(
@@ -541,7 +510,7 @@ class DiffCoderTrainer:
             filename='last', 
             save_top_k=1,
             every_n_epochs=1,
-            save_on_train_epoch_end=True # Gwarantuje zapis zaraz po zakończeniu pętli treningowej dla epoki
+            save_on_train_epoch_end=True 
         )
 
         early_stop_callback = EarlyStopping(
@@ -552,7 +521,10 @@ class DiffCoderTrainer:
         )
         
         lr_monitor = LearningRateMonitor(logging_interval='epoch')
-        curriculum_callback = AdaptiveCurriculumCallback(min_delta=1e-4)
+        curriculum_callback = AdaptiveCurriculumCallback(
+            min_delta=1e-4, 
+            reset_state_on_load=self.config.reset_curriculum_state 
+        )
         
         sample_logger_callback = LogGeneratedSamplesCallback(
             sample_pairs=self.sample_pairs,
@@ -580,35 +552,22 @@ class DiffCoderTrainer:
             gradient_clip_val=1.0
         )
 
-        # 2. POPRAWKA WZNAWIANIA: Szukamy dedykowanego pliku last.ckpt lub najlepszego zapisanego przez Lightning
         ckpt_to_resume = None
-        if self.config.resume_from_checkpoint:
-            checkpoint_dir = Path(self.config.checkpoint_dir)
-            last_ckpt = checkpoint_dir / "last.ckpt"
-            
-            if last_ckpt.exists():
-                ckpt_to_resume = str(last_ckpt)
+        if self.config.resume_from_checkpoint and self.config.resume_ckpt_name:
+            target_ckpt = Path(self.config.checkpoint_dir) / self.config.resume_ckpt_name
+            if target_ckpt.exists():
+                ckpt_to_resume = str(target_ckpt)
+                print(f"\n>>> [RESUME] Odszukano wyznaczony plik: {ckpt_to_resume} <<<\n")
             else:
-                # Jeśli nie ma last.ckpt, szukamy jakiegokolwiek pliku .ckpt w folderze
-                all_ckpts = list(checkpoint_dir.glob("*.ckpt"))
-                if all_ckpts:
-                    # Wybieramy najnowszy zmodyfikowany plik
-                    all_ckpts.sort(key=os.path.getmtime)
-                    ckpt_to_resume = str(all_ckpts[-1])
+                print(f"\n>>> [WARNING] Nie znaleziono pliku '{self.config.resume_ckpt_name}' w katalogu {self.config.checkpoint_dir}! Rozpoczynam od zera. <<<\n")
 
-        if ckpt_to_resume:
-            print(f"\n>>> [RESUME] Znaleziono checkpoint. Wznawiam pełny stan nauki z: {ckpt_to_resume} <<<\n")
-        else:
-            print("\n>>> [START] Brak pasujących checkpointów (.ckpt). Rozpoczynam naukę od zera. <<<\n")
-        
         trainer.fit(
             self.lightning_model, 
             train_dataloaders=self.train_loader, 
             val_dataloaders=self.val_loader,
-            ckpt_path=ckpt_to_resume # Przekazujemy poprawną ścieżkę do .ckpt lub None
+            ckpt_path=ckpt_to_resume 
         )
         
-        # Rejestracja najlepszego modelu w Comet na koniec udanego treningu
         if comet_logger is not None and best_checkpoint_callback.best_model_path:
             try:
                 print(">>> [COMET] Rejestruję najlepszy model w chmurze Comet ML... <<<")
@@ -633,7 +592,7 @@ def main():
         batch_size = 4
         accumulation_steps = 8
         num_workers = 3
-        epochs = 1500 # Zwiększone dla realnego obsłużenia 9 etapów
+        epochs = 1500 
         val_split = 0.05
         early_stopping_patience = 120 
         hidden_dim = 512
@@ -641,8 +600,14 @@ def main():
         dilation_factor = int(os.getenv("DILATION_FACTOR", "2"))
         dataset_fraction = float(os.getenv("DATASET_FRACTION", "1.0"))
         base_lr = 5e-5
+        
         checkpoint_dir = 'checkpoints'
+        
+        # --- ZARZĄDZANIE WZNAWIANIEM TRENINGU ---
         resume_from_checkpoint = True
+        resume_ckpt_name = "last-v1.ckpt" # Bezpośrednie celowanie w wirtualkę
+        rollback_stage = 2 # Sforsowany powrót do maskowania 20-35%
+        reset_curriculum_state = True # Reset liczników val_loss dla nowej paczki 15k danych
 
     config = Config()
     trainer = DiffCoderTrainer(config)
