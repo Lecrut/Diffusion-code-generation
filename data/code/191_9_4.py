@@ -1,0 +1,13 @@
+def combine_unique_lists(list_one, list_two):
+    combined_set = set(list_one)
+    combined_set.update(list_two)
+    return list(combined_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = combine_unique_lists(list_a, list_b)
+    print(result)
+    list_c = ['a', 'b', 'c']
+    list_d = ['c', 'd', 'e']
+    result2 = combine_unique_lists(list_c, list_d)
+    print(result2)

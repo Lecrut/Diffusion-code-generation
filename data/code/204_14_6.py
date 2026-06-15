@@ -1,0 +1,25 @@
+def find_middle(data):
+    n = len(data)
+    if n == 0:
+        return None
+    else:
+        middle_index = n // 2
+        if n % 2 == 1:
+            return data[middle_index]
+        else:
+            return data[middle_index - 1]
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30, 40]
+    list3 = [5, 15]
+    list4 = [100]
+    list5 = []
+    list6 = [1, 2, 3, 4]
+    list7 = [1, 2]
+    print("List:", list1, "Middle Value:", find_middle(list1))
+    print("List:", list2, "Middle Value:", find_middle(list2))
+    print("List:", list3, "Middle Value:", find_middle(list3))
+    print("List:", list4, "Middle Value:", find_middle(list4))
+    print("List:", list5, "Middle Value:", find_middle(list5))
+    print("List:", list6, "Middle Value:", find_middle(list6))
+    print("List:", list7, "Middle Value:", find_middle(list7))

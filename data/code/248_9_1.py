@@ -1,0 +1,28 @@
+import unittest
+class AdditionCalculator:
+    def add(self, a, b):
+        return a + b
+class TestAdditionCalculator(unittest.TestCase):
+    def setUp(self):
+        self.calculator = AdditionCalculator()
+    def test_positive_numbers(self):
+        self.assertEqual(self.calculator.add(5, 3), 8)
+        self.assertEqual(self.calculator.add(10, 20), 30)
+        self.assertEqual(self.calculator.add(1, 1), 2)
+    def test_positive_and_negative_numbers(self):
+        self.assertEqual(self.calculator.add(5, -3), 2)
+        self.assertEqual(self.calculator.add(-5, 3), -2)
+        self.assertEqual(self.calculator.add(-5, -3), -8)
+    def test_positive_and_zero(self):
+        self.assertEqual(self.calculator.add(10, 0), 10)
+        self.assertEqual(self.calculator.add(0, 10), 10)
+        self.assertEqual(self.calculator.add(0, 0), 0)
+    def test_large_numbers(self):
+        self.assertEqual(self.calculator.add(1000000, 2000000), 3000000)
+        self.assertEqual(self.calculator.add(-500000, 750000), 250000)
+    def test_mixed_signs(self):
+        self.assertEqual(self.calculator.add(10, -5), 5)
+        self.assertEqual(self.calculator.add(-10, 5), -5)
+        self.assertEqual(self.calculator.add(-10, -5), -15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)
