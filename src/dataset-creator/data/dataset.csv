@@ -17426,3 +17426,2130 @@ if __name__ == '__main__':
     print(f""Dictionary for '{sample_text2}': {dict2}"")
     dict3 = build_dictionary(sample_text3)
     print(f""Dictionary for '{sample_text3}': {dict3}"")",True,8,1016,17_11_8.py
+17,12,Build a simple word dictionary,Develop an efficient class named 'WordDictionary' that initializes with an empty dictionary and provides a method 'add_word(word)' to populate the dictionary. The implementation must ensure that only unique words are stored and handle potential empty string inputs gracefully.,"class WordDictionary:
+    def __init__(self):
+        self.word_set = set()
+    def add_word(self, word):
+        if word and word not in self.word_set:
+            self.word_set.add(word)
+if __name__ == '__main__':
+    wd = WordDictionary()
+    words_to_add = [""apple"", ""banana"", ""apple"", """", ""cherry"", ""banana""]
+    for word in words_to_add:
+        wd.add_word(word)
+    print(list(wd.word_set))",True,0,1017,17_12.py
+17,12,Build a simple word dictionary,Develop an efficient class named 'WordDictionary' that initializes with an empty dictionary and provides a method 'add_word(word)' to populate the dictionary. The implementation must ensure that only unique words are stored and handle potential empty string inputs gracefully.,"class WordDictionary:
+    def __init__(self):
+        self.words = set()
+    def add_word(self, word):
+        if word and word not in self.words:
+            self.words.add(word)
+if __name__ == '__main__':
+    wd = WordDictionary()
+    print(f""Initial dictionary: {wd.words}"")
+    wd.add_word(""apple"")
+    print(f""After adding 'apple': {wd.words}"")
+    wd.add_word(""banana"")
+    print(f""After adding 'banana': {wd.words}"")
+    wd.add_word(""apple"")
+    print(f""After adding duplicate 'apple': {wd.words}"")
+    wd.add_word("""")
+    print(f""After adding empty string: {wd.words}"")
+    wd.add_word(""orange"")
+    print(f""After adding 'orange': {wd.words}"")",True,1,1018,17_12_1.py
+17,12,Build a simple word dictionary,Develop an efficient class named 'WordDictionary' that initializes with an empty dictionary and provides a method 'add_word(word)' to populate the dictionary. The implementation must ensure that only unique words are stored and handle potential empty string inputs gracefully.,"class WordDictionary:
+    def __init__(self):
+        self.words = set()
+    def add_word(self, word):
+        if word and word not in self.words:
+            self.words.add(word)
+if __name__ == '__main__':
+    wd = WordDictionary()
+    print(f""Initial dictionary: {wd.words}"")
+    wd.add_word(""apple"")
+    wd.add_word(""banana"")
+    wd.add_word(""apple"")
+    wd.add_word("""")
+    wd.add_word(""cherry"")
+    wd.add_word(""banana"")
+    print(f""Dictionary after additions: {wd.words}"")",True,2,1019,17_12_2.py
+17,12,Build a simple word dictionary,Develop an efficient class named 'WordDictionary' that initializes with an empty dictionary and provides a method 'add_word(word)' to populate the dictionary. The implementation must ensure that only unique words are stored and handle potential empty string inputs gracefully.,"class WordDictionary:
+    def __init__(self):
+        self.words = set()
+    def add_word(self, word):
+        if word and word not in self.words:
+            self.words.add(word)
+if __name__ == '__main__':
+    wd = WordDictionary()
+    print(f""Initial dictionary: {wd.words}"")
+    wd.add_word(""apple"")
+    wd.add_word(""banana"")
+    wd.add_word(""apple"")
+    wd.add_word("""")
+    wd.add_word(""cherry"")
+    print(f""Dictionary after adding words: {wd.words}"")",True,3,1020,17_12_3.py
+17,6,Build a simple word dictionary,Write a command-line interface (CLI) section using the 'argparse' module to allow the user to specify the input file path for building the word dictionary.,,False,0,1021,17_6.py
+17,14,Build a simple word dictionary,"Create a standalone, highly efficient Python function that reads a text file and generates a frequency map (a dictionary) where keys are words and values are their counts. Ensure the implementation uses file I/O best practices and handles multi-word phrases correctly by treating sequences of characters separated by spaces as potential words.",,False,0,1022,17_14.py
+17,8,Build a simple word dictionary,"Generate a function that reads an arbitrary string, tokenizes it into words, filters out any non-alphabetic tokens, and returns a dictionary containing only the unique alphabetic words found.",,False,0,1023,17_8.py
+18,0,Group fruits by type,"Write a complete, robust Python script to group a list of mixed fruits by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the code is highly readable and efficient.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    fruits = ['Apple', 'Banana', 'Orange', 'Apple', 'Grape', 'Banana', 'Mango', 'Apple']
+    result = group_fruits(fruits)
+    print(result)",True,0,1024,18_0.py
+18,0,Group fruits by type,"Write a complete, robust Python script to group a list of mixed fruits by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the code is highly readable and efficient.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    fruits = ['Apple', 'Banana', 'Orange', 'Apple', 'Grape', 'Banana', 'Apple', 'Mango']
+    result = group_fruits(fruits)
+    print(result)",True,1,1025,18_0_1.py
+18,0,Group fruits by type,"Write a complete, robust Python script to group a list of mixed fruits by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the code is highly readable and efficient.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(1)
+        else:
+            grouped[fruit] = [1]
+    return grouped
+if __name__ == '__main__':
+    fruits = ['Apple', 'Banana', 'Apple', 'Orange', 'Banana', 'Apple', 'Grape']
+    result = group_fruits(fruits)
+    print(result)",True,2,1026,18_0_2.py
+18,1,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of fruit strings and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. Prioritize time complexity efficiency.,"def group_fruits(fruit_list):
+    result = {}
+    for fruit in fruit_list:
+        if fruit not in result:
+            result[fruit] = []
+        result[fruit].append(fruit)
+    return result
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    grouped = group_fruits(sample_fruits)
+    print(grouped)",True,0,1027,18_1.py
+18,1,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of fruit strings and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. Prioritize time complexity efficiency.,"def group_fruits(fruit_list):
+    result = {}
+    for fruit in fruit_list:
+        if fruit not in result:
+            result[fruit] = []
+        result[fruit].append(fruit)
+    return result
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple""]
+    grouped = group_fruits(sample_fruits)
+    print(grouped)",True,1,1028,18_1_1.py
+18,1,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of fruit strings and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. Prioritize time complexity efficiency.,"def group_fruits(fruits):
+    result = {}
+    for fruit in fruits:
+        if fruit not in result:
+            result[fruit] = []
+        result[fruit].append(fruit)
+    return result
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple""]
+    grouped = group_fruits(sample_fruits)
+    print(grouped)",True,2,1029,18_1_2.py
+18,1,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of fruit strings and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. Prioritize time complexity efficiency.,"import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    print(result)",True,3,1030,18_1_3.py
+17,13,Build a simple word dictionary,"Write a command-line interface (CLI) script using Python's 'argparse' module that prompts the user to input a file path, reads the content, processes it to create a word dictionary, and prints the resulting dictionary to the console.",,False,0,1031,17_13.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Apple"": ""Pome"",
+        ""Banana"": ""Berry"",
+        ""Orange"": ""Citrus"",
+        ""Lemon"": ""Citrus"",
+        ""Grape"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Pineapple"": ""Tropical"",
+        ""Mango"": ""Tropical""
+    }
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        found_type = None
+        for key, value in fruit_types.items():
+            if key.lower() in fruit_lower or fruit_lower in key.lower():
+                found_type = value
+                break
+        if found_type:
+            if found_type not in categorized:
+                categorized[found_type] = []
+            categorized[found_type].append(fruit)
+        else:
+            if fruit not in categorized:
+                categorized[fruit] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Orange"", ""Banana"", ""Lemon"", ""Grape"", ""Pineapple"", ""Mango"", ""Pear""]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,0,1032,18_4.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Apple"": ""Pome"",
+        ""Banana"": ""Berry"",
+        ""Orange"": ""Citrus"",
+        ""Lemon"": ""Citrus"",
+        ""Grape"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Pineapple"": ""Tropical"",
+        ""Mango"": ""Tropical"",
+        ""Lime"": ""Citrus""
+    }
+    for fruit in fruit_list:
+        found = False
+        for key, fruit_type in fruit_types.items():
+            if fruit in key or fruit in fruit_type:
+                fruit_type_name = fruit_type
+                if fruit_type_name not in categorized:
+                    categorized[fruit_type_name] = []
+                categorized[fruit_type_name].append(fruit)
+                found = True
+                break
+        if not found:
+            if fruit not in categorized:
+                categorized[fruit] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Orange"", ""Banana"", ""Lemon"", ""Grape"", ""Mango"", ""Pineapple"", ""Strawberry""]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,1,1033,18_4_1.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Citrus"": [""Orange"", ""Lemon"", ""Lime""],
+        ""Pome"": [""Apple"", ""Pear""],
+        ""Berry"": [""Strawberry"", ""Blueberry"", ""Raspberry""],
+        ""Melon"": [""Watermelon"", ""Cantaloupe""]
+    }
+    for fruit in fruit_list:
+        found = False
+        for fruit_type, fruits in fruit_types.items():
+            if fruit in fruits:
+                if fruit_type not in categorized:
+                    categorized[fruit_type] = []
+                if fruit not in categorized[fruit_type]:
+                    categorized[fruit_type].append(fruit)
+                found = True
+                break
+        if not found:
+            if fruit not in categorized:
+                categorized[fruit] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Orange"",
+        ""Banana"",
+        ""Lemon"",
+        ""Strawberry"",
+        ""Pear"",
+        ""Watermelon"",
+        ""Grape"",
+        ""Lime""
+    ]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,2,1034,18_4_2.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Apple"": ""Pome"",
+        ""Banana"": ""Berry"",
+        ""Orange"": ""Citrus"",
+        ""Lemon"": ""Citrus"",
+        ""Grape"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Pineapple"": ""Tropical"",
+        ""Mango"": ""Tropical""
+    }
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        found_type = None
+        for key, value in fruit_types.items():
+            if key.lower() in fruit_lower or value.lower() in fruit_lower:
+                found_type = value
+                break
+        if found_type:
+            if found_type not in categorized:
+                categorized[found_type] = []
+            categorized[found_type].append(fruit)
+        else:
+            if fruit not in categorized:
+                categorized[fruit] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Orange"", ""Banana"", ""Lemon"", ""Grape"", ""Strawberry"", ""Pineapple"", ""Mango"", ""Pear""]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,3,1035,18_4_3.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Apple"": ""Pome"",
+        ""Banana"": ""Berry"",
+        ""Orange"": ""Citrus"",
+        ""Lemon"": ""Citrus"",
+        ""Grape"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Pineapple"": ""Tropical"",
+        ""Mango"": ""Tropical"",
+        ""Lime"": ""Citrus""
+    }
+    for fruit in fruit_list:
+        found = False
+        for key, fruit_type in fruit_types.items():
+            if key in fruit:
+                fruit_type_name = fruit_types[key]
+                if fruit_type_name not in categorized:
+                    categorized[fruit_type_name] = []
+                categorized[fruit_type_name].append(fruit)
+                found = True
+                break
+        if not found:
+            if ""Unknown"":
+                categorized[""Unknown""] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Orange"", ""Banana"", ""Lemon"", ""Grape"", ""Pineapple"", ""Mango"", ""Lime"", ""Kiwi""]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,4,1036,18_4_4.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Apple"": ""Pome"",
+        ""Orange"": ""Citrus"",
+        ""Lemon"": ""Citrus"",
+        ""Banana"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Grape"": ""Berry"",
+        ""Pineapple"": ""Tropical"",
+        ""Mango"": ""Tropical"",
+        ""Lime"": ""Citrus""
+    }
+    for fruit in fruit_list:
+        found = False
+        for key, fruit_type in fruit_types.items():
+            if fruit in key:
+                fruit_type_name = fruit_types[key]
+                if fruit_type_name not in categorized:
+                    categorized[fruit_type_name] = []
+                categorized[fruit_type_name].append(fruit)
+                found = True
+                break
+        if not found:
+            if fruit not in categorized:
+                categorized[fruit] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Orange"", ""Lemon"", ""Banana"", ""Strawberry"", ""Grape"", ""Pineapple"", ""Mango"", ""Lime"", ""Watermelon""]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,5,1037,18_4_5.py
+18,4,Group fruits by type,"Create a function that takes a list of fruit names and returns a dictionary where the keys are unique fruit types (e.g., 'Citrus', 'Pome') and the values are lists containing all fruits belonging to that type. Assume input strings might require simple categorization.","def categorize_fruits(fruit_list):
+    categorized = {}
+    fruit_types = {
+        ""Apple"": ""Pome"",
+        ""Banana"": ""Berry"",
+        ""Orange"": ""Citrus"",
+        ""Lemon"": ""Citrus"",
+        ""Grape"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Pineapple"": ""Tropical"",
+        ""Mango"": ""Tropical""
+    }
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        found_type = None
+        for key, value in fruit_types.items():
+            if key.lower() in fruit_lower or fruit_lower in key.lower():
+                found_type = value
+                break
+        if found_type:
+            if found_type not in categorized:
+                categorized[found_type] = []
+            categorized[found_type].append(fruit)
+        else:
+            if fruit not in categorized:
+                categorized[fruit] = [fruit]
+    return categorized
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Orange"", ""Banana"", ""Lemon"", ""Grape"", ""Pineapple"", ""Mango"", ""Kiwi""]
+    result = categorize_fruits(sample_fruits)
+    print(result)",True,6,1038,18_4_6.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': [],
+        'Citrus': [],
+        'Pome': [],
+        'Drupe': [],
+        'Melon': [],
+        'Grain': [],
+        'Other': []
+    }
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        if 'berry' in fruit_lower or 'currant' in fruit_lower or 'raspberry' in fruit_lower:
+            classification_map['Berry'].append(fruit)
+        elif 'citrus' in fruit_lower or 'lemon' in fruit_lower or 'orange' in fruit_lower:
+            classification_map['Citrus'].append(fruit)
+        elif 'apple' in fruit_lower or 'pear' in fruit_lower:
+            classification_map['Pome'].append(fruit)
+        elif 'peach' in fruit_lower or 'plum' in fruit_lower:
+            classification_map['Drupe'].append(fruit)
+        elif 'melon' in fruit_lower or 'cantaloupe' in fruit_lower:
+            classification_map['Melon'].append(fruit)
+        elif 'wheat' in fruit_lower or 'rice' in fruit_lower:
+            classification_map['Grain'].append(fruit)
+        else:
+            classification_map['Other'].append(fruit)
+    return classification_map
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Orange"",
+        ""Strawberry"",
+        ""Banana"",
+        ""Grape"",
+        ""Lemon"",
+        ""Pear"",
+        ""Peach"",
+        ""Watermelon"",
+        ""Wheat"",
+        ""Plum"",
+        ""Cantaloupe""
+    ]
+    grouped_fruits = classify_fruits(sample_fruits)
+    for classification, fruits in grouped_fruits.items():
+        print(f""--- {classification} ---"")
+        if fruits:
+            for fruit in fruits:
+                print(f""- {fruit}"")
+        else:
+            print(""None found"")",True,0,1039,18_5.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': [],
+        'Citrus': [],
+        'Pome': [],
+        'Drupe': [],
+        'Melon': [],
+        'Grain': [],
+        'Other': []
+    }
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        if 'berry' in fruit_lower or 'currant' in fruit_lower or 'raspberry' in fruit_lower:
+            classification_map['Berry'].append(fruit)
+        elif 'citrus' in fruit_lower or 'lemon' in fruit_lower or 'orange' in fruit_lower:
+            classification_map['Citrus'].append(fruit)
+        elif 'apple' in fruit_lower or 'pear' in fruit_lower:
+            classification_map['Pome'].append(fruit)
+        elif 'peach' in fruit_lower or 'plum' in fruit_lower:
+            classification_map['Drupe'].append(fruit)
+        elif 'melon' in fruit_lower or 'cantaloupe' in fruit_lower:
+            classification_map['Melon'].append(fruit)
+        elif 'wheat' in fruit_lower or 'rice' in fruit_lower:
+            classification_map['Grain'].append(fruit)
+        else:
+            classification_map['Other'].append(fruit)
+    return classification_map
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Orange"",
+        ""Strawberry"",
+        ""Grape"",
+        ""Lemon"",
+        ""Pear"",
+        ""Peach"",
+        ""Plum"",
+        ""Melon"",
+        ""Wheat"",
+        ""Banana""
+    ]
+    grouped_fruits = classify_fruits(sample_fruits)
+    for category, fruits in grouped_fruits.items():
+        print(f""--- {category} ---"")
+        if fruits:
+            for fruit in fruits:
+                print(f""- {fruit}"")
+        else:
+            print(""None"")",True,1,1040,18_5_1.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': ['strawberry', 'blueberry', 'raspberry', 'blackberry'],
+        'Citrus': ['orange', 'lemon', 'lime', 'grapefruit'],
+        'Pome': ['apple', 'pear', 'plum'],
+        'Drupe': ['peach', 'apricot', 'cherry'],
+        'Melon': ['watermelon', 'cantaloupe', 'honeydew']
+    }
+    grouped_fruits = {category: [] for category in classification_map}
+    for fruit in fruit_list:
+        found = False
+        for category, fruits in classification_map.items():
+            if fruit in fruits:
+                grouped_fruits[category].append(fruit)
+                found = True
+                break
+        if not found:
+            pass
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_fruits = [
+        'apple',
+        'orange',
+        'strawberry',
+        'banana',                                                                                                          
+        'grapefruit',
+        'pear',
+        'blueberry',
+        'peach',
+        'watermelon',
+        'lemon'
+    ]
+    result = classify_fruits(sample_fruits)
+    for category, fruits in result.items():
+        print(f""{category}: {fruits}"")",True,2,1041,18_5_2.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': [],
+        'Citrus': [],
+        'Pome': [],
+        'Drupe': [],
+        'Melon': [],
+        'Pear': [],
+        'Fig': [],
+        'Banana': []
+    }
+    fruit_categories = {
+        ""Apple"": ""Pome"",
+        ""Orange"": ""Citrus"",
+        ""Strawberry"": ""Berry"",
+        ""Grape"": ""Berry"",
+        ""Lemon"": ""Citrus"",
+        ""Pear"": ""Pome"",
+        ""Peach"": ""Drupe"",
+        ""Mango"": ""Drupe"",
+        ""Banana"": ""Berry""                                    
+    }
+    for fruit in fruit_list:
+        if fruit in fruit_categories:
+            category = fruit_categories[fruit]
+            if category in classification_map:
+                classification_map[category].append(fruit)
+            else:
+                print(f""Warning: Fruit {fruit} belongs to unmapped category {category}"")
+    return classification_map
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Orange"",
+        ""Strawberry"",
+        ""Grape"",
+        ""Lemon"",
+        ""Pear"",
+        ""Peach"",
+        ""Mango"",
+        ""Banana""
+    ]
+    grouped_results = classify_fruits(sample_fruits)
+    for category, fruits in grouped_results.items():
+        print(f""{category}: {fruits}"")",True,3,1042,18_5_3.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': [],
+        'Citrus': [],
+        'Pome': [],
+        'Drupe': [],
+        'Melon': [],
+        'Grain': [],
+        'Other': []
+    }
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        if 'berry' in fruit_lower or 'currant' in fruit_lower or 'raspberry' in fruit_lower:
+            classification_map['Berry'].append(fruit)
+        elif 'citrus' in fruit_lower or 'lemon' in fruit_lower or 'orange' in fruit_lower:
+            classification_map['Citrus'].append(fruit)
+        elif 'apple' in fruit_lower or 'pear' in fruit_lower:
+            classification_map['Pome'].append(fruit)
+        elif 'peach' in fruit_lower or 'plum' in fruit_lower:
+            classification_map['Drupe'].append(fruit)
+        elif 'melon' in fruit_lower or 'cantaloupe' in fruit_lower:
+            classification_map['Melon'].append(fruit)
+        elif 'wheat' in fruit_lower or 'rice' in fruit_lower:
+            classification_map['Grain'].append(fruit)
+        else:
+            classification_map['Other'].append(fruit)
+    return classification_map
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Orange"",
+        ""Strawberry"",
+        ""Banana"",
+        ""Grape"",
+        ""Lemon"",
+        ""Pear"",
+        ""Peach"",
+        ""Watermelon"",
+        ""Wheat"",
+        ""Plum"",
+        ""Cantaloupe"",
+        ""Pineapple""
+    ]
+    grouped_fruits = classify_fruits(sample_fruits)
+    for classification, fruits in grouped_fruits.items():
+        print(f""--- {classification} ---"")
+        if fruits:
+            for fruit in fruits:
+                print(f""- {fruit}"")
+        else:
+            print(""None"")",True,4,1043,18_5_4.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': ['strawberry', 'blueberry', 'raspberry', 'blackberry'],
+        'Citrus': ['orange', 'lemon', 'lime', 'grapefruit'],
+        'Pome': ['apple', 'pear', 'plum'],
+        'Drupe': ['peach', 'apricot', 'cherry'],
+        'Melon': ['watermelon', 'cantaloupe', 'honeydew']
+    }
+    grouped_fruits = {category: [] for category in classification_map}
+    for fruit in fruit_list:
+        found = False
+        for category, fruits in classification_map.items():
+            if fruit in fruits:
+                grouped_fruits[category].append(fruit)
+                found = True
+                break
+        if not found:
+            pass
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_fruits = [
+        'apple',
+        'orange',
+        'strawberry',
+        'grapefruit',
+        'pear',
+        'blueberry',
+        'peach',
+        'watermelon',
+        'lemon',
+        'plum'
+    ]
+    result = classify_fruits(sample_fruits)
+    for category, fruits in result.items():
+        print(f""{category}: {fruits}"")",True,5,1044,18_5_5.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': [],
+        'Citrus': [],
+        'Pome': [],
+        'Drupe': [],
+        'Melon': [],
+        'Pear': [],
+        'Fig': [],
+        'Grape': []
+    }
+    fruit_categories = {
+        ""Apple"": ""Pome"",
+        ""Banana"": ""Berry"",
+        ""Orange"": ""Citrus"",
+        ""Grape"": ""Berry"",
+        ""Strawberry"": ""Berry"",
+        ""Lemon"": ""Citrus"",
+        ""Pear"": ""Pome"",
+        ""Peach"": ""Drupe"",
+        ""Plum"": ""Drupe"",
+        ""Melon"": ""Melon"",
+        ""Fig"": ""Fig""
+    }
+    for fruit in fruit_list:
+        if fruit in fruit_categories:
+            category = fruit_categories[fruit]
+            if category in classification_map:
+                classification_map[category].append(fruit)
+            else:
+                pass
+    return classification_map
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Banana"",
+        ""Orange"",
+        ""Grape"",
+        ""Strawberry"",
+        ""Lemon"",
+        ""Pear"",
+        ""Peach"",
+        ""Plum"",
+        ""Melon"",
+        ""Fig""
+    ]
+    grouped_fruits = classify_fruits(sample_fruits)
+    for category, fruits in grouped_fruits.items():
+        print(f""{category}: {fruits}"")",True,6,1045,18_5_6.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': ['strawberry', 'blueberry', 'raspberry', 'blackberry'],
+        'Citrus': ['orange', 'lemon', 'lime', 'grapefruit'],
+        'Pome': ['apple', 'pear', 'plum'],
+        'Melon': ['watermelon', 'cantaloupe', 'honeydew'],
+        'Drupe': ['peach', 'apricot', 'cherry'],
+        'Grain': ['wheat', 'rice', 'barley']
+    }
+    grouped_fruits = {category: [] for category in classification_map}
+    for fruit in fruit_list:
+        found = False
+        for category, fruits in classification_map.items():
+            if fruit in fruits:
+                grouped_fruits[category].append(fruit)
+                found = True
+                break
+        if not found:
+            pass
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_fruits = [
+        'apple',
+        'orange',
+        'strawberry',
+        'grapefruit',
+        'pear',
+        'watermelon',
+        'peach',
+        'lemon',
+        'blueberry',
+        'plum'
+    ]
+    result = classify_fruits(sample_fruits)
+    for category, fruits in result.items():
+        print(f""{category}: {fruits}"")",True,7,1046,18_5_7.py
+18,5,Group fruits by type,"Generate a complete, production-ready Python script that reads a predefined list of fruits and groups them by their primary botanical classification (e.g., 'Berry', 'Citrus', 'Pome'). Include clear comments explaining the logic.","def classify_fruits(fruit_list):
+    classification_map = {
+        'Berry': ['strawberry', 'blueberry', 'raspberry', 'blackberry'],
+        'Citrus': ['orange', 'lemon', 'lime', 'grapefruit'],
+        'Pome': ['apple', 'pear', 'plum'],
+        'Melon': ['watermelon', 'cantaloupe', 'honeydew'],
+        'Drupe': ['peach', 'apricot', 'cherry'],
+        'Banana': ['banana']
+    }
+    grouped_fruits = {}
+    for fruit in fruit_list:
+        found = False
+        for category, fruits in classification_map.items():
+            if fruit in fruits:
+                if category not in grouped_fruits:
+                    grouped_fruits[category] = []
+                grouped_fruits[category].append(fruit)
+                found = True
+                break
+        if not found:
+            grouped_fruits['Other'] = [fruit]
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_fruits = [
+        'apple', 'banana', 'orange', 'strawberry', 'grapefruit', 
+        'pear', 'watermelon', 'peach', 'blueberry', 'lemon', 'plum'
+    ]
+    result = classify_fruits(sample_fruits)
+    print(result)",True,8,1047,18_5_8.py
+18,6,Group fruits by type,"Implement an optimized algorithm to group a list of fruit strings into categories based on a predefined set of rules (e.g., if the fruit starts with 'A', it's 'Apple'). The function must handle potential empty inputs gracefully.","def group_fruits(fruit_list):
+    if not fruit_list:
+        return {}
+    categories = {}
+    for fruit in fruit_list:
+        category = None
+        if fruit.startswith('A'):
+            category = 'Apple'
+        elif fruit.startswith('B'):
+            category = 'Banana'
+        elif fruit.startswith('C'):
+            category = 'Cherry'
+        else:
+            category = 'Other'
+        if category not in categories:
+            categories[category] = []
+        categories[category].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Apricot"",
+        ""Banana"",
+        ""Berry"",
+        ""Carrot"",
+        ""Coconut"",
+        ""Avocado"",
+        ""Grape""
+    ]
+    grouped_result = group_fruits(sample_fruits)
+    print(grouped_result)",True,0,1048,18_6.py
+18,6,Group fruits by type,"Implement an optimized algorithm to group a list of fruit strings into categories based on a predefined set of rules (e.g., if the fruit starts with 'A', it's 'Apple'). The function must handle potential empty inputs gracefully.","def group_fruits(fruit_list):
+    if not fruit_list:
+        return {}
+    categories = {}
+    for fruit in fruit_list:
+        category = None
+        if fruit.startswith('A'):
+            category = 'Apple'
+        elif fruit.startswith('B'):
+            category = 'Banana'
+        elif fruit.startswith('C'):
+            category = 'Cherry'
+        else:
+            category = 'Other'
+        if category not in categories:
+            categories[category] = []
+        categories[category].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Banana"",
+        ""Apricot"",
+        ""Berry"",
+        ""Carrot"",
+        ""Coconut"",
+        ""Avocado"",
+        ""Grape""
+    ]
+    result = group_fruits(sample_fruits)
+    print(result)
+    empty_test = []
+    empty_result = group_fruits(empty_test)
+    print(f""Empty test result: {empty_result}"")",True,1,1049,18_6_1.py
+18,6,Group fruits by type,"Implement an optimized algorithm to group a list of fruit strings into categories based on a predefined set of rules (e.g., if the fruit starts with 'A', it's 'Apple'). The function must handle potential empty inputs gracefully.","def group_fruits(fruit_list):
+    if not fruit_list:
+        return {}
+    categories = {}
+    for fruit in fruit_list:
+        category = None
+        if fruit.startswith('A'):
+            category = 'Apple'
+        elif fruit.startswith('B'):
+            category = 'Banana'
+        elif fruit.startswith('C'):
+            category = 'Cherry'
+        else:
+            category = 'Other'
+        if category not in categories:
+            categories[category] = []
+        categories[category].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Apricot"",
+        ""Banana"",
+        ""Berry"",
+        ""Carrot"",
+        ""Coconut"",
+        ""Avocado"",
+        ""Grape""
+    ]
+    grouped = group_fruits(sample_fruits)
+    print(grouped)",True,2,1050,18_6_2.py
+18,6,Group fruits by type,"Implement an optimized algorithm to group a list of fruit strings into categories based on a predefined set of rules (e.g., if the fruit starts with 'A', it's 'Apple'). The function must handle potential empty inputs gracefully.","def group_fruits(fruit_list):
+    if not fruit_list:
+        return {}
+    categories = {}
+    for fruit in fruit_list:
+        category = None
+        if fruit.startswith('A'):
+            category = 'Apple'
+        elif fruit.startswith('B'):
+            category = 'Banana'
+        elif fruit.startswith('C'):
+            category = 'Cherry'
+        else:
+            category = 'Other'
+        if category not in categories:
+            categories[category] = []
+        categories[category].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Banana"",
+        ""Apricot"",
+        ""Blueberry"",
+        ""Carrot"",
+        ""Coconut"",
+        ""Avocado"",
+        ""Grape""
+    ]
+    result = group_fruits(sample_fruits)
+    print(result)",True,3,1051,18_6_3.py
+18,6,Group fruits by type,"Implement an optimized algorithm to group a list of fruit strings into categories based on a predefined set of rules (e.g., if the fruit starts with 'A', it's 'Apple'). The function must handle potential empty inputs gracefully.","def group_fruits(fruit_list):
+    if not fruit_list:
+        return {}
+    categories = {}
+    for fruit in fruit_list:
+        category = None
+        if fruit.startswith('A'):
+            category = 'Apple'
+        elif fruit.startswith('B'):
+            category = 'Banana'
+        elif fruit.startswith('C'):
+            category = 'Cherry'
+        else:
+            category = 'Other'
+        if category not in categories:
+            categories[category] = []
+        categories[category].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Apricot"",
+        ""Banana"",
+        ""Blueberry"",
+        ""Carrot"",
+        ""Coconut"",
+        ""Avocado"",
+        ""Grape""
+    ]
+    grouped_result = group_fruits(sample_fruits)
+    print(grouped_result)",True,4,1052,18_6_4.py
+18,7,Group fruits by type,Write a testable Python module containing a function to group fruits. Include example usage and assertions to demonstrate that the grouping logic is correct for a sample dataset of mixed fruits.,"def group_fruits(fruit_list):
+    groups = {}
+    for fruit in fruit_list:
+        if fruit not in groups:
+            groups[fruit] = []
+        groups[fruit].append(fruit)
+    return groups
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    expected_output = {
+        ""apple"": [""apple"", ""apple"", ""apple""],
+        ""banana"": [""banana"", ""banana""],
+        ""orange"": [""orange""],
+        ""grape"": [""grape""]
+    }
+    actual_output = group_fruits(sample_data)
+    assert actual_output == expected_output, f""Expected {expected_output}, but got {actual_output}""
+    print(""Test passed!"")",True,0,1053,18_7.py
+18,7,Group fruits by type,Write a testable Python module containing a function to group fruits. Include example usage and assertions to demonstrate that the grouping logic is correct for a sample dataset of mixed fruits.,"def group_fruits(fruit_list):
+    groups = {}
+    for fruit in fruit_list:
+        if fruit not in groups:
+            groups[fruit] = []
+        groups[fruit].append(fruit)
+    return groups
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    expected_output = {
+        ""apple"": [""apple"", ""apple"", ""apple""],
+        ""banana"": [""banana"", ""banana""],
+        ""orange"": [""orange""],
+        ""grape"": [""grape""]
+    }
+    actual_output = group_fruits(sample_data)
+    assert actual_output == expected_output, f""Expected {expected_output}, but got {actual_output}""
+    print(""Test passed!"")
+    print(""Actual Output:"", actual_output)",True,1,1054,18_7_1.py
+18,7,Group fruits by type,Write a testable Python module containing a function to group fruits. Include example usage and assertions to demonstrate that the grouping logic is correct for a sample dataset of mixed fruits.,"def group_fruits(fruit_list):
+    groups = {}
+    for fruit in fruit_list:
+        if fruit not in groups:
+            groups[fruit] = []
+        groups[fruit].append(fruit)
+    return groups
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    expected_output = {
+        ""apple"": [""apple"", ""apple"", ""apple""],
+        ""banana"": [""banana"", ""banana""],
+        ""orange"": [""orange""],
+        ""grape"": [""grape""]
+    }
+    actual_output = group_fruits(sample_data)
+    assert actual_output == expected_output
+    print(""Test passed!"")",True,2,1055,18_7_2.py
+18,7,Group fruits by type,Write a testable Python module containing a function to group fruits. Include example usage and assertions to demonstrate that the grouping logic is correct for a sample dataset of mixed fruits.,"def group_fruits(fruit_list):
+    groups = {}
+    for fruit in fruit_list:
+        if fruit not in groups:
+            groups[fruit] = []
+        groups[fruit].append(fruit)
+    return groups
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    expected_output = {
+        ""apple"": [""apple"", ""apple"", ""apple""],
+        ""banana"": [""banana"", ""banana""],
+        ""orange"": [""orange""],
+        ""grape"": [""grape""]
+    }
+    actual_output = group_fruits(sample_data)
+    assert actual_output == expected_output, f""Expected {expected_output}, but got {actual_output}""
+    print(""Test passed!"")
+    print(""Actual output:"", actual_output)",True,3,1056,18_7_3.py
+18,7,Group fruits by type,Write a testable Python module containing a function to group fruits. Include example usage and assertions to demonstrate that the grouping logic is correct for a sample dataset of mixed fruits.,"def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit not in grouped:
+            grouped[fruit] = []
+        grouped[fruit].append(fruit)
+    return grouped
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    expected_output = {
+        ""apple"": [""apple"", ""apple"", ""apple""],
+        ""banana"": [""banana"", ""banana""],
+        ""orange"": [""orange""],
+        ""grape"": [""grape""]
+    }
+    actual_output = group_fruits(sample_data)
+    assert actual_output == expected_output, f""Expected {expected_output}, but got {actual_output}""
+    print(""Test passed!"")",True,4,1057,18_7_4.py
+18,7,Group fruits by type,Write a testable Python module containing a function to group fruits. Include example usage and assertions to demonstrate that the grouping logic is correct for a sample dataset of mixed fruits.,"def group_fruits(fruit_list):
+    groups = {}
+    for fruit in fruit_list:
+        if fruit not in groups:
+            groups[fruit] = []
+        groups[fruit].append(fruit)
+    return groups
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple"", ""grape""]
+    expected_output = {
+        ""apple"": [""apple"", ""apple"", ""apple""],
+        ""banana"": [""banana"", ""banana""],
+        ""orange"": [""orange""],
+        ""grape"": [""grape""]
+    }
+    actual_output = group_fruits(sample_data)
+    assert actual_output == expected_output, f""Expected {expected_output}, but got {actual_output}""
+    print(""Test passed!"")
+    print(f""Sample Data: {sample_data}"")
+    print(f""Actual Grouping: {actual_output}"")",True,5,1058,18_7_5.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"if __name__ == '__main__':
+    fruit_list = [""apple"", ""banana"", ""orange"", ""grape"", ""strawberry"", ""mango"", ""pineapple""]
+    fruit_types = {fruit: ""sweet"" for fruit in fruit_list if fruit in [""apple"", ""banana"", ""orange"", ""grape"", ""mango""]}
+    fruit_types.update({fruit: ""tart"" for fruit in fruit_list if fruit in [""strawberry"", ""pineapple""]})
+    fruit_types.update({fruit: ""citrus"" for fruit in fruit_list if fruit in [""orange""]})
+    print(fruit_types)",True,0,1059,18_8.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        fruit_type = ""unknown""
+        if ""apple"" in fruit or ""orange"" in fruit:
+            fruit_type = ""citrus""
+        elif ""banana"" in fruit or ""grape"" in fruit:
+            fruit_type = ""tropical""
+        elif ""strawberry"" in fruit or ""blueberry"" in fruit:
+            fruit_type = ""berry""
+        else:
+            fruit_type = ""other""
+        if fruit_type not in grouped:
+            grouped[fruit_type] = []
+        grouped[fruit_type].append(fruit)
+    return grouped
+if __name__ == '__main__':
+    input_fruits = [
+        ""apple"",
+        ""orange"",
+        ""banana"",
+        ""grape"",
+        ""strawberry"",
+        ""blueberry"",
+        ""mango"",
+        ""lemon""
+    ]
+    result = group_fruits(input_fruits)
+    print(result)",True,1,1060,18_8_1.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"if __name__ == '__main__':
+    fruit_list = [""apple"", ""banana"", ""carrot"", ""grape"", ""orange"", ""strawberry"", ""melon""]
+    fruit_types = {fruit: ""sweet"" if fruit in [""apple"", ""banana"", ""grape"", ""strawberry""] else (""root"" if fruit == ""carrot"" else (""citrus"" if fruit in [""orange""] else ""other"")) for fruit in fruit_list}
+    print(fruit_types)",True,2,1061,18_8_2.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        fruit_type = ""unknown""
+        if ""apple"" in fruit or ""orange"" in fruit:
+            fruit_type = ""citrus""
+        elif ""banana"" in fruit or ""grape"" in fruit:
+            fruit_type = ""tropical""
+        elif ""strawberry"" in fruit or ""blueberry"" in fruit:
+            fruit_type = ""berry""
+        else:
+            fruit_type = ""other""
+        if fruit_type not in grouped:
+            grouped[fruit_type] = []
+        grouped[fruit_type].append(fruit)
+    return grouped
+if __name__ == '__main__':
+    input_fruits = [
+        ""apple"",
+        ""orange"",
+        ""banana"",
+        ""grape"",
+        ""strawberry"",
+        ""blueberry"",
+        ""mango"",
+        ""kiwi""
+    ]
+    result = group_fruits(input_fruits)
+    print(result)",True,3,1062,18_8_3.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        fruit_type = ""unknown""
+        if ""apple"" in fruit or ""orange"" in fruit:
+            fruit_type = ""citrus""
+        elif ""banana"" in fruit or ""grape"" in fruit:
+            fruit_type = ""tropical""
+        elif ""strawberry"" in fruit or ""blueberry"" in fruit:
+            fruit_type = ""berry""
+        else:
+            fruit_type = ""other""
+        if fruit_type not in grouped:
+            grouped[fruit_type] = []
+        grouped[fruit_type].append(fruit)
+    return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""orange"",
+        ""banana"",
+        ""grape"",
+        ""strawberry"",
+        ""blueberry"",
+        ""mango"",
+        ""kiwi""
+    ]
+    fruit_groups = group_fruits(sample_fruits)
+    print(fruit_groups)",True,4,1063,18_8_4.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"if __name__ == '__main__':
+    fruit_list = [""apple"", ""banana"", ""orange"", ""grape"", ""strawberry"", ""mango"", ""pineapple""]
+    fruit_types = {fruit: ""berry"" if fruit in [""strawberry"", ""grape""] else (""citrus"" if fruit in [""orange""] or fruit in [""pineapple""] else ""other"") for fruit in fruit_list}
+    print(fruit_types)",True,5,1064,18_8_5.py
+18,8,Group fruits by type,Design and implement a solution using dictionary comprehension to efficiently group an input list of fruit names into a dictionary based on their assumed type. Ensure the code adheres strictly to Pythonic style.,"if __name__ == '__main__':
+    fruit_list = [""apple"", ""banana"", ""orange"", ""grape"", ""strawberry"", ""mango"", ""pineapple""]
+    fruit_types = {fruit: ""sweet"" for fruit in fruit_list if fruit in [""apple"", ""banana"", ""orange"", ""grape"", ""strawberry"", ""mango""]}
+    print(fruit_types)",True,6,1065,18_8_6.py
+18,9,Group fruits by type,"Write a comprehensive script that takes user input for a list of fruits and outputs the final grouped result in a neatly formatted manner, demonstrating the grouping by fruit type.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    print(""--- Fruit Grouping Result ---"")
+    for fruit, fruits in result.items():
+        print(f""Fruit: {fruit}"")
+        print(f""  List: {sorted(list(set(fruits)))}"")
+        print(""-"" * 20)",True,0,1066,18_9.py
+18,9,Group fruits by type,"Write a comprehensive script that takes user input for a list of fruits and outputs the final grouped result in a neatly formatted manner, demonstrating the grouping by fruit type.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    for fruit, fruits in result.items():
+        print(f""Fruit: {fruit}"")
+        for item in fruits:
+            print(f""  - {item}"")
+        print(""-"" * 20)",True,1,1067,18_9_1.py
+18,9,Group fruits by type,"Write a comprehensive script that takes user input for a list of fruits and outputs the final grouped result in a neatly formatted manner, demonstrating the grouping by fruit type.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    for fruit, fruits in result.items():
+        print(f""Fruit Type: {fruit}"")
+        print(""  Items:"", "", "".join(sorted(list(set(fruits)))))
+        print(""-"" * 20)",True,2,1068,18_9_2.py
+18,9,Group fruits by type,"Write a comprehensive script that takes user input for a list of fruits and outputs the final grouped result in a neatly formatted manner, demonstrating the grouping by fruit type.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""apple"",
+        ""grape"",
+        ""banana"",
+        ""apple"",
+        ""mango""
+    ]
+    result = group_fruits(sample_fruits)
+    print(""--- Fruit Grouping Result ---"")
+    for fruit, fruits in result.items():
+        print(f""{fruit}: {', '.join(sorted(list(set(fruits))))}"")",True,3,1069,18_9_3.py
+18,9,Group fruits by type,"Write a comprehensive script that takes user input for a list of fruits and outputs the final grouped result in a neatly formatted manner, demonstrating the grouping by fruit type.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    print(""Grouped Fruits:"")
+    for fruit, items in result.items():
+        print(f""{fruit}: {', '.join(sorted(list(set(items))))}"")",True,4,1070,18_9_4.py
+18,9,Group fruits by type,"Write a comprehensive script that takes user input for a list of fruits and outputs the final grouped result in a neatly formatted manner, demonstrating the grouping by fruit type.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    print(""--- Fruit Grouping Result ---"")
+    for fruit, fruits in result.items():
+        print(f""Fruit: {fruit}"")
+        print(f""  List: {', '.join(sorted(list(set(fruits))))}"")
+        print(""-"" * 20)",True,5,1071,18_9_5.py
+18,10,Group fruits by type,"Write a complete, robust Python script that reads a list of mixed fruits and groups them by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the output is clean and well-formatted.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    fruits = [
+        ""Apple"",
+        ""Banana"",
+        ""Orange"",
+        ""Apple"",
+        ""Grape"",
+        ""Banana"",
+        ""Mango"",
+        ""Apple"",
+        ""Orange""
+    ]
+    fruit_groups = group_fruits(fruits)
+    for fruit_type, fruit_list in fruit_groups.items():
+        print(f""{fruit_type}: {', '.join(sorted(list(set(fruit_list))))}"")",True,0,1072,18_10.py
+18,10,Group fruits by type,"Write a complete, robust Python script that reads a list of mixed fruits and groups them by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the output is clean and well-formatted.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"",
+        ""Banana"",
+        ""Orange"",
+        ""Apple"",
+        ""Grape"",
+        ""Banana"",
+        ""Mango"",
+        ""Apple"",
+        ""Orange""
+    ]
+    fruit_groups = group_fruits(sample_fruits)
+    for fruit_type, fruits in fruit_groups.items():
+        print(f""{fruit_type}: {sorted(list(set(fruits)))}"")",True,1,1073,18_10_1.py
+18,10,Group fruits by type,"Write a complete, robust Python script that reads a list of mixed fruits and groups them by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the output is clean and well-formatted.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit not in grouped:
+            grouped[fruit] = []
+        grouped[fruit].append(fruit)
+    return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        'Apple', 'Banana', 'Orange', 'Apple', 'Grapes', 
+        'Banana', 'Mango', 'Apple', 'Orange', 'Pineapple'
+    ]
+    result = group_fruits(sample_fruits)
+    for fruit_type, fruits in result.items():
+        print(f""{fruit_type}: {', '.join(sorted(list(set(fruits))))}"")",True,2,1074,18_10_2.py
+18,10,Group fruits by type,"Write a complete, robust Python script that reads a list of mixed fruits and groups them by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the output is clean and well-formatted.","def group_fruits(fruit_list):
+    grouped_fruits = {}
+    for fruit in fruit_list:
+        fruit_type = fruit.split()[0]
+        if fruit_type not in grouped_fruits:
+            grouped_fruits[fruit_type] = []
+        grouped_fruits[fruit_type].append(fruit)
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple Red"",
+        ""Banana Yellow"",
+        ""Orange Sweet"",
+        ""Apple Green"",
+        ""Grape Purple"",
+        ""Banana Green"",
+        ""Orange Pink""
+    ]
+    grouped = group_fruits(sample_fruits)
+    for fruit_type, fruits in grouped.items():
+        print(f""--- {fruit_type}s ---"")
+        for fruit in fruits:
+            print(f""- {fruit}"")
+        print()",True,3,1075,18_10_3.py
+18,10,Group fruits by type,"Write a complete, robust Python script that reads a list of mixed fruits and groups them by their type (e.g., 'Apple', 'Banana', 'Orange'). Use a dictionary for grouping and ensure the output is clean and well-formatted.","def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(1)
+        else:
+            grouped[fruit] = [1]
+    return grouped
+if __name__ == '__main__':
+    fruits = [""Apple"", ""Banana"", ""Orange"", ""Apple"", ""Grape"", ""Banana"", ""Mango""]
+    result = group_fruits(fruits)
+    for fruit, items in result.items():
+        print(f""{fruit}: {len(items)} occurrences"")",True,4,1076,18_10_4.py
+18,11,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of strings representing fruits and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. The implementation must be highly efficient (O(n) time complexity).,"def group_fruits(fruits):
+    result = {}
+    for fruit in fruits:
+        if fruit not in result:
+            result[fruit] = []
+        result[fruit].append(fruit)
+    return result
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple""]
+    grouped = group_fruits(sample_fruits)
+    print(grouped)",True,0,1077,18_11.py
+18,11,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of strings representing fruits and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. The implementation must be highly efficient (O(n) time complexity).,"import collections
+def group_fruits(fruits):
+    grouped = collections.defaultdict(list)
+    for fruit in fruits:
+        grouped[fruit].append(fruit)
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple""]
+    result = group_fruits(sample_fruits)
+    print(result)",True,1,1078,18_11_1.py
+18,11,Group fruits by type,Implement an optimized function named `group_fruits` that accepts a list of strings representing fruits and returns a dictionary where keys are fruit types and values are lists of corresponding fruits. The implementation must be highly efficient (O(n) time complexity).,"def group_fruits(fruits):
+    result = {}
+    for fruit in fruits:
+        if fruit not in result:
+            result[fruit] = []
+        result[fruit].append(fruit)
+    return result
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""grape""]
+    grouped = group_fruits(sample_fruits)
+    print(grouped)",True,2,1079,18_11_2.py
+18,12,Group fruits by type,Develop an object-oriented solution in Python to group fruits. Create a `FruitGrouper` class with a method to process a list of fruit names and return the grouped results as a dictionary.,"class FruitGrouper:
+    def group_fruits(self, fruit_list):
+        grouped = {}
+        for fruit in fruit_list:
+            if fruit not in grouped:
+                grouped[fruit] = []
+            grouped[fruit].append(fruit)
+        return grouped
+if __name__ == '__main__':
+    grouper = FruitGrouper()
+    fruits = [""apple"", ""banana"", ""apple"", ""orange"", ""banana"", ""apple""]
+    result = grouper.group_fruits(fruits)
+    print(result)",True,0,1080,18_12.py
+18,3,Group fruits by type,Write a concise Python solution using `collections.defaultdict` to group an input list of fruits into categories based on their names. The solution must be highly efficient.,"import collections
+fruits = [""apple"", ""banana"", ""cherry"", ""apple"", ""orange"", ""banana""]
+grouped_fruits = collections.defaultdict(list)
+for fruit in fruits:
+    grouped_fruits[fruit].append(fruit)
+if __name__ == '__main__':
+    print(dict(grouped_fruits))",True,0,1081,18_3.py
+18,2,Group fruits by type,Develop a class named `FruitSorter` with a method to take an unsorted list of fruits and return a dictionary grouping them by their common fruit type. Ensure the implementation uses best-practice object-oriented principles.,,False,0,1082,18_2.py
+19,0,Track favorite animal names,"Write a complete, well-documented Python script to track favorite animal names, storing them in a dictionary where the key is the animal and the value is a list of associated user preferences.","def track_favorite_animals():
+    favorite_animals = {
+        ""Lion"": [""majestic"", ""kingly""],
+        ""Elephant"": [""wise"", ""gentle""],
+        ""Tiger"": [""fierce"", ""striped""],
+        "" Dolphin"": [""intelligent"", ""playful""]
+    }
+    return favorite_animals
+if __name__ == '__main__':
+    animal_data = track_favorite_animals()
+    print(animal_data)",True,0,1083,19_0.py
+19,0,Track favorite animal names,"Write a complete, well-documented Python script to track favorite animal names, storing them in a dictionary where the key is the animal and the value is a list of associated user preferences.","def track_favorite_animals():
+    favorite_animals = {
+        ""Dog"": [""Playful"", ""Loyal""],
+        ""Cat"": [""Independent"", ""Graceful""],
+        ""Elephant"": [""Wise"", ""Gentle""],
+        ""Lion"": [""Brave"", ""Regal""]
+    }
+    return favorite_animals
+if __name__ == '__main__':
+    animal_data = track_favorite_animals()
+    print(animal_data)",True,1,1084,19_0_1.py
+19,0,Track favorite animal names,"Write a complete, well-documented Python script to track favorite animal names, storing them in a dictionary where the key is the animal and the value is a list of associated user preferences.","def track_favorite_animals():
+    favorite_animals = {
+        ""Dog"": [""Playful"", ""Loyal""],
+        ""Cat"": [""Independent"", ""Graceful""],
+        ""Lion"": [""Majestic"", ""Strong""],
+        ""Elephant"": [""Wise"", ""Gentle""]
+    }
+    return favorite_animals
+if __name__ == '__main__':
+    animal_data = track_favorite_animals()
+    print(animal_data)",True,2,1085,19_0_2.py
+19,0,Track favorite animal names,"Write a complete, well-documented Python script to track favorite animal names, storing them in a dictionary where the key is the animal and the value is a list of associated user preferences.","def track_animal_favorites():
+    favorites = {}
+    animal1 = ""dog""
+    preferences1 = [""friendly"", ""loyal""]
+    favorites[animal1] = preferences1
+    animal2 = ""cat""
+    preferences2 = [""affectionate"", ""independent""]
+    favorites[animal2] = preferences2
+    animal3 = ""lion""
+    preferences3 = [""majestic"", ""fierce""]
+    favorites[animal3] = preferences3
+    animal4 = ""elephant""
+    preferences4 = [""large"", ""intelligent""]
+    favorites[animal4] = preferences4
+    return favorites
+if __name__ == '__main__':
+    animal_data = track_animal_favorites()
+    print(animal_data)",True,3,1086,19_0_3.py
+19,0,Track favorite animal names,"Write a complete, well-documented Python script to track favorite animal names, storing them in a dictionary where the key is the animal and the value is a list of associated user preferences.","def track_favorite_animals():
+    favorite_animals = {}
+    animal1 = ""cat""
+    preferences1 = [""fluffy"", ""sleepy""]
+    favorite_animals[animal1] = preferences1
+    animal2 = ""dog""
+    preferences2 = [""playful"", ""loyal""]
+    favorite_animals[animal2] = preferences2
+    animal3 = ""lion""
+    preferences3 = [""majestic"", ""roar""]
+    favorite_animals[animal3] = preferences3
+    animal4 = ""elephant""
+    preferences4 = [""large"", ""grey""]
+    favorite_animals[animal4] = preferences4
+    return favorite_animals
+if __name__ == '__main__':
+    data = track_favorite_animals()
+    print(data)",True,4,1087,19_0_4.py
+19,0,Track favorite animal names,"Write a complete, well-documented Python script to track favorite animal names, storing them in a dictionary where the key is the animal and the value is a list of associated user preferences.","def track_favorite_animals():
+    favorite_animals = {
+        ""Dog"": [""Playful"", ""Loyal""],
+        ""Cat"": [""Independent"", ""Graceful""],
+        ""Bird"": [""Singing"", ""Flying""],
+        ""Fish"": [""Swimming"", ""Calm""]
+    }
+    return favorite_animals
+if __name__ == '__main__':
+    animal_data = track_favorite_animals()
+    print(animal_data)",True,5,1088,19_0_5.py
+19,1,Track favorite animal names,"Implement an optimized class named 'AnimalTracker' to manage a collection of favorite animal names and allow for easy addition, retrieval, and display of these names.","class AnimalTracker:
+    def __init__(self):
+        self.favorites = []
+    def add_animal(self, animal_name):
+        if animal_name not in self.favorites:
+            self.favorites.append(animal_name)
+    def get_animals(self):
+        return self.favorites
+    def display_animals(self):
+        print(""Favorite Animals:"")
+        for animal in self.favorites:
+            print(animal)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    tracker.add_animal(""Dog"")
+    tracker.add_animal(""Cat"")
+    tracker.add_animal(""Bird"")
+    tracker.add_animal(""Dog"")
+    tracker.add_animal(""Fish"")
+    tracker.display_animals()
+    print(""\nList of favorites:"", tracker.get_animals())",True,0,1089,19_1.py
+19,1,Track favorite animal names,"Implement an optimized class named 'AnimalTracker' to manage a collection of favorite animal names and allow for easy addition, retrieval, and display of these names.","class AnimalTracker:
+    def __init__(self):
+        self.favorites = []
+    def add_animal(self, animal_name):
+        if animal_name not in self.favorites:
+            self.favorites.append(animal_name)
+    def get_animals(self):
+        return self.favorites
+    def display_favorites(self):
+        print(""Favorite Animals:"")
+        for animal in self.favorites:
+            print(animal)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    tracker.add_animal(""Dog"")
+    tracker.add_animal(""Cat"")
+    tracker.add_animal(""Bird"")
+    tracker.add_animal(""Dog"")
+    tracker.display_favorites()
+    print(""\nList of favorites:"", tracker.get_animals())",True,1,1090,19_1_1.py
+19,1,Track favorite animal names,"Implement an optimized class named 'AnimalTracker' to manage a collection of favorite animal names and allow for easy addition, retrieval, and display of these names.","class AnimalTracker:
+    def __init__(self):
+        self.favorites = []
+    def add_animal(self, animal_name):
+        if animal_name not in self.favorites:
+            self.favorites.append(animal_name)
+    def get_animals(self):
+        return self.favorites
+    def display_animals(self):
+        print(""Favorite Animals:"")
+        for animal in self.favorites:
+            print(animal)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    tracker.add_animal(""Dog"")
+    tracker.add_animal(""Cat"")
+    tracker.add_animal(""Bird"")
+    tracker.add_animal(""Dog"")
+    tracker.display_animals()
+    print(""\nList of favorites:"", tracker.get_animals())",True,2,1091,19_1_2.py
+19,1,Track favorite animal names,"Implement an optimized class named 'AnimalTracker' to manage a collection of favorite animal names and allow for easy addition, retrieval, and display of these names.","class AnimalTracker:
+    def __init__(self):
+        self.favorites = []
+    def add_animal(self, animal_name):
+        if animal_name not in self.favorites:
+            self.favorites.append(animal_name)
+    def get_animals(self):
+        return self.favorites
+    def display_animals(self):
+        print(""Favorite Animals:"")
+        for animal in self.favorites:
+            print(animal)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    tracker.add_animal(""Dog"")
+    tracker.add_animal(""Cat"")
+    tracker.add_animal(""Bird"")
+    tracker.add_animal(""Dog"")
+    tracker.add_animal(""Fish"")
+    tracker.display_animals()",True,3,1092,19_1_3.py
+19,2,Track favorite animal names,"Develop a function that reads animal names from a predefined list and populates a dictionary with these animals, ensuring the data structure is efficient for lookups.","def create_animal_dictionary():
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""monkey"", ""zebra""]
+    animal_dict = {}
+    for animal in animal_list:
+        animal_dict[animal] = animal
+    return animal_dict
+if __name__ == '__main__':
+    result = create_animal_dictionary()
+    print(result)",True,0,1093,19_2.py
+19,2,Track favorite animal names,"Develop a function that reads animal names from a predefined list and populates a dictionary with these animals, ensuring the data structure is efficient for lookups.","def create_animal_dictionary():
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""monkey"", ""zebra""]
+    animal_dict = {}
+    for animal in animal_list:
+        animal_dict[animal] = True
+    return animal_dict
+if __name__ == '__main__':
+    animals = create_animal_dictionary()
+    print(animals)
+    print(f""Lion is in the dictionary: {'lion' in animals}"")
+    print(f""Elephant is in the dictionary: {'elephant' in animals}"")",True,1,1094,19_2_1.py
+19,2,Track favorite animal names,"Develop a function that reads animal names from a predefined list and populates a dictionary with these animals, ensuring the data structure is efficient for lookups.","def create_animal_dictionary():
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""monkey"", ""zebra""]
+    animal_dict = {}
+    for animal in animal_list:
+        animal_dict[animal] = True
+    return animal_dict
+if __name__ == '__main__':
+    result = create_animal_dictionary()
+    print(result)",True,2,1095,19_2_2.py
+19,2,Track favorite animal names,"Develop a function that reads animal names from a predefined list and populates a dictionary with these animals, ensuring the data structure is efficient for lookups.","def create_animal_dictionary():
+    animal_list = [""lion"", ""tiger"", ""elephant"", ""monkey"", ""zebra""]
+    animal_dict = {}
+    for animal in animal_list:
+        animal_dict[animal] = True
+    return animal_dict
+if __name__ == '__main__':
+    animal_data = create_animal_dictionary()
+    print(animal_data)
+    print(f""Lion is in the dictionary: {'lion' in animal_data}"")
+    print(f""Elephant is in the dictionary: {'elephant' in animal_data}"")",True,3,1096,19_2_3.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import random
+def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""apple"",
+        ""grape"",
+        ""banana"",
+        ""mango"",
+        ""kiwi"",
+        ""watermelon"",
+        ""apple"",
+        ""lemon"",
+        ""invalid_fruit""
+    ]
+    valid_fruits = []
+    invalid_fruits = []
+    for fruit in sample_fruits:
+        if fruit in [""apple"", ""banana"", ""orange"", ""grape"", ""mango"", ""kiwi"", ""watermelon"", ""lemon""]:
+            valid_fruits.append(fruit)
+        else:
+            invalid_fruits.append(fruit)
+    grouped_result = group_fruits(valid_fruits)
+    print(""--- Grouped Fruits ---"")
+    if grouped_result:
+        for fruit_type, fruits in grouped_result.items():
+            print(f""{fruit_type}: {', '.join(sorted(list(set(fruits))))}"")
+    else:
+        print(""No valid fruits found to group."")
+    print(""\n--- Invalid Entries ---"")
+    if invalid_fruits:
+        for fruit in invalid_fruits:
+            print(f""Error processing: {fruit}"")
+    else:
+        print(""No invalid entries found."")",True,0,1097,18_14.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import random
+def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        if fruit_lower in grouped:
+            grouped[fruit_lower].append(fruit)
+        else:
+            grouped[fruit_lower] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""grape"",
+        ""apple"",
+        ""mango"",
+        ""banana"",
+        ""strawberry"",
+        ""kiwi"",
+        ""watermelon"",
+        ""apple""
+    ]
+    invalid_fruits = [
+        ""melon"",
+        ""pear"",
+        ""zucchini""
+    ]
+    all_fruits = sample_fruits + invalid_fruits
+    processed_fruits = []
+    for fruit in all_fruits:
+        if fruit and fruit.isalpha():
+            processed_fruits.append(fruit)
+        else:
+            print(f""Error: Invalid fruit entry ignored: {fruit}"")
+    grouped_result = group_fruits(processed_fruits)
+    print(""--- Grouped Fruits ---"")
+    if grouped_result:
+        for fruit_type, fruits in grouped_result.items():
+            print(f""\n{fruit_type.capitalize()}:"")
+            for fruit in sorted(fruits):
+                print(f""- {fruit}"")
+    else:
+        print(""No valid fruits were processed."")",True,1,1098,18_14_1.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import random
+def group_fruits(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        fruit_lower = fruit.lower()
+        if fruit_lower in grouped:
+            grouped[fruit_lower].append(fruit)
+        else:
+            grouped[fruit_lower] = [fruit]
+    return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""grape"",
+        ""apple"",
+        ""mango"",
+        ""banana"",
+        ""kiwi"",
+        ""strawberry"",
+        ""apple"",
+        ""watermelon"",
+        ""pear"",
+        ""invalid_fruit""
+    ]
+    valid_fruits = []
+    for fruit in sample_fruits:
+        if fruit.isalpha():
+            valid_fruits.append(fruit)
+    grouped_results = group_fruits(valid_fruits)
+    print(""Grouped Fruits:"")
+    for fruit_type, fruits in grouped_results.items():
+        print(f""--- {fruit_type.capitalize()}:"")
+        for fruit in fruits:
+            print(f""- {fruit}"")
+        print("""")",True,2,1099,18_14_2.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""apple"",
+        ""grape"",
+        ""banana"",
+        ""mango"",
+        ""kiwi"",
+        ""apple"",
+        ""watermelon"",
+        ""pear"",
+        ""invalid_fruit""
+    ]
+    valid_fruits = []
+    invalid_fruits = []
+    for fruit in sample_fruits:
+        if fruit in [""apple"", ""banana"", ""orange"", ""grape"", ""mango"", ""kiwi"", ""watermelon"", ""pear""]:
+            valid_fruits.append(fruit)
+        else:
+            invalid_fruits.append(fruit)
+    grouped_result = group_fruits(valid_fruits)
+    print(""--- Grouped Fruits ---"")
+    for fruit_type, fruits in grouped_result.items():
+        print(f""{fruit_type}: {', '.join(sorted(list(set(fruits))))}"")
+    print(""\n--- Invalid Entries ---"")
+    if invalid_fruits:
+        for fruit in invalid_fruits:
+            print(f""Error processing '{fruit}': Invalid fruit entry."")
+    else:
+        print(""No invalid entries found."")",True,3,1100,18_14_3.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        fruit_type = fruit.lower().split()[0]
+        if fruit_type:
+            grouped[fruit_type].append(fruit)
+        else:
+            print(f""Error: Invalid fruit entry encountered: {fruit}"")
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""grape"",
+        ""mango"",
+        ""apricot"",
+        ""kiwi"",
+        ""watermelon"",
+        ""peach"",
+        ""melon"",
+        ""strawberry"",
+        ""invalid fruit entry""
+    ]
+    grouped_results = group_fruits(sample_fruits)
+    print(""--- Grouped Fruits ---"")
+    for fruit_type, fruits in grouped_results.items():
+        print(f""\n{fruit_type}:"")
+        for fruit in fruits:
+            print(f""- {fruit}"")",True,4,1101,18_14_4.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""apple"",
+        ""grape"",
+        ""banana"",
+        ""mango"",
+        ""kiwi"",
+        ""apple"",
+        ""watermelon"",
+        ""pear"",
+        ""invalid_fruit""
+    ]
+    valid_fruits = []
+    invalid_fruits = []
+    for fruit in sample_fruits:
+        if fruit in [""apple"", ""banana"", ""orange"", ""grape"", ""mango"", ""kiwi"", ""watermelon"", ""pear""]:
+            valid_fruits.append(fruit)
+        else:
+            invalid_fruits.append(fruit)
+    grouped_result = group_fruits(valid_fruits)
+    print(""--- Grouped Fruits ---"")
+    if grouped_result:
+        for fruit_type, fruits in grouped_result.items():
+            print(f""{fruit_type}: {', '.join(sorted(list(set(fruits))))}"")
+    else:
+        print(""No valid fruits were processed."")
+    print(""\n--- Invalid Entries ---"")
+    if invalid_fruits:
+        for fruit in invalid_fruits:
+            print(f""Error: '{fruit}' is not a recognized fruit and was ignored."")
+    else:
+        print(""No invalid entries found."")",True,5,1102,18_14_5.py
+18,14,Group fruits by type,"Create a complete program that takes user input for a list of fruits, processes this list to group them by their primary type, and prints the final grouped results clearly to the console. Ensure error handling for invalid fruit entries is included.","import collections
+def group_fruits(fruit_list):
+    grouped = collections.defaultdict(list)
+    for fruit in fruit_list:
+        if fruit in grouped:
+            grouped[fruit].append(fruit)
+        else:
+            grouped[fruit] = [fruit]
+    return dict(grouped)
+if __name__ == '__main__':
+    sample_fruits = [
+        ""apple"",
+        ""banana"",
+        ""orange"",
+        ""apple"",
+        ""grape"",
+        ""banana"",
+        ""mango"",
+        ""kiwi"",
+        ""apple"",
+        ""watermelon"",
+        ""invalid_fruit""
+    ]
+    valid_fruits = []
+    for fruit in sample_fruits:
+        if fruit in [""apple"", ""banana"", ""orange"", ""grape"", ""mango"", ""kiwi"", ""watermelon""]:
+            valid_fruits.append(fruit)
+        else:
+            print(f""Warning: Invalid fruit entry ignored: {fruit}"")
+    grouped_result = group_fruits(valid_fruits)
+    print(""--- Grouped Fruits ---"")
+    if grouped_result:
+        for fruit_type, fruits in grouped_result.items():
+            print(f""{fruit_type}: {', '.join(sorted(list(set(fruits))))}"")
+    else:
+        print(""No valid fruits were processed."")",True,6,1103,18_14_6.py
+19,4,Track favorite animal names,Implement a method within the AnimalTracker class to add a new favorite animal name and handle potential duplicate entries gracefully without overwriting existing data.,"class AnimalTracker:
+    def __init__(self):
+        self.favorites = set()
+    def add_favorite(self, animal_name):
+        self.favorites.add(animal_name)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    print(""Initial favorites:"", tracker.favorites)
+    tracker.add_favorite(""Dog"")
+    print(""After adding Dog:"", tracker.favorites)
+    tracker.add_favorite(""Cat"")
+    print(""After adding Cat:"", tracker.favorites)
+    tracker.add_favorite(""Dog"")
+    print(""After trying to add duplicate Dog:"", tracker.favorites)",True,0,1104,19_4.py
+19,4,Track favorite animal names,Implement a method within the AnimalTracker class to add a new favorite animal name and handle potential duplicate entries gracefully without overwriting existing data.,"class AnimalTracker:
+    def __init__(self):
+        self.favorites = set()
+    def add_favorite(self, animal_name):
+        self.favorites.add(animal_name)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    print(""Initial favorites:"", tracker.favorites)
+    tracker.add_favorite(""Dog"")
+    print(""After adding Dog:"", tracker.favorites)
+    tracker.add_favorite(""Cat"")
+    print(""After adding Cat:"", tracker.favorites)
+    tracker.add_favorite(""Dog"")
+    print(""After trying to add duplicate Dog:"", tracker.favorites)
+    tracker.add_favorite(""Bird"")
+    print(""After adding Bird:"", tracker.favorites)",True,1,1105,19_4_1.py
+19,4,Track favorite animal names,Implement a method within the AnimalTracker class to add a new favorite animal name and handle potential duplicate entries gracefully without overwriting existing data.,"class AnimalTracker:
+    def __init__(self):
+        self.favorites = set()
+    def add_favorite(self, animal_name):
+        self.favorites.add(animal_name)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    print(f""Initial favorites: {tracker.favorites}"")
+    tracker.add_favorite(""Dog"")
+    print(f""After adding Dog: {tracker.favorites}"")
+    tracker.add_favorite(""Cat"")
+    print(f""After adding Cat: {tracker.favorites}"")
+    tracker.add_favorite(""Dog"")
+    print(f""After adding Dog again (no change): {tracker.favorites}"")
+    tracker.add_favorite(""Bird"")
+    print(f""After adding Bird: {tracker.favorites}"")",True,2,1106,19_4_2.py
+19,4,Track favorite animal names,Implement a method within the AnimalTracker class to add a new favorite animal name and handle potential duplicate entries gracefully without overwriting existing data.,"class AnimalTracker:
+    def __init__(self):
+        self.favorites = set()
+    def add_favorite(self, animal_name):
+        self.favorites.add(animal_name)
+if __name__ == '__main__':
+    tracker = AnimalTracker()
+    print(""Initial favorites:"", tracker.favorites)
+    tracker.add_favorite(""Dog"")
+    print(""After adding Dog:"", tracker.favorites)
+    tracker.add_favorite(""Cat"")
+    print(""After adding Cat:"", tracker.favorites)
+    tracker.add_favorite(""Dog"")
+    print(""After adding duplicate Dog:"", tracker.favorites)",True,3,1107,19_4_3.py
+19,5,Track favorite animal names,Create an optimized function that takes a list of animal names and returns a dictionary where each animal is mapped to the count of how many times it appeared in the input list.,"def count_animal_names(animal_list):
+    counts = {}
+    for animal in animal_list:
+        if animal in counts:
+            counts[animal] += 1
+        else:
+            counts[animal] = 1
+    return counts
+if __name__ == '__main__':
+    sample_list = [""dog"", ""cat"", ""dog"", ""bird"", ""cat"", ""dog""]
+    result = count_animal_names(sample_list)
+    print(result)",True,0,1108,19_5.py
+19,5,Track favorite animal names,Create an optimized function that takes a list of animal names and returns a dictionary where each animal is mapped to the count of how many times it appeared in the input list.,"def count_animal_names(animal_list):
+    counts = {}
+    for animal in animal_list:
+        if animal in counts:
+            counts[animal] += 1
+        else:
+            counts[animal] = 1
+    return counts
+if __name__ == '__main__':
+    sample_list = [""cat"", ""dog"", ""cat"", ""bird"", ""dog"", ""cat""]
+    result = count_animal_names(sample_list)
+    print(result)",True,1,1109,19_5_1.py
+19,6,Track favorite animal names,"Write a program that reads favorite animal names from a file named 'favorites.txt' and loads them into a Python list, handling potential FileNotFoundError exceptions robustly.","def load_favorites(filename):
+    favorites = []
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                favorites.append(line.strip())
+    except FileNotFoundError:
+        print(f""Error: The file {filename} was not found."")
+        return None
+    return favorites
+if __name__ == '__main__':
+    file_name = 'favorites.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""Dog\n"")
+            f.write(""Cat\n"")
+            f.write(""Bird\n"")
+    except IOError:
+        pass
+    animal_list = load_favorites(file_name)
+    if animal_list is not None:
+        print(animal_list)",True,0,1110,19_6.py
+19,6,Track favorite animal names,"Write a program that reads favorite animal names from a file named 'favorites.txt' and loads them into a Python list, handling potential FileNotFoundError exceptions robustly.","try:
+    with open('favorites.txt', 'r') as file:
+        favorite_animals = file.readlines()
+except FileNotFoundError:
+    favorite_animals = []
+favorite_list = [line.strip() for line in favorite_animals if line.strip()]
+if __name__ == '__main__':
+    print(favorite_list)",True,1,1111,19_6_1.py
+19,6,Track favorite animal names,"Write a program that reads favorite animal names from a file named 'favorites.txt' and loads them into a Python list, handling potential FileNotFoundError exceptions robustly.","try:
+    with open('favorites.txt', 'r') as file:
+        favorite_animals = file.readlines()
+except FileNotFoundError:
+    favorite_animals = []
+if __name__ == '__main__':
+    print(favorite_animals)",True,2,1112,19_6_2.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""elephant"": 7,
+        ""tiger"": 9,
+        ""monkey"": 5,
+        ""penguin"": 3,
+        ""giraffe"": 6
+    }
+    return animal_data
+if __name__ == '__main__':
+    animal_favorites = create_animal_sentiment_store()
+    print(animal_favorites)",True,0,1113,19_7.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""elephant"": 7,
+        ""tiger"": 9,
+        ""monkey"": 6,
+        ""penguin"": 5,
+        ""giraffe"": 8
+    }
+    return animal_data
+if __name__ == '__main__':
+    animal_favorites = create_animal_sentiment_store()
+    print(animal_favorites)",True,1,1114,19_7_1.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""tiger"": 9,
+        ""elephant"": 7,
+        ""monkey"": 5,
+        ""penguin"": 3,
+        ""giraffe"": 6
+    }
+    return animal_data
+if __name__ == '__main__':
+    animal_favorites = create_animal_sentiment_store()
+    print(animal_favorites)",True,2,1115,19_7_2.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""tiger"": 9,
+        ""elephant"": 7,
+        ""monkey"": 5,
+        ""penguin"": 3,
+        ""snake"": 2
+    }
+    return animal_data
+if __name__ == '__main__':
+    animal_favorites = create_animal_sentiment_store()
+    print(animal_favorites)",True,3,1116,19_7_3.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","data_structure = {}
+data_structure['dog'] = 8
+data_structure['cat'] = 9
+data_structure['bird'] = 7
+data_structure['fish'] = 5
+data_structure['lion'] = 10
+if __name__ == '__main__':
+    print(data_structure)",True,4,1117,19_7_4.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""elephant"": 9,
+        ""tiger"": 7,
+        ""monkey"": 6,
+        ""penguin"": 5,
+        ""giraffe"": 8
+    }
+    return animal_data
+if __name__ == '__main__':
+    animal_favorites = create_animal_sentiment_store()
+    print(animal_favorites)",True,5,1118,19_7_5.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""elephant"": 7,
+        ""monkey"": 5,
+        ""tiger"": 9,
+        ""penguin"": 4,
+        ""giraffe"": 6
+    }
+    return animal_data
+if __name__ == '__main__':
+    animal_favorites = create_animal_sentiment_store()
+    print(animal_favorites)",True,6,1119,19_7_6.py
+19,7,Track favorite animal names,"Design and implement an efficient data structure, such as a hash map or dictionary, to store favorite animal names along with a simple sentiment score (integer) for each animal.","def create_animal_sentiment_store():
+    animal_data = {
+        ""lion"": 8,
+        ""tiger"": 9,
+        ""elephant"": 7,
+        ""monkey"": 6,
+        ""penguin"": 5,
+        ""snake"": 3
+    }
+    return animal_data
+if __name__ == '__main__':
+    sentiment_store = create_animal_sentiment_store()
+    print(sentiment_store)",True,7,1120,19_7_7.py
+18,13,Group fruits by type,Write a concise and idiomatic Python snippet using the `itertools` module or standard library features to group an unsorted list of fruits into distinct categories based on predefined fruit types. Prioritize readability and best practices.,"from itertools import groupby
+fruits = [""apple"", ""banana"", ""cherry"", ""apricot"", ""grape"", ""orange"", ""mango""]
+fruit_types = {""apple"": ""pome"", ""banana"": ""berry"", ""cherry"": ""stone"", ""apricot"": ""stone"", ""grape"": ""berry"", ""orange"": ""citrus"", ""mango"": ""stone""}
+sorted_fruits = sorted(fruits)
+grouped_fruits = []
+for fruit_type, group in groupby(sorted_fruits, key=lambda fruit: fruit_types[fruit]):
+    grouped_fruits.append((fruit_type, list(group)))
+if __name__ == '__main__':
+    print(grouped_fruits)",True,0,1121,18_13.py
+19,9,Track favorite animal names,"Refactor the previous tracking logic into a single, highly efficient function that accepts an iterable of strings and returns a sorted list of unique favorite animal names.","def get_unique_sorted_favorites(animal_names):
+    unique_favorites = set(animal_names)
+    sorted_favorites = sorted(list(unique_favorites))
+    return sorted_favorites
+if __name__ == '__main__':
+    sample_data = [
+        ""dog"",
+        ""cat"",
+        ""dog"",
+        ""bird"",
+        ""cat"",
+        ""fish"",
+        ""dog"",
+        ""bird""
+    ]
+    result = get_unique_sorted_favorites(sample_data)
+    print(result)",True,0,1122,19_9.py
+19,9,Track favorite animal names,"Refactor the previous tracking logic into a single, highly efficient function that accepts an iterable of strings and returns a sorted list of unique favorite animal names.","def find_unique_favorites(animal_names):
+    unique_favorites = set(animal_names)
+    sorted_favorites = sorted(list(unique_favorites))
+    return sorted_favorites
+if __name__ == '__main__':
+    sample_data = [
+        ""dog"",
+        ""cat"",
+        ""dog"",
+        ""bird"",
+        ""cat"",
+        ""fish"",
+        ""dog"",
+        ""bird""
+    ]
+    result = find_unique_favorites(sample_data)
+    print(result)",True,1,1123,19_9_1.py
+19,9,Track favorite animal names,"Refactor the previous tracking logic into a single, highly efficient function that accepts an iterable of strings and returns a sorted list of unique favorite animal names.","def get_unique_sorted_favorites(animal_names):
+    unique_favorites = set(animal_names)
+    sorted_favorites = sorted(list(unique_favorites))
+    return sorted_favorites
+if __name__ == '__main__':
+    sample_data = [
+        ""cat"",
+        ""dog"",
+        ""cat"",
+        ""bird"",
+        ""dog"",
+        ""fish"",
+        ""cat"",
+        ""bird""
+    ]
+    result = get_unique_sorted_favorites(sample_data)
+    print(result)",True,2,1124,19_9_2.py
+19,9,Track favorite animal names,"Refactor the previous tracking logic into a single, highly efficient function that accepts an iterable of strings and returns a sorted list of unique favorite animal names.","def get_unique_sorted_favorites(animal_names):
+    unique_favorites = set(animal_names)
+    sorted_favorites = sorted(list(unique_favorites))
+    return sorted_favorites
+if __name__ == '__main__':
+    sample_data = [""dog"", ""cat"", ""dog"", ""bird"", ""cat"", ""fish"", ""dog""]
+    result = get_unique_sorted_favorites(sample_data)
+    print(result)",True,3,1125,19_9_3.py
