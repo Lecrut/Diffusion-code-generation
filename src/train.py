@@ -592,7 +592,7 @@ def main():
         max_code_len = 512
         batch_size = 4
         accumulation_steps = 8
-        num_workers = 0
+        num_workers = 3
         epochs = 1500 
         val_split = 0.05
         early_stopping_patience = 120 
