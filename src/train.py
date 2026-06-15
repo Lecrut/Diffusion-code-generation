@@ -202,18 +202,19 @@ class DiffCoderLightning(pl.LightningModule):
     def configure_optimizers(self):
         optimizer = torch.optim.AdamW(self.parameters(), lr=self.base_lr, weight_decay=0.01)
         
-        # Używamy CosineAnnealingWarmRestarts. 
-        # T_0 ustawiamy wysoko (np. 10000), żeby scheduler sam nie wywoływał restartów w losowych momentach.
-        # Będziemy nim sterować w pełni ręcznie i intencjonalnie przy zmianach etapów (stages).
+        steps_per_epoch = 312  # Dla 10k danych / 32 efektywnego batcha
         scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
-            optimizer, T_0=10000, T_mult=1, eta_min=1e-6
+            optimizer, 
+            T_0=steps_per_epoch * 5, 
+            T_mult=1, 
+            eta_min=1e-6
         )
         
         return {
             "optimizer": optimizer,
             "lr_scheduler": {
                 "scheduler": scheduler,
-                "interval": "epoch",
+                "interval": "step",
                 "frequency": 1
             }
         }
@@ -241,24 +242,29 @@ class DiffCoderLightning(pl.LightningModule):
 
 # --- CALLBACK DO PROGRAMU NAUCZANIA (SYNCHRONIZACJA STAGE + LR RESTART) ---
 
+import numpy as np
+
 class AdaptiveCurriculumCallback(Callback):
-    def __init__(self, min_delta=1e-4):
+    def __init__(self, min_delta=1e-4, plateau_patience=15):
         super().__init__()
         self.min_delta = min_delta
+        self.plateau_patience = plateau_patience # Ile epok bez poprawy oznacza plateau
+        
         self.best_val_loss = float('inf')
         self.patience_counter = 0
+        self.loss_history = [] # Przechowuje loss z ostatnich epok na danym etapie
         
-        # Twoje 9 perfekcyjnych etapów
+        # Zakresy maskowania dla etapów
         self.stages = {
-            1: {"bounds": (0.10, 0.25), "patience": 10},
-            2: {"bounds": (0.20, 0.35), "patience": 15},
-            3: {"bounds": (0.30, 0.45), "patience": 25},
-            4: {"bounds": (0.40, 0.55), "patience": 50},
-            5: {"bounds": (0.50, 0.65), "patience": 75},
-            6: {"bounds": (0.60, 0.75), "patience": 100},
-            7: {"bounds": (0.70, 0.85), "patience": 150},
-            8: {"bounds": (0.80, 0.95), "patience": 200},
-            9: {"bounds": (0.90, 1.00), "patience": 99999}
+            1: (0.10, 0.25),
+            2: (0.20, 0.35),
+            3: (0.30, 0.45),
+            4: (0.40, 0.55),
+            5: (0.50, 0.65),
+            6: (0.60, 0.75),
+            7: (0.70, 0.85),
+            8: (0.80, 0.95),
+            9: (0.90, 1.00)
         }
 
     def on_validation_epoch_end(self, trainer, pl_module):
@@ -277,7 +283,7 @@ class AdaptiveCurriculumCallback(Callback):
         if stage >= max(self.stages.keys()):
             return
 
-        required_patience = self.stages[stage]["patience"]
+        self.loss_history.append(current_val_loss)
 
         if current_val_loss < self.best_val_loss - self.min_delta:
             self.best_val_loss = current_val_loss
@@ -285,36 +291,51 @@ class AdaptiveCurriculumCallback(Callback):
         else:
             self.patience_counter += 1  
 
-        if self.patience_counter >= required_patience:
-            next_stage = stage + 1
-            pl_module.current_stage = next_stage
-            pl_module.current_lower_bound = self.stages[next_stage]["bounds"][0]
-            pl_module.current_upper_bound = self.stages[next_stage]["bounds"][1]
+        # Jeśli przez `plateau_patience` epok strata nie spadła, sprawdzamy czy wykres się wypłaszczył
+        if self.patience_counter >= self.plateau_patience:
+            # Bierzemy pod uwagę historię z ostatnich N epok na tym etapie
+            recent_losses = self.loss_history[-self.plateau_patience:]
             
-            print(f"\n>>> [CURRICULUM] Strata wypłaszczona na etapie {stage}. Przełączam na STAGE {next_stage}! <<<")
-            print(f">>> Nowy zakres maskowania tokenów: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<")
+            # Obliczamy zmienność (odchylenie standardowe) w tym oknie czasowym
+            loss_stability = np.std(recent_losses)
             
-            # --- POPRAWKA: Wymuszenie restartu Cosine Annealing (Warm Restart) ---
-            # Resetujemy licznik kroków wewnętrznych schedulera, co gwałtownie podbija LR do wartości początkowej
-            for lr_scheduler_config in trainer.lr_scheduler_configs:
-                sch = lr_scheduler_config.scheduler
-                if isinstance(sch, torch.optim.lr_scheduler.CosineAnnealingWarmRestarts):
-                    sch.T_cur = 0  # Zerujemy czas bieżącego cyklu, prowokując natychmiastowy restart energii LR
-                    print(">>> [SCHEDULER] Wykonano Cosine Warm Restart! Podbito Learning Rate dla nowego etapu. <<<\n")
-            
-            # Reset licznika Early Stopping, chroniący proces przed wzrostem straty wywołanym nowym etapem
-            for callback in trainer.callbacks:
-                if isinstance(callback, EarlyStopping):
-                    callback.wait_count = 0
-                    callback.best_score = torch.tensor(float('inf'))
-            
-            gc.collect()                  
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()    
-                print(">>> [VM CLEANUP] Pamięć RAM i cache VRAM zostały pomyślnie wyczyszczone. <<<")
-                    
-            self.best_val_loss = float('inf')
-            self.patience_counter = 0
+            # Jeśli odchylenie standardowe jest bardzo małe (np. < 0.005), 
+            # oznacza to, że model nie "skacze" chaotycznie, tylko realnie utknął na płaskowyżu (plateau)
+            if loss_stability < 0.005: 
+                next_stage = stage + 1
+                pl_module.current_stage = next_stage
+                pl_module.current_lower_bound = self.stages[next_stage][0]
+                pl_module.current_upper_bound = self.stages[next_stage][1]
+                
+                print(f"\n>>> [CURRICULUM] Model w pełni nasycił wiedzę na etapie {stage} (Plateau std: {loss_stability:.5f}).")
+                print(f">>> Awansuję automatycznie do STAGE {next_stage}! Nowe maskowanie: {pl_module.current_lower_bound*100:.1f}% - {pl_module.current_upper_bound*100:.1f}% <<<\n")
+                
+                # Resetujemy metryki i historię pod nowy etap
+                self.best_val_loss = float('inf')
+                self.patience_counter = 0
+                self.loss_history = []
+                
+                # Łagodny reset LR i czyszczenie pamięci
+                for lr_scheduler_config in trainer.lr_scheduler_configs:
+                    sch = lr_scheduler_config.scheduler
+                    if isinstance(sch, torch.optim.lr_scheduler.CosineAnnealingWarmRestarts):
+                        sch.T_cur = 0  
+                        for param_group in trainer.optimizers[0].param_groups:
+                            param_group['lr'] = param_group['lr'] * 0.9
+                
+                for callback in trainer.callbacks:
+                    if isinstance(callback, EarlyStopping):
+                        callback.wait_count = 0
+                        callback.best_score = torch.tensor(float('inf'))
+                        
+                gc.collect()
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+            else:
+                # Jeśli strata nie spada, ale zmienność jest wciąż duża (wykres skacze, model walczy),
+                # dajemy mu jeszcze czas i nie awansujemy go na siłę.
+                print(f"[CURRICULUM INFO] Model na etapie {stage} nie poprawia minimum, ale wciąż dynamicznie się chwieje (std: {loss_stability:.5f}). Kontynuuję naukę...")
+
 
     def state_dict(self):
         return {
