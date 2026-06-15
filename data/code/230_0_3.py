@@ -1,0 +1,6 @@
+def process_strings(string_list):
+    for s in string_list:
+        print(s.upper())
+if __name__ == '__main__':
+    data = ["hello", "world", "python", "script"]
+    process_strings(data)

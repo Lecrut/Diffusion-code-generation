@@ -16,7 +16,7 @@ spec = importlib.util.spec_from_file_location("autoCommit", autoCommit_path)
 autoCommit = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(autoCommit)
 
-NUM_TOPICS = 250
+NUM_TOPICS = 500
 INSTR_PER_TOPIC = 15
 VARIANTS_PER_INSTR = 20
 ATTEMPTS_PER_INSTR = 200

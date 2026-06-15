@@ -1,0 +1,13 @@
+def find_minimum(data):
+    if not data:
+        raise ValueError("Input list cannot be empty")
+    minimum = data[0]
+    for element in data[1:]:
+        if element < minimum:
+            minimum = element
+    return minimum
+if __name__ == '__main__':
+    sample_list = [3, 1, 4, 1, 5, 9, 2]
+    minimum_value = find_minimum(sample_list)
+    print(f"The list is: {sample_list}")
+    print(f"The minimum element is: {minimum_value}")

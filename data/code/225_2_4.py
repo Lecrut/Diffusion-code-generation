@@ -1,0 +1,23 @@
+class MinMaxFinder:
+    def calculate_range(self, numbers):
+        if not numbers:
+            return None, None, None
+        minimum = min(numbers)
+        maximum = max(numbers)
+        range_value = maximum - minimum
+        return minimum, maximum, range_value
+if __name__ == '__main__':
+    finder = MinMaxFinder()
+    sample_data = [3.14, 1.0, 9.8, 5.5, 2.71]
+    min_val, max_val, diff = finder.calculate_range(sample_data)
+    print(f"Minimum: {min_val}")
+    print(f"Maximum: {max_val}")
+    print(f"Range (Max - Min): {diff}")
+    sample_data_2 = [100.5, 50.2, 200.0]
+    min_val_2, max_val_2, diff_2 = finder.calculate_range(sample_data_2)
+    print(f"Minimum: {min_val_2}")
+    print(f"Maximum: {max_val_2}")
+    print(f"Range (Max - Min): {diff_2}")
+    empty_data = []
+    min_val_3, max_val_3, diff_3 = finder.calculate_range(empty_data)
+    print(f"Empty List Result: Minimum={min_val_3}, Maximum={max_val_3}, Range={diff_3}")

@@ -1,0 +1,18 @@
+import itertools
+def calculate_average_of_sets(list_of_sets):
+    all_elements = set()
+    for s in list_of_sets:
+        all_elements.update(s)
+    if not all_elements:
+        return 0.0
+    total_sum = sum(all_elements)
+    count = len(all_elements)
+    return total_sum / count
+if __name__ == '__main__':
+    sample_sets = [
+        {1, 2, 3},
+        {3, 4, 5},
+        {5, 6}
+    ]
+    average = calculate_average_of_sets(sample_sets)
+    print(average)
