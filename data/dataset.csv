@@ -339006,3 +339006,2517 @@ if __name__ == '__main__':
     generator = char_type_generator(test_string)
     results = list(generator)
     print(results)",True,4,16974,271_3_4.py
+271,5,Analyze text character types,"Implement a method within the `CharacterAnalyzer` class to filter the input string, separating all alphabetic characters into one list and all numeric characters into another, ensuring immutability where appropriate.","class CharacterAnalyzer:
+    def filter_characters(self, input_string):
+        alphabetic_chars = []
+        numeric_chars = []
+        for char in input_string:
+            if char.isalpha():
+                alphabetic_chars.append(char)
+            elif char.isdigit():
+                numeric_chars.append(char)
+        return alphabetic_chars, numeric_chars
+if __name__ == '__main__':
+    analyzer = CharacterAnalyzer()
+    sample_string = ""a1b2c3d4e5f""
+    alphabets, numbers = analyzer.filter_characters(sample_string)
+    print(f""Input String: {sample_string}"")
+    print(f""Alphabetic Characters: {alphabets}"")
+    print(f""Numeric Characters: {numbers}"")",True,0,16975,271_5.py
+271,5,Analyze text character types,"Implement a method within the `CharacterAnalyzer` class to filter the input string, separating all alphabetic characters into one list and all numeric characters into another, ensuring immutability where appropriate.","class CharacterAnalyzer:
+    def filter_characters(self, input_string):
+        alphabetic_chars = []
+        numeric_chars = []
+        for char in input_string:
+            if char.isalpha():
+                alphabetic_chars.append(char)
+            elif char.isdigit():
+                numeric_chars.append(char)
+        return alphabetic_chars, numeric_chars
+if __name__ == '__main__':
+    analyzer = CharacterAnalyzer()
+    sample_string = ""abc123def456""
+    alphabets, numbers = analyzer.filter_characters(sample_string)
+    print(f""Input String: {sample_string}"")
+    print(f""Alphabetic Characters: {alphabets}"")
+    print(f""Numeric Characters: {numbers}"")",True,1,16976,271_5_1.py
+271,5,Analyze text character types,"Implement a method within the `CharacterAnalyzer` class to filter the input string, separating all alphabetic characters into one list and all numeric characters into another, ensuring immutability where appropriate.","class CharacterAnalyzer:
+    def filter_characters(self, input_string):
+        alpha_chars = []
+        numeric_chars = []
+        for char in input_string:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                alpha_chars.append(char)
+            elif '0' <= char <= '9':
+                numeric_chars.append(char)
+        return alpha_chars, numeric_chars
+if __name__ == '__main__':
+    analyzer = CharacterAnalyzer()
+    sample_string = ""Hello123World!""
+    alpha_list, numeric_list = analyzer.filter_characters(sample_string)
+    print(""Alphabetic characters:"", alpha_list)
+    print(""Numeric characters:"", numeric_list)",True,2,16977,271_5_2.py
+271,5,Analyze text character types,"Implement a method within the `CharacterAnalyzer` class to filter the input string, separating all alphabetic characters into one list and all numeric characters into another, ensuring immutability where appropriate.","class CharacterAnalyzer:
+    def analyze_string(self, input_string):
+        alphabetic_chars = []
+        numeric_chars = []
+        for char in input_string:
+            if char.isalpha():
+                alphabetic_chars.append(char)
+            elif char.isdigit():
+                numeric_chars.append(char)
+        return alphabetic_chars, numeric_chars
+if __name__ == '__main__':
+    analyzer = CharacterAnalyzer()
+    sample_string = ""abc123def456""
+    alphabets, numbers = analyzer.analyze_string(sample_string)
+    print(f""Input String: {sample_string}"")
+    print(f""Alphabetic Characters: {alphabets}"")
+    print(f""Numeric Characters: {numbers}"")",True,3,16978,271_5_3.py
+271,7,Analyze text character types,"Write a unit test suite using `unittest` for the previously developed character analysis logic, covering edge cases like empty strings, strings with only numbers, and strings containing complex Unicode characters.","import unittest
+def analyze_string(text):
+    if not text:
+        return {""length"": 0, ""alphabetic_count"": 0, ""numeric_count"": 0, ""unicode_count"": 0}
+    alphabetic_count = 0
+    numeric_count = 0
+    unicode_count = 0
+    for char in text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            alphabetic_count += 1
+        elif '0' <= char <= '9':
+            numeric_count += 1
+        else:
+            unicode_count += 1
+    return {
+        ""length"": len(text),
+        ""alphabetic_count"": alphabetic_count,
+        ""numeric_count"": numeric_count,
+        ""unicode_count"": unicode_count
+    }
+class TestCharacterAnalysis(unittest.TestCase):
+    def test_empty_string(self):
+        input_str = """"
+        expected = {""length"": 0, ""alphabetic_count"": 0, ""numeric_count"": 0, ""unicode_count"": 0}
+        self.assertEqual(analyze_string(input_str), expected)
+    def test_only_numbers(self):
+        input_str = ""12345""
+        expected = {""length"": 5, ""alphabetic_count"": 0, ""numeric_count"": 5, ""unicode_count"": 0}
+        self.assertEqual(analyze_string(input_str), expected)
+    def test_only_letters(self):
+        input_str = ""HelloWorld""
+        expected = {""length"": 10, ""alphabetic_count"": 10, ""numeric_count"": 0, ""unicode_count"": 0}
+        self.assertEqual(analyze_string(input_str), expected)
+    def test_mixed_string(self):
+        input_str = ""Test123ABC""
+        expected = {""length"": 10, ""alphabetic_count"": 6, ""numeric_count"": 3, ""unicode_count"": 1}
+        self.assertEqual(analyze_string(input_str), expected)
+    def test_complex_unicode(self):
+        input_str = ""Hello🌍World!😊""
+        expected = {""length"": 16, ""alphabetic_count"": 10, ""numeric_count"": 0, ""unicode_count"": 6}
+        self.assertEqual(analyze_string(input_str), expected)
+    def test_only_unicode(self):
+        input_str = ""!@#$%^&*() ""
+        expected = {""length"": 10, ""alphabetic_count"": 0, ""numeric_count"": 0, ""unicode_count"": 10}
+        self.assertEqual(analyze_string(input_str), expected)
+    def test_empty_unicode_only(self):
+        input_str = """"
+        expected = {""length"": 0, ""alphabetic_count"": 0, ""numeric_count"": 0, ""unicode_count"": 0}
+        self.assertEqual(analyze_string(input_str), expected)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,16979,271_7.py
+271,7,Analyze text character types,"Write a unit test suite using `unittest` for the previously developed character analysis logic, covering edge cases like empty strings, strings with only numbers, and strings containing complex Unicode characters.","import unittest
+class CharacterAnalyzer:
+    def analyze(self, text):
+        if not text:
+            return {""length"": 0, ""alphabets"": 0, ""numbers"": 0, ""symbols"": 0}
+        alphabets = 0
+        numbers = 0
+        symbols = 0
+        for char in text:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                alphabets += 1
+            elif '0' <= char <= '9':
+                numbers += 1
+            else:
+                symbols += 1
+        return {""length"": len(text), ""alphabets"": alphabets, ""numbers"": numbers, ""symbols"": symbols}
+class TestCharacterAnalyzer(unittest.TestCase):
+    def setUp(self):
+        self.analyzer = CharacterAnalyzer()
+    def test_empty_string(self):
+        text = """"
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 0)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_numbers(self):
+        text = ""12345""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 5)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 5)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_alphabets(self):
+        text = ""HelloWorld""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 10)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_mixed_string(self):
+        text = ""a1b2c3""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 6)
+        self.assertEqual(result[""alphabets""], 3)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 0)
+    def test_string_with_spaces_and_punctuation(self):
+        text = ""Hello World! 123""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 16)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 3)
+    def test_string_with_unicode(self):
+        text = ""Hello😊World🚀123""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 17)
+        self.assertEqual(result[""alphabets""], 5)                      
+        self.assertEqual(result[""numbers""], 3)            
+        self.assertEqual(result[""symbols""], 9)                        
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,16980,271_7_1.py
+271,7,Analyze text character types,"Write a unit test suite using `unittest` for the previously developed character analysis logic, covering edge cases like empty strings, strings with only numbers, and strings containing complex Unicode characters.","import unittest
+class CharacterAnalyzer:
+    def analyze(self, text):
+        if not text:
+            return {""length"": 0, ""alphabets"": 0, ""numbers"": 0, ""symbols"": 0}
+        alphabets = 0
+        numbers = 0
+        symbols = 0
+        for char in text:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                alphabets += 1
+            elif '0' <= char <= '9':
+                numbers += 1
+            else:
+                symbols += 1
+        return {""length"": len(text), ""alphabets"": alphabets, ""numbers"": numbers, ""symbols"": symbols}
+class TestCharacterAnalyzer(unittest.TestCase):
+    def setUp(self):
+        self.analyzer = CharacterAnalyzer()
+    def test_standard_string(self):
+        text = ""Hello World123!""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 14)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 1)
+    def test_empty_string(self):
+        text = """"
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 0)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_numbers(self):
+        text = ""1234567890""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 10)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 10)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_alphabets(self):
+        text = ""abcdefghijklmnopqrstuvwxyz""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 26)
+        self.assertEqual(result[""alphabets""], 26)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_mixed_string(self):
+        text = ""a1b2c3d4""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 8)
+        self.assertEqual(result[""alphabets""], 4)
+        self.assertEqual(result[""numbers""], 4)
+        self.assertEqual(result[""symbols""], 0)
+    def test_string_with_unicode(self):
+        text = ""Résumé €ñ🚀""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 8)
+        self.assertEqual(result[""alphabets""], 4)                                                                      
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 4)             
+    def test_string_with_only_symbols(self):
+        text = ""!@#$%^&*()""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 10)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 10)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,16981,271_7_2.py
+271,7,Analyze text character types,"Write a unit test suite using `unittest` for the previously developed character analysis logic, covering edge cases like empty strings, strings with only numbers, and strings containing complex Unicode characters.","import unittest
+class CharacterAnalyzer:
+    def analyze(self, text):
+        if not text:
+            return {""length"": 0, ""alphabets"": 0, ""numbers"": 0, ""symbols"": 0}
+        alphabets = 0
+        numbers = 0
+        symbols = 0
+        for char in text:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                alphabets += 1
+            elif '0' <= char <= '9':
+                numbers += 1
+            else:
+                symbols += 1
+        return {""length"": len(text), ""alphabets"": alphabets, ""numbers"": numbers, ""symbols"": symbols}
+class TestCharacterAnalyzer(unittest.TestCase):
+    def setUp(self):
+        self.analyzer = CharacterAnalyzer()
+    def test_empty_string(self):
+        text = """"
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 0)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_numbers(self):
+        text = ""12345""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 5)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 5)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_alphabets(self):
+        text = ""HelloWorld""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 10)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_mixed_string(self):
+        text = ""Test123!""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 8)
+        self.assertEqual(result[""alphabets""], 4)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 1)
+    def test_string_with_unicode(self):
+        text = ""Hello世界123€""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 13)
+        self.assertEqual(result[""alphabets""], 5)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 5)
+    def test_complex_unicode_only(self):
+        text = ""🚀✨😊""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 3)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 3)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,16982,271_7_3.py
+271,7,Analyze text character types,"Write a unit test suite using `unittest` for the previously developed character analysis logic, covering edge cases like empty strings, strings with only numbers, and strings containing complex Unicode characters.","import unittest
+class CharacterAnalyzer:
+    def analyze(self, text):
+        if not text:
+            return {""length"": 0, ""alphabets"": 0, ""numbers"": 0, ""symbols"": 0}
+        alphabets = 0
+        numbers = 0
+        symbols = 0
+        for char in text:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                alphabets += 1
+            elif '0' <= char <= '9':
+                numbers += 1
+            else:
+                symbols += 1
+        return {""length"": len(text), ""alphabets"": alphabets, ""numbers"": numbers, ""symbols"": symbols}
+class TestCharacterAnalyzer(unittest.TestCase):
+    def setUp(self):
+        self.analyzer = CharacterAnalyzer()
+    def test_empty_string(self):
+        text = """"
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 0)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_numbers(self):
+        text = ""12345""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 5)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 5)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_alphabets(self):
+        text = ""HelloWorld""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 10)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_mixed_string(self):
+        text = ""a1b2c3""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 6)
+        self.assertEqual(result[""alphabets""], 3)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 0)
+    def test_string_with_symbols(self):
+        text = ""a!b@c#d""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 7)
+        self.assertEqual(result[""alphabets""], 4)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 3)
+    def test_string_with_unicode(self):
+        text = ""Hello😊World🚀""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 14)
+        self.assertEqual(result[""alphabets""], 5)                                                                             
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 9)                                                                                       
+    def test_complex_unicode_only(self):
+        text = ""😀🚀✨""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 3)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 3)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,16983,271_7_4.py
+271,7,Analyze text character types,"Write a unit test suite using `unittest` for the previously developed character analysis logic, covering edge cases like empty strings, strings with only numbers, and strings containing complex Unicode characters.","import unittest
+class CharacterAnalyzer:
+    def analyze(self, text):
+        if not text:
+            return {""length"": 0, ""alphabets"": 0, ""numbers"": 0, ""symbols"": 0}
+        alphabets = 0
+        numbers = 0
+        symbols = 0
+        for char in text:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                alphabets += 1
+            elif '0' <= char <= '9':
+                numbers += 1
+            else:
+                symbols += 1
+        return {""length"": len(text), ""alphabets"": alphabets, ""numbers"": numbers, ""symbols"": symbols}
+class TestCharacterAnalyzer(unittest.TestCase):
+    def setUp(self):
+        self.analyzer = CharacterAnalyzer()
+    def test_empty_string(self):
+        text = """"
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 0)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_numbers(self):
+        text = ""12345""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 5)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 5)
+        self.assertEqual(result[""symbols""], 0)
+    def test_only_alphabets(self):
+        text = ""HelloWorld""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 10)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 0)
+    def test_mixed_string(self):
+        text = ""a1b2c3""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 6)
+        self.assertEqual(result[""alphabets""], 3)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 0)
+    def test_string_with_spaces_and_symbols(self):
+        text = ""Hello World! 123""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 16)
+        self.assertEqual(result[""alphabets""], 10)
+        self.assertEqual(result[""numbers""], 3)
+        self.assertEqual(result[""symbols""], 3)
+    def test_string_with_unicode(self):
+        text = ""Hello😊World🚀""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 14)
+        self.assertEqual(result[""alphabets""], 5)                                                                                            
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 4)                                                                                              
+    def test_complex_unicode_only(self):
+        text = ""😀😂🚀""
+        result = self.analyzer.analyze(text)
+        self.assertEqual(result[""length""], 3)
+        self.assertEqual(result[""alphabets""], 0)
+        self.assertEqual(result[""numbers""], 0)
+        self.assertEqual(result[""symbols""], 3)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,16984,271_7_5.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    lowercase_count = 0
+    uppercase_count = 0
+    digit_count = 0
+    symbol_count = 0
+    alphabetic_count = 0
+    whitespace_count = 0
+    for char in raw_text:
+        if 'a' <= char <= 'z':
+            lowercase_count += 1
+            alphabetic_count += 1
+        elif 'A' <= char <= 'Z':
+            uppercase_count += 1
+            alphabetic_count += 1
+        elif '0' <= char <= '9':
+            digit_count += 1
+        elif char.isspace():
+            whitespace_count += 1
+        elif re.match(r'[A-Za-z]', char) or re.match(r'[^A-Za-z0-9\s]', char):
+            symbol_count += 1
+            alphabetic_count += 1
+    total_characters = len(raw_text)
+    result = {
+        ""total_characters"": total_characters,
+        ""lowercase_count"": lowercase_count,
+        ""uppercase_count"": uppercase_count,
+        ""digit_count"": digit_count,
+        ""symbol_count"": symbol_count,
+        ""alphabetic_count"": alphabetic_count,
+        ""whitespace_count"": whitespace_count,
+    }
+    return result
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 Python is fun.""
+    print(f""Raw Input: {sample_text}"")
+    processed_data = classify_text_characters(sample_text)
+    print(""Processed Result:"")
+    for key, value in processed_data.items():
+        print(f""{key}: {value}"")",True,0,16985,271_8.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    digits = ""0123456789""
+    punctuation = ""!\""#$%&'()*+,-./:;<=>?@[\\]^_`{|}~""
+    vowel_count = 0
+    consonant_count = 0
+    digit_count = 0
+    punctuation_count = 0
+    other_count = 0
+    for char in raw_text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            if char in vowels:
+                vowel_count += 1
+            elif char in consonants:
+                consonant_count += 1
+            else:
+                other_count += 1
+        elif '0' <= char <= '9':
+            digit_count += 1
+        elif char in punctuation:
+            punctuation_count += 1
+        else:
+            other_count += 1
+    total_characters = len(raw_text)
+    result = {
+        ""input_text"": raw_text,
+        ""total_characters"": total_characters,
+        ""vowel_count"": vowel_count,
+        ""consonant_count"": consonant_count,
+        ""digit_count"": digit_count,
+        ""punctuation_count"": punctuation_count,
+        ""other_count"": other_count,
+    }
+    return result
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 abc""
+    processed_data = classify_text_characters(sample_text)
+    print(processed_data)",True,1,16986,271_8_1.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    other_letters = """".join(c for c in raw_text if c.isalpha() and c not in vowels and c not in consonants)
+    digits = """".join(c for c in raw_text if c.isdigit())
+    symbols = """".join(c for c in raw_text if not c.isalnum())
+    char_counts = {
+        ""vowels"": 0,
+        ""consonants"": 0,
+        ""digits"": 0,
+        ""other_letters"": 0,
+        ""symbols"": 0,
+        ""total_alphanumeric"": 0
+    }
+    for char in raw_text:
+        if char in vowels:
+            char_counts[""vowels""] += 1
+        elif char in consonants:
+            char_counts[""consonants""] += 1
+        elif char.isdigit():
+            char_counts[""digits""] += 1
+        elif char.isalpha():
+            char_counts[""other_letters""] += 1
+            char_counts[""total_alphanumeric""] += 1
+        else:
+            char_counts[""symbols""] += 1
+    char_counts[""total_alphanumeric""] = char_counts[""vowels""] + char_counts[""consonants""] + char_counts[""digits""] + char_counts[""other_letters""]
+    return char_counts
+if __name__ == '__main__':
+    sample_text = ""Hello World 123! This is a test sentence.""
+    result = classify_text_characters(sample_text)
+    print(result)",True,2,16987,271_8_2.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    digits = ""0123456789""
+    punctuation = ""!\""#$%&'()*+,-./:;<=>?@[\\]^_`{|}~""
+    vowel_count = 0
+    consonant_count = 0
+    digit_count = 0
+    punctuation_count = 0
+    other_count = 0
+    for char in raw_text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            if char in vowels:
+                vowel_count += 1
+            elif char in consonants:
+                consonant_count += 1
+            else:
+                other_count += 1
+        elif '0' <= char <= '9':
+            digit_count += 1
+        elif char in punctuation:
+            punctuation_count += 1
+        else:
+            other_count += 1
+    total_characters = len(raw_text)
+    result = {
+        ""total_characters"": total_characters,
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count,
+        ""other_characters"": other_count,
+    }
+    return result
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 abc""
+    print(classify_text_characters(sample_text))",True,3,16988,271_8_3.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_chars(raw_text: str) -> dict:
+    char_counts = {}
+    for char in raw_text:
+        if 'a' <= char <= 'z':
+            char_type = 'lowercase'
+        elif 'A' <= char <= 'Z':
+            char_type = 'uppercase'
+        elif '0' <= char <= '9':
+            char_type = 'digit'
+        elif ' ' == char:
+            char_type = 'space'
+        else:
+            char_type = 'other'
+        if char_type not in char_counts:
+            char_counts[char_type] = 0
+        char_counts[char_type] += 1
+    return char_counts
+if __name__ == '__main__':
+    sample_text = ""Hello World 123! This is a test.""
+    print(f""Raw Input: {sample_text}"")
+    structured_result = classify_text_chars(sample_text)
+    import json
+    print(""\nStructured Output:"")
+    print(json.dumps(structured_result, indent=4))",True,4,16989,271_8_4.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    other_letters = """".join(c for c in raw_text if c.isalpha() and c not in vowels and c not in consonants)
+    digits = """".join(c for c in raw_text if c.isdigit())
+    symbols = """".join(c for c in raw_text if not c.isalnum())
+    char_counts = {
+        ""vowels"": 0,
+        ""consonants"": 0,
+        ""digits"": 0,
+        ""symbols"": 0,
+        ""other_letters"": 0
+    }
+    for char in raw_text:
+        if char in vowels:
+            char_counts[""vowels""] += 1
+        elif char in consonants:
+            char_counts[""consonants""] += 1
+        elif char.isdigit():
+            char_counts[""digits""] += 1
+        elif not char.isalnum():
+            char_counts[""symbols""] += 1
+        elif char.isalpha():
+            char_counts[""other_letters""] += 1
+    return char_counts
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 abc@xyz""
+    result = classify_text_characters(sample_text)
+    print(result)",True,5,16990,271_8_5.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    digits = ""0123456789""
+    punctuation = ""!\""#$%&'()*+,-./:;<=>?@[\\]^_`{|}~""
+    vowel_count = 0
+    consonant_count = 0
+    digit_count = 0
+    punctuation_count = 0
+    other_count = 0
+    for char in raw_text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            if char in vowels:
+                vowel_count += 1
+            elif char in consonants:
+                consonant_count += 1
+            else:
+                other_count += 1
+        elif '0' <= char <= '9':
+            digit_count += 1
+        elif char in punctuation:
+            punctuation_count += 1
+        else:
+            other_count += 1
+    total_characters = len(raw_text)
+    result = {
+        ""total_characters"": total_characters,
+        ""vowel_count"": vowel_count,
+        ""consonant_count"": consonant_count,
+        ""digit_count"": digit_count,
+        ""punctuation_count"": punctuation_count,
+        ""other_count"": other_count,
+    }
+    return result
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 abc""
+    print(classify_text_characters(sample_text))",True,6,16991,271_8_6.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    digits = ""0123456789""
+    punctuation = ""!\""#$%&'()*+,-./:;<=>?@[\\]^_`{|}~""
+    vowel_count = 0
+    consonant_count = 0
+    digit_count = 0
+    punctuation_count = 0
+    other_count = 0
+    for char in raw_text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            if char in vowels:
+                vowel_count += 1
+            elif char in consonants:
+                consonant_count += 1
+            else:
+                other_count += 1
+        elif '0' <= char <= '9':
+            digit_count += 1
+        elif char in punctuation:
+            punctuation_count += 1
+        else:
+            other_count += 1
+    total_alphabetic = vowel_count + consonant_count
+    total_numeric = digit_count
+    total_symbolic = punctuation_count
+    total_other = other_count
+    result = {
+        ""input_text"": raw_text,
+        ""vowel_count"": vowel_count,
+        ""consonant_count"": consonant_count,
+        ""digit_count"": digit_count,
+        ""punctuation_count"": punctuation_count,
+        ""other_character_count"": other_count,
+        ""summary"": {
+            ""alphabetic_total"": total_alphabetic,
+            ""numeric_total"": total_numeric,
+            ""symbolic_total"": total_symbolic,
+            ""other_total"": total_other
+        }
+    }
+    return result
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 abc""
+    processed_data = classify_text_characters(sample_text)
+    print(processed_data)",True,7,16992,271_8_7.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+def classify_text_characters(raw_text: str) -> dict:
+    vowels = ""aeiouAEIOU""
+    consonants = ""bcdfghJKLMNLPQRSTWHYZ""
+    other_letters = """".join(c for c in raw_text if c.isalpha() and c not in vowels and c not in consonants)
+    digits = """".join(c for c in raw_text if c.isdigit())
+    symbols = """".join(c for c in raw_text if not c.isalnum())
+    vowel_count = sum(1 for char in raw_text if char in vowels)
+    consonant_count = sum(1 for char in raw_text if char in consonants)
+    digit_count = len(digits)
+    symbol_count = len(symbols)
+    letter_count = sum(1 for char in raw_text if char.isalpha())
+    result = {
+        ""raw_text"": raw_text,
+        ""vowel_count"": vowel_count,
+        ""consonant_count"": consonant_count,
+        ""digit_count"": digit_count,
+        ""symbol_count"": symbol_count,
+        ""letter_count"": letter_count,
+        ""other_letters_count"": len(other_letters),
+    }
+    return result
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 abc@xyz""
+    processed_data = classify_text_characters(sample_text)
+    print(processed_data)",True,8,16993,271_8_8.py
+271,8,Analyze text character types,"Develop a pipeline function that takes raw text as input, processes it through the character type classification, and outputs a structured result suitable for further data processing, emphasizing readability and best practices.","import re
+from collections import defaultdict
+def classify_text_characters(raw_text: str) -> dict:
+    character_counts = defaultdict(int)
+    for char in raw_text:
+        if 'a' <= char <= 'z':
+            character_counts[char] += 1
+        elif 'A' <= char <= 'Z':
+            character_counts[char.lower()] += 1
+        elif '0' <= char <= '9':
+            character_counts[char] += 1
+        elif char.isspace():
+            character_counts[' '] += 1
+        else:
+            character_counts['other'] += 1
+    return dict(character_counts)
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123, this is a test sentence.""
+    print(f""Raw Input: {sample_text}\n"")
+    structured_result = classify_text_characters(sample_text)
+    import json
+    print(""Structured Output:"")
+    print(json.dumps(structured_result, indent=4))",True,9,16994,271_8_9.py
+271,9,Analyze text character types,"Refactor the initial script to use a single, highly efficient dictionary comprehension approach to achieve the final character count categorization without explicit loops where possible.","def categorize_characters(text):
+    char_counts = {}
+    for char in text:
+        if char.isalpha():
+            char_counts[char] = char_counts.get(char, 0) + 1
+    return char_counts
+if __name__ == '__main__':
+    sample_text = ""Hello World! This is a test.""
+    result = categorize_characters(sample_text)
+    print(result)",True,0,16995,271_9.py
+271,9,Analyze text character types,"Refactor the initial script to use a single, highly efficient dictionary comprehension approach to achieve the final character count categorization without explicit loops where possible.","def categorize_characters(text):
+    char_counts = {}
+    for char in text:
+        if char.isalpha():
+            char_counts[char] = char_counts.get(char, 0) + 1
+    return char_counts
+if __name__ == '__main__':
+    sample_text = ""Hello World! This is a test string.""
+    result = categorize_characters(sample_text)
+    print(result)",True,1,16996,271_9_1.py
+271,10,Analyze text character types,"Write a complete, well-documented Python script to analyze a given string and classify its constituent characters into categories such as alphabetic, numeric, punctuation, whitespace, and special symbols. Implement the logic using efficient string methods and conditional statements.","import string
+def classify_string(input_string):
+    categories = {
+        ""alphabetic"": 0,
+        ""numeric"": 0,
+        ""punctuation"": 0,
+        ""whitespace"": 0,
+        ""special_symbols"": 0
+    }
+    for char in input_string:
+        if char.isalpha():
+            categories[""alphabetic""] += 1
+        elif char.isdigit():
+            categories[""numeric""] += 1
+        elif char in string.punctuation:
+            categories[""punctuation""] += 1
+        elif char.isspace():
+            categories[""whitespace""] += 1
+        else:
+            categories[""special_symbols""] += 1
+    return categories
+if __name__ == '__main__':
+    sample_string = ""Hello World! 123$$""
+    results = classify_string(sample_string)
+    print(results)",True,0,16997,271_10.py
+271,10,Analyze text character types,"Write a complete, well-documented Python script to analyze a given string and classify its constituent characters into categories such as alphabetic, numeric, punctuation, whitespace, and special symbols. Implement the logic using efficient string methods and conditional statements.","import string
+def classify_string(input_string):
+    categories = {
+        ""alphabetic"": 0,
+        ""numeric"": 0,
+        ""punctuation"": 0,
+        ""whitespace"": 0,
+        ""special_symbols"": 0
+    }
+    for char in input_string:
+        if char.isalpha():
+            categories[""alphabetic""] += 1
+        elif char.isdigit():
+            categories[""numeric""] += 1
+        elif char in string.punctuation:
+            categories[""punctuation""] += 1
+        elif char.isspace():
+            categories[""whitespace""] += 1
+        else:
+            categories[""special_symbols""] += 1
+    return categories
+if __name__ == '__main__':
+    sample_string = ""Hello World! 123$$""
+    result = classify_string(sample_string)
+    print(result)",True,1,16998,271_10_1.py
+271,10,Analyze text character types,"Write a complete, well-documented Python script to analyze a given string and classify its constituent characters into categories such as alphabetic, numeric, punctuation, whitespace, and special symbols. Implement the logic using efficient string methods and conditional statements.","import string
+def classify_string(text):
+    alphabetic_count = 0
+    numeric_count = 0
+    punctuation_count = 0
+    whitespace_count = 0
+    special_symbol_count = 0
+    for char in text:
+        if char.isalpha():
+            alphabetic_count += 1
+        elif char.isdigit():
+            numeric_count += 1
+        elif char in string.punctuation:
+            punctuation_count += 1
+        elif char.isspace():
+            whitespace_count += 1
+        else:
+            special_symbol_count += 1
+    return {
+        ""alphabetic"": alphabetic_count,
+        ""numeric"": numeric_count,
+        ""punctuation"": punctuation_count,
+        ""whitespace"": whitespace_count,
+        ""special_symbols"": special_symbol_count
+    }
+if __name__ == '__main__':
+    sample_string = ""Hello World! 123, this is a test-string.""
+    result = classify_string(sample_string)
+    print(result)",True,2,16999,271_10_2.py
+271,11,Analyze text character types,Implement an optimized class named 'CharacterAnalyzer' with a method to take any input string and return a dictionary containing the counts for each character type identified in the previous task. Ensure the implementation is highly efficient (O(n) time complexity).,"class CharacterAnalyzer:
+    def analyze(self, text):
+        counts = {}
+        for char in text:
+            if char in counts:
+                counts[char] += 1
+            else:
+                counts[char] = 1
+        return counts
+if __name__ == '__main__':
+    analyzer = CharacterAnalyzer()
+    sample_string = ""hello world""
+    result = analyzer.analyze(sample_string)
+    print(result)",True,0,17000,271_11.py
+271,12,Analyze text character types,"Develop a function named 'character_type_classifier' that accepts a single character as input and returns its corresponding type from a predefined set of categories: 'alphabetic', 'numeric', 'punctuation', 'whitespace', or 'symbol'. The function must handle edge cases robustly.","def character_type_classifier(char):
+    if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+        return 'alphabetic'
+    elif '0' <= char <= '9':
+        return 'numeric'
+    elif ' ' == char:
+        return 'whitespace'
+    elif char in '!""#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~':
+        return 'punctuation'
+    else:
+        return 'symbol'
+if __name__ == '__main__':
+    test_characters = ['a', '5', '.', ' ', '!', '$', '\n', 'Z', '9', '?', '@']
+    for char in test_characters:
+        result = character_type_classifier(char)
+        print(f""Character: '{char}', Type: {result}"")",True,0,17001,271_12.py
+271,12,Analyze text character types,"Develop a function named 'character_type_classifier' that accepts a single character as input and returns its corresponding type from a predefined set of categories: 'alphabetic', 'numeric', 'punctuation', 'whitespace', or 'symbol'. The function must handle edge cases robustly.","def character_type_classifier(char):
+    if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+        return 'alphabetic'
+    elif '0' <= char <= '9':
+        return 'numeric'
+    elif ' ' == char:
+        return 'whitespace'
+    elif char in '!""#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~':
+        return 'punctuation'
+    else:
+        return 'symbol'
+if __name__ == '__main__':
+    test_characters = ['a', '5', '.', ' ', '!', '$', '\n', 'Z', '9', '?', '@']
+    for char in test_characters:
+        result = character_type_classifier(char)
+        print(f""Character: '{char}' -> Type: {result}"")",True,1,17002,271_12_1.py
+271,12,Analyze text character types,"Develop a function named 'character_type_classifier' that accepts a single character as input and returns its corresponding type from a predefined set of categories: 'alphabetic', 'numeric', 'punctuation', 'whitespace', or 'symbol'. The function must handle edge cases robustly.","def character_type_classifier(char):
+    if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+        return 'alphabetic'
+    elif '0' <= char <= '9':
+        return 'numeric'
+    elif ' ' == char:
+        return 'whitespace'
+    elif char in '!""#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~':
+        return 'punctuation'
+    else:
+        return 'symbol'
+if __name__ == '__main__':
+    test_characters = ['a', '5', '!', ' ', '$', '\n', 'Z', '9', '.', '?', '@']
+    for char in test_characters:
+        result = character_type_classifier(char)
+        print(f""Character: '{char}', Type: {result}"")",True,2,17003,271_12_2.py
+271,12,Analyze text character types,"Develop a function named 'character_type_classifier' that accepts a single character as input and returns its corresponding type from a predefined set of categories: 'alphabetic', 'numeric', 'punctuation', 'whitespace', or 'symbol'. The function must handle edge cases robustly.","def character_type_classifier(char):
+    if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+        return 'alphabetic'
+    elif '0' <= char <= '9':
+        return 'numeric'
+    elif ' ' == char:
+        return 'whitespace'
+    elif char in '!""#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~':
+        return 'punctuation'
+    else:
+        return 'symbol'
+if __name__ == '__main__':
+    test_characters = ['a', '5', '!', ' ', '$', 'Z', '9', '.', '\n', '@', 'é']
+    for char in test_characters:
+        result = character_type_classifier(char)
+        print(f""Character: '{char}', Type: {result}"")",True,3,17004,271_12_3.py
+271,4,Analyze text character types,"Write a robust function to classify individual characters based on Unicode categories using the `str.isascii()`, `str.isalpha()`, and other appropriate built-in methods for precise character type analysis.",,False,0,17005,271_4.py
+271,6,Analyze text character types,Design and implement an efficient algorithm using regular expressions (`re` module) to perform the character type analysis on a large input text block.,,False,0,17006,271_6.py
+271,14,Analyze text character types,Refactor the previous code to use regular expressions (`re` module) for more concise and powerful character type classification instead of manual iteration over each character. Ensure the final solution remains highly optimized and adheres to modern Python standards.,"import re
+def classify_characters(text):
+    vowels = re.compile(r'[aeiouAEIOU]')
+    consonants = re.compile(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]')
+    digits = re.compile(r'\d')
+    punctuation = re.compile(r'[!""#$%&\'()*+,-./:;<=>?@\[\\\]^_`{|}~]')
+    vowel_count = len(vowels.findall(text))
+    consonant_count = len(consonants.findall(text))
+    digit_count = len(digits.findall(text))
+    punctuation_count = len(punctuation.findall(text))
+    return {
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count
+    }
+if __name__ == '__main__':
+    sample_text = ""Hello World 123! This is a test string.""
+    results = classify_characters(sample_text)
+    print(results)",True,0,17007,271_14.py
+271,14,Analyze text character types,Refactor the previous code to use regular expressions (`re` module) for more concise and powerful character type classification instead of manual iteration over each character. Ensure the final solution remains highly optimized and adheres to modern Python standards.,"import re
+def classify_characters(text):
+    vowels = re.compile(r'[aeiouAEIOU]')
+    consonants = re.compile(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]')
+    digits = re.compile(r'\d')
+    punctuation = re.compile(r'[!?""\'();:,./<>@#$%^&*+=\-~`~\[\]{}|\/\\:;?><]')
+    vowel_count = len(vowels.findall(text))
+    consonant_count = len(consonants.findall(text))
+    digit_count = len(digits.findall(text))
+    punctuation_count = len(punctuation.findall(text))
+    return {
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count
+    }
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123, this is a test string.""
+    results = classify_characters(sample_text)
+    print(results)",True,1,17008,271_14_1.py
+271,14,Analyze text character types,Refactor the previous code to use regular expressions (`re` module) for more concise and powerful character type classification instead of manual iteration over each character. Ensure the final solution remains highly optimized and adheres to modern Python standards.,"import re
+def classify_characters(text):
+    vowels = re.compile(r'[aeiouAEIOU]')
+    consonants = re.compile(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]')
+    digits = re.compile(r'\d')
+    punctuation = re.compile(r'[^\w\s\d]')
+    vowel_count = len(vowels.findall(text))
+    consonant_count = len(consonants.findall(text))
+    digit_count = len(digits.findall(text))
+    punctuation_count = len(punctuation.findall(text))
+    return {
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count
+    }
+if __name__ == '__main__':
+    sample_text = ""Hello World 123! This is a test sentence.""
+    results = classify_characters(sample_text)
+    print(results)",True,2,17009,271_14_2.py
+271,14,Analyze text character types,Refactor the previous code to use regular expressions (`re` module) for more concise and powerful character type classification instead of manual iteration over each character. Ensure the final solution remains highly optimized and adheres to modern Python standards.,"import re
+def classify_characters(text):
+    vowels = re.compile(r'[aeiouAEIOU]')
+    consonants = re.compile(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]')
+    digits = re.compile(r'\d')
+    punctuation = re.compile(r'[!?""\'();:,./<>@#$%^&*+=\-~`~\[\]{}|\/\\:;?><]')
+    vowel_count = len(vowels.findall(text))
+    consonant_count = len(consonants.findall(text))
+    digit_count = len(digits.findall(text))
+    punctuation_count = len(punctuation.findall(text))
+    return {
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count
+    }
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123, this is a test sentence.""
+    results = classify_characters(sample_text)
+    print(results)",True,3,17010,271_14_3.py
+271,14,Analyze text character types,Refactor the previous code to use regular expressions (`re` module) for more concise and powerful character type classification instead of manual iteration over each character. Ensure the final solution remains highly optimized and adheres to modern Python standards.,"import re
+def classify_characters(text):
+    vowels = re.compile(r'[aeiouAEIOU]')
+    consonants = re.compile(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]')
+    digits = re.compile(r'\d')
+    punctuation = re.compile(r'[!""#$%&\'()*+,-./:;<=>?@\[\]^_`{|}~]')
+    vowel_count = len(vowels.findall(text))
+    consonant_count = len(consonants.findall(text))
+    digit_count = len(digits.findall(text))
+    punctuation_count = len(punctuation.findall(text))
+    return {
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count
+    }
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123 Python is fun.""
+    results = classify_characters(sample_text)
+    print(results)",True,4,17011,271_14_4.py
+271,14,Analyze text character types,Refactor the previous code to use regular expressions (`re` module) for more concise and powerful character type classification instead of manual iteration over each character. Ensure the final solution remains highly optimized and adheres to modern Python standards.,"import re
+def classify_characters(text):
+    vowels = re.compile(r'[aeiouAEIOU]')
+    consonants = re.compile(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]')
+    digits = re.compile(r'\d')
+    punctuation = re.compile(r'[!?""\'():;,.?!@#$%^&*()_+=-`~\[\]{}|\/\\;:\s\n]')
+    vowel_count = len(vowels.findall(text))
+    consonant_count = len(consonants.findall(text))
+    digit_count = len(digits.findall(text))
+    punctuation_count = len(punctuation.findall(text))
+    return {
+        ""vowels"": vowel_count,
+        ""consonants"": consonant_count,
+        ""digits"": digit_count,
+        ""punctuation"": punctuation_count
+    }
+if __name__ == '__main__':
+    sample_text = ""Hello World! 123, this is a test sentence.""
+    results = classify_characters(sample_text)
+    print(results)",True,5,17012,271_14_5.py
+272,1,Sort words alphabetically now,Implement an optimized function named `sort_words` that accepts a list of strings and returns a new list containing those strings sorted alphabetically. Use the built-in `sorted()` function for efficiency.,"def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_result = sort_words(sample_list)
+    print(sorted_result)",True,0,17013,272_1.py
+272,1,Sort words alphabetically now,Implement an optimized function named `sort_words` that accepts a list of strings and returns a new list containing those strings sorted alphabetically. Use the built-in `sorted()` function for efficiency.,"def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_list = sort_words(sample_list)
+    print(sorted_list)",True,1,17014,272_1_1.py
+272,1,Sort words alphabetically now,Implement an optimized function named `sort_words` that accepts a list of strings and returns a new list containing those strings sorted alphabetically. Use the built-in `sorted()` function for efficiency.,"def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_result = sort_words(sample_words)
+    print(sorted_result)",True,2,17015,272_1_2.py
+272,2,Sort words alphabetically now,"Develop a class named `WordSorter` with a method `sort(self, word_list)` that sorts the provided list of words alphabetically and returns the sorted list. Ensure the implementation is clean and object-oriented.","class WordSorter:
+    def sort(self, word_list):
+        return sorted(word_list)
+if __name__ == '__main__':
+    sorter = WordSorter()
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_list = sorter.sort(sample_list)
+    print(sorted_list)",True,0,17016,272_2.py
+272,2,Sort words alphabetically now,"Develop a class named `WordSorter` with a method `sort(self, word_list)` that sorts the provided list of words alphabetically and returns the sorted list. Ensure the implementation is clean and object-oriented.","class WordSorter:
+    def sort(self, word_list):
+        return sorted(word_list)
+if __name__ == '__main__':
+    sorter = WordSorter()
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sorter.sort(words)
+    print(sorted_words)",True,1,17017,272_2_1.py
+272,0,Sort words alphabetically now,"Write a complete, robust Python script that takes a list of words as input and prints them sorted alphabetically in ascending order.","import sys
+def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_list = sort_words(sample_words)
+    for word in sorted_list:
+        print(word)",True,0,17018,272_0.py
+272,0,Sort words alphabetically now,"Write a complete, robust Python script that takes a list of words as input and prints them sorted alphabetically in ascending order.","import operator
+def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_result = sort_words(sample_words)
+    print(*sorted_result)",True,1,17019,272_0_1.py
+272,0,Sort words alphabetically now,"Write a complete, robust Python script that takes a list of words as input and prints them sorted alphabetically in ascending order.","import operator
+def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sort_words(words)
+    print(*sorted_words)",True,2,17020,272_0_2.py
+272,4,Sort words alphabetically now,"Create an efficient function that takes a single string containing multiple words separated by spaces, sorts these words alphabetically, and returns the result as a single space-separated string.","def sort_and_join_words(input_string):
+    words = input_string.split()
+    words.sort()
+    return "" "".join(words)
+if __name__ == '__main__':
+    sample_input = ""hello world python sorting example""
+    result = sort_and_join_words(sample_input)
+    print(result)",True,0,17021,272_4.py
+272,4,Sort words alphabetically now,"Create an efficient function that takes a single string containing multiple words separated by spaces, sorts these words alphabetically, and returns the result as a single space-separated string.","import sys
+def sort_and_join_words(input_string):
+    words = input_string.split()
+    words.sort()
+    return "" "".join(words)
+if __name__ == '__main__':
+    sample_input = ""hello world python sorting algorithm""
+    result = sort_and_join_words(sample_input)
+    print(result)",True,1,17022,272_4_1.py
+272,4,Sort words alphabetically now,"Create an efficient function that takes a single string containing multiple words separated by spaces, sorts these words alphabetically, and returns the result as a single space-separated string.","import sys
+def sort_and_join_words(input_string):
+    words = input_string.split()
+    words.sort()
+    return "" "".join(words)
+if __name__ == '__main__':
+    sample_input = ""hello world python programming algorithm""
+    result = sort_and_join_words(sample_input)
+    print(result)",True,2,17023,272_4_2.py
+272,5,Sort words alphabetically now,Implement a generator function that yields words from an input list in alphabetical order. This should be memory efficient for very large lists.,"def alphabetize_word_generator(word_list):
+    sorted_words = sorted(word_list)
+    for word in sorted_words:
+        yield word
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""date"", ""cherry"", ""elderberry""]
+    word_generator = alphabetize_word_generator(sample_list)
+    result_list = list(word_generator)
+    print(result_list)",True,0,17024,272_5.py
+272,5,Sort words alphabetically now,Implement a generator function that yields words from an input list in alphabetical order. This should be memory efficient for very large lists.,"def alphabetize_words(word_list):
+    sorted_list = sorted(word_list)
+    for word in sorted_list:
+        yield word
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""date"", ""cherry"", ""elderberry""]
+    word_generator = alphabetize_words(sample_list)
+    result = list(word_generator)
+    print(result)",True,1,17025,272_5_1.py
+272,5,Sort words alphabetically now,Implement a generator function that yields words from an input list in alphabetical order. This should be memory efficient for very large lists.,"def alphabetize_word_generator(word_list):
+    sorted_words = sorted(word_list)
+    for word in sorted_words:
+        yield word
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    word_generator = alphabetize_word_generator(sample_list)
+    result_list = list(word_generator)
+    print(result_list)",True,2,17026,272_5_2.py
+271,13,Analyze text character types,"Write a complete Python program that reads user input, processes the entire input string to count the occurrences of each character type identified in Task 1, and prints the final categorized results in a clear, structured format. Focus on best-practice I/O handling.",,False,0,17027,271_13.py
+272,3,Sort words alphabetically now,"Write a concise Python snippet to read a string of space-separated words from standard input, sort them alphabetically, and print the result to standard output.","import sys
+if __name__ == '__main__':
+    input_string = ""apple banana cherry date elderberry""
+    words = input_string.split()
+    words.sort()
+    print("" "".join(words))",True,0,17028,272_3.py
+272,7,Sort words alphabetically now,Design and implement a function `alphabetical_sort` that accepts any iterable of strings and returns a fully sorted list of those strings. Ensure the solution is O(n log n) time complexity.,"import random
+def alphabetical_sort(string_iterable):
+    return sorted(list(string_iterable))
+if __name__ == '__main__':
+    sample1 = [""banana"", ""apple"", ""cherry"", ""date""]
+    result1 = alphabetical_sort(sample1)
+    print(f""Sample 1 Input: {sample1}"")
+    print(f""Sample 1 Output: {result1}"")
+    sample2 = [""zebra"", ""ant"", ""bear"", ""cat""]
+    result2 = alphabetical_sort(sample2)
+    print(f""Sample 2 Input: {sample2}"")
+    print(f""Sample 2 Output: {result2}"")
+    sample3 = [""hello"", ""world"", ""python"", ""java""]
+    result3 = alphabetical_sort(sample3)
+    print(f""Sample 3 Input: {sample3}"")
+    print(f""Sample 3 Output: {result3}"")
+    sample4 = [""a"", ""b"", ""c"", ""d"", ""e""]
+    result4 = alphabetical_sort(sample4)
+    print(f""Sample 4 Input: {sample4}"")
+    print(f""Sample 4 Output: {result4}"")",True,0,17029,272_7.py
+272,7,Sort words alphabetically now,Design and implement a function `alphabetical_sort` that accepts any iterable of strings and returns a fully sorted list of those strings. Ensure the solution is O(n log n) time complexity.,"import random
+def alphabetical_sort(iterable):
+    return sorted(list(iterable))
+if __name__ == '__main__':
+    sample1 = [""banana"", ""apple"", ""cherry"", ""date""]
+    result1 = alphabetical_sort(sample1)
+    print(f""Sample 1 Input: {sample1}"")
+    print(f""Sample 1 Output: {result1}"")
+    sample2 = [""zebra"", ""ant"", ""bear"", ""cat""]
+    result2 = alphabetical_sort(sample2)
+    print(f""Sample 2 Input: {sample2}"")
+    print(f""Sample 2 Output: {result2}"")
+    sample3 = [""hello"", ""world"", ""python"", ""java""]
+    result3 = alphabetical_sort(sample3)
+    print(f""Sample 3 Input: {sample3}"")
+    print(f""Sample 3 Output: {result3}"")
+    sample4 = [""a"", ""b"", ""c"", ""d"", ""e""]
+    result4 = alphabetical_sort(sample4)
+    print(f""Sample 4 Input: {sample4}"")
+    print(f""Sample 4 Output: {result4}"")",True,1,17030,272_7_1.py
+272,7,Sort words alphabetically now,Design and implement a function `alphabetical_sort` that accepts any iterable of strings and returns a fully sorted list of those strings. Ensure the solution is O(n log n) time complexity.,"def alphabetical_sort(string_iterable):
+    return sorted(list(string_iterable))
+if __name__ == '__main__':
+    sample1 = [""banana"", ""apple"", ""cherry"", ""date""]
+    result1 = alphabetical_sort(sample1)
+    print(result1)
+    sample2 = [""zebra"", ""ant"", ""bear"", ""cat""]
+    result2 = alphabetical_sort(sample2)
+    print(result2)
+    sample3 = [""hello"", ""world"", ""python"", ""java""]
+    result3 = alphabetical_sort(sample3)
+    print(result3)
+    sample4 = [""a"", ""b"", ""c"", ""d""]
+    result4 = alphabetical_sort(sample4)
+    print(result4)",True,2,17031,272_7_2.py
+272,7,Sort words alphabetically now,Design and implement a function `alphabetical_sort` that accepts any iterable of strings and returns a fully sorted list of those strings. Ensure the solution is O(n log n) time complexity.,"import random
+def alphabetical_sort(string_iterable):
+    return sorted(list(string_iterable))
+if __name__ == '__main__':
+    sample1 = [""banana"", ""apple"", ""cherry"", ""date""]
+    print(f""Input: {sample1}"")
+    result1 = alphabetical_sort(sample1)
+    print(f""Output: {result1}"")
+    sample2 = [""zebra"", ""ant"", ""bear"", ""cat""]
+    print(f""Input: {sample2}"")
+    result2 = alphabetical_sort(sample2)
+    print(f""Output: {result2}"")
+    sample3 = [""hello"", ""world"", ""python"", ""java""]
+    print(f""Input: {sample3}"")
+    result3 = alphabetical_sort(sample3)
+    print(f""Output: {result3}"")
+    sample4 = [""a"", ""b"", ""c"", ""d"", ""e""]
+    print(f""Input: {sample4}"")
+    result4 = alphabetical_sort(sample4)
+    print(f""Output: {result4}"")",True,3,17032,272_7_3.py
+272,7,Sort words alphabetically now,Design and implement a function `alphabetical_sort` that accepts any iterable of strings and returns a fully sorted list of those strings. Ensure the solution is O(n log n) time complexity.,"def alphabetical_sort(string_iterable):
+    return sorted(list(string_iterable))
+if __name__ == '__main__':
+    sample_data = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_result = alphabetical_sort(sample_data)
+    print(sorted_result)",True,4,17033,272_7_4.py
+272,7,Sort words alphabetically now,Design and implement a function `alphabetical_sort` that accepts any iterable of strings and returns a fully sorted list of those strings. Ensure the solution is O(n log n) time complexity.,"def alphabetical_sort(iterable):
+    return sorted(list(iterable))
+if __name__ == '__main__':
+    sample1 = [""banana"", ""apple"", ""cherry"", ""date""]
+    result1 = alphabetical_sort(sample1)
+    print(result1)
+    sample2 = [""zebra"", ""ant"", ""bear"", ""cat""]
+    result2 = alphabetical_sort(sample2)
+    print(result2)
+    sample3 = [""hello"", ""world"", ""python"", ""java""]
+    result3 = alphabetical_sort(sample3)
+    print(result3)
+    sample4 = [""a"", ""b"", ""c"", ""d""]
+    result4 = alphabetical_sort(sample4)
+    print(result4)",True,5,17034,272_7_5.py
+272,8,Sort words alphabetically now,"Write a complete program that prompts the user to enter a sequence of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted list clearly formatted.","if __name__ == '__main__':
+    word_sequence = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    print(""Original sequence:"", word_sequence)
+    word_list = word_sequence
+    word_list.sort()
+    print(""Sorted list:"", word_list)",True,0,17035,272_8.py
+272,8,Sort words alphabetically now,"Write a complete program that prompts the user to enter a sequence of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted list clearly formatted.","if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    words.sort()
+    print(""Sorted list of words:"")
+    for word in words:
+        print(word)",True,1,17036,272_8_1.py
+272,8,Sort words alphabetically now,"Write a complete program that prompts the user to enter a sequence of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted list clearly formatted.","if __name__ == '__main__':
+    word_sequence = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sorted(word_sequence)
+    print(""Original sequence:"", word_sequence)
+    print(""Sorted sequence:"", sorted_words)",True,2,17037,272_8_2.py
+272,8,Sort words alphabetically now,"Write a complete program that prompts the user to enter a sequence of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted list clearly formatted.","if __name__ == '__main__':
+    word_sequence = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    word_list = word_sequence
+    word_list.sort()
+    print(""Sorted list of words:"")
+    for word in word_list:
+        print(word)",True,3,17038,272_8_3.py
+272,9,Sort words alphabetically now,"Refactor the sorting logic into a single, highly optimized one-line expression using Python's built-in features to sort an input list of words alphabetically.","if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sorted(words)
+    print(sorted_words)",True,0,17039,272_9.py
+272,9,Sort words alphabetically now,"Refactor the sorting logic into a single, highly optimized one-line expression using Python's built-in features to sort an input list of words alphabetically.","if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_words = sorted(words)
+    print(sorted_words)",True,1,17040,272_9_1.py
+272,11,Sort words alphabetically now,Implement an efficient function named `sort_words` that accepts a single list of strings and returns a new list containing those words sorted alphabetically. Use the built-in `sorted()` function for optimal performance.,"def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_result = sort_words(sample_words)
+    print(sorted_result)",True,0,17041,272_11.py
+272,11,Sort words alphabetically now,Implement an efficient function named `sort_words` that accepts a single list of strings and returns a new list containing those words sorted alphabetically. Use the built-in `sorted()` function for optimal performance.,"def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_result = sort_words(sample_list)
+    print(sorted_result)",True,1,17042,272_11_1.py
+272,11,Sort words alphabetically now,Implement an efficient function named `sort_words` that accepts a single list of strings and returns a new list containing those words sorted alphabetically. Use the built-in `sorted()` function for optimal performance.,"import time
+def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    start_time = time.perf_counter()
+    sorted_result = sort_words(sample_list)
+    end_time = time.perf_counter()
+    print(sorted_result)",True,2,17043,272_11_2.py
+272,11,Sort words alphabetically now,Implement an efficient function named `sort_words` that accepts a single list of strings and returns a new list containing those words sorted alphabetically. Use the built-in `sorted()` function for optimal performance.,"def sort_words(word_list):
+    return sorted(word_list)
+if __name__ == '__main__':
+    sample_list = [""banana"", ""apple"", ""cherry"", ""date""]
+    sorted_list = sort_words(sample_list)
+    print(sorted_list)",True,3,17044,272_11_3.py
+272,12,Sort words alphabetically now,"Develop a class named `WordSorter` with a method `sort(self, word_list)` that handles sorting a provided list of words alphabetically. Ensure the implementation is clean and follows object-oriented best practices.","class WordSorter:
+    def sort(self, word_list):
+        return sorted(word_list)
+if __name__ == '__main__':
+    sorter = WordSorter()
+    words = [""banana"", ""apple"", ""zebra"", ""cat"", ""dog""]
+    sorted_words = sorter.sort(words)
+    print(sorted_words)",True,0,17045,272_12.py
+272,12,Sort words alphabetically now,"Develop a class named `WordSorter` with a method `sort(self, word_list)` that handles sorting a provided list of words alphabetically. Ensure the implementation is clean and follows object-oriented best practices.","class WordSorter:
+    def sort(self, word_list):
+        return sorted(word_list)
+if __name__ == '__main__':
+    sorter = WordSorter()
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sorter.sort(words)
+    print(sorted_words)",True,1,17046,272_12_1.py
+272,6,Sort words alphabetically now,"Write a script that reads a file containing one word per line and writes the contents to a new file, with all words sorted alphabetically before writing.","import os
+input_filename = ""input.txt""
+output_filename = ""sorted_output.txt""
+with open(input_filename, 'w') as f:
+    f.write(""apple\nbanana\ncherry\ndate\nelephant\nfig"")
+words = []
+try:
+    with open(input_filename, 'r') as infile:
+        for line in infile:
+            words.append(line.strip())
+except FileNotFoundError:
+    print(f""Error: Input file {input_filename} not found."")
+    exit()
+sorted_words = sorted(words)
+with open(output_filename, 'w') as outfile:
+    for word in sorted_words:
+        outfile.write(word + '\n')
+if __name__ == '__main__':
+    pass",True,0,17047,272_6.py
+272,6,Sort words alphabetically now,"Write a script that reads a file containing one word per line and writes the contents to a new file, with all words sorted alphabetically before writing.","import os
+def sort_and_write(input_filename, output_filename):
+    with open(input_filename, 'r') as infile:
+        words = infile.readlines()
+    sorted_words = sorted([word.strip() for word in words if word.strip()])
+    with open(output_filename, 'w') as outfile:
+        for word in sorted_words:
+            outfile.write(word + '\n')
+if __name__ == '__main__':
+    input_file = ""input.txt""
+    output_file = ""output.txt""
+    with open(input_file, 'w') as f:
+        f.write(""zebra\n"")
+        f.write(""apple\n"")
+        f.write(""banana\n"")
+        f.write(""cat\n"")
+        f.write(""dog\n"")
+    sort_and_write(input_file, output_file)
+    with open(output_file, 'r') as f:
+        print(f.read())",True,1,17048,272_6_1.py
+272,14,Sort words alphabetically now,Design and implement a highly efficient one-liner using Python's built-in features to sort an existing list of words alphabetically in place. Provide the complete runnable code block.,"if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    words.sort()
+    print(words)",True,0,17049,272_14.py
+272,14,Sort words alphabetically now,Design and implement a highly efficient one-liner using Python's built-in features to sort an existing list of words alphabetically in place. Provide the complete runnable code block.,"if __name__ == '__main__':
+    my_list = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    my_list.sort()
+    print(my_list)",True,1,17050,272_14_1.py
+273,0,Repeat a simple sequence of actions,"Write a complete, well-documented Python script that repeatedly prints the sequence 'Hello World' exactly five times.","def main():
+    for _ in range(5):
+        print(""Hello World"")
+if __name__ == '__main__':
+    main()",True,0,17051,273_0.py
+273,1,Repeat a simple sequence of actions,"Implement an optimized function named 'repeat_sequence' that accepts a list and an integer N, and returns a new list containing the input list repeated N times using list multiplication or a generator expression.","def repeat_sequence(input_list, N):
+    if N <= 0:
+        return []
+    return input_list * N
+if __name__ == '__main__':
+    list1 = [1, 2]
+    n1 = 3
+    result1 = repeat_sequence(list1, n1)
+    print(f""Input list: {list1}, N: {n1}"")
+    print(f""Result: {result1}"")
+    list2 = ['a', 'b']
+    n2 = 2
+    result2 = repeat_sequence(list2, n2)
+    print(f""Input list: {list2}, N: {n2}"")
+    print(f""Result: {result2}"")
+    list3 = [10]
+    n3 = 5
+    result3 = repeat_sequence(list3, n3)
+    print(f""Input list: {list3}, N: {n3}"")
+    print(f""Result: {result3}"")",True,0,17052,273_1.py
+273,1,Repeat a simple sequence of actions,"Implement an optimized function named 'repeat_sequence' that accepts a list and an integer N, and returns a new list containing the input list repeated N times using list multiplication or a generator expression.","def repeat_sequence(input_list, N):
+    return input_list * N
+if __name__ == '__main__':
+    list1 = [1, 2]
+    n1 = 3
+    result1 = repeat_sequence(list1, n1)
+    print(result1)
+    list2 = ['a', 'b']
+    n2 = 2
+    result2 = repeat_sequence(list2, n2)
+    print(result2)
+    list3 = [10]
+    n3 = 5
+    result3 = repeat_sequence(list3, n3)
+    print(result3)",True,1,17053,273_1_1.py
+273,1,Repeat a simple sequence of actions,"Implement an optimized function named 'repeat_sequence' that accepts a list and an integer N, and returns a new list containing the input list repeated N times using list multiplication or a generator expression.","def repeat_sequence(input_list, N):
+    if N <= 0:
+        return []
+    return input_list * N
+if __name__ == '__main__':
+    list1 = [1, 2]
+    n1 = 3
+    result1 = repeat_sequence(list1, n1)
+    print(f""Input list: {list1}, N: {n1}"")
+    print(f""Result: {result1}"")
+    list2 = ['a', 'b']
+    n2 = 2
+    result2 = repeat_sequence(list2, n2)
+    print(f""Input list: {list2}, N: {n2}"")
+    print(f""Result: {result2}"")
+    list3 = [10]
+    n3 = 5
+    result3 = repeat_sequence(list3, n3)
+    print(f""Input list: {list3}, N: {n3}"")
+    print(f""Result: {result3}"")
+    list4 = []
+    n4 = 2
+    result4 = repeat_sequence(list4, n4)
+    print(f""Input list: {list4}, N: {n4}"")
+    print(f""Result: {result4}"")",True,2,17054,273_1_2.py
+273,1,Repeat a simple sequence of actions,"Implement an optimized function named 'repeat_sequence' that accepts a list and an integer N, and returns a new list containing the input list repeated N times using list multiplication or a generator expression.","def repeat_sequence(input_list, N):
+    if N <= 0:
+        return []
+    return input_list * N
+if __name__ == '__main__':
+    list1 = [1, 2]
+    n1 = 3
+    result1 = repeat_sequence(list1, n1)
+    print(f""Input: {list1}, N: {n1}"")
+    print(f""Result: {result1}"")
+    list2 = ['a', 'b']
+    n2 = 2
+    result2 = repeat_sequence(list2, n2)
+    print(f""Input: {list2}, N: {n2}"")
+    print(f""Result: {result2}"")
+    list3 = [10]
+    n3 = 5
+    result3 = repeat_sequence(list3, n3)
+    print(f""Input: {list3}, N: {n3}"")
+    print(f""Result: {result3}"")",True,3,17055,273_1_3.py
+272,10,Sort words alphabetically now,Write a complete and optimized Python script that takes a list of words as input and prints them sorted alphabetically in ascending order.,"import sys
+if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    sorted_words = sorted(words)
+    for word in sorted_words:
+        print(word)",True,0,17056,272_10.py
+273,2,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method 'repeat(self, sequence, count)' that efficiently generates and returns the repeated sequence as a single list. Ensure the implementation is highly performant.","class SequenceRepeater:
+    def repeat(self, sequence, count):
+        if count <= 0:
+            return []
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}"")
+    print(f""Result: {result1}"")
+    sequence2 = ['a', 'b']
+    count2 = 4
+    result2 = repeater.repeat(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}"")
+    print(f""Result: {result2}"")
+    sequence3 = [10]
+    count3 = 0
+    result3 = repeater.repeat(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}"")
+    print(f""Result: {result3}"")",True,0,17057,273_2.py
+273,2,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method 'repeat(self, sequence, count)' that efficiently generates and returns the repeated sequence as a single list. Ensure the implementation is highly performant.","class SequenceRepeater:
+    def repeat(self, sequence, count):
+        if count <= 0:
+            return []
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}, Result: {result1}"")
+    sequence2 = ['a', 'b']
+    count2 = 2
+    result2 = repeater.repeat(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}, Result: {result2}"")
+    sequence3 = [10, 20, 30]
+    count3 = 0
+    result3 = repeater.repeat(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}, Result: {result3}"")
+    sequence4 = []
+    count4 = 5
+    result4 = repeater.repeat(sequence4, count4)
+    print(f""Sequence: {sequence4}, Count: {count4}, Result: {result4}"")",True,1,17058,273_2_1.py
+273,2,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method 'repeat(self, sequence, count)' that efficiently generates and returns the repeated sequence as a single list. Ensure the implementation is highly performant.","class SequenceRepeater:
+    def repeat(self, sequence, count):
+        if count <= 0:
+            return []
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}"")
+    print(f""Result: {result1}"")
+    sequence2 = ['a', 'b']
+    count2 = 2
+    result2 = repeater.repeat(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}"")
+    print(f""Result: {result2}"")
+    sequence3 = [10]
+    count3 = 5
+    result3 = repeater.repeat(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}"")
+    print(f""Result: {result3}"")
+    sequence4 = []
+    count4 = 5
+    result4 = repeater.repeat(sequence4, count4)
+    print(f""Sequence: {sequence4}, Count: {count4}"")
+    print(f""Result: {result4}"")",True,2,17059,273_2_2.py
+273,2,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method 'repeat(self, sequence, count)' that efficiently generates and returns the repeated sequence as a single list. Ensure the implementation is highly performant.","class SequenceRepeater:
+    def repeat(self, sequence, count):
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}"")
+    print(f""Result: {result1}"")
+    sequence2 = ['a', 'b']
+    count2 = 4
+    result2 = repeater.repeat(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}"")
+    print(f""Result: {result2}"")
+    sequence3 = [10]
+    count3 = 5
+    result3 = repeater.repeat(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}"")
+    print(f""Result: {result3}"")",True,3,17060,273_2_3.py
+273,3,Repeat a simple sequence of actions,Develop a recursive Python function to generate a string by repeating a given substring N times. The function must be clean and handle edge cases correctly.,"def repeat_string(substring, n):
+    if n <= 0:
+        return """"
+    if n == 1:
+        return substring
+    else:
+        return substring + repeat_string(substring, n - 1)
+if __name__ == '__main__':
+    sub = ""abc""
+    count = 3
+    result = repeat_string(sub, count)
+    print(result)",True,0,17061,273_3.py
+273,3,Repeat a simple sequence of actions,Develop a recursive Python function to generate a string by repeating a given substring N times. The function must be clean and handle edge cases correctly.,"def repeat_string(substring, n):
+    if n <= 0:
+        return """"
+    if n == 1:
+        return substring
+    return substring + repeat_string(substring, n - 1)
+if __name__ == '__main__':
+    sub = ""abc""
+    count = 3
+    result = repeat_string(sub, count)
+    print(result)",True,1,17062,273_3_1.py
+273,5,Repeat a simple sequence of actions,Implement a generator function that yields elements from a specified iterable repeated N times. This must be memory-efficient for very large sequences.,"def repeat_iterable(iterable, n):
+    if n <= 0:
+        return
+    for _ in range(n):
+        yield from iterable
+if __name__ == '__main__':
+    sample_iterable = range(1, 4)
+    repeat_count = 3
+    result_generator = repeat_iterable(sample_iterable, repeat_count)
+    result_list = list(result_generator)
+    print(result_list)",True,0,17063,273_5.py
+273,5,Repeat a simple sequence of actions,Implement a generator function that yields elements from a specified iterable repeated N times. This must be memory-efficient for very large sequences.,"def repeat_iterable(iterable, n):
+    if n <= 0:
+        return
+    for _ in range(n):
+        yield from iterable
+if __name__ == '__main__':
+    my_list = [1, 2]
+    n_repeats = 3
+    result_generator = repeat_iterable(my_list, n_repeats)
+    result_list = list(result_generator)
+    print(result_list)
+    my_tuple = ('a', 'b')
+    n_repeats = 2
+    result_generator = repeat_iterable(my_tuple, n_repeats)
+    result_list = list(result_generator)
+    print(result_list)",True,1,17064,273_5_1.py
+273,5,Repeat a simple sequence of actions,Implement a generator function that yields elements from a specified iterable repeated N times. This must be memory-efficient for very large sequences.,"def repeat_iterable(iterable, n):
+    if n <= 0:
+        return
+    for _ in range(n):
+        yield from iterable
+if __name__ == '__main__':
+    sample_iterable = [1, 2]
+    n_repeats = 3
+    result_generator = repeat_iterable(sample_iterable, n_repeats)
+    result_list = list(result_generator)
+    print(result_list)",True,2,17065,273_5_2.py
+273,5,Repeat a simple sequence of actions,Implement a generator function that yields elements from a specified iterable repeated N times. This must be memory-efficient for very large sequences.,"def repeat_iterable(iterable, n):
+    if n <= 0:
+        return
+    for _ in range(n):
+        yield from iterable
+if __name__ == '__main__':
+    my_list = [1, 2]
+    repeat_count = 3
+    result_generator = repeat_iterable(my_list, repeat_count)
+    result_list = list(result_generator)
+    print(result_list)
+    my_tuple = ('a', 'b')
+    repeat_count = 2
+    result_generator = repeat_iterable(my_tuple, repeat_count)
+    result_list = list(result_generator)
+    print(result_list)",True,3,17066,273_5_3.py
+273,5,Repeat a simple sequence of actions,Implement a generator function that yields elements from a specified iterable repeated N times. This must be memory-efficient for very large sequences.,"def repeat_iterable(iterable, n):
+    if n <= 0:
+        return
+    current_list = []
+    for _ in range(n):
+        current_list.extend(iterable)
+    for item in current_list:
+        yield item
+if __name__ == '__main__':
+    my_list = [1, 2]
+    repetitions = 3
+    result_generator = repeat_iterable(my_list, repetitions)
+    output = list(result_generator)
+    print(output)",True,4,17067,273_5_4.py
+273,5,Repeat a simple sequence of actions,Implement a generator function that yields elements from a specified iterable repeated N times. This must be memory-efficient for very large sequences.,"def repeat_iterable(iterable, n):
+    if n <= 0:
+        return
+    for _ in range(n):
+        yield from iterable
+if __name__ == '__main__':
+    my_list = [1, 2]
+    n_repeats = 3
+    result_generator = repeat_iterable(my_list, n_repeats)
+    result_list = list(result_generator)
+    print(result_list)
+    my_string = ['a', 'b']
+    n_repeats_str = 2
+    result_generator_str = repeat_iterable(my_string, n_repeats_str)
+    result_list_str = list(result_generator_str)
+    print(result_list_str)",True,5,17068,273_5_5.py
+272,13,Sort words alphabetically now,"Write a standalone Python program that prompts the user to enter a series of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted result clearly to the console. Include robust error handling for non-string inputs if applicable.","if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    try:
+        word_list = []
+        for item in words:
+            if isinstance(item, str):
+                word_list.append(item)
+            else:
+                print(f""Warning: Skipped non-string input: {item}"")
+        word_list.sort()
+        print(""Original list of words:"", words)
+        print(""Sorted list of words:"", word_list)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")",True,0,17069,272_13.py
+272,13,Sort words alphabetically now,"Write a standalone Python program that prompts the user to enter a series of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted result clearly to the console. Include robust error handling for non-string inputs if applicable.","if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    try:
+        word_list = []
+        for item in words:
+            if isinstance(item, str):
+                word_list.append(item)
+            else:
+                print(f""Skipping invalid input: {item}"")
+        word_list.sort()
+        print(""Original list of words:"", words)
+        print(""Sorted list of words:"", word_list)
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,1,17070,272_13_1.py
+272,13,Sort words alphabetically now,"Write a standalone Python program that prompts the user to enter a series of words, stores them in a list, sorts the list alphabetically, and then prints the final sorted result clearly to the console. Include robust error handling for non-string inputs if applicable.","if __name__ == '__main__':
+    words = [""banana"", ""apple"", ""cherry"", ""date"", ""elderberry""]
+    try:
+        word_list = []
+        for item in words:
+            if isinstance(item, str):
+                word_list.append(item)
+            else:
+                print(f""Warning: Skipped non-string input: {item}"")
+        word_list.sort()
+        print(""Original list of words (after filtering non-strings):"")
+        print(word_list)
+        print(""\nAlphabetically sorted list:"")
+        for word in word_list:
+            print(word)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,2,17071,272_13_2.py
+273,7,Repeat a simple sequence of actions,"Create a function that accepts a list of items and an integer repetition factor, and returns a flattened list containing all elements from the original list repeated by the factor (e.g., [1, 2] repeated 3 times results in [1, 2, 1, 2, 1, 2]).","def repeat_list(items, factor):
+    result = []
+    for _ in range(factor):
+        result.extend(items)
+    return result
+if __name__ == '__main__':
+    list1 = [1, 2]
+    factor1 = 3
+    output1 = repeat_list(list1, factor1)
+    print(f""Input list: {list1}, Factor: {factor1}"")
+    print(f""Output: {output1}"")
+    list2 = ['a', 'b']
+    factor2 = 4
+    output2 = repeat_list(list2, factor2)
+    print(f""Input list: {list2}, Factor: {factor2}"")
+    print(f""Output: {output2}"")
+    list3 = [10]
+    factor3 = 5
+    output3 = repeat_list(list3, factor3)
+    print(f""Input list: {list3}, Factor: {factor3}"")
+    print(f""Output: {output3}"")",True,0,17072,273_7.py
+273,7,Repeat a simple sequence of actions,"Create a function that accepts a list of items and an integer repetition factor, and returns a flattened list containing all elements from the original list repeated by the factor (e.g., [1, 2] repeated 3 times results in [1, 2, 1, 2, 1, 2]).","def repeat_list(items, factor):
+    result = []
+    for _ in range(factor):
+        result.extend(items)
+    return result
+if __name__ == '__main__':
+    list1 = [1, 2]
+    factor1 = 3
+    output1 = repeat_list(list1, factor1)
+    print(f""List: {list1}, Factor: {factor1}, Result: {output1}"")
+    list2 = ['a', 'b']
+    factor2 = 4
+    output2 = repeat_list(list2, factor2)
+    print(f""List: {list2}, Factor: {factor2}, Result: {output2}"")
+    list3 = [10, 20, 30]
+    factor3 = 2
+    output3 = repeat_list(list3, factor3)
+    print(f""List: {list3}, Factor: {factor3}, Result: {output3}"")",True,1,17073,273_7_1.py
+273,7,Repeat a simple sequence of actions,"Create a function that accepts a list of items and an integer repetition factor, and returns a flattened list containing all elements from the original list repeated by the factor (e.g., [1, 2] repeated 3 times results in [1, 2, 1, 2, 1, 2]).","def repeat_list(items, factor):
+    result = []
+    for _ in range(factor):
+        result.extend(items)
+    return result
+if __name__ == '__main__':
+    list1 = [1, 2]
+    factor1 = 3
+    output1 = repeat_list(list1, factor1)
+    print(f""Input list: {list1}, Factor: {factor1}"")
+    print(f""Output: {output1}"")
+    list2 = ['a', 'b']
+    factor2 = 4
+    output2 = repeat_list(list2, factor2)
+    print(f""Input list: {list2}, Factor: {factor2}"")
+    print(f""Output: {output2}"")
+    list3 = [10, 20, 30]
+    factor3 = 2
+    output3 = repeat_list(list3, factor3)
+    print(f""Input list: {list3}, Factor: {factor3}"")
+    print(f""Output: {output3}"")",True,2,17074,273_7_2.py
+273,8,Repeat a simple sequence of actions,"Write a robust Python function that takes an iterable and an integer N, and returns a new list where every element from the iterable is repeated N times. Use list comprehension for efficiency.","def repeat_elements(iterable, N):
+    return [element for element in iterable for _ in range(N)]
+if __name__ == '__main__':
+    data = [1, 2, 3]
+    n = 3
+    result = repeat_elements(data, n)
+    print(result)",True,0,17075,273_8.py
+273,9,Repeat a simple sequence of actions,"Implement a decorator named 'repeat_n_times' that can be applied to any function, allowing it to execute the decorated function N times sequentially with the same arguments.","def repeat_n_times(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat_n_times(3)
+def say_hello(name):
+    print(f""Hello, {name}"")
+if __name__ == '__main__':
+    say_hello(""World"")",True,0,17076,273_9.py
+273,9,Repeat a simple sequence of actions,"Implement a decorator named 'repeat_n_times' that can be applied to any function, allowing it to execute the decorated function N times sequentially with the same arguments.","def repeat_n_times(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat_n_times(3)
+def greet(name):
+    print(f""Hello, {name}"")
+if __name__ == '__main__':
+    greet(""Alice"")",True,1,17077,273_9_1.py
+273,9,Repeat a simple sequence of actions,"Implement a decorator named 'repeat_n_times' that can be applied to any function, allowing it to execute the decorated function N times sequentially with the same arguments.","import functools
+def repeat_n_times(n):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat_n_times(3)
+def greet(name):
+    print(f""Hello, {name}"")
+if __name__ == '__main__':
+    greet(""Alice"")",True,2,17078,273_9_2.py
+273,9,Repeat a simple sequence of actions,"Implement a decorator named 'repeat_n_times' that can be applied to any function, allowing it to execute the decorated function N times sequentially with the same arguments.","import functools
+def repeat_n_times(n):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat_n_times(3)
+def say_hello(name):
+    print(f""Hello, {name}"")
+if __name__ == '__main__':
+    say_hello(""World"")",True,3,17079,273_9_3.py
+273,10,Repeat a simple sequence of actions,"Write a complete, well-documented Python script that repeatedly prints the sequence 'Hello World' exactly ten times using a loop.","def main():
+    for i in range(10):
+        print(""Hello World"")
+if __name__ == '__main__':
+    main()",True,0,17080,273_10.py
+273,11,Repeat a simple sequence of actions,Implement an optimized function named 'repeat_sequence' that accepts a list of strings and returns a new list containing the input sequence repeated three times.,"def repeat_sequence(sequence):
+    repeated_list = []
+    for _ in range(3):
+        repeated_list.extend(sequence)
+    return repeated_list
+if __name__ == '__main__':
+    input_list = [""a"", ""b""]
+    result = repeat_sequence(input_list)
+    print(result)",True,0,17081,273_11.py
+273,11,Repeat a simple sequence of actions,Implement an optimized function named 'repeat_sequence' that accepts a list of strings and returns a new list containing the input sequence repeated three times.,"def repeat_sequence(sequence):
+    result = []
+    for _ in range(3):
+        result.extend(sequence)
+    return result
+if __name__ == '__main__':
+    input_list = [""a"", ""b""]
+    output_list = repeat_sequence(input_list)
+    print(output_list)",True,1,17082,273_11_1.py
+273,11,Repeat a simple sequence of actions,Implement an optimized function named 'repeat_sequence' that accepts a list of strings and returns a new list containing the input sequence repeated three times.,"def repeat_sequence(sequence):
+    repeated = []
+    for _ in range(3):
+        repeated.extend(sequence)
+    return repeated
+if __name__ == '__main__':
+    input_list = [""a"", ""b""]
+    result = repeat_sequence(input_list)
+    print(result)",True,2,17083,273_11_2.py
+273,12,Repeat a simple sequence of actions,Write a robust Python program that generates and prints the Fibonacci sequence up to the 15th term by iteratively repeating the calculation process.,"def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        for i in range(2, n):
+            next_fib = sequence[-1] + sequence[-2]
+            sequence.append(next_fib)
+        return sequence
+if __name__ == '__main__':
+    n_terms = 15
+    fib_sequence = generate_fibonacci(n_terms)
+    print(fib_sequence)",True,0,17084,273_12.py
+273,12,Repeat a simple sequence of actions,Write a robust Python program that generates and prints the Fibonacci sequence up to the 15th term by iteratively repeating the calculation process.,"import sys
+def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        for i in range(2, n):
+            next_fib = sequence[-1] + sequence[-2]
+            sequence.append(next_fib)
+        return sequence
+if __name__ == '__main__':
+    limit = 15
+    fib_sequence = generate_fibonacci(limit)
+    print(*fib_sequence)",True,1,17085,273_12_1.py
+273,12,Repeat a simple sequence of actions,Write a robust Python program that generates and prints the Fibonacci sequence up to the 15th term by iteratively repeating the calculation process.,"def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        for i in range(2, n):
+            next_fib = sequence[-1] + sequence[-2]
+            sequence.append(next_fib)
+        return sequence
+if __name__ == '__main__':
+    limit = 15
+    fib_sequence = generate_fibonacci(limit)
+    print(fib_sequence)",True,2,17086,273_12_2.py
+273,12,Repeat a simple sequence of actions,Write a robust Python program that generates and prints the Fibonacci sequence up to the 15th term by iteratively repeating the calculation process.,"def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        while len(sequence) < n:
+            next_fib = sequence[-1] + sequence[-2]
+            sequence.append(next_fib)
+        return sequence
+if __name__ == '__main__':
+    n_terms = 15
+    fib_sequence = generate_fibonacci(n_terms)
+    print(fib_sequence)",True,3,17087,273_12_3.py
+273,12,Repeat a simple sequence of actions,Write a robust Python program that generates and prints the Fibonacci sequence up to the 15th term by iteratively repeating the calculation process.,"import sys
+def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        while len(sequence) < n:
+            next_fib = sequence[-1] + sequence[-2]
+            sequence.append(next_fib)
+        return sequence
+if __name__ == '__main__':
+    n_terms = 15
+    fib_sequence = generate_fibonacci(n_terms)
+    print(*fib_sequence)",True,4,17088,273_12_4.py
+273,12,Repeat a simple sequence of actions,Write a robust Python program that generates and prints the Fibonacci sequence up to the 15th term by iteratively repeating the calculation process.,"def generate_fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    else:
+        sequence = [0, 1]
+        for i in range(2, n):
+            next_fib = sequence[-1] + sequence[-2]
+            sequence.append(next_fib)
+        return sequence
+if __name__ == '__main__':
+    n = 15
+    fib_sequence = generate_fibonacci(n)
+    print(fib_sequence)",True,5,17089,273_12_5.py
+273,13,Repeat a simple sequence of actions,Develop an efficient method using recursion to repeat a specific action (printing the number) exactly five times for a given starting number.,"def repeat_print(n, count):
+    if count == 0:
+        return
+    repeat_print(n, count - 1)
+    print(n)
+if __name__ == '__main__':
+    start_number = 10
+    repetitions = 5
+    repeat_print(start_number, repetitions)",True,0,17090,273_13.py
+273,13,Repeat a simple sequence of actions,Develop an efficient method using recursion to repeat a specific action (printing the number) exactly five times for a given starting number.,"def repeat_print(n, count):
+    if count == 0:
+        return
+    repeat_print(n, count - 1)
+    print(n)
+if __name__ == '__main__':
+    start_number = 10
+    repetition_count = 5
+    repeat_print(start_number, repetition_count)",True,1,17091,273_13_1.py
+273,13,Repeat a simple sequence of actions,Develop an efficient method using recursion to repeat a specific action (printing the number) exactly five times for a given starting number.,"def repeat_print(n, count):
+    if count == 0:
+        return
+    repeat_print(n, count - 1)
+    print(n)
+if __name__ == '__main__':
+    start_number = 42
+    repetitions = 5
+    repeat_print(start_number, repetitions)",True,2,17092,273_13_2.py
+273,14,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method that takes an initial sequence (list or tuple) and an integer count, and returns the concatenated result of repeating the sequence that many times. Ensure the implementation is highly efficient.","class SequenceRepeater:
+    def repeat_sequence(self, sequence, count):
+        if count <= 0:
+            return tuple()
+        return tuple(sequence * count)
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat_sequence(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}, Result: {result1}"")
+    sequence2 = ('a', 'b')
+    count2 = 4
+    result2 = repeater.repeat_sequence(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}, Result: {result2}"")
+    sequence3 = [10]
+    count3 = 5
+    result3 = repeater.repeat_sequence(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}, Result: {result3}"")
+    sequence4 = ()
+    count4 = 2
+    result4 = repeater.repeat_sequence(sequence4, count4)
+    print(f""Sequence: {sequence4}, Count: {count4}, Result: {result4}"")",True,0,17093,273_14.py
+273,14,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method that takes an initial sequence (list or tuple) and an integer count, and returns the concatenated result of repeating the sequence that many times. Ensure the implementation is highly efficient.","class SequenceRepeater:
+    def repeat_sequence(self, sequence, count):
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat_sequence(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}, Result: {result1}"")
+    sequence2 = ('a', 'b')
+    count2 = 4
+    result2 = repeater.repeat_sequence(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}, Result: {result2}"")
+    sequence3 = [10, 20, 30]
+    count3 = 0
+    result3 = repeater.repeat_sequence(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}, Result: {result3}"")
+    sequence4 = ()
+    count4 = 5
+    result4 = repeater.repeat_sequence(sequence4, count4)
+    print(f""Sequence: {sequence4}, Count: {count4}, Result: {result4}"")",True,1,17094,273_14_1.py
+273,14,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method that takes an initial sequence (list or tuple) and an integer count, and returns the concatenated result of repeating the sequence that many times. Ensure the implementation is highly efficient.","class SequenceRepeater:
+    def repeat_sequence(self, sequence, count):
+        if count <= 0:
+            return []
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat_sequence(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}, Result: {result1}"")
+    sequence2 = ('a', 'b')
+    count2 = 4
+    result2 = repeater.repeat_sequence(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}, Result: {result2}"")
+    sequence3 = [10]
+    count3 = 5
+    result3 = repeater.repeat_sequence(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}, Result: {result3}"")",True,2,17095,273_14_2.py
+273,14,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method that takes an initial sequence (list or tuple) and an integer count, and returns the concatenated result of repeating the sequence that many times. Ensure the implementation is highly efficient.","class SequenceRepeater:
+    def repeat_sequence(self, sequence, count):
+        if count <= 0:
+            return tuple()
+        return tuple(sequence * count)
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    seq1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat_sequence(seq1, count1)
+    print(f""Sequence: {seq1}, Count: {count1}, Result: {result1}"")
+    seq2 = ('a', 'b')
+    count2 = 4
+    result2 = repeater.repeat_sequence(seq2, count2)
+    print(f""Sequence: {seq2}, Count: {count2}, Result: {result2}"")
+    seq3 = [10]
+    count3 = 5
+    result3 = repeater.repeat_sequence(seq3, count3)
+    print(f""Sequence: {seq3}, Count: {count3}, Result: {result3}"")
+    seq4 = ()
+    count4 = 2
+    result4 = repeater.repeat_sequence(seq4, count4)
+    print(f""Sequence: {seq4}, Count: {count4}, Result: {result4}"")",True,3,17096,273_14_3.py
+273,14,Repeat a simple sequence of actions,"Write a class named 'SequenceRepeater' with a method that takes an initial sequence (list or tuple) and an integer count, and returns the concatenated result of repeating the sequence that many times. Ensure the implementation is highly efficient.","class SequenceRepeater:
+    def repeat_sequence(self, sequence, count):
+        if count <= 0:
+            return []
+        return sequence * count
+if __name__ == '__main__':
+    repeater = SequenceRepeater()
+    sequence1 = [1, 2]
+    count1 = 3
+    result1 = repeater.repeat_sequence(sequence1, count1)
+    print(f""Sequence: {sequence1}, Count: {count1}, Result: {result1}"")
+    sequence2 = ('a', 'b')
+    count2 = 4
+    result2 = repeater.repeat_sequence(sequence2, count2)
+    print(f""Sequence: {sequence2}, Count: {count2}, Result: {result2}"")
+    sequence3 = [10]
+    count3 = 5
+    result3 = repeater.repeat_sequence(sequence3, count3)
+    print(f""Sequence: {sequence3}, Count: {count3}, Result: {result3}"")
+    sequence4 = ()
+    count4 = 2
+    result4 = repeater.repeat_sequence(sequence4, count4)
+    print(f""Sequence: {sequence4}, Count: {count4}, Result: {result4}"")",True,4,17097,273_14_4.py
+274,0,Print all items in a list,"Write a complete, professional Python script that defines a list of strings and prints every item in that list using a standard for loop.","def main():
+    string_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    for item in string_list:
+        print(item)
+if __name__ == '__main__':
+    main()",True,0,17098,274_0.py
+274,0,Print all items in a list,"Write a complete, professional Python script that defines a list of strings and prints every item in that list using a standard for loop.","def main():
+    my_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    for item in my_list:
+        print(item)
+if __name__ == '__main__':
+    main()",True,1,17099,274_0_1.py
+274,1,Print all items in a list,Implement an optimized function named 'print_list_items' that accepts any iterable (like a list) and prints each element efficiently.,"def print_list_items(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True]
+    print_list_items(sample_list)
+    sample_tuple = ('a', 'b', 'c')
+    print_list_items(sample_tuple)",True,0,17100,274_1.py
+274,1,Print all items in a list,Implement an optimized function named 'print_list_items' that accepts any iterable (like a list) and prints each element efficiently.,"def print_list_items(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 'a', 4.5]
+    print_list_items(sample_list)
+    sample_tuple = ('hello', 'world')
+    print_list_items(sample_tuple)",True,1,17101,274_1_1.py
+274,1,Print all items in a list,Implement an optimized function named 'print_list_items' that accepts any iterable (like a list) and prints each element efficiently.,"def print_list_items(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print_list_items(sample_list)
+    sample_tuple = ('a', 'b', 'c')
+    print_list_items(sample_tuple)
+    sample_string = ""Hello""
+    print_list_items(sample_string)",True,2,17102,274_1_2.py
+274,1,Print all items in a list,Implement an optimized function named 'print_list_items' that accepts any iterable (like a list) and prints each element efficiently.,"def print_list_items(iterable):
+    for item in iterable:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True, [5, 6]]
+    print_list_items(sample_list)",True,3,17103,274_1_3.py
+274,2,Print all items in a list,Develop an efficient one-liner using the built-in `print` function and unpacking to display all elements of a given list on separate lines.,"if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(*my_list)",True,0,17104,274_2.py
+274,3,Print all items in a list,"Write a robust Python function that takes a list of mixed data types and prints each item clearly, handling potential type conversions gracefully if necessary.","def print_mixed_data(data):
+    for item in data:
+        print(f""Item: {item}, Type: {type(item)}"")
+if __name__ == '__main__':
+    sample_data = [10, ""hello"", 3.14, True, [1, 2], None]
+    print_mixed_data(sample_data)",True,0,17105,274_3.py
+274,3,Print all items in a list,"Write a robust Python function that takes a list of mixed data types and prints each item clearly, handling potential type conversions gracefully if necessary.","def print_mixed_list(data):
+    for item in data:
+        print(f""Item: {item}, Type: {type(item)}"")
+if __name__ == '__main__':
+    sample_data = [10, ""hello"", 3.14, True, [1, 2], None]
+    print_mixed_list(sample_data)",True,1,17106,274_3_1.py
+274,4,Print all items in a list,Create a method within a class called 'DataProcessor' that has a method to iterate over an internal list and print all its contents using the most Pythonic approach.,"class DataProcessor:
+    def __init__(self):
+        self.data = [1, 2, 3, 4, 5]
+    def print_data(self):
+        for item in self.data:
+            print(item)
+if __name__ == '__main__':
+    processor = DataProcessor()
+    processor.print_data()",True,0,17107,274_4.py
+274,4,Print all items in a list,Create a method within a class called 'DataProcessor' that has a method to iterate over an internal list and print all its contents using the most Pythonic approach.,"class DataProcessor:
+    def __init__(self):
+        self.data = [10, 20, 30, 40, 50]
+    def print_all_contents(self):
+        for item in self.data:
+            print(item)
+if __name__ == '__main__':
+    processor = DataProcessor()
+    processor.print_all_contents()",True,1,17108,274_4_1.py
+274,4,Print all items in a list,Create a method within a class called 'DataProcessor' that has a method to iterate over an internal list and print all its contents using the most Pythonic approach.,"class DataProcessor:
+    def __init__(self):
+        self.data = [1, 2, 3, 4, 5]
+    def print_all(self):
+        for item in self.data:
+            print(item)
+if __name__ == '__main__':
+    processor = DataProcessor()
+    processor.print_all()",True,2,17109,274_4_2.py
+274,4,Print all items in a list,Create a method within a class called 'DataProcessor' that has a method to iterate over an internal list and print all its contents using the most Pythonic approach.,"class DataProcessor:
+    def __init__(self, data):
+        self.data = data
+    def print_all(self):
+        for item in self.data:
+            print(item)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    processor = DataProcessor(sample_list)
+    processor.print_all()",True,3,17110,274_4_3.py
+274,4,Print all items in a list,Create a method within a class called 'DataProcessor' that has a method to iterate over an internal list and print all its contents using the most Pythonic approach.,"class DataProcessor:
+    def __init__(self):
+        self.data = [1, 2, 3, 4, 5]
+    def print_all_contents(self):
+        for item in self.data:
+            print(item)
+if __name__ == '__main__':
+    processor = DataProcessor()
+    processor.print_all_contents()",True,4,17111,274_4_4.py
+274,5,Print all items in a list,"Generate the complete, optimized Python code to iterate through a predefined list of numbers and print each number, demonstrating the use of list iteration techniques.","def main():
+    numbers = [10, 25, 33, 47, 51]
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    main()",True,0,17112,274_5.py
+274,5,Print all items in a list,"Generate the complete, optimized Python code to iterate through a predefined list of numbers and print each number, demonstrating the use of list iteration techniques.","def iterate_and_print(numbers):
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    sample_list = [10, 25, 33, 47, 51]
+    iterate_and_print(sample_list)",True,1,17113,274_5_1.py
+274,5,Print all items in a list,"Generate the complete, optimized Python code to iterate through a predefined list of numbers and print each number, demonstrating the use of list iteration techniques.","def iterate_list():
+    numbers = [10, 25, 33, 48, 51]
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    iterate_list()",True,2,17114,274_5_2.py
+274,5,Print all items in a list,"Generate the complete, optimized Python code to iterate through a predefined list of numbers and print each number, demonstrating the use of list iteration techniques.","def iterate_list():
+    numbers = [10, 25, 33, 47, 51]
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    iterate_list()",True,3,17115,274_5_3.py
+274,5,Print all items in a list,"Generate the complete, optimized Python code to iterate through a predefined list of numbers and print each number, demonstrating the use of list iteration techniques.","def main():
+    numbers = [10, 25, 42, 78, 91]
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    main()",True,4,17116,274_5_4.py
+274,6,Print all items in a list,"Implement a generator function that yields every item from an input list one by one, and then write the main block to consume and print these yielded items.","def list_iterator(input_list):
+    for item in input_list:
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    iterator = list_iterator(sample_list)
+    for number in iterator:
+        print(number)",True,0,17117,274_6.py
+274,6,Print all items in a list,"Implement a generator function that yields every item from an input list one by one, and then write the main block to consume and print these yielded items.","def list_to_generator(input_list):
+    for item in input_list:
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    generator = list_to_generator(sample_list)
+    for item in generator:
+        print(item)",True,1,17118,274_6_1.py
+274,6,Print all items in a list,"Implement a generator function that yields every item from an input list one by one, and then write the main block to consume and print these yielded items.","def list_iterator(input_list):
+    for item in input_list:
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    generator = list_iterator(sample_list)
+    for number in generator:
+        print(number)",True,2,17119,274_6_2.py
+274,7,Print all items in a list,Write the most concise and efficient Python code possible to print all elements of a given list sequentially.,"if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    for x in my_list:
+        print(x)",True,0,17120,274_7.py
+274,7,Print all items in a list,Write the most concise and efficient Python code possible to print all elements of a given list sequentially.,"if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    for item in my_list:
+        print(item)",True,1,17121,274_7_1.py
+274,7,Print all items in a list,Write the most concise and efficient Python code possible to print all elements of a given list sequentially.,"if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(*my_list)",True,2,17122,274_7_2.py
+274,8,Print all items in a list,"Design and implement a function that accepts an arbitrary list and prints each item, ensuring the solution is easily readable and adheres strictly to PEP 8 conventions.","def print_list_items(data_list):
+    for item in data_list:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True]
+    print_list_items(sample_list)",True,0,17123,274_8.py
+274,8,Print all items in a list,"Design and implement a function that accepts an arbitrary list and prints each item, ensuring the solution is easily readable and adheres strictly to PEP 8 conventions.","def print_list_items(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True]
+    print_list_items(sample_list)",True,1,17124,274_8_1.py
+274,8,Print all items in a list,"Design and implement a function that accepts an arbitrary list and prints each item, ensuring the solution is easily readable and adheres strictly to PEP 8 conventions.","def print_list_items(data_list):
+    for item in data_list:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True, [5, 6]]
+    print_list_items(sample_list)",True,2,17125,274_8_2.py
+274,9,Print all items in a list,"Write a complete script that demonstrates three different methods (for loop, while loop, and list comprehension) for printing all elements contained within a sample list.","def demonstrate_printing():
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Method 1: For Loop ---"")
+    for item in sample_list:
+        print(item)
+    print(""\n--- Method 2: While Loop ---"")
+    i = 0
+    while i < len(sample_list):
+        print(sample_list[i])
+        i += 1
+    print(""\n--- Method 3: List Comprehension ---"")
+    printed_items = [item for item in sample_list]
+    for item in printed_items:
+        print(item)
+if __name__ == '__main__':
+    demonstrate_printing()",True,0,17126,274_9.py
+274,9,Print all items in a list,"Write a complete script that demonstrates three different methods (for loop, while loop, and list comprehension) for printing all elements contained within a sample list.","def demonstrate_printing():
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Using for loop ---"")
+    for item in sample_list:
+        print(item)
+    print(""\n--- Using while loop ---"")
+    i = 0
+    while i < len(sample_list):
+        print(sample_list[i])
+        i += 1
+    print(""\n--- Using list comprehension ---"")
+    result = [item for item in sample_list]
+    print(result)
+if __name__ == '__main__':
+    demonstrate_printing()",True,1,17127,274_9_1.py
+274,9,Print all items in a list,"Write a complete script that demonstrates three different methods (for loop, while loop, and list comprehension) for printing all elements contained within a sample list.","def main():
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    print(""--- Using for loop ---"")
+    for item in sample_list:
+        print(item)
+    print(""\n--- Using while loop ---"")
+    i = 0
+    while i < len(sample_list):
+        print(sample_list[i])
+        i += 1
+    print(""\n--- Using list comprehension ---"")
+    list_comprehension_result = [item for item in sample_list]
+    for item in list_comprehension_result:
+        print(item)
+if __name__ == '__main__':
+    main()",True,2,17128,274_9_2.py
+274,9,Print all items in a list,"Write a complete script that demonstrates three different methods (for loop, while loop, and list comprehension) for printing all elements contained within a sample list.","def demonstrate_printing():
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Method 1: For Loop ---"")
+    for item in sample_list:
+        print(item)
+    print(""\n--- Method 2: While Loop ---"")
+    i = 0
+    while i < len(sample_list):
+        print(sample_list[i])
+        i += 1
+    print(""\n--- Method 3: List Comprehension ---"")
+    result = [item for item in sample_list]
+    print(result)
+if __name__ == '__main__':
+    demonstrate_printing()",True,3,17129,274_9_3.py
+274,9,Print all items in a list,"Write a complete script that demonstrates three different methods (for loop, while loop, and list comprehension) for printing all elements contained within a sample list.","def main():
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    print(""--- Using for loop ---"")
+    for item in sample_list:
+        print(item)
+    print(""\n--- Using while loop ---"")
+    i = 0
+    while i < len(sample_list):
+        print(sample_list[i])
+        i += 1
+    print(""\n--- Using list comprehension ---"")
+    result = [item for item in sample_list]
+    print(result)
+if __name__ == '__main__':
+    main()",True,4,17130,274_9_4.py
+273,4,Repeat a simple sequence of actions,"Write an iterative solution using a while loop to generate and print the sequence of numbers from 1 to 10, where each number is printed three times consecutively.",,False,0,17131,273_4.py
+274,10,Print all items in a list,Write a complete and robust Python script that defines a list of strings and then prints every item in that list using a standard loop structure.,"def main():
+    string_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    for item in string_list:
+        print(item)
+if __name__ == '__main__':
+    main()",True,0,17132,274_10.py
+274,10,Print all items in a list,Write a complete and robust Python script that defines a list of strings and then prints every item in that list using a standard loop structure.,"def main():
+    my_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    for item in my_list:
+        print(item)
+if __name__ == '__main__':
+    main()",True,1,17133,274_10_1.py
+273,6,Repeat a simple sequence of actions,"Write a script that takes an input string and prints it, followed by the entire string repeated exactly 100 times, ensuring proper newline separation between repetitions.",,False,0,17134,273_6.py
+274,11,Print all items in a list,Implement an optimized function named 'print_list_items' that accepts a list as an argument and efficiently prints each element to the console. Use Pythonic best practices.,"def print_list_items(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True, [5, 6]]
+    print_list_items(sample_list)",True,0,17135,274_11.py
+274,11,Print all items in a list,Implement an optimized function named 'print_list_items' that accepts a list as an argument and efficiently prints each element to the console. Use Pythonic best practices.,"def print_list_items(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True]
+    print_list_items(sample_list)",True,1,17136,274_11_1.py
+274,13,Print all items in a list,Write a class method or a standalone function that takes an iterable (list) and iterates through it to display every element. Ensure the code is clean and easily readable.,"def display_all_elements(data):
+    for element in data:
+        print(element)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    display_all_elements(sample_list)",True,0,17137,274_13.py
+274,13,Print all items in a list,Write a class method or a standalone function that takes an iterable (list) and iterates through it to display every element. Ensure the code is clean and easily readable.,"def display_all_elements(data):
+    for element in data:
+        print(element)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    display_all_elements(sample_list)
+    sample_list_two = [""apple"", ""banana"", ""cherry""]
+    display_all_elements(sample_list_two)",True,1,17138,274_13_1.py
+274,13,Print all items in a list,Write a class method or a standalone function that takes an iterable (list) and iterates through it to display every element. Ensure the code is clean and easily readable.,"def display_all_elements(data):
+    for element in data:
+        print(element)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 'a', True]
+    display_all_elements(sample_list)",True,2,17139,274_13_2.py
+274,13,Print all items in a list,Write a class method or a standalone function that takes an iterable (list) and iterates through it to display every element. Ensure the code is clean and easily readable.,"def display_list_elements(data):
+    for element in data:
+        print(element)
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 3.14, True]
+    display_list_elements(sample_list)",True,3,17140,274_13_3.py
+274,12,Print all items in a list,"Develop a single line, highly efficient one-liner using built-in Python features to print all elements contained within a given list, assuming the list is already defined.","if __name__ == '__main__': print(*[1, 2, 3, 4, 5])",True,0,17141,274_12.py
+275,0,Iterate through a small collection,"Write a complete, efficient Python script that iterates through a list of strings and prints each string in uppercase.","def uppercase_strings(string_list):
+    uppercase_list = []
+    for s in string_list:
+        uppercase_list.append(s.upper())
+    return uppercase_list
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""script""]
+    result = uppercase_strings(sample_list)
+    for upper_string in result:
+        print(upper_string)",True,0,17142,275_0.py
+275,0,Iterate through a small collection,"Write a complete, efficient Python script that iterates through a list of strings and prints each string in uppercase.","def process_strings(string_list):
+    for s in string_list:
+        print(s.upper())
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""script""]
+    process_strings(sample_list)",True,1,17143,275_0_1.py
+275,0,Iterate through a small collection,"Write a complete, efficient Python script that iterates through a list of strings and prints each string in uppercase.","def uppercase_strings(string_list):
+    uppercase_list = []
+    for s in string_list:
+        uppercase_list.append(s.upper())
+    return uppercase_list
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""scripting""]
+    result = uppercase_strings(sample_list)
+    for upper_string in result:
+        print(upper_string)",True,2,17144,275_0_2.py
+275,0,Iterate through a small collection,"Write a complete, efficient Python script that iterates through a list of strings and prints each string in uppercase.","def process_strings(string_list):
+    for s in string_list:
+        print(s.upper())
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""scripting""]
+    process_strings(sample_list)",True,3,17145,275_0_3.py
+275,0,Iterate through a small collection,"Write a complete, efficient Python script that iterates through a list of strings and prints each string in uppercase.","def process_strings(string_list):
+    for s in string_list:
+        print(s.upper())
+if __name__ == '__main__':
+    sample_strings = [""hello"", ""world"", ""python"", ""scripting""]
+    process_strings(sample_strings)",True,4,17146,275_0_4.py
+275,0,Iterate through a small collection,"Write a complete, efficient Python script that iterates through a list of strings and prints each string in uppercase.","def uppercase_list(string_list):
+    uppercase_list = []
+    for s in string_list:
+        uppercase_list.append(s.upper())
+    return uppercase_list
+if __name__ == '__main__':
+    sample_strings = [""hello"", ""world"", ""python"", ""scripting""]
+    result = uppercase_list(sample_strings)
+    for upper_string in result:
+        print(upper_string)",True,5,17147,275_0_5.py
+275,1,Iterate through a small collection,Implement a function named `process_collection` that takes a list of integers and returns a new list containing only the even numbers. Use a list comprehension for optimization.,"def process_collection(data):
+    return [x for x in data if x % 2 == 0]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = process_collection(sample_list)
+    print(result)",True,0,17148,275_1.py
