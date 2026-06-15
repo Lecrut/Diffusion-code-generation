@@ -1,0 +1,13 @@
+import sys
+def find_largest(input_string):
+    try:
+        numbers = [int(x) for x in input_string.split()]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return "Error: Input contains non-numeric values."
+if __name__ == '__main__':
+    sample_input = "10 5 22 8 30"
+    result = find_largest(sample_input)
+    print(result)

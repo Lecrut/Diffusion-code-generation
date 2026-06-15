@@ -310397,3 +310397,3040 @@ if __name__ == '__main__':
     sample_data = [10, 20, 30, 40, 50]
     average = calculator.get_average(sample_data)
     print(average)",True,3,15465,250_11_3.py
+250,12,Calculate the average of values,Write a complete Python script that prompts the user to input a series of numbers from the console and then calculates and prints the average of all entered numbers. Use appropriate error handling for non-numeric input.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    total = 0
+    count = 0
+    for num in numbers:
+        try:
+            total += num
+            count += 1
+        except TypeError:
+            print(""Error: Invalid input detected. Please enter only numbers."")
+            continue
+    if count > 0:
+        average = total / count
+        print(f""The average of the entered numbers is: {average}"")
+    else:
+        print(""No valid numbers were entered to calculate the average."")",True,0,15466,250_12.py
+250,12,Calculate the average of values,Write a complete Python script that prompts the user to input a series of numbers from the console and then calculates and prints the average of all entered numbers. Use appropriate error handling for non-numeric input.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    total = 0
+    count = 0
+    for num in numbers:
+        if isinstance(num, (int, float)):
+            total += num
+            count += 1
+        else:
+            print(f""Error: '{num}' is not a valid number. Skipping."")
+    if count > 0:
+        average = total / count
+        print(f""The average of the entered numbers is: {average}"")
+    else:
+        print(""No valid numbers were entered to calculate the average."")",True,1,15467,250_12_1.py
+250,12,Calculate the average of values,Write a complete Python script that prompts the user to input a series of numbers from the console and then calculates and prints the average of all entered numbers. Use appropriate error handling for non-numeric input.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    total = 0
+    count = 0
+    for num in numbers:
+        if isinstance(num, (int, float)):
+            total += num
+            count += 1
+        else:
+            print(f""Skipping invalid input: {num}"")
+    if count > 0:
+        average = total / count
+        print(f""The average of the entered numbers is: {average}"")
+    else:
+        print(""No valid numbers were entered."")",True,2,15468,250_12_2.py
+250,12,Calculate the average of values,Write a complete Python script that prompts the user to input a series of numbers from the console and then calculates and prints the average of all entered numbers. Use appropriate error handling for non-numeric input.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    total = 0
+    count = 0
+    for num in numbers:
+        if isinstance(num, (int, float)):
+            total += num
+            count += 1
+        else:
+            print(f""Error: Invalid input '{num}'. Skipping this value."")
+    if count > 0:
+        average = total / count
+        print(f""The average of the entered numbers is: {average}"")
+    else:
+        print(""No valid numbers were entered to calculate the average."")",True,3,15469,250_12_3.py
+250,12,Calculate the average of values,Write a complete Python script that prompts the user to input a series of numbers from the console and then calculates and prints the average of all entered numbers. Use appropriate error handling for non-numeric input.,"if __name__ == '__main__':
+    numbers = [10, 20, 30, 40, 50]
+    total = 0
+    valid_numbers = []
+    for item in numbers:
+        try:
+            number = float(item)
+            valid_numbers.append(number)
+            total += number
+        except ValueError:
+            print(f""Skipping invalid input: {item}"")
+    if valid_numbers:
+        average = total / len(valid_numbers)
+        print(f""The numbers entered are: {valid_numbers}"")
+        print(f""The average is: {average}"")
+    else:
+        print(""No valid numbers were entered."")",True,4,15470,250_12_4.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def compute_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [10.5, 20.5, 30.5]
+    print(f""Data: {data1}, Mean: {compute_mean(data1)}"")
+    data2 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    print(f""Data: {data2}, Mean: {compute_mean(data2)}"")
+    data3 = [100.0, 50.5, 75.25]
+    print(f""Data: {data3}, Mean: {compute_mean(data3)}"")
+    data4 = [3.14, 2.71, 1.618]
+    print(f""Data: {data4}, Mean: {compute_mean(data4)}"")",True,0,15471,250_13.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def calculate_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.0, 2.5, 3.5, 4.0]
+    mean1 = calculate_mean(data1)
+    print(f""Data: {data1}, Mean: {mean1}"")
+    data2 = [10.5, 20.5, 30.5]
+    mean2 = calculate_mean(data2)
+    print(f""Data: {data2}, Mean: {mean2}"")
+    data3 = [5.0, 5.0, 5.0, 5.0]
+    mean3 = calculate_mean(data3)
+    print(f""Data: {data3}, Mean: {mean3}"")
+    data4 = [1.1, 2.2, 3.3, 4.4, 5.5]
+    mean4 = calculate_mean(data4)
+    print(f""Data: {data4}, Mean: {mean4}"")
+    data5 = [0.0, -1.0, 2.0, -3.0]
+    mean5 = calculate_mean(data5)
+    print(f""Data: {data5}, Mean: {mean5}"")",True,1,15472,250_13_1.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def calculate_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.5, 2.5, 3.5]
+    print(f""Data: {data1}, Mean: {calculate_mean(data1)}"")
+    data2 = [10.0, 20.0, 30.0, 40.0]
+    print(f""Data: {data2}, Mean: {calculate_mean(data2)}"")
+    data3 = [5.5, 6.5, 7.5, 8.5]
+    print(f""Data: {data3}, Mean: {calculate_mean(data3)}"")
+    data4 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    print(f""Data: {data4}, Mean: {calculate_mean(data4)}"")
+    data5 = [100.5, 99.5, 101.0]
+    print(f""Data: {data5}, Mean: {calculate_mean(data5)}"")",True,2,15473,250_13_2.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def calculate_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.0, 2.5, 3.5, 4.0]
+    mean1 = calculate_mean(data1)
+    print(f""Data: {data1}, Mean: {mean1}"")
+    data2 = [10.5, 20.5, 30.5]
+    mean2 = calculate_mean(data2)
+    print(f""Data: {data2}, Mean: {mean2}"")
+    data3 = [5.0, 5.0, 5.0, 5.0]
+    mean3 = calculate_mean(data3)
+    print(f""Data: {data3}, Mean: {mean3}"")
+    data4 = [1.1, 2.2, 3.3, 4.4, 5.5]
+    mean4 = calculate_mean(data4)
+    print(f""Data: {data4}, Mean: {mean4}"")",True,3,15474,250_13_3.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def compute_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.0, 2.5, 3.5, 4.0]
+    result1 = compute_mean(data1)
+    print(f""Data: {data1}, Mean: {result1}"")
+    data2 = [10.5, 20.5, 30.5]
+    result2 = compute_mean(data2)
+    print(f""Data: {data2}, Mean: {result2}"")
+    data3 = [5.0, 5.0, 5.0, 5.0]
+    result3 = compute_mean(data3)
+    print(f""Data: {data3}, Mean: {result3}"")
+    data4 = [1.1, 2.2, 3.3, 4.4, 5.5]
+    result4 = compute_mean(data4)
+    print(f""Data: {data4}, Mean: {result4}"")
+    data5 = [0.0, -1.0, 2.0, -3.0]
+    result5 = compute_mean(data5)
+    print(f""Data: {data5}, Mean: {result5}"")",True,4,15475,250_13_4.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def calculate_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [10.5, 20.5, 30.5]
+    print(f""Data: {data1}, Mean: {calculate_mean(data1)}"")
+    data2 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    print(f""Data: {data2}, Mean: {calculate_mean(data2)}"")
+    data3 = [100.0, 50.5, 75.25]
+    print(f""Data: {data3}, Mean: {calculate_mean(data3)}"")
+    data4 = [3.14159, 2.71828, 1.61803]
+    print(f""Data: {data4}, Mean: {calculate_mean(data4)}"")
+    data5 = [5.0]
+    print(f""Data: {data5}, Mean: {calculate_mean(data5)}"")",True,5,15476,250_13_5.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def compute_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [10.5, 20.5, 30.5]
+    print(f""Data: {data1}, Mean: {compute_mean(data1)}"")
+    data2 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    print(f""Data: {data2}, Mean: {compute_mean(data2)}"")
+    data3 = [100.0, 50.5, 75.25, 25.0]
+    print(f""Data: {data3}, Mean: {compute_mean(data3)}"")
+    data4 = [3.14, 2.71, 1.618]
+    print(f""Data: {data4}, Mean: {compute_mean(data4)}"")
+    data5 = [5.0]
+    print(f""Data: {data5}, Mean: {compute_mean(data5)}"")",True,6,15477,250_13_6.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def calculate_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.0, 2.5, 3.5, 4.0]
+    mean1 = calculate_mean(data1)
+    print(f""Data: {data1}, Mean: {mean1}"")
+    data2 = [10.5, 20.5, 30.5]
+    mean2 = calculate_mean(data2)
+    print(f""Data: {data2}, Mean: {mean2}"")
+    data3 = [5.0, 5.0, 5.0, 5.0]
+    mean3 = calculate_mean(data3)
+    print(f""Data: {data3}, Mean: {mean3}"")
+    data4 = [1.1, 2.2, 3.3, 4.4, 5.5]
+    mean4 = calculate_mean(data4)
+    print(f""Data: {data4}, Mean: {mean4}"")
+    data5 = [0.0, -1.0, 1.0, 2.0]
+    mean5 = calculate_mean(data5)
+    print(f""Data: {data5}, Mean: {mean5}"")",True,7,15478,250_13_7.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def calculate_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.0, 2.5, 3.5, 4.0]
+    print(f""Data: {data1}, Mean: {calculate_mean(data1)}"")
+    data2 = [10.5, 20.5, 30.5]
+    print(f""Data: {data2}, Mean: {calculate_mean(data2)}"")
+    data3 = [1.1, 2.2, 3.3, 4.4, 5.5]
+    print(f""Data: {data3}, Mean: {calculate_mean(data3)}"")
+    data4 = [5.0, 5.0, 5.0, 5.0]
+    print(f""Data: {data4}, Mean: {calculate_mean(data4)}"")
+    data5 = [100.0, 200.0, 300.0]
+    print(f""Data: {data5}, Mean: {calculate_mean(data5)}"")",True,8,15479,250_13_8.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def compute_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [1.0, 2.5, 3.5, 4.0]
+    print(f""Data: {data1}"")
+    print(f""Mean: {compute_mean(data1)}"")
+    data2 = [10.5, 20.5, 30.5]
+    print(f""\nData: {data2}"")
+    print(f""Mean: {compute_mean(data2)}"")
+    data3 = [1.1, 2.2, 3.3, 4.4, 5.5]
+    print(f""\nData: {data3}"")
+    print(f""Mean: {compute_mean(data3)}"")
+    data4 = [100.0, 50.5, 75.25]
+    print(f""\nData: {data4}"")
+    print(f""Mean: {compute_mean(data4)}"")
+    data5 = [5.0]
+    print(f""\nData: {data5}"")
+    print(f""Mean: {compute_mean(data5)}"")",True,9,15480,250_13_9.py
+250,13,Calculate the average of values,Develop an optimized solution using Python's built-in `statistics` module to compute the average (mean) of a given list of floating-point numbers. Provide examples demonstrating its use for different input scenarios.,"import statistics
+def compute_mean(data):
+    return statistics.mean(data)
+if __name__ == '__main__':
+    data1 = [10.5, 20.5, 30.5]
+    print(f""Data: {data1}, Mean: {compute_mean(data1)}"")
+    data2 = [1.0, 2.0, 3.0, 4.0, 5.0]
+    print(f""Data: {data2}, Mean: {compute_mean(data2)}"")
+    data3 = [100.0, 50.5, 75.25]
+    print(f""Data: {data3}, Mean: {compute_mean(data3)}"")
+    data4 = [3.14, 2.71, 1.618]
+    print(f""Data: {data4}, Mean: {compute_mean(data4)}"")
+    data5 = [5.0]
+    print(f""Data: {data5}, Mean: {compute_mean(data5)}"")",True,10,15481,250_13_10.py
+250,14,Calculate the average of values,"Create a function that calculates the weighted average of a list of scores and their corresponding weights. The function should take two lists (scores and weights) as input and return the calculated weighted average, ensuring the code is clean, readable, and uses efficient iterative logic.","def calculate_weighted_average(scores, weights):
+    total_weighted_sum = 0
+    total_weight = 0
+    for score, weight in zip(scores, weights):
+        total_weighted_sum += score * weight
+        total_weight += weight
+    if total_weight == 0:
+        return 0
+    return total_weighted_sum / total_weight
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78]
+    sample_weights = [0.3, 0.5, 0.2]
+    weighted_avg = calculate_weighted_average(sample_scores, sample_weights)
+    print(weighted_avg)",True,0,15482,250_14.py
+250,14,Calculate the average of values,"Create a function that calculates the weighted average of a list of scores and their corresponding weights. The function should take two lists (scores and weights) as input and return the calculated weighted average, ensuring the code is clean, readable, and uses efficient iterative logic.","def calculate_weighted_average(scores, weights):
+    if len(scores) != len(weights):
+        raise ValueError(""Scores and weights lists must have the same length"")
+    total_weighted_sum = 0
+    total_weight = 0
+    for score, weight in zip(scores, weights):
+        total_weighted_sum += score * weight
+        total_weight += weight
+    if total_weight == 0:
+        return 0
+    return total_weighted_sum / total_weight
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88]
+    sample_weights = [0.2, 0.3, 0.15, 0.35]
+    weighted_avg = calculate_weighted_average(sample_scores, sample_weights)
+    print(weighted_avg)",True,1,15483,250_14_1.py
+250,14,Calculate the average of values,"Create a function that calculates the weighted average of a list of scores and their corresponding weights. The function should take two lists (scores and weights) as input and return the calculated weighted average, ensuring the code is clean, readable, and uses efficient iterative logic.","def calculate_weighted_average(scores, weights):
+    total_weighted_sum = 0
+    total_weight = 0
+    if len(scores) != len(weights):
+        raise ValueError(""Scores and weights lists must have the same length"")
+    for score, weight in zip(scores, weights):
+        total_weighted_sum += score * weight
+        total_weight += weight
+    if total_weight == 0:
+        return 0
+    else:
+        return total_weighted_sum / total_weight
+if __name__ == '__main__':
+    scores_list = [85, 92, 78, 88]
+    weights_list = [0.2, 0.3, 0.15, 0.35]
+    weighted_avg = calculate_weighted_average(scores_list, weights_list)
+    print(weighted_avg)",True,2,15484,250_14_2.py
+250,14,Calculate the average of values,"Create a function that calculates the weighted average of a list of scores and their corresponding weights. The function should take two lists (scores and weights) as input and return the calculated weighted average, ensuring the code is clean, readable, and uses efficient iterative logic.","def calculate_weighted_average(scores, weights):
+    total_weighted_sum = 0
+    total_weight = 0
+    for score, weight in zip(scores, weights):
+        total_weighted_sum += score * weight
+        total_weight += weight
+    if total_weight == 0:
+        return 0
+    return total_weighted_sum / total_weight
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88]
+    sample_weights = [0.2, 0.3, 0.15, 0.35]
+    weighted_avg = calculate_weighted_average(sample_scores, sample_weights)
+    print(weighted_avg)",True,3,15485,250_14_3.py
+250,14,Calculate the average of values,"Create a function that calculates the weighted average of a list of scores and their corresponding weights. The function should take two lists (scores and weights) as input and return the calculated weighted average, ensuring the code is clean, readable, and uses efficient iterative logic.","def calculate_weighted_average(scores, weights):
+    total_weighted_sum = 0
+    total_weight = 0
+    if len(scores) != len(weights):
+        raise ValueError(""Scores and weights lists must have the same length"")
+    for score, weight in zip(scores, weights):
+        total_weighted_sum += score * weight
+        total_weight += weight
+    if total_weight == 0:
+        return 0
+    return total_weighted_sum / total_weight
+if __name__ == '__main__':
+    sample_scores = [85, 92, 78, 88]
+    sample_weights = [0.2, 0.3, 0.1, 0.4]
+    weighted_avg = calculate_weighted_average(sample_scores, sample_weights)
+    print(weighted_avg)",True,4,15486,250_14_4.py
+251,0,Determine the largest number present,"Write a complete, efficient Python script that reads numbers from a file and determines and prints the largest number present.",,False,0,15487,251_0.py
+251,1,Determine the largest number present,"Implement an optimized function named 'find_largest' that accepts a list of integers and returns the largest integer, using the built-in `max()` function for maximum efficiency.","def find_largest(data):
+    return max(data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    result = find_largest(sample_list)
+    print(result)",True,0,15488,251_1.py
+251,1,Determine the largest number present,"Implement an optimized function named 'find_largest' that accepts a list of integers and returns the largest integer, using the built-in `max()` function for maximum efficiency.","def find_largest(data):
+    return max(data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 8, 15]
+    largest = find_largest(sample_list)
+    print(largest)",True,1,15489,251_1_1.py
+251,1,Determine the largest number present,"Implement an optimized function named 'find_largest' that accepts a list of integers and returns the largest integer, using the built-in `max()` function for maximum efficiency.","def find_largest(data):
+    return max(data)
+if __name__ == '__main__':
+    sample_list = [10, 5, 22, 8, 30]
+    result = find_largest(sample_list)
+    print(result)",True,2,15490,251_1_2.py
+251,2,Determine the largest number present,Develop a standalone Python program that takes user input as a sequence of space-separated numbers and identifies and outputs the single largest number in the input.,"import sys
+def find_largest(input_string):
+    try:
+        numbers = [int(x) for x in input_string.split()]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all inputs are valid integers.""
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8 30""
+    result = find_largest(sample_input)
+    print(result)",True,0,15491,251_2.py
+251,2,Determine the largest number present,Develop a standalone Python program that takes user input as a sequence of space-separated numbers and identifies and outputs the single largest number in the input.,"import sys
+if __name__ == '__main__':
+    input_data = ""42 10 99 3 56""
+    numbers = list(map(int, input_data.split()))
+    largest = max(numbers)
+    print(largest)",True,1,15492,251_2_1.py
+251,2,Determine the largest number present,Develop a standalone Python program that takes user input as a sequence of space-separated numbers and identifies and outputs the single largest number in the input.,"import sys
+def find_largest(input_string):
+    try:
+        numbers = [int(x) for x in input_string.split()]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return ""Error: Input contains non-numeric values.""
+if __name__ == '__main__':
+    sample_input = ""10 5 22 8 30""
+    result = find_largest(sample_input)
+    print(result)",True,2,15493,251_2_2.py
+251,2,Determine the largest number present,Develop a standalone Python program that takes user input as a sequence of space-separated numbers and identifies and outputs the single largest number in the input.,"import sys
+def find_largest(input_string):
+    try:
+        numbers = [int(x) for x in input_string.split()]
+        if not numbers:
+            return None
+        return max(numbers)
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all inputs are valid integers.""
+if __name__ == '__main__':
+    sample_input = ""10 5 42 3 99 1""
+    result = find_largest(sample_input)
+    print(result)",True,3,15494,251_2_3.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers[1:]:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Maximum in {list1}: {analyzer.find_maximum(list1)}"")
+    print(f""Maximum in {list2}: {analyzer.find_maximum(list2)}"")
+    print(f""Maximum in {list3}: {analyzer.find_maximum(list3)}"")
+    try:
+        analyzer.find_maximum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,15495,251_3.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Maximum of {list1}: {analyzer.find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {analyzer.find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {analyzer.find_maximum(list3)}"")
+    try:
+        analyzer.find_maximum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,1,15496,251_3_1.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    sample_list1 = [10, 5, 20, 8, 15]
+    sample_list2 = [-5, -1, -10, -3]
+    sample_list3 = [42]
+    sample_list4 = []
+    print(f""Maximum of {sample_list1}: {analyzer.find_maximum(sample_list1)}"")
+    print(f""Maximum of {sample_list2}: {analyzer.find_maximum(sample_list2)}"")
+    print(f""Maximum of {sample_list3}: {analyzer.find_maximum(sample_list3)}"")
+    try:
+        analyzer.find_maximum(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,2,15497,251_3_2.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers[1:]:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Maximum of {list1}: {analyzer.find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {analyzer.find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {analyzer.find_maximum(list3)}"")
+    try:
+        analyzer.find_maximum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,3,15498,251_3_3.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Maximum in {list1}: {analyzer.find_maximum(list1)}"")
+    print(f""Maximum in {list2}: {analyzer.find_maximum(list2)}"")
+    print(f""Maximum in {list3}: {analyzer.find_maximum(list3)}"")
+    try:
+        analyzer.find_maximum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,4,15499,251_3_4.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -100, -3]
+    list3 = [42]
+    list4 = []
+    print(f""Maximum of {list1}: {analyzer.find_maximum(list1)}"")
+    print(f""Maximum of {list2}: {analyzer.find_maximum(list2)}"")
+    print(f""Maximum of {list3}: {analyzer.find_maximum(list3)}"")
+    try:
+        analyzer.find_maximum(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,5,15500,251_3_5.py
+251,3,Determine the largest number present,Write a class named 'NumberAnalyzer' with a method to find the maximum value within an arbitrary list of integers. Ensure the implementation is highly readable and follows object-oriented best practices.,"class NumberAnalyzer:
+    def find_maximum(self, numbers):
+        if not numbers:
+            raise ValueError(""Input list cannot be empty"")
+        maximum = numbers[0]
+        for number in numbers:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    sample_list1 = [10, 5, 22, 8, 30]
+    sample_list2 = [-5, -1, -100, -2]
+    sample_list3 = [7]
+    sample_list4 = []
+    print(f""Maximum of {sample_list1}: {analyzer.find_maximum(sample_list1)}"")
+    print(f""Maximum of {sample_list2}: {analyzer.find_maximum(sample_list2)}"")
+    print(f""Maximum of {sample_list3}: {analyzer.find_maximum(sample_list3)}"")
+    try:
+        analyzer.find_maximum(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,6,15501,251_3_6.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""7, -3, 15.5, 0""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")
+    test_string_6 = ""invalid,123,xyz,456""
+    print(f""Input: '{test_string_6}', Largest: {find_largest_number(test_string_6)}"")",True,0,15502,251_4.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                pass
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""7,abc,4,9""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")
+    test_string_6 = ""10""
+    print(f""Input: '{test_string_6}', Largest: {find_largest_number(test_string_6)}"")",True,1,15503,251_4_1.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""7, -3, 15.5, 0""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")
+    test_string_6 = ""abc,123,xyz""
+    print(f""Input: '{test_string_6}', Largest: {find_largest_number(test_string_6)}"")",True,2,15504,251_4_2.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""99,0,50.5,invalid,200""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")",True,3,15505,251_4_3.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""99,0,50.5,invalid,1000""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")",True,4,15506,251_4_4.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        try:
+            number = float(item.strip())
+            numbers.append(number)
+        except ValueError:
+            continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    sample1 = ""10,5,22,8""
+    print(f""Input: '{sample1}', Largest: {find_largest_number(sample1)}"")
+    sample2 = ""3.14,1.618,2.718""
+    print(f""Input: '{sample2}', Largest: {find_largest_number(sample2)}"")
+    sample3 = ""a,b,100,c""
+    print(f""Input: '{sample3}', Largest: {find_largest_number(sample3)}"")
+    sample4 = ""50""
+    print(f""Input: '{sample4}', Largest: {find_largest_number(sample4)}"")
+    sample5 = """"
+    print(f""Input: '{sample5}', Largest: {find_largest_number(sample5)}"")",True,5,15507,251_4_5.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""a,b,100,c""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = """"
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = ""50""
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")",True,6,15508,251_4_6.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                pass
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""7,abc,4,9""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")
+    test_string_6 = ""50""
+    print(f""Input: '{test_string_6}', Largest: {find_largest_number(test_string_6)}"")",True,7,15509,251_4_7.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        item = item.strip()
+        if item:
+            try:
+                numbers.append(float(item))
+            except ValueError:
+                continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    print(f""Input: '{test_string_1}', Largest: {find_largest_number(test_string_1)}"")
+    test_string_2 = ""3.14,1.618,2.718""
+    print(f""Input: '{test_string_2}', Largest: {find_largest_number(test_string_2)}"")
+    test_string_3 = ""apple,banana,100,orange""
+    print(f""Input: '{test_string_3}', Largest: {find_largest_number(test_string_3)}"")
+    test_string_4 = ""99,0,50.5,invalid,1000""
+    print(f""Input: '{test_string_4}', Largest: {find_largest_number(test_string_4)}"")
+    test_string_5 = """"
+    print(f""Input: '{test_string_5}', Largest: {find_largest_number(test_string_5)}"")
+    test_string_6 = ""7""
+    print(f""Input: '{test_string_6}', Largest: {find_largest_number(test_string_6)}"")",True,8,15510,251_4_8.py
+251,4,Determine the largest number present,Create a function that accepts a single string containing comma-separated numerical values and returns the largest numerical value found within that string. Handle potential non-numeric input gracefully.,"def find_largest_number(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        try:
+            number = float(item.strip())
+            numbers.append(number)
+        except ValueError:
+            continue
+    if not numbers:
+        return None
+    return max(numbers)
+if __name__ == '__main__':
+    test_string_1 = ""10,5,22,8""
+    result_1 = find_largest_number(test_string_1)
+    print(f""Input: '{test_string_1}', Largest Number: {result_1}"")
+    test_string_2 = ""3.5,1.2,9.9""
+    result_2 = find_largest_number(test_string_2)
+    print(f""Input: '{test_string_2}', Largest Number: {result_2}"")
+    test_string_3 = ""a,b,10,c""
+    result_3 = find_largest_number(test_string_3)
+    print(f""Input: '{test_string_3}', Largest Number: {result_3}"")
+    test_string_4 = ""50""
+    result_4 = find_largest_number(test_string_4)
+    print(f""Input: '{test_string_4}', Largest Number: {result_4}"")
+    test_string_5 = """"
+    result_5 = find_largest_number(test_string_5)
+    print(f""Input: '{test_string_5}', Largest Number: {result_5}"")",True,9,15511,251_4_9.py
+251,5,Determine the largest number present,Write an algorithm using only basic loop constructs (no built-in `max()`) to iterate through a provided list of integers and manually determine the largest element.,"def find_largest(data):
+    if not data:
+        return None
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [15, 8, 22, 3, 45, 10]
+    result = find_largest(sample_list)
+    print(result)",True,0,15512,251_5.py
+251,5,Determine the largest number present,Write an algorithm using only basic loop constructs (no built-in `max()`) to iterate through a provided list of integers and manually determine the largest element.,"def find_largest(data):
+    if not data:
+        return None
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [15, 8, 22, 4, 30, 11]
+    result = find_largest(sample_list)
+    print(result)",True,1,15513,251_5_1.py
+251,5,Determine the largest number present,Write an algorithm using only basic loop constructs (no built-in `max()`) to iterate through a provided list of integers and manually determine the largest element.,"if __name__ == '__main__':
+    data = [12, 45, 6, 89, 33, 71]
+    if not data:
+        largest = None
+    else:
+        largest = data[0]
+        for i in range(1, len(data)):
+            if data[i] > largest:
+                largest = data[i]
+    print(largest)",True,2,15514,251_5_2.py
+251,5,Determine the largest number present,Write an algorithm using only basic loop constructs (no built-in `max()`) to iterate through a provided list of integers and manually determine the largest element.,"if __name__ == '__main__':
+    data = [15, 8, 22, 4, 30, 11]
+    if not data:
+        largest = None
+    else:
+        largest = data[0]
+        for i in range(1, len(data)):
+            if data[i] > largest:
+                largest = data[i]
+    print(largest)",True,3,15515,251_5_3.py
+251,5,Determine the largest number present,Write an algorithm using only basic loop constructs (no built-in `max()`) to iterate through a provided list of integers and manually determine the largest element.,"def find_largest(data):
+    if not data:
+        return None
+    largest = data[0]
+    for i in range(1, len(data)):
+        if data[i] > largest:
+            largest = data[i]
+    return largest
+if __name__ == '__main__':
+    sample_list = [15, 3, 88, 42, 9, 71]
+    result = find_largest(sample_list)
+    print(result)",True,4,15516,251_5_4.py
+251,5,Determine the largest number present,Write an algorithm using only basic loop constructs (no built-in `max()`) to iterate through a provided list of integers and manually determine the largest element.,"if __name__ == '__main__':
+    data = [15, 8, 23, 4, 31, 10]
+    if not data:
+        largest = None
+    else:
+        largest = data[0]
+        for i in range(1, len(data)):
+            if data[i] > largest:
+                largest = data[i]
+    print(largest)",True,5,15517,251_5_5.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(data_iterator):
+    try:
+        first_item = next(data_iterator)
+    except StopIteration:
+        return None
+    largest = first_item
+    for number in data_iterator:
+        if number > largest:
+            largest = number
+    return largest
+def number_stream_generator(iterable):
+    return (n for n in iterable)
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    data_iterator = number_stream_generator(sample_data)
+    largest_number = find_largest(data_iterator)
+    print(largest_number)
+    sample_data_2 = [50, 10, 40, 20, 30]
+    data_iterator_2 = number_stream_generator(sample_data_2)
+    largest_number_2 = find_largest(data_iterator_2)
+    print(largest_number_2)
+    sample_data_3 = [7]
+    data_iterator_3 = number_stream_generator(sample_data_3)
+    largest_number_3 = find_largest(data_iterator_3)
+    print(largest_number_3)
+    sample_data_4 = []
+    data_iterator_4 = number_stream_generator(sample_data_4)
+    largest_number_4 = find_largest(data_iterator_4)
+    print(largest_number_4)",True,0,15518,251_6.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers:
+        if number > largest:
+            largest = number
+    return largest
+def largest_generator(iterable):
+    it = iter(iterable)
+    try:
+        first_item = next(it)
+        current_largest = first_item
+    except StopIteration:
+        return
+    for number in it:
+        if number > current_largest:
+            current_largest = number
+        yield current_largest
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    print(list(largest_generator(sample_data)))
+    sample_data_2 = [5, -2, 8, -10, 1]
+    print(list(largest_generator(sample_data_2)))
+    sample_data_3 = []
+    print(list(largest_generator(sample_data_3)))
+    sample_data_4 = [42]
+    print(list(largest_generator(sample_data_4)))",True,1,15519,251_6_1.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(data_iter):
+    try:
+        first = next(data_iter)
+    except StopIteration:
+        return
+    largest = first
+    for number in data_iter:
+        if number > largest:
+            largest = number
+    yield largest
+if __name__ == '__main__':
+    sample_data = iter([10, 5, 20, 3, 15, 25])
+    result_generator = find_largest(sample_data)
+    largest_value = next(result_generator)
+    print(largest_value)
+    sample_data_2 = iter([-5, -1, -10, -2])
+    result_generator_2 = find_largest(sample_data_2)
+    largest_value_2 = next(result_generator_2)
+    print(largest_value_2)
+    sample_data_3 = iter([42])
+    result_generator_3 = find_largest(sample_data_3)
+    largest_value_3 = next(result_generator_3)
+    print(largest_value_3)",True,2,15520,251_6_2.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(data_iterator):
+    try:
+        first_item = next(data_iterator)
+    except StopIteration:
+        return None
+    largest = first_item
+    for number in data_iterator:
+        if number > largest:
+            largest = number
+    return largest
+def number_stream_generator(iterable):
+    return (n for n in iterable)
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    data_iterator = number_stream_generator(sample_data)
+    result = find_largest(data_iterator)
+    print(result)
+    sample_data_2 = [50, 10, 40, 20, 30]
+    data_iterator_2 = number_stream_generator(sample_data_2)
+    result_2 = find_largest(data_iterator_2)
+    print(result_2)
+    sample_data_3 = [7]
+    data_iterator_3 = number_stream_generator(sample_data_3)
+    result_3 = find_largest(data_iterator_3)
+    print(result_3)
+    sample_data_4 = []
+    data_iterator_4 = number_stream_generator(sample_data_4)
+    result_4 = find_largest(data_iterator_4)
+    print(result_4)",True,3,15521,251_6_3.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(data_iter):
+    try:
+        first_item = next(data_iter)
+    except StopIteration:
+        return None
+    largest = first_item
+    for number in data_iter:
+        if number > largest:
+            largest = number
+    return largest
+def largest_generator(iterable):
+    if not iterable:
+        return
+    iterator = iter(iterable)
+    try:
+        current_max = next(iterator)
+    except StopIteration:
+        return
+    for number in iterator:
+        if number > current_max:
+            current_max = number
+        yield current_max
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    print(list(largest_generator(sample_data)))",True,4,15522,251_6_4.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers:
+        if number > largest:
+            largest = number
+    yield largest
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    result_generator = find_largest(sample_data)
+    largest_value = next(result_generator)
+    print(largest_value)
+    sample_data_empty = []
+    result_generator_empty = find_largest(sample_data_empty)
+    try:
+        next(result_generator_empty)
+    except StopIteration:
+        print(""Empty list handled correctly (no value yielded)"")",True,5,15523,251_6_5.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers:
+        if number > largest:
+            largest = number
+    return largest
+def largest_generator(iterable):
+    try:
+        iterator = iter(iterable)
+        first = next(iterator)
+        largest = first
+        for number in iterator:
+            if number > largest:
+                largest = number
+        yield largest
+    except StopIteration:
+        return
+if __name__ == '__main__':
+    sample_data1 = [10, 5, 20, 8, 15]
+    print(list(largest_generator(sample_data1)))
+    sample_data2 = [-5, -1, -10, -3]
+    print(list(largest_generator(sample_data2)))
+    sample_data3 = [42]
+    print(list(largest_generator(sample_data3)))
+    sample_data4 = []
+    print(list(largest_generator(sample_data4)))",True,6,15524,251_6_6.py
+251,6,Determine the largest number present,"Implement a generator function that takes an iterable of numbers and yields the largest number encountered as it processes the input stream, optimizing for memory usage.","def find_largest(numbers):
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for number in numbers[1:]:
+        if number > largest:
+            largest = number
+    return largest
+def largest_generator(iterable):
+    it = iter(iterable)
+    try:
+        first = next(it)
+        current_largest = first
+    except StopIteration:
+        return
+    for number in it:
+        if number > current_largest:
+            current_largest = number
+        yield current_largest
+if __name__ == '__main__':
+    sample_data = [10, 5, 20, 3, 15, 25]
+    print(list(largest_generator(sample_data)))",True,7,15525,251_6_7.py
+250,9,Calculate the average of values,Implement a decorator named `@average_calculator` that can be applied to any function. This decorator must automatically calculate and return the average of the function's results when it is called.,,False,0,15526,250_9.py
+250,4,Calculate the average of values,"Create a script that reads numbers from standard input, parses them as floats, and calculates the average of all entered numbers. The script must handle potential `ValueError` exceptions during float conversion.",,False,0,15527,250_4.py
+251,9,Determine the largest number present,"Generate a complete solution for determining the largest number from a dynamically generated list where elements are populated by reading input from a simulated data source (e.g., a hardcoded list or mock file content).","import random
+def find_largest_number(data):
+    if not data:
+        return None
+    largest = data[0]
+    for number in data:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    mock_data = [45, 12, 89, 3, 67, 22]
+    result = find_largest_number(mock_data)
+    print(result)",True,0,15528,251_9.py
+251,9,Determine the largest number present,"Generate a complete solution for determining the largest number from a dynamically generated list where elements are populated by reading input from a simulated data source (e.g., a hardcoded list or mock file content).","import random
+def find_largest_number(data):
+    if not data:
+        return None
+    largest = data[0]
+    for number in data:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    mock_data = [15, 8, 42, 3, 99, 27, 55]
+    result = find_largest_number(mock_data)
+    print(result)",True,1,15529,251_9_1.py
+251,9,Determine the largest number present,"Generate a complete solution for determining the largest number from a dynamically generated list where elements are populated by reading input from a simulated data source (e.g., a hardcoded list or mock file content).","import random
+def find_largest_number(data):
+    if not data:
+        return None
+    largest = data[0]
+    for number in data[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    mock_data = [42, 16, 89, 3, 77, 55]
+    result = find_largest_number(mock_data)
+    print(result)",True,2,15530,251_9_2.py
+251,9,Determine the largest number present,"Generate a complete solution for determining the largest number from a dynamically generated list where elements are populated by reading input from a simulated data source (e.g., a hardcoded list or mock file content).","def find_largest_number(data):
+    if not data:
+        return None
+    largest = data[0]
+    for number in data[1:]:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    mock_data = [15, 8, 42, 3, 99, 27]
+    result = find_largest_number(mock_data)
+    print(result)",True,3,15531,251_9_3.py
+251,9,Determine the largest number present,"Generate a complete solution for determining the largest number from a dynamically generated list where elements are populated by reading input from a simulated data source (e.g., a hardcoded list or mock file content).","import random
+def find_largest_number(data):
+    if not data:
+        return None
+    largest = data[0]
+    for number in data:
+        if number > largest:
+            largest = number
+    return largest
+if __name__ == '__main__':
+    mock_data = [45, 12, 89, 34, 67, 91, 23]
+    result = find_largest_number(mock_data)
+    print(result)",True,4,15532,251_9_4.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.0]
+    list3 = [42.0]
+    list4 = []
+    print(f""Max of {list1}: {finder.find_max(list1)}"")
+    print(f""Max of {list2}: {finder.find_max(list2)}"")
+    print(f""Max of {list3}: {finder.find_max(list3)}"")
+    try:
+        finder.find_max(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,0,15533,251_8.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data: list[float]) -> float:
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    sample_list_1 = [3.14, 1.618, 2.718, 0.577]
+    sample_list_2 = [-10.5, -5.2, -20.1, -1.0]
+    sample_list_3 = [42.0]
+    sample_list_4 = [99.9, 100.1, 98.7]
+    empty_list = []
+    print(f""Max of {sample_list_1}: {finder.find_max(sample_list_1)}"")
+    print(f""Max of {sample_list_2}: {finder.find_max(sample_list_2)}"")
+    print(f""Max of {sample_list_3}: {finder.find_max(sample_list_3)}"")
+    print(f""Max of {sample_list_4}: {finder.find_max(sample_list_4)}"")
+    try:
+        finder.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,15534,251_8_1.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.0]
+    list3 = [42.0]
+    list4 = [1.0e-9, 1.0e-8, 1.0e-7]
+    empty_list = []
+    print(f""Max of {list1}: {finder.find_max(list1)}"")
+    print(f""Max of {list2}: {finder.find_max(list2)}"")
+    print(f""Max of {list3}: {finder.find_max(list3)}"")
+    print(f""Max of {list4}: {finder.find_max(list4)}"")
+    try:
+        finder.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,2,15535,251_8_2.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data: list[float]) -> float:
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -1.1, -20.0]
+    list3 = [42.0]
+    list4 = [1.0e-9, 5.0e-9, 3.0e-9]
+    empty_list = []
+    print(f""Max of {list1}: {finder.find_max(list1)}"")
+    print(f""Max of {list2}: {finder.find_max(list2)}"")
+    print(f""Max of {list3}: {finder.find_max(list3)}"")
+    print(f""Max of {list4}: {finder.find_max(list4)}"")
+    try:
+        finder.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,3,15536,251_8_3.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data: list[float]) -> float:
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    sample_list_1 = [3.14, 1.618, 2.718, 0.577]
+    sample_list_2 = [-10.5, -5.2, -20.1, -1.0]
+    sample_list_3 = [42.0, 1.0, 99.9, 15.5]
+    empty_list = []
+    result_1 = finder.find_max(sample_list_1)
+    print(f""Max of {sample_list_1}: {result_1}"")
+    result_2 = finder.find_max(sample_list_2)
+    print(f""Max of {sample_list_2}: {result_2}"")
+    result_3 = finder.find_max(sample_list_3)
+    print(f""Max of {sample_list_3}: {result_3}"")
+    try:
+        finder.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,4,15537,251_8_4.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatAnalyzer:
+    def find_max(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    analyzer = FloatAnalyzer()
+    sample_list_1 = [3.14, 1.618, 2.718, 0.577]
+    sample_list_2 = [-10.5, -5.2, -20.1, -1.0]
+    sample_list_3 = [42.0, 1.0, 99.99, 15.5]
+    empty_list = []
+    result_1 = analyzer.find_max(sample_list_1)
+    print(f""Max of {sample_list_1}: {result_1}"")
+    result_2 = analyzer.find_max(sample_list_2)
+    print(f""Max of {sample_list_2}: {result_2}"")
+    result_3 = analyzer.find_max(sample_list_3)
+    print(f""Max of {sample_list_3}: {result_3}"")
+    try:
+        analyzer.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,5,15538,251_8_5.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data: list[float]) -> float:
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    sample_list_1 = [3.14, 1.618, 2.718, 0.577]
+    sample_list_2 = [-10.5, -5.2, -20.1, -1.0]
+    sample_list_3 = [42.0]
+    sample_list_4 = [99.99, 100.0, 98.76]
+    empty_list = []
+    print(f""Max of {sample_list_1}: {finder.find_max(sample_list_1)}"")
+    print(f""Max of {sample_list_2}: {finder.find_max(sample_list_2)}"")
+    print(f""Max of {sample_list_3}: {finder.find_max(sample_list_3)}"")
+    print(f""Max of {sample_list_4}: {finder.find_max(sample_list_4)}"")
+    try:
+        finder.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,6,15539,251_8_6.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data: list[float]) -> float:
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    sample_list_1 = [3.14, 1.618, 2.718, 0.577]
+    sample_list_2 = [-10.5, -5.2, -20.8, -1.1]
+    sample_list_3 = [42.0, 1.0, 99.99, 50.0]
+    empty_list = []
+    result_1 = finder.find_max(sample_list_1)
+    print(f""Max of {sample_list_1}: {result_1}"")
+    result_2 = finder.find_max(sample_list_2)
+    print(f""Max of {sample_list_2}: {result_2}"")
+    result_3 = finder.find_max(sample_list_3)
+    print(f""Max of {sample_list_3}: {result_3}"")
+    try:
+        finder.find_max(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,7,15540,251_8_7.py
+251,8,Determine the largest number present,Design and implement a highly performant method within a Python object capable of finding the maximum element in a list of floating-point numbers.,"class FloatMaxFinder:
+    def find_max(self, data):
+        if not data:
+            raise ValueError(""Input list cannot be empty"")
+        max_val = data[0]
+        for x in data[1:]:
+            if x > max_val:
+                max_val = x
+        return max_val
+if __name__ == '__main__':
+    finder = FloatMaxFinder()
+    list1 = [3.14, 1.618, 2.718, 0.577]
+    list2 = [-10.5, -5.2, -20.1, -1.9]
+    list3 = [42.0]
+    list4 = []
+    print(f""Max of {list1}: {finder.find_max(list1)}"")
+    print(f""Max of {list2}: {finder.find_max(list2)}"")
+    print(f""Max of {list3}: {finder.find_max(list3)}"")
+    try:
+        finder.find_max(list4)
+    except ValueError as e:
+        print(f""Error for {list4}: {e}"")",True,8,15541,251_8_8.py
+251,10,Determine the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and determines and prints the largest number present. The solution must be highly efficient.","import sys
+if __name__ == '__main__':
+    input_data = [42, 10, 99, 5, 123, 78]
+    if not input_data:
+        print(""Error: Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,0,15542,251_10.py
+251,10,Determine the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and determines and prints the largest number present. The solution must be highly efficient.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 42, 99, 3, 78]
+    if not input_data:
+        print(""Error: Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,1,15543,251_10_1.py
+251,10,Determine the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and determines and prints the largest number present. The solution must be highly efficient.","import sys
+if __name__ == '__main__':
+    input_data = [42, 10, 99, 5, 33]
+    if not input_data:
+        print(""Error: Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,2,15544,251_10_2.py
+251,10,Determine the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and determines and prints the largest number present. The solution must be highly efficient.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 20, 8, 15]
+    if not input_data:
+        print(""Error: Input list is empty."")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,3,15545,251_10_3.py
+251,10,Determine the largest number present,"Write a complete, robust Python script that reads a list of integers from standard input and determines and prints the largest number present. The solution must be highly efficient.","import sys
+if __name__ == '__main__':
+    input_data = [10, 5, 42, 99, 3, 88]
+    if not input_data:
+        print(""Error: Input list is empty"")
+    else:
+        largest = input_data[0]
+        for number in input_data[1:]:
+            if number > largest:
+                largest = number
+        print(largest)",True,4,15546,251_10_4.py
+251,11,Determine the largest number present,Implement an optimized function named 'find_largest' that accepts a list of numbers as input and returns the single largest number. Use built-in functions or efficient algorithmic approaches.,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list1 = [3, 1, 4, 1, 5, 9, 2]
+    sample_list2 = [-10, -5, -20, -1]
+    sample_list3 = [42]
+    sample_list4 = []
+    print(f""Largest in {sample_list1}: {find_largest(sample_list1)}"")
+    print(f""Largest in {sample_list2}: {find_largest(sample_list2)}"")
+    print(f""Largest in {sample_list3}: {find_largest(sample_list3)}"")
+    try:
+        find_largest(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,0,15547,251_11.py
+251,11,Determine the largest number present,Implement an optimized function named 'find_largest' that accepts a list of numbers as input and returns the single largest number. Use built-in functions or efficient algorithmic approaches.,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list1 = [10, 5, 20, 8, 15]
+    sample_list2 = [-5, -1, -10, -3]
+    sample_list3 = [42]
+    sample_list4 = []
+    print(f""Largest in {sample_list1}: {find_largest(sample_list1)}"")
+    print(f""Largest in {sample_list2}: {find_largest(sample_list2)}"")
+    print(f""Largest in {sample_list3}: {find_largest(sample_list3)}"")
+    try:
+        find_largest(sample_list4)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,1,15548,251_11_1.py
+251,11,Determine the largest number present,Implement an optimized function named 'find_largest' that accepts a list of numbers as input and returns the single largest number. Use built-in functions or efficient algorithmic approaches.,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list1 = [10, 5, 20, 8, 15]
+    result1 = find_largest(sample_list1)
+    print(f""The largest number in {sample_list1} is: {result1}"")
+    sample_list2 = [-5, -1, -10, -3]
+    result2 = find_largest(sample_list2)
+    print(f""The largest number in {sample_list2} is: {result2}"")
+    sample_list3 = [42]
+    result3 = find_largest(sample_list3)
+    print(f""The largest number in {sample_list3} is: {result3}"")
+    sample_list4 = []
+    try:
+        result4 = find_largest(sample_list4)
+        print(f""The largest number in {sample_list4} is: {result4}"")
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,2,15549,251_11_2.py
+251,11,Determine the largest number present,Implement an optimized function named 'find_largest' that accepts a list of numbers as input and returns the single largest number. Use built-in functions or efficient algorithmic approaches.,"def find_largest(numbers):
+    if not numbers:
+        raise ValueError(""Input list cannot be empty"")
+    return max(numbers)
+if __name__ == '__main__':
+    sample_list1 = [10, 5, 20, 8, 15]
+    sample_list2 = [-5, -1, -10, -3]
+    sample_list3 = [42]
+    sample_list4 = []
+    print(f""Largest in {sample_list1}: {find_largest(sample_list1)}"")
+    print(f""Largest in {sample_list2}: {find_largest(sample_list2)}"")
+    print(f""Largest in {sample_list3}: {find_largest(sample_list3)}"")
+    try:
+        find_largest(sample_list4)
+    except ValueError as e:
+        print(f""Error for {sample_list4}: {e}"")",True,3,15550,251_11_3.py
+251,13,Determine the largest number present,Write a concise and efficient one-line Python expression or function definition that finds the largest element in a given list of integers.,"if __name__ == '__main__':
+    data = [10, 5, 20, 8]
+    largest = max(data)
+    print(largest)",True,0,15551,251_13.py
+251,12,Determine the largest number present,Develop a class named 'NumberAnalyzer' with a method 'get_maximum' that takes an iterable (like a list) and correctly identifies the maximum value within it. Ensure the implementation adheres to object-oriented best practices.,"class NumberAnalyzer:
+    def get_maximum(self, data):
+        if not data:
+            raise ValueError(""Input iterable cannot be empty"")
+        maximum = data[0]
+        for number in data:
+            if number > maximum:
+                maximum = number
+        return maximum
+if __name__ == '__main__':
+    analyzer = NumberAnalyzer()
+    list1 = [10, 5, 20, 8, 15]
+    list2 = [-5, -1, -10, -3]
+    list3 = [42]
+    empty_list = []
+    print(f""Maximum of {list1}: {analyzer.get_maximum(list1)}"")
+    print(f""Maximum of {list2}: {analyzer.get_maximum(list2)}"")
+    print(f""Maximum of {list3}: {analyzer.get_maximum(list3)}"")
+    try:
+        analyzer.get_maximum(empty_list)
+    except ValueError as e:
+        print(f""Error for empty list: {e}"")",True,0,15552,251_12.py
+251,7,Determine the largest number present,"Write a script to read integers from standard input until EOF (End Of File) and track the running maximum value, printing only the final largest number.","if __name__ == '__main__':
+    data = [10, 5, 20, 3, 15]
+    max_value = -float('inf')
+    for num in data:
+        if num > max_value:
+            max_value = num
+    print(max_value)",True,0,15553,251_7.py
+251,7,Determine the largest number present,"Write a script to read integers from standard input until EOF (End Of File) and track the running maximum value, printing only the final largest number.","import sys
+if __name__ == '__main__':
+    data = [10, 5, 20, 3, 15]
+    max_val = -sys.maxsize - 1
+    for num in data:
+        if num > max_val:
+            max_val = num
+    print(max_val)",True,1,15554,251_7_1.py
+251,7,Determine the largest number present,"Write a script to read integers from standard input until EOF (End Of File) and track the running maximum value, printing only the final largest number.","import sys
+if __name__ == '__main__':
+    data = [10, 5, 20, 15, 30, 8]
+    max_value = -sys.maxsize - 1
+    for num in data:
+        if num > max_value:
+            max_value = num
+    print(max_value)",True,2,15555,251_7_2.py
+252,1,Compare two simple quantities now,"Implement an optimized function named `compare_quantities` that accepts two integers and returns a string indicating which quantity is greater, handling the case where they are equal.","def compare_quantities(a, b):
+    if a > b:
+        return ""a is greater""
+    elif b > a:
+        return ""b is greater""
+    else:
+        return ""the quantities are equal""
+if __name__ == '__main__':
+    print(compare_quantities(10, 5))
+    print(compare_quantities(20, 30))
+    print(compare_quantities(7, 7))
+    print(compare_quantities(100, 99))",True,0,15556,252_1.py
+252,2,Compare two simple quantities now,Develop a class named `QuantityComparer` with a method to compare two internal attributes (integers) and return a comparison result object or dictionary.,"class QuantityComparer:
+    def compare(self, a: int, b: int) -> dict:
+        if a > b:
+            return {""result"": ""a is greater than b"", ""a"": a, ""b"": b}
+        elif a < b:
+            return {""result"": ""a is less than b"", ""a"": a, ""b"": b}
+        else:
+            return {""result"": ""a is equal to b"", ""a"": a, ""b"": b}
+if __name__ == '__main__':
+    comparer = QuantityComparer()
+    val1 = 10
+    val2 = 5
+    result1 = comparer.compare(val1, val2)
+    print(f""Comparing {val1} and {val2}: {result1}"")
+    val3 = 20
+    val4 = 20
+    result2 = comparer.compare(val3, val4)
+    print(f""Comparing {val3} and {val4}: {result2}"")
+    val5 = 3
+    val6 = 15
+    result3 = comparer.compare(val5, val6)
+    print(f""Comparing {val5} and {val6}: {result3}"")",True,0,15557,252_2.py
+252,2,Compare two simple quantities now,Develop a class named `QuantityComparer` with a method to compare two internal attributes (integers) and return a comparison result object or dictionary.,"class QuantityComparer:
+    def compare(self, a: int, b: int) -> dict:
+        result = {
+            ""a"": a,
+            ""b"": b,
+            ""comparison_result"": """",
+            ""difference"": a - b
+        }
+        if a > b:
+            result[""comparison_result""] = ""a is greater than b""
+        elif a < b:
+            result[""comparison_result""] = ""a is less than b""
+        else:
+            result[""comparison_result""] = ""a is equal to b""
+        return result
+if __name__ == '__main__':
+    comparer = QuantityComparer()
+    value1 = 10
+    value2 = 5
+    comparison1 = comparer.compare(value1, value2)
+    print(f""Comparing {value1} and {value2}: {comparison1}"")
+    value3 = 20
+    value4 = 20
+    comparison2 = comparer.compare(value3, value4)
+    print(f""Comparing {value3} and {value4}: {comparison2}"")
+    value5 = 3
+    value6 = 15
+    comparison3 = comparer.compare(value5, value6)
+    print(f""Comparing {value5} and {value6}: {comparison3}"")",True,1,15558,252_2_1.py
+252,2,Compare two simple quantities now,Develop a class named `QuantityComparer` with a method to compare two internal attributes (integers) and return a comparison result object or dictionary.,"class QuantityComparer:
+    def compare(self, a: int, b: int) -> dict:
+        result = {}
+        if a > b:
+            result['comparison'] = 'a is greater than b'
+            result['difference'] = a - b
+        elif a < b:
+            result['comparison'] = 'a is less than b'
+            result['difference'] = b - a
+        else:
+            result['comparison'] = 'a is equal to b'
+            result['difference'] = 0
+        return result
+if __name__ == '__main__':
+    comparer = QuantityComparer()
+    value1 = 15
+    value2 = 7
+    comparison_result1 = comparer.compare(value1, value2)
+    print(f""Comparing {value1} and {value2}: {comparison_result1}"")
+    value3 = 20
+    value4 = 20
+    comparison_result2 = comparer.compare(value3, value4)
+    print(f""Comparing {value3} and {value4}: {comparison_result2}"")
+    value5 = 3
+    value6 = 10
+    comparison_result3 = comparer.compare(value5, value6)
+    print(f""Comparing {value5} and {value6}: {comparison_result3}"")",True,2,15559,252_2_2.py
+252,2,Compare two simple quantities now,Develop a class named `QuantityComparer` with a method to compare two internal attributes (integers) and return a comparison result object or dictionary.,"class QuantityComparer:
+    def __init__(self):
+        pass
+    def compare(self, a, b):
+        if a > b:
+            return {""result"": ""a is greater than b"", ""a"": a, ""b"": b}
+        elif a < b:
+            return {""result"": ""a is less than b"", ""a"": a, ""b"": b}
+        else:
+            return {""result"": ""a is equal to b"", ""a"": a, ""b"": b}
+if __name__ == '__main__':
+    comparer = QuantityComparer()
+    val1 = 10
+    val2 = 5
+    result1 = comparer.compare(val1, val2)
+    print(result1)
+    val3 = 7
+    val4 = 7
+    result2 = comparer.compare(val3, val4)
+    print(result2)
+    val5 = 20
+    val6 = 15
+    result3 = comparer.compare(val5, val6)
+    print(result3)",True,3,15560,252_2_3.py
+252,2,Compare two simple quantities now,Develop a class named `QuantityComparer` with a method to compare two internal attributes (integers) and return a comparison result object or dictionary.,"class QuantityComparer:
+    def compare(self, a: int, b: int) -> dict:
+        result = {
+            ""a"": a,
+            ""b"": b,
+            ""comparison_result"": """",
+            ""difference"": a - b
+        }
+        if a > b:
+            result[""comparison_result""] = ""a is greater than b""
+        elif a < b:
+            result[""comparison_result""] = ""a is less than b""
+        else:
+            result[""comparison_result""] = ""a is equal to b""
+        return result
+if __name__ == '__main__':
+    comparer = QuantityComparer()
+    value1 = 10
+    value2 = 5
+    comparison1 = comparer.compare(value1, value2)
+    print(f""Comparing {value1} and {value2}: {comparison1}"")
+    value3 = 7
+    value4 = 7
+    comparison2 = comparer.compare(value3, value4)
+    print(f""Comparing {value3} and {value4}: {comparison2}"")
+    value5 = 20
+    value6 = 15
+    comparison3 = comparer.compare(value5, value6)
+    print(f""Comparing {value5} and {value6}: {comparison3}"")",True,4,15561,252_2_4.py
+252,3,Compare two simple quantities now,"Write a concise Python script that takes two numbers as command-line arguments and uses conditional logic to compare them, printing the result clearly.","import sys
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py num1 num2"")
+    else:
+        try:
+            num1 = int(sys.argv[1])
+            num2 = int(sys.argv[2])
+            if num1 > num2:
+                print(f""{num1} is greater than {num2}"")
+            elif num1 < num2:
+                print(f""{num1} is less than {num2}"")
+            else:
+                print(f""{num1} is equal to {num2}"")
+        except ValueError:
+            print(""Invalid input. Please provide integers."")",True,0,15562,252_3.py
+252,3,Compare two simple quantities now,"Write a concise Python script that takes two numbers as command-line arguments and uses conditional logic to compare them, printing the result clearly.","import sys
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py num1 num2"")
+else:
+        try:
+            num1 = int(sys.argv[1])
+            num2 = int(sys.argv[2])
+            if num1 > num2:
+                print(f""{num1} is greater than {num2}"")
+            elif num1 < num2:
+                print(f""{num1} is less than {num2}"")
+            else:
+                print(f""{num1} is equal to {num2}"")
+        except ValueError:
+            print(""Invalid input. Please provide integers."")",True,1,15563,252_3_1.py
+252,3,Compare two simple quantities now,"Write a concise Python script that takes two numbers as command-line arguments and uses conditional logic to compare them, printing the result clearly.","import sys
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print(""Usage: python script_name.py num1 num2"")
+    else:
+        try:
+            num1 = float(sys.argv[1])
+            num2 = float(sys.argv[2])
+            if num1 > num2:
+                print(f""{num1} is greater than {num2}"")
+            elif num1 < num2:
+                print(f""{num1} is less than {num2}"")
+            else:
+                print(f""{num1} is equal to {num2}"")
+        except ValueError:
+            print(""Invalid input. Please provide valid numbers."")",True,2,15564,252_3_2.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    difference = a - b
+    return difference
+if __name__ == '__main__':
+    num1 = 3.1415926535
+    num2 = 3.1415926536
+    result1 = compare_and_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = 0.1 + 0.2
+    num4 = 0.3
+    result2 = compare_and_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = 1.0
+    num6 = 0.9999999999999999
+    result3 = compare_and_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,0,15565,252_4.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    difference = a - b
+    return difference
+if __name__ == '__main__':
+    num1 = 0.1 + 0.2
+    num2 = 0.3
+    result = compare_and_difference(num1, num2)
+    print(result)",True,1,15566,252_4_1.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    if abs(a - b) < 1e-9:
+        return 0.0
+    return a - b
+if __name__ == '__main__':
+    num1 = 1.0000000000000001
+    num2 = 1.0
+    diff1 = compare_and_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {diff1}"")
+    num3 = 3.14159
+    num4 = 3.1415926535
+    diff2 = compare_and_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {diff2}"")
+    num5 = 0.1 + 0.2
+    num6 = 0.3
+    diff3 = compare_and_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {diff3}"")",True,2,15567,252_4_2.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","import math
+def compare_and_difference(a, b):
+    if abs(a - b) < 1e-9:
+        return 0.0
+    else:
+        return a - b
+if __name__ == '__main__':
+    num1 = 1.0000000000000001
+    num2 = 1.0
+    diff1 = compare_and_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {diff1}"")
+    num3 = 3.14159
+    num4 = 3.1415926535
+    diff2 = compare_and_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {diff2}"")
+    num5 = 5.0
+    num6 = 5.0
+    diff3 = compare_and_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {diff3}"")",True,3,15568,252_4_3.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    difference = a - b
+    return difference
+if __name__ == '__main__':
+    num1 = 3.1415926535
+    num2 = 3.1415926536
+    result1 = compare_and_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = 0.1 + 0.2
+    num4 = 0.3
+    result2 = compare_and_difference(num3, num4)
+    print(f""Difference between {num3} (0.1+0.2) and {num4}: {result2}"")
+    num5 = 1.0
+    num6 = 0.9999999999999999
+    result3 = compare_and_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,4,15569,252_4_4.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    if abs(a - b) < 1e-9:
+        return 0.0
+    return a - b
+if __name__ == '__main__':
+    num1 = 1.0000000000000001
+    num2 = 1.0
+    diff1 = compare_and_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {diff1}"")
+    num3 = 3.1415926535
+    num4 = 3.141592653500001
+    diff2 = compare_and_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {diff2}"")
+    num5 = 5.0
+    num6 = 5.000000000000001
+    diff3 = compare_and_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {diff3}"")
+    num7 = 0.1 + 0.2
+    num8 = 0.3
+    diff4 = compare_and_difference(num7, num8)
+    print(f""Difference between {num7} and {num8}: {diff4}"")",True,5,15570,252_4_5.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    difference = a - b
+    return difference
+if __name__ == '__main__':
+    num1 = 0.1 + 0.2
+    num2 = 0.3
+    result1 = compare_and_difference(num1, num2)
+    print(f""{result1=}"")
+    num3 = 1.0
+    num4 = 0.9999999999999999
+    result2 = compare_and_difference(num3, num4)
+    print(f""{result2=}"")
+    num5 = 1.0 / 3.0
+    num6 = 0.3333333333333333
+    result3 = compare_and_difference(num5, num6)
+    print(f""{result3=}"")",True,6,15571,252_4_6.py
+252,4,Compare two simple quantities now,"Implement a function that compares two floating-point numbers and returns the difference between them, ensuring precision is handled appropriately for comparison.","def compare_and_difference(a, b):
+    if abs(a - b) < 1e-9:
+        return 0.0
+    return a - b
+if __name__ == '__main__':
+    num1 = 1.0000000000000001
+    num2 = 1.0
+    diff1 = compare_and_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {diff1}"")
+    num3 = 3.14159
+    num4 = 3.141590000000001
+    diff2 = compare_and_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {diff2}"")
+    num5 = 5.0
+    num6 = 5.0
+    diff3 = compare_and_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {diff3}"")",True,7,15572,252_4_7.py
+252,5,Compare two simple quantities now,Write an efficient Python routine to compare two lists of numbers by comparing their respective sums.,"def compare_sums(list1, list2):
+    sum1 = sum(list1)
+    sum2 = sum(list2)
+    return sum1 == sum2
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4]
+    list_b = [5, 6, 7, 8]
+    result = compare_sums(list_a, list_b)
+    print(result)",True,0,15573,252_5.py
+252,5,Compare two simple quantities now,Write an efficient Python routine to compare two lists of numbers by comparing their respective sums.,"def compare_list_sums(list1, list2):
+    sum1 = sum(list1)
+    sum2 = sum(list2)
+    if sum1 == sum2:
+        return ""Sums are equal""
+    else:
+        return ""Sums are not equal""
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4]
+    list_b = [5, 10, 15, -5]
+    result = compare_list_sums(list_a, list_b)
+    print(result)",True,1,15574,252_5_1.py
+252,5,Compare two simple quantities now,Write an efficient Python routine to compare two lists of numbers by comparing their respective sums.,"def compare_sums(list1, list2):
+    sum1 = sum(list1)
+    sum2 = sum(list2)
+    return sum1 == sum2
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [10, 20, 30, 40, 50]
+    result = compare_sums(list_a, list_b)
+    print(result)",True,2,15575,252_5_2.py
+252,5,Compare two simple quantities now,Write an efficient Python routine to compare two lists of numbers by comparing their respective sums.,"def compare_list_sums(list1, list2):
+    sum1 = sum(list1)
+    sum2 = sum(list2)
+    return sum1 == sum2
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4]
+    list_b = [5, 6, 7, 8]
+    result = compare_list_sums(list_a, list_b)
+    print(result)
+    list_c = [10, 20]
+    list_d = [15, 5]
+    result2 = compare_list_sums(list_c, list_d)
+    print(result2)",True,3,15576,252_5_3.py
+252,5,Compare two simple quantities now,Write an efficient Python routine to compare two lists of numbers by comparing their respective sums.,"def compare_list_sums(list1, list2):
+    sum1 = sum(list1)
+    sum2 = sum(list2)
+    return sum1 == sum2
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [10, 20, 30, 40, 50]
+    result = compare_list_sums(list_a, list_b)
+    print(result)",True,4,15577,252_5_4.py
+252,6,Compare two simple quantities now,Create a robust function that takes two quantities (integers) and returns a tuple containing the smaller quantity and the larger quantity.,"def find_min_max(a, b):
+    if a <= b:
+        return (a, b)
+    else:
+        return (b, a)
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 7
+    result = find_min_max(num1, num2)
+    print(result)",True,0,15578,252_6.py
+252,6,Compare two simple quantities now,Create a robust function that takes two quantities (integers) and returns a tuple containing the smaller quantity and the larger quantity.,"def find_min_max(a, b):
+    if a <= b:
+        return (a, b)
+    else:
+        return (b, a)
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 7
+    result = find_min_max(num1, num2)
+    print(result)
+    num3 = 42
+    num4 = 99
+    result2 = find_min_max(num3, num4)
+    print(result2)
+    num5 = 10
+    num6 = 10
+    result3 = find_min_max(num5, num6)
+    print(result3)",True,1,15579,252_6_1.py
+252,0,Compare two simple quantities now,"Write a complete, well-documented Python script to compare two simple integer quantities provided by the user and print which one is larger.","def compare_integers(a, b):
+    if a > b:
+        print(f""{a} is larger than {b}"")
+    elif b > a:
+        print(f""{b} is larger than {a}"")
+    else:
+        print(f""{a} and {b} are equal"")
+if __name__ == '__main__':
+    num1 = 42
+    num2 = 99
+    compare_integers(num1, num2)",True,0,15580,252_0.py
+252,0,Compare two simple quantities now,"Write a complete, well-documented Python script to compare two simple integer quantities provided by the user and print which one is larger.","def compare_numbers(a, b):
+    if a > b:
+        print(f""{a} is larger than {b}"")
+    elif b > a:
+        print(f""{b} is larger than {a}"")
+    else:
+        print(f""{a} and {b} are equal"")
+if __name__ == '__main__':
+    num1 = 42
+    num2 = 99
+    compare_numbers(num1, num2)",True,1,15581,252_0_1.py
+252,0,Compare two simple quantities now,"Write a complete, well-documented Python script to compare two simple integer quantities provided by the user and print which one is larger.","def compare_numbers():
+    num1 = 42
+    num2 = 105
+    if num1 > num2:
+        print(f""{num1} is larger than {num2}"")
+    elif num2 > num1:
+        print(f""{num2} is larger than {num1}"")
+    else:
+        print(f""{num1} and {num2} are equal"")
+if __name__ == '__main__':
+    compare_numbers()",True,2,15582,252_0_2.py
+251,14,Determine the largest number present,"Create a script that reads a single line of space-separated numbers from the user, converts them to integers, and then outputs the absolute largest integer found in that input set. Prioritize error handling for non-integer inputs.",,False,0,15583,251_14.py
+252,9,Compare two simple quantities now,"Design and implement a simple comparison mechanism for two arbitrary numerical values, focusing on readability and adherence to Python best practices.","def compare_numbers(a, b):
+    if a > b:
+        return ""a is greater than b""
+    elif a < b:
+        return ""a is less than b""
+    else:
+        return ""a is equal to b""
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 25
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 100
+    num4 = 100
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -5
+    num6 = 5
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,0,15584,252_9.py
+252,9,Compare two simple quantities now,"Design and implement a simple comparison mechanism for two arbitrary numerical values, focusing on readability and adherence to Python best practices.","import operator
+def compare_numbers(a, b):
+    if a > b:
+        return ""a is greater than b""
+    elif a < b:
+        return ""a is less than b""
+    else:
+        return ""a is equal to b""
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 25
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 100
+    num4 = 100
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -5
+    num6 = 0
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,1,15585,252_9_1.py
+252,9,Compare two simple quantities now,"Design and implement a simple comparison mechanism for two arbitrary numerical values, focusing on readability and adherence to Python best practices.","import operator
+def compare_numbers(a, b):
+    if a > b:
+        return ""a is greater than b""
+    elif a < b:
+        return ""a is less than b""
+    else:
+        return ""a is equal to b""
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 25
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 100
+    num4 = 100
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -5
+    num6 = 5
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,2,15586,252_9_2.py
+252,9,Compare two simple quantities now,"Design and implement a simple comparison mechanism for two arbitrary numerical values, focusing on readability and adherence to Python best practices.","import operator
+def compare_numbers(a, b):
+    if a > b:
+        return ""a is greater than b""
+    elif a < b:
+        return ""a is less than b""
+    else:
+        return ""a is equal to b""
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 27
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 42.5
+    num4 = 42.5
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -10
+    num6 = 5
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,3,15587,252_9_3.py
+252,9,Compare two simple quantities now,"Design and implement a simple comparison mechanism for two arbitrary numerical values, focusing on readability and adherence to Python best practices.","import operator
+def compare_numbers(a, b):
+    if a < b:
+        return ""a is less than b""
+    elif a > b:
+        return ""a is greater than b""
+    else:
+        return ""a is equal to b""
+if __name__ == '__main__':
+    num1 = 15
+    num2 = 25
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 100
+    num4 = 100
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -5
+    num6 = 0
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,4,15588,252_9_4.py
+252,7,Compare two simple quantities now,"Implement an optimized comparison logic using Python's built-in comparison operators for two variables, demonstrating the most efficient way to determine the greater value.","if __name__ == '__main__':
+    a = 15
+    b = 27
+    if a > b:
+        greater = a
+    else:
+        greater = b
+    print(greater)",True,0,15589,252_7.py
+252,7,Compare two simple quantities now,"Implement an optimized comparison logic using Python's built-in comparison operators for two variables, demonstrating the most efficient way to determine the greater value.","if __name__ == '__main__':
+    a = 15
+    b = 28
+    if a > b:
+        greater = a
+    else:
+        greater = b
+    print(greater)
+    x = -5
+    y = -10
+    if x > y:
+        greater = x
+    else:
+        greater = y
+    print(greater)
+    p = 100.5
+    q = 99.9
+    if p > q:
+        greater = p
+    else:
+        greater = q
+    print(greater)",True,1,15590,252_7_1.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a >= b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")",True,0,15591,252_11.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.33
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")",True,1,15592,252_11_1.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")",True,2,15593,252_11_2.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num3 = -5.0
+    num4 = 10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")",True,3,15594,252_11_3.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")",True,4,15595,252_11_4.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")
+    num3 = -5.0
+    num4 = 10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")",True,5,15596,252_11_5.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.33
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    larger, smaller, diff = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")
+    num5 = 100.0
+    num6 = 100.0
+    larger, smaller, diff = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger: {larger}"")
+    print(f""Smaller: {smaller}"")
+    print(f""Difference: {diff}"")",True,6,15597,252_11_6.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","import math
+def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a > b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    larger, smaller, diff = compare_quantities(num1, num2)
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    larger2, smaller2, diff2 = compare_quantities(num3, num4)
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger number: {larger2}"")
+    print(f""Smaller number: {smaller2}"")
+    print(f""Absolute difference: {diff2}"")
+    num5 = 3.14159
+    num6 = 3.14158
+    larger3, smaller3, diff3 = compare_quantities(num5, num6)
+    print(f""\nNumber 5: {num5}"")
+    print(f""Number 6: {num6}"")
+    print(f""Larger number: {larger3}"")
+    print(f""Smaller number: {smaller3}"")
+    print(f""Absolute difference: {diff3}"")",True,7,15598,252_11_7.py
+252,11,Compare two simple quantities now,"Implement an optimized function named 'compare_quantities' that accepts two floating-point numbers and returns a tuple containing the larger number, the smaller number, and the absolute difference between them. Ensure the implementation is time-efficient.","def compare_quantities(a: float, b: float) -> tuple[float, float, float]:
+    if a >= b:
+        larger = a
+        smaller = b
+    else:
+        larger = b
+        smaller = a
+    difference = abs(a - b)
+    return larger, smaller, difference
+if __name__ == '__main__':
+    num1 = 15.7
+    num2 = 8.3
+    result = compare_quantities(num1, num2)
+    larger, smaller, diff = result
+    print(f""Number 1: {num1}"")
+    print(f""Number 2: {num2}"")
+    print(f""Larger number: {larger}"")
+    print(f""Smaller number: {smaller}"")
+    print(f""Absolute difference: {diff}"")
+    num3 = -5.0
+    num4 = -10.5
+    result2 = compare_quantities(num3, num4)
+    larger2, smaller2, diff2 = result2
+    print(f""\nNumber 3: {num3}"")
+    print(f""Number 4: {num4}"")
+    print(f""Larger number: {larger2}"")
+    print(f""Smaller number: {smaller2}"")
+    print(f""Absolute difference: {diff2}"")",True,8,15599,252_11_8.py
+252,12,Compare two simple quantities now,"Develop a class named 'QuantityComparator' with a method 'compare_and_display(self, q1, q2)' that compares two provided quantities and prints a descriptive sentence indicating which quantity is greater, assuming the inputs are numerical.","class QuantityComparator:
+    def compare_and_display(self, q1, q2):
+        if q1 > q2:
+            print(f""{q1} is greater than {q2}"")
+        elif q2 > q1:
+            print(f""{q2} is greater than {q1}"")
+        else:
+            print(f""{q1} is equal to {q2}"")
+if __name__ == '__main__':
+    comparator = QuantityComparator()
+    comparator.compare_and_display(15, 10)
+    comparator.compare_and_display(50, 75)
+    comparator.compare_and_display(33, 33)",True,0,15600,252_12.py
+252,12,Compare two simple quantities now,"Develop a class named 'QuantityComparator' with a method 'compare_and_display(self, q1, q2)' that compares two provided quantities and prints a descriptive sentence indicating which quantity is greater, assuming the inputs are numerical.","class QuantityComparator:
+    def compare_and_display(self, q1, q2):
+        if q1 > q2:
+            print(f""{q1} is greater than {q2}"")
+        elif q2 > q1:
+            print(f""{q2} is greater than {q1}"")
+        else:
+            print(f""{q1} is equal to {q2}"")
+if __name__ == '__main__':
+    comparator = QuantityComparator()
+    comparator.compare_and_display(15, 10)
+    comparator.compare_and_display(42, 30)
+    comparator.compare_and_display(7, 7)",True,1,15601,252_12_1.py
+252,12,Compare two simple quantities now,"Develop a class named 'QuantityComparator' with a method 'compare_and_display(self, q1, q2)' that compares two provided quantities and prints a descriptive sentence indicating which quantity is greater, assuming the inputs are numerical.","class QuantityComparator:
+    def compare_and_display(self, q1, q2):
+        if q1 > q2:
+            print(f""{q1} is greater than {q2}"")
+        elif q2 > q1:
+            print(f""{q2} is greater than {q1}"")
+        else:
+            print(f""{q1} is equal to {q2}"")
+if __name__ == '__main__':
+    comparator = QuantityComparator()
+    comparator.compare_and_display(15, 10)
+    comparator.compare_and_display(30, 30)
+    comparator.compare_and_display(5, 25)",True,2,15602,252_12_2.py
+252,13,Compare two simple quantities now,"Write a concise and highly efficient Python function using only built-in operators to compare two arbitrary numbers (integers or floats) and return True if the first number is strictly greater than the second, otherwise False.","def compare_numbers(a, b):
+    return a > b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 5.2
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 3
+    num4 = 7
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -1.0
+    num6 = -1.0
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,0,15603,252_13.py
+252,13,Compare two simple quantities now,"Write a concise and highly efficient Python function using only built-in operators to compare two arbitrary numbers (integers or floats) and return True if the first number is strictly greater than the second, otherwise False.","def compare_numbers(a, b):
+    return a > b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    print(compare_numbers(num1, num2))
+    num3 = 3.14
+    num4 = 3.14
+    print(compare_numbers(num3, num4))
+    num5 = 20
+    num6 = 25
+    print(compare_numbers(num5, num6))",True,1,15604,252_13_1.py
+252,13,Compare two simple quantities now,"Write a concise and highly efficient Python function using only built-in operators to compare two arbitrary numbers (integers or floats) and return True if the first number is strictly greater than the second, otherwise False.","def compare_numbers(a, b):
+    return a > b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 5.2
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 3
+    num4 = 7
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -1.0
+    num6 = -5.0
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,2,15605,252_13_2.py
+252,13,Compare two simple quantities now,"Write a concise and highly efficient Python function using only built-in operators to compare two arbitrary numbers (integers or floats) and return True if the first number is strictly greater than the second, otherwise False.","def compare_numbers(a, b):
+    return a > b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 5.2
+    result = compare_numbers(num1, num2)
+    print(result)
+    num3 = 3
+    num4 = 7
+    result2 = compare_numbers(num3, num4)
+    print(result2)
+    num5 = -10
+    num6 = -5
+    result3 = compare_numbers(num5, num6)
+    print(result3)",True,3,15606,252_13_3.py
+252,8,Compare two simple quantities now,Write a full program that prompts the user to input two quantities and then uses a series of `if/elif/else` statements to compare them and display the outcome.,"def compare_quantities(a, b):
+    if a > b:
+        print(f""Quantity A is greater than Quantity B"")
+    elif b > a:
+        print(f""Quantity B is greater than Quantity A"")
+    else:
+        print(""Quantity A and Quantity B are equal"")
+if __name__ == '__main__':
+    quantity1 = 15
+    quantity2 = 25
+    compare_quantities(quantity1, quantity2)
+    quantity1 = 10
+    quantity2 = 10
+    compare_quantities(quantity1, quantity2)
+    quantity1 = 30
+    quantity2 = 5
+    compare_quantities(quantity1, quantity2)",True,0,15607,252_8.py
+252,8,Compare two simple quantities now,Write a full program that prompts the user to input two quantities and then uses a series of `if/elif/else` statements to compare them and display the outcome.,"if __name__ == '__main__':
+    quantity1 = 15
+    quantity2 = 25
+    if quantity1 > quantity2:
+        print(""Quantity 1 is greater than Quantity 2"")
+    elif quantity1 < quantity2:
+        print(""Quantity 1 is less than Quantity 2"")
+    else:
+        print(""Quantity 1 is equal to Quantity 2"")",True,1,15608,252_8_1.py
+253,0,Find the middle value among three,Implement a Python function named `find_middle` that accepts three numbers as arguments and returns the median value. Use the most efficient mathematical approach.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 8
+    median = find_middle(num1, num2, num3)
+    print(median)",True,0,15609,253_0.py
+253,0,Find the middle value among three,Implement a Python function named `find_middle` that accepts three numbers as arguments and returns the median value. Use the most efficient mathematical approach.,"def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 1
+    num3 = 8
+    median = find_middle(num1, num2, num3)
+    print(median)",True,1,15610,253_0_1.py
+253,1,Find the middle value among three,Write a robust script that prompts the user to input three distinct numbers and then prints the middle value among them. Handle potential non-numeric input gracefully.,"def find_middle(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort()
+    return numbers[1]
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 20
+    middle_value = find_middle(num1, num2, num3)
+    print(middle_value)",True,0,15611,253_1.py
+253,1,Find the middle value among three,Write a robust script that prompts the user to input three distinct numbers and then prints the middle value among them. Handle potential non-numeric input gracefully.,"import sys
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 20
+    result = find_middle(num1, num2, num3)
+    print(result)",True,1,15612,253_1_1.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 20, 5))
+    print(get_median(7, 1, 9))
+    print(get_median(4, 8, 2))
+    print(get_median(100, 50, 25))",True,0,15613,253_2.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 20, 5))
+    print(get_median(7, 1, 9))
+    print(get_median(4, 8, 2))
+    print(get_median(100, 50, 150))",True,1,15614,253_2_1.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 2, 8))
+    print(get_median(4, 1, 9))
+    print(get_median(7, 7, 3))
+    print(get_median(100, 50, 25))",True,2,15615,253_2_2.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 2, 8))
+    print(get_median(4, 1, 9))
+    print(get_median(7, 7, 3))
+    print(get_median(100, 50, 150))",True,3,15616,253_2_3.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 20, 5))
+    print(get_median(7, 7, 1))
+    print(get_median(100, 50, 25))
+    print(get_median(3, 1, 2))",True,4,15617,253_2_4.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 20, 5))
+    print(get_median(7, 7, 7))
+    print(get_median(3, 1, 4))
+    print(get_median(9, 2, 8))",True,5,15618,253_2_5.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 2, 8))
+    print(get_median(4, 7, 2))
+    print(get_median(9, 1, 5))
+    print(get_median(3, 3, 3))
+    print(get_median(100, 50, 25))",True,6,15619,253_2_6.py
+253,2,Find the middle value among three,Develop an optimized function `get_median` that takes any three integers and returns the median without sorting the entire list explicitly. Focus on conditional logic for efficiency.,"def get_median(a, b, c):
+    if a <= b <= c or c <= b <= a:
+        if a <= b <= c:
+            return b
+        else:
+            return b
+    elif b <= a <= c or c <= a <= b:
+        if b <= a <= c:
+            return a
+        else:
+            return a
+    else:
+        return c
+if __name__ == '__main__':
+    print(get_median(1, 5, 3))
+    print(get_median(10, 2, 8))
+    print(get_median(4, 9, 1))
+    print(get_median(7, 7, 3))
+    print(get_median(100, 50, 25))",True,7,15620,253_2_7.py
+253,3,Find the middle value among three,Create a class named `ThreeNumberAnalyzer` with a method `find_middle` that stores three numbers in the constructor and returns the middle value when called.,"class ThreeNumberAnalyzer:
+    def __init__(self, a, b, c):
+        self.numbers = [a, b, c]
+    def find_middle(self):
+        self.numbers.sort()
+        return self.numbers[1]
+if __name__ == '__main__':
+    analyzer = ThreeNumberAnalyzer(10, 5, 20)
+    middle = analyzer.find_middle()
+    print(middle)",True,0,15621,253_3.py
+252,10,Compare two simple quantities now,"Write a complete, robust Python script that takes two integer inputs from the user and prints their sum and difference. Implement input validation to ensure only integers are provided.",,False,0,15622,252_10.py
+252,14,Compare two simple quantities now,"Generate a standalone Python program that prompts the user for two quantities, converts them to integers, and then compares them, printing the result in a clear, formatted manner. Prioritize readability and adherence to best practices.","import sys
+def compare_numbers(num1, num2):
+    if num1 > num2:
+        print(f""The first number ({num1}) is greater than the second number ({num2})."")
+    elif num1 < num2:
+        print(f""The first number ({num1}) is less than the second number ({num2})."")
+    else:
+        print(f""The first number ({num1}) is equal to the second number ({num2})."")
+if __name__ == '__main__':
+    sample_num1 = 42
+    sample_num2 = 100
+    int_num1 = int(sample_num1)
+    int_num2 = int(sample_num2)
+    print(""--- Number Comparison ---"")
+    print(f""First quantity entered: {int_num1}"")
+    print(f""Second quantity entered: {int_num2}"")
+    compare_numbers(int_num1, int_num2)",True,0,15623,252_14.py
+252,14,Compare two simple quantities now,"Generate a standalone Python program that prompts the user for two quantities, converts them to integers, and then compares them, printing the result in a clear, formatted manner. Prioritize readability and adherence to best practices.","def compare_numbers(num1, num2):
+    if num1 > num2:
+        print(f""The first number ({num1}) is greater than the second number ({num2})."")
+    elif num1 < num2:
+        print(f""The first number ({num1}) is less than the second number ({num2})."")
+    else:
+        print(f""The first number ({num1}) is equal to the second number ({num2})."")
+if __name__ == '__main__':
+    sample_num1 = 42
+    sample_num2 = 100
+    integer_num1 = int(sample_num1)
+    integer_num2 = int(sample_num2)
+    print(""--- Number Comparison ---"")
+    print(f""First quantity entered: {integer_num1}"")
+    print(f""Second quantity entered: {integer_num2}"")
+    compare_numbers(integer_num1, integer_num2)",True,1,15624,252_14_1.py
+252,14,Compare two simple quantities now,"Generate a standalone Python program that prompts the user for two quantities, converts them to integers, and then compares them, printing the result in a clear, formatted manner. Prioritize readability and adherence to best practices.","def compare_numbers(num1, num2):
+    if num1 > num2:
+        print(f""The first number ({num1}) is greater than the second number ({num2})."")
+    elif num1 < num2:
+        print(f""The first number ({num1}) is less than the second number ({num2})."")
+    else:
+        print(f""The first number ({num1}) is equal to the second number ({num2})."")
+if __name__ == '__main__':
+    sample_num1 = 42
+    sample_num2 = 105
+    integer_num1 = int(sample_num1)
+    integer_num2 = int(sample_num2)
+    print(f""Comparing sample numbers: {integer_num1} and {integer_num2}"")
+    compare_numbers(integer_num1, integer_num2)",True,2,15625,252_14_2.py
+252,14,Compare two simple quantities now,"Generate a standalone Python program that prompts the user for two quantities, converts them to integers, and then compares them, printing the result in a clear, formatted manner. Prioritize readability and adherence to best practices.","def compare_numbers(num1, num2):
+    if num1 > num2:
+        print(f""The first number ({num1}) is greater than the second number ({num2})."")
+    elif num1 < num2:
+        print(f""The first number ({num1}) is less than the second number ({num2})."")
+    else:
+        print(f""The first number ({num1}) is equal to the second number ({num2})."")
+if __name__ == '__main__':
+    sample_num1 = 42
+    sample_num2 = 100
+    integer_num1 = int(sample_num1)
+    integer_num2 = int(sample_num2)
+    print(f""Comparing sample numbers: {sample_num1} and {sample_num2}"")
+    compare_numbers(integer_num1, integer_num2)",True,3,15626,252_14_3.py
+253,6,Find the middle value among three,Design an algorithm to determine the middle value of three numbers. Provide the implementation using only built-in Python features for maximum performance.,"import math
+def find_middle(a, b, c):
+    if (a <= b and b <= c) or (c <= b and b <= a):
+        return b
+    elif (b <= a and a <= c) or (c <= a and a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 20
+    middle = find_middle(num1, num2, num3)
+    print(middle)",True,0,15627,253_6.py
+253,6,Find the middle value among three,Design an algorithm to determine the middle value of three numbers. Provide the implementation using only built-in Python features for maximum performance.,"import math
+def find_middle(a, b, c):
+    if (a <= b and b <= c) or (c <= b and b <= a):
+        return b
+    elif (b <= a and a <= c) or (c <= a and a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 15
+    middle = find_middle(num1, num2, num3)
+    print(middle)",True,1,15628,253_6_1.py
+253,6,Find the middle value among three,Design an algorithm to determine the middle value of three numbers. Provide the implementation using only built-in Python features for maximum performance.,"import math
+def find_middle(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 15
+    middle = find_middle(num1, num2, num3)
+    print(middle)",True,2,15629,253_6_2.py
+253,6,Find the middle value among three,Design an algorithm to determine the middle value of three numbers. Provide the implementation using only built-in Python features for maximum performance.,"import math
+def find_middle(a, b, c):
+    if (a <= b <= c) or (c <= b <= a):
+        return b
+    elif (b <= a <= c) or (c <= a <= b):
+        return a
+    else:
+        return c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 20
+    middle = find_middle(num1, num2, num3)
+    print(middle)",True,3,15630,253_6_3.py
+253,7,Find the middle value among three,Write a function that takes a list of exactly three numbers and returns the median. Document the function thoroughly with a clear docstring explaining its time and space complexity.,"def find_median(numbers):
+    if len(numbers) != 3:
+        raise ValueError(""Input list must contain exactly three numbers."")
+    sorted_numbers = sorted(numbers)
+    median = sorted_numbers[1]
+    return median
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    result = find_median(sample_list)
+    print(result)",True,0,15631,253_7.py
+253,7,Find the middle value among three,Write a function that takes a list of exactly three numbers and returns the median. Document the function thoroughly with a clear docstring explaining its time and space complexity.,"def find_median(numbers):
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+    if n == 3:
+        return sorted_numbers[1]
+    else:
+        return sum(sorted_numbers) / 3
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    median = find_median(sample_list)
+    print(median)",True,1,15632,253_7_1.py
+253,7,Find the middle value among three,Write a function that takes a list of exactly three numbers and returns the median. Document the function thoroughly with a clear docstring explaining its time and space complexity.,"def find_median(numbers):
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+    if n == 3:
+        return sorted_numbers[1]
+    else:
+        return sum(sorted_numbers) / 3
+if __name__ == '__main__':
+    sample_list = [5, 2, 8]
+    median = find_median(sample_list)
+    print(f""The list is: {sample_list}"")
+    print(f""The median is: {median}"")",True,2,15633,253_7_2.py
+253,8,Find the middle value among three,Develop a solution to find the middle value among three numbers using sorting. Ensure the code demonstrates best practices for list manipulation in Python.,"def find_middle_value(nums):
+    sorted_nums = sorted(nums)
+    middle_index = len(sorted_nums) // 2
+    return sorted_nums[middle_index]
+if __name__ == '__main__':
+    numbers = [15, 8, 22]
+    middle = find_middle_value(numbers)
+    print(middle)",True,0,15634,253_8.py
+253,8,Find the middle value among three,Develop a solution to find the middle value among three numbers using sorting. Ensure the code demonstrates best practices for list manipulation in Python.,"def find_middle_value(nums):
+    sorted_nums = sorted(nums)
+    middle_index = len(sorted_nums) // 2
+    return sorted_nums[middle_index]
+if __name__ == '__main__':
+    numbers = [15, 7, 22]
+    middle = find_middle_value(numbers)
+    print(middle)",True,1,15635,253_8_1.py
+253,8,Find the middle value among three,Develop a solution to find the middle value among three numbers using sorting. Ensure the code demonstrates best practices for list manipulation in Python.,"if __name__ == '__main__':
+    numbers = [15, 8, 22]
+    numbers.sort()
+    middle_index = len(numbers) // 2
+    middle_value = numbers[middle_index]
+    print(middle_value)",True,2,15636,253_8_2.py
+253,9,Find the middle value among three,Generate an object-oriented approach where a method within a class finds and returns the middle value of the three initialized attributes.,"class ThreeNumberFinder:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    def find_middle(self):
+        if (self.a <= self.b <= self.c) or (self.c <= self.b <= self.a):
+            return self.b
+        elif (self.b <= self.a <= self.c) or (self.c <= self.a <= self.b):
+            return self.a
+        else:
+            return self.c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 15
+    finder = ThreeNumberFinder(num1, num2, num3)
+    middle = finder.find_middle()
+    print(middle)",True,0,15637,253_9.py
+253,9,Find the middle value among three,Generate an object-oriented approach where a method within a class finds and returns the middle value of the three initialized attributes.,"class ThreeNumberFinder:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    def find_middle(self):
+        if (self.a <= self.b <= self.c) or (self.c <= self.b <= self.a):
+            return self.b
+        elif (self.b <= self.a <= self.c) or (self.c <= self.a <= self.b):
+            return self.a
+        else:
+            return self.c
+if __name__ == '__main__':
+    numbers = [10, 5, 20]
+    finder = ThreeNumberFinder(numbers[0], numbers[1], numbers[2])
+    middle = finder.find_middle()
+    print(middle)",True,1,15638,253_9_1.py
+253,9,Find the middle value among three,Generate an object-oriented approach where a method within a class finds and returns the middle value of the three initialized attributes.,"class ThreeNumberFinder:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    def find_middle(self):
+        if (self.a <= self.b <= self.c) or (self.c <= self.b <= self.a):
+            return self.b
+        elif (self.b <= self.a <= self.c) or (self.c <= self.a <= self.b):
+            return self.a
+        else:
+            return self.c
+if __name__ == '__main__':
+    numbers = 10
+    numbers = 5
+    numbers = 20
+    finder = ThreeNumberFinder(numbers, numbers, numbers)
+    middle = finder.find_middle()
+    print(middle)",True,2,15639,253_9_2.py
+253,9,Find the middle value among three,Generate an object-oriented approach where a method within a class finds and returns the middle value of the three initialized attributes.,"class ThreeNumber:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    def find_middle(self):
+        if self.a > self.b:
+            if self.b > self.c:
+                return self.b
+            else:
+                return self.c
+        else:
+            if self.a < self.b:
+                if self.a > self.c:
+                    return self.a
+                else:
+                    return self.c
+            else:
+                return self.a
+if __name__ == '__main__':
+    obj = ThreeNumber(10, 5, 20)
+    print(obj.find_middle())
+    obj2 = ThreeNumber(3, 7, 1)
+    print(obj2.find_middle())
+    obj3 = ThreeNumber(50, 25, 40)
+    print(obj3.find_middle())
+    obj4 = ThreeNumber(1, 2, 3)
+    print(obj4.find_middle())",True,3,15640,253_9_3.py
+253,9,Find the middle value among three,Generate an object-oriented approach where a method within a class finds and returns the middle value of the three initialized attributes.,"class ThreeNumberFinder:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    def find_middle(self):
+        if (self.a <= self.b <= self.c) or (self.c <= self.b <= self.a):
+            return self.b
+        elif (self.b <= self.a <= self.c) or (self.c <= self.a <= self.b):
+            return self.a
+        else:
+            return self.c
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    num3 = 20
+    finder = ThreeNumberFinder(num1, num2, num3)
+    middle = finder.find_middle()
+    print(middle)",True,4,15641,253_9_4.py
+253,9,Find the middle value among three,Generate an object-oriented approach where a method within a class finds and returns the middle value of the three initialized attributes.,"class ThreeNumberFinder:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+    def find_middle(self):
+        if (self.a <= self.b <= self.c) or (self.c <= self.b <= self.a):
+            return self.b
+        elif (self.b <= self.a <= self.c) or (self.c <= self.a <= self.b):
+            return self.a
+        else:
+            return self.c
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 2
+    num3 = 8
+    finder = ThreeNumberFinder(num1, num2, num3)
+    middle_value = finder.find_middle()
+    print(middle_value)",True,5,15642,253_9_5.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(3, 1, 2))
+    print(find_middle(5, 2, 8))
+    print(find_middle(-10, 0, 5))
+    print(find_middle(100, 100, 100))",True,0,15643,253_10.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(5, 1, 4))
+    print(find_middle(10, 20, 30))
+    print(find_middle(1, 1, 5))
+    print(find_middle(-5, 0, 5))",True,1,15644,253_10_1.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(5, 1, 4))
+    print(find_middle(10, 20, 30))
+    print(find_middle(1, 100, 50))
+    print(find_middle(-5, 0, 5))
+    print(find_middle(-10, -5, -20))",True,2,15645,253_10_2.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(5, 1, 4))
+    print(find_middle(10, 20, 30))
+    print(find_middle(7, 7, 7))
+    print(find_middle(-5, 0, 5))
+    print(find_middle(-10, -20, -30))",True,3,15646,253_10_3.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(5, 1, 4))
+    print(find_middle(10, 20, 5))
+    print(find_middle(-10, 0, 10))
+    print(find_middle(7, 7, 7))",True,4,15647,253_10_4.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(5, 1, 4))
+    print(find_middle(10, 20, 30))
+    print(find_middle(1, 1, 10))
+    print(find_middle(-5, 0, 5))
+    print(find_middle(100, -10, 50))",True,5,15648,253_10_5.py
+253,10,Find the middle value among three,Implement a robust and efficient Python function named `find_middle` that accepts three numbers as input and returns the median value. The solution must handle all possible input combinations correctly.,"import math
+def find_middle(a, b, c):
+    numbers = sorted([a, b, c])
+    return numbers[1]
+if __name__ == '__main__':
+    print(find_middle(1, 2, 3))
+    print(find_middle(5, 1, 4))
+    print(find_middle(10, 20, 30))
+    print(find_middle(-5, 0, 5))
+    print(find_middle(100, -10, 50))",True,6,15649,253_10_6.py
