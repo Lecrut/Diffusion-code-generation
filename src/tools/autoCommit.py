@@ -8,6 +8,7 @@ def auto_commit():
     try:
         result = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, cwd=".")
         if result.stdout.strip():
+            subprocess.run(["git", "pull"], cwd=".")
             subprocess.run(["git", "add", "data/"], cwd=".")
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             subprocess.run(["git", "commit", "-m", f"Auto-commit: Dataset progress at {timestamp}"], cwd=".")
