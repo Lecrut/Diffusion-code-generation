@@ -332583,3 +332583,3046 @@ if __name__ == '__main__':
     sample_text = ""The quick brown fox jumps over the lazy dog. Fox and dog are friends.""
     result = analyzer.find_all_words(sample_text)
     print(result)",True,4,16563,264_12_4.py
+264,13,Find all words in text,"Write an efficient command-line utility script that takes a file path as a command-line argument, reads the file content, and prints every word found in the text exactly once. Use best practices for file handling.",,False,0,16564,264_13.py
+264,14,Find all words in text,"Create an optimized function that tokenizes a given string of text into a list of words, filtering out any non-alphabetic characters and returning only the unique words in lowercase.","import re
+def tokenize_and_filter(text):
+    words = set()
+    for char in text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            words.add(char.lower())
+    return sorted(list(words))
+if __name__ == '__main__':
+    sample_text = ""Hello World! This is a Test string with numbers 123 and symbols @#$""
+    result = tokenize_and_filter(sample_text)
+    print(result)",True,0,16565,264_14.py
+264,14,Find all words in text,"Create an optimized function that tokenizes a given string of text into a list of words, filtering out any non-alphabetic characters and returning only the unique words in lowercase.","import re
+def tokenize_and_filter(text):
+    words = set()
+    for char in text:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            words.add(char.lower())
+    return sorted(list(words))
+if __name__ == '__main__':
+    sample_text = ""Hello World! This is a Test String with numbers 123 and symbols @#$""
+    result = tokenize_and_filter(sample_text)
+    print(result)",True,1,16566,264_14_1.py
+264,14,Find all words in text,"Create an optimized function that tokenizes a given string of text into a list of words, filtering out any non-alphabetic characters and returning only the unique words in lowercase.","import re
+def tokenize_and_unique(text):
+    words = re.findall(r'[a-zA-Z]+', text.lower())
+    unique_words = set(words)
+    return list(unique_words)
+if __name__ == '__main__':
+    sample_text = ""Hello World! This is a test string, with numbers 123 and symbols @#.""
+    result = tokenize_and_unique(sample_text)
+    print(result)",True,2,16567,264_14_2.py
+264,14,Find all words in text,"Create an optimized function that tokenizes a given string of text into a list of words, filtering out any non-alphabetic characters and returning only the unique words in lowercase.","import re
+def tokenize_and_unique(text):
+    words = re.findall(r'[a-zA-Z]+', text.lower())
+    unique_words = set(words)
+    return list(unique_words)
+if __name__ == '__main__':
+    sample_text = ""Hello World! This is a test string, with numbers 123 and symbols @#$.""
+    result = tokenize_and_unique(sample_text)
+    print(result)",True,3,16568,264_14_3.py
+264,14,Find all words in text,"Create an optimized function that tokenizes a given string of text into a list of words, filtering out any non-alphabetic characters and returning only the unique words in lowercase.","import re
+def tokenize_and_unique(text):
+    words = re.findall(r'[a-zA-Z]+', text)
+    unique_words = set()
+    for word in words:
+        unique_words.add(word.lower())
+    return list(unique_words)
+if __name__ == '__main__':
+    sample_text1 = ""Hello World! This is a test string, with numbers 123 and symbols @.""
+    sample_text2 = ""Programming is fun; let's learn Python and data science.""
+    sample_text3 = ""A B C a b c A b c""
+    result1 = tokenize_and_unique(sample_text1)
+    print(f""'{sample_text1}' -> {result1}"")
+    result2 = tokenize_and_unique(sample_text2)
+    print(f""'{sample_text2}' -> {result2}"")
+    result3 = tokenize_and_unique(sample_text3)
+    print(f""'{sample_text3}' -> {result3}"")",True,4,16569,264_14_4.py
+265,0,Extract characters from a phrase,"Write a complete, robust Python script to extract all alphabetic characters from an input string and store them in a new string.","def extract_alphabetic(input_string):
+    result = """"
+    for char in input_string:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            result += char
+    return result
+if __name__ == '__main__':
+    sample_string = ""Hello World 123!""
+    extracted_string = extract_alphabetic(sample_string)
+    print(extracted_string)",True,0,16570,265_0.py
+265,0,Extract characters from a phrase,"Write a complete, robust Python script to extract all alphabetic characters from an input string and store them in a new string.","def extract_alphabetic(input_string):
+    result = """"
+    for char in input_string:
+        if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+            result += char
+    return result
+if __name__ == '__main__':
+    sample_string = ""Hello World 123!""
+    extracted_chars = extract_alphabetic(sample_string)
+    print(extracted_chars)",True,1,16571,265_0_1.py
+264,5,Find all words in text,Implement a command-line interface (CLI) script using Python's `argparse` module that allows the user to input a file path and prints all unique words found in that file to the console. Ensure error handling is included.,,False,0,16572,264_5.py
+265,1,Extract characters from a phrase,"Implement an optimized function named `extract_vowels` that takes a string and returns a new string containing only the vowels (a, e, i, o, u) from the input.","def extract_vowels(text):
+    vowels = ""aeiouAEIOU""
+    result = """"
+    for char in text:
+        if char in vowels:
+            result += char
+    return result
+if __name__ == '__main__':
+    sample_string1 = ""Hello World""
+    sample_string2 = ""Programming is fun""
+    sample_string3 = ""AEIOUaeiou123""
+    print(extract_vowels(sample_string1))
+    print(extract_vowels(sample_string2))
+    print(extract_vowels(sample_string3))",True,0,16573,265_1.py
+265,1,Extract characters from a phrase,"Implement an optimized function named `extract_vowels` that takes a string and returns a new string containing only the vowels (a, e, i, o, u) from the input.","def extract_vowels(text):
+    vowels = ""aeiouAEIOU""
+    result = """"
+    for char in text:
+        if char in vowels:
+            result += char
+    return result
+if __name__ == '__main__':
+    sample_string1 = ""Hello World""
+    sample_string2 = ""Programming is Fun""
+    sample_string3 = ""AEIOUaeiou123""
+    print(extract_vowels(sample_string1))
+    print(extract_vowels(sample_string2))
+    print(extract_vowels(sample_string3))",True,1,16574,265_1_1.py
+264,8,Find all words in text,"Develop a complete solution that reads text from standard input (stdin) and prints every word found on a new line, ensuring all words are lowercased for consistent processing.",,False,0,16575,264_8.py
+265,2,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract_specific_chars(self, text, char_set)` that extracts characters from a string based on a provided set of allowed characters.","class StringExtractor:
+    def extract_specific_chars(self, text, char_set):
+        extracted_chars = """"
+        for char in text:
+            if char in char_set:
+                extracted_chars += char
+        return extracted_chars
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text = ""Hello World! 123""
+    allowed_chars = set(""aeiouAEIOU"")
+    result = extractor.extract_specific_chars(sample_text, allowed_chars)
+    print(result)",True,0,16576,265_2.py
+265,2,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract_specific_chars(self, text, char_set)` that extracts characters from a string based on a provided set of allowed characters.","class StringExtractor:
+    def extract_specific_chars(self, text, char_set):
+        extracted_chars = """"
+        for char in text:
+            if char in char_set:
+                extracted_chars += char
+        return extracted_chars
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text = ""Hello World! 123""
+    allowed_chars_str = ""abcde""
+    result = extractor.extract_specific_chars(sample_text, allowed_chars_str)
+    print(result)",True,1,16577,265_2_1.py
+265,2,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract_specific_chars(self, text, char_set)` that extracts characters from a string based on a provided set of allowed characters.","class StringExtractor:
+    def extract_specific_chars(self, text, char_set):
+        extracted_chars = []
+        for char in text:
+            if char in char_set:
+                extracted_chars.append(char)
+        return """".join(extracted_chars)
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text = ""Hello World! 123""
+    allowed_chars = {'a', 'e', 'i', 'o', ' ', ' '}
+    result = extractor.extract_specific_chars(sample_text, allowed_chars)
+    print(result)",True,2,16578,265_2_2.py
+265,2,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract_specific_chars(self, text, char_set)` that extracts characters from a string based on a provided set of allowed characters.","class StringExtractor:
+    def extract_specific_chars(self, text, char_set):
+        extracted_chars = """"
+        for char in text:
+            if char in char_set:
+                extracted_chars += char
+        return extracted_chars
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text = ""Hello World! 123""
+    allowed_chars = {'a', 'e', 'i', 'o', ' ', ' '}
+    result = extractor.extract_specific_chars(sample_text, allowed_chars)
+    print(result)",True,3,16579,265_2_3.py
+265,2,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract_specific_chars(self, text, char_set)` that extracts characters from a string based on a provided set of allowed characters.","class StringExtractor:
+    def extract_specific_chars(self, text, char_set):
+        extracted_chars = """"
+        for char in text:
+            if char in char_set:
+                extracted_chars += char
+        return extracted_chars
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text = ""Hello World! 123""
+    allowed_chars_set = set(""aeiouAEIOU0123456789"")
+    result = extractor.extract_specific_chars(sample_text, allowed_chars_set)
+    print(result)",True,4,16580,265_2_4.py
+265,2,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract_specific_chars(self, text, char_set)` that extracts characters from a string based on a provided set of allowed characters.","class StringExtractor:
+    def extract_specific_chars(self, text, char_set):
+        extracted_chars = """"
+        for char in text:
+            if char in char_set:
+                extracted_chars += char
+        return extracted_chars
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text = ""Hello World! 123""
+    allowed_chars_str = ""abcde""
+    allowed_chars_set = set(allowed_chars_str)
+    result = extractor.extract_specific_chars(sample_text, allowed_chars_set)
+    print(result)",True,5,16581,265_2_5.py
+265,4,Extract characters from a phrase,Create a generator function that yields each character from an input string that has an odd ASCII value.,"def char_generator(input_string):
+    for char in input_string:
+        if ord(char) % 2 != 0:
+            yield char
+if __name__ == '__main__':
+    test_string = ""aBcDeFg""
+    result_generator = char_generator(test_string)
+    output_list = list(result_generator)
+    print(output_list)",True,0,16582,265_4.py
+265,4,Extract characters from a phrase,Create a generator function that yields each character from an input string that has an odd ASCII value.,"def char_generator(input_string):
+    for char in input_string:
+        if ord(char) % 2 != 0:
+            yield char
+if __name__ == '__main__':
+    test_string = ""Hello World!""
+    result_generator = char_generator(test_string)
+    output_list = list(result_generator)
+    print(output_list)",True,1,16583,265_4_1.py
+265,4,Extract characters from a phrase,Create a generator function that yields each character from an input string that has an odd ASCII value.,"def char_generator(input_string):
+    for char in input_string:
+        if ord(char) % 2 != 0:
+            yield char
+if __name__ == '__main__':
+    test_string = ""Hello World!""
+    generator = char_generator(test_string)
+    result = list(generator)
+    print(result)",True,2,16584,265_4_2.py
+265,4,Extract characters from a phrase,Create a generator function that yields each character from an input string that has an odd ASCII value.,"def char_generator(input_string):
+    for char in input_string:
+        if ord(char) % 2 != 0:
+            yield char
+if __name__ == '__main__':
+    sample_string = ""aBcDeFg""
+    result_generator = char_generator(sample_string)
+    output_list = list(result_generator)
+    print(output_list)",True,3,16585,265_4_3.py
+265,4,Extract characters from a phrase,Create a generator function that yields each character from an input string that has an odd ASCII value.,"def odd_ascii_chars(input_string):
+    for char in input_string:
+        if ord(char) % 2 != 0:
+            yield char
+if __name__ == '__main__':
+    test_string = ""Hello World!""
+    result_generator = odd_ascii_chars(test_string)
+    output_list = list(result_generator)
+    print(output_list)",True,4,16586,265_4_4.py
+265,3,Extract characters from a phrase,Write an efficient Python function to extract all digits from an input string and return them as a list of integers.,"def extract_digits(input_string):
+    digits = []
+    for char in input_string:
+        if char.isdigit():
+            digits.append(int(char))
+    return digits
+if __name__ == '__main__':
+    test_string1 = ""abc123xyz45""
+    result1 = extract_digits(test_string1)
+    print(result1)
+    test_string2 = ""No digits here""
+    result2 = extract_digits(test_string2)
+    print(result2)
+    test_string3 = ""98765""
+    result3 = extract_digits(test_string3)
+    print(result3)",True,0,16587,265_3.py
+265,3,Extract characters from a phrase,Write an efficient Python function to extract all digits from an input string and return them as a list of integers.,"def extract_digits(input_string):
+    digits = []
+    for char in input_string:
+        if char.isdigit():
+            digits.append(int(char))
+    return digits
+if __name__ == '__main__':
+    test_string1 = ""abc123xyz45""
+    result1 = extract_digits(test_string1)
+    print(result1)
+    test_string2 = ""NoDigitsHere""
+    result2 = extract_digits(test_string2)
+    print(result2)
+    test_string3 = ""98765""
+    result3 = extract_digits(test_string3)
+    print(result3)",True,1,16588,265_3_1.py
+265,5,Extract characters from a phrase,"Implement a method within a class to extract all words (sequences of alphabetic characters) from a given sentence, handling punctuation correctly.","class WordExtractor:
+    def extract_words(self, sentence):
+        words = []
+        for char in sentence:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                if not words or words[-1] != char.lower():
+                    words.append(char)
+        return words
+if __name__ == '__main__':
+    extractor = WordExtractor()
+    sample_sentence = ""Hello world! This is a test sentence, with punctuation.""
+    extracted = extractor.extract_words(sample_sentence)
+    print(extracted)",True,0,16589,265_5.py
+265,5,Extract characters from a phrase,"Implement a method within a class to extract all words (sequences of alphabetic characters) from a given sentence, handling punctuation correctly.","class WordExtractor:
+    def extract_words(self, sentence):
+        words = []
+        for char in sentence:
+            if 'a' <= char <= 'z' or 'A' <= char <= 'Z':
+                if not words or words[-1] != char.lower():
+                    words.append(char)
+        return words
+if __name__ == '__main__':
+    extractor = WordExtractor()
+    sample_sentence = ""Hello world! This is a test sentence, how are you doing?""
+    extracted = extractor.extract_words(sample_sentence)
+    print(extracted)",True,1,16590,265_5_1.py
+265,7,Extract characters from a phrase,Develop a function that takes a phrase and returns a dictionary where keys are unique characters and values are their respective counts in the phrase.,"def count_characters(phrase):
+    counts = {}
+    for char in phrase:
+        if char in counts:
+            counts[char] += 1
+        else:
+            counts[char] = 1
+    return counts
+if __name__ == '__main__':
+    sample_phrase = ""hello world""
+    result = count_characters(sample_phrase)
+    print(result)",True,0,16591,265_7.py
+265,7,Extract characters from a phrase,Develop a function that takes a phrase and returns a dictionary where keys are unique characters and values are their respective counts in the phrase.,"def count_characters(phrase):
+    char_counts = {}
+    for char in phrase:
+        if char in char_counts:
+            char_counts[char] += 1
+        else:
+            char_counts[char] = 1
+    return char_counts
+if __name__ == '__main__':
+    sample_phrase = ""hello world""
+    result = count_characters(sample_phrase)
+    print(result)",True,1,16592,265_7_1.py
+265,6,Extract characters from a phrase,Write a highly optimized solution using regular expressions (`re` module) to extract only the alphanumeric characters from a complex input string.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""This is a complex string with numbers 123 and symbols!@#$ %^&*()""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,0,16593,265_6.py
+265,6,Extract characters from a phrase,Write a highly optimized solution using regular expressions (`re` module) to extract only the alphanumeric characters from a complex input string.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""This is a complex string with numbers 123 and symbols!@#$ %^&*() ""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,1,16594,265_6_1.py
+265,6,Extract characters from a phrase,Write a highly optimized solution using regular expressions (`re` module) to extract only the alphanumeric characters from a complex input string.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""This is a complex string with numbers 123 and symbols!@#$""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,2,16595,265_6_2.py
+265,6,Extract characters from a phrase,Write a highly optimized solution using regular expressions (`re` module) to extract only the alphanumeric characters from a complex input string.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""This is a complex string with numbers 123 and symbols!@#$ %^&""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,3,16596,265_6_3.py
+265,6,Extract characters from a phrase,Write a highly optimized solution using regular expressions (`re` module) to extract only the alphanumeric characters from a complex input string.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""Hello World! 123@abc-xyz/def""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,4,16597,265_6_4.py
+265,9,Extract characters from a phrase,"Implement a recursive function to extract all nested parentheses pairs from a string, ensuring balanced extraction.","def extract_parentheses(s):
+    result = []
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append(char)
+        elif char == ')':
+            if stack:
+                top = stack.pop()
+                result.append((top, char))
+    return result
+if __name__ == '__main__':
+    test_string1 = ""a(b(c)d)e""
+    test_string2 = ""(a(b)c)(d)""
+    test_string3 = ""((x))y""
+    test_string4 = ""abc""
+    test_string5 = ""()(())""
+    print(f""'{test_string1}': {extract_parentheses(test_string1)}"")
+    print(f""'{test_string2}': {extract_parentheses(test_string2)}"")
+    print(f""'{test_string3}': {extract_parentheses(test_string3)}"")
+    print(f""'{test_string4}': {extract_parentheses(test_string4)}"")
+    print(f""'{test_string5}': {extract_parentheses(test_string5)}"")",True,0,16598,265_9.py
+265,9,Extract characters from a phrase,"Implement a recursive function to extract all nested parentheses pairs from a string, ensuring balanced extraction.","def extract_parentheses(s):
+    result = []
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append('(')
+        elif char == ')':
+            if stack:
+                top = stack.pop()
+                result.append((top, char))
+        elif stack:
+            result.append((stack[-1], char))
+    return result
+if __name__ == '__main__':
+    test_string1 = ""a(b(c)d)e""
+    print(extract_parentheses(test_string1))
+    test_string2 = ""(a(b)c)(d)""
+    print(extract_parentheses(test_string2))
+    test_string3 = ""abc""
+    print(extract_parentheses(test_string3))
+    test_string4 = ""((a)(b))""
+    print(extract_parentheses(test_string4))",True,1,16599,265_9_1.py
+265,9,Extract characters from a phrase,"Implement a recursive function to extract all nested parentheses pairs from a string, ensuring balanced extraction.","def extract_parentheses(s):
+    result = []
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append('(')
+        elif char == ')':
+            if stack:
+                top = stack.pop()
+                result.append((top, char))
+        elif stack:
+            result.append((stack[-1], char))
+    return result
+if __name__ == '__main__':
+    test_string1 = ""a(b(c)d)e""
+    print(extract_parentheses(test_string1))
+    test_string2 = ""((a)(b))""
+    print(extract_parentheses(test_string2))
+    test_string3 = ""abc(def)ghi(jkl)""
+    print(extract_parentheses(test_string3))
+    test_string4 = ""(()())""
+    print(extract_parentheses(test_string4))",True,2,16600,265_9_2.py
+265,9,Extract characters from a phrase,"Implement a recursive function to extract all nested parentheses pairs from a string, ensuring balanced extraction.","def extract_parentheses(s):
+    result = []
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append('(')
+        elif char == ')':
+            if stack:
+                top = stack.pop()
+                result.append((top, char))
+        elif stack:
+            result.append((stack[-1], char))
+    return result
+if __name__ == '__main__':
+    test_string1 = ""a(b(c)d)e""
+    print(extract_parentheses(test_string1))
+    test_string2 = ""(a(b)c)(d)""
+    print(extract_parentheses(test_string2))
+    test_string3 = ""((x))y""
+    print(extract_parentheses(test_string3))
+    test_string4 = ""abc""
+    print(extract_parentheses(test_string4))",True,3,16601,265_9_3.py
+265,9,Extract characters from a phrase,"Implement a recursive function to extract all nested parentheses pairs from a string, ensuring balanced extraction.","def extract_parentheses(s):
+    result = []
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append('(')
+        elif char == ')':
+            if stack:
+                top = stack.pop()
+                result.append((top, char))
+        elif stack:
+            result.append((stack[-1], char))
+    return result
+if __name__ == '__main__':
+    test_string1 = ""a(b(c)d)e""
+    print(extract_parentheses(test_string1))
+    test_string2 = ""(a(b)c)(d)""
+    print(extract_parentheses(test_string2))
+    test_string3 = ""((x)y)z""
+    print(extract_parentheses(test_string3))
+    test_string4 = ""abc""
+    print(extract_parentheses(test_string4))",True,4,16602,265_9_4.py
+265,9,Extract characters from a phrase,"Implement a recursive function to extract all nested parentheses pairs from a string, ensuring balanced extraction.","def extract_parentheses(s):
+    result = []
+    stack = []
+    for char in s:
+        if char == '(':
+            stack.append('(')
+        elif char == ')':
+            if stack:
+                top = stack.pop()
+                result.append((top, char))
+        elif stack:
+            result.append((stack[-1], char))
+    return result
+def extract_nested_pairs(s):
+    pairs = []
+    stack = []
+    for i, char in enumerate(s):
+        if char == '(':
+            stack.append(i)
+        elif char == ')':
+            if stack:
+                start_index = stack.pop()
+                end_index = i
+                pairs.append((start_index, end_index))
+    return pairs
+if __name__ == '__main__':
+    test_string1 = ""a(b(c)d)e""
+    test_string2 = ""(a(b)c)(d(e))""
+    test_string3 = ""((x)y)z""
+    test_string4 = ""abc""
+    test_string5 = ""()(())""
+    print(f""Test 1: {extract_nested_pairs(test_string1)}"")
+    print(f""Test 2: {extract_nested_pairs(test_string2)}"")
+    print(f""Test 3: {extract_nested_pairs(test_string3)}"")
+    print(f""Test 4: {extract_nested_pairs(test_string4)}"")
+    print(f""Test 5: {extract_nested_pairs(test_string5)}"")",True,5,16603,265_9_5.py
+265,10,Extract characters from a phrase,"Write a complete, production-ready Python script that accepts a string and extracts all alphanumeric characters into a new string, ignoring spaces and punctuation. Implement this using efficient string methods or regular expressions.","import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""Hello World! 123 Python is fun.""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,0,16604,265_10.py
+265,10,Extract characters from a phrase,"Write a complete, production-ready Python script that accepts a string and extracts all alphanumeric characters into a new string, ignoring spaces and punctuation. Implement this using efficient string methods or regular expressions.","import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    sample_string = ""Hello World! 123 Python is fun, isn't it?""
+    result = extract_alphanumeric(sample_string)
+    print(result)",True,1,16605,265_10_1.py
+265,12,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract(self, text)` that efficiently extracts all vowels from the input text and returns them as a single string in lowercase. Focus on clean object-oriented design.","class StringExtractor:
+    def extract(self, text):
+        vowels = ""aeiou""
+        extracted_vowels = """"
+        for char in text:
+            if char.lower() in vowels:
+                extracted_vowels += char.lower()
+        return extracted_vowels
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text1 = ""Hello World""
+    sample_text2 = ""Programming is fun""
+    sample_text3 = ""AEIOUaeiou 123""
+    result1 = extractor.extract(sample_text1)
+    result2 = extractor.extract(sample_text2)
+    result3 = extractor.extract(sample_text3)
+    print(f""'{sample_text1}' -> '{result1}'"")
+    print(f""'{sample_text2}' -> '{result2}'"")
+    print(f""'{sample_text3}' -> '{result3}'"")",True,0,16606,265_12.py
+265,12,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract(self, text)` that efficiently extracts all vowels from the input text and returns them as a single string in lowercase. Focus on clean object-oriented design.","class StringExtractor:
+    def extract(self, text):
+        vowels = ""aeiou""
+        extracted_vowels = """"
+        for char in text:
+            if char.lower() in vowels:
+                extracted_vowels += char.lower()
+        return extracted_vowels
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text1 = ""Hello World""
+    sample_text2 = ""Programming is Fun""
+    sample_text3 = ""AEIOUaeiou 123""
+    result1 = extractor.extract(sample_text1)
+    result2 = extractor.extract(sample_text2)
+    result3 = extractor.extract(sample_text3)
+    print(f""'{sample_text1}' -> '{result1}'"")
+    print(f""'{sample_text2}' -> '{result2}'"")
+    print(f""'{sample_text3}' -> '{result3}'"")",True,1,16607,265_12_1.py
+265,12,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract(self, text)` that efficiently extracts all vowels from the input text and returns them as a single string in lowercase. Focus on clean object-oriented design.","class StringExtractor:
+    def extract(self, text):
+        vowels = ""aeiou""
+        extracted_vowels = """"
+        for char in text:
+            if char.lower() in vowels:
+                extracted_vowels += char.lower()
+        return extracted_vowels
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text1 = ""Hello World""
+    sample_text2 = ""Programming is fun""
+    sample_text3 = ""AEIOU and lowercase""
+    result1 = extractor.extract(sample_text1)
+    result2 = extractor.extract(sample_text2)
+    result3 = extractor.extract(sample_text3)
+    print(f""'{sample_text1}' -> '{result1}'"")
+    print(f""'{sample_text2}' -> '{result2}'"")
+    print(f""'{sample_text3}' -> '{result3}'"")",True,2,16608,265_12_2.py
+265,12,Extract characters from a phrase,"Develop a class named `StringExtractor` with a method `extract(self, text)` that efficiently extracts all vowels from the input text and returns them as a single string in lowercase. Focus on clean object-oriented design.","class StringExtractor:
+    def extract(self, text):
+        vowels = ""aeiou""
+        extracted_vowels = """"
+        for char in text:
+            if char.lower() in vowels:
+                extracted_vowels += char.lower()
+        return extracted_vowels
+if __name__ == '__main__':
+    extractor = StringExtractor()
+    sample_text1 = ""This is a sample text for vowel extraction""
+    sample_text2 = ""Rhythm myth sky""
+    sample_text3 = ""AEIOUaeiou 123""
+    result1 = extractor.extract(sample_text1)
+    result2 = extractor.extract(sample_text2)
+    result3 = extractor.extract(sample_text3)
+    print(f""Text: '{sample_text1}'"")
+    print(f""Extracted Vowels: '{result1}'"")
+    print(""-"" * 20)
+    print(f""Text: '{sample_text2}'"")
+    print(f""Extracted Vowels: '{result2}'"")
+    print(""-"" * 20)
+    print(f""Text: '{sample_text3}'"")
+    print(f""Extracted Vowels: '{result3}'"")",True,3,16609,265_12_3.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    result1 = extract_alphanumeric(test_string1)
+    print(f""Input: '{test_string1}', Output: '{result1}'"")
+    test_string2 = ""Python3.10 is great.""
+    result2 = extract_alphanumeric(test_string2)
+    print(f""Input: '{test_string2}', Output: '{result2}'"")
+    test_string3 = ""$$$abc123xyz""
+    result3 = extract_alphanumeric(test_string3)
+    print(f""Input: '{test_string3}', Output: '{result3}'"")
+    test_string4 = ""OnlyLetters""
+    result4 = extract_alphanumeric(test_string4)
+    print(f""Input: '{test_string4}', Output: '{result4}'"")",True,0,16610,265_11.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"def extract_alphanumeric(input_string):
+    result = []
+    for char in input_string:
+        if char.isalnum():
+            result.append(char)
+    return """".join(result)
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    print(extract_alphanumeric(test_string1))
+    test_string2 = ""Python3.10 is great""
+    print(extract_alphanumeric(test_string2))
+    test_string3 = ""$$%^&*() ""
+    print(extract_alphanumeric(test_string3))
+    test_string4 = ""OnlyLettersAndNumbers""
+    print(extract_alphanumeric(test_string4))",True,1,16611,265_11_1.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"import re
+def extract_alphanumeric(input_string):
+    return """".join(char for char in input_string if char.isalnum())
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    result1 = extract_alphanumeric(test_string1)
+    print(f""Input: '{test_string1}'"")
+    print(f""Output: '{result1}'"")
+    test_string2 = ""Python3.10 is great.""
+    result2 = extract_alphanumeric(test_string2)
+    print(f""Input: '{test_string2}'"")
+    print(f""Output: '{result2}'"")
+    test_string3 = ""$$%^&*()_+=-""
+    result3 = extract_alphanumeric(test_string3)
+    print(f""Input: '{test_string3}'"")
+    print(f""Output: '{result3}'"")",True,2,16612,265_11_2.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"def extract_alphanumeric(input_string):
+    result = []
+    for char in input_string:
+        if char.isalnum():
+            result.append(char)
+    return """".join(result)
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    print(extract_alphanumeric(test_string1))
+    test_string2 = ""abc123xyz""
+    print(extract_alphanumeric(test_string2))
+    test_string3 = ""NoAlphanumericChars""
+    print(extract_alphanumeric(test_string3))
+    test_string4 = """"
+    print(extract_alphanumeric(test_string4))",True,3,16613,265_11_3.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"import re
+def extract_alphanumeric(input_string):
+    return re.sub(r'[^a-zA-Z0-9]', '', input_string)
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    result1 = extract_alphanumeric(test_string1)
+    print(f""Input: {test_string1}, Output: {result1}"")
+    test_string2 = ""Python3.10 is great""
+    result2 = extract_alphanumeric(test_string2)
+    print(f""Input: {test_string2}, Output: {result2}"")
+    test_string3 = ""$$$abc123xyz%""
+    result3 = extract_alphanumeric(test_string3)
+    print(f""Input: {test_string3}, Output: {result3}"")
+    test_string4 = ""OnlyLetters""
+    result4 = extract_alphanumeric(test_string4)
+    print(f""Input: {test_string4}, Output: {result4}"")",True,4,16614,265_11_4.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"def extract_alphanumeric(input_string):
+    result = """"
+    for char in input_string:
+        if char.isalnum():
+            result += char
+    return result
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    test_string2 = ""Python3.10 is great""
+    test_string3 = ""$$%^&*() ""
+    test_string4 = """"
+    print(f""'{test_string1}' -> '{extract_alphanumeric(test_string1)}'"")
+    print(f""'{test_string2}' -> '{extract_alphanumeric(test_string2)}'"")
+    print(f""'{test_string3}' -> '{extract_alphanumeric(test_string3)}'"")
+    print(f""'{test_string4}' -> '{extract_alphanumeric(test_string4)}'"")",True,5,16615,265_11_5.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"import re
+def extract_alphanumeric(input_string):
+    return """".join(char for char in input_string if char.isalnum())
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    result1 = extract_alphanumeric(test_string1)
+    print(f""Input: '{test_string1}', Output: '{result1}'"")
+    test_string2 = ""Python3.10 is fast""
+    result2 = extract_alphanumeric(test_string2)
+    print(f""Input: '{test_string2}', Output: '{result2}'"")
+    test_string3 = ""OnlySymbols!@#$""
+    result3 = extract_alphanumeric(test_string3)
+    print(f""Input: '{test_string3}', Output: '{result3}'"")
+    test_string4 = """"
+    result4 = extract_alphanumeric(test_string4)
+    print(f""Input: '{test_string4}', Output: '{result4}'"")",True,6,16616,265_11_6.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"import re
+def extract_alphanumeric(input_string):
+    return """".join(char for char in input_string if char.isalnum())
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    result1 = extract_alphanumeric(test_string1)
+    print(f""Input: '{test_string1}', Output: '{result1}'"")
+    test_string2 = ""Python3.10 is great""
+    result2 = extract_alphanumeric(test_string2)
+    print(f""Input: '{test_string2}', Output: '{result2}'"")
+    test_string3 = ""$$%^&*() ""
+    result3 = extract_alphanumeric(test_string3)
+    print(f""Input: '{test_string3}', Output: '{result3}'"")
+    test_string4 = """"
+    result4 = extract_alphanumeric(test_string4)
+    print(f""Input: '{test_string4}', Output: '{result4}'"")",True,7,16617,265_11_7.py
+265,11,Extract characters from a phrase,Implement an optimized function named `extract_alphanumeric` that takes a single string as input and returns a new string containing only the letters and digits from the original string. Ensure the implementation is time-efficient.,"import re
+def extract_alphanumeric(input_string):
+    return """".join(char for char in input_string if char.isalnum())
+if __name__ == '__main__':
+    test_string1 = ""Hello World 123!""
+    result1 = extract_alphanumeric(test_string1)
+    print(f""Input: {test_string1}"")
+    print(f""Output: {result1}"")
+    test_string2 = ""Python3.10 is great""
+    result2 = extract_alphanumeric(test_string2)
+    print(f""Input: {test_string2}"")
+    print(f""Output: {result2}"")
+    test_string3 = ""!@#$%^&*()_+=-""
+    result3 = extract_alphanumeric(test_string3)
+    print(f""Input: {test_string3}"")
+    print(f""Output: {result3}"")",True,8,16618,265_11_8.py
+265,14,Extract characters from a phrase,"Create an optimized method within a class designed to process text. This method should accept a string and return a dictionary where keys are the unique characters found in the string, and values are their respective counts in the string.","class TextProcessor:
+    def count_characters(self, text):
+        counts = {}
+        for char in text:
+            if char in counts:
+                counts[char] += 1
+            else:
+                counts[char] = 1
+        return counts
+if __name__ == '__main__':
+    processor = TextProcessor()
+    sample_text = ""hello world""
+    result = processor.count_characters(sample_text)
+    print(result)",True,0,16619,265_14.py
+265,14,Extract characters from a phrase,"Create an optimized method within a class designed to process text. This method should accept a string and return a dictionary where keys are the unique characters found in the string, and values are their respective counts in the string.","class TextProcessor:
+    def count_characters(self, text: str) -> dict:
+        counts = {}
+        for char in text:
+            if char in counts:
+                counts[char] += 1
+            else:
+                counts[char] = 1
+        return counts
+if __name__ == '__main__':
+    processor = TextProcessor()
+    sample_text = ""hello world""
+    result = processor.count_characters(sample_text)
+    print(result)",True,1,16620,265_14_1.py
+265,13,Extract characters from a phrase,"Write a concise and highly readable Python function that takes a phrase and uses list comprehension to extract and return a list of all individual characters from the phrase, filtering out any non-alphanumeric characters. Provide docstrings explaining the function's purpose.","def extract_alphanumeric(phrase):
+    return [char for char in phrase if char.isalnum()]
+if __name__ == '__main__':
+    sample_phrase = ""Hello World! 123""
+    result = extract_alphanumeric(sample_phrase)
+    print(result)",True,0,16621,265_13.py
+266,1,Count the total number of words,Implement an efficient function named `count_words` that takes a single string argument and returns the total word count. The implementation must use best practices for string splitting.,"def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string = ""This is a sample sentence for testing word counting.""
+    word_count = count_words(sample_string)
+    print(word_count)",True,0,16622,266_1.py
+266,1,Count the total number of words,Implement an efficient function named `count_words` that takes a single string argument and returns the total word count. The implementation must use best practices for string splitting.,"def count_words(text):
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence""
+    sample_string2 = ""  leading and trailing spaces are handled correctly ""
+    sample_string3 = """"
+    sample_string4 = ""OneWord""
+    sample_string5 = ""Multiple   spaces   between words""
+    print(f""'{sample_string1}' has {count_words(sample_string1)} words"")
+    print(f""'{sample_string2}' has {count_words(sample_string2)} words"")
+    print(f""'{sample_string3}' has {count_words(sample_string3)} words"")
+    print(f""'{sample_string4}' has {count_words(sample_string4)} words"")
+    print(f""'{sample_string5}' has {count_words(sample_string5)} words"")",True,1,16623,266_1_1.py
+266,1,Count the total number of words,Implement an efficient function named `count_words` that takes a single string argument and returns the total word count. The implementation must use best practices for string splitting.,"def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence""
+    sample_string2 = ""  leading and trailing spaces are handled correctly ""
+    sample_string3 = ""OneWord""
+    sample_string4 = """"
+    sample_string5 = ""Multiple   spaces   between words""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,2,16624,266_1_2.py
+266,1,Count the total number of words,Implement an efficient function named `count_words` that takes a single string argument and returns the total word count. The implementation must use best practices for string splitting.,"def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string = ""This is a sample sentence for testing word counting""
+    word_count = count_words(sample_string)
+    print(word_count)",True,3,16625,266_1_3.py
+266,1,Count the total number of words,Implement an efficient function named `count_words` that takes a single string argument and returns the total word count. The implementation must use best practices for string splitting.,"def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string = ""This is a sample sentence for word counting""
+    word_count = count_words(sample_string)
+    print(word_count)",True,4,16626,266_1_4.py
+266,2,Count the total number of words,Develop an optimized class named `WordCounter` with a method to calculate the word count from any given input text. Ensure the class design is clean and object-oriented.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""  leading and trailing spaces are handled correctly.""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {count3}\n"")
+    count4 = counter.count_words(sample_text4)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {count4}\n"")",True,0,16627,266_2.py
+266,2,Count the total number of words,Develop an optimized class named `WordCounter` with a method to calculate the word count from any given input text. Ensure the class design is clean and object-oriented.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""   leading and trailing spaces are handled correctly.""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {count3}\n"")
+    count4 = counter.count_words(sample_text4)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {count4}\n"")",True,1,16628,266_2_1.py
+266,2,Count the total number of words,Develop an optimized class named `WordCounter` with a method to calculate the word count from any given input text. Ensure the class design is clean and object-oriented.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""  leading and trailing spaces are handled correctly.""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text: '{sample_text1}'"")
+    print(f""Word Count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text: '{sample_text2}'"")
+    print(f""Word Count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text: '{sample_text3}'"")
+    print(f""Word Count: {count3}\n"")
+    count4 = counter.count_words(sample_text4)
+    print(f""Text: '{sample_text4}'"")
+    print(f""Word Count: {count4}\n"")",True,2,16629,266_2_2.py
+266,2,Count the total number of words,Develop an optimized class named `WordCounter` with a method to calculate the word count from any given input text. Ensure the class design is clean and object-oriented.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""   leading and trailing spaces are handled correctly.""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text: '{sample_text1}'"")
+    print(f""Word Count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text: '{sample_text2}'"")
+    print(f""Word Count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text: '{sample_text3}'"")
+    print(f""Word Count: {count3}\n"")
+    count4 = counter.count_words(sample_text4)
+    print(f""Text: '{sample_text4}'"")
+    print(f""Word Count: {count4}\n"")",True,3,16630,266_2_3.py
+266,2,Count the total number of words,Develop an optimized class named `WordCounter` with a method to calculate the word count from any given input text. Ensure the class design is clean and object-oriented.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""   leading and trailing spaces are handled correctly""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""'{sample_text1}' word count: {count1}"")
+    count2 = counter.count_words(sample_text2)
+    print(f""'{sample_text2}' word count: {count2}"")
+    count3 = counter.count_words(sample_text3)
+    print(f""'{sample_text3}' word count: {count3}"")
+    count4 = counter.count_words(sample_text4)
+    print(f""'{sample_text4}' word count: {count4}"")",True,4,16631,266_2_4.py
+266,2,Count the total number of words,Develop an optimized class named `WordCounter` with a method to calculate the word count from any given input text. Ensure the class design is clean and object-oriented.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""  leading and trailing spaces are handled correctly""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {count3}\n"")
+    count4 = counter.count_words(sample_text4)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {count4}\n"")",True,5,16632,266_2_5.py
+266,3,Count the total number of words,"Write a concise and highly efficient one-line Python expression or function that calculates the total number of words in a provided string, ignoring leading/trailing whitespace.","def word_count(s):
+    return len(s.split())
+if __name__ == '__main__':
+    test_string = ""  Hello world  ""
+    print(word_count(test_string))",True,0,16633,266_3.py
+266,3,Count the total number of words,"Write a concise and highly efficient one-line Python expression or function that calculates the total number of words in a provided string, ignoring leading/trailing whitespace.","def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string = ""  Hello world  this is a test ""
+    print(count_words(sample_string))",True,1,16634,266_3_1.py
+266,3,Count the total number of words,"Write a concise and highly efficient one-line Python expression or function that calculates the total number of words in a provided string, ignoring leading/trailing whitespace.","def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    test_string = ""  Hello world  this is a test ""
+    print(count_words(test_string))",True,2,16635,266_3_2.py
+266,0,Count the total number of words,"Write a complete, robust Python script that accepts a string as input and accurately counts the total number of words, handling various whitespace scenarios correctly. Ensure the code is highly optimized.","import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample_string1 = ""This is a test sentence with multiple spaces.""
+    sample_string2 = ""  leading and trailing spaces   \tand newlines\n""
+    sample_string3 = """"
+    sample_string4 = ""OneWord""
+    sample_string5 = ""word1  word2\tword3""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,0,16636,266_0.py
+266,0,Count the total number of words,"Write a complete, robust Python script that accepts a string as input and accurately counts the total number of words, handling various whitespace scenarios correctly. Ensure the code is highly optimized.","import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence with varying amounts of whitespace.""
+    sample_string2 = ""  Multiple   spaces   here \t and newlines\n.""
+    sample_string3 = """"
+    sample_string4 = ""SingleWord""
+    sample_string5 = ""Word1\nWord2""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,1,16637,266_0_1.py
+266,0,Count the total number of words,"Write a complete, robust Python script that accepts a string as input and accurately counts the total number of words, handling various whitespace scenarios correctly. Ensure the code is highly optimized.","import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence with various spaces.""
+    sample_string2 = ""  leading and trailing spaces   \tand multiple spaces\n\nbetween words. ""
+    sample_string3 = """"
+    sample_string4 = ""SingleWord""
+    sample_string5 = ""word1  word2\tword3""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,2,16638,266_0_2.py
+266,0,Count the total number of words,"Write a complete, robust Python script that accepts a string as input and accurately counts the total number of words, handling various whitespace scenarios correctly. Ensure the code is highly optimized.","import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string with varying amounts of whitespace.""
+    sample_string2 = ""  leading and trailing spaces   \tand multiple spaces in between. ""
+    sample_string3 = """"
+    sample_string4 = ""One\nTwo\tThree""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")",True,3,16639,266_0_3.py
+266,0,Count the total number of words,"Write a complete, robust Python script that accepts a string as input and accurately counts the total number of words, handling various whitespace scenarios correctly. Ensure the code is highly optimized.","import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string with varying amounts of whitespace.""
+    sample_string2 = ""  leading and trailing spaces   and multiple    spaces in between. \t""
+    sample_string3 = """"
+    sample_string4 = ""One\nTwo\rThree""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")",True,4,16640,266_0_4.py
+266,0,Count the total number of words,"Write a complete, robust Python script that accepts a string as input and accurately counts the total number of words, handling various whitespace scenarios correctly. Ensure the code is highly optimized.","import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample_string1 = ""  Hello world!   This is a test. ""
+    sample_string2 = ""Multiple   spaces\tand\nnewlines.""
+    sample_string3 = """"
+    sample_string4 = ""SingleWord""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")",True,5,16641,266_0_5.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"import re
+def count_words(text):
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string for word counting""
+    sample_string2 = ""  Multiple   spaces   between words here  ""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""Words\twith\nvarious\twhitespace""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,0,16642,266_5.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"def count_words(text):
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string for word counting""
+    sample_string2 = ""  Multiple   spaces   between words here ""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""   \t\n\r ""
+    result1 = count_words(sample_string1)
+    result2 = count_words(sample_string2)
+    result3 = count_words(sample_string3)
+    result4 = count_words(sample_string4)
+    result5 = count_words(sample_string5)
+    print(f""'{sample_string1}' has {result1} words"")
+    print(f""'{sample_string2}' has {result2} words"")
+    print(f""'{sample_string3}' has {result3} words"")
+    print(f""'{sample_string4}' has {result4} words"")
+    print(f""'{sample_string5}' has {result5} words"")",True,1,16643,266_5_1.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"import re
+def count_words(text):
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string for word counting""
+    sample_string2 = ""  Multiple   spaces\tand\ttabs\n\nwords here ""
+    sample_string3 = """"
+    sample_string4 = ""SingleWord""
+    result1 = count_words(sample_string1)
+    result2 = count_words(sample_string2)
+    result3 = count_words(sample_string3)
+    result4 = count_words(sample_string4)
+    print(f""'{sample_string1}' has {result1} words"")
+    print(f""'{sample_string2}' has {result2} words"")
+    print(f""'{sample_string3}' has {result3} words"")
+    print(f""'{sample_string4}' has {result4} words"")",True,2,16644,266_5_2.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"def count_words(text):
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string for testing""
+    sample_string2 = ""  Multiple   spaces   between words here ""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""   \t\n""
+    print(f""'{sample_string1}' has {count_words(sample_string1)} words."")
+    print(f""'{sample_string2}' has {count_words(sample_string2)} words."")
+    print(f""'{sample_string3}' has {count_words(sample_string3)} words."")
+    print(f""'{sample_string4}' has {count_words(sample_string4)} words."")
+    print(f""'{sample_string5}' has {count_words(sample_string5)} words."")",True,3,16645,266_5_3.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"import re
+def count_words(text: str) -> int:
+    if not text:
+        return 0
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string_1 = ""This is a sample string with several words""
+    sample_string_2 = ""  Multiple   spaces   between   words ""
+    sample_string_3 = ""SingleWord""
+    sample_string_4 = """"
+    sample_string_5 = ""   ""
+    result1 = count_words(sample_string_1)
+    result2 = count_words(sample_string_2)
+    result3 = count_words(sample_string_3)
+    result4 = count_words(sample_string_4)
+    result5 = count_words(sample_string_5)
+    print(f""'{sample_string_1}' -> Count: {result1}"")
+    print(f""'{sample_string_2}' -> Count: {result2}"")
+    print(f""'{sample_string_3}' -> Count: {result3}"")
+    print(f""'{sample_string_4}' -> Count: {result4}"")
+    print(f""'{sample_string_5}' -> Count: {result5}"")",True,4,16646,266_5_4.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"def count_words(text):
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string for testing""
+    sample_string2 = ""  Multiple   spaces   between words ""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""   \t\n\r ""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,5,16647,266_5_5.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"import re
+def count_words(text: str) -> int:
+    if not text:
+        return 0
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string_1 = ""This is a sample string with multiple words""
+    sample_string_2 = ""  leading and trailing spaces   are handled correctly ""
+    sample_string_3 = ""SingleWord""
+    sample_string_4 = """"
+    sample_string_5 = ""  \t\nMultiple\tspaces\r""
+    print(f""'{sample_string_1}' has {count_words(sample_string_1)} words"")
+    print(f""'{sample_string_2}' has {count_words(sample_string_2)} words"")
+    print(f""'{sample_string_3}' has {count_words(sample_string_3)} words"")
+    print(f""'{sample_string_4}' has {count_words(sample_string_4)} words"")
+    print(f""'{sample_string_5}' has {count_words(sample_string_5)} words"")",True,6,16648,266_5_6.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"def count_words(text):
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string for word counting""
+    sample_string2 = ""  Multiple   spaces   between words here ""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""   \t\n""
+    result1 = count_words(sample_string1)
+    result2 = count_words(sample_string2)
+    result3 = count_words(sample_string3)
+    result4 = count_words(sample_string4)
+    result5 = count_words(sample_string5)
+    print(f""'{sample_string1}' has {result1} words"")
+    print(f""'{sample_string2}' has {result2} words"")
+    print(f""'{sample_string3}' has {result3} words"")
+    print(f""'{sample_string4}' has {result4} words"")
+    print(f""'{sample_string5}' has {result5} words"")",True,7,16649,266_5_7.py
+266,5,Count the total number of words,Implement a function that counts words in a string by splitting the string based on any sequence of whitespace characters. Provide detailed docstrings explaining the function's purpose and complexity.,"import re
+def count_words(text: str) -> int:
+    word_list = text.split()
+    return len(word_list)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence with several words.""
+    sample_string2 = ""  leading and trailing spaces   should be handled correctly. ""
+    sample_string3 = ""   multiple   spaces   between   words ""
+    sample_string4 = """"
+    sample_string5 = ""SingleWord""
+    result1 = count_words(sample_string1)
+    result2 = count_words(sample_string2)
+    result3 = count_words(sample_string3)
+    result4 = count_words(sample_string4)
+    result5 = count_words(sample_string5)
+    print(f""'{sample_string1}' has {result1} words."")
+    print(f""'{sample_string2}' has {result2} words."")
+    print(f""'{sample_string3}' has {result3} words."")
+    print(f""'{sample_string4}' has {result4} words."")
+    print(f""'{sample_string5}' has {result5} words."")",True,8,16650,266_5_8.py
+266,6,Count the total number of words,Write a testable Python module containing a function to count words. Include comprehensive unit tests using the `unittest` framework to verify correctness across edge cases like empty strings and strings with multiple spaces.,"import unittest
+class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+class TestWordCounter(unittest.TestCase):
+    def setUp(self):
+        self.counter = WordCounter()
+    def test_basic_sentence(self):
+        self.assertEqual(self.counter.count_words(""Hello world""), 2)
+    def test_multiple_spaces(self):
+        self.assertEqual(self.counter.count_words(""Hello   world""), 2)
+    def test_leading_and_trailing_spaces(self):
+        self.assertEqual(self.counter.count_words(""  Hello world  ""), 2)
+    def test_empty_string(self):
+        self.assertEqual(self.counter.count_words(""""), 0)
+    def test_only_spaces(self):
+        self.assertEqual(self.counter.count_words(""   \t\n ""), 0)
+    def test_single_word(self):
+        self.assertEqual(self.counter.count_words(""Single""), 1)
+    def test_punctuation_attached(self):
+        self.assertEqual(self.counter.count_words(""Hello, world!""), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,16651,266_6.py
+266,6,Count the total number of words,Write a testable Python module containing a function to count words. Include comprehensive unit tests using the `unittest` framework to verify correctness across edge cases like empty strings and strings with multiple spaces.,"import unittest
+class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+class TestWordCounter(unittest.TestCase):
+    def setUp(self):
+        self.counter = WordCounter()
+    def test_basic_sentence(self):
+        self.assertEqual(self.counter.count_words(""Hello world""), 2)
+    def test_multiple_spaces(self):
+        self.assertEqual(self.counter.count_words(""Hello   world""), 2)
+    def test_leading_and_trailing_spaces(self):
+        self.assertEqual(self.counter.count_words(""  Hello world  ""), 2)
+    def test_empty_string(self):
+        self.assertEqual(self.counter.count_words(""""), 0)
+    def test_only_spaces(self):
+        self.assertEqual(self.counter.count_words(""   \t\n ""), 0)
+    def test_single_word(self):
+        self.assertEqual(self.counter.count_words(""Single""), 1)
+    def test_punctuation_attached(self):
+        self.assertEqual(self.counter.count_words(""Word! Another.""), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,16652,266_6_1.py
+266,6,Count the total number of words,Write a testable Python module containing a function to count words. Include comprehensive unit tests using the `unittest` framework to verify correctness across edge cases like empty strings and strings with multiple spaces.,"import unittest
+class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+class TestWordCounter(unittest.TestCase):
+    def setUp(self):
+        self.counter = WordCounter()
+    def test_basic_sentence(self):
+        text = ""This is a test sentence""
+        self.assertEqual(self.counter.count_words(text), 5)
+    def test_empty_string(self):
+        text = """"
+        self.assertEqual(self.counter.count_words(text), 0)
+    def test_string_with_only_spaces(self):
+        text = ""   \t  ""
+        self.assertEqual(self.counter.count_words(text), 0)
+    def test_multiple_spaces(self):
+        text = ""Hello   world""
+        self.assertEqual(self.counter.count_words(text), 2)
+    def test_leading_and_trailing_spaces(self):
+        text = ""  Start and end  ""
+        self.assertEqual(self.counter.count_words(text), 3)
+    def test_single_word(self):
+        text = ""Word""
+        self.assertEqual(self.counter.count_words(text), 1)
+    def test_only_punctuation(self):
+        text = "".,!?""
+        self.assertEqual(self.counter.count_words(text), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,16653,266_6_2.py
+266,6,Count the total number of words,Write a testable Python module containing a function to count words. Include comprehensive unit tests using the `unittest` framework to verify correctness across edge cases like empty strings and strings with multiple spaces.,"import unittest
+class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+class TestWordCounter(unittest.TestCase):
+    def setUp(self):
+        self.counter = WordCounter()
+    def test_basic_sentence(self):
+        text = ""This is a test sentence""
+        self.assertEqual(self.counter.count_words(text), 5)
+    def test_empty_string(self):
+        text = """"
+        self.assertEqual(self.counter.count_words(text), 0)
+    def test_string_with_only_spaces(self):
+        text = ""   \t  ""
+        self.assertEqual(self.counter.count_words(text), 0)
+    def test_multiple_spaces(self):
+        text = ""Hello   world""
+        self.assertEqual(self.counter.count_words(text), 2)
+    def test_leading_and_trailing_spaces(self):
+        text = ""  Start and end ""
+        self.assertEqual(self.counter.count_words(text), 3)
+    def test_single_word(self):
+        text = ""Word""
+        self.assertEqual(self.counter.count_words(text), 1)
+    def test_only_punctuation(self):
+        text = "".,! ? ""
+        self.assertEqual(self.counter.count_words(text), 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,16654,266_6_3.py
+266,7,Count the total number of words,Design and implement an optimized algorithm for counting words in a string that minimizes unnecessary operations. Focus on time complexity efficiency.,"import collections
+def count_words_optimized(text):
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string = ""This is an example sentence for word counting optimization""
+    count = count_words_optimized(sample_string)
+    print(count)",True,0,16655,266_7.py
+266,7,Count the total number of words,Design and implement an optimized algorithm for counting words in a string that minimizes unnecessary operations. Focus on time complexity efficiency.,"import collections
+def count_words_optimized(text):
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string = ""This is an example string for word counting optimization""
+    result = count_words_optimized(sample_string)
+    print(result)",True,1,16656,266_7_1.py
+266,7,Count the total number of words,Design and implement an optimized algorithm for counting words in a string that minimizes unnecessary operations. Focus on time complexity efficiency.,"import collections
+def count_words_optimized(text):
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string = ""This is an optimized algorithm for counting words in a string""
+    count = count_words_optimized(sample_string)
+    print(count)",True,2,16657,266_7_2.py
+266,7,Count the total number of words,Design and implement an optimized algorithm for counting words in a string that minimizes unnecessary operations. Focus on time complexity efficiency.,"def count_words(text):
+    if not text:
+        return 0
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string = ""This is an example sentence for word counting optimization""
+    word_count = count_words(sample_string)
+    print(word_count)",True,3,16658,266_7_3.py
+266,7,Count the total number of words,Design and implement an optimized algorithm for counting words in a string that minimizes unnecessary operations. Focus on time complexity efficiency.,"import collections
+def count_words_optimized(text):
+    words = text.split()
+    return len(words)
+if __name__ == '__main__':
+    sample_string = ""This is an example sentence for word counting optimization""
+    result = count_words_optimized(sample_string)
+    print(result)",True,4,16659,266_7_4.py
+266,8,Count the total number of words,"Generate the complete, production-ready Python code for a utility script that reads text from a file and outputs the total word count of the entire file content.","def count_words_in_file(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            content = file.read()
+            word_count = len(content.split())
+            return word_count
+    except FileNotFoundError:
+        return -1
+if __name__ == '__main__':
+    sample_filename = ""sample_text.txt""
+    sample_content = ""This is a sample text file for testing purposes. It contains several words and we want to count them accurately.""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(sample_content)
+        word_count = count_words_in_file(sample_filename)
+        print(word_count)
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,0,16660,266_8.py
+266,8,Count the total number of words,"Generate the complete, production-ready Python code for a utility script that reads text from a file and outputs the total word count of the entire file content.","def count_words_in_file(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            content = file.read()
+            word_count = len(content.split())
+            return word_count
+    except FileNotFoundError:
+        return -1
+if __name__ == '__main__':
+    sample_filename = ""sample.txt""
+    sample_content = ""This is a sample text file for testing the word count utility.""
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(sample_content)
+        word_count = count_words_in_file(sample_filename)
+        print(word_count)
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,1,16661,266_8_1.py
+266,8,Count the total number of words,"Generate the complete, production-ready Python code for a utility script that reads text from a file and outputs the total word count of the entire file content.","def count_words_in_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+            word_count = len(content.split())
+            return word_count
+    except FileNotFoundError:
+        return -1
+if __name__ == '__main__':
+    sample_filename = ""sample.txt""
+    sample_content = ""This is a sample text file for testing the word count utility.""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_content)
+    word_count = count_words_in_file(sample_filename)
+    print(word_count)",True,2,16662,266_8_2.py
+266,8,Count the total number of words,"Generate the complete, production-ready Python code for a utility script that reads text from a file and outputs the total word count of the entire file content.","def count_words_in_file(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            content = file.read()
+            word_count = len(content.split())
+            return word_count
+    except FileNotFoundError:
+        return -1
+if __name__ == '__main__':
+    sample_filename = ""sample_text.txt""
+    sample_content = ""This is a sample text file for testing the word count utility. It contains several words and punctuation marks.""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_content)
+    word_count = count_words_in_file(sample_filename)
+    print(word_count)",True,3,16663,266_8_3.py
+266,8,Count the total number of words,"Generate the complete, production-ready Python code for a utility script that reads text from a file and outputs the total word count of the entire file content.","def count_words_in_file(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            content = file.read()
+            word_count = len(content.split())
+            return word_count
+    except FileNotFoundError:
+        return -1
+if __name__ == '__main__':
+    sample_file_content = ""This is a sample text file for testing the word count utility. It contains several words and some punctuation.""
+    sample_filename = ""sample_text.txt""
+    with open(sample_filename, 'w') as f:
+        f.write(sample_file_content)
+    word_count = count_words_in_file(sample_filename)
+    print(word_count)",True,4,16664,266_8_4.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample1 = ""Hello world! This is a test.""
+    sample2 = ""What's up, world? How are you?""
+    sample3 = ""One-two-three... four five.""
+    sample4 = ""  leading and trailing spaces   ""
+    sample5 = ""Hyphenated-words are tricky.""
+    print(f""'{sample1}' -> {count_words_with_punctuation(sample1)}"")
+    print(f""'{sample2}' -> {count_words_with_punctuation(sample2)}"")
+    print(f""'{sample3}' -> {count_words_with_punctuation(sample3)}"")
+    print(f""'{sample4}' -> {count_words_with_punctuation(sample4)}"")
+    print(f""'{sample5}' -> {count_words_with_punctuation(sample5)}"")",True,0,16665,266_9.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""Hello world! This is a test, how are you?""
+    sample_string2 = ""One-two three... four five.""
+    sample_string3 = ""  Leading spaces and trailing punctuation? Yes.""
+    sample_string4 = ""Hyphenated-words should be counted as one if possible, but standard word counting treats them separately unless explicitly handled. For this simple count, we focus on sequences of word characters.""
+    print(f""'{sample_string1}' -> {count_words_with_punctuation(sample_string1)}"")
+    print(f""'{sample_string2}' -> {count_words_with_punctuation(sample_string2)}"")
+    print(f""'{sample_string3}' -> {count_words_with_punctuation(sample_string3)}"")
+    print(f""'{sample_string4}' -> {count_words_with_punctuation(sample_string4)}"")",True,1,16666,266_9_1.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample1 = ""Hello world! This is a test, how are you?""
+    sample2 = ""One-two three... four five.""
+    sample3 = ""Word.Another,word?Final.""
+    sample4 = ""  leading and trailing spaces   ""
+    sample5 = ""SingleWord""
+    print(f""'{sample1}' -> {count_words_with_punctuation(sample1)}"")
+    print(f""'{sample2}' -> {count_words_with_punctuation(sample2)}"")
+    print(f""'{sample3}' -> {count_words_with_punctuation(sample3)}"")
+    print(f""'{sample4}' -> {count_words_with_punctuation(sample4)}"")
+    print(f""'{sample5}' -> {count_words_with_punctuation(sample5)}"")",True,2,16667,266_9_2.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""Hello world! This is a test, how are you?""
+    sample_string2 = ""One-two three... four five.""
+    sample_string3 = ""  Leading spaces and trailing punctuation? Yes.""
+    sample_string4 = ""SingleWord""
+    print(f""'{sample_string1}' -> {count_words_with_punctuation(sample_string1)}"")
+    print(f""'{sample_string2}' -> {count_words_with_punctuation(sample_string2)}"")
+    print(f""'{sample_string3}' -> {count_words_with_punctuation(sample_string3)}"")
+    print(f""'{sample_string4}' -> {count_words_with_punctuation(sample_string4)}"")",True,3,16668,266_9_3.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample1 = ""Hello world! This is a test.""
+    sample2 = ""One-two three... four?""
+    sample3 = ""Word. Another, word! End.""
+    sample4 = ""  leading and trailing spaces are handled correctly. ""
+    sample5 = ""Hyphenated-words and apostrophes't are tricky.""
+    print(f""'{sample1}' -> {count_words_with_punctuation(sample1)}"")
+    print(f""'{sample2}' -> {count_words_with_punctuation(sample2)}"")
+    print(f""'{sample3}' -> {count_words_with_punctuation(sample3)}"")
+    print(f""'{sample4}' -> {count_words_with_punctuation(sample4)}"")
+    print(f""'{sample5}' -> {count_words_with_punctuation(sample5)}"")",True,4,16669,266_9_4.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample1 = ""This is a test sentence with some punctuation.""
+    sample2 = ""Hello, world! How are you doing today?""
+    sample3 = ""One-two-three... four five six.""
+    sample4 = ""  leading and trailing spaces   ""
+    sample5 = ""Hyphenated-words and apostrophes' count.""
+    print(f""'{sample1}' -> {count_words(sample1)}"")
+    print(f""'{sample2}' -> {count_words(sample2)}"")
+    print(f""'{sample3}' -> {count_words(sample3)}"")
+    print(f""'{sample4}' -> {count_words(sample4)}"")
+    print(f""'{sample5}' -> {count_words(sample5)}"")",True,5,16670,266_9_5.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string_1 = ""Hello world! This is a test, how are you?""
+    sample_string_2 = ""One-two three... four five.""
+    sample_string_3 = ""Word.Another,word?Final.""
+    sample_string_4 = ""  leading and trailing spaces  ""
+    sample_string_5 = ""SingleWord""
+    print(f""'{sample_string_1}': {count_words_with_punctuation(sample_string_1)}"")
+    print(f""'{sample_string_2}': {count_words_with_punctuation(sample_string_2)}"")
+    print(f""'{sample_string_3}': {count_words_with_punctuation(sample_string_3)}"")
+    print(f""'{sample_string_4}': {count_words_with_punctuation(sample_string_4)}"")
+    print(f""'{sample_string_5}': {count_words_with_punctuation(sample_string_5)}"")",True,6,16671,266_9_6.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words_with_punctuation(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""Hello world! This is a test, how are you?""
+    sample_string2 = ""One-two three... four five.""
+    sample_string3 = ""  Leading spaces and trailing punctuation? Yes.""
+    sample_string4 = ""SingleWord.""
+    print(f""'{sample_string1}' -> {count_words_with_punctuation(sample_string1)}"")
+    print(f""'{sample_string2}' -> {count_words_with_punctuation(sample_string2)}"")
+    print(f""'{sample_string3}' -> {count_words_with_punctuation(sample_string3)}"")
+    print(f""'{sample_string4}' -> {count_words_with_punctuation(sample_string4)}"")",True,7,16672,266_9_7.py
+266,9,Count the total number of words,"Develop an advanced function capable of counting words in a string while correctly handling punctuation attached to words (e.g., 'word.' should be counted as one word). Provide the most professional and accurate implementation.","import re
+def count_words(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""Hello world! This is a test, how are you?""
+    sample_string2 = ""One-two three... four five.""
+    sample_string3 = ""  Leading spaces and trailing punctuation.""
+    sample_string4 = ""SingleWord""
+    print(f""'{sample_string1}' -> {count_words(sample_string1)}"")
+    print(f""'{sample_string2}' -> {count_words(sample_string2)}"")
+    print(f""'{sample_string3}' -> {count_words(sample_string3)}"")
+    print(f""'{sample_string4}' -> {count_words(sample_string4)}"")",True,8,16673,266_9_8.py
+265,8,Extract characters from a phrase,Write a script that reads user input from the console and extracts all characters that are not spaces or punctuation marks into a single output string.,,False,0,16674,265_8.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence for testing.""
+    sample_string2 = ""  Multiple   spaces   between words here. ""
+    sample_string3 = """"
+    sample_string4 = ""OneWord""
+    sample_string5 = ""Hello, world! How are you?""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,0,16675,266_11.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence for testing.""
+    sample_string2 = ""  leading and trailing spaces are handled efficiently. ""
+    sample_string3 = ""OneWord""
+    sample_string4 = """"
+    sample_string5 = ""Multiple   spaces   between words should still count as one word if we use split() correctly.""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,1,16676,266_11_1.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample1 = ""This is a sample sentence.""
+    sample2 = ""  leading and trailing spaces are handled correctly. ""
+    sample3 = ""Another test string with multiple   spaces.""
+    sample4 = """"
+    sample5 = ""SingleWord""
+    print(f""'{sample1}': {count_words(sample1)}"")
+    print(f""'{sample2}': {count_words(sample2)}"")
+    print(f""'{sample3}': {count_words(sample3)}"")
+    print(f""'{sample4}': {count_words(sample4)}"")
+    print(f""'{sample5}': {count_words(sample5)}"")",True,2,16677,266_11_2.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample1 = ""This is a sample sentence.""
+    sample2 = ""  leading and trailing spaces are handled correctly ""
+    sample3 = ""OneWord""
+    sample4 = """"
+    sample5 = ""Multiple   spaces\tand\nnewlines""
+    print(f""'{sample1}': {count_words(sample1)}"")
+    print(f""'{sample2}': {count_words(sample2)}"")
+    print(f""'{sample3}': {count_words(sample3)}"")
+    print(f""'{sample4}': {count_words(sample4)}"")
+    print(f""'{sample5}': {count_words(sample5)}"")",True,3,16678,266_11_3.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence for testing.""
+    sample_string2 = ""  Multiple   spaces   and   extra   spaces here. ""
+    sample_string3 = """"
+    sample_string4 = ""OneWord""
+    sample_string5 = ""Hello, world! How are you?""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,4,16679,266_11_4.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string_1 = ""This is a sample string for testing""
+    sample_string_2 = ""  leading and trailing spaces are handled well ""
+    sample_string_3 = ""OneWord""
+    sample_string_4 = """"
+    sample_string_5 = ""Multiple   spaces\tand\nnewlines""
+    print(f""'{sample_string_1}': {count_words(sample_string_1)}"")
+    print(f""'{sample_string_2}': {count_words(sample_string_2)}"")
+    print(f""'{sample_string_3}': {count_words(sample_string_3)}"")
+    print(f""'{sample_string_4}': {count_words(sample_string_4)}"")
+    print(f""'{sample_string_5}': {count_words(sample_string_5)}"")",True,5,16680,266_11_5.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample sentence for testing.""
+    sample_string2 = ""  leading and trailing spaces are handled efficiently. ""
+    sample_string3 = ""OneWord""
+    sample_string4 = """"
+    sample_string5 = ""Multiple   spaces   between words are also fine.""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,6,16681,266_11_6.py
+266,11,Count the total number of words,Implement an optimized function named 'count_words' that takes any string as input and returns the total word count. The implementation must be highly efficient and adhere to Python best practices.,"import re
+def count_words(text):
+    if not text:
+        return 0
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    sample1 = ""This is a sample sentence.""
+    sample2 = ""Another test string with multiple words.""
+    sample3 = """"
+    sample4 = ""  leading and trailing spaces are handled correctly. ""
+    sample5 = ""Word1, Word2; Word3""
+    print(f""'{sample1}' -> {count_words(sample1)}"")
+    print(f""'{sample2}' -> {count_words(sample2)}"")
+    print(f""'{sample3}' -> {count_words(sample3)}"")
+    print(f""'{sample4}' -> {count_words(sample4)}"")
+    print(f""'{sample5}' -> {count_words(sample5)}"")",True,7,16682,266_11_7.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing the word counter.""
+    sample_text2 = ""Another test case with different spacing and punctuation.""
+    sample_text3 = """"
+    sample_text4 = ""Word one. Word two! Three.""
+    wc = WordCounter()
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {wc.count_words(sample_text1)}"")
+    print(""-"" * 20)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {wc.count_words(sample_text2)}"")
+    print(""-"" * 20)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {wc.count_words(sample_text3)}"")
+    print(""-"" * 20)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {wc.count_words(sample_text4)}"")",True,0,16683,266_12.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words and punctuation.""
+    sample_text3 = """"
+    sample_text4 = ""   leading and trailing spaces test   ""
+    wc = WordCounter()
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {wc.count_words(sample_text1)}"")
+    print(""-"" * 20)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {wc.count_words(sample_text2)}"")
+    print(""-"" * 20)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {wc.count_words(sample_text3)}"")
+    print(""-"" * 20)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {wc.count_words(sample_text4)}"")",True,1,16684,266_12_1.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""  leading and trailing spaces are handled correctly.""
+    wc = WordCounter()
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {wc.count_words(sample_text1)}\n"")
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {wc.count_words(sample_text2)}\n"")
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {wc.count_words(sample_text3)}\n"")
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {wc.count_words(sample_text4)}\n"")",True,2,16685,266_12_2.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""   leading and trailing spaces test.  ""
+    wc = WordCounter()
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {wc.count_words(sample_text1)}\n"")
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {wc.count_words(sample_text2)}\n"")
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {wc.count_words(sample_text3)}\n"")
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {wc.count_words(sample_text4)}\n"")",True,3,16686,266_12_3.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        if not text:
+            return 0
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = """"
+    sample_text4 = ""   leading and trailing spaces are handled correctly.""
+    counter = WordCounter()
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {counter.count_words(sample_text1)}\n"")
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {counter.count_words(sample_text2)}\n"")
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {counter.count_words(sample_text3)}\n"")
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {counter.count_words(sample_text4)}\n"")",True,4,16687,266_12_4.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = ""   leading and trailing spaces test  ""
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text: '{sample_text1}'"")
+    print(f""Word count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text: '{sample_text2}'"")
+    print(f""Word count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text: '{sample_text3}'"")
+    print(f""Word count: {count3}"")",True,5,16688,266_12_5.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing the word counter.""
+    sample_text2 = ""Another test case with varying amounts of words.""
+    sample_text3 = ""  leading and trailing spaces should be handled correctly.""
+    sample_text4 = """"
+    wc = WordCounter()
+    count1 = wc.count_words(sample_text1)
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {count1}\n"")
+    count2 = wc.count_words(sample_text2)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {count2}\n"")
+    count3 = wc.count_words(sample_text3)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {count3}\n"")
+    count4 = wc.count_words(sample_text4)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {count4}\n"")",True,6,16689,266_12_6.py
+266,12,Count the total number of words,Develop a class named 'WordCounter' with a method to calculate the total number of words in any given text. Ensure the class design is object-oriented and the method is highly optimized.,"class WordCounter:
+    def count_words(self, text):
+        words = text.split()
+        return len(words)
+if __name__ == '__main__':
+    sample_text1 = ""This is a sample sentence for testing.""
+    sample_text2 = ""Another test case with multiple words.""
+    sample_text3 = ""  leading and trailing spaces are handled correctly.""
+    sample_text4 = """"
+    counter = WordCounter()
+    count1 = counter.count_words(sample_text1)
+    print(f""Text 1: '{sample_text1}'"")
+    print(f""Word count: {count1}\n"")
+    count2 = counter.count_words(sample_text2)
+    print(f""Text 2: '{sample_text2}'"")
+    print(f""Word count: {count2}\n"")
+    count3 = counter.count_words(sample_text3)
+    print(f""Text 3: '{sample_text3}'"")
+    print(f""Word count: {count3}\n"")
+    count4 = counter.count_words(sample_text4)
+    print(f""Text 4: '{sample_text4}'"")
+    print(f""Word count: {count4}\n"")",True,7,16690,266_12_7.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(re.findall(r'\b\w+\b', text))
+if __name__ == '__main__':
+    test_string1 = ""This is a sample sentence.""
+    test_string2 = ""  Multiple   spaces here.""
+    test_string3 = """"
+    test_string4 = ""OneWord""
+    print(f""'{test_string1}': {count_words(test_string1)}"")
+    print(f""'{test_string2}': {count_words(test_string2)}"")
+    print(f""'{test_string3}': {count_words(test_string3)}"")
+    print(f""'{test_string4}': {count_words(test_string4)}"")",True,0,16691,266_13.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample1 = ""This is a sample sentence.""
+    sample2 = ""  Multiple   spaces   here.""
+    sample3 = """"
+    sample4 = ""SingleWord""
+    print(f""'{sample1}': {count_words(sample1)}"")
+    print(f""'{sample2}': {count_words(sample2)}"")
+    print(f""'{sample3}': {count_words(sample3)}"")
+    print(f""'{sample4}': {count_words(sample4)}"")",True,1,16692,266_13_1.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    sample1 = ""This is a sample sentence.""
+    sample2 = ""  Multiple    spaces   here.""
+    sample3 = """"
+    sample4 = ""SingleWord""
+    print(f""'{sample1}': {count_words(sample1)}"")
+    print(f""'{sample2}': {count_words(sample2)}"")
+    print(f""'{sample3}': {count_words(sample3)}"")
+    print(f""'{sample4}': {count_words(sample4)}"")",True,2,16693,266_13_2.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    test_string1 = ""This is a sample sentence.""
+    test_string2 = ""  Multiple   spaces here.""
+    test_string3 = """"
+    test_string4 = ""SingleWord""
+    test_string5 = ""Word1 Word2\tWord3""
+    print(f""'{test_string1}': {count_words(test_string1)}"")
+    print(f""'{test_string2}': {count_words(test_string2)}"")
+    print(f""'{test_string3}': {count_words(test_string3)}"")
+    print(f""'{test_string4}': {count_words(test_string4)}"")
+    print(f""'{test_string5}': {count_words(test_string5)}"")",True,3,16694,266_13_3.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    test_string1 = ""This is a sample sentence.""
+    test_string2 = ""  Multiple   spaces   here.""
+    test_string3 = """"
+    test_string4 = ""SingleWord""
+    test_string5 = ""Word1 Word2\nWord3""
+    print(f""'{test_string1}': {count_words(test_string1)}"")
+    print(f""'{test_string2}': {count_words(test_string2)}"")
+    print(f""'{test_string3}': {count_words(test_string3)}"")
+    print(f""'{test_string4}': {count_words(test_string4)}"")
+    print(f""'{test_string5}': {count_words(test_string5)}"")",True,4,16695,266_13_4.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    test_string1 = ""This is a sample sentence.""
+    test_string2 = ""  Multiple   spaces   here.""
+    test_string3 = """"
+    test_string4 = ""SingleWord""
+    test_string5 = ""Word1, Word2, and Word3.""
+    print(f""'{test_string1}': {count_words(test_string1)}"")
+    print(f""'{test_string2}': {count_words(test_string2)}"")
+    print(f""'{test_string3}': {count_words(test_string3)}"")
+    print(f""'{test_string4}': {count_words(test_string4)}"")
+    print(f""'{test_string5}': {count_words(test_string5)}"")",True,5,16696,266_13_5.py
+266,13,Count the total number of words,Write a concise and efficient Python function that uses built-in string methods or regular expressions to determine the exact number of words in an input string. Prioritize readability and performance.,"import re
+def count_words(text):
+    return len(text.split())
+if __name__ == '__main__':
+    test_string1 = ""This is a sample sentence""
+    test_string2 = ""  leading and trailing spaces ""
+    test_string3 = ""Multiple   spaces between words""
+    test_string4 = """"
+    test_string5 = ""SingleWord""
+    print(f""'{test_string1}': {count_words(test_string1)}"")
+    print(f""'{test_string2}': {count_words(test_string2)}"")
+    print(f""'{test_string3}': {count_words(test_string3)}"")
+    print(f""'{test_string4}': {count_words(test_string4)}"")
+    print(f""'{test_string5}': {count_words(test_string5)}"")",True,6,16697,266_13_6.py
+266,14,Count the total number of words,"Generate a standalone Python program that prompts the user for multi-line text input and then outputs the total word count for that entire input, ensuring error handling for empty input strings is included.",,False,0,16698,266_14.py
+267,0,Check if a word is long,"Write a complete, well-documented Python script to check if an input string is 'long', defining 'long' as having more than 10 characters. Use clear variable names and handle user input robustly.","def check_string_length(input_string):
+    is_long = len(input_string) > 10
+    return is_long
+if __name__ == '__main__':
+    sample_string_one = ""short""
+    sample_string_two = ""thisisalongstring""
+    sample_string_three = ""tenchars""
+    result_one = check_string_length(sample_string_one)
+    print(f""'{sample_string_one}' is long: {result_one}"")
+    result_two = check_string_length(sample_string_two)
+    print(f""'{sample_string_two}' is long: {result_two}"")
+    result_three = check_string_length(sample_string_three)
+    print(f""'{sample_string_three}' is long: {result_three}"")",True,0,16699,267_0.py
+267,0,Check if a word is long,"Write a complete, well-documented Python script to check if an input string is 'long', defining 'long' as having more than 10 characters. Use clear variable names and handle user input robustly.","def check_string_length(input_string):
+    is_long = len(input_string) > 10
+    return is_long
+if __name__ == '__main__':
+    sample_string_one = ""short""
+    sample_string_two = ""this_is_a_long_string""
+    sample_string_three = ""tenchars""
+    result_one = check_string_length(sample_string_one)
+    print(f""'{sample_string_one}' is long: {result_one}"")
+    result_two = check_string_length(sample_string_two)
+    print(f""'{sample_string_two}' is long: {result_two}"")
+    result_three = check_string_length(sample_string_three)
+    print(f""'{sample_string_three}' is long: {result_three}"")",True,1,16700,267_0_1.py
+267,0,Check if a word is long,"Write a complete, well-documented Python script to check if an input string is 'long', defining 'long' as having more than 10 characters. Use clear variable names and handle user input robustly.","def check_string_length(input_string):
+    is_long = len(input_string) > 10
+    return is_long
+if __name__ == '__main__':
+    sample_string_one = ""short""
+    sample_string_two = ""thisisalongword""
+    sample_string_three = ""tenchars""
+    result_one = check_string_length(sample_string_one)
+    print(f""'{sample_string_one}' is long: {result_one}"")
+    result_two = check_string_length(sample_string_two)
+    print(f""'{sample_string_two}' is long: {result_two}"")
+    result_three = check_string_length(sample_string_three)
+    print(f""'{sample_string_three}' is long: {result_three}"")",True,2,16701,267_0_2.py
+267,1,Check if a word is long,"Implement a standalone Python function named `is_word_long` that accepts a single string argument and returns `True` if the length of the string is greater than 15, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(s):
+    return len(s) > 15
+if __name__ == '__main__':
+    print(is_word_long(""short""))
+    print(is_word_long(""thisisalongword""))
+    print(is_word_long(""a_very_long_string_example""))
+    print(is_word_long(""exactlyfifteen""))
+    print(is_word_long(""""))",True,0,16702,267_1.py
+267,1,Check if a word is long,"Implement a standalone Python function named `is_word_long` that accepts a single string argument and returns `True` if the length of the string is greater than 15, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(s):
+    return len(s) > 15
+if __name__ == '__main__':
+    print(is_word_long(""short""))
+    print(is_word_long(""thisisalongword""))
+    print(is_word_long(""thisisalongwordisdefinitelylong""))
+    print(is_word_long(""exactlyfifteen""))
+    print(is_word_long(""""))",True,1,16703,267_1_1.py
+267,1,Check if a word is long,"Implement a standalone Python function named `is_word_long` that accepts a single string argument and returns `True` if the length of the string is greater than 15, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(s):
+    return len(s) > 15
+if __name__ == '__main__':
+    print(is_word_long(""short""))
+    print(is_word_long(""thisisalongword""))
+    print(is_word_long(""a_very_long_string_here""))
+    print(is_word_long(""exactlyfifteen""))
+    print(is_word_long(""""))",True,2,16704,267_1_2.py
+267,1,Check if a word is long,"Implement a standalone Python function named `is_word_long` that accepts a single string argument and returns `True` if the length of the string is greater than 15, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(s):
+    return len(s) > 15
+if __name__ == '__main__':
+    print(is_word_long(""short""))
+    print(is_word_long(""thisisalongword""))
+    print(is_word_long(""a_very_long_string_example""))
+    print(is_word_long(""exactlyfifteen""))",True,3,16705,267_1_3.py
+267,2,Check if a word is long,"Develop an optimized class named `WordChecker` with a method `check_length(self, text)` that determines if the input string `text` is considered long (length > 20). The class should follow object-oriented best practices.","class WordChecker:
+    def check_length(self, text):
+        return len(text) > 20
+if __name__ == '__main__':
+    checker = WordChecker()
+    sample1 = ""This is a short sentence""
+    sample2 = ""This is a very long sentence that will definitely exceed twenty characters""
+    sample3 = ""Exactly twenty characters""
+    print(f""'{sample1}': {checker.check_length(sample1)}"")
+    print(f""'{sample2}': {checker.check_length(sample2)}"")
+    print(f""'{sample3}': {checker.check_length(sample3)}"")",True,0,16706,267_2.py
+267,2,Check if a word is long,"Develop an optimized class named `WordChecker` with a method `check_length(self, text)` that determines if the input string `text` is considered long (length > 20). The class should follow object-oriented best practices.","class WordChecker:
+    def check_length(self, text):
+        return len(text) > 20
+if __name__ == '__main__':
+    checker = WordChecker()
+    sample1 = ""This is a short sentence""
+    sample2 = ""This is a very long sentence that definitely exceeds twenty characters""
+    sample3 = ""Exactly twenty characters""
+    print(f""'{sample1}' is long: {checker.check_length(sample1)}"")
+    print(f""'{sample2}' is long: {checker.check_length(sample2)}"")
+    print(f""'{sample3}' is long: {checker.check_length(sample3)}"")",True,1,16707,267_2_1.py
+267,2,Check if a word is long,"Develop an optimized class named `WordChecker` with a method `check_length(self, text)` that determines if the input string `text` is considered long (length > 20). The class should follow object-oriented best practices.","class WordChecker:
+    def check_length(self, text):
+        return len(text) > 20
+if __name__ == '__main__':
+    checker = WordChecker()
+    sample1 = ""This is a short sentence.""
+    sample2 = ""This is a very long sentence that definitely exceeds the twenty character limit for testing purposes.""
+    sample3 = ""Exactly twenty characters""
+    print(f""'{sample1}' is long: {checker.check_length(sample1)}"")
+    print(f""'{sample2}' is long: {checker.check_length(sample2)}"")
+    print(f""'{sample3}' is long: {checker.check_length(sample3)}"")",True,2,16708,267_2_2.py
+267,2,Check if a word is long,"Develop an optimized class named `WordChecker` with a method `check_length(self, text)` that determines if the input string `text` is considered long (length > 20). The class should follow object-oriented best practices.","class WordChecker:
+    def check_length(self, text):
+        return len(text) > 20
+if __name__ == '__main__':
+    checker = WordChecker()
+    sample1 = ""This is a short sentence""
+    sample2 = ""This is a very long sentence that will definitely exceed twenty characters""
+    sample3 = ""Exactly twenty characters""
+    print(f""'{sample1}' is long: {checker.check_length(sample1)}"")
+    print(f""'{sample2}' is long: {checker.check_length(sample2)}"")
+    print(f""'{sample3}' is long: {checker.check_length(sample3)}"")",True,3,16709,267_2_3.py
+266,4,Count the total number of words,Create a command-line interface (CLI) script using Python that prompts the user to enter a sentence and then prints the total word count. The script must be fully functional and handle input gracefully.,,False,0,16710,266_4.py
+266,10,Count the total number of words,"Write a complete, robust Python script that accepts a string input from the user and accurately counts the total number of words in that string, handling various whitespace scenarios efficiently.","import re
+def count_words(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string with varying amounts of whitespace.""
+    sample_string2 = ""  leading and trailing spaces   and multiple    spaces in between. ""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""  \t\n\r""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,0,16711,266_10.py
+266,10,Count the total number of words,"Write a complete, robust Python script that accepts a string input from the user and accurately counts the total number of words in that string, handling various whitespace scenarios efficiently.","import re
+def count_words(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string_1 = ""This is a sample string with various spaces.""
+    sample_string_2 = ""  Multiple   spaces   and    extra   whitespace. ""
+    sample_string_3 = ""SingleWord""
+    sample_string_4 = """"
+    sample_string_5 = ""Words\tseparated\nby\nnewlines.""
+    print(f""'{sample_string_1}': {count_words(sample_string_1)}"")
+    print(f""'{sample_string_2}': {count_words(sample_string_2)}"")
+    print(f""'{sample_string_3}': {count_words(sample_string_3)}"")
+    print(f""'{sample_string_4}': {count_words(sample_string_4)}"")
+    print(f""'{sample_string_5}': {count_words(sample_string_5)}"")",True,1,16712,266_10_1.py
+266,10,Count the total number of words,"Write a complete, robust Python script that accepts a string input from the user and accurately counts the total number of words in that string, handling various whitespace scenarios efficiently.","import re
+def count_words(text):
+    words = re.findall(r'\b\w+\b', text)
+    return len(words)
+if __name__ == '__main__':
+    sample_string1 = ""This is a sample string with various spaces.""
+    sample_string2 = ""  leading and trailing spaces   \tand multiple spaces\n\nbetween them.""
+    sample_string3 = ""SingleWord""
+    sample_string4 = """"
+    sample_string5 = ""  \t \n ""
+    print(f""'{sample_string1}': {count_words(sample_string1)}"")
+    print(f""'{sample_string2}': {count_words(sample_string2)}"")
+    print(f""'{sample_string3}': {count_words(sample_string3)}"")
+    print(f""'{sample_string4}': {count_words(sample_string4)}"")
+    print(f""'{sample_string5}': {count_words(sample_string5)}"")",True,2,16713,266_10_2.py
+267,5,Check if a word is long,Implement a generator function named `check_long_words` that takes an iterable of strings and yields only those strings whose length is greater than 10. Ensure this implementation is memory efficient.,"def check_long_words(string_iterable):
+    for s in string_iterable:
+        if len(s) > 10:
+            yield s
+if __name__ == '__main__':
+    sample_data = [""short"", ""longerword"", ""thisisalongword"", ""medium"", ""verylongwordexample""]
+    result_generator = check_long_words(sample_data)
+    result_list = list(result_generator)
+    print(result_list)",True,0,16714,267_5.py
+267,5,Check if a word is long,Implement a generator function named `check_long_words` that takes an iterable of strings and yields only those strings whose length is greater than 10. Ensure this implementation is memory efficient.,"def check_long_words(string_iterable):
+    for s in string_iterable:
+        if len(s) > 10:
+            yield s
+if __name__ == '__main__':
+    sample_data = [""short"", ""thisisalongword"", ""anotherlongone"", ""medium"", ""verylongwordexample""]
+    result_generator = check_long_words(sample_data)
+    result_list = list(result_generator)
+    print(result_list)",True,1,16715,267_5_1.py
+267,5,Check if a word is long,Implement a generator function named `check_long_words` that takes an iterable of strings and yields only those strings whose length is greater than 10. Ensure this implementation is memory efficient.,"def check_long_words(string_iterable):
+    for word in string_iterable:
+        if len(word) > 10:
+            yield word
+if __name__ == '__main__':
+    sample_data = [""short"", ""longerword"", ""thisisalongword"", ""medium"", ""verylongwordexample""]
+    result_generator = check_long_words(sample_data)
+    result_list = list(result_generator)
+    print(result_list)",True,2,16716,267_5_2.py
+267,5,Check if a word is long,Implement a generator function named `check_long_words` that takes an iterable of strings and yields only those strings whose length is greater than 10. Ensure this implementation is memory efficient.,"def check_long_words(string_iterable):
+    for s in string_iterable:
+        if len(s) > 10:
+            yield s
+if __name__ == '__main__':
+    sample_data = [""short"", ""thisisalongword"", ""anotherone"", ""verylongwordexample"", ""medium""]
+    result_generator = check_long_words(sample_data)
+    result_list = list(result_generator)
+    print(result_list)",True,3,16717,267_5_3.py
+267,6,Check if a word is long,Write a script that reads a list of words from a file named 'input.txt' and prints each word prefixed with 'LONG:' if its length is greater than 10. Include necessary file handling error management.,"def process_words(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.readlines()
+            for line in words:
+                word = line.strip()
+                if len(word) > 10:
+                    print(f""LONG:{word}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+    except Exception as e:
+        print(f""An error occurred: {e}"")
+if __name__ == '__main__':
+    with open('input.txt', 'w') as f:
+        f.write(""short\n"")
+        f.write(""thisisalongword\n"")
+        f.write(""anotherword\n"")
+        f.write(""verylongwordexample\n"")
+        f.write(""medium\n"")
+    process_words('input.txt')",True,0,16718,267_6.py
+267,6,Check if a word is long,Write a script that reads a list of words from a file named 'input.txt' and prints each word prefixed with 'LONG:' if its length is greater than 10. Include necessary file handling error management.,"def process_words(filename):
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                words = line.strip().split()
+                for word in words:
+                    if len(word) > 10:
+                        print(f""LONG:{word}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+    except Exception as e:
+        print(f""An error occurred: {e}"")
+if __name__ == '__main__':
+    with open('input.txt', 'w') as f:
+        f.write(""short word longword anotherlongword verylongword"")
+    process_words('input.txt')",True,1,16719,267_6_1.py
+267,6,Check if a word is long,Write a script that reads a list of words from a file named 'input.txt' and prints each word prefixed with 'LONG:' if its length is greater than 10. Include necessary file handling error management.,"def process_words(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.readlines()
+            for line in words:
+                word = line.strip()
+                if len(word) > 10:
+                    print(f""LONG:{word}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+    except IOError as e:
+        print(f""Error reading file: {e}"")
+if __name__ == '__main__':
+    with open('input.txt', 'w') as f:
+        f.write(""short\n"")
+        f.write(""thisisalongword\n"")
+        f.write(""anotherword\n"")
+        f.write(""verylongwordexample\n"")
+        f.write(""medium\n"")
+    process_words('input.txt')",True,2,16720,267_6_2.py
+267,6,Check if a word is long,Write a script that reads a list of words from a file named 'input.txt' and prints each word prefixed with 'LONG:' if its length is greater than 10. Include necessary file handling error management.,"def process_words(filename):
+    try:
+        with open(filename, 'r') as file:
+            words = file.read().split()
+            for word in words:
+                if len(word) > 10:
+                    print(f""LONG:{word}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+    except Exception as e:
+        print(f""An error occurred: {e}"")
+if __name__ == '__main__':
+    with open('input.txt', 'w') as f:
+        f.write(""short word longword anotherlongword test"")
+    process_words('input.txt')",True,3,16721,267_6_3.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if args and isinstance(args[0], str) and len(args[0]) > max_length:
+                raise ValueError(f""Input string exceeds maximum length of {max_length}"")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(10)
+def process_string(input_str):
+    return f""Processed: {input_str}""
+if __name__ == '__main__':
+    print(process_string(""short""))
+    try:
+        process_string(""this is too long"")
+    except ValueError as e:
+        print(e)",True,0,16722,267_7.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if len(args) > max_length:
+                raise ValueError(""Input argument exceeds the maximum allowed length."")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(5)
+def process_string(s):
+    return f""Processed: {s}""
+if __name__ == '__main__':
+    try:
+        print(process_string(""short""))
+        print(process_string(""longerstring""))
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,16723,267_7_1.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if args and isinstance(args[0], str) and len(args[0]) > max_length:
+                raise ValueError(f""Input string exceeds maximum length of {max_length}"")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(10)
+def process_string(text):
+    return f""Processed: {text}""
+if __name__ == '__main__':
+    print(process_string(""short""))
+    try:
+        process_string(""this is a long string"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,2,16724,267_7_2.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if args and isinstance(args[0], str) and len(args[0]) > max_length:
+                raise ValueError(f""Input string exceeds maximum length of {max_length}"")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(10)
+def process_string(input_str):
+    return f""Processed: {input_str}""
+if __name__ == '__main__':
+    test_string_short = ""hello""
+    test_string_long = ""this is a very long string""
+    print(process_string(test_string_short))
+    try:
+        process_string(test_string_long)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,3,16725,267_7_3.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            if 'input_string' in kwargs:
+                input_str = kwargs['input_string']
+                if len(input_str) > max_length:
+                    raise ValueError(f""Input string length ({len(input_str)}) exceeds the maximum allowed length of {max_length}"")
+            else:
+                pass
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+@length_check(max_length=10)
+def process_data(input_string, other_arg):
+    return f""Processing string: {input_string}""
+if __name__ == '__main__':
+    print(""--- Test Case 1: String within length limit ---"")
+    try:
+        result1 = process_data(input_string=""short"", other_arg=123)
+        print(result1)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    print(""\n--- Test Case 2: String exceeding length limit ---"")
+    try:
+        result2 = process_data(input_string=""this_is_way_too_long"", other_arg=456)
+        print(result2)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,4,16726,267_7_4.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if args and isinstance(args[0], str) and len(args[0]) > max_length:
+                raise ValueError(f""Input string exceeds maximum length of {max_length}"")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(10)
+def process_string(text):
+    return f""Processed: {text}""
+if __name__ == '__main__':
+    test_string_short = ""hello""
+    test_string_long = ""this is a very long string""
+    print(process_string(test_string_short))
+    try:
+        process_string(test_string_long)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,5,16727,267_7_5.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if args and isinstance(args[0], str):
+                if len(args[0]) > max_length:
+                    raise ValueError(f""Input string exceeds maximum length of {max_length}"")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(10)
+def process_string(input_str):
+    return f""Processed: {input_str}""
+if __name__ == '__main__':
+    test_string_short = ""hello""
+    test_string_long = ""this is a very long string""
+    print(process_string(test_string_short))
+    try:
+        process_string(test_string_long)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,6,16728,267_7_6.py
+267,7,Check if a word is long,Design and implement a decorator function that can be applied to any function to automatically check if the input string argument exceeds a specified length before execution. Provide an example usage.,"def length_check(max_length):
+    def decorator(func):
+        def wrapper(*args):
+            if args and isinstance(args[0], str) and len(args[0]) > max_length:
+                raise ValueError(f""Input string exceeds maximum length of {max_length}"")
+            return func(*args)
+        return wrapper
+    return decorator
+@length_check(10)
+def process_string(input_str):
+    return f""Processed: {input_str}""
+if __name__ == '__main__':
+    test_string_short = ""hello""
+    test_string_long = ""thisiswaytoolong""
+    print(process_string(test_string_short))
+    try:
+        process_string(test_string_long)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,7,16729,267_7_7.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""five"", 4))
+        self.assertFalse(check_word_length(""four"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""one"", 0))
+        self.assertFalse(check_word_length(""a"", 0))
+        self.assertFalse(check_word_length(""hello"", 100))
+        self.assertFalse(check_word_length(""world"", 50))
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertFalse(check_word_length(""test"", 4))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,16730,267_8.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 8))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""hello"", 5))
+        self.assertFalse(check_word_length(""five"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        word = ""programming""
+        self.assertTrue(check_word_length(word, 8))
+        self.assertFalse(check_word_length(word, 7))
+        self.assertFalse(check_word_length(word, 10))
+    def test_long_words(self):
+        self.assertTrue(check_word_length(""supercalifragilisticexpialidocious"", 30))
+        self.assertFalse(check_word_length(""short"", 50))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,16731,267_8_1.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longer"", 3))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""three"", 5))
+        self.assertFalse(check_word_length(""four"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""hello"", 4))
+        self.assertFalse(check_word_length(""hello"", 5))
+        self.assertTrue(check_word_length(""world"", 4))
+        self.assertFalse(check_word_length(""world"", 3))
+    def test_long_words(self):
+        self.assertTrue(check_word_length(""supercalifragilisticexpialidocious"", 30))
+        self.assertFalse(check_word_length(""shortword"", 100))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,16732,267_8_2.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""five"", 4))
+        self.assertFalse(check_word_length(""four"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""one"", -1))
+        self.assertFalse(check_word_length(""two"", -1))
+        self.assertFalse(check_word_length(""hello"", 100))
+        self.assertFalse(check_word_length(""world"", 50))
+        self.assertTrue(check_word_length(""test"", 3))
+        self.assertFalse(check_word_length(""test"", 4))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,16733,267_8_3.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""five"", 4))
+        self.assertFalse(check_word_length(""four"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""one"", 0))
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length(""hello"", 100))
+        self.assertFalse(check_word_length(""world"", 50))
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertFalse(check_word_length(""test"", 4))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,16734,267_8_4.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""hello"", 5))
+        self.assertFalse(check_word_length(""five"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""one"", 0))
+        self.assertFalse(check_word_length(""a"", 0))
+        self.assertFalse(check_word_length(""test"", 100))
+        self.assertFalse(check_word_length(""verylongword"", 1000))
+    def test_mixed_cases(self):
+        self.assertTrue(check_word_length(""Python"", 5))
+        self.assertFalse(check_word_length(""short"", 6))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,16735,267_8_5.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""exact"", 4))
+        self.assertFalse(check_word_length(""four"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""one"", 0))
+        self.assertFalse(check_word_length(""a"", 0))
+        self.assertFalse(check_word_length(""hello"", 10))
+        self.assertFalse(check_word_length(""world"", 100))
+        self.assertTrue(check_word_length(""testing"", 3.9))
+        self.assertFalse(check_word_length(""test"", 3.5))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,16736,267_8_6.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""five"", 4))
+        self.assertFalse(check_word_length(""four"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        self.assertTrue(check_word_length(""one"", 0))
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length(""hello"", 100))
+        self.assertFalse(check_word_length(""world"", 50))
+        self.assertTrue(check_word_length(""abcde"", 4))
+        self.assertFalse(check_word_length(""abcde"", 5))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,16737,267_8_7.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""test"", 5))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""five"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+    def test_long_word_and_high_threshold(self):
+        self.assertTrue(check_word_length(""supercalifragilistic"", 15))
+    def test_short_word_and_low_threshold(self):
+        self.assertTrue(check_word_length(""a"", 0))
+    def test_edge_case_zero_threshold(self):
+        self.assertTrue(check_word_length(""hello"", 0))
+    def test_long_word_and_high_threshold_failure(self):
+        self.assertFalse(check_word_length(""short"", 10))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,8,16738,267_8_8.py
+267,8,Check if a word is long,Write a testable Python module containing unit tests using the `unittest` framework for a function that checks word length against a dynamic threshold. Ensure comprehensive test coverage.,"import unittest
+def check_word_length(word, threshold):
+    return len(word) > threshold
+class TestWordLengthChecker(unittest.TestCase):
+    def test_word_longer_than_threshold(self):
+        self.assertTrue(check_word_length(""testing"", 4))
+        self.assertTrue(check_word_length(""longerword"", 5))
+    def test_word_shorter_than_threshold(self):
+        self.assertFalse(check_word_length(""short"", 5))
+        self.assertFalse(check_word_length(""a"", 2))
+    def test_word_equal_to_threshold(self):
+        self.assertFalse(check_word_length(""test"", 4))
+        self.assertFalse(check_word_length(""five"", 4))
+    def test_empty_string(self):
+        self.assertFalse(check_word_length("""", 0))
+        self.assertFalse(check_word_length("""", 1))
+    def test_various_thresholds(self):
+        word = ""programming""
+        self.assertTrue(check_word_length(word, 8))
+        self.assertFalse(check_word_length(word, 9))
+        self.assertTrue(check_word_length(word, 7))
+    def test_long_words(self):
+        self.assertTrue(check_word_length(""supercalifragilistic"", 20))
+        self.assertFalse(check_word_length(""short"", 50))
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,9,16739,267_8_9.py
+267,4,Check if a word is long,Create a concise and highly efficient lambda function that takes a string and returns a boolean value indicating if its length exceeds the threshold of 12 characters.,"def check_length(s):
+    return len(s) > 12
+if __name__ == '__main__':
+    print(check_length(""short""))
+    print(check_length(""thisiswaylong""))
+    print(check_length(""exactlytwelve""))",True,0,16740,267_4.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    test_word_1 = ""short""
+    test_word_2 = ""longerword""
+    min_len_1 = 5
+    min_len_2 = 10
+    result_1_1 = is_word_long(test_word_1, min_len_1)
+    result_1_2 = is_word_long(test_word_2, min_len_1)
+    result_2_1 = is_word_long(test_word_1, min_len_2)
+    result_2_2 = is_word_long(test_word_2, min_len_2)
+    print(f""Is '{test_word_1}' long (min length {min_len_1}): {result_1_1}"")
+    print(f""Is '{test_word_2}' long (min length {min_len_1}): {result_1_2}"")
+    print(f""Is '{test_word_1}' long (min length {min_len_2}): {result_2_1}"")
+    print(f""Is '{test_word_2}' long (min length {min_len_2}): {result_2_2}"")",True,0,16741,267_10.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    sample_word = ""programming""
+    minimum_length = 7
+    result = is_word_long(sample_word, minimum_length)
+    print(f""Word: {sample_word}"")
+    print(f""Minimum Length: {minimum_length}"")
+    print(f""Is the word long? {result}"")
+    sample_word_short = ""code""
+    result_short = is_word_long(sample_word_short, minimum_length)
+    print(f""\nWord: {sample_word_short}"")
+    print(f""Minimum Length: {minimum_length}"")
+    print(f""Is the word long? {result_short}"")",True,1,16742,267_10_1.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    test_word_1 = ""programming""
+    test_word_2 = ""short""
+    test_word_3 = ""medium""
+    minimum_length_setting = 7
+    result_1 = is_word_long(test_word_1, minimum_length_setting)
+    result_2 = is_word_long(test_word_2, minimum_length_setting)
+    result_3 = is_word_long(test_word_3, minimum_length_setting)
+    print(f""Is '{test_word_1}' long (min length {minimum_length_setting}): {result_1}"")
+    print(f""Is '{test_word_2}' long (min length {minimum_length_setting}): {result_2}"")
+    print(f""Is '{test_word_3}' long (min length {minimum_length_setting}): {result_3}"")",True,2,16743,267_10_2.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    sample_word = ""programming""
+    minimum_length = 7
+    result = is_word_long(sample_word, minimum_length)
+    print(f""Word: {sample_word}"")
+    print(f""Minimum Length: {minimum_length}"")
+    print(f""Is the word long? {result}"")
+    sample_word_short = ""code""
+    result_short = is_word_long(sample_word_short, minimum_length)
+    print(f""\nWord: {sample_word_short}"")
+    print(f""Minimum Length: {minimum_length}"")
+    print(f""Is the word long? {result_short}"")
+    sample_word_long = ""algorithm""
+    result_long = is_word_long(sample_word_long, minimum_length)
+    print(f""\nWord: {sample_word_long}"")
+    print(f""Minimum Length: {minimum_length}"")
+    print(f""Is the word long? {result_long}"")",True,3,16744,267_10_3.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    test_word1 = ""programming""
+    test_word2 = ""short""
+    test_word3 = ""medium""
+    minimum_length = 7
+    result1 = is_word_long(test_word1, minimum_length)
+    result2 = is_word_long(test_word2, minimum_length)
+    result3 = is_word_long(test_word3, minimum_length)
+    print(f""Is '{test_word1}' long (min length {minimum_length}): {result1}"")
+    print(f""Is '{test_word2}' long (min length {minimum_length}): {result2}"")
+    print(f""Is '{test_word3}' long (min length {minimum_length}): {result3}"")",True,4,16745,267_10_4.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    test_word1 = ""programming""
+    test_word2 = ""short""
+    test_word3 = ""medium""
+    minimum_length_setting = 7
+    result1 = is_word_long(test_word1, minimum_length_setting)
+    result2 = is_word_long(test_word2, minimum_length_setting)
+    result3 = is_word_long(test_word3, minimum_length_setting)
+    print(f""Is '{test_word1}' long (min length {minimum_length_setting}): {result1}"")
+    print(f""Is '{test_word2}' long (min length {minimum_length_setting}): {result2}"")
+    print(f""Is '{test_word3}' long (min length {minimum_length_setting}): {result3}"")",True,5,16746,267_10_5.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    test_word1 = ""apple""
+    test_word2 = ""banana""
+    test_word3 = ""cat""
+    minimum_length = 5
+    result1 = is_word_long(test_word1, minimum_length)
+    result2 = is_word_long(test_word2, minimum_length)
+    result3 = is_word_long(test_word3, minimum_length)
+    print(f""'{test_word1}' is long (min length {minimum_length}): {result1}"")
+    print(f""'{test_word2}' is long (min length {minimum_length}): {result2}"")
+    print(f""'{test_word3}' is long (min length {minimum_length}): {result3}"")",True,6,16747,267_10_6.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    sample_word = ""programming""
+    min_len_setting = 7
+    result = is_word_long(sample_word, min_len_setting)
+    print(f""Word: {sample_word}, Minimum Length: {min_len_setting}"")
+    print(f""Is the word long? {result}"")
+    sample_word_short = ""code""
+    result_short = is_word_long(sample_word_short, min_len_setting)
+    print(f""Word: {sample_word_short}, Minimum Length: {min_len_setting}"")
+    print(f""Is the word long? {result_short}"")
+    sample_word_long = ""supercalifragilisticexpialidocious""
+    result_long = is_word_long(sample_word_long, min_len_setting)
+    print(f""Word: {sample_word_long}, Minimum Length: {min_len_setting}"")
+    print(f""Is the word long? {result_long}"")",True,7,16748,267_10_7.py
+267,10,Check if a word is long,"Write a complete, robust Python script that defines a function to check if a given word is 'long'. The definition of 'long' should be based on a configurable minimum length parameter. Include clear docstrings and example usage.","def is_word_long(word, min_length):
+    return len(word) >= min_length
+if __name__ == '__main__':
+    test_word_1 = ""programming""
+    test_word_2 = ""short""
+    test_word_3 = ""medium""
+    minimum_length = 6
+    result_1 = is_word_long(test_word_1, minimum_length)
+    result_2 = is_word_long(test_word_2, minimum_length)
+    result_3 = is_word_long(test_word_3, minimum_length)
+    print(f""Is '{test_word_1}' long (min length {minimum_length}): {result_1}"")
+    print(f""Is '{test_word_2}' long (min length {minimum_length}): {result_2}"")
+    print(f""Is '{test_word_3}' long (min length {minimum_length}): {result_3}"")",True,8,16749,267_10_8.py
+267,11,Check if a word is long,"Implement an optimized Python function named `is_word_long` that takes a string and an integer threshold. The function must return `True` if the word's length exceeds the threshold, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(word: str, threshold: int) -> bool:
+    return len(word) > threshold
+if __name__ == '__main__':
+    word1 = ""programming""
+    threshold1 = 7
+    result1 = is_word_long(word1, threshold1)
+    print(f""{word1} > {threshold1}: {result1}"")
+    word2 = ""short""
+    threshold2 = 5
+    result2 = is_word_long(word2, threshold2)
+    print(f""{word2} > {threshold2}: {result2}"")
+    word3 = ""algorithm""
+    threshold3 = 8
+    result3 = is_word_long(word3, threshold3)
+    print(f""{word3} > {threshold3}: {result3}"")",True,0,16750,267_11.py
+267,11,Check if a word is long,"Implement an optimized Python function named `is_word_long` that takes a string and an integer threshold. The function must return `True` if the word's length exceeds the threshold, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(word: str, threshold: int) -> bool:
+    return len(word) > threshold
+if __name__ == '__main__':
+    word1 = ""programming""
+    threshold1 = 7
+    result1 = is_word_long(word1, threshold1)
+    print(f""{word1} > {threshold1}: {result1}"")
+    word2 = ""short""
+    threshold2 = 5
+    result2 = is_word_long(word2, threshold2)
+    print(f""{word2} > {threshold2}: {result2}"")
+    word3 = ""algorithm""
+    threshold3 = 9
+    result3 = is_word_long(word3, threshold3)
+    print(f""{word3} > {threshold3}: {result3}"")",True,1,16751,267_11_1.py
+267,11,Check if a word is long,"Implement an optimized Python function named `is_word_long` that takes a string and an integer threshold. The function must return `True` if the word's length exceeds the threshold, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(word: str, threshold: int) -> bool:
+    return len(word) > threshold
+if __name__ == '__main__':
+    test_word1 = ""short""
+    test_threshold1 = 5
+    result1 = is_word_long(test_word1, test_threshold1)
+    print(f""{test_word1} > {test_threshold1}: {result1}"")
+    test_word2 = ""longerword""
+    test_threshold2 = 7
+    result2 = is_word_long(test_word2, test_threshold2)
+    print(f""{test_word2} > {test_threshold2}: {result2}"")
+    test_word3 = ""test""
+    test_threshold3 = 4
+    result3 = is_word_long(test_word3, test_threshold3)
+    print(f""{test_word3} > {test_threshold3}: {result3}"")",True,2,16752,267_11_2.py
+267,11,Check if a word is long,"Implement an optimized Python function named `is_word_long` that takes a string and an integer threshold. The function must return `True` if the word's length exceeds the threshold, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(word: str, threshold: int) -> bool:
+    return len(word) > threshold
+if __name__ == '__main__':
+    word1 = ""programming""
+    threshold1 = 7
+    result1 = is_word_long(word1, threshold1)
+    print(f""{word1} > {threshold1}: {result1}"")
+    word2 = ""short""
+    threshold2 = 5
+    result2 = is_word_long(word2, threshold2)
+    print(f""{word2} > {threshold2}: {result2}"")
+    word3 = ""efficient""
+    threshold3 = 8
+    result3 = is_word_long(word3, threshold3)
+    print(f""{word3} > {threshold3}: {result3}"")",True,3,16753,267_11_3.py
+267,11,Check if a word is long,"Implement an optimized Python function named `is_word_long` that takes a string and an integer threshold. The function must return `True` if the word's length exceeds the threshold, and `False` otherwise. Ensure the implementation is highly efficient.","def is_word_long(word: str, threshold: int) -> bool:
+    return len(word) > threshold
+if __name__ == '__main__':
+    word1 = ""programming""
+    threshold1 = 7
+    result1 = is_word_long(word1, threshold1)
+    print(f""{word1} > {threshold1}: {result1}"")
+    word2 = ""short""
+    threshold2 = 5
+    result2 = is_word_long(word2, threshold2)
+    print(f""{word2} > {threshold2}: {result2}"")
+    word3 = ""efficiency""
+    threshold3 = 10
+    result3 = is_word_long(word3, threshold3)
+    print(f""{word3} > {threshold3}: {result3}"")",True,4,16754,267_11_4.py
+267,12,Check if a word is long,"Develop a class named `WordChecker` with an initializer that sets a default minimum length. Implement a method within this class, `check_length(self, word)`, which determines if the input word is longer than the initialized minimum length. Ensure adherence to object-oriented best practices.","class WordChecker:
+    def __init__(self, min_length):
+        self.min_length = min_length
+    def check_length(self, word):
+        return len(word) > self.min_length
+if __name__ == '__main__':
+    checker1 = WordChecker(5)
+    print(f""Word 'hello': {checker1.check_length('hello')}"")
+    print(f""Word 'world': {checker1.check_length('world')}"")
+    print(f""Word 'a': {checker1.check_length('a')}"")
+    checker2 = WordChecker(10)
+    print(f""Word 'testing': {checker2.check_length('testing')}"")
+    print(f""Word 'short': {checker2.check_length('short')}"")",True,0,16755,267_12.py
+267,12,Check if a word is long,"Develop a class named `WordChecker` with an initializer that sets a default minimum length. Implement a method within this class, `check_length(self, word)`, which determines if the input word is longer than the initialized minimum length. Ensure adherence to object-oriented best practices.","class WordChecker:
+    def __init__(self, min_length):
+        self.min_length = min_length
+    def check_length(self, word):
+        return len(word) > self.min_length
+if __name__ == '__main__':
+    checker1 = WordChecker(5)
+    print(f""Checking 'hello': {checker1.check_length('hello')}"")
+    print(f""Checking 'world': {checker1.check_length('world')}"")
+    print(f""Checking 'hi': {checker1.check_length('hi')}"")
+    checker2 = WordChecker(10)
+    print(f""Checking 'programming': {checker2.check_length('programming')}"")
+    print(f""Checking 'short': {checker2.check_length('short')}"")",True,1,16756,267_12_1.py
+267,12,Check if a word is long,"Develop a class named `WordChecker` with an initializer that sets a default minimum length. Implement a method within this class, `check_length(self, word)`, which determines if the input word is longer than the initialized minimum length. Ensure adherence to object-oriented best practices.","class WordChecker:
+    def __init__(self, min_length):
+        self.min_length = min_length
+    def check_length(self, word):
+        return len(word) > self.min_length
+if __name__ == '__main__':
+    checker1 = WordChecker(5)
+    print(f""Checking 'hello': {checker1.check_length('hello')}"")
+    print(f""Checking 'world': {checker1.check_length('world')}"")
+    print(f""Checking 'hi': {checker1.check_length('hi')}"")
+    checker2 = WordChecker(10)
+    print(f""Checking 'testing': {checker2.check_length('testing')}"")
+    print(f""Checking 'short': {checker2.check_length('short')}"")",True,2,16757,267_12_2.py
+267,12,Check if a word is long,"Develop a class named `WordChecker` with an initializer that sets a default minimum length. Implement a method within this class, `check_length(self, word)`, which determines if the input word is longer than the initialized minimum length. Ensure adherence to object-oriented best practices.","class WordChecker:
+    def __init__(self, min_length):
+        self.min_length = min_length
+    def check_length(self, word):
+        return len(word) > self.min_length
+if __name__ == '__main__':
+    checker1 = WordChecker(5)
+    print(f""Word 'hello': {checker1.check_length('hello')}"")
+    print(f""Word 'world': {checker1.check_length('world')}"")
+    print(f""Word 'hi': {checker1.check_length('hi')}"")
+    checker2 = WordChecker(10)
+    print(f""Word 'testing': {checker2.check_length('testing')}"")
+    print(f""Word 'short': {checker2.check_length('short')}"")",True,3,16758,267_12_3.py
+267,12,Check if a word is long,"Develop a class named `WordChecker` with an initializer that sets a default minimum length. Implement a method within this class, `check_length(self, word)`, which determines if the input word is longer than the initialized minimum length. Ensure adherence to object-oriented best practices.","class WordChecker:
+    def __init__(self, min_length):
+        self.min_length = min_length
+    def check_length(self, word):
+        return len(word) > self.min_length
+if __name__ == '__main__':
+    checker1 = WordChecker(5)
+    print(f""Word 'hello': {checker1.check_length('hello')}"")
+    print(f""Word 'world': {checker1.check_length('world')}"")
+    print(f""Word 'hi': {checker1.check_length('hi')}"")
+    checker2 = WordChecker(3)
+    print(f""Word 'testing': {checker2.check_length('testing')}"")
+    print(f""Word 'a': {checker2.check_length('a')}"")",True,4,16759,267_12_4.py
+267,12,Check if a word is long,"Develop a class named `WordChecker` with an initializer that sets a default minimum length. Implement a method within this class, `check_length(self, word)`, which determines if the input word is longer than the initialized minimum length. Ensure adherence to object-oriented best practices.","class WordChecker:
+    def __init__(self, min_length):
+        self.min_length = min_length
+    def check_length(self, word):
+        return len(word) > self.min_length
+if __name__ == '__main__':
+    checker1 = WordChecker(5)
+    print(f""Word 'hello': {checker1.check_length('hello')}"")
+    print(f""Word 'world': {checker1.check_length('world')}"")
+    print(f""Word 'hi': {checker1.check_length('hi')}"")
+    checker2 = WordChecker(8)
+    print(f""Word 'testing': {checker2.check_length('testing')}"")
+    print(f""Word 'short': {checker2.check_length('short')}"")",True,5,16760,267_12_5.py
+267,9,Check if a word is long,"Develop a single, highly optimized function that takes a string and returns a tuple containing two boolean values: whether the string is long (length > 10) and whether it contains only alphabetic characters. Prioritize speed.","def check_string(s):
+    is_long = len(s) > 10
+    is_alpha = s.isalpha()
+    return (is_long, is_alpha)
+if __name__ == '__main__':
+    test_strings = [
+        ""short"",
+        ""thisisalongstring"",
+        ""onlyletters"",
+        ""this has a space"",
+        ""abcdefghij"",
+        ""a"" * 11,
+        ""1234567890""
+    ]
+    for s in test_strings:
+        result = check_string(s)
+        print(f""Input: '{s}', Result: {result}"")",True,0,16761,267_9.py
+267,14,Check if a word is long,"Create a pure, single-function implementation for checking word length. This function should accept a string and return a boolean indicating whether the string's length is greater than 10 characters, regardless of any external configuration. Optimize this function for speed.","def check_word_length(text):
+    return len(text) > 10
+if __name__ == '__main__':
+    print(check_word_length(""short""))
+    print(check_word_length(""thisiswaylong""))
+    print(check_word_length(""exactlyten""))
+    print(check_word_length(""longerthanten""))",True,0,16762,267_14.py
+267,14,Check if a word is long,"Create a pure, single-function implementation for checking word length. This function should accept a string and return a boolean indicating whether the string's length is greater than 10 characters, regardless of any external configuration. Optimize this function for speed.","def check_word_length(text):
+    return len(text) > 10
+if __name__ == '__main__':
+    print(check_word_length(""short""))
+    print(check_word_length(""thisiswaytoolong""))
+    print(check_word_length(""exactlyten""))
+    print(check_word_length(""longerthanten""))",True,1,16763,267_14_1.py
+267,14,Check if a word is long,"Create a pure, single-function implementation for checking word length. This function should accept a string and return a boolean indicating whether the string's length is greater than 10 characters, regardless of any external configuration. Optimize this function for speed.","def check_word_length(text):
+    return len(text) > 10
+if __name__ == '__main__':
+    print(check_word_length(""short""))
+    print(check_word_length(""thisiswaylong""))
+    print(check_word_length(""tenchars""))
+    print(check_word_length(""elevenchars""))",True,2,16764,267_14_2.py
+267,13,Check if a word is long,"Write a command-line interface (CLI) script using Python that prompts the user to enter a word and a minimum length. The script must call an underlying function to check if the entered word is long enough, printing the result clearly to the console.",,False,0,16765,267_13.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"import re
+def get_first_word(text):
+    words = text.split()
+    if words:
+        return words[0]
+    return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))
+    print(get_first_word(""""))",True,0,16766,268_1.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"def get_first_word(text):
+    words = text.split()
+    if words:
+        return words[0]
+    else:
+        return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))
+    print(get_first_word(""""))",True,1,16767,268_1_1.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"def get_first_word(text):
+    if not text:
+        return """"
+    words = text.split()
+    if words:
+        return words[0]
+    return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))
+    print(get_first_word(""""))",True,2,16768,268_1_2.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"def get_first_word(text):
+    words = text.split()
+    if words:
+        return words[0]
+    else:
+        return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words ""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))",True,3,16769,268_1_3.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"def get_first_word(text):
+    words = text.split()
+    if words:
+        return words[0]
+    return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))
+    print(get_first_word(""""))",True,4,16770,268_1_4.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"def get_first_word(text):
+    words = text.split()
+    if words:
+        return words[0]
+    return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))",True,5,16771,268_1_5.py
+268,1,Find the first word only,Implement an efficient function named `get_first_word` that accepts a string and returns only the first word. Ensure the implementation is robust for various inputs.,"def get_first_word(text):
+    words = text.split()
+    if words:
+        return words[0]
+    else:
+        return """"
+if __name__ == '__main__':
+    print(get_first_word(""Hello world""))
+    print(get_first_word(""   leading spaces and multiple words""))
+    print(get_first_word(""""))
+    print(get_first_word(""singleword""))
+    print(get_first_word(""""))",True,6,16772,268_1_6.py
