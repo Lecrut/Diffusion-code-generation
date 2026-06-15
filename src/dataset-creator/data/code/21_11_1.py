@@ -1,0 +1,22 @@
+from collections import defaultdict
+def organize_data(data, sort_key):
+    organized = defaultdict(list)
+    for item in data:
+        if sort_key in item:
+            key_value = item[sort_key]
+            organized[key_value].append(item)
+    return dict(organized)
+if __name__ == '__main__':
+    sample_data = [
+        {'name': 'Alice', 'age': 30, 'city': 'New York'},
+        {'name': 'Bob', 'age': 25, 'city': 'Los Angeles'},
+        {'name': 'Charlie', 'age': 30, 'city': 'New York'},
+        {'name': 'David', 'age': 35, 'city': 'Chicago'},
+        {'name': 'Eve', 'age': 25, 'city': 'Los Angeles'}
+    ]
+    sort_key = 'city'
+    result = organize_data(sample_data, sort_key)
+    print(result)
+    sort_key = 'age'
+    result = organize_data(sample_data, sort_key)
+    print(result)
