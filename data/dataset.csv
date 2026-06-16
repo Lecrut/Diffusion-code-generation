@@ -345950,3 +345950,2829 @@ if __name__ == '__main__':
     sample_array = [1.5, 2.75, 3.0, -4.2, 100.1]
     result = sum_array_elements(sample_array)
     print(result)",True,3,17476,281_7_3.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_sum_from_file(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping invalid line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    return total
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""30\n"")
+            f.write(""error_line\n"")
+            f.write(""-5\n"")
+        grand_total = calculate_sum_from_file(file_name)
+        if grand_total is not None:
+            print(f""The grand total sum is: {grand_total}"")
+    except IOError as e:
+        print(f""An error occurred during file operation: {e}"")",True,0,17477,281_8.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_file_sum(filename):
+    total_sum = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total_sum += number
+                except ValueError:
+                    print(f""Skipping invalid line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    except IOError as e:
+        print(f""Error reading file '{filename}': {e}"")
+        return None
+    return total_sum
+if __name__ == '__main__':
+    sample_filename = 'data.txt'
+    try:
+        with open(sample_filename, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""-5\n"")
+            f.write(""100\n"")
+            f.write(""invalid_number\n"")
+            f.write(""3.14\n"")
+        result = calculate_file_sum(sample_filename)
+        if result is not None:
+            print(result)
+    except IOError as e:
+        print(f""An error occurred during file setup or operation: {e}"")",True,1,17478,281_8_1.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_sum_from_file(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping non-numeric line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    return total
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""-5\n"")
+            f.write(""100\n"")
+            f.write(""invalid_number\n"")
+            f.write(""3.14\n"")
+        grand_total = calculate_sum_from_file(file_name)
+        if grand_total is not None:
+            print(f""The grand total sum is: {grand_total}"")
+    except IOError as e:
+        print(f""An error occurred during file operation: {e}"")",True,2,17479,281_8_2.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_sum_from_file(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping invalid line: {line.strip()}"")
+        return total
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    except IOError as e:
+        print(f""Error reading file '{filename}': {e}"")
+        return None
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""-5\n"")
+            f.write(""100\n"")
+            f.write(""invalid_number\n"")
+        result = calculate_sum_from_file(file_name)
+        if result is not None:
+            print(result)
+    except IOError as e:
+        print(f""An error occurred during file setup or reading: {e}"")",True,3,17480,281_8_3.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_total(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping non-numeric line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    return total
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""30\n"")
+            f.write(""error\n"")
+            f.write(""15.5\n"")
+        grand_total = calculate_total(file_name)
+        if grand_total is not None:
+            print(grand_total)
+    except IOError as e:
+        print(f""An error occurred during file writing or reading setup: {e}"")",True,4,17481,281_8_4.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_total(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping invalid line: {line.strip()}"")
+        return total
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    except IOError as e:
+        print(f""Error reading file '{filename}': {e}"")
+        return None
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""30\n"")
+            f.write(""invalid_number\n"")
+            f.write(""-5\n"")
+        result = calculate_total(file_name)
+        if result is not None:
+            print(f""The grand total sum is: {result}"")
+    except Exception as e:
+        print(f""An unexpected error occurred during setup or execution: {e}"")",True,5,17482,281_8_5.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_total(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping non-numeric line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    return total
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""-5\n"")
+            f.write(""100\n"")
+            f.write(""invalid_line\n"")
+        grand_total = calculate_total(file_name)
+        if grand_total is not None:
+            print(f""The grand total sum of numbers in {file_name} is: {grand_total}"")
+    except IOError as e:
+        print(f""An error occurred during file operation: {e}"")",True,6,17483,281_8_6.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_total(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping non-numeric line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    return total
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""30\n"")
+            f.write(""error_line\n"")
+            f.write(""-5\n"")
+        grand_total = calculate_total(file_name)
+        if grand_total is not None:
+            print(f""The grand total sum of numbers in {file_name} is: {grand_total}"")
+    except IOError as e:
+        print(f""An error occurred during file writing or reading: {e}"")",True,7,17484,281_8_7.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_total(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping non-numeric line: {line.strip()}"")
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    return total
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""30\n"")
+            f.write(""error_line\n"")
+            f.write(""-5\n"")
+        grand_total = calculate_total(file_name)
+        if grand_total is not None:
+            print(f""The grand total sum of numbers in {file_name} is: {grand_total}"")
+    except IOError as e:
+        print(f""An error occurred during file operation: {e}"")",True,8,17485,281_8_8.py
+281,8,Find the sum of a few values,"Develop a script that reads numbers from a file named 'data.txt', assumes each line contains one number, and calculates the grand total sum of all numbers in the file. Include proper file handling error management.","def calculate_sum_from_file(filename):
+    total = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                try:
+                    number = float(line.strip())
+                    total += number
+                except ValueError:
+                    print(f""Skipping invalid line: {line.strip()}"")
+        return total
+    except FileNotFoundError:
+        print(f""Error: File '{filename}' not found."")
+        return None
+    except IOError as e:
+        print(f""Error reading file '{filename}': {e}"")
+        return None
+if __name__ == '__main__':
+    file_name = 'data.txt'
+    try:
+        with open(file_name, 'w') as f:
+            f.write(""10\n"")
+            f.write(""25.5\n"")
+            f.write(""-5\n"")
+            f.write(""100\n"")
+            f.write(""invalid_number\n"")
+            f.write(""3.14\n"")
+        result = calculate_sum_from_file(file_name)
+        if result is not None:
+            print(result)
+    except IOError as e:
+        print(f""An error occurred during file setup or operation: {e}"")",True,9,17486,281_8_9.py
+281,10,Find the sum of a few values,"Write a complete, efficient Python script that prompts the user to enter five integer values and then calculates and prints their total sum. Use best practices for input handling.","if __name__ == '__main__':
+    values = [10, 25, 5, 40, 15]
+    total_sum = sum(values)
+    print(total_sum)",True,0,17487,281_10.py
+281,10,Find the sum of a few values,"Write a complete, efficient Python script that prompts the user to enter five integer values and then calculates and prints their total sum. Use best practices for input handling.","if __name__ == '__main__':
+    numbers = [10, 25, 32, 8, 15]
+    total_sum = sum(numbers)
+    print(total_sum)",True,1,17488,281_10_1.py
+281,10,Find the sum of a few values,"Write a complete, efficient Python script that prompts the user to enter five integer values and then calculates and prints their total sum. Use best practices for input handling.","if __name__ == '__main__':
+    numbers = [10, 25, 32, 8, 40]
+    total_sum = sum(numbers)
+    print(total_sum)",True,2,17489,281_10_2.py
+281,10,Find the sum of a few values,"Write a complete, efficient Python script that prompts the user to enter five integer values and then calculates and prints their total sum. Use best practices for input handling.","if __name__ == '__main__':
+    numbers = [10, 25, 5, 40, 15]
+    total_sum = sum(numbers)
+    print(total_sum)",True,3,17490,281_10_3.py
+281,11,Find the sum of a few values,Implement an optimized function named 'calculate_sum' that accepts a list of numbers and returns their total sum using the built-in `sum()` function. Ensure the function is highly readable and efficient.,"def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2, 8]
+    result = calculate_sum(sample_list)
+    print(result)",True,0,17491,281_11.py
+281,11,Find the sum of a few values,Implement an optimized function named 'calculate_sum' that accepts a list of numbers and returns their total sum using the built-in `sum()` function. Ensure the function is highly readable and efficient.,"def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = calculate_sum(data1)
+    print(result1)
+    data2 = [10, -5, 20, 0]
+    result2 = calculate_sum(data2)
+    print(result2)
+    data3 = []
+    result3 = calculate_sum(data3)
+    print(result3)",True,1,17492,281_11_1.py
+281,11,Find the sum of a few values,Implement an optimized function named 'calculate_sum' that accepts a list of numbers and returns their total sum using the built-in `sum()` function. Ensure the function is highly readable and efficient.,"def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = calculate_sum(data1)
+    print(result1)
+    data2 = [10.5, 20.5, 30.5]
+    result2 = calculate_sum(data2)
+    print(result2)
+    data3 = [-1, 5, -3, 10]
+    result3 = calculate_sum(data3)
+    print(result3)",True,2,17493,281_11_2.py
+281,12,Find the sum of a few values,"Develop a robust Python program that takes five specific predefined numerical values (e.g., 10, 25, 5, 40, 15) and calculates their sum. Document the logic clearly.","if __name__ == '__main__':
+    numbers = [10, 25, 5, 40, 15]
+    total_sum = 0
+    for number in numbers:
+        total_sum += number
+    print(total_sum)",True,0,17494,281_12.py
+281,12,Find the sum of a few values,"Develop a robust Python program that takes five specific predefined numerical values (e.g., 10, 25, 5, 40, 15) and calculates their sum. Document the logic clearly.","import sys
+def calculate_sum(a, b, c, d, e):
+    total = a + b + c + d + e
+    return total
+if __name__ == '__main__':
+    value1 = 10
+    value2 = 25
+    value3 = 5
+    value4 = 40
+    value5 = 15
+    result = calculate_sum(value1, value2, value3, value4, value5)
+    print(result)",True,1,17495,281_12_1.py
+281,13,Find the sum of a few values,Write a class named 'ValueSummer' with a method to calculate the sum of any number of provided arguments. Ensure the implementation is object-oriented and adheres to clean coding principles.,"class ValueSummer:
+    def sum_all(self, *args):
+        total = 0
+        for num in args:
+            total += num
+        return total
+if __name__ == '__main__':
+    summer = ValueSummer()
+    result1 = summer.sum_all(1, 2, 3)
+    print(f""Sum of (1, 2, 3): {result1}"")
+    result2 = summer.sum_all(10, 20, 30, 40)
+    print(f""Sum of (10, 20, 30, 40): {result2}"")
+    result3 = summer.sum_all(5)
+    print(f""Sum of (5): {result3}"")
+    result4 = summer.sum_all()
+    print(f""Sum of (): {result4}"")",True,0,17496,281_13.py
+281,13,Find the sum of a few values,Write a class named 'ValueSummer' with a method to calculate the sum of any number of provided arguments. Ensure the implementation is object-oriented and adheres to clean coding principles.,"class ValueSummer:
+    def __init__(self):
+        pass
+    def calculate_sum(self, *args):
+        return sum(args)
+if __name__ == '__main__':
+    summer = ValueSummer()
+    result1 = summer.calculate_sum(1, 2, 3)
+    print(f""Sum of (1, 2, 3): {result1}"")
+    result2 = summer.calculate_sum(10, 20, 30, 40)
+    print(f""Sum of (10, 20, 30, 40): {result2}"")
+    result3 = summer.calculate_sum(5)
+    print(f""Sum of (5): {result3}"")
+    result4 = summer.calculate_sum()
+    print(f""Sum of (): {result4}"")",True,1,17497,281_13_1.py
+281,13,Find the sum of a few values,Write a class named 'ValueSummer' with a method to calculate the sum of any number of provided arguments. Ensure the implementation is object-oriented and adheres to clean coding principles.,"class ValueSummer:
+    def __init__(self):
+        pass
+    def calculate_sum(self, *args):
+        total = 0
+        for num in args:
+            total += num
+        return total
+if __name__ == '__main__':
+    summer = ValueSummer()
+    numbers1 = (1, 2, 3, 4, 5)
+    sum1 = summer.calculate_sum(*numbers1)
+    print(f""Sum of {list(numbers1)} is: {sum1}"")
+    numbers2 = (10, 20, 30)
+    sum2 = summer.calculate_sum(*numbers2)
+    print(f""Sum of {list(numbers2)} is: {sum2}"")
+    numbers3 = (5, 5, 5, 5)
+    sum3 = summer.calculate_sum(*numbers3)
+    print(f""Sum of {list(numbers3)} is: {sum3}"")
+    numbers4 = ()
+    sum4 = summer.calculate_sum(*numbers4)
+    print(f""Sum of an empty set is: {sum4}"")",True,2,17498,281_13_2.py
+281,13,Find the sum of a few values,Write a class named 'ValueSummer' with a method to calculate the sum of any number of provided arguments. Ensure the implementation is object-oriented and adheres to clean coding principles.,"class ValueSummer:
+    def __init__(self):
+        pass
+    def calculate_sum(self, *args):
+        total = 0
+        for num in args:
+            total += num
+        return total
+if __name__ == '__main__':
+    summer = ValueSummer()
+    numbers1 = (1, 2, 3, 4, 5)
+    result1 = summer.calculate_sum(*numbers1)
+    print(f""Sum of {list(numbers1)} is: {result1}"")
+    numbers2 = (10, 20, 30)
+    result2 = summer.calculate_sum(10, 20, 30)
+    print(f""Sum of {list(numbers2)} is: {result2}"")
+    numbers3 = (5, 5, 10, 15)
+    result3 = summer.calculate_sum(*numbers3)
+    print(f""Sum of {list(numbers3)} is: {result3}"")",True,3,17499,281_13_3.py
+281,13,Find the sum of a few values,Write a class named 'ValueSummer' with a method to calculate the sum of any number of provided arguments. Ensure the implementation is object-oriented and adheres to clean coding principles.,"class ValueSummer:
+    def __init__(self):
+        pass
+    def sum_all(self, *args):
+        total = 0
+        for num in args:
+            total += num
+        return total
+if __name__ == '__main__':
+    summer = ValueSummer()
+    numbers1 = 1, 5, 10
+    result1 = summer.sum_all(*numbers1)
+    print(f""Sum of {numbers1}: {result1}"")
+    numbers2 = 2.5, 3.5, 1.0
+    result2 = summer.sum_all(*numbers2)
+    print(f""Sum of {numbers2}: {result2}"")
+    numbers3 = 100, 200, -50
+    result3 = summer.sum_all(*numbers3)
+    print(f""Sum of {numbers3}: {result3}"")",True,4,17500,281_13_4.py
+281,13,Find the sum of a few values,Write a class named 'ValueSummer' with a method to calculate the sum of any number of provided arguments. Ensure the implementation is object-oriented and adheres to clean coding principles.,"class ValueSummer:
+    def __init__(self):
+        pass
+    def calculate_sum(self, *args):
+        return sum(args)
+if __name__ == '__main__':
+    summer = ValueSummer()
+    numbers1 = 1, 5, 10
+    result1 = summer.calculate_sum(*numbers1)
+    print(f""Sum of {numbers1}: {result1}"")
+    numbers2 = 2.5, 3.5, 1.0
+    result2 = summer.calculate_sum(*numbers2)
+    print(f""Sum of {numbers2}: {result2}"")
+    numbers3 = 100
+    result3 = summer.calculate_sum(numbers3)
+    print(f""Sum of {numbers3}: {result3}"")
+    numbers4 = 7, 2, 8, 3
+    result4 = summer.calculate_sum(*numbers4)
+    print(f""Sum of {numbers4}: {result4}"")",True,5,17501,281_13_5.py
+281,9,Find the sum of a few values,"Write an optimized solution to find the sum of elements in a list, demonstrating both a simple iterative approach and a more concise functional programming approach (e.g., using `sum()`). Compare the results for a sample list.","if __name__ == '__main__':
+    data = [1, 5, 2, 8, 3]
+    def iterative_sum(numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+    result_iterative = iterative_sum(data)
+    def functional_sum(numbers):
+        return sum(numbers)
+    result_functional = functional_sum(data)
+    print(f""Sample List: {data}"")
+    print(f""Iterative Sum Result: {result_iterative}"")
+    print(f""Functional Sum Result: {result_functional}"")",True,0,17502,281_9.py
+281,9,Find the sum of a few values,"Write an optimized solution to find the sum of elements in a list, demonstrating both a simple iterative approach and a more concise functional programming approach (e.g., using `sum()`). Compare the results for a sample list.","if __name__ == '__main__':
+    data = [1, 5, 2, 8, 3]
+    def iterative_sum(lst):
+        total = 0
+        for item in lst:
+            total += item
+        return total
+    result_iterative = iterative_sum(data)
+    def functional_sum(lst):
+        return sum(lst)
+    result_functional = functional_sum(data)
+    print(f""Sample List: {data}"")
+    print(f""Iterative Sum Result: {result_iterative}"")
+    print(f""Functional Sum Result: {result_functional}"")",True,1,17503,281_9_1.py
+281,9,Find the sum of a few values,"Write an optimized solution to find the sum of elements in a list, demonstrating both a simple iterative approach and a more concise functional programming approach (e.g., using `sum()`). Compare the results for a sample list.","if __name__ == '__main__':
+    data = [1, 5, 2, 8, 3]
+    def iterative_sum(numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+    result_iterative = iterative_sum(data)
+    def functional_sum(numbers):
+        return sum(numbers)
+    result_functional = functional_sum(data)
+    print(f""Sample List: {data}"")
+    print(f""Result from Iterative Approach: {result_iterative}"")
+    print(f""Result from Functional Approach (sum()): {result_functional}"")",True,2,17504,281_9_2.py
+282,0,Calculate total from a sequence,"Write a complete, robust Python script that prompts the user to enter a sequence of numbers and then calculates their total sum using a loop.","if __name__ == '__main__':
+    numbers = [10, 25, 40, 5]
+    total_sum = 0
+    for number in numbers:
+        total_sum += number
+    print(total_sum)",True,0,17505,282_0.py
+282,0,Calculate total from a sequence,"Write a complete, robust Python script that prompts the user to enter a sequence of numbers and then calculates their total sum using a loop.","if __name__ == '__main__':
+    numbers = [10, 25, 5, 40, 15]
+    total_sum = 0
+    for number in numbers:
+        total_sum += number
+    print(total_sum)",True,1,17506,282_0_1.py
+282,0,Calculate total from a sequence,"Write a complete, robust Python script that prompts the user to enter a sequence of numbers and then calculates their total sum using a loop.","if __name__ == '__main__':
+    numbers = [10, 25, 40, 15]
+    total_sum = 0
+    for number in numbers:
+        total_sum += number
+    print(total_sum)",True,2,17507,282_0_2.py
+282,0,Calculate total from a sequence,"Write a complete, robust Python script that prompts the user to enter a sequence of numbers and then calculates their total sum using a loop.","if __name__ == '__main__':
+    numbers = [10, 25, 37, 42, 58]
+    total_sum = 0
+    for number in numbers:
+        total_sum += number
+    print(total_sum)",True,3,17508,282_0_3.py
+282,1,Calculate total from a sequence,Implement an optimized function named 'calculate_sequence_sum' that accepts a list of integers and returns their total sum using the built-in `sum()` function for maximum efficiency.,"def calculate_sequence_sum(data):
+    return sum(data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 15, 20]
+    result = calculate_sequence_sum(sample_list)
+    print(result)",True,0,17509,282_1.py
+282,1,Calculate total from a sequence,Implement an optimized function named 'calculate_sequence_sum' that accepts a list of integers and returns their total sum using the built-in `sum()` function for maximum efficiency.,"def calculate_sequence_sum(data):
+    return sum(data)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 20, 3]
+    result = calculate_sequence_sum(sample_list)
+    print(result)",True,1,17510,282_1_1.py
+282,2,Calculate total from a sequence,Develop a Python function to calculate the sum of all even numbers within a given list of integers. The function must be highly efficient.,"def sum_even_numbers(data):
+    total = 0
+    for number in data:
+        if number % 2 == 0:
+            total += number
+    return total
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = sum_even_numbers(sample_list)
+    print(result)",True,0,17511,282_2.py
+279,3,Cycle through a defined range easily,"Write a single function that takes an integer 'start' and an integer 'step', and uses a loop to cycle through the defined range starting from 'start' up to (but not including) 'end'.","def cycle_range(start, step):
+    current = start
+    while current < 10:
+        print(current)
+        current += step
+if __name__ == '__main__':
+    cycle_range(0, 3)",True,0,17512,279_3.py
+282,4,Calculate total from a sequence,Create a class named 'SequenceCalculator' with a method to calculate the total sum of any provided list of numbers. Ensure the implementation is object-oriented and follows best practices.,"class SequenceCalculator:
+    def calculate_sum(self, numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    sample_list = [1, 5, 10, 2]
+    result = calculator.calculate_sum(sample_list)
+    print(result)",True,0,17513,282_4.py
+282,4,Calculate total from a sequence,Create a class named 'SequenceCalculator' with a method to calculate the total sum of any provided list of numbers. Ensure the implementation is object-oriented and follows best practices.,"class SequenceCalculator:
+    def calculate_sum(self, numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    list3 = [-1, 5, 10]
+    sum1 = calculator.calculate_sum(list1)
+    print(f""The sum of {list1} is: {sum1}"")
+    sum2 = calculator.calculate_sum(list2)
+    print(f""The sum of {list2} is: {sum2}"")
+    sum3 = calculator.calculate_sum(list3)
+    print(f""The sum of {list3} is: {sum3}"")",True,1,17514,282_4_1.py
+282,4,Calculate total from a sequence,Create a class named 'SequenceCalculator' with a method to calculate the total sum of any provided list of numbers. Ensure the implementation is object-oriented and follows best practices.,"class SequenceCalculator:
+    def calculate_sum(self, numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    list3 = [-1, 5, 10]
+    print(calculator.calculate_sum(list1))
+    print(calculator.calculate_sum(list2))
+    print(calculator.calculate_sum(list3))",True,2,17515,282_4_2.py
+282,4,Calculate total from a sequence,Create a class named 'SequenceCalculator' with a method to calculate the total sum of any provided list of numbers. Ensure the implementation is object-oriented and follows best practices.,"class SequenceCalculator:
+    def calculate_sum(self, numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    list3 = [-1, 5, -3, 10]
+    sum1 = calculator.calculate_sum(list1)
+    print(f""The sum of {list1} is: {sum1}"")
+    sum2 = calculator.calculate_sum(list2)
+    print(f""The sum of {list2} is: {sum2}"")
+    sum3 = calculator.calculate_sum(list3)
+    print(f""The sum of {list3} is: {sum3}"")",True,3,17516,282_4_3.py
+282,4,Calculate total from a sequence,Create a class named 'SequenceCalculator' with a method to calculate the total sum of any provided list of numbers. Ensure the implementation is object-oriented and follows best practices.,"class SequenceCalculator:
+    def calculate_sum(self, numbers):
+        total = 0
+        for number in numbers:
+            total += number
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, 20, 30]
+    list3 = [-1, 5, 10, -2]
+    sum1 = calculator.calculate_sum(list1)
+    print(f""Sum of {list1}: {sum1}"")
+    sum2 = calculator.calculate_sum(list2)
+    print(f""Sum of {list2}: {sum2}"")
+    sum3 = calculator.calculate_sum(list3)
+    print(f""Sum of {list3}: {sum3}"")",True,4,17517,282_4_4.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    input_data = [
+        ""10"",
+        ""25"",
+        ""hello"",
+        ""3.5"",
+        ""-5""
+    ]
+    result = calculate_sum(input_data)
+    print(result)",True,0,17518,282_3.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 25 hello 3.5 40\n""
+    input_data = sample_input.split()
+    result = calculate_sum(input_data)
+    print(result)",True,1,17519,282_3_1.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 25 hello 3.5 40\n""
+    input_data = sample_input.split()
+    final_sum = calculate_sum(input_data)
+    print(final_sum)",True,2,17520,282_3_2.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 5 hello 22.5 -3\n""
+    input_data = sample_input.split()
+    final_sum = calculate_sum(input_data)
+    print(final_sum)",True,3,17521,282_3_3.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(input_data):
+    total = 0
+    for item in input_data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, ""20"", ""invalid"", 3]
+    result = calculate_sum(sample_input)
+    print(result)",True,4,17522,282_3_4.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    input_data = [
+        ""10"",
+        ""5"",
+        ""hello"",
+        ""20"",
+        ""-3"",
+        ""4.5""
+    ]
+    result = calculate_sum(input_data)
+    print(result)",True,5,17523,282_3_5.py
+282,3,Calculate total from a sequence,"Write an optimized script that reads a sequence of numbers from standard input, handles potential non-integer inputs gracefully, and computes the final total sum.","import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        try:
+            total += int(item)
+        except ValueError:
+            pass
+    return total
+if __name__ == '__main__':
+    input_data = [10, ""25"", ""invalid"", 3.5, 42]
+    result = calculate_sum(input_data)
+    print(result)",True,6,17524,282_3_6.py
+282,5,Calculate total from a sequence,Implement a recursive Python function to calculate the sum of all elements in a given sequence (list). Provide an example usage demonstrating its functionality.,"def recursive_list_sum(data):
+    if not data:
+        return 0
+    else:
+        return data[0] + recursive_list_sum(data[1:])
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    result = recursive_list_sum(sample_list)
+    print(result)",True,0,17525,282_5.py
+282,6,Calculate total from a sequence,"Write a concise and highly readable one-line expression or lambda function that calculates the total sum of elements in a predefined list: [10, 20, 30, 40].","if __name__ == '__main__':
+    total_sum = sum([10, 20, 30, 40])
+    print(total_sum)",True,0,17526,282_6.py
+282,6,Calculate total from a sequence,"Write a concise and highly readable one-line expression or lambda function that calculates the total sum of elements in a predefined list: [10, 20, 30, 40].","if __name__ == '__main__':
+    total = sum([10, 20, 30, 40])
+    print(total)",True,1,17527,282_6_1.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    total = 0
+    cumulative_sums = []
+    for number in generator:
+        total += number
+        cumulative_sums.append(total)
+    return cumulative_sums
+if __name__ == '__main__':
+    sequence_generator = (i * 2 for i in range(1, 11))
+    result = cumulative_sum_generator(sequence_generator)
+    print(result)",True,0,17528,282_7.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    total = 0
+    cumulative_sums = []
+    for number in generator:
+        total += number
+        cumulative_sums.append(total)
+    return cumulative_sums
+if __name__ == '__main__':
+    sequence_generator = (i * 2 for i in range(10))
+    result = cumulative_sum_generator(sequence_generator)
+    print(result)",True,1,17529,282_7_1.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    total = 0
+    cumulative_sums = []
+    for number in generator:
+        total += number
+        cumulative_sums.append(total)
+    return cumulative_sums
+if __name__ == '__main__':
+    data_generator = (i * 2 for i in range(1, 11))
+    result = cumulative_sum_generator(data_generator)
+    print(result)",True,2,17530,282_7_2.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def calculate_cumulative_sum(generator):
+    cumulative_sum = 0
+    results = []
+    for number in generator:
+        cumulative_sum += number
+        results.append(cumulative_sum)
+    return results
+if __name__ == '__main__':
+    sequence_generator = (i * 2 for i in range(10))
+    cumulative_sums = calculate_cumulative_sum(sequence_generator)
+    print(cumulative_sums)",True,3,17531,282_7_3.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    cumulative_sums = []
+    current_sum = 0
+    for number in generator:
+        current_sum += number
+        cumulative_sums.append(current_sum)
+    return cumulative_sums
+if __name__ == '__main__':
+    sequence_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    generator_expression = (x for x in sequence_data)
+    result = cumulative_sum_generator(generator_expression)
+    print(result)",True,4,17532,282_7_4.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    cumulative_sums = []
+    current_sum = 0
+    for number in generator:
+        current_sum += number
+        cumulative_sums.append(current_sum)
+    return cumulative_sums
+if __name__ == '__main__':
+    sequence_generator = (i * 2 for i in range(10))
+    result = cumulative_sum_generator(sequence_generator)
+    print(result)",True,5,17533,282_7_5.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    cumulative_sums = []
+    current_sum = 0
+    for number in generator:
+        current_sum += number
+        cumulative_sums.append(current_sum)
+    return cumulative_sums
+if __name__ == '__main__':
+    data_generator = (i * 2 for i in range(1, 11))
+    result = cumulative_sum_generator(data_generator)
+    print(result)",True,6,17534,282_7_6.py
+282,7,Calculate total from a sequence,Design an efficient algorithm to calculate the cumulative sum of a large sequence of numbers provided as a generator expression.,"def cumulative_sum_generator(generator):
+    total = 0
+    cumulative_sums = []
+    for number in generator:
+        total += number
+        cumulative_sums.append(total)
+    return cumulative_sums
+if __name__ == '__main__':
+    data_generator = (i * 2 for i in range(1000))
+    result = cumulative_sum_generator(data_generator)
+    print(result)",True,7,17535,282_7_7.py
+282,9,Calculate total from a sequence,"Implement a function to calculate the sum of a sequence using the `functools.reduce` method, demonstrating an alternative functional programming approach.","from functools import reduce
+def calculate_sum(sequence):
+    return reduce(lambda acc, x: acc + x, sequence)
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result = calculate_sum(data)
+    print(result)",True,0,17536,282_9.py
+282,9,Calculate total from a sequence,"Implement a function to calculate the sum of a sequence using the `functools.reduce` method, demonstrating an alternative functional programming approach.","from functools import reduce
+def calculate_sum(sequence):
+    return reduce(lambda acc, x: acc + x, sequence)
+if __name__ == '__main__':
+    numbers = [1, 2, 3, 4, 5]
+    result = calculate_sum(numbers)
+    print(result)",True,1,17537,282_9_1.py
+282,10,Calculate total from a sequence,Write a robust and efficient Python function named `calculate_sequence_sum` that accepts a list of numbers and returns their total sum. Implement it using the most time-efficient method.,"def calculate_sequence_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    data = [1, 5, 10, 15, 20]
+    result = calculate_sequence_sum(data)
+    print(result)",True,0,17538,282_10.py
+282,10,Calculate total from a sequence,Write a robust and efficient Python function named `calculate_sequence_sum` that accepts a list of numbers and returns their total sum. Implement it using the most time-efficient method.,"def calculate_sequence_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 15, 20]
+    result = calculate_sequence_sum(sample_list)
+    print(result)",True,1,17539,282_10_1.py
+282,11,Calculate total from a sequence,Implement an optimized script that reads a sequence of integers from standard input and calculates the sum of all provided numbers. Handle potential input errors gracefully.,"import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        if isinstance(item, int):
+            total += item
+        else:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 20 30 hello 40 50""
+    try:
+        input_data = sample_input.split()
+        numbers = []
+        for item in input_data:
+            try:
+                numbers.append(int(item))
+            except ValueError:
+                pass
+        result = calculate_sum(numbers)
+        print(result)
+    except Exception:
+        pass",True,0,17540,282_11.py
+282,11,Calculate total from a sequence,Implement an optimized script that reads a sequence of integers from standard input and calculates the sum of all provided numbers. Handle potential input errors gracefully.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 20 30 40 50""
+    numbers = []
+    try:
+        for item in input_data.split():
+            numbers.append(int(item))
+        total_sum = sum(numbers)
+        print(total_sum)
+    except ValueError:
+        sys.stderr.write(""Error: Invalid input detected.\n"")",True,1,17541,282_11_1.py
+282,11,Calculate total from a sequence,Implement an optimized script that reads a sequence of integers from standard input and calculates the sum of all provided numbers. Handle potential input errors gracefully.,"import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        if isinstance(item, int):
+            total += item
+        else:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 25 hello 30 45.5 -5""
+    input_data = sample_input.split()
+    numbers = []
+    for item in input_data:
+        try:
+            numbers.append(int(item))
+        except ValueError:
+            continue
+    result = calculate_sum(numbers)
+    print(result)",True,2,17542,282_11_2.py
+282,11,Calculate total from a sequence,Implement an optimized script that reads a sequence of integers from standard input and calculates the sum of all provided numbers. Handle potential input errors gracefully.,"import sys
+if __name__ == '__main__':
+    input_data = ""10 20 30 40 50""
+    numbers = []
+    try:
+        input_numbers = input_data.split()
+        for item in input_numbers:
+            numbers.append(int(item))
+        total_sum = sum(numbers)
+        print(total_sum)
+    except ValueError:
+        sys.stderr.write(""Error: Invalid input detected.\n"")
+    except Exception as e:
+        sys.stderr.write(f""An unexpected error occurred: {e}\n"")",True,3,17543,282_11_3.py
+282,11,Calculate total from a sequence,Implement an optimized script that reads a sequence of integers from standard input and calculates the sum of all provided numbers. Handle potential input errors gracefully.,"import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        if isinstance(item, int):
+            total += item
+        else:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 20 30 40 5""
+    try:
+        input_data = sample_input.split()
+        numbers = []
+        for item in input_data:
+            numbers.append(int(item))
+        result = calculate_sum(numbers)
+        print(result)
+    except ValueError:
+        sys.stderr.write(""Error: Input contains non-integer values.\n"")
+    except Exception as e:
+        sys.stderr.write(f""An unexpected error occurred: {e}\n"")",True,4,17544,282_11_4.py
+282,11,Calculate total from a sequence,Implement an optimized script that reads a sequence of integers from standard input and calculates the sum of all provided numbers. Handle potential input errors gracefully.,"import sys
+def calculate_sum(data):
+    total = 0
+    for item in data:
+        if isinstance(item, int):
+            total += item
+        else:
+            pass
+    return total
+if __name__ == '__main__':
+    sample_input = ""10 25 hello 3.5 40""
+    input_data = sample_input.split()
+    numbers = []
+    for item in input_data:
+        try:
+            numbers.append(int(item))
+        except ValueError:
+            continue
+    result = calculate_sum(numbers)
+    print(result)",True,5,17545,282_11_5.py
+282,12,Calculate total from a sequence,"Develop a class named `SequenceCalculator` with a method `get_total(self, sequence)` that calculates the sum of all elements in the input list. Ensure the implementation is object-oriented and adheres to best practices.","class SequenceCalculator:
+    def get_total(self, sequence):
+        total = 0
+        for element in sequence:
+            total += element
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    sample_sequence_1 = [1, 2, 3, 4, 5]
+    result_1 = calculator.get_total(sample_sequence_1)
+    print(f""The total for {sample_sequence_1} is: {result_1}"")
+    sample_sequence_2 = [10, 20, 30, 40]
+    result_2 = calculator.get_total(sample_sequence_2)
+    print(f""The total for {sample_sequence_2} is: {result_2}"")
+    sample_sequence_3 = [-1, 5, -3, 10]
+    result_3 = calculator.get_total(sample_sequence_3)
+    print(f""The total for {sample_sequence_3} is: {result_3}"")",True,0,17546,282_12.py
+282,12,Calculate total from a sequence,"Develop a class named `SequenceCalculator` with a method `get_total(self, sequence)` that calculates the sum of all elements in the input list. Ensure the implementation is object-oriented and adheres to best practices.","class SequenceCalculator:
+    def get_total(self, sequence):
+        total = 0
+        for element in sequence:
+            total += element
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    sample_sequence_1 = [1, 2, 3, 4, 5]
+    result_1 = calculator.get_total(sample_sequence_1)
+    print(f""The total for {sample_sequence_1} is: {result_1}"")
+    sample_sequence_2 = [10, -5, 20, 0]
+    result_2 = calculator.get_total(sample_sequence_2)
+    print(f""The total for {sample_sequence_2} is: {result_2}"")
+    sample_sequence_3 = []
+    result_3 = calculator.get_total(sample_sequence_3)
+    print(f""The total for {sample_sequence_3} is: {result_3}"")",True,1,17547,282_12_1.py
+282,12,Calculate total from a sequence,"Develop a class named `SequenceCalculator` with a method `get_total(self, sequence)` that calculates the sum of all elements in the input list. Ensure the implementation is object-oriented and adheres to best practices.","class SequenceCalculator:
+    def get_total(self, sequence):
+        total = 0
+        for element in sequence:
+            total += element
+        return total
+if __name__ == '__main__':
+    calculator = SequenceCalculator()
+    sample_sequence = [1, 5, 10, 2]
+    result = calculator.get_total(sample_sequence)
+    print(result)",True,2,17548,282_12_2.py
+282,13,Calculate total from a sequence,Write a concise and idiomatic Python expression or function definition to calculate the total sum of elements in a given tuple representing a sequence of numbers.,"def sum_tuple(t):
+    return sum(t)
+if __name__ == '__main__':
+    my_tuple = (1, 5, 2, 8, 3)
+    result = sum_tuple(my_tuple)
+    print(result)",True,0,17549,282_13.py
+282,13,Calculate total from a sequence,Write a concise and idiomatic Python expression or function definition to calculate the total sum of elements in a given tuple representing a sequence of numbers.,"def sum_tuple(t):
+    return sum(t)
+if __name__ == '__main__':
+    my_tuple = (1, 5, 10, -2)
+    result = sum_tuple(my_tuple)
+    print(result)",True,1,17550,282_13_1.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    try:
+        for item in input_string.split(','):
+            if item.strip():
+                numbers.append(float(item.strip()))
+        return sum(numbers)
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all entries are valid numbers.""
+if __name__ == '__main__':
+    sample_input = ""10,25,3.5,40""
+    result = calculate_sum(sample_input)
+    print(result)",True,0,17551,282_14.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    try:
+        numbers = [float(x.strip()) for x in input_string.split(',')]
+        total = sum(numbers)
+        return total
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all entries are valid numbers.""
+if __name__ == '__main__':
+    sample_input = ""10, 5.5, 20, 3.5""
+    result = calculate_sum(sample_input)
+    print(f""Input string: {sample_input}"")
+    print(f""Calculated sum: {result}"")",True,1,17552,282_14_1.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        try:
+            numbers.append(float(item.strip()))
+        except ValueError:
+            pass
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_input = ""10,25.5,30,4.5""
+    result = calculate_sum(sample_input)
+    print(result)",True,2,17553,282_14_2.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    try:
+        for item in input_string.split(','):
+            if item.strip():
+                numbers.append(float(item.strip()))
+        return sum(numbers)
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all entries are valid numbers.""
+if __name__ == '__main__':
+    sample_input = ""10, 25.5, 3, 42""
+    result = calculate_sum(sample_input)
+    print(result)",True,3,17554,282_14_3.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    try:
+        for item in input_string.split(','):
+            if item.strip():
+                numbers.append(float(item.strip()))
+        return sum(numbers)
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all parts are valid numbers.""
+    except Exception as e:
+        return f""An unexpected error occurred: {e}""
+if __name__ == '__main__':
+    sample_input = ""10,5.5,20,3.14""
+    result = calculate_sum(sample_input)
+    print(result)",True,4,17555,282_14_4.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        try:
+            numbers.append(float(item.strip()))
+        except ValueError:
+            pass
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_input = ""10,25,33.5,42""
+    result = calculate_sum(sample_input)
+    print(result)",True,5,17556,282_14_5.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        try:
+            numbers.append(float(item.strip()))
+        except ValueError:
+            pass
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_input = ""10,25,3.5,40""
+    result = calculate_sum(sample_input)
+    print(result)",True,6,17557,282_14_6.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    try:
+        for item in input_string.split(','):
+            if item.strip():
+                numbers.append(float(item.strip()))
+        return sum(numbers)
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all parts are valid numbers.""
+if __name__ == '__main__':
+    sample_input = ""10,25,3.5,40""
+    result = calculate_sum(sample_input)
+    print(result)",True,7,17558,282_14_7.py
+282,14,Calculate total from a sequence,"Create a complete, well-documented Python program that prompts the user to enter a comma-separated string of numbers and calculates their total sum. Focus on clean input processing and accurate summation.","import sys
+def calculate_sum(input_string):
+    numbers = []
+    for item in input_string.split(','):
+        try:
+            numbers.append(float(item.strip()))
+        except ValueError:
+            pass
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_input = ""10,25,33.5,42""
+    total = calculate_sum(sample_input)
+    print(f""The input string was: {sample_input}"")
+    print(f""The total sum is: {total}"")",True,8,17559,282_14_8.py
+283,0,Check all elements in a list,"Write a complete, robust Python script that takes a list of numbers and prints only the elements that are greater than 10. Use list comprehension for efficiency.","def filter_greater_than_ten(numbers):
+    return [x for x in numbers if x > 10]
+if __name__ == '__main__':
+    sample_list = [5, 12, 8, 15, 3, 22, 9]
+    result = filter_greater_than_ten(sample_list)
+    print(result)",True,0,17560,283_0.py
+283,0,Check all elements in a list,"Write a complete, robust Python script that takes a list of numbers and prints only the elements that are greater than 10. Use list comprehension for efficiency.","def filter_greater_than_ten(numbers):
+    return [x for x in numbers if x > 10]
+if __name__ == '__main__':
+    sample_list = [5, 12, 8, 15, 3, 20, 9]
+    result = filter_greater_than_ten(sample_list)
+    print(result)",True,1,17561,283_0_1.py
+283,0,Check all elements in a list,"Write a complete, robust Python script that takes a list of numbers and prints only the elements that are greater than 10. Use list comprehension for efficiency.","def filter_greater_than_ten(numbers):
+    return [x for x in numbers if x > 10]
+if __name__ == '__main__':
+    sample_list = [5, 12, 8, 15, 3, 22, 9, 10]
+    result = filter_greater_than_ten(sample_list)
+    print(result)",True,2,17562,283_0_2.py
+283,1,Check all elements in a list,"Implement an optimized function named 'check_and_filter' that accepts a list of integers and a threshold, returning a new list containing only the elements from the original list that are greater than or equal to the threshold. Ensure the code is highly efficient.","def check_and_filter(data, threshold):
+    return [x for x in data if x >= threshold]
+if __name__ == '__main__':
+    sample_list = [10, 5, 22, 8, 30, 15, 7]
+    sample_threshold = 12
+    result = check_and_filter(sample_list, sample_threshold)
+    print(result)",True,0,17563,283_1.py
+283,1,Check all elements in a list,"Implement an optimized function named 'check_and_filter' that accepts a list of integers and a threshold, returning a new list containing only the elements from the original list that are greater than or equal to the threshold. Ensure the code is highly efficient.","def check_and_filter(data, threshold):
+    return [x for x in data if x >= threshold]
+if __name__ == '__main__':
+    sample_list = [10, 5, 22, 8, 30, 15]
+    sample_threshold = 15
+    result = check_and_filter(sample_list, sample_threshold)
+    print(result)",True,1,17564,283_1_1.py
+283,1,Check all elements in a list,"Implement an optimized function named 'check_and_filter' that accepts a list of integers and a threshold, returning a new list containing only the elements from the original list that are greater than or equal to the threshold. Ensure the code is highly efficient.","def check_and_filter(data, threshold):
+    return [x for x in data if x >= threshold]
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 3, 15, 8, 25]
+    sample_threshold = 12
+    result = check_and_filter(sample_list, sample_threshold)
+    print(result)",True,2,17565,283_1_2.py
+282,8,Calculate total from a sequence,Write a script that reads a single line of space-separated integers from the user and calculates their total sum. Include error handling for invalid input types.,"def calculate_sum(input_string):
+    try:
+        numbers = input_string.split()
+        total = 0
+        for item in numbers:
+            total += int(item)
+        return total
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all parts are integers.""
+    except Exception as e:
+        return f""An unexpected error occurred: {e}""
+if __name__ == '__main__':
+    sample_input = ""10 20 35 42""
+    result = calculate_sum(sample_input)
+    print(result)",True,0,17566,282_8.py
+282,8,Calculate total from a sequence,Write a script that reads a single line of space-separated integers from the user and calculates their total sum. Include error handling for invalid input types.,"def calculate_sum(input_string):
+    try:
+        numbers = input_string.split()
+        total = 0
+        for item in numbers:
+            total += int(item)
+        return total
+    except ValueError:
+        return ""Error: Invalid input. Please ensure all parts are integers.""
+    except Exception as e:
+        return f""An unexpected error occurred: {e}""
+if __name__ == '__main__':
+    sample_input = ""10 20 35 5""
+    result = calculate_sum(sample_input)
+    print(result)",True,1,17567,282_8_1.py
+283,2,Check all elements in a list,Develop a Python function that iterates through a given list of strings and checks if each string contains the substring 'Python'. Return a new list containing only the strings that contain this substring. Use a generator expression for memory efficiency.,"def filter_python_strings(string_list):
+    return [s for s in string_list if 'Python' in s]
+if __name__ == '__main__':
+    sample_list = [""Hello Python world"", ""Java programming"", ""Python is fun"", ""C++ development"", ""Pythonic code""]
+    result_list = list(filter_python_strings(sample_list))
+    print(result_list)",True,0,17568,283_2.py
+283,2,Check all elements in a list,Develop a Python function that iterates through a given list of strings and checks if each string contains the substring 'Python'. Return a new list containing only the strings that contain this substring. Use a generator expression for memory efficiency.,"def filter_python_strings(string_list):
+    return [s for s in string_list if 'Python' in s]
+if __name__ == '__main__':
+    sample_list = [""Hello Python world"", ""Java programming"", ""Python is fun"", ""C++ development"", ""Another Python example""]
+    result = filter_python_strings(sample_list)
+    print(result)",True,1,17569,283_2_1.py
+283,2,Check all elements in a list,Develop a Python function that iterates through a given list of strings and checks if each string contains the substring 'Python'. Return a new list containing only the strings that contain this substring. Use a generator expression for memory efficiency.,"def filter_python_strings(string_list):
+    return [s for s in string_list if 'Python' in s]
+if __name__ == '__main__':
+    sample_list = [""Hello Python world"", ""Java programming"", ""Python is fun"", ""C++ development"", ""Another Python example""]
+    result = list(filter_python_strings(sample_list))
+    print(result)",True,2,17570,283_2_2.py
+283,2,Check all elements in a list,Develop a Python function that iterates through a given list of strings and checks if each string contains the substring 'Python'. Return a new list containing only the strings that contain this substring. Use a generator expression for memory efficiency.,"def filter_strings(string_list):
+    return [s for s in string_list if 'Python' in s]
+if __name__ == '__main__':
+    sample_list = [""Hello Python world"", ""Java programming"", ""Python is fun"", ""C++ code""]
+    result = list(filter_strings(sample_list))
+    print(result)",True,3,17571,283_2_3.py
+283,2,Check all elements in a list,Develop a Python function that iterates through a given list of strings and checks if each string contains the substring 'Python'. Return a new list containing only the strings that contain this substring. Use a generator expression for memory efficiency.,"def filter_python_strings(string_list):
+    return [s for s in string_list if 'Python' in s]
+if __name__ == '__main__':
+    sample_list = [""Hello Python world"", ""Java programming"", ""Python is fun"", ""C++ development"", ""Pythonic code""]
+    result = list(filter_python_strings(sample_list))
+    print(result)",True,4,17572,283_2_4.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for element in data_list:
+            if condition(element):
+                result.append(element)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    result1 = checker.check_elements(sample_data, is_even)
+    print(f""Data: {sample_data}"")
+    print(f""Condition: Is Even"")
+    print(f""Result: {result1}"")
+    sample_data_strings = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result2 = checker.check_elements(sample_data_strings, starts_with_b)
+    print(f""\nData: {sample_data_strings}"")
+    print(f""Condition: Starts with 'b'"")
+    print(f""Result: {result2}"")
+    sample_data_mixed = [10, 15, 20, 25, 30]
+    def is_multiple_of_5(n):
+        return n % 5 == 0
+    result3 = checker.check_elements(sample_data_mixed, is_multiple_of_5)
+    print(f""\nData: {sample_data_mixed}"")
+    print(f""Condition: Multiple of 5"")
+    print(f""Result: {result3}"")",True,0,17573,283_3.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for element in data_list:
+            if condition(element):
+                result.append(element)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    result1 = checker.check_elements(sample_data, is_even)
+    print(f""Data: {sample_data}"")
+    print(f""Condition: is even"")
+    print(f""Result: {result1}"")
+    sample_data_str = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result2 = checker.check_elements(sample_data_str, starts_with_b)
+    print(f""\nData: {sample_data_str}"")
+    print(f""Condition: starts with 'b'"")
+    print(f""Result: {result2}"")",True,1,17574,283_3_1.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for element in data_list:
+            if condition(element):
+                result.append(element)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    result_even = checker.check_elements(sample_data, is_even)
+    print(f""Data: {sample_data}"")
+    print(f""Condition (is even): {result_even}"")
+    sample_data_strings = [""apple"", ""banana"", ""cat"", ""dog"", ""elephant""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result_starts_with_b = checker.check_elements(sample_data_strings, starts_with_b)
+    print(f""Data: {sample_data_strings}"")
+    print(f""Condition (starts with 'b'): {result_starts_with_b}"")
+    sample_data_mixed = [10, 15, 22, 31, 40]
+    def is_greater_than_12(n):
+        return n > 12
+    result_greater_than_12 = checker.check_elements(sample_data_mixed, is_greater_than_12)
+    print(f""Data: {sample_data_mixed}"")
+    print(f""Condition (greater than 12): {result_greater_than_12}"")",True,2,17575,283_3_2.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for item in data_list:
+            if condition(item):
+                result.append(item)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(x):
+        return x % 2 == 0
+    result1 = checker.check_elements(sample_data, is_even)
+    print(f""Result 1: {result1}"")
+    def is_greater_than_5(x):
+        return x > 5
+    result2 = checker.check_elements(sample_data, is_greater_than_5)
+    print(f""Result 2: {result2}"")
+    def is_odd(x):
+        return x % 2 != 0
+    result3 = checker.check_elements(sample_data, is_odd)
+    print(f""Result 3: {result3}"")",True,3,17576,283_3_3.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for element in data_list:
+            if condition(element):
+                result.append(element)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    result1 = checker.check_elements(sample_data, is_even)
+    print(f""Sample Data: {sample_data}"")
+    print(f""Condition: Element is even"")
+    print(f""Result: {result1}"")
+    sample_data_strings = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result2 = checker.check_elements(sample_data_strings, starts_with_b)
+    print(f""\nSample Data: {sample_data_strings}"")
+    print(f""Condition: String starts with 'b'"")
+    print(f""Result: {result2}"")
+    sample_data_mixed = [10, 15, 20, 25, 30]
+    def is_multiple_of_5(n):
+        return n % 5 == 0
+    result3 = checker.check_elements(sample_data_mixed, is_multiple_of_5)
+    print(f""\nSample Data: {sample_data_mixed}"")
+    print(f""Condition: Element is a multiple of 5"")
+    print(f""Result: {result3}"")",True,4,17577,283_3_4.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for item in data_list:
+            if condition(item):
+                result.append(item)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(x):
+        return x % 2 == 0
+    result_even = checker.check_elements(sample_data, is_even)
+    print(f""Data: {sample_data}"")
+    print(f""Condition: is even"")
+    print(f""Result: {result_even}"")
+    sample_data_strings = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result_starts_with_b = checker.check_elements(sample_data_strings, starts_with_b)
+    print(f""\nData: {sample_data_strings}"")
+    print(f""Condition: starts with 'b'"")
+    print(f""Result: {result_starts_with_b}"")
+    sample_data_mixed = [10, 15, 20, 25, 30]
+    def is_multiple_of_5(x):
+        return x % 5 == 0
+    result_multiples_of_5 = checker.check_elements(sample_data_mixed, is_multiple_of_5)
+    print(f""\nData: {sample_data_mixed}"")
+    print(f""Condition: multiple of 5"")
+    print(f""Result: {result_multiples_of_5}"")",True,5,17578,283_3_5.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for element in data_list:
+            if condition(element):
+                result.append(element)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    result1 = checker.check_elements(sample_data, is_even)
+    print(f""Data: {sample_data}"")
+    print(f""Condition: is even"")
+    print(f""Result: {result1}"")
+    sample_data_strings = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result2 = checker.check_elements(sample_data_strings, starts_with_b)
+    print(f""\nData: {sample_data_strings}"")
+    print(f""Condition: starts with 'b'"")
+    print(f""Result: {result2}"")
+    sample_data_mixed = [10, 15, 20, 25, 30]
+    def is_multiple_of_5(n):
+        return n % 5 == 0
+    result3 = checker.check_elements(sample_data_mixed, is_multiple_of_5)
+    print(f""\nData: {sample_data_mixed}"")
+    print(f""Condition: multiple of 5"")
+    print(f""Result: {result3}"")",True,6,17579,283_3_6.py
+283,3,Check all elements in a list,"Write an optimized method within a class called 'ListChecker' that has a method 'check_elements(self, data_list, condition)' which returns a new list containing all elements from 'data_list' that satisfy the boolean 'condition'.","class ListChecker:
+    def check_elements(self, data_list, condition):
+        result = []
+        for element in data_list:
+            if condition(element):
+                result.append(element)
+        return result
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    result_even = checker.check_elements(sample_data, is_even)
+    print(f""Sample Data: {sample_data}"")
+    print(f""Condition (is even): {result_even}"")
+    sample_data_strings = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    def starts_with_b(s):
+        return s.startswith('b')
+    result_starts_with_b = checker.check_elements(sample_data_strings, starts_with_b)
+    print(f""Sample Data: {sample_data_strings}"")
+    print(f""Condition (starts with 'b'): {result_starts_with_b}"")",True,7,17580,283_3_7.py
+283,5,Check all elements in a list,"Implement a function that accepts a list of mixed data types (integers, strings, floats) and filters it to return only the elements that are numeric types. Ensure the filtering logic is robust.","def filter_numeric(data):
+    result = []
+    for item in data:
+        if isinstance(item, (int, float)):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_data = [1, ""hello"", 3.14, True, ""world"", 5.0, None, [1, 2]]
+    filtered_data = filter_numeric(sample_data)
+    print(filtered_data)",True,0,17581,283_5.py
+283,5,Check all elements in a list,"Implement a function that accepts a list of mixed data types (integers, strings, floats) and filters it to return only the elements that are numeric types. Ensure the filtering logic is robust.","def filter_numeric(data):
+    result = []
+    for item in data:
+        if isinstance(item, (int, float)):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_data = [1, ""hello"", 3.14, True, ""world"", 5, None, 7.0]
+    filtered_data = filter_numeric(sample_data)
+    print(filtered_data)",True,1,17582,283_5_1.py
+283,5,Check all elements in a list,"Implement a function that accepts a list of mixed data types (integers, strings, floats) and filters it to return only the elements that are numeric types. Ensure the filtering logic is robust.","def filter_numeric(data):
+    result = []
+    for item in data:
+        if isinstance(item, (int, float)):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    mixed_list = [1, ""hello"", 3.14, True, 5, ""world"", 7.0, None, [1, 2]]
+    numeric_list = filter_numeric(mixed_list)
+    print(numeric_list)",True,2,17583,283_5_2.py
+283,6,Check all elements in a list,Write an efficient Python solution to check if all elements in a provided list are positive. The function should immediately return False upon finding any non-positive element.,"def check_positive(data):
+    for x in data:
+        if x <= 0:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 5, 10, 2]
+    list2 = [1, 5, -3, 2]
+    list3 = [10, 20, 30]
+    list4 = [-1, 5, 10]
+    print(f""List 1: {check_positive(list1)}"")
+    print(f""List 2: {check_positive(list2)}"")
+    print(f""List 3: {check_positive(list3)}"")
+    print(f""List 4: {check_positive(list4)}"")",True,0,17584,283_6.py
+283,6,Check all elements in a list,Write an efficient Python solution to check if all elements in a provided list are positive. The function should immediately return False upon finding any non-positive element.,"def check_all_positive(data):
+    for x in data:
+        if x <= 0:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [10, -2, 3, 4]
+    list3 = [1, 5, 0, 8]
+    list4 = []
+    list5 = [7.5, 100.1, 0.001]
+    print(f""List 1: {check_all_positive(list1)}"")
+    print(f""List 2: {check_all_positive(list2)}"")
+    print(f""List 3: {check_all_positive(list3)}"")
+    print(f""List 4: {check_all_positive(list4)}"")
+    print(f""List 5: {check_all_positive(list5)}"")",True,1,17585,283_6_1.py
+283,6,Check all elements in a list,Write an efficient Python solution to check if all elements in a provided list are positive. The function should immediately return False upon finding any non-positive element.,"def check_all_positive(data):
+    for x in data:
+        if x <= 0:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 5, 10, 2]
+    list2 = [1, 5, -3, 2]
+    list3 = [10, 20, 30]
+    list4 = [-1, 5, 10]
+    print(f""List 1: {check_all_positive(list1)}"")
+    print(f""List 2: {check_all_positive(list2)}"")
+    print(f""List 3: {check_all_positive(list3)}"")
+    print(f""List 4: {check_all_positive(list4)}"")",True,2,17586,283_6_2.py
+283,6,Check all elements in a list,Write an efficient Python solution to check if all elements in a provided list are positive. The function should immediately return False upon finding any non-positive element.,"def check_all_positive(data):
+    for x in data:
+        if x <= 0:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 5, 10, 3]
+    list2 = [2, -1, 4, 6]
+    list3 = [100, 50, 0, 20]
+    list4 = [7, 8, 9]
+    print(f""List 1: {check_all_positive(list1)}"")
+    print(f""List 2: {check_all_positive(list2)}"")
+    print(f""List 3: {check_all_positive(list3)}"")
+    print(f""List 4: {check_all_positive(list4)}"")",True,3,17587,283_6_3.py
+283,6,Check all elements in a list,Write an efficient Python solution to check if all elements in a provided list are positive. The function should immediately return False upon finding any non-positive element.,"def check_positive(data):
+    for x in data:
+        if x <= 0:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 5, 10, 2]
+    list2 = [1, 5, -3, 2]
+    list3 = [100, 200, 300]
+    list4 = [-1, 5, 10]
+    print(f""List 1: {check_positive(list1)}"")
+    print(f""List 2: {check_positive(list2)}"")
+    print(f""List 3: {check_positive(list3)}"")
+    print(f""List 4: {check_positive(list4)}"")",True,4,17588,283_6_4.py
+283,6,Check all elements in a list,Write an efficient Python solution to check if all elements in a provided list are positive. The function should immediately return False upon finding any non-positive element.,"def check_positive(data):
+    for x in data:
+        if x <= 0:
+            return False
+    return True
+if __name__ == '__main__':
+    list1 = [1, 5, 10, 2]
+    list2 = [1, 5, -3, 2]
+    list3 = [10, 20, 30]
+    list4 = [-1, 5, 10]
+    print(f""List 1 is all positive: {check_positive(list1)}"")
+    print(f""List 2 is all positive: {check_positive(list2)}"")
+    print(f""List 3 is all positive: {check_positive(list3)}"")
+    print(f""List 4 is all positive: {check_positive(list4)}"")",True,5,17589,283_6_5.py
+283,7,Check all elements in a list,"Design and implement a function that takes a list of tuples, where each tuple contains a value and a boolean flag, and returns a new list containing only the values corresponding to the True flags. Optimize for time complexity.","def filter_true_values(data):
+    result = []
+    for value, flag in data:
+        if flag:
+            result.append(value)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (10, False),
+        (25, True),
+        (30, False),
+        (45, True),
+        (50, False)
+    ]
+    output = filter_true_values(sample_data)
+    print(output)",True,0,17590,283_7.py
+283,7,Check all elements in a list,"Design and implement a function that takes a list of tuples, where each tuple contains a value and a boolean flag, and returns a new list containing only the values corresponding to the True flags. Optimize for time complexity.","def filter_true_values(data):
+    result = []
+    for value, flag in data:
+        if flag:
+            result.append(value)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (1, True),
+        (2, False),
+        (3, True),
+        (4, False),
+        (5, True)
+    ]
+    output = filter_true_values(sample_data)
+    print(output)",True,1,17591,283_7_1.py
+283,8,Check all elements in a list,"Write a complete program that reads a predefined list of items and uses a loop structure to check every item against a specific criterion (e.g., length or value) and prints the elements that pass the check.","def filter_items(items, criterion):
+    result = []
+    for item in items:
+        if len(item) > criterion:
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    threshold = 5
+    filtered_items = filter_items(sample_list, threshold)
+    for item in filtered_items:
+        print(item)",True,0,17592,283_8.py
+283,8,Check all elements in a list,"Write a complete program that reads a predefined list of items and uses a loop structure to check every item against a specific criterion (e.g., length or value) and prints the elements that pass the check.","def filter_items(items, criterion):
+    result = []
+    for item in items:
+        if len(item) > criterion:
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    length_criterion = 5
+    passing_items = filter_items(sample_list, length_criterion)
+    for item in passing_items:
+        print(item)",True,1,17593,283_8_1.py
+283,8,Check all elements in a list,"Write a complete program that reads a predefined list of items and uses a loop structure to check every item against a specific criterion (e.g., length or value) and prints the elements that pass the check.","def filter_items(items, criterion):
+    result = []
+    for item in items:
+        if len(item) > criterion:
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""orange"", ""grapefruit""]
+    min_length = 5
+    filtered_items = filter_items(sample_list, min_length)
+    for item in filtered_items:
+        print(item)",True,2,17594,283_8_2.py
+283,8,Check all elements in a list,"Write a complete program that reads a predefined list of items and uses a loop structure to check every item against a specific criterion (e.g., length or value) and prints the elements that pass the check.","def filter_items(items, criterion):
+    result = []
+    for item in items:
+        if len(item) > criterion:
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""strawberry"", ""grapefruit""]
+    threshold = 5
+    filtered_items = filter_items(sample_list, threshold)
+    for item in filtered_items:
+        print(item)",True,3,17595,283_8_3.py
+283,8,Check all elements in a list,"Write a complete program that reads a predefined list of items and uses a loop structure to check every item against a specific criterion (e.g., length or value) and prints the elements that pass the check.","def filter_items(items, criterion):
+    result = []
+    for item in items:
+        if len(item) > criterion:
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""orange"", ""grapefruit""]
+    threshold = 5
+    filtered_items = filter_items(sample_list, threshold)
+    for item in filtered_items:
+        print(item)",True,4,17596,283_8_4.py
+283,8,Check all elements in a list,"Write a complete program that reads a predefined list of items and uses a loop structure to check every item against a specific criterion (e.g., length or value) and prints the elements that pass the check.","def filter_items(items, criterion):
+    passed_items = []
+    for item in items:
+        if len(item) > criterion:
+            passed_items.append(item)
+    return passed_items
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    min_length = 5
+    result = filter_items(sample_list, min_length)
+    for item in result:
+        print(item)",True,5,17597,283_8_5.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_objects(data, key, operator, value):
+    result = []
+    for obj in data:
+        if obj.get(key) is not None:
+            if operator == "">"":
+                if obj[key] > value:
+                    result.append(obj)
+            elif operator == ""<"":
+                if obj[key] < value:
+                    result.append(obj)
+            elif operator == ""=="":
+                if obj[key] == value:
+                    result.append(obj)
+            elif operator == "">="":
+                if obj[key] >= value:
+                    result.append(obj)
+            elif operator == ""<="":
+                if obj[key] <= value:
+                    result.append(obj)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""age"": 30, ""score"": 85},
+        {""name"": ""Bob"", ""age"": 25, ""score"": 92},
+        {""name"": ""Charlie"", ""age"": 35, ""score"": 78},
+        {""name"": ""David"", ""age"": 28, ""score"": 95}
+    ]
+    key_to_check = ""age""
+    comparison_operator = "">""
+    threshold_value = 30
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""Original Data:"")
+    for item in sample_data:
+        print(item)
+    print(""\nFiltered List (where age > 30):"")
+    for item in filtered_list:
+        print(item)
+    key_to_check = ""score""
+    comparison_operator = ""<=""
+    threshold_value = 90
+    filtered_list_2 = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""\nFiltered List (where score <= 90):"")
+    for item in filtered_list_2:
+        print(item)",True,0,17598,283_9.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_objects(data, key, operator, value):
+    result = []
+    for obj in data:
+        if obj.get(key) is not None:
+            if operator == "">"":
+                if obj[key] > value:
+                    result.append(obj)
+            elif operator == ""<"":
+                if obj[key] < value:
+                    result.append(obj)
+            elif operator == ""=="":
+                if obj[key] == value:
+                    result.append(obj)
+            elif operator == "">="":
+                if obj[key] >= value:
+                    result.append(obj)
+            elif operator == ""<="":
+                if obj[key] <= value:
+                    result.append(obj)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""age"": 30, ""score"": 85},
+        {""name"": ""Bob"", ""age"": 25, ""score"": 92},
+        {""name"": ""Charlie"", ""age"": 35, ""score"": 78},
+        {""name"": ""David"", ""age"": 28, ""score"": 95}
+    ]
+    key_to_check = ""age""
+    comparison_operator = "">""
+    threshold_value = 30
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""Original Data: {sample_data}"")
+    print(f""Filtering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list)
+    key_to_check = ""score""
+    comparison_operator = ""<=""
+    threshold_value = 90
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""\nFiltering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list)",True,1,17599,283_9_1.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_objects(data, key, operator, value):
+    result = []
+    for obj in data:
+        if operator == ""gt"" and obj.get(key, float('-inf')) > value:
+            result.append(obj)
+        elif operator == ""lt"" and obj.get(key, float('inf')) < value:
+            result.append(obj)
+        elif operator == ""ge"" and obj.get(key, float('-inf')) >= value:
+            result.append(obj)
+        elif operator == ""le"" and obj.get(key, float('inf')) <= value:
+            result.append(obj)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""score"": 85, ""age"": 30},
+        {""name"": ""Bob"", ""score"": 92, ""age"": 25},
+        {""name"": ""Charlie"", ""score"": 78, ""age"": 35},
+        {""name"": ""David"", ""score"": 95, ""age"": 28}
+    ]
+    key_to_check = ""score""
+    comparison_operator = ""gt""
+    threshold_value = 90
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""Original Data: {sample_data}"")
+    print(f""Filtering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list)
+    key_to_check = ""age""
+    comparison_operator = ""le""
+    threshold_value = 30
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""\nFiltering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list)",True,2,17600,283_9_2.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_objects(data, key, operator, value):
+    result = []
+    for obj in data:
+        if operator == ""gt"" and obj.get(key, float('-inf')) > value:
+            result.append(obj)
+        elif operator == ""lt"" and obj.get(key, float('inf')) < value:
+            result.append(obj)
+        elif operator == ""ge"" and obj.get(key, float('-inf')) >= value:
+            result.append(obj)
+        elif operator == ""le"" and obj.get(key, float('inf')) <= value:
+            result.append(obj)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""age"": 30, ""score"": 85},
+        {""name"": ""Bob"", ""age"": 25, ""score"": 92},
+        {""name"": ""Charlie"", ""age"": 35, ""score"": 78},
+        {""name"": ""David"", ""age"": 22, ""score"": 95}
+    ]
+    key_to_check = ""age""
+    comparison_operator = ""gt""
+    threshold_value = 30
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""Original Data: {sample_data}"")
+    print(f""Filtering by '{key_to_check}' > {threshold_value}:"")
+    print(filtered_list)
+    key_to_check = ""score""
+    comparison_operator = ""le""
+    threshold_value = 90
+    filtered_list = filter_objects(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""\nFiltering by '{key_to_check}' <= {threshold_value}:"")
+    print(filtered_list)",True,3,17601,283_9_3.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_list_by_key(data_list, key, operator, value):
+    result = []
+    for item in data_list:
+        if key in item:
+            item_value = item[key]
+            if operator == ""gt"" and item_value > value:
+                result.append(item)
+            elif operator == ""lt"" and item_value < value:
+                result.append(item)
+            elif operator == ""ge"" and item_value >= value:
+                result.append(item)
+            elif operator == ""le"" and item_value <= value:
+                result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""age"": 30, ""score"": 85},
+        {""name"": ""Bob"", ""age"": 25, ""score"": 92},
+        {""name"": ""Charlie"", ""age"": 35, ""score"": 78},
+        {""name"": ""David"", ""age"": 28, ""score"": 95}
+    ]
+    key_to_check = ""age""
+    comparison_operator = ""gt""
+    threshold_value = 30
+    filtered_list = filter_list_by_key(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""Original Data: {sample_data}"")
+    print(f""Filtering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list)
+    key_to_check = ""score""
+    comparison_operator = ""ge""
+    threshold_value = 90
+    filtered_list_2 = filter_list_by_key(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""\nFiltering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list_2)",True,4,17602,283_9_4.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_list_by_key_and_operator(data_list, key, operator, value):
+    result_list = []
+    for item in data_list:
+        if key in item:
+            item_value = item[key]
+            if operator == ""greater_than"" and isinstance(item_value, (int, float)) and isinstance(value, (int, float)):
+                if item_value > value:
+                    result_list.append(item)
+            elif operator == ""less_than"" and isinstance(item_value, (int, float)) and isinstance(value, (int, float)):
+                if item_value < value:
+                    result_list.append(item)
+            elif operator == ""greater_than_or_equal"" and isinstance(item_value, (int, float)) and isinstance(value, (int, float)):
+                if item_value >= value:
+                    result_list.append(item)
+            elif operator == ""less_than_or_equal"" and isinstance(item_value, (int, float)) and isinstance(value, (int, float)):
+                if item_value <= value:
+                    result_list.append(item)
+    return result_list
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""age"": 30, ""score"": 85.5},
+        {""name"": ""Bob"", ""age"": 25, ""score"": 92.1},
+        {""name"": ""Charlie"", ""age"": 35, ""score"": 78.9},
+        {""name"": ""David"", ""age"": 28, ""score"": 95.0},
+        {""name"": ""Eve"", ""age"": 40, ""score"": 81.2}
+    ]
+    print(""Original Data:"")
+    for item in sample_data:
+        print(item)
+    print(""\nFiltering for age greater than 30:"")
+    result1 = filter_list_by_key_and_operator(sample_data, ""age"", ""greater_than"", 30)
+    for item in result1:
+        print(item)
+    print(""\nFiltering for score less than 90.0:"")
+    result2 = filter_list_by_key_and_operator(sample_data, ""score"", ""less_than"", 90.0)
+    for item in result2:
+        print(item)
+    print(""\nFiltering for age greater than or equal to 35:"")
+    result3 = filter_list_by_key_and_operator(sample_data, ""age"", ""greater_than_or_equal"", 35)
+    for item in result3:
+        print(item)",True,5,17603,283_9_5.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_objects(data, key, operator, value):
+    result = []
+    for obj in data:
+        if obj.get(key) is not None:
+            if operator == ""gt"" and obj[key] > value:
+                result.append(obj)
+            elif operator == ""lt"" and obj[key] < value:
+                result.append(obj)
+            elif operator == ""eq"" and obj[key] == value:
+                result.append(obj)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Alice"", ""age"": 30, ""score"": 85},
+        {""name"": ""Bob"", ""age"": 25, ""score"": 92},
+        {""name"": ""Charlie"", ""age"": 35, ""score"": 78},
+        {""name"": ""David"", ""age"": 28, ""score"": 95}
+    ]
+    print(""Original Data:"")
+    for item in sample_data:
+        print(item)
+    print(""\nFiltering by age greater than 30:"")
+    result_gt = filter_objects(sample_data, ""age"", ""gt"", 30)
+    for item in result_gt:
+        print(item)
+    print(""\nFiltering by score less than 90:"")
+    result_lt = filter_objects(sample_data, ""score"", ""lt"", 90)
+    for item in result_lt:
+        print(item)
+    print(""\nFiltering by age equal to 28:"")
+    result_eq = filter_objects(sample_data, ""age"", ""eq"", 28)
+    for item in result_eq:
+        print(item)",True,6,17604,283_9_6.py
+283,9,Check all elements in a list,"Develop an advanced function that accepts a list of objects (dictionaries) and a key, returning a new list containing only those objects where the specified key's value meets a certain comparison operator (e.g., greater than). Assume the input list contains dictionaries.","def filter_list_by_comparison(data_list, key, operator, value):
+    result = []
+    for item in data_list:
+        if key in item:
+            item_value = item[key]
+            condition = None
+            if operator == "">"":
+                condition = item_value > value
+            elif operator == ""<"":
+                condition = item_value < value
+            elif operator == ""=="":
+                condition = item_value == value
+            elif operator == "">="":
+                condition = item_value >= value
+            elif operator == ""<="":
+                condition = item_value <= value
+            if condition:
+                result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {'name': 'Alice', 'age': 30, 'score': 85},
+        {'name': 'Bob', 'age': 25, 'score': 92},
+        {'name': 'Charlie', 'age': 35, 'score': 78},
+        {'name': 'David', 'age': 28, 'score': 95}
+    ]
+    key_to_check = 'age'
+    comparison_operator = '>'
+    threshold_value = 30
+    filtered_list = filter_list_by_comparison(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""Original Data: {sample_data}"")
+    print(f""Filtering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list)
+    key_to_check = 'score'
+    comparison_operator = '<='
+    threshold_value = 90
+    filtered_list_2 = filter_list_by_comparison(sample_data, key_to_check, comparison_operator, threshold_value)
+    print(f""\nFiltering by '{key_to_check}' {comparison_operator} {threshold_value}:"")
+    print(filtered_list_2)",True,7,17605,283_9_7.py
+283,4,Check all elements in a list,"Create a standalone Python script that prompts the user to input a list of integers, and then displays all the numbers in that list that are even. Handle potential non-integer inputs gracefully.","def filter_even_numbers(numbers):
+    even_numbers = []
+    for num in numbers:
+        if isinstance(num, int):
+            if num % 2 == 0:
+                even_numbers.append(num)
+    return even_numbers
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, ""a"", 10.5]
+    result = filter_even_numbers(sample_list)
+    print(result)",True,0,17606,283_4.py
+283,4,Check all elements in a list,"Create a standalone Python script that prompts the user to input a list of integers, and then displays all the numbers in that list that are even. Handle potential non-integer inputs gracefully.","def filter_even_numbers(numbers):
+    even_numbers = []
+    for num in numbers:
+        if isinstance(num, int):
+            if num % 2 == 0:
+                even_numbers.append(num)
+    return even_numbers
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, ""a"", 9.5]
+    result = filter_even_numbers(sample_list)
+    print(result)",True,1,17607,283_4_1.py
+283,4,Check all elements in a list,"Create a standalone Python script that prompts the user to input a list of integers, and then displays all the numbers in that list that are even. Handle potential non-integer inputs gracefully.","def filter_even_numbers(numbers):
+    even_numbers = []
+    for num in numbers:
+        if isinstance(num, int) and num % 2 == 0:
+            even_numbers.append(num)
+    return even_numbers
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, ""a"", 10.5]
+    result = filter_even_numbers(sample_list)
+    print(result)",True,2,17608,283_4_2.py
+283,11,Check all elements in a list,Implement an optimized Python function named `check_list_elements` that accepts a list of integers and returns a new list containing only the elements from the original list that are even. The function must use a list comprehension for maximum efficiency.,"def check_list_elements(data):
+    return [x for x in data if x % 2 == 0]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result = check_list_elements(sample_list)
+    print(result)",True,0,17609,283_11.py
+283,10,Check all elements in a list,"Write a complete, robust Python script that prompts the user to enter a list of numbers and then checks and prints all the numbers in that list that are greater than 10. Ensure the code is efficient and handles potential input errors gracefully.",,False,0,17610,283_10.py
+283,13,Check all elements in a list,Write a flexible Python function that takes two lists as input and returns a single list containing all elements that are present in both input lists (the intersection of the two lists). Optimize this function for time complexity.,"def find_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    intersection = set1.intersection(set2)
+    return list(intersection)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = find_intersection(list_a, list_b)
+    print(result)",True,0,17611,283_13.py
+283,13,Check all elements in a list,Write a flexible Python function that takes two lists as input and returns a single list containing all elements that are present in both input lists (the intersection of the two lists). Optimize this function for time complexity.,"import time
+def find_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    intersection_set = set1.intersection(set2)
+    return list(intersection_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = find_intersection(list_a, list_b)
+    print(result)",True,1,17612,283_13_1.py
+283,13,Check all elements in a list,Write a flexible Python function that takes two lists as input and returns a single list containing all elements that are present in both input lists (the intersection of the two lists). Optimize this function for time complexity.,"def find_intersection(list1, list2):
+    set1 = set(list1)
+    set2 = set(list2)
+    intersection_set = set1.intersection(set2)
+    return list(intersection_set)
+if __name__ == '__main__':
+    list_a = [1, 2, 3, 4, 5]
+    list_b = [4, 5, 6, 7, 8]
+    result = find_intersection(list_a, list_b)
+    print(result)",True,2,17613,283_13_2.py
+283,12,Check all elements in a list,"Develop a professional Python solution to iterate through a given list of strings and identify and print all the strings that contain the letter 'a', ignoring case sensitivity. Provide clear comments explaining the logic used.",,False,0,17614,283_12.py
+283,14,Check all elements in a list,Create an optimized script that defines a function to check if a given list contains duplicate elements. The function should return a boolean value and utilize a set data structure internally for high performance.,"def contains_duplicates(input_list):
+    seen = set()
+    for item in input_list:
+        if item in seen:
+            return True
+        seen.add(item)
+    return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [1, 2, 3, 4, 1]
+    list3 = ['a', 'b', 'c', 'a']
+    list4 = []
+    list5 = [5, 5, 5, 5]
+    print(f""List 1 has duplicates: {contains_duplicates(list1)}"")
+    print(f""List 2 has duplicates: {contains_duplicates(list2)}"")
+    print(f""List 3 has duplicates: {contains_duplicates(list3)}"")
+    print(f""List 4 has duplicates: {contains_duplicates(list4)}"")
+    print(f""List 5 has duplicates: {contains_duplicates(list5)}"")",True,0,17615,283_14.py
+283,14,Check all elements in a list,Create an optimized script that defines a function to check if a given list contains duplicate elements. The function should return a boolean value and utilize a set data structure internally for high performance.,"def contains_duplicates(input_list):
+    seen = set()
+    for item in input_list:
+        if item in seen:
+            return True
+        seen.add(item)
+    return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [1, 2, 3, 4, 1]
+    list3 = ['a', 'b', 'c', 'a']
+    list4 = []
+    list5 = [5, 5, 5, 5]
+    print(f""List {list1} has duplicates: {contains_duplicates(list1)}"")
+    print(f""List {list2} has duplicates: {contains_duplicates(list2)}"")
+    print(f""List {list3} has duplicates: {contains_duplicates(list3)}"")
+    print(f""List {list4} has duplicates: {contains_duplicates(list4)}"")
+    print(f""List {list5} has duplicates: {contains_duplicates(list5)}"")",True,1,17616,283_14_1.py
+283,14,Check all elements in a list,Create an optimized script that defines a function to check if a given list contains duplicate elements. The function should return a boolean value and utilize a set data structure internally for high performance.,"def contains_duplicates(data):
+    seen = set()
+    for item in data:
+        if item in seen:
+            return True
+        seen.add(item)
+    return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [1, 2, 3, 4, 1]
+    list3 = ['a', 'b', 'c', 'a']
+    list4 = []
+    list5 = [5, 5, 5, 5]
+    print(f""List 1 has duplicates: {contains_duplicates(list1)}"")
+    print(f""List 2 has duplicates: {contains_duplicates(list2)}"")
+    print(f""List 3 has duplicates: {contains_duplicates(list3)}"")
+    print(f""List 4 has duplicates: {contains_duplicates(list4)}"")
+    print(f""List 5 has duplicates: {contains_duplicates(list5)}"")",True,2,17617,283_14_2.py
+283,14,Check all elements in a list,Create an optimized script that defines a function to check if a given list contains duplicate elements. The function should return a boolean value and utilize a set data structure internally for high performance.,"def contains_duplicates(input_list):
+    seen = set()
+    for item in input_list:
+        if item in seen:
+            return True
+        seen.add(item)
+    return False
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    list2 = [1, 2, 3, 4, 1]
+    list3 = [""apple"", ""banana"", ""apple"", ""cherry""]
+    list4 = []
+    list5 = [5.5, 1.1, 5.5]
+    print(f""List 1 has duplicates: {contains_duplicates(list1)}"")
+    print(f""List 2 has duplicates: {contains_duplicates(list2)}"")
+    print(f""List 3 has duplicates: {contains_duplicates(list3)}"")
+    print(f""List 4 has duplicates: {contains_duplicates(list4)}"")
+    print(f""List 5 has duplicates: {contains_duplicates(list5)}"")",True,3,17618,283_14_3.py
+284,0,Reverse the order of items looped,"Write a complete, high-quality Python script to reverse the order of elements in a given list using slicing.","def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(my_list)
+    print(reversed_list)",True,0,17619,284_0.py
+284,0,Reverse the order of items looped,"Write a complete, high-quality Python script to reverse the order of elements in a given list using slicing.","def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)",True,1,17620,284_0_1.py
+284,1,Reverse the order of items looped,"Implement an optimized function named `reverse_list` that takes a list as input and returns a new list with the elements in reverse order, without modifying the original list.","def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)",True,0,17621,284_1.py
+284,2,Reverse the order of items looped,Develop a method within a Python class to reverse the order of items stored in an instance attribute list.,"class ListReverser:
+    def reverse_list(self, data_list):
+        return data_list[::-1]
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    reverser = ListReverser()
+    reversed_list = reverser.reverse_list(my_list)
+    print(reversed_list)",True,0,17622,284_2.py
+284,3,Reverse the order of items looped,Write a standalone function that reverses the order of elements in a tuple and returns the reversed tuple.,"def reverse_tuple(input_tuple):
+    return tuple(reversed(input_tuple))
+if __name__ == '__main__':
+    sample_tuple = (1, 2, 3, 4, 5)
+    reversed_sample = reverse_tuple(sample_tuple)
+    print(reversed_sample)",True,0,17623,284_3.py
+284,3,Reverse the order of items looped,Write a standalone function that reverses the order of elements in a tuple and returns the reversed tuple.,"def reverse_tuple(input_tuple):
+    return tuple(reversed(input_tuple))
+if __name__ == '__main__':
+    sample_tuple = (1, 2, 3, 4, 5)
+    reversed_sample = reverse_tuple(sample_tuple)
+    print(reversed_sample)
+    sample_tuple_2 = ('a', 'b', 'c')
+    reversed_sample_2 = reverse_tuple(sample_tuple_2)
+    print(reversed_sample_2)
+    sample_tuple_3 = (10, 20, 30)
+    reversed_sample_3 = reverse_tuple(sample_tuple_3)
+    print(reversed_sample_3)",True,1,17624,284_3_1.py
+284,3,Reverse the order of items looped,Write a standalone function that reverses the order of elements in a tuple and returns the reversed tuple.,"def reverse_tuple(input_tuple):
+    return tuple(reversed(input_tuple))
+if __name__ == '__main__':
+    sample_tuple = (1, 2, 3, 4, 5)
+    reversed_sample = reverse_tuple(sample_tuple)
+    print(reversed_sample)
+    sample_tuple_2 = ('a', 'b', 'c', 'd')
+    reversed_sample_2 = reverse_tuple(sample_tuple_2)
+    print(reversed_sample_2)
+    sample_tuple_3 = (10, 20, 30)
+    reversed_sample_3 = reverse_tuple(sample_tuple_3)
+    print(reversed_sample_3)",True,2,17625,284_3_2.py
+284,4,Reverse the order of items looped,Implement an iterative algorithm to reverse the order of elements in a list by manually swapping adjacent elements.,"def reverse_list_swaps(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        if arr[i] > arr[i+1]:
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+    return arr
+if __name__ == '__main__':
+    my_list = [6, 5, 4, 3, 2, 1]
+    print(""Original list:"", my_list)
+    reversed_list = reverse_list_swaps(my_list)
+    print(""Reversed list:"", reversed_list)
+    my_list_2 = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list_2)
+    reversed_list_2 = reverse_list_swaps(my_list_2)
+    print(""Reversed list:"", reversed_list_2)
+    my_list_3 = [5, 1, 4, 2, 8]
+    print(""Original list:"", my_list_3)
+    reversed_list_3 = reverse_list_swaps(my_list_3)
+    print(""Reversed list:"", reversed_list_3)",True,0,17626,284_4.py
+284,4,Reverse the order of items looped,Implement an iterative algorithm to reverse the order of elements in a list by manually swapping adjacent elements.,"def reverse_list_swaps(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        if arr[i] > arr[i+1]:
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+    return arr
+if __name__ == '__main__':
+    my_list = [5, 1, 4, 2, 8]
+    print(""Original list:"", my_list)
+    reversed_list = reverse_list_swaps(my_list)
+    print(""Reversed list:"", reversed_list)
+    my_list_2 = [10, 20, 5, 15]
+    print(""Original list:"", my_list_2)
+    reversed_list_2 = reverse_list_swaps(my_list_2)
+    print(""Reversed list:"", reversed_list_2)
+    my_list_3 = [3, 2, 1]
+    print(""Original list:"", my_list_3)
+    reversed_list_3 = reverse_list_swaps(my_list_3)
+    print(""Reversed list:"", reversed_list_3)",True,1,17627,284_4_1.py
+284,4,Reverse the order of items looped,Implement an iterative algorithm to reverse the order of elements in a list by manually swapping adjacent elements.,"def reverse_list_swaps(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        if arr[i] > arr[i+1]:
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+    return arr
+if __name__ == '__main__':
+    data = [5, 1, 4, 2, 8]
+    print(""Original list:"", data)
+    reversed_data = reverse_list_swaps(data)
+    print(""Reversed list:"", reversed_data)",True,2,17628,284_4_2.py
+284,4,Reverse the order of items looped,Implement an iterative algorithm to reverse the order of elements in a list by manually swapping adjacent elements.,"def reverse_list_swaps(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        if arr[i] > arr[i+1]:
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+    return arr
+if __name__ == '__main__':
+    my_list = [5, 1, 4, 2, 8]
+    print(""Original list:"", my_list)
+    reversed_list = reverse_list_swaps(my_list)
+    print(""Reversed list:"", reversed_list)
+    my_list_2 = [10, 5, 2, 7, 1]
+    print(""Original list:"", my_list_2)
+    reversed_list_2 = reverse_list_swaps(my_list_2)
+    print(""Reversed list:"", reversed_list_2)
+    my_list_3 = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list_3)
+    reversed_list_3 = reverse_list_swaps(my_list_3)
+    print(""Reversed list:"", reversed_list_3)",True,3,17629,284_4_3.py
+284,5,Reverse the order of items looped,Create a generator function that yields the elements of an input iterable in reverse order.,"def reverse_iterable(input_iterable):
+    for item in reversed(list(input_iterable)):
+        yield item
+if __name__ == '__main__':
+    sample = [1, 2, 3, 4, 5]
+    reversed_result = list(reverse_iterable(sample))
+    print(reversed_result)",True,0,17630,284_5.py
+284,5,Reverse the order of items looped,Create a generator function that yields the elements of an input iterable in reverse order.,"def reverse_iterator(iterable):
+    for item in reversed(list(iterable)):
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_result = list(reverse_iterator(sample_list))
+    print(reversed_result)",True,1,17631,284_5_1.py
+284,5,Reverse the order of items looped,Create a generator function that yields the elements of an input iterable in reverse order.,"def reverse_iterator(iterable):
+    for item in reversed(list(iterable)):
+        yield item
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_elements = list(reverse_iterator(sample_list))
+    print(reversed_elements)",True,2,17632,284_5_2.py
+284,6,Reverse the order of items looped,Write a robust Python script that takes a string and reverses the order of its individual characters.,"import sys
+def reverse_string(input_string):
+    return input_string[::-1]
+if __name__ == '__main__':
+    sample_string = ""hello world""
+    reversed_result = reverse_string(sample_string)
+    print(reversed_result)",True,0,17633,284_6.py
+284,6,Reverse the order of items looped,Write a robust Python script that takes a string and reverses the order of its individual characters.,"import sys
+def reverse_string(input_string):
+    return input_string[::-1]
+if __name__ == '__main__':
+    sample_string = ""hello world""
+    reversed_string = reverse_string(sample_string)
+    print(reversed_string)",True,1,17634,284_6_1.py
+284,7,Reverse the order of items looped,Implement an in-place reversal algorithm for a mutable list using two pointers to achieve the reversal efficiently.,"def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", my_list_2)
+    reverse_list_inplace(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 2, 3, 4]
+    print(""Original list:"", my_list_3)
+    reverse_list_inplace(my_list_3)
+    print(""Reversed list:"", my_list_3)
+    my_list_4 = [5, 4, 3, 2, 1]
+    print(""Original list:"", my_list_4)
+    reverse_list_inplace(my_list_4)
+    print(""Reversed list:"", my_list_4)",True,0,17635,284_7.py
+284,7,Reverse the order of items looped,Implement an in-place reversal algorithm for a mutable list using two pointers to achieve the reversal efficiently.,"def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", my_list_2)
+    reverse_list_inplace(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 2, 3, 4]
+    print(""Original list:"", my_list_3)
+    reverse_list_inplace(my_list_3)
+    print(""Reversed list:"", my_list_3)",True,1,17636,284_7_1.py
+284,7,Reverse the order of items looped,Implement an in-place reversal algorithm for a mutable list using two pointers to achieve the reversal efficiently.,"def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50, 60]
+    print(""Original list:"", my_list_2)
+    reverse_list_inplace(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 2, 1]
+    print(""Original list:"", my_list_3)
+    reverse_list_inplace(my_list_3)
+    print(""Reversed list:"", my_list_3)",True,2,17637,284_7_2.py
+284,7,Reverse the order of items looped,Implement an in-place reversal algorithm for a mutable list using two pointers to achieve the reversal efficiently.,"def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", my_list_2)
+    reverse_list_inplace(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 2, 3, 4]
+    print(""Original list:"", my_list_3)
+    reverse_list_inplace(my_list_3)
+    print(""Reversed list:"", my_list_3)
+    my_list_4 = [7, 8, 9]
+    print(""Original list:"", my_list_4)
+    reverse_list_inplace(my_list_4)
+    print(""Reversed list:"", my_list_4)",True,3,17638,284_7_3.py
+284,7,Reverse the order of items looped,Implement an in-place reversal algorithm for a mutable list using two pointers to achieve the reversal efficiently.,"def reverse_list_in_place(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", my_list)
+    reverse_list_in_place(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", my_list_2)
+    reverse_list_in_place(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 2, 3, 4]
+    print(""Original list:"", my_list_3)
+    reverse_list_in_place(my_list_3)
+    print(""Reversed list:"", my_list_3)
+    my_list_4 = [100]
+    print(""Original list:"", my_list_4)
+    reverse_list_in_place(my_list_4)
+    print(""Reversed list:"", my_list_4)",True,4,17639,284_7_4.py
+284,7,Reverse the order of items looped,Implement an in-place reversal algorithm for a mutable list using two pointers to achieve the reversal efficiently.,"def reverse_list_inplace(arr):
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5, 6]
+    print(""Original list:"", my_list)
+    reverse_list_inplace(my_list)
+    print(""Reversed list:"", my_list)
+    my_list_2 = [10, 20, 30, 40, 50]
+    print(""Original list:"", my_list_2)
+    reverse_list_inplace(my_list_2)
+    print(""Reversed list:"", my_list_2)
+    my_list_3 = [1, 2, 2, 3, 4]
+    print(""Original list:"", my_list_3)
+    reverse_list_inplace(my_list_3)
+    print(""Reversed list:"", my_list_3)",True,5,17640,284_7_5.py
+284,8,Reverse the order of items looped,Develop a class method that reverses the order of items in an internal list and returns the reversed list.,"class ListReverser:
+    def __init__(self):
+        self.internal_list = []
+    def add_items(self, items):
+        self.internal_list.extend(items)
+    def reverse_and_return(self):
+        reversed_list = self.internal_list[::-1]
+        self.internal_list = reversed_list
+        return reversed_list
+if __name__ == '__main__':
+    reverser = ListReverser()
+    sample_data = [1, 2, 3, 4, 5]
+    reverser.add_items(sample_data)
+    reversed_result = reverser.reverse_and_return()
+    print(reversed_result)",True,0,17641,284_8.py
+284,8,Reverse the order of items looped,Develop a class method that reverses the order of items in an internal list and returns the reversed list.,"class ListReverser:
+    def __init__(self):
+        self.internal_list = []
+    def add_items(self, items):
+        self.internal_list.extend(items)
+    def reverse_and_return(self):
+        reversed_list = self.internal_list[::-1]
+        return reversed_list
+if __name__ == '__main__':
+    reverser = ListReverser()
+    sample_data = [1, 2, 3, 4, 5]
+    reverser.add_items(sample_data)
+    result = reverser.reverse_and_return()
+    print(result)",True,1,17642,284_8_1.py
+284,8,Reverse the order of items looped,Develop a class method that reverses the order of items in an internal list and returns the reversed list.,"class ListReverser:
+    def __init__(self):
+        self._internal_list = []
+    def set_list(self, data):
+        self._internal_list = list(data)
+    def reverse_and_return(self):
+        self._internal_list.reverse()
+        return self._internal_list
+if __name__ == '__main__':
+    reverser = ListReverser()
+    sample_data = [1, 2, 3, 4, 5]
+    reverser.set_list(sample_data)
+    reversed_list = reverser.reverse_and_return()
+    print(reversed_list)",True,2,17643,284_8_2.py
+284,9,Reverse the order of items looped,Write a concise and efficient Python expression or one-liner to reverse the order of elements in a list.,"if __name__ == '__main__':
+    my_list = [1, 2, 3, 4, 5]
+    reversed_list = my_list[::-1]
+    print(reversed_list)",True,0,17644,284_9.py
+284,11,Reverse the order of items looped,Implement an optimized function named `reverse_list` that takes a list as input and returns a new list with the elements in reverse order. Use Pythonic methods for maximum efficiency.,"def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)",True,0,17645,284_11.py
+284,11,Reverse the order of items looped,Implement an optimized function named `reverse_list` that takes a list as input and returns a new list with the elements in reverse order. Use Pythonic methods for maximum efficiency.,"def reverse_list(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reversed_list = reverse_list(sample_list)
+    print(reversed_list)
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    reversed_list_2 = reverse_list(sample_list_2)
+    print(reversed_list_2)",True,1,17646,284_11_1.py
+284,10,Reverse the order of items looped,Write a complete and robust Python script that demonstrates how to reverse the order of elements in a list using slicing. The solution must be efficient and include clear comments explaining the process.,"import sys
+def reverse_list_slicing(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    print(""Original list:"", sample_list)
+    reversed_list = reverse_list_slicing(sample_list)
+    print(""Reversed list (using slicing):"", reversed_list)
+    sample_list_2 = ['a', 'b', 'c', 'd']
+    print(""\nOriginal list:"", sample_list_2)
+    reversed_list_2 = reverse_list_slicing(sample_list_2)
+    print(""Reversed list (using slicing):"", reversed_list_2)
+    sample_list_3 = [10, 20, 30, 40]
+    print(""\nOriginal list:"", sample_list_3)
+    reversed_list_3 = reverse_list_slicing(sample_list_3)
+    print(""Reversed list (using slicing):"", reversed_list_3)",True,0,17647,284_10.py
+284,10,Reverse the order of items looped,Write a complete and robust Python script that demonstrates how to reverse the order of elements in a list using slicing. The solution must be efficient and include clear comments explaining the process.,"import sys
+def reverse_list_slicing(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8]
+    print(""Original list:"", sample_list)
+    reversed_list = reverse_list_slicing(sample_list)
+    print(""Reversed list (using slicing):"", reversed_list)",True,1,17648,284_10_1.py
+284,10,Reverse the order of items looped,Write a complete and robust Python script that demonstrates how to reverse the order of elements in a list using slicing. The solution must be efficient and include clear comments explaining the process.,"import sys
+def reverse_list_slicing(input_list):
+    return input_list[::-1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8]
+    print(""Original List:"", sample_list)
+    reversed_list = reverse_list_slicing(sample_list)
+    print(""Reversed List (using slicing):"", reversed_list)",True,2,17649,284_10_2.py
+284,12,Reverse the order of items looped,Develop a function that reverses the order of items in an iterable (like a tuple or string) without modifying the original object. Provide the most idiomatic and best-practice Python implementation.,"def reverse_iterable(iterable):
+    return reversed(list(iterable))
+if __name__ == '__main__':
+    my_tuple = (1, 2, 3, 4, 5)
+    my_string = ""hello""
+    reversed_tuple = reverse_iterable(my_tuple)
+    reversed_string = reverse_iterable(my_string)
+    print(f""Original tuple: {my_tuple}"")
+    print(f""Reversed tuple: {reversed_tuple}"")
+    print(f""Original string: {my_string}"")
+    print(f""Reversed string: {reversed_string}"")",True,0,17650,284_12.py
+284,12,Reverse the order of items looped,Develop a function that reverses the order of items in an iterable (like a tuple or string) without modifying the original object. Provide the most idiomatic and best-practice Python implementation.,"def reverse_iterable(iterable):
+    return reversed(iterable)
+if __name__ == '__main__':
+    my_tuple = (1, 2, 3, 4, 5)
+    my_string = ""hello""
+    my_list = [10, 20, 30]
+    reversed_tuple = list(reverse_iterable(my_tuple))
+    reversed_string = list(reverse_iterable(my_string))
+    reversed_list = list(reverse_iterable(my_list))
+    print(f""Original tuple: {my_tuple}"")
+    print(f""Reversed tuple: {reversed_tuple}"")
+    print(f""Original string: {my_string}"")
+    print(f""Reversed string: {reversed_string}"")
+    print(f""Original list: {my_list}"")
+    print(f""Reversed list: {reversed_list}"")",True,1,17651,284_12_1.py
+284,12,Reverse the order of items looped,Develop a function that reverses the order of items in an iterable (like a tuple or string) without modifying the original object. Provide the most idiomatic and best-practice Python implementation.,"def reverse_iterable(iterable):
+    return reversed(list(iterable))
+if __name__ == '__main__':
+    my_tuple = (1, 2, 3, 4, 5)
+    my_string = ""hello""
+    my_set = {10, 20, 30}
+    reversed_tuple = reverse_iterable(my_tuple)
+    reversed_string = reverse_iterable(my_string)
+    reversed_set = reverse_iterable(my_set)
+    print(f""Original tuple: {my_tuple}"")
+    print(f""Reversed tuple: {reversed_tuple}"")
+    print(f""Original string: {my_string}"")
+    print(f""Reversed string: {reversed_string}"")
+    print(f""Original set: {my_set}"")
+    print(f""Reversed set (as list): {reversed_set}"")",True,2,17652,284_12_2.py
+284,13,Reverse the order of items looped,Write a class method within a class designed to reverse the internal list of data upon calling a specific method. Ensure the operation is performed in place efficiently.,"class DataReverser:
+    def __init__(self, data):
+        self._data = list(data)
+    def reverse_data(self):
+        self._data.reverse()
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    reverser = DataReverser(sample_list)
+    print(""Original list before reversal:"", sample_list)
+    reverser.reverse_data()
+    print(""List after reversal:"", sample_list)",True,0,17653,284_13.py
+284,13,Reverse the order of items looped,Write a class method within a class designed to reverse the internal list of data upon calling a specific method. Ensure the operation is performed in place efficiently.,"class DataReverser:
+    def __init__(self, data):
+        self._data = list(data)
+    def reverse_in_place(self):
+        self._data.reverse()
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    reverser = DataReverser(sample_data)
+    print(""Original data:"", sample_data)
+    reverser.reverse_in_place()
+    print(""Reversed data:"", reverser._data)",True,1,17654,284_13_1.py
+284,13,Reverse the order of items looped,Write a class method within a class designed to reverse the internal list of data upon calling a specific method. Ensure the operation is performed in place efficiently.,"class DataReverser:
+    def __init__(self):
+        self.data = []
+    def reverse_data(self):
+        self.data.reverse()
+if __name__ == '__main__':
+    reverser = DataReverser()
+    reverser.data = [1, 2, 3, 4, 5]
+    print(""Original data:"", reverser.data)
+    reverser.reverse_data()
+    print(""Reversed data:"", reverser.data)",True,2,17655,284_13_2.py
+284,13,Reverse the order of items looped,Write a class method within a class designed to reverse the internal list of data upon calling a specific method. Ensure the operation is performed in place efficiently.,"class DataReverser:
+    def __init__(self, data):
+        self._data = list(data)
+    def reverse_internal_list(self):
+        self._data.reverse()
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    reverser = DataReverser(sample_data)
+    print(""Original data:"", sample_data)
+    reverser.reverse_internal_list()
+    print(""Reversed data:"", reverser._data)",True,3,17656,284_13_3.py
+285,0,Compare adjacent elements within a set,"Write a complete, well-documented Python function named `compare_adjacent` that takes a list of numbers and returns a list of tuples, where each tuple contains the comparison result (>, <, or ==) between adjacent elements.","def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a > b:
+            results.append("">"")
+        elif a < b:
+            results.append(""<"")
+        else:
+            results.append(""=="")
+    return results
+if __name__ == '__main__':
+    sample_data = [1, 5, 2, 8, 8, 3]
+    comparison_results = compare_adjacent(sample_data)
+    print(comparison_results)",True,0,17657,285_0.py
+285,0,Compare adjacent elements within a set,"Write a complete, well-documented Python function named `compare_adjacent` that takes a list of numbers and returns a list of tuples, where each tuple contains the comparison result (>, <, or ==) between adjacent elements.","def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a > b:
+            results.append("">"")
+        elif a < b:
+            results.append(""<"")
+        else:
+            results.append(""=="")
+    return results
+if __name__ == '__main__':
+    sample_list = [10, 5, 20, 20, 3, 1]
+    comparison_results = compare_adjacent(sample_list)
+    print(comparison_results)",True,1,17658,285_0_1.py
+285,0,Compare adjacent elements within a set,"Write a complete, well-documented Python function named `compare_adjacent` that takes a list of numbers and returns a list of tuples, where each tuple contains the comparison result (>, <, or ==) between adjacent elements.","def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a > b:
+            results.append("">"")
+        elif a < b:
+            results.append(""<"")
+        else:
+            results.append(""=="")
+    return results
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 8, 3]
+    comparison_results = compare_adjacent(sample_list)
+    print(comparison_results)",True,2,17659,285_0_2.py
+285,0,Compare adjacent elements within a set,"Write a complete, well-documented Python function named `compare_adjacent` that takes a list of numbers and returns a list of tuples, where each tuple contains the comparison result (>, <, or ==) between adjacent elements.","def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a > b:
+            results.append("">"")
+        elif a < b:
+            results.append(""<"")
+        else:
+            results.append(""=="")
+    return results
+if __name__ == '__main__':
+    sample_data = [1, 5, 3, 3, 8, 2]
+    comparison_results = compare_adjacent(sample_data)
+    print(comparison_results)",True,3,17660,285_0_3.py
+285,0,Compare adjacent elements within a set,"Write a complete, well-documented Python function named `compare_adjacent` that takes a list of numbers and returns a list of tuples, where each tuple contains the comparison result (>, <, or ==) between adjacent elements.","def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a > b:
+            results.append("">"")
+        elif a < b:
+            results.append(""<"")
+        else:
+            results.append(""=="")
+    return results
+if __name__ == '__main__':
+    sample_list = [1, 5, 3, 3, 8, 0]
+    comparison_results = compare_adjacent(sample_list)
+    print(comparison_results)",True,4,17661,285_0_4.py
+285,1,Compare adjacent elements within a set,Implement an optimized function to iterate through a list of integers and identify all pairs of adjacent elements that are strictly greater than each other. The function should return a list of these pairs.,"def find_greater_adjacent_pairs(data):
+    pairs = []
+    for i in range(len(data) - 1):
+        if data[i+1] > data[i]:
+            pairs.append((data[i], data[i+1]))
+    return pairs
+if __name__ == '__main__':
+    sample_list = [1, 3, 2, 5, 4, 6, 7]
+    result = find_greater_adjacent_pairs(sample_list)
+    print(result)",True,0,17662,285_1.py
+285,1,Compare adjacent elements within a set,Implement an optimized function to iterate through a list of integers and identify all pairs of adjacent elements that are strictly greater than each other. The function should return a list of these pairs.,"def find_greater_adjacent_pairs(data):
+    pairs = []
+    for i in range(len(data) - 1):
+        if data[i] > data[i+1]:
+            pairs.append((data[i], data[i+1]))
+    return pairs
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3, 9, 4]
+    result = find_greater_adjacent_pairs(sample_list)
+    print(result)",True,1,17663,285_1_1.py
+285,1,Compare adjacent elements within a set,Implement an optimized function to iterate through a list of integers and identify all pairs of adjacent elements that are strictly greater than each other. The function should return a list of these pairs.,"def find_adjacent_greater_pairs(data):
+    pairs = []
+    for i in range(len(data) - 1):
+        if data[i+1] > data[i]:
+            pairs.append((data[i], data[i+1]))
+    return pairs
+if __name__ == '__main__':
+    sample_list = [1, 3, 2, 5, 4, 6, 3]
+    result = find_adjacent_greater_pairs(sample_list)
+    print(result)",True,2,17664,285_1_2.py
+285,1,Compare adjacent elements within a set,Implement an optimized function to iterate through a list of integers and identify all pairs of adjacent elements that are strictly greater than each other. The function should return a list of these pairs.,"def find_greater_adjacent_pairs(data):
+    pairs = []
+    for i in range(len(data) - 1):
+        if data[i+1] > data[i]:
+            pairs.append((data[i], data[i+1]))
+    return pairs
+if __name__ == '__main__':
+    sample_list = [1, 3, 2, 5, 4, 6, 3]
+    result = find_greater_adjacent_pairs(sample_list)
+    print(result)",True,3,17665,285_1_3.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data, tolerance):
+    non_compliant_indices = []
+    n = len(data)
+    for i in range(n - 1):
+        diff = abs(data[i] - data[i+1])
+        if diff > tolerance:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    sample_data = [1.000, 1.0005, 2.000, 3.001, 5.0]
+    tolerance = 0.001
+    result = check_adjacent_pairs(sample_data, tolerance)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,0,17666,285_2.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data, tolerance):
+    non_compliant_indices = []
+    n = len(data)
+    for i in range(n - 1):
+        if abs(data[i] - data[i+1]) > tolerance:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    sample_data = [1.0, 1.0005, 2.0, 2.001, 3.0, 3.0001]
+    tolerance = 0.001
+    result = check_adjacent_pairs(sample_data, tolerance)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,1,17667,285_2_1.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data, tolerance):
+    non_compliant_indices = []
+    n = len(data)
+    for i in range(n - 1):
+        if abs(data[i] - data[i+1]) > tolerance:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    unsorted_list = [1.0, 1.0005, 2.0, 2.001, 5.0, 5.0001]
+    tolerance = 0.001
+    result = check_adjacent_pairs(unsorted_list, tolerance)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,2,17668,285_2_2.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data, tolerance):
+    non_compliant_indices = []
+    n = len(data)
+    for i in range(n - 1):
+        if abs(data[i] - data[i+1]) > tolerance:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    sample_data = [1.0, 1.0005, 2.0, 2.001, 5.0, 5.002]
+    tolerance = 0.001
+    result = check_adjacent_pairs(sample_data, tolerance)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,3,17669,285_2_3.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data, tolerance):
+    non_compliant_indices = []
+    n = len(data)
+    for i in range(n - 1):
+        if abs(data[i] - data[i+1]) > tolerance:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    sample_data = [1.0, 1.0005, 2.0, 3.001, 5.0]
+    tolerance = 0.001
+    result = check_adjacent_pairs(sample_data, tolerance)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,4,17670,285_2_4.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data):
+    non_compliant_indices = []
+    for i in range(len(data) - 1):
+        diff = abs(data[i] - data[i+1])
+        if diff > 0.001:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    sample_data = [1.0, 1.0005, 2.0, 2.001, 3.0]
+    result = check_adjacent_pairs(sample_data)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,5,17671,285_2_5.py
+285,2,Compare adjacent elements within a set,Develop a robust Python script that takes an unsorted list of floating-point numbers and checks every adjacent pair to determine if they are within a tolerance of 0.001. Print the indices of any non-compliant pairs.,"import math
+def check_adjacent_pairs(data, tolerance):
+    non_compliant_indices = []
+    n = len(data)
+    for i in range(n - 1):
+        if abs(data[i] - data[i+1]) > tolerance:
+            non_compliant_indices.append((i, i + 1))
+    return non_compliant_indices
+if __name__ == '__main__':
+    unsorted_list = [1.0, 1.0005, 2.0, 2.001, 3.0, 3.002]
+    tolerance = 0.001
+    result = check_adjacent_pairs(unsorted_list, tolerance)
+    for index1, index2 in result:
+        print(f""Non-compliant pair found at indices: ({index1}, {index2})"")",True,6,17672,285_2_6.py
