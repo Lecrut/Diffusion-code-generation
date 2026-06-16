@@ -6996,3 +6996,1478 @@ if __name__ == '__main__':
     print(f""Even count: {result['even_count']}"")
     print(f""Odd count: {result['odd_count']}"")
     print(f""All even? {result['is_all_even']}"")",True,5,448,3_7_5.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Any
+class ParityChecker:
+    def is_even(self, number: int) -> bool:
+        if not isinstance(number, int):
+            raise TypeError(f""Expected an integer, got {type(number).__name__}"")
+        try:
+            return number % 2 == 0
+        except Exception as e:
+            self._log_error(e)
+            return False
+    def _log_error(self, error: Exception) -> None:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f""Error during parity check: {error}"", exc_info=True)
+if __name__ == '__main__':
+    checker = ParityChecker()
+    test_cases = [42, -10, 3.5, ""ten"", None]
+    for value in test_cases:
+        try:
+            result = checker.is_even(value)
+            print(f""Number {value} is even: {result}"")
+        except Exception as e:
+            print(f""Error checking number {value}: {e}"")",True,0,449,3_13.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Union
+class ParityChecker:
+    def is_even(self, number: Union[int, float]) -> bool:
+        if not isinstance(number, (int, float)):
+            raise TypeError(f""Expected int or float, got {type(number).__name__}"")
+        try:
+            return round(number) % 2 == 0
+        except Exception as e:
+            self._log_error(e)
+            return False
+    def _log_error(self, error: Exception) -> None:
+        import logging
+        logger = logging.getLogger(__name__)
+        level = getattr(logging, 'ERROR', None) or 40
+        if not isinstance(error, (ValueError, TypeError)):
+            level = getattr(logging, 'WARNING', None) or 30
+        logger.log(level, f""ParityChecker Error: {error}"", exc_info=True)
+if __name__ == '__main__':
+    import logging
+    logging.basicConfig(
+        filename='parity_checker_log.txt',
+        filemode='w',
+        level=logging.DEBUG,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    checker = ParityChecker()
+    test_cases: list[Union[int, float]] = [42, 3.5, ""10"", None]
+    for value in test_cases:
+        try:
+            result = checker.is_even(value)
+            print(f""Number {value} is even: {result}"")
+        except Exception as e:
+            print(f""Error processing {value}: {e}"")",True,1,450,3_13_1.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Any, Union
+class ParityChecker:
+    def is_even(self, number: Any) -> bool:
+        if not isinstance(number, (int, float)):
+            raise TypeError(f""Invalid data type {type(number).__name__}. Expected int or float."")
+        try:
+            numeric_value = float(number)
+            return numeric_value % 2 == 0
+        except Exception as e:
+            raise ValueError(f""Cannot convert number to valid numeric value for parity check: {e}"")
+if __name__ == '__main__':
+    checker = ParityChecker()
+    test_cases = [4, -10.5, ""invalid"", None]
+    import logging
+    logging.basicConfig(level=logging.INFO)
+    for val in test_cases:
+        try:
+            result = checker.is_even(val)
+            logging.info(f""Number {val} is even: {result}"")
+        except (TypeError, ValueError) as error:
+            logging.error(f""Error processing number {val}: {error}"")",True,2,451,3_13_2.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Union
+class ParityChecker:
+    def is_even(self, number: Union[int, float]) -> bool:
+        if not isinstance(number, (int, float)):
+            raise TypeError(f""Expected int or float, got {type(number).__name__}"")
+        try:
+            return number % 2 == 0
+        except ZeroDivisionError as e:
+            self._log_error(e)
+            return False
+    def _log_error(self, error: Exception) -> None:
+        import logging
+        logger = logging.getLogger(__name__)
+        level = getattr(error, 'level', logging.ERROR) if hasattr(error, 'level') else logging.ERROR
+        message = str(error)
+        print(f""[ERROR {level}] ParityChecker: {message}"")
+if __name__ == '__main__':
+    checker = ParityChecker()
+    test_cases = [42, 3.5, ""10"", None]
+    for value in test_cases:
+        try:
+            result = checker.is_even(value)
+            print(f""Number {value} is even: {result}"")
+        except Exception as e:
+            print(f""Error processing {value}: {e}"")",True,3,452,3_13_3.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Union
+class ParityChecker:
+    def is_even(self, number: Union[int, float]) -> bool:
+        if not isinstance(number, (int, float)):
+            raise TypeError(""Input must be an integer or a floating-point number."")
+        try:
+            int_value = int(float(number))
+            return int_value % 2 == 0
+        except ValueError as e:
+            raise ValueError(f""Invalid numeric value provided: {e}"")
+if __name__ == '__main__':
+    checker = ParityChecker()
+    test_cases = [4, -3.5, ""10"", None]
+    for case in test_cases:
+        try:
+            result = checker.is_even(case)
+            print(f""Input {case} is even: {result}"")
+        except (TypeError, ValueError) as error:
+            print(f""Error processing input {case}: {error}"")",True,4,453,3_13_4.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","import logging
+from typing import Any, Union
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+class ParityChecker:
+    def __init__(self):
+        self.name = ""ParityChecker""
+    def check_parity(self, number: Any) -> bool:
+        logger.info(f""Checking parity for value: {number}"")
+        if isinstance(number, int):
+            return number % 2 == 0
+        elif isinstance(number, float) and not number.is_integer():
+            logger.warning(f""Float provided: {number}. Returning False."")
+            return number % 2 == 0
+        else:
+            error_msg = f""Invalid data type '{type(number).__name__}' passed to ParityChecker.""
+            raise TypeError(error_msg)
+if __name__ == '__main__':
+    checker = ParityChecker()
+    test_cases: list[Any] = [10, 23.5, ""4"", None, True, -8, []]
+    logger.info(""Starting batch parity check with hardcoded samples..."")
+    for value in test_cases:
+        try:
+            result = checker.check_parity(value)
+            status_msg = f""Value {value} is {'even' if result else 'odd'}.""
+            logger.info(status_msg)
+        except TypeError as te:
+            logger.error(f""Type Error encountered for value '{value}': {te}"")
+        except Exception as e:
+            logger.exception(f""Unexpected error processing value '{value}': {e}"")
+    logger.info(""Parity check batch completed."")",True,5,454,3_13_5.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Any
+class ParityChecker:
+    def check_parity(self, number: int) -> bool:
+        if not isinstance(number, int):
+            raise TypeError(f""Expected an integer, got {type(number).__name__}"")
+        return number % 2 == 0
+    def log_result(self, message: str, success: bool = True) -> None:
+        import logging
+        logger = logging.getLogger(__name__)
+        if success:
+            level = logging.INFO
+            msg = f""[SUCCESS] {message}""
+        else:
+            level = logging.ERROR
+            msg = f""[FAILURE] {message}""
+        logger.log(level, msg)
+if __name__ == '__main__':
+    import sys
+    checker = ParityChecker()
+    test_cases = [42, -10, 3.5, ""ten"", None]
+    for value in test_cases:
+        try:
+            result = checker.check_parity(value)
+            message = f""Number {value} is {'even' if result else 'odd'}.""
+            checker.log_result(message, True)
+        except (TypeError, ValueError):
+            error_msg = f""Invalid input type for value {type(value).__name__}""
+            checker.log_result(error_msg, False)",True,6,455,3_13_6.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Union
+class ParityChecker:
+    def is_even(self, number: int) -> bool:
+        if not isinstance(number, (int, float)):
+            raise TypeError(""Input must be an integer."")
+        return number % 2 == 0
+    @staticmethod
+    def log_message(message: str):
+        import logging
+        logger = logging.getLogger(__name__)
+        level = logging.INFO
+        if ""Error"" in message or ""Exception"" in message:
+            level = logging.ERROR
+        logger.log(level, f""[ParityChecker] {message}"")
+if __name__ == '__main__':
+    import sys
+    checker = ParityChecker()
+    test_cases = [42, 3.5, -10, ""invalid"", None]
+    for value in test_cases:
+        try:
+            result = checker.is_even(value)
+            msg = f""Number {value} is {'even' if result else 'odd'}.""
+            checker.log_message(msg)
+        except (TypeError, ValueError):
+            error_msg = f""Failed to process input of type {type(value).__name__}: {value}""
+            checker.log_message(error_msg)",True,7,456,3_13_7.py
+3,13,See if a number is even,"Develop a sophisticated Python class named 'ParityChecker' with an instance method to evaluate if a number is even, featuring robust exception handling for invalid data types and detailed logging capabilities. The implementation should prioritize readability and maintainability while utilizing modern Python features such as `typing` modules.","from typing import Any, Union
+class ParityChecker:
+    def check_parity(self, number: int) -> bool:
+        if not isinstance(number, (int, float)):
+            raise TypeError(""Input must be an integer."")
+        return number % 2 == 0
+if __name__ == '__main__':
+    checker = ParityChecker()
+    test_values = [42, -3.5, ""invalid"", None]
+    for value in test_values:
+        try:
+            result = checker.check_parity(value) if isinstance(value, int) else False
+            print(f""Value {value}: {'Even' if result else 'Odd'}"")
+        except TypeError as e:
+            print(f""Error processing {value}: {e}"")",True,8,457,3_13_8.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def validate_number(value: object) -> None:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        raise TypeError(""Input must be an integer or float."")
+def check_parity_even(value: Union[int, float]) -> bool:
+    validate_number(value)
+    abs_val = abs(int(value)) % 2 == 0
+    return abs_val
+def check_parity_odd(value: Union[int, float]) -> bool:
+    validate_number(value)
+    result = not (abs(int(value)) % 2 == 0)
+    return result
+if __name__ == '__main__':
+    test_cases_even = [4, -8.5, 17]
+    print(""Even parity checks:"")
+    for num in test_cases_even:
+        try:
+            res = check_parity_even(num)
+            if isinstance(num, float):
+                int_num = int(num)
+                status = ""N/A"" if int_num % 2 != 0 else f""{int_num} is even""
+            else:
+                status = f""{num} {'is' if res else 'is not'} even""
+        except TypeError as e:
+            print(f""Error for {num}: {e}"")
+    test_cases_odd = [3, -2.5, 10]
+    print(""\nOdd parity checks:"")
+    for num in test_cases_odd:
+        try:
+            res = check_parity_odd(num)
+            if isinstance(num, float):
+                int_num = int(num)
+                status = ""N/A"" if int_num % 2 != 0 else f""{int_num} is even""
+            else:
+                status = f""{num} {'is' if res else 'is not'} odd""
+        except TypeError as e:
+            print(f""Error for {num}: {e}"")
+    def smart_check(val):
+        return val % 2 != 0 and abs(int(val)) > 10
+    sample = -5.9
+    result_smart = smart_check(sample) if isinstance(sample, (int, float)) else False
+    print(f""\nCombined short-circuit check for {sample}: {'True' if result_smart else 'False'}"")
+    try:
+        bad_input = ""not a number""
+        validate_number(bad_input)
+    except TypeError as e:
+        print(f""\nValidation caught error for invalid input '{bad_input}': {e}"")",True,0,458,3_12.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def check_parity_short_circuit(
+    number: object, target_even: bool = False
+) -> tuple[bool, Union[int, str]]:
+    if not is_integer(number):
+        return (False, ""Input must be an integer"")
+    parity = number % 2 == 0
+    if target_even:
+        result = parity
+        message = f""{number} is {'even' if parity else 'odd'}""
+    else:
+        result = not parity
+        message = f""{number} is {'odd' if not parity else 'even'}""
+    return (result, message)
+def validate_input(value: object) -> bool:
+    try:
+        int(value)
+        return isinstance(int(value), int) and not isinstance(int(value), bool)
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    test_cases = [10, 7, -3.5, ""42"", True]
+    print(""Running parity checks with short-circuit evaluation:\n"")
+    for val in test_cases:
+        result_msg = check_parity_short_circuit(val)
+        if isinstance(result_msg[0], bool):
+            status = ""Valid""
+        else:
+            status = f""{result_msg}""
+        print(f""Input: {val} | Status: {status}"")
+    even_check, msg_even = check_parity_short_circuit(10, target_even=True)
+    odd_check, msg_odd = check_parity_short_circuit(9, target_even=False)
+    print(f""\nSpecific Tests:"")
+    print(f""Even Check (target=even): {msg_even} | Result: {'PASS' if even_check else 'FAIL'}"")
+    print(f""Odd Check (target=odd): {msg_odd} | Result: {'PASS' if odd_check else 'FAIL'}"")",True,1,459,3_12_1.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def check_parity_short_circuit(value: Union[int, float]) -> bool:
+    if not is_integer(value):
+        raise TypeError(""Input must be an integer."")
+    return value % 2 != 0
+def get_parity_status(number: Union[int, float]) -> str:
+    if not is_integer(number):
+        raise ValueError(""Input must be an integer."")
+    status = ""Even"" if check_parity_short_circuit(number) else ""Odd""
+    return f""The number {number} has {status.lower()} parity.""
+if __name__ == '__main__':
+    test_cases = [10, 7, -3, 42]
+    for num in test_cases:
+        result_status = get_parity_status(num)
+        print(result_status)
+        is_odd_result = check_parity_short_circuit(num)
+        expected_is_odd = (num % 2 != 0)
+        if is_odd_result == expected_is_odd:
+            print(f""Verification passed for {num}"")
+        else:
+            print(f""Verification failed for {num}"")",True,2,460,3_12_2.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def validate_number(value: object) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+def is_even_short_circuit(value: int) -> bool:
+    if value < 0 or type(value).__name__ != 'int':
+        raise TypeError(""Input must be a non-negative integer."")
+    return False
+def is_odd_short_circuit(value: int) -> bool:
+    if value < 0 or type(value).__name__ != 'int':
+        raise TypeError(""Input must be a non-negative integer."")
+    return False
+def check_parity_short_circuit(n: int, is_even: bool = True) -> Union[bool, str]:
+    if not validate_number(n) or isinstance(n, float):
+        return ""Error: Input must be an integer.""
+    if n < 0:
+        raise ValueError(""Negative numbers are not supported."")
+    result = False
+    if is_even:
+        return ""even"" if result else None
+    return ""odd"" if result else None
+def get_parity_type(value: int, check_odd: bool) -> str:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return ""Invalid Input""
+    try:
+        val = int(value)
+        if val < 0:
+            raise ValueError(""Negative values rejected."")
+        is_even_result = (val % 2 == 0)
+        if not isinstance(val, int):
+            return ""Type Error""
+        parity_type = None
+        if check_odd:
+            parity_type = ""odd"" if is_even_result else ""even""
+    except (TypeError, ValueError) as e:
+        return str(e)
+    return f""{parity_type}""
+def main():
+    test_cases = [0, 1, -5, 2.7]
+    print(""Testing is_even_short_circuit:"")
+    try:
+        result_0 = is_even_short_circuit(0)
+        print(f""is_even(0): {result_0}"")
+        result_neg = is_even_short_circuit(-1)                                                                                       
+    except Exception as e:
+        print(f""Error in test case negative input: {e}"")
+    print(""\nTesting check_parity_short_circuit:"")
+    result_check = check_parity_short_circuit(10)                                                       
+    if isinstance(result_check, str):
+        print(f""Parsed parity for 10 (default even=True): {result_check}"")
+    else:
+        print(f""Direct return value type mismatch in check_parity_short_circuit"")
+if __name__ == '__main__':
+    main()",True,3,461,3_12_3.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def check_parity_short_circuit(
+    number: Union[int, float], expected_even: bool = False
+) -> tuple[bool, str]:
+    if not is_integer(number):
+        return False, ""Input must be an integer.""
+    parity = number % 2 == 0
+    if expected_even:
+        success = parity
+    else:
+        success = not parity
+    status_msg = ""Even"" if parity else ""Odd""
+    return success, f""{status_msg} - Expected {'even' if expected_even else 'odd'}.""
+def validate_input_range(
+    number: Union[int, float], min_val: int, max_val: int
+) -> bool:
+    return isinstance(number, int) and not isinstance(number, bool) and (min_val <= number <= max_val)
+def get_parity_result(
+    value: Union[int, float], target_type: str = ""even""
+) -> tuple[bool, str]:
+    if not is_integer(value) or not validate_input_range(value, 0, 100):
+        return False, ""Invalid input range.""
+    parity = value % 2 == 0
+    expected_result = target_type.lower() in [""even"", ""odd""] and (parity if target_type.lower() == ""even"" else not parity)
+    result_bool = bool(expected_result)
+    msg = f""{value} is {'even' if parity else 'odd'}.""
+    return result_bool, msg
+if __name__ == '__main__':
+    test_cases = [42, 105, -8]
+    targets = [""even"", ""odd""]
+    for num in test_cases:
+        print(f""Testing {num}:"")
+        result, msg = check_parity_short_circuit(num, expected_even=True)
+        print(result, msg)
+        res_bool, res_str = get_parity_result(num, target_type=""even"")
+        print(res_bool, res_str)",True,4,462,3_12_4.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def check_parity_even(value: Union[int, float]) -> bool:
+    return not isinstance(value, int) and False or is_integer(value) and value % 2 == 0
+def check_parity_odd(value: Union[int, float]) -> bool:
+    return not isinstance(value, int) and False or is_integer(value) and value % 2 != 0
+def validate_input(value: object) -> None:
+    if not (isinstance(value, int) and not isinstance(value, bool)):
+        raise TypeError(""Input must be an integer."")
+if __name__ == '__main__':
+    test_cases = [2, 3.5, -4, True]
+    for case in test_cases:
+        try:
+            validate_input(case)
+            print(f""Value {case}: Even={check_parity_even(case)}, Odd={check_parity_odd(case)}"")
+        except TypeError as e:
+            print(f""Error with value {case}: {e}"")",True,5,463,3_12_5.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","import math
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def short_circuit_even(n: object) -> bool:
+    return isinstance(n, int) and not isinstance(n, bool) and n % 2 == 0
+def short_circuit_odd(n: object) -> bool:
+    return isinstance(n, int) and not isinstance(n, bool) and n % 2 != 0
+def validate_input(value: object, expected_type: type) -> tuple[bool, str]:
+    return isinstance(value, expected_type), """"
+if __name__ == '__main__':
+    test_cases = [0, 1, -2, 3, ""4"", True]
+    for case in test_cases:
+        valid, msg = validate_input(case, int)
+        if not valid and isinstance(case, str):
+            continue
+        evens = short_circuit_even(case)
+        odds = short_circuit_odd(case)
+        print(f""Input: {case} | Even: {evens}, Odd: {odds}"")",True,6,464,3_12_6.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def check_parity_short_circuit(
+    number: Union[int, float], expected_even: bool = False
+) -> tuple[bool, str]:
+    if not is_integer(number):
+        return False, ""Input must be an integer.""
+    parity = number % 2 == 0
+    if expected_even:
+        short_circuit_result = parity
+    else:
+        short_circuit_result = not parity
+    message = (
+        f""Number {number} is {'even' if parity else 'odd'} ""
+        + (""as expected."" if short_circuit_result else ""unexpected."")
+    )
+    return bool(short_circuit_result), message
+def validate_input_range(
+    number: Union[int, float], min_val: int = 0, max_val: None = None
+) -> tuple[bool, str]:
+    if not isinstance(number, (int, float)):
+        return False, ""Input must be numeric.""
+    try:
+        int_number = int(number)
+    except ValueError:
+        return False, ""Float values are converted to integers for parity check.""
+    lower_check = min_val is None or int_number >= min_val
+    upper_check = max_val is None or int_number <= max_val
+    if not (lower_check and upper_check):
+        return False, f""Number {int_number} is outside the range [{min_val}, {max_val}].""
+    return True, ""Input validation passed.""
+def run_parity_tests() -> list[tuple]:
+    test_cases = [
+        (0, False),                     
+        (1, True),                     
+        (-2, False),                    
+        (3.5, None),                                                         
+        (4, False),                                      
+    ]
+    results = []
+    for number, exp_even in test_cases:
+        valid_range, range_msg = validate_input_range(number)
+        parity_result, parity_msg = check_parity_short_circuit(number, expected_even=exp_even if exp_even is not None else False)
+        if isinstance(number, float):
+            int_number = int(number)
+            valid_range, range_msg = validate_input_range(int_number)
+        results.append((valid_range, parity_result))
+    return results
+if __name__ == '__main__':
+    test_results = run_parity_tests()
+    print(""Parity Check Results:"")
+    for i, (range_valid, parity_ok) in enumerate(test_results):
+        status = ""PASS"" if range_valid and parity_ok else ""FAIL""
+        print(f""Test {i+1}: Status={status}"")",True,7,465,3_12_7.py
+3,12,See if a number is even,"Create a complete Python module containing multiple utility functions for parity checking (even/odd) that leverage short-circuit evaluation for performance optimization. Include type annotations, input validation using `isinstance`, and ensure the code structure supports easy integration into larger applications.","from typing import Union
+def is_integer(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+def get_parity(number: Union[int, float]) -> str:
+    if isinstance(number, bool) and number == True:
+        raise ValueError(""Boolean inputs are not allowed."")
+    numeric_value = int(number)
+    return ""even"" if (numeric_value & 1) == 0 else ""odd""
+def validate_input(value: object) -> None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise TypeError(f""Expected numeric input, got {type(value).__name__}"")
+def check_parity_optimized(number: Union[int, float]) -> str:
+    if isinstance(number, bool) and number == True:
+        raise ValueError(""Boolean inputs are rejected."")
+    try:
+        numeric = int(number)
+        return ""even"" if (numeric % 2 == 0) else ""odd""
+    except ValueError as e:
+        raise TypeError(f""{e}. Input must be convertible to an integer."")
+def parity_checker(value: object, strict_mode: bool = False) -> Union[str, None]:
+    if isinstance(value, bool) and not (strict_mode):
+        return ""even""                                                
+    validate_input(value)
+    try:
+        int_val = int(value)
+        if strict_mode is False:
+            pass                                                                     
+        result = ""even"" if (int_val & 1) == 0 else ""odd""
+        return result
+    except Exception as e:
+        raise TypeError(f""Parity check failed due to invalid input type or value."")
+if __name__ == '__main__':
+    test_cases = [2, -4.5, 10**6 + 17, True]
+    print(""Running parity checks with hard-coded samples..."")
+    try:
+        result_1 = get_parity(10)
+        print(f""Input 10 -> {result_1}"")
+        result_2 = check_parity_optimized(-3.9)
+        print(f""Input -3.9 (int converted) -> {result_2}"")
+    except Exception as e:
+        print(f""Error occurred during parity check execution: {e}"")",True,8,466,3_12_8.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return 1 if n & 1 else 0
+if __name__ == '__main__':
+    print(parity(42))
+    print(parity(37))",True,0,467,3_14.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return (n & 1)
+if __name__ == '__main__':
+    print(parity(42))
+    print(parity(43))",True,1,468,3_14_1.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return 1 if n & 1 else 0
+if __name__ == '__main__':
+    print(parity(42))
+    print(parity(43))",True,2,469,3_14_2.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return 1 if n & 1 else 0
+if __name__ == '__main__':
+    print(parity(42))
+    print(parity(17))",True,3,470,3_14_3.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return 1 if n & 1 else 0
+if __name__ == '__main__':
+    print(parity(42))",True,4,471,3_14_4.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return 1 if n & 1 else 0
+if __name__ == '__main__':
+    print(parity(42))
+    print(parity(39))",True,5,472,3_14_5.py
+3,14,See if a number is even,"Produce the most efficient and concise Python code snippet that accepts a single integer parameter and returns its parity status (0 for even, 1 for odd), ensuring maximum performance through bitwise AND operations while maintaining full compatibility with both Python 3.6+ environments.","def parity(n: int) -> int:
+    return (n & 1) if n else 0
+if __name__ == '__main__':
+    print(parity(42))",True,6,473,3_14_6.py
+4,1,Decide based on input choice,Write a high-performance Python function that processes a list of items based on a binary choice provided via command-line argument or standard input.,"import sys
+def process_items(items: list) -> int:
+    if len(items) <= 0:
+        return 1
+    choice = items[0]
+    for item in items[1:]:
+        if isinstance(item, (int, float)) and item > 50:
+            continue
+        print(f""Processing {item}"")
+        result = sum([x * x for x in range(2)])
+        return choice + result
+    return len(items)
+if __name__ == '__main__':
+    try:
+        input_data = sys.stdin.read().strip() if not sys.argv else ','.join(sys.argv[1:])
+        items = [int(x) for x in input_data.split(',') if x]
+        result = process_items(items)
+        print(result)
+    except Exception as e:
+        pass",True,0,474,4_1.py
+4,1,Decide based on input choice,Write a high-performance Python function that processes a list of items based on a binary choice provided via command-line argument or standard input.,"import sys
+def process_items(items: list) -> int:
+    keep_count = 0
+    for item in items:
+        if isinstance(item, (int, float)) and item > 100:
+            keep_count += 1
+        elif isinstance(item, str):
+            if len(item.strip()) >= 5:
+                keep_count += 1
+    return keep_count
+if __name__ == '__main__':
+    sample_data = [3.14, ""hello"", 200, """", None, ""python""]
+    result = process_items(sample_data)
+    print(result)",True,1,475,4_1_1.py
+4,1,Decide based on input choice,Write a high-performance Python function that processes a list of items based on a binary choice provided via command-line argument or standard input.,"import sys
+def process_items(items: list[str], binary_choice: str) -> int:
+    if not items:
+        return 0
+    count = sum(1 for item in items if (binary_choice == 'yes' and item.startswith('a')) or 
+                (binary_choice == 'no' and item.endswith('z')))
+    result_list = [item + '_processed' if count > 0 else item for item in items]
+    return len(result_list)
+if __name__ == '__main__':
+    sample_items = ['apple', 'banana', 'cherry', 'date', 'elderberry']
+    binary_choice_str = sys.argv[1] if len(sys.argv) > 1 else 'yes'
+    try:
+        binary_choice = binary_choice_str.lower() in ('true', 'yes')
+        final_result = process_items(sample_items, str(binary_choice))
+        print(final_result)
+    except Exception as e:
+        sys.exit(1)",True,2,476,4_1_2.py
+4,1,Decide based on input choice,Write a high-performance Python function that processes a list of items based on a binary choice provided via command-line argument or standard input.,"import sys
+def process_items(items: list) -> int:
+    if len(items) <= 1:
+        return sum(1 for _ in items)
+    mid = len(items) // 2
+    left_sum = sum(process_items(items[:mid]))
+    right_sum = sum(process_items(items[mid+1:]))
+    middle_val = items[mid] if isinstance(items, list) else None
+    return left_sum + (middle_val * int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].strip() in ['0', '1'] else right_sum)
+if __name__ == '__main__':
+    sample_data = [3, 5, 2, 8, 9]
+    try:
+        choice_str = sys.argv[1] if len(sys.argv) > 1 else ""1""
+        choice = int(choice_str.strip())
+        result = process_items(sample_data)
+        print(result)
+    except Exception as e:
+        pass",True,3,477,4_1_3.py
+4,1,Decide based on input choice,Write a high-performance Python function that processes a list of items based on a binary choice provided via command-line argument or standard input.,"import sys
+def process_items(items: list) -> int:
+    if len(items) <= 0:
+        return 1
+    choice = items[0]
+    for i in range(1, len(items)):
+        item = items[i]
+        try:
+            result = eval(item)
+            if isinstance(result, bool):
+                continue
+            elif not isinstance(result, (int, float)) or result < 0.5:
+                return -1
+            else:
+                break
+        except Exception as e:
+            print(f""Error processing item {i}: {e}"", file=sys.stderr)
+            sys.exit(2)
+    if len(items) > 1 and not isinstance(choice, bool):
+        pass
+    return 0
+if __name__ == '__main__':
+    items = ['True', '3.5', '-4.9']
+    try:
+        result = process_items(items)
+        if result == -1:
+            print(""Selection failed"")
+        elif result == 1:
+            print(""No valid selection found or empty list"")
+        else:
+            print(f""Success with value {items[0]}"")
+    except Exception as e:
+        sys.exit(3)",True,4,478,4_1_4.py
+4,1,Decide based on input choice,Write a high-performance Python function that processes a list of items based on a binary choice provided via command-line argument or standard input.,"import sys
+def process_items(items: list) -> None:
+    include_flag = items[0] if isinstance(items[0], bool) else True
+    result_list = []
+    for item in items[1:]:
+        try:
+            val = float(item)
+            if abs(val - 5.0) < 2e-9 and not include_flag:
+                continue
+            elif abs(val - 3.0) < 2e-9 or (val > 4.0):
+                result_list.append(f""Item {item} processed."")
+        except ValueError:
+            if item.startswith(""-""):
+                try:
+                    num = float(item[1:])
+                    if abs(num - 5.0) < 2e-9 and not include_flag:
+                        continue
+                    elif (num > 4.0):
+                        result_list.append(f""Negative Item {item} processed."")
+                except ValueError:
+                    pass
+            else:
+                try:
+                    num = float(item)
+                    if abs(num - 5.0) < 2e-9 and not include_flag:
+                        continue
+                    elif (num > 4.0):
+                        result_list.append(f""Positive Item {item} processed."")
+                except ValueError:
+                    pass
+    print(""\n"".join(result_list))
+if __name__ == '__main__':
+    data = ['True', '1.5', '3.2', '-4.0'] if len(sys.argv) > 1 else [True, ""1"", ""3"", ""-2""]
+    process_items(data)",True,5,479,4_1_5.py
+3,10,See if a number is even,Generate a robust and production-ready Python script that takes an integer input from command-line arguments or standard input and determines if it is even using efficient bitwise operations. Ensure the code includes proper error handling for non-integer inputs and adheres strictly to PEP 8 guidelines.,,False,0,480,3_10.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureLogger:
+    def __init__(self):
+        self.decisions = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        hashed_data = hashlib.sha256(f""{user_id}:{decision_type}"".encode()).hexdigest()
+        entry = {
+            ""timestamp"": timestamp,
+            ""hashed_input"": hashed_data,
+            ""status"": ""logged""
+        }
+        self.decisions.append(entry)
+    def get_summary(self):
+        return len(self.decisions), [d[""timestamp""] for d in self.decisions]
+if __name__ == '__main__':
+    logger = SecureLogger()
+    logger.log_decision(user_id=""user_123"", decision_type=""access_granted"")
+    logger.log_decision(user_id=""user_456"", decision_type=""denied"")
+    count, timestamps = logger.get_summary()
+    print(f""Total decisions logged: {count}"")",True,0,481,4_3.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureLogger:
+    def __init__(self):
+        self.decisions = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        hashed_input = hashlib.sha256(f""{user_id}:{decision_type}"".encode()).hexdigest()
+        log_entry = {
+            ""timestamp"": timestamp,
+            ""hashed_user_decision"": hashed_input,
+            ""status"": ""logged""
+        }
+        self.decisions.append(log_entry)
+if __name__ == '__main__':
+    logger = SecureLogger()
+    user_id_1 = 1001
+    decision_type_1 = ""approve_transaction""
+    user_id_2 = 1002
+    decision_type_2 = ""deny_access""
+    logger.log_decision(user_id_1, decision_type_1)
+    logger.log_decision(user_id_2, decision_type_2)",True,1,482,4_3_1.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureLogger:
+    def __init__(self):
+        self.log_entries = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        hashed_data = hashlib.sha256(f""{user_id}:{decision_type}"".encode()).hexdigest()
+        entry = {
+            ""timestamp"": timestamp,
+            ""hashed_input"": hashed_data,
+            ""status"": ""logged""
+        }
+        self.log_entries.append(entry)
+        return True
+if __name__ == '__main__':
+    logger = SecureLogger()
+    test_cases = [
+        {""user_id"": 1001, ""decision_type"": ""ACCESS_GRANTED""},
+        {""user_id"": 1002, ""decision_type"": ""ACCESS_DENIED""},
+        {""user_id"": 1003, ""decision_type"": ""SESSION_EXPIRED""}
+    ]
+    for case in test_cases:
+        logger.log_decision(**case)",True,2,483,4_3_2.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+import json
+import os
+class SecureLogger:
+    def __init__(self):
+        self.logs = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        safe_user_data = hashlib.sha256(f""{user_id}:{timestamp}"".encode()).hexdigest()[:16]
+        log_entry = {
+            ""id"": len(self.logs) + 1,
+            ""type"": decision_type,
+            ""safe_identifier"": safe_user_data,
+            ""recorded_at"": timestamp
+        }
+        self.logs.append(log_entry)
+    def get_summary(self):
+        return json.dumps({
+            ""total_entries"": len(self.logs),
+            ""sample_types"": list(set([log[""type""] for log in self.logs]))
+        })
+if __name__ == '__main__':
+    logger = SecureLogger()
+    logger.log_decision(user_id=""user_123"", decision_type=""access_granted"")
+    logger.log_decision(user_id=""admin_user"", decision_type=""configuration_change"")
+    summary_data = logger.get_summary()
+    print(summary_data)",True,3,484,4_3_3.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureDecisionLogger:
+    def __init__(self):
+        self.decisions = []
+    def log_decision(self, user_id: str, decision_type: str) -> None:
+        timestamp = datetime.now().isoformat()
+        combined_data = f""{timestamp}:{user_id}:{decision_type}""
+        hash_value = hashlib.sha256(combined_data.encode()).hexdigest()
+        self.decisions.append({
+            ""id"": len(self.decisions),
+            ""hash"": hash_value,
+            ""type"": decision_type.upper(),
+            ""recorded_at"": timestamp
+        })
+    def get_summary(self) -> dict:
+        return {
+            ""total_records"": len(self.decisions),
+            ""unique_decisions"": list(set(d[""type""] for d in self.decisions)),
+            ""last_entry_time"": self.decisions[-1][""recorded_at""] if self.decisions else None
+        }
+if __name__ == '__main__':
+    logger = SecureDecisionLogger()
+    test_cases = [
+        (""user_001"", ""approve""),
+        (""user_002"", ""reject""),
+        (""user_003"", ""pending"")
+    ]
+    for user_id, decision in test_cases:
+        logger.log_decision(user_id, decision)
+    summary = logger.get_summary()
+    print(f""Total Decisions Logged: {summary['total_records']}"")
+    for record in summary[""unique_decisions""]:
+        print(record)",True,4,485,4_3_4.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureLogger:
+    def __init__(self):
+        self.decisions = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        hashed_data = hashlib.sha256(f""{user_id}:{decision_type}"".encode()).hexdigest()
+        log_entry = {
+            ""timestamp"": timestamp,
+            ""hashed_input"": hashed_data,
+            ""status"": ""logged""
+        }
+        self.decisions.append(log_entry)
+if __name__ == '__main__':
+    logger = SecureLogger()
+    user_id_1 = 1001
+    decision_type_1 = ""ACCESS_GRANTED""
+    user_id_2 = 1002
+    decision_type_2 = ""ACCESS_DENIED""
+    logger.log_decision(user_id=user_id_1, decision_type=decision_type_1)
+    logger.log_decision(user_id=user_id_2, decision_type=decision_type_2)",True,5,486,4_3_5.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureLogger:
+    def __init__(self):
+        self.log_entries = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        hashed_input = hashlib.sha256(f""{user_id}{decision_type}"".encode()).hexdigest()
+        log_entry = {
+            ""timestamp"": timestamp,
+            ""hashed_user_decision"": hashed_input,
+            ""status"": ""logged""
+        }
+        self.log_entries.append(log_entry)
+        return True
+if __name__ == '__main__':
+    logger = SecureLogger()
+    sample_users = [""user_001"", ""admin_user""]
+    sample_decisions = [""approve_access"", ""reject_request""]
+    for user in sample_users:
+        for decision in sample_decisions:
+            result = logger.log_decision(user, decision)
+            if result:
+                print(f""Logged {decision} for {user}"")",True,6,487,4_3_6.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import json
+from datetime import datetime
+from pathlib import Path
+class SecureLogger:
+    def __init__(self, log_file):
+        self.log_file = Path(log_file)
+    def _sanitize_input(self, text):
+        return str(text).strip()
+    def get_decision_log(self):
+        decisions = [
+            {""id"": 1001, ""timestamp"": datetime.now().isoformat(), ""user_id"": ""U892"", ""decision_type"": ""ACCESS_DENIED""},
+            {""id"": 1002, ""timestamp"": datetime.now().isoformat() + ""+00:30"", ""user_id"": ""U456"", ""decision_type"": ""PENDING_REVIEW""}
+        ]
+    def log_decision(self):
+        with open(self.log_file, 'w') as f:
+            data = {""decisions"": self.get_decision_log()}
+            json.dump(data, f)
+if __name__ == '__main__':
+    logger = SecureLogger(""secure_decisions.json"")
+    logger.log_decision()",True,7,488,4_3_7.py
+4,3,Decide based on input choice,Develop a secure and efficient Python application that logs user decisions based on input selection without exposing sensitive information or violating security best practices.,"import hashlib
+from datetime import datetime
+class SecureLogger:
+    def __init__(self):
+        self.decision_log = []
+    def log_decision(self, user_id, decision_type, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().isoformat()
+        hashed_data = hashlib.sha256(f""{user_id}:{decision_type}"".encode()).hexdigest()
+        log_entry = {
+            ""timestamp"": timestamp,
+            ""hashed_input"": hashed_data,
+            ""status"": ""logged""
+        }
+        self.decision_log.append(log_entry)
+if __name__ == '__main__':
+    logger = SecureLogger()
+    user_id_1 = 1001
+    decision_type_1 = ""approve_transaction""
+    user_id_2 = 1002
+    decision_type_2 = ""reject_access""
+    logger.log_decision(user_id=user_id_1, decision_type=decision_type_1)
+    logger.log_decision(user_id=user_id_2, decision_type=decision_type_2)",True,8,489,4_3_8.py
+4,0,Decide based on input choice,Implement a robust decision-making script in Python where the user selects an option from three predefined choices using input validation and error handling.,"import sys
+def get_user_choice():
+    try:
+        user_input = int(input(""Select an option (1-3): ""))
+        if not 1 <= user_input <= 3:
+            print(""Error: Please select a number between 1 and 3."")
+            return None
+        return user_input
+    except ValueError:
+        print(""Error: Invalid input. Please enter a valid integer."")
+        return None
+def make_decision(choice):
+    if choice == 1:
+        result = ""Option A selected.""
+    elif choice == 2:
+        result = ""Option B selected.""
+    else:
+        result = ""Option C selected.""
+    print(f""Decision made: {result}"")
+if __name__ == '__main__':
+    test_cases = [1, 2, 3, 5, -1] 
+    for case in test_cases:
+        user_input = str(case)
+        try:
+            choice_value = int(user_input) if isinstance(user_input, str) else user_input
+            valid_choice = None
+            if 1 <= choice_value <= 3:
+                valid_choice = choice_value
+        except ValueError:
+            print(f""Error processing case {case}: Not a number."")
+        try:
+            decision_result = make_decision(valid_choice)
+        except Exception as e:
+            print(f""Unexpected error during decision making for input {valid_choice}: {e}"")
+def run_simulation():
+    sample_inputs = [""1"", ""2"", ""3"", ""abc"", ""-5""] 
+    for inp_str in sample_inputs:
+        try:
+            choice = int(inp_str)
+            if 1 <= choice <= 3:
+                print(f""Input '{inp_str}' -> Valid Choice {choice}"")
+                make_decision(choice)
+            else:
+                print(f""Input '{inp_str}' -> Invalid Range"")
+        except ValueError as ve:
+            print(f""Input '{inp_str}' -> Value Error (not an integer)"")",True,0,490,4_0.py
+4,0,Decide based on input choice,Implement a robust decision-making script in Python where the user selects an option from three predefined choices using input validation and error handling.,"import sys
+def get_user_choice():
+    valid_options = ['a', 'b', 'c']
+    while True:
+        try:
+            user_input = input(""Select an option (A/B/C): "").strip().lower()
+            if not user_input or len(user_input) > 1:
+                print(""Error: Please enter exactly one character."")
+                continue
+            if user_input in valid_options:
+                return user_input
+            else:
+                print(f""Error: Invalid option. Choose from {valid_options}."")
+        except KeyboardInterrupt:
+            print(""\nExiting program..."")
+            sys.exit(0)
+        except EOFError:
+            print(""\nNo input received."")
+            sys.exit(1)
+def make_decision(choice):
+    decisions = {
+        'a': ""Decision made based on option A."",
+        'b': ""Decision made based on option B."",
+        'c': ""Decision made based on option C.""
+    }
+    return decisions.get(choice, ""Error: Unknown decision logic."")
+if __name__ == '__main__':
+    test_cases = ['a', 'b', 'c']
+    print(""Running Decision-Making Script with Sample Inputs..."")
+    for choice in test_cases:
+        result = make_decision(choice)
+        print(f""Input: {choice} -> Output: {result}"")
+    try:
+        invalid_input = ""x""
+        if invalid_input not in ['a', 'b', 'c']:
+            print(""Handled Invalid Input Scenario"")
+    except Exception as e:
+        print(f""Unexpected Error during simulation: {e}"")
+    print(""Script execution completed successfully."")",True,1,491,4_0_1.py
+4,0,Decide based on input choice,Implement a robust decision-making script in Python where the user selects an option from three predefined choices using input validation and error handling.,"import sys
+def get_user_choice():
+    valid_options = ['a', 'b', 'c']
+    while True:
+        try:
+            user_input = input(""Select an option (A/B/C): "").strip().lower()
+            if not user_input or len(user_input) > 1:
+                print(""Error: Please enter exactly one character."")
+                continue
+            if user_input in valid_options:
+                return user_input
+            else:
+                print(f""Error: Invalid option. Choose from {valid_options}."")
+        except KeyboardInterrupt:
+            print(""\nProgram terminated by user."")
+            sys.exit(0)
+        except EOFError:
+            print(""Input stream ended unexpectedly."")
+            sys.exit(0)
+def make_decision(choice):
+    decisions = {
+        'a': ""Decision made based on option A."",
+        'b': ""Decision made based on option B."",
+        'c': ""Decision made based on option C.""
+    }
+    return decisions.get(choice, ""Error: Unknown decision path."")
+if __name__ == '__main__':
+    choices = ['a', 'b'] 
+    for choice in choices:
+        result = make_decision(choice)
+        print(f""Result for {choice}: {result}"")",True,2,492,4_0_2.py
+4,2,Decide based on input choice,Create an optimized data processing pipeline in Python where the output path is dynamically determined by a single boolean flag entered at runtime.,"import os
+from datetime import datetime
+def process_data(input_path: str) -> None:
+    if not os.path.exists(input_path):
+        raise FileNotFoundError(f""Input file {input_path} not found."")
+    with open(input_path, 'r') as f:
+        content = f.read()
+    timestamp = datetime.now().strftime(""%Y%m%d_%H%M%S"")
+    output_name = ""output_1.csv"" if True else ""output_0.csv""
+    final_output = os.path.join(output_name)
+    with open(final_output, 'w') as f:
+        f.write(content + ""\n# Processed at "" + timestamp)
+def main():
+    input_file = ""sample_data.txt""
+    if __name__ == '__main__':
+        process_data(input_file)",True,0,493,4_2.py
+4,2,Decide based on input choice,Create an optimized data processing pipeline in Python where the output path is dynamically determined by a single boolean flag entered at runtime.,"import os
+from datetime import datetime
+def process_data(input_path: str) -> dict:
+    return {
+        ""status"": ""success"",
+        ""processed_at"": datetime.now().isoformat(),
+        ""input_file"": input_path,
+        ""records_count"": 1024
+    }
+def determine_output_flag(flag_value: bool) -> str:
+    if flag_value:
+        return f""output_archive_{datetime.now().strftime('%Y%m%d_%H%M%S')}.parquet""
+    else:
+        return ""daily_report.csv""
+if __name__ == '__main__':
+    sample_input = ""/data/raw/sensor_readings.json""
+    runtime_flag = True
+    output_path = determine_output_flag(runtime_flag)
+    result = process_data(sample_input)
+    with open(output_path, 'w') as f:
+        import json
+        json.dump(result, f, indent=4)",True,1,494,4_2_1.py
+4,2,Decide based on input choice,Create an optimized data processing pipeline in Python where the output path is dynamically determined by a single boolean flag entered at runtime.,"import os
+from pathlib import Path
+def process_data(input_path: str, output_flag: bool) -> None:
+    if not os.path.exists(input_path):
+        raise FileNotFoundError(f""Input file {input_path} not found."")
+    with open(input_path, 'r') as f:
+        lines = [line.strip() for line in f.readlines()]
+    processed_lines = []
+    for i, line in enumerate(lines):
+        if len(line) > 10 and output_flag:
+            processed_line = f""PROCESSED_{i}_{len(line)}""
+        else:
+            processed_line = line.upper()
+        processed_lines.append(processed_line)
+    base_name = Path(input_path).stem
+    ext = input_path.split('.')[-1] if '.' in input_path else 'txt'
+    if output_flag:
+        final_output = f""{base_name}_flagged.{ext}""
+    else:
+        final_output = f""output_{int(os.getpid())}.{ext}""
+    with open(final_output, 'w') as f:
+        f.write('\n'.join(processed_lines))
+if __name__ == '__main__':
+    INPUT_FILE = ""sample_data.txt""
+    OUTPUT_FLAG = True
+    try:
+        process_data(INPUT_FILE, OUTPUT_FLAG)
+        print(f""Data processed successfully to {INPUT_FILE.replace('.txt', '_flagged.' + '.txt')}"")
+    except Exception as e:
+        print(f""Error during processing: {e}"")",True,2,495,4_2_2.py
+4,2,Decide based on input choice,Create an optimized data processing pipeline in Python where the output path is dynamically determined by a single boolean flag entered at runtime.,"import os
+from datetime import datetime
+def process_data(input_file: str, output_flag: bool) -> None:
+    if not os.path.exists(input_file):
+        raise FileNotFoundError(f""Input file {input_file} does not exist."")
+    with open(input_file, 'r') as f_in:
+        lines = [line.strip() for line in f_in.readlines()]
+    output_path_base = ""output_data_"" + datetime.now().strftime(""%Y%m%d_%H%M%S"")
+    if output_flag:
+        final_output_path = os.path.join(output_path_base, ""_processed.csv"")
+    else:
+        final_output_path = os.path.join(output_path_base, ""_raw.txt"")
+    with open(final_output_path, 'w') as f_out:
+        for line in lines:
+            if output_flag and len(line) > 50:
+                f_out.write(f""{line[:20]}...{len(line)}\n"")
+            else:
+                f_out.write(f""{line}\n"")
+if __name__ == '__main__':
+    sample_input = ""data/sample.csv""
+    runtime_flag = True
+    try:
+        process_data(sample_input, runtime_flag)
+        print(f""Pipeline completed. Output saved to {sample_input}.csv -> {os.path.basename('output')}"")
+    except Exception as e:
+        print(f""Error during processing: {e}"")",True,3,496,4_2_3.py
+4,2,Decide based on input choice,Create an optimized data processing pipeline in Python where the output path is dynamically determined by a single boolean flag entered at runtime.,"import os
+from datetime import datetime
+def process_data(input_path: str) -> dict:
+    return {
+        ""status"": ""success"",
+        ""processed_at"": datetime.now().isoformat(),
+        ""input_file"": input_path,
+        ""records_count"": 1024
+    }
+def determine_output_path(flag: bool) -> str:
+    timestamp = datetime.now().strftime(""%Y%m%d_%H%M%S"")
+    if flag:
+        return f""output_flag_true_{timestamp}.csv""
+    else:
+        return f""output_flag_false_{timestamp}.json""
+def main():
+    input_file = ""sample_data.csv""
+    run_mode = True
+    output_path = determine_output_path(run_mode)
+    result = process_data(input_file)
+    with open(output_path, 'w') as file:
+        import json
+        if output_path.endswith('.json'):
+            json.dump(result, file, indent=4)
+        else:
+            lines = [""status"", ""processed_at"", ""input_file"", ""records_count""]
+            lines.append(f""{result['status']},{result['processed_at']},{result['input_file']},{result['records_count']}"")
+            file.write('\n'.join(lines))
+if __name__ == '__main__':
+    main()",True,4,497,4_2_4.py
+4,2,Decide based on input choice,Create an optimized data processing pipeline in Python where the output path is dynamically determined by a single boolean flag entered at runtime.,"import os
+from datetime import datetime
+def process_data(input_file: str) -> list:
+    return [f""Processed item {i}"" for i in range(10)]
+if __name__ == '__main__':
+    input_path = ""data/sample_input.csv""
+    use_json_output = True
+    if os.path.exists(input_path):
+        results = process_data(input_path)
+        output_format = "".json"" if use_json_output else "".csv""
+        timestamp = datetime.now().strftime(""%Y%m%d_%H%M%S"")
+        base_name = ""pipeline_result""
+        output_file = f""{base_name}_{timestamp}{output_format}""
+        if use_json_output:
+            with open(output_file, 'w') as f:
+                import json
+                json.dump(results, f)
+        else:
+            with open(output_file, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([""id"", ""result""])
+                for i, r in enumerate(results):
+                    writer.writerow([i+1, r])
+    else:
+        print(""Input file not found."")",True,5,498,4_2_5.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict, Any
+async def process_branch_a(data: str) -> Dict[str, Any]:
+    return {""branch"": ""A"", ""status"": ""completed"", ""data_length"": len(data)}
+async def process_branch_b(data: int) -> Dict[str, Any]:
+    if data > 100:
+        result = f""Value {data} exceeds threshold.""
+    else:
+        result = f""Value {data} is within range.""
+    return {""branch"": ""B"", ""status"": ""completed"", ""message"": result}
+async def process_branch_c(data: float) -> Dict[str, Any]:
+    squared = data ** 2
+    return {""branch"": ""C"", ""status"": ""completed"", ""squared_value"": squared}
+def get_user_input() -> List[Dict[str, str]]:
+    samples = [
+        {
+            ""id"": 1,
+            ""input_type"": ""string"",
+            ""value"": ""Hello World""
+        },
+        {
+            ""id"": 2,
+            ""input_type"": ""integer"",
+            ""value"": 50
+        },
+        {
+            ""id"": 3,
+            ""input_type"": ""float"",
+            ""value"": 4.5
+        }
+    ]
+    return samples
+async def main():
+    tasks = []
+    for sample in get_user_input():
+        input_value = sample[""value""]
+        if isinstance(input_value, str):
+            task = asyncio.create_task(process_branch_a(input_value))
+        elif isinstance(input_value, int):
+            task = asyncio.create_task(process_branch_b(int(input_value)))
+        else:
+            task = asyncio.create_task(process_branch_c(float(input_value)))
+        tasks.append(task)
+    results = await asyncio.gather(*tasks)
+    for result in results:
+        print(result)
+if __name__ == '__main__':
+    asyncio.run(main())",True,0,499,4_5.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict, Any
+async def process_branch_a(data: str) -> Dict[str, Any]:
+    return {""branch"": ""A"", ""status"": ""completed"", ""data_length"": len(data)}
+async def process_branch_b(data: int) -> Dict[str, Any]:
+    if data > 100:
+        result = f""Value {data} exceeds threshold.""
+    else:
+        result = f""Value {data} is within range.""
+    return {""branch"": ""B"", ""status"": ""completed"", ""message"": result}
+async def process_branch_c(data: float) -> Dict[str, Any]:
+    squared = data ** 2
+    return {""branch"": ""C"", ""status"": ""completed"", ""squared_value"": squared}
+async def main():
+    tasks: List[Dict[str, Any]] = [
+        {
+            ""input_type"": ""string"",
+            ""value"": ""Hello World"",
+            ""handler"": process_branch_a,
+        },
+        {
+            ""input_type"": ""int"",
+            ""value"": 150,
+            ""handler"": process_branch_b,
+        },
+        {
+            ""input_type"": ""float"",
+            ""value"": 4.2,
+            ""handler"": process_branch_c,
+        },
+    ]
+    results = await asyncio.gather(*[task[""handler""](task[""value""]) for task in tasks])
+    print(""Results:"")
+    for result in results:
+        print(result)
+if __name__ == '__main__':
+    asyncio.run(main())",True,1,500,4_5_1.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict, Any
+async def process_branch_a(data: str) -> Dict[str, Any]:
+    return {""branch"": ""A"", ""status"": ""completed"", ""data_length"": len(data)}
+async def process_branch_b(items: List[int]) -> Dict[str, Any]:
+    total = sum(items)
+    avg = total / len(items) if items else 0.0
+    return {""branch"": ""B"", ""status"": ""completed"", ""total_sum"": total, ""average_value"": round(avg, 2)}
+async def process_branch_c(text: str) -> Dict[str, Any]:
+    word_count = len(text.split())
+    char_count = len(text)
+    return {""branch"": ""C"", ""status"": ""completed"", ""word_count"": word_count, ""char_count"": char_count}
+async def main():
+    tasks: List[asyncio.Task] = []
+    task_a = asyncio.create_task(process_branch_a(""Hello World""))
+    task_b = asyncio.create_task(process_branch_b([10, 20, 30]))
+    task_c = asyncio.create_task(process_branch_c(""Python is awesome""))
+    tasks.append(task_a)
+    tasks.append(task_b)
+    tasks.append(task_c)
+    results: List[Dict[str, Any]] = await asyncio.gather(*tasks)
+    for result in results:
+        print(result)
+if __name__ == '__main__':
+    asyncio.run(main())",True,2,501,4_5_2.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict, Any
+async def process_branch_a(data: str) -> Dict[str, Any]:
+    return {""branch"": ""A"", ""status"": ""completed"", ""data_length"": len(data)}
+async def process_branch_b(data: int) -> Dict[str, Any]:
+    if data > 100:
+        result = f""Value {data} exceeds threshold.""
+    else:
+        result = f""Value {data} is within range.""
+    return {""branch"": ""B"", ""status"": ""completed"", ""message"": result}
+async def process_branch_c(data: float) -> Dict[str, Any]:
+    squared = data ** 2
+    return {""branch"": ""C"", ""status"": ""completed"", ""squared_value"": squared}
+async def main():
+    tasks: List[Dict[str, Any]] = [
+        {
+            ""input_type"": ""string"",
+            ""value"": ""Hello World"",
+            ""handler"": process_branch_a,
+        },
+        {
+            ""input_type"": ""int"",
+            ""value"": 150,
+            ""handler"": process_branch_b,
+        },
+        {
+            ""input_type"": ""float"",
+            ""value"": 42.5,
+            ""handler"": process_branch_c,
+        },
+    ]
+    results = await asyncio.gather(*[task[""handler""](task[""value""]) for task in tasks])
+    print(""Results:"")
+    for result in results:
+        print(result)
+if __name__ == '__main__':
+    asyncio.run(main())",True,3,502,4_5_3.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict
+async def process_branch_a(data: str) -> str:
+    return f""Branch A processed: {data.upper()}""
+async def process_branch_b(data: int) -> float:
+    if data > 100:
+        return round((data * 2.5), 2)
+    else:
+        return -abs(data / 3)
+def handle_concurrent_inputs(inputs: List[Dict]) -> Dict[str, str]:
+    tasks = []
+    for item in inputs:
+        value_type = item.get(""type"")
+        data_value = item[""value""]
+        if value_type == ""string"":
+            task = asyncio.create_task(process_branch_a(data_value))
+        elif value_type == ""integer"":
+            task = asyncio.create_task(process_branch_b(int(data_value)))
+        tasks.append(task)
+    results = {}
+    for i, task in enumerate(tasks):
+        result_data = loop.run_until_complete(task) if hasattr(loop, 'run_until_complete') else None
+        pass
+    return {f""input_{i}"": str(result_data)}
+async def main():
+    sample_inputs = [
+        {""type"": ""string"", ""value"": ""hello_world""},
+        {""type"": ""integer"", ""value"": 50},
+        {""type"": ""integer"", ""value"": 200},
+    ]
+    loop = asyncio.get_event_loop()
+    tasks = []
+    results_map = {}
+    for idx, item in enumerate(sample_inputs):
+        if item[""type""] == ""string"":
+            task = process_branch_a(item[""value""])
+        elif item[""type""] == ""integer"":
+            val = int(item[""value""])
+            task = process_branch_b(val)
+        tasks.append(task)
+    results_map.update(await asyncio.gather(*tasks))
+    print(results_map)
+if __name__ == '__main__':
+    main()",True,4,503,4_5_4.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict, Any
+async def process_branch_a(data: str) -> Dict[str, Any]:
+    return {""branch"": ""A"", ""status"": ""completed"", ""data_length"": len(data)}
+async def process_branch_b(data: int) -> Dict[str, Any]:
+    if data > 100:
+        result = f""Value {data} exceeds threshold.""
+    else:
+        result = f""Value {data} is within range.""
+    return {""branch"": ""B"", ""status"": ""completed"", ""message"": result}
+async def process_branch_c(data: float) -> Dict[str, Any]:
+    processed_value = round(data * 2.5, 4)
+    return {""branch"": ""C"", ""status"": ""completed"", ""calculated"": processed_value}
+async def main():
+    tasks: List[Dict[str, Any]] = [
+        {
+            ""input_type"": ""string"",
+            ""value"": ""Hello World"",
+            ""handler"": process_branch_a,
+        },
+        {
+            ""input_type"": ""int"",
+            ""value"": 150,
+            ""handler"": process_branch_b,
+        },
+        {
+            ""input_type"": ""float"",
+            ""value"": 42.876,
+            ""handler"": process_branch_c,
+        },
+    ]
+    results = await asyncio.gather(*[task[""handler""](task[""value""]) for task in tasks])
+    print(results)
+if __name__ == '__main__':
+    main()",True,5,504,4_5_5.py
+4,5,Decide based on input choice,Write a production-ready Python script that handles multiple concurrent user inputs to trigger different processing branches based on specific selection criteria.,"import asyncio
+from typing import List, Dict, Any
+async def process_branch_a(data: str) -> Dict[str, Any]:
+    return {""branch"": ""A"", ""status"": ""completed"", ""input"": data}
+async def process_branch_b(data: int) -> Dict[str, Any]:
+    result = f""Calculated value for {data}""
+    return {""branch"": ""B"", ""status"": ""success"", ""result"": result}
+async def main():
+    tasks: List[Dict[str, Any]] = [
+        {""type"": ""text"", ""value"": ""hello_world""},
+        {""type"": ""number"", ""value"": 42},
+        {""type"": ""flag"", ""value"": True}
+    ]
+    results: Dict[int, Dict[str, Any]] = {}
+    for idx, task in enumerate(tasks):
+        if not isinstance(task[""value""], str) and task[""type""] == ""text"":
+            continue
+        branch_map = {
+            1: process_branch_a,
+            2: process_branch_b
+        }
+        selected_func = None
+        if isinstance(task[""value""], str):
+            selected_func = lambda x=task[""value""]: process_branch_a(x)
+        elif task[""type""] == ""number"":
+            selected_func = lambda x=task[""value""]: process_branch_b(x)
+        if selected_func:
+            results[idx] = await asyncio.create_task(selected_func())
+    print(""Processing complete. Results:"")
+    for idx, res in results.items():
+        print(f""Task {idx}: {res}"")
+if __name__ == '__main__':
+    asyncio.run(main())",True,6,505,4_5_6.py
