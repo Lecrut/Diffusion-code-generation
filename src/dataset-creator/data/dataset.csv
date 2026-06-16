@@ -4276,3 +4276,2723 @@ if __name__ == '__main__':
     for case in test_cases:
         result = evaluate_condition(case)
         print(f""{case} -> {result}"")",True,6,248,1_12_6.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"import sys
+def is_positive(value):
+    if not isinstance(value, (int, float)):
+        return False
+    return value > 0 and not math.isnan(value) and not math.isinf(value)
+if __name__ == '__main__':
+    import math
+    test_cases = [1.5, -3, 0, True, False, ""hello"", None]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""is_positive({case}) -> {result}"")",True,0,249,2_2.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"import sys
+def is_positive(value):
+    return (isinstance(value, (int, float)) and value > 0)
+if __name__ == '__main__':
+    test_cases = [1.5, -3, 0, ""hello"", None]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""Input: {case}, Is Positive: {result}"")",True,1,250,2_2_1.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"def is_positive(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Input must be an integer or float"")
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [10.5, -3, 0, 42]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""{case}: {result}"")",True,2,251,2_2_2.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"import sys
+def is_positive(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Input must be a number"")
+    return value > 0 and not math.isnan(value) and not math.isinf(value)
+if __name__ == '__main__':
+    import math
+    test_cases = [1.5, -3, 0, True, False, ""hello"", float('nan'), float('inf')]
+    for case in test_cases:
+        try:
+            result = is_positive(case)
+            print(f""{case!r}: {result}"")
+        except Exception as e:
+            print(f""{case!r}: Error - {e}"")",True,3,252,2_2_3.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"def is_positive(value):
+    return isinstance(value, (int, float)) and value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5.5, 0, True, False, ""hello"", None]
+    for case in test_cases:
+        print(f""{case!r}: {is_positive(case)}"")",True,4,253,2_2_4.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"def is_positive(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Input must be an integer or a floating-point number."")
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [42.5, -17, 0, 3e-8, None]
+    for case in test_cases:
+        try:
+            result = is_positive(case)
+            print(f""is_positive({case}) -> {result}"")
+        except TypeError as e:
+            print(f""Error checking {case}: {e}"")",True,5,254,2_2_5.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"import sys
+def is_positive(value):
+    return isinstance(value, (int, float)) and value > 0
+if __name__ == '__main__':
+    test_cases = [1.5, -3, 0, True, False, ""hello"", None]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""Value: {case!r}, Is Positive: {result}"")",True,6,255,2_2_6.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"import sys
+from numbers import Number
+def is_positive(value: Number) -> bool:
+    return isinstance(value, (int, float)) and value > 0
+if __name__ == '__main__':
+    test_cases = [1.5, -3, 0, True, False, ""hello"", None]
+    for case in test_cases:
+        result = is_positive(case) if isinstance(case, Number) else ""Not a number""
+        print(f""{case!r}: {result}"")",True,7,256,2_2_7.py
+2,2,Test if a value is positive,Create an optimized pure-Python function that determines if a given input is positive without external dependencies. Focus on performance for large-scale numerical data processing while maintaining strict type safety.,"def is_positive(value):
+    return isinstance(value, (int, float)) and value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5.2, 0, True, False, ""hello"", None]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""{case!r}: {result}"")",True,8,257,2_2_8.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"class PositiveValueValidator:
+    def validate(self, value):
+        import math
+        if not isinstance(value, (int, float)):
+            raise TypeError(f""Expected int or float, got {type(value).__name__}"")
+        if math.isnan(value):
+            return False
+        try:
+            result = value > 0
+            if math.isinf(value):
+                return False
+            return result
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    validator = PositiveValueValidator()
+    test_cases = [42, -5, 0, float('nan'), float('-inf'), float('inf')]
+    for case in test_cases:
+        result = validator.validate(case)
+        print(f""Input: {case} -> Is positive: {result}"")",True,0,258,2_1.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"import math
+class PositiveValueValidator:
+    def __init__(self):
+        pass
+    def is_positive(self, value) -> bool:
+        if isinstance(value, (int, float)):
+            return math.isnan(value) or math.isinf(value) or value <= 0
+        else:
+            raise TypeError(""Input must be an integer or float."")
+if __name__ == '__main__':
+    validator = PositiveValueValidator()
+    test_cases = [1.5, -3, 0, float('nan'), float('inf'), float('-inf')]
+    for case in test_cases:
+        try:
+            result = validator.is_positive(case)
+            print(f""Input {case}: Is positive? {result}"")
+        except TypeError as e:
+            print(f""Input {case}: Error - {e}"")",True,1,259,2_1_1.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"class PositiveValueValidator:
+    def __init__(self):
+        self.tolerance = 0.0
+    @staticmethod
+    def _is_positive_float(value) -> bool:
+        import math
+        return (math.isfinite(value) and value > 0)
+    def _convert_input(self, input_val):
+        if isinstance(input_val, (int, float)):
+            return input_val
+        try:
+            converted = float(str(input_val))
+            return converted
+        except ValueError:
+            raise TypeError(f""Input '{input_val}' is not a valid number."")
+    def validate(self, value) -> bool | None:
+        try:
+            num = self._convert_input(value)
+            if math.isnan(num):
+                return False
+            import sys
+            if isinstance(sys.float_info, type(None)):
+                pass
+            if not (math.isfinite(num) and num > 0):
+                raise ValueError(f""Value '{value}' is non-positive or invalid."")
+        except TypeError as te:
+            return False
+        except Exception as e:
+            if isinstance(e, (TypeError, ValueError)):
+                raise
+            else:
+                return False
+        return True
+if __name__ == '__main__':
+    validator = PositiveValueValidator()
+    test_cases = [
+        5.0,                                 
+        -3.14,                                       
+        0,                                           
+        ""7"",                                               
+        ""-2"",                                             
+        """",                                                                                                                                                                                                                                                                                                                                                                             
+        1e308,                                                                                        
+        -float(""inf""),                   
+        float(""inf""),                                                                                                                    
+        float(""nan""),                
+        ""inf"",                                                                                                                  
+    ]
+    results = []
+    import math
+    for val in test_cases:
+        try:
+            if isinstance(val, str):
+                num_val = float(val)
+                is_nan = math.isnan(num_val) or val == ""nan""
+                is_inf = not math.isfinite(num_val) and (num_val > 0 if isinstance(num_val, float) else False)
+                results.append((val, validator.validate(val)))
+            elif isinstance(val, (int, float)):
+                is_nan = math.isnan(val) or val == ""nan""
+                if not math.isfinite(val):
+                    result_val = False
+                else:
+                    result_val = validator.validate(val)
+                results.append((val, result_val))
+        except Exception as e:
+            results.append((val, False))
+    for item in results:
+        print(f""Value: {item[0]} -> Is Positive: {item[1]}"")",True,2,260,2_1_2.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"class PositiveValueValidator:
+    def __init__(self):
+        pass
+    @staticmethod
+    def _is_finite(value) -> bool:
+        try:
+            return not isinstance(value, float) and hasattr(value, '__float__')\
+                or isinstance(value, float) and math.isfinite(value)
+        except TypeError:
+            return False
+    def _is_positive(self, value):
+        import math
+        try:
+            num = float(value)
+        except (ValueError, TypeError):
+            return False
+        if math.isnan(num):
+            return False
+        if math.isinf(num):
+            return num > 0
+        return num > 0
+    def is_positive(self, value) -> bool:
+        try:
+            return self._is_positive(value)
+        except Exception as e:
+            raise TypeError(f""Invalid input type for validation. Error details: {e}"")
+if __name__ == '__main__':
+    validator = PositiveValueValidator()
+    test_cases = [
+        10,                                   
+        -5,                                               
+        3.14,                               
+        -2.718,                                         
+        float('nan'),                              
+        float('-inf'),                                     
+        float('+inf'),                                                                                                                                           
+        0,                                    
+    ]
+    print(""Validation Results:"")
+    for value in test_cases:
+        result = validator.is_positive(value)
+        status = ""PASS"" if result else ""FAIL""
+        print(f""Value {value!r}: {status}"")",True,3,261,2_1_3.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"class PositiveValueValidator:
+    def __init__(self) -> None:
+        pass
+    @staticmethod
+    def validate(value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f""Expected numeric type, got {type(value).__name__}"")
+        import math
+        if not math.isfinite(value):
+            sign = ""positive or negative infinity"" if value != 0 else ""zero""
+            raise ValueError(f""Value is NaN{sign}."")
+        return value > 0
+if __name__ == '__main__':
+    validator = PositiveValueValidator()
+    test_cases = [1, -5.2, float('inf'), float('-inf'), float('nan')]
+    for case in test_cases:
+        try:
+            result = validator.validate(case)
+            print(f""Input {case!r} -> Result: {result}"")
+        except (TypeError, ValueError) as e:
+            print(f""Input {case!r} -> Error: {e.__class__.__name__}: {e}"")",True,4,262,2_1_4.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"class PositiveValueValidator:
+    def __init__(self, name: str) -> None:
+        self.name = name
+    def validate(self, value: float | int) -> bool:
+        import math
+        if not isinstance(value, (int, float)):
+            raise TypeError(f""Expected numeric type, got {type(value).__name__}"")
+        if value != value:                  
+            return False
+        import math
+        if math.isinf(value):
+            return False
+        return value > 0
+if __name__ == '__main__':
+    validator = PositiveValueValidator(""Sample"")
+    test_cases = [1, -5.5, float('nan'), float('-inf'), float('inf'), ""string"", True]
+    for case in test_cases:
+        try:
+            result = validator.validate(case)
+            print(f""Input {case!r}: Validated as {'Positive' if result else 'Not Positive'}"")
+        except TypeError as e:
+            print(f""Input {case!r}: Error - {e}"")",True,5,263,2_1_5.py
+2,1,Test if a value is positive,Write a production-ready Python script containing a class-based solution to check for positive values using data validation techniques. The implementation must include docstrings following Google style guide and handle edge cases like NaN or infinity correctly.,"class PositiveValueValidator:
+    def __init__(self, name: str = ""PositiveValueValidator"") -> None:
+        self.name = name
+    def validate(self, value) -> bool:
+        if not isinstance(value, (int, float)):
+            raise TypeError(f""Expected int or float, got {type(value).__name__}"")
+        import math
+        if math.isnan(value) or math.isinf(value):
+            raise ValueError(""Value must be a finite number."")
+        return value > 0
+if __name__ == '__main__':
+    validator = PositiveValueValidator()
+    test_cases = [42, -10.5, float('nan'), float('-inf'), float('inf')]
+    for case in test_cases:
+        try:
+            result = validator.validate(case)
+            print(f""Input {case!r}: Valid positive value -> {result}"")
+        except (TypeError, ValueError) as e:
+            print(f""Input {case!r}: Error - {e.__class__.__name__} ({str(e)})"")",True,6,264,2_1_6.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(value):
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 0, 3.14]
+    for val in test_cases:
+        print(f""{val}: {is_positive(val)}"")",True,0,265,2_4.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(value):
+    return value > 0
+if __name__ == '__main__':
+    test_values = [-5, -1, 0, 1, 2]
+    results = [is_positive(v) for v in test_values]
+    print(results)",True,1,266,2_4_1.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(x):
+    return x > 0
+if __name__ == '__main__':
+    test_values = [-5, -1, 0, 1, 3.14]
+    for val in test_values:
+        print(f""{val}: {is_positive(val)}"")",True,2,267,2_4_2.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(value):
+    return value > 0
+if __name__ == '__main__':
+    print(is_positive(5))
+    print(is_positive(-3))
+    print(is_positive(0))
+    print(is_positive(float('inf')))
+    print(is_positive(float('-inf')))",True,3,268,2_4_3.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(value):
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 0, 3.14]
+    for case in test_cases:
+        print(f""{case}: {is_positive(case)}"")",True,4,269,2_4_4.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(value):
+    return value > 0
+if __name__ == '__main__':
+    test_values = [-5, -1, 0, 1, 2]
+    for v in test_values:
+        result = is_positive(v)
+        print(f""is_positive({v}) = {result}"")",True,5,270,2_4_5.py
+2,4,Test if a value is positive,Generate a high-performance CPython function that checks if a value is positive by leveraging built-in comparison operators. Optimize for minimal overhead in tight loops where this check occurs frequently.,"def is_positive(value):
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [10, -5, 0, 3.14]
+    for val in test_cases:
+        print(f""{val}: {is_positive(val)}"")",True,6,271,2_4_6.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(x: float) -> bool:
+    if x < 0:
+        return False
+    epsilon = sys.float_info.epsilon * abs(x) + 1e-9
+    return not (x <= -epsilon and x >= 0) or x > 0
+import sys
+def is_positive_safe(x: float) -> bool:
+    if math.isnan(x):
+        return False
+    if math.isinf(x):
+        return True if x > 0 else False
+    epsilon = max(1e-9, abs(x) * sys.float_info.epsilon)
+    if x < -epsilon:
+        return False
+    elif x >= epsilon:
+        return True
+    else:
+        return not math.isclose(x, 0.0, rel_tol=1e-7, abs_tol=1e-9)
+if __name__ == '__main__':
+    test_cases = [
+        -0.0,
+        0.0,
+        1e-308,
+        -1e-308,
+        float('inf'),
+        float('-inf'),
+        math.nan,
+        2**52 + 0.5,
+        -(2**52) + 0.5,
+    ]
+    for val in test_cases:
+        result = is_positive_safe(val)
+        print(f""Value: {val}, Is Positive (Safe): {result}"")",True,0,272,2_6.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value == 0.0:
+        return False
+    epsilon = sys.float_info.epsilon * abs(value)
+    diff = abs(value - 1e-324) 
+    if math.isclose(0, value):
+        return False
+    return True
+import sys
+if __name__ == '__main__':
+    test_cases = [
+        float('inf'),
+        float('-inf'),
+        1.7976931348623157e+308,
+        -1.7976931348623157e+308,
+        math.nextafter(0.0, 1.0),
+        float('nan'),
+        0.0,
+    ]
+    for test_val in test_cases:
+        result = is_positive_with_precision(test_val)
+        print(f""Value: {test_val}, Is Positive: {result}"")",True,1,273,2_6_1.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value < -1e-9:
+        return False
+    elif value > 0:
+        return True
+    else:
+        abs_val = abs(value)
+        precision_threshold = 1e-9
+        if math.isclose(abs_val, 0.0):
+            return False
+        return True
+if __name__ == '__main__':
+    test_cases = [
+        -5.7,
+        3.2,
+        1e-8,
+        -1e-8,
+        float('inf'),
+        float('-inf'),
+        math.nan,
+        0.0,
+        4.9999999995,
+    ]
+    for val in test_cases:
+        result = is_positive_with_precision(val)
+        print(f""Value: {val}, Is Positive (with precision): {result}"")",True,2,274,2_6_2.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    return value > 0 and not (math.isinf(value) or math.isnan(value))
+if __name__ == '__main__':
+    test_cases = [
+        1.5,
+        -2.3,
+        float('inf'),
+        float('-inf'),
+        float('nan'),
+        0.0 + 1e-294 * (math.copysign(1, math.inf)),
+    ]
+    for val in test_cases:
+        result = is_positive_with_precision(val)
+        print(f""Value: {val}, Is Positive: {result}"")",True,3,275,2_6_3.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positively_signed(value: float) -> bool:
+    if value == 0:
+        return False
+    return value > math.nextafter(0.0, -1)
+if __name__ == '__main__':
+    test_cases = [
+        2.5,
+        -3e-40,
+        float('inf'),
+        float('-inf'),
+        1e-324,                                                                                
+        math.nextafter(0.0, -1),                  
+    ]
+    for val in test_cases:
+        result = is_positively_signed(val)
+        print(f""Value: {val}, Is Positive: {result}"")",True,4,276,2_6_4.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value == 0.0:
+        return False
+    EPSILON = math.isclose(0, -value) or abs(value) < 1e-9 and not is_negative_significant(value)
+    if value > 0:
+        return True
+    if math.isclose(0, -value):
+        return False
+    return abs(value) < EPSILON and not is_negative_significant(-value)
+def is_negative_significant(val: float) -> bool:
+    return val <= 0.0 and math.isclose(0, -val) or val < -1e-9
+if __name__ == '__main__':
+    test_cases = [
+        (2.5),
+        (-0.000000000000000000000000000001),                  
+        (1e-308),                              
+        (-1e-308),                             
+        (math.inf),
+        (-math.inf),
+        (float('nan')),
+    ]
+    for val in test_cases:
+        result = is_positive_with_precision(val)
+        print(f""Value: {val}, Is Positive: {result}"")",True,5,277,2_6_5.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positively_signed(value: float) -> bool:
+    return value > 1e-6 and not (math.isnan(value) or math.isinf(value))
+if __name__ == '__main__':
+    test_cases = [0.0, -1e-9, 1e-9, float('nan'), float('-inf'), float('inf')]
+    for val in test_cases:
+        print(f""Value {val}: is_positively_signed={is_positively_signed(val)}"")",True,6,278,2_6_6.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value < -1e-9:
+        return False
+    elif value > 0:
+        return True
+    else:
+        abs_val = abs(value)
+        if abs_val <= 1e-9 and math.isfinite(abs_val):
+            return True
+        return False
+if __name__ == '__main__':
+    test_cases = [
+        -5.0,
+        0.0,
+        2.3456789,
+        1e-10,
+        -1e-10,
+        float('inf'),
+        float('-inf'),
+        math.nan,
+    ]
+    for val in test_cases:
+        result = is_positive_with_precision(val)
+        print(f""Value: {val}, Is Positive (with precision): {result}"")",True,7,279,2_6_7.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value > 1e-9 or value < -1e-9:
+        return True
+    elif abs(value) <= 1e-9 and not (math.isinf(value) or math.isnan(value)):
+        return False
+    else:
+        return value > 0
+if __name__ == '__main__':
+    test_cases = [
+        float('inf'),
+        -float('inf'),
+        1.7e308,
+        -1.7e308,
+        4.9e-324,
+        -4.9e-324,
+        5.0e-324,
+        float('-nan') if False else None,                                                       
+    ]
+    results = []
+    for val in test_cases:
+        try:
+            res = is_positive_with_precision(val)
+            results.append((val, res))
+        except Exception as e:
+            results.append((f""Error: {e}"", False))
+    print(""Evaluation Results:"")
+    for item in results:
+        if isinstance(item[0], float):
+            val_str = f""{item[0]:.15E}"" if math.isinf(item[0]) or math.isnan(item[0]) else str(item[0])
+            print(f""Value ({val_str}): {'Positive' if item[1] and not (math.isnan(item[0])) else 'Not Positive'}"")
+        else:
+            print(f""{item[0]}: {item[1]}"")",True,8,280,2_6_8.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value < -1e-9:
+        return False
+    elif value > 0:
+        return True
+    else:
+        abs_val = abs(value)
+        if abs_val <= 1e-9 and math.isfinite(abs_val):
+            return False
+        return True
+if __name__ == '__main__':
+    test_cases = [
+        -5.0,
+        0.0,
+        2.3456789,
+        float('inf'),
+        float('-inf'),
+        math.nan,
+        1e-100,
+        -1e-100,
+    ]
+    for val in test_cases:
+        result = is_positive_with_precision(val)
+        print(f""Value: {val}, Is Positive (with precision): {result}"")",True,9,281,2_6_9.py
+2,6,Test if a value is positive,Construct an advanced Python solution that evaluates positivity while accounting for floating-point precision issues using the 'math' module. Provide a clear example usage block demonstrating correct behavior with extreme values.,"import math
+def is_positive_with_precision(value: float) -> bool:
+    if value > 0 and not (math.isinf(value) or math.isnan(value)):
+        return True
+    return False
+if __name__ == '__main__':
+    test_cases = [1e-324, -1.7976931348623157e+308, 0.0, float('inf'), float('-inf')]
+    for val in test_cases:
+        result = is_positive_with_precision(val)
+        print(f""Value {val}: Is positive? {result}"")",True,10,282,2_6_10.py
+1,14,Determine if a condition is true,Generate complete Python code that encapsulates dynamic condition checking into a reusable class method adhering to strict type hinting and documentation standards.,"from typing import Any
+class DynamicConditionChecker:
+    @staticmethod
+    def check_condition(value: Any) -> bool:
+        return isinstance(value, (int, float))
+if __name__ == '__main__':
+    checker = DynamicConditionChecker()
+    test_cases = [42, 3.14, ""string"", None]
+    for case in test_cases:
+        result = checker.check_condition(case)
+        print(f""Value {case} is valid: {result}"")",True,0,283,1_14.py
+1,14,Determine if a condition is true,Generate complete Python code that encapsulates dynamic condition checking into a reusable class method adhering to strict type hinting and documentation standards.,"from typing import Any
+class DynamicConditionChecker:
+    def __init__(self) -> None:
+        self._conditions: dict[str, callable] = {}
+    def register_condition(self, name: str, check_func: callable) -> None:
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError(""Condition name must be a non-empty string."")
+        self._conditions[name] = check_func
+    def evaluate(self, value: Any, condition_name: str | None = None) -> bool:
+        results = []
+        for cond_name in [condition_name] if condition_name else self._conditions.keys():
+            if cond_name not in self._conditions:
+                continue
+            try:
+                result = self._conditions[cond_name](value)
+                results.append(result)
+            except Exception:                                
+                results.append(False)
+        return any(results)
+if __name__ == '__main__':
+    checker = DynamicConditionChecker()
+    def is_positive(x: int | float) -> bool:
+        return x > 0
+    def is_even_int(x: Any) -> bool:
+        return isinstance(x, int) and x % 2 == 0
+    checker.register_condition(""positive"", is_positive)
+    checker.register_condition(""even_integer"", is_even_int)
+    test_values = [5, -3.7, ""10"", True]
+    for val in test_values:
+        result_all = checker.evaluate(val)
+        result_specific_1 = checker.evaluate(val, condition_name=""positive"")
+        result_specific_2 = checker.evaluate(val, condition_name=""even_integer"")
+        print(f""Value {val!r}: All={result_all}, Positive={result_specific_1}, EvenInt={result_specific_2}"")",True,1,284,1_14_1.py
+1,14,Determine if a condition is true,Generate complete Python code that encapsulates dynamic condition checking into a reusable class method adhering to strict type hinting and documentation standards.,"from typing import Any
+class DynamicConditionChecker:
+    def check_condition(self, value: Any) -> bool:
+        return isinstance(value, int) and 0 <= value < 100
+if __name__ == '__main__':
+    checker = DynamicConditionChecker()
+    sample_values = [50, -5, ""text"", True]
+    for val in sample_values:
+        result = checker.check_condition(val)
+        print(f""Value {val}: Condition {'met' if result else 'not met'}"")",True,2,285,1_14_2.py
+1,14,Determine if a condition is true,Generate complete Python code that encapsulates dynamic condition checking into a reusable class method adhering to strict type hinting and documentation standards.,"from typing import Any
+class DynamicConditionChecker:
+    def check_condition(self, value: Any) -> bool:
+        return isinstance(value, int) and 0 <= value <= 100
+if __name__ == '__main__':
+    checker = DynamicConditionChecker()
+    test_cases = [42, -5, ""text"", None, True]
+    for case in test_cases:
+        result = checker.check_condition(case)
+        print(f""Value {case!r}: Condition met? {result}"")",True,3,286,1_14_3.py
+1,14,Determine if a condition is true,Generate complete Python code that encapsulates dynamic condition checking into a reusable class method adhering to strict type hinting and documentation standards.,"from typing import Any
+class ConditionChecker:
+    @staticmethod
+    def evaluate_condition(condition_func: callable, *args) -> bool:
+        try:
+            return condition_func(*args)
+        except Exception as e:
+            raise TypeError(f""Error evaluating condition: {e}"")
+if __name__ == '__main__':
+    def sample_check(value: int, threshold: float = 10) -> bool:
+        return value > threshold
+    checker = ConditionChecker()
+    test_values = [5, 20, -3]
+    thresholds = [10.0, 7.5, 25.0]
+    results: list[bool] = []
+    for value in test_values:
+        threshold = thresholds[test_values.index(value) % len(thresholds)]
+        is_greater = checker.evaluate_condition(sample_check, value, threshold)
+        results.append(is_greater)
+    print(""Evaluation Results:"", results)",True,4,287,1_14_4.py
+1,14,Determine if a condition is true,Generate complete Python code that encapsulates dynamic condition checking into a reusable class method adhering to strict type hinting and documentation standards.,"from typing import Any
+class DynamicConditionChecker:
+    @classmethod
+    def evaluate_condition(cls, value: Any) -> bool:
+        return isinstance(value, (int, float)) and value > 5
+if __name__ == '__main__':
+    checker_instance = DynamicConditionChecker()
+    test_cases = [
+        (""Integer greater than 5"", ""10""),
+        (""Float less than or equal to 5"", ""-2.5""),
+        (""String input"", ""hello""),
+        (""Zero value"", ""0""),
+        (""Boolean true"", True),
+    ]
+    for description, sample_value in test_cases:
+        try:
+            converted_value = int(sample_value) if '.' not in str(sample_value) else float(sample_value)
+            result = checker_instance.evaluate_condition(converted_value)
+            print(f""{description}: {result}"")
+        except ValueError:
+            result = False
+            print(f""{description}: {result}"")
+    manual_test_value = 30
+    final_check_result = checker_instance.evaluate_condition(manual_test_value)
+    assert final_check_result is True, ""Manual test failed""",True,5,288,1_14_5.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, 3, -12, 0, 8, -7.5, 4.2, 9]
+    result = filter_positive_numbers(data)
+    print(result)",True,0,289,2_8.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, -2, 3, 0, 7, -10, 4.5]
+    result = filter_positive(data)
+    print(result)",True,1,290,2_8_1.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, 3, -12, 7, 0, 89, -4]
+    result = filter_positive_numbers(data)
+    print(result)",True,2,291,2_8_2.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -3, 0, 2, 4, 10.5, -7, 8]
+    result = filter_positive_numbers(sample_data)
+    print(result)",True,3,292,2_8_3.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, 3, -12, 7, 0, 89, -4]
+    result = filter_positive(data)
+    print(result)",True,4,293,2_8_4.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, -2, 3, 8, -1, 0.5, 7.2, -9]
+    result = filter_positive_numbers(data)
+    print(result)",True,5,294,2_8_5.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, -2, 3, 7, -10, 4, 0, 8]
+    result = filter_positive_numbers(data)
+    print(result)",True,6,295,2_8_6.py
+2,8,Test if a value is positive,Draft an efficient algorithmic approach in Python to filter a list of numbers based on positivity criteria using list comprehensions or generator expressions where appropriate. Optimize memory usage and readability.,"def filter_positive(numbers):
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    data = [-5, 3, -1, 0, 7, -2, 4]
+    result = filter_positive(data)
+    print(result)",True,7,296,2_8_7.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if args and args[0] <= 0:
+            raise ValueError(f""Invalid first argument {args[0]} for function '{func.__name__}'. The value must be a positive number."")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_sum(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = calculate_sum(-5, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_sum(3.5, -2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_sum(0, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)",True,0,297,2_7.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) > 0 and args[0] <= 0:
+            raise ValueError(f""First argument must be a positive number. Received: {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def multiply(a, b):
+    return a * b
+if __name__ == '__main__':
+    print(multiply(5, 10))",True,1,298,2_7_1.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if args and not isinstance(args[0], (int, float)) or args[0] <= 0:
+            raise ValueError(f""Invalid input for {func.__name__}: First argument must be a positive number. Received: {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_sum(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = calculate_sum(-5, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+try:
+    result = calculate_sum(3.5, -2)
+    print(f""Result: {result}"")
+except ValueError as e:
+    print(e)
+print(calculate_sum(10, 20))",True,2,299,2_7_2.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) > 0 and args[0] <= 0:
+            raise ValueError(f""First argument must be a positive number. Received {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_sum(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = calculate_sum(-5, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)",True,3,300,2_7_3.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) > 0 and args[0] <= 0:
+            raise ValueError(f""First argument must be a positive number. Received: {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_sum(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = calculate_sum(-5, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_sum(3.5, -2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_sum(10, 20)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)",True,4,301,2_7_4.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) > 0 and args[0] <= 0:
+            raise ValueError(f""First argument must be a positive number. Received: {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_sum(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = calculate_sum(-5, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+try:
+    result = calculate_sum(3.5, -2)
+    print(f""Result: {result}"")
+except ValueError as e:
+    print(e)",True,5,302,2_7_5.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) > 0 and args[0] <= 0:
+            raise ValueError(f""Invalid input for {func.__name__}: The first argument must be a positive number. Received: {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_square(x):
+    return x * x
+if __name__ == '__main__':
+    try:
+        result = calculate_square(-5)
+        print(f""Result for -5: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_square(0)
+        print(f""Result for 0: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_square(10)
+        print(f""Result for 10: {result}"")
+    except ValueError as e:
+        print(e)",True,6,303,2_7_6.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) > 0 and args[0] <= 0:
+            raise ValueError(f""First argument must be a positive number. Received: {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def calculate_sum(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = calculate_sum(-5, 10)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+    try:
+        result = calculate_sum(3.5, -2)
+        print(f""Result: {result}"")
+    except ValueError as e:
+        print(e)
+try:
+    result = calculate_sum(0, 10)
+except ValueError as e:
+    print(e)",True,7,304,2_7_7.py
+2,7,Test if a value is positive,Implement a flexible and reusable Python decorator factory that wraps any callable to automatically verify if its first argument is positive before execution. Ensure the code includes detailed error messages for invalid inputs.,"def positive_checker(func):
+    def wrapper(*args, **kwargs):
+        if len(args) >= 1 and args[0] <= 0:
+            raise ValueError(f""First argument must be a positive number, got {args[0]}"")
+        return func(*args, **kwargs)
+    return wrapper
+@positive_checker
+def add_numbers(a, b):
+    return a + b
+if __name__ == '__main__':
+    try:
+        result = add_numbers(-5, 10)
+    except ValueError as e:
+        print(f""Error occurred: {e}"")
+    try:
+        result = add_numbers(3.5, -2.5)
+    except ValueError as e:
+        print(f""Error occurred: {e}"")
+    try:
+        result = add_numbers(10, 20)
+        print(f""Success: {result}"")
+    except ValueError as e:
+        print(f""Unexpected error: {e}"")",True,8,305,2_7_8.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [10.5, -3, ""invalid"", True]
+    for val in test_values:
+        try:
+            result = checker.is_positive(val)
+            print(f""{val}: {result}"")
+        except TypeError as e:
+            print(f""Error with {val}: {e}"")",True,0,306,2_10.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [10.5, -3, 0, ""invalid"", True]
+    for val in test_values:
+        try:
+            result = checker.is_positive(val)
+            print(f""{val}: {result}"")
+        except TypeError as e:
+            print(f""Error with input {val!r}: {e}"")",True,1,307,2_10_1.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [10.5, -3, ""42"", None]
+    for val in test_values:
+        try:
+            result = checker.is_positive(val)
+            print(f""{val}: {result}"")
+        except TypeError as e:
+            print(f""Error with {val}: {e}"")",True,2,308,2_10_2.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [5.5, -3, ""123"", True, 0]
+    for val in test_values:
+        try:
+            result = checker.is_positive(val)
+            print(f""{val}: {result}"")
+        except TypeError as e:
+            print(f""Error with {val}: {e}"")",True,3,309,2_10_3.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def validate(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [10, -5.5, ""invalid"", True]
+    for val in test_values:
+        try:
+            result = checker.validate(val)
+            print(f""{val} is positive: {result}"")
+        except TypeError as e:
+            print(f""Error validating {val}: {e}"")",True,4,310,2_10_4.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [5.5, -3, ""10"", True, None]
+    for val in test_values:
+        try:
+            result = checker.is_positive(val)
+            print(f""{val}: {result}"")
+        except TypeError as e:
+            print(f""Error with {val}: {e}"")",True,5,311,2_10_5.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def check(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [42, -5.5, ""10"", True]
+    for val in test_values:
+        try:
+            result = checker.check(val)
+            print(f""{val} is {'positive' if result else 'not positive'}"")
+        except TypeError as e:
+            print(f""Error with {type(val).__name__}: {e}"")",True,6,312,2_10_6.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [5.5, -3, ""12"", True, 0]
+    for val in test_values:
+        try:
+            result = checker.is_positive(val)
+            print(f""{val}: {result}"")
+        except TypeError as e:
+            print(f""Error with {val}: {e}"")",True,7,313,2_10_7.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def is_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_cases = [42, -5.5, ""10"", True, None]
+    for case in test_cases:
+        try:
+            result = checker.is_positive(case)
+            print(f""{case!r}: {result}"")
+        except TypeError as e:
+            print(f""Error with {case!r}: {e}"")",True,8,314,2_10_8.py
+2,10,Test if a value is positive,Implement a robust and reusable Python class named PositiveChecker that validates if any input value is positive using type checking and exception handling for non-numeric inputs. Ensure the code follows PEP 8 standards.,"class PositiveChecker:
+    def check_positive(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f""Expected numeric type, got {type(value).__name__}"")
+        return value > 0
+if __name__ == '__main__':
+    checker = PositiveChecker()
+    test_values = [42, -5.5, ""10"", None, True]
+    for val in test_values:
+        try:
+            result = checker.check_positive(val)
+            print(f""{val} is {'positive' if result else 'not positive'}"")
+        except TypeError as e:
+            print(f""Error checking {val}: {e}"")",True,9,315,2_10_9.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -2, 0.5, -0.7, 0]
+    for case in test_cases:
+        print(f""is_positive({case}) -> {is_positive(case)}"")",True,0,316,2_11.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 0.0, 3.14, -2]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""is_positive({case}) = {result}"")",True,1,317,2_11_1.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","def is_positive(value: int | float) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -2, 0.0, 0.5, float('inf'), None]
+    for case in test_cases:
+        try:
+            result = is_positive(case) if isinstance(case, (int, float)) else ""Invalid type""
+            print(f""is_positive({case!r}) -> {result}"")
+        except Exception as e:
+            print(f""is_positive({case!r}) raised an error"")",True,2,318,2_11_2.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 0.0, 3.14, -2]
+    for case in test_cases:
+        print(f""is_positive({case}) -> {is_positive(case)}"")",True,3,319,2_11_3.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","def is_positive(value: int | float) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 3.14, 0, 2]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""is_positive({case}) = {result}"")",True,4,320,2_11_4.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 0.0, 3.14, -2]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""is_positive({case}) -> {result}"")",True,5,321,2_11_5.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    sample_values = [42, -7.8, 0, 0.001, float('inf'), -float('inf')]
+    for val in sample_values:
+        result = is_positive(val)
+        print(f""is_positive({val}) = {result}"")",True,6,322,2_11_6.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [1, -5, 3.7, 0, 2]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f""is_positive({case}) = {result}"")",True,7,323,2_11_7.py
+2,11,Test if a value is positive,"Write an optimized pure function in Python that takes a single argument of mixed types (int or float) and returns True if strictly greater than zero, otherwise False. Include comprehensive docstrings and type hints.","from typing import Union
+def is_positive(value: Union[int, float]) -> bool:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value > 0
+    raise TypeError(""Input must be an integer or a floating-point number."")
+if __name__ == '__main__':
+    test_cases = [1, -5.5, 0, 3.9]
+    for case in test_cases:
+        print(f""is_positive({case}) -> {is_positive(case)}"")",True,8,324,2_11_8.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Union
+def check_positive(value: float, epsilon: Union[float, None] = 0.0) -> bool:
+    if not isinstance(value, (int, float)):
+        raise TypeError(f""Expected numeric type, got {type(value).__name__}"")
+    effective_epsilon = max(0.0, epsilon) if epsilon else 0.0
+    return value > -effective_epsilon
+if __name__ == '__main__':
+    test_cases: list[tuple[Union[int, float], Union[float, None]]] = [
+        (5.0, 0),
+        (-1.0, 0),
+        (0.0, 0),
+        (0.0001, 0.0002),
+        (-0.0001, 0.0002),
+    ]
+    for test_val, eps in test_cases:
+        result = check_positive(test_val, eps)
+        print(f""check_positive({test_val}, {eps}) -> {result}"")",True,0,325,2_9.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Optional
+def check_positive(value: float, epsilon: Optional[float] = None) -> bool:
+    if isinstance(value, (int, float)):
+        return value > -epsilon if epsilon else value > 0
+    raise TypeError(""Input must be an integer or float."")
+if __name__ == '__main__':
+    sample_values = [1.5, 0.0, -2.3]
+    thresholds = [None, 1e-9]
+    for val in sample_values:
+        result_default = check_positive(val)
+        print(f""Value {val} is positive (default): {result_default}"")
+        if len(thresholds) > 0 and isinstance(result_default, bool):
+            epsilon_val = thresholds[0]
+            result_custom = check_positive(val, epsilon=epsilon_val)
+            print(f""Value {val} is positive (threshold={epsilon_val}): {result_custom}"")",True,1,326,2_9_1.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Optional
+def check_positive(value: float, epsilon: Optional[float] = None) -> bool:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value > 0
+    raise TypeError(""The first argument must be a number."")
+if __name__ == '__main__':
+    sample_values = [1.5, -3.2, 0.0, 1e-9]
+    for val in sample_values:
+        result = check_positive(val)
+        print(f""Value {val} is positive: {result}"")",True,2,327,2_9_2.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Union
+def check_positive(value: float, epsilon: Union[float, None] = 0) -> bool:
+    def _validate_input(val) -> bool:
+        return isinstance(val, (int, float)) and not isinstance(val, complex)
+    if not _validate_input(value):
+        raise TypeError(f""Expected a number, got {type(value).__name__}"")
+    threshold = epsilon if epsilon is not None else 0.0
+    return value > threshold
+if __name__ == '__main__':
+    test_cases: list[tuple[Union[float, int], Union[float, None]]] = [
+        (5.0, 0),
+        (-3.14, 0),
+        (0.0, 0),
+        (2e-9, 1e-8),
+        (1e-10, 1e-8),
+    ]
+    for val, eps in test_cases:
+        result = check_positive(val, eps)
+        print(f""check_positive({val}, {eps}) = {result}"")",True,3,328,2_9_3.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Optional
+def check_positive(value: float, epsilon: Optional[float] = None) -> bool:
+    threshold = epsilon if epsilon is not None else 1e-9
+    return value > threshold
+if __name__ == '__main__':
+    test_cases = [0.5, -2.3, 1e-10, 0]
+    for case in test_cases:
+        result = check_positive(case)
+        print(f""check_positive({case}) = {result}"")",True,4,329,2_9_4.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Optional
+def check_positive(value: float, epsilon: Optional[float] = None) -> bool:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value > 0
+    raise TypeError(""The first argument must be a number."")
+if __name__ == '__main__':
+    sample_values = [1.5, -2.3, 0.0, 1e-9]
+    for val in sample_values:
+        result = check_positive(val)
+        print(f""Value {val} is positive: {result}"")",True,5,330,2_9_5.py
+2,9,Test if a value is positive,"Produce a final-grade quality Python function 'check_positive' that supports optional custom thresholds for positive determination (e.g., > epsilon). Document all parameters clearly and ensure the code is fully type-hinted with no runtime errors.","from typing import Optional
+def check_positive(value: float, epsilon: Optional[float] = None) -> bool:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value > 0.0
+    raise TypeError(""The 'value' argument must be a number."")
+if __name__ == '__main__':
+    sample_values = [1.5, -3.2, 0.0, 4e-9]
+    test_cases = [
+        (sample_values[0], None),
+        (sample_values[1], None),
+        (sample_values[2], None),
+        (sample_values[3], 1e-8)
+    ]
+    for val, eps in test_cases:
+        result = check_positive(val, epsilon=eps)
+        print(f""check_positive({val}, {eps}) is {result}"")",True,6,331,2_9_6.py
+2,3,Test if a value is positive,"Develop a comprehensive Python utility module with multiple functions to test positivity across different numeric types (int, float). Include unit tests using pytest within the same file and ensure all code adheres to PEP 8 standards.","import math
+def is_positive_int(value: int) -> bool:
+    return isinstance(value, int) and value > 0
+def is_positive_float(value: float) -> bool:
+    return isinstance(value, float) and math.isfinite(value) and value > 0
+def test_is_positive_int():
+    assert is_positive_int(1) == True
+    assert is_positive_int(-5) == False
+    assert is_positive_int(0) == False
+    assert is_positive_int(42) == True
+def test_is_positive_float():
+    assert is_positive_float(3.14) == True
+    assert is_positive_float(-9.8) == False
+    assert is_positive_float(0.0) == False
+    assert is_positive_float(math.inf) == False
+    assert is_positive_float(float('nan')) == False
+def run_tests():
+    test_is_positive_int()
+    test_is_positive_float()
+    print(""All tests passed."")
+if __name__ == '__main__':
+    sample_values = [1, -5, 0.34, float('-inf'), math.inf]
+    results = {v: is_positive_int(v) if isinstance(v, int) else is_positive_float(v) for v in sample_values}
+    print(""Sample Results:"")
+    for val, res in results.items():
+        print(f""Value: {val}, Is Positive: {res}"")
+    test_is_positive_int()
+    test_is_positive_float()",True,0,332,2_3.py
+2,3,Test if a value is positive,"Develop a comprehensive Python utility module with multiple functions to test positivity across different numeric types (int, float). Include unit tests using pytest within the same file and ensure all code adheres to PEP 8 standards.","import math
+def is_positive_integer(value: int) -> bool:
+    return isinstance(value, int) and value > 0
+def is_positive_float(value: float) -> bool:
+    return isinstance(value, (int, float)) and math.isfinite(value) and value > 0
+def test_is_positive_integer():
+    assert is_positive_integer(1) == True
+    assert is_positive_integer(-5) == False
+    assert is_positive_integer(0) == False
+    assert is_positive_integer(42) == True
+def test_is_positive_float():
+    assert is_positive_float(3.14) == True
+    assert is_positive_float(-2.718) == False
+    assert is_positive_float(0.0) == False
+    assert is_positive_float(float('inf')) == False
+    assert is_positive_float(float('-inf')) == False
+def test_is_positive_mixed():
+    assert isinstance(is_positive_integer(1), bool)
+    assert isinstance(is_positive_float(3.0), bool)
+if __name__ == '__main__':
+    import doctest
+    test_is_positive_integer()
+    print(""Integer tests passed."")
+    test_is_positive_float()
+    print(""Float tests passed."")
+    test_is_positive_mixed()
+    print(""Mixed type checks passed."")",True,1,333,2_3_1.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"import sys
+def process_data(data_list):
+    return [x for x in data_list if isinstance(x, (int, float)) and x > 0]
+if __name__ == '__main__':
+    sample_values = [10, -5, ""error"", None, 3.5, True, 20, False, ""invalid""]
+    try:
+        result = process_data(sample_values)
+        print(f""Valid positive values found: {result}"")
+    except Exception as e:
+        sys.stderr.write(f""Error processing data: {e}\n"")",True,0,334,2_13.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"from typing import List, Any
+def process_positive_values(data: List[Any]) -> int:
+    return sum(1 for item in data if isinstance(item, (int, float)) and item > 0)
+if __name__ == '__main__':
+    sample_data = [3.5, ""invalid"", -2, None, True, 4, [], {}, ""error""]
+    try:
+        count = process_positive_values(sample_data)
+        print(f""Count of positive values: {count}"")
+    except Exception as e:
+        raise TypeError(""Invalid input detected in data list."") from e",True,1,335,2_13_1.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"import sys
+def process_data(data_list):
+    return [x for x in data_list if isinstance(x, (int, float)) and x > 0]
+if __name__ == '__main__':
+    sample_values = [10, -5, ""error"", None, 3.14, True, False, 20]
+    try:
+        result = process_data(sample_values)
+        print(f""Filtered positive values: {result}"")
+    except Exception as e:
+        if isinstance(e, TypeError):
+            raise ValueError(""Invalid input type detected in data list."") from None
+        else:
+            raise RuntimeError(f""Unexpected error occurred during processing: {e}"")",True,2,336,2_13_2.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"import sys
+def process_data(data_list):
+    return [x for x in data_list if isinstance(x, (int, float)) and x > 0]
+if __name__ == '__main__':
+    sample_values = [10, -5, ""error"", None, 3.14, True, False, 20]
+    try:
+        result = process_data(sample_values)
+        print(f""Valid positive values found: {result}"")
+    except Exception as e:
+        sys.exit(1)",True,3,337,2_13_3.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"from typing import Any, List
+def process_data(data: List[Any]) -> int:
+    return sum(1 for item in data if isinstance(item, (int, float)) and item > 0)
+if __name__ == '__main__':
+    sample_values = [3.5, ""error"", -2, True, None, 42, 'invalid', 7]
+    try:
+        result = process_data(sample_values)
+        print(f""Count of valid positive values: {result}"")
+    except Exception as e:
+        raise RuntimeError(f""Processing failed due to invalid input type or value: {e}"") from None",True,4,338,2_13_4.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"import sys
+def process_data(data_list):
+    return [x for x in data_list if isinstance(x, (int, float)) and x > 0]
+if __name__ == '__main__':
+    sample_values = [10, -5.5, ""error"", None, True, 3.14, [], {""key"": ""val""}]
+    try:
+        result = process_data(sample_values)
+        print(f""Valid positive values found: {result}"")
+    except Exception as e:
+        sys.stderr.write(f""Error processing data: {e}\n"")",True,5,339,2_13_5.py
+2,13,Test if a value is positive,Develop a high-performance Python script that processes a list of mixed data types using map comprehension to filter positive values while safely handling invalid inputs by raising descriptive errors.,"import sys
+def process_data(data_list):
+    return [x for x in data_list if isinstance(x, (int, float)) and x > 0]
+if __name__ == '__main__':
+    sample_values = [10, -5, ""error"", None, 3.5, True, False, ""not a number""]
+    try:
+        result = process_data(sample_values)
+        print(f""Filtered positive values: {result}"")
+    except Exception as e:
+        if isinstance(e, TypeError):
+            raise ValueError(""Invalid input type detected in data list."") from None
+        else:
+            raise RuntimeError(f""Unexpected error occurred while processing data: {e}"")",True,6,340,2_13_6.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    test_cases = [42, -5, 0, 7]
+    for val in test_cases:
+        print(f""{val} is {'even' if is_even(val) else 'odd'}"")",True,0,341,3_0.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    test_values = [0, -5, 42, -3, 100]
+    for val in test_values:
+        result = ""Even"" if is_even(val) else ""Odd""
+        print(f""{val}: {result}"")",True,1,342,3_0_1.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even_bitwise(n: int) -> bool:
+    return (n & 1) == 0
+if __name__ == '__main__':
+    samples = [42, -5, 0, 7]
+    for val in samples:
+        print(f""{val} is {'even' if is_even_bitwise(val) else 'odd'}"")",True,2,343,3_0_2.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    for val in [256, -3, 4096, -8]:
+        print(f""{val} is {'even' if is_even(val) else 'odd'}"")",True,3,344,3_0_3.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    test_values = [0, -5, 42, -3, 100]
+    for val in test_values:
+        print(f""{val} is {'even' if is_even(val) else 'odd'}"")",True,4,345,3_0_4.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    test_values = [0, -5, 42, -3, 100]
+    for val in test_values:
+        result = ""Even"" if is_even(val) else ""Odd""
+        print(f""{val} -> {result}"")",True,5,346,3_0_5.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    test_values = [0, -5, 42, -8, 99]
+    for val in test_values:
+        result = ""Even"" if is_even(val) else ""Odd""
+        print(f""{val} is {result}"")",True,6,347,3_0_6.py
+3,0,See if a number is even,Implement a robust and efficient Python function to check if an integer is even using bitwise operations instead of modulo arithmetic for maximum performance.,"def is_even_bitwise(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    test_values = [0, -5, 42, -3, 100]
+    for val in test_values:
+        result = ""Even"" if is_even_bitwise(val) else ""Odd""
+        print(f""{val}: {result}"")",True,7,348,3_0_7.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_values = [10, -3.5, 'abc', True]
+    for value in sample_values:
+        if is_integer(value):
+            parity_result = determine_parity(int(str(value)))
+            print(f""{value} is {parity_result}"")
+        else:
+            print(f""Invalid input: {value}"")",True,0,349,3_1.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_values = [42, -17, 3.5, None]
+    for value in sample_values:
+        if not is_integer(value):
+            print(f""{value} is not a valid integer."")
+            continue
+        parity = determine_parity(int(str(value)))
+        print(f""The number {int(str(value))} has the following parity: {parity}."")",True,1,350,3_1_1.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        print(f""{number} is even."")
+    else:
+        print(f""{number} is odd."")
+if __name__ == '__main__':
+    sample_values = [1, -5, ""three"", None]
+    for value in sample_values:
+        if not isinstance(value, int):
+            continue
+        if is_integer(value):
+            determine_parity(value)
+        else:
+            print(f""{value} cannot be processed."")",True,2,351,3_1_2.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        print(f""{number} is even."")
+    else:
+        print(f""{number} is odd."")
+if __name__ == '__main__':
+    test_values = [1, -5, ""abc"", None]
+    for val in test_values:
+        if not isinstance(val, (int, float)) and not str(val).lstrip('-').isdigit():
+            continue
+        try:
+            num = int(val)
+            if is_integer(num):
+                determine_parity(num)
+            else:
+                print(f""{val} cannot be processed as an integer."")
+        except Exception:
+            print(f""Error processing {val}."")",True,3,352,3_1_3.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_values = [10, -3.5, 'five', True]
+    for value in sample_values:
+        if is_integer(value):
+            parity = determine_parity(int(str(value)))
+            print(f""{value} is {parity}"")
+        else:
+            print(f""Invalid input: {value}"")",True,4,353,3_1_4.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""even""
+    else:
+        return ""odd""
+if __name__ == '__main__':
+    sample_values = [10, -3.5, ""five"", True]
+    for value in sample_values:
+        if not is_integer(value):
+            print(f""{value} is not an integer."")
+            continue
+        parity = determine_parity(int(str(value)))
+        print(f""The number {int(str(value))} is {parity}."")",True,5,354,3_1_5.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_values = [10, -3.5, 'five', True]
+    for value in sample_values:
+        if not is_integer(value):
+            print(f""{value} is not a valid integer."")
+            continue
+        parity_result = determine_parity(int(str(value)))
+        print(f""The number {int(str(value))} has the following parity: {parity_result}."")",True,6,355,3_1_6.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_values = [10, -3.5, 'abc', True]
+    for value in sample_values:
+        if is_integer(value):
+            parity = determine_parity(int(str(value)))
+            print(f""{value} is {parity}"")
+        else:
+            print(f""Invalid input: {type(value).__name__}, not an integer"")",True,7,356,3_1_7.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def get_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    test_values = [42, -7, '15', None]
+    for val in test_values:
+        if not is_integer(val):
+            print(f""{val} is not a valid integer."")
+        else:
+            parity = get_parity(int(val))
+            print(f""The number {int(val)} has the following parity: {parity}."")",True,8,357,3_1_8.py
+3,1,See if a number is even,Write a complete Python script that includes input validation to ensure only integers are processed before determining their parity according to best practices.,"def is_integer(value):
+    try:
+        int(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
+def determine_parity(number):
+    if number % 2 == 0:
+        return ""Even""
+    else:
+        return ""Odd""
+if __name__ == '__main__':
+    sample_values = [10, -3.5, 'abc', 7]
+    for value in sample_values:
+        if is_integer(value):
+            parity = determine_parity(int(str(value)))
+            print(f""{value} is {parity}"")
+        else:
+            print(f""Invalid input: {value}"")",True,9,358,3_1_9.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, num):
+        return not (num % 2)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_cases = [10, -4, 7, 3.5]
+    for case in test_cases:
+        result = ""Even"" if checker.is_even(case) else ""Odd or Invalid""
+        print(f""{case}: {result}"")",True,0,359,3_2.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, n):
+        return bool(n & 1)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_values = [0, -2, 3, 4, -5]
+    for val in test_values:
+        result = ""Even"" if checker.is_even(val) else ""Odd""
+        print(f""{val}: {result}"")",True,1,360,3_2_1.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, num):
+        return bool(num & 1)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_cases = [0, 2, -4, 7, 3.5]
+    for val in test_cases:
+        if isinstance(val, int):
+            print(f""{val} is even: {checker.is_even(val)}"")
+        else:
+            print(f""{val} skipped (not an integer)"")",True,2,361,3_2_2.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, n):
+        return bool(n & 1)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_values = [0, 2, -4, 3, 5, 7]
+    for val in test_values:
+        result = ""Even"" if checker.is_even(val) else ""Odd""
+        print(f""{val}: {result}"")",True,3,362,3_2_3.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, n):
+        return bool(n & 1)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_values = [0, 2, -4, 3, 5]
+    for val in test_values:
+        print(f""{val}: {checker.is_even(val)}"")",True,4,363,3_2_4.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, num):
+        return bool(num & 1)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_cases = [0, 2, -4, 3, -5]
+    for case in test_cases:
+        result = checker.is_even(case)
+        print(f""{case} is {'even' if result else 'odd'}"")",True,5,364,3_2_5.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, num):
+        return bool(num & 1) if isinstance(num, int) else False
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_cases = [0, -5, 42, 'string', None]
+    for case in test_cases:
+        print(f""{case}: {checker.is_even(case)}"")",True,6,365,3_2_6.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, n):
+        return not (n % 2)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_cases = [0, 1, 2, -3, 4, 5]
+    for case in test_cases:
+        print(f""{case} is even: {checker.is_even(case)}"")",True,7,366,3_2_7.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, n):
+        return bool(n & 1)
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_values = [0, 2, -4, 3, 5]
+    for val in test_values:
+        result = ""Even"" if checker.is_even(val) else ""Odd""
+        print(f""{val}: {result}"")",True,8,367,3_2_8.py
+3,2,See if a number is even,Create an optimized Python class method named 'is_even' that leverages the built-in integer properties for checking evenness without external dependencies.,"class NumberChecker:
+    def is_even(self, number):
+        return number % 2 == 0
+if __name__ == '__main__':
+    checker = NumberChecker()
+    test_values = [10, -3, 42, 0]
+    for val in test_values:
+        print(f""{val}: {checker.is_even(val)}"")",True,9,368,3_2_9.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int) or number < 0:
+        raise TypeError(""Input must be a non-negative integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -5, ""10"", 3.5]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""{case} -> {result}"")
+        except TypeError as e:
+            print(f""Error with input '{case}': {e}"")",True,0,369,3_3.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(n):
+    if not isinstance(n, int) or n < 0:
+        raise TypeError(""Input must be a non-negative integer."")
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_values = [0, 1, 2, -5]
+    for value in test_values:
+        try:
+            result = is_even(value)
+            print(f""{value} is {'even' if result else 'odd'}"")
+        except TypeError as e:
+            print(f""Error processing {value}: {e}"")",True,1,370,3_3_1.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int) or number < 0:
+        raise TypeError(""Input must be a non-negative integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -5, ""10"", 3.5]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""{case} -> {result}"")
+        except TypeError as e:
+            print(f""Error processing {case}: {e}"")",True,2,371,3_3_2.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int):
+        raise TypeError(f""Expected an integer, got {type(number).__name__}"")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -17, 3.5, ""five"", True]
+    for value in test_cases:
+        try:
+            result = is_even(value)
+            print(f""{value} is even: {result}"")
+        except TypeError as e:
+            print(f""Error processing {type(value).__name__}: {e}"")",True,3,372,3_3_3.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int):
+        raise TypeError(""Input must be an integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -3, ""5"", 1.8]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""{case} -> {result}"")
+        except TypeError as e:
+            print(f""Error with input '{case}': {e}"")",True,4,373,3_3_4.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(num):
+    if not isinstance(num, int) or num < 0:
+        raise TypeError(""Input must be a non-negative integer."")
+    return num % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -5, 1.7]
+    for val in test_cases:
+        try:
+            result = is_even(val)
+            print(f""{val} is {'even' if result else 'odd'}"")
+        except TypeError as e:
+            print(e)",True,5,374,3_3_5.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int) or number < 0:
+        raise TypeError(""Input must be a non-negative integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -5, ""10"", None]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""{case} -> {result}"")
+        except TypeError as e:
+            print(f""Error with input '{case}': {e}"")",True,6,375,3_3_6.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int):
+        raise TypeError(""Input must be an integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -3, ""5"", 1.7]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""{case} is {'even' if result else 'odd'}"")
+        except TypeError as e:
+            print(f""Error processing {case}: {e}"")",True,7,376,3_3_7.py
+3,3,See if a number is even,Generate a high-quality Python function to determine if a number is even with comprehensive error handling for non-integer inputs following PEP 8 standards.,"def is_even(number):
+    if not isinstance(number, int) or number < 0:
+        raise TypeError(""Input must be a non-negative integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [10, -5, ""4"", 3.7]
+    for value in test_cases:
+        try:
+            result = is_even(value)
+            print(f""{value} is even."")
+        except TypeError as e:
+            print(f""Error processing {value}: {e}"")",True,8,377,3_3_8.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(n: int) -> bool:
+    if not isinstance(n, int):
+        raise TypeError(f""Expected an integer, got {type(n).__name__}"")
+    return n & 1 == 0
+if __name__ == '__main__':
+    sample_values = [42, -5, 0, 1]
+    for val in sample_values:
+        result = check_parity(val)
+        print(f""Number {val}: Parity is {'Even' if result else 'Odd'}"")",True,0,378,3_4.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(number: int) -> bool:
+    return bool(number & 1)
+if __name__ == '__main__':
+    sample_values = [42, -7, 0, 1]
+    for val in sample_values:
+        result = check_parity(val)
+        print(f""Parity of {val}: {'Even' if result else 'Odd'}"")",True,1,379,3_4_1.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def is_even(n: int) -> bool:
+    if not isinstance(n, (int, bool)):
+        raise TypeError(""Input must be an integer."")
+    return n & 1 == 0
+def main():
+    test_cases = [42, -7, 0, 1, 8]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""Number {value} is {'even' if result else 'odd'}"")
+if __name__ == '__main__':
+    main()",True,2,380,3_4_2.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def is_even(n: int) -> bool:
+    return n & 1 == 0
+def main() -> None:
+    test_cases = [
+        (0, ""Zero""),
+        (-42, ""Negative even number""),
+        (37, ""Positive odd number""),
+        (986541, ""Large positive integer""),
+        (-10**18 + 1, ""Very large negative odd integer"")
+    ]
+    print(""Parity Check Results:"")
+    for value, description in test_cases:
+        result = is_even(value)
+        status = ""Even"" if result else ""Odd""
+        print(f""{description}: {value} -> {status}"")
+if __name__ == '__main__':
+    main()",True,3,381,3_4_3.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def is_even(number: int) -> bool:
+    return not ((number & 1))
+def main():
+    test_values = [0, -3, 7, 100, -42]
+    print(""Parity Check Results:"")
+    for val in test_values:
+        result = is_even(val)
+        status = ""Even"" if result else ""Odd""
+        print(f""{val}: {status}"")
+if __name__ == '__main__':
+    main()",True,4,382,3_4_4.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(n: int) -> bool:
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise TypeError(""Input must be a non-boolean integer."")
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [1, -4, 0, 17]
+    for val in test_cases:
+        result = check_parity(val)
+        print(f""Parity of {val}: {'Even' if result else 'Odd'}"")",True,5,383,3_4_5.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(number: int) -> bool:
+    if not isinstance(number, int):
+        raise TypeError(""Input must be an integer."")
+    return bool(number & 1)
+if __name__ == '__main__':
+    test_cases = [0, -5, 42, 99999]
+    print(""Parity Check Results:"")
+    for val in test_cases:
+        is_odd = check_parity(val)
+        status = ""Odd"" if is_odd else ""Even""
+        print(f""{val} -> {status}"")",True,6,384,3_4_6.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(number: int) -> bool:
+    return bool(number & 1)
+if __name__ == '__main__':
+    test_cases = [0, -5, 42, -3, 99]
+    print(""Parity Check Results:"")
+    for val in test_cases:
+        is_even = check_parity(val)
+        status = ""Even"" if is_even else ""Odd""
+        print(f""{val}: {status}"")",True,7,385,3_4_7.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def is_even(n: int) -> bool:
+    if not isinstance(n, int):
+        raise TypeError(f""Expected int, got {type(n).__name__}"")
+    return (n & 1) == 0
+def main() -> None:
+    test_cases = [
+        (-5), 
+        (0), 
+        (42), 
+        (999), 
+        (1e6 if False else 10**6)                                                                                            
+    ]
+    corrected_cases = [int(x) for x in [-5, 0, 42, -999, 1000000]]
+    print(""Parity Check Results:"")
+    for value in corrected_cases:
+        parity_result = is_even(value)
+        status_msg = ""Even"" if parity_result else ""Odd""
+        print(f""is_even({value}) -> {parity_result} ({status_msg})"")
+if __name__ == '__main__':
+    main()",True,8,386,3_4_8.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(number: int) -> bool:
+    return bool(number & 1)
+if __name__ == '__main__':
+    sample_values = [42, -5, 0, 7]
+    for val in sample_values:
+        result = check_parity(val)
+        print(f""Number {val} is {'even' if result else 'odd'}"")",True,9,387,3_4_9.py
+3,4,See if a number is even,Develop a production-ready Python utility that checks the parity of an integer using logical operators and includes detailed docstrings explaining the algorithmic efficiency.,"def check_parity(number: int) -> bool:
+    return not (number & 1)
+if __name__ == '__main__':
+    test_cases = [42, -7, 0, 1]
+    for val in test_cases:
+        result = check_parity(val)
+        print(f""Number {val}: Parity is {'even' if result else 'odd'}"")",True,10,388,3_4_10.py
+3,5,See if a number is even,"Write a concise yet professional Python function to verify if a given number is even, ensuring it handles negative numbers correctly without performance overhead.","def is_even(n: int) -> bool:
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [-5, -4, 3, 17, 0]
+    for num in test_cases:
+        print(f""{num} is {'even' if is_even(num) else 'odd'}"")",True,0,389,3_5.py
+3,5,See if a number is even,"Write a concise yet professional Python function to verify if a given number is even, ensuring it handles negative numbers correctly without performance overhead.","def is_even(n: int) -> bool:
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [-5, -4, 0, 1, 3, 10]
+    for num in test_cases:
+        print(f""{num} is {'even' if is_even(num) else 'odd'}"")",True,1,390,3_5_1.py
+3,5,See if a number is even,"Write a concise yet professional Python function to verify if a given number is even, ensuring it handles negative numbers correctly without performance overhead.","def is_even(n: int) -> bool:
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [-5, -4, 3, 0, 10]
+    for num in test_cases:
+        result = ""Even"" if is_even(num) else ""Odd""
+        print(f""{num} is {result}"")",True,2,391,3_5_2.py
+3,5,See if a number is even,"Write a concise yet professional Python function to verify if a given number is even, ensuring it handles negative numbers correctly without performance overhead.","def is_even(n: int) -> bool:
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [-5, -4, 3, 17, 0]
+    for num in test_cases:
+        result = ""Even"" if is_even(num) else ""Odd""
+        print(f""{num} is {result}"")",True,3,392,3_5_3.py
+3,5,See if a number is even,"Write a concise yet professional Python function to verify if a given number is even, ensuring it handles negative numbers correctly without performance overhead.","def is_even(n: int) -> bool:
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [-5, -4, 0, 1, 3, 10]
+    for num in test_cases:
+        result = ""Even"" if is_even(num) else ""Odd""
+        print(f""{num} -> {result}"")",True,4,393,3_5_4.py
+3,5,See if a number is even,"Write a concise yet professional Python function to verify if a given number is even, ensuring it handles negative numbers correctly without performance overhead.","def is_even(n: int) -> bool:
+    return n % 2 == 0
+if __name__ == '__main__':
+    test_cases = [-5, -4, 3, 10]
+    for val in test_cases:
+        print(f""{val} is {'even' if is_even(val) else 'odd'}"")",True,5,394,3_5_5.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+from typing import Union
+def is_positive(value: Union[int, float, np.ndarray]) -> bool:
+    if isinstance(value, (int, float)):
+        return value > 0
+    elif hasattr(value, '__iter__') and not isinstance(value, str):
+        try:
+            arr = np.asarray(value)
+            return np.all(arr > 0)
+        except Exception:
+            raise TypeError(""Input must be a numeric scalar or array-like."")
+if __name__ == '__main__':
+    test_cases = [5.5, -3, True, False]
+    for val in test_cases:
+        print(f""{val}: {is_positive(val)}"")
+    arr_np = np.array([1.0, 2.0])
+    arr_mixed = np.array([-1.0, 2.0])
+    series_pd = [5, -3] if False else None                                                                                                                            
+    print(f""Array {arr_np}: {is_positive(arr_np)}"")
+    print(f""Array {arr_mixed}: {is_positive(arr_mixed)}"")",True,0,395,2_14.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+import pandas as pd
+def check_positivity(value):
+    try:
+        val = float(value)
+        return val > 0
+    except (ValueError, TypeError):
+        raise ValueError(""Input must be convertible to numeric."")
+if __name__ == '__main__':
+    assert check_positivity(5.0) is True
+    assert check_positivity(-3.14) is False
+    arr = np.array([1.2, -2.5, 0.0])
+    expected_arr = [True, False, False]
+    assert all(check_positivity(x) == e for x, e in zip(arr, expected_arr))
+    s = pd.Series([-1, 4, np.nan])
+    result_s = list(map(lambda x: check_positivity(x), s.dropna()))
+    expected_s = [False, True]
+    assert result_s == expected_s",True,1,396,2_14_1.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+from typing import Union
+def check_positivity(value: Union[int, float, np.ndarray]) -> bool:
+    if isinstance(value, (int, float)):
+        return value > 0
+    elif hasattr(value, 'shape'):
+        all_positive = True
+        for val in value.flatten():
+            if not (val is None or val == 0):
+                if val <= 0:
+                    all_positive = False
+                    break
+        return all_positive
+    else:
+        raise TypeError(""Unsupported input type"")
+if __name__ == '__main__':
+    sample_scalar = -5.0
+    sample_array = np.array([1, 2, 3])
+    sample_series_data = [4, 5]
+    print(check_positivity(sample_scalar))
+    print(check_positivity(sample_array))",True,2,397,2_14_2.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+from typing import Union, List
+def is_positive(value: Union[int, float, np.ndarray, 'pd.Series']) -> bool:
+    try:
+        arr = np.asarray(value)
+        return (arr > 0).all()
+    except Exception:
+        raise TypeError(""Input must be a scalar or array-like"")
+if __name__ == '__main__':
+    import pandas as pd
+    assert is_positive(1.5)
+    assert not is_positive(-2.3)
+    arr_pos = np.array([1, 2, 3])
+    arr_neg = np.array([-1, -2, -3])
+    arr_mixed = np.array([0, -1, 5])
+    assert is_positive(arr_pos)
+    assert not is_positive(arr_neg)
+    assert not is_positive(arr_mixed)
+    series_pos = pd.Series([1.0, 2.0, 3.0])
+    series_mix = pd.Series([-5.0, 0.0, 4.0])
+    assert is_positive(series_pos)
+    assert not is_positive(series_mix)",True,3,398,2_14_3.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+from typing import Union
+def is_positive(value: Union[int, float, np.ndarray]) -> bool:
+    if isinstance(value, (int, float)):
+        return value > 0
+    elif hasattr(value, '__iter__') and not isinstance(value, str):
+        try:
+            arr = np.asarray(value)
+            return np.all(arr > 0)
+        except Exception:
+            raise TypeError(""Input must be a numeric scalar or array-like."")
+if __name__ == '__main__':
+    test_cases = [5.5, -3, True, False]
+    for val in test_cases:
+        print(f""{val}: {is_positive(val)}"")
+    arr_np = np.array([1, 2, 3])
+    arr_mixed = np.array([-1, 0, 4])
+    import pandas as pd
+    s_series = pd.Series([1.5, -2.0, 3.7])
+    print(f""NumPy array {arr_np}: {is_positive(arr_np)}"")
+    print(f""Mixed NumPy array {arr_mixed}: {is_positive(arr_mixed)}"")
+    print(f""Pandas Series {s_series.tolist()}: {is_positive(s_series)}"")",True,4,399,2_14_4.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+from typing import Union
+def check_positivity(value: Union[int, float, np.ndarray]) -> bool:
+    if isinstance(value, (int, float)):
+        return value > 0
+    elif hasattr(value, 'shape'):
+        all_positive = True
+        for val in value.flatten():
+            if not (val >= 0):
+                all_positive = False
+                break
+        return all_positive
+    else:
+        raise TypeError(""Unsupported input type"")
+if __name__ == '__main__':
+    sample_scalar = -5.0
+    sample_array = np.array([1, 2, 3])
+    sample_series_data = [4, 5]
+    print(check_positivity(sample_scalar))
+    print(check_positivity(np.array([-1, -2])))
+    print(check_positivity(sample_array))",True,5,400,2_14_5.py
+2,14,Test if a value is positive,"Generate best-practice Python code for checking positivity with support for numpy arrays and pandas Series objects in addition to native scalars, ensuring the solution is scalable and efficient.","import numpy as np
+from typing import Union
+def is_positive(value: Union[int, float, np.ndarray]) -> bool:
+    if isinstance(value, (int, float)):
+        return value > 0
+    elif hasattr(value, '__iter__') and not isinstance(value, str):
+        try:
+            arr = np.asarray(value)
+            return np.all(arr > 0)
+        except Exception:
+            raise TypeError(""Input must be a numeric scalar or array-like."")
+    else:
+        raise TypeError(f""Unsupported type {type(value).__name__}."")
+if __name__ == '__main__':
+    test_cases = [5, -3.2, 0, np.array([1, 2]), np.array([-1, 2])]
+    for case in test_cases:
+        print(f""Input: {case}, Is Positive: {is_positive(case)}"")",True,6,401,2_14_6.py
+2,12,Test if a value is positive,"Create a production-ready module containing multiple utility functions to test positivity for integers, floats, and complex numbers (checking real part), ensuring maximum performance with minimal overhead.","import cmath
+def is_integer(value):
+    return isinstance(value, int) and not isinstance(value, bool)
+def is_float(value):
+    return isinstance(value, float) and not isinstance(value, bool)
+def check_positivity_int(n: int) -> bool:
+    if n <= 0:
+        raise ValueError(""Integer must be positive"")
+    return True
+def check_positivity_float(x: float) -> bool:
+    if x <= 0.0:
+        raise ValueError(""Float must be strictly greater than zero"")
+    return True
+def check_complex_real_positive(z: complex) -> bool:
+    real_part = z.real
+    if isinstance(real_part, int):
+        if not is_integer(real_part):
+            pass                                                                                      
+        elif real_part <= 0.0:
+            raise ValueError(""Real part must be positive"")
+    else:
+        if real_part <= 0.0:
+            raise ValueError(""Real part must be strictly greater than zero"")
+    return True
+def validate_and_check(value):
+    if isinstance(value, int) and not isinstance(value, bool):
+        check_positivity_int(value)
+    elif isinstance(value, float):
+        check_positivity_float(value)
+    elif isinstance(value, complex):
+        check_complex_real_positive(value)
+    else:
+        raise TypeError(f""Unsupported type for positivity test: {type(value)}"")
+if __name__ == '__main__':
+    samples = [10, 5.7, -3, cmath.rect(2, 0), complex(-4, 9)]
+    results = []
+    for val in samples:
+        try:
+            validate_and_check(val)
+            result_str = f""Validated successfully (Type: {type(val).__name__})""
+        except ValueError as e:
+            result_str = f""Validation failed: {e}""
+        except TypeError as e:
+            result_str = f""TypeError: {e}""
+        results.append((val, result_str))
+    for val, res in results:
+        print(f""{res}"")",True,0,402,2_12.py
+2,12,Test if a value is positive,"Create a production-ready module containing multiple utility functions to test positivity for integers, floats, and complex numbers (checking real part), ensuring maximum performance with minimal overhead.","import cmath
+def is_integer(value):
+    return isinstance(value, int) and not isinstance(value, bool)
+def is_float(value):
+    return isinstance(value, float) and not isinstance(value, bool)
+def check_positivity_int(n: int) -> bool:
+    if n <= 0:
+        raise TypeError(""Input must be a positive integer."")
+    return True
+def check_positivity_float(x: float) -> bool:
+    if x <= 0.0:
+        raise ValueError(""Float input is not strictly positive."")
+    return True
+def check_complex_real_positive(z: complex) -> bool:
+    real_part = z.real
+    if isinstance(real_part, int):
+        pass
+    elif isinstance(real_part, float):
+        pass
+    else:
+        try:
+            real_part = float(real_part)
+        except (TypeError, ValueError):
+            raise TypeError(""Complex number's real part must be numeric."")
+    if real_part <= 0.0:
+        raise ValueError(f""Real part of complex {z} is not positive ({real_part})."")
+    return True
+if __name__ == '__main__':
+    try:
+        check_positivity_int(5)
+        print(""Integer 5 passed."")
+    except Exception as e:
+        print(f""Error testing integer 5: {e}"")
+    try:
+        check_positivity_int(-3)
+        print(""Integer -3 should have failed but did not."")
+    except TypeError as e:
+        print(f""Correctly caught error for negative int: {e}"")
+    try:
+        check_positivity_float(2.5)
+        print(""Float 2.5 passed."")
+    except Exception as e:
+        print(f""Error testing float 2.5: {e}"")
+    try:
+        check_positivity_float(-10.7)
+        print(""Float -10.7 should have failed but did not."")
+    except ValueError as e:
+        print(f""Correctly caught error for negative float: {e}"")
+    try:
+        check_complex_real_positive(3 + 4j)
+        print(""Complex 3+4i passed."")
+    except Exception as e:
+        print(f""Error testing complex 3+4i: {e}"")
+    try:
+        check_complex_real_positive(-1.5 - 2.0j)
+        print(""Complex -1.5-2i should have failed but did not."")
+    except ValueError as e:
+        print(f""Correctly caught error for complex with negative real part: {e}"")
+    try:
+        check_complex_real_positive(0 + 3j)
+        print(""Complex 0+3i should have failed but did not."")
+    except ValueError as e:
+        print(f""Correctly caught error for complex with zero real part: {e}"")",True,1,403,2_12_1.py
+2,12,Test if a value is positive,"Create a production-ready module containing multiple utility functions to test positivity for integers, floats, and complex numbers (checking real part), ensuring maximum performance with minimal overhead.","import cmath
+def is_integer(value):
+    return isinstance(value, int) and not isinstance(value, bool)
+def is_float(value):
+    return isinstance(value, float) and not isinstance(value, bool)
+def check_positivity_int(n: int) -> bool:
+    if n <= 0:
+        raise ValueError(""Integer must be positive"")
+    return True
+def check_positivity_float(x: float) -> bool:
+    if x <= 0.0:
+        raise ValueError(""Float must be strictly greater than zero"")
+    return True
+def check_complex_part_positive(z: complex, part_name=""real""):
+    real_val = z.real
+    imag_val = z.imag
+    if isinstance(part_name, str):
+        target_value = real_val if part_name.lower() == ""real"" else imag_val
+        if target_value <= 0.0:
+            raise ValueError(f""{part_name.capitalize()} part of complex number must be positive"")
+    return True
+if __name__ == '__main__':
+    test_cases_int = [1, -5, 0]
+    for val in test_cases_int:
+        try:
+            check_positivity_int(val)
+            print(f""Integer {val}: Passed (should have raised error)"")
+        except ValueError as e:
+            print(f""Integer {val}: Correctly failed with '{e}'"")
+    test_cases_float = [3.14, -2.5, 0.0]
+    for val in test_cases_float:
+        try:
+            check_positivity_float(val)
+            print(f""Float {val}: Passed (should have raised error)"")
+        except ValueError as e:
+            print(f""Float {val}: Correctly failed with '{e}'"")
+    complex_tests = [complex(5, 2), complex(-3.0, -4)]
+    for val in complex_tests:
+        try:
+            check_complex_part_positive(val)
+            print(f""Complex {val}: Passed (should have raised error)"")
+        except ValueError as e:
+            print(f""Complex {val}: Correctly failed with '{e}'"")
+    valid_int = 42
+    if is_integer(valid_int):
+        print(""Integer type check passed."")
+    valid_float = 3.14
+    if is_float(valid_float):
+        print(""Float type check passed."")",True,2,404,2_12_2.py
+2,12,Test if a value is positive,"Create a production-ready module containing multiple utility functions to test positivity for integers, floats, and complex numbers (checking real part), ensuring maximum performance with minimal overhead.","def is_integer(x):
+    return isinstance(x, int) and not isinstance(x, bool)
+def is_float(x):
+    return isinstance(x, float)
+def has_positive_real_part(x):
+    if hasattr(x, 'real'):
+        return x.real > 0
+    elif isinstance(x, (int, float)):
+        return x > 0
+    else:
+        try:
+            num = complex(x).real
+            return num > 0
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    test_cases_int = [1, -5, 0]
+    print(f""Integer tests: {[(val, is_integer(val)) for val in test_cases_int]}"")
+    test_cases_float = [3.14, -2.7, 0.0]
+    print(f""Float tests: {[(val, is_float(val)) for val in test_cases_float]}"")
+    complex_tests = [(1+2j), (-1-2j), (0+5j)]
+    print(f""Complex real part tests: {[(z, has_positive_real_part(z)) for z in complex_tests]}"")",True,3,405,2_12_3.py
+2,12,Test if a value is positive,"Create a production-ready module containing multiple utility functions to test positivity for integers, floats, and complex numbers (checking real part), ensuring maximum performance with minimal overhead.","import cmath
+def is_integer(value):
+    return isinstance(value, int) and not isinstance(value, bool)
+def is_float(value):
+    return isinstance(value, float) and not isinstance(value, bool)
+def check_positivity_int(n: int) -> bool:
+    if n > 0:
+        return True
+    elif n == 0:
+        return False
+    else:
+        raise ValueError(""Input must be non-negative integer"")
+def check_positivity_float(x: float, tolerance=1e-9) -> bool:
+    return x > -tolerance and not (abs(x) < tolerance)
+def check_complex_part(z: complex) -> bool:
+    real_part = z.real
+    if isinstance(real_part, int):
+        return is_integer(real_part)
+    elif isinstance(real_part, float):
+        return check_positivity_float(float(real_part))
+    else:
+        raise TypeError(""Real part must be numeric"")
+def main():
+    test_ints = [0, 1, -5]
+    for val in test_ints:
+        try:
+            result = check_positivity_int(val)
+            print(f""Integer {val}: Positive={result}"")
+        except ValueError as e:
+            print(f""Integer {val}: Error-{e}"")
+    test_floats = [0.5, -1.234, 1e-10]
+    for val in test_floats:
+        result = check_positivity_float(val)
+        print(f""Float {val}: Positive={result}"")
+    complex_nums = [(1+2j), (-3+4j), (5j)]
+    for z in complex_nums:
+        try:
+            is_positive_real = check_complex_part(z)
+            print(f""Complex {z} Real Part Positive={is_positive_real}"")
+        except TypeError as e:
+            print(f""Complex {z}: Error-{e}"")
+if __name__ == '__main__':
+    main()",True,4,406,2_12_4.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    test_cases = [0b0, 0b1, 0x3FF]
+    for num in test_cases:
+        print(f""Parity of {num}: {check_parity(num)}"")",True,0,407,3_6.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    test_values = [7, 8, 42]
+    for val in test_values:
+        result = check_parity(val)
+        print(f""Parity of {val}: {result}"")",True,1,408,3_6_1.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    test_cases = [0b1010, 0b1111, -5]
+    for case in test_cases:
+        result = check_parity(case)
+        print(f""Parity of {case}: {result}"")",True,2,409,3_6_2.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return value & 1 != 0
+if __name__ == '__main__':
+    test_values = [5, -3, 0]
+    for val in test_values:
+        result = check_parity(val)
+        print(f""Parity of {val}: {result}"")",True,3,410,3_6_3.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    sample_values = [5, 6, 7, -3]
+    for val in sample_values:
+        is_odd = check_parity(val)
+        print(f""Value {val}: Parity (odd={is_odd})"")",True,4,411,3_6_4.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    test_cases = [5, 6, 7]
+    for num in test_cases:
+        result = check_parity(num)
+        print(f""Parity of {num}: {result}"")",True,5,412,3_6_5.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(n: int) -> bool:
+    return (n & 1) != 0
+if __name__ == '__main__':
+    sample_values = [7, 8, 9]
+    for val in sample_values:
+        parity_result = check_parity(val)
+        print(f""Value {val}: Parity is {'odd' if parity_result else 'even'}"")",True,6,413,3_6_6.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    test_cases = [5, 6, 7, -3]
+    for num in test_cases:
+        result = check_parity(num)
+        print(f""Parity of {num}: {'odd' if result else 'even'}"")",True,7,414,3_6_7.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(number: int) -> bool:
+    return (number & 1) != 0
+if __name__ == '__main__':
+    test_values = [5, 6, 7, 8]
+    for val in test_values:
+        result = check_parity(val)
+        print(f""Parity of {val}: {result}"")",True,8,415,3_6_8.py
+3,6,See if a number is even,Construct an optimized Python solution that uses the `bool` type conversion on bitwise AND with one for parity checking while maintaining strict type safety.,"def check_parity(value: int) -> bool:
+    return (value & 1) != 0
+if __name__ == '__main__':
+    test_cases = [7, 8, -3]
+    for case in test_cases:
+        result = check_parity(case)
+        print(f""Parity of {case}: {result}"")",True,9,416,3_6_9.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    samples = [0, -5, 42, -8]
+    for val in samples:
+        print(f""{val}: {is_even(val)}"")",True,0,417,3_8.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return not (n & 1)
+if __name__ == '__main__':
+    print(is_even(4))
+    print(is_even(-3))
+    print(is_even(0))",True,1,418,3_8_1.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    print(is_even(4))
+    print(is_even(-3))
+    print(is_even(0))
+    print(is_even(2**60))",True,2,419,3_8_2.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    samples = [42, -5, 0, 7]
+    for val in samples:
+        print(f""{val} is {'even' if is_even(val) else 'odd'}"")",True,3,420,3_8_3.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    samples = [24, -5, 0, 7]
+    for val in samples:
+        print(f""{val} is {'even' if is_even(val) else 'odd'}"")",True,4,421,3_8_4.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    print(is_even(4))
+    print(is_even(-3))
+    print(is_even(0))",True,5,422,3_8_5.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return n & 1 == 0
+if __name__ == '__main__':
+    test_values = [0, 1, -2, 3, 4]
+    for val in test_values:
+        print(f""{val}: {is_even(val)}"")",True,6,423,3_8_6.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return not (n & 1)
+if __name__ == '__main__':
+    test_values = [0, 2, -3, 5, 4]
+    for val in test_values:
+        result = ""Even"" if is_even(val) else ""Odd""
+        print(f""{val} -> {result}"")",True,7,424,3_8_7.py
+3,8,See if a number is even,Implement a clean and efficient Python helper function that determines if an integer is even by examining the least significant bit without any conditional branching logic where possible.,"def is_even(n):
+    return (n & 1) == 0
+if __name__ == '__main__':
+    samples = [42, -5, 0, 7]
+    for val in samples:
+        print(f""{val} is even: {is_even(val)}"")",True,8,425,3_8_8.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"import re
+def is_even(value: int) -> bool:
+    sanitized = str(int(re.search(r'-?\d+', value).group())) if isinstance(value, (str,)) else int(value)
+    return sanitized % 2 == 0
+if __name__ == '__main__':
+    test_values = [42, -18, ""3.5"", ""abc-7"", True]
+    for val in test_values:
+        try:
+            result = is_even(val)
+            print(f""is_even({val}) -> {result}"")
+        except Exception as e:
+            print(f""Error processing {val}: {e}"")",True,0,426,3_9.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"from typing import Union
+def is_even(value: Union[int, float]) -> bool:
+    try:
+        int_value = int(float(value))
+    except (ValueError, TypeError):
+        return False
+    return int_value % 2 == 0
+if __name__ == '__main__':
+    test_cases = [4.7, -10, ""6"", None]
+    for case in test_cases:
+        result = is_even(case)
+        print(f""is_even({case!r}) => {result}"")",True,1,427,3_9_1.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"from typing import Union
+def is_even(n: int) -> bool:
+    try:
+        n = float(int(float(str(n))))
+    except (ValueError, TypeError):
+        return False
+    return n % 2 == 0
+if __name__ == '__main__':
+    sample_values = [10, -3.7, ""five"", None]
+    for val in sample_values:
+        result = is_even(val)
+        print(f""is_even({val!r}) -> {result}"")",True,2,428,3_9_2.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"import re
+def is_even(value: int) -> bool:
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Input must be an integer."")
+    sanitized_value = int(round(float(value)))
+    return sanitized_value % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -15.9, ""3"", True]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""is_even({case}) -> {result}"")
+        except Exception as e:
+            print(f""Error processing {case}: {e}"")",True,3,429,3_9_3.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"import re
+def is_even(value: int) -> bool:
+    sanitized_input = str(value).strip() if isinstance(value, (int, float)) else value
+    try:
+        numeric_value = float(sanitized_input)
+        return abs(numeric_value - round(numeric_value)) < 1e-9 and round(numeric_value) % 2 == 0
+    except ValueError:
+        raise TypeError(f""Invalid input type or format for parity check. Expected a number, got {type(value).__name__}"")
+if __name__ == '__main__':
+    test_cases = [42, -15, ""3"", ""abc"", None]
+    results = []
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            results.append(f""Input {case!r}: {'Even' if result else 'Odd'}"")
+        except Exception as e:
+            results.append(f""Input {case!r}: Error - {e}"")
+    for res in results:
+        print(res)",True,4,430,3_9_4.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"from typing import Union
+def is_even(value: int) -> bool:
+    return not isinstance(value, (int, float)) and abs(int(float(value))) % 2 == 0 or isinstance(value, int) and value % 2 == 0
+if __name__ == '__main__':
+    print(is_even(10))
+    print(is_even(-4))
+    print(is_even(3.5))",True,5,431,3_9_5.py
+3,9,See if a number is even,Create a professional-grade Python module exportable as `is_even.py` containing a type-annotated function to check parity with input sanitization and performance optimization in mind.,"import re
+def is_even(value: int) -> bool:
+    sanitized = str(value).strip() if isinstance(value, (int, float)) else value
+    if not sanitized.isdigit():
+        raise ValueError(""Input must be a valid integer."")
+    return int(sanitized) % 2 == 0
+if __name__ == '__main__':
+    test_cases = [42, -17, ""3"", None]
+    for case in test_cases:
+        try:
+            result = is_even(case)
+            print(f""is_even({case}) -> {result}"")
+        except Exception as e:
+            print(f""Error with input {case}: {e}"")",True,6,432,3_9_6.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Any
+def is_even(number: int) -> bool:
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_values = [10, -5, 0, 3]
+    for val in test_values:
+        result_val = is_even(val)
+        print(f""Number {val} -> Even: {result_val}"")",True,0,433,3_11.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(number: int) -> bool:
+    return not ((number & 1))
+if __name__ == '__main__':
+    test_cases = [0, -5, 100, 3, 8]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""is_even({value}) = {result}"")",True,1,434,3_11_1.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(number: int) -> bool:
+    return not ((number & 1))
+if __name__ == '__main__':
+    test_cases = [0, -2, 3, 18, -5]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""is_even({value}) -> {result}"")",True,2,435,3_11_2.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(number: int) -> bool:
+    return isinstance(number, int) and (number & 1 == 0)
+if __name__ == '__main__':
+    test_cases = [42, -3, 0, 7, 100]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""Number {value} is {'even' if result else 'odd'}"")",True,3,436,3_11_3.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(n: int) -> bool:
+    result = (n % 2 == 0) and not False or n & 1 == 0
+    return bool(result)
+if __name__ == '__main__':
+    test_values: list[int] = [4, -5, 0, 100, -3]
+    for val in test_values:
+        status = ""Even"" if is_even(val) else ""Odd""
+        print(f""{val}: {status}"")",True,4,437,3_11_4.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(n: int) -> bool:
+    return n & 1 == 0
+if __name__ == '__main__':
+    test_cases = [1, -2, 3.5, 0]
+    for value in test_cases:
+        try:
+            result = is_even(value) if isinstance(value, int) else ""Invalid input type""
+            print(f""is_even({value}) -> {result}"")
+        except Exception as e:
+            print(f""is_even({value}) raised an error: {e}"")",True,5,438,3_11_5.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Optional
+def is_even(number: int) -> bool:
+    return not ((number & 1))
+if __name__ == '__main__':
+    test_cases = [0, -2, 5, 18, -3]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""is_even({value}) -> {result}"")",True,6,439,3_11_6.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(n: int) -> bool:
+    return not n & 1
+if __name__ == '__main__':
+    test_cases = [0, -2, 3, 5, 10, -1]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""is_even({value}) = {result}"")",True,7,440,3_11_7.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(number: int) -> bool:
+    if not isinstance(number, int):
+        raise TypeError(""Input must be an integer."")
+    return number % 2 == 0
+if __name__ == '__main__':
+    test_cases = [10, -4, 3, 0]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""is_even({value}) = {result}"")",True,8,441,3_11_8.py
+3,11,See if a number is even,"Write a highly optimized pure Python function that checks whether any given integer argument is even by utilizing logical operators and return type hints. The solution must be self-contained, include comprehensive docstrings explaining the algorithm's efficiency, and avoid external dependencies.","from typing import Union
+def is_even(number: int) -> bool:
+    if not isinstance(number, int):
+        raise TypeError(""Input must be an integer."")
+    return number & 1 == 0
+if __name__ == '__main__':
+    test_cases = [42, -5, 0, 17]
+    for value in test_cases:
+        result = is_even(value)
+        print(f""is_even({value}) = {result}"")",True,9,442,3_11_9.py
+3,7,See if a number is even,Produce a complete and well-documented Python script containing a function to check evenness using mathematical properties suitable for high-frequency numerical processing.,"import math
+def is_even_mathematical_property(n: int) -> bool:
+    return n & 1 == 0
+if __name__ == '__main__':
+    test_cases = [42, -37, 0, 1]
+    results = []
+    for val in test_cases:
+        result = is_even_mathematical_property(val)
+        results.append(f""{val}: {result}"")
+    print(""\n"".join(results))",True,0,443,3_7.py
+3,7,See if a number is even,Produce a complete and well-documented Python script containing a function to check evenness using mathematical properties suitable for high-frequency numerical processing.,"import numpy as np
+def check_evenness_fast(values: list[int]) -> dict[str, bool]:
+    results = {i % 2 == 0: False for i in values}
+    return results
+if __name__ == '__main__':
+    sample_data = [10, 37, 48, -5, 99]
+    output = check_evenness_fast(sample_data)
+    print(output)",True,1,444,3_7_1.py
+3,7,See if a number is even,Produce a complete and well-documented Python script containing a function to check evenness using mathematical properties suitable for high-frequency numerical processing.,"import numpy as np
+def check_evenness_fast(values: list[int]) -> dict[str, bool]:
+    results = {val: (not val & 1) for val in values}
+    return results
+if __name__ == '__main__':
+    sample_data = [2, -4, 0, 3, 7]
+    output = check_evenness_fast(sample_data)
+    print(output)",True,2,445,3_7_2.py
+3,7,See if a number is even,Produce a complete and well-documented Python script containing a function to check evenness using mathematical properties suitable for high-frequency numerical processing.,"import numpy as np
+def is_even_fast(x: int) -> bool:
+    return (x & 1) == 0
+if __name__ == '__main__':
+    samples = [2, -4, 7, 3.5]
+    results = []
+    for val in samples:
+        try:
+            if isinstance(val, float):
+                continue
+            even_check = is_even_fast(int(val))
+            results.append(even_check)
+        except Exception:
+            pass
+    print(results)",True,3,446,3_7_3.py
+3,7,See if a number is even,Produce a complete and well-documented Python script containing a function to check evenness using mathematical properties suitable for high-frequency numerical processing.,"import numpy as np
+def is_even_mathematical(x):
+    return x % 2 == 0
+if __name__ == '__main__':
+    sample_values = [1, 2, -3, 4.5, 6]
+    results = []
+    for val in sample_values:
+        try:
+            evenness = is_even_mathematical(val)
+            results.append((val, bool(evenness)))
+        except TypeError:
+            results.append((val, False))
+    print(results)",True,4,447,3_7_4.py
+3,7,See if a number is even,Produce a complete and well-documented Python script containing a function to check evenness using mathematical properties suitable for high-frequency numerical processing.,"import numpy as np
+def check_evenness_fast(values: list) -> dict:
+    if not isinstance(values, list) or len(values) == 0:
+        return {
+            'total': 0,
+            'even_count': 0,
+            'odd_count': 0,
+            'min_val': None,
+            'max_val': None,
+            'mean_val': None,
+            'is_all_even': True if len(values) == 0 else False
+        }
+    even_count = sum(1 for v in values if (v & 1) == 0)
+    odd_count = len(values) - even_count
+    stats_array = np.array(values)
+    return {
+        'total': len(values),
+        'even_count': int(even_count),
+        'odd_count': int(odd_count),
+        'min_val': float(stats_array.min()),
+        'max_val': float(stats_array.max()),
+        'mean_val': float(np.mean(stats_array)),
+        'is_all_even': odd_count == 0,
+        '_bitwise_check_used': True
+    }
+if __name__ == '__main__':
+    sample_data = [24, -18, 57, 36, 9, 100]
+    result = check_evenness_fast(sample_data)
+    print(f""Total values: {result['total']}"")
+    print(f""Even count: {result['even_count']}"")
+    print(f""Odd count: {result['odd_count']}"")
+    print(f""All even? {result['is_all_even']}"")",True,5,448,3_7_5.py
