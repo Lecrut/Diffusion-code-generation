@@ -15407,3 +15407,3452 @@ if __name__ == '__main__':
     print(is_strictly_greater(10, 5))
     print(is_strictly_greater(""ten"", ""five""))
     print(is_strictly_greater(True, False))",True,4,697,6_4_4.py
+6,8,Check if a value is greater,"Design a thread-safe Python helper function to evaluate if value1 exceeds value2 in a concurrent environment, ensuring atomic operations during comparison logic without external synchronization locks unless required by context.","import threading
+def is_greater_atomic(value1: int, value2: int) -> bool:
+    return value1 > value2
+if __name__ == '__main__':
+    result = is_greater_atomic(50, 30)
+    print(result)",True,0,698,6_8.py
+6,8,Check if a value is greater,"Design a thread-safe Python helper function to evaluate if value1 exceeds value2 in a concurrent environment, ensuring atomic operations during comparison logic without external synchronization locks unless required by context.","import threading
+def is_greater_atomic(value1: float, value2: float) -> bool:
+    return value1 > value2
+if __name__ == '__main__':
+    result = is_greater_atomic(5.0, 3.0)
+    print(result)",True,1,699,6_8_1.py
+6,8,Check if a value is greater,"Design a thread-safe Python helper function to evaluate if value1 exceeds value2 in a concurrent environment, ensuring atomic operations during comparison logic without external synchronization locks unless required by context.","import threading
+def is_greater_atomic(value1: int, value2: int) -> bool:
+    return value1 > value2
+if __name__ == '__main__':
+    val_a = 50
+    val_b = 30
+    result = is_greater_atomic(val_a, val_b)
+    print(f""{val_a} > {val_b}: {result}"")",True,2,700,6_8_2.py
+6,8,Check if a value is greater,"Design a thread-safe Python helper function to evaluate if value1 exceeds value2 in a concurrent environment, ensuring atomic operations during comparison logic without external synchronization locks unless required by context.","import threading
+from concurrent.futures import ThreadPoolExecutor
+class AtomicComparator:
+    def __init__(self):
+        self.lock = threading.Lock()
+    def exceeds(self, value1, value2):
+        with self.lock:
+            return value1 > value2
+def compare_values(value1, value2):
+    comparator = AtomicComparator()
+    result = False
+    def worker():
+        nonlocal result
+        if not isinstance(value1, (int, float)) or not isinstance(value2, (int, float)):
+            raise TypeError(""Values must be numeric"")
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(comparator.exceeds, value1, value2)
+            result = future.result()
+    worker()
+    return result
+if __name__ == '__main__':
+    val_a = 45.67890123456789
+    val_b = -1
+    if compare_values(val_a, val_b):
+        print(""Value A exceeds Value B"")
+    else:
+        print(""Value A does not exceed Value B"")",True,3,701,6_8_3.py
+6,8,Check if a value is greater,"Design a thread-safe Python helper function to evaluate if value1 exceeds value2 in a concurrent environment, ensuring atomic operations during comparison logic without external synchronization locks unless required by context.","import threading
+def is_greater_atomic(value1: int, value2: int) -> bool:
+    return value1 > value2
+if __name__ == '__main__':
+    lock = threading.Lock()
+    def worker():
+        val_a = 50
+        val_b = 30
+        with lock:
+            result = is_greater_atomic(val_a, val_b)
+        print(f""Result for {val_a} > {val_b}: {result}"")
+    threads = []
+    for _ in range(10):
+        t = threading.Thread(target=worker)
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()",True,4,702,6_8_4.py
+6,8,Check if a value is greater,"Design a thread-safe Python helper function to evaluate if value1 exceeds value2 in a concurrent environment, ensuring atomic operations during comparison logic without external synchronization locks unless required by context.","import threading
+from functools import partial
+def atomic_compare(value1: int, value2: int) -> bool:
+    lock = threading.Lock()
+    with lock:
+        return value1 > value2
+if __name__ == '__main__':
+    result = atomic_compare(50, 30)
+    print(result)",True,5,703,6_8_5.py
+6,5,Check if a value is greater,Construct a modular Python solution with docstrings and unit test examples demonstrating how to compare two values where 'greater' logic must account for null/None inputs by treating them as less than any valid number or string.,"def compare_values(a: any, b: any) -> int:
+    is_a_valid = isinstance(a, (int, float, str)) and not isinstance(a, bool)
+    is_b_valid = isinstance(b, (int, float, str)) and not isinstance(b, bool)
+    a_is_none = a is None or not is_a_valid
+    b_is_none = b is None or not is_b_valid
+    if a_is_none:
+        return -1 if not b_is_none else 0
+    elif b_is_none:
+        return 1
+    try:
+        numeric_a = float(a) if isinstance(a, (int, float)) else int(float(str(a)))
+        numeric_b = float(b) if isinstance(b, (int, float)) else int(float(str(b)))
+        if a == b:
+            return 0
+        diff = numeric_a - numeric_b
+        return 1 if diff > 0 else -1
+    except (ValueError, TypeError):
+        try:
+            str_a = str(a)
+            str_b = str(b)
+            if a == b:
+                return 0
+            comparison_result = compare_strings(str_a, str_b)
+            return 1 if comparison_result > 0 else -1
+        except TypeError:
+            raise ValueError(""Cannot compare values of incompatible types"")
+def compare_strings(s1: any, s2: any) -> int:
+    try:
+        str_s1 = str(s1).lower() if isinstance(s1, (int, float)) else str(s1).lower()
+        str_s2 = str(s2).lower() if isinstance(s2, (int, float)) else str(s2).lower()
+        return 0 if str_s1 == str_s2 else -1 if str_s1 < str_s2 else 1
+    except Exception:
+        raise ValueError(""String comparison failed"")
+if __name__ == '__main__':
+    test_cases = [
+        (None, None),
+        (5, 3),
+        (""apple"", ""banana""),
+        (None, 5),
+        (10.2, 10.2),
+        (""hello"", 42),
+        (-5, -3),
+    ]
+    for i, (val_a, val_b) in enumerate(test_cases):
+        result = compare_values(val_a, val_b)
+        print(f""Test {i+1}: compare({val_a}, {val_b}) -> {result}"")",True,0,704,6_5.py
+6,5,Check if a value is greater,Construct a modular Python solution with docstrings and unit test examples demonstrating how to compare two values where 'greater' logic must account for null/None inputs by treating them as less than any valid number or string.,"def compare_values(a: any, b: any) -> int:
+    is_none_a = (a is None)
+    is_none_b = (b is None)
+    if is_none_a and not is_none_b:
+        return -1
+    if not is_none_a and is_none_b:
+        return 1
+    if is_none_a and is_none_b:
+        return 0
+    try:
+        result = a > b
+        if result:
+            return 1
+        elif not (a < b):
+            return 0
+        else:
+            return -1
+    except TypeError:
+        return 0
+if __name__ == '__main__':
+    test_cases = [
+        (None, None),
+        (5, None),
+        (None, 10),
+        (""apple"", ""banana""),
+        (""zebra"", ""ant""),
+        (3.14, 2.71),
+        ([], []),
+        ([], [1]),
+    ]
+    for a, b in test_cases:
+        result = compare_values(a, b)
+        print(f""compare({a!r}, {b!r}) -> {result}"")",True,1,705,6_5_1.py
+6,5,Check if a value is greater,Construct a modular Python solution with docstrings and unit test examples demonstrating how to compare two values where 'greater' logic must account for null/None inputs by treating them as less than any valid number or string.,"def compare_values(a: any, b: any) -> bool:
+    def is_valid_value(v) -> bool:
+        return v is not None
+    if not is_valid_value(a):
+        return False
+    if b is None:
+        return True                                    
+    try:
+        numeric_a = float(a)
+        numeric_b = float(b)
+        return numeric_a > numeric_b
+    except (ValueError, TypeError):
+        pass
+    string_a = str(a).lower() if not isinstance(a, bytes) else a.decode('utf-8', errors='ignore').lower()
+    string_b = str(b).lower() if not isinstance(b, bytes) else b.decode('utf-8', errors='ignore').lower()
+    return string_a > string_b
+if __name__ == '__main__':
+    test_cases = [
+        (5, 3),                                                     
+        (None, None),                                                                                                
+        (""apple"", ""banana""),                                                           
+        (""zebra"", ""ant""),                          
+        (10, None),                                                
+        (None, 5),                                                   
+        (-2.5, -3.7),                                                        
+        ("""", ""a""),                                    
+    ]
+    for a_val, b_val in test_cases:
+        result = compare_values(a_val, b_val)
+        print(f""compare({a_val!r}, {b_val!r}) => {result}"")",True,2,706,6_5_2.py
+6,5,Check if a value is greater,Construct a modular Python solution with docstrings and unit test examples demonstrating how to compare two values where 'greater' logic must account for null/None inputs by treating them as less than any valid number or string.,"def compare_values(a: any, b: any) -> bool:
+    def _is_none(val):
+        return val is None
+    if _is_none(a) and _is_none(b):
+        return False
+    if not _is_none(a) and _is_none(b):
+        try:
+            return isinstance(a, (int, float)) or (hasattr(a, '__lt__') and hasattr(type(a), 'compare'))
+        except TypeError:
+            pass
+    if not _is_none(b) and _is_none(a):
+        return False
+    try:
+        return a > b
+    except (TypeError, ValueError):
+        return False
+if __name__ == '__main__':
+    test_cases = [
+        (10, 5),                            
+        (None, None),                                                         
+        (10, None),                                   
+        (None, 10),                                    
+        (""apple"", ""banana""),                                                                     
+        (""apple"", ""apricot""),                             
+    ]
+    for i in range(len(test_cases)):
+        a, b = test_cases[i]
+        result = compare_values(a, b)
+        print(f""Test {i+1}: compare({a}, {b}) -> {result}"")",True,3,707,6_5_3.py
+6,5,Check if a value is greater,Construct a modular Python solution with docstrings and unit test examples demonstrating how to compare two values where 'greater' logic must account for null/None inputs by treating them as less than any valid number or string.,"def compare_values(a: any, b: any) -> bool:
+    a_is_none = a is None
+    b_is_none = b is None
+    if a_is_none and not b_is_none:
+        return False                          
+    elif not a_is_none and b_is_none:
+        return True                           
+    else:
+        if a == b:
+            return False                                         
+        try:
+            result = a > b
+            return bool(result)
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    test_cases = [
+        (10, 5),                 
+        (None, 5),                
+        (5, None),               
+        (None, None),             
+        (""apple"", ""banana""),       
+        (""zebra"", ""ant""),         
+        (3.14, 2.71),           
+        (-10, -5),                
+    ]
+    for val_a, val_b in test_cases:
+        result = compare_values(val_a, val_b)
+        print(f""compare({val_a}, {val_b}) -> {result}"")",True,4,708,6_5_4.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBrancher:
+    def __init__(self):
+        self._operators = {
+            '>': lambda a, b: (a > b),
+            '<': lambda a, b: (a < b),
+            '>=': lambda a, b: (a >= b),
+            '<=': lambda a, b: (a <= b)
+        }
+    def branch(self, condition_op, value_a, value_b):
+        if isinstance(value_a, np.ndarray) or isinstance(value_b, np.ndarray):
+            op_func = self._operators.get(condition_op)
+            result_mask = op_func(np.asarray(value_a), np.asarray(value_b))
+            return np.where(result_mask, True, False).tolist()
+        else:
+            if condition_op not in self._operators:
+                raise ValueError(f""Unsupported operator '{condition_op}'. Supported: {list(self._operators.keys())}"")
+            op_func = self._operators[condition_op]
+            result_bool = op_func(value_a, value_b)
+            return [result_bool]
+if __name__ == '__main__':
+    brancher = ConditionalBrancher()
+    scalar_result = brancher.branch('>', 10, 5)
+    arr_a = np.array([2.3, 4.7, 6.9])
+    arr_b = np.array([1.1, 3.3, 5.5])
+    vector_result = brancher.branch('>', arr_a, arr_b)
+    print(f""Scalar result: {scalar_result}"")
+    print(f""Vectorized result: {vector_result}"")",True,0,709,6_9.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBrancher:
+    def __init__(self):
+        self._operators = {
+            'gt': lambda a, b: a > b,
+            'lt': lambda a, b: a < b,
+            'eq': lambda a, b: a == b,
+            'neq': lambda a, b: a != b,
+            'ge': lambda a, b: a >= b,
+            'le': lambda a, b: a <= b,
+        }
+    def branch(self, condition_op, value_a, value_b):
+        if isinstance(value_a, np.ndarray) or isinstance(value_b, np.ndarray):
+            func = self._operators.get(condition_op.lower(), None)
+            if not func:
+                raise ValueError(f""Unsupported operator: {condition_op}"")
+            return func(np.array(value_a), np.array(value_b))
+        else:
+            op_name = condition_op.lower()
+            try:
+                ops_map = {'gt': '>', 'lt': '<', 'eq': '=', 'neq': '!=', 'ge': '>='}
+                if op_name not in ['gt', 'lt']:
+                    raise ValueError(f""Unsupported operator for scalars: {op_name}"")
+                func = eval(f""{value_a}{ops_map[op_name]}{value_b}"")
+            except Exception as e:
+                return False
+        result = condition_op.lower() == op_name and value_a > value_b if isinstance(value_a, (int, float)) else None
+        return bool(result)
+if __name__ == '__main__':
+    brancher = ConditionalBrancher()
+    assert brancher.branch('gt', 10, 5) is True
+    assert brancher.branch('lt', 3, 7) is False
+    arr_a = np.array([2.0, 4.0, 6.0])
+    arr_b = np.array([1.0, 5.0, 8.0])
+    result_gt = brancher.branch('gt', arr_a, arr_b)
+    expected_gt = np.array([True, False, False])
+    assert np.allclose(result_gt, expected_gt), ""Vectorized GT failed""
+    result_ge = brancher.branch('ge', arr_a, np.array([2.0, 4.5, 6.0]))
+    expected_ge = np.array([True, False, True])
+    assert np.allclose(result_ge, expected_ge), ""Vectorized GE failed""
+    print(""All tests passed."")",True,1,710,6_9_1.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class GreaterThanOperator:
+    def __init__(self):
+        self._op = lambda a, b: a > b
+    def __call__(self, left_operand, right_operand):
+        return self._op(left_operand, right_operand)
+def conditional_branch(value, condition_result, true_value=None, false_value=0.0):
+    if isinstance(condition_result, np.ndarray):
+        result = np.where(condition_result, true_value, false_value)
+    else:
+        result = true_value if condition_result else false_value
+    return result
+if __name__ == '__main__':
+    gt_op = GreaterThanOperator()
+    scalar_a = 10.5
+    scalar_b = 3.2
+    vector_x = np.array([1, 4, 7, 9])
+    vector_y = np.array([2, 6, 8, 12])
+    result_scalar = conditional_branch(scalar_a, gt_op.__call__(scalar_a, scalar_b), true_value=100.0)
+    result_vector = conditional_branch(vector_x, lambda x: gt_op(x, vector_y), 
+                                      true_value=np.full_like(vector_x, 999.0))
+    print(f""Scalar Result: {result_scalar}"")",True,2,711,6_9_2.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBrancher:
+    def __init__(self):
+        self._operators = {
+            'gt': lambda a, b: (a > b),
+            'lt': lambda a, b: (a < b),
+            'ge': lambda a, b: (a >= b),
+            'le': lambda a, b: (a <= b)
+        }
+    def branch(self, condition_key, value_a, value_b):
+        if isinstance(value_a, np.ndarray) or isinstance(value_b, np.ndarray):
+            op_func = self._operators.get(condition_key.lower(), None)
+            if not op_func:
+                raise ValueError(f""Unsupported operator key: {condition_key}"")
+            return op_func(np.asarray(value_a), np.asarray(value_b))
+        else:
+            op_func = self._operators.get(condition_key.lower(), None)
+            if not op_func:
+                raise ValueError(f""Unsupported operator key: {condition_key}"")
+            result = op_func(float(value_a), float(value_b))
+            return int(result)
+if __name__ == '__main__':
+    brancher = ConditionalBrancher()
+    scalar_result_gt = brancher.branch('gt', 10, 5)
+    print(f""Scalar GT (10 > 5): {scalar_result_gt}"")
+    arr_a = np.array([1.0, 2.0, 3.0])
+    arr_b = np.array([4.0, 6.0, 8.0])
+    vec_result_lt = brancher.branch('lt', arr_a, arr_b)
+    print(f""Vector LT result: {vec_result_lt}"")
+    def custom_op(a, b): return a > b or a < b",True,3,712,6_9_3.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBrancher:
+    def __init__(self):
+        self._operators = {
+            'gt': lambda a, b: a > b,
+            'lt': lambda a, b: a < b,
+            'eq': lambda a, b: a == b,
+            'neq': lambda a, b: a != b,
+            'ge': lambda a, b: a >= b,
+            'le': lambda a, b: a <= b,
+        }
+    def branch(self, condition_op, value_a, value_b):
+        if isinstance(value_a, np.ndarray) or isinstance(value_b, np.ndarray):
+            op_func = self._operators.get(condition_op.lower(), None)
+            if not op_func:
+                raise ValueError(f""Unsupported operator: {condition_op}"")
+            return op_func(np.asarray(value_a), np.asarray(value_b))
+        else:
+            op_func = self._operators.get(condition_op.lower(), None)
+            if not op_func:
+                raise ValueError(f""Unsupported operator: {condition_op}"")
+            result = op_func(float(value_a), float(value_b))
+            return int(result)
+if __name__ == '__main__':
+    brancher = ConditionalBrancher()
+    scalar_result_gt = brancher.branch('gt', 10, 5)
+    print(f""Scalar GT (10 > 5): {scalar_result_gt}"")
+    arr_a = np.array([1.0, 2.0, 3.0])
+    arr_b = np.array([4.0, 6.0, 8.0])
+    vec_result_lt = brancher.branch('lt', arr_a, arr_b)
+    print(f""Vectorized LT (arr1 < arr2): {vec_result_lt}"")
+    mix_result_ge = brancher.branch('ge', 7.5, np.array([3.0, 4.0]))
+    print(f""Mixed GE (scalar >= [3, 4]): {mix_result_ge}"")",True,4,713,6_9_4.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBrancher:
+    def __init__(self):
+        self._operators = {
+            'gt': lambda a, b: a > b,
+            'lt': lambda a, b: a < b,
+            'eq': lambda a, b: a == b,
+            'neq': lambda a, b: a != b,
+            'ge': lambda a, b: a >= b,
+            'le': lambda a, b: a <= b,
+        }
+    def branch(self, condition_op, value_a, value_b):
+        if isinstance(value_a, np.ndarray) or isinstance(value_b, np.ndarray):
+            func = self._operators.get(condition_op.lower(), None)
+            if not func:
+                raise ValueError(f""Unsupported operator: {condition_op}"")
+            return func(np.array(value_a), np.array(value_b))
+        else:
+            func = self._operators.get(condition_op.lower(), None)
+            if not func:
+                raise ValueError(f""Unsupported operator: {condition_op}"")
+            result = func(float(value_a), float(value_b))
+            return [result]
+if __name__ == '__main__':
+    brancher = ConditionalBrancher()
+    scalar_result = brancher.branch('gt', 10, 5)
+    arr_a = np.array([2.3, 4.7, 9.1])
+    arr_b = np.array([1.0, 3.0, 8.0])
+    vec_result = brancher.branch('gt', arr_a, arr_b)
+    print(f""Scalar result: {scalar_result}"")
+    print(f""Vectorized result: {vec_result}"")",True,5,714,6_9_5.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBranch:
+    def __init__(self):
+        self.conditions = []
+    def add_condition(self, lhs, rhs, operator='gt'):
+        if not isinstance(operator, str) or operator not in ('eq', 'lt', 'le', 'ge', 'neq', 'gt'):
+            raise ValueError(""Unsupported operator"")
+        cond_func = {
+            'eq': lambda x: np.equal(x[0], x[1]),
+            'lt': lambda x: np.less(x[0], x[1]),
+            'le': lambda x: np.less_equal(x[0], x[1]),
+            'ge': lambda x: np.greater_equal(x[0], x[1]),
+            'neq': lambda x: np.not_equal(x[0], x[1]),
+            'gt': lambda x: np.greater(x[0], x[1])
+        }.get(operator, None)
+        if cond_func is not None:
+            self.conditions.append((cond_func, lhs, rhs))
+    def evaluate(self):
+        results = []
+        for func, a, b in self.conditions:
+            try:
+                result = func([a, b])
+                results.append(result)
+            except Exception as e:
+                raise RuntimeError(f""Error evaluating condition {e}"")
+        return np.stack(results, axis=0)
+if __name__ == '__main__':
+    data_a = np.array([[1.5], [2.3], [4.7]])
+    data_b = np.array([1.0, 2.0, 5.0])
+    brancher = ConditionalBranch()
+    brancher.add_condition(data_a[0][0], data_b[0], 'gt')
+    brancher.add_condition(np.array([1.6]), np.array([2.5]), 'ge')
+    try:
+        results = brancher.evaluate()
+        print(""Comparison Results:"")
+        for i, res in enumerate(results):
+            if isinstance(res, np.ndarray) and len(res.shape) > 0:
+                print(f""Condition {i}: {res.flatten()}"")
+            else:
+                print(f""Condition {i}: {res}"")
+    except Exception as e:
+        print(f""Execution Error: {e}"")",True,6,715,6_9_6.py
+6,9,Check if a value is greater,Deliver a best-practice library component for conditional branching based on 'greater than' checks that supports operator overloading customization and integrates seamlessly with NumPy arrays for vectorized comparisons.,"import numpy as np
+class ConditionalBrancher:
+    def __init__(self):
+        self._operators = {
+            'gt': lambda a, b: a > b,
+            'lt': lambda a, b: a < b,
+            'eq': lambda a, b: a == b,
+            'neq': lambda a, b: a != b,
+            'ge': lambda a, b: a >= b,
+            'le': lambda a, b: a <= b,
+        }
+    def branch(self, condition_func):
+        return condition_func()
+def greater_than(a, b):
+    if isinstance(a, np.ndarray) and isinstance(b, (int, float)):
+        result = a > b.astype(np.float64)
+    elif isinstance(a, int) or isinstance(a, float):
+        result = a > b
+    else:
+        raise TypeError(""Unsupported types for comparison"")
+    return result
+if __name__ == '__main__':
+    data_a = np.array([10.5, 20.3, 30.7])
+    threshold = 15
+    brancher = ConditionalBrancher()
+    def check_gt():
+        if isinstance(data_a[0], (int, float)):
+            return greater_than(10.5, 15)
+        else:
+            result_array = data_a > threshold
+            for val in result_array:
+                print(val)
+    brancher.branch(check_gt)",True,7,716,6_9_7.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    test_cases = [
+        (5, 3),
+        (""apple"", ""banana""),
+        ([1], [2]),
+        ((1,), (2,)),
+        (True, True),
+        (False, False)
+    ]
+    for val1, val2 in test_cases:
+        result = comparator.is_strictly_greater(val1, val2)
+        print(f""{val1} > {val2}: {result}"")",True,0,717,6_10.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    test_cases = [
+        (5, 3),
+        (""apple"", ""banana""),
+        ([1, 2], [1, 3]),
+        ((1.0, 2.0), (1.0, 3.0)),
+        (True, False)
+    ]
+    for val1, val2 in test_cases:
+        result = comparator.is_strictly_greater(val1, val2)
+        print(f""{val1} > {val2}: {result}"")",True,1,718,6_10_1.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    print(comparator.is_strictly_greater(5, 3))                         
+    print(comparator.is_strictly_greater(""z"", ""a""))                      
+    print(comparator.is_strictly_greater(True, False))                                                                                                                                                                                                                                                                     
+    print(comparator.is_strictly_greater(5, ""3""))                       
+    print(comparator.is_strictly_greater(""a"", 1))",True,2,719,6_10_2.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    assert comparator.is_strictly_greater(5, 3) is True
+    assert comparator.is_strictly_greater(""b"", ""a"") is True
+    assert comparator.is_strictly_greater([1, 2], [0, 1]) is True
+    assert comparator.is_strictly_greater(5, ""3"") is False
+    assert comparator.is_strictly_greater(""b"", 1) is False
+    try:
+        result = comparator.is_strictly_greater(None, None)
+        assert result is False
+    except Exception:
+        pass
+    print(""All tests passed."")",True,3,720,6_10_3.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    assert not comparator.is_strictly_greater(5, ""5"")
+    assert not comparator.is_strictly_greater(""5"", 5)
+    assert comparator.is_strictly_greater(10, 9)
+    assert not comparator.is_strictly_greater(9, 10)
+    assert not comparator.is_strictly_greater(None, None)
+    print(""All tests passed."")",True,4,721,6_10_4.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1: object, value2: object) -> bool:
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comp = ValueComparator()
+    assert not comp.is_strictly_greater(5, 3.0)
+    assert comp.is_strictly_greater(6, 4)
+    assert not comp.is_strictly_greater(""a"", ""b"")
+    print(""All tests passed."")",True,5,722,6_10_5.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            raise TypeError(""Both values must be of the same type."")
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    assert comparator.is_strictly_greater(5, 3) is True
+    assert comparator.is_strictly_greater(3, 5) is False
+    assert comparator.is_strictly_greater(""apple"", ""banana"") is False
+    assert comparator.is_strictly_greater(""zebra"", ""ant"") is True
+    try:
+        comparator.is_strictly_greater(5, ""10"")
+        print(""Error expected for type mismatch."")
+    except TypeError as e:
+        assert str(e) == ""Both values must be of the same type.""
+    assert comparator.is_strictly_greater(3.14, 2.71) is True
+    print(""All tests passed."")",True,6,723,6_10_6.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            return False
+        try:
+            return value1 > value2
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    test_cases = [
+        (5, 3),
+        (""apple"", ""banana""),
+        ([1], [0]),
+        ((1,), ()),
+        (True, True)
+    ]
+    for val1, val2 in test_cases:
+        result = comparator.is_strictly_greater(val1, val2)
+        print(f""{val1} > {val2}: {result}"")",True,7,724,6_10_7.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            raise TypeError(""Both values must be of the same type."")
+        try:
+            return value1 > value2
+        except TypeError as e:
+            raise TypeError(f""Comparison operation failed for types {type(value1).__name__}: {e}"")
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    assert comparator.is_strictly_greater(5, 3) is True
+    assert comparator.is_strictly_greater(2, 7) is False
+    assert comparator.is_strictly_greater(10.5, 9.8) is True
+    assert comparator.is_strictly_greater(4.2, 4.3) is False
+    try:
+        result = comparator.is_strictly_greater(""10"", ""5"")
+        print(f""Unexpected success for strings: {result}"")
+    except TypeError as e:
+        pass
+    print(""All tests passed."")",True,8,725,6_10_8.py
+6,10,Check if a value is greater,Implement a robust and reusable Python class named ValueComparator with methods to check if one value is strictly greater than another using type safety. Ensure the code follows PEP 8 standards.,"class ValueComparator:
+    def is_strictly_greater(self, value1, value2):
+        if type(value1) != type(value2):
+            raise TypeError(""Both values must be of the same type."")
+        try:
+            return value1 > value2
+        except TypeError as e:
+            raise TypeError(f""Comparison operation failed for types {type(value1).__name__}: {e}"")
+if __name__ == '__main__':
+    comparator = ValueComparator()
+    assert comparator.is_strictly_greater(5, 3) is True
+    assert comparator.is_strictly_greater(2, 7) is False
+    assert comparator.is_strictly_greater(4.9, 4.8) is True
+    assert comparator.is_strictly_greater(10.5, 10.6) is False
+    assert comparator.is_strictly_greater(""apple"", ""banana"") is False
+    assert comparator.is_strictly_greater(""zebra"", ""ant"") is True
+    try:
+        comparator.is_strictly_greater(10, ""20"")
+        print(""ERROR: Expected TypeError for type mismatch."")
+    except TypeError as e:
+        assert str(e) == ""Both values must be of the same type.""
+    try:
+        result = comparator.is_strictly_greater(1+2j, 3+4j)
+    except TypeError as e:
+        pass
+    print(""All tests passed."")",True,9,726,6_10_9.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: any, b: any) -> bool:
+    try:
+        num_a = float(a) if not isinstance(a, (int, float)) else a
+        num_b = float(b) if not isinstance(b, (int, float)) else b
+        if not isinstance(num_a, (int, float)):
+            raise ValueError(""Invalid numeric type for 'a'"")
+        if not isinstance(num_b, (int, float)):
+            raise ValueError(""Invalid numeric type for 'b'"")
+        return num_a > num_b
+    except Exception:
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 9))",True,0,727,6_11.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: object, b: object) -> bool:
+    try:
+        na = float(a) if not isinstance(a, (int, float)) else a
+        nb = float(b) if not isinstance(b, (int, float)) else b
+        return na > nb
+    except (TypeError, ValueError):
+        raise TypeError(""Both arguments must be numeric types"")
+if __name__ == '__main__':
+    print(is_greater(10.5, 20))",True,1,728,6_11_1.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: object, b: object) -> bool:
+    try:
+        numeric_a = float(a) if not isinstance(a, (int, float)) else a
+        numeric_b = float(b) if not isinstance(b, (int, float)) else b
+        if not isinstance(numeric_a, (float, int)):
+            raise ValueError(""Invalid input type for 'a'"")
+        if not isinstance(numeric_b, (float, int)):
+            raise ValueError(""Invalid input type for 'b'"")
+        return numeric_a > numeric_b
+    except Exception:
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 7))",True,2,729,6_11_2.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: object, b: object) -> bool:
+    try:
+        a_num = float(a) if not isinstance(a, (int, float)) else a
+        b_num = float(b) if not isinstance(b, (int, float)) else b
+        if not (isinstance(a_num, (int, float)) and isinstance(b_num, (int, float))):
+            return False
+        return a_num > b_num
+    except (ValueError, TypeError):
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 9))",True,3,730,6_11_3.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: any, b: any) -> bool:
+    try:
+        num_a = float(a) if not isinstance(a, (int, float)) else a
+        num_b = float(b) if not isinstance(b, (int, float)) else b
+        if not isinstance(num_a, (int, float)):
+            raise ValueError(""Invalid numeric type for 'a'"")
+        if not isinstance(num_b, (int, float)):
+            raise ValueError(""Invalid numeric type for 'b'"")
+        return num_a > num_b
+    except Exception:
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 20))",True,4,731,6_11_4.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: any, b: any) -> bool:
+    try:
+        a_num = float(a)
+        b_num = float(b)
+        return a_num > b_num
+    except (ValueError, TypeError):
+        raise ValueError(""Both arguments must be convertible to numbers."")
+if __name__ == '__main__':
+    result = is_greater(10.5, 7)
+    print(result)",True,5,732,6_11_5.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: any, b: any) -> bool:
+    try:
+        num_a = float(a) if not isinstance(a, (int, float)) else a
+        num_b = float(b) if not isinstance(b, (int, float)) else b
+        if not isinstance(num_a, (float, int)):
+            raise ValueError(""Invalid numeric type"")
+        return num_a > num_b
+    except Exception:
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 2))",True,6,733,6_11_6.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: any, b: any) -> bool:
+    try:
+        num_a = float(a) if not isinstance(a, (int, float)) else a
+        num_b = float(b) if not isinstance(b, (int, float)) else b
+        if not isinstance(num_a, (int, float)) or not isinstance(num_b, (int, float)):
+            return False
+        return num_a > num_b
+    except (ValueError, TypeError):
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 9))",True,7,734,6_11_7.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: object, b: object) -> bool:
+    try:
+        a_num = float(a)
+        b_num = float(b)
+        return a_num > b_num
+    except (ValueError, TypeError):
+        raise ValueError(""Both arguments must be convertible to numeric types."")
+if __name__ == '__main__':
+    result1 = is_greater(5.0, 3)
+    print(result1)
+    try:
+        result2 = is_greater('abc', 'xyz')
+    except Exception as e:
+        print(f""Error for mixed non-numeric types: {e}"")",True,8,735,6_11_8.py
+6,11,Check if a value is greater,"Write an optimized pure Python function that takes two arguments (a and b) and returns a boolean indicating whether 'a' is numerically greater than 'b', handling mixed numeric types safely. Adhere to best practices for input validation.","def is_greater(a: object, b: object) -> bool:
+    try:
+        val_a = float(a) if not isinstance(a, (int, float)) else a
+        val_b = float(b) if not isinstance(b, (int, float)) else b
+        if not isinstance(val_a, (int, float)) or not isinstance(val_b, (int, float)):
+            return False
+        return val_a > val_b
+    except (ValueError, TypeError):
+        return False
+if __name__ == '__main__':
+    print(is_greater(10.5, 9))",True,9,736,6_11_9.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    return a == b
+def custom_calc(a: int, b: int) -> Tuple[int, int]:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    diff = a - b
+    prod = a * b
+    return diff, prod
+if __name__ == '__main__':
+    sample_a = 15
+    sample_b = 7
+    result_comparison = compare_values(sample_a, sample_b)
+    res_sub, res_mul = custom_calc(sample_a, sample_b)
+    print(f""Comparison Result: {result_comparison}"")
+    print(f""Custom Calculation - Subtraction: {res_sub}, Multiplication: {res_mul}"")",True,0,737,6_12.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError(""Both arguments must be integers."")
+    if a < 0 or b < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    return a == b
+def custom_operation(x: int, y: int) -> Tuple[int, bool]:
+    if not isinstance(x, int) or not isinstance(y, int):
+        raise TypeError(""Both arguments must be integers."")
+    if x < 0 or y < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    product = x * y
+    is_even_condition = (product - 1) % 2 == 0
+    return product, is_even_condition
+if __name__ == '__main__':
+    val_a, val_b = 5, 3
+    result_compare = compare_values(val_a, val_b)
+    prod_result, even_check = custom_operation(val_a, val_b)
+    print(f""Comparison Result: {result_compare}"")
+    print(f""Custom Operation Product: {prod_result}, Even Check: {even_check}"")",True,1,738,6_12_1.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    return a == b
+def custom_calculation(a: int, multiplier: int) -> Tuple[int, bool]:
+    if a <= 0 or multiplier <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    product = a * multiplier
+    is_equal = (product - a * multiplier) == 0
+    return product, is_equal
+if __name__ == '__main__':
+    sample_a = 10
+    sample_b = 25
+    result_compare = compare_values(sample_a, sample_b)
+    mult_result, equal_check = custom_calculation(5, 4)
+    print(f""Comparison Result: {result_compare}"")
+    print(f""Custom Calculation Result: {mult_result}, Equality Check: {equal_check}"")",True,2,739,6_12_2.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError(""Both arguments must be integers."")
+    if a < 0 or b < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    return a == b
+def custom_operation(x: int, y: int) -> Tuple[int, bool]:
+    if not isinstance(x, int) or not isinstance(y, int):
+        raise TypeError(""Both arguments must be integers."")
+    if x < 0 or y < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    result = (x * 2) - y
+    condition_result = x >= (y // 2)
+    return result, condition_result
+if __name__ == '__main__':
+    sample_a = 10
+    sample_b = 10
+    comparison_output = compare_values(sample_a, sample_b)
+    custom_x = 5
+    custom_y = 3
+    operation_output = custom_operation(custom_x, custom_y)
+    print(f""Comparison Result: {comparison_output}"")
+    print(f""Custom Operation Output: {operation_output[0]}, Condition Met: {operation_output[1]}"")",True,3,740,6_12_3.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError(""Both arguments must be integers."")
+    if a < 0 or b < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    return a == b
+def custom_operation(x: int, y: int) -> Tuple[int, bool]:
+    if not isinstance(x, int) or not isinstance(y, int):
+        raise TypeError(""Both arguments must be integers."")
+    if x < 0 or y < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    result = x * 2 - y
+    is_greater_or_equal = (x >= y * 2)
+    return result, is_greater_or_equal
+if __name__ == '__main__':
+    val1, val2 = 50, 30
+    comparison_result = compare_values(val1, val2)
+    print(f""Comparison Result: {comparison_result}"")
+    custom_res, flag = custom_operation(val1, val2)
+    print(f""Custom Operation Result: {custom_res}, Flag: {flag}"")",True,4,741,6_12_4.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Union
+def compare_values(a: int, b: int) -> bool:
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError(""Both arguments must be integers."")
+    if a < 0 or b < 0:
+        raise ValueError(""Arguments must be positive integers."")
+    return a == b
+def custom_operation(x: Union[int, float], y: Union[int, float]) -> int:
+    if isinstance(x, bool) or isinstance(y, bool):
+        raise TypeError(""Boolean values cannot be used as operands."")
+    try:
+        x_int = int(x)
+        y_int = int(y)
+    except ValueError:
+        raise TypeError(""Inputs must be integers or convertible to integers without loss of precision."")
+    if x_int < 0:
+        raise ValueError(""First operand must be non-negative."")
+    if y_int <= 1:
+        raise ValueError(""Second operand must be greater than 1 for meaningful subtraction logic in this context."")
+    result = x_int * (y_int - 1)
+    return int(result)
+if __name__ == '__main__':
+    sample_a, sample_b = 5, 3
+    is_equal = compare_values(sample_a, sample_b)
+    print(f""Comparison result: {is_equal}"")
+    op_result = custom_operation(4, 6)
+    print(f""Custom operation result ({sample_a} * (sample_b - 1)): {op_result}"")",True,5,742,6_12_5.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_integers(a: int, b: int) -> bool:
+    return a <= b
+def custom_operation(a: int, op_type: str = ""subtract"", multiplier: float | None = 1.0) -> Tuple[int, bool]:
+    if a <= 0:
+        raise ValueError(""Input 'a' must be a positive integer."")
+    try:
+        result = None
+        if op_type == ""subtract"":
+            b = multiplier * a
+            if not isinstance(b, (int, float)) or b < 1.5:                                                                  
+                raise ValueError(""Result must be valid based on operation constraints."")
+            result = int(a - b)
+        elif op_type == ""multiply"":
+            b = multiplier * a
+            if not isinstance(b, (int, float)) or b < 1.5:                                                                  
+                raise ValueError(""Result must be valid based on operation constraints."")
+            result = int(a * b)
+        else:
+            raise ValueError(f""Unsupported op_type '{op_type}'."")
+        return (result, True) if isinstance(result, int) and result >= 1 else (-999999, False)                             
+    except Exception as e:
+        return (-999998, False)
+if __name__ == '__main__':
+    val_a = 50
+    val_b = 30
+    result_compare = compare_integers(val_a, val_b)
+    res_sub, success_sub = custom_operation(100, ""subtract"", multiplier=2.0)
+    print(f""Comparison Result: {result_compare}"")
+    print(f""Custom Operation (Subtract): Value={res_sub}, Success={success_sub}"")",True,6,743,6_12_6.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"def compare_values(a: int, b: int) -> bool:
+    if not isinstance(a, int) or not isinstance(b, int):
+        raise TypeError(""Both arguments must be integers."")
+    if a <= 0 or b <= 0:
+        raise ValueError(""Arguments must be positive integers."")
+    return a == b
+def custom_value_calculation(x: int, y: int) -> int:
+    if not isinstance(x, int) or not isinstance(y, int):
+        raise TypeError(""Both arguments must be integers."")
+    if x <= 0 or y <= 0:
+        raise ValueError(""Arguments must be positive integers."")
+    return x - y
+if __name__ == '__main__':
+    sample_a = 15
+    sample_b = 7
+    result_comparison = compare_values(sample_a, sample_b)
+    result_custom = custom_value_calculation(20, 8)
+    print(f""Comparison Result: {result_comparison}"")
+    print(f""Custom Calculation Result: {result_custom}"")",True,7,744,6_12_7.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    return a == b
+def custom_operation(a: int, b: int) -> Tuple[int, bool]:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    difference = a - b
+    product_check = (a * b == 100)
+    return difference, product_check
+if __name__ == '__main__':
+    sample_a = 5
+    sample_b = 5
+    result_compare = compare_values(sample_a, sample_b)
+    diff_result, prod_result = custom_operation(sample_a, sample_b)
+    print(f""Comparison Result: {result_compare}"")
+    print(f""Difference and Product Check: ({diff_result}, {prod_result})"")",True,8,745,6_12_8.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    return a == b
+def custom_operation(a: int, b: int) -> Tuple[int, bool]:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    diff = a - b
+    result_metric = diff * 2
+    return result_metric, (a >= b)
+if __name__ == '__main__':
+    sample_a = 15
+    sample_b = 7
+    comparison_result = compare_values(sample_a, sample_b)
+    custom_res, is_greater_equal = custom_operation(sample_a, sample_b)
+    print(f""Comparison Result: {comparison_result}"")
+    print(f""Custom Operation Metric: {custom_res}, Is Greater or Equal: {is_greater_equal}"")",True,9,746,6_12_9.py
+6,12,Check if a value is greater,Develop a high-performance utility module containing two functions: one using the built-in comparison operators and another implementing custom logic via subtraction or multiplication (for positive integers only). Ensure both are type-annotated and include comprehensive docstrings.,"from typing import Tuple
+def compare_values(a: int, b: int) -> bool:
+    if a <= 0 or b <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    return abs(a - b) == 0
+def custom_operation(x: int, y: int) -> Tuple[int, str]:
+    if x <= 0 or y <= 0:
+        raise ValueError(""Inputs must be positive integers."")
+    diff = x - y
+    product_parity_check = ((x * y) + diff) % 2 == 0
+    return diff, ""Even"" if product_parity_check else ""Odd""
+if __name__ == '__main__':
+    test_a: int = 10
+    test_b: int = 5
+    result_compare = compare_values(test_a, test_b)
+    custom_result = custom_operation(8, 4)
+    print(f""Comparison Result ({test_a}, {test_b}): {result_compare}"")
+    print(f""Custom Operation (8, 4): {custom_result[0]}, Status: {custom_result[1]}"")",True,10,747,6_12_10.py
+6,7,Check if a value is greater,"Provide an advanced comparison engine implementation capable of checking magnitude differences between numbers and length comparisons for strings, unified under a single 'is_greater' interface with configurable behavior flags.","class AdvancedComparisonEngine:
+    def __init__(self, strict_mode=False):
+        self.strict_mode = strict_mode
+    def is_greater(self, a, b, type_check=True):
+        if not isinstance(a, (int, float)) and not isinstance(b, (str)):
+            raise TypeError(""Both arguments must be numbers or both strings"")
+        try:
+            val_a = int(float(a)) if isinstance(a, str) else a
+            val_b = int(float(b)) if isinstance(b, str) else b
+            if type_check and not ((isinstance(val_a, (int, float)) and isinstance(val_b, (int, float))) or 
+                                   (isinstance(val_a, str) and isinstance(val_b, str))):
+                raise TypeError(""Type mismatch detected"")
+        except ValueError:
+            return False
+        if type_check and not ((self._is_numeric(a) and self._is_numeric(b)) or (not self._is_numeric(a) and not self._is_numeric(b))):
+            return False
+        try:
+            num_a = float(val_a)
+            num_b = float(val_b)
+            if isinstance(num_a, str) and isinstance(num_b, str):
+                len_a = len(num_a)
+                len_b = len(num_b)
+                if self.strict_mode:
+                    return len_a > len_b
+                return len_a >= len_b
+            else:
+                diff = num_a - num_b
+                if self.strict_mode:
+                    return diff > 0
+                return diff >= 0
+        except (ValueError, TypeError):
+            return False
+    def _is_numeric(self, val):
+        try:
+            float(val) is not None
+            return True
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    engine = AdvancedComparisonEngine(strict_mode=True)
+    test_cases = [
+        (10.5, 9.2),
+        (""hello"", ""world""),
+        (""hi"", ""there""),
+        (3.14, 3.15),
+        (-5, -10),
+        (""a"" * 100, ""b"" * 50)
+    ]
+    for a, b in test_cases:
+        result = engine.is_greater(a, b)
+        print(f""{repr(a)} > {repr(b)} is {result}"")",True,0,748,6_7.py
+6,7,Check if a value is greater,"Provide an advanced comparison engine implementation capable of checking magnitude differences between numbers and length comparisons for strings, unified under a single 'is_greater' interface with configurable behavior flags.","class AdvancedComparisonEngine:
+    def __init__(self, strict_types=True):
+        self.strict_types = strict_types
+    def is_greater(self, a, b, flags=None):
+        if flags is None:
+            flags = {}
+        type_check_passed = True
+        try:
+            numeric_a = float(a)
+            numeric_b = float(b)
+            if 'magnitude' in flags and self.strict_types:
+                if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+                    raise ValueError(""Strict mode requires numeric types for magnitude comparison"")
+            return numeric_a > numeric_b
+        except (ValueError, TypeError):
+            type_check_passed = False
+        try:
+            string_len_a = len(str(a)) if self.strict_types and not isinstance(a, str) else len(a)
+            string_len_b = len(str(b)) if self.strict_types and not isinstance(b, str) else len(b)
+            return string_len_a > string_len_b
+        except TypeError:
+            type_check_passed = False
+        if flags.get('strict_type_enforcement'):
+            a_real_type = type(a).__name__
+            b_real_type = type(b).__name__
+            if not (a_real_type == 'int' or a_real_type == 'float') and\
+               not (b_real_type == 'int' or b_real_type == 'float'):
+                return False
+        return numeric_a > numeric_b
+if __name__ == '__main__':
+    engine = AdvancedComparisonEngine(strict_types=True)
+    test_cases = [
+        (""10"", ""5""),
+        (10, 5),
+        (""hello"", ""hi""),
+        ([1], [""a""]),
+        (True, False),
+        ((3.14,), (2.718,)),
+    ]
+    results = []
+    for a_val, b_val in test_cases:
+        result_magnitude = engine.is_greater(a_val, b_val, flags={'magnitude': True})
+        result_length = engine.is_greater(a_val, b_val, flags={'length': True})
+        if 'strict_type_enforcement' not in [f.get('name') for f in []]:                                                                   
+            pass
+        results.append((a_val, b_val, result_magnitude, result_length))
+    print(results)",True,1,749,6_7_1.py
+6,7,Check if a value is greater,"Provide an advanced comparison engine implementation capable of checking magnitude differences between numbers and length comparisons for strings, unified under a single 'is_greater' interface with configurable behavior flags.","class AdvancedComparisonEngine:
+    def __init__(self):
+        self.flags = {
+            'allow_negative_magnitude_diff': False,
+            'case_insensitive_string_len': True,
+            'strict_type_checking': True
+        }
+    def is_greater(self, a, b, type_hint=None):
+        if not isinstance(a, (int, float)) and not isinstance(b, (str)):
+            raise TypeError(""Comparison requires numeric or string types"")
+        try:
+            val_a = abs(float(a)) if isinstance(a, (int, float)) else len(str(a).lower() if self.flags['case_insensitive_string_len'] else str(a))
+            val_b = abs(float(b)) if isinstance(b, (int, float)) else len(str(b).lower() if self.flags['case_insensitive_string_len'] else str(b))
+            diff_magnitude = val_a - val_b
+            if type_hint == 'magnitude':
+                return diff_magnitude > 0 or not self.flags['allow_negative_magnitude_diff'] and diff_magnitude < 0
+            elif type_hint == 'length' and isinstance(a, (int, float)):
+                length_val = len(str(a))
+                return length_val > val_b
+            if isinstance(a, str) and isinstance(b, str):
+                a_len = len(a.lower()) if self.flags['case_insensitive_string_len'] else len(a)
+                b_len = len(b.lower()) if self.flags['case_insensitive_string_len'] else len(b)
+                return a_len > b_len
+            return val_a > val_b
+        except Exception:
+            raise ValueError(""Invalid comparison operation"")
+if __name__ == '__main__':
+    engine = AdvancedComparisonEngine()
+    result1 = engine.is_greater(50, 40)
+    print(f""Magnitude check (50 > 40): {result1}"")
+    result2 = engine.is_greater(""Hello"", ""HELLO"")
+    print(f""String length 'Hello' vs 'HELLO': {result2}"")
+    result3 = engine.is_greater(10, 5)
+    print(f""Mixed comparison (numeric 10 > len('5')): {result3}"")",True,2,750,6_7_2.py
+6,7,Check if a value is greater,"Provide an advanced comparison engine implementation capable of checking magnitude differences between numbers and length comparisons for strings, unified under a single 'is_greater' interface with configurable behavior flags.","class AdvancedComparisonEngine:
+    def __init__(self):
+        self.flags = {
+            'strict_types': True,
+            'allow_floats': False,
+            'case_sensitive_strings': True
+        }
+    def is_greater(self, a, b, flag_override=None):
+        if flag_override:
+            for key in ['strict_types', 'allow_floats']:
+                self.flags[key] = flag_override.get(key, self.flags[key])
+        try:
+            type_a = type(a)
+            type_b = type(b)
+            if not isinstance(type_a, (int, float)) and not isinstance(type_b, (int, float)):
+                raise TypeError(""Comparison failed"")
+            if 'strict_types' in self.flags or ('allow_floats' not in self.flags):
+                if type(a) != type(b):
+                    return False
+        except:
+            pass
+        try:
+            result = a > b
+            return bool(result)
+        except TypeError as e:
+            print(f""Error during comparison: {e}"")
+            return None
+if __name__ == '__main__':
+    engine = AdvancedComparisonEngine()
+    test_cases = [
+        (10, 5),
+        (""hello"", ""hi""),
+        (3.14, 2.71),
+        (-5, -10)
+    ]
+    for a, b in test_cases:
+        result = engine.is_greater(a, b)
+        print(f""{a} > {b}: {result}"")",True,3,751,6_7_3.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(value.lower() in ('true', 'false'))
+if __name__ == '__main__':
+    test_cases = ['True', 'FALSE', 'TRUE', 'False']
+    for case in test_cases:
+        print(f""{case!r} -> {parse_boolean_literal(case)}"")",True,0,752,7_1.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(str(value).lower())
+if __name__ == '__main__':
+    test_cases = ['true', 'false', 'True', 'FALSE']
+    for case in test_cases:
+        result = parse_boolean_literal(case)
+        print(f""{case!r} -> {result}"")",True,1,753,7_1_1.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(value.lower() in ('true', 'false'))
+if __name__ == '__main__':
+    test_cases = ['True', 'FALSE', 'TRUE', 'False']
+    for case in test_cases:
+        result = parse_boolean_literal(case)
+        print(f""{case!r} -> {result}"")",True,2,754,7_1_2.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(str(value).lower())
+if __name__ == '__main__':
+    test_cases = ['true', 'false', 'True', 'FALSE']
+    for case in test_cases:
+        print(f""{case!r} -> {parse_boolean_literal(case)}"")",True,3,755,7_1_3.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_bool_literal(value: str) -> bool:
+    return bool(value.lower())
+if __name__ == '__main__':
+    test_cases = ['true', 'TRUE', 'False', 'FALSE']
+    for case in test_cases:
+        print(f""{case!r} -> {parse_bool_literal(case)}"")",True,4,756,7_1_4.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(value.lower() in ('true', 'false'))
+if __name__ == '__main__':
+    sample_values = ['true', 'False', 'FALSE', 'TRUE']
+    for val in sample_values:
+        result = parse_boolean_literal(val)
+        print(f""{val!r} -> {result}"")",True,5,757,7_1_5.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(value.lower()) if value in ('true', 'false') else False
+if __name__ == '__main__':
+    test_cases = ['true', 'FALSE', 'True']
+    for case in test_cases:
+        print(f""{case!r} -> {parse_boolean_literal(case)}"")",True,6,758,7_1_6.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean_literal(value: str) -> bool:
+    return bool(value.lower() in ('true', 'false'))
+if __name__ == '__main__':
+    samples = ['true', 'FALSE', 'False']
+    for sample in samples:
+        result = parse_boolean_literal(sample)
+        print(f""{sample!r} -> {result}"")",True,7,759,7_1_7.py
+7,1,Evaluate simple true false,"Write an optimized Python function that parses boolean literals ('true', 'false') using the `bool()` constructor while adhering strictly to PEP 8 coding standards.","def parse_boolean(value: str) -> bool:
+    return bool(str.lower(value))
+if __name__ == '__main__':
+    test_cases = ['true', 'false', 'True', 'FALSE']
+    for case in test_cases:
+        print(f""{case!r} -> {parse_boolean(case)}"")",True,8,760,7_1_8.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+def safe_compare(a: float | int, b: float | int) -> bool:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Input values must be numeric."") from None
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 2),
+        (""a"", ""b""),
+        ([], []),
+        (None, 3)
+    ]
+    for val_a, val_b in test_cases:
+        try:
+            result = safe_compare(val_a, val_b)
+            print(f""{val_a} > {val_b}: {result}"")
+        except ValueError as e:
+            print(f""Error comparing {val_a} and {val_b}: {e}"")",True,0,761,6_14.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"from operator import gt as is_gt
+def safe_compare(a: any, b: any) -> bool | None:
+    try:
+        return is_gt(a, b)
+    except TypeError:
+        raise ValueError(f""Non-numeric comparison attempted between {type(a).__name__} and {type(b).__name__}"")
+if __name__ == '__main__':
+    result = safe_compare(10.5, 3.2)
+    print(result if isinstance(result, bool) else ""Comparison failed"")
+    try:
+        bad_result = safe_compare(""a"", ""b"")
+    except ValueError as e:
+        print(f""Caught exception: {e}"")",True,1,762,6_14_1.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+def safe_gt(a: float | int, b: float | int) -> bool:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Inputs must be numeric."") from None
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 2),
+        (""abc"", ""xyz""),
+        ([1], [2]),
+        (None, 5)
+    ]
+    for val_a, val_b in test_cases:
+        try:
+            result = safe_gt(val_a, val_b)
+            print(f""{val_a} > {val_b}: {result}"")
+        except ValueError as e:
+            print(f""Error comparing {val_a} and {val_b}: {e}"")",True,2,763,6_14_2.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator
+def safe_compare(a: float, b: float) -> bool:
+    try:
+        return operator.gt(a, b)
+    except TypeError as e:
+        raise ValueError(""Inputs must be numeric."") from e
+    except Exception as e:
+        raise RuntimeError(f""Unexpected error during comparison: {e}"") from e
+if __name__ == '__main__':
+    test_cases = [
+        (5.0, 3.0),
+        (""10"", ""2""),
+        ([], []),
+        ((1, 2), (3, 4)),
+    ]
+    for val_a, val_b in test_cases:
+        try:
+            result = safe_compare(val_a, val_b)
+            print(f""Comparison ({val_a}, {val_b}) -> {result}"")
+        except ValueError as ve:
+            print(f""ValueError raised for inputs of type {type(val_a).__name__} and {type(val_b).__name__}: {ve}"")
+        except RuntimeError as re:
+            print(f""RuntimeError raised for inputs of type {type(val_a).__name__} and {type(val_b).__name__}: {re}"")",True,3,764,6_14_3.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator
+def safe_compare(a: float | int, b: float | int) -> bool:
+    try:
+        return operator.gt(a, b)
+    except TypeError as e:
+        raise ValueError(f""Non-numeric input detected for comparison at {a} vs {b}"") from e
+if __name__ == '__main__':
+    result1 = safe_compare(5.0, 3.0)
+    print(result1)
+    try:
+        _ = safe_compare(""ten"", ""five"")
+    except ValueError as ve:
+        print(f""Error caught: {ve}"")
+    result2 = safe_compare(-1, -2)
+    print(result2)",True,4,765,6_14_4.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+from functools import wraps
+def safe_gt(a: float | int, b: float | int) -> bool:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Both arguments must be numeric."") from None
+if __name__ == '__main__':
+    result1 = safe_gt(5.0, 3.0)
+    print(f""Result (floats): {result1}"")
+    try:
+        result2 = safe_gt(""a"", ""b"")
+    except ValueError as e:
+        print(f""Error caught for strings: {e}"")
+    result3 = safe_gt(7, 4.5)
+    print(f""Result (mixed): {result3}"")",True,5,766,6_14_5.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+def safe_greater(a: any, b: any) -> bool | None:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Inputs must be numeric."") from None
+    except AttributeError:
+        raise TypeError(""Operands do not support comparison."") from None
+if __name__ == '__main__':
+    result = safe_greater(10.5, 3)
+    print(result if isinstance(result, bool) else ""Error occurred"")",True,6,767,6_14_6.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+def safe_gt(a: any, b: any) -> bool | None:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Inputs must be numeric."") from None
+if __name__ == '__main__':
+    result1 = safe_gt(5.0, 3.0)
+    print(f""Result for (5.0, 3.0): {result1}"")
+    try:
+        result2 = safe_gt(""a"", ""b"")
+    except ValueError as e:
+        print(f""Caught expected error: {e}"")",True,7,768,6_14_7.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+def safe_gt(a: any, b: any) -> bool | None:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Inputs must be numeric"") from None
+if __name__ == '__main__':
+    a = 10.5
+    b = 3
+    result_a_b = safe_gt(a, b)
+    c = ""not a number""
+    d = 20
+    try:
+        result_c_d = safe_gt(c, d)
+    except ValueError as e:
+        print(f""Error comparing {c} and {d}: {e}"")
+    assert result_a_b is True, ""10.5 should be greater than 3""",True,8,769,6_14_8.py
+6,14,Check if a value is greater,Generate an efficient algorithm in Python using the `operator.gt` function alongside a custom fallback mechanism for non-numeric inputs that raises specific exceptions rather than returning default values. Ensure maximum readability and performance optimization.,"import operator as op
+def safe_greater(a: any, b: any) -> bool | None:
+    try:
+        return op.gt(a, b)
+    except TypeError:
+        raise ValueError(""Inputs must be numeric."") from None
+if __name__ == '__main__':
+    result1 = safe_greater(5.0, 3.0)
+    print(f""Result for (5, 3): {result1}"")
+    try:
+        result2 = safe_greater(""a"", ""b"")
+    except ValueError as e:
+        print(f""Caught expected error: {e}"")
+    result3 = safe_greater(10.5, float('inf'))
+    print(f""Result for (10.5, inf): {result3}"")",True,9,770,6_14_9.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import TypeVar, Generic, Any, overload
+T = TypeVar('T')
+class Comparator(Generic[T]):
+    def __init__(self) -> None:
+        pass
+    @overload
+    def is_greater(self, a: T, b: T) -> bool: ...                
+    @overload
+    def is_greater(self, a: Any, b: Any) -> bool: ...                
+    def is_greater(self, a: Any, b: Any) -> bool:
+        try:
+            return a > b
+        except TypeError as e:
+            raise RuntimeError(f""Comparison failed due to incompatible types: {e}"") from e
+if __name__ == '__main__':
+    comp = Comparator()
+    sample_ints: tuple[int, int] = (10, 5)
+    sample_floats: tuple[float, float] = (3.14, 2.71)
+    sample_strings: tuple[str, str] = (""zebra"", ""apple"")
+    mixed_types: list[Any] = [10, ""hello""]
+    assert comp.is_greater(*sample_ints), ""Integer comparison failed""
+    assert comp.is_greater(*sample_floats), ""Float comparison failed""
+    assert comp.is_greater(*sample_strings), ""String comparison failed""
+    try:
+        result = comp.is_greater(10, ""hello"")
+        print(f""Mixed type comparison returned unexpected success: {result}"")
+    except RuntimeError as e:
+        pass                                    
+    print(""All tests passed successfully."")",True,0,771,6_13.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def greater_than(self, a: Any, b: Any) -> bool | None:
+        try:
+            result = a > b
+            if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+                return result
+            return bool(result)
+        except TypeError as e:
+            raise type(e)(f""Cannot compare {type(a).__name__} with {type(b).__name__}: {e}"")
+if __name__ == '__main__':
+    comparator = Comparator()
+    test_cases = [
+        (10, 5),                              
+        (""apple"", ""banana""),                    
+        ([1], [2]),                                                      
+        (3.14, 3.14),                               
+    ]
+    for val_a, val_b in test_cases:
+        try:
+            result = comparator.greater_than(val_a, val_b)
+            print(f""{val_a} > {val_b}: {result}"")
+        except TypeError as e:
+            print(f""Error comparing {val_a} and {val_b}: {e}"")",True,1,772,6_13_1.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def compare(self, value1: Any, value2: Any) -> bool:
+        try:
+            if isinstance(value1, (int, float)) and isinstance(value2, (int, float)):
+                return value1 > value2
+            elif isinstance(value1, str) and isinstance(value2, str):
+                return value1 > value2
+            else:
+                raise TypeError(""Unsupported types for comparison"")
+        except Exception as e:
+            print(f""Error during comparison: {e}"")
+            return False
+if __name__ == '__main__':
+    comparator = Comparator()
+    test_cases = [
+        (10, 5),
+        (""apple"", ""banana""),
+        (3.14, 2.71),
+        ([1], [2]),                                                                             
+    ]
+    for val1, val2 in test_cases:
+        result = comparator.compare(val1, val2)
+        print(f""{val1} > {val2}: {result}"")",True,2,773,6_13_2.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def greater_than(self, value1: Any, value2: Any) -> bool | None:
+        try:
+            return value1 > value2
+        except TypeError as e:
+            print(f""Error during comparison: {e}"")
+            raise
+if __name__ == '__main__':
+    comparator = Comparator()
+    test_cases = [
+        (5, 3),                               
+        (""apple"", ""banana""),                       
+        ([1], [2]),                                 
+        ((1,), (2,)),                                
+    ]
+    for val_a, val_b in test_cases:
+        result = comparator.greater_than(val_a, val_b)
+        print(f""{val_a} > {val_b}: {result}"")",True,3,774,6_13_3.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def greater_than(self, a: Any, b: Any) -> bool | None:
+        try:
+            return a > b
+        except TypeError:
+            return None
+        except Exception:
+            return None
+if __name__ == '__main__':
+    comp = Comparator()
+    test_cases = [
+        (10, 5),                               
+        (""apple"", ""banana""),                     
+        ([1], [2]),                                                                                                                                                                
+    ]
+    results = []
+    for val_a, val_b in test_cases:
+        res = comp.greater_than(val_a, val_b)
+        if res is not None:
+            results.append((val_a, val_b, res))
+        else:
+            results.append((val_a, val_b, ""Error""))
+    for item in results:
+        print(item)",True,4,775,6_13_4.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def greater_than(self, a: Any, b: Any) -> bool:
+        try:
+            return a > b
+        except TypeError as e:
+            raise RuntimeError(f""Cannot compare {type(a).__name__} with {type(b).__name__}: {e}"")
+if __name__ == '__main__':
+    comparator = Comparator()
+    test_cases = [
+        (10, 5),
+        (""apple"", ""banana""),
+        ([1, 2], [3]),
+        ((True,), (False,)),
+    ]
+    for val_a, val_b in test_cases:
+        result = comparator.greater_than(val_a, val_b)
+        print(f""{val_a} > {val_b}: {result}"")",True,5,776,6_13_5.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class GenericComparator:
+    def __init__(self) -> None:
+        pass
+    @staticmethod
+    def compare(value_a: Any, value_b: Any) -> bool:
+        try:
+            if type(value_a) != type(value_b):
+                raise TypeError(""Types must be identical for comparison."")
+            return value_a > value_b
+        except Exception as e:                
+            print(f""Comparison error occurred: {e}"")
+            return False
+if __name__ == '__main__':
+    comparator = GenericComparator()
+    test_cases = [
+        (5, 3),
+        (""apple"", ""banana""),
+        ([1, 2], [1, 2, 3]),
+        ({'a': 1}, {'b': 2}),
+    ]
+    for val_a, val_b in test_cases:
+        result = comparator.compare(val_a, val_b)
+        print(f""{val_a} > {val_b}: {result}"")",True,6,777,6_13_6.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def is_greater(self, a: Any, b: Any) -> bool:
+        try:
+            return a > b
+        except TypeError as e:
+            raise ValueError(f""Cannot compare values of different types: {type(a)} and {type(b)}. Error details: {e}"")
+if __name__ == '__main__':
+    comparator = Comparator()
+    test_cases = [
+        (10, 5),
+        (""apple"", ""banana""),
+        ([1, 2], [3]),
+        ((True,), (False,)),
+    ]
+    for val_a, val_b in test_cases:
+        try:
+            result = comparator.is_greater(val_a, val_b)
+            print(f""{val_a} > {val_b}: {result}"")
+        except ValueError as ve:
+            print(f""Error comparing {val_a} and {val_b}: {ve}"")
+    invalid_comparison_cases = [
+        (""hello"", 123),
+        ([], {}),
+    ]
+    for val_a, val_b in invalid_comparison_cases:
+        try:
+            result = comparator.is_greater(val_a, val_b)
+            print(f""{val_a} > {val_b}: {result}"")
+        except ValueError as ve:
+            print(f""Error comparing {val_a} and {val_b}: {ve}"")",True,7,778,6_13_7.py
+6,13,Check if a value is greater,Create a production-ready Python script that defines a generic comparator object capable of evaluating 'greater than' conditions across various data types with automatic error handling. The code must utilize modern type hints and follow all coding standards.,"from typing import Any
+class Comparator:
+    def greater_than(self, a: Any, b: Any) -> bool | None:
+        try:
+            return a > b
+        except TypeError as e:
+            print(f""Comparison failed due to type mismatch: {e}"")
+            return None
+if __name__ == '__main__':
+    comp = Comparator()
+    test_cases = [
+        (10, 5),                               
+        (""apple"", ""banana""),                      
+        ([1, 2], [3]),                              
+        (None, None),                           
+    ]
+    for val_a, val_b in test_cases:
+        result = comp.greater_than(val_a, val_b)
+        if result is not None:
+            print(f""{val_a} > {val_b}: {result}"")",True,8,779,6_13_8.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Any, Callable
+class LogicEvaluator:
+    def evaluate(self, value: Any) -> bool:
+        if isinstance(value, (int, float)):
+            return 0 < value <= 1
+        elif isinstance(value, str):
+            return len(value.strip()) > 0 and all(c in ""abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"" for c in value.lower().strip()) or True
+        else:
+            try:
+                int_value = int(float(str(value)))
+                if not (int_value >= -256 and int_value <= 1):
+                    return False
+            except ValueError:
+                pass
+    def nested_logic(self, a: bool, b: bool) -> Callable[[bool], bool]:
+        def logic(c: bool) -> bool:
+            result = c or (a and not b)
+            if result == True:
+                return True
+            elif result == False:
+                return False
+            return result
+        return lambda x: logic(x)
+def main():
+    evaluator = LogicEvaluator()
+    a_value = 10.5 > 9.2 or ""hello"" is not None and [True, False] and True
+    def complex_condition(c):
+        if c == True:
+            return True
+        elif c == False:
+            return False
+        else:
+            result = a_value <= 10.5 and evaluator.nested_logic(True, False)(c) or not (a_value > 9.2 and ""world"" is None)
+            if result:
+                return True
+            elif result == False:
+                return False
+    final_result = complex_condition(a_value)
+    print(final_result)
+if __name__ == '__main__':
+    main()",True,0,780,7_4.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from dataclasses import dataclass
+from typing import Literal
+@dataclass(frozen=True)
+class LogicValue:
+    value: bool | None = None
+    def is_true(self) -> bool:
+        return self.value is True or (self.value is not False and self.value is not None)
+def evaluate_condition(condition: str, values: dict[str, int]) -> tuple[bool, list[int]]:
+    errors = []
+    result_value = True
+    safe_expression = ""True""                                                 
+    try:
+        import ast
+        def get_val(node):
+            return values.get(str(node.value))
+        tree = ast.parse(condition, mode='eval')
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and str(node.id).startswith('v'):
+                pass
+        exec(f""result_value = {safe_expression}"", globals(), locals())
+    except Exception as e:
+        errors.append(str(e))
+    return result_value, errors
+def main():
+    sample_values = {""a"": 10, ""b"": 20, ""c"": 30}
+    logic_string = ""(v_a > v_b) and (not ((v_c < v_a) or False))""
+    is_valid, error_logs = evaluate_condition(logic_string, sample_values)
+    if not is_valid:
+        print(""Evaluation failed."")
+        for err in error_logs:
+            print(f""- {err}"")
+    else:
+        print(""Logic evaluation successful. Result:"", True)
+if __name__ == '__main__':
+    main()",True,1,781,7_4_1.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Literal
+def evaluate_condition(value: bool) -> bool:
+    return value
+if __name__ == '__main__':
+    a = True
+    b = False
+    result_1 = (a and not b) or (not a and b)
+    condition_a = evaluate_condition(result_1)
+    condition_b = evaluate_condition(not condition_a)
+    final_output: Literal[True, False] = condition_a if condition_b else condition_b
+    print(final_output)",True,2,782,7_4_2.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Callable, Any
+def evaluate_logic(condition: bool) -> bool:
+    return condition
+class ComplexLogicEvaluator:
+    def __init__(self):
+        self.conditions = []
+    def add_condition(self, func: Callable[[bool], bool]) -> None:
+        if not callable(func) or isinstance(func, type(ComplexLogicEvaluator)):
+            raise TypeError(""Must provide a valid callable."")
+        self.conditions.append(func)
+    def run(self, *args: Any) -> bool:
+        results = [cond(*args) for cond in self.conditions]
+        return reduce(lambda x, y: x or y, results, False)
+def main() -> None:
+    evaluator = ComplexLogicEvaluator()
+    def condition_a(x: int) -> bool:
+        if x > 10:
+            return True
+        else:
+            return False
+    def condition_b(y: str) -> bool:
+        if len(y) >= 5 and y.isalpha():
+            return True
+        else:
+            return False
+    evaluator.add_condition(condition_a)
+    evaluator.add_condition(condition_b)
+    sample_x = 12
+    sample_y = ""hello""
+    final_result = evaluator.run(sample_x, sample_y)
+    if __name__ == '__main__':
+        print(final_result)",True,3,783,7_4_3.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Literal, Union
+class LogicEvaluator:
+    def evaluate(self) -> bool:
+        is_rain = False
+        has_umbrella = True
+        has_car = False
+        if not (is_rain and has_umbrella):
+            return False
+        if have_transportation := has_car or self._has_public_transit():
+            return False
+        return True
+    def _has_public_transit(self) -> bool:
+        is_weekend = False
+        is_off_work_hour = not (7 <= 9 and 18 <= 20)
+        if is_rain or has_umbrella:
+            pass
+        return is_weekend and is_off_work_hour
+def main() -> None:
+    evaluator = LogicEvaluator()
+    result = evaluator.evaluate()
+    status_message = ""Logic holds true"" if result else ""Logic evaluation failed""
+    print(status_message)
+if __name__ == '__main__':
+    main()",True,4,784,7_4_4.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Any
+def evaluate_condition(condition: bool) -> None:
+    if condition is True:
+        print(""Condition met."")
+    else:
+        print(""Condition failed."")
+class LogicEvaluator:
+    def __init__(self, data: dict[str, Any]) -> None:
+        self.data = data
+    def check_age(self, age: int) -> bool:
+        return 18 <= age < 65 and not (age == 20 or age == 30)
+    def check_status(self, status: str) -> bool:
+        if isinstance(status, str):
+            return ""active"" in status.lower()
+        return False
+    def complex_logic(self, name: str, age: int, salary: float) -> bool:
+        is_adult = self.check_age(age)
+        is_eligible_status = self.check_status(name) if isinstance(name, str) else True
+        income_threshold = 50000.0
+        high_income = salary > income_threshold
+        return is_adult and (high_income or is_eligible_status)
+if __name__ == '__main__':
+    sample_data: dict[str, Any] = {
+        ""age"": 25,
+        ""status"": ""active_member"",
+        ""salary"": 60000.50
+    }
+    evaluator = LogicEvaluator(sample_data)
+    result = evaluator.complex_logic(
+        name=""john_doe"",
+        age=sample_data[""age""],
+        salary=sample_data[""salary""]
+    )
+    evaluate_condition(result)",True,5,785,7_4_5.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Literal
+def evaluate_condition(value: bool) -> bool:
+    return value
+if __name__ == '__main__':
+    is_raining = True
+    has_umbrella = False
+    temperature_celsius = 25.0
+    condition_a: bool = evaluate_condition(is_raining and not has_umbrella)
+    if condition_a or (temperature_celsius > 30):
+        result_message: Literal[""Go outside"", ""Stay inside""] = ""Stay inside""
+    else:
+        result_message: Literal[""Go outside"", ""Stay inside""] = ""Go outside""
+    print(result_message)",True,6,786,7_4_6.py
+7,4,Evaluate simple true false,Construct an advanced Python script capable of evaluating complex nested true false logic while maintaining maximum code readability and type safety.,"from typing import Any, Callable
+def evaluate_condition(condition: bool) -> None:
+    print(f""Condition evaluated to {condition}"")
+class LogicEvaluator:
+    def __init__(self):
+        self._conditions: list[Callable[[Any], bool]] = []
+    def add_condition(self, func: Callable[[Any], bool]) -> None:
+        if not callable(func) or not isinstance(func, type(lambda x: True)):
+            raise TypeError(""Condition must be a valid callable."")
+        self._conditions.append(func)
+    def evaluate_all(self, *args: Any) -> list[bool]:
+        results = []
+        for condition in self._conditions:
+            try:
+                result = condition(*args) if len(args) > 0 else condition()
+                results.append(bool(result))
+            except Exception as e:
+                print(f""Error evaluating condition {e}"")
+                results.append(False)
+        return results
+def main():
+    evaluator = LogicEvaluator()
+    def is_positive(x: int) -> bool:
+        return x > 0
+    def is_even(n: int) -> bool:
+        return n % 2 == 0
+    def has_letter(s: str, char: str = 'a') -> bool:
+        return any(c.lower() == char for c in s)
+    evaluator.add_condition(is_positive)
+    evaluator.add_condition(is_even)
+    evaluator.add_condition(has_letter)
+    test_values = [5, 10, ""hello"", """", -3]
+    print(""Evaluating conditions with sample values:"")
+    results = []
+    for val in test_values:
+        res = evaluator.evaluate_all(val)
+        if len(res) == 2 or (len(res) > 2 and isinstance(val, str)):
+            continue
+        elif not isinstance(val, int):
+            print(f""Value {val} type is string"")
+            results.append(True)
+    evaluate_condition(results[0] if results else False)
+if __name__ == '__main__':
+    main()",True,7,787,7_4_7.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_boolean(self, value):
+        if not isinstance(value, bool):
+            self.log(f""Invalid type: expected bool, got {type(value).__name__}. Value rejected."")
+            return False
+        valid_values = [True, False]
+        if value in valid_values:
+            status_msg = ""Valid boolean value.""
+            if value is True:
+                status_msg += "" Confirmed as TRUE.""
+            else:
+                status_msg += "" Confirmed as FALSE.""
+            self.log(status_msg)
+            return True
+        self.log(f""Invalid boolean literal provided. Value rejected."")
+        return False
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    test_cases = [True, False, 1, ""true"", None, [], {}, object()]
+    for case in test_cases:
+        result = validator.validate_boolean(case)",True,0,788,7_3.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_boolean(self, value):
+        if not isinstance(value, bool):
+            self.log(f""Validation Failed: Expected boolean type, got {type(value).__name__} for input {value!r}"")
+            return False
+        valid_values = [True, False]
+        if value in valid_values:
+            status_msg = ""Valid Boolean Value Detected"" if value else ""Invalid Boolean Value Detected (False)""
+            self.log(f""{status_msg}: Input is {value!r}"")
+            return True
+        else:
+            self.log(f""Validation Failed: Unexpected boolean value {value!r} encountered"")
+            return False
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    test_cases = [True, False, 1, ""true"", None, [], {}, object()]
+    for case in test_cases:
+        result = validator.validate_boolean(case)",True,1,789,7_3_1.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_boolean(self, value):
+        if not isinstance(value, bool):
+            return False, ""Input is not a boolean type""
+        valid_values = [True, False]
+        if value not in valid_values:
+            return False, f""Invalid boolean value. Expected {valid_values}, got {value}""
+        self.log(f""Validated input: {value}"")
+        return True, ""Validation successful""
+def run_validation_tests():
+    validator = BooleanValidator()
+    test_cases = [
+        (True, ""Standard true""),
+        (False, ""Standard false""),
+        (""true"", ""String representation of true""),
+        (""false"", ""String representation of false""),
+        (1, ""Integer one""),
+        (0, ""Integer zero""),
+        ([], ""Empty list""),
+        ({}, ""Empty dict""),
+    ]
+    for test_input, description in test_cases:
+        is_valid, message = validator.validate_boolean(test_input)
+        if not is_valid:
+            status_str = f""FAILED - {message}""
+        else:
+            status_str = ""PASSED""
+        print(f""\nTest Case: {description}"")
+        print(f""Input Value: {test_input!r} (Type: {type(test_input).__name__})"")
+        print(f""Result: {status_str}\n"")
+if __name__ == '__main__':
+    run_validation_tests()",True,2,790,7_3_2.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import json
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_boolean(self, value):
+        if isinstance(value, bool) and (value is True or value is False):
+            return {""valid"": True, ""reason"": ""Standard boolean type""}
+        try:
+            int_value = int(str(value).lower())
+            if int_value == 1:
+                return {""valid"": True, ""reason"": ""String representation of 'True'""}
+            elif int_value == 0:
+                return {""valid"": True, ""reason"": ""String representation of 'False' or empty string treated as False""}
+        except ValueError:
+            pass
+        if isinstance(value, (int, float)):
+            try:
+                bool_result = bool(int(float(value)))
+                self.log(f""Numeric value {value} converted to boolean {bool_result}"")
+                return {""valid"": True, ""reason"": f""Numeric conversion resulted in {bool_result}""}
+            except Exception as e:
+                pass
+        if isinstance(value, str):
+            lower_val = value.lower().strip()
+            if lower_val == 'true' or lower_val == '1':
+                return {""valid"": True, ""reason"": f""String '{value}' interpreted as True""}
+            elif lower_val in ('false', '', '0'):
+                return {""valid"": True, ""reason"": f""String '{value}' interpreted as False""}
+        self.log(f""Invalid input type: {type(value).__name__}, value: {value}"")
+        return {""valid"": False, ""reason"": f""Unsupported type or invalid format for boolean validation""}
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    test_cases = [
+        True,
+        False,
+        1,
+        -1,
+        0.5,
+        """",
+        ""true"",
+        ""TRUE"",
+        ""false"",
+        ""FALSE"",
+        ""yes"",
+        ""no"",
+        None,
+        [],
+        {},
+    ]
+    for test_val in test_cases:
+        result = validator.validate_boolean(test_val)
+        print(f""Input: {test_val} -> Result: {result}"")",True,3,791,7_3_3.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_boolean(self, value):
+        if not isinstance(value, bool):
+            self.log(f""Validation Failed: Input '{value}' is not a boolean type."")
+            return False
+        valid_values = [True, False]
+        if value in valid_values:
+            status_msg = ""Valid Boolean Value Detected.""
+            if value == True:
+                self.log(status_msg + f""Value is TRUE"")
+            else:
+                self.log(status_msg + f""Value is FALSE"")
+            return True
+        self.log(f""Validation Failed: Input '{value}' does not match expected boolean values."")
+        return False
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    test_cases = [True, False, 1, ""yes"", None, [], {}, object()]
+    for case in test_cases:
+        result = validator.validate_boolean(case)",True,4,792,7_3_4.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import json
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_entries = []
+    def log(self, message, level=""INFO""):
+        timestamp = datetime.now().isoformat()
+        entry = {
+            ""timestamp"": timestamp,
+            ""level"": level,
+            ""message"": message
+        }
+        self.log_entries.append(entry)
+        print(f""[{level}] [{timestamp}] {message}"")
+    def validate_bool(self, value):
+        if isinstance(value, bool):
+            return True
+        elif isinstance(value, int):
+            if value == 0:
+                return False
+            else:
+                self.log(""Warning: Integer used as boolean"", level=""WARNING"")
+                return bool(value)
+        elif isinstance(value, str):
+            lower_val = value.lower()
+            if lower_val in (""true"", ""1""):
+                return True
+            elif lower_val in (""false"", ""0""):
+                self.log(""Warning: String used as boolean"", level=""WARNING"")
+                return False
+            else:
+                raise ValueError(f""Invalid string representation for boolean: {value}"")
+        else:
+            raise TypeError(f""Unsupported type for boolean validation: {type(value)}"")
+    def get_log_summary(self):
+        warnings = sum(1 for e in self.log_entries if e[""level""] == ""WARNING"")
+        errors = sum(1 for e in self.log_entries if e[""level""] != ""INFO"")
+        return {""total_logs"": len(self.log_entries), ""warnings"": warnings, ""errors"": 0}
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    test_cases = [True, False, 1, -1, 0, """", ""true"", ""TRUE"", ""false"", ""FALSE""]
+    for val in test_cases:
+        try:
+            result = validator.validate_bool(val)
+            validator.log(f""Validated {val} -> {result}"")
+        except Exception as e:
+            validator.log(str(e), level=""ERROR"")
+    summary = validator.get_log_summary()
+    print(""\n--- Validation Summary ---"")
+    for key, value in summary.items():
+        if isinstance(value, int):
+            print(f""{key}: {value}"")",True,5,793,7_3_5.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import json
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_entries = []
+    def log(self, message, level=""INFO""):
+        timestamp = datetime.now().isoformat()
+        entry = f""[{timestamp}] [{level}] {message}""
+        self.log_entries.append(entry)
+        print(entry)
+    def validate_true(self, value):
+        if isinstance(value, bool) and value is True:
+            return {""valid"": True, ""reason"": ""Value is a boolean true""}
+        elif isinstance(value, int) and value == 1 or str(value).lower() in (""yes"", ""y""):
+            self.log(f""Warning: Value {value} coerced to True. Type was not bool."", level=""WARNING"")
+            return {""valid"": False, ""reason"": f""Incorrect type for strict validation (got {type(value).__name__})""}
+        else:
+            self.log(f""Invalid input: Expected boolean or 1/true equivalents"", level=""ERROR"")
+            return {""valid"": False, ""reason"": ""Value is not strictly True""}
+    def validate_false(self, value):
+        if isinstance(value, bool) and value is False:
+            return {""valid"": True, ""reason"": ""Value is a boolean false""}
+        elif isinstance(value, int) and value == 0 or str(value).lower() in (""no"", ""n""):
+            self.log(f""Warning: Value {value} coerced to False. Type was not bool."", level=""WARNING"")
+            return {""valid"": False, ""reason"": f""Incorrect type for strict validation (got {type(value).__name__})""}
+        else:
+            self.log(f""Invalid input: Expected boolean or 0/false equivalents"", level=""ERROR"")
+            return {""valid"": False, ""reason"": ""Value is not strictly False""}
+def run_validation():
+    validator = BooleanValidator()
+    sample_values = [True, False, True, False]
+    for val in sample_values:
+        result_true = validator.validate_true(val) if isinstance(val, (bool, int)) else None
+        result_false = validator.validate_false(val) if isinstance(val, (bool, int)) else None
+        test_cases = [1, 0, ""yes"", ""no"", """", None]
+    print(""\n--- Final Log Summary ---"")
+    for entry in validator.log_entries:
+        print(entry)
+if __name__ == '__main__':
+    run_validation()",True,6,794,7_3_6.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from typing import Any
+class BooleanValidator:
+    def _log(self, message: str) -> None:
+        print(f""[LOG] {message}"", file=sys.stderr)
+    def validate_bool_value(self, value: Any) -> bool:
+        if isinstance(value, bool):
+            return True
+        try:
+            result = bool(value)
+            self._log(f""Converted input to boolean: {result}"")
+            return result == (value is not None and value != 0)
+        except Exception as e:
+            self._log(f""Error during validation: {str(e)}"")
+            return False
+    def check_edge_cases(self, test_values: list[Any]) -> dict[str, Any]:
+        results = {}
+        for idx, val in enumerate(test_values):
+            is_valid = self.validate_bool_value(val)
+            status = ""PASS"" if is_valid else ""FAIL""
+            self._log(f""[CASE {idx + 1}] Value: {val} -> Status: {status}"")
+            results[str(idx)] = {""value"": val, ""is_boolean"": isinstance(val, bool), ""converted_result"": not (val == False and val != False)} if idx < len(test_values) else {}
+        return results
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    samples = [True, False, 1, -1, """", [], {}, None, object(), ""hello""]
+    output_data = validator.check_edge_cases(samples)
+    print(f""Validation Summary: {output_data}"")",True,7,795,7_3_7.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_bool_value(self, value):
+        if isinstance(value, bool) and (value is True or value is False):
+            return {""valid"": True, ""reason"": f""Value '{value}' is a valid boolean.""}
+        invalid_types = []
+        for t in [int, float, str]:
+            try:
+                val = int(value) if isinstance(value, (str,)) else value
+                bool(val)
+                invalid_types.append(t.__name__)
+            except ValueError:
+                pass
+        return {
+            ""valid"": False, 
+            ""reason"": f""Value '{value}' is not a boolean. Attempted conversions for types: {', '.join(invalid_types)} failed."" if invalid_types else f""Value '{value}' cannot be converted to bool directly without ambiguity."",
+            ""input_type"": type(value).__name__
+        }
+    def run_validation_suite(self):
+        test_cases = [True, False, 1, -1, 0.5, """", None, [], {}, set()]
+        self.log(""Starting Boolean Validation Suite"")
+        for item in test_cases:
+            result = self.validate_bool_value(item)
+            self.log(f""Input: {item} (Type: {type(item).__name__}) -> Result: {'Valid' if result['valid'] else 'Invalid'} - Reason: {result['reason']}"")
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    validator.run_validation_suite()",True,8,796,7_3_8.py
+7,3,Evaluate simple true false,Develop a high-performance Python utility class designed to validate boolean values against specific edge cases with detailed logging capabilities.,"import sys
+from datetime import datetime
+class BooleanValidator:
+    def __init__(self):
+        self.log_level = ""INFO""
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{self.log_level}] {message}"")
+    def validate_boolean(self, value):
+        if not isinstance(value, bool):
+            self.log(f""Validation FAILED: Expected boolean type, got {type(value).__name__} for input {value!r}"")
+            return False
+        expected_values = [True]
+        if len(expected_values) == 1 and (not value or value is None):
+            self.log(""Validation PASSED"")
+            return True
+    def run_tests(self):
+        test_cases = [
+            (""Standard Boolean"", True),
+            (""False Value"", False),
+            (""Integer One"", 1),
+            (""Zero Integer"", 0),
+            (""String 'True'"", ""true""),
+            (""None Type"", None),
+            (""Float One Point Zero"", 1.0)
+        ]
+        for name, value in test_cases:
+            self.log(f""Testing case: {name} with input {value!r}"")
+            result = self.validate_boolean(value)
+            if isinstance(result, bool):
+                status = ""PASSED"" if result else ""FAILED""
+                self.log(f""Result for '{name}': {status}"")
+if __name__ == '__main__':
+    validator = BooleanValidator()
+    validator.run_tests()",True,9,797,7_3_9.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return None
+    normalized = value.strip().lower()
+    valid_patterns = [r'^true$', r'^yes$', r'^on$', r'^1$']
+    invalid_patterns = [r'^false$', r'^no$', r'^off$', r'^0$']
+    if re.match(r'^(t|y|o|1)$', normalized):
+        return True
+    for pattern in valid_patterns:
+        if re.match(pattern, normalized):
+            return True
+    for pattern in invalid_patterns:
+        if re.match(pattern, normalized):
+            return False
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        ""True"",
+        ""TRUE"",
+        ""true"",
+        ""  TRUE  "",
+        ""Yes"",
+        ""YES"",
+        ""yes"",
+        ""1"",
+        ""FALSE"",
+        ""false"",
+        ""No"",
+        ""0"",
+        """",
+        ""maybe"",
+        None,
+    ]
+    for case in test_cases:
+        result = sanitize_boolean_string(case)
+        print(f""Input: {case!r} -> Output: {result}"")",True,0,798,7_5.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return value
+    sanitized = value.strip().lower()
+    valid_options = {'true', 'false'}
+    if sanitized in valid_options:
+        return sanitized == 'true'
+    if sanitized in ('1', '0'):
+        return int(sanitized) != 0
+    yes_no_map = {'y': True, 'n': False}
+    on_off_map = {'o': True, 'f': False}
+    for char in value:
+        if char.lower() in yes_no_map or char.lower() in on_off_map:
+            return any(c.lower() in ('t', '1') for c in sanitized)
+    raise ValueError(f""Invalid boolean string: {value}"")
+if __name__ == '__main__':
+    test_cases = [
+        ""True"", 
+        ""FALSE"", 
+        ""true"", 
+        ""False"", 
+        ""fAlSe"", 
+        ""1"", 
+        ""0"", 
+        ""yes"", 
+        ""no"", 
+        ""on"", 
+        ""off"", 
+        """", 
+        ""  TRUE  "",
+    ]
+    for test in test_cases:
+        try:
+            result = sanitize_boolean_string(test)
+            print(f""Input: {test!r} -> Output: {result}"")
+        except ValueError as e:
+            print(f""Input: {test!r} -> Error: {e}"")",True,1,799,7_5_1.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return None
+    value = value.strip().lower()
+    valid_values = {'true', 'false'}
+    if value in valid_values:
+        return True if value == 'true' else False
+    match = re.match(r'^\s*(t|tr)(r)?$', value, re.IGNORECASE)
+    if match and len(value.strip()) > 0:
+        return True
+    match = re.match(r'^\s*(f|fa)(l|r)?$|^false\s*$', value, re.IGNORECASE)
+    if match or (value.startswith('f') and not any(c in 't' for c in value)):
+        return False
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        ""True"",
+        ""TRUE"",
+        ""true "",
+        ""  false\n\t"",
+        ""FaLsE"",
+        ""T"",
+        ""F"",
+        ""yes"",
+        ""no"",
+        """",
+        None,
+        123
+    ]
+    for test in test_cases:
+        result = sanitize_boolean_string(test)
+        print(f""Input: {test!r} -> Output: {result}"")",True,2,800,7_5_2.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return value
+    sanitized = value.strip().lower()
+    valid_values = ['true', 'false']
+    if sanitized in valid_values:
+        return sanitized == 'true'
+    normalized_map = {
+        'y': True, 'n': False, 
+        't': True, 'f': False,
+        '1': True, '0': False,
+        'yes': True, 'no': False,
+        'true': True, 'false': False,
+    }
+    if sanitized in normalized_map:
+        return normalized_map[sanitized]
+    pattern = r'(?:^|[^a-z])([atfyn10]+)(?=[^\w]|$)'
+    matches = re.findall(pattern, sanitized)
+    if not matches:
+        return None
+    clean_word = re.sub(r'[^a-z]', '', sanitized)
+    if len(clean_word) > 0:
+        return sanitize_boolean_string(clean_word)
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        ""True"", 
+        ""FALSE"", 
+        ""tRuE"", 
+        ""yes"", 
+        ""no"", 
+        ""1"", 
+        ""0"", 
+        ""  TRUE  "", 
+        ""invalid_input"", 
+        """",
+        ""yEs""
+    ]
+    results = []
+    for case in test_cases:
+        result = sanitize_boolean_string(case)
+        if isinstance(result, bool):
+            results.append(f""{case!r} -> {result}"")
+        else:
+            results.append(f""{case!r} -> {type(result).__name__}: {result}"")
+    print(""\n"".join(results))",True,3,801,7_5_3.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return False
+    value = value.strip().lower()
+    valid_patterns = [r'^true$', r'^yes$', r'^on$', r'^(1|t)$', 
+                      r'^false$', r'^no$', r'^off$', r'^(0|f)$']
+    for pattern in valid_patterns:
+        if re.match(pattern, value):
+            return True
+    patterns_false = [r'^true$', r'^yes$', r'^on$', r'^(1|t)$', 
+                      r'^false$', r'^no$', r'^off$', r'^(0|f)$']
+    for pattern in valid_patterns:
+        if re.match(pattern, value):
+            return False
+    print(f""Invalid boolean string '{value}'"")
+    return None
+if __name__ == '__main__':
+    test_cases = [""True"", ""false"", ""YES"", ""  ON  "", ""1"", ""t"", 
+                  ""no"", ""off"", ""0"", ""f"", ""invalid""]
+    for case in test_cases:
+        result = sanitize_boolean(case)
+        print(f""{case!r} -> {result}"")",True,4,802,7_5_4.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"def sanitize_boolean(value):
+    if isinstance(value, bool):
+        return value
+    str_value = str(value).strip().lower()
+    valid_options = {'true', 'yes', '1', 'on'}
+    invalid_options = {'false', 'no', '0', 'off'}
+    if str_value in valid_options:
+        return True
+    elif str_value in invalid_options:
+        return False
+    raise ValueError(f""Invalid boolean string: {value}"")
+if __name__ == '__main__':
+    test_cases = [
+        ""True"", 
+        ""TRUE"", 
+        ""true"", 
+        ""Yes"", 
+        ""YES"", 
+        ""yes"", 
+        ""1"", 
+        ""ON"", 
+        ""False"", 
+        ""FALSE"", 
+        ""no"", 
+        ""0"", 
+        ""OFF""
+    ]
+    for test in test_cases:
+        result = sanitize_boolean(test)
+        print(f""{test!r} -> {result}"")
+try:
+    raise ValueError(""Invalid input"")
+except Exception as e:
+    print(str(e))",True,5,803,7_5_5.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return None
+    value = value.strip().lower()
+    valid_values = {'true', 'false'}
+    if value in valid_values:
+        return True if value == 'true' else False
+    pattern = r'^[tT][rR]ue$|^f[F|F[Aa]]alse$'
+    if re.match(pattern, value):
+        return True if re.search(r'[tT]', value) else False
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        ""True"",
+        ""TRUE"",
+        ""true!"",
+        ""  TRUE "",
+        ""False"",
+        ""FALSE"",
+        ""false."",
+        ""fAlSe"",
+        ""yes"",
+        """",
+        None,
+        123
+    ]
+    for test in test_cases:
+        result = sanitize_boolean_string(test)
+        print(f""Input: {test!r} -> Output: {result}"")",True,6,804,7_5_6.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(s: str) -> bool | None:
+    s = s.strip().lower()
+    if not any(key in s for key in ['true', 'false']):
+        return None
+    try:
+        return True if s == 'true' else False
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    test_cases = [
+        ""True"",
+        ""FALSE"",
+        ""  TRUE "",
+        ""falsey value"",
+        ""TRUEY"",
+        """",
+        ""maybe"",
+        ""1"",
+        ""0""
+    ]
+    for case in test_cases:
+        result = sanitize_boolean_string(case)
+        print(f""'{case}' -> {result}"")",True,7,805,7_5_7.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return value
+    normalized = value.strip().lower()
+    valid_values = {'true', 'false'}
+    if normalized in valid_values:
+        return normalized == 'true'
+    try:
+        num_val = int(normalized.replace(' ', ''))
+        if num_val == 1 or str(num_val).strip() == '1':
+            return True
+        elif num_val == 0 or str(num_val).strip() == '0' or normalized.strip().replace('.', '').isdigit():
+            return False
+    except ValueError:
+        pass
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        'True',
+        'TRUE',
+        'true',
+        '  TRUE  ',
+        'False',
+        'FALSE',
+        'false',
+        'fAlSe',
+        '1',
+        '0',
+        'yes',                                                                                      
+    ]
+    for test in test_cases:
+        result = sanitize_boolean_string(test)
+        print(f""Input: {test!r} -> Output: {result}"")",True,8,806,7_5_8.py
+7,5,Evaluate simple true false,Write a concise yet comprehensive Python function that converts mixed-case boolean strings to their native types with input sanitization features.,"import re
+def sanitize_boolean_string(value: str) -> bool | None:
+    if not isinstance(value, str):
+        return None
+    value = value.strip().lower()
+    valid_values = {'true', 'false'}
+    if value in valid_values:
+        return True if value == 'true' else False
+    pattern = r'^[tT][rR]ue$|^f[FaA]lse$|^[yY][eE][sS]$|[nN][oO]$'
+    if re.match(pattern, value):
+        return True if any(c in value for c in 'tyes') else False
+    return None
+if __name__ == '__main__':
+    test_cases = [
+        ""True"",
+        ""FALSE"",
+        ""Yes"",
+        ""no"",
+        ""  TRUE  "",
+        ""maybe"",
+        """",
+        ""1"",
+        ""0""
+    ]
+    for case in test_cases:
+        result = sanitize_boolean_string(case)
+        print(f""'{case}' -> {result}"")",True,9,807,7_5_9.py
+7,2,Evaluate simple true false,Create a production-ready Python module containing multiple functions for evaluating various forms of simple true false statements including string and variable comparisons.,"def evaluate_simple_true_false(statement):
+    return eval(statement) if not isinstance(statement, str) else False
+def compare_strings(str1, str2):
+    return str1 == str2
+def compare_variables(var_a, var_b):
+    return var_a == var_b
+def check_numeric_equality(num1, num2):
+    return num1 == num2
+if __name__ == '__main__':
+    sample_strings = ""hello"", ""world""
+    sample_vars = 42, 3.14
+    print(compare_strings(sample_strings[0], sample_strings[1]))
+    print(compare_variables(sample_vars[0], sample_vars[1]))",True,0,808,7_2.py
+7,2,Evaluate simple true false,Create a production-ready Python module containing multiple functions for evaluating various forms of simple true false statements including string and variable comparisons.,"def evaluate_simple_statement(statement: str) -> bool:
+    try:
+        result = eval(statement, {""__builtins__"": {}}, {})
+        return isinstance(result, bool) and (result is True or result is False)
+    except Exception:
+        raise ValueError(""Invalid expression"")
+def compare_strings(str1: str, str2: str) -> bool:
+    return str1 == str2
+def check_variable_equality(var_a: any, var_b: any) -> bool:
+    return var_a == var_b
+if __name__ == '__main__':
+    sample_statements = [
+        ""5 + 3 > 19"",
+        ""'hello' == 'world'"",
+        ""{1, 2} & {2, 3}"",
+        ""[1, 2] in [[1], [2]]""
+    ]
+    variables_a = {""x"": 10, ""y"": 5.0}
+    variables_b = {""z"": 10, ""w"": 6.0}
+    print(evaluate_simple_statement(""5 + 3 > 19""))
+    print(compare_strings(""hello"", ""world""))
+    print(check_variable_equality(variables_a[""x""], variables_b[""z""]))",True,1,809,7_2_1.py
+7,2,Evaluate simple true false,Create a production-ready Python module containing multiple functions for evaluating various forms of simple true false statements including string and variable comparisons.,"def evaluate_simple_statement(statement: str) -> bool:
+    try:
+        result = eval(statement)
+        return isinstance(result, (bool)) and not isinstance(result, type(lambda: None)) or result in [True, False]
+    except Exception:
+        return False
+def evaluate_variable_comparison(a_var: any, b_var: any, operator: str) -> bool:
+    if not isinstance(operator, str):
+        raise ValueError(""Operator must be a string"")
+    valid_operators = ['==', '!=', '<=', '>=']
+    if operator not in valid_operators:
+        return False
+    try:
+        namespace = {'a': a_var, 'b': b_var}
+        code_to_run = f""{operator}""
+        exec(code_to_run, {""__builtins__"": __import__('builtins')}, namespace)
+        return True                                                                        
+    except Exception:
+        return False
+def complex_logic_eval(condition1: bool, condition2: str, operator: str = 'and', value_target: any = None) -> bool:
+    if not isinstance(condition1, bool):
+        raise ValueError(""First argument must be boolean"")
+    try:
+        result_condition = condition1
+        if value_target is None:
+            pass                                                                                 
+        elif isinstance(value_target, str):
+            result_condition = (value_target.lower() == ""true"") and result_condition
+        else:
+            pass 
+        return evaluate_variable_comparison(condition1, True, operator)
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_statements = [
+        ""2 + 3 > 5"",
+        ""'hello' in 'world'"",
+        ""[True] and [False]"",
+        ""{1} & {2}""                                                                                                                                                
+    ]
+    test_vars = {""a"": 5, ""b"": 10}
+    print(evaluate_simple_statement(""2 + 3 > 4""))
+    print(evaluate_variable_comparison(test_vars[""a""], test_vars[""b""], ""==""))
+    c_bool = True
+    c_str = ""test""
+    result_c1 = complex_logic_eval(c_bool, c_str)
+    print(result_c1)",True,2,810,7_2_2.py
+7,2,Evaluate simple true false,Create a production-ready Python module containing multiple functions for evaluating various forms of simple true false statements including string and variable comparisons.,"def evaluate_simple_true_false(statement: str) -> bool:
+    return eval(statement)
+def compare_strings(str1: str, str2: str) -> bool:
+    return str1 == str2
+def compare_variables(var_a, var_b) -> bool:
+    return var_a == var_b
+if __name__ == '__main__':
+    sample_statement = ""5 + 3 > 7""
+    result_simple = evaluate_simple_true_false(sample_statement)
+    str_val1 = ""hello""
+    str_val2 = ""world""
+    result_str_compare = compare_strings(str_val1, str_val2)
+    var_x = 10
+    var_y = 5 + 5
+    result_var_compare = compare_variables(var_x, var_y)
+    print(f""Simple Statement Result: {result_simple}"")
+    print(f""String Comparison Result: {result_str_compare}"")
+    print(f""Variable Comparison Result: {result_var_compare}"")",True,3,811,7_2_3.py
+7,2,Evaluate simple true false,Create a production-ready Python module containing multiple functions for evaluating various forms of simple true false statements including string and variable comparisons.,"def evaluate_simple_true_false(statement: str) -> bool:
+    return eval(statement)
+def compare_strings(str1: str, str2: str) -> bool:
+    return str1 == str2
+def compare_variables(var_a, var_b) -> bool:
+    return var_a == var_b
+if __name__ == '__main__':
+    sample_statement = ""5 + 3 > 7""
+    result_simple = evaluate_simple_true_false(sample_statement)
+    str_val1 = ""hello""
+    str_val2 = ""world""
+    res_str_compare = compare_strings(str_val1, str_val2)
+    var_x = 10
+    var_y = 5
+    res_var_compare = compare_variables(var_x, var_y * 2)
+    print(f""Simple Statement Result: {result_simple}"")
+    print(f""String Comparison Result: {res_str_compare}"")
+    print(f""Variable Comparison Result: {res_var_compare}"")",True,4,812,7_2_4.py
+7,2,Evaluate simple true false,Create a production-ready Python module containing multiple functions for evaluating various forms of simple true false statements including string and variable comparisons.,"def evaluate_statement(statement: str) -> bool:
+    try:
+        return eval(statement)
+    except Exception:
+        return False
+def compare_strings(str1: str, str2: str) -> bool:
+    return str1 == str2
+def compare_variables(var_a: any, var_b: any) -> bool:
+    return var_a == var_b
+if __name__ == '__main__':
+    sample_statements = [
+        ""x > 5"",
+        ""'hello' == 'world'"",
+        ""[1, 2] == [3]"",
+        ""True and True""
+    ]
+    variables_x = 6
+    variables_y = 7
+    print(evaluate_statement(""variables_x > 5""))
+    print(compare_strings(""test"", ""TEST""))
+    print(compare_variables(variables_x, variables_y))",True,5,813,7_2_5.py
+7,7,Evaluate simple true false,Generate an optimized Python code snippet that evaluates boolean expressions with support for dictionary mapping without compromising execution speed or memory usage.,"import timeit
+def evaluate_expression(expr: str, mapping: dict) -> bool:
+    return eval(expr, {""__builtins__"": {}}, mapping)
+if __name__ == '__main__':
+    sample_mapping = {
+        ""a"": 10,
+        ""b"": 20,
+        ""c"": True,
+        ""d"": False
+    }
+    test_exprs = [
+        ""a > b and c"",
+        ""not d or a == 5"",
+        ""(a + b) < 31""
+    ]
+    iterations = 10000
+    for expr in test_exprs:
+        start_time = timeit.default_timer()
+        result = evaluate_expression(expr, sample_mapping)
+        end_time = timeit.default_timer()
+        print(f""Expression: {expr}"")
+        print(f""Result: {result}"")
+        print(f""Execution Time (approx): {(end_time - start_time) * 1000:.2f} ms\n"")",True,0,814,7_7.py
+7,7,Evaluate simple true false,Generate an optimized Python code snippet that evaluates boolean expressions with support for dictionary mapping without compromising execution speed or memory usage.,"import timeit
+def evaluate_expression(expr: str) -> bool:
+    try:
+        return eval(expr, {""__builtins__"": {}}, {})
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_data = {
+        ""x"": 10,
+        ""y"": 20,
+        ""z"": True
+    }
+    exprs = [
+        ""x > y and z"",
+        ""not x or not y"",
+        ""sample_data['a'] if 'a' in sample_data else False""
+    ]
+    for i, expression in enumerate(exprs):
+        print(f""Evaluating: {expression}"")
+        result = evaluate_expression(expression)
+        print(f""Result: {result}\n"")
+        iterations = 10000
+        t = timeit.timeit(
+            stmt=f'evaluate_expression(""{expression}"")', 
+            setup='from __main__ import evaluate_expression, sample_data; x=sample_data[""x""]; y=sample_data[""y""]', 
+            number=iterations
+        )
+        avg_time_per_call = t / iterations * 1000               
+        print(f""Average execution time per call: {avg_time_per_call:.4f} ms"")",True,1,815,7_7_1.py
+7,7,Evaluate simple true false,Generate an optimized Python code snippet that evaluates boolean expressions with support for dictionary mapping without compromising execution speed or memory usage.,"def evaluate_expression(expr: str) -> bool:
+    allowed = {""and"", ""or"", ""not"", ""="", ""!="", ""<"", "">""}
+    def is_allowed(token):
+        return token in allowed or (isinstance(token, int))
+    tokens = expr.split()
+    if not all(is_allowed(t) for t in tokens):
+        raise ValueError(""Invalid expression"")
+    stack = []
+    i = 0
+    while i < len(tokens):
+        op1 = None
+        current_token = tokens[i]
+        if current_token == ""not"":
+            op2, val = evaluate_unary(current_token)
+            stack.append(val)
+            continue
+        try:
+            num_val = int(current_token)
+            stack.append(num_val != 0) 
+        except ValueError:
+            pass
+    return all(stack)
+def evaluate_unary(op):
+    if op == ""not"":
+        raise NotImplementedError(""Complex recursion not supported in this static version"")
+    return None
+if __name__ == '__main__':
+    expr = ""(a and b) or c""
+    mapping = {""a"": True, ""b"": False, ""c"": True}
+    try:
+        result = eval(expr, {""__builtins__"": {}, **mapping}, {})
+        print(result)
+    except Exception as e:
+        print(f""Error: {e}"")",True,2,816,7_7_2.py
+7,8,Evaluate simple true false,Develop a professional-grade Python toolset including unit tests to ensure accurate evaluation of simple true false statements across diverse input scenarios.,"import unittest
+class TrueFalseEvaluator:
+    def evaluate_statement(self, statement):
+        return bool(eval(statement)) if isinstance(statement, str) else False
+    def get_evaluation_result(self, expression):
+        try:
+            result = eval(expression)
+            is_true_false = isinstance(result, (bool, int)) and not isinstance(result, complex) or isinstance(result, bool)
+            if is_true_false:
+                return {
+                    ""expression"": str(expression),
+                    ""result"": result,
+                    ""is_valid_statement"": True,
+                    ""message"": f""Statement '{str(expression)}' evaluates to {'True' if result else 'False'}.""
+                }
+            elif isinstance(result, (list, tuple)):
+                return {
+                    ""expression"": str(expression),
+                    ""result"": list(result) if isinstance(result, tuple) else result,
+                    ""is_valid_statement"": True,
+                    ""message"": f""Expression '{str(expression)}' evaluates to a collection.""
+                }
+            else:
+                return {
+                    ""expression"": str(expression),
+                    ""result"": None,
+                    ""is_valid_statement"": False,
+                    ""message"": f""'{str(expression)}' is not a simple true/false statement or returns an invalid type.""
+                }
+        except Exception as e:
+            return {
+                ""expression"": str(expression),
+                ""error"": str(e),
+                ""result"": None,
+                ""is_valid_statement"": False,
+                ""message"": f""Error evaluating '{str(expression)}': {e}""
+            }
+class TestTrueFalseEvaluator(unittest.TestCase):
+    def test_simple_true(self):
+        evaluator = TrueFalseEvaluator()
+        result = evaluator.get_evaluation_result(""2 + 1 == 3"")
+        self.assertEqual(result[""result""], True)
+        self.assertTrue(result[""is_valid_statement""])
+    def test_simple_false(self):
+        evaluator = TrueFalseEvaluator()
+        result = evaluator.get_evaluation_result(""5 > 4"")
+        self.assertEqual(result[""result""], False)
+        self.assertFalse(result[""is_valid_statement""])
+    def test_invalid_expression(self):
+        evaluator = TrueFalseEvaluator()
+        result = evaluator.get_evaluation_result(""[1, 2]"")
+        self.assertTrue(result[""error""] is not None or ""list"" in str(result).lower())
+    def test_boolean_directly(self):
+        evaluator = TrueFalseEvaluator()
+        result = evaluator.evaluate_statement(True)
+        self.assertEqual(result, True)
+if __name__ == '__main__':
+    unittest.main(exit=False)",True,0,817,7_8.py
+7,8,Evaluate simple true false,Develop a professional-grade Python toolset including unit tests to ensure accurate evaluation of simple true false statements across diverse input scenarios.,"import unittest
+class TrueFalseEvaluator:
+    def evaluate(self, statement):
+        return bool(statement) if isinstance(statement, str) else False
+def run_tests():
+    evaluator = TrueFalseEvaluator()
+    test_cases = [
+        (""The sky is blue"", True),
+        (""2 + 2 equals 5"", False),
+        (True, True),
+        ([], False),
+        ({}, False),
+        (""10 > 9"", True),
+        (""False statement here"", False),
+    ]
+    for input_val, expected in test_cases:
+        result = evaluator.evaluate(input_val)
+        assert result == expected, f""Failed for {input_val}: got {result}, expected {expected}""
+if __name__ == '__main__':
+    unittest.main()",True,1,818,7_8_1.py
+7,8,Evaluate simple true false,Develop a professional-grade Python toolset including unit tests to ensure accurate evaluation of simple true false statements across diverse input scenarios.,"import unittest
+class TruthEvaluator:
+    def evaluate_statement(self, statement):
+        if isinstance(statement, str) and not any(c.isdigit() for c in statement.strip()):
+            return True if ""true"" in statement.lower() else False
+        elif isinstance(statement, bool):
+            return statement
+        elif isinstance(statement, (int, float)):
+            return self.evaluate_statement(str(bool(int(float(statement)))))
+        else:
+            raise TypeError(f""Unsupported input type for evaluation: {type(statement)}"")
+class TestTruthEvaluator(unittest.TestCase):
+    def setUp(self):
+        self.evaluator = TruthEvaluator()
+    def test_true_string(self):
+        result = self.evaluator.evaluate_statement(""true is correct"")
+        self.assertTrue(result)
+    def test_false_string(self):
+        result = self.evaluator.evaluate_statement(""false is incorrect"")
+        self.assertFalse(result)
+    def test_boolean_input(self):
+        self.assertEqual(True, self.evaluator.evaluate_statement(True))
+        self.assertEqual(False, self.evaluator.evaluate_statement(False))
+    def test_numeric_conversion(self):
+        self.assertTrue(self.evaluator.evaluate_statement(1))
+        self.assertFalse(self.evaluator.evaluate_statement(-1))
+        self.assertTrue(self.evaluator.evaluate_statement(float(""0.5"")))
+    def test_case_insensitivity(self):
+        result = self.evaluator.evaluate_statement(""TRUE"")
+        self.assertTrue(result)
+if __name__ == '__main__':
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestTruthEvaluator)
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite)",True,2,819,7_8_2.py
+7,8,Evaluate simple true false,Develop a professional-grade Python toolset including unit tests to ensure accurate evaluation of simple true false statements across diverse input scenarios.,"import unittest
+class TruthEvaluator:
+    def evaluate_statement(self, statement):
+        if not isinstance(statement, str) or len(statement.strip()) == 0:
+            return False
+        stripped = statement.lower().strip()
+        if stripped in ['true', 'yes']:
+            return True
+        elif stripped in ['false', 'no']:
+            return False
+        try:
+            result = eval(stripped, {""__builtins__"": {}}, {})
+            if isinstance(result, bool):
+                return result
+            elif isinstance(result, int | float):
+                return True
+            else:
+                raise ValueError(""Non-numeric non-boolean expression"")
+        except Exception:
+            return False
+class TestTruthEvaluator(unittest.TestCase):
+    def setUp(self):
+        self.evaluator = TruthEvaluator()
+    def test_explicit_true(self):
+        assert self.evaluator.evaluate_statement(""true"") is True
+        assert self.evaluator.evaluate_statement(""yes"") is True
+    def test_explicit_false(self):
+        assert self.evaluator.evaluate_statement(""false"") is False
+        assert self.evaluator.evaluate_statement(""no"") is False
+    def test_mathematical_expressions_true(self):
+        assert self.evaluator.evaluate_statement(""2+2==4"") is True
+        assert self.evaluator.evaluate_statement(""(10-5)==5"") is True
+    def test_mathematical_expressions_false(self):
+        assert self.evaluator.evaluate_statement(""2+2==5"") is False
+        assert self.evaluator.evaluate_statement(""3*3>9"") is False
+    def test_invalid_inputs(self):
+        assert self.evaluator.evaluate_statement("""") is False
+        assert self.evaluator.evaluate_statement(None) is False
+if __name__ == '__main__':
+    unittest.main()",True,3,820,7_8_3.py
+7,8,Evaluate simple true false,Develop a professional-grade Python toolset including unit tests to ensure accurate evaluation of simple true false statements across diverse input scenarios.,"import unittest
+class TrueFalseEvaluator:
+    def evaluate(self, statement):
+        if isinstance(statement, str) and not statement.strip():
+            return False
+        try:
+            result = eval(statement.replace(""True"", ""true"").replace(""False"", ""false""))
+            return bool(result)
+        except Exception:
+            return None
+class TestEvaluator(unittest.TestCase):
+    def test_simple_true(self):
+        evaluator = TrueFalseEvaluator()
+        self.assertTrue(evaluator.evaluate(""1 + 0 == 1""))
+    def test_simple_false(self):
+        evaluator = TrueFalseEvaluator()
+        self.assertFalse(evaluator.evaluate(""2 * 3 != 6""))
+    def test_string_comparison_true(self):
+        evaluator = TrueFalseEvaluator()
+        self.assertTrue(evaluator.evaluate(""'hello' == 'hello'""))
+    def test_numeric_inequality_false(self):
+        evaluator = TrueFalseEvaluator()
+        self.assertFalse(evaluator.evaluate(""10 > 20""))
+    def test_complex_expression_true(self):
+        evaluator = TrueFalseEvaluator()
+        self.assertTrue(evaluator.evaluate(""(5 + 3) * (4 - 7) == -6"" if False else ""(5 + 3) * (4 - 7) != -18""))
+    def test_invalid_syntax_handling(self):
+        evaluator = TrueFalseEvaluator()
+        result = evaluator.evaluate(""not defined"")
+        self.assertIsNone(result)
+if __name__ == '__main__':
+    unittest.main(verbosity=2)",True,4,821,7_8_4.py
+7,6,Evaluate simple true false,Implement a scalable Python solution for evaluating true false conditions using dataclasses and proper exception propagation strategies.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Condition:
+    value: bool | None = None
+    operator: str = ""eq""
+def evaluate(condition: Condition) -> tuple[bool, Exception]:
+    if condition.value is not None and (condition.operator == ""eq""):
+        return True, None
+    raise ValueError(""Invalid configuration"")
+if __name__ == '__main__':
+    c1 = Condition(value=True, operator=""eq"")
+    result, error = evaluate(c1)
+    print(f""Result: {result}, Error: {error}"")
+    try:
+        c2 = Condition(value=None, operator=""neq"")
+        _evaluate(c2)
+    except Exception as e:
+        print(f""Caught exception type: {type(e).__name__}"")",True,0,822,7_6.py
+7,9,Evaluate simple true false,Write a modular and maintainable Python library that provides multiple methods for boolean conversion with explicit type hints and docstrings following best practices.,"from typing import Any
+def to_bool(value: Any) -> bool:
+    return bool(value)
+def is_truthy(value: Any) -> bool:
+    return not isinstance(value, (type(None), int, float)) or\
+           value != 0 and value != """" and len(str(value).strip()) > 0
+def safe_bool_cast(value: Any) -> bool:
+    return not isinstance(value, type(None)) and\
+           value != 0 and\
+           len(str(value).strip()) > 0
+if __name__ == '__main__':
+    test_values = [None, True, False, 1, -1, 0, """", "" "", [], {}, (1,), set(), [""a""], {""key"": ""val""}]
+    print(""Testing to_bool:"")
+    for val in test_values:
+        result = to_bool(val)
+        print(f""to_bool({repr(val):20}) -> {result}"")
+    print(""\nTesting is_truthy:"")
+    for val in test_values:
+        result = is_truthy(val)
+        print(f""is_truthy({repr(val):20}) -> {result}"")
+    print(""\nTesting safe_bool_cast:"")
+    for val in test_values:
+        result = safe_bool_cast(val)
+        print(f""safe_bool_cast({repr(val):20}) -> {result}"")",True,0,823,7_9.py
+7,9,Evaluate simple true false,Write a modular and maintainable Python library that provides multiple methods for boolean conversion with explicit type hints and docstrings following best practices.,"def to_bool(value: object) -> bool:
+    return bool(value)
+def explicit_boolean(value: object) -> bool:
+    return not isinstance(value, (int, float)) or value != 0
+def string_to_bool(s: str) -> bool:
+    return s.lower() in {""true"", ""yes""}
+def numeric_boolean(value: object) -> bool:
+    return not isinstance(value, int) or value != 0
+if __name__ == '__main__':
+    test_values = [None, """", [], {}, ""yes"", 1, -1, 0.0]
+    print(""Testing to_bool:"")
+    for val in test_values:
+        result = to_bool(val)
+        print(f""to_bool({val!r}) -> {result}"")
+    print(""\nTesting explicit_boolean:"")
+    for val in test_values:
+        result = explicit_boolean(val)
+        print(f""explicit_boolean({val!r}) -> {result}"")
+    print(""\nTesting string_to_bool:"")
+    sample_strings = [""TRUE"", ""false"", """", ""YES""]
+    for s in sample_strings:
+        result = string_to_bool(s)
+        print(f""string_to_bool({s!r}) -> {result}"")
+    print(""\nTesting numeric_boolean:"")
+    test_numbers = [1, -5, 0.0]
+    for val in test_numbers:
+        result = numeric_boolean(val)
+        print(f""numeric_boolean({val!r}) -> {result}"")",True,1,824,7_9_1.py
+7,9,Evaluate simple true false,Write a modular and maintainable Python library that provides multiple methods for boolean conversion with explicit type hints and docstrings following best practices.,"from typing import Any
+def to_bool(value: Any) -> bool:
+    return bool(value)
+class BooleanConverter:
+    @staticmethod
+    def from_string(s: str) -> bool:
+        return s.lower() in ('true', 'yes', '1') and not (s.lower().startswith('no'))
+    @staticmethod
+    def from_number(n: int) -> bool:
+        return n != 0
+if __name__ == '__main__':
+    test_values = [None, """", [], {}, ""true"", ""false"", 1, -5, 0]
+    print(""Testing to_bool:"")
+    for val in test_values:
+        result = to_bool(val)
+        print(f""to_bool({val!r}) -> {result}"")
+    converter = BooleanConverter()
+    print(""\nTesting from_string:"")
+    string_tests = [""True"", ""FALSE"", ""yes"", ""no"", """", ""1""]
+    for s in string_tests:
+        result = converter.from_string(s)
+        print(f""from_string({s!r}) -> {result}"")
+    print(""\nTesting from_number:"")
+    number_tests = [0, 42, -3]
+    for n in number_tests:
+        result = converter.from_number(n)
+        print(f""from_number({n!r}) -> {result}"")",True,2,825,7_9_2.py
+7,9,Evaluate simple true false,Write a modular and maintainable Python library that provides multiple methods for boolean conversion with explicit type hints and docstrings following best practices.,"from typing import Any
+def to_bool(value: Any) -> bool:
+    return bool(value)
+def strict_bool(value: Any) -> bool:
+    return isinstance(value, bool) and (value is True)
+def numeric_to_bool(value: Any) -> bool:
+    try:
+        num = float(value)
+    except (TypeError, ValueError):
+        raise TypeError(f""Cannot convert {value!r} to a number for boolean conversion."")
+    return num != 0
+def string_to_bool(value: Any) -> bool:
+    try:
+        s = str(value).lower()
+    except Exception as e:
+        raise TypeError(f""Cannot convert {value!r} to string."") from e
+    return s in ('true', 'yes', '1')
+if __name__ == '__main__':
+    test_cases = [
+        (""Standard"", ""to_bool""), 
+        (True, True), 
+        (""Falsy standard"", ""to_bool""), 
+        ([], False), 
+        (""Strict boolean check"", ""strict_bool""), 
+        ((False,), False), 
+        ((10,) if __name__ == ""__main__"" else None) ,                                          
+    ]
+    samples = [True, False, """", [], {}, set(), 0, -5.7, ""yes"", ""true"", ""no""]
+    print(""Testing to_bool:"")
+    for val in samples:
+        result = to_bool(val)
+        print(f""to_bool({val!r}) -> {result}"")
+    print(""\nTesting strict_bool:"")
+    try:
+        pass
+    except:
+        print(""strict_bool requires explicit boolean inputs."")
+    results = []
+    try:
+        for val in [True, False]:
+            results.append(strict_bool(val))
+    except ValueError:
+        pass
+    print(""\nTesting numeric_to_bool:"")
+    try:
+        num_samples = [-10, 5.0, 0, -0.0]
+        for n in num_samples:
+            res = numeric_to_bool(n)
+            print(f""numeric_to_bool({n!r}) -> {res}"")
+    except TypeError as e:
+        print(e)
+    print(""\nTesting string_to_bool:"")
+    str_samples = [""yes"", ""true"", 1, """", None]
+    for s in str_samples:
+        try:
+            res = string_to_bool(s)
+            print(f""string_to_bool({s!r}) -> {res}"")
+        except TypeError as e:
+            print(f""Error with {s}: {e}"")
+    data = {""active"": ""yes"", ""count"": 0, ""flag"": True}
+    converted_data = {}
+    for key in [""active""]:
+        if isinstance(data[key], str):
+            try:
+                val = string_to_bool(data[key])
+            except TypeError:
+                print(f""Could not convert {data[key]!r}"")
+                continue
+        converted_data[""active""] = to_bool(""yes"")
+    print(""\nSample Usage Output:"")
+    print(converted_data)",True,3,826,7_9_3.py
+7,9,Evaluate simple true false,Write a modular and maintainable Python library that provides multiple methods for boolean conversion with explicit type hints and docstrings following best practices.,"from typing import Any
+def to_bool(value: Any) -> bool:
+    return bool(value)
+def is_truthy(value: Any) -> bool:
+    return not (value is None or value == 0 or 
+                isinstance(value, bool) and not value or 
+                len(str(value)) == 0)
+def safe_bool(value: Any, default: bool = True) -> bool:
+    try:
+        return bool(value)
+    except Exception:
+        return default
+if __name__ == '__main__':
+    test_cases = [0, 1, """", ""hello"", [], {}, None, True, False]
+    print(""Testing to_bool:"")
+    for case in test_cases:
+        result = to_bool(case)
+        print(f""to_bool({case!r}) -> {result}"")
+    print(""\nTesting is_truthy:"")
+    for case in test_cases:
+        result = is_truthy(case)
+        print(f""is_truthy({case!r}) -> {result}"")",True,4,827,7_9_4.py
+7,9,Evaluate simple true false,Write a modular and maintainable Python library that provides multiple methods for boolean conversion with explicit type hints and docstrings following best practices.,"def to_bool(value: bool | int | str) -> bool:
+    try:
+        return bool(value)
+    except Exception as e:                
+        raise TypeError(f""Cannot convert {type(value).__name__} to bool"") from e
+def is_truthy(value: object) -> bool:
+    try:
+        return bool(value)
+    except Exception as e:                
+        raise TypeError(f""Cannot evaluate {type(value).__name__} for truthiness"") from e
+def to_boolean(value: object | None = None) -> bool:
+    return bool(value)
+if __name__ == '__main__':
+    test_cases = [True, 1, ""yes"", """", -5, [], {}, set(), object()]
+    print(""Testing to_bool:"")
+    for val in test_cases:
+        try:
+            result = to_bool(val)
+            print(f""to_bool({val!r}) -> {result}"")
+        except TypeError as e:
+            print(f""to_bool({val!r}) raised TypeError"")
+    print(""\nTesting is_truthy:"")
+    for val in test_cases:
+        try:
+            result = is_truthy(val)
+            print(f""is_truthy({val!r}) -> {result}"")
+        except TypeError as e:
+            print(f""is_truthy({val!r}) raised TypeError"")
+    print(""\nTesting to_boolean:"")
+    for val in test_cases + [None, False]:
+        try:
+            result = to_boolean(val)
+            print(f""to_boolean({val!r}) -> {result}"")
+        except TypeError as e:
+            print(f""to_boolean({val!r}) raised TypeError"")",True,5,828,7_9_5.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(input_str: str) -> list[bool]:
+    if not isinstance(input_str, str):
+        raise TypeError(""Input must be a string."")
+    tokens = input_str.strip().split()
+    result = []
+    for token in tokens:
+        try:
+            value = bool(token)
+            if not isinstance(value, bool):
+                raise ValueError(f""Invalid boolean representation: '{token}'"")
+            result.append(value)
+        except Exception as e:
+            raise ValueError(f""Failed to parse token '{token}': {e}"") from None
+    return result
+if __name__ == '__main__':
+    sample_input = ""true false True FALSE 1 0 yes no""
+    output_result = parse_boolean_string(sample_input)
+    print(output_result)",True,0,829,7_11.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(boolean_str: str) -> list[bool]:
+    if not boolean_str.strip():
+        return []
+    try:
+        values = [token.lower().strip() for token in boolean_str.split()]
+        result = []
+        for value in values:
+            if value == 'true':
+                result.append(True)
+            elif value == 'false' or value == '0':
+                result.append(False)
+            else:
+                raise ValueError(f""Invalid boolean value '{value}'"")
+        return result
+    except Exception as e:
+        print(f""Error parsing input: {e}"")
+        return []
+if __name__ == '__main__':
+    sample_input = ""true false True FALSE 0 yes no invalid""
+    output = parse_boolean_string(sample_input)
+    if not isinstance(output, list):
+        print(""Output is empty or an error occurred."")
+    else:
+        for i, val in enumerate(output):
+            print(f""{i}: {val}"")",True,1,830,7_11_1.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(input_str: str) -> list[bool]:
+    if not input_str.strip():
+        return []
+    try:
+        values = [token for token in input_str.split()]
+        result = []
+        for val in values:
+            normalized_val = str(val).strip().lower()
+            if normalized_val in ('true', 'yes', 'on'):
+                result.append(True)
+            elif normalized_val in ('false', 'no', 'off'):
+                result.append(False)
+            else:
+                try:
+                    parsed_int = int(normalized_val)
+                    if parsed_int == 1:
+                        result.append(True)
+                    elif parsed_int == 0:
+                        result.append(False)
+                    else:
+                        raise ValueError(f""Invalid boolean representation '{normalized_val}'"")
+                except ValueError as e:
+                    return [None] if len(result) == 0 else result + [None]
+        return result
+    except Exception:
+        return []
+if __name__ == '__main__':
+    sample_input = ""True False Yes No on off""
+    output_result = parse_boolean_string(sample_input)
+    print(output_result)",True,2,831,7_11_2.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(input_str: str) -> list[bool]:
+    if not isinstance(input_str, str):
+        raise TypeError(""Input must be a string."")
+    result = []
+    for token in input_str.split():
+        token_lower = token.lower()
+        try:
+            if token_lower == ""true"" or token_lower == ""1"":
+                result.append(True)
+            elif token_lower == ""false"" or token_lower == ""0"":
+                result.append(False)
+            else:
+                raise ValueError(f""Invalid boolean value encountered: '{token}'"")
+        except Exception as e:
+            raise RuntimeError(f""Failed to convert token '{token}': {e}"") from None
+    return result
+if __name__ == '__main__':
+    sample_input = ""True False yes no 1 TRUE FALSE invalid_value 0""
+    try:
+        output_list = parse_boolean_string(sample_input)
+        print(f""Parsed values: {[str(val).lower() for val in output_list]}"")
+    except Exception as ex:
+        print(f""Error occurred during parsing: {ex}"")",True,3,832,7_11_3.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(boolean_str: str) -> list[bool]:
+    if not isinstance(boolean_str, str):
+        raise TypeError(""Input must be a string."")
+    tokens = [token.strip() for token in boolean_str.split()]
+    result = []
+    for token in tokens:
+        lower_token = token.lower()
+        try:
+            if lower_token == ""true"" or lower_token == ""yes"":
+                result.append(True)
+            elif lower_token == ""false"" or lower_token == ""no"":
+                result.append(False)
+            else:
+                value = int(token)
+                if value not in (0, 1):
+                    raise ValueError(f""Invalid boolean representation: '{token}'"")
+                result.append(bool(value))
+        except ValueError:
+            raise ValueError(f""Cannot convert '{token}' to boolean."")
+    return result
+if __name__ == '__main__':
+    sample_input = ""true false yes no 1 0 invalid True FALSE""
+    try:
+        output = parse_boolean_string(sample_input)
+        print(output)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,4,833,7_11_4.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(input_str: str) -> list[bool]:
+    try:
+        return [val.lower() in (""true"", ""1"") for val in input_str.split()]
+    except Exception as e:
+        raise TypeError(f""Invalid input format. Expected space-separated true/false or 0/1, got {input_str!r}"") from e
+if __name__ == '__main__':
+    sample_input = ""true false True 1 FALSE 0 invalid""
+    result = parse_boolean_string(sample_input)
+    print(result)",True,5,834,7_11_5.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(input_str: str) -> list[bool]:
+    result = []
+    for token in input_str.strip().split():
+        if not isinstance(token, str):
+            raise TypeError(f""Expected string tokens, got {type(token).__name__}"")
+        try:
+            normalized = token.lower()
+            result.append(normalized == ""true"")
+            if not (normalized in (""true"", ""false"")):
+                raise ValueError(f""Invalid boolean value '{token}'"")
+        except Exception as e:
+            raise TypeError(f""Error parsing input string: {e}"") from None
+    return result
+if __name__ == '__main__':
+    sample_input = ""True False TRUE false True invalid 1""
+    try:
+        output = parse_boolean_string(sample_input)
+        print(output if isinstance(output, list) else f""[{output}]"")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,6,835,7_11_6.py
+7,11,Evaluate simple true false,Write a high-quality Python function that takes a string containing one or more boolean values separated by spaces and returns their evaluated results using the best practices for error handling and type conversion.,"def parse_boolean_string(boolean_str: str) -> list[bool]:
+    if not isinstance(boolean_str, str):
+        raise TypeError(""Input must be a string."")
+    tokens = [token.strip() for token in boolean_str.split()]
+    result = []
+    for token in tokens:
+        try:
+            value = bool(token.lower())
+            if not isinstance(value, bool):
+                result.append(bool(int(value)))
+        except ValueError:
+            raise ValueError(f""Invalid boolean value '{token}'. Expected true/false/yes/no/1/0."")
+    return result
+if __name__ == '__main__':
+    sample_input = ""true false yes no 1 0 True False""
+    output_list = parse_boolean_string(sample_input)
+    print(output_list)",True,7,836,7_11_7.py
+7,14,Evaluate simple true false,Create an elegant and performant Python class designed to handle the evaluation of complex but simple logical conditions while maintaining optimal memory efficiency.,"class EfficientEvaluator:
+    def __init__(self):
+        self._cache = {}
+    def evaluate(self, condition_fn):
+        if id(condition_fn) in self._cache:
+            return True
+        try:
+            result = condition_fn()
+            is_truthy = bool(result)
+            self._cache[id(condition_fn)] = is_truthy
+        except Exception:
+            return False
+        return True
+    def evaluate_batch(self, conditions):
+        results = []
+        for c in conditions:
+            if callable(c):
+                result = self.evaluate(c)
+                results.append(result)
+            else:
+                try:
+                    val = bool(c)
+                    results.append(val)
+                except Exception:
+                    results.append(False)
+        return results
+if __name__ == '__main__':
+    evaluator = EfficientEvaluator()
+    def condition_a():
+        x = 10
+        y = 20
+        return (x > 5 and y < 30)
+    def condition_b():
+        z = [1, 2, 3]
+        return len(z) == 3
+    assert evaluator.evaluate(condition_a) is True
+    test_conditions = [condition_b, ""valid string"", None, False, condition_a]
+    results = evaluator.evaluate_batch(test_conditions)
+    expected_results = [True, True, False, False, True]
+    assert all(r == e for r, e in zip(results, expected_results)), f""Expected {expected_results}, got {results}""
+    print(""All logical evaluations passed successfully."")",True,0,837,7_14.py
+7,14,Evaluate simple true false,Create an elegant and performant Python class designed to handle the evaluation of complex but simple logical conditions while maintaining optimal memory efficiency.,"import sys
+class EfficientEvaluator:
+    def __init__(self):
+        self.cache = {}
+    def evaluate(self, condition_func):
+        if id(condition_func) not in self.cache:
+            try:
+                result = condition_func()
+                self.cache[id(condition_func)] = (result, True)
+            except Exception as e:
+                self.cache[id(condition_func)] = (False, False)
+        else:
+            result, _ = self.cache.get(id(condition_func))
+        return result
+    def reset_cache(self):
+        self.cache.clear()
+def condition_a():
+    x = 10 + 5 * 2
+    y = ""hello"" == ""world""
+    z = True and not False or None is None
+    return (x > 15) and ((y != y) | (z))
+def condition_b():
+    a, b = [True], []
+    c = len(a) + len(b) < 20
+    d = sum([i for i in range(3)]) % 7 == 0
+    return c or not d and True is None
+if __name__ == '__main__':
+    evaluator = EfficientEvaluator()
+    result_a = evaluator.evaluate(condition_a)
+    print(f""Condition A: {result_a}"")
+    result_b = evaluator.evaluate(condition_b)
+    print(f""Condition B: {result_b}"")
+    if not (result_a or result_b):
+        sys.exit(1)",True,1,838,7_14_1.py
