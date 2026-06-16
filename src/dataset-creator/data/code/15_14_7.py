@@ -1,0 +1,7 @@
+from typing import List
+def sort_numeric_values(values: List[float]) -> List[float]:
+    return sorted(values)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7, 0]
+    result: List[float] = sort_numeric_values(sample_data)
+    print("Sorted values:", result)

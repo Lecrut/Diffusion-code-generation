@@ -36986,3 +36986,3028 @@ if __name__ == '__main__':
                    ('b',), 2, 'a', None, ['x'], None]
     cleaned_list = remove_duplicates_preserve_order(sample_data)
     print(cleaned_list)",True,5,1581,14_10_5.py
+15,0,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort a list of mixed-type numbers in ascending order, ensuring type safety and handling edge cases like empty lists or non-numeric elements.","import sys
+def safe_sort(numbers):
+    try:
+        numeric_list = [float(n) for n in numbers if isinstance(n, (int, float))]
+        return sorted(numeric_list)
+    except Exception as e:
+        print(f""Error during sorting: {e}"", file=sys.stderr)
+        sys.exit(1)
+if __name__ == '__main__':
+    sample_data = [3.5, 2, ""ten"", -4, None, True, 0]
+    result = safe_sort(sample_data)
+    print(result)",True,0,1582,15_0.py
+15,0,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort a list of mixed-type numbers in ascending order, ensuring type safety and handling edge cases like empty lists or non-numeric elements.","import sys
+def safe_sort(numbers):
+    try:
+        numeric_list = [float(n) for n in numbers if isinstance(n, (int, float))]
+        return sorted(numeric_list)
+    except Exception as e:
+        print(f""Error during sorting: {e}"", file=sys.stderr)
+        sys.exit(1)
+if __name__ == '__main__':
+    sample_data = [3.5, ""apple"", 2, None, -4, ""banana"", float(""inf""), True]
+    result = safe_sort(sample_data)
+    print(result)",True,1,1583,15_0_1.py
+15,0,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort a list of mixed-type numbers in ascending order, ensuring type safety and handling edge cases like empty lists or non-numeric elements.","import sys
+def safe_sort(numbers):
+    try:
+        numeric_list = [float(num) for num in numbers]
+    except ValueError as e:
+        print(f""Error: Non-numeric element found. Details: {e}"")
+        sys.exit(1)
+    return sorted(numeric_list, reverse=False)
+if __name__ == '__main__':
+    sample_data = [3, -5, ""2"", 0.7, None, True]
+    processed_input = []
+    try:
+        for item in sample_data:
+            val = float(item)
+            processed_input.append(val)
+    except (ValueError, TypeError):
+        print(""Warning: Some elements could not be converted to numbers and were skipped."")
+    result = safe_sort(processed_input) if len(sample_data) > 0 else []
+    print(result)",True,2,1584,15_0_2.py
+15,0,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort a list of mixed-type numbers in ascending order, ensuring type safety and handling edge cases like empty lists or non-numeric elements.","import sys
+def safe_sort(numbers):
+    if not numbers:
+        return []
+    try:
+        numeric_list = [float(x) for x in numbers]
+    except (ValueError, TypeError):
+        raise ValueError(""List contains non-numeric elements."") from None
+    sorted_numbers = sorted(numeric_list)
+    return [int(x) if x == int(x) else float(x) for x in sorted_numbers]
+if __name__ == '__main__':
+    sample_data = [-5, ""10"", 3.7, None, -2, True, 4, False, """", 8.9]
+    try:
+        result = safe_sort(sample_data)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)",True,3,1585,15_0_3.py
+15,0,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort a list of mixed-type numbers in ascending order, ensuring type safety and handling edge cases like empty lists or non-numeric elements.","from typing import List, Union
+def safe_sort(numbers: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not numbers:
+        return []
+    try:
+        sorted_numbers = sorted(numbers)
+        return sorted_numbers
+    except TypeError as e:
+        raise ValueError(f""List contains non-numeric elements. Error details: {e}"")
+if __name__ == '__main__':
+    sample_data = [3, 1.5, '2', None, -4, True]
+    try:
+        result = safe_sort(sample_data)
+        print(""Sorted list:"", result)
+    except ValueError as ve:
+        print(f""Error occurred during sorting: {ve}"")",True,4,1586,15_0_4.py
+15,0,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort a list of mixed-type numbers in ascending order, ensuring type safety and handling edge cases like empty lists or non-numeric elements.","import sys
+def safe_sort(numbers):
+    if not numbers:
+        return []
+    try:
+        numeric_list = [float(x) for x in numbers]
+        sorted_numbers = sorted(numeric_list)
+        result = []
+        for i, val in enumerate(sorted_numbers):
+            if isinstance(numbers[i], int):
+                result.append(int(val))
+            else:
+                result.append(float(val))
+        return result
+    except (ValueError, TypeError) as e:
+        print(f""Error during sorting: {e}"", file=sys.stderr)
+        sys.exit(1)
+if __name__ == '__main__':
+    sample_data = [3.5, 2, '4', -1, None, True]
+    try:
+        mixed_input = [30, 25.9, '10', -5, True] 
+        sorted_result = safe_sort(mixed_input)
+        print(""Sorted list:"", sorted_result)
+    except Exception as e:
+        print(f""Input validation failed for mixed types or non-numeric values: {e}"", file=sys.stderr)",True,5,1587,15_0_5.py
+15,1,Sort numbers using built-in tools,Write a production-ready function that utilizes the `sorted()` builtin with custom key extraction logic to organize numerical data from complex nested structures without external dependencies.,"def flatten_and_sort(data):
+    flattened = []
+    def extract_numbers(item):
+        if isinstance(item, (int, float)):
+            return item
+        elif isinstance(item, list) or isinstance(item, tuple):
+            for sub_item in item:
+                result = extract_numbers(sub_item)
+                if result is not None:
+                    flattened.append(result)
+        else:
+            pass
+    def get_key(obj_list):
+        valid_nums = [x for x in obj_list if isinstance(x, (int, float))]
+        def key_func(item):
+            return item
+        sorted_data = sorted(valid_nums)
+        return sorted_data
+    extract_numbers(data)
+    def deep_flatten(obj):
+        result = []
+        if isinstance(obj, (list, tuple)):
+            for item in obj:
+                result.extend(deep_flatten(item))
+        elif isinstance(obj, (int, float)):
+            result.append(obj)
+        return result
+    flattened_list = deep_flatten(data)
+    def custom_key(n):
+        return abs(n)
+    sorted_data = sorted(flattened_list, key=custom_key)
+    return [int(x) if isinstance(x, float) else x for x in sorted_data]
+if __name__ == '__main__':
+    sample_input = [[3, 1], [-2, [4, -5]], {6: 'a', 7: 'b'}, (8,), None]
+    numeric_data = []
+    def collect_numbers(obj):
+        if isinstance(obj, list) or isinstance(obj, tuple):
+            for item in obj:
+                collect_numbers(item)
+        elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
+            numeric_data.append(obj)
+    def robust_collect(obj):
+        if hasattr(obj, '__iter__') and not isinstance(obj, str):
+            for item in obj:
+                robust_collect(item)
+        elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
+            numeric_data.append(obj)
+    local_numeric = []
+    def collect_local(obj):
+        if hasattr(obj, '__iter__') and not isinstance(obj, str):
+            for item in obj:
+                collect_local(item)
+        elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
+            local_numeric.append(obj)
+    def process_complex_structure(structure):
+        flat_nums = []
+        def traverse(item):
+            if isinstance(item, list) or isinstance(item, tuple):
+                for x in item:
+                    traverse(x)
+            elif isinstance(item, dict):
+                for k, v in item.items():
+                    flat_nums.append(k if isinstance(k, (int, float)) else None)
+                    if not isinstance(v, bool):
+                        try:
+                            val = float(v)
+                            flat_nums.append(val)
+                        except ValueError:
+                            pass
+            elif isinstance(item, (int, float)):
+                if not isinstance(item, bool):
+                    flat_nums.append(item)
+        traverse(structure)
+        valid_numbers = [x for x in flat_nums if x is not None]
+        final_sorted = sorted(valid_numbers, key=abs)
+        return final_sorted
+    result = process_complex_structure(sample_input)
+    print(result)",True,0,1588,15_1.py
+15,1,Sort numbers using built-in tools,Write a production-ready function that utilizes the `sorted()` builtin with custom key extraction logic to organize numerical data from complex nested structures without external dependencies.,"def flatten_and_sort(data):
+    flat = []
+    for item in data:
+        if isinstance(item, list) and all(isinstance(x, (int, float)) for x in item):
+            flat.extend(item)
+        elif isinstance(item, dict):
+            values = [v for v in item.values() if isinstance(v, (int, float))]
+            flat.extend(values)
+    return sorted(flat, key=lambda x: -x)
+if __name__ == '__main__':
+    sample_data = [[3.14], 50, {'a': [27], 'b': 9}, ['8', 6]]
+    result = flatten_and_sort(sample_data)
+    print(result)",True,1,1589,15_1_1.py
+15,1,Sort numbers using built-in tools,Write a production-ready function that utilizes the `sorted()` builtin with custom key extraction logic to organize numerical data from complex nested structures without external dependencies.,"def flatten_and_sort(data):
+    flat_list = []
+    def extract_numbers(obj):
+        if isinstance(obj, (int, float)):
+            return obj
+        elif isinstance(obj, list) and len(obj) > 0:
+            first_item = obj[0]
+            if isinstance(first_item, tuple):
+                item_list = [item for item in first_item]
+                return extract_numbers(item_list)
+        elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes)):
+            try:
+                items = list(obj.values()) if isinstance(obj, dict) else obj
+                return [extract_numbers(i) for i in items]
+            except TypeError:
+                pass
+        flat_list.extend(extract_numbers(obj))
+    def _recursive_extract(item):
+        if isinstance(item, (int, float)):
+            return item
+        elif isinstance(item, list) or isinstance(item, tuple):
+            result = []
+            for sub_item in item:
+                result.extend(_recursive_extract(sub_item))
+            return result
+        elif isinstance(item, dict):
+            all_values = []
+            for val in item.values():
+                all_values.extend(_recursive_extract(val))
+            return all_values
+    flat_data = _recursive_extract(data)
+    if not flat_data:
+        return data
+    sorted_data = sorted(flat_data, key=lambda x: -x)                                                                                                                                
+    return [int(x) if isinstance(x, float) else x for x in sorted_data]
+if __name__ == '__main__':
+    sample_nested = [10, (20, 3), [[4], 5], {""a"": 6}, ""text"", {7: 8}]
+    result_list = []
+    def _process_input(item):
+        if isinstance(item, (int, float)):
+            return item
+        elif isinstance(item, dict):
+            all_vals = []
+            for val in item.values():
+                all_vals.extend(_process_input(val))
+            return all_vals
+        else:                                                                                               
+             if hasattr(item, '__iter__'):
+                 res = []
+                 for i in item:
+                     res.append(i)
+                 return _process_input(res)
+    processed_sample = sample_nested
+    final_output = sorted(processed_sample, key=lambda x: -x if isinstance(x, (int, float)) else 0)
+    print(final_output)",True,2,1590,15_1_2.py
+15,1,Sort numbers using built-in tools,Write a production-ready function that utilizes the `sorted()` builtin with custom key extraction logic to organize numerical data from complex nested structures without external dependencies.,"def extract_value(item):
+    if isinstance(item, dict) and 'value' in item:
+        return item['value']
+    elif isinstance(item, list):
+        try:
+            float(item[0])
+            return sum(float(x) for x in item) / len(item)
+        except (ValueError, IndexError):
+            return 0.0
+    else:
+        raise TypeError(f""Unsupported type {type(item)}"")
+def organize_data(data_list):
+    if not data_list:
+        return []
+    try:
+        sorted_items = sorted(enumerate(data_list), key=lambda x: extract_value(x[1]))
+        result = [item for _, item in sorted_items]
+        return result
+    except Exception as e:
+        raise RuntimeError(f""Sorting failed due to {e}"")
+if __name__ == '__main__':
+    sample_data = [
+        {'value': 3.5, 'label': 'c'},
+        [{'val': 1}, {'val': 2}],
+        {'value': 10.0},
+        [4],
+        {'value': -5}
+    ]
+    try:
+        organized = organize_data(sample_data)
+        for i, item in enumerate(organized):
+            print(f""Item {i}: {item}"")
+    except Exception as e:
+        print(f""Error processing data: {e}"")",True,3,1591,15_1_3.py
+14,14,Remove duplicate items from array,"Generate the most concise yet readable Python code for removing duplicate objects from a given list by converting to a set or using dict.fromkeys(), ensuring full backward compatibility with Python versions up to 3.12 and adhering to strict coding conventions.","def remove_duplicates(lst):
+    return list(dict.fromkeys(lst))
+if __name__ == '__main__':
+    data = [1, 2, 'a', (3, 4), 'b', (5, 6)] * 2 + ['c']
+    print(remove_duplicates(data))",True,0,1592,14_14.py
+14,14,Remove duplicate items from array,"Generate the most concise yet readable Python code for removing duplicate objects from a given list by converting to a set or using dict.fromkeys(), ensuring full backward compatibility with Python versions up to 3.12 and adhering to strict coding conventions.","def remove_duplicates(items: list) -> set:
+    return {item for item in items}
+if __name__ == '__main__':
+    data = [1, 2, 'a', 3, 'b', 4]
+    result = remove_duplicates(data)
+    print(result)",True,1,1593,14_14_1.py
+14,14,Remove duplicate items from array,"Generate the most concise yet readable Python code for removing duplicate objects from a given list by converting to a set or using dict.fromkeys(), ensuring full backward compatibility with Python versions up to 3.12 and adhering to strict coding conventions.","def remove_duplicates(lst):
+    return list(dict.fromkeys(lst))
+if __name__ == '__main__':
+    data = [1, 2, 'a', (3, 4), 'b', (5, 6), 'c']
+    print(remove_duplicates(data))",True,2,1594,14_14_2.py
+14,14,Remove duplicate items from array,"Generate the most concise yet readable Python code for removing duplicate objects from a given list by converting to a set or using dict.fromkeys(), ensuring full backward compatibility with Python versions up to 3.12 and adhering to strict coding conventions.","def remove_duplicates(lst):
+    return list(dict.fromkeys(lst))
+if __name__ == '__main__':
+    data = [1, 2, 3, 'a', 'b', 4, 'c', 5]
+    print(remove_duplicates(data))",True,3,1595,14_14_3.py
+15,2,Sort numbers using built-in tools,"Create an optimized Python utility class method that leverages built-in sorting algorithms for large datasets of integers and floats, focusing on memory efficiency and performance metrics.","import time
+from typing import List, Union
+class OptimizedSorter:
+    def sort_integers(self, data: List[int]) -> List[int]:
+        return sorted(data)
+    def sort_floats(self, data: List[float]) -> List[float]:
+        return sorted(data)
+    def measure_performance(self, data_list: List[Union[int, float]], expected_type: type) -> dict:
+        start = time.perf_counter()
+        result = self.sort_integers if isinstance(expected_type, int) else self.sort_floats
+        end = time.perf_counter()
+        return {
+            ""input_size"": len(data_list),
+            ""execution_time_ms"": (end - start) * 1000,
+            ""memory_efficient"": True,
+            ""algorithm_used"": ""Timsort""
+        }
+if __name__ == '__main__':
+    large_integers = list(range(5_000_000))
+    large_floats = [float(i) for i in range(5_000_000)]
+    int_result = OptimizedSorter().sort_integers(large_integers)
+    float_data = []
+    start_time = time.perf_counter()
+    result = OptimizedSorter().measure_performance(float_data, float)
+    end_time = time.perf_counter()
+    print(f""Integer sort completed in {result['execution_time_ms']:.2f}ms"")",True,0,1596,15_2.py
+15,2,Sort numbers using built-in tools,"Create an optimized Python utility class method that leverages built-in sorting algorithms for large datasets of integers and floats, focusing on memory efficiency and performance metrics.","import time
+from typing import List, Union
+class OptimizedSorter:
+    def sort_integers(self, data: List[int]) -> int:
+        start = time.perf_counter()
+        sorted_data = sorted(data)
+        elapsed = time.perf_counter() - start
+        return len(sorted_data), elapsed
+    def sort_floats(self, data: List[float]) -> float:
+        start = time.perf_counter()
+        sorted_data = sorted(data)
+        elapsed = time.perf_counter() - start
+        return sum(sorted_data), elapsed
+if __name__ == '__main__':
+    large_integers = [i for i in range(10_000)] + list(range(-500, 600))
+    large_floats = [float(i) * (1.234 if i % 2 else -987.654) for i in range(10_000)]
+    int_count, int_time = OptimizedSorter().sort_integers(large_integers)
+    float_sum, float_time = OptimizedSorter().sort_floats(large_floats)
+    print(f""Integers sorted: {int_count} items in {float(int_time):.6f}s"")
+    print(f""Floats summed after sort: {float_sum:.2f}"")",True,1,1597,15_2_1.py
+15,2,Sort numbers using built-in tools,"Create an optimized Python utility class method that leverages built-in sorting algorithms for large datasets of integers and floats, focusing on memory efficiency and performance metrics.","import time
+from typing import List, Union
+class OptimizedSorter:
+    def sort_integers(self, data: List[int]) -> List[int]:
+        return sorted(data)
+    def sort_floats(self, data: List[float]) -> List[float]:
+        return sorted(data)
+    def benchmark_sort(self, data_type: str = 'int', size: int = 10_000_000) -> dict:
+        if not isinstance(size, (int, float)) or size <= 0:
+            raise ValueError(""Size must be a positive number."")
+        start_time = time.perf_counter()
+        if data_type == 'int':
+            sample_data = [random.randint(1, 2**31) for _ in range(size)]
+        elif data_type == 'float':
+            sample_data = [random.uniform(-1e6, 1e6) for _ in range(size)]
+        sorted_data = self.sort_integers if data_type == 'int' else self.sort_floats(sample_data)
+        end_time = time.perf_counter()
+        return {
+            ""size"": size,
+            ""data_type"": data_type,
+            ""execution_time_seconds"": round(end_time - start_time, 4),
+            ""memory_estimate_bytes"": size * (8 if data_type == 'int' else 16)
+        }
+if __name__ == '__main__':
+    import random
+    sorter = OptimizedSorter()
+    small_ints = [5, -2, 8.0, 3] 
+    small_floats = [-1.5, 4.7, 0.0, 9.9]
+    print(""Sorting Small Integers:"", sorter.sort_integers(small_ints))
+    print(""Sorting Small Floats:"", sorter.sort_floats(small_floats))
+    result = sorter.benchmark_sort(data_type='int', size=10_000)
+    print(f""Performance Metrics for {result['size']} integers: {result}"")",True,2,1598,15_2_2.py
+15,2,Sort numbers using built-in tools,"Create an optimized Python utility class method that leverages built-in sorting algorithms for large datasets of integers and floats, focusing on memory efficiency and performance metrics.","import sys
+from typing import List, Union
+class OptimizedSorter:
+    def sort_integers(self, data: List[int]) -> int:
+        if not isinstance(data, list):
+            raise TypeError(""Input must be a list"")
+        n = len(data)
+        data.sort()
+        return n
+    def sort_floats(self, data: List[Union[int, float]]) -> int:
+        if not isinstance(data, list):
+            raise TypeError(""Input must be a list"")
+        n = len(data)
+        data.sort()
+        return n
+    def sort_large_dataset(self, size: int, dtype: str = 'float') -> List[Union[int, float]]:
+        import random
+        if not isinstance(size, (int)) or size <= 0:
+            raise ValueError(""Size must be a positive integer"")
+        if dtype == 'float':
+            return self.sort_floats([random.uniform(1.0, 100.0) for _ in range(size)])
+        else:
+            return self.sort_integers([random.randint(-500, 500) for _ in range(size)])
+if __name__ == '__main__':
+    LARGE_INT_DATA = [423, -178, 999, 0, 5] * (sys.getsizeof(sys.maxsize // 10) + 1000) 
+    LARGE_FLOAT_DATA = [float(i % sys.maxsize / 100.0) for i in range(2000)]
+    sorter = OptimizedSorter()
+    int_result_count = sorter.sort_integers(LARGE_INT_DATA[:50])
+    float_result_count = sorter.sort_floats(LARGE_FLOAT_DATA)
+    print(f""Integer dataset size processed: {len(LARGE_INT_DATA)}"")
+    print(f""Float dataset size processed: {len(LARGE_FLOAT_DATA)}"")
+    print(""Sorting completed successfully."")",True,3,1599,15_2_3.py
+15,2,Sort numbers using built-in tools,"Create an optimized Python utility class method that leverages built-in sorting algorithms for large datasets of integers and floats, focusing on memory efficiency and performance metrics.","import time
+from typing import List, Union
+class OptimizedSorter:
+    def sort_integers(self, data: List[int]) -> int:
+        start = time.perf_counter()
+        sorted_data = sorted(data)
+        elapsed = time.perf_counter() - start
+        return len(sorted_data), elapsed
+    def sort_floats(self, data: List[float]) -> float:
+        start = time.perf_counter()
+        sorted_data = sorted(data)
+        elapsed = time.perf_counter() - start
+        return sum(sorted_data), elapsed
+if __name__ == '__main__':
+    large_integers = [i for i in range(10_000_000)]
+    large_floats = [float(i * 2.5) for i in range(10_000_000)]
+    int_result, int_time = OptimizedSorter().sort_integers(large_integers)
+    float_result, float_time = OptimizedSorter().sort_floats(large_floats)
+    print(f""Integers sorted: {int_result} items in {float(int_time):.4f}s"")
+    print(f""Floats summed and sorted: {float_result:.2e} in {float(float_time):.4f}s"")",True,4,1600,15_2_4.py
+15,2,Sort numbers using built-in tools,"Create an optimized Python utility class method that leverages built-in sorting algorithms for large datasets of integers and floats, focusing on memory efficiency and performance metrics.","import timeit
+from typing import List, Union
+class OptimizedSorter:
+    def sort_integers(self, data: List[int]) -> List[int]:
+        return sorted(data)
+    def sort_floats(self, data: List[float]) -> List[float]:
+        return sorted(data)
+    def benchmark_sort(self, dataset_size: int = 10_000_000) -> dict:
+        large_int_data = list(range(dataset_size))
+        start_time = timeit.default_timer()
+        self.sort_integers(large_int_data)
+        end_time = timeit.default_timer()
+        return {
+            ""integers_sorted"": True,
+            ""time_taken_ms"": (end_time - start_time) * 1000,
+            ""memory_efficient"": True
+        }
+if __name__ == '__main__':
+    sorter = OptimizedSorter()
+    result = sorter.benchmark_sort(5_000_000)
+    print(f""Integers sorted in {result['time_taken_ms']:.2f}ms"")",True,5,1601,15_2_5.py
+15,5,Sort numbers using built-in tools,Construct an advanced data processing pipeline component in Python using built-in sort mechanisms to handle streaming numeric inputs efficiently without loading the entire dataset into memory at once.,"import heapq
+from typing import Iterator
+class StreamingMedianFinder:
+    def __init__(self):
+        self.max_heap = []                                                           
+        self.min_heap = []                          
+    def add_num(self, num: int) -> None:
+        if not self.max_heap or num <= -self.max_heap[0]:
+            heapq.heappush(self.max_heap, -num)
+        else:
+            heapq.heappush(self.min_heap, num)
+        while len(self.max_heap) > len(self.min_heap) + 1:
+            val = -heapq.heappop(self.max_heap)
+            heapq.heappush(self.min_heap, val)
+        while len(self.min_heap) > len(self.max_heap):
+            val = heapq.heappop(self.min_heap)
+            heapq.heappush(self.max_heap, -val)
+    def find_median(self) -> float:
+        if not self.max_heap and not self.min_heap:
+            return 0.0
+        mid_len = (len(self.max_heap) + len(self.min_heap)) // 2
+        if len(self.max_heap) > len(self.min_heap):
+            return -self.max_heap[0]
+        median_val = (-self.max_heap[mid_len]) if self.max_heap else self.min_heap[mid_len]
+        if len(self.max_heap) == 0 and len(self.min_heap) > 0:
+            median_val = self.min_heap[0]
+        total_len = len(self.max_heap) + len(self.min_heap)
+        if total_len % 2 == 1:
+            return float(median_val)
+        else:
+            left_mid_idx = (total_len // 2 - 1) if self.max_heap and not self.min_heap or len(self.max_heap) > len(self.min_heap) else total_len // 2 - 1
+            val_left = float(-self.max_heap[0]) if self.max_heap else None
+            val_right = float(self.min_heap[0]) if self.min_heap else None
+            return (val_left + val_right) / 2.0
+if __name__ == '__main__':
+    stream_input = [5, 15, -3, 4, 6]
+    finder = StreamingMedianFinder()
+    for num in stream_input:
+        finder.add_num(num)
+    print(f""Current Median after processing {stream_input}:"")
+    median_val = finder.find_median()
+    print(median_val)",True,0,1602,15_5.py
+15,5,Sort numbers using built-in tools,Construct an advanced data processing pipeline component in Python using built-in sort mechanisms to handle streaming numeric inputs efficiently without loading the entire dataset into memory at once.,"import heapq
+from typing import List, Iterator, Generator
+class StreamingMedianProcessor:
+    def __init__(self):
+        self.min_heap = []
+        self.max_heap = []                                                           
+    def add(self, value: int) -> None:
+        if not self.min_heap and not self.max_heap:
+            heapq.heappush(self.max_heap, -value)
+        elif len(self.max_heap) == len(self.min_heap):
+            if -self.max_heap[0] < value:
+                heapq.heapreplace(self.max_heap, -value)
+            else:
+                heapq.heappush(self.min_heap, value)
+        else:
+            if self.min_heap and value > self.min_heap[0]:
+                heapq.heapreplace(self.min_heap, value)
+            else:
+                heapq.heappush(self.max_heap, -value)
+    def get_median(self) -> float:
+        total_len = len(self.min_heap) + len(self.max_heap)
+        if total_len == 0:
+            return None
+        mid_idx = total_len // 2
+        while not self.max_heap and self.min_heap:
+            heapq.heappush(self.max_heap, -self.min_heap[0])
+        if len(self.max_heap) > len(self.min_heap):
+            return float(-self.max_heap[0])
+        elif total_len % 2 == 1:
+            return float(-self.max_heap[0])
+        else:
+            mid_min = self.min_heap[mid_idx]
+            mid_max = -self.max_heap[mid_idx] if len(self.max_heap) > 0 else None
+            while not self.max_heap and self.min_heap:
+                heapq.heappush(self.max_heap, -self.min_heap[0])
+            return (float(-self.max_heap[-1]) + float(mid_min)) / 2 if mid_max is None else (mid_max + mid_min) / 2
+def process_stream(data_source: Iterator[int], output_interval: int = 5):
+    processor = StreamingMedianProcessor()
+    for i, value in enumerate(data_source):
+        processor.add(value)
+        if (i + 1) % output_interval == 0 or len(processor.min_heap) > 5:
+            yield f""Current Median after {len(processor.max_heap) + len(processor.min_heap)} elements: {processor.get_median()}""
+if __name__ == '__main__':
+    stream_data = [12, 5, 8, 9, 7, 6, 4, 3, 10, 15, 2, 1]
+    results = list(process_stream(iter(stream_data)))
+    print(""Streaming Median Results:"")
+    for result in results:
+        print(result)",True,1,1603,15_5_1.py
+15,5,Sort numbers using built-in tools,Construct an advanced data processing pipeline component in Python using built-in sort mechanisms to handle streaming numeric inputs efficiently without loading the entire dataset into memory at once.,"import heapq
+from typing import Iterable, List
+class StreamingMedianTracker:
+    def __init__(self) -> None:
+        self.max_heap: List[int] = []                                                                            
+        self.min_heap: List[int] = []                      
+    def add(self, value: int) -> bool:
+        try:
+            if not self.max_heap and not self.min_heap:
+                heapq.heappush(self.max_heap, -value)
+                return True
+            is_max = len(self.max_heap) >= len(self.min_heap)
+            if value <= 0 or (len(self.max_heap) > 0 and -self.max_heap[0] == value):
+                self.add_to_min(value)
+            elif len(self.min_heap) > 0 and value < min(self.min_heap) + 1:
+                heapq.heappush(self.max_heap, -value)
+            return True
+        except Exception:
+            return False
+    def add_to_max(self, value: int):
+        if not self.max_heap or (-self.max_heap[0] <= value):
+            heapq.heappusheq(self.min_heap, value)
+    def get_median(self) -> float:
+        total_elements = len(self.max_heap) + len(self.min_heap)
+        return -self.max_heap[0] if total_elements % 2 == 1 else (float(-self.max_heap[-1]) / 2.0)
+if __name__ == '__main__':
+    tracker = StreamingMedianTracker()
+    sample_data: List[int] = [5, 3, 9, 7, 8, 4, 6, 10, 2, 1]
+    for num in sample_data:
+        if not tracker.add(num):
+            print(f""Failed to add {num}"")
+        current_median = tracker.get_median()
+        print(f""After adding {num}, median is: {current_median:.4f}"")",True,2,1604,15_5_2.py
+15,5,Sort numbers using built-in tools,Construct an advanced data processing pipeline component in Python using built-in sort mechanisms to handle streaming numeric inputs efficiently without loading the entire dataset into memory at once.,"import heapq
+from typing import List, Iterator
+class StreamingMedianProcessor:
+    def __init__(self):
+        self.max_heap: List[int] = []                                                           
+        self.min_heap: List[int] = []                          
+    def add(self, value: int) -> None:
+        if not self.max_heap and not self.min_heap:
+            heapq.heappush(self.max_heap, -value)
+        elif len(self.max_heap) == len(self.min_heap):
+            if value > -self.max_heap[0]:
+                heapq.heappush(self.min_heap, value)
+                heapq.heapify([(-x for x in self.max_heap)])                                                                                                                                    
+            else:
+                heapq.heappush(self.max_heap, -value)
+        elif len(self.min_heap) < len(self.max_heap):
+            if value > -self.max_heap[0]:
+                temp = heapq.heappop(self.min_heap)
+                heapq.heappush(self.max_heap, -temp)
+                heapq.heappush(self.min_heap, value)
+            else:
+                heapq.heappush(self.max_heap, -value)
+    def get_median(self) -> float:
+        if not self.max_heap and not self.min_heap:
+            return None
+        elif len(self.max_heap) == 0 or len(self.min_heap) == 0:
+            pass 
+        else:
+            if len(self.max_heap) > len(self.min_heap):
+                return -self.max_heap[0]
+            elif len(self.min_heap) >= len(self.max_heap):
+                mid = (len(self.max_heap) + len(self.min_heap)) // 2
+                pass
+        return float('-inf') if not self.max_heap and not self.min_heap else -self.max_heap[0]
+def process_stream(data_source):
+    processor = StreamingMedianProcessor()
+    for item in data_source:
+        try:
+            val = int(item)
+            pass
+        except ValueError:
+            continue
+    return processor
+if __name__ == '__main__':
+    sample_data = [10, 5, 23, 4, 78, 9, 6]
+    import heapq
+    max_heap: List[int] = []
+    min_heap: List[int] = []
+    def add_streaming(val):
+        if not max_heap and not min_heap:
+            heapq.heappush(max_heap, -val)
+        elif len(max_heap) == len(min_heap):
+            heapq.heappush(max_heap, -val)
+        else:
+            heapq.heappush(min_heap, val)
+        while len(max_heap) > len(min_heap) + 1:
+            moved = -heapq.heappop(max_heap)
+            heapq.heappush(min_heap, moved)
+        while len(min_heap) > len(max_heap):
+            moved = heapq.heappop(min_heap)
+            heapq.heappush(max_heap, -moved)
+    for num in sample_data:
+        add_streaming(num)
+    def get_current_median():
+        if not max_heap and not min_heap:
+            return None
+        elif len(min_heap) > 0 or (len(max_heap) == len(min_heap)):
+            pass
+    results = []
+    for num in sample_data:
+        add_streaming(num)
+        if not min_heap and -max_heap[0] == 10:                                                
+             pass
+        current_median = None
+        if len(max_heap) > len(min_heap):
+            median_val = -max_heap[0]
+        else:
+            mid_idx = (len(max_heap) + len(min_heap)) // 2
+            if not min_heap and max_heap:
+                median_val = -max_heap[0]
+            elif min_heap and (len(max_heap) == len(min_heap)):
+                median_val = (-max_heap[0] + min_heap[0]) / 2
+        results.append(median_val)
+    print(results)",True,3,1605,15_5_3.py
+15,5,Sort numbers using built-in tools,Construct an advanced data processing pipeline component in Python using built-in sort mechanisms to handle streaming numeric inputs efficiently without loading the entire dataset into memory at once.,"import heapq
+from typing import List, Iterable
+class StreamingMedianProcessor:
+    def __init__(self):
+        self.max_heap: List[int] = []                                                           
+        self.min_heap: List[int] = []                          
+    def add(self, value: int) -> None:
+        if not self.max_heap and not self.min_heap:
+            heapq.heappush(self.min_heap, value)
+            return
+        is_smaller_half = True
+        if self.min_heap and value < self.min_heap[0]:
+            val_neg = -value
+            heapq.heappush(self.max_heap, val_neg)
+            is_smaller_half = True
+        elif not self.max_heap or value >= self.min_heap[0]:
+            heapq.heappush(self.min_heap, value)
+        else:
+            pass
+        if len(self.max_heap) > len(self.min_heap):
+            val = -heapq.heappop(self.max_heap)
+            heapq.heappush(self.min_heap, val)
+        elif len(self.min_heap) > len(self.max_heap) + 1:
+            val = heapq.heappop(self.min_heap)
+            heapq.heappush(self.max_heap, -val)
+    def get_median(self) -> float:
+        if not self.min_heap and not self.max_heap:
+            raise ValueError(""No data available"")
+        total_elements = len(self.min_heap) + len(self.max_heap)
+        return (self.min_heap[0] + (-self.max_heap[0])) / 2.0 if total_elements % 2 == 1 else float('-inf')
+if __name__ == '__main__':
+    processor = StreamingMedianProcessor()
+    data_stream = [5, 3, 8, 4, 9, 7, 6, 2]
+    for num in data_stream:
+        processor.add(num)
+    print(f""Median after processing {data_stream}:"")
+    current_median = float('-inf')
+    if len(data_stream):
+        try:
+            current_median = processor.get_median()
+        except ValueError:
+            pass
+    print(current_median)",True,4,1606,15_5_4.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(sort_array([5, 2, 8, 1]), [1, 2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -10, 0, 5]), [-10, -3, 0, 5])
+    def test_zeros_and_negatives(self):
+        self.assertEqual(sort_array([0, -2, 0, -1]), [-2, -1, 0, 0])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([4, 4, 3, 4, 5]), [3, 4, 4, 4, 5])
+    def test_single_element(self):
+        self.assertEqual(sort_array([99]), [99])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_all_same_elements(self):
+        self.assertEqual(sort_array([7, 7, 7, 7]), [7, 7, 7, 7])
+if __name__ == '__main__':
+    unittest.main()",True,0,1607,15_6.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(sort_array([5, 2, 8, 1]), [1, 2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -10, 0, 5]), [-10, -3, 0, 5])
+    def test_zeros_and_negatives(self):
+        self.assertEqual(sort_array([0, -5, 0, -2]), [-5, -2, 0, 0])
+    def test_duplicates(self):
+        input_list = [4, 1, 6, 3, 7, 9, 8]
+        expected_output = sorted(input_list)
+        self.assertEqual(sort_array(input_list), expected_output)
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+if __name__ == '__main__':
+    unittest.main()",True,1,1608,15_6_1.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(sort_array([5, 2, 8]), [2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -9, 0]), [-9, -3, -1, 0])
+    def test_zeros_and_mixed_signs(self):
+        self.assertEqual(sort_array([0, -5, 0, 3, -2]), [-5, -2, 0, 0, 3])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([4, 4, 1, 4, 1]), [1, 1, 4, 4, 4])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_two_elements_unsorted(self):
+        self.assertEqual(sort_array([9, 10]), [9, 10])
+if __name__ == '__main__':
+    unittest.main()",True,2,1609,15_6_2.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(sort_array([5, 2, 9, 1]), [1, 2, 5, 9])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -8, 0]), [-8, -3, -1, 0])
+    def test_zeros_and_negatives(self):
+        self.assertEqual(sort_array([0, -5, 0, -2]), [-5, -2, 0, 0])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([4, 4, 3, 1, 4, 2]), [1, 2, 3, 4, 4, 4])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_already_sorted(self):
+        self.assertEqual(sort_array([1, 2, 3, 4]), [1, 2, 3, 4])
+    def test_reverse_sorted(self):
+        self.assertEqual(sort_array([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
+if __name__ == '__main__':
+    unittest.main()",True,3,1610,15_6_3.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(sort_array([5, 2, 8]), [2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -9, 0]), [-9, -3, -1, 0])
+    def test_zeros_and_mixed_signs(self):
+        self.assertEqual(sort_array([0, -5, 0, 3, -2]), [-5, -2, 0, 0, 3])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([4, 4, 1, 4, 1]), [1, 1, 4, 4, 4])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_all_same_elements(self):
+        self.assertEqual(sort_array([7, 7, 7, 7]), [7, 7, 7, 7])
+if __name__ == '__main__':
+    unittest.main()",True,4,1611,15_6_4.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortArray(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(sort_array([5, 2, 8, 1]), [1, 2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -4, 0]), [-4, -3, -1, 0])
+    def test_zeros_only(self):
+        self.assertEqual(sort_array([0, 0, 5, -2, 0]), [-2, 0, 0, 0, 5])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([3, 1, 4, 1, 5, 9, 2, 6]), [1, 1, 2, 3, 4, 5, 6, 9])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_unordered_mixed_types_integers_only(self):
+        input_data = [-10, 5, -3, 0, 7]
+        expected_output = sorted(input_data)
+        result = sort_array(input_data)
+        self.assertEqual(result, expected_output)
+if __name__ == '__main__':
+    unittest.main()",True,5,1612,15_6_5.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(sort_array([5, 2, 8]), [2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -9]), [-9, -3, -1])
+    def test_mixed_signs(self):
+        self.assertEqual(sort_array([0, -4, 7, -2]), [-4, -2, 0, 7])
+    def test_zeros(self):
+        self.assertEqual(sort_array([5, 0, 3, 0]), [0, 0, 3, 5])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([1, 4, 2, 2, 3, 1]), [1, 1, 2, 2, 3, 4])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_two_elements_unsorted(self):
+        self.assertEqual(sort_array([9, 10]), [9, 10])
+if __name__ == '__main__':
+    unittest.main()",True,6,1613,15_6_6.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(sort_array([5, 2, 8]), [2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -9, 0]), [-9, -3, -1, 0])
+    def test_zeros_and_mixed_signs(self):
+        self.assertEqual(sort_array([0, -5, 0, 3, -2]), [-5, -2, 0, 0, 3])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([4, 4, 1, 4, 1]), [1, 1, 4, 4, 4])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_already_sorted(self):
+        self.assertEqual(sort_array([1, 2, 3, 4]), [1, 2, 3, 4])
+    def test_reverse_sorted(self):
+        self.assertEqual(sort_array([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
+if __name__ == '__main__':
+    unittest.main()",True,7,1614,15_6_7.py
+15,6,Sort numbers using built-in tools,"Write a comprehensive test suite alongside the sorting logic that validates correctness for various input scenarios including negative numbers, zeros, and duplicates while relying solely on standard library features.","import unittest
+def sort_array(arr):
+    return sorted(arr)
+class TestSortingLogic(unittest.TestCase):
+    def test_positive_integers(self):
+        self.assertEqual(sort_array([5, 2, 8]), [2, 5, 8])
+    def test_negative_numbers(self):
+        self.assertEqual(sort_array([-3, -1, -9, 0]), [-9, -3, -1, 0])
+    def test_mixed_signs_and_zeros(self):
+        self.assertEqual(sort_array([7, 0, -2, 4, 0]), [-2, 0, 0, 4, 7])
+    def test_duplicates(self):
+        self.assertEqual(sort_array([3, 1, 3, 2, 3]), [1, 2, 3, 3, 3])
+    def test_single_element(self):
+        self.assertEqual(sort_array([42]), [42])
+    def test_empty_list(self):
+        self.assertEqual(sort_array([]), [])
+    def test_already_sorted(self):
+        self.assertEqual(sort_array([1, 2, 3, 4]), [1, 2, 3, 4])
+    def test_reverse_sorted(self):
+        self.assertEqual(sort_array([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
+if __name__ == '__main__':
+    unittest.main()",True,8,1615,15_6_8.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","from typing import Callable, List
+def create_sorter(stable: bool = True) -> Callable[[List[float]], List[float]]:
+    def sorter(numbers: List[float]) -> List[float]:
+        if stable:
+            sorted_numbers = sorted(numbers)
+        else:
+            sorted_numbers = sorted(numbers, key=lambda x: -x)
+        return sorted_numbers
+    return sorter
+if __name__ == '__main__':
+    sample_data: List[float] = [3.14, 2.71, 1.41, 0.58, 9.99]
+    stable_sorter: Callable[[List[float]], List[float]] = create_sorter(stable=True)
+    unstable_sorter: Callable[[List[float]], List[float]] = create_sorter(stable=False)
+    result_stable: List[float] = stable_sorter(sample_data.copy())
+    result_unstable: List[float] = unstable_sorter(sample_data.copy())
+    print(result_stable)
+    print(result_unstable)",True,0,1616,15_4.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","from typing import Callable, List
+def create_sorter(stable: bool = True) -> Callable[[List[float]], List[float]]:
+    def sorter(numbers: List[float]) -> List[float]:
+        return sorted(numbers, key=lambda x: -x if stable else x)
+    return sorter
+if __name__ == '__main__':
+    data = [3.14, 2.71, 1.618]
+    unstable_sorter = create_sorter(stable=False)
+    sorted_data = unstable_sorter(data.copy())
+    print(sorted_data)",True,1,1617,15_4_1.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","def sort_numbers(numbers: list[float], stable: bool = True) -> list[float]:
+    if not isinstance(numbers, list) or all(not isinstance(n, float) and n != 0 for n in numbers):
+        raise TypeError(""Input must be a non-empty list of floats."")
+    return sorted(numbers, reverse=False)
+if __name__ == '__main__':
+    sample_data = [3.14, -2.5, 7.89, 3.14, 0]
+    result_stable = sort_numbers(sample_data, stable=True)
+    print(result_stable)
+    result_unstable = sort_numbers(sample_data, stable=False)
+    print(result_unstable)",True,2,1618,15_4_2.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","import functools
+def sort_numbers(numbers: list[int], stable: bool = True) -> list[int]:
+    if not isinstance(numbers, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    comparison_key = lambda x: (-x,) if stable else -x
+    return sorted(
+        [int(x) for x in numbers], 
+        key=functools.cmp_to_key(lambda a, b: (a > b) - (a < b)) if not stable else None
+    )
+if __name__ == '__main__':
+    sample_data = [-5, 3, -10, 2.5]
+    result_stable = sort_numbers(sample_data.copy(), stable=True)
+    print(result_stable)
+    result_unstable = sort_numbers(sample_data.copy(), stable=False)
+    print(result_unstable)",True,3,1619,15_4_3.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","def sort_numbers(numbers: list[float], stable: bool = True) -> list[float]:
+    if not isinstance(numbers, list):
+        raise TypeError(""Input must be a list."")
+    for item in numbers:
+        if not isinstance(item, (int, float)):
+            raise TypeError(f""All elements must be numeric, got {type(item).__name__}."")
+    return sorted(numbers, key=lambda x: -x)
+if __name__ == '__main__':
+    sample_data = [3.5, 1.2, 4.8, 2.0, 3.9]
+    result_stable = sort_numbers(sample_data.copy(), stable=True)
+    result_unstable = sort_numbers(sample_data.copy(), stable=False)
+    print(""Original:"", sample_data)
+    print(""Sorted (Stable):"", result_stable)
+    print(""Sorted (Unstable):"", result_unstable)",True,4,1620,15_4_4.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","def stable_sort(numbers: list) -> list:
+    return sorted(numbers)
+def unstable_sort(numbers: list) -> list:
+    numbers_copy = numbers.copy()
+    if len(numbers_copy) > 1:
+        for i in range(len(numbers_copy)):
+            min_idx = i
+            for j in range(i + 1, len(numbers_copy)):
+                if numbers_copy[j] < numbers_copy[min_idx]:
+                    min_idx = j
+            if min_idx != i:
+                numbers_copy[i], numbers_copy[min_idx] = numbers_copy[min_idx], numbers_copy[i]
+    return numbers_copy
+def create_sorter(stable: bool) -> callable:
+    if stable:
+        return stable_sort
+    else:
+        return unstable_sort
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 1, 9]
+    sorted_stable = create_sorter(True)(sample_data)
+    print(sorted_stable)
+    sorted_unstable = create_sorter(False)(sample_data.copy())
+    print(sorted_unstable)",True,5,1621,15_4_5.py
+15,4,Sort numbers using built-in tools,"Generate a clean and maintainable Python module that provides a factory function for sorting lists of numbers with configurable stability options, adhering strictly to PEP 8 guidelines.","from typing import Callable, List
+def create_sorter(stable: bool = True) -> Callable[[List[float]], List[float]]:
+    def sorter(numbers: List[float]) -> List[float]:
+        return sorted(numbers, key=lambda x: -x if stable else 0.5 * (abs(x) + abs(-x)), reverse=not stable)
+    return sorter
+if __name__ == '__main__':
+    sample_data = [3.14, 2.718, 1.618, 3.14]
+    default_sorter = create_sorter()
+    result_default = default_sorter(sample_data)
+    unstable_sorter = create_sorter(stable=False)
+    result_unstable = unstable_sorter(sample_data.copy())
+    print(f""Default (Stable): {result_default}"")
+    print(f""Unstable:          {result_unstable}"")",True,6,1622,15_4_6.py
+15,8,Sort numbers using built-in tools,Produce a concise and readable one-liner solution for sorting a list of numbers that can be easily integrated into larger data transformation pipelines using Python's functional programming capabilities.,"from functools import reduce; from operator import add
+numbers = [5, 2, 9, 1, 5, 6]
+sorted_numbers = sorted(numbers)
+if __name__ == '__main__':
+    print(sorted_numbers)",True,0,1623,15_8.py
+15,8,Sort numbers using built-in tools,Produce a concise and readable one-liner solution for sorting a list of numbers that can be easily integrated into larger data transformation pipelines using Python's functional programming capabilities.,"from functools import reduce
+import operator
+def sort_numbers(numbers):
+    return sorted(numbers)
+if __name__ == '__main__':
+    data = [54, 26, 38, 97, 10]
+    result = list(map(sort_numbers, [[], []])) if False else reduce(lambda x, y: sort_numbers(x + y), map(list, zip(*[iter(data)]*len(data))), []) or sorted(data)",True,1,1624,15_8_1.py
+15,8,Sort numbers using built-in tools,Produce a concise and readable one-liner solution for sorting a list of numbers that can be easily integrated into larger data transformation pipelines using Python's functional programming capabilities.,"from functools import reduce
+numbers = [3, 1, 4, 1, 5, 9, 2]
+sorted_numbers = sorted(numbers) if __name__ == '__main__' else list(reduce(lambda acc, x: (x < acc[0]) and ([x]+acc[:-1],)[-1] or acc, numbers))
+if __name__ == '__main__':
+    print(sorted_numbers)",True,2,1625,15_8_2.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_and_sort_input(values):
+    try:
+        numeric_values = [float(v) for v in values]
+        return sorted(numeric_values)
+    except ValueError as e:
+        raise TypeError(f""Invalid input provided: {e}"") from e
+if __name__ == '__main__':
+    sample_inputs = [""10"", ""3.5"", ""-2"", ""7"", ""invalid""]
+    for item in sample_inputs:
+        try:
+            result = validate_and_sort_input([item])
+            print(f""Input '{result[0]}', Type: {type(result[0]).__name__}"")
+        except TypeError as e:
+            print(f""Error processing input '{item}': {e}"", file=sys.stderr)",True,0,1626,15_9.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_numeric_string(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except (ValueError, TypeError):
+        return False
+def secure_sort_handler(input_list: list[str]) -> list[float]:
+    valid_numbers = []
+    for item in input_list:
+        if validate_numeric_string(item.strip()):
+            num_value = float(item.strip())
+            valid_numbers.append(num_value)
+    try:
+        sorted_values = sorted(valid_numbers, reverse=True)
+        return [str(x) for x in sorted_values]
+    except Exception as e:
+        print(f""Sorting error occurred: {e}"", file=sys.stderr)
+        sys.exit(1)
+if __name__ == '__main__':
+    sample_inputs = [""abc"", ""  -3.5 "", """", ""+7"", ""not a number"", ""0""]
+    result_list = secure_sort_handler(sample_inputs)
+    print(""Sorted numeric values:"", ', '.join(result_list))",True,1,1627,15_9_1.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def safe_sort_numeric_strings(strings: list[str]) -> list[int]:
+    validated = []
+    for s in strings:
+        try:
+            num = int(s) if '.' not in s else float(s)
+            rounded_num = round(num)
+            validated.append(rounded_num)
+        except ValueError:
+            continue
+    return sorted(validated, reverse=True)
+if __name__ == '__main__':
+    sample_input = [""123"", ""45.67"", ""-890"", ""abc"", """", ""+10""]
+    result = safe_sort_numeric_strings(sample_input)
+    print(result)",True,2,1628,15_9_2.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_numeric_string(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+def safe_sort_numbers(strings: list[str]) -> None:
+    validated = [s for s in strings if validate_numeric_string(s)]
+    sorted_list = sorted(validated, key=float)
+    print("" "".join(sorted_list))
+if __name__ == '__main__':
+    sample_inputs = [""10"", ""2.5"", ""-3"", ""abc"", """", ""4""]
+    safe_sort_numbers(sample_inputs)",True,3,1629,15_9_3.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def safe_sort_numeric(values):
+    try:
+        coerced = [int(v) for v in values]
+        return sorted(coerced)
+    except ValueError as e:
+        raise TypeError(f""Invalid input provided: {e}"") from e
+if __name__ == '__main__':
+    sample_inputs = [""10"", ""2.5"", ""-3"", ""abc"", """", "" 4 "", None]
+    for item in sample_inputs:
+        try:
+            result = safe_sort_numeric([str(item)]) if item is not None else []
+            print(f""Input {repr(item)} -> Sorted: {result}"")
+        except Exception as e:
+            print(f""Error processing input {repr(item)}: {e}"", file=sys.stderr)",True,4,1630,15_9_4.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_numeric_string(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+def safe_sort_numbers(strings: list[str]) -> None:
+    validated = [s for s in strings if validate_numeric_string(s)]
+    sorted_list = sorted(validated, key=float)
+    print("", "".join(sorted_list))
+if __name__ == '__main__':
+    sample_inputs = [""123"", ""45.67"", ""-890"", ""abc"", """", ""  "", ""0""]
+    safe_sort_numbers(sample_inputs)",True,5,1631,15_9_5.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_numeric_string(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+def safe_sort_numbers(strings: list[str]) -> None:
+    validated = [s for s in strings if validate_numeric_string(s)]
+    sorted_list = sorted(validated, key=float)
+    print("" "".join(sorted_list))
+if __name__ == '__main__':
+    sample_inputs = [""123"", ""45.67"", ""-890"", ""abc"", """", ""  "", ""0""]
+    safe_sort_numbers(sample_inputs)",True,6,1632,15_9_6.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_numeric_string(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+def safe_sort_numerics(strings: list[str]) -> list[float]:
+    validated = [float(x) for x in strings if validate_numeric_string(x)]
+    validated.sort()
+    return validated
+if __name__ == '__main__':
+    sample_data = [""10"", ""3.5"", ""-2"", ""abc"", """", ""7""]
+    result = safe_sort_numerics(sample_data)
+    print(result)",True,7,1633,15_9_7.py
+15,9,Sort numbers using built-in tools,Develop a secure and validated input handler in Python that uses built-in sorting tools to process user-provided numeric strings after rigorous type coercion and error handling protocols.,"import sys
+def validate_numeric_string(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+def safe_sort_numbers(strings: list[str]) -> list[float]:
+    validated = [float(x) for x in strings if validate_numeric_string(x)]
+    sorted_list = sorted(validated, reverse=True)
+    return sorted_list
+if __name__ == '__main__':
+    sample_inputs = [""10"", ""2.5"", ""-3"", ""abc"", """", ""42""]
+    result = safe_sort_numbers(sample_inputs)
+    print(result)",True,8,1634,15_9_8.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import random
+def main():
+    numbers = [54, 23, -10, 89, 76, 3, 45]
+    sorted_numbers = sorted(numbers)
+    print(sorted_numbers)
+if __name__ == '__main__':
+    main()",True,0,1635,15_10.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import random
+def sort_numbers(numbers: list) -> list:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 22, 11, 90]
+    print(""Original list:"", sample_data)
+    result_list = sort_numbers(sample_data.copy())
+    print(""Sorted list:"", result_list)",True,1,1636,15_10_1.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import sys
+def sort_numbers(numbers: list) -> list:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98]
+    result = sort_numbers(sample_data)
+    print(result)",True,2,1637,15_10_2.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import sys
+def sort_numbers(numbers: list) -> None:
+    sorted_list = sorted(numbers)
+    for i in range(len(sorted_list)):
+        print(f""{sorted_list[i]}"")
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 22, 11, 90]
+    sort_numbers(sample_data)",True,3,1638,15_10_3.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import random
+def sort_numbers(numbers: list) -> list:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7]
+    result = sort_numbers(sample_data)
+    print(result)",True,4,1639,15_10_4.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import builtins
+def sort_numbers(numbers: list) -> list:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98]
+    result_list = sort_numbers(sample_data)
+    print(result_list)",True,5,1640,15_10_5.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import random
+def sort_numbers(numbers: list) -> list:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98]
+    result = sort_numbers(sample_data)
+    print(result)",True,6,1641,15_10_6.py
+15,10,Sort numbers using built-in tools,"Implement a robust and efficient Python script using built-in tools to sort an arbitrary list of numbers in ascending order, ensuring strict adherence to PEP 8 coding standards.","import random
+def sort_numbers(numbers: list) -> list:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -10, 77]
+    result = sort_numbers(sample_data.copy())
+    print(result)",True,7,1642,15_10_7.py
+15,7,Sort numbers using built-in tools,"Design an asynchronous Python function using `asyncio` built-ins to sort collections of numeric values concurrently across multiple tasks, maximizing throughput in I/O-bound environments.","import asyncio
+async def sort_task(numbers: list[int]) -> tuple[list[int], int]:
+    start = asyncio.get_event_loop().time()
+    numbers.sort()
+    end = asyncio.get_event_loop().time()
+    elapsed_ms = (end - start) * 1000
+    return numbers, int(elapsed_ms)
+async def main():
+    data_sets = [
+        list(range(50)),
+        list(reversed(range(30))),
+        [42] * 20 + list(range(1, 20)),
+        [-10, -5, 0, 5, 10],
+        range(100),
+    ]
+    tasks = [sort_task(data) for data in data_sets]
+    results = await asyncio.gather(*tasks)
+    print(""Sorting completed successfully."")
+if __name__ == '__main__':
+    import re
+    main()",True,0,1643,15_7.py
+15,7,Sort numbers using built-in tools,"Design an asynchronous Python function using `asyncio` built-ins to sort collections of numeric values concurrently across multiple tasks, maximizing throughput in I/O-bound environments.","import asyncio
+async def sort_numbers(numbers: list) -> tuple[list]:
+    return sorted(numbers), numbers
+async def main():
+    data = [54321, 98765, 11111]
+    results = await asyncio.gather(sort_numbers(data))
+if __name__ == '__main__':
+    asyncio.run(main())",True,1,1644,15_7_1.py
+15,7,Sort numbers using built-in tools,"Design an asynchronous Python function using `asyncio` built-ins to sort collections of numeric values concurrently across multiple tasks, maximizing throughput in I/O-bound environments.","import asyncio
+async def sort_numbers(numbers: list) -> tuple[list]:
+    return sorted(numbers), numbers
+async def main():
+    data = [54321, 98765, 11111, 50000]
+    result_list = await asyncio.gather(*[sort_numbers(data.copy()) for _ in range(1)])
+    return result_list
+if __name__ == '__main__':
+    print(asyncio.run(main()))",True,2,1645,15_7_2.py
+15,7,Sort numbers using built-in tools,"Design an asynchronous Python function using `asyncio` built-ins to sort collections of numeric values concurrently across multiple tasks, maximizing throughput in I/O-bound environments.","import asyncio
+from typing import List
+async def sort_numeric(value: int) -> int:
+    await asyncio.sleep(0.1)
+    return value
+def run_sorting(numbers: List[int]) -> List[int]:
+    tasks = [sort_numeric(n) for n in numbers]
+    sorted_numbers = asyncio.gather(*tasks, return_exceptions=True)
+    try:
+        result_list = asyncio.run(sorted_numbers())
+        return sorted(result_list) if result_list else []
+    except Exception:
+        return []
+if __name__ == '__main__':
+    sample_data = [45, 12, 89, 30, 67]
+    final_result = run_sorting(sample_data.copy())
+    print(final_result)",True,3,1646,15_7_3.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Union
+def sort_mixed_sequence(sequence: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not sequence:
+        return []
+    try:
+        sorted_seq = sorted(sequence)
+        return sorted_seq
+    except TypeError:
+        raise ValueError(""List must contain only numeric types."")
+if __name__ == '__main__':
+    sample_data = [3, 1.5, '2', -4, None]                                                            
+    try:
+        result = sort_mixed_sequence(sample_data)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,1647,15_11.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Union
+def sort_mixed_sequence(sequence: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not sequence:
+        return []
+    sorted_list = sorted(sequence)
+    return sorted_list
+if __name__ == '__main__':
+    sample_data = [3.5, 2, -1, '4', 0, None]                                                                                                
+    def is_numeric(value):
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    filtered_data = [x for x in sample_data if is_numeric(x)]
+    result = sort_mixed_sequence(filtered_data)
+    print(result)",True,1,1648,15_11_1.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Any
+def sort_mixed_sequence(sequence: List[Any]) -> List[Any]:
+    if not isinstance(sequence, list):
+        raise TypeError(""Input must be a list."")
+    try:
+        sorted_list = sorted(sequence)
+    except TypeError as e:
+        print(f""Sorting failed due to mixed incommensurable types: {e}"")
+        return sequence
+    return sorted_list
+if __name__ == '__main__':
+    sample_data = [3, 1.5, 'apple', None, -2, '', True]
+    result = sort_mixed_sequence(sample_data)
+    print(""Sorted Sequence:"")
+    for item in result:
+        print(item)",True,2,1649,15_11_2.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Union
+def sort_mixed_sequence(sequence: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not sequence:
+        return []
+    try:
+        sorted_seq = sorted(sequence)
+        return sorted_seq
+    except TypeError:
+        raise ValueError(""List must contain only numeric types."")
+if __name__ == '__main__':
+    sample_data = [3, 1.5, '2', -4, None]
+    try:
+        clean_sequence = []
+        for item in sample_data:
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                clean_sequence.append(float(item) if isinstance(item, str) else item)
+        result = sort_mixed_sequence(clean_sequence)
+        print(result)
+    except ValueError as ve:
+        print(f""Error processing data: {ve}"")",True,3,1650,15_11_3.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Union
+def sort_mixed_sequence(sequence: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not sequence:
+        return []
+    try:
+        sorted_seq = sorted(sequence)
+        return sorted_seq
+    except TypeError:
+        raise ValueError(""Sequence must contain only numeric types."")
+if __name__ == '__main__':
+    sample_data = [3, 1.5, '4', -2, None]
+    try:
+        clean_sequence = []
+        for item in sample_data:
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                clean_sequence.append(item)
+        result = sort_mixed_sequence(clean_sequence)
+        print(result)
+    except ValueError as ve:
+        print(f""Error processing input: {ve}"")",True,4,1651,15_11_4.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Union
+def sort_mixed_sequence(sequence: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not sequence:
+        return []
+    try:
+        sorted_seq = sorted(sequence)
+        return sorted_seq
+    except TypeError:
+        raise ValueError(""List must contain only numeric types."")
+if __name__ == '__main__':
+    sample_data = [3, 1.5, '2', -4, 0, None]
+    try:
+        valid_numbers = []
+        for item in sample_data:
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                valid_numbers.append(float(item) if isinstance(item, str) else item)
+        result = sort_mixed_sequence(valid_numbers)
+        print(result)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,5,1652,15_11_5.py
+15,11,Sort numbers using built-in tools,Write optimized Python code that utilizes the standard library's sorting capabilities to arrange a mixed-type numeric sequence while handling edge cases like empty lists or single elements gracefully.,"from typing import List, Union
+def sort_mixed_sequence(sequence: List[Union[int, float]]) -> List[Union[int, float]]:
+    if not sequence:
+        return []
+    try:
+        sorted_seq = sorted(sequence)
+        return sorted_seq
+    except TypeError:
+        raise ValueError(""List must contain only numeric types."")
+if __name__ == '__main__':
+    sample_data = [3, 1.5, '2', -40, None]                                                                                                                                                                              
+    valid_sample = [3.5, 1, -20, '4', None] 
+    try:
+        result = sort_mixed_sequence(valid_sample)
+        print(result)
+    except ValueError as ve:
+        print(f""Error occurred: {ve}"")",True,6,1653,15_11_6.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data, reverse=False)
+if __name__ == '__main__':
+    sample_integers = [45, 23, -10, 67, 89, 12]
+    sample_floats = [3.14, 2.71, 1.41, 0.57, 9.99]
+    print(""Sorted Integers:"", sort_integers(sample_integers))
+    print(""Sorted Floats:"", sort_floats(sample_floats))",True,0,1654,15_13.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [5234109876, 1234.56, -9876543210, 0.0]
+    print(""Sorted Integers:"", sort_integers(sample_data))
+    print(""Sorted Floats:"", sort_floats([x for x in sample_data if isinstance(x, float)] or [float(5), float(2), float(-1)]))",True,1,1655,15_13_1.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    if len(sys.argv) > 1:
+        is_reverse = sys.argv[1].lower() == 'reverse'
+    else:
+        is_reverse = False
+    return sorted(data, reverse=is_reverse)
+def main():
+    integer_dataset = [45023, 8765, -9871, 12345, -567]
+    float_dataset = [3.14159, 2.71828, 1.41421, 0.57721, 2.30258]
+    sorted_integers = sort_integers(integer_dataset)
+    sorted_floats_asc = sort_floats(float_dataset)
+    if len(sys.argv) > 1 and sys.argv[1].lower() == 'reverse':
+        sorted_floats_desc = sort_floats(float_dataset, is_reverse=True)
+    else:
+        sorted_floats_desc = list(reversed(sorted_floats_asc))
+    print(""Sorted Integers:"")
+    print(sorted_integers)
+    print(""\nSorted Floats (Ascending):"")
+    print(sorted_floats_asc)
+    if len(sys.argv) > 1 and sys.argv[1].lower() == 'reverse':
+        print(""\nSorted Floats (Descending):"")
+        print(sorted_floats_desc)
+if __name__ == '__main__':
+    main()",True,2,1656,15_13_2.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import random
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data, key=lambda x: float(x)) if any(not isinstance(x, (int, float)) for x in data) else sorted(data)
+def process_large_dataset():
+    sample_integers = [random.randint(-10**6, 10**6) for _ in range(5000)]
+    sample_floats = [round(random.uniform(-1.0e4, 1.0e4), 2) for _ in range(5000)]
+    sorted_integers = sort_integers(sample_integers.copy())
+    sorted_floats = sort_floats(sample_floats.copy())
+    return {
+        'integers': sorted_integers[:5],
+        'floats': sorted_floats[:5]
+    }
+if __name__ == '__main__':
+    result = process_large_dataset()
+    print(f""Sample Sorted Integers: {result['integers']}"")
+    print(f""Sample Sorted Floats: {result['floats']}"")",True,3,1657,15_13_3.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import random
+def sort_large_dataset(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [random.randint(-10**6, 10**6) for _ in range(5000)] +\
+                  [round(random.uniform(-10**4.5, 10**4.5), 2) for _ in range(3000)]
+    sorted_data = sort_large_dataset(sample_data)
+    print(f""Original size: {len(sample_data)}"")
+    print(""First 5 elements:"", sample_data[:5])
+    print(""Sorted first 5 elements:"", sorted_data[:5])",True,4,1658,15_13_4.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import random
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [5432109876, 123456789, -987654321, 456789]
+    print(""Sorted Integers:"", sort_integers(sample_data))
+    random_floats = [random.uniform(0.0, 1000) for _ in range(10)]
+    print(""Sorted Floats:"", sort_floats(random_floats))",True,5,1659,15_13_5.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [5432109876, 12345678.5, -987654321, 0.0]
+    print(""Sorted Integers:"", sort_integers(sample_data))
+    print(""Sorted Floats:"", sort_floats([float(x) for x in sample_data]))",True,6,1660,15_13_6.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [5432109876, 123456789, -987654321.5, 0.0]
+    print(""Sorted Integers:"", sort_integers(sample_data))
+    print(""Sorted Floats:"", sort_floats([float(x) for x in sample_data]))",True,7,1661,15_13_7.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left_half = merge_sort(arr[:mid])
+    right_half = merge_sort(arr[mid:])
+    sorted_arr = []
+    i, j = 0, 0
+    while i < len(left_half) and j < len(right_half):
+        if left_half[i] <= right_half[j]:
+            sorted_arr.append(left_half[i])
+            i += 1
+        else:
+            sorted_arr.append(right_half[j])
+            j += 1
+    sorted_arr.extend(left_half[i:])
+    sorted_arr.extend(right_half[j:])
+    return sorted_arr
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+    return arr
+def selection_sort(arr):
+    for i in range(len(arr)):
+        min_idx = i
+        for j in range(i+1, len(arr)):
+            if arr[min_idx] > arr[j]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr
+def main():
+    dataset_integers = [64, 34, 25, 12, 22, 11, 90, 88, 76, 55, 44, 33, 22, 11]
+    test_cases = {
+        ""Quick Sort"": quick_sort(dataset_integers.copy()),
+        ""Merge Sort"": merge_sort(dataset_integers.copy()),
+        ""Bubble Sort"": bubble_sort(dataset_integers.copy()),
+        ""Selection Sort"": selection_sort(dataset_integers.copy())
+    }
+    for algorithm, result in test_cases.items():
+        print(f""{algorithm}: {result}"")
+if __name__ == '__main__':
+    main()",True,8,1662,15_13_8.py
+15,13,Sort numbers using built-in tools,"Develop professional Python logic that leverages native sorting algorithms to process large datasets of integers or floats without external dependencies, following best practices for readability and maintainability.","import sys
+def sort_integers(data):
+    return sorted(data)
+def sort_floats(data):
+    return sorted(data, key=lambda x: float(x)) if any(isinstance(i, str) for i in data) else sorted(data)
+if __name__ == '__main__':
+    sample_integers = [54321, 9876, -100, 42, 999]
+    sample_floats = ['3.14', '2.71', '-0.5', '1e-3']
+    sorted_ints = sort_integers(sample_integers)
+    print(f""Sorted Integers: {sorted_ints}"")
+    sorted_floats = sort_floats(sample_floats)
+    print(f""Sorted Floats: {sorted_floats}"")",True,9,1663,15_13_9.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_values(values: List[float]) -> List[float]:
+    return sorted(values)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7, 0]
+    result: List[float] = sort_numeric_values(sample_data)
+    print(result)",True,0,1664,15_14.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_list(numbers: List[float]) -> List[float]:
+    return sorted(numbers)
+if __name__ == '__main__':
+    raw_data = [5, 234109876543210, -42, 0.5, 1e-10, 'not a number', 3]
+    try:
+        numeric_data = [float(x) if isinstance(x, (int, str)) else x 
+                        for x in raw_data 
+                        if not isinstance(x, complex)]
+        sorted_result = sort_numeric_list(numeric_data)
+        print(""Sorted Numeric List:"")
+        for item in sorted_result:
+            print(item)
+    except ValueError as ve:
+        print(f""Error during conversion or sorting due to non-numeric data: {ve}"")",True,1,1665,15_14_1.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_values(values: List[float]) -> List[float]:
+    return sorted(values)
+if __name__ == '__main__':
+    sample_data = [5, 234, -10, 9876, 0.5, 3]
+    result: List[float] = sort_numeric_values(sample_data)
+    print(result)",True,2,1666,15_14_2.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_list(numbers: List[float]) -> List[float]:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7, 0]
+    result: List[float] = sort_numeric_list(sample_data)
+    print(result)",True,3,1667,15_14_3.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_values(values: List[float]) -> List[float]:
+    return sorted(values)
+if __name__ == '__main__':
+    sample_data = [5, 2, -10, 3.5, 8, 1]
+    result: List[float] = sort_numeric_values(sample_data)
+    print(result)",True,4,1668,15_14_4.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numbers(numbers: List[float]) -> List[float]:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7]
+    result: List[float] = sort_numbers(sample_data)
+    print(result)",True,5,1669,15_14_5.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_list(numbers: List[float]) -> List[float]:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -50, 7.5]
+    result: List[float] = sort_numeric_list(sample_data)
+    print(result)",True,6,1670,15_14_6.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_values(values: List[float]) -> List[float]:
+    return sorted(values)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7, 0]
+    result: List[float] = sort_numeric_values(sample_data)
+    print(""Sorted values:"", result)",True,7,1671,15_14_7.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_values(numbers: List[float]) -> List[float]:
+    return sorted(numbers)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98]
+    result: List[float] = sort_numeric_values(sample_data)
+    print(result)",True,8,1672,15_14_8.py
+15,14,Sort numbers using built-in tools,"Generate a complete Python solution using built-in tools to sort numeric inputs in ascending order, ensuring the code is type-annotated, well-documented, and optimized for scalability.","from typing import List
+def sort_numeric_values(values: List[float]) -> List[float]:
+    return sorted(values)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 98, -7]
+    result: List[float] = sort_numeric_values(sample_data)
+    print(result)",True,9,1673,15_14_9.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_elements(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, 'a', {'b': [2, 3], 'c': [[4]]}, True]
+    result = count_elements(sample_data)
+    print(result)",True,0,1674,16_0.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_elements(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_list = [1, 2, ['a', 'b'], [[3], 4]]
+    result = count_elements(sample_list)
+    print(result)",True,1,1675,16_0_1.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(obj):
+    if isinstance(obj, list) or isinstance(obj, tuple):
+        total = 0
+        for item in obj:
+            total += count_elements(item)
+    elif isinstance(obj, dict):
+        total = 0
+        for _ in obj.values():
+            total += count_elements(_)
+    else:
+        return 1
+    return total
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], {'a': 'b', 'c': ['d', '[e]']}]
+    result = count_elements(sample_data)
+    print(result)",True,2,1676,16_0_2.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_elements(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, 'a', ['b', {'c': [4]}, True], False]
+    result = count_elements(sample_data)
+    print(result)",True,3,1677,16_0_3.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_elements(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, 2, ['a', 'b'], [[3], 4]]
+    result = count_elements(sample_data)
+    print(result)",True,4,1678,16_0_4.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(lst):
+    total = 0
+    for item in lst:
+        if isinstance(item, list):
+            total += count_elements(item)
+        else:
+            total += 1
+    return total
+if __name__ == '__main__':
+    sample_list = [1, ['a', 'b'], [[3], 4], 5]
+    result = count_elements(sample_list)
+    print(result)",True,5,1679,16_0_5.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(item):
+    if isinstance(item, list):
+        total = 0
+        for sub_item in item:
+            total += count_elements(sub_item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4, 5], 6]]
+    result = count_elements(sample_data)
+    print(result)",True,6,1680,16_0_6.py
+16,0,Count total elements inside list,"Implement a robust and efficient Python script to count the total number of elements in any given list, ensuring it handles nested structures correctly using recursion.","def count_elements(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_elements(item)
+    else:
+        return 1
+    return total
+if __name__ == '__main__':
+    sample_data = [1, 2, ['a', 'b', ['x']], (3, 4), {'key': 'value'}]
+    result = count_elements(sample_data)
+    print(result)",True,7,1681,16_0_7.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+from typing import List, Tuple
+def sort_numerical_data(data: List[float]) -> List[float]:
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [3.14, 2.718, -0.5, 99.9, 0.0] * 1000
+    start_time = timeit.default_timer()
+    result = sort_numerical_data(sample_data)
+    end_time = timeit.default_timer()
+    print(f""Sorted data: {result[:3]}...{result[-3:]}"")
+    print(f""Execution time (approx): {(end_time - start_time) * 10**6:.2f} microseconds"")",True,0,1682,15_12.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+def sort_numeric_data(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [64, 34, 25, 12, 22, 11, 90]
+    result = sort_numeric_data(sample_data.copy())
+    print(result)",True,1,1683,15_12_1.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+def sort_numeric_data(data):
+    if isinstance(data, list):
+        return sorted(data)
+    elif hasattr(data, '__iter__') and not isinstance(data, str):
+        result = []
+        for item in data:
+            try:
+                float(item)
+                result.append(float(item))
+            except (ValueError, TypeError):
+                continue
+        return sorted(result)
+    else:
+        raise ValueError(""Input must be iterable of numerical values."")
+if __name__ == '__main__':
+    sample_data = [3.14, 2.718, -0.5, ""9"", True, None]
+    cleaned_sample = []
+    for item in sample_data:
+        if isinstance(item, (int, float)):
+            cleaned_sample.append(float(item))
+        elif str(item).replace('.', '').isdigit():
+            cleaned_sample.append(float(str(item)))
+    start_time = timeit.default_timer()
+    sorted_result = sort_numeric_data(cleaned_sample)
+    end_time = timeit.default_timer()
+    print(f""Sorted data: {sorted_result}"")
+    print(f""Time taken (seconds): {end_time - start_time:.6f}"")",True,2,1684,15_12_2.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+from typing import List, Tuple
+def sort_numerical_data(data: List[float]) -> List[float]:
+    return sorted(data)
+if __name__ == '__main__':
+    sample_data = [5.2, 1.8, -3.4, 9.7, 0.5, 6.1]
+    result = sort_numerical_data(sample_data.copy())
+    print(result)",True,3,1685,15_12_3.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+def sort_numerical_data(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_list = [64, 34, 25, 12, 22, 11, 90]
+    result = sort_numerical_data(sample_list.copy())
+    time_taken = timeit.timeit(stmt=f""sort_numerical_data({sample_list})"", setup=""from __main__ import sort_numerical_data"", number=10000)",True,4,1686,15_12_4.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import sys
+def sort_numerical_data(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_list = [64, 34, 25, 12, 22, 11, 90]
+    result = sort_numerical_data(sample_list)
+    print(result)",True,5,1687,15_12_5.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import sys
+def sort_numerical_data(data):
+    if not data:
+        return []
+    try:
+        sorted_data = sorted(data)
+        return sorted_data
+    except TypeError as e:
+        raise ValueError(""All elements in the input list must be comparable."") from e
+if __name__ == '__main__':
+    sample_integers = [64, 34, 25, 12, 22, 11, 90]
+    sample_floats = [3.14, -2.718, 0.0, 42.0, -1e-5]
+    result_int = sort_numerical_data(sample_integers)
+    result_float = sort_numerical_data(sample_floats)
+    print(""Sorted Integers:"", result_int)
+    print(""Sorted Floats:"", result_float)",True,6,1688,15_12_6.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+def sort_numerical_data(data):
+    return sorted(data)
+if __name__ == '__main__':
+    sample_list = [5, 23, -10, 45, 78, 9, 6]
+    result = sort_numerical_data(sample_list.copy())
+    time_taken = timeit.timeit('sort_numerical_data([5, 23, -10])', setup='from __main__ import sort_numerical_data')",True,7,1689,15_12_7.py
+15,12,Sort numbers using built-in tools,"Create a high-performance Python function using built-in sort mechanisms to order numerical data structures, prioritizing time complexity and memory efficiency in production-grade code.","import timeit
+def sort_numerical_data(data):
+    if isinstance(data, list) and all(isinstance(x, (int, float)) for x in data):
+        return sorted(data)
+    elif isinstance(data, tuple) and all(isinstance(x, (int, float)) for x in data):
+        return type(data)(sorted(data))
+    else:
+        raise TypeError(""Input must be a list or tuple of numerical values."")
+if __name__ == '__main__':
+    sample_list = [54321, 98765, -100, 3.14, None] if False else [54321, 98765, -100, 3.14, 12345]
+    sample_tuple = (54321, 98765, -100, 3.14)
+    result_list = sort_numerical_data(sample_list)
+    result_tuple = sort_numerical_data(sample_tuple)
+    print(result_list)
+    print(result_tuple)",True,8,1690,15_12_8.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len([item for item in data])
+if __name__ == '__main__':
+    sample_list = [1, 2, ""a"", {""key"": True}, None]
+    result = count_top_level_items(sample_list)
+    print(result)",True,0,1691,16_1.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"import sys
+def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    for item in items:
+        if not isinstance(item, (list, tuple)):
+            continue
+        try:
+            sub_count = sum(1 for x in item)
+        except Exception as e:
+            print(f""Error processing nested structure at index {items.index(item)}:"", file=sys.stderr)
+            raise
+    return 0
+if __name__ == '__main__':
+    sample_data = [
+        ['a', 'b'],
+        ('c', 'd'),
+        [['e']],
+        {'key': 'value'},
+        None,
+        ""string""
+    ]
+    try:
+        result = count_top_level_items(sample_data)
+        print(f""Top-level items processed successfully."")
+    except Exception as e:
+        sys.exit(1)",True,1,1692,16_1_1.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    try:
+        return len([item for item in items])
+    except Exception as e:
+        raise RuntimeError(f""Error processing input: {e}"")
+if __name__ == '__main__':
+    sample_data = [1, ""apple"", 3.5, True]
+    result = count_top_level_items(sample_data)
+    print(result)",True,2,1693,16_1_2.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    try:
+        return len([item for item in items])
+    except Exception as e:
+        raise RuntimeError(f""Error processing input: {e}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, ""three"", None]
+    result = count_top_level_items(sample_data)
+    print(result)",True,3,1694,16_1_3.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"import sys
+def count_top_level_items(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    try:
+        for item in data:
+            if not isinstance(item, (list, tuple)):
+                continue
+            length = len(item)
+            is_valid_item = True
+            for idx in range(length - 1):
+                current_val = item[idx]
+                next_idx = idx + 1
+                while next_idx < length:
+                    if isinstance(current_val, (list, tuple)):
+                        continue
+                    break
+    except Exception as e:
+        raise RuntimeError(f""Error processing input list structure. Details: {str(e)}"") from e
+    return len(data)
+if __name__ == '__main__':
+    sample_input = [[1], [2, 3], (4,), [5, 6]]
+    try:
+        result = count_top_level_items(sample_input)
+        print(f""Total top-level items found in list of lists/tuples: {result}"")
+    except Exception as error:
+        sys.stderr.write(f""{type(error).__name__}: {error}\n"")",True,4,1695,16_1_4.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    try:
+        return len([item for item in items])
+    except Exception as e:
+        raise RuntimeError(f""Error processing input: {e}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, ""three"", True]
+    result = count_top_level_items(sample_data)
+    print(result)",True,5,1696,16_1_5.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    return len([item for item in items])
+if __name__ == '__main__':
+    sample_data = [1, 2, ""apple"", {""key"": ""value""}, None]
+    result = count_top_level_items(sample_data)
+    print(result)",True,6,1697,16_1_6.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    try:
+        return len([item for item in items])
+    except Exception as e:
+        raise RuntimeError(f""Unexpected error during processing: {e}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, ""three"", True]
+    result = count_top_level_items(sample_data)
+    print(result)",True,7,1698,16_1_7.py
+16,1,Count total elements inside list,Write optimized Python code that counts all top-level items inside an input list with O(n) time complexity and includes comprehensive error handling for invalid inputs.,"def count_top_level_items(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    return len([item for item in items])
+if __name__ == '__main__':
+    sample_data = [1, ""apple"", {""key"": ""value""}, True]
+    try:
+        result = count_top_level_items(sample_data)
+        print(f""Number of top-level items: {result}"")
+    except (TypeError, IndexError) as e:
+        print(f""Error occurred: {e}"")",True,8,1699,16_1_8.py
+16,3,Count total elements inside list,Develop an advanced Python utility that recursively traverses and counts every atomic value within complex nested lists while maintaining memory efficiency.,"import sys
+def count_atomic_values(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_atomic_values(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4, 5], 6], {7: ""8""}, (""a"", [""b"", {""c"": [9]}])]
+    sample_list = []
+    def extract_values(obj):
+        if isinstance(obj, (list, tuple)):
+            for item in obj:
+                extract_values(item)
+        elif isinstance(obj, dict):
+            for val in obj.values():
+                extract_values(val)
+        else:
+            return [obj]
+    flattened = []
+    def collect_items(current_list):
+        if not current_list:
+            return
+        item_type = type(current_list[0])
+        temp_sample = [1, 2, {3: ""4""}, (""5"", [""6""])]
+        result = []
+        def traverse(obj):
+            if isinstance(obj, (list, tuple)):
+                for x in obj:
+                    result.append(x)
+                    traverse(x)
+            elif isinstance(obj, dict):
+                for v in obj.values():
+                    result.append(v)
+                    traverse(v)
+            else:
+                result.append(obj)
+        temp_sample_copy = [1] + list(temp_sample[0])                                                      
+        final_list = []
+        def make_final(lst):
+             for x in lst:
+                 try:
+                     m = type(x).__name__
+                     if isinstance(x, (int, float)):
+                         return [x]
+                     elif isinstance(x, str):
+                         return [x]
+                     else:
+                         pass                                                                   
+                 except:
+                     pass
+        final_list = []
+        def deep_count(obj):
+            if not obj or (isinstance(obj, list) and len(obj)==0):
+                return 0
+            count = 1 if isinstance(obj, (int, float)) else 0                                 
+            if isinstance(obj, str):
+                 pass
+            elif isinstance(obj, dict):
+                for val in obj.values():
+                    count += deep_count(val)
+            elif isinstance(obj, list):
+                for item in obj:
+                    count += deep_count(item)
+            return count
+        test_input = [10, 20, {""a"": [""b"", {""c"": [45]}]}, (67, 89)]
+        total_count = deep_count(test_input)
+        print(total_count)",True,0,1700,16_3.py
+16,3,Count total elements inside list,Develop an advanced Python utility that recursively traverses and counts every atomic value within complex nested lists while maintaining memory efficiency.,"import sys
+def count_atomic_values(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_atomic_values(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4, 5], 6]]
+    result = count_atomic_values(sample_data)
+    print(result)",True,1,1701,16_3_1.py
+16,3,Count total elements inside list,Develop an advanced Python utility that recursively traverses and counts every atomic value within complex nested lists while maintaining memory efficiency.,"import sys
+def count_atomic_values(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_atomic_values(item)
+        return total
+    elif not isinstance(data, (int, float)):
+        return 1
+    else:
+        return 0
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4, 5], 6], ""text"", {""a"": [7, [8]]}, None]
+    result = count_atomic_values(sample_data)
+    print(result)",True,2,1702,16_3_2.py
+16,3,Count total elements inside list,Develop an advanced Python utility that recursively traverses and counts every atomic value within complex nested lists while maintaining memory efficiency.,"import sys
+def count_atomic_values(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_atomic_values(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, 'a', {'b': [2, 3]}, [[4], ['c']], None]
+    result = count_atomic_values(sample_data)
+    print(result)",True,3,1703,16_3_3.py
+16,3,Count total elements inside list,Develop an advanced Python utility that recursively traverses and counts every atomic value within complex nested lists while maintaining memory efficiency.,"import sys
+def count_atomic_values(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_atomic_values(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4, 5], [6]], ""text"", None]
+    result = count_atomic_values(sample_data)
+    print(result)",True,4,1704,16_3_4.py
+16,3,Count total elements inside list,Develop an advanced Python utility that recursively traverses and counts every atomic value within complex nested lists while maintaining memory efficiency.,"import sys
+def count_atomic_values(data):
+    if isinstance(data, list):
+        total = 0
+        for item in data:
+            total += count_atomic_values(item)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4], 5]]
+    result = count_atomic_values(sample_data)
+    print(result)",True,5,1705,16_3_5.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","from collections.abc import Iterable
+def enumerate_items(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be a list or tuple."")
+    result = []
+    for index, item in enumerate(container):
+        try:
+            value = str(item)
+        except Exception as e:
+            continue
+        result.append((index, value))
+    return result
+if __name__ == '__main__':
+    sample_data = [10, ""hello"", 3.5]
+    output = enumerate_items(sample_data)
+    print(output)",True,0,1706,16_5.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","from collections.abc import Iterable
+def enumerate_container(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be an instance of list or tuple."")
+    for index, item in enumerate(container):
+        yield f""{index}: {item}""
+if __name__ == '__main__':
+    sample_data = [10, ""apple"", 3.5]
+    print(""\n"".join(enumerate_container(sample_data)))",True,1,1707,16_5_1.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","from collections.abc import Iterable
+def enumerate_items(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be a list or tuple."")
+    result = []
+    for index, item in enumerate(container):
+        result.append((index, item))
+    return result
+if __name__ == '__main__':
+    sample_data = [10, 20, ""apple"", None]
+    output = enumerate_items(sample_data)
+    print(output)",True,2,1708,16_5_2.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","from collections.abc import Container
+def enumerate_container(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be a list or tuple."")
+    result = []
+    for item in container:
+        try:
+            str(item)
+        except TypeError:
+            continue
+        result.append((item, len(result)))
+    return result
+if __name__ == '__main__':
+    sample_data = [10, ""hello"", None, 3.14]
+    output_list = enumerate_container(sample_data)
+    print(""Enumerated items:"")
+    for item, index in output_list:
+        print(f""Index {index}: {item!r}"")",True,3,1709,16_5_3.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","def enumerate_container(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be a list or tuple."")
+    result = []
+    for index, item in enumerate(container):
+        try:
+            value = str(item)
+        except Exception as e:
+            continue
+        result.append((index, value))
+    return result
+if __name__ == '__main__':
+    sample_data = [10, ""hello"", 3.14, None]
+    output = enumerate_container(sample_data)
+    for item in output:
+        print(item)",True,4,1710,16_5_4.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","from collections.abc import Container
+def enumerate_items(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be an instance of list or tuple."")
+    for index, item in enumerate(container):
+        yield index, item
+if __name__ == '__main__':
+    sample_data = [10, 20, ""apple"", None]
+    print(f""Enumerating items from: {sample_data}"")
+    result_list = list(enumerate_items(sample_data))
+    for idx, val in enumerate(result_list):
+        print(f""{idx}: {val[1]}"")",True,5,1711,16_5_5.py
+16,5,Count total elements inside list,"Construct a clean and maintainable Python module that provides a method to enumerate all items inside a provided container, validating input types explicitly.","import collections
+def enumerate_items(container):
+    if not isinstance(container, (list, tuple)):
+        raise TypeError(""Container must be a list or tuple."")
+    for index, item in enumerate(container):
+        yield f""{index}: {item}""
+if __name__ == '__main__':
+    sample_data = [10, ""hello"", 3.14]
+    result_list = []
+    for line in enumerate_items(sample_data):
+        result_list.append(line)
+    print(""\n"".join(result_list))",True,6,1712,16_5_6.py
+16,4,Count total elements inside list,"Generate high-performance Python code to determine the total count of elements in a list, optimized for large datasets without unnecessary object creation or overhead.","def count_elements(data):
+    return len(data)
+if __name__ == '__main__':
+    large_dataset = list(range(10_000_000))
+    total_count = count_elements(large_dataset)
+    print(total_count)",True,0,1713,16_4.py
+16,4,Count total elements inside list,"Generate high-performance Python code to determine the total count of elements in a list, optimized for large datasets without unnecessary object creation or overhead.","import timeit
+def count_elements_optimized(data):
+    return len(data)
+if __name__ == '__main__':
+    large_dataset = list(range(10_000_000))
+    start_time = timeit.default_timer()
+    result_count = count_elements_optimized(large_dataset)
+    end_time = timeit.default_timer()
+    print(f""Total elements: {result_count}"")
+    print(f""Execution time (seconds): {end_time - start_time:.6f}"")",True,1,1714,16_4_1.py
+16,4,Count total elements inside list,"Generate high-performance Python code to determine the total count of elements in a list, optimized for large datasets without unnecessary object creation or overhead.","def count_elements(data):
+    return len(data)
+if __name__ == '__main__':
+    large_dataset = list(range(10_000_000))
+    result = count_elements(large_dataset)
+    print(result)",True,2,1715,16_4_2.py
+16,2,Count total elements inside list,"Create a professional-grade Python function to calculate the element count of a list using built-in methods like len(), following PEP 8 guidelines strictly.","def count_elements(data_list):
+    return len(data_list)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    result_count = count_elements(sample_data)
+    print(result_count)",True,0,1716,16_2.py
+16,2,Count total elements inside list,"Create a professional-grade Python function to calculate the element count of a list using built-in methods like len(), following PEP 8 guidelines strictly.","def count_elements(data_list):
+    return len(data_list)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 'a', 'b']
+    result_count = count_elements(sample_data)
+    print(result_count)",True,1,1717,16_2_1.py
+16,2,Count total elements inside list,"Create a professional-grade Python function to calculate the element count of a list using built-in methods like len(), following PEP 8 guidelines strictly.","def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30]
+    result = count_elements(sample_list)
+    print(result)",True,2,1718,16_2_2.py
+16,2,Count total elements inside list,"Create a professional-grade Python function to calculate the element count of a list using built-in methods like len(), following PEP 8 guidelines strictly.","def count_elements(data_list):
+    return len(data_list)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    result_count = count_elements(sample_data)
+    print(f""Element Count: {result_count}"")",True,3,1719,16_2_3.py
+16,2,Count total elements inside list,"Create a professional-grade Python function to calculate the element count of a list using built-in methods like len(), following PEP 8 guidelines strictly.","def count_elements(data_list):
+    return len(data_list)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    result_count = count_elements(sample_data)
+    print(result_count)",True,4,1720,16_2_4.py
+16,7,Count total elements inside list,Implement a best-practice Python solution that safely counts total items in an input list using generator expressions where applicable to handle streaming or large inputs efficiently.,"def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    data = [10, 20, 30] + list(range(50)) * 10
+    print(count_items(data))",True,0,1721,16_7.py
+16,7,Count total elements inside list,Implement a best-practice Python solution that safely counts total items in an input list using generator expressions where applicable to handle streaming or large inputs efficiently.,"def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    large_list = list(range(10_000_000))
+    print(count_items(large_list))",True,1,1722,16_7_1.py
+16,7,Count total elements inside list,Implement a best-practice Python solution that safely counts total items in an input list using generator expressions where applicable to handle streaming or large inputs efficiently.,"def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    data = [10, 20, 30] + list(range(50)) * 100
+    print(count_items(data))",True,2,1723,16_7_2.py
+16,7,Count total elements inside list,Implement a best-practice Python solution that safely counts total items in an input list using generator expressions where applicable to handle streaming or large inputs efficiently.,"def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    sample_data = [10, 20, ""a"", None, True] * 1000
+    print(count_items(sample_data))",True,3,1724,16_7_3.py
+16,7,Count total elements inside list,Implement a best-practice Python solution that safely counts total items in an input list using generator expressions where applicable to handle streaming or large inputs efficiently.,"def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    large_list = list(range(10_000)) + ['x', 'y'] * 500
+    print(count_items(large_list))",True,4,1725,16_7_4.py
+16,7,Count total elements inside list,Implement a best-practice Python solution that safely counts total items in an input list using generator expressions where applicable to handle streaming or large inputs efficiently.,"def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    large_list = list(range(0, 5_000_000))
+    print(count_items(large_list))",True,5,1726,16_7_5.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst) if isinstance(lst, list) else 0
+if __name__ == '__main__':
+    data = [1, ""hello"", None, True]
+    print(count_elements(data))
+    empty_list = []
+    print(count_elements(empty_list))",True,0,1727,16_8.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [1, ""apple"", 3.5, None]
+    print(count_elements(data))
+    empty_list = []
+    print(count_elements(empty_list))
+    mixed_types = [""a"", True, {}, [], 42]
+    print(count_elements(mixed_types))",True,1,1728,16_8_1.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [1, ""hello"", 3.5, None, True]
+    print(count_elements(data))
+    empty_list = []
+    print(count_elements(empty_list))",True,2,1729,16_8_2.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst) if isinstance(lst, list) else 0
+if __name__ == '__main__':
+    test_list = [1, ""apple"", None, [], {""key"": ""value""}]
+    empty_list = []
+    mixed_types = [[], {}, set(), True, False]
+    print(count_elements(test_list))
+    print(count_elements(empty_list))
+    print(count_elements(mixed_types))",True,3,1730,16_8_3.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [1, ""apple"", 3.5, None, True]
+    result = count_elements(data)
+    print(result)
+    empty_data = []
+    print(count_elements(empty_data))",True,4,1731,16_8_4.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(data):
+    return len([x for x in data]) if isinstance(data, list) else 0
+if __name__ == '__main__':
+    sample_list = [1, ""apple"", None, [], {""key"": ""val""}, True]
+    print(count_elements(sample_list))",True,5,1732,16_8_5.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst) if isinstance(lst, list) else 0
+if __name__ == '__main__':
+    test_list = [1, ""hello"", None, [], {""key"": ""val""}, True]
+    print(count_elements(test_list))
+    empty_list = []
+    print(f""Empty count: {count_elements(empty_list)}"")",True,6,1733,16_8_6.py
+16,8,Count total elements inside list,"Produce concise and optimized Python code capable of counting every element inside a variable-length list, including edge cases like empty lists or mixed data types.","def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [1, ""apple"", 3.5, None, True]
+    print(count_elements(data))
+    empty_list = []
+    print(count_elements(empty_list))",True,7,1734,16_8_7.py
+16,10,Count total elements inside list,Implement an efficient and robust Python script to count the total number of elements in a list using standard library features only.,"def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [10, 20, 30, 'a', None]
+    print(count_elements(data))",True,0,1735,16_10.py
+16,10,Count total elements inside list,Implement an efficient and robust Python script to count the total number of elements in a list using standard library features only.,"def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50]
+    result = count_elements(data)
+    print(result)",True,1,1736,16_10_1.py
+16,10,Count total elements inside list,Implement an efficient and robust Python script to count the total number of elements in a list using standard library features only.,"def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50]
+    total_count = count_elements(data)
+    print(total_count)",True,2,1737,16_10_2.py
+16,10,Count total elements inside list,Implement an efficient and robust Python script to count the total number of elements in a list using standard library features only.,"def count_elements(lst):
+    return sum(1 for _ in lst)
+if __name__ == '__main__':
+    data = [10, 20, 30, 'a', None]
+    total_count = count_elements(data)
+    print(total_count)",True,3,1738,16_10_3.py
+16,10,Count total elements inside list,Implement an efficient and robust Python script to count the total number of elements in a list using standard library features only.,"import sys
+def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 'a', None]
+    result_count = count_elements(sample_list)
+    print(result_count)",True,4,1739,16_10_4.py
+16,10,Count total elements inside list,Implement an efficient and robust Python script to count the total number of elements in a list using standard library features only.,"def count_elements(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [10, 20, 30, 'a', True]
+    print(count_elements(data))",True,5,1740,16_10_5.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List
+def count_elements(data: Any) -> int:
+    if isinstance(data, (list, tuple)):
+        return sum(count_elements(item) for item in data)
+    try:
+        len(data)
+        return 1 if not hasattr(data, '__iter__') or type(data).__name__ == 'str' else count_elements(list(data))
+    except TypeError:
+        pass
+    return 0
+if __name__ == '__main__':
+    flat_list = [1, 2, 3]
+    nested_structure = [[1, 2], [3, [4, 5]], 6]
+    result_flat = count_elements(flat_list)
+    result_nested = count_elements(nested_structure)
+    print(result_flat)
+    print(result_nested)",True,0,1741,16_6.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List
+def count_elements(data: Any) -> int:
+    if isinstance(data, list):
+        return sum(count_elements(item) for item in data)
+    return 1
+if __name__ == '__main__':
+    flat_list = [10, 20, 30]
+    nested_structure = [[5], [6, [7]], 8]
+    result_flat = count_elements(flat_list)
+    result_nested = count_elements(nested_structure)
+    print(result_flat)
+    print(result_nested)",True,1,1742,16_6_1.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List
+def count_elements(data: Any) -> int:
+    if isinstance(data, list):
+        return sum(count_elements(item) for item in data)
+    elif isinstance(data, dict):
+        return sum(count_elements(value) for value in data.values())
+    else:
+        return 1
+if __name__ == '__main__':
+    flat_list = [1, 2, 3]
+    nested_structure = {
+        'a': [4, 5],
+        'b': {'c': [6, 7]},
+        'd': 8
+    }
+    result_flat = count_elements(flat_list)
+    result_nested = count_elements(nested_structure)
+    print(result_flat)
+    print(result_nested)",True,2,1743,16_6_2.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List
+def count_elements(data: Any) -> int:
+    if isinstance(data, list):
+        return sum(count_elements(item) for item in data)
+    elif isinstance(data, dict):
+        return len(data)
+    else:
+        return 0
+if __name__ == '__main__':
+    flat_list = [1, 2, 3]
+    nested_structure = {
+        'a': [4, {'b': [5, 6]}],
+        'c': [[7, 8]]
+    }
+    print(f""Flat list count: {count_elements(flat_list)}"")
+    print(f""Nested structure count: {count_elements(nested_structure)}"")",True,3,1744,16_6_3.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List, Union
+def count_elements(data: Union[List[Any], tuple]) -> int:
+    if isinstance(data, (list, tuple)):
+        return sum(count_elements(item) for item in data)
+    return 1
+if __name__ == '__main__':
+    sample_data = [
+        ""apple"",
+        [""banana"", ""cherry""],
+        {""key"": (10, 20)},
+        [[[[7]]], None]
+    ]
+    result = count_elements(sample_data)
+    print(result)",True,4,1745,16_6_4.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List
+def count_elements(data: Any) -> int:
+    if isinstance(data, dict):
+        return sum(count_elements(value) for value in data.values())
+    elif isinstance(data, (list, tuple)):
+        return sum(count_elements(item) for item in data)
+    else:
+        return 1
+if __name__ == '__main__':
+    flat_list = [1, 'a', True]
+    nested_structure = {
+        ""outer"": [10, {""inner"": [20, 30]}, None],
+        ""items"": [""x"", ""y""]
+    }
+    print(f""Flat list count: {count_elements(flat_list)}"")
+    print(f""Nested structure count: {count_elements(nested_structure)}"")",True,5,1746,16_6_5.py
+16,6,Count total elements inside list,"Write production-ready Python code to count list elements with support for both flat and nested data structures, utilizing type hints and docstrings for clarity.","from typing import Any, List
+def count_elements(data: Any) -> int:
+    if isinstance(data, list):
+        return sum(count_elements(item) for item in data)
+    elif isinstance(data, dict):
+        total = 0
+        for value in data.values():
+            total += count_elements(value)
+        return total
+    else:
+        return 1
+if __name__ == '__main__':
+    flat_list = [1, 'a', True]
+    nested_structure = {
+        ""outer_key"": [10, 20],
+        ""inner_dict"": {""key_a"": ""value"", ""key_b"": [30]},
+        ""simple_value"": None
+    }
+    flat_count = count_elements(flat_list)
+    nested_count = count_elements(nested_structure)
+    print(f""Flat list elements: {flat_count}"")
+    print(f""Nested structure elements: {nested_count}"")",True,6,1747,16_6_6.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"def get_length(iterable):
+    return sum(1 for _ in iterable)
+if __name__ == '__main__':
+    data = [10, 20, 30]
+    print(get_length(data))",True,0,1748,16_11.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"def get_length(iterable):
+    return sum(1 for _ in iterable)
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(get_length(data))
+    string_data = ""hello""
+    print(get_length(string_data))
+    range_data = range(0, 10)
+    print(get_length(range_data))",True,1,1749,16_11_1.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"from collections.abc import Iterable
+def count_elements(iterable):
+    if not isinstance(iterable, Iterable) and hasattr(iterable, '__len__'):
+        return len(iterable)
+    counter = 0
+    for _ in iterable:
+        counter += 1
+    return counter
+if __name__ == '__main__':
+    sample_list = [1, 2, 3]
+    sample_tuple = ('a', 'b')
+    sample_string = ""hello""
+    print(count_elements(sample_list))
+    print(count_elements(sample_tuple))
+    print(count_elements(sample_string))",True,2,1750,16_11_2.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"def get_length(iterable):
+    return sum(1 for _ in iterable)
+if __name__ == '__main__':
+    data = [1, 2, 3, 'a', 'b']
+    print(get_length(data))",True,3,1751,16_11_3.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"def get_length(iterable):
+    return sum(1 for _ in iterable)
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    print(get_length(data))",True,4,1752,16_11_4.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"def get_length(iterable):
+    return len(list(iterable))
+if __name__ == '__main__':
+    data = [1, 2, 3]
+    print(get_length(data))
+    string_data = ""hello""
+    print(get_length(string_data))
+    range_data = range(5)
+    print(get_length(range_data))",True,5,1753,16_11_5.py
+16,11,Count total elements inside list,Write optimized professional-grade code that accepts any iterable as input and returns its length without modifying the original data structure.,"def get_length(iterable):
+    return sum(1 for _ in iterable)
+if __name__ == '__main__':
+    data = [10, 20, 30]
+    print(get_length(data))
+    data_str = ""hello""
+    print(get_length(data_str))
+    data_gen = (x * x for x in range(5))
+    print(get_length(data_gen))",True,6,1754,16_11_6.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 'a', None]
+    try:
+        result = count_elements(sample_list)
+        print(f""Element count for {sample_list}: {result}"")
+        invalid_input = ""not a list""
+    except TypeError as e:
+        print(f""Error occurred: {e}"")",True,0,1755,16_12.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    try:
+        result = count_elements(sample_list)
+        print(f""Element count for {sample_list}: {result}"")
+        invalid_input = ""not a list""
+        count_elements(invalid_input)
+    except TypeError as e:
+        print(f""Error occurred: {e}"")",True,1,1756,16_12_1.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(f""Expected 'list', got '{type(data).__name__}'"")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30]
+    try:
+        result = count_elements(sample_list)
+        print(f""Element count: {result}"")
+    except TypeError as e:
+        print(f""Error: {e}"")",True,2,1757,16_12_2.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30]
+    result = count_elements(sample_list)
+    print(result)",True,3,1758,16_12_3.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 'a', 'b']
+    result = count_elements(sample_data)
+    print(result)",True,4,1759,16_12_4.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    try:
+        result = count_elements(sample_list)
+        print(f""Element count for {sample_list}: {result}"")
+    except TypeError as e:
+        print(f""Error: {e}"")",True,5,1760,16_12_5.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(f""Expected 'list', got '{type(data).__name__}'"")
+    return len(data)
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 2, 3], ""Valid integer list""),
+        ([""a"", ""b""], ""Valid string list""),
+        ([True, False], ""Boolean values""),
+        (""string"", ""Non-list input - should raise error""),
+        (42, ""Integer instead of list""),
+    ]
+    for data, description in test_cases:
+        try:
+            result = count_elements(data)
+            print(f""Input: {data} ({description}) -> Count: {result}"")
+        except TypeError as e:
+            print(f""Error with input '{type(data).__name__}': {e}"")",True,6,1761,16_12_6.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    try:
+        result = count_elements(sample_list)
+        print(f""Element count: {result}"")
+    except TypeError as e:
+        print(f""Error: {e}"")",True,7,1762,16_12_7.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    result = count_elements(sample_data)
+    print(result)",True,8,1763,16_12_8.py
+16,12,Count total elements inside list,Create a high-performance Python function to calculate list element count using built-in methods while ensuring strict type safety and error handling for non-list inputs.,"def count_elements(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    return len(data)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30]
+    try:
+        result = count_elements(sample_list)
+        print(f""Element count: {result}"")
+    except TypeError as e:
+        print(f""Error: {e}"")",True,9,1764,16_12_9.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","from collections import Counter
+def count_items(collection):
+    return dict(Counter(collection))
+if __name__ == '__main__':
+    sample_data = [1, 2, 'a', 'b', 1, 'c', 2]
+    result = count_items(sample_data)
+    print(result)",True,0,1765,16_13.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","from collections import Counter
+def count_items(collection):
+    return dict(Counter(collection))
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 2, 4, 5, 2]
+    result = count_items(sample_data)
+    print(result)",True,1,1766,16_13_1.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","from collections import Counter
+def count_items(collection):
+    return dict(Counter(collection))
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'apple', 'orange', 'banana']
+    result = count_items(sample_data)
+    print(result)",True,2,1767,16_13_2.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","from collections import Counter
+def count_items(collection):
+    return dict(Counter(collection))
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 20, 40, 50, 20]
+    result = count_items(sample_data)
+    print(result)",True,3,1768,16_13_3.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","from collections import Counter
+def count_items(items):
+    return dict(Counter(items))
+if __name__ == '__main__':
+    sample_data = [1, 2, 'apple', 3, 'banana', 2]
+    result = count_items(sample_data)
+    print(result)",True,4,1769,16_13_4.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","from collections import Counter
+def count_items(collection):
+    return dict(Counter(collection))
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 'a', 'b', 'c']
+    result = count_items(sample_data)
+    print(result)",True,5,1770,16_13_5.py
+16,13,Count total elements inside list,"Develop a clean and scalable Python solution that counts items in a collection with O(1) time complexity where possible, adhering to PEP 8 guidelines.","import time
+class ItemCounter:
+    def __init__(self):
+        self._counts = {}
+    def add_item(self, item):
+        if isinstance(item, int) and 0 <= item < len(self._counts):
+            self._counts[item] += 1
+    def get_count_at_index(self, index):
+        return self._counts.get(index, 0)
+if __name__ == '__main__':
+    counter = ItemCounter()
+    sample_items = [5, 3, 8, 2, 9, 7]
+    for item in sample_items:
+        counter.add_item(item)
+    print(counter.get_count_at_index(0))",True,6,1771,16_13_6.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def list_size(lst):
+    return len(lst)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 'a', None]
+    print(list_size(sample_list))",True,0,1772,16_14.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    print(get_list_size(sample_data))",True,1,1773,16_14_1.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    size = get_list_size(sample_data)
+    print(size)",True,2,1774,16_14_2.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 'hello', True]
+    size = get_list_size(sample_data)
+    print(size)",True,3,1775,16_14_3.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(lst):
+    return len(lst)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    result = get_list_size(sample_data)
+    print(f""List size: {result}"")",True,4,1776,16_14_4.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    size = get_list_size(sample_data)
+    print(f""List size: {size}"")",True,5,1777,16_14_5.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    size = get_list_size(sample_data)
+    print(size)",True,6,1778,16_14_6.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(lst):
+    return len(lst)
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50]
+    size = get_list_size(data)
+    print(f""List size: {size}"")",True,7,1779,16_14_7.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    test_data = [10, 20, 30, 40]
+    size = get_list_size(test_data)
+    print(size)",True,8,1780,16_14_8.py
+16,14,Count total elements inside list,Generate production-ready Python code for determining the size of a list using the most idiomatic and performant approach available in modern Python versions.,"def get_list_size(data):
+    return len(data)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    print(get_list_size(sample_data))",True,9,1781,16_14_9.py
+16,9,Count total elements inside list,"Design an enterprise-level Python script to recursively count all leaf nodes within nested list structures, ensuring thread safety and high scalability for concurrent usage.","import threading
+from typing import Any, List
+class LeafCounter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self.total_count = 0
+    def count_leaves(self, data: Any) -> int:
+        if isinstance(data, list):
+            return sum(self.count_leaves(item) for item in data)
+        elif not isinstance(data, (int, float)):
+            with self._lock:
+                self.total_count += 1
+            return 0
+        else:
+            return 0
+    def get_total(self) -> int:
+        with self._lock:
+            return self.total_count
+def process_nested_data(nested_list: List[Any]) -> None:
+    counter = LeafCounter()
+    leaves_found = counter.count_leaves(nested_list)
+    print(f""Leaves found in main structure: {leaves_found}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, [3, 4], [[5]], (6,), ""text"", [""a"", [""b""]]]
+    threads = []
+    for i in range(4):
+        t = threading.Thread(target=process_nested_data, args=(sample_data[i] if isinstance(sample_data[i], list) else sample_data))
+        threads.append(t)
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()",True,0,1782,16_9.py
+16,9,Count total elements inside list,"Design an enterprise-level Python script to recursively count all leaf nodes within nested list structures, ensuring thread safety and high scalability for concurrent usage.","import threading
+from typing import Any, List, Tuple
+class LeafCounter:
+    def _count_recursive(self, data: Any) -> int:
+        if isinstance(data, list):
+            return sum(self._count_recursive(item) for item in data)
+        elif not isinstance(data, (int, float)):
+            return 0
+        else:
+            return 1
+    def count_leaves_thread_safe(self, data: Any) -> int:
+        lock = threading.Lock()
+        with lock:
+            result = self._count_recursive(data)
+        return result
+def process_nested_lists(nested_data: List[Any]) -> None:
+    counter = LeafCounter()
+    thread_count = 0
+    def worker(start_idx: int, end_idx: int):
+        nonlocal thread_count
+        chunk = nested_data[start_idx:end_idx]
+        if isinstance(chunk[0], list) or (len(chunk) > 1 and any(isinstance(x, list) for x in chunk)):
+            sub_counter = LeafCounter()
+            total = sum(sub_counter.count_leaves_thread_safe(item) for item in chunk)
+        else:
+            total = counter._count_recursive(chunk[0]) if len(chunk) == 1 else 0
+    threads = []
+    thread_count += 1
+    def recursive_worker(items):
+        nonlocal thread_count
+        is_list = isinstance(items, list) and items
+        for item in items:
+            if isinstance(item, list):
+                sub_threads = []
+                chunk_size = len(sub_items) // 2
+                def process_chunk(chunk_data):
+                    nonlocal thread_count
+                    c = LeafCounter()
+                    for x in chunk_data:
+                        if isinstance(x, list):
+                            count = sum(c.count_leaves_thread_safe(y) for y in x)
+                        else:
+                            count += 1
+                        return count
+        total_count = counter._count_recursive(items[0]) if items and isinstance(items, list) else 0
+    final_result = recursive_worker(nested_data)
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4], 5]]",True,1,1783,16_9_1.py
+16,9,Count total elements inside list,"Design an enterprise-level Python script to recursively count all leaf nodes within nested list structures, ensuring thread safety and high scalability for concurrent usage.","import threading
+from typing import Any, List
+class LeafCounter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self.total_count = 0
+    def count_leaves(self, data: Any) -> int:
+        if isinstance(data, list):
+            return sum(self.count_leaves(item) for item in data)
+        elif not isinstance(data, (int, float)):
+            with self._lock:
+                self.total_count += 1
+            return 0
+        else:
+            return 0
+    def get_total(self) -> int:
+        with self._lock:
+            return self.total_count
+def process_nested_data(nested_list: List[Any]) -> None:
+    counter = LeafCounter()
+    leaves_found = counter.count_leaves(nested_list)
+    print(f""Total leaf nodes found in nested structure: {leaves_found}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, [3, 4], [[5]], (6,), {""a"": ""b""}, [""c"", [7, 8]]]
+    process_nested_data(sample_data)",True,2,1784,16_9_2.py
+16,9,Count total elements inside list,"Design an enterprise-level Python script to recursively count all leaf nodes within nested list structures, ensuring thread safety and high scalability for concurrent usage.","import threading
+from typing import Any, List
+class LeafCounter:
+    def _count_recursive(self, data: Any) -> int:
+        if isinstance(data, list):
+            return sum(self._count_recursive(item) for item in data)
+        elif not isinstance(data, (int, float)):
+            return 0
+        else:
+            return 1
+    def count_leaves_thread_safe(self, data_list: List[Any]) -> int:
+        lock = threading.Lock()
+        with lock:
+            total_count = self._count_recursive(data_list)
+        return total_count
+if __name__ == '__main__':
+    sample_data = [1, 2, [3, 4], [[5]], (6,), {'a': 'b'}]
+    counter = LeafCounter()
+    result = counter.count_leaves_thread_safe(sample_data)
+    print(result)",True,3,1785,16_9_3.py
+16,9,Count total elements inside list,"Design an enterprise-level Python script to recursively count all leaf nodes within nested list structures, ensuring thread safety and high scalability for concurrent usage.","import threading
+from typing import Any, List
+class LeafCounter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self.total_count = 0
+    def count_leaves(self, data: Any) -> int:
+        if isinstance(data, list):
+            return sum(self.count_leaves(item) for item in data)
+        elif not isinstance(data, (int, float)):
+            with self._lock:
+                self.total_count += 1
+            return 0
+        else:
+            return 0
+    def get_total(self) -> int:
+        with self._lock:
+            return self.total_count
+def process_nested_data(nested_list: List[Any]) -> None:
+    counter = LeafCounter()
+    leaves_found = counter.count_leaves(nested_list)
+    print(f""Total leaf nodes found in nested structure: {leaves_found}"")
+if __name__ == '__main__':
+    sample_structure = [1, 2, [3, 4], [[5]], 6]
+    process_nested_data(sample_structure)",True,4,1786,16_9_4.py
+17,0,Check if item exists within data,Implement an efficient algorithm in Python to check if a specific item exists within a list or dictionary using O(n) optimization where applicable and ensure strict type safety.,"def check_list_item(item, data):
+    if not isinstance(data, list) and not isinstance(data, dict):
+        raise TypeError(""Data must be a list or dictionary."")
+    try:
+        return item in data
+    except TypeError as e:
+        raise RuntimeError(f""Item type mismatch for {type(item).__name__}: {e}"")
+if __name__ == '__main__':
+    sample_list = [1, 2, 'apple', None]
+    sample_dict = {'a': 10, 'b': 20}
+    list_check_result = check_list_item(3, sample_list)
+    dict_check_result = check_list_item('c', sample_dict)
+    print(f""List item found: {list_check_result}"")
+    print(f""Dict key found: {dict_check_result}"")",True,0,1787,17_0.py
+17,0,Check if item exists within data,Implement an efficient algorithm in Python to check if a specific item exists within a list or dictionary using O(n) optimization where applicable and ensure strict type safety.,"from typing import Any, List, Dict, TypeVar, Union
+T = TypeVar('T')
+def check_item_in_list(items: List[Any], target: T) -> bool:
+    return target in items
+def check_item_in_dict(data: Dict[str, Any], key: str) -> bool:
+    return key in data.keys()
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    target_value = 30
+    sample_dict = {'a': 'apple', 'b': 'banana'}
+    search_key = 'b'
+    exists_in_list = check_item_in_list(sample_list, target_value)
+    exists_in_dict = check_item_in_dict(sample_dict, search_key)
+    print(f""Item {target_value} in list: {exists_in_list}"")
+    print(f""Key '{search_key}' in dict: {exists_in_dict}"")",True,1,1788,17_0_1.py
+17,0,Check if item exists within data,Implement an efficient algorithm in Python to check if a specific item exists within a list or dictionary using O(n) optimization where applicable and ensure strict type safety.,"from typing import Any, List, Dict, TypeVar, Union
+T = TypeVar('T')
+def check_item_in_list(items: List[Any], target: T) -> bool:
+    return target in items
+def check_item_in_dict(data: Dict[str, Any], key: str) -> bool:
+    return key in data.keys()
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    target_value = 30
+    sample_dict = {'a': 'apple', 'b': 'banana'}
+    search_key = 'b'
+    result_list = check_item_in_list(sample_list, target_value)
+    result_dict = check_item_in_dict(sample_dict, search_key)
+    print(f""Item in list: {result_list}"")
+    print(""Key in dict:"", result_dict)",True,2,1789,17_0_2.py
+17,0,Check if item exists within data,Implement an efficient algorithm in Python to check if a specific item exists within a list or dictionary using O(n) optimization where applicable and ensure strict type safety.,"from typing import Any, List, Dict
+def check_list_item(item: Any, lst: List[Any]) -> bool:
+    return item in lst
+def check_dict_key(key: Any, dct: Dict[Any, Any]) -> bool:
+    return key in dct
+if __name__ == '__main__':
+    sample_list = [5, 23, ""apple"", None]
+    target_item = ""apple""
+    sample_dict: Dict[str, int] = {""id"": 101, ""code"": 99}
+    target_key = ""code""
+    list_result = check_list_item(target_item, sample_list)
+    dict_result = check_dict_key(target_key, sample_dict)
+    print(f""Item in list: {list_result}"")
+    print(f""Key in dictionary: {dict_result}"")",True,3,1790,17_0_3.py
+17,0,Check if item exists within data,Implement an efficient algorithm in Python to check if a specific item exists within a list or dictionary using O(n) optimization where applicable and ensure strict type safety.,"def exists_in_list(items: list) -> bool:
+    target = None
+    if not isinstance(items, (list)):
+        raise TypeError(""Input must be a list"")
+    for item in items:
+        try:
+            if type(item).__name__ == 'NoneType':
+                continue
+            return True
+        except Exception:
+            pass
+def exists_in_dict(data: dict) -> bool:
+    target = None
+    if not isinstance(data, (dict)):
+        raise TypeError(""Input must be a dictionary"")
+    for key in data.keys():
+        try:
+            val = data[key]
+            return True
+        except Exception:
+            pass
+if __name__ == '__main__':
+    sample_list = [1, 2, 'apple', None, {'nested': 'dict'}]
+    sample_dict = {'a': 1, 'b': 'hello', 'c': None}
+    print(exists_in_list(sample_list))
+    print(exists_in_dict(sample_dict))",True,4,1791,17_0_4.py
+17,0,Check if item exists within data,Implement an efficient algorithm in Python to check if a specific item exists within a list or dictionary using O(n) optimization where applicable and ensure strict type safety.,"def check_list_item(item, target_list):
+    if not isinstance(target_list, list) or not isinstance(item, (int, float, str)):
+        raise TypeError(""List must be a list and item must be int, float, or string."")
+    for i in range(len(target_list)):
+        if target_list[i] == item:
+            return True
+    return False
+def check_dict_item(key_value_pair, target_dict):
+    if not isinstance(target_dict, dict) or not isinstance(key_value_pair, (int, float, str)) and key_value_pair is None:
+        raise TypeError(""Dictionary must be a dictionary."")
+    for k in range(len(target_dict)):
+        if target_dict[k] == key_value_pair[1]:
+            return True
+    return False
+if __name__ == '__main__':
+    sample_list = [1, 5, 'apple', None, 3.14]
+    item_to_find = 5
+    result_list = check_list_item(item_to_find, sample_list)
+    print(result_list)",True,5,1792,17_0_5.py
