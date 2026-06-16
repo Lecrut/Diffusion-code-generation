@@ -58200,3 +58200,2570 @@ if __name__ == '__main__':
         print(result_list)
     except Exception as e:
         print(f""Initialization failed due to {type(e).__name__}: {e}"")",True,9,2590,24_3_9.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    id: int
+    name: str
+    price: float
+    quantity: int
+def create_item_list(items_data):
+    return [Item(**item_dict) for item_dict in items_data]
+def calculate_total_value(item_list):
+    total = sum(item.price * item.quantity for item in item_list)
+    return round(total, 2)
+def filter_by_price_range(item_list, min_price: float | None = None, max_price: float | None = None):
+    filtered_items = []
+    for item in item_list:
+        if (min_price is not None and item.price < min_price) or\
+           (max_price is not None and item.price > max_price):
+            continue
+        filtered_items.append(item)
+    return filtered_items
+def update_quantity(item_list, target_id: int, new_quantity: int):
+    updated_item = next((item for item in item_list if item.id == target_id), None)
+    if not updated_item:
+        raise ValueError(f""Item with id {target_id} not found."")
+    return [item if item.id != target_id else Item(id=item.id, name=item.name, price=item.price, quantity=new_quantity) for item in item_list]
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 101, ""name"": ""Laptop"", ""price"": 999.50, ""quantity"": 2},
+        {""id"": 102, ""name"": ""Mouse"", ""price"": 25.00, ""quantity"": 5},
+        {""id"": 103, ""name"": ""Keyboard"", ""price"": 75.99, ""quantity"": 3}
+    ]
+    items = create_item_list(sample_data)
+    total_value = calculate_total_value(items)
+    print(f""Total Value: {total_value}"")
+    filtered_items = filter_by_price_range(items, min_price=100.0)
+    for item in filtered_items:
+        print(item.name + f"": ${item.price:.2f} x {item.quantity}"")
+    updated_list = update_quantity(items, 101, 5)
+    total_value_after_update = calculate_total_value(updated_list)
+    print(f""Total Value After Update: {total_value_after_update}"")",True,0,2591,24_4.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    id: int
+    name: str
+    price: float
+    quantity: int
+def create_item_list(items_data):
+    return [Item(**item_dict) for item_dict in items_data]
+def calculate_total_price(item_list):
+    total = sum(item.price * item.quantity for item in item_list)
+    return round(total, 2)
+if __name__ == '__main__':
+    sample_items = [
+        {""id"": 101, ""name"": ""Laptop"", ""price"": 999.99, ""quantity"": 5},
+        {""id"": 102, ""name"": ""Mouse"", ""price"": 25.50, ""quantity"": 20},
+        {""id"": 103, ""name"": ""Keyboard"", ""price"": 75.00, ""quantity"": 10}
+    ]
+    item_list = create_item_list(sample_items)
+    total_cost = calculate_total_price(item_list)
+    print(f""Total Cost: {total_cost}"")",True,1,2592,24_4_1.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    name: str
+    price: float
+    quantity: int
+def create_item_list() -> list[Item]:
+    return [
+        Item(name=""Laptop"", price=999.99, quantity=1),
+        Item(name=""Mouse"", price=25.50, quantity=5),
+        Item(name=""Keyboard"", price=75.00, quantity=3)
+    ]
+def calculate_total_price(items: list[Item]) -> float:
+    return sum(item.price * item.quantity for item in items)
+if __name__ == '__main__':
+    inventory = create_item_list()
+    total_cost = calculate_total_price(inventory)
+    print(f""Total Cost: {total_cost:.2f}"")",True,2,2593,24_4_2.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    name: str
+    price: float
+    quantity: int
+def create_item_list(items_data):
+    return [Item(**item_dict) for item_dict in items_data]
+def calculate_total_value(item_list):
+    total = sum(item.price * item.quantity for item in item_list)
+    return round(total, 2)
+if __name__ == '__main__':
+    sample_items = [
+        {""name"": ""Laptop"", ""price"": 1200.50, ""quantity"": 3},
+        {""name"": ""Mouse"", ""price"": 25.99, ""quantity"": 10},
+        {""name"": ""Keyboard"", ""price"": 75.00, ""quantity"": 5}
+    ]
+    item_list = create_item_list(sample_items)
+    total_value = calculate_total_value(item_list)
+    print(f""Total Value: {total_value}"")",True,3,2594,24_4_3.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass
+class Item:
+    name: str
+    price: float
+    quantity: int
+def create_item_list() -> list[Item]:
+    return [
+        Item(name=""Laptop"", price=999.99, quantity=1),
+        Item(name=""Mouse"", price=25.50, quantity=5),
+        Item(name=""Keyboard"", price=75.00, quantity=3)
+    ]
+def calculate_total_price(items: list[Item]) -> float:
+    return sum(item.price * item.quantity for item in items)
+if __name__ == '__main__':
+    inventory = create_item_list()
+    total_cost = calculate_total_price(inventory)
+    print(f""Total Inventory Cost: ${total_cost:.2f}"")",True,4,2595,24_4_4.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    id: int
+    name: str
+    price: float
+    quantity: int
+def create_item_list(items_data):
+    return [Item(**item_dict) for item_dict in items_data]
+def calculate_total_value(item_list):
+    total = sum(item.price * item.quantity for item in item_list)
+    return round(total, 2)
+def filter_by_price_range(item_list, min_price: float, max_price: float):
+    filtered_items = [item for item in item_list if min_price <= item.price <= max_price]
+    return filtered_items
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 101, 'name': 'Laptop', 'price': 999.50, 'quantity': 2},
+        {'id': 102, 'name': 'Mouse', 'price': 25.00, 'quantity': 5},
+        {'id': 103, 'name': 'Keyboard', 'price': 75.99, 'quantity': 3}
+    ]
+    items = create_item_list(sample_data)
+    total_value = calculate_total_value(items)
+    filtered_items = filter_by_price_range(items, 20.0, 100.0)
+    print(f""Total Value: {total_value}"")",True,5,2596,24_4_5.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    name: str
+    price: float
+    quantity: int
+def create_item_list(items_data):
+    return [Item(**item_dict) for item_dict in items_data]
+def calculate_total_price(item_list):
+    total = sum(item.price * item.quantity for item in item_list)
+    return round(total, 2)
+if __name__ == '__main__':
+    sample_items = [
+        {""name"": ""Laptop"", ""price"": 1200.50, ""quantity"": 3},
+        {""name"": ""Mouse"", ""price"": 25.99, ""quantity"": 10},
+        {""name"": ""Keyboard"", ""price"": 75.00, ""quantity"": 5}
+    ]
+    item_list = create_item_list(sample_items)
+    total_cost = calculate_total_price(item_list)
+    print(f""Total Cost: {total_cost}"")",True,6,2597,24_4_6.py
+24,4,Create a basic item list,Develop a production-ready module for creating and manipulating basic item lists using the `dataclasses` library with full type hints included.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Item:
+    name: str
+    price: float
+    quantity: int
+def create_item_list(items_data):
+    return [Item(**item_dict) for item_dict in items_data]
+def calculate_total_value(item_list):
+    return sum(item.price * item.quantity for item in item_list)
+if __name__ == '__main__':
+    sample_items = [
+        {'name': 'Laptop', 'price': 1200.50, 'quantity': 3},
+        {'name': 'Mouse', 'price': 25.99, 'quantity': 10},
+        {'name': 'Keyboard', 'price': 75.00, 'quantity': 5}
+    ]
+    items = create_item_list(sample_items)
+    total_value = calculate_total_value(items)
+    print(f""Created {len(items)} items."")
+    for item in items:
+        print(f""{item.name}: ${item.price:.2f} x {item.quantity}"")
+    print(f""Total Value: ${total_value:.2f}"")",True,7,2598,24_4_7.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import time
+from typing import Generator, Dict, Any
+def yield_from_large_dict(data: Dict[str, list]) -> Generator[Any, None, None]:
+    for key in data.keys():
+        if len(key) > 10 and time.time() % 2 == 0:
+            continue
+        yield from data[key]
+if __name__ == '__main__':
+    sample_data = {
+        ""group_a"": [1, 2, 3],
+        ""group_b"": [""x"", ""y""],
+        ""large_group_c"": list(range(0, 5)),
+        ""empty_group_d"": [],
+        ""mixed_e"": {""nested"": True},
+    }
+    for item in yield_from_large_dict(sample_data):
+        print(item)",True,0,2599,24_7.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import time
+def yield_from_dict(data):
+    for key in data:
+        value = data[key]
+        if isinstance(value, (list, tuple)):
+            for item in value:
+                yield f""{key}: {item}""
+        else:
+            yield f""{key}: {value}""
+if __name__ == '__main__':
+    large_dataset = {
+        ""alpha"": [10, 20, 30],
+        ""beta"": [""a"", ""b""],
+        ""gamma"": 42.5,
+        ""delta"": {""nested"": True},
+        ""epsilon"": list(range(100))
+    }
+    start_time = time.time()
+    for item in yield_from_dict(large_dataset):
+        print(item)
+    end_time = time.time()
+    print(f""Execution completed in {end_time - start_time:.4f} seconds"")",True,1,2600,24_7_1.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import time as _time
+def yield_from_large_dict(data: dict) -> None:
+    for key in data.keys():
+        value = data[key]
+        if isinstance(value, list):
+            for item in value:
+                yield (key, item)
+def _generate_large_dataset() -> dict:
+    return {f""item_{i}"": [10 + i * 2, ""data_"" + str(i)] for i in range(50)}
+if __name__ == '__main__':
+    dataset = _generate_large_dataset()
+    generator = yield_from_large_dict(dataset)
+    count = 0
+    start_time = _time.time_ns() / 1e9
+    try:
+        while True:
+            item = next(generator)
+            print(f""{item}"")
+            count += 1
+    except StopIteration:
+        end_time = _time.time_ns() / 1e9
+        duration_seconds = round(end_time - start_time, 2)
+        total_items_yielded = f""Total items yielded: {count}""
+        print(f""{total_items_yielded}"")",True,2,2601,24_7_2.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import time
+def yield_from_dict(data):
+    for key in data:
+        value = data[key]
+        if isinstance(value, (list, tuple)):
+            for item in value:
+                yield f""{key}: {item}""
+        else:
+            yield f""{key}: {value}""
+if __name__ == '__main__':
+    sample_data = {
+        ""fruits"": [""apple"", ""banana"", ""cherry""],
+        ""numbers"": [1, 2, 3],
+        ""single_item"": ""end""
+    }
+    generator = yield_from_dict(sample_data)
+    start_time = time.time()
+    for item in generator:
+        print(item)
+    end_time = time.time()
+    print(f""\nTotal execution time (yield loop): {end_time - start_time:.4f} seconds"")",True,3,2602,24_7_3.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import time as t
+def yield_from_dict(data: dict) -> None:
+    for key in data.keys():
+        value = data[key]
+        if isinstance(value, (list, tuple)):
+            for item in value:
+                yield item
+        else:
+            yield value
+if __name__ == '__main__':
+    sample_data = {
+        ""alpha"": [10, 20, 30],
+        ""beta"": {""nested"": [40, 50]},
+        ""gamma"": ""single"",
+        ""delta"": [[60]]
+    }
+    start_time = t.time()
+    for item in yield_from_dict(sample_data):
+        print(item)
+    end_time = t.time()
+    print(f""Total time: {end_time - start_time:.4f} seconds"")",True,4,2603,24_7_4.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import sys
+def yield_items(data: dict) -> None:
+    for item in data.items():
+        if isinstance(item[0], str):
+            key = item[0]
+            value_list = item[1].split(',')
+            for val in map(int, value_list):
+                yield f""{key}:{val}""
+if __name__ == '__main__':
+    sample_data = {
+        'A': '10,20,30',
+        'B': '40,50',
+        'C': '60'
+    }
+    generator = yield_items(sample_data)
+    for item in generator:
+        print(item)",True,5,2604,24_7_5.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"import time
+from typing import Iterator, Dict, Any
+def create_generator(data: Dict[str, list]) -> Iterator[Any]:
+    for key in data.keys():
+        if isinstance(data[key], list):
+            yield from data[key]
+        else:
+            yield data[key]
+if __name__ == '__main__':
+    sample_data = {
+        ""group_a"": [1, 2, 3, 4, 5],
+        ""group_b"": [""apple"", ""banana"", ""cherry""],
+        ""single_item"": {""id"": 99},
+        ""empty_group"": []
+    }
+    gen = create_generator(sample_data)
+    start_time = time.time()
+    for item in gen:
+        print(item, end="" "")
+    end_time = time.time()
+    print(f""\nTotal items yielded and printed successfully."")",True,6,2605,24_7_6.py
+24,7,Create a basic item list,Design a high-performance generator function to yield items one by one from a large dataset stored in a dictionary structure.,"from typing import Generator, Dict, Any
+def yield_from_dict(data: Dict[str, list]) -> Generator[Any, None, None]:
+    for key in data.keys():
+        if isinstance(data[key], (list, tuple)):
+            for item in data[key]:
+                yield item
+if __name__ == '__main__':
+    sample_data = {
+        ""fruits"": [""apple"", ""banana"", ""cherry""],
+        ""vegetables"": [""carrot"", ""broccoli"", ""spinach""],
+        ""numbers"": [1, 2, 3]
+    }
+    for item in yield_from_dict(sample_data):
+        print(item)",True,7,2606,24_7_7.py
+24,6,Create a basic item list,Construct a secure Python script that populates an item list from JSON input data with comprehensive validation logic for non-existent fields.,"import json
+def validate_item(item: dict) -> bool:
+    required_fields = [""id"", ""name"", ""price""]
+    return all(field in item for field in required_fields) and isinstance(item.get(""price""), (int, float))
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 101, ""name"": ""Laptop"", ""price"": 999.5},
+        {""id"": 102, ""name"": ""Mouse"", ""price"": 25},
+        {""id"": 103, ""missing_field"": True}
+    ]
+    validated_items = [item for item in sample_data if validate_item(item)]
+    output_json = json.dumps(validated_items)",True,0,2607,24_6.py
+24,6,Create a basic item list,Construct a secure Python script that populates an item list from JSON input data with comprehensive validation logic for non-existent fields.,"import json
+def validate_and_populate(data):
+    required_fields = [""id"", ""name"", ""price""]
+    if not isinstance(data, dict) or data == {}:
+        return []
+    validated_items = []
+    for item in data:
+        if not isinstance(item, dict):
+            continue
+        missing_fields = [field for field in required_fields if field not in item]
+        if missing_fields:
+            print(f""Warning: Item {item.get('id', 'unknown')} is missing fields: {missing_fields}"")
+            continue
+        validated_items.append(item)
+    return validated_items
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 1, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 2, ""name"": ""Mouse""},
+        {""id"": 3, ""name"": ""Keyboard"", ""missing_field"": True}
+    ]
+    try:
+        json_input = json.dumps(sample_data)
+        parsed_json = json.loads(json_input)
+        result_items = validate_and_populate(parsed_json)
+        output_list = [{""status"": ""valid""} for _ in range(len(result_items))]
+        print(f""Validated items count: {len(output_list)}"")
+    except Exception as e:
+        print(f""Error processing data: {e}"")",True,1,2608,24_6_1.py
+24,6,Create a basic item list,Construct a secure Python script that populates an item list from JSON input data with comprehensive validation logic for non-existent fields.,"import json
+def validate_item(item: dict) -> bool:
+    required_fields = [""id"", ""name"", ""price""]
+    for field in required_fields:
+        if field not in item:
+            return False
+    try:
+        float(item[""price""])
+    except (ValueError, TypeError):
+        return False
+    return True
+def populate_item_list(json_data: str) -> list:
+    parsed = json.loads(json_data)
+    items = []
+    for entry in parsed.get(""items"", []):
+        if validate_item(entry):
+            items.append({""id"": entry[""id""], ""name"": entry[""name""], ""price"": float(entry[""price""])})
+    return items
+if __name__ == '__main__':
+    sample_json = '{""items"": [{""id"": 1, ""name"": ""Apple"", ""price"": 0.5}, {""id"": 2, ""missing_field"": true}]}'
+    result_list = populate_item_list(sample_json)
+    print(result_list)",True,2,2609,24_6_2.py
+24,6,Create a basic item list,Construct a secure Python script that populates an item list from JSON input data with comprehensive validation logic for non-existent fields.,"import json
+def validate_and_populate(data):
+    required_fields = [""id"", ""name"", ""price""]
+    if not isinstance(data, dict) and data:
+        raise ValueError(""Input must be a dictionary."")
+    for field in required_fields:
+        if field not in data or (isinstance(data[field], str) and len(str(data[field])) == 0):
+            return None
+    items = []
+    try:
+        json_str = json.dumps({""id"": int(data[""id""]), ""name"": str(data[""name""]).strip(), ""price"": float(data[""price""])})
+        parsed_data = json.loads(json_str)
+        for item in data.get(""items"", [parsed_data]):
+            if not isinstance(item, dict):
+                continue
+            missing_fields = []
+            for field in required_fields:
+                val = item.get(field)
+                if val is None or (isinstance(val, str) and len(str(val)) == 0):
+                    missing_fields.append(field)
+            if not all(f in item for f in required_fields):
+                continue
+            items.append({
+                ""id"": int(item[""id""]),
+                ""name"": str(item[""name""]).strip(),
+                ""price"": float(item[""price""])
+            })
+    except (ValueError, TypeError) as e:
+        return None
+    return {""status"": ""success"", ""count"": len(items)}
+if __name__ == '__main__':
+    sample_input = {
+        ""id"": 101,
+        ""name"": ""Widget A"",
+        ""price"": 29.99,
+        ""items"": [
+            {""id"": 1, ""name"": ""Test Item"", ""price"": 5.0},
+            {""id"": 2, ""name"": """", ""price"": 3.0}
+        ]
+    }
+    result = validate_and_populate(sample_input)
+    if result:
+        print(json.dumps(result))
+    else:
+        print(""Validation failed or data is invalid."")",True,3,2610,24_6_3.py
+24,6,Create a basic item list,Construct a secure Python script that populates an item list from JSON input data with comprehensive validation logic for non-existent fields.,"import json
+def validate_and_populate(data):
+    required_fields = [""id"", ""name"", ""price""]
+    if not isinstance(data, dict) or data.get(""type"") != ""item_list"":
+        raise ValueError(""Invalid input structure: expected a dictionary with 'type' set to 'item_list'."")
+    items = []
+    for idx, item in enumerate(data[""items""], 1):
+        missing_fields = [field for field in required_fields if field not in item]
+        if missing_fields:
+            raise ValueError(f""Item {idx} is invalid. Missing fields: {missing_fields}."")
+        items.append({
+            ""id"": int(item[""id""]),
+            ""name"": str(item[""name""]).strip(),
+            ""price"": float(item[""price""])
+        })
+    return {""status"": ""success"", ""count"": len(items), ""data"": items}
+if __name__ == '__main__':
+    sample_data = {
+        ""type"": ""item_list"",
+        ""items"": [
+            {""id"": 101, ""name"": ""Widget A"", ""price"": 9.99},
+            {""id"": 102, ""name"": ""Gadget B"", ""price"": 45.50}
+        ]
+    }
+    try:
+        result = validate_and_populate(sample_data)
+        print(json.dumps(result, indent=2))
+    except ValueError as e:
+        print(f""Validation Error: {e}"")",True,4,2611,24_6_4.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 1002, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 1003, ""name"": ""Keyboard"", ""price"": 75.00}
+    ]
+    try:
+        with open(""items.json"", ""w"") as file:
+            json.dump(items, file, indent=4)
+        return True
+    except IOError as e:
+        print(f""Error writing to file: {e}"")
+        return False
+if __name__ == '__main__':
+    success = generate_item_list()
+    if not success:
+        exit(1)",True,0,2612,24_10.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 1002, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 1003, ""name"": ""Keyboard"", ""price"": 75.00}
+    ]
+    try:
+        with open(""item_list.json"", ""w"") as file:
+            json.dump(items, file, indent=4)
+        return True
+    except IOError as e:
+        print(f""Error writing to file: {e}"")
+        return False
+if __name__ == '__main__':
+    success = generate_item_list()
+    if not success:
+        exit(1)",True,1,2613,24_10_1.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""category"": ""Electronics""},
+        {""id"": 1002, ""name"": ""Desk Chair"", ""category"": ""Furniture""},
+        {""id"": 1003, ""name"": ""Wireless Mouse"", ""category"": ""Accessories""}
+    ]
+    try:
+        with open(""items.json"", ""w"") as f:
+            json.dump(items, f, indent=4)
+        return items
+    except IOError as e:
+        print(f""Error writing file: {e}"")
+        raise
+if __name__ == '__main__':
+    try:
+        item_list = generate_item_list()
+        for item in item_list:
+            print(json.dumps(item))
+    except Exception as ex:
+        print(f""Unexpected error occurred: {ex}"")",True,2,2614,24_10_2.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+def generate_item_list(items):
+    if not items:
+        raise ValueError(""Item list cannot be empty."")
+    result = []
+    for index, item in enumerate(items, start=1):
+        try:
+            name = str(item.get('name', 'Unknown'))
+            price = float(item.get('price', 0)) if isinstance(item.get('price'), (int, float)) else 0.0
+            result.append({
+                ""index"": index,
+                ""item_name"": name,
+                ""formatted_price"": f""${price:.2f}""
+            })
+        except Exception as e:
+            print(f""Warning: Error processing item at index {index}: {e}"")
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""name"": ""Laptop"", ""price"": 1200},
+        {""name"": ""Mouse"", ""price"": 25.99},
+        {""name"": ""Keyboard"", ""price"": 75}
+    ]
+    try:
+        item_list = generate_item_list(sample_data)
+        print(""Generated Item List:"")
+        for entry in item_list:
+            print(f""{entry['index']}. {entry['item_name']} - {entry['formatted_price']}"")
+        with open('output.json', 'w') as f:
+            json.dump(item_list, f)
+    except Exception as e:
+        print(f""Critical error occurred: {e}"")",True,3,2615,24_10_3.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+def generate_item_list():
+    raw_data = [
+        {""id"": 101, ""name"": ""Widget A"", ""price"": 29.99},
+        {""id"": 102, ""name"": ""Gadget B"", ""price"": -5.00},
+        {""id"": None, ""name"": """", ""price"": ""invalid""},
+    ]
+    validated_items = []
+    for item in raw_data:
+        try:
+            if not isinstance(item.get(""id""), int) or item[""id""] <= 0:
+                continue
+            name = str(item.get(""name"", """")).strip()
+            price_str = str(item.get(""price""))
+            float_price = float(price_str)
+            if float_price < 0:
+                continue
+            validated_items.append({
+                ""id"": item[""id""],
+                ""name"": name,
+                ""price"": round(float_price, 2)
+            })
+        except (ValueError, TypeError):
+            continue
+    return validated_items
+if __name__ == '__main__':
+    items = generate_item_list()
+    output_json = json.dumps(items, indent=4)
+    print(output_json)",True,4,2616,24_10_4.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+from datetime import date, timedelta
+def generate_item_list():
+    items = []
+    base_date = date.today()
+    for i in range(10):
+        item_id = f""ITEM-{i+1:03d}""
+        try:
+            quantity = 5 + (i % 4) * 2
+            if not isinstance(quantity, int) or quantity <= 0:
+                raise ValueError(""Invalid quantity"")
+            description = f""{item_id} - {chr(65+i)} Series""
+            items.append({
+                ""id"": item_id,
+                ""quantity"": quantity,
+                ""description"": description,
+                ""created_at"": (base_date + timedelta(days=i)).isoformat()
+            })
+        except ValueError as ve:
+            print(f""[ERROR] {ve}"")
+    return items
+if __name__ == '__main__':
+    output_data = generate_item_list()
+    try:
+        with open(""item_list.json"", ""w"") as file_handle:
+            json.dump(output_data, file_handle, indent=4)
+        print(f""[INFO] Successfully generated {len(output_data)} items."")
+    except IOError as ie:
+        print(""[CRITICAL] Failed to write output file:"", str(ie))",True,5,2617,24_10_5.py
+24,10,Create a basic item list,Implement a robust and production-ready Python script to generate an item list using best practices for data handling and error management.,"import json
+def generate_item_list(items):
+    try:
+        return {item['id']: item for item in items} if isinstance(items, list) else {}
+    except Exception as e:
+        print(f""Error generating item list: {e}"")
+        return {}
+if __name__ == '__main__':
+    sample_items = [
+        {'id': 101, 'name': 'Laptop', 'price': 999.99},
+        {'id': 102, 'name': 'Mouse', 'price': 25.50}
+    ]
+    item_list = generate_item_list(sample_items)
+    output_data = {
+        ""status"": ""success"",
+        ""count"": len(item_list),
+        ""items"": list(item_list.values())
+    }
+    with open('item_list.json', 'w') as f:
+        json.dump(output_data, f, indent=4)",True,6,2618,24_10_6.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"from typing import List, Dict
+def build_item_list() -> List[Dict[str, str]]:
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""category"": ""Electronics""},
+        {""id"": 1002, ""name"": ""Desk Chair"", ""category"": ""Furniture""},
+        {""id"": 1003, ""name"": ""Wireless Mouse"", ""category"": ""Accessories""},
+        {""id"": 1004, ""name"": ""Standing Desk"", ""category"": ""Furniture""},
+    ]
+    return items
+if __name__ == '__main__':
+    item_list = build_item_list()
+    print(item_list)",True,0,2619,24_12.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+def build_item_list(items_data):
+    processed_items = []
+    for index, data in enumerate(items_data):
+        try:
+            cleaned_entry = {
+                ""id"": f""item_{index + 1}"",
+                **data
+            }
+            if not isinstance(cleaned_entry.get(""name""), str) or len(cleaned_entry[""name""]) == 0:
+                raise ValueError(f""Invalid name for item at index {index}"")
+            processed_items.append({
+                ""id"": cleaned_entry[""id""],
+                ""name"": cleaned_entry[""name""].strip(),
+                ""price"": float(data.get(""price"", 0.0)),
+                ""in_stock"": data.get(""in_stock"", True)
+            })
+        except (ValueError, TypeError):
+            continue
+    return processed_items
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 1, ""name"": ""Laptop"", ""price"": 999.50, ""in_stock"": True},
+        {""id"": 2, ""name"": ""Mouse"", ""price"": 25.00, ""in_stock"": False},
+        {""id"": 3, ""name"": """", ""price"": 10.00, ""in_stock"": True}
+    ]
+    result = build_item_list(sample_data)
+    output_json = json.dumps(result, indent=2)
+    print(output_json)",True,1,2620,24_12_1.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+from typing import List, Dict
+def build_item_list() -> List[Dict[str, str]]:
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""category"": ""Electronics""},
+        {""id"": 1002, ""name"": ""Desk Chair"", ""category"": ""Furniture""},
+        {""id"": 1003, ""name"": ""Wireless Mouse"", ""category"": ""Accessories""},
+    ]
+    return items
+if __name__ == '__main__':
+    result = build_item_list()
+    print(json.dumps(result))",True,2,2621,24_12_2.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import time
+def build_item_list():
+    items = []
+    sample_data = [100, 250, ""Apple"", True]
+    for i in range(3):
+        current_time = time.time() * (i + 1)
+        item_dict = {
+            'id': f""ITEM-{current_time}"",
+            'value': sample_data[i % len(sample_data)],
+            'processed_at': current_time,
+            'status': ""active"" if i == 0 else ""pending"",
+            'metadata': {""source"": ""hardcoded""}
+        }
+        items.append(item_dict)
+    return items
+if __name__ == '__main__':
+    result = build_item_list()
+    print(result)",True,3,2622,24_12_3.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import time
+def build_item_list(items: list) -> dict:
+    start_time = time.time()
+    processed_items = []
+    for idx, item in enumerate(items):
+        if isinstance(item, (dict, str)):
+            entry = {
+                ""id"": f""item_{idx}"",
+                ""data"": item,
+                ""processed_at"": time.strftime(""%Y-%m-%d %H:%M:%S""),
+                ""status"": ""validated""
+            }
+        else:
+            raise ValueError(f""Unsupported item type at index {idx}: {type(item)}"")
+        processed_items.append(entry)
+    end_time = time.time()
+    return {
+        ""total_count"": len(processed_items),
+        ""processing_duration_ms"": round((end_time - start_time) * 1000, 2),
+        ""items"": processed_items
+    }
+if __name__ == '__main__':
+    sample_data = [
+        {""type"": ""product"", ""code"": ""ABC-123""},
+        ""Simple string item"",
+        [""nested_list_item_1""],
+        456,
+        None
+    ]
+    try:
+        result = build_item_list(sample_data)
+        print(f""Total items processed: {result['total_count']}"")
+        print(f""Processing time: {result['processing_duration_ms']} ms"")
+        for item in result[""items""]:
+            if isinstance(item, dict):
+                print(f""[{item['id']}] Status: {item['status']} | Data Type: {type(item.get('data')).__name__}"")
+    except ValueError as e:
+        print(f""Error during processing: {e}"")",True,4,2623,24_12_4.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+from typing import List, Dict
+def build_item_list() -> List[Dict[str, str]]:
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""category"": ""Electronics""},
+        {""id"": 1002, ""name"": ""Headphones"", ""category"": ""Accessories""},
+        {""id"": 1003, ""name"": ""Desk Chair"", ""category"": ""Furniture""},
+    ]
+    return items
+if __name__ == '__main__':
+    result = build_item_list()
+    print(json.dumps(result))",True,5,2624,24_12_5.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+from typing import List, Dict
+def build_item_list() -> List[Dict[str, str]]:
+    items = [
+        {""id"": 1001, ""name"": ""Python Script"", ""category"": ""Software""},
+        {""id"": 2005, ""name"": ""Data Analysis Tool"", ""category"": ""Hardware""},
+        {""id"": 3042, ""name"": ""Cloud Service Access"", ""category"": ""Service""}
+    ]
+    return items
+if __name__ == '__main__':
+    result = build_item_list()
+    print(json.dumps(result))",True,6,2625,24_12_6.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+def build_item_list(items_data):
+    return items_data
+if __name__ == '__main__':
+    sample_items = [
+        {""id"": 1, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 2, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 3, ""name"": ""Keyboard"", ""price"": 75.00}
+    ]
+    result = build_item_list(sample_items)
+    print(json.dumps(result))",True,7,2626,24_12_7.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+from typing import List, Dict
+def build_item_list(items: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    return items
+if __name__ == '__main__':
+    sample_items = [
+        {""id"": 1001, ""name"": ""Widget A"", ""price"": 29.99},
+        {""id"": 1002, ""name"": ""Gadget B"", ""price"": 45.50},
+        {""id"": 1003, ""name"": ""Tool C"", ""price"": 12.75}
+    ]
+    result = build_item_list(sample_items)
+    print(json.dumps(result))",True,8,2627,24_12_8.py
+24,12,Create a basic item list,Develop an optimized Python function to build and return a comprehensive item list adhering to modern coding standards and performance requirements.,"import json
+def build_item_list(data):
+    items = []
+    for key in sorted(data.keys()):
+        value = data[key]
+        if isinstance(value, dict):
+            nested_items = {k: v for k, v in value.items() if not (isinstance(v, str) and 'hidden' in v.lower())}
+            items.append({key: nested_items})
+    return {""items"": items}
+if __name__ == '__main__':
+    sample_data = {
+        ""electronics"": {
+            ""phone"": ""iPhone 15 Pro"",
+            ""laptop"": ""MacBook Air M2""
+        },
+        ""clothing"": {
+            ""shirt"": ""Cotton T-Shirt (hidden: size details)"",
+            ""pants"": ""Denim Jeans""
+        }
+    }
+    result = build_item_list(sample_data)
+    print(json.dumps(result, indent=4))",True,9,2628,24_12_9.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","import re
+def validate_item(item: dict) -> bool:
+    required_keys = ['name', 'price']
+    return all(key in item for key in required_keys) and isinstance(item['price'], (int, float))
+class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: int | float) -> None:
+        if not validate_item({'name': name, 'price': price}):
+            raise ValueError(""Invalid item data"")
+        self.items.append({'name': name, 'price': price})
+    def get_items(self) -> dict[str, int | float]:
+        return {item['name']: item['price'] for item in self.items}
+if __name__ == '__main__':
+    manager = ItemListManager()
+    manager.add_item('Laptop', 999)
+    manager.add_item('Mouse', 25.50)
+    items_dict = manager.get_items()
+    print(items_dict)",True,0,2629,24_11.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","import re
+def validate_email(email: str) -> bool:
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    return re.match(pattern, email) is not None
+class ItemListBuilder:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: float, quantity: int, category: str, email: str) -> bool:
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            return False
+        try:
+            price = float(price)
+        except (ValueError, TypeError):
+            return False
+        if not isinstance(quantity, int) or quantity <= 0:
+            return False
+        categories = ['Electronics', 'Clothing', 'Food']
+        if category not in categories:
+            return False
+        if not validate_email(email):
+            return False
+        item_data = {
+            ""name"": name.strip(),
+            ""price"": price,
+            ""quantity"": quantity,
+            ""category"": category,
+            ""email"": email
+        }
+        self.items.append(item_data)
+        return True
+def main():
+    builder = ItemListBuilder()
+    sample_items = [
+        (""Laptop"", 999.50, 10, ""Electronics"", ""user@example.com""),
+        (""T-Shirt"", 25.00, 50, ""Clothing"", ""buyer@test.org""),
+        (12345, -5.00, 5, ""Food"", ""invalid-email""),
+    ]
+    results = []
+    for item in sample_items:
+        if len(item) != 5:
+            continue
+        is_valid = builder.add_item(*item)
+        results.append({
+            ""input"": item,
+            ""success"": is_valid
+        })
+    final_list = {
+        ""total_count"": len(builder.items),
+        ""valid_items"": builder.items
+    }
+if __name__ == '__main__':
+    pass",True,1,2630,24_11_1.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","class ItemList:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: float) -> bool:
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            return False
+        try:
+            price = float(price)
+            if price < 0:
+                raise ValueError(""Price must be non-negative."")
+        except (ValueError, TypeError):
+            return False
+        self.items.append({""name"": name.strip(), ""price"": round(price, 2)})
+        return True
+    def get_items(self) -> list[dict]:
+        return [item.copy() for item in self.items]
+if __name__ == '__main__':
+    inventory = ItemList()
+    sample_data = [
+        (""Laptop"", 999.50),
+        (""Mouse"", 25.00),
+        (123, -10.00)
+    ]
+    for name, price in sample_data:
+        inventory.add_item(name, price)
+    print(inventory.get_items())",True,2,2631,24_11_2.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","import re
+def validate_item(item: dict) -> bool:
+    required_keys = {'name', 'price'}
+    return all(key in item for key in required_keys) and isinstance(item['price'], (int, float))
+class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: int | float) -> None:
+        if not validate_item({'name': name, 'price': price}):
+            raise ValueError(""Invalid item data"")
+        self.items.append({'name': name, 'price': price})
+    def get_items(self) -> list[dict]:
+        return [item.copy() for item in self.items]
+if __name__ == '__main__':
+    manager = ItemListManager()
+    manager.add_item('Laptop', 999.50)
+    manager.add_item('Mouse', 25)
+    items_list = manager.get_items()
+    for item in items_list:
+        print(f""{item['name']}: ${item['price']}"")",True,3,2632,24_11_3.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","class ItemValidator:
+    def validate(self, item):
+        if not isinstance(item, dict) or 'name' not in item or 'price' not in item:
+            raise ValueError(""Item must be a dictionary with 'name' and 'price' keys."")
+        if not isinstance(item['price'], (int, float)) or item['price'] <= 0:
+            raise ValueError(""Price must be a positive number."")
+def create_item_list():
+    items = [
+        {'name': 'Laptop', 'price': 999.50},
+        {'name': 'Mouse', 'price': 25.00},
+        {'name': 'Keyboard', 'price': 75.0}
+    ]
+def main():
+    validator = ItemValidator()
+    validated_items = []
+    for item in items:
+        try:
+            validator.validate(item)
+            validated_items.append({'status': 'valid', **item})
+        except ValueError as e:
+            print(f""Validation failed for {item.get('name')}: {e}"")
+    return {'items_count': len(validated_items), 'data': validated_items}
+if __name__ == '__main__':
+    result = create_item_list()
+    if isinstance(result, dict) and 'data' in result:
+        print(f""Total valid items: {result['items_count']}"")
+        for item in result['data']:
+            print(item)",True,4,2633,24_11_4.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","def validate_item(item: dict) -> bool:
+    required_keys = {'id', 'name'}
+    return all(key in item for key in required_keys) and isinstance(item['id'], int)
+class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, item_data: dict) -> bool:
+        if not validate_item(item_data):
+            return False
+        new_id = max((i.get('id', 0) for i in self.items), default=0) + 1
+        updated_item = {**item_data, 'id': new_id}
+        self.items.append(updated_item)
+        return True
+    def get_items(self):
+        return list(self.items)
+if __name__ == '__main__':
+    manager = ItemListManager()
+    sample_data_1 = {'id': 0, 'name': 'Laptop'}
+    sample_data_2 = {'id': -5, 'name': 'Mouse'}
+    sample_data_3 = {'id': 10, 'name': 'Keyboard', 'extra_field': True}
+    manager.add_item(sample_data_1)
+    if not manager.add_item(sample_data_2):
+        pass
+    result = manager.add_item(sample_data_3)
+    final_list = manager.get_items()",True,5,2634,24_11_5.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","class ItemList:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: float) -> bool:
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            return False
+        try:
+            price_value = float(price)
+            if price_value < 0:
+                raise ValueError(""Price cannot be negative"")
+            self.items.append({
+                ""name"": name.strip(),
+                ""price"": round(price_value, 2),
+                ""id"": len(self.items) + 1
+            })
+            return True
+        except (ValueError, TypeError):
+            return False
+    def get_total_price(self) -> float:
+        return sum(item[""price""] for item in self.items)
+if __name__ == '__main__':
+    inventory = ItemList()
+    sample_data = [
+        (""Laptop"", 999.50),
+        (""Mouse"", 25.00),
+        (""Keyboard"", 75.99),
+        (123, -10.00)
+    ]
+    for name, price in sample_data:
+        inventory.add_item(name, price)
+    print(f""Total Inventory Value: ${inventory.get_total_price():.2f}"")",True,6,2635,24_11_6.py
+24,11,Create a basic item list,"Write efficient, PEP 8 compliant Python code that creates a structured dictionary-based item list with validation logic.","import re
+def validate_item(item: dict) -> bool:
+    required_keys = {'name', 'price'}
+    return all(key in item for key in required_keys) and isinstance(item.get('price'), (int, float))
+class ItemListManager:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: int | float) -> None:
+        if not validate_item({'name': name, 'price': price}):
+            raise ValueError(""Invalid item data"")
+        self.items.append({'name': name, 'price': price})
+    def get_items(self) -> dict[str, int | float]:
+        return {item['name']: item['price'] for item in self.items}
+if __name__ == '__main__':
+    manager = ItemListManager()
+    manager.add_item('Laptop', 999)
+    manager.add_item('Mouse', 25.50)
+    output_dict = manager.get_items()
+    print(output_dict)",True,7,2636,24_11_7.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from datetime import datetime
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 1002, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 1003, ""name"": ""Keyboard"", ""price"": 75.00}
+    ]
+    output = {
+        ""generated_at"": datetime.now().isoformat(),
+        ""total_items"": len(items),
+        ""items"": items
+    }
+    return json.dumps(output)
+if __name__ == '__main__':
+    result = generate_item_list()
+    print(result)",True,0,2637,24_14.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from datetime import datetime
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 1002, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 1003, ""name"": ""Keyboard"", ""price"": 75.00}
+    ]
+    return items
+def main():
+    item_data = generate_item_list()
+    output_format = json.dumps(item_data)
+    print(output_format)
+if __name__ == '__main__':
+    main()",True,1,2638,24_14_1.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from datetime import datetime
+from typing import List, Dict
+class ItemListGenerator:
+    def __init__(self):
+        self.items: List[Dict[str, any]] = []
+    def add_item(self, name: str, description: str, price: float) -> None:
+        entry = {
+            ""id"": len(self.items),
+            ""name"": name,
+            ""description"": description,
+            ""price"": round(price, 2),
+            ""created_at"": datetime.now().isoformat()
+        }
+        self.items.append(entry)
+    def get_item_list(self) -> List[Dict[str, any]]:
+        return self.items.copy()
+def generate_sample_data(generator: ItemListGenerator) -> None:
+    generator.add_item(""Laptop Pro X"", ""High-performance laptop for professionals"", 2499.99)
+    generator.add_item(""Wireless Headphones"", ""Noise-cancelling over-ear headphones"", 199.50)
+    generator.add_item(""Smart Thermostat"", ""WiFi-enabled climate control system"", 89.99)
+    generator.add_item(""LED Desk Lamp"", ""Adjustable brightness and color temperature"", 45.75)
+if __name__ == '__main__':
+    item_list = ItemListGenerator()
+    generate_sample_data(item_list)
+    output_json = json.dumps(
+        {
+            ""generated_at"": datetime.now().isoformat(),
+            ""total_items"": len(item_list.get_item_list()),
+            ""items"": item_list.get_item_list()
+        },
+        indent=2,
+        sort_keys=True                                                                
+    )
+    print(output_json)",True,2,2639,24_14_2.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from datetime import datetime
+from typing import List, Dict
+class ItemProcessor:
+    def __init__(self):
+        self.items_data = [
+            {""id"": 1001, ""name"": ""Widget A"", ""price"": 29.99},
+            {""id"": 1002, ""name"": ""Gadget B"", ""price"": 49.50},
+            {""id"": 1003, ""name"": ""Tool C"", ""price"": 15.75}
+        ]
+    def generate_item_list(self) -> List[Dict]:
+        return self.items_data.copy()
+def format_output(items: List[Dict]) -> str:
+    output = []
+    for item in items:
+        timestamp = datetime.now().isoformat(timespec='milliseconds')
+        line = f""[{timestamp}] ID:{item['id']} | {item['name']}: ${item['price']:.2f}""
+        output.append(line)
+    return ""\n"".join(output)
+if __name__ == '__main__':
+    processor = ItemProcessor()
+    items = processor.generate_item_list()
+    print(format_output(items))",True,3,2640,24_14_3.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from datetime import datetime
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 1002, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 1003, ""name"": ""Keyboard"", ""price"": 75.00},
+    ]
+    return items
+def main():
+    item_list = generate_item_list()
+    output_data = {
+        ""generated_at"": datetime.now().isoformat(),
+        ""total_items"": len(item_list),
+        ""items"": item_list,
+    }
+    print(json.dumps(output_data, indent=2))
+if __name__ == '__main__':
+    main()",True,4,2641,24_14_4.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from typing import List, Dict
+class ItemListGenerator:
+    def __init__(self):
+        self.items = []
+    def add_item(self, name: str, price: float) -> None:
+        if not isinstance(name, str) or not isinstance(price, (int, float)):
+            raise ValueError(""Invalid item data"")
+        self.items.append({""name"": name, ""price"": price})
+    def generate_report(self) -> List[Dict]:
+        return sorted(self.items, key=lambda x: x[""price""])
+def create_sample_data() -> ItemListGenerator:
+    generator = ItemListGenerator()
+    sample_items = [
+        (""Laptop"", 999.99),
+        (""Mouse"", 25.50),
+        (""Keyboard"", 75.00),
+        (""Monitor"", 350.00)
+    ]
+    for name, price in sample_items:
+        generator.add_item(name, price)
+    return generator
+if __name__ == '__main__':
+    item_generator = create_sample_data()
+    final_list = item_generator.generate_report()
+    output_json = json.dumps(final_list, indent=2)
+    print(output_json)",True,5,2642,24_14_5.py
+24,14,Create a basic item list,"Create a clean and maintainable Python script to produce an item list, ensuring the solution is scalable, secure, and fully optimized for execution speed.","import json
+from datetime import datetime
+def generate_item_list():
+    items = [
+        {""id"": 1001, ""name"": ""Laptop"", ""price"": 999.99},
+        {""id"": 1002, ""name"": ""Mouse"", ""price"": 25.50},
+        {""id"": 1003, ""name"": ""Keyboard"", ""price"": 75.00}
+    ]
+    output_data = {
+        ""generated_at"": datetime.now().isoformat(),
+        ""total_items"": len(items),
+        ""items"": items
+    }
+    return json.dumps(output_data)
+if __name__ == '__main__':
+    result = generate_item_list()
+    print(result)",True,6,2643,24_14_6.py
+24,9,Create a basic item list,"Develop a comprehensive utility function to create and manage basic item lists using the `collections` module, ensuring thread-safe operations where applicable.","import threading
+from collections import defaultdict
+class ThreadSafeItemList:
+    def __init__(self):
+        self._data = defaultdict(list)
+        self._lock = threading.Lock()
+    def add(self, item_id, value):
+        with self._lock:
+            self._data[item_id].append(value)
+    def get_all_for_item(self, item_id):
+        with self._lock:
+            return list(self._data.get(item_id, []))
+    def count_items(self):
+        with self._lock:
+            return len(list(self._data.keys()))
+if __name__ == '__main__':
+    item_manager = ThreadSafeItemList()
+    test_data = [
+        (""apple"", ""red""),
+        (""banana"", ""yellow""),
+        (""cherry"", ""red""),
+        (""date"", ""brown""),
+        (""elderberry"", ""purple"")
+    ]
+    def add_items_batch(items):
+        item_manager.add(*items)
+    threads = []
+    batch_size = len(test_data) // 2 + 1 if len(test_data) % 2 == 0 else len(test_data) // 2
+    for i in range(3):
+        start_idx = i * (len(test_data) // 3)
+        end_idx = start_idx + (len(test_data) // 3) if i < 2 else len(test_data)
+        batch_items = test_data[start_idx:end_idx]
+        t = threading.Thread(target=add_items_batch, args=(batch_items,))
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    total_count = item_manager.count_items()
+    print(f""Total unique items tracked: {total_count}"")
+    apple_data = item_manager.get_all_for_item(""apple"")
+    print(f""Items associated with 'apple': {apple_data}"")",True,0,2644,24_9.py
+24,9,Create a basic item list,"Develop a comprehensive utility function to create and manage basic item lists using the `collections` module, ensuring thread-safe operations where applicable.","import threading
+from collections import deque
+class ThreadSafeItemList:
+    def __init__(self):
+        self._data = deque()
+        self._lock = threading.Lock()
+    def add_item(self, item):
+        with self._lock:
+            self._data.append(item)
+    def remove_first(self):
+        with self._lock:
+            if not self._data:
+                return None
+            return self._data.popleft()
+    def get_all_items(self):
+        with self._lock:
+            items = list(self._data)
+            return items
+if __name__ == '__main__':
+    item_list = ThreadSafeItemList()
+    initial_data = [""Apple"", ""Banana"", ""Cherry""]
+    for val in initial_data:
+        item_list.add_item(val)
+    print(""Initial items:"", item_list.get_all_items())
+    def worker(thread_id):
+        for i in range(3):
+            item = item_list.remove_first()
+            if item is not None:
+                print(f""Thread {thread_id} removed: {item}"")
+    threads = []
+    for t_id in range(2):
+        thread = threading.Thread(target=worker, args=(t_id,))
+        threads.append(thread)
+        thread.start()
+    for thread in threads:
+        thread.join()
+    print(""Remaining items:"", item_list.get_all_items())",True,1,2645,24_9_1.py
+24,9,Create a basic item list,"Develop a comprehensive utility function to create and manage basic item lists using the `collections` module, ensuring thread-safe operations where applicable.","import threading
+from collections import defaultdict
+class ThreadSafeItemList:
+    def __init__(self):
+        self._data = {}
+        self._lock = threading.Lock()
+    def add(self, item_id, value):
+        with self._lock:
+            if isinstance(item_id, int) and not isinstance(value, list):
+                self._data[item_id] = [value]
+            else:
+                self._data.setdefault(item_id, []).append(value)
+    def get_all_values(self, item_id=None):
+        with self._lock:
+            if item_id is None:
+                return list(dict.values(self._data))
+            elif isinstance(item_id, int):
+                return [self._data[item_id]] if item_id in self._data else []
+    def remove_by_index(self, index):
+        for key in list(self._data.keys()):
+            with self._lock:
+                values = self._data[key]
+                try:
+                    val_to_remove = values[index]
+                    items_with_val = [k for k, v in self._data.items() if val_to_remove in v and len(v) > 1]
+                    removed_items = []
+                    def remove_recursive(d):
+                        new_d = {}
+                        for k, v in d.items():
+                            try:
+                                idx = v.index(val_to_remove)
+                                v[idx:] = v[:idx] + v[idx+1:] if len(v) > 1 else None
+                            except ValueError:
+                                pass
+                    remove_recursive(self._data)
+                except IndexError:
+                    continue
+if __name__ == '__main__':
+    item_list = ThreadSafeItemList()
+    thread_safe_item_list = item_list
+    t1, t2, t3 = threading.Thread(target=lambda: [thread_safe_item_list.add(i, val) for i in range(5)], daemon=True),\
+                 threading.Thread(target=lambda: [thread_safe_item_list.add(i + 10, val * 2) for i in range(5)], daemon=True),\
+                 threading.Thread(target=lambda: thread_safe_item_list.remove_by_index(3))
+    t1.start()
+    t2.start()
+    t3.start()",True,2,2646,24_9_2.py
+24,9,Create a basic item list,"Develop a comprehensive utility function to create and manage basic item lists using the `collections` module, ensuring thread-safe operations where applicable.","import threading
+from collections import defaultdict
+class ThreadSafeItemList:
+    def __init__(self):
+        self._data = {}
+        self._lock = threading.Lock()
+    def add_item(self, item_id, data_value):
+        with self._lock:
+            if isinstance(item_id, int) and not isinstance(data_value, dict):
+                raise ValueError(""Invalid input types"")
+            self._data[item_id] = {**self._data.get(item_id, {}), ""value"": data_value}
+    def get_item(self, item_id):
+        with self._lock:
+            return self._data.get(item_id)
+    def list_all_items(self):
+        with self._lock:
+            items_list = [item for id_, value in self._data.items() if isinstance(id_, int)]
+            return sorted(items_list, key=lambda x: (x[""value""], x.get(""id"", 0)))
+if __name__ == '__main__':
+    item_manager = ThreadSafeItemList()
+    test_items_data = [
+        {""id"": ""ITEM_101"", ""value"": ""Apple""},
+        {""id"": ""ITEM_205"", ""value"": ""Banana""},
+        {""id"": ""ITEM_399"", ""value"": ""Cherry""}
+    ]
+    def add_item_thread(item_data):
+        item_manager.add_item(item_data[""id""], item_data[""value""])
+    threads = []
+    for data in test_items_data:
+        t = threading.Thread(target=add_item_thread, args=(data,))
+        threads.append(t)
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    print(""Items added successfully."")",True,3,2647,24_9_3.py
+24,9,Create a basic item list,"Develop a comprehensive utility function to create and manage basic item lists using the `collections` module, ensuring thread-safe operations where applicable.","import threading
+from collections import deque
+class ThreadSafeItemList:
+    def __init__(self):
+        self._data = deque()
+        self._lock = threading.Lock()
+    def add_item(self, item):
+        with self._lock:
+            self._data.append(item)
+    def remove_first(self):
+        with self._lock:
+            if len(self._data) == 0:
+                return None
+            return self._data.popleft()
+    def get_all_items(self):
+        with self._lock:
+            items = list(self._data)
+            return items
+def main():
+    item_list = ThreadSafeItemList()
+    sample_values = [10, 20, ""apple"", 3.5]
+    for value in sample_values:
+        item_list.add_item(value)
+    print(""Initial list:"", item_list.get_all_items())
+    removed_value = item_list.remove_first()
+    print(f""Removed first item: {removed_value}"")
+    final_list = item_list.get_all_items()
+    print(""Final list:"", final_list)
+if __name__ == '__main__':
+    main()",True,4,2648,24_9_4.py
+24,9,Create a basic item list,"Develop a comprehensive utility function to create and manage basic item lists using the `collections` module, ensuring thread-safe operations where applicable.","import threading
+from collections import deque
+class ThreadSafeItemList:
+    def __init__(self):
+        self._items = deque()
+        self._lock = threading.Lock()
+    def add_item(self, item_id: str, description: str) -> None:
+        with self._lock:
+            self._items.append((item_id, description))
+    def get_items(self) -> list:
+        return [list(item) for item in self._items]
+    def remove_by_index(self, index: int) -> bool:
+        if 0 <= index < len(self._items):
+            with self._lock:
+                removed = self._items.pop(index)
+                return True
+        return False
+def create_sample_list() -> ThreadSafeItemList:
+    lst = ThreadSafeItemList()
+    sample_items = [
+        (""item_001"", ""Basic Widget""),
+        (""item_002"", ""Advanced Gadget""),
+        (""item_003"", ""Standard Tool"")
+    ]
+    for item_id, desc in sample_items:
+        lst.add_item(item_id, desc)
+    return lst
+if __name__ == '__main__':
+    my_list = create_sample_list()
+    def worker(thread_num):
+        items = my_list.get_items()
+        if thread_num % 2 == 0:
+            for i in range(1, len(items)):
+                idx = (thread_num * 3 + i) % len(my_list._items)
+                my_list.remove_by_index(idx)
+    threads = []
+    for t in range(4):
+        thread = threading.Thread(target=worker, args=(t,), daemon=True)
+        threads.append(thread)
+        thread.start()
+    for thread in threads:
+        thread.join(timeout=2.0)
+    remaining_items = my_list.get_items()
+    print(f""Remaining items count: {len(remaining_items)}"")",True,5,2649,24_9_5.py
+24,13,Create a basic item list,Generate high-quality Python code that dynamically constructs an item list with type checking and clear documentation following industry best practices.,"from typing import List, Any
+def validate_item(item: Any) -> bool:
+    return isinstance(item, str) and len(str(item)) > 0 or isinstance(item, int)
+def construct_item_list(items: List[Any], min_length: int = 1, max_length: int = None) -> List[str]:
+    valid_items = []
+    for item in items:
+        if validate_item(item):
+            valid_items.append(str(item))
+    result_list = list(valid_items)
+    if len(result_list) < min_length:
+        raise ValueError(f""The constructed list has {len(result_list)} items but requires at least {min_length}."")
+    if max_length is not None and len(result_list) > max_length:
+        raise ValueError(f""The constructed list exceeds the maximum allowed length of {max_length} with {len(result_list)}."")
+    return result_list
+if __name__ == '__main__':
+    raw_data = [123, ""valid_string"", 45.67, """", None, True, -98]
+    try:
+        final_list = construct_item_list(raw_data)
+        print(""Constructed Item List:"")
+        for idx, item in enumerate(final_list):
+            print(f""Item {idx}: {item}"")
+    except ValueError as e:
+        print(f""Validation Error occurred: {e}"")",True,0,2650,24_13.py
+24,13,Create a basic item list,Generate high-quality Python code that dynamically constructs an item list with type checking and clear documentation following industry best practices.,"class Item:
+    def __init__(self, name: str, price: float, quantity: int):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise TypeError(""Name must be a non-empty string."")
+        if not isinstance(price, (int, float)) or price <= 0:
+            raise ValueError(""Price must be a positive number."")
+        if not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Quantity must be a non-negative integer."")
+        self._name = name.strip()
+        self.price = float(price)
+        self.quantity = quantity
+    @property
+    def total(self) -> float:
+        return round(self.price * self.quantity, 2)
+class ItemList:
+    def __init__(self):
+        self._items = []
+    @staticmethod
+    def _validate_item(item_data: dict) -> None:
+        required_keys = {'name', 'price', 'quantity'}
+        if not isinstance(item_data, dict):
+            raise TypeError(""Item data must be a dictionary."")
+        missing_keys = required_keys - set(item_data.keys())
+        if missing_keys:
+            raise ValueError(f""Missing required keys: {missing_keys}"")
+    def add_item(self, item_data: dict) -> None:
+        self._validate_item(item_data)
+        try:
+            new_item = Item(**item_data)
+            self._items.append(new_item)
+        except (TypeError, ValueError) as e:
+            raise RuntimeError(f""Failed to add item due to validation error: {e}"")
+    def get_total_value(self) -> float:
+        return round(sum(item.total for item in self._items), 2)
+if __name__ == '__main__':
+    list_instance = ItemList()
+    sample_items = [
+        {'name': 'Laptop', 'price': 999.50, 'quantity': 1},
+        {'name': 'Mouse', 'price': 25.00, 'quantity': 3},
+        {'name': 'Keyboard', 'price': 75.99, 'quantity': 2}
+    ]
+    for item_data in sample_items:
+        list_instance.add_item(item_data)
+    print(f""Total Value of Items: ${list_instance.get_total_value():.2f}"")",True,1,2651,24_13_1.py
+24,13,Create a basic item list,Generate high-quality Python code that dynamically constructs an item list with type checking and clear documentation following industry best practices.,"class ItemValidationError(Exception):
+    def __init__(self, message: str) -> None:
+        self.message = f""Validation Error: {message}""
+        super().__init__(self.message)
+def validate_and_collect_items(items: list[dict]) -> dict[str, int]:
+    valid_count = 0
+    if not isinstance(items, list):
+        raise ValueError(""Input must be a list of dictionaries."")
+    for idx, entry in enumerate(items):
+        if not isinstance(entry, dict) or len(entry) == 0:
+            continue
+        has_valid_entry = False
+        for key, value in entry.items():
+            if isinstance(value, bool):
+                pass 
+            elif not isinstance(value, (int, str)):
+                raise ItemValidationError(f""Invalid type '{type(value).__name__}' for key '{key}'. Expected int or str."")
+            if isinstance(value, int) and not isinstance(value, bool):
+                has_valid_entry = True
+        if not has_valid_entry:
+            raise ItemValidationError(f""Validation Error: Invalid type for item at index {idx}."")
+    return {""total_valid"": len(items), ""total_invalid"": 0}
+if __name__ == '__main__':
+    test_data = [
+        {""id"": 1, ""qty"": 5}, 
+        {""name"": ""test"", ""val"": ""3""}, 
+        {""price"": 2.99}
+    ]
+    try:
+        result = validate_and_collect_items(test_data)
+        print(f""Processed Items Summary: {result}"")
+    except ItemValidationError as e:
+        print(e.message)",True,2,2652,24_13_2.py
+24,13,Create a basic item list,Generate high-quality Python code that dynamically constructs an item list with type checking and clear documentation following industry best practices.,"def build_item_list(items):
+    if not isinstance(items, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    validated_items = []
+    for idx, item in enumerate(items):
+        try:
+            str(item)                                                                                                                                                                            
+            if not isinstance(item, (str, int)): 
+                continue                                                                                                                                                                                         
+            else:
+                validated_items.append(str(item))
+        except TypeError:
+            raise ValueError(f""Element at index {idx} is not convertible to string."")
+    return validated_items
+if __name__ == '__main__':
+    raw_data = [""Apple"", 42, ""Banana"", None, [1, 2], True]
+    try:
+        final_list = build_item_list(raw_data)
+        print(""Validated Item List:"", final_list)
+    except (TypeError, ValueError) as e:
+        print(f""Error encountered during list construction: {e}"")",True,3,2653,24_13_3.py
+24,13,Create a basic item list,Generate high-quality Python code that dynamically constructs an item list with type checking and clear documentation following industry best practices.,"def validate_item(item):
+    return isinstance(item, str) and len(item.strip()) > 0
+def construct_item_list(items):
+    return [item for item in items if validate_item(item)]
+if __name__ == '__main__':
+    sample_data = [""apple"", 123, ""   "", None, ""banana""]
+    validated_list = construct_item_list(sample_data)",True,4,2654,24_13_4.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional
+def get_city_name(latitude: float, longitude: float) -> str:
+    try:
+        url = ""https://nominatim.openstreetmap.org/search""
+        params = {
+            ""format"": ""json"",
+            ""q"": f""{latitude},{longitude}"",
+            ""limit"": 1
+        }
+        response = requests.get(url, params=params, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            return data[0].get(""display_name"", """")
+        else:
+            raise ValueError(f""API returned status code {response.status_code}"")
+    except requests.exceptions.Timeout:
+        raise TimeoutError(""Request timed out"")
+    except requests.exceptions.RequestException as e:
+        raise Exception(f""Network error occurred: {e}"")
+if __name__ == '__main__':
+    lat = 40.7128
+    lon = -74.0060
+    try:
+        city = get_city_name(lat, lon)
+        print(city)
+    except TimeoutError as te:
+        print(f""Timeout error occurred: {te}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,0,2655,25_1.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not isinstance(latitude, (int, float)) or not isinstance(longitude, (int, float)):
+        raise ValueError(""Latitude and longitude must be numeric."")
+    if latitude < -90 or latitude > 90:
+        raise ValueError(f""Invalid latitude {latitude}. Must be between -90 and 90."")
+    if longitude < -180 or longitude > 180:
+        raise ValueError(f""Invalid longitude {longitude}. Must be between -180 and 180."")
+    url = ""https://geocoding-api.example.com/v2/reverse?lat={}&lon={}"".format(latitude, longitude)
+    try:
+        response = requests.get(url, timeout=5.0)
+        if response.status_code == 429 or response.status_code >= 500:
+            raise TimeoutError(""API request timed out or service unavailable."")
+        data = response.json()
+        city_name = data.get('city', {}).get('name')
+        if not city_name:
+            return ""City name not found in database.""
+        return city_name
+    except requests.exceptions.Timeout as e:
+        raise TimeoutError(f""API request timed out after 5 seconds."") from e
+    except requests.exceptions.ConnectionError as e:
+        raise ConnectionError(""Failed to connect to the geocoding API."") from e
+if __name__ == '__main__':
+    lat = 40.7128
+    lon = -74.0060
+    try:
+        result = get_city_name(lat, lon)
+        print(f""City Name: {result}"")
+    except (ValueError, TimeoutError, ConnectionError) as error:
+        print(f""An error occurred: {error}"")",True,1,2656,25_1_1.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not isinstance(latitude, (int, float)) or not isinstance(longitude, (int, float)):
+        raise TypeError(""Latitude and longitude must be numeric."")
+    if latitude < -90 or latitude > 90:
+        raise ValueError(f""Invalid latitude {latitude}. Must be between -90 and 90."")
+    if longitude < -180 or longitude > 180:
+        raise ValueError(f""Invalid longitude {longitude}. Must be between -180 and 180."")
+    url = ""https://geocoding-api.example.com/v2/reverse?lat={}&lon={}"".format(latitude, longitude)
+    try:
+        response = requests.get(url, timeout=5.0)
+        if response.status_code == 429 or response.status_code >= 500:
+            raise TimeoutError(""API request timed out or service unavailable."")
+        data = response.json()
+        city_name = data.get('city', {}).get('name')
+        if not city_name:
+            return ""City name not found in database.""
+        return city_name
+    except requests.exceptions.Timeout as e:
+        raise TimeoutError(f""API request timed out after 5 seconds."") from e
+    except requests.exceptions.ConnectionError as e:
+        raise ConnectionError(""Unable to connect to the geocoding service."") from e
+if __name__ == '__main__':
+    lat = 40.7128
+    lon = -74.0060
+    try:
+        result = get_city_name(lat, lon)
+        print(f""City Name: {result}"")
+    except (TypeError, ValueError, TimeoutError, ConnectionError) as error:
+        print(f""An error occurred: {error}"")",True,2,2657,25_1_2.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not (-90 <= latitude <= 90):
+        raise ValueError(""Latitude must be between -90 and 90."")
+    if not (-180 <= longitude <= 180):
+        raise ValueError(""Longitude must be between -180 and 180."")
+    url = ""https://geocoding-api.example.com/v2/reverse""
+    params = {
+        'lat': latitude,
+        'lon': longitude,
+        'format': 'json'
+    }
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        if response.status_code == 429 or response.status_code >= 500:
+            raise TimeoutError(""API request timed out or service unavailable."")
+        data = response.json()
+        city_name = data.get('city', {}).get('name')
+        if not city_name:
+            return ""City name not found in database.""
+        return city_name
+    except requests.exceptions.Timeout as e:
+        raise TimeoutError(f""API request timed out after 10 seconds."") from e
+    except Exception as e:
+        raise RuntimeError(f""An unexpected error occurred while fetching location data:"") from e
+if __name__ == '__main__':
+    lat = 48.8566
+    lon = 2.3522
+    try:
+        city = get_city_name(lat, lon)
+        print(f""Coordinates ({lat}, {lon}) correspond to the city: {city}"")
+    except (ValueError, TimeoutError, RuntimeError) as error:
+        print(f""An error occurred while determining the city name:"")",True,3,2658,25_1_3.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional, Tuple
+def get_city_name(lat: float, lon: float) -> str:
+    url = ""https://geocoding-api.example.com/v1/reverse""
+    try:
+        response = requests.get(url, params={""lat"": lat, ""lon"": lon}, timeout=5.0)
+        if not 200 <= response.status_code < 300:
+            raise ValueError(f""API returned status code {response.status_code}"")
+        data = response.json()
+        city_name = data.get(""city"", {}).get(""name"")
+        if not city_name or isinstance(city_name, str) and len(city_name.strip()) == 0:
+            return ""Unknown location""
+        return city_name
+    except requests.exceptions.Timeout:
+        raise TimeoutError(""API request timed out after 5 seconds."")
+    except requests.exceptions.ConnectionError:
+        raise ConnectionError(""Failed to connect to the geocoding service."")
+    except ValueError as ve:
+        if ""invalid"" in str(ve).lower():
+            return f""Invalid input: {str(ve)}""
+        else:
+            raise
+if __name__ == '__main__':
+    lat = 40.7128
+    lon = -74.0060
+    try:
+        city = get_city_name(lat, lon)
+        print(city)
+    except (ValueError, TimeoutError, ConnectionError) as e:
+        if isinstance(e, ValueError):
+            print(f""Input Error: {e}"")
+        elif isinstance(e, TimeoutError):
+            print(""Timeout occurred."")
+        else:
+            print(f""Connection failed: {e}"")",True,4,2659,25_1_4.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional, Tuple
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not isinstance(latitude, (int, float)) or not isinstance(longitude, (int, float)):
+        raise ValueError(""Latitude and longitude must be numeric."")
+    if latitude < -90.1 or latitude > 84:
+        raise ValueError(f""Invalid latitude {latitude}. Must be between -90 and 84."")
+    if longitude < -180.1 or longitude > 179.9:
+        raise ValueError(f""Invalid longitude {longitude}. Must be between -180 and 179."")
+    try:
+        url = ""https://nominatim.openstreetmap.org/search""
+        params = {""format"": ""json"", ""q"": f""{latitude},{longitude}"", ""limit"": 1}
+        response = requests.get(url, params=params, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        if not data or len(data) == 0:
+            raise ValueError(""No city found for the given coordinates."")
+        return data[0][""display_name""]
+    except requests.exceptions.Timeout:
+        raise TimeoutError(""API request timed out."") from None
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f""Network error occurred while fetching location: {e}"") from e
+if __name__ == '__main__':
+    lat = 48.8566
+    lon = 2.3522
+    try:
+        city = get_city_name(lat, lon)
+        print(f""City found at coordinates ({lat}, {lon}): {city}"")
+    except (ValueError, TimeoutError, RuntimeError) as err:
+        print(f""An error occurred: {err}"")",True,5,2660,25_1_5.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not (-90 <= latitude <= 90):
+        raise ValueError(""Latitude must be between -90 and 90 degrees."")
+    if not (-180 <= longitude <= 180):
+        raise ValueError(""Longitude must be between -180 and 180 degrees."")
+    url = ""https://geocoding-api.example.com/reverse""
+    params = {
+        'lat': latitude,
+        'lon': longitude,
+        'api_key': 'hardcoded_sample_key'
+    }
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            city_name = data.get('city', {}).get('name')
+            if not city_name or isinstance(city_name, str):
+                return city_name
+            raise ValueError(""Invalid API response format."")
+        elif response.status_code >= 500:
+            raise TimeoutError(f""Server error occurred. Status code: {response.status_code}"")
+        else:
+            raise Exception(f""API returned unexpected status code: {response.status_code}."")
+    except requests.exceptions.Timeout:
+        raise TimeoutError(""Request timed out after 10 seconds."")
+    except requests.exceptions.ConnectionError:
+        raise ConnectionError(""Unable to connect to the geocoding service."")
+if __name__ == '__main__':
+    lat = 48.8566
+    lon = 2.3522
+    try:
+        city = get_city_name(lat, lon)
+        print(f""City name for {lat}, {lon}: {city}"")
+    except (ValueError, TimeoutError, ConnectionError) as e:
+        error_msg = str(e).replace('\n', ' ') if isinstance(e, Exception) else str(e)
+        print(f""Error occurred while retrieving city information: {error_msg}"")",True,6,2661,25_1_6.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not (-90 <= latitude <= 90):
+        raise ValueError(""Latitude must be between -90 and 90."")
+    try:
+        response = requests.get(
+            ""https://nominatim.openstreetmap.org/search"",
+            params={
+                ""format"": ""json"",
+                ""lat"": latitude,
+                ""lon"": longitude,
+                ""limit"": 1
+            },
+            timeout=5.0
+        )
+        response.raise_for_status()
+        data = response.json()
+        if not data or len(data) == 0:
+            return f""City name unknown for coordinates ({latitude}, {longitude})""
+        city_name = data[0].get(""display_name"", ""Unknown"")
+    except requests.exceptions.Timeout:
+        raise TimeoutError(""API request timed out."")
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f""Network error occurred while fetching location: {e}"")
+    return city_name
+if __name__ == '__main__':
+    lat = 40.7128
+    lon = -74.0060
+    try:
+        result = get_city_name(lat, lon)
+        print(f""City name for {lat}, {lon}: {result}"")
+    except (ValueError, TimeoutError, RuntimeError) as error:
+        print(f""An error occurred: {error}"")",True,7,2662,25_1_7.py
+25,1,Map colors to names,Write a production-ready Python function that takes latitude and longitude as arguments and returns the corresponding city name with full error handling for invalid inputs and API timeouts.,"import requests
+from typing import Optional, Tuple
+def get_city_name(latitude: float, longitude: float) -> str:
+    if not isinstance(latitude, (int, float)) or not isinstance(longitude, (int, float)):
+        raise TypeError(""Latitude and longitude must be numeric values."")
+    if latitude < -90 or latitude > 90:
+        raise ValueError(f""Invalid latitude {latitude}. Must be between -90 and 90."")
+    if longitude < -180 or longitude > 180:
+        raise ValueError(f""Invalid longitude {longitude}. Must be between -180 and 180."")
+    url = f""https://geocoding-api.example.com/reverse?lat={latitude}&lon={longitude}""
+    try:
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            return data.get(""city"", ""Unknown City"")
+        else:
+            error_msg = f""API returned status code {response.status_code}""
+            raise RuntimeError(error_msg)
+    except requests.exceptions.Timeout:
+        raise TimeoutError(f""Request to geocoding API timed out after 5 seconds."")
+    except requests.exceptions.ConnectionError:
+        raise ConnectionError(""Failed to connect to the geocoding service."")
+if __name__ == '__main__':
+    lat = 40.7128
+    lon = -74.0060
+    try:
+        city_name = get_city_name(lat, lon)
+        print(f""City Name: {city_name}"")
+    except (TypeError, ValueError, TimeoutError, ConnectionError) as e:
+        print(f""An error occurred: {e}"")",True,8,2663,25_1_8.py
+25,3,Map colors to names,"Develop a comprehensive Python class named GeographicMapper that encapsulates logic to convert coordinates to names, with support for multiple geocoding providers via an abstract base pattern.","import abc
+from typing import Optional
+class GeocodingProvider(abc.ABC):
+    @abc.abstractmethod
+    def get_name(self, lat: float, lon: float) -> str:
+        pass
+class OpenStreetMapProvider(GeocodingProvider):
+    def __init__(self, api_key: Optional[str] = None):
+        self.api_key = api_key
+    def get_name(self, lat: float, lon: float) -> str:
+        return f""OpenStreetMap Location at ({lat}, {lon})""
+class GoogleMapsProvider(GeocodingProvider):
+    def __init__(self, api_key: Optional[str] = None):
+        self.api_key = api_key
+    def get_name(self, lat: float, lon: float) -> str:
+        return f""Google Maps Location at ({lat}, {lon})""
+class GeographicMapper:
+    def __init__(self, provider: GeocodingProvider):
+        self.provider = provider
+    def map_coordinates_to_name(self, latitude: float, longitude: float) -> str:
+        if not (-90 <= latitude <= 90 and -180 <= longitude <= 180):
+            raise ValueError(""Invalid coordinates"")
+        return self.provider.get_name(latitude, longitude)
+if __name__ == '__main__':
+    osm_provider = OpenStreetMapProvider()
+    google_provider = GoogleMapsProvider(api_key=""demo_key_12345"")
+    mapper_osm = GeographicMapper(osm_provider)
+    mapper_google = GeographicMapper(google_provider)
+    sample_lat, sample_lon = 40.7128, -74.0060
+    result_osm = mapper_osm.map_coordinates_to_name(sample_lat, sample_lon)
+    result_google = mapper_google.map_coordinates_to_name(sample_lat, sample_lon)
+    print(f""OSM Result: {result_osm}"")
+    print(f""Google Maps Result: {result_google}"")",True,0,2664,25_3.py
+25,3,Map colors to names,"Develop a comprehensive Python class named GeographicMapper that encapsulates logic to convert coordinates to names, with support for multiple geocoding providers via an abstract base pattern.","import abc
+from typing import Optional
+class GeocodingProvider(abc.ABC):
+    @abc.abstractmethod
+    def get_name(self, lat: float, lon: float) -> str:
+        pass
+class GoogleMapsProvider(GeocodingProvider):
+    def __init__(self, api_key: str = ""YOUR_API_KEY""):
+        self.api_key = api_key
+    def get_name(self, lat: float, lon: float) -> str:
+        return f""Google Maps Location at {lat}, {lon}""
+class OpenStreetMapProvider(GeocodingProvider):
+    def __init__(self, user_agent: str = ""PythonScript/1.0""):
+        self.user_agent = user_agent
+    def get_name(self, lat: float, lon: float) -> str:
+        return f""OpenStreetMap Location at {lat}, {lon}""
+class GeographicMapper:
+    def __init__(self):
+        self.providers: list[GeocodingProvider] = []
+    def add_provider(self, provider: GeocodingProvider) -> None:
+        if isinstance(provider, GeocodingProvider):
+            self.providers.append(provider)
+        else:
+            raise TypeError(""Only valid geocoding providers can be added."")
+    def get_name_from_coordinates(
+        self, lat: float, lon: float, provider_index: Optional[int] = None
+    ) -> str:
+        if not self.providers:
+            return ""No providers registered.""
+        if provider_index is not None and 0 <= provider_index < len(self.providers):
+            selected_provider = self.providers[provider_index]
+        else:
+            if not self.providers:
+                return ""Error: No providers registered.""
+            selected_provider = self.providers[0]
+        try:
+            name = selected_provider.get_name(lat, lon)
+            return f""Provider {selected_provider.__class__.__name__}: {name}""
+        except Exception as e:
+            return f""Error retrieving location from provider: {str(e)}""
+if __name__ == '__main__':
+    mapper = GeographicMapper()
+    google_providers = GoogleMapsProvider(api_key=""demo_key"")
+    osm_provider = OpenStreetMapProvider(user_agent=""test_user"")
+    mapper.add_provider(google_providers)
+    mapper.add_provider(osm_provider)
+    lat, lon = 40.7128, -74.0060
+    result_default = mapper.get_name_from_coordinates(lat, lon)
+    print(result_default)
+    result_specific = mapper.get_name_from_coordinates(lat, lon, provider_index=0)
+    print(result_specific)",True,1,2665,25_3_1.py
+25,3,Map colors to names,"Develop a comprehensive Python class named GeographicMapper that encapsulates logic to convert coordinates to names, with support for multiple geocoding providers via an abstract base pattern.","import abc
+from typing import Optional
+class GeocodingProvider(abc.ABC):
+    @abc.abstractmethod
+    def get_name(self, latitude: float, longitude: float) -> str:
+        pass
+class GoogleMapsProvider(GeocodingProvider):
+    def __init__(self, api_key: str = ""YOUR_API_KEY""):
+        self.api_key = api_key
+    def get_name(self, latitude: float, longitude: float) -> str:
+        return f""Google Maps Location ({latitude}, {longitude}) - Placeholder Data""
+class OpenStreetMapProvider(GeocodingProvider):
+    def __init__(self, user_agent: Optional[str] = None):
+        self.user_agent = user_agent or ""GeographicMapper/1.0""
+    def get_name(self, latitude: float, longitude: float) -> str:
+        return f""OpenStreetMap Location ({latitude}, {longitude}) - Placeholder Data""
+class GeographicMapper:
+    def __init__(self):
+        self.providers = {}
+    def register_provider(self, provider_class: type[GeocodingProvider], name: str):
+        if not issubclass(provider_class, GeocodingProvider):
+            raise TypeError(""Only subclasses of GeocodingProvider are allowed"")
+        self.providers[name] = provider_class()
+    def get_location_name(
+        self, latitude: float, longitude: float, provider_name: Optional[str] = None
+    ) -> str:
+        if not provider_name and len(self.providers) == 1:
+            for p in self.providers.values():
+                return p.get_name(latitude, longitude)
+        if provider_name not in self.providers:
+            raise ValueError(f""Unknown provider '{provider_name}'. Available providers: {list(self.providers.keys())}"")
+        return self.providers[provider_name].get_name(latitude, longitude)
+if __name__ == '__main__':
+    mapper = GeographicMapper()
+    google_provider = GoogleMapsProvider(api_key=""test-key"")
+    osm_provider = OpenStreetMapProvider(user_agent=None)
+    mapper.register_provider(GoogleMapsProvider, ""google_maps"")
+    mapper.register_provider(OpenStreetMapProvider, ""openstreetmap"")
+    lat, lon = 40.7128, -74.0060
+    result_google = mapper.get_location_name(lat, lon, provider_name=""google_maps"")
+    print(result_google)
+    result_osm = mapper.get_location_name(lat, lon, provider_name=""openstreetmap"")
+    print(result_osm)",True,2,2666,25_3_2.py
+25,3,Map colors to names,"Develop a comprehensive Python class named GeographicMapper that encapsulates logic to convert coordinates to names, with support for multiple geocoding providers via an abstract base pattern.","from abc import ABC, abstractmethod
+class GeocodingProvider(ABC):
+    @abstractmethod
+    def get_location(self, lat: float, lon: float) -> str:
+        pass
+class SampleLocationProvider(GeocodingProvider):
+    _locations = {
+        (40.7128, -74.0060): ""New York"",
+        (51.5074, -0.1278): ""London"",
+        (35.6762, 139.6503): ""Tokyo""
+    }
+    def get_location(self, lat: float, lon: float) -> str:
+        key = (lat, lon)
+        return self._locations.get(key, f""Unknown location at {lat}, {lon}"")
+class SampleCityProvider(GeocodingProvider):
+    _cities = [
+        (""New York"", 40.7128, -74.0060),
+        (""London"", 51.5074, -0.1278)
+    ]
+    def get_location(self, lat: float, lon: float) -> str:
+        for city_name, c_lat, c_lon in self._cities:
+            if abs(lat - c_lat) < 0.001 and abs(lon - c_lon) < 0.001:
+                return city_name
+        return f""Unknown location at {lat}, {lon}""
+class GeographicMapper:
+    def __init__(self, provider_class=None):
+        self.provider = provider_class if isinstance(provider_class, GeocodingProvider) else SampleLocationProvider()
+    def map_coordinates(self, lat: float, lon: float) -> str:
+        return self.provider.get_location(lat, lon)
+if __name__ == '__main__':
+    mapper1 = GeographicMapper(SampleCityProvider())
+    print(mapper1.map_coordinates(51.5074, -0.1278))
+    mapper2 = GeographicMapper()
+    print(mapper2.map_coordinates(40.7128, -74.0060))",True,3,2667,25_3_3.py
+25,3,Map colors to names,"Develop a comprehensive Python class named GeographicMapper that encapsulates logic to convert coordinates to names, with support for multiple geocoding providers via an abstract base pattern.","from abc import ABC, abstractmethod
+class GeocodingProvider(ABC):
+    @abstractmethod
+    def get_name(self, lat: float, lon: float) -> str:
+        pass
+class OpenStreetMapProvider(GeocodingProvider):
+    def __init__(self, api_key: str = ""default_osm""):
+        self.api_key = api_key
+    def get_name(self, lat: float, lon: float) -> str:
+        return f""OpenStreetMap Location ({lat}, {lon})""
+class GoogleMapsProvider(GeocodingProvider):
+    def __init__(self, api_key: str = ""default_google""):
+        self.api_key = api_key
+    def get_name(self, lat: float, lon: float) -> str:
+        return f""Google Maps Location ({lat}, {lon})""
+class GeographicMapper:
+    def __init__(self):
+        self.providers: list[GeocodingProvider] = []
+    def add_provider(self, provider: GeocodingProvider) -> None:
+        if isinstance(provider, GeocodingProvider):
+            self.providers.append(provider)
+        else:
+            raise TypeError(""Only valid geocoding providers can be added."")
+    def map_coordinates_to_name(self, lat: float, lon: float, use_first_available: bool = True) -> str | None:
+        for provider in self.providers:
+            try:
+                return provider.get_name(lat, lon)
+            except Exception as e:
+                if not use_first_available and len(self.providers) > 1:
+                    continue
+                raise e
+    def map_coordinates_to_names(self, lat: float, lon: float) -> list[str]:
+        results = []
+        for provider in self.providers:
+            try:
+                name = provider.get_name(lat, lon)
+                if name and len(name.strip()) > 0:
+                    results.append(name)
+            except Exception as e:
+                pass
+        return results
+if __name__ == '__main__':
+    mapper = GeographicMapper()
+    osm_provider = OpenStreetMapProvider(api_key=""osm_123"")
+    google_provider = GoogleMapsProvider(api_key=""google_456"")
+    mapper.add_provider(osm_provider)
+    mapper.add_provider(google_provider)
+    lat, lon = 40.7128, -74.0060
+    single_name = mapper.map_coordinates_to_name(lat, lon)
+    all_names = mapper.map_coordinates_to_names(lat, lon)
+    print(f""Single Name: {single_name}"")
+    print(""All Names:"")
+    for name in all_names:
+        print(name)",True,4,2668,25_3_4.py
+25,3,Map colors to names,"Develop a comprehensive Python class named GeographicMapper that encapsulates logic to convert coordinates to names, with support for multiple geocoding providers via an abstract base pattern.","from abc import ABC, abstractmethod
+class GeocodingProvider(ABC):
+    @abstractmethod
+    def get_name(self, latitude: float, longitude: float) -> str:
+        pass
+class MockGeocodingProvider(GeocodingProvider):
+    _locations = {
+        (40.7128, -74.0060): ""New York City"",
+        (51.5074, -0.1278): ""London"",
+        (35.6762, 139.6503): ""Tokyo""
+    }
+    def get_name(self, latitude: float, longitude: float) -> str:
+        key = (round(latitude, 4), round(longitude, 4))
+        return self._locations.get(key, f""Unknown Location at {latitude}, {longitude}"")
+class GeographicMapper:
+    def __init__(self):
+        self.providers: list[GeocodingProvider] = []
+    def add_provider(self, provider: GeocodingProvider) -> None:
+        if isinstance(provider, GeocodingProvider):
+            self.providers.append(provider)
+        else:
+            raise TypeError(""Only instances of subclasses from 'abstract base pattern' are allowed"")
+    def get_name_for_coordinates(
+        self, latitude: float | None = None, longitude: float | None = None
+    ) -> str:
+        if latitude is None or longitude is None:
+            return ""Invalid coordinates""
+        for provider in self.providers:
+            try:
+                name = provider.get_name(latitude, longitude)
+                return f""{name} (via {provider.__class__.__name__})""
+            except Exception as e:
+                continue
+        return ""No matching location found via any registered providers""
+if __name__ == '__main__':
+    mapper = GeographicMapper()
+    mock_provider = MockGeocodingProvider()
+    mapper.add_provider(mock_provider)
+    test_lat, test_lon = 40.7128, -74.0060
+    result = mapper.get_name_for_coordinates(test_lat, test_lon)
+    print(result)",True,5,2669,25_3_5.py
+25,2,Map colors to names,Create an optimized asynchronous Python application using aiohttp to batch map coordinate-to-name lookups. Ensure thread safety and implement a caching mechanism for repeated requests.,"import asyncio
+from aiohttp import ClientSession
+from typing import Dict, List, Tuple
+import time
+class GeoCache:
+    def __init__(self):
+        self._cache: Dict[Tuple[float, float], str] = {}
+        self._lock = asyncio.Lock()
+    async def get(self, lat: float, lon: float) -> str:
+        key = (lat, lon)
+        if key in self._cache:
+            return self._cache[key]
+        try:
+            async with ClientSession(timeout=asyncio.ClientTimeout(total=5)) as session:
+                await asyncio.sleep(0.1) 
+                if abs(lat - 48.8566) < 0.01 and abs(lon - 2.3522) < 0.01:
+                    name = ""Paris""
+                elif abs(lat - 51.5074) < 0.01 and abs(lon - 0.1278) < 0.01:
+                    name = ""London""
+                else:
+                    import random
+                    names = [""Tokyo"", ""New York"", ""Berlin""]
+                    name = random.choice(names)
+            async with self._lock:
+                if key not in self._cache:
+                    self._cache[key] = name
+        except Exception as e:
+            print(f""Error fetching coordinates ({lat}, {lon}): {e}"")
+        return ""Unknown Location""
+async def fetch_location(session: ClientSession, lat: float, lon: float) -> str:
+    cache = GeoCache()
+    return await cache.get(lat, lon)
+async def process_batch(coordinates: List[Tuple[float, float]]) -> Dict[str, str]:
+    tasks = [fetch_location(None, lat, lon) for lat, lon in coordinates]
+    results = await asyncio.gather(*tasks)
+    return dict(zip(coordinates, results))
+if __name__ == '__main__':
+    sample_coords = [(48.8566, 2.3522), (51.5074, -0.1278), (-33.8688, 151.2093)]
+    start_time = time.time()
+    results = asyncio.run(process_batch(sample_coords))
+    end_time = time.time()
+    print(""Batch Results:"")
+    for coord, name in zip(sample_coords, results.values()):
+        print(f""{coord}: {name}"")
+    print(f""Total Time: {end_time - start_time:.2f} seconds"")",True,0,2670,25_2.py
+25,2,Map colors to names,Create an optimized asynchronous Python application using aiohttp to batch map coordinate-to-name lookups. Ensure thread safety and implement a caching mechanism for repeated requests.,"import asyncio
+from typing import Dict, List, Tuple
+import aiohttp
+class CoordinateCache:
+    def __init__(self):
+        self._cache: Dict[Tuple[int, int], str] = {}
+        self.lock = asyncio.Lock()
+    async def get(self, coord: Tuple[int, int]) -> str:
+        if coord in self._cache:
+            return self._cache[coord]
+        await asyncio.sleep(0.1)
+        new_name = f""Location_{coord[0]}_{coord[1]}""
+        async with self.lock:
+            if coord in self._cache:
+                return self._cache[coord]
+            if coord not in self._cache:
+                self._cache[coord] = new_name
+            return new_name
+    async def set(self, coord: Tuple[int, int], name: str):
+        async with self.lock:
+            self._cache[coord] = name
+async def fetch_coordinates(session: aiohttp.ClientSession) -> List[Tuple[str, str]]:
+    coords_data = [
+        (101, 205),
+        (304, 789),
+        (666, 123),
+        (999, 888),
+        (42, 42)
+    ]
+    tasks = [session.get(f""http://example.com/api?x={c[0]}&y={c[1]}"") for c in coords_data]
+    results = await asyncio.gather(*tasks)
+    return [(str(c), r.text.strip()) if not isinstance(r, str) else (str(c), r) for c, r in zip(coords_data, results)]
+async def main():
+    cache = CoordinateCache()
+    coordinator_map: Dict[Tuple[int, int], str] = {}
+    sample_coords = [(101, 205), (304, 789), (666, 123)]
+    for coord in sample_coords:
+        name = await cache.get(coord)
+        coordinator_map[coord] = name
+    test_coord = (101, 205)
+    cached_name = await cache.get(test_coord)
+    print(f""Initial mapping for {test_coord}: {cached_name}"")
+if __name__ == '__main__':
+    asyncio.run(main())",True,1,2671,25_2_1.py
+25,0,Map colors to names,Implement an efficient and robust Python script that maps geographic coordinates to place names using a geocoding library like Geopy or Nominatim. Ensure the code handles network errors gracefully and includes input validation.,,False,0,2672,25_0.py
+25,4,Map colors to names,"Generate high-performance Python code using NumPy vectors to perform bulk coordinate-to-name mapping where possible, falling back to individual API calls only when necessary. Optimize memory usage during large dataset processing.","import numpy as np
+from concurrent.futures import ThreadPoolExecutor
+import time
+def fetch_name_from_api(coord):
+    return f""Name_{coord[0]}_{coord[1]}""
+def bulk_map_coordinates(coords, max_workers=4):
+    if len(coords.shape) != 1 or coords.shape[0] % 2 != 0:
+        raise ValueError(""Coordinates must be a flat array with an even number of elements representing [x, y]."")
+    n = len(coords) // 2
+    xs = coords[::2]
+    ys = coords[1::2]
+    names_list = []
+    BATCH_SIZE = 100
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = []
+        for i in range(0, n, BATCH_SIZE):
+            end_idx = min(i + BATCH_SIZE, n)
+            batch_coords = coords[i:end_idx]
+            future = executor.submit(fetch_name_from_api, batch_coords.reshape(-1))
+            futures.append(future)
+        for future in futures:
+            names_list.extend([future.result()])
+    return np.array(names_list)
+if __name__ == '__main__':
+    raw_coords = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+    start_time = time.time()
+    result_names = bulk_map_coordinates(raw_coords)
+    end_time = time.time()
+    print(""Mapped Names:"")
+    for name in result_names:
+        print(name)
+    print(f""Processing completed in {end_time - start_time:.4f} seconds"")",True,0,2673,25_4.py
+25,4,Map colors to names,"Generate high-performance Python code using NumPy vectors to perform bulk coordinate-to-name mapping where possible, falling back to individual API calls only when necessary. Optimize memory usage during large dataset processing.","import numpy as np
+def bulk_coordinate_to_name(coordinates):
+    code_map = {
+        'A': {'lat': 40.7128, 'lon': -74.0060},
+        'B': {'lat': 34.0522, 'lon': -118.2437},
+    }
+    result = []
+    if len(coordinates) > 1:
+        lats = np.array([c['lat'] for c in coordinates])
+        lons = np.array([c['lon'] for c in coordinates])
+        matched_indices = []
+        unmatched_coords = []
+        for idx, coord in enumerate(coordinates):
+            if any(abs(coord['lat'] - code_map[k]['lat']) < 0.1 and abs(coord['lon'] - code_map[k]['lon']) < 0.1 
+                   for k in code_map.keys()):
+                matched_indices.append(idx)
+        if len(matched_indices):
+            result = [f""{coordinates[i]}'s Name"" for i in range(len(coordinates))]
+    else:
+        name_map = {
+            'A': ""New York"",
+            'B': ""Los Angeles"",
+        }
+        if coordinates[0] in name_map.values():
+            result.append(name_map.get(coordinates[0], f""Unknown: {coordinates}""))
+    return result
+if __name__ == '__main__':
+    sample_coords = [
+        {'lat': 40.7128, 'lon': -74.0060},
+        {'lat': 35.0, 'lon': -90.0},
+        {'lat': 34.0522, 'lon': -118.2437}
+    ]
+    output = bulk_coordinate_to_name(sample_coords)
+    print(output)",True,1,2674,25_4_1.py
+25,4,Map colors to names,"Generate high-performance Python code using NumPy vectors to perform bulk coordinate-to-name mapping where possible, falling back to individual API calls only when necessary. Optimize memory usage during large dataset processing.","import numpy as np
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+def fetch_name_from_api(coord):
+    try:
+        response = f""Name_{coord[0]}_{coord[1]}""                                
+        return coord, response
+    except Exception:
+        raise RuntimeError(f""API failure for {coord}"")
+def bulk_coordinate_to_name(coords):
+    if not coords or len(coords) == 0:
+        return []
+    x_coords = np.array([c[0] for c in coords])
+    y_coords = np.array([c[1] for c in coords])
+    results = {}
+    try:
+        batch_size = 10
+        start_time = time.time()
+        for i in range(0, len(coords), batch_size):
+            end_idx = min(i + batch_size, len(coords))
+            current_batch = coords[i:end_idx]
+            if isinstance(current_batch[0], (list, tuple)):
+                x_b = np.array([c[0] for c in current_batch])
+                y_b = np.array([c[1] for c in current_batch])
+                mock_names = [f""Vector_{x}_{y}"" for x, y in zip(x_b.tolist(), y_b.tolist())]
+            else:
+                raise ValueError(""Coordinates must be tuples or lists"")
+            results.update(zip(current_batch, mock_names))
+        elapsed_time = time.time() - start_time
+    except Exception as e:
+        print(f""Vectorized operation failed. Falling back to sequential mode due to error: {e}"")
+        results_fallback = {}
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            future_to_coord = {executor.submit(fetch_name_from_api, coord): coord for coord in coords}
+            for future in as_completed(future_to_coord):
+                try:
+                    result = future.result()
+                    results_fallback[result[0]] = result[1]
+                except Exception as exc:
+                    if isinstance(exc.__cause__, RuntimeError) and ""API failure"" in str(exc.__cause__):
+                        pass
+        return list(results_fallback.values())
+if __name__ == '__main__':
+    sample_coords = [(1.0, 2.0), (3.0, 4.0), (5.0, 6.0)]
+    coords_to_process = [list(c) for c in sample_coords]
+    names_list = bulk_coordinate_to_name(coords_to_process)
+    print(""Generated Names:"", names_list)",True,2,2675,25_4_2.py
+25,5,Map colors to names,Write a clean and maintainable Python module that includes unit tests for the map-colors-to-names functionality using pytest. The code should utilize dependency injection for geocoding services to enable easy testing without external API keys in test environments.,,False,0,2676,25_5.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logger = logging.getLogger(__name__)
+def validate_wgs84_coords(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    return True
+class LocationService:
+    def __init__(self):
+        self._locations = {}
+    def add_location(self, name: str, lat: float, lon: float) -> None:
+        if not validate_wgs84_coords(lat, lon):
+            logger.warning(f""Invalid coordinates for {name}: ({lat}, {lon})"")
+            return
+        self._locations[name] = (lat, lon)
+    def get_location(self, name: str) -> Optional[Tuple[float, float]]:
+        if not validate_wgs84_coords(*self._locations.get(name)):
+            logger.warning(f""Location '{name}' has invalid coordinates"")
+            return None
+        return self._locations[name]
+if __name__ == '__main__':
+    service = LocationService()
+    service.add_location(""New York"", 40.7128, -74.0060)
+    service.add_location(""Invalid North"", 95.0, -74.0060)
+    service.add_location(""Valid South"", -33.8688, 151.2093)
+    target_name = ""New York""
+    coords = service.get_location(target_name)
+    if coords:
+        logger.info(f""Fetched coordinates for {target_name}: {coords}"")",True,0,2677,25_8.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    return True
+def get_location_name(lat: float, lon: float) -> Optional[str]:
+    valid_coords = [45.7632, -97.6952]
+    if lat == 45.7632 and lon == -97.6952:
+        return ""Kansas City""
+    logger.warning(f""No known location found for coordinates ({lat}, {lon})"")
+    return None
+def main():
+    sample_lat = 48.1075
+    sample_lon = -3.0578
+    if validate_wgs84(sample_lat, sample_lon):
+        name = get_location_name(sample_lat, sample_lon)
+        logger.info(f""Retrieved location: {name}"")
+    else:
+        logger.error(""Coordinate validation failed"")
+if __name__ == '__main__':
+    main()",True,1,2678,25_8_1.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    return True
+def get_location_name(lat: float, lon: float) -> Optional[str]:
+    logger.debug(f""Retrieving name for coordinates ({lat}, {lon})"")
+    if lat == 45.7631 and lon == -122.6908:
+        return ""San Francisco, CA""
+    elif lat == 40.7128 and lon == -74.0060:
+        return ""New York City, NY""
+    else:
+        logger.warning(f""No name found for coordinates ({lat}, {lon})"")
+        return None
+def main():
+    sample_lat = 50.0
+    sample_lon = 100.0
+    if not validate_wgs84(sample_lat, sample_lon):
+        logger.error(""Coordinate validation failed."")
+        return
+    name = get_location_name(sample_lat, sample_lon)
+    if name:
+        logger.info(f""Location found: {name}"")
+    else:
+        logger.warning(""No location data available for the provided coordinates."")
+if __name__ == '__main__':
+    main()",True,2,2679,25_8_2.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    return True
+class LocationValidator:
+    def __init__(self):
+        self.valid_locations = {(-45.0, -73.6) : ""Rio de Janeiro"", (29.76, -95.37) : ""Houston""}
+    def get_name(self, lat: float, lon: float) -> Optional[str]:
+        if not validate_wgs84(lat, lon):
+            logger.warning(f""Invalid WGS84 coordinates provided: {lat}, {lon}"")
+            return None
+        key = (round(lat, 2), round(lon, 2))
+        if key in self.valid_locations:
+            name = self.valid_locations[key]
+            logger.debug(f""Retrieved location name for {key}: {name}"")
+            return name
+        else:
+            logger.warning(f""No known location found at coordinates: {lat}, {lon}"")
+            return None
+if __name__ == '__main__':
+    validator = LocationValidator()
+    test_cases = [(-45.0, -73.6), (91.0, 0.0), (-20.0, -80.0)]
+    for lat, lon in test_cases:
+        result = validator.get_name(lat, lon)
+        if result is not None:
+            print(f""Location at {lat}, {lon}: {result}"")",True,3,2680,25_8_3.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    logger.debug(""Coordinates within WGS84 limits"")
+    return True
+def get_location_name(lat: float, lon: float) -> Optional[str]:
+    valid_coords = [(-33.8688, 151.2093), (40.7128, -74.0060)]
+    if lat == -33.8688 and lon == 151.2093:
+        return ""Sydney""
+    elif lat == 40.7128 and lon == -74.0060:
+        return ""New York City""
+    logger.debug(f""No match found for {lat}, {lon}"")
+    return None
+if __name__ == '__main__':
+    test_lat, test_lon = 35.6762, 139.7654
+    if validate_wgs84(test_lat, test_lon):
+        name = get_location_name(test_lat, test_lon)
+        logger.info(f""Retrieved location: {name}"")
+    else:
+        logger.error(""Invalid WGS84 coordinates"")",True,4,2681,25_8_4.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90.0 <= lat <= 90.0):
+        return False
+    if not (-180.0 <= lon <= 180.0):
+        return False
+    return True
+def get_location_name(lat: float, lon: float) -> Optional[str]:
+    logger.debug(f""Retrieving location data for {lat}, {lon}"")
+    if lat == 48.8566 and abs(lon - 2.3522) < 0.1:
+        return ""Paris, France""
+    elif lat == 51.5074 and lon == -0.1278:
+        return ""London, UK""
+    else:
+        logger.warning(f""No known location found for {lat}, {lon}"")
+        return None
+def main():
+    lat = 45.993612
+    lon = -75.807799
+    if validate_wgs84(lat, lon):
+        name = get_location_name(lat, lon)
+        logger.info(f""Location found: {name}"")
+    else:
+        error_msg = f""Invalid coordinates provided: latitude={lat}, longitude={lon}""
+        logger.error(error_msg)
+if __name__ == '__main__':
+    main()",True,5,2682,25_8_5.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+def validate_wgs84_coordinate(coord: float) -> bool:
+    return -180 <= coord <= 180
+def get_location_name(lat: float, lon: float) -> str:
+    if not (validate_wgs84_coordinate(lat) and validate_wgs84_coordinate(lon)):
+        raise ValueError(""Coordinates out of WGS84 limits"")
+    logger.debug(f""Retrieving name for lat={lat}, lon={lon}"")
+    return f""Location at {lat:.2f}N, {lon:.2f}E""
+if __name__ == '__main__':
+    test_lat = 35.6762
+    test_lon = -139.8404
+    try:
+        name = get_location_name(test_lat, test_lon)
+        print(name)
+        invalid_lat = float('-inf')
+        result = validate_wgs84_coordinate(invalid_lat)
+        logger.info(f""Validation of {invalid_lat}: {result}"")
+    except ValueError as e:
+        logger.error(str(e))",True,6,2683,25_8_6.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    logger.debug(""Coordinate validation passed for (%s, %s)"", lat, lon)
+    return True
+def get_location_name(lat: float, lon: float) -> Optional[str]:
+    if validate_wgs84(lat, lon):
+        logger.info(f""Retrieving location data for coordinates ({lat}, {lon})"")
+        return f""Location at {lat:.2f}N/W{abs(lon):.2f}E""
+    else:
+        raise ValueError(""Coordinates are outside WGS84 limits."")
+if __name__ == '__main__':
+    sample_lat = 51.5074
+    sample_lon = -0.1278
+    try:
+        result = get_location_name(sample_lat, sample_lon)
+        print(result)
+    except ValueError as e:
+        logger.error(f""Validation failed: {e}"")",True,7,2684,25_8_7.py
+25,8,Map colors to names,Produce type-annotated Python code that strictly validates coordinate inputs against standard WGS84 limits before attempting name retrieval. Include detailed logging for debugging purposes without cluttering the output with verbose messages during normal operation.,"import logging
+from typing import Tuple, Optional
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+def validate_wgs84(lat: float, lon: float) -> bool:
+    if not (-90 <= lat <= 90):
+        return False
+    if not (-180 <= lon <= 180):
+        return False
+    logger.debug(f""Coordinates validated successfully for {lat}, {lon}"")
+    return True
+def get_location_name(lat: float, lon: float) -> Optional[str]:
+    if not validate_wgs84(lat, lon):
+        raise ValueError(""Invalid WGS84 coordinates"")
+    logger.debug(f""Retrieving name for {lat}, {lon}"")
+    known_locations = {
+        (0.0, 175.0),
+        (-33.8688, 151.2093)
+    }
+    if (lat, lon) in known_locations:
+        return ""Simulated City""
+    logger.debug(f""No matching location found for {lat}, {lon}"")
+    return None
+if __name__ == '__main__':
+    test_lat = -33.8688
+    test_lon = 151.2093
+    try:
+        name = get_location_name(test_lat, test_lon)
+        logger.info(f""Retrieved location name: {name}"")
+    except ValueError as e:
+        logger.error(f""Validation failed: {e}"")",True,8,2685,25_8_8.py
