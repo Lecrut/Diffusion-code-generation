@@ -416475,3 +416475,2522 @@ if __name__ == '__main__':
     except ZeroDivisionError as e:
         print(f""\nError caught: {e}"")",True,6,20605,327_2_6.py
 326,4,Find the average of several figures,"Create an interactive command-line tool that continuously prompts the user for input until they enter 'done', accumulating all valid numerical inputs, and finally displaying the calculated average of those numbers.",,False,0,20606,326_4.py
+327,4,Perform basic arithmetic operations,"Implement a function using Python's built-in functions to calculate the average of a list of numbers, assuming the list is non-empty. Include comprehensive type hinting and docstrings for professional quality.","def calculate_average(numbers: list[float]) -> float:
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10.5, 20.0, 35.5, 40.0]
+    average = calculate_average(sample_list)
+    print(average)",True,0,20607,327_4.py
+327,4,Perform basic arithmetic operations,"Implement a function using Python's built-in functions to calculate the average of a list of numbers, assuming the list is non-empty. Include comprehensive type hinting and docstrings for professional quality.","def calculate_average(numbers: list[float | int]) -> float:
+    if not numbers:
+        raise ValueError(""Input list cannot be empty."")
+    total = sum(numbers)
+    count = len(numbers)
+    average = total / count
+    return average
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    try:
+        result = calculate_average(sample_list)
+        print(f""The list is: {sample_list}"")
+        print(f""The average is: {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    sample_list_two = [2.5, 3.5, 1.0]
+    try:
+        result_two = calculate_average(sample_list_two)
+        print(f""\nThe list is: {sample_list_two}"")
+        print(f""The average is: {result_two}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,20608,327_4_1.py
+327,4,Perform basic arithmetic operations,"Implement a function using Python's built-in functions to calculate the average of a list of numbers, assuming the list is non-empty. Include comprehensive type hinting and docstrings for professional quality.","def calculate_average(numbers: list[float | int]) -> float:
+    if not numbers:
+        raise ValueError(""Input list cannot be empty."")
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    try:
+        average_result = calculate_average(sample_list)
+        print(f""The list of numbers is: {sample_list}"")
+        print(f""The average is: {average_result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")
+    empty_list = []
+    try:
+        calculate_average(empty_list)
+    except ValueError as e:
+        print(f""Testing empty list error: {e}"")",True,2,20609,327_4_2.py
+327,4,Perform basic arithmetic operations,"Implement a function using Python's built-in functions to calculate the average of a list of numbers, assuming the list is non-empty. Include comprehensive type hinting and docstrings for professional quality.","def calculate_average(numbers: list[float]) -> float:
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10.5, 20.0, 30.5, 40.0]
+    average = calculate_average(sample_list)
+    print(average)",True,3,20610,327_4_3.py
+327,4,Perform basic arithmetic operations,"Implement a function using Python's built-in functions to calculate the average of a list of numbers, assuming the list is non-empty. Include comprehensive type hinting and docstrings for professional quality.","def calculate_average(numbers: list[float]) -> float:
+    return sum(numbers) / len(numbers)
+if __name__ == '__main__':
+    sample_list = [10.5, 20.0, 15.5, 30.0]
+    average = calculate_average(sample_list)
+    print(average)",True,4,20611,327_4_4.py
+327,5,Perform basic arithmetic operations,Write an algorithm to take a sequence of integers as input and compute the running total (cumulative sum) of all elements. Provide the most time-efficient implementation possible.,"def running_total(sequence):
+    running_sum = 0
+    running_totals = []
+    for element in sequence:
+        running_sum += element
+        running_totals.append(running_sum)
+    return running_totals
+if __name__ == '__main__':
+    input_sequence = [1, 2, 3, 4, 5]
+    result = running_total(input_sequence)
+    print(result)",True,0,20612,327_5.py
+327,5,Perform basic arithmetic operations,Write an algorithm to take a sequence of integers as input and compute the running total (cumulative sum) of all elements. Provide the most time-efficient implementation possible.,"import time
+def running_total(sequence):
+    running_sum = 0
+    running_totals = []
+    for element in sequence:
+        running_sum += element
+        running_totals.append(running_sum)
+    return running_totals
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result = running_total(data)
+    print(result)",True,1,20613,327_5_1.py
+327,6,Perform basic arithmetic operations,"Create a function that takes two floating-point numbers and returns a tuple containing their floor, ceiling, and remainder when divided by each other. Ensure precise floating-point arithmetic is used where appropriate.","import math
+def calculate_floor_ceiling_remainder(a, b):
+    floor_a = math.floor(a)
+    ceil_a = math.ceil(a)
+    floor_b = math.floor(b)
+    ceil_b = math.ceil(b)
+    remainder = a % b
+    return (floor_a, ceil_a, floor_b, ceil_b, remainder)
+if __name__ == '__main__':
+    num1 = 10.7
+    num2 = 3.4
+    result = calculate_floor_ceiling_remainder(num1, num2)
+    print(result)",True,0,20614,327_6.py
+327,6,Perform basic arithmetic operations,"Create a function that takes two floating-point numbers and returns a tuple containing their floor, ceiling, and remainder when divided by each other. Ensure precise floating-point arithmetic is used where appropriate.","import math
+def calculate_floor_ceiling_remainder(a, b):
+    floor_a = math.floor(a)
+    ceil_a = math.ceil(a)
+    floor_b = math.floor(b)
+    ceil_b = math.ceil(b)
+    remainder = a % b
+    return (floor_a, ceil_a, floor_b, ceil_b, remainder)
+if __name__ == '__main__':
+    num1 = 10.3
+    num2 = 3.7
+    result = calculate_floor_ceiling_remainder(num1, num2)
+    print(result)",True,1,20615,327_6_1.py
+327,6,Perform basic arithmetic operations,"Create a function that takes two floating-point numbers and returns a tuple containing their floor, ceiling, and remainder when divided by each other. Ensure precise floating-point arithmetic is used where appropriate.","import math
+def calculate_floor_ceiling_remainder(a, b):
+    floor_a = math.floor(a)
+    ceil_a = math.ceil(a)
+    floor_b = math.floor(b)
+    ceil_b = math.ceil(b)
+    remainder = a - b * math.floor(a / b)
+    return (floor_a, ceil_a, remainder)
+if __name__ == '__main__':
+    num1 = 10.7
+    num2 = 3.4
+    result = calculate_floor_ceiling_remainder(num1, num2)
+    print(result)",True,2,20616,327_6_2.py
+327,6,Perform basic arithmetic operations,"Create a function that takes two floating-point numbers and returns a tuple containing their floor, ceiling, and remainder when divided by each other. Ensure precise floating-point arithmetic is used where appropriate.","import math
+def calculate_floor_ceiling_remainder(a, b):
+    floor_a = math.floor(a)
+    ceil_a = math.ceil(a)
+    remainder = a % b
+    return (floor_a, ceil_a, remainder)
+if __name__ == '__main__':
+    num1 = 10.7
+    num2 = 3.4
+    result = calculate_floor_ceiling_remainder(num1, num2)
+    print(result)",True,3,20617,327_6_3.py
+327,6,Perform basic arithmetic operations,"Create a function that takes two floating-point numbers and returns a tuple containing their floor, ceiling, and remainder when divided by each other. Ensure precise floating-point arithmetic is used where appropriate.","import math
+def floor_ceiling_remainder(a, b):
+    floor_a = math.floor(a)
+    ceil_a = math.ceil(a)
+    rem_a = a - floor_a
+    floor_b = math.floor(b)
+    ceil_b = math.ceil(b)
+    rem_b = b - floor_b
+    return (floor_a, ceil_a, rem_a, floor_b, ceil_b, rem_b)
+if __name__ == '__main__':
+    num1 = 5.7
+    num2 = 3.2
+    result = floor_ceiling_remainder(num1, num2)
+    print(result)",True,4,20618,327_6_4.py
+327,7,Perform basic arithmetic operations,"Write a script that uses a loop to calculate the sum of squares for all integers from 1 to N, where N is provided by user input. Optimize the calculation process.","import math
+def sum_of_squares(n):
+    total = 0
+    for i in range(1, n + 1):
+        total += i * i
+    return total
+def sum_of_squares_optimized(n):
+    return n * (n + 1) * (2 * n + 1) // 6
+if __name__ == '__main__':
+    N = 100
+    result_loop = sum_of_squares(N)
+    result_optimized = sum_of_squares_optimized(N)
+    print(f""Sum of squares using loop: {result_loop}"")
+    print(f""Sum of squares using optimized formula: {result_optimized}"")",True,0,20619,327_7.py
+327,7,Perform basic arithmetic operations,"Write a script that uses a loop to calculate the sum of squares for all integers from 1 to N, where N is provided by user input. Optimize the calculation process.","import math
+def sum_of_squares(n):
+    total = 0
+    for i in range(1, n + 1):
+        total += i * i
+    return total
+def sum_of_squares_optimized(n):
+    return n * (n + 1) * (2 * n + 1) // 6
+if __name__ == '__main__':
+    N = 100
+    result_loop = sum_of_squares(N)
+    result_optimized = sum_of_squares_optimized(N)
+    print(f""N: {N}"")
+    print(f""Sum of squares (Loop method): {result_loop}"")
+    print(f""Sum of squares (Optimized method): {result_optimized}"")",True,1,20620,327_7_1.py
+327,7,Perform basic arithmetic operations,"Write a script that uses a loop to calculate the sum of squares for all integers from 1 to N, where N is provided by user input. Optimize the calculation process.","import math
+def sum_of_squares(n):
+    total = 0
+    for i in range(1, n + 1):
+        total += i * i
+    return total
+def sum_of_squares_optimized(n):
+    return n * (n + 1) * (2 * n + 1) // 6
+if __name__ == '__main__':
+    N = 100
+    result_loop = sum_of_squares(N)
+    result_optimized = sum_of_squares_optimized(N)
+    print(f""Sum of squares from 1 to {N} (Loop): {result_loop}"")
+    print(f""Sum of squares from 1 to {N} (Optimized): {result_optimized}"")",True,2,20621,327_7_2.py
+327,8,Perform basic arithmetic operations,"Implement a function that accepts a list of numbers and returns a new list containing the results of applying the operation (e.g., multiplication) between the first element and every subsequent element in the list. Use list comprehension for conciseness.","def apply_operation(numbers):
+    return [numbers[0] * x for x in numbers[1:]]
+if __name__ == '__main__':
+    sample_list = [2, 3, 4, 5]
+    result = apply_operation(sample_list)
+    print(result)",True,0,20622,327_8.py
+327,8,Perform basic arithmetic operations,"Implement a function that accepts a list of numbers and returns a new list containing the results of applying the operation (e.g., multiplication) between the first element and every subsequent element in the list. Use list comprehension for conciseness.","def apply_operation(numbers):
+    return [numbers[0] * x for x in numbers[1:]]
+if __name__ == '__main__':
+    data = [2, 3, 4, 5]
+    result = apply_operation(data)
+    print(result)",True,1,20623,327_8_1.py
+327,9,Perform basic arithmetic operations,"Design and implement a module-level set of functions for basic arithmetic: 'add', 'subtract', 'multiply', and 'divide'. Ensure all functions are pure and mathematically correct. Provide comprehensive examples demonstrating their usage.","def add(a, b):
+    return a + b
+def subtract(a, b):
+    return a - b
+def multiply(a, b):
+    return a * b
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    print(""--- Testing Addition ---"")
+    num1 = 10
+    num2 = 5
+    result_add = add(num1, num2)
+    print(f""Addition of {num1} and {num2}: {result_add}"")
+    print(""\n--- Testing Subtraction ---"")
+    num3 = 20
+    num4 = 7
+    result_sub = subtract(num3, num4)
+    print(f""Subtraction of {num3} and {num4}: {result_sub}"")
+    print(""\n--- Testing Multiplication ---"")
+    num5 = 6
+    num6 = 8
+    result_mul = multiply(num5, num6)
+    print(f""Multiplication of {num5} and {num6}: {result_mul}"")
+    print(""\n--- Testing Division ---"")
+    num7 = 15
+    num8 = 3
+    result_div = divide(num7, num8)
+    print(f""Division of {num7} by {num8}: {result_div}"")
+    print(""\n--- Testing Division by Zero (Error Handling) ---"")
+    try:
+        divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught expected error: {e}"")",True,0,20624,327_9.py
+327,9,Perform basic arithmetic operations,"Design and implement a module-level set of functions for basic arithmetic: 'add', 'subtract', 'multiply', and 'divide'. Ensure all functions are pure and mathematically correct. Provide comprehensive examples demonstrating their usage.","def add(a, b):
+    return a + b
+def subtract(a, b):
+    return a - b
+def multiply(a, b):
+    return a * b
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    print(""--- Addition ---"")
+    result_add = add(num1, num2)
+    print(f""{num1} + {num2} = {result_add}"")
+    print(""\n--- Subtraction ---"")
+    result_sub = subtract(num1, num2)
+    print(f""{num1} - {num2} = {result_sub}"")
+    print(""\n--- Multiplication ---"")
+    result_mul = multiply(num1, num2)
+    print(f""{num1} * {num2} = {result_mul}"")
+    print(""\n--- Division ---"")
+    result_div = divide(num1, num2)
+    print(f""{num1} / {num2} = {result_div}"")
+    num3 = 20
+    num4 = 4
+    print(""\n--- Additional Examples ---"")
+    result_add_2 = add(num3, num4)
+    print(f""{num3} + {num4} = {result_add_2}"")
+    result_sub_2 = subtract(num3, num4)
+    print(f""{num3} - {num4} = {result_sub_2}"")
+    result_mul_2 = multiply(num3, num4)
+    print(f""{num3} * {num4} = {result_mul_2}"")
+    result_div_2 = divide(num3, num4)
+    print(f""{num3} / {num4} = {result_div_2}"")
+    try:
+        divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""\nCaught expected error: {e}"")",True,1,20625,327_9_1.py
+327,9,Perform basic arithmetic operations,"Design and implement a module-level set of functions for basic arithmetic: 'add', 'subtract', 'multiply', and 'divide'. Ensure all functions are pure and mathematically correct. Provide comprehensive examples demonstrating their usage.","def add(a, b):
+    return a + b
+def subtract(a, b):
+    return a - b
+def multiply(a, b):
+    return a * b
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    print(""--- Testing Addition ---"")
+    num1 = 10
+    num2 = 5
+    result_add = add(num1, num2)
+    print(f""Addition of {num1} and {num2}: {result_add}"")
+    print(""\n--- Testing Subtraction ---"")
+    num3 = 15
+    num4 = 7
+    result_sub = subtract(num3, num4)
+    print(f""Subtraction of {num3} and {num4}: {result_sub}"")
+    print(""\n--- Testing Multiplication ---"")
+    num5 = 6
+    num6 = 8
+    result_mul = multiply(num5, num6)
+    print(f""Multiplication of {num5} and {num6}: {result_mul}"")
+    print(""\n--- Testing Division ---"")
+    num7 = 20
+    num8 = 4
+    result_div = divide(num7, num8)
+    print(f""Division of {num7} by {num8}: {result_div}"")
+    print(""\n--- Testing Division by Zero (Error Handling) ---"")
+    try:
+        divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught expected error: {e}"")",True,2,20626,327_9_2.py
+327,9,Perform basic arithmetic operations,"Design and implement a module-level set of functions for basic arithmetic: 'add', 'subtract', 'multiply', and 'divide'. Ensure all functions are pure and mathematically correct. Provide comprehensive examples demonstrating their usage.","def add(a, b):
+    return a + b
+def subtract(a, b):
+    return a - b
+def multiply(a, b):
+    return a * b
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    print(""--- Addition ---"")
+    result_add = add(num1, num2)
+    print(f""{num1} + {num2} = {result_add}"")
+    print(""\n--- Subtraction ---"")
+    result_sub = subtract(num1, num2)
+    print(f""{num1} - {num2} = {result_sub}"")
+    print(""\n--- Multiplication ---"")
+    result_mul = multiply(num1, num2)
+    print(f""{num1} * {num2} = {result_mul}"")
+    print(""\n--- Division ---"")
+    result_div = divide(num1, num2)
+    print(f""{num1} / {num2} = {result_div}"")
+    num3 = 15
+    num4 = 3
+    print(""\n--- Additional Examples ---"")
+    result_add_2 = add(num3, num4)
+    print(f""{num3} + {num4} = {result_add_2}"")
+    result_mul_2 = multiply(num3, num4)
+    print(f""{num3} * {num4} = {result_mul_2}"")
+    result_div_2 = divide(result_mul_2, 5)
+    print(f""{result_mul_2} / 5 = {result_div_2}"")
+    try:
+        divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""\nCaught expected error: {e}"")",True,3,20627,327_9_3.py
+327,9,Perform basic arithmetic operations,"Design and implement a module-level set of functions for basic arithmetic: 'add', 'subtract', 'multiply', and 'divide'. Ensure all functions are pure and mathematically correct. Provide comprehensive examples demonstrating their usage.","def add(a, b):
+    return a + b
+def subtract(a, b):
+    return a - b
+def multiply(a, b):
+    return a * b
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    print(""Testing add function:"")
+    result_add = add(10, 5)
+    print(f""10 + 5 = {result_add}"")
+    print(""\nTesting subtract function:"")
+    result_subtract = subtract(20, 7)
+    print(f""20 - 7 = {result_subtract}"")
+    print(""\nTesting multiply function:"")
+    result_multiply = multiply(6, 8)
+    print(f""6 * 8 = {result_multiply}"")
+    print(""\nTesting divide function:"")
+    result_divide = divide(100, 4)
+    print(f""100 / 4 = {result_divide}"")
+    try:
+        result_divide_error = divide(10, 0)
+    except ZeroDivisionError as e:
+        print(f""\nCaught expected error for division by zero: {e}"")",True,4,20628,327_9_4.py
+326,14,Find the average of several figures,Create a command-line interface (CLI) script using the `argparse` module that accepts a sequence of numbers as command-line arguments and computes their average. The code must be fully optimized for execution speed.,,False,0,20629,326_14.py
+327,11,Perform basic arithmetic operations,"Implement an optimized function named 'arithmetic_operations' that accepts three integers (a, b, c) and returns a dictionary containing the results of addition (a+b), subtraction (a-b), multiplication (a*b), and division (a/b), handling potential division by zero errors gracefully.","def arithmetic_operations(a, b, c):
+    results = {}
+    results['addition'] = a + b
+    results['subtraction'] = a - b
+    results['multiplication'] = a * b
+    if b != 0:
+        results['division'] = a / b
+    else:
+        results['division'] = ""Division by zero""
+    return results
+if __name__ == '__main__':
+    a_val = 10
+    b_val = 2
+    c_val = 5
+    output = arithmetic_operations(a_val, b_val, c_val)
+    print(output)",True,0,20630,327_11.py
+327,11,Perform basic arithmetic operations,"Implement an optimized function named 'arithmetic_operations' that accepts three integers (a, b, c) and returns a dictionary containing the results of addition (a+b), subtraction (a-b), multiplication (a*b), and division (a/b), handling potential division by zero errors gracefully.","def arithmetic_operations(a, b, c):
+    results = {}
+    results['addition'] = a + b
+    results['subtraction'] = a - b
+    results['multiplication'] = a * b
+    if b != 0:
+        results['division'] = a / b
+    else:
+        results['division'] = ""Division by zero error""
+    return results
+if __name__ == '__main__':
+    a_val = 10
+    b_val = 2
+    c_val = 5
+    output = arithmetic_operations(a_val, b_val, c_val)
+    print(output)",True,1,20631,327_11_1.py
+327,12,Perform basic arithmetic operations,"Develop a class named 'Calculator' with methods for performing basic arithmetic operations: add(self, x, y), subtract(self, x, y), multiply(self, x, y), and divide(self, x, y). Ensure all methods are robust and return appropriate results.","class Calculator:
+    def add(self, x, y):
+        return x + y
+    def subtract(self, x, y):
+        return x - y
+    def multiply(self, x, y):
+        return x * y
+    def divide(self, x, y):
+        if y == 0:
+            raise ValueError(""Cannot divide by zero"")
+        return x / y
+if __name__ == '__main__':
+    calc = Calculator()
+    print(f""Addition: {calc.add(10, 5)}"")
+    print(f""Subtraction: {calc.subtract(10, 5)}"")
+    print(f""Multiplication: {calc.multiply(10, 5)}"")
+    print(f""Division: {calc.divide(10, 5)}"")
+    try:
+        print(f""Division by zero: {calc.divide(10, 0)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,20632,327_12.py
+327,12,Perform basic arithmetic operations,"Develop a class named 'Calculator' with methods for performing basic arithmetic operations: add(self, x, y), subtract(self, x, y), multiply(self, x, y), and divide(self, x, y). Ensure all methods are robust and return appropriate results.","class Calculator:
+    def add(self, x, y):
+        return x + y
+    def subtract(self, x, y):
+        return x - y
+    def multiply(self, x, y):
+        return x * y
+    def divide(self, x, y):
+        if y == 0:
+            raise ValueError(""Cannot divide by zero"")
+        return x / y
+if __name__ == '__main__':
+    calc = Calculator()
+    print(f""Addition: {calc.add(10, 5)}"")
+    print(f""Subtraction: {calc.subtract(10, 5)}"")
+    print(f""Multiplication: {calc.multiply(10, 5)}"")
+    print(f""Division: {calc.divide(10, 5)}"")
+    try:
+        print(f""Division by zero test: {calc.divide(10, 0)}"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,20633,327_12_1.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise TypeError(""Input must be a number."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, -3, 8]
+    try:
+        result = calculate_running_total(sample_input)
+        print(result)
+    except TypeError as e:
+        print(f""Error: {e}"")",True,0,20634,327_13.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise TypeError(""All inputs must be numbers."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, -3, 20]
+    try:
+        result = calculate_running_total(sample_input)
+        print(result)
+    except TypeError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,20635,327_13_1.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"import sys
+def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise TypeError(f""Invalid input: '{num}' is not a number."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, -2, 8]
+    try:
+        result = calculate_running_total(sample_input)
+        print(f""The running total sum is: {result}"")
+    except TypeError as e:
+        print(f""Error processing input: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,2,20636,327_13_2.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise TypeError(""Input must be a number."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, -3, 8]
+    try:
+        result = calculate_running_total(sample_input)
+        print(result)
+    except TypeError as e:
+        print(f""Error: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,3,20637,327_13_3.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"if __name__ == '__main__':
+    input_data = [10, 5, 20, 3]
+    running_total = 0
+    for item in input_data:
+        if not isinstance(item, int):
+            raise TypeError(""All inputs must be integers."")
+        running_total += item
+    print(f""The running total sum is: {running_total}"")",True,4,20638,327_13_4.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise TypeError(""All inputs must be numbers."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, 2, -3, 8]
+    try:
+        result = calculate_running_total(sample_input)
+        print(result)
+    except TypeError as e:
+        print(f""Error: {e}"")",True,5,20639,327_13_5.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, int):
+            raise TypeError(""All inputs must be integers."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5, 20, 3]
+    try:
+        result = calculate_running_total(sample_input)
+        print(result)
+    except TypeError as e:
+        print(f""Error: {e}"")",True,6,20640,327_13_6.py
+327,13,Perform basic arithmetic operations,Write a standalone Python program that reads a sequence of numbers from standard input and calculates the running total sum of all numbers entered. The script must handle non-integer inputs by raising informative exceptions.,"def calculate_running_total(numbers):
+    running_total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise TypeError(""All inputs must be numbers."")
+        running_total += num
+    return running_total
+if __name__ == '__main__':
+    sample_input = [10, 5.5, -3, 8, ""a"", 2]
+    try:
+        result = calculate_running_total(sample_input)
+        print(f""The running total is: {result}"")
+    except TypeError as e:
+        print(f""Error: {e}"")",True,7,20641,327_13_7.py
+327,14,Perform basic arithmetic operations,"Create an efficient function using built-in Python operators to perform complex arithmetic on a list of numbers: calculate the sum, average, product, and range (maximum and minimum values) of the list. The function must be highly optimized.","def analyze_list(numbers):
+    if not numbers:
+        return None
+    total = sum(numbers)
+    count = len(numbers)
+    product = 1
+    for x in numbers:
+        product *= x
+    average = total / count
+    maximum = max(numbers)
+    minimum = min(numbers)
+    return {
+        ""sum"": total,
+        ""average"": average,
+        ""product"": product,
+        ""range"": (maximum, minimum)
+    }
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50]
+    results = analyze_list(data)
+    print(results)",True,0,20642,327_14.py
+327,14,Perform basic arithmetic operations,"Create an efficient function using built-in Python operators to perform complex arithmetic on a list of numbers: calculate the sum, average, product, and range (maximum and minimum values) of the list. The function must be highly optimized.","def analyze_list(numbers):
+    if not numbers:
+        return None
+    total_sum = sum(numbers)
+    count = len(numbers)
+    product = 1
+    for x in numbers:
+        product *= x
+    average = total_sum / count
+    maximum = max(numbers)
+    minimum = min(numbers)
+    return {
+        ""sum"": total_sum,
+        ""average"": average,
+        ""product"": product,
+        ""range"": (minimum, maximum)
+    }
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    results = analyze_list(sample_list)
+    print(results)",True,1,20643,327_14_1.py
+327,14,Perform basic arithmetic operations,"Create an efficient function using built-in Python operators to perform complex arithmetic on a list of numbers: calculate the sum, average, product, and range (maximum and minimum values) of the list. The function must be highly optimized.","def analyze_list(numbers):
+    if not numbers:
+        return None
+    total_sum = sum(numbers)
+    count = len(numbers)
+    product = 1
+    for x in numbers:
+        product *= x
+    average = total_sum / count
+    maximum = max(numbers)
+    minimum = min(numbers)
+    return {
+        ""sum"": total_sum,
+        ""average"": average,
+        ""product"": product,
+        ""min"": minimum,
+        ""max"": maximum
+    }
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    results = analyze_list(sample_list)
+    print(results)",True,2,20644,327_14_2.py
+327,14,Perform basic arithmetic operations,"Create an efficient function using built-in Python operators to perform complex arithmetic on a list of numbers: calculate the sum, average, product, and range (maximum and minimum values) of the list. The function must be highly optimized.","def analyze_list(data):
+    if not data:
+        return None
+    total = sum(data)
+    count = len(data)
+    product = 1
+    for x in data:
+        product *= x
+    average = total / count
+    maximum = max(data)
+    minimum = min(data)
+    return {
+        ""sum"": total,
+        ""average"": average,
+        ""product"": product,
+        ""range"": (maximum, minimum)
+    }
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    results = analyze_list(sample_list)
+    print(results)",True,3,20645,327_14_3.py
+327,14,Perform basic arithmetic operations,"Create an efficient function using built-in Python operators to perform complex arithmetic on a list of numbers: calculate the sum, average, product, and range (maximum and minimum values) of the list. The function must be highly optimized.","def analyze_list(numbers):
+    if not numbers:
+        return None
+    total_sum = sum(numbers)
+    count = len(numbers)
+    average = total_sum / count
+    product = 1
+    for x in numbers:
+        product *= x
+    maximum = max(numbers)
+    minimum = min(numbers)
+    return {
+        ""sum"": total_sum,
+        ""average"": average,
+        ""product"": product,
+        ""range"": (minimum, maximum)
+    }
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    results = analyze_list(sample_list)
+    print(results)",True,4,20646,327_14_4.py
+328,0,Find the length of a string,Implement a clear and efficient Python function named `find_string_length` that accepts a string and returns its length using the built-in `len()` function. Ensure the code is well-documented with a docstring.,"def find_string_length(input_string):
+    return len(input_string)
+if __name__ == '__main__':
+    test_string_1 = ""hello""
+    result_1 = find_string_length(test_string_1)
+    print(f""The length of '{test_string_1}' is: {result_1}"")
+    test_string_2 = """"
+    result_2 = find_string_length(test_string_2)
+    print(f""The length of '{test_string_2}' is: {result_2}"")
+    test_string_3 = ""Python""
+    result_3 = find_string_length(test_string_3)
+    print(f""The length of '{test_string_3}' is: {result_3}"")",True,0,20647,328_0.py
+328,0,Find the length of a string,Implement a clear and efficient Python function named `find_string_length` that accepts a string and returns its length using the built-in `len()` function. Ensure the code is well-documented with a docstring.,"def find_string_length(input_string):
+    return len(input_string)
+if __name__ == '__main__':
+    test_string1 = ""hello""
+    result1 = find_string_length(test_string1)
+    print(f""The length of '{test_string1}' is: {result1}"")
+    test_string2 = """"
+    result2 = find_string_length(test_string2)
+    print(f""The length of '{test_string2}' is: {result2}"")
+    test_string3 = ""Python""
+    result3 = find_string_length(test_string3)
+    print(f""The length of '{test_string3}' is: {result3}"")",True,1,20648,328_0_1.py
+328,0,Find the length of a string,Implement a clear and efficient Python function named `find_string_length` that accepts a string and returns its length using the built-in `len()` function. Ensure the code is well-documented with a docstring.,"def find_string_length(input_string):
+    return len(input_string)
+if __name__ == '__main__':
+    test_string_1 = ""hello""
+    result_1 = find_string_length(test_string_1)
+    print(f""The length of '{test_string_1}' is: {result_1}"")
+    test_string_2 = ""Python""
+    result_2 = find_string_length(test_string_2)
+    print(f""The length of '{test_string_2}' is: {result_2}"")
+    test_string_3 = """"
+    result_3 = find_string_length(test_string_3)
+    print(f""The length of '{test_string_3}' is: {result_3}"")",True,2,20649,328_0_2.py
+327,10,Perform basic arithmetic operations,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates their sum, difference, product, and quotient. Use appropriate input validation for numeric types.",,False,0,20650,327_10.py
+328,2,Find the length of a string,Develop an optimized method within a class named `StringUtility` to calculate the length of any given string. The implementation must be O(1) time complexity.,"class StringUtility:
+    def calculate_length(self, s: str) -> int:
+        return len(s)
+if __name__ == '__main__':
+    utility = StringUtility()
+    sample_string1 = ""hello""
+    sample_string2 = """"
+    sample_string3 = ""Python""
+    print(f""Length of '{sample_string1}': {utility.calculate_length(sample_string1)}"")
+    print(f""Length of '{sample_string2}': {utility.calculate_length(sample_string2)}"")
+    print(f""Length of '{sample_string3}': {utility.calculate_length(sample_string3)}"")",True,0,20651,328_2.py
+328,2,Find the length of a string,Develop an optimized method within a class named `StringUtility` to calculate the length of any given string. The implementation must be O(1) time complexity.,"class StringUtility:
+    def calculate_length(self, s: str) -> int:
+        return len(s)
+if __name__ == '__main__':
+    utility = StringUtility()
+    test_string1 = ""hello""
+    test_string2 = """"
+    test_string3 = ""Python""
+    print(f""Length of '{test_string1}': {utility.calculate_length(test_string1)}"")
+    print(f""Length of '{test_string2}': {utility.calculate_length(test_string2)}"")
+    print(f""Length of '{test_string3}': {utility.calculate_length(test_string3)}"")",True,1,20652,328_2_1.py
+328,2,Find the length of a string,Develop an optimized method within a class named `StringUtility` to calculate the length of any given string. The implementation must be O(1) time complexity.,"class StringUtility:
+    def get_length(self, s: str) -> int:
+        return len(s)
+if __name__ == '__main__':
+    utility = StringUtility()
+    test_string1 = ""hello""
+    test_string2 = """"
+    test_string3 = ""Python""
+    print(f""Length of '{test_string1}': {utility.get_length(test_string1)}"")
+    print(f""Length of '{test_string2}': {utility.get_length(test_string2)}"")
+    print(f""Length of '{test_string3}': {utility.get_length(test_string3)}"")",True,2,20653,328_2_2.py
+328,2,Find the length of a string,Develop an optimized method within a class named `StringUtility` to calculate the length of any given string. The implementation must be O(1) time complexity.,"class StringUtility:
+    def get_length(self, s: str) -> int:
+        return len(s)
+if __name__ == '__main__':
+    utility = StringUtility()
+    string1 = ""hello""
+    string2 = """"
+    string3 = ""Python""
+    print(f""Length of '{string1}': {utility.get_length(string1)}"")
+    print(f""Length of '{string2}': {utility.get_length(string2)}"")
+    print(f""Length of '{string3}': {utility.get_length(string3)}"")",True,3,20654,328_2_3.py
+328,1,Find the length of a string,Write a robust Python script that prompts the user to input a string from the console and then prints the length of that string. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    sample_string = ""Hello World""
+    try:
+        length = len(sample_string)
+        print(length)
+    except TypeError:
+        print(""Error: Input was not a string."")",True,0,20655,328_1.py
+328,1,Find the length of a string,Write a robust Python script that prompts the user to input a string from the console and then prints the length of that string. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    sample_string = ""example""
+    try:
+        length = len(sample_string)
+        print(length)
+    except TypeError:
+        print(""Error: Input was not a string."")",True,1,20656,328_1_1.py
+328,1,Find the length of a string,Write a robust Python script that prompts the user to input a string from the console and then prints the length of that string. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    sample_string = ""Hello World""
+    try:
+        length = len(sample_string)
+        print(length)
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,2,20657,328_1_2.py
+328,1,Find the length of a string,Write a robust Python script that prompts the user to input a string from the console and then prints the length of that string. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    sample_string = ""Hello World""
+    try:
+        length = len(sample_string)
+        print(length)
+    except Exception as e:
+        print(""An error occurred during length calculation."")",True,3,20658,328_1_3.py
+328,1,Find the length of a string,Write a robust Python script that prompts the user to input a string from the console and then prints the length of that string. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    sample_string = ""Hello World""
+    try:
+        length = len(sample_string)
+        print(length)
+    except Exception as e:
+        print(""An error occurred"")",True,4,20659,328_1_4.py
+328,1,Find the length of a string,Write a robust Python script that prompts the user to input a string from the console and then prints the length of that string. Handle potential input errors gracefully.,"if __name__ == '__main__':
+    sample_string = ""Hello World""
+    try:
+        length = len(sample_string)
+        print(length)
+    except TypeError:
+        print(""Error: Input was not a valid string."")",True,5,20660,328_1_5.py
+328,3,Find the length of a string,Create a standalone Python script that reads a string from standard input and calculates its length. Focus on making the I/O operations efficient.,"import sys
+if __name__ == '__main__':
+    input_data = ""This is a sample string for testing the length calculation.""
+    length = len(input_data)
+    print(length)",True,0,20661,328_3.py
+328,3,Find the length of a string,Create a standalone Python script that reads a string from standard input and calculates its length. Focus on making the I/O operations efficient.,"import sys
+if __name__ == '__main__':
+    input_data = ""This is a sample string for testing the length calculation.""
+    string_length = len(input_data)
+    print(string_length)",True,1,20662,328_3_1.py
+328,3,Find the length of a string,Create a standalone Python script that reads a string from standard input and calculates its length. Focus on making the I/O operations efficient.,"import sys
+if __name__ == '__main__':
+    input_string = ""This is a sample string for testing the length calculation.""
+    length = len(input_string)
+    print(length)",True,2,20663,328_3_2.py
+328,4,Find the length of a string,Write an optimized function `calculate_length(input_string)` that determines the length of the input string. The solution must prioritize performance for very long strings.,"def calculate_length(input_string):
+    return len(input_string)
+if __name__ == '__main__':
+    test_string_short = ""hello""
+    test_string_long = ""a"" * 1000000
+    test_string_empty = """"
+    result_short = calculate_length(test_string_short)
+    result_long = calculate_length(test_string_long)
+    result_empty = calculate_length(test_string_empty)
+    print(f""Length of '{test_string_short}': {result_short}"")
+    print(f""Length of '{test_string_long}': {result_long}"")
+    print(f""Length of '{test_string_empty}': {result_empty}"")",True,0,20664,328_4.py
+328,4,Find the length of a string,Write an optimized function `calculate_length(input_string)` that determines the length of the input string. The solution must prioritize performance for very long strings.,"def calculate_length(input_string):
+    return len(input_string)
+if __name__ == '__main__':
+    test_string_short = ""hello""
+    test_string_long = ""a"" * 1000000
+    test_string_empty = """"
+    print(f""Length of '{test_string_short}': {calculate_length(test_string_short)}"")
+    print(f""Length of '{test_string_long}': {calculate_length(test_string_long)}"")
+    print(f""Length of '{test_string_empty}': {calculate_length(test_string_empty)}"")",True,1,20665,328_4_1.py
+328,5,Find the length of a string,Implement a generator function that yields the length of each character in an input string sequentially. This should be memory-efficient.,"def char_lengths_generator(input_string):
+    for char in input_string:
+        yield len(char)
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = char_lengths_generator(test_string)
+    result_list = list(generator)
+    print(result_list)",True,0,20666,328_5.py
+328,5,Find the length of a string,Implement a generator function that yields the length of each character in an input string sequentially. This should be memory-efficient.,"def char_length_generator(input_string):
+    for char in input_string:
+        yield len(char)
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = char_length_generator(test_string)
+    results = list(generator)
+    print(results)",True,1,20667,328_5_1.py
+328,5,Find the length of a string,Implement a generator function that yields the length of each character in an input string sequentially. This should be memory-efficient.,"def char_lengths_generator(input_string):
+    for char in input_string:
+        yield len(char)
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = char_lengths_generator(test_string)
+    results = list(generator)
+    print(results)",True,2,20668,328_5_2.py
+328,6,Find the length of a string,"Design and implement a class `StringAnalyzer` with a method `get_length(self, text)` to find the length of the provided text. Ensure the entire implementation adheres to modern Python best practices.","class StringAnalyzer:
+    def get_length(self, text):
+        return len(text)
+if __name__ == '__main__':
+    analyzer = StringAnalyzer()
+    sample_text1 = ""hello world""
+    sample_text2 = """"
+    sample_text3 = ""Python programming""
+    length1 = analyzer.get_length(sample_text1)
+    length2 = analyzer.get_length(sample_text2)
+    length3 = analyzer.get_length(sample_text3)
+    print(f""Length of '{sample_text1}': {length1}"")
+    print(f""Length of '{sample_text2}': {length2}"")
+    print(f""Length of '{sample_text3}': {length3}"")",True,0,20669,328_6.py
+328,6,Find the length of a string,"Design and implement a class `StringAnalyzer` with a method `get_length(self, text)` to find the length of the provided text. Ensure the entire implementation adheres to modern Python best practices.","class StringAnalyzer:
+    def get_length(self, text):
+        return len(text)
+if __name__ == '__main__':
+    analyzer = StringAnalyzer()
+    sample_text1 = ""hello world""
+    sample_text2 = """"
+    sample_text3 = ""Python""
+    length1 = analyzer.get_length(sample_text1)
+    length2 = analyzer.get_length(sample_text2)
+    length3 = analyzer.get_length(sample_text3)
+    print(f""Length of '{sample_text1}': {length1}"")
+    print(f""Length of '{sample_text2}': {length2}"")
+    print(f""Length of '{sample_text3}': {length3}"")",True,1,20670,328_6_1.py
+328,6,Find the length of a string,"Design and implement a class `StringAnalyzer` with a method `get_length(self, text)` to find the length of the provided text. Ensure the entire implementation adheres to modern Python best practices.","class StringAnalyzer:
+    def get_length(self, text):
+        return len(text)
+if __name__ == '__main__':
+    analyzer = StringAnalyzer()
+    sample_text1 = ""hello world""
+    sample_text2 = """"
+    sample_text3 = ""Python""
+    print(f""Length of '{sample_text1}': {analyzer.get_length(sample_text1)}"")
+    print(f""Length of '{sample_text2}': {analyzer.get_length(sample_text2)}"")
+    print(f""Length of '{sample_text3}': {analyzer.get_length(sample_text3)}"")",True,2,20671,328_6_2.py
+328,7,Find the length of a string,Write a concise and highly readable Python expression or one-line function definition to find the length of a string variable named `my_text`.,"if __name__ == '__main__':
+    my_text = ""hello world""
+    print(len(my_text))",True,0,20672,328_7.py
+328,7,Find the length of a string,Write a concise and highly readable Python expression or one-line function definition to find the length of a string variable named `my_text`.,"if __name__ == '__main__':
+    my_text = ""hello world""
+    length = len(my_text)
+    print(length)",True,1,20673,328_7_1.py
+328,8,Find the length of a string,"Develop a comprehensive test suite using `unittest` for a function that calculates string length. Include test cases for empty strings, strings with spaces, and strings containing Unicode characters.","import unittest
+def calculate_string_length(s):
+    return len(s)
+class TestStringLength(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(calculate_string_length(""""), 0)
+    def test_string_with_spaces(self):
+        self.assertEqual(calculate_string_length(""hello world""), 11)
+    def test_string_with_only_spaces(self):
+        self.assertEqual(calculate_string_length(""   ""), 3)
+    def test_string_with_unicode(self):
+        self.assertEqual(calculate_string_length(""你好世界""), 4)
+    def test_mixed_string(self):
+        self.assertEqual(calculate_string_length(""a b c 🚀""), 7)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,20674,328_8.py
+328,8,Find the length of a string,"Develop a comprehensive test suite using `unittest` for a function that calculates string length. Include test cases for empty strings, strings with spaces, and strings containing Unicode characters.","import unittest
+class TestStringLength:
+    def test_empty_string(self):
+        self.assertEqual(len(""""), 0)
+    def test_string_with_spaces(self):
+        self.assertEqual(len(""hello world""), 11)
+        self.assertEqual(len(""   ""), 3)
+    def test_string_with_unicode(self):
+        self.assertEqual(len(""résumé""), 6)
+        self.assertEqual(len(""你好""), 2)
+        self.assertEqual(len(""🚀✨""), 2)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,20675,328_8_1.py
+328,8,Find the length of a string,"Develop a comprehensive test suite using `unittest` for a function that calculates string length. Include test cases for empty strings, strings with spaces, and strings containing Unicode characters.","import unittest
+def calculate_string_length(s):
+    return len(s)
+class TestStringLength(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(calculate_string_length(""""), 0)
+    def test_string_with_spaces(self):
+        self.assertEqual(calculate_string_length(""hello world""), 11)
+    def test_string_with_only_spaces(self):
+        self.assertEqual(calculate_string_length(""   ""), 3)
+    def test_string_with_unicode(self):
+        self.assertEqual(calculate_string_length(""你好世界""), 4)
+    def test_mixed_string(self):
+        self.assertEqual(calculate_string_length(""A B C 🚀""), 7)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,20676,328_8_2.py
+328,8,Find the length of a string,"Develop a comprehensive test suite using `unittest` for a function that calculates string length. Include test cases for empty strings, strings with spaces, and strings containing Unicode characters.","import unittest
+class TestStringLength:
+    def test_empty_string(self):
+        self.assertEqual(len(""""), 0)
+    def test_string_with_spaces(self):
+        self.assertEqual(len(""hello world""), 11)
+    def test_string_with_unicode(self):
+        self.assertEqual(len(""你好世界""), 4)
+    def test_string_with_mixed_characters(self):
+        self.assertEqual(len(""A B C 🚀""), 7)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,20677,328_8_3.py
+328,8,Find the length of a string,"Develop a comprehensive test suite using `unittest` for a function that calculates string length. Include test cases for empty strings, strings with spaces, and strings containing Unicode characters.","import unittest
+def calculate_string_length(s):
+    return len(s)
+class TestStringLength(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(calculate_string_length(""""), 0)
+    def test_string_with_spaces(self):
+        self.assertEqual(calculate_string_length(""hello world""), 11)
+    def test_string_with_only_spaces(self):
+        self.assertEqual(calculate_string_length(""   ""), 3)
+    def test_string_with_unicode(self):
+        self.assertEqual(calculate_string_length(""你好世界""), 4)
+    def test_string_with_mixed_characters(self):
+        self.assertEqual(calculate_string_length(""A B C!""), 5)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,20678,328_8_4.py
+328,8,Find the length of a string,"Develop a comprehensive test suite using `unittest` for a function that calculates string length. Include test cases for empty strings, strings with spaces, and strings containing Unicode characters.","import unittest
+def calculate_string_length(s):
+    return len(s)
+class TestStringLength(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(calculate_string_length(""""), 0)
+    def test_string_with_spaces(self):
+        self.assertEqual(calculate_string_length(""hello world""), 11)
+        self.assertEqual(calculate_string_length(""  ""), 2)
+    def test_string_with_unicode(self):
+        self.assertEqual(calculate_string_length(""你好""), 2)
+        self.assertEqual(calculate_string_length(""🚀🌍""), 2)
+        self.assertEqual(calculate_string_length(""abc123!@#""), 8)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,20679,328_8_5.py
+328,10,Find the length of a string,Implement an optimized Python function named `find_string_length` that accepts a string and returns its length using the most efficient built-in method. Ensure the code is clean and follows PEP 8 guidelines.,"def find_string_length(s: str) -> int:
+    return len(s)
+if __name__ == '__main__':
+    test_string1 = ""hello""
+    result1 = find_string_length(test_string1)
+    print(f""The length of '{test_string1}' is: {result1}"")
+    test_string2 = """"
+    result2 = find_string_length(test_string2)
+    print(f""The length of '{test_string2}' is: {result2}"")
+    test_string3 = ""Python optimization""
+    result3 = find_string_length(test_string3)
+    print(f""The length of '{test_string3}' is: {result3}"")",True,0,20680,328_10.py
+328,10,Find the length of a string,Implement an optimized Python function named `find_string_length` that accepts a string and returns its length using the most efficient built-in method. Ensure the code is clean and follows PEP 8 guidelines.,"def find_string_length(s: str) -> int:
+    return len(s)
+if __name__ == '__main__':
+    test_string_1 = ""hello""
+    result_1 = find_string_length(test_string_1)
+    print(f""The length of '{test_string_1}' is: {result_1}"")
+    test_string_2 = """"
+    result_2 = find_string_length(test_string_2)
+    print(f""The length of '{test_string_2}' is: {result_2}"")
+    test_string_3 = ""Python""
+    result_3 = find_string_length(test_string_3)
+    print(f""The length of '{test_string_3}' is: {result_3}"")",True,1,20681,328_10_1.py
+328,10,Find the length of a string,Implement an optimized Python function named `find_string_length` that accepts a string and returns its length using the most efficient built-in method. Ensure the code is clean and follows PEP 8 guidelines.,"def find_string_length(s: str) -> int:
+    return len(s)
+if __name__ == '__main__':
+    test_string1 = ""hello""
+    result1 = find_string_length(test_string1)
+    print(f""The length of '{test_string1}' is: {result1}"")
+    test_string2 = """"
+    result2 = find_string_length(test_string2)
+    print(f""The length of '{test_string2}' is: {result2}"")
+    test_string3 = ""Python""
+    result3 = find_string_length(test_string3)
+    print(f""The length of '{test_string3}' is: {result3}"")",True,2,20682,328_10_2.py
+328,9,Find the length of a string,Write an algorithm to find the length of a string without using any built-in string length functions (like `len()`). Focus on manual iteration for maximum efficiency demonstration.,"def find_string_length(s):
+    count = 0
+    for char in s:
+        count += 1
+    return count
+if __name__ == '__main__':
+    test_string1 = ""hello""
+    result1 = find_string_length(test_string1)
+    print(result1)
+    test_string2 = """"
+    result2 = find_string_length(test_string2)
+    print(result2)
+    test_string3 = ""Python""
+    result3 = find_string_length(test_string3)
+    print(result3)
+    test_string4 = ""1234567890""
+    result4 = find_string_length(test_string4)
+    print(result4)",True,0,20683,328_9.py
+328,9,Find the length of a string,Write an algorithm to find the length of a string without using any built-in string length functions (like `len()`). Focus on manual iteration for maximum efficiency demonstration.,"def find_string_length(s):
+    count = 0
+    for char in s:
+        count = count + 1
+    return count
+if __name__ == '__main__':
+    test_string1 = ""hello""
+    result1 = find_string_length(test_string1)
+    print(f""The length of '{test_string1}' is: {result1}"")
+    test_string2 = ""world""
+    result2 = find_string_length(test_string2)
+    print(f""The length of '{test_string2}' is: {result2}"")
+    test_string3 = """"
+    result3 = find_string_length(test_string3)
+    print(f""The length of '{test_string3}' is: {result3}"")
+    test_string4 = ""Python""
+    result4 = find_string_length(test_string4)
+    print(f""The length of '{test_string4}' is: {result4}"")",True,1,20684,328_9_1.py
+328,9,Find the length of a string,Write an algorithm to find the length of a string without using any built-in string length functions (like `len()`). Focus on manual iteration for maximum efficiency demonstration.,"def find_string_length(s):
+    count = 0
+    for char in s:
+        count += 1
+    return count
+if __name__ == '__main__':
+    test_string_1 = ""hello""
+    result_1 = find_string_length(test_string_1)
+    print(f""The length of '{test_string_1}' is: {result_1}"")
+    test_string_2 = ""Python""
+    result_2 = find_string_length(test_string_2)
+    print(f""The length of '{test_string_2}' is: {result_2}"")
+    test_string_3 = """"
+    result_3 = find_string_length(test_string_3)
+    print(f""The length of '{test_string_3}' is: {result_3}"")
+    test_string_4 = ""abcde""
+    result_4 = find_string_length(test_string_4)
+    print(f""The length of '{test_string_4}' is: {result_4}"")",True,2,20685,328_9_2.py
+328,9,Find the length of a string,Write an algorithm to find the length of a string without using any built-in string length functions (like `len()`). Focus on manual iteration for maximum efficiency demonstration.,"def find_string_length(s):
+    count = 0
+    for char in s:
+        count = count + 1
+    return count
+if __name__ == '__main__':
+    test_string_1 = ""hello""
+    result_1 = find_string_length(test_string_1)
+    print(f""The length of '{test_string_1}' is: {result_1}"")
+    test_string_2 = ""Python""
+    result_2 = find_string_length(test_string_2)
+    print(f""The length of '{test_string_2}' is: {result_2}"")
+    test_string_3 = """"
+    result_3 = find_string_length(test_string_3)
+    print(f""The length of '{test_string_3}' is: {result_3}"")
+    test_string_4 = ""abcde""
+    result_4 = find_string_length(test_string_4)
+    print(f""The length of '{test_string_4}' is: {result_4}"")",True,3,20686,328_9_3.py
+328,12,Find the length of a string,"Develop a class named `StringUtil` with a method `get_length(self, text)` that calculates and returns the length of the input string. The implementation must be highly efficient.","class StringUtil:
+    def get_length(self, text):
+        return len(text)
+if __name__ == '__main__':
+    util = StringUtil()
+    sample1 = ""hello""
+    sample2 = """"
+    sample3 = ""Python programming""
+    print(f""Length of '{sample1}': {util.get_length(sample1)}"")
+    print(f""Length of '{sample2}': {util.get_length(sample2)}"")
+    print(f""Length of '{sample3}': {util.get_length(sample3)}"")",True,0,20687,328_12.py
+328,12,Find the length of a string,"Develop a class named `StringUtil` with a method `get_length(self, text)` that calculates and returns the length of the input string. The implementation must be highly efficient.","class StringUtil:
+    def get_length(self, text):
+        return len(text)
+if __name__ == '__main__':
+    util = StringUtil()
+    sample_string1 = ""hello""
+    sample_string2 = """"
+    sample_string3 = ""efficient""
+    print(util.get_length(sample_string1))
+    print(util.get_length(sample_string2))
+    print(util.get_length(sample_string3))",True,1,20688,328_12_1.py
+328,12,Find the length of a string,"Develop a class named `StringUtil` with a method `get_length(self, text)` that calculates and returns the length of the input string. The implementation must be highly efficient.","class StringUtil:
+    def get_length(self, text):
+        return len(text)
+if __name__ == '__main__':
+    util = StringUtil()
+    sample_string1 = ""hello""
+    sample_string2 = """"
+    sample_string3 = ""efficient implementation""
+    print(f""Length of '{sample_string1}': {util.get_length(sample_string1)}"")
+    print(f""Length of '{sample_string2}': {util.get_length(sample_string2)}"")
+    print(f""Length of '{sample_string3}': {util.get_length(sample_string3)}"")",True,2,20689,328_12_2.py
+328,13,Find the length of a string,"Create a standalone Python function that takes any input, treats it as a string, and calculates its length. Provide docstrings explaining the function's purpose, parameters, and return value according to modern Python standards.","def calculate_string_length(input_value):
+    return len(str(input_value))
+if __name__ == '__main__':
+    sample1 = ""hello world""
+    result1 = calculate_string_length(sample1)
+    print(f""The length of '{sample1}' is: {result1}"")
+    sample2 = 12345
+    result2 = calculate_string_length(sample2)
+    print(f""The length of '{sample2}' (as string) is: {result2}"")
+    sample3 = """"
+    result3 = calculate_string_length(sample3)
+    print(f""The length of '{sample3}' is: {result3}"")
+    sample4 = ""Python""
+    result4 = calculate_string_length(sample4)
+    print(f""The length of '{sample4}' is: {result4}"")",True,0,20690,328_13.py
+328,13,Find the length of a string,"Create a standalone Python function that takes any input, treats it as a string, and calculates its length. Provide docstrings explaining the function's purpose, parameters, and return value according to modern Python standards.","def calculate_string_length(input_value):
+    return len(str(input_value))
+if __name__ == '__main__':
+    sample1 = ""hello world""
+    result1 = calculate_string_length(sample1)
+    print(f""The length of '{sample1}' is: {result1}"")
+    sample2 = 12345
+    result2 = calculate_string_length(sample2)
+    print(f""The length of '{sample2}' (treated as string) is: {result2}"")
+    sample3 = """"
+    result3 = calculate_string_length(sample3)
+    print(f""The length of '{sample3}' is: {result3}"")
+    sample4 = ""Python""
+    result4 = calculate_string_length(sample4)
+    print(f""The length of '{sample4}' is: {result4}"")",True,1,20691,328_13_1.py
+328,13,Find the length of a string,"Create a standalone Python function that takes any input, treats it as a string, and calculates its length. Provide docstrings explaining the function's purpose, parameters, and return value according to modern Python standards.","def calculate_string_length(input_value):
+    return len(str(input_value))
+if __name__ == '__main__':
+    sample1 = ""hello world""
+    length1 = calculate_string_length(sample1)
+    print(f""The length of '{sample1}' is: {length1}"")
+    sample2 = 12345
+    length2 = calculate_string_length(sample2)
+    print(f""The length of '{sample2}' (as string) is: {length2}"")
+    sample3 = """"
+    length3 = calculate_string_length(sample3)
+    print(f""The length of '{sample3}' is: {length3}"")
+    sample4 = ""Python""
+    length4 = calculate_string_length(sample4)
+    print(f""The length of '{sample4}' is: {length4}"")",True,2,20692,328_13_2.py
+328,13,Find the length of a string,"Create a standalone Python function that takes any input, treats it as a string, and calculates its length. Provide docstrings explaining the function's purpose, parameters, and return value according to modern Python standards.","def calculate_string_length(input_value):
+    return len(str(input_value))
+if __name__ == '__main__':
+    sample1 = ""hello world""
+    result1 = calculate_string_length(sample1)
+    print(f""The length of '{sample1}' is: {result1}"")
+    sample2 = 12345
+    result2 = calculate_string_length(sample2)
+    print(f""The length of {sample2} (treated as string) is: {result2}"")
+    sample3 = """"
+    result3 = calculate_string_length(sample3)
+    print(f""The length of '{sample3}' is: {result3}"")
+    sample4 = ""Python""
+    result4 = calculate_string_length(sample4)
+    print(f""The length of '{sample4}' is: {result4}"")",True,3,20693,328_13_3.py
+328,14,Find the length of a string,"Write the most concise and performant one-line Python expression to determine the length of a given string variable, assuming the input is already a string.","if __name__ == '__main__':
+    s = ""hello""
+    print(len(s))",True,0,20694,328_14.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""world"", ""hello""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""abc"", ""abcd""))
+    print(are_strings_equal(""Python"", ""python""))",True,0,20695,329_0.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""world"", ""hello""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""abc"", ""abd""))",True,1,20696,329_0_1.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""hello"", ""world""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""abc"", ""abc ""))",True,2,20697,329_0_2.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""hello"", ""world""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""a"", ""a""))
+    print(are_strings_equal(""abc"", ""abd""))",True,3,20698,329_0_3.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""hello"", ""world""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""a"", ""b""))
+    print(are_strings_equal(""abc"", ""abc ""))",True,4,20699,329_0_4.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""hello"", ""world""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""a"", ""b""))
+    print(are_strings_equal(""test"", ""test ""))",True,5,20700,329_0_5.py
+329,0,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two string arguments and returns `True` if they are exactly equal, and `False` otherwise. Ensure the implementation is highly efficient.","def are_strings_equal(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    print(are_strings_equal(""hello"", ""hello""))
+    print(are_strings_equal(""world"", ""hello""))
+    print(are_strings_equal("""", """"))
+    print(are_strings_equal(""a"", ""b""))
+    print(are_strings_equal(""test"", ""test ""))",True,6,20701,329_0_6.py
+328,11,Find the length of a string,"Write a complete, robust Python script that prompts the user to input a string and then prints the length of that string. Handle potential errors gracefully if non-string input is provided.","import sys
+def calculate_string_length(input_value):
+    try:
+        return len(input_value)
+    except TypeError:
+        return ""Error: Input must be a string.""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""hello world"",
+        ""Python"",
+        12345,
+        None,
+        [""list""]
+    ]
+    for sample in sample_inputs:
+        result = calculate_string_length(sample)
+        print(f""Input: {repr(sample)}, Length: {result}"")",True,0,20702,328_11.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","import sys
+def compare_strings(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    result1 = compare_strings(string_a, string_b)
+    print(f""Comparing '{string_a}' and '{string_b}': {result1}"")
+    result2 = compare_strings(string_a, string_c)
+    print(f""Comparing '{string_a}' and '{string_c}': {result2}"")",True,0,20703,329_2.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","import sys
+def compare_strings(str1, str2):
+    if str1 == str2:
+        return True
+    return False
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    result1 = compare_strings(string_a, string_b)
+    print(f""Comparing '{string_a}' and '{string_b}': {result1}"")
+    result2 = compare_strings(string_a, string_c)
+    print(f""Comparing '{string_a}' and '{string_c}': {result2}"")",True,1,20704,329_2_1.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","import sys
+def compare_strings_optimized(str1, str2):
+    if str1 == str2:
+        return True
+    return False
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    string_d = ""hello ""
+    string_e = ""hello""
+    print(f""Comparing '{string_a}' and '{string_b}': {compare_strings_optimized(string_a, string_b)}"")
+    print(f""Comparing '{string_a}' and '{string_c}': {compare_strings_optimized(string_a, string_c)}"")
+    print(f""Comparing '{string_d}' and '{string_e}': {compare_strings_optimized(string_d, string_e)}"")
+    print(f""Comparing '{string_a}' and '{string_e}': {compare_strings_optimized(string_a, string_e)}"")",True,2,20705,329_2_2.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","def compare_strings_optimized(str1, str2):
+    if type(str1) is not type(str2):
+        return False
+    return str1 == str2
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    string_d = ""hello ""
+    string_e = ""hello""
+    print(f""'{string_a}' == '{string_b}': {compare_strings_optimized(string_a, string_b)}"")
+    print(f""'{string_a}' == '{string_c}': {compare_strings_optimized(string_a, string_c)}"")
+    print(f""'{string_d}' == '{string_e}': {compare_strings_optimized(string_d, string_e)}"")",True,3,20706,329_2_3.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","import sys
+def compare_strings(str1, str2):
+    if str1 == str2:
+        return True
+    return False
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    string_d = ""hello""
+    print(f""Comparing '{string_a}' and '{string_b}': {compare_strings(string_a, string_b)}"")
+    print(f""Comparing '{string_a}' and '{string_c}': {compare_strings(string_a, string_c)}"")
+    print(f""Comparing '{string_d}' and '{string_a}': {compare_strings(string_d, string_a)}"")",True,4,20707,329_2_4.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","def compare_strings_optimized(str1, str2):
+    if type(str1) is not type(str2):
+        return False
+    return str1 == str2
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    string_d = ""hello ""
+    string_e = ""hello""
+    print(f""Comparing '{string_a}' and '{string_b}': {compare_strings_optimized(string_a, string_b)}"")
+    print(f""Comparing '{string_a}' and '{string_c}': {compare_strings_optimized(string_a, string_c)}"")
+    print(f""Comparing '{string_a}' and '{string_d}': {compare_strings_optimized(string_a, string_d)}"")
+    print(f""Comparing '{string_a}' and '{string_e}': {compare_strings_optimized(string_a, string_e)}"")
+    string_a_int = 123
+    string_b_int = ""123""
+    print(f""Comparing integer {string_a_int} and string '{string_b_int}': {compare_strings_optimized(string_a_int, string_b_int)}"")",True,5,20708,329_2_5.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","import sys
+def compare_strings_optimized(str1, str2):
+    if str1 == str2:
+        return True
+    return False
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    print(f""Comparing '{string_a}' and '{string_b}': {compare_strings_optimized(string_a, string_b)}"")
+    print(f""Comparing '{string_a}' and '{string_c}': {compare_strings_optimized(string_a, string_c)}"")",True,6,20709,329_2_6.py
+329,2,Check if strings are equal,"Develop an optimized method to compare two strings for equality in Python, prioritizing built-in string comparison methods.","import sys
+def compare_strings_optimized(str1, str2):
+    if str1 == str2:
+        return True
+    return False
+if __name__ == '__main__':
+    string_a = ""hello""
+    string_b = ""hello""
+    string_c = ""world""
+    string_d = ""hello ""
+    string_e = ""hello""
+    print(f""Comparing '{string_a}' and '{string_b}': {compare_strings_optimized(string_a, string_b)}"")
+    print(f""Comparing '{string_a}' and '{string_c}': {compare_strings_optimized(string_a, string_c)}"")
+    print(f""Comparing '{string_d}' and '{string_e}': {compare_strings_optimized(string_d, string_e)}"")",True,7,20710,329_2_7.py
+329,3,Check if strings are equal,"Create a class named `StringComparer` with a method `check_equality(self, str1, str2)` that efficiently determines if the two input strings are identical.","class StringComparer:
+    def check_equality(self, str1, str2):
+        return str1 == str2
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(comparer.check_equality(""hello"", ""hello""))
+    print(comparer.check_equality(""world"", ""hello""))
+    print(comparer.check_equality("""", """"))
+    print(comparer.check_equality(""abc"", ""abc ""))
+    print(comparer.check_equality(""123"", ""123""))",True,0,20711,329_3.py
+329,3,Check if strings are equal,"Create a class named `StringComparer` with a method `check_equality(self, str1, str2)` that efficiently determines if the two input strings are identical.","class StringComparer:
+    def check_equality(self, str1, str2):
+        return str1 == str2
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(comparer.check_equality(""hello"", ""hello""))
+    print(comparer.check_equality(""world"", ""hello""))
+    print(comparer.check_equality("""", """"))
+    print(comparer.check_equality(""abc"", ""abc ""))",True,1,20712,329_3_1.py
+329,3,Check if strings are equal,"Create a class named `StringComparer` with a method `check_equality(self, str1, str2)` that efficiently determines if the two input strings are identical.","class StringComparer:
+    def check_equality(self, str1, str2):
+        return str1 == str2
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(comparer.check_equality(""hello"", ""hello""))
+    print(comparer.check_equality(""world"", ""hello""))
+    print(comparer.check_equality("""", """"))
+    print(comparer.check_equality(""a"", ""b""))
+    print(comparer.check_equality(""test"", ""test ""))",True,2,20713,329_3_2.py
+329,1,Check if strings are equal,"Write a complete, robust Python script that prompts the user to enter two strings from the console and then checks if they are equal, printing the result clearly.",,False,0,20714,329_1.py
+329,5,Check if strings are equal,"Implement a function that checks for string equality while being mindful of potential performance implications for very long strings, focusing on standard Python comparison techniques.","def check_string_equality(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    s1 = ""a"" * 1000000
+    s2 = ""a"" * 1000000
+    s3 = ""a"" * 1000000 + ""b""
+    s4 = s1
+    print(f""s1 == s2: {check_string_equality(s1, s2)}"")
+    print(f""s1 == s3: {check_string_equality(s1, s3)}"")
+    print(f""s1 == s4: {check_string_equality(s1, s4)}"")",True,0,20715,329_5.py
+329,5,Check if strings are equal,"Implement a function that checks for string equality while being mindful of potential performance implications for very long strings, focusing on standard Python comparison techniques.","def check_string_equality(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    s1 = ""a"" * 1000000
+    s2 = ""a"" * 1000000
+    s3 = ""b"" * 1000000
+    s4 = ""a"" * 1000000 + ""b""
+    print(f""s1 == s2: {check_string_equality(s1, s2)}"")
+    print(f""s1 == s3: {check_string_equality(s1, s3)}"")
+    print(f""s1 == s4: {check_string_equality(s1, s4)}"")",True,1,20716,329_5_1.py
+329,5,Check if strings are equal,"Implement a function that checks for string equality while being mindful of potential performance implications for very long strings, focusing on standard Python comparison techniques.","def check_string_equality(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    s1 = ""a"" * 1000000
+    s2 = ""a"" * 1000000
+    s3 = ""b"" * 1000000
+    s4 = ""a"" * 1000001
+    print(f""s1 == s2: {check_string_equality(s1, s2)}"")
+    print(f""s1 == s3: {check_string_equality(s1, s3)}"")
+    print(f""s1 == s4: {check_string_equality(s1, s4)}"")",True,2,20717,329_5_2.py
+329,5,Check if strings are equal,"Implement a function that checks for string equality while being mindful of potential performance implications for very long strings, focusing on standard Python comparison techniques.","def check_string_equality(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    s1 = ""a"" * 1000000
+    s2 = ""a"" * 1000000
+    s3 = ""b"" * 1000000
+    s4 = ""a"" * 1000000 + ""b""
+    print(check_string_equality(s1, s2))
+    print(check_string_equality(s1, s3))
+    print(check_string_equality(s1, s4))",True,3,20718,329_5_3.py
+329,5,Check if strings are equal,"Implement a function that checks for string equality while being mindful of potential performance implications for very long strings, focusing on standard Python comparison techniques.","def check_string_equality(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    s1 = ""a"" * 1000000
+    s2 = ""a"" * 1000000
+    s3 = ""b"" * 1000000
+    print(check_string_equality(s1, s2))
+    print(check_string_equality(s1, s3))",True,4,20719,329_5_4.py
+329,5,Check if strings are equal,"Implement a function that checks for string equality while being mindful of potential performance implications for very long strings, focusing on standard Python comparison techniques.","def check_string_equality(str1, str2):
+    return str1 == str2
+if __name__ == '__main__':
+    s1 = ""a"" * 1000000
+    s2 = ""a"" * 1000000
+    s3 = ""a"" * 1000001
+    s4 = ""b"" * 1000000
+    print(check_string_equality(s1, s2))
+    print(check_string_equality(s1, s3))
+    print(check_string_equality(s1, s4))",True,5,20720,329_5_5.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""apple"", ""apple""),
+        (""apple"", ""Apple""),
+        (""apple"", ""apply""),
+        (""hello"", ""world""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""abc"", ""abcd""),
+        (""test"", ""test ""),
+        (""same"", ""same""),
+        (""longerstring"", ""short""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for: '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,0,20721,329_6.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""apple"", ""apple""),
+        (""apple"", ""Apple""),
+        (""hello"", ""hello""),
+        (""world"", ""worl""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""abc"", ""abcd""),
+        (""test"", ""testing""),
+        (""same"", ""same""),
+        (""different"", ""same""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for: '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,1,20722,329_6_1.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""apple"", ""apple""),
+        (""apple"", ""Apple""),
+        (""apple"", ""apply""),
+        (""hello"", ""hell""),
+        ("""", """"),
+        (""abc"", ""abc""),
+        (""abc"", ""abd""),
+        (""short"", ""longerstring""),
+        (""same"", ""same""),
+        (""123"", ""123""),
+        (""a"", ""b""),
+        (""test"", ""test ""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = (str1 == str2)
+        if result != expected:
+            print(f""Test failed for: '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,2,20723,329_6_2.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""hello"", ""hello""),
+        (""hello"", ""world""),
+        (""apple"", ""apple""),
+        (""apple"", ""Apple""),
+        (""abc"", ""abcd""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""test"", ""test ""),
+        (""longerstring"", ""longerstring""),
+        (""short"", ""longer""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for ('{str1}', '{str2}'). Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for ('{str1}', '{str2}')"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,3,20724,329_6_3.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""apple"", ""apple""),
+        (""apple"", ""Apple""),
+        (""apple"", ""apply""),
+        (""hello"", ""world""),
+        ("""", """"),
+        (""a"", ""a""),
+        (""abc"", ""abcd""),
+        (""test"", ""testing""),
+        (""same"", ""same""),
+        (""different"", ""different""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        if not result:
+            print(f""Test failed for: '{str1}' vs '{str2}'"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,4,20725,329_6_4.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""hello"", ""hello""),
+        (""hello"", ""world""),
+        (""abc"", ""abc""),
+        (""abc"", ""abd""),
+        (""apple"", ""apply""),
+        (""Apple"", ""apple""),
+        (""test"", ""test ""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""longerstring"", ""short""),
+        (""same"", ""same""),
+        (""123"", ""123""),
+        (""a"", ""A""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for: '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,5,20726,329_6_5.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""hello"", ""hello""),
+        (""hello"", ""world""),
+        (""hello"", ""Hello""),
+        (""abc"", ""abcd""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""test"", ""test ""),
+        (""longerstring"", ""shorterstring""),
+        (""Python"", ""python""),
+        (""123"", ""123""),
+        (""a"", ""A"")
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for: '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,6,20727,329_6_6.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""hello"", ""hello""),
+        (""hello"", ""world""),
+        (""abc"", ""abc""),
+        (""abc"", ""abd""),
+        (""apple"", ""apply""),
+        (""Apple"", ""apple""),
+        (""test"", ""test ""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""longerstring"", ""short""),
+        (""same"", ""same""),
+        (""123"", ""123""),
+        (""A"", ""a""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for '{str1}' vs '{str2}'."")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,7,20728,329_6_7.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""hello"", ""hello""),
+        (""hello"", ""world""),
+        (""abc"", ""abc""),
+        (""abc"", ""abd""),
+        (""apple"", ""apply""),
+        (""Apple"", ""apple""),
+        ("""", """"),
+        (""a"", ""a""),
+        (""a"", ""b""),
+        (""longerstring"", ""short""),
+        (""same"", ""same""),
+        (""test"", ""test ""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for ('{str1}', '{str2}'). Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for ('{str1}', '{str2}')"")
+    if all_passed:
+        print(""\nAll tests passed."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,8,20729,329_6_8.py
+329,6,Check if strings are equal,"Generate a testable module containing functions to verify the equality of various pairs of strings, including cases with different lengths and case differences.","def test_string_equality(str1, str2):
+    return str1 == str2
+def run_tests():
+    test_cases = [
+        (""hello"", ""hello""),
+        (""hello"", ""world""),
+        (""abc"", ""abc""),
+        (""abc"", ""abd""),
+        (""apple"", ""apply""),
+        (""Apple"", ""apple""),
+        ("""", """"),
+        (""a"", ""b""),
+        (""test"", ""test ""),
+        (""longerstring"", ""longerstring""),
+        (""short"", ""longer""),
+    ]
+    all_passed = True
+    for str1, str2 in test_cases:
+        result = test_string_equality(str1, str2)
+        expected = str1 == str2
+        if result != expected:
+            print(f""Test failed for: '{str1}' vs '{str2}'. Expected: {expected}, Got: {result}"")
+            all_passed = False
+        else:
+            print(f""Test passed for: '{str1}' vs '{str2}'"")
+    if all_passed:
+        print(""\nAll tests passed successfully."")
+    else:
+        print(""\nSome tests failed."")
+if __name__ == '__main__':
+    run_tests()",True,9,20730,329_6_9.py
+329,7,Check if strings are equal,"Write an optimized function that handles potential `TypeError` if non-string inputs are accidentally passed, ensuring it only compares actual string types for equality.","def safe_string_equality(a, b):
+    if isinstance(a, str) and isinstance(b, str):
+        return a == b
+    return False
+if __name__ == '__main__':
+    print(safe_string_equality(""hello"", ""hello""))
+    print(safe_string_equality(""hello"", ""world""))
+    print(safe_string_equality(123, ""123""))
+    print(safe_string_equality(""test"", 123))
+    print(safe_string_equality(None, """"))
+    print(safe_string_equality("""", """"))",True,0,20731,329_7.py
+329,7,Check if strings are equal,"Write an optimized function that handles potential `TypeError` if non-string inputs are accidentally passed, ensuring it only compares actual string types for equality.","def safe_string_equality(a, b):
+    if isinstance(a, str) and isinstance(b, str):
+        return a == b
+    return False
+if __name__ == '__main__':
+    print(safe_string_equality(""hello"", ""hello""))
+    print(safe_string_equality(""hello"", ""world""))
+    print(safe_string_equality(123, ""123""))
+    print(safe_string_equality(""test"", 123))
+    print(safe_string_equality("""", """"))
+    print(safe_string_equality(None, None))",True,1,20732,329_7_1.py
+329,7,Check if strings are equal,"Write an optimized function that handles potential `TypeError` if non-string inputs are accidentally passed, ensuring it only compares actual string types for equality.","def safe_string_equality(a, b):
+    if isinstance(a, str) and isinstance(b, str):
+        return a == b
+    return False
+if __name__ == '__main__':
+    print(safe_string_equality(""hello"", ""hello""))
+    print(safe_string_equality(""hello"", ""world""))
+    print(safe_string_equality(123, ""123""))
+    print(safe_string_equality(""test"", 456))
+    print(safe_string_equality(None, """"))
+    print(safe_string_equality("""", """"))",True,2,20733,329_7_2.py
+329,7,Check if strings are equal,"Write an optimized function that handles potential `TypeError` if non-string inputs are accidentally passed, ensuring it only compares actual string types for equality.","def safe_string_equality(a, b):
+    if isinstance(a, str) and isinstance(b, str):
+        return a == b
+    return False
+if __name__ == '__main__':
+    print(safe_string_equality(""hello"", ""hello""))
+    print(safe_string_equality(""hello"", ""world""))
+    print(safe_string_equality(""hello"", 123))
+    print(safe_string_equality(None, ""hello""))
+    print(safe_string_equality("""", """"))
+    print(safe_string_equality(123, 456))",True,3,20734,329_7_3.py
+329,4,Check if strings are equal,"Write a concise and idiomatic Python expression to check if the string 'hello' is equal to 'hello', and demonstrate how this principle applies generally for checking string equality.",,False,0,20735,329_4.py
+329,8,Check if strings are equal,Design and write a full program that reads two strings from standard input and outputs 'Strings are equal' or 'Strings are not equal' based on their comparison.,"import sys
+if __name__ == '__main__':
+    string1 = ""hello""
+    string2 = ""world""
+    if string1 == string2:
+        print(""Strings are equal"")
+    else:
+        print(""Strings are not equal"")",True,0,20736,329_8.py
+329,10,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two strings as input and returns `True` if they are exactly equal, ignoring case sensitivity for the comparison. The implementation must be highly optimized.","def are_strings_equal(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal(""Hello"", ""hello""))
+    print(are_strings_equal(""World"", ""worlD""))
+    print(are_strings_equal(""Python"", ""Java""))
+    print(are_strings_equal(""Test"", ""test""))",True,0,20737,329_10.py
+329,10,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two strings as input and returns `True` if they are exactly equal, ignoring case sensitivity for the comparison. The implementation must be highly optimized.","def are_strings_equal(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal(""Hello"", ""hello""))
+    print(are_strings_equal(""World"", ""world""))
+    print(are_strings_equal(""Python"", ""java""))
+    print(are_strings_equal(""Test"", ""test""))
+    print(are_strings_equal(""A"", ""a""))",True,1,20738,329_10_1.py
+329,10,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two strings as input and returns `True` if they are exactly equal, ignoring case sensitivity for the comparison. The implementation must be highly optimized.","def are_strings_equal(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal(""Hello"", ""hello""))
+    print(are_strings_equal(""World"", ""world""))
+    print(are_strings_equal(""Python"", ""Java""))
+    print(are_strings_equal(""Test"", ""test""))
+    print(are_strings_equal(""aBc"", ""abc""))",True,2,20739,329_10_2.py
+329,10,Check if strings are equal,"Implement a Python function named `are_strings_equal` that takes two strings as input and returns `True` if they are exactly equal, ignoring case sensitivity for the comparison. The implementation must be highly optimized.","def are_strings_equal(str1, str2):
+    return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    print(are_strings_equal(""Hello"", ""hello""))
+    print(are_strings_equal(""World"", ""worlD""))
+    print(are_strings_equal(""Python"", ""Java""))
+    print(are_strings_equal(""Test"", ""test""))
+    print(are_strings_equal(""a"", ""A""))",True,3,20740,329_10_3.py
+329,11,Check if strings are equal,"Write a complete, professional Python script that reads two strings from standard input and prints 'Equal' or 'Not Equal' based on whether they are identical. Use best practices for input handling.","import sys
+if __name__ == '__main__':
+    string1 = ""hello""
+    string2 = ""hello""
+    if string1 == string2:
+        print(""Equal"")
+    else:
+        print(""Not Equal"")",True,0,20741,329_11.py
+329,11,Check if strings are equal,"Write a complete, professional Python script that reads two strings from standard input and prints 'Equal' or 'Not Equal' based on whether they are identical. Use best practices for input handling.","import sys
+if __name__ == '__main__':
+    string1 = ""hello""
+    string2 = ""world""
+    if string1 == string2:
+        print(""Equal"")
+    else:
+        print(""Not Equal"")",True,1,20742,329_11_1.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality(""Test"", None)
+    except TypeError as e:
+        print(f""Test 4 (None Input Error): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(123, ""test"")
+    except TypeError as e:
+        print(f""Test 5 (Non-string Input Error): Caught expected error: {e}"")",True,0,20743,329_12.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive Equal): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality(""Test"", None)
+    except TypeError as e:
+        print(f""Test 4 (None input error caught): {e}"")
+    try:
+        comparer.check_equality(123, ""test"")
+    except TypeError as e:
+        print(f""Test 5 (Non-string input error caught): {e}"")
+    try:
+        comparer.check_equality(None, ""test"")
+    except TypeError as e:
+        print(f""Test 6 (None input error caught): {e}"")",True,1,20744,329_12_1.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality('Test', None)
+    except TypeError as e:
+        print(f""Test 4 (None input error caught): {e}"")
+    try:
+        comparer.check_equality(123, 'test')
+    except TypeError as e:
+        print(f""Test 5 (Non-string input error caught): {e}"")",True,2,20745,329_12_2.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Both inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive Equal): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality(""Test"", None)
+    except TypeError as e:
+        print(f""Test 4 (None input handling): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(123, ""test"")
+    except TypeError as e:
+        print(f""Test 5 (Non-string input handling): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(None, ""test"")
+    except TypeError as e:
+        print(f""Test 6 (None input handling): Caught expected error: {e}"")",True,3,20746,329_12_3.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Both inputs must be strings."")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1: 'Hello' and 'hello' -> {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2: 'World' and 'Other' -> {comparer.check_equality('World', 'Other')}"")
+    print(f""Test 3: 'a' and 'A' -> {comparer.check_equality('a', 'A')}"")
+    try:
+        comparer.check_equality(""test"", None)
+    except TypeError as e:
+        print(f""Test 4 (Error Handling): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(123, ""test"")
+    except TypeError as e:
+        print(f""Test 5 (Error Handling): Caught expected error: {e}"")",True,4,20747,329_12_4.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality('Test', None)
+    except TypeError as e:
+        print(f""Test 4 (None input handling): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(123, 'test')
+    except TypeError as e:
+        print(f""Test 5 (Non-string input handling): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(['a'], 'a')
+    except TypeError as e:
+        print(f""Test 6 (List input handling): Caught expected error: {e}"")",True,5,20748,329_12_5.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1: 'Hello' and 'hello' -> {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2: 'World' and 'World' -> {comparer.check_equality('World', 'World')}"")
+    print(f""Test 3: 'Apple' and 'Banana' -> {comparer.check_equality('Apple', 'Banana')}"")
+    try:
+        comparer.check_equality(""Test"", None)
+    except TypeError as e:
+        print(f""Test 4 (None input): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(123, ""test"")
+    except TypeError as e:
+        print(f""Test 5 (Non-string input): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(None, ""test"")
+    except TypeError as e:
+        print(f""Test 6 (None input): Caught expected error: {e}"")",True,6,20749,329_12_6.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive Equal): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality('Test', None)
+    except TypeError as e:
+        print(f""Test 4 (None input error caught): {e}"")
+    try:
+        comparer.check_equality(123, 'test')
+    except TypeError as e:
+        print(f""Test 5 (Non-string input error caught): {e}"")",True,7,20750,329_12_7.py
+329,12,Check if strings are equal,"Develop an optimized method within a class called `StringComparer` that has a method `check_equality(self, str1, str2)` which compares two strings for equality. The comparison should be case-insensitive and handle potential `None` inputs gracefully by raising a `TypeError` if non-string types are provided.","class StringComparer:
+    def check_equality(self, str1, str2):
+        if str1 is None or str2 is None:
+            raise TypeError(""Input strings cannot be None"")
+        if not isinstance(str1, str) or not isinstance(str2, str):
+            raise TypeError(""Inputs must be strings"")
+        return str1.lower() == str2.lower()
+if __name__ == '__main__':
+    comparer = StringComparer()
+    print(f""Test 1 (Equal): {comparer.check_equality('Hello', 'hello')}"")
+    print(f""Test 2 (Unequal): {comparer.check_equality('World', 'Python')}"")
+    print(f""Test 3 (Case Insensitive): {comparer.check_equality('Test', 'test')}"")
+    try:
+        comparer.check_equality('Test', None)
+    except TypeError as e:
+        print(f""Test 4 (None input error): Caught expected error: {e}"")
+    try:
+        comparer.check_equality(123, 'test')
+    except TypeError as e:
+        print(f""Test 5 (Non-string input error): Caught expected error: {e}"")",True,8,20751,329_12_8.py
+329,9,Check if strings are equal,"Provide the most Pythonic and simplest way to check if two string variables, `s1` and `s2`, hold the same value, assuming they are already defined.","if __name__ == '__main__':
+    s1 = ""hello""
+    s2 = ""hello""
+    s3 = ""world""
+    print(s1 == s2)
+    print(s1 == s3)",True,0,20752,329_9.py
+329,14,Check if strings are equal,"Write a robust function `compare_strings(s1: str, s2: str) -> bool` that checks for string equality. The function must handle edge cases such as empty strings and ensure the comparison is strictly based on the content of the strings.","def compare_strings(s1: str, s2: str) -> bool:
+    return s1 == s2
+if __name__ == '__main__':
+    print(f""compare_strings('hello', 'hello'): {compare_strings('hello', 'hello')}"")
+    print(f""compare_strings('hello', 'world'): {compare_strings('hello', 'world')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('a', 'a'): {compare_strings('a', 'a')}"")
+    print(f""compare_strings('a', 'b'): {compare_strings('a', 'b')}"")
+    print(f""compare_strings('', 'a'): {compare_strings('', 'a')}"")
+    print(f""compare_strings('abc', 'abc'): {compare_strings('abc', 'abc')}"")
+    print(f""compare_strings('abc', 'abcd'): {compare_strings('abc', 'abcd')}"")",True,0,20753,329_14.py
+329,14,Check if strings are equal,"Write a robust function `compare_strings(s1: str, s2: str) -> bool` that checks for string equality. The function must handle edge cases such as empty strings and ensure the comparison is strictly based on the content of the strings.","def compare_strings(s1: str, s2: str) -> bool:
+    return s1 == s2
+if __name__ == '__main__':
+    print(f""compare_strings('hello', 'hello'): {compare_strings('hello', 'hello')}"")
+    print(f""compare_strings('hello', 'world'): {compare_strings('hello', 'world')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('a', 'a'): {compare_strings('a', 'a')}"")
+    print(f""compare_strings('a', 'b'): {compare_strings('a', 'b')}"")
+    print(f""compare_strings('abc', 'abc'): {compare_strings('abc', 'abc')}"")
+    print(f""compare_strings('abc', 'abd'): {compare_strings('abc', 'abd')}"")
+    print(f""compare_strings('', 'a'): {compare_strings('', 'a')}"")
+    print(f""compare_strings(' ', ' '): {compare_strings(' ', ' ')}"")",True,1,20754,329_14_1.py
+329,14,Check if strings are equal,"Write a robust function `compare_strings(s1: str, s2: str) -> bool` that checks for string equality. The function must handle edge cases such as empty strings and ensure the comparison is strictly based on the content of the strings.","def compare_strings(s1: str, s2: str) -> bool:
+    return s1 == s2
+if __name__ == '__main__':
+    print(f""compare_strings('hello', 'hello'): {compare_strings('hello', 'hello')}"")
+    print(f""compare_strings('hello', 'world'): {compare_strings('hello', 'world')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('a', 'a'): {compare_strings('a', 'a')}"")
+    print(f""compare_strings('a', 'b'): {compare_strings('a', 'b')}"")
+    print(f""compare_strings('', 'a'): {compare_strings('', 'a')}"")
+    print(f""compare_strings('abc', 'abc'): {compare_strings('abc', 'abc')}"")
+    print(f""compare_strings('abc', 'abd'): {compare_strings('abc', 'abd')}"")",True,2,20755,329_14_2.py
+329,14,Check if strings are equal,"Write a robust function `compare_strings(s1: str, s2: str) -> bool` that checks for string equality. The function must handle edge cases such as empty strings and ensure the comparison is strictly based on the content of the strings.","def compare_strings(s1: str, s2: str) -> bool:
+    return s1 == s2
+if __name__ == '__main__':
+    print(f""compare_strings('hello', 'hello'): {compare_strings('hello', 'hello')}"")
+    print(f""compare_strings('hello', 'world'): {compare_strings('hello', 'world')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('a', 'a'): {compare_strings('a', 'a')}"")
+    print(f""compare_strings('', 'a'): {compare_strings('', 'a')}"")
+    print(f""compare_strings('abc', 'abc'): {compare_strings('abc', 'abc')}"")
+    print(f""compare_strings('abc', 'abd'): {compare_strings('abc', 'abd')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")",True,3,20756,329_14_3.py
+329,14,Check if strings are equal,"Write a robust function `compare_strings(s1: str, s2: str) -> bool` that checks for string equality. The function must handle edge cases such as empty strings and ensure the comparison is strictly based on the content of the strings.","def compare_strings(s1: str, s2: str) -> bool:
+    return s1 == s2
+if __name__ == '__main__':
+    print(f""compare_strings('hello', 'hello'): {compare_strings('hello', 'hello')}"")
+    print(f""compare_strings('hello', 'world'): {compare_strings('hello', 'world')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('', ''): {compare_strings('', '')}"")
+    print(f""compare_strings('a', 'a'): {compare_strings('a', 'a')}"")
+    print(f""compare_strings('a', 'b'): {compare_strings('a', 'b')}"")
+    print(f""compare_strings('abc', 'abc'): {compare_strings('abc', 'abc')}"")
+    print(f""compare_strings('abc', 'abd'): {compare_strings('abc', 'abd')}"")
+    print(f""compare_strings('', 'a'): {compare_strings('', 'a')}"")
+    print(f""compare_strings('a', ''): {compare_strings('a', '')}"")",True,4,20757,329_14_4.py
+330,0,Make a string uppercase,"Write a complete, robust Python script that takes a string as input and converts it entirely to uppercase, printing the result to the console.","def convert_to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    sample_string = ""this is a sample string""
+    result = convert_to_uppercase(sample_string)
+    print(result)",True,0,20758,330_0.py
+330,0,Make a string uppercase,"Write a complete, robust Python script that takes a string as input and converts it entirely to uppercase, printing the result to the console.","def convert_to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    sample_string = ""this is a test string""
+    result = convert_to_uppercase(sample_string)
+    print(result)",True,1,20759,330_0_1.py
+330,0,Make a string uppercase,"Write a complete, robust Python script that takes a string as input and converts it entirely to uppercase, printing the result to the console.","def convert_to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    sample_string = ""this is a sample string for testing""
+    result = convert_to_uppercase(sample_string)
+    print(result)",True,2,20760,330_0_2.py
+330,0,Make a string uppercase,"Write a complete, robust Python script that takes a string as input and converts it entirely to uppercase, printing the result to the console.","def convert_to_uppercase(input_string):
+    uppercase_string = input_string.upper()
+    print(uppercase_string)
+if __name__ == '__main__':
+    sample_string = ""this is a sample string for testing""
+    convert_to_uppercase(sample_string)",True,3,20761,330_0_3.py
+330,0,Make a string uppercase,"Write a complete, robust Python script that takes a string as input and converts it entirely to uppercase, printing the result to the console.","def convert_to_uppercase(input_string):
+    uppercase_string = input_string.upper()
+    print(uppercase_string)
+if __name__ == '__main__':
+    sample_string = ""this is a sample string""
+    convert_to_uppercase(sample_string)",True,4,20762,330_0_4.py
+330,1,Make a string uppercase,Implement an optimized function named `to_uppercase` that accepts a single string argument and returns the uppercase version of that string using the built-in string method.,"def to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    test_string1 = ""hello world""
+    result1 = to_uppercase(test_string1)
+    print(f""'{test_string1}' -> '{result1}'"")
+    test_string2 = ""PYTHON""
+    result2 = to_uppercase(test_string2)
+    print(f""'{test_string2}' -> '{result2}'"")
+    test_string3 = ""abc123xyz""
+    result3 = to_uppercase(test_string3)
+    print(f""'{test_string3}' -> '{result3}'"")",True,0,20763,330_1.py
+330,1,Make a string uppercase,Implement an optimized function named `to_uppercase` that accepts a single string argument and returns the uppercase version of that string using the built-in string method.,"def to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    test_string1 = ""hello world""
+    result1 = to_uppercase(test_string1)
+    print(f""'{test_string1}' -> '{result1}'"")
+    test_string2 = ""Python is fun""
+    result2 = to_uppercase(test_string2)
+    print(f""'{test_string2}' -> '{result2}'"")
+    test_string3 = ""UPPERCASE""
+    result3 = to_uppercase(test_string3)
+    print(f""'{test_string3}' -> '{result3}'"")",True,1,20764,330_1_1.py
+330,1,Make a string uppercase,Implement an optimized function named `to_uppercase` that accepts a single string argument and returns the uppercase version of that string using the built-in string method.,"def to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    test_string1 = ""hello world""
+    result1 = to_uppercase(test_string1)
+    print(f""'{test_string1}' -> '{result1}'"")
+    test_string2 = ""PYTHON""
+    result2 = to_uppercase(test_string2)
+    print(f""'{test_string2}' -> '{result2}'"")
+    test_string3 = ""aBcDeFg""
+    result3 = to_uppercase(test_string3)
+    print(f""'{test_string3}' -> '{result3}'"")",True,2,20765,330_1_2.py
+330,1,Make a string uppercase,Implement an optimized function named `to_uppercase` that accepts a single string argument and returns the uppercase version of that string using the built-in string method.,"def to_uppercase(input_string):
+    return input_string.upper()
+if __name__ == '__main__':
+    test_string1 = ""hello world""
+    result1 = to_uppercase(test_string1)
+    print(f""'{test_string1}' -> '{result1}'"")
+    test_string2 = ""Python""
+    result2 = to_uppercase(test_string2)
+    print(f""'{test_string2}' -> '{result2}'"")
+    test_string3 = ""abc123xyz""
+    result3 = to_uppercase(test_string3)
+    print(f""'{test_string3}' -> '{result3}'"")",True,3,20766,330_1_3.py
+330,2,Make a string uppercase,Develop a class named `StringManipulator` with a method `uppercase_string` that efficiently converts any input string to uppercase. Ensure the implementation is clean and follows object-oriented best practices.,"class StringManipulator:
+    def uppercase_string(self, input_string):
+        return input_string.upper()
+if __name__ == '__main__':
+    manipulator = StringManipulator()
+    sample1 = ""hello world""
+    result1 = manipulator.uppercase_string(sample1)
+    print(f""Original: {sample1}"")
+    print(f""Uppercase: {result1}"")
+    sample2 = ""Python Programming""
+    result2 = manipulator.uppercase_string(sample2)
+    print(f""Original: {sample2}"")
+    print(f""Uppercase: {result2}"")",True,0,20767,330_2.py
+330,2,Make a string uppercase,Develop a class named `StringManipulator` with a method `uppercase_string` that efficiently converts any input string to uppercase. Ensure the implementation is clean and follows object-oriented best practices.,"class StringManipulator:
+    def uppercase_string(self, input_string):
+        return input_string.upper()
+if __name__ == '__main__':
+    manipulator = StringManipulator()
+    sample1 = ""hello world""
+    result1 = manipulator.uppercase_string(sample1)
+    print(f""Original: {sample1}"")
+    print(f""Uppercase: {result1}"")
+    sample2 = ""Python Programming""
+    result2 = manipulator.uppercase_string(sample2)
+    print(f""Original: {sample2}"")
+    print(f""Uppercase: {result2}"")
+    sample3 = ""aBcDeFg""
+    result3 = manipulator.uppercase_string(sample3)
+    print(f""Original: {sample3}"")
+    print(f""Uppercase: {result3}"")",True,1,20768,330_2_1.py
+330,2,Make a string uppercase,Develop a class named `StringManipulator` with a method `uppercase_string` that efficiently converts any input string to uppercase. Ensure the implementation is clean and follows object-oriented best practices.,"class StringManipulator:
+    def uppercase_string(self, input_string):
+        return input_string.upper()
+if __name__ == '__main__':
+    manipulator = StringManipulator()
+    sample1 = ""hello world""
+    result1 = manipulator.uppercase_string(sample1)
+    print(f""Original: {sample1}"")
+    print(f""Uppercase: {result1}"")
+    sample2 = ""Python Programming""
+    result2 = manipulator.uppercase_string(sample2)
+    print(f""Original: {sample2}"")
+    print(f""Uppercase: {result2}"")
+    sample3 = ""test""
+    result3 = manipulator.uppercase_string(sample3)
+    print(f""Original: {sample3}"")
+    print(f""Uppercase: {result3}"")",True,2,20769,330_2_2.py
+330,2,Make a string uppercase,Develop a class named `StringManipulator` with a method `uppercase_string` that efficiently converts any input string to uppercase. Ensure the implementation is clean and follows object-oriented best practices.,"class StringManipulator:
+    def uppercase_string(self, input_string):
+        return input_string.upper()
+if __name__ == '__main__':
+    manipulator = StringManipulator()
+    sample1 = ""hello world""
+    result1 = manipulator.uppercase_string(sample1)
+    print(f""Original: {sample1}, Uppercase: {result1}"")
+    sample2 = ""Python Programming""
+    result2 = manipulator.uppercase_string(sample2)
+    print(f""Original: {sample2}, Uppercase: {result2}"")
+    sample3 = ""test""
+    result3 = manipulator.uppercase_string(sample3)
+    print(f""Original: {sample3}, Uppercase: {result3}"")",True,3,20770,330_2_3.py
+330,3,Make a string uppercase,"Write a concise Python function that accepts a string and returns the uppercase version of the string using string slicing or iteration, avoiding direct use of the `.upper()` method if possible (for demonstration purposes, though `.upper()` is preferred).","def to_uppercase_manual(s):
+    result = """"
+    for char in s:
+        if 'a' <= char <= 'z':
+            result += chr(ord(char) - 32)
+        else:
+            result += char
+    return result
+if __name__ == '__main__':
+    input_string = ""hello world""
+    uppercase_string = to_uppercase_manual(input_string)
+    print(uppercase_string)",True,0,20771,330_3.py
+330,3,Make a string uppercase,"Write a concise Python function that accepts a string and returns the uppercase version of the string using string slicing or iteration, avoiding direct use of the `.upper()` method if possible (for demonstration purposes, though `.upper()` is preferred).","def to_uppercase_manual(input_string):
+    result = """"
+    for char in input_string:
+        if 'a' <= char <= 'z':
+            result += chr(ord(char) - 32)
+        else:
+            result += char
+    return result
+if __name__ == '__main__':
+    sample = ""hello world""
+    uppercase_result = to_uppercase_manual(sample)
+    print(uppercase_result)",True,1,20772,330_3_1.py
+330,3,Make a string uppercase,"Write a concise Python function that accepts a string and returns the uppercase version of the string using string slicing or iteration, avoiding direct use of the `.upper()` method if possible (for demonstration purposes, though `.upper()` is preferred).","def to_uppercase(s):
+    result = """"
+    for char in s:
+        result += chr(ord(char) - 32)
+    return result
+if __name__ == '__main__':
+    test_string = ""hello world""
+    uppercase_string = to_uppercase(test_string)
+    print(uppercase_string)",True,2,20773,330_3_2.py
+329,13,Check if strings are equal,"Create a concise and efficient Python expression or one-line function that checks if two given strings are equal, ensuring the comparison is case-sensitive unless explicitly modified by the user to be case-insensitive. Provide examples of its usage.",,False,0,20774,329_13.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = uppercase_char_generator(test_string)
+    result_list = list(generator)
+    print(result_list)
+    long_string = ""this is a very long string designed to test memory efficiency when processing very long strings"" * 1000
+    generator_long = uppercase_char_generator(long_string)
+    result_long = list(generator_long)
+    print(""--- Long String Test (First 20 chars) ---"")
+    print(result_long[:20])",True,0,20775,330_5.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = uppercase_char_generator(test_string)
+    result_list = list(generator)
+    print(result_list)
+    long_string = ""this is a very long string designed to test memory efficiency"" * 10000
+    generator_long = uppercase_char_generator(long_string)
+    result_long = list(generator_long)
+    print(""--- Long String Test (First 20 chars) ---"")
+    print(result_long[:20])",True,1,20776,330_5_1.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    sample_string = ""this is a very long string for testing memory efficiency""
+    uppercase_generator = uppercase_char_generator(sample_string)
+    result_list = list(uppercase_generator)
+    print(result_list)",True,2,20777,330_5_2.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = uppercase_char_generator(test_string)
+    result_list = list(generator)
+    print(result_list)
+    long_string = ""this is a very long string for testing memory efficiency"" * 10000
+    generator_long = uppercase_char_generator(long_string)
+    result_long = list(generator_long)
+    print(""--- Long String Test (First 20 chars) ---"")
+    print(result_long[:20])",True,3,20778,330_5_3.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    sample_string = ""hello world""
+    generator = uppercase_char_generator(sample_string)
+    result_list = list(generator)
+    print(result_list)
+    long_string = ""this is a very long string designed to test memory efficiency"" * 1000
+    generator_long = uppercase_char_generator(long_string)
+    result_long = list(generator_long)
+    print(""--- Long String Test ---"")
+    print(len(result_long))
+    print(result_long[:50])",True,4,20779,330_5_4.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = uppercase_char_generator(test_string)
+    result_list = list(generator)
+    print(result_list)
+    long_string = ""this is a very long string to test memory efficiency"" * 10000
+    generator_long = uppercase_char_generator(long_string)
+    result_long = list(generator_long)
+    print(""--- Long String Test (First 20 chars) ---"")
+    print(result_long[:20])",True,5,20780,330_5_5.py
+330,5,Make a string uppercase,"Implement a generator function that yields each character of an input string in uppercase, optimizing for memory efficiency when processing very long strings.","def uppercase_char_generator(input_string):
+    for char in input_string:
+        yield char.upper()
+if __name__ == '__main__':
+    test_string = ""hello world""
+    generator = uppercase_char_generator(test_string)
+    result_list = list(generator)
+    print(result_list)",True,6,20781,330_5_6.py
+330,6,Make a string uppercase,Write a testable Python module containing a function `capitalize_string` that correctly handles empty strings and strings containing mixed cases by converting them to uppercase.,"def capitalize_string(input_string):
+    if not input_string:
+        return """"
+    return input_string.upper()
+if __name__ == '__main__':
+    test_cases = [
+        ("""", """"),
+        (""hello"", ""HELLO""),
+        (""world"", ""WORLD""),
+        (""MiXeD CaSe"", ""MIXED CASE""),
+        (""ALL CAPS"", ""ALL CAPS"")
+    ]
+    for input_str, expected_output in test_cases:
+        actual_output = capitalize_string(input_str)
+        assert actual_output == expected_output, f""Input: '{input_str}', Expected: '{expected_output}', Got: '{actual_output}'""
+        print(f""Test passed for input: '{input_str}'"")",True,0,20782,330_6.py
+330,6,Make a string uppercase,Write a testable Python module containing a function `capitalize_string` that correctly handles empty strings and strings containing mixed cases by converting them to uppercase.,"def capitalize_string(input_string):
+    if not input_string:
+        return """"
+    return input_string.upper()
+if __name__ == '__main__':
+    test_cases = [
+        ("""", """"),
+        (""hello"", ""HELLO""),
+        (""world"", ""WORLD""),
+        (""MiXeD cAsE"", ""MIXED CASE""),
+        (""ALL CAPS"", ""ALL CAPS"")
+    ]
+    for input_str, expected_output in test_cases:
+        actual_output = capitalize_string(input_str)
+        assert actual_output == expected_output, f""Input: '{input_str}', Expected: '{expected_output}', Got: '{actual_output}'""
+        print(f""Test passed for input: '{input_str}'"")",True,1,20783,330_6_1.py
+330,6,Make a string uppercase,Write a testable Python module containing a function `capitalize_string` that correctly handles empty strings and strings containing mixed cases by converting them to uppercase.,"def capitalize_string(input_string):
+    if not input_string:
+        return """"
+    return input_string.upper()
+if __name__ == '__main__':
+    test_cases = [
+        ("""", """"),
+        (""hello"", ""HELLO""),
+        (""world"", ""WORLD""),
+        (""MiXeD cAsE"", ""MIXED CASE"")
+    ]
+    for input_str, expected_output in test_cases:
+        actual_output = capitalize_string(input_str)
+        assert actual_output == expected_output, f""Input: '{input_str}', Expected: '{expected_output}', Got: '{actual_output}'""
+        print(f""Test passed for input: '{input_str}'"")",True,2,20784,330_6_2.py
+330,6,Make a string uppercase,Write a testable Python module containing a function `capitalize_string` that correctly handles empty strings and strings containing mixed cases by converting them to uppercase.,"def capitalize_string(input_string):
+    if not input_string:
+        return """"
+    return input_string.upper()
+if __name__ == '__main__':
+    print(capitalize_string(""""))
+    print(capitalize_string(""hello""))
+    print(capitalize_string(""WORLD""))
+    print(capitalize_string(""MiXeD CaSe""))",True,3,20785,330_6_3.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","def repeatedly_uppercase(s, n):
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    sample_string = ""hello""
+    num_applications = 3
+    final_result = repeatedly_uppercase(sample_string, num_applications)
+    print(final_result)",True,0,20786,330_7.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","import string
+def repeatedly_uppercase(s, n):
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    sample_string = ""hello""
+    num_applications = 3
+    final_result = repeatedly_uppercase(sample_string, num_applications)
+    print(final_result)",True,1,20787,330_7_1.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","def apply_uppercase_repeatedly(s, n):
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    sample_string = ""hello""
+    num_repetitions = 3
+    final_result = apply_uppercase_repeatedly(sample_string, num_repetitions)
+    print(final_result)",True,2,20788,330_7_2.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","import string
+def repeatedly_uppercase(s: str, n: int) -> str:
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    sample_string = ""hello""
+    num_applications = 3
+    final_result = repeatedly_uppercase(sample_string, num_applications)
+    print(final_result)",True,3,20789,330_7_3.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","def repeatedly_uppercase(s, n):
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    string_to_transform = ""hello""
+    number_of_applications = 3
+    final_result = repeatedly_uppercase(string_to_transform, number_of_applications)
+    print(final_result)",True,4,20790,330_7_4.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","import string
+def apply_uppercase_repeatedly(s, n):
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    sample_string = ""hello""
+    num_applications = 3
+    final_result = apply_uppercase_repeatedly(sample_string, num_applications)
+    print(final_result)",True,5,20791,330_7_5.py
+330,7,Make a string uppercase,"Design an efficient solution for repeatedly applying the uppercase transformation to a string multiple times, returning the final result in a single operation.","def repeatedly_uppercase(s, n):
+    result = s
+    for _ in range(n):
+        result = result.upper()
+    return result
+if __name__ == '__main__':
+    input_string = ""hello""
+    num_applications = 3
+    final_result = repeatedly_uppercase(input_string, num_applications)
+    print(final_result)",True,6,20792,330_7_6.py
+330,8,Make a string uppercase,"Write a function that takes a list of strings and returns a new list where every string in the original list has been converted to uppercase. Ensure the solution is highly efficient (e.g., using list comprehensions).","def convert_to_uppercase(string_list):
+    return [s.upper() for s in string_list]
+if __name__ == '__main__':
+    sample_list = [""hello"", ""world"", ""python"", ""code""]
+    result = convert_to_uppercase(sample_list)
+    print(result)",True,0,20793,330_8.py
