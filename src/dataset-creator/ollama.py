@@ -8,7 +8,8 @@ from threading import Lock
 
 
 OLLAMA_URL = "http://localhost:11434"
-MODEL = "gemma4:e2b" 
+# MODEL = "gemma4:e2b" - Default model 
+MODEL = "qwen3.5:4b"
 # MODEL = "mistral-medium-3.5:128b" - TO CHANGE FOR TESTING
 
 DATA_DIR = "data"
