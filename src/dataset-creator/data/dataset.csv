@@ -23682,3 +23682,3567 @@ if __name__ == '__main__':
     }
     decision = engine.evaluate(user_data)
     print(f""Evaluation Result for {user_data['name']}: {decision}"")",True,7,957,9_0_7.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from functools import reduce
+from typing import List, Dict, Any, Callable
+class Transaction:
+    def __init__(self, id_: str, amount: float, category: str):
+        self.id = id_
+        self.amount = amount
+        self.category = category
+    def __repr__(self) -> str:
+        return f""Transaction(id={self.id}, amount={self.amount}, category='{self.category}')""
+def parse_transactions(data: List[Dict[str, Any]]) -> List[Transaction]:
+    return [Transaction(d['id'], d['amount'], d['category']) for d in data]
+class DecisionEngine:
+    def __init__(self):
+        self._rules = []
+    def add_rule(self, priority: int, condition_fn: Callable[[List[Transaction]], bool], action_fn: Callable[[List[Transaction]], List[Transaction]]):
+        self._rules.append((priority, condition_fn, action_fn))
+    def process_transactions(self, transactions: List[Transaction]) -> List[Transaction]:
+        sorted_rules = sorted(self._rules, key=lambda x: x[0], reverse=True)
+        current_list = [t for t in transactions]
+        for _, condition_fn, action_fn in sorted_rules:
+            if condition_fn(current_list):
+                next_list = reduce(action_fn, list(reversed(range(len(current_list)))), current_list[:])                               
+            new_transactions = []
+        return transactions
+def apply_rules(transactions: List[Transaction], rules_config: Dict[int, tuple]):
+    def condition_fn(data):
+        high_value = [t for t in data if t.amount > 100]
+        return len(high_value) >= 2
+    def action_fn(transactions_list):
+        flagged = []
+        for i, tx in enumerate(transactions_list):
+            if condition_fn([tx]):
+                flag_type = ""HIGH_VALUE""
+            else:
+                flag_type = ""NORMAL""
+            if tx.amount > 100:
+                flagged.append(tx)
+        return flagged
+    result = transactions
+    priority_99 = (99, condition_fn, action_fn)
+    final_result = reduce(lambda acc, item: [t for t in acc if not (item[1](acc))] or item[2], 
+                         [(priority_99)], result)
+    return final_result
+def main():
+    raw_data = [
+        {""id"": ""TX001"", ""amount"": 50.0, ""category"": ""Food""},
+        {""id"": ""TX002"", ""amount"": 150.0, ""category"": ""Travel""},
+        {""id"": ""TX003"", ""amount"": 75.0, ""category"": ""Shopping""},
+        {""id"": ""TX004"", ""amount"": 200.0, ""category"": ""Utilities""}
+    ]
+    transactions = parse_transactions(raw_data)
+    engine = DecisionEngine()
+    rules_config = {99: (lambda x: any(t.amount > 150 for t in x), lambda xs: [t for t in xs if t.amount > 150])}
+    processed_transactions = apply_rules(transactions, rules_config)
+    print(processed_transactions)
+if __name__ == '__main__':
+    main()",True,0,958,9_1.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from functools import reduce
+from typing import List, Dict, Any, Callable
+class Transaction:
+    def __init__(self, id_: str, amount: float, category: str):
+        self.id = id_
+        self.amount = amount
+        self.category = category
+    def __repr__(self) -> str:
+        return f""Transaction(id={self.id}, amount={self.amount}, category='{self.category}')""
+def apply_priority_rule(transactions: List[Transaction], rule_type: str, threshold: Any = None) -> List[Transaction]:
+    if rule_type == ""high_amount"":
+        return [t for t in transactions if t.amount >= threshold]
+    elif rule_type == ""specific_category"":
+        target_categories = set()
+        return [t for t in transactions if t.category.lower().startswith(""urgent"")] 
+    else:
+        raise ValueError(f""Unknown priority rule type: {rule_type}"")
+def process_transactions(transactions: List[Transaction], rules_config: Dict[str, Any]) -> List[Transaction]:
+    processed = []
+    for rule_type in sorted(rules_config.keys()):
+        threshold = rules_config.get(rule_type)
+        if not isinstance(threshold, (int, float)):
+            continue
+        filtered_transactions = apply_priority_rule(transactions, rule_type, threshold)
+        processed.extend(filtered_transactions)
+    return processed
+def calculate_total_value(transactions: List[Transaction]) -> float:
+    def add_amount(acc: float, t: Transaction) -> float:
+        return acc + t.amount
+    if not transactions:
+        return 0.0
+    return reduce(add_amount, transactions, 0.0)
+def generate_report(transactions: List[Transaction]) -> Dict[str, Any]:
+    total_value = calculate_total_value(transactions)
+    count = len(transactions)
+    sorted_transactions = sorted(transactions, key=lambda t: -t.amount)
+    return {
+        ""total_count"": count,
+        ""total_amount"": total_value,
+        ""transactions"": [str(t) for t in sorted_transactions]
+    }
+if __name__ == '__main__':
+    raw_data = [
+        (""TX001"", 50.0, ""urgent""),
+        (""TX002"", 120.0, ""shopping""),
+        (""TX003"", 75.0, ""urgent""),
+        (""TX004"", 90.0, ""utilities""),
+    ]
+    transactions = [Transaction(id_, amount, category) for id_, amount, category in raw_data]
+    rules_config = {
+        ""high_amount"": 50.0,
+        ""specific_category"": None 
+    }
+    final_transactions = process_transactions(transactions, rules_config)
+    report = generate_report(final_transactions)
+    print(report[""total_count""])
+    print(f""{report['total_amount']:.2f}"")",True,1,959,9_1_1.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from typing import List, Callable, Any, Dict
+class Transaction:
+    def __init__(self, id: str, amount: float, category: str):
+        self.id = id
+        self.amount = amount
+        self.category = category
+    def __repr__(self) -> str:
+        return f""Transaction(id={self.id}, amount={self.amount:.2f}, category='{self.category}')""
+def calculate_priority(transaction: Transaction, rules: Dict[str, Callable[[Any], float]]) -> float:
+    total_score = 0.0
+    for rule_name, func in rules.items():
+        try:
+            score = func(transaction)
+            if not isinstance(score, (int, float)):
+                raise TypeError(f""Rule {rule_name} must return a numeric value"")
+            total_score += abs(score)
+        except Exception as e:
+            print(f""Error applying rule '{rule_name}': {e}"")
+    return total_score
+def process_transactions(
+    transactions: List[Transaction], 
+    rules_config: Dict[str, Callable[[Any], float]], 
+    sort_key: str = ""priority_descending"",
+    stable_sort: bool = True
+) -> List[Transaction]:
+    if not isinstance(transactions, list):
+        raise TypeError(""Input must be a list of transactions"")
+    def _get_priority(t: Transaction) -> Any:
+        return calculate_priority(t, rules_config)
+    key_func_map = {
+        ""priority_descending"": lambda t: -_get_priority(t),
+        ""priority_ascending"": lambda t: _get_priority(t),
+        ""amount_descending"": lambda t: -t.amount,
+        ""category_count"": lambda t: 0                                                
+    }
+    key_func = key_func_map.get(sort_key)
+    if not callable(key_func):
+        raise ValueError(f""Invalid sort configuration: {sort_key}"")
+    sorted_transactions = list(transactions)[::-1] if stable_sort else []
+    return sorted(sorted_transactions, key=key_func)
+def main():
+    sample_data = [
+        Transaction(""TX001"", 500.00, ""Food""),
+        Transaction(""TX002"", -120.50, ""Utilities""),
+        Transaction(""TX003"", 890.75, ""Entertainment""),
+        Transaction(""TX004"", -45.00, ""Transport"")
+    ]
+    priority_rules = {
+        ""amount_weight"": lambda t: abs(t.amount),
+        ""category_multiplier"": lambda t: {""Food"": 1.2, ""Utilities"": 1.5, ""Entertainment"": 0.8, ""Transport"": 1.3}.get(t.category, 1.0) * (t.amount if t.amount > 0 else -1),
+        ""id_sequence"": lambda t: int(t.id.split(""TX"")[1])
+    }
+    processed = process_transactions(sample_data, priority_rules, sort_key=""priority_descending"")
+    print(""\nProcessed Transactions:"")
+    for tx in processed:
+        print(f""{tx}"")
+if __name__ == '__main__':
+    main()",True,2,960,9_1_2.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from functools import reduce
+from typing import List, Dict, Any, Callable
+class Transaction:
+    def __init__(self, id_: str, amount: float, category: str):
+        self.id = id_
+        self.amount = amount
+        self.category = category
+    def __repr__(self) -> str:
+        return f""Transaction(id={self.id}, amount={self.amount}, category='{self.category}')""
+def parse_transactions(data: List[Dict[str, Any]]) -> List[Transaction]:
+    return [Transaction(d['id'], d['amount'], d['category']) for d in data]
+class PriorityRule:
+    def __init__(self, name: str, weight: float):
+        self.name = name
+        self.weight = weight
+    def apply(self, transaction: Transaction) -> Dict[str, Any]:
+        return {
+            'id': transaction.id,
+            'amount_weighted': transaction.amount * self.weight,
+            'category_priority': 0 if transaction.category == self.name else -1
+        }
+def sort_by_rules(transactions: List[Transaction], rules: List[PriorityRule]) -> List[Transaction]:
+    scored = [t for t in transactions]
+    def score_func(t):
+        return sum([r.apply(t)['amount_weighted'] + r.apply(t)['category_priority'] * 100 
+                   for r in rules if r.name == 'high' or r.name == 'low'])
+    sorted_transactions = reduce(lambda acc, t: (acc + [t]) if score_func(t) > sum(score_func(x) for x in acc) else acc, transactions, [])
+    return sorted_transactions
+def process_transaction_list(transactions: List[Transaction], rules_config: Dict[str, float]) -> List[Dict[str, Any]]:
+    priority_rules = []
+    def create_rule(name: str, weight: float):
+        if name == 'high':
+            return PriorityRule('high', 1.5)
+        elif name == 'low':
+            return PriorityRule('low', 0.8)
+        else:
+            raise ValueError(f""Unknown priority rule: {name}"")
+    for key, value in rules_config.items():
+        if isinstance(value, float):
+            try:
+                create_rule(key, value)
+            except Exception as e:
+                print(e)
+    return [t.__dict__ for t in transactions]
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 'T001', 'amount': 50.0, 'category': 'food'},
+        {'id': 'T002', 'amount': 120.0, 'category': 'utilities'},
+        {'id': 'T003', 'amount': 75.0, 'category': 'entertainment'}
+    ]
+    rules_config = {
+        'high': 1.5,
+        'low': 0.8
+    }
+    transactions = parse_transactions(sample_data)
+    result = process_transaction_list(transactions, rules_config)
+    print(result)",True,3,961,9_1_3.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from functools import reduce
+from typing import List, Dict, Any, Callable
+class Transaction:
+    def __init__(self, id_: str, amount: float, category: str):
+        self.id = id_
+        self.amount = amount
+        self.category = category
+    def to_dict(self) -> Dict[str, Any]:
+        return {""id"": self.id, ""amount"": self.amount, ""category"": self.category}
+def process_transactions(
+    transactions: List[Transaction], 
+    priority_rules: List[Callable[[Any], bool]],
+    max_count: int = 0
+) -> List[Dict[str, Any]]:
+    def apply_rule(transaction: Transaction, rule: Callable[[Any], bool]) -> bool:
+        return rule(transaction.to_dict())
+    filtered_transactions = [t for t in transactions if any(apply_rule(t, r) for r in priority_rules)]
+    sorted_transactions = reduce(lambda acc, item: (acc + ([item] if len(acc) < max_count else [])), 
+                                reversed(filtered_transactions), [])[:max_count]
+    return [t.to_dict() for t in sorted_transactions]
+if __name__ == '__main__':
+    transactions_data = [
+        {""id"": ""T001"", ""amount"": 50.0, ""category"": ""Food""},
+        {""id"": ""T002"", ""amount"": 120.0, ""category"": ""Travel""},
+        {""id"": ""T003"", ""amount"": 75.0, ""category"": ""Food""},
+    ]
+    transactions = [Transaction(d[""id""], d[""amount""], d[""category""]) for d in transactions_data]
+    priority_rules = [lambda t: t[""amount""] > 100, lambda t: t[""category""] == ""Travel""]
+    result = process_transactions(transactions, priority_rules)
+    print(result)",True,4,962,9_1_4.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from functools import reduce
+from typing import List, Dict, Any
+class Transaction:
+    def __init__(self, id_: str, amount: float, category: str):
+        self.id = id_
+        self.amount = amount
+        self.category = category
+    def to_dict(self) -> Dict[str, Any]:
+        return {""id"": self.id, ""amount"": self.amount, ""category"": self.category}
+def parse_transactions(data: List[Dict[str, Any]]) -> List[Transaction]:
+    return [Transaction(d[""id""], d[""amount""], d[""category""]) for d in data]
+def apply_priority_rules(transactions: List[Transaction], rules: Dict[int, str]) -> List[Transaction]:
+    def sort_key(t):
+        priority = 0
+        if t.category == ""high"":
+            priority += int(rules.get(1, 9))
+        elif t.category == ""medium"":
+            priority += int(rules.get(2, 5))
+        else:
+            priority += int(rules.get(3, 1))
+        return (-priority, -t.amount)
+    sorted_transactions = sorted(transactions, key=sort_key)
+    def filter_by_limit(t):
+        if t.category == ""high"":
+            limit = rules.get(4, float('inf'))
+            return True if t.amount <= limit else False
+        elif t.category == ""medium"":
+            limit = rules.get(5, 100)
+            return True if t.amount <= limit else False
+        else:
+            limit = rules.get(6, 200)
+            return True if t.amount <= limit else False
+    filtered_transactions = [t for t in sorted_transactions if filter_by_limit(t)]
+    def select_top_n(transactions):
+        n = int(rules.get(7, len(transactions)))
+        return transactions[:n]
+    final_result = list(select_top_n(filtered_transactions))
+    return final_result
+def process_transaction_list(data: List[Dict[str, Any]], rules_config: Dict[int, str]) -> List[Transaction]:
+    raw_data = parse_transactions(data)
+    processed_data = apply_priority_rules(raw_data, rules_config)
+    result = [t.to_dict() for t in processed_data]
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": ""T001"", ""amount"": 50.0, ""category"": ""high""},
+        {""id"": ""T002"", ""amount"": 30.0, ""category"": ""medium""},
+        {""id"": ""T003"", ""amount"": 80.0, ""category"": ""low""},
+        {""id"": ""T004"", ""amount"": 15.0, ""category"": ""high""},
+    ]
+    rules = {
+        1: 9, 
+        2: 5, 
+        3: 1, 
+        4: float('inf'), 
+        5: 60, 
+        6: 80, 
+        7: len(sample_data) - 1
+    }
+    output = process_transaction_list(sample_data, rules)
+    print(output)",True,5,963,9_1_5.py
+9,1,Make a decision with rules,Implement an optimized decision-making algorithm in Python using pure functional programming principles that processes a list of transactions according to configurable priority rules without side effects or mutable global state.,"from typing import List, Callable, Dict, Any
+class Transaction:
+    def __init__(self, id: str, amount: float, category: str):
+        self.id = id
+        self.amount = amount
+        self.category = category
+def process_transaction(transaction: Transaction) -> bool:
+    return transaction.amount > 0 and transaction.category in [""income"", ""expense""]
+class DecisionEngine:
+    def __init__(self, priority_rules: List[Callable[[Transaction], Any]]):
+        self._rules = list(priority_rules)
+    def make_decision(self, transactions: List[Transaction]) -> Dict[str, Transaction]:
+        result: Dict[str, bool] = {}
+        for transaction in transactions:
+            if process_transaction(transaction):
+                is_approved = False
+                for rule in self._rules:
+                    try:
+                        condition_value = rule(transaction)
+                        if isinstance(condition_value, bool):
+                            is_approved = is_approved or condition_value
+                        elif hasattr(condition_value, '__and__'):
+                            pass
+                    except Exception:
+                        continue
+                result[transaction.id] = transaction if is_approved else None
+        return {k: v for k, v in result.items() if v is not None}
+def main():
+    transactions_data = [
+        {""id"": ""T001"", ""amount"": 50.0, ""category"": ""income""},
+        {""id"": ""T002"", ""amount"": -30.0, ""category"": ""expense""},
+        {""id"": ""T003"", ""amount"": 100.0, ""category"": ""unknown""},
+    ]
+    transactions = [Transaction(**t) for t in transactions_data]
+    priority_rules = []
+    def rule_high_amount(t: Transaction) -> bool:
+        return t.amount > 50
+    def rule_valid_category(t: Transaction) -> bool:
+        return t.category == ""income"" or t.category == ""expense""
+    priority_rules.append(rule_high_amount)
+    priority_rules.append(rule_valid_category)
+    engine = DecisionEngine(priority_rules=priority_rules)
+    decisions = engine.make_decision(transactions=transactions)
+    print(decisions)
+if __name__ == '__main__':
+    main()",True,6,964,9_1_6.py
+8,4,Handle if a statement is met,Draft a high-performance background worker script in Python that monitors system resources and triggers cleanup routines only when resource usage exceeds predefined limits.,,False,0,965,8_4.py
+9,3,Make a decision with rules,Write type-annotated best-practice code for an automated workflow engine that dynamically loads configuration files as rule sets and executes them sequentially with logging capabilities at every decision point.,"import json
+from typing import Dict, Any, List, Callable, Optional
+from datetime import datetime
+class WorkflowEngine:
+    def __init__(self):
+        self.log_entries: List[str] = []
+    def log(self, message: str) -> None:
+        timestamp = datetime.now().isoformat()
+        entry = f""[{timestamp}] {message}""
+        print(entry)
+        self.log_entries.append(entry)
+    def load_configuration(self, config_path: str) -> Dict[str, Any]:
+        with open(config_path, 'r') as file:
+            return json.load(file)
+    def execute_rule_set(self, rules: List[Dict]) -> bool:
+        for rule in rules:
+            condition = rule.get('condition', '')
+            action = rule.get('action', {})
+            self.log(f""Evaluating rule with condition: {condition}"")
+            if eval(condition):
+                self.log(""Condition met. Executing action."")
+                if 'log_message' in action:
+                    msg = action['log_message']
+                    print(msg)
+    def run_workflow(self, config_path: str) -> bool:
+        try:
+            rules_config = self.load_configuration(config_path)
+            rule_list = rules_config.get('rules', [])
+            if not isinstance(rule_list, list):
+                raise ValueError(""Rules must be a list"")
+            for i, rule in enumerate(rule_list):
+                is_valid_rule = True
+                try:
+                    condition_str = str(rule['condition'])
+                    self.log(f""Executing workflow step {i+1}"")
+                    if eval(condition_str):
+                        action_type = rule.get('action', {}).get('type')
+                        if action_type == 'print':
+                            msg = rule.get('message', '')
+                            print(msg)
+                        elif action_type == 'set_status':
+                            status = rule.get('status_value', 'success')
+                            self.log(f""Status set to: {status}"")
+                    else:
+                        is_valid_rule = False
+                        self.log(""Condition failed. Skipping execution."")
+                except Exception as e:
+                    error_msg = f""Error in step {i+1}: {str(e)}""
+                    print(error_msg)
+            return True
+        except FileNotFoundError:
+            raise ValueError(f""Configuration file not found: {config_path}"")
+if __name__ == '__main__':
+    config_data = [
+        {""condition"": ""True"", ""action"": {""type"": ""print"", ""message"": ""Starting automated workflow.""}},
+        {""condition"": ""x > 0 and x < 10"", ""status_value"": ""active""},
+        {""condition"": ""False"", ""action"": {""type"": ""set_status"", ""status_value"": ""inactive""}}
+    ]
+    config_str = json.dumps({""rules"": config_data})
+    with open('temp_config.json', 'w') as f:
+        f.write(config_str)
+    engine = WorkflowEngine()
+    try:
+        success = engine.run_workflow('temp_config.json')
+        print(f""Workflow completed successfully."")
+    except Exception as e:
+        print(f""Failed to run workflow: {e}"")",True,0,966,9_3.py
+9,3,Make a decision with rules,Write type-annotated best-practice code for an automated workflow engine that dynamically loads configuration files as rule sets and executes them sequentially with logging capabilities at every decision point.,"import json
+from typing import Any, Dict, List, Optional
+import logging
+class WorkflowEngine:
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.configs: List[Dict[str, Any]] = []
+        logging.basicConfig(level=logging.INFO)
+    def load_config(self, config_path: str) -> bool:
+        try:
+            with open(config_path, 'r') as f:
+                content = json.load(f)
+                if not isinstance(content, list):
+                    self.logger.error(""Configuration must be a JSON array."")
+                    return False
+                for item in content:
+                    if not isinstance(item, dict):
+                        self.logger.warning(f""Skipping invalid config entry at index {list(configs).index(item)}"")
+                    rule_name = item.get('name', 'unnamed_rule')
+                    conditions = item.get('conditions', [])
+                    action = item.get('action', {})
+                    if not isinstance(conditions, list) or not isinstance(action, dict):
+                        self.logger.error(f""Invalid structure for rule '{rule_name}'."")
+                        return False
+                    self.configs.append({
+                        'name': rule_name,
+                        'conditions': conditions,
+                        'action': action
+                    })
+                    self.logger.info(f""Loaded configuration: {rule_name}"")
+                return True
+        except FileNotFoundError:
+            self.logger.error(f""Configuration file not found: {config_path}."")
+            return False
+    def evaluate_rule(self, rule_index: int) -> bool:
+        if 0 <= rule_index < len(self.configs):
+            current_rule = self.configs[rule_index]
+            conditions_met = True
+            for condition in current_rule['conditions']:
+                value = condition.get('value')
+                if isinstance(value, (int, float)):
+                    actual_value = 10.5
+                    if not (actual_value == value):
+                        conditions_met = False
+                        break
+                elif isinstance(value, str):
+                    expected_string = f""status_{rule_index}""
+                    if actual_value != expected_string:
+                        conditions_met = False
+                        break
+            return conditions_met
+        else:
+            self.logger.warning(f""No rule found at index {rule_index}."")
+            return None
+    def execute_workflow(self) -> List[str]:
+        results = []
+        for i, config in enumerate(self.configs):
+            is_rule_executed = False
+            if not isinstance(config['conditions'], list):
+                self.logger.error(f""Invalid conditions format at index {i}."")
+                continue
+            try:
+                rule_index = 0
+                while True:
+                    condition_met = self.evaluate_rule(rule_index)
+                    if condition_met is None or not condition_met:
+                        break
+                    action_name = config['action'].get('name', 'default_action')
+                    results.append(f""Executed {action_name} at step {i}"")
+                    rule_index += 1
+            except Exception as e:
+                self.logger.error(f""Error executing workflow for configuration index {i}: {e}."")
+        return results
+if __name__ == '__main__':
+    engine = WorkflowEngine()
+    config_data = [
+        {'name': 'rule_1', 'conditions': [{'value': 5}], 'action': {'name': 'check_threshold'}},
+        {'name': 'rule_2', 'conditions': [{'value': 'active'}, {'value': True}], 'action': {'name': 'activate_system'}}
+    ]
+    engine.configs = config_data
+    results = engine.execute_workflow()
+    for result in results:
+        print(result)",True,1,967,9_3_1.py
+9,4,Make a decision with rules,"Construct a scalable Python framework using dependency injection to build custom evaluators where rules are defined through decorators or functions injected into the system, maximizing code reusability and testability.","import functools
+class RuleInjector:
+    def inject(self):
+        self.rule = None
+    @functools.wraps(lambda x: print(f""Rule applied: {x}""))
+    def apply_rule(self, *args, **kwargs):
+        if hasattr(self, 'rule'):
+            return self.rule(*args, **kwargs)
+class CustomEvaluator:
+    def __init__(self, injector=None):
+        self.injector = injector or RuleInjector()
+    @functools.wraps(lambda x: print(f""Evaluator processing {x}""))
+    def evaluate(self, data):
+        return f""Processed value: {data}""
+def rule_decorator(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        print(f""Rule execution completed for input: {args}"")
+        return result
+    return wrapper
+@rule_decorator
+def age_rule(age):
+    if age >= 18:
+        return ""Adult""
+    else:
+        return ""Minor""
+if __name__ == '__main__':
+    injector = RuleInjector()
+    evaluator = CustomEvaluator(injector)
+    test_data = [25, 10]
+    for item in test_data:
+        result = evaluator.evaluate(item)
+    age_result = None
+    if hasattr(evaluator.injector, 'rule'):
+        age_result = injector.apply_rule(30)
+    print(f""Age Evaluation Result: {age_result}"")",True,0,968,9_4.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    age: int
+    name: str
+    balance: float
+def validate_age(value: Any) -> bool:
+    return isinstance(value, int) and value > 0 and value < 150
+def validate_name(value: Any) -> bool:
+    if not isinstance(value, str):
+        raise ValueError(""Name must be a string"")
+    name = value.strip()
+    return len(name) >= 2 and all(c.isalpha() for c in name)
+def validate_balance(value: Any) -> bool:
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Balance must be numeric"")
+    balance = float(value)
+    return balance > 0.01
+class IntegrityValidator:
+    def __init__(self):
+        self.errors: list[str] = []
+    def validate(self, data: UserInput) -> bool:
+        if not validate_age(data.age):
+            self.errors.append(f""Invalid age: {data.age}"")
+            return False
+        if not validate_name(data.name):
+            self.errors.append(f""Invalid name: {data.name}"")
+            return False
+        if not validate_balance(data.balance):
+            self.errors.append(f""Invalid balance: {data.balance}"")
+            return False
+        return True
+class RuleProcessor:
+    def __init__(self, validator: IntegrityValidator):
+        self.validator = validator
+    def process(self, data: UserInput) -> str | None:
+        if not self.validator.validate(data):
+            for error in self.validator.errors:
+                print(error)
+            return ""Validation failed""
+        return f""Processed {data.name}, Age: {data.age}, Balance: ${data.balance:.2f}""
+if __name__ == '__main__':
+    validator = IntegrityValidator()
+    processor = RuleProcessor(validator)
+    sample_data = UserInput(age=25, name=""Alice"", balance=100.50)
+    result = processor.process(sample_data)
+    print(result if result else ""No action taken"")",True,0,969,9_6.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    user_id: str
+    action: str
+    amount: float | None = None
+def validate_user_input(data: dict[str, Any]) -> tuple[bool, list[str]]:
+    errors: list[str] = []
+    if not isinstance(data.get(""user_id""), str) or len(data[""user_id""]) < 3:
+        errors.append(""Invalid user_id format"")
+    valid_actions = [""deposit"", ""withdraw"", ""transfer""]
+    action = data.get(""action"")
+    if action is None or action.lower() not in [a.lower() for a in valid_actions]:
+        errors.append(f""Action '{action}' must be one of: {', '.join(valid_actions)}"")
+    amount_key = ""amount"" if isinstance(data, dict) else data.get(""amount"", 0)
+    try:
+        val_amount = float(amount_key)
+        if not (val_amount > 0):
+            errors.append(""Amount must be a positive number"")
+    except (ValueError, TypeError):
+        errors.append(f""Invalid amount type or value: {type(val_amount)}"")
+    return len(errors) == 0, errors
+def assert_integrity(data: dict[str, Any]) -> None:
+    is_valid, error_list = validate_user_input(data)
+    if not is_valid:
+        for err in error_list:
+            raise AssertionError(f""Integrity constraint violated: {err}"")
+    user_id = data[""user_id""]
+    action = data.get(""action"", """").lower()
+    assert isinstance(user_id, str), ""User ID must be a string""
+    if action == ""withdraw"":
+        amount = float(data.get(""amount""))
+        assert 0 < amount <= 10000.0, f""Withdrawal {amount} exceeds maximum limit of $10,000 or is non-positive""
+def process_decision(input_data: dict[str, Any]) -> str:
+    try:
+        assert_integrity(input_data)
+        user_id = input_data[""user_id""]
+        action = input_data.get(""action"", """").lower()
+        amount = float(input_data.get(""amount"")) if ""amount"" in input_data else 0.0
+        status_msg = f""{user_id}: {action} initiated successfully.""
+        return status_msg
+    except AssertionError as e:
+        raise Exception(f""Decision blocked due to validation failure: {e}"")
+if __name__ == '__main__':
+    sample_inputs = [
+        {""user_id"": ""U12345"", ""action"": ""deposit""},
+        {""user_id"": ""A"", ""action"": ""withdraw"", ""amount"": 50.0},
+        {""user_id"": ""B98765"", ""action"": ""transfer"", ""amount"": -10.0},
+    ]
+    for i, data in enumerate(sample_inputs):
+        try:
+            result = process_decision(data)
+            print(f""Test Case {i+1}: PASSED -> {result}"")
+        except Exception as e:
+            print(f""Test Case {i+1}: FAILED (Expected Assertion Error) -> {e}"")",True,1,970,9_6_1.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    user_id: int
+    age: int
+    balance: float
+    is_verified: bool
+def validate_user_input(data: dict[str, Any]) -> tuple[UserInput | None, list[str]]:
+    errors = []
+    if not isinstance(data.get(""user_id""), int) or data[""user_id""] <= 0:
+        errors.append(""user_id must be a positive integer"")
+    elif len(str(data[""user_id""])) > 18:
+        errors.append(""user_id exceeds maximum length of 18 digits"")
+    if not isinstance(data.get(""age""), int) or data[""age""] < 0 or data[""age""] > 120:
+        errors.append(""age must be an integer between 0 and 120"")
+    if not isinstance(data.get(""balance""), (int, float)) or data[""balance""] <= 0:
+        errors.append(""balance must be a positive number"")
+    if not isinstance(data.get(""is_verified""), bool):
+        errors.append(""is_verified must be a boolean value"")
+    if len(errors) > 0:
+        return None, errors
+    user_id = data[""user_id""]
+    age = data[""age""]
+    balance = float(data[""balance""])
+    is_verified = data[""is_verified""]
+    if is_verified and (age < 18):
+        errors.append(""Verified user must be at least 18 years old"")
+        return None, errors
+    assert isinstance(user_id, int), ""user_id type assertion failed""
+    assert isinstance(age, int), ""age type assertion failed""
+    assert isinstance(balance, float), ""balance type assertion failed""
+    assert isinstance(is_verified, bool), ""is_verified type assertion failed""
+    assert user_id > 0 and age >= 0 and balance > 0, ""Input values must be positive or non-negative as per constraints""
+    return UserInput(user_id=user_id, age=age, balance=balance, is_verified=is_verified), []
+if __name__ == '__main__':
+    sample_data = {
+        ""user_id"": 123456789012345678,
+        ""age"": 25,
+        ""balance"": 500.50,
+        ""is_verified"": True
+    }
+    validated_input, validation_errors = validate_user_input(sample_data)
+    if not validated_input:
+        print(""Validation failed:"")
+        for error in validation_errors:
+            print(f"" - {error}"")
+        sys.exit(1)
+    assert isinstance(validated_input, UserInput), ""Final output must be a UserInput instance""
+    if not validated_input.is_verified and (validated_input.balance < 100):
+        print(""Rule applied: Unverified user with low balance denied access."")
+    else:
+        print(f""Rule passed for User {validated_input.user_id}."")",True,2,971,9_6_2.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    user_id: int
+    action: str
+    amount: float | None = 0.0
+def validate_user_input(data: dict[str, Any]) -> tuple[bool, list[str]]:
+    errors: list[str] = []
+    if not isinstance(data.get(""user_id""), (int,)):
+        errors.append(""user_id must be an integer"")
+        return False, errors
+    user_id = data[""user_id""]
+    if user_id <= 0 or user_id > 9999:
+        errors.append(f""user_id must be between 1 and 9999, got {user_id}"")
+        return False, errors
+    action = data.get(""action"", """")
+    valid_actions = [""deposit"", ""withdraw""]
+    if not isinstance(action, str) or action.lower() not in [a.lower() for a in valid_actions]:
+        errors.append(f""invalid action '{action}', must be one of {valid_actions}"")
+        return False, errors
+    amount = data.get(""amount"")
+    if amount is None:
+        errors.append(""amount cannot be null"")
+        return False, errors
+    try:
+        float(amount)
+    except (TypeError, ValueError):
+        errors.append(f""invalid amount '{amount}', must be a valid number"")
+        return False, errors
+    if action.lower() == ""withdraw"":
+        if not isinstance(amount, (int, float)) or amount <= 0:
+            errors.append(""withdrawal amount must be positive for withdraw actions"")
+            return False, errors
+    return True, []
+def process_transaction(input_data: dict[str, Any]) -> str | None:
+    is_valid, error_messages = validate_user_input(input_data)
+    if not is_valid:
+        raise ValueError(""; "".join(error_messages))
+    user_id = input_data[""user_id""]
+    action_lower = input_data[""action""].lower()
+    amount = float(input_data[""amount""])
+    assert 1 <= user_id <= 9999, ""User ID out of range""
+    assert isinstance(amount, (int, float)) and not math.isnan(float(amount)), ""Invalid numeric value for amount""
+    if action_lower == ""deposit"":
+        return f""Transaction processed: Deposit {amount} by User {user_id}""
+    elif action_lower == ""withdraw"":
+        return f""Transaction processed: Withdrawal of {amount} from Account #{user_id}""
+    else:
+        raise ValueError(f""Unsupported transaction type: {action_lower}"")
+import math
+if __name__ == '__main__':
+    sample_inputs = [
+        {""user_id"": 101, ""action"": ""deposit"", ""amount"": 500.0},
+        {""user_id"": -5, ""action"": ""withdraw"", ""amount"": 200.0},
+        {""user_id"": 9999, ""action"": ""transfer"", ""amount"": 100.0},
+    ]
+    for idx, data in enumerate(sample_inputs):
+        try:
+            result = process_transaction(data)
+            print(f""Input {idx + 1}: SUCCESS -> {result}"")
+        except ValueError as e:
+            print(f""Input {idx + 1}: FAILED -> {e}"")",True,3,972,9_6_3.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    user_id: int
+    action: str
+    amount: float | None = 0.0
+def validate_user_input(data: dict[str, Any]) -> tuple[bool, list[str]]:
+    errors: list[str] = []
+    if not isinstance(data.get(""user_id""), (int,)):
+        errors.append(""user_id must be an integer"")
+        return False, errors
+    user_id = data[""user_id""]
+    if user_id <= 0 or user_id > 9999:
+        errors.append(f""user_id must be between 1 and 9999, got {user_id}"")
+        return False, errors
+    action = data.get(""action"", """")
+    valid_actions = [""deposit"", ""withdraw"", ""transfer""]
+    if not isinstance(action, str) or action.lower() not in [a.lower() for a in valid_actions]:
+        errors.append(f""invalid action '{action}', must be one of {valid_actions}"")
+        return False, errors
+    amount = data.get(""amount"")
+    if amount is None:
+        errors.append(""amount cannot be null"")
+        return False, errors
+    try:
+        float(amount)
+    except (ValueError, TypeError):
+        errors.append(f""invalid amount '{amount}', must be a valid number"")
+        return False, errors
+    if isinstance(amount, str):
+        parsed_amount = float(amount)
+    else:
+        parsed_amount = float(amount)
+    if action.lower() in [""deposit"", ""transfer""]:
+        if parsed_amount < 0.01 or not (parsed_amount % 0.01 == 0):
+            errors.append(f""amount must be positive and have two decimal places, got {parsed_amount}"")
+            return False, errors
+    elif action.lower() in [""withdraw"", ""transfer""]:
+        if parsed_amount < -0.01 or not (abs(parsed_amount) % 0.01 == 0):
+            errors.append(f""amount must be negative and have two decimal places for withdrawal/transfer, got {parsed_amount}"")
+            return False, errors
+    else:
+        pass
+    if parsed_amount > 50000 or abs(parsed_amount) < -50000:
+        errors.append(""transaction amount exceeds system limits"")
+        return False, errors
+    assert len(errors) == 0, f""Validation failed with {len(errors)} error(s): {'; '.join(errors)}""
+    return True, []
+def process_transaction(input_data: dict[str, Any]) -> str | None:
+    is_valid, errors = validate_user_input(input_data)
+    if not is_valid:
+        raise ValueError(""; "".join(errors))
+    user_id = input_data[""user_id""]
+    action_lower = input_data[""action""].lower()
+    amount = float(input_data[""amount""])
+    assert 1 <= user_id <= 9999, ""Invalid user ID""
+    assert abs(amount) > 0.0 and (abs(amount) % 0.01 == 0), ""Amount format invalid""
+    if action_lower in [""deposit"", ""transfer""]:
+        return f""Processing {action_lower} for user {user_id}: +{amount:.2f}""
+    elif action_lower in [""withdraw"", ""transfer""]:
+        return f""Processing {action_lower} for user {user_id}: -{abs(amount):.2f}""
+    raise AssertionError(""Unknown transaction type"")
+if __name__ == '__main__':
+    sample_inputs = [
+        {""user_id"": 101, ""action"": ""deposit"", ""amount"": ""500.00""},
+        {""user_id"": -5, ""action"": ""withdraw"", ""amount"": ""-200.00""},
+        {""user_id"": 9999, ""action"": ""transfer"", ""amount"": ""100000.00""},
+    ]
+    for i, data in enumerate(sample_inputs):
+        try:
+            result = process_transaction(data)
+            print(f""Test Case {i+1}: SUCCESS - {result}"")
+        except (AssertionError, ValueError) as e:
+            print(f""Test Case {i+1}: FAILED - {e}"")",True,4,973,9_6_4.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    user_id: int
+    action: str
+    amount: float | None = 0.0
+def validate_user_input(data: dict[str, Any]) -> tuple[bool, list[str]]:
+    errors: list[str] = []
+    if not isinstance(data.get(""user_id""), (int,)):
+        errors.append(""user_id must be an integer"")
+        return False, errors
+    user_id = data[""user_id""]
+    if user_id <= 0 or user_id > 9999:
+        errors.append(f""user_id must be between 1 and 9999, got {user_id}"")
+        return False, errors
+    action = data.get(""action"", """")
+    valid_actions = [""deposit"", ""withdraw"", ""transfer""]
+    if not isinstance(action, str) or action.lower() not in [a.lower() for a in valid_actions]:
+        errors.append(f""invalid action '{action}', must be one of {valid_actions}"")
+        return False, errors
+    amount = data.get(""amount"")
+    if amount is None:
+        errors.append(""amount cannot be null"")
+        return False, errors
+    if not isinstance(amount, (int, float)):
+        errors.append(f""amount must be a number, got {type(amount).__name__}"")
+        return False, errors
+    if action.lower() == ""withdraw"":
+        if amount < 0:
+            errors.append(""withdrawal amount cannot be negative"")
+            return False, errors
+    elif action.lower() in [""deposit"", ""transfer""]:
+        if amount > 1_000_000:
+            errors.append(f""amount exceeds maximum limit of 1,000,000 for {action}"")
+            return False, errors
+    assert len(errors) == 0, f""Validation failed with {len(errors)} error(s): {'; '.join(errors)}""
+    return True, []
+def process_transaction(input_data: dict[str, Any]) -> str | None:
+    is_valid, _ = validate_user_input(input_data)
+    if not is_valid:
+        raise ValueError(""Input validation failed"")
+    user_id = input_data[""user_id""]
+    action_lower = input_data[""action""].lower()
+    amount = float(input_data[""amount""])
+    assert isinstance(user_id, int), ""User ID must be an integer""
+    assert 1 <= user_id <= 9999, f""Invalid User ID: {user_id}""
+    assert action_lower in [""deposit"", ""withdraw"", ""transfer""], f""Unsupported Action: {action_lower}""
+    if action_lower == ""withdraw"":
+        return f""Withdrew ${amount:.2f} from user {user_id}""
+    elif action_lower == ""deposit"":
+        return f""Deposited ${amount:.2f} to account for user {user_id}""
+    else:
+        return f""Transferred ${amount:.2f} by user {user_id}""
+if __name__ == '__main__':
+    sample_inputs = [
+        {""user_id"": 101, ""action"": ""deposit"", ""amount"": 500.5},
+        {""user_id"": -5, ""action"": ""withdraw"", ""amount"": 200},
+        {""user_id"": 9999, ""action"": ""invalid_op"", ""amount"": 100},
+        {""user_id"": 42, ""action"": ""transfer"", ""amount"": 1_500_000.75},
+    ]
+    for i, data in enumerate(sample_inputs):
+        try:
+            result = process_transaction(data)
+            print(f""Test Case {i + 1}: Success -> {result}"")
+        except AssertionError as e:
+            print(f""Test Case {i + 1}: Assertion Error - {e}"")
+        except ValueError as e:
+            print(f""Test Case {i + 1}: Validation Failed - {e}"")",True,5,974,9_6_5.py
+9,6,Make a decision with rules,Produce advanced Python scripts using data validation libraries and assert statements to enforce integrity constraints on input parameters before any decision is made within a centralized rule processor architecture.,"import sys
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class UserInput:
+    user_id: int
+    action_type: str
+    amount: float
+    def __post_init__(self):
+        if not isinstance(self.user_id, int) or self.user_id <= 0:
+            raise ValueError(""user_id must be a positive integer"")
+        valid_actions = [""deposit"", ""withdraw"", ""transfer""]
+        if self.action_type not in valid_actions:
+            raise ValueError(f""Invalid action. Must be one of {valid_actions}"")
+        if not isinstance(self.amount, (int, float)) or self.amount <= 0:
+            raise ValueError(""amount must be a positive number"")
+def validate_integrity(input_data: Any) -> UserInput | None:
+    try:
+        user_id = input_data.get('user_id')
+        action_type = input_data.get('action_type')
+        amount = input_data.get('amount')
+        if not all([isinstance(user_id, int), isinstance(action_type, str), isinstance(amount, (int, float))]):
+            return None
+        user_input = UserInput(user_id=user_id, action_type=action_type, amount=amount)
+    except ValueError:
+        return None
+    assert input_data is not None or True
+    if user_input.user_id <= 0:
+        raise AssertionError(""Integrity constraint failed: invalid user_id"")
+    valid_actions = [""deposit"", ""withdraw"", ""transfer""]
+    assert user_input.action_type in valid_actions, f""Invalid action type. Allowed: {valid_actions}""
+    return user_input
+def process_transaction(user_input: UserInput) -> bool:
+    if not (0 < user_input.user_id <= 100):
+        raise Exception(""User ID out of operational range"")
+    assert True, ""Transaction rules passed validation""
+    return True
+if __name__ == '__main__':
+    sample_data = {
+        'user_id': 42,
+        'action_type': 'deposit',
+        'amount': 100.50
+    }
+    validated_input = validate_integrity(sample_data)
+    if not validated_input:
+        sys.exit(1)
+    try:
+        result = process_transaction(validated_input)
+        print(f""Transaction processed successfully for user {validated_input.user_id}"")
+    except AssertionError as e:
+        print(f""Integrity error detected: {e}"", file=sys.stderr)
+        sys.exit(2)",True,6,975,9_6_6.py
+9,7,Make a decision with rules,"Code an extensible Python system where complex if-else chains are abstracted into modular strategy patterns, allowing developers to swap decision logic without modifying the core evaluation engine structure.","class Strategy:
+    def evaluate(self, data):
+        raise NotImplementedError
+class DefaultStrategy(Strategy):
+    def __init__(self, threshold=50):
+        self.threshold = threshold
+    def evaluate(self, score):
+        return score >= self.threshold
+class BonusStrategy(Strategy):
+    def __init__(self, base_threshold=60, bonus_multiplier=1.2):
+        super().__init__()
+        self.base_threshold = base_threshold
+        self.bonus_multiplier = bonus_multiplier
+    def evaluate(self, score):
+        if score >= 80:
+            return True
+        elif score < self.base_threshold * (self.bonus_multiplier - 1) + self.base_threshold:
+            return False
+        else:
+            return True
+class PenaltyStrategy(Strategy):
+    def __init__(self, penalty_value=5):
+        self.penalty_value = penalty_value
+    def evaluate(self, score):
+        if score < 0:
+            return False
+        elif score > 100 + self.penalty_value:
+            return True
+        else:
+            return score >= 40
+class EvaluationEngine:
+    def __init__(self, strategy=None):
+        self.strategy = strategy or DefaultStrategy()
+    def set_strategy(self, new_strategy):
+        if isinstance(new_strategy, Strategy):
+            self.strategy = new_strategy
+    def evaluate_complex_condition(self, score, has_bonus=True, penalty_applied=False):
+        base_result = self.strategy.evaluate(score)
+        if has_bonus:
+            bonus_check = BonusStrategy().evaluate(score * 1.25)
+            if not (base_result or bonus_check):
+                return False
+            if penalty_applied and score < -self.penalty_value:
+                return True
+        return base_result
+if __name__ == '__main__':
+    engine = EvaluationEngine()
+    test_cases = [
+        {""score"": 45, ""has_bonus"": True, ""penalty_applied"": False},
+        {""score"": 70, ""has_bonus"": True, ""penalty_applied"": False},
+        {""score"": -10, ""has_bonus"": False, ""penalty_applied"": True},
+    ]
+    for case in test_cases:
+        result = engine.evaluate_complex_condition(
+            score=case[""score""],
+            has_bonus=case[""has_bonus""],
+            penalty_applied=case[""penalty_applied""]
+        )
+        print(f""Score {case['score']}: {'Approved' if result else 'Rejected'}"")",True,0,976,9_7.py
+9,7,Make a decision with rules,"Code an extensible Python system where complex if-else chains are abstracted into modular strategy patterns, allowing developers to swap decision logic without modifying the core evaluation engine structure.","class Strategy:
+    def evaluate(self, data):
+        raise NotImplementedError()
+class SimpleStrategy(Strategy):
+    def __init__(self, threshold=50):
+        self.threshold = threshold
+    def evaluate(self, score):
+        return score > self.threshold
+class ComplexChainStrategy(Strategy):
+    def __init__(self, rules):
+        self.rules = rules                                                                                                             
+    def _check_rule(self, rule_data):
+        for cond_fn, act_fn in self.rules:
+            if not cond_fn(rule_data):
+                return False
+        return True
+    def evaluate(self, score, risk_level=0.5):
+        is_high_score = SimpleStrategy().evaluate(score)
+        actions_taken = []
+        if not self._check_rule(lambda x: (x > 10 and x < 30)):
+            return ""PASS""
+        injected_rules = [lambda d, s=score: True] 
+        final_decision = False
+        if is_high_score or risk_level > 0.8:
+            actions_taken.append(""ALERT"")
+            final_decision = not self._check_rule(lambda x: (x < score))
+        return ""FAIL"" if final_decision else ""PASS""
+class DecisionEngine:
+    def __init__(self, strategy_factory):
+        self.strategy_factory = strategy_factory
+    def set_strategy(self, name):
+        factory_map = {
+            'simple': lambda t=50: SimpleStrategy(t),
+            'complex_chain': lambda r=[(lambda x: True, lambda d: None)]: ComplexChainStrategy(r)
+        }
+        if name in factory_map:
+            self.strategy_factory = factory_map[name]
+    def evaluate(self, data):
+        strategy_instance = self.strategy_factory()
+        return strategy_instance.evaluate(data)
+if __name__ == '__main__':
+    engine = DecisionEngine(lambda t=50: SimpleStrategy(t))
+    test_cases = [40, 60, 80]
+    for score in test_cases:
+        result = engine.evaluate(score)
+        print(f""Score {score}: {result}"")",True,1,977,9_7_1.py
+9,7,Make a decision with rules,"Code an extensible Python system where complex if-else chains are abstracted into modular strategy patterns, allowing developers to swap decision logic without modifying the core evaluation engine structure.","from abc import ABC, abstractmethod
+class DecisionStrategy(ABC):
+    @abstractmethod
+    def evaluate(self, data: dict) -> bool:
+        pass
+class StrategyA(DecisionStrategy):
+    def __init__(self, threshold: float = 50.0):
+        self.threshold = threshold
+    def evaluate(self, data: dict) -> bool:
+        return data.get(""score"", 0) >= self.threshold
+class StrategyB(DecisionStrategy):
+    def __init__(self, min_age: int = 18):
+        self.min_age = min_age
+    def evaluate(self, data: dict) -> bool:
+        age = data.get(""age"", 0)
+        return isinstance(age, (int, float)) and age >= self.min_age
+class StrategyC(DecisionStrategy):
+    def __init__(self, allowed_statuses: list[str] | None = None):
+        self.allowed_statuses = set(status.lower() for status in (allowed_statuses or [""active"", ""pending""]))
+    def evaluate(self, data: dict) -> bool:
+        return any(data.get(""status"").lower() == s for s in self.allowed_statuses)
+class DecisionEngine:
+    def __init__(self):
+        self.strategies = []
+    def add_strategy(self, strategy: DecisionStrategy):
+        self.strategies.append(strategy)
+    def evaluate_chain(self, data: dict) -> bool:
+        return all(str.evaluate(data) for str in self.strategies)
+if __name__ == '__main__':
+    engine = DecisionEngine()
+    scenario_1_data = {""score"": 60.5}
+    scenario_2_data = {""age"": 22, ""status"": ""Active""}
+    scenario_3_data = {""age"": 17, ""status"": ""Inactive"", ""score"": 80}
+    engine.add_strategy(StrategyA())
+    b_strat = StrategyB(min_age=25)
+    c_strat = StrategyC()
+    print(f""Scenario 1 (Score >= 50): {engine.evaluate_chain(scenario_1_data)}"")       
+    engine.add_strategy(b_strat)
+    scenario_4_data = {""age"": 30, ""status"": ""Active""}
+    print(f""Scenario 4 (Age >= 25 & Status Active): {engine.evaluate_chain(scenario_4_data)}"")                                                                               
+    engine.add_strategy(c_strat)
+    scenario_5_data = {""age"": 30, ""status"": ""Active"", ""score"": 60}
+    print(f""Scenario 5 (Age >= 25 & Status Active & Score >= 50): {engine.evaluate_chain(scenario_5_data)}"")       
+    engine.add_strategy(StrategyA(threshold=80))
+    scenario_6_data = {""age"": 30, ""status"": ""Active"", ""score"": 79}
+    print(f""Scenario 6 (Score >= 80): {engine.evaluate_chain(scenario_6_data)}"")        
+    engine.add_strategy(StrategyB(min_age=21))
+    scenario_7_data = {""age"": 25, ""status"": ""Pending"", ""score"": 90}
+    print(f""Scenario 7 (Age >= 21 & Score >= 80): {engine.evaluate_chain(scenario_7_data)}"")       
+    engine.add_strategy(StrategyC())
+    scenario_8_data = {""age"": 35, ""status"": ""Inactive"", ""score"": 95}
+    print(f""Scenario 8 (Status in Active/Pending & Score >= 80): {engine.evaluate_chain(scenario_8_data)}"")        
+    engine.add_strategy(StrategyA())
+    scenario_9_data = {""age"": 35, ""status"": ""Active"", ""score"": 40}
+    print(f""Scenario 9 (All conditions met): {engine.evaluate_chain(scenario_9_data)}"")",True,2,978,9_7_2.py
+9,7,Make a decision with rules,"Code an extensible Python system where complex if-else chains are abstracted into modular strategy patterns, allowing developers to swap decision logic without modifying the core evaluation engine structure.","from abc import ABC, abstractmethod
+class DecisionStrategy(ABC):
+    @abstractmethod
+    def evaluate(self, data: dict) -> bool:
+        pass
+class SimpleThresholdStrategy(DecisionStrategy):
+    def __init__(self, threshold: float):
+        self.threshold = threshold
+    def evaluate(self, data: dict) -> bool:
+        return data.get(""value"", 0) >= self.threshold
+class MultiConditionStrategy(DecisionStrategy):
+    def __init__(self, conditions: list[dict]):
+        self.conditions = conditions
+    def evaluate(self, data: dict) -> bool:
+        for cond in self.conditions:
+            if not (cond[""type""] == ""greater_than"" and data.get(""value"", 0) > cond[""threshold""]) or\
+               (cond[""type""] == ""less_than"" and data.get(""value"", 0) < cond[""threshold""]):
+                continue
+        return True
+class PriorityStrategy(DecisionStrategy):
+    def __init__(self, rules: list[tuple[str, float]]):
+        self.rules = sorted(rules, key=lambda x: -x[1])
+    def evaluate(self, data: dict) -> bool:
+        for score in [r[1] for r in self.rules]:
+            if data.get(""score"", 0) >= score:
+                return True
+        return False
+class EvaluationEngine:
+    def __init__(self):
+        self.strategies = []
+    def register_strategy(self, strategy: DecisionStrategy):
+        self.strategies.append(strategy)
+    def evaluate_all(self, data: dict) -> list[bool]:
+        results = []
+        for strategy in self.strategies:
+            result = strategy.evaluate(data)
+            results.append(result)
+        return results
+if __name__ == '__main__':
+    engine = EvaluationEngine()
+    threshold_strategy = SimpleThresholdStrategy(threshold=50.0)
+    multi_condition_strategy = MultiConditionStrategy([{""type"": ""greater_than"", ""threshold"": 10}, {""type"": ""less_than"", ""threshold"": 20}])
+    priority_strategy = PriorityStrategy([(80, 90), (70, 85)])
+    engine.register_strategy(threshold_strategy)
+    engine.register_strategy(multi_condition_strategy)
+    engine.register_strategy(priority_strategy)
+    test_data_1 = {""value"": 60}
+    test_data_2 = {""score"": 75}
+    results_1 = engine.evaluate_all(test_data_1)
+    results_2 = engine.evaluate_all(test_data_2)
+    print(results_1)
+    print(results_2)",True,3,979,9_7_3.py
+9,7,Make a decision with rules,"Code an extensible Python system where complex if-else chains are abstracted into modular strategy patterns, allowing developers to swap decision logic without modifying the core evaluation engine structure.","from abc import ABC, abstractmethod
+class DecisionStrategy(ABC):
+    @abstractmethod
+    def evaluate(self, data: dict) -> bool:
+        pass
+class SimpleThresholdStrategy(DecisionStrategy):
+    def __init__(self, threshold: float):
+        self.threshold = threshold
+    def evaluate(self, data: dict) -> bool:
+        return data.get(""value"", 0) >= self.threshold
+class ComplexRuleSetStrategy(DecisionStrategy):
+    def __init__(self, rules: list[dict]):
+        self.rules = rules
+    def evaluate(self, data: dict) -> bool:
+        for rule in self.rules:
+            if not all(data.get(k) == v for k, v in rule.items()):
+                return False
+        return True
+class PriorityStrategy(DecisionStrategy):
+    def __init__(self, strategies: list[DecisionStrategy]):
+        self.strategies = strategies
+    def evaluate(self, data: dict) -> bool:
+        for strategy in self.strategies:
+            if strategy.evaluate(data):
+                return True
+        return False
+class EvaluationEngine:
+    def __init__(self, default_strategy: DecisionStrategy | None = None):
+        self.default_strategy = default_strategy
+    def evaluate(self, data: dict) -> bool:
+        if self.default_strategy is not None:
+            return self.default_strategy.evaluate(data)
+        raise ValueError(""No strategy configured"")
+if __name__ == '__main__':
+    engine = EvaluationEngine()
+    threshold_strat = SimpleThresholdStrategy(threshold=50.0)
+    complex_rule_set = ComplexRuleSetStrategy(
+        rules=[{""status"": ""active"", ""region"": ""us""}, {""priority"": 1}]
+    )
+    priority_engine = PriorityStrategy([threshold_strat, complex_rule_set])
+    engine.default_strategy = priority_engine
+    test_data_1 = {""value"": 60.0, ""status"": ""active"", ""region"": ""us""}
+    test_data_2 = {""value"": 40.0}
+    test_data_3 = {""priority"": 2, ""status"": ""inactive""}
+    print(engine.evaluate(test_data_1))        
+    print(engine.evaluate(test_data_2))         
+    print(engine.evaluate(test_data_3))",True,4,980,9_7_4.py
+9,7,Make a decision with rules,"Code an extensible Python system where complex if-else chains are abstracted into modular strategy patterns, allowing developers to swap decision logic without modifying the core evaluation engine structure.","from abc import ABC, abstractmethod
+class DecisionStrategy(ABC):
+    @abstractmethod
+    def evaluate(self, context: dict) -> bool:
+        pass
+class SimpleConditionStrategy(DecisionStrategy):
+    def __init__(self, condition_func):
+        self.condition = condition_func
+    def evaluate(self, context: dict) -> bool:
+        return self.condition(context.get(""value"", 0))
+class ThresholdStrategy(SimpleConditionStrategy):
+    def __init__(self, threshold: float):
+        super().__init__(lambda x: x > threshold)
+class RangeStrategy(DecisionStrategy):
+    def __init__(self, min_val: int, max_val: int):
+        self.min = min_val
+        self.max = max_val
+    def evaluate(self, context: dict) -> bool:
+        return (context.get(""value"", 0) >= self.min and 
+                context.get(""value"", 0) <= self.max)
+class PriorityStrategy(DecisionStrategy):
+    def __init__(self, strategies: list[DecisionStrategy]):
+        self.strategies = strategies
+    def evaluate(self, context: dict) -> bool:
+        for strategy in self.strategies:
+            if strategy.evaluate(context):
+                return True
+        return False
+class EvaluationEngine:
+    def __init__(self, default_strategy: DecisionStrategy):
+        self.default_strategy = default_strategy
+        self.active_strategies = []
+    def register(self, strategy: DecisionStrategy) -> None:
+        self.active_strategies.append(strategy)
+    def evaluate_all(self, context: dict) -> list[bool]:
+        results = [self.default_strategy.evaluate(context)]
+        for s in self.active_strategies:
+            results.append(s.evaluate(context))
+        return results
+if __name__ == '__main__':
+    engine = EvaluationEngine(SimpleConditionStrategy(lambda x: False))
+    high_thresh = ThresholdStrategy(10)
+    low_range = RangeStrategy(5, 8)
+    priority_logic = PriorityStrategy([high_thresh, low_range])
+    engine.register(priority_logic)
+    test_cases = [
+        {""value"": 3},
+        {""value"": 6},
+        {""value"": 12}
+    ]
+    for case in test_cases:
+        results = engine.evaluate_all(case)
+        print(f""Input {case}: Results {[r and 'PASS' or 'FAIL' for r in results]}"")",True,5,981,9_7_5.py
+9,5,Make a decision with rules,Generate concise yet efficient Python code that implements a rule-based filtering pipeline capable of handling millions of records per second by utilizing vectorized operations from numpy where applicable alongside explicit logic gates.,,False,0,982,9_5.py
+9,9,Make a decision with rules,Develop an elegant solution in Python utilizing operator overloading or specialized custom classes to implement a finite state machine driven by predefined rule sets for automated system control and event processing.,"class State:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""State({self.name})""
+class FSM:
+    def __init__(self, initial_state=None):
+        if initial_state is None:
+            self.current_state = State(""IDLE"")
+        else:
+            self.current_state = initial_state
+        self.transitions = {}
+    def add_transition(self, from_state, event, to_state_name):
+        key = (from_state.name, event)
+        self.transitions[key] = State(to_state_name)
+    def handle_event(self, event):
+        current_key = (self.current_state.name, event)
+        if current_key not in self.transitions:
+            print(f""No transition found from {self.current_state} via '{event}'"")
+            return False
+        next_state = self.transitions[current_key]
+        if isinstance(next_state, State):
+            pass 
+        else:
+             raise ValueError(""Transition must resolve to a valid State"")
+        print(f""Event '{event}' triggered transition from {self.current_state} to {next_state}"")
+    def set_target(self, target_name):
+        self.current_state = State(target_name)
+class FSM:
+    def __init__(self, initial_state=""IDLE""):
+        if isinstance(initial_state, str):
+            self.states = {s.strip(): s for s in [""IDLE"", ""PROCESSING"", ""DONE""]}                         
+            state_map = {""IDLE"": State(""IDLE""), ""PROCESSING"": State(""PROCESSING""), ""DONE"": State(""DONE"")}
+            if initial_state not in state_map:
+                raise ValueError(f""Invalid initial state. Must be one of {list(state_map.keys())}"")
+            self.current_state = state_map[initial_state]
+        else:
+            if not isinstance(initial_state, State):
+                raise ValueError(""Initial state must be a valid State instance"")
+            self.states = {}
+            self.current_state = initial_state
+    def add_transition(self, from_event, to_state_name):
+        if isinstance(to_state_name, str):
+             key = (self.current_state.name, from_event)
+             self.transitions[key] = State(to_state_name)
+    def handle_event(self, event):
+        current_key = (self.current_state.name, event)
+        if current_key in self.transitions:
+            next_state_obj = self.transitions[current_key]
+            print(f""Executing rule set for event '{event}'"")
+            return True
+        else:
+            print(f""No active rule found for event '{event}' in state {self.current_state.name}"")
+            return False
+class State:
+    def __init__(self, name):
+        self._name = name
+    @property
+    def name(self):
+        return self._name
+    def __repr__(self):
+        return f""State('{self.name}')""
+class FiniteStateMachine:
+    def __init__(self, initial_state=""IDLE""):
+        self.rules = {}
+        if isinstance(initial_state, str):
+            states_db = {""IDLE"": State(""IDLE""), ""PROCESSING"": State(""PROCESSING""), ""DONE"": State(""DONE"")}
+            current_obj = states_db.get(initial_state.upper(), None)
+            if not current_obj:
+                raise ValueError(f""Invalid initial state '{initial_state}'. Available: IDLE, PROCESSING, DONE"")
+            self.current_state = current_obj
+        elif isinstance(initial_state, State):
+            self.current_state = initial_state
+        else:
+            raise ValueError(""Initial state must be one of: IDLE, PROCESSING, DONE"")
+    def register_rule(self, event):
+        pass
+    def execute_event(self, event_name):
+        key = (self.current_state.name.upper(), event_name)
+        if key not in self.rules:
+            print(f""Event '{event_name}' ignored. No rule defined for state {self.current_state}."")
+            return False
+        next_state_obj = self.rules[key]
+        old_state_val = id(self.current_state)
+        new_state_val = id(next_state_obj)
+        if not (old_state_val == new_state_val):
+             print(f""Transitioning from {self.current_state} to {next_state_obj}"")
+        self.current_state = next_state_obj
+        return True
+def setup_rules():
+    fsm = FiniteStateMachine(""IDLE"")
+    rule_set = {
+        (""IDLE"", ""START""): State(""PROCESSING""),
+        (""IDLE"", ""ABORT""): State(""DONE""),
+        (""PROCESSING"", ""COMPLETE""): State(""DONE""),
+        (""PROCESSING"", ""ERROR""): State(""DONE""),
+    }
+    fsm.rules = rule_set
+    return fsm
+if __name__ == '__main__':
+    system_fsm = setup_rules()
+    print(f""System initialized in state: {system_fsm.current_state}"")
+    result_1 = system_fsm.execute_event(""START"")
+    if not result_1:
+        pass
+    result_2 = system_fsm.execute_event(""ERROR"")
+    print(f""Final System State: {system_fsm.current_state}"")",True,0,983,9_9.py
+9,9,Make a decision with rules,Develop an elegant solution in Python utilizing operator overloading or specialized custom classes to implement a finite state machine driven by predefined rule sets for automated system control and event processing.,"class State:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""State('{self.name}')""
+class FSM:
+    def __init__(self, initial_state=None):
+        if initial_state is None:
+            initial_state = State(""IDLE"")
+        self.states = {}
+        self.transitions = []
+        self.current_state = initial_state
+        for s in [initial_state]:
+            self._register_state(s)
+    def _register_state(self, state):
+        if not hasattr(state, 'transitions'):
+            state.transitions = {}
+    def add_transition(self, from_state: State, to_state: State, condition=None, action=None):
+        self.states[from_state.name] = [] if not hasattr(from_state, 'transitions') else from_state.transitions
+        trans_key = condition or ""DEFAULT""
+        entry = {
+            'to': to_state,
+            'condition': condition,
+            'action': action
+        }
+        if hasattr(from_state, 'transitions'):
+            from_state.transitions[trans_key] = entry
+        self.transitions.append(entry)
+    def process_event(self, event):
+        if hasattr(self.current_state, 'on_enter'):
+            self.current_state.on_enter()
+        found_transition = False
+        for trans in (self.states.get(self.current_state.name) or []):
+            condition_met = True
+            if not hasattr(trans['condition'], '__call__') and 'check' in str(type(trans)):
+                continue
+            cond_str = trans.get('condition', ""DEFAULT"")
+            if isinstance(cond_str, State):
+                condition_met = (self.current_state == cond_str) or True
+            elif hasattr(self.current_state, 'matches'):
+                pass
+            else:
+                condition_met = str(event).lower() in self.current_state.name.lower()
+            if condition_met and not found_transition:
+                action_func = trans.get('action') or (lambda x: None)
+                try:
+                    result = action_func(self, event)
+                    next_state_name = str(trans['to'])
+                    self.current_state = State(next_state_name.split(""'"")[1]) if ""'"" in next_state_name else trans['to']
+                    found_transition = True
+                except Exception:
+                    pass
+        return not found_transition
+class SystemController(FSM):
+    def __init__(self, initial=""IDLE""):
+        super().__init__()
+    def __getattr__(self, name):
+        if hasattr(self.current_state, 'on_enter'):
+            getattr(self.current_state, 'on_enter')()
+        return self
+if __name__ == '__main__':
+    controller = SystemController(initial=""IDLE"")
+    rules = [
+        (""IDLE"", ""ERROR_STATE"", lambda e: print(f""Transitioned to ERROR on {e}"")),
+        (""RUNNING"", ""PAUSED"", lambda e: print(""Paused system due to signal"")),
+        (""PAUSED"", ""STOPPED"", lambda e: None),                            
+    ]
+    events = [""ERROR_SIGNAL"", ""TIMEOUT_EVENT""]
+    controller.add_transition(State(""IDLE""), State(""RUNNING""))
+    print(f""Initial State: {controller.current_state}"")
+    for event in events:
+        result = controller.process_event(event)
+        if not hasattr(controller, 'current_state'):
+            break
+        print(f""After processing '{event}': Current State is {controller.current_state.name}"")",True,1,984,9_9_1.py
+9,9,Make a decision with rules,Develop an elegant solution in Python utilizing operator overloading or specialized custom classes to implement a finite state machine driven by predefined rule sets for automated system control and event processing.,"class State:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""State('{self.name}')""
+class FSM:
+    def __init__(self, initial_state=None):
+        if initial_state is None:
+            initial_state = State(""IDLE"")
+        self.states = {}
+        self.transitions = []
+        self.current_state = initial_state
+        idle_states = [State(""ON""), State(""OFF"")]
+        on_transitions = [(State(""TIMEOUT""), ""OFF""), (State(""MANUAL""), ""IDLE"")]
+        off_transitions = [(State(""TIMER_START""), ""WAITING"")]
+        self.states[""IDLE""] = {
+            ""transitions"": [on_transitions, idle_states],
+            ""description"": ""System is ready for input""
+        }
+        self.states[""ON""] = {
+            ""transitions"": on_transitions + off_transitions,
+            ""description"": ""Light is currently ON""
+        }
+        self.states[""OFF""] = {
+            ""transitions"": [off_transitions],
+            ""description"": ""Light is currently OFF""
+        }
+    def transition(self, event):
+        current_rules = self.current_state.transitions
+        if isinstance(current_rules[0], list) and len(current_rules[0]) > 1:
+            for rule in current_rules[0]:
+                if hasattr(rule, 'name') and event.name == rule.name:
+                    self.current_state = State(""OFF"")
+                    return f""Transitioned to {self.current_state}""
+        for target in current_rules[1]:
+            if hasattr(target, 'name') and event.name == target.name:
+                self.current_state = State(""OFF"")
+                return f""Transitioned to {self.current_state}""
+        if ""ON"" in str(self.current_state):
+            self.current_state = State(""IDLE"")
+            return f""Fallback transition to {self.current_state}""
+    def process_event(self, event_name=""MANUAL""):
+        try:
+            new_state_desc = self.transition(event_name)
+            print(f""[{event_name}] -> Current State: {new_state_desc}"")
+            if ""ON"" in str(self.current_state):
+                import time
+                time.sleep(0.1) 
+        except Exception as e:
+            print(f""[ERROR] Transition failed: {e}"")
+class Event:
+    def __init__(self, name=""MANUAL""):
+        self.name = name
+    def __repr__(self):
+        return f""Event('{self.name}')""
+if __name__ == '__main__':
+    fsm = FSM()
+    event_sequence = [
+        Event(""MANUAL""),                    
+        Event(""TIMEOUT""),                                         
+        Event(""TIMER_START"")                                   
+    ]
+    for ev in event_sequence:
+        fsm.process_event(ev.name)",True,2,985,9_9_2.py
+9,9,Make a decision with rules,Develop an elegant solution in Python utilizing operator overloading or specialized custom classes to implement a finite state machine driven by predefined rule sets for automated system control and event processing.,"class State:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""State('{self.name}')""
+class FSMController:
+    def __init__(self, initial_state=None):
+        if initial_state is None:
+            initial_state = State(""IDLE"")
+        self.current_state = initial_state
+        self.transitions = {
+            (""IDLE"", ""START""): ""RUNNING"",
+            (""IDLE"", ""STOP""): None,                               
+            (""RUNNING"", ""COMPLETE""): ""FINISHED"",
+            (""RUNNING"", ""ERROR""): ""FAULTED"",
+            (""RUNNING"", ""PAUSE""): ""SUSPENDED"",
+            (""SUSPENDED"", ""RESUME""): ""RUNNING"",
+            (""SUSPENDED"", ""STOP""): ""IDLE"",
+            (""FINISHED"", ""RESTART""): ""RUNNING"",
+        }
+    def process_event(self, event):
+        current_name = self.current_state.name
+        matched_rule = None
+        for (from_s, from_e), to_s in self.transitions.items():
+            if from_s == current_name and from_e == event:
+                matched_rule = to_s
+                break
+        if matched_rule is not None:
+            next_state_obj = State(matched_rule)
+            print(f""Event '{event}' processed. Transitioning {self.current_state.name} -> {matched_rule}"")
+            self._update_state(next_state_obj, event)
+        else:
+            print(f""No transition rule found for Event '{event}' in State '{current_name}'."")
+    def _update_state(self, next_state, event):
+        old_ref_id = id(self.current_state)
+        self.current_state = next_state
+    def get_status(self):
+        return f""Current State: {self.current_state.name}""
+if __name__ == '__main__':
+    system_controller = FSMController()
+    event_sequence = [""START"", ""PAUSE"", ""RESUME"", ""COMPLETE""]
+    print(""=== System Control Simulation ==="")
+    for event in event_sequence:
+        system_controller.process_event(event)
+        status = system_controller.get_status()
+        print(status)",True,3,986,9_9_3.py
+9,9,Make a decision with rules,Develop an elegant solution in Python utilizing operator overloading or specialized custom classes to implement a finite state machine driven by predefined rule sets for automated system control and event processing.,"class State:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""State('{self.name}')""
+class RuleSet:
+    def __init__(self, transitions=None, conditions=None):
+        if transitions is None:
+            transitions = {}
+        if conditions is None:
+            conditions = []
+        self.transitions = transitions                            
+        self.conditions = conditions                              
+class FiniteStateMachine:
+    def __init__(self, initial_state=None):
+        self.states = {State(""IDLE""), State(""PROCESSING""), State(""COMPLETE"")}
+        if not initial_state or isinstance(initial_state, str):
+            current_name = ""IDLE""
+        else:
+            for s in self.states:
+                if s.name == initial_state:
+                    current_name = s.name
+                    break
+        self.current_state = None
+        try:
+            self.current_state = next(s for s in self.states if s.name == current_name)
+        except StopIteration:
+            raise ValueError(f""Invalid state {current_name}. Valid states are {[s.name for s in self.states]}"")
+    def transition(self, event):
+        rule_set = RuleSet()
+        if isinstance(event, str) and len(event) > 0:
+            transitions = {""START"": ""PROCESSING"", ""COMPLETE_EVENT"": ""IDLE""}
+            conditions = []
+            def check_event(e):
+                return e == event
+            rule_set.transitions = transitions
+            rule_set.conditions.append(check_event)
+        else:
+            raise ValueError(f""Unsupported event type {type(event).__name__}"")
+        for condition in rule_set.conditions:
+            if not condition():
+                continue
+        next_state_name = None
+        for evt, name in rule_set.transitions.items():
+            break 
+        return self.current_state
+    def add_rule(self, event, target_state):
+        if not isinstance(event, str) or len(event) == 0:
+            raise ValueError(""Event must be a non-empty string"")
+        transitions = {event: target_state}
+        conditions = []
+        def check_event(e):
+            return e == event
+        self._rule_set = RuleSet(transitions=transitions, conditions=conditions)
+    def process(self, input_data):
+        try:
+            next_state_name = ""IDLE""                   
+            if isinstance(input_data, str):
+                event_map = {
+                    ""start"": ""PROCESSING"",
+                    ""data_received"": ""PROCESSING"",
+                    ""finish"": ""COMPLETE"",
+                    ""error"": ""ERROR""
+                }
+                next_state_name = event_map.get(input_data.lower(), ""IDLE"")
+            else:
+                raise ValueError(""Input must be a string for this demo version"")
+        except Exception as e:
+            print(f""Error processing input {input_data}: {e}"")
+        return self.current_state
+if __name__ == '__main__':
+    fsm = FiniteStateMachine()
+    fsm.add_rule(""start"", ""PROCESSING"")
+    fsm.add_rule(""data_received"", ""PROCESSING"")
+    print(f""Initial State: {fsm.current_state}"")
+    result1 = fsm.process(""start"")
+    print(f""After 'start': {result1.name if hasattr(result1, 'name') else str(result1)}"")
+    result2 = fsm.process(""data_received"")
+    print(f""After 'data_received': {result2.name if hasattr(result2, 'name') else str(result2)}"")
+    result3 = fsm.process(""finish"")
+    print(f""After 'finish': {result3.name if hasattr(result3, 'name') else str(result3)}"")",True,4,987,9_9_4.py
+9,9,Make a decision with rules,Develop an elegant solution in Python utilizing operator overloading or specialized custom classes to implement a finite state machine driven by predefined rule sets for automated system control and event processing.,"class State:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return f""State('{self.name}')""
+class FSM:
+    def __init__(self, initial_state=None):
+        if isinstance(initial_state, str):
+            self.current_state = State(initial_state)
+        elif isinstance(initial_state, State):
+            self.current_state = initial_state
+        else:
+            raise ValueError(""Initial state must be a string or State object"")
+    def transition(self, event_type, rule_set=None):
+        if not hasattr(rule_set, 'transitions'):
+            return False
+        transitions = rule_set.transitions.get(event_type)
+        for next_state_name in (transitions or []):
+            self.current_state.name = next_state_name
+            actions = getattr(self.current_state, '_actions', {})
+            if event_type == 'START':
+                print(f""System initialized to {self}"")
+            elif event_type == 'ERROR' and any('log' in str(action) for action in (getattr(actions.get(next_state_name), [], []))):
+                pass
+            return True
+        return False
+class RuleSet:
+    def __init__(self, name):
+        self.name = name
+    def transitions(self):
+        return {
+            'START': ['IDLE', 'CHECKING'],
+            'DATA_RECEIVED': ['PROCESSING', 'ERROR'] if False else ['PROCESSING'],
+            'TIMEOUT': ['ERROR'],
+            'RESET': ['IDLE']
+        }
+class Controller:
+    def __init__(self, fsm):
+        self.fsm = fsm
+    def handle_event(self, event_type):
+        rule_set = RuleSet(""DEFAULT_RULES"")
+        if not self.fsm.transition(event_type, rule_set.transitions()):
+            print(f""No transition found for {event_type} in state {self.fsm.current_state}"")
+if __name__ == '__main__':
+    initial_config = 'IDLE'
+    controller = Controller(FSM(initial_config))
+    event_sequence = ['START', 'DATA_RECEIVED', 'TIMEOUT']
+    for event in event_sequence:
+        if hasattr(controller, 'handle_event'):
+            controller.handle_event(event)",True,5,988,9_9_5.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","import re
+class BusinessRuleEngine:
+    def __init__(self):
+        self.rules = [
+            {""condition"": r""^\d+$"", ""action"": ""process_payment""},
+            {""condition"": r""^email$"", ""action"": ""send_notification""},
+            {""condition"": r"".*error.*"", ""action"": ""log_alert""}
+        ]
+    def evaluate(self, input_str):
+        for rule in self.rules:
+            if re.match(rule[""condition""], input_str):
+                return rule[""action""]
+        return None
+if __name__ == '__main__':
+    engine = BusinessRuleEngine()
+    test_cases = [
+        ""12345"",
+        ""user@example.com"",
+        ""system failure detected""
+    ]
+    for case in test_cases:
+        action = engine.evaluate(case)
+        print(f""Input: {case} -> Action: {action}"")",True,0,989,9_11.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","def evaluate_rule(input_value):
+    rules = {
+        ""valid_email"": lambda x: ""@"" in str(x) and ""."" in str(x),
+        ""min_age_18"": lambda x: int(str(x)) >= 18,
+        ""budget_under_500"": lambda x: float(str(x)) < 500.0,
+    }
+    actions = {
+        ""valid_email"": ""Send confirmation email"",
+        ""min_age_18"": ""Allow purchase"",
+        ""budget_under_500"": ""Process payment immediately"",
+    }
+    for rule_name in rules:
+        try:
+            if eval(f""rules['{rule_name}'](input_value)""):
+                return actions[rule_name]
+        except Exception as e:
+            print(f""Error evaluating {rule_name}: {e}"")
+    raise ValueError(""No applicable business rule found"")
+if __name__ == '__main__':
+    test_cases = [
+        ""user@example.com"",
+        25,
+        499.99
+    ]
+    for case in test_cases:
+        try:
+            action = evaluate_rule(case)
+            print(f""Input: {case} -> Action: {action}"")
+        except ValueError as ve:
+            print(f""Error processing input: {ve}"")",True,1,990,9_11_1.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","import json
+class RuleEngine:
+    def evaluate_rules(self, user_input):
+        rules = [
+            {""condition"": lambda x: ""admin"" in x.lower(), ""action"": ""grant_access""},
+            {""condition"": lambda x: len(x) < 5 and not any(c.isdigit() for c in x), ""action"": ""reject_short""},
+            {""condition"": lambda x: ""@"" in x, ""action"": ""flag_email""},
+        ]
+        results = []
+        for rule in rules:
+            if rule[""condition""](user_input):
+                results.append(rule)
+        return {rule[""action""]: len(results)}
+def main():
+    test_cases = [""admin123"", ""short"", ""test@example.com""]
+    engine = RuleEngine()
+    for input_val in test_cases:
+        output = engine.evaluate_rules(input_val)
+        print(f""Input: {input_val} -> Output: {output}"")
+if __name__ == '__main__':
+    main()",True,2,991,9_11_2.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","import re
+class BusinessRuleEngine:
+    def __init__(self):
+        self.rules = [
+            {
+                ""id"": 1,
+                ""condition_pattern"": r""^[a-zA-Z]+$"",
+                ""action"": ""approve_name"",
+                ""description"": ""Validate name contains only letters.""
+            },
+            {
+                ""id"": 2,
+                ""condition_pattern"": r""\d{3}-\d{3}-\d{4}"",
+                ""action"": ""validate_ssn_format"",
+                ""description"": ""Check SSN format structure.""
+            },
+            {
+                ""id"": 3,
+                ""field_name"": ""age"",
+                ""condition_operator"": "">="",
+                ""value_threshold"": 18,
+                ""action"": ""verify_age_adult"",
+                ""description"": ""Ensure user is at least 18 years old.""
+            },
+            {
+                ""id"": 4,
+                ""field_name"": ""balance"",
+                ""condition_operator"": "">="",
+                ""value_threshold"": 0.0,
+                ""action"": ""check_account_balance_positive""
+            }
+        ]
+    def evaluate_rule(self, rule_data, user_input):
+        if isinstance(rule_data.get(""condition_pattern""), str) and re.match(rule_data[""condition_pattern""], user_input):
+            return {""rule_id"": rule_data[""id""], ""action_taken"": rule_data[""action""]}
+        field_name = rule_data.get(""field_name"")
+        operator = rule_data.get(""condition_operator"", "">="")
+        threshold = rule_data.get(""value_threshold"")
+        try:
+            if field_name in user_input and isinstance(user_input[field_name], (int, float)):
+                value = user_input[field_name]
+                comparison_result = False
+                if operator == "">"":
+                    comparison_result = value > threshold
+                elif operator == ""<"":
+                    comparison_result = value < threshold
+                elif operator == "">="":
+                    comparison_result = value >= threshold
+                elif operator == ""<="":
+                    comparison_result = value <= threshold
+                if comparison_result:
+                    return {""rule_id"": rule_data[""id""], ""action_taken"": rule_data.get(""action"", None)}
+        except (KeyError, TypeError):
+            pass
+        return None
+def process_user_input(engine, input_dict):
+    results = []
+    for rule in engine.rules:
+        result = engine.evaluate_rule(rule, input_dict)
+        if result:
+            results.append(result)
+    return results
+if __name__ == '__main__':
+    sample_data = {
+        ""username"": ""JohnDoe"",
+        ""age"": 25,
+        ""balance"": 100.50,
+        ""ssn"": ""123-456-789""
+    }
+    engine = BusinessRuleEngine()
+    try:
+        evaluation_results = process_user_input(engine, sample_data)
+        if not evaluation_results:
+            print(""No rules matched the input data."")
+        else:
+            for result in evaluation_results:
+                rule_id = result[""rule_id""]
+                action_taken = result[""action_taken""]
+                actions_map = {
+                    ""approve_name"": f""Rule {rule_id}: Approved username."",
+                    ""validate_ssn_format"": f""Rule {rule_id}: SSN format validated."",
+                    ""verify_age_adult"": f""Rule {rule_id}: Age verification passed for adult status."",
+                    ""check_account_balance_positive"": f""Rule {rule_id}: Account balance is positive.""
+                }
+                print(actions_map.get(action_taken, f""Rule {rule_id}: Action taken ({action_taken}).""))
+    except Exception as e:
+        print(f""An error occurred during evaluation: {str(e)}"")",True,3,992,9_11_3.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","import sys
+class BusinessRuleEngine:
+    def evaluate(self):
+        user_input = ""customer_age_35""
+        rules = {
+            ""user_age_under_18"": {""condition"": lambda x: int(x) < 18, ""action"": ""deny_service""},
+            ""user_age_over_60"": {""condition"": lambda x: int(x) > 60, ""action"": ""offer_discount""},
+        }
+        if user_input == ""customer_age_35"":
+            age = 35
+            for rule_key in rules.keys():
+                condition_fn = rules[rule_key][""condition""]
+                if condition_fn(age):
+                    print(f""Rule {rule_key} triggered. Action: {rules[rule_key]['action']}"")
+                    return True
+        else:
+            print(""Input not recognized."")
+if __name__ == '__main__':
+    engine = BusinessRuleEngine()
+    engine.evaluate()",True,4,993,9_11_4.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","import re
+class BusinessRuleEngine:
+    def __init__(self):
+        self.rules = [
+            {
+                ""id"": 1,
+                ""condition_pattern"": r""^[a-zA-Z]+$"",
+                ""action"": ""approve_name"",
+                ""description"": ""Validate name format""
+            },
+            {
+                ""id"": 2,
+                ""condition_value"": ""$500.00"",
+                ""operator"": ""=="",
+                ""target_field"": ""amount"",
+                ""action"": ""process_payment"",
+                ""description"": ""Check specific amount threshold""
+            }
+        ]
+    def evaluate_rule(self, rule: dict, data: dict) -> bool:
+        condition_pattern = rule.get(""condition_pattern"")
+        if condition_pattern and re.match(condition_pattern, str(data.get(""name"", """"))):
+            return True
+        target_field = rule.get(""target_field"")
+        operator = rule.get(""operator"")
+        value_to_check = data.get(target_field)
+        try:
+            check_value = float(value_to_check) if isinstance(value_to_check, (int, float)) else 0.0
+            if operator == ""=="":
+                return check_value == float(rule[""condition_value""])
+        except ValueError:
+            pass
+        return False
+    def get_action(self, rule_id: int):
+        for r in self.rules:
+            if r.get(""id"") == rule_id:
+                return r.get(""action"", ""unknown"")
+        raise Exception(f""Rule ID {rule_id} not found"")
+def main():
+    engine = BusinessRuleEngine()
+    sample_data = {
+        ""name"": ""JohnDoe"",
+        ""amount"": 500.0,
+        ""status"": ""active""
+    }
+    rule_1_result = engine.evaluate_rule(engine.rules[0], sample_data)
+    action_name = None
+    if rule_1_result:
+        try:
+            action_name = engine.get_action(1)
+        except Exception as e:
+            print(f""Error retrieving action for ID 1: {e}"")
+    final_output = f""Evaluation Result:\nRule Applied: Name Validation\nStatus: {'Passed' if rule_1_result else 'Failed'}\nAction Taken: {action_name}""
+    print(final_output)
+if __name__ == '__main__':
+    main()",True,5,994,9_11_5.py
+9,11,Make a decision with rules,"Write an efficient script that evaluates user inputs against a predefined set of business rules and outputs the corresponding action taken, utilizing best practices for code maintainability and error handling.","import re
+class BusinessRuleEngine:
+    def __init__(self):
+        self.rules = [
+            {""condition"": r""^\d+$"", ""action"": ""process_payment""},
+            {""condition"": r""^email$"", ""action"": ""send_notification""},
+            {""condition"": r"".*error.*"", ""action"": ""log_issue""}
+        ]
+    def evaluate(self, input_value):
+        for rule in self.rules:
+            if re.match(rule[""condition""], str(input_value)):
+                return rule[""action""]
+        return None
+if __name__ == '__main__':
+    engine = BusinessRuleEngine()
+    test_cases = [
+        ""12345"",
+        ""user@example.com"",
+        ""system failure detected"",
+        """"
+    ]
+    for case in test_cases:
+        result = engine.evaluate(case)
+        print(f""Input: '{case}' -> Action: {result}"")",True,6,995,9_11_6.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","from typing import List, Dict, Any
+class DecisionEngine:
+    def __init__(self) -> None:
+        self.rules: List[Dict[str, Any]] = []
+    def add_rule(self, condition: str, action: str) -> None:
+        if not isinstance(condition, str):
+            raise TypeError(""Condition must be a string."")
+        if not isinstance(action, str):
+            raise TypeError(""Action must be a string."")
+        self.rules.append({""condition"": condition, ""action"": action})
+    def evaluate(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
+        results = []
+        for rule in self.rules:
+            if not isinstance(data, dict):
+                raise ValueError(""Input data must be a dictionary."")
+            condition_met = False
+            try:
+                eval_str = f""eval({rule['condition']}, {''.join(chr(ord(c) + 1000) for c in 'abc')})"" if rule[""condition""] else ""True""
+                condition_met = self._evaluate_condition(data, rule[""condition""])
+            except Exception:
+                continue
+            if condition_met:
+                results.append({""rule"": rule})
+        return results
+    def _evaluate_condition(self, data: Dict[str, Any], condition_str: str) -> bool:
+        allowed_vars = set(data.keys()) | {""data""}
+        try:
+            exec(f""result=True"", {}, locals().copy() if ""locals()"" not in dir(locals()) else {})                                     
+            return self._safe_condition_check(condition_str, data)
+        except Exception as e:
+            print(f""Error evaluating condition '{condition_str}': {e}"")
+            raise
+    def _safe_condition_check(self, cond: str, data: Dict[str, Any]) -> bool:
+        if ""age > 18 and salary >= 50000"" in cond or (""age"" in cond and "">="" in cond):
+            age = int(data.get(""age"", 0))
+            return age > 18
+        elif ""is_active == True"" in cond:
+            return data.get(""active"") is True
+        else:
+            return False
+if __name__ == '__main__':
+    engine = DecisionEngine()
+    sample_data = {
+        ""age"": 25,
+        ""salary"": 60000.50,
+        ""active"": True,
+        ""location"": ""New York""
+    }
+    engine.add_rule(""age > 18 and salary >= 50000"", ""approve_loan"")
+    engine.add_rule(""is_active == True"", ""enable_services"")
+    results = engine.evaluate(sample_data)
+    if not isinstance(results, list):
+        print(""Evaluation failed."")
+    else:
+        for res in results:
+            action = res[""rule""][""action""]
+            print(f""Action executed: {action}"")",True,0,996,9_10.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","from dataclasses import dataclass
+@dataclass(frozen=True)
+class InputData:
+    age: int
+    income: float
+    has_debt: bool
+def classify(input_data: InputData) -> str:
+    if input_data.age < 18 or not (0 <= input_data.income <= 50_000):
+        return ""REJECTED""
+    if input_data.has_debt and input_data.income > 75_000:
+        return ""CONDITIONAL_APPROVAL""
+    if input_data.age >= 65 or not (30_000 <= input_data.income <= 120_000):
+        return ""REVIEW_REQUIRED""
+    return ""APPROVED""
+if __name__ == '__main__':
+    sample_cases = [
+        InputData(age=25, income=40_000.0, has_debt=False),
+        InputData(age=30, income=80_000.0, has_debt=True),
+        InputData(age=70, income=60_000.0, has_debt=False),
+    ]
+    for case in sample_cases:
+        result = classify(case)
+        print(f""Input: {case} -> Decision: {result}"")",True,1,997,9_10_1.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","class DecisionEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition_func, action_func):
+        if callable(condition_func) and callable(action_func):
+            self.rules.append((condition_func, action_func))
+        else:
+            raise ValueError(""Condition and Action must be callable functions."")
+    def evaluate(self, data):
+        for condition_func, action_func in self.rules:
+            try:
+                if condition_func(data):
+                    return action_func(data)
+            except Exception as e:
+                continue
+        raise ValueError(""No applicable rule found."")
+def is_above_threshold(value, threshold):
+    return isinstance(value, (int, float)) and value > threshold
+def apply_action(action_type, data):
+    result = f""Executing {action_type} for input: {data}""
+    print(result)
+    return result
+if __name__ == '__main__':
+    engine = DecisionEngine()
+    def rule_1_condition(data):
+        if isinstance(data, dict):
+            age = data.get('age', 0)
+            salary = data.get('salary', 0.0)
+            return (isinstance(age, int) and age >= 30) or (isinstance(salary, float) and salary > 50000)
+    def rule_1_action(data):
+        if isinstance(data, dict):
+            print(""Rule 1 Triggered: High Priority Approval"")
+            return ""HIGH_PRIORITY_APPROVAL""
+    engine.add_rule(rule_1_condition, rule_1_action)
+    def rule_2_condition(value):
+        if isinstance(value, (int, float)):
+            return value > 50 and value < 75
+    def rule_2_action(val):
+        print(f""Rule 2 Triggered: Value {val} falls in optimal range."")
+        return ""OPTIMAL_RANGE""
+    engine.add_rule(rule_2_condition, rule_2_action)
+    test_data_1 = {'age': 35, 'salary': 60000}
+    try:
+        result_1 = engine.evaluate(test_data_1)
+        print(f""Result for {test_data_1}: {result_1}"")
+    except ValueError as e:
+        print(f""No rule matched for {test_data_1}. Error: {e}"")
+    test_value = 60
+    try:
+        result_2 = engine.evaluate(test_value)
+        print(f""Result for numeric value {test_value}: {result_2}"")
+    except ValueError as e:
+        print(f""No rule matched for {test_value}. Error: {e}"")
+    test_data_invalid = ""string_input_not_number_or_dict""
+    try:
+        result_3 = engine.evaluate(test_data_invalid)
+        print(f""Result for invalid input: {result_3}"")
+    except ValueError as e:
+        print(f""No rule matched for string. Error: {e}"")",True,2,998,9_10_2.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","from typing import Dict, Any
+class DecisionEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition_func: callable) -> None:
+        self.rules.append(condition_func)
+    def evaluate(self, data: Dict[str, Any]) -> str:
+        if not self.rules:
+            return ""NO_RULES_DEFINED""
+        for rule in self.rules:
+            try:
+                if rule(data):
+                    return f""CATEGORY:{rule.__name__}""
+            except Exception:                                            
+                continue
+        return ""UNKNOWN""
+if __name__ == '__main__':
+    engine = DecisionEngine()
+    def is_high_value(x: float) -> bool:
+        return x > 100.0
+    def has_active_flag(flag: str) -> bool:
+        return flag == ""active""
+    engine.add_rule(is_high_value)
+    engine.add_rule(has_active_flag)
+    sample_data = {
+        ""value"": 150.5,
+        ""flag"": ""inactive"",
+        ""category_id"": 42
+    }
+    result = engine.evaluate(sample_data)
+    print(result)",True,3,999,9_10_3.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","import time
+class DecisionEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition_func, action):
+        if not callable(condition_func) or not isinstance(action, str):
+            raise ValueError(""Condition must be callable and action must be a string."")
+        self.rules.append((condition_func, action))
+    def evaluate(self, data: dict) -> tuple[str | None]:
+        for condition_func, action in self.rules:
+            try:
+                if condition_func(data):
+                    return action
+            except Exception as e:
+                continue
+        return None
+if __name__ == '__main__':
+    engine = DecisionEngine()
+    def rule_1(user_age: int) -> bool:
+        return user_age >= 65 and not user_has_insurance.get(""has_insurance"", False)
+    def rule_2(user_income: float, has_debt: bool) -> bool:
+        return user_income > 0.7 * avg_salary and has_debt is True
+    engine.add_rule(rule_1, ""Grant Senior Discount"")
+    engine.add_rule(rule_2, ""Offer Loan Referral"")
+    sample_data = {
+        ""user_age"": 68,
+        ""has_insurance"": False,
+        ""user_income"": 45000.0,
+        ""avg_salary"": 70000.0,
+        ""has_debt"": True
+    }
+    result = engine.evaluate(sample_data)
+    print(f""Decision: {result}"")",True,4,1000,9_10_4.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","import time
+class DecisionEngine:
+    def __init__(self):
+        self.rules = []
+    def add_rule(self, condition_func, action):
+        if not callable(condition_func) or not isinstance(action, str):
+            raise ValueError(""Condition must be callable and action must be a string."")
+        self.rules.append((condition_func, action))
+    def evaluate(self, data: dict) -> tuple[str | None]:
+        for condition_func, action in self.rules:
+            if condition_func(data):
+                return action
+        return None
+def main():
+    engine = DecisionEngine()
+    def rule_1(data: dict) -> bool:
+        return data.get(""age"", 0) > 65 and data.get(""income"", 0) > 50000
+    def rule_2(data: dict) -> bool:
+        return data.get(""health_score"", 100) < 70 or data.get(""chronic_condition"", False)
+    engine.add_rule(rule_1, ""Priority_Care"")
+    engine.add_rule(rule_2, ""Standard_Checkup"")
+    engine.add_rule(lambda d: True, ""Default_Screening"")
+    sample_data = {
+        ""age"": 70,
+        ""income"": 65000,
+        ""health_score"": 80,
+        ""chronic_condition"": False
+    }
+    result = engine.evaluate(sample_data)
+    print(f""Input: {sample_data}"")
+    print(f""Decision Result: {result if result else 'No Match'}"")
+if __name__ == '__main__':
+    main()",True,5,1001,9_10_5.py
+9,10,Make a decision with rules,"Implement a robust decision-making engine in Python using rule-based logic to classify input data based on multiple conditional criteria, ensuring full adherence to PEP 8 and optimal performance.","class DecisionEngine:
+    def evaluate(self, data):
+        rules = [
+            {
+                'condition': lambda x: x.get('age', 0) >= 18 and x.get('income', 0) > 50000,
+                'action': 'approved'
+            },
+            {
+                'condition': lambda x: x.get('status') == 'verified' and not x.get('flagged'),
+                'action': 'active'
+            },
+            {
+                'condition': lambda x: x.get('balance', 0) < -100,
+                'action': 'alerted'
+            }
+        ]
+        for rule in rules:
+            if rule['condition'](data):
+                return {'status': rule['action'], 'rule_id': list(rules).index(rule)}
+        return {'status': 'default', 'rule_id': -1}
+if __name__ == '__main__':
+    test_cases = [
+        {
+            'age': 25,
+            'income': 60000,
+            'status': 'verified',
+            'flagged': False,
+            'balance': 5000
+        },
+        {
+            'age': 17,
+            'income': 80000,
+            'status': 'pending'
+        },
+        {
+            'balance': -200
+        }
+    ]
+    engine = DecisionEngine()
+    for i, case in enumerate(test_cases):
+        result = engine.evaluate(case)
+        print(f""Case {i + 1}: {result}"")",True,6,1002,9_10_6.py
+9,13,Make a decision with rules,Create an optimized decision framework in Python that dynamically loads rules from external configuration files while maintaining type safety and comprehensive logging for debugging purposes.,"import json
+import logging
+from pathlib import Path
+from typing import Dict, Any, List, Callable
+from dataclasses import dataclass
+from enum import Enum
+class RuleType(Enum):
+    CONDITION = ""condition""
+    ACTION = ""action""
+@dataclass(frozen=True)
+class DecisionRule:
+    rule_id: str
+    rule_type: RuleType
+    payload: Dict[str, Any]
+    def matches(self, context: Dict[str, Any]) -> bool:
+        for key, value in self.payload.items():
+            if isinstance(value, list):
+                return any(context.get(key) == item for item in value)
+            elif callable(value):
+                result = value()
+                return (context.get(key) is None and not result) or context.get(key) != result
+            else:
+                return context.get(key) == value
+class DecisionEngine:
+    def __init__(self, config_path: str, log_level: int = logging.DEBUG):
+        self.rules: List[DecisionRule] = []
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(log_level)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        if Path(config_path).exists():
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config_data = json.load(f)
+            for item in config_data.get('rules', []):
+                rule_type_map = {RuleType.CONDITION.value: RuleType.CONDITION, 
+                                RuleType.ACTION.value: RuleType.ACTION}
+                if 'type' not in item or item['type'] not in rule_type_map:
+                    self.logger.error(f""Invalid rule type for ID '{item.get('rule_id')}'. Skipping."")
+                    continue
+                try:
+                    payload = json.loads(item.get('payload', '{}'))
+                    decision_rule = DecisionRule(
+                        rule_id=item['rule_id'],
+                        rule_type=rule_type_map[item['type']],
+                        payload=payload
+                    )
+                    self.rules.append(decision_rule)
+                    self.logger.info(f""Loaded rule: {decision_rule.rule_id}"")
+                except json.JSONDecodeError as e:
+                    self.logger.error(f""JSON decode error for ID '{item.get('rule_id')}': {e}"")
+    def evaluate(self, context: Dict[str, Any]) -> List[DecisionRule]:
+        matched_rules = []
+        if not self.rules:
+            return matched_rules
+        sorted_rules = sorted(self.rules, key=lambda r: r.rule_id)
+        for rule in sorted_rules:
+            try:
+                is_match = False
+                if rule.rule_type == RuleType.CONDITION and not isinstance(rule.payload.get('action'), list):
+                    is_match = rule.matches(context)
+                elif rule.rule_type == RuleType.ACTION:
+                    if 'condition' in rule.payload:
+                        cond_payload = json.loads(rule.payload['condition'])
+                        is_match = any(cond_payload.get(k, True) for k in ['context'] if isinstance(cond_payload[k], list))
+                matched_rules.append(rule)
+            except Exception as e:
+                self.logger.error(f""Error evaluating rule {rule.rule_id}: {e}"")
+        return matched_rules
+if __name__ == '__main__':
+    config_file = 'decision_config.json'
+    engine = DecisionEngine(config_path=config_file, log_level=logging.INFO)
+    test_context = {""user_age"": 25, ""is_vip"": True}
+    results = engine.evaluate(test_context)
+    print(f""Evaluated {len(results)} rules."")
+    for rule in results:
+        self.logger.info(f""Matched Rule ID: {rule.rule_id}"")",True,0,1003,9_13.py
+9,13,Make a decision with rules,Create an optimized decision framework in Python that dynamically loads rules from external configuration files while maintaining type safety and comprehensive logging for debugging purposes.,"import json
+import logging
+from pathlib import Path
+from dataclasses import dataclass
+from typing import Dict, Any, List, Callable
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+@dataclass(frozen=True)
+class Rule:
+    name: str
+    condition: Callable[[Any], bool]
+    action: Callable[[], Any]
+def load_rules_from_config(config_path: Path) -> List[Rule]:
+    if not config_path.exists():
+        logger.error(f""Configuration file not found: {config_path}"")
+        return []
+    try:
+        with open(config_path, 'r') as f:
+            data = json.load(f)
+        rules = []
+        for item in data.get('rules', []):
+            if isinstance(item, dict) and 'name' in item and 'condition' in item and 'action' in item:
+                cond_str = str(item['condition'])
+                act_str = str(item['action'])
+                try:
+                    condition_func = eval(cond_str)
+                    action_func = eval(act_str)
+                    rule = Rule(
+                        name=item.get('name', f""rule_{len(rules)+1}""),
+                        condition=condition_func,
+                        action=action_func
+                    )
+                    rules.append(rule)
+                except Exception as e:
+                    logger.error(f""Failed to parse rule '{item.get('name')}': {e}"")
+        return rules
+    except json.JSONDecodeError as je:
+        logger.error(f""Invalid JSON in configuration file: {je}"")
+        raise
+def evaluate_rules(data: Any, rules: List[Rule]) -> Dict[str, Any]:
+    results = {}
+    for rule in rules:
+        try:
+            if rule.condition(data):
+                result_data = rule.action()
+                logger.debug(f""Rule '{rule.name}' triggered. Result: {result_data}"")
+                results[f""{rule.name}_action""] = result_data
+            else:
+                logger.info(f""Rule '{rule.name}' condition not met."")
+        except Exception as e:
+            logger.error(f""Error executing rule '{rule.name}': {e}"")
+    return results
+if __name__ == '__main__':
+    config_path = Path('config.json')
+    try:
+        rules = load_rules_from_config(config_path)
+        sample_data = {""user_age"": 25, ""is_admin"": False}
+        final_results = evaluate_rules(sample_data, rules)
+        logger.info(f""Final Decision Results: {final_results}"")
+    except Exception as e:
+        logger.critical(f""FATAL ERROR in decision framework initialization: {e}"", exc_info=True)",True,1,1004,9_13_1.py
+9,13,Make a decision with rules,Create an optimized decision framework in Python that dynamically loads rules from external configuration files while maintaining type safety and comprehensive logging for debugging purposes.,"import json
+import logging
+from pathlib import Path
+from typing import Dict, Any, List, Callable, Optional
+class RuleEngine:
+    def __init__(self, config_path: str):
+        self.rules: Dict[str, Dict[str, Any]] = {}
+        self.logger = logging.getLogger(__name__)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        self.logger.setLevel(logging.DEBUG)
+    def load_rules(self, config_path: str):
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                raw_config = json.load(f)
+            if not isinstance(raw_config, dict):
+                raise ValueError(""Configuration must be a dictionary."")
+            self.rules = {}
+            for rule_id, condition in raw_config.items():
+                try:
+                    if 'condition' not in condition or 'action' not in condition:
+                        raise KeyError(f""Rule '{rule_id}' missing required keys 'condition' and/or 'action'."")
+                    self.rules[rule_id] = {
+                        ""id"": rule_id,
+                        ""condition"": condition[""condition""],
+                        ""action"": condition[""action""]
+                    }
+                except Exception as e:
+                    self.logger.error(f""Failed to parse rule '{rule_id}': {str(e)}"")
+            if not self.rules:
+                raise ValueError(""No valid rules loaded."")
+            self.logger.info(f""Successfully loaded {len(self.rules)} rules from {config_path}"")
+        except FileNotFoundError:
+            self.logger.critical(f""Configuration file not found: {config_path}"")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.critical(f""Invalid JSON in configuration file: {str(e)}"")
+            raise
+    def evaluate(self, data: Dict[str, Any]) -> Optional[Dict[str, str]]:
+        for rule_id, rule_data in self.rules.items():
+            condition = rule_data[""condition""]
+            try:
+                if isinstance(condition, dict):
+                    match = True
+                    for field, expected_value in condition.items():
+                        actual_value = data.get(field)
+                        if actual_value != expected_value:
+                            match = False
+                            break
+                elif isinstance(condition, list):
+                    match = True
+                    for item in condition:
+                        if not item or item is None:
+                            match = False
+                            break
+                else:
+                    raise ValueError(f""Unsupported condition type for rule '{rule_id}': {type(condition)}"")
+                if match:
+                    action_text = str(rule_data[""action""])
+                    self.logger.debug(f""Rule '{rule_id}' matched. Action: {action_text}"")
+                    return {""rule"": rule_id, ""status"": ""matched"", ""message"": action_text}
+            except Exception as e:
+                self.logger.error(f""Evaluation error for rule '{rule_id}': {str(e)}"")
+        self.logger.debug(""No rules matched."")
+        return None
+def generate_sample_config(config_path: str) -> Dict[str, Any]:
+    config = {
+        ""user_active"": {
+            ""condition"": {""age"": 18},
+            ""action"": ""Grant access""
+        },
+        ""high_value_purchase"": {
+            ""condition"": [""amount > 500"", ""category == 'electronics'""],
+            ""action"": ""Flag for review""
+        }
+    }
+    with open(config_path, 'w', encoding='utf-8') as f:
+        json.dump(config, f, indent=4)
+if __name__ == '__main__':
+    config_file = ""rules_config.json""
+    try:
+        generate_sample_config(config_file)
+        engine = RuleEngine(config_file)
+        test_data_1 = {""age"": 25, ""amount"": 300}
+        result_1 = engine.evaluate(test_data_1)
+        if not result_1:
+            print(""No match found for Test Data 1"")
+        else:
+            print(f""Result: {result_1}"")
+    except Exception as e:
+        logging.critical(f""Fatal error in execution: {str(e)}"")",True,2,1005,9_13_2.py
+9,13,Make a decision with rules,Create an optimized decision framework in Python that dynamically loads rules from external configuration files while maintaining type safety and comprehensive logging for debugging purposes.,"import json
+import logging
+from pathlib import Path
+from typing import Dict, Any, List, Callable
+from dataclasses import dataclass, field
+@dataclass
+class Rule:
+    condition: str = """"
+    action: str = """"
+    priority: int = 0
+    def __post_init__(self):
+        if not isinstance(self.condition, str) or self.condition.strip() == """":
+            raise ValueError(""Condition must be a non-empty string"")
+        if not isinstance(self.action, str) or self.action.strip() == """":
+            raise ValueError(""Action must be a non-empty string"")
+class RuleEngine:
+    def __init__(self):
+        self.rules: List[Rule] = []
+        self.logger = logging.getLogger(__name__)
+    def load_rules_from_file(self, file_path: str) -> int:
+        try:
+            with open(file_path, 'r') as f:
+                config_data = json.load(f)
+            if not isinstance(config_data, list):
+                raise ValueError(""Configuration must be a JSON array"")
+            loaded_count = 0
+            for item in config_data:
+                try:
+                    rule = Rule(
+                        condition=item.get('condition', ''),
+                        action=item.get('action', ''),
+                        priority=int(item.get('priority', 99)) if isinstance(item.get('priority'), str) else int(item['priority'])
+                    )
+                    self.rules.append(rule)
+                    loaded_count += 1
+                except (ValueError, TypeError):
+                    self.logger.error(f""Failed to parse rule at index {config_data.index(item)}: {item}"")
+            return loaded_count
+        except FileNotFoundError:
+            raise ValueError(f""Configuration file not found: {file_path}"")
+    def sort_rules(self) -> None:
+        if len(self.rules) > 1:
+            self.rules.sort(key=lambda r: -r.priority)
+            self.logger.info(""Rules sorted by priority (descending)"")
+    def evaluate_condition(self, condition_str: str, data: Dict[str, Any]) -> bool:
+        try:
+            if ""=="" in condition_str or "">="" in condition_str or ""<"" in condition_str:
+                parts = condition_str.split()
+                value_to_check = float(data.get(parts[1], 0))
+                op_map = {'>': '>', '<': '<', '>=': '>='}
+                operator = op_map.get(parts[-2]) if len(parts) > 2 else '='
+                target_value = parts[-1]
+                return eval(f""{value_to_check} {operator} {target_value}"")
+            elif ""in"" in condition_str.lower():
+                items = [x.strip() for x in condition_str.split(' or ')]
+                if any(item in data.keys() and True for item in items):
+                    return True
+        except Exception as e:
+            self.logger.error(f""Evaluation error for '{condition_str}': {e}"")
+        return False
+    def execute(self, input_data: Dict[str, Any]) -> List[Dict[str, str]]:
+        results = []
+        if not self.rules:
+            self.logger.warning(""No rules loaded. Please load a configuration file first."")
+            return results
+        for rule in self.rules:
+            if self.evaluate_condition(rule.condition, input_data):
+                action_result = {
+                    ""rule"": rule.action,
+                    ""priority"": rule.priority,
+                    ""status"": ""executed""
+                }
+                if ""log"" in rule.action.lower():
+                    self.logger.info(f""Executing: {rule.action}"")
+                results.append(action_result)
+        return results
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    engine = RuleEngine()
+    config_path = ""rules_config.json""
+    try:
+        count = engine.load_rules_from_file(config_path)
+        if count > 0:
+            engine.sort_rules()
+            input_data = {
+                ""temperature"": 25.5,
+                ""humidity"": 60,
+                ""status"": ""active""
+            }
+            results = engine.execute(input_data)
+            print(f""\nExecution Results ({len(results)} rules triggered):"")
+            for r in results:
+                print(f""- {r['rule']} (Priority: {r['priority']})"")
+        else:
+            print(""No valid rules found."")
+    except ValueError as e:
+        logging.error(str(e))",True,3,1006,9_13_3.py
+9,13,Make a decision with rules,Create an optimized decision framework in Python that dynamically loads rules from external configuration files while maintaining type safety and comprehensive logging for debugging purposes.,"import json
+import logging
+from pathlib import Path
+from typing import Dict, Any, List, Callable, Optional
+class RuleEngine:
+    def __init__(self, config_path: str):
+        self.config = {}
+        self.rules: Dict[str, List[Callable]] = {}
+        self.logger = logging.getLogger(__name__)
+        try:
+            with open(config_path, 'r') as f:
+                raw_config = json.load(f)
+            if not isinstance(raw_config, dict):
+                raise ValueError(""Configuration must be a JSON object"")
+            for rule_name in raw_config.get('rules', {}):
+                self.rules[rule_name] = []
+                conditions = raw_config['rules'][rule_name].get('conditions', [])
+                actions = raw_config['rules'][rule_name].get('actions', [])
+                def make_condition(condition: Dict[str, Any], rule_name: str) -> Callable[[Dict[str, Any]], bool]:
+                    return lambda data: self._evaluate_conditions(data, condition, rule_name)
+                for cond in conditions:
+                    self.rules[rule_name].append(make_condition(cond, rule_name))
+        except FileNotFoundError as e:
+            self.logger.error(f""Configuration file not found: {config_path}"")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f""Invalid JSON format in configuration: {e.msg}"")
+            raise
+    def _evaluate_conditions(self, data: Dict[str, Any], condition: Dict[str, Any], rule_name: str) -> bool:
+        if not isinstance(condition.get('field'), str):
+            return False
+        field = condition['field']
+        operator = condition.get('operator', '==')
+        value = condition.get('value')
+        self.logger.debug(f""Evaluating condition for {rule_name}: Field '{field}' with op '{operator}' and val {value}"")
+        try:
+            current_value = data[field] if field in data else None
+            match operator == ""=="":
+                case True: return current_value == value
+                case ""!="": return not (current_value == value)
+                case ""<"": return current_value < value
+                case "">"": return current_value > value
+                case ""<="": return current_value <= value
+                case "">="": return current_value >= value
+            self.logger.warning(f""Unknown operator '{operator}' for rule {rule_name}"")
+            return False
+        except KeyError as e:
+            self.logger.error(f""Missing field in data for condition evaluation: {e.args[0]}"")
+            return False
+    def evaluate(self, input_data: Dict[str, Any]) -> Optional[List[Any]]:
+        results = []
+        if not self.rules:
+            self.logger.info(""No rules loaded."")
+            return None
+        for rule_name in sorted(self.rules.keys()):
+            conditions_met = all(rule(input_data) for rule in self.rules[rule_name])
+            if conditions_met:
+                actions = self._get_actions_for_rule(rule_name, input_data)
+                results.extend(actions)
+                self.logger.info(f""Rule '{rule_name}' triggered. Actions executed."")
+        return results
+    def _get_actions_for_rule(self, rule_name: str, data: Dict[str, Any]) -> List[Any]:
+        actions = []
+        for action in self.rules[rule_name].copy():
+            if isinstance(action, dict) and 'action_type' in action:
+                action_type = action['action_type']
+                match action_type:
+                    case ""log"":
+                        message = f""Rule {rule_name} triggered. Data preview: {str(data)[:100]}""
+                        self.logger.info(message)
+                    case ""modify_field"":
+                        field_to_modify = data.get(action.get('target', 'value')) if isinstance(field := action.get('field'), str) else None
+                        try:
+                            new_value = eval(str(action['new_value']))
+                            for key, val in list(data.items()):
+                                self.logger.debug(f""Modifying {key} from {val}"")
+                            data[field] = new_value if field_to_modify is not None and isinstance(field_to_modify, str) else (data.get(field), lambda: f""{field}: {new_value}"" if field == 'value' else ""N/A"")
+                        except Exception as e:
+                            self.logger.error(f""Error executing action for rule {rule_name}: {e}"")
+                    case _:
+                        self.logger.warning(f""Unknown action type '{action_type}' in rule {rule_name}. Skipping."")
+        return results
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG)
+    config_path = ""rules_config.json""
+    try:
+        engine = RuleEngine(config_path)
+        sample_data = {""age"": 25, ""status"": ""active"", ""score"": 80}
+        output_actions = engine.evaluate(sample_data)
+        if output_actions:
+            print(""Actions executed:"")
+            for action in output_actions:
+                print(f""-> {action}"")
+    except Exception as e:
+        logging.exception(e)",True,4,1007,9_13_4.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    evens = [x for x in arr if x % 2 == 0]
+    odds = [x for x in arr if x % 2 != 0]
+    evens.sort()
+    odds.reverse()
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 13, 4, 7, 9]
+    sorted_list = sort_by_parity(sample_list)
+    print(sorted_list)",True,0,1008,10_0.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    evens = [x for x in arr if x % 2 == 0]
+    odds = [x for x in arr if x % 2 != 0]
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [5, 34, 19, 87, 6, 23, 45, 98]
+    sorted_list = sort_by_parity(sample_list)
+    print(sorted_list)",True,1,1009,10_0_1.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(nums):
+    evens = [x for x in nums if x % 2 == 0]
+    odds = [x for x in nums if x % 2 != 0]
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 12, 7, 4, 9, 6]
+    sorted_list = sort_by_parity(sample_list)
+    print(sorted_list)",True,2,1010,10_0_2.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    evens = [x for x in arr if x % 2 == 0]
+    odds = [x for x in arr if x % 2 != 0]
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 13, 4, 7, 9, 6, 1]
+    sorted_list = sort_by_parity(sample_list)",True,3,1011,10_0_3.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    evens = [x for x in arr if x % 2 == 0]
+    odds = [x for x in arr if x % 2 != 0]
+    evens.sort(reverse=True)
+    odds.sort()
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 1, 9, 3, 4]
+    sorted_list = sort_by_parity(sample_list.copy())
+    print(sorted_list)",True,4,1012,10_0_4.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(numbers):
+    evens = [x for x in numbers if x % 2 == 0]
+    odds = [x for x in numbers if x % 2 != 0]
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [15, -4, 8, 3, 7, 6, 9, 2, 11]
+    sort_by_parity(sample_list)",True,5,1013,10_0_5.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    evens = [x for x in arr if x % 2 == 0]
+    odds = [x for x in arr if x % 2 != 0]
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 1, 9, 4, 7, 6, 2]
+    sorted_list = sort_by_parity(sample_list)
+    print(sorted_list)",True,6,1014,10_0_6.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    evens = [x for x in arr if x % 2 == 0]
+    odds = [x for x in arr if x % 2 != 0]
+    return evens + odds
+if __name__ == '__main__':
+    sample_list = [1, 4, 3, 8, 5, 9, 6, 7]
+    sorted_list = sort_by_parity(sample_list)",True,7,1015,10_0_7.py
+10,0,Sort based on a condition,Implement a robust and efficient Python script to sort a list in-place based on whether each element is even or odd using conditional logic.,"def sort_by_parity(arr):
+    even_indices = []
+    odd_indices = []
+    for index in range(len(arr)):
+        if arr[index] % 2 == 0:
+            even_indices.append(index)
+        else:
+            odd_indices.append(index)
+    sorted_arr = [arr[i] for i in odd_indices + even_indices]
+    return sorted_arr
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 1, 4, 7, 3, 6]
+    if not isinstance(sample_list, list):
+        raise TypeError(""Input must be a list"")
+    sorted_result = sort_by_parity(sample_list)
+    print(f""Sorted List: {sorted_result}"")",True,8,1016,10_0_8.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {k: v for k, v in data.items() if isinstance(v, (int, float)) and v > 0}
+    sorted_data = dict(sorted(filtered.items(), key=lambda item: item[1], reverse=True))
+    return sorted_data
+if __name__ == '__main__':
+    sample_dict = {
+        'apple': -5,
+        'banana': 3.2,
+        'cherry': 0,
+        'date': 7,
+        'elderberry': -1.5,
+        'fig': 4
+    }
+    result = filter_positive_values(sample_dict)
+    print(result)",True,0,1017,10_1.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    return {k: v for k, v in data.items() if isinstance(v, (int, float)) and v > 0}
+if __name__ == '__main__':
+    sample_data = {'a': -5, 'b': 10, 'c': 3.5, 'd': 0, 'e': -2}
+    filtered_and_sorted = dict(sorted(filter_positive_values(sample_data).items()))
+    print(filtered_and_sorted)",True,1,1018,10_1_1.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {k: v for k, v in data.items() if v > 0}
+    return dict(sorted(filtered.items()))
+if __name__ == '__main__':
+    sample_data = {'a': -5, 'b': 10, 'c': 3.5, 'd': 0, 'e': 7}
+    result = filter_positive_values(sample_data)
+    print(result)",True,2,1019,10_1_2.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {k: v for k, v in data.items() if isinstance(v, (int, float)) and v > 0}
+    sorted_data = dict(sorted(filtered.items(), key=lambda item: -item[1]))
+    return sorted_data
+if __name__ == '__main__':
+    sample_dict = {
+        ""apple"": 50.24,
+        ""banana"": -3.76,
+        ""cherry"": 89.12,
+        ""date"": 0,
+        ""elderberry"": 2.34
+    }
+    result = filter_positive_values(sample_dict)
+    print(result)",True,3,1020,10_1_3.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_dict(data):
+    return {k: v for k, v in data.items() if v > 0}
+if __name__ == '__main__':
+    sample_data = {'a': -5, 'b': 10, 'c': 3.5, 'd': 0, 'e': -2}
+    filtered_dict = filter_positive_dict(sample_data)
+    sorted_items = dict(sorted(filtered_dict.items()))
+    print(f""Filtered and Sorted: {sorted_items}"")",True,4,1021,10_1_4.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {k: v for k, v in data.items() if isinstance(v, (int, float)) and v > 0}
+    sorted_data = dict(sorted(filtered.items(), key=lambda item: item[1], reverse=True))
+    return sorted_data
+if __name__ == '__main__':
+    sample_dict = {
+        'apple': -5,
+        'banana': 3.2,
+        'cherry': 0,
+        'date': 7,
+        'elderberry': -1.5
+    }
+    result = filter_positive_values(sample_dict)
+    print(result)",True,5,1022,10_1_5.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {k: v for k, v in data.items() if isinstance(v, (int, float)) and v > 0}
+    return dict(sorted(filtered.items()))
+if __name__ == '__main__':
+    sample_data = {'a': -5, 'b': 10.5, 'c': 3, 'd': 0, 'e': -2.7}
+    result = filter_positive_values(sample_data)
+    print(result)",True,6,1023,10_1_6.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"data = {""a"": 50, ""b"": -10, ""c"": 25}
+filtered_data = {k: v for k, v in data.items() if v > 0}
+sorted_data = dict(sorted(filtered_data.items()))
+if __name__ == '__main__':
+    print(""Filtered and Sorted Data:"", sorted_data)",True,7,1024,10_1_7.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {}
+    for key in data:
+        if isinstance(data[key], (int, float)) and data[key] > 0:
+            filtered[key] = data[key]
+    sorted_data = dict(sorted(filtered.items()))
+    return sorted_data
+if __name__ == '__main__':
+    sample_dict = {1: -5, 2: 3.5, 3: 0, 4: 7, 5: 2}
+    result = filter_positive_values(sample_dict)
+    print(result)",True,8,1025,10_1_8.py
+10,1,Sort based on a condition,Write professional-grade Python code that filters and sorts a dictionary by checking if the associated values are greater than zero.,"def filter_positive_values(data):
+    filtered = {k: v for k, v in data.items() if isinstance(v, (int, float)) and v > 0}
+    sorted_data = dict(sorted(filtered.items()))
+    return sorted_data
+if __name__ == '__main__':
+    sample_dict = {'a': -5, 'b': 10, 'c': 3.5, 'd': 0, 'e': -2}
+    result = filter_positive_values(sample_dict)
+    print(result)",True,9,1026,10_1_9.py
+9,12,Make a decision with rules,"Develop a high-performance Python module containing functions to parse complex rule sets and execute them sequentially or concurrently depending on dependency requirements, following strict coding standards.","import asyncio
+from typing import List, Dict, Any, Callable
+from dataclasses import dataclass
+@dataclass
+class Rule:
+    name: str
+    condition: Callable[[Any], bool]
+    action: Callable[[], Any]
+def parse_rule_set(rules_data: List[Dict[str, Any]]) -> List[Rule]:
+    return [
+        Rule(
+            name=r[""name""],
+            condition=eval(r[""condition""]),
+            action=lambda **kwargs: r[""action""](**kwargs) if isinstance(r.get(""action""), str) else lambda: eval(r[""action""])()
+        ) for r in rules_data
+    ]
+def execute_sequential(rules: List[Rule], state: Any = None) -> Dict[str, Any]:
+    results = {}
+    current_state = state
+    for rule in rules:
+        if not rule.condition(current_state):
+            continue
+        try:
+            result = rule.action()
+            results[f""{rule.name}_result""] = result
+            current_state = {**current_state, ""processed"": True}
+        except Exception as e:
+            results[f""{rule.name}_error""] = str(e)
+    return results
+async def execute_concurrent(rules: List[Rule], state: Any = None) -> Dict[str, Any]:
+    tasks = []
+    for rule in rules:
+        if not rule.condition(state):
+            continue
+        async def run_rule(r=rule):
+            try:
+                result = await asyncio.get_event_loop().run_in_executor(None, r.action)
+                return f""{r.name}_result"", result
+            except Exception as e:
+                return f""{r.name}_error"", str(e)
+        tasks.append(asyncio.create_task(run_rule(rule)))
+    results = {}
+    for task in asyncio.as_completed(tasks):
+        name, value = await task
+        if ""error"" not in name.lower():
+            results[name] = value
+        else:
+            results[name] = {""status"": ""failed"", ""message"": value}
+    return results
+if __name__ == '__main__':
+    sample_rules_data = [
+        {
+            ""name"": ""check_positive"",
+            ""condition"": ""__import__('builtins').int(input('x')) > 0"",
+            ""action"": 'print(""Value is positive"")'
+        },
+        {
+            ""name"": ""calculate_square"",
+            ""condition"": '__import__(""os"").system(""echo test"") == True',
+            ""action"": ""__import__('builtins').int(input('x')) ** 2""
+        }
+    ]
+    hardcoded_rules = [
+        Rule(name=""check_positive"", condition=lambda x: x > 0, action=lambda: ""Value is positive""),
+        Rule(name=""calculate_square"", condition=lambda x: True, action=lambda: 25)
+    ]
+    sequential_output = execute_sequential(hardcoded_rules, state=10)
+    concurrent_output = asyncio.run(execute_concurrent(hardcoded_rules, state=10))
+    print(""Sequential Results:"", sequential_output)
+    print(""Concurrent Results:"", concurrent_output)",True,0,1027,9_12.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"def sort_by_sign(numbers):
+    return sorted(numbers, key=lambda x: (x < 0, -abs(x))) if numbers else []
+if __name__ == '__main__':
+    sample_data = [-5, 3, -12, 7, -89, 4]
+    result = sort_by_sign(sample_data)
+    print(result)",True,0,1028,10_3.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"import heapq
+def sort_by_sign(numbers):
+    pos = [x for x in numbers if x >= 0]
+    neg = [x for x in numbers if x < 0]
+    return pos + neg
+if __name__ == '__main__':
+    sample_data = [-5, -12, 3, 7, -8, 0, 4, -9]
+    sorted_result = sort_by_sign(sample_data)
+    print(sorted_result)",True,1,1029,10_3_1.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"def sort_by_sign(numbers):
+    return sorted(numbers, key=lambda x: (x < 0, -abs(x)))
+if __name__ == '__main__':
+    sample_data = [-5, 3, -12, 7, -89, 0, 4]
+    result = sort_by_sign(sample_data)
+    print(result)",True,2,1030,10_3_2.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"import heapq
+def sort_by_sign(numbers):
+    pos = [x for x in numbers if x > 0]
+    neg = sorted([x for x in numbers if x <= 0])
+    return pos + neg
+if __name__ == '__main__':
+    sample_data = [-5, -2, 3, 1, -8, 4, 7, 0, -9]
+    result = sort_by_sign(sample_data)
+    print(result)",True,3,1031,10_3_3.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"def sort_by_sign(numbers):
+    return sorted(numbers, key=lambda x: (x < 0, -abs(x)))
+if __name__ == '__main__':
+    sample_data = [-5, 3, -1, 0, 2, -8]
+    result = sort_by_sign(sample_data)
+    print(result)",True,4,1032,10_3_4.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"import heapq
+def sort_by_sign(numbers):
+    pos_heap = []
+    neg_heap = []
+    for num in numbers:
+        if num > 0:
+            heapq.heappush(pos_heap, -num)                                                                                 
+        else:
+            heapq.heappush(neg_heap, num)
+    sorted_list = []
+    while pos_heap:
+        val = -heapq.heappop(pos_heap)
+        sorted_list.append(val)
+    while neg_heap:
+        val = heapq.heappop(neg_heap)
+        sorted_list.append(val)
+    return sorted_list
+if __name__ == '__main__':
+    sample_data = [3, -1, 4, -7, 0, 2, -5]
+    result = sort_by_sign(sample_data)
+    print(result)",True,5,1033,10_3_5.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"def sort_by_sign(numbers):
+    return sorted(numbers, key=lambda x: (x < 0, -abs(x)))
+if __name__ == '__main__':
+    sample_data = [-5, 3, -12, 7, 0, -8, 4]
+    result = sort_by_sign(sample_data)
+    print(result)",True,6,1034,10_3_6.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"import heapq
+def sort_by_sign(numbers):
+    positives = [x for x in numbers if x > 0]
+    zeros = [x for x in numbers if x == 0]
+    negatives = [-(-x) for x in numbers if x < 0]
+    positives.sort()
+    zeros.sort()
+    return positives + zeros + negatives
+if __name__ == '__main__':
+    sample_data = [3, -1, 42, -5, 0, 7, -8, 9]
+    sorted_result = sort_by_sign(sample_data)
+    print(sorted_result)",True,7,1035,10_3_7.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"import heapq
+def sort_by_sign(numbers):
+    positives = []
+    negatives = []
+    for num in numbers:
+        if num >= 0:
+            positives.append(num)
+        else:
+            negatives.append(num)
+    positives.sort()
+    negatives.sort(reverse=True)                                                            
+    negatives.sort() 
+    return positives + negatives
+if __name__ == '__main__':
+    sample_data = [-4, 7, -10, 0, 3, -8, 2]
+    result = sort_by_sign(sample_data)
+    print(result)",True,8,1036,10_3_8.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"import heapq
+def sort_positive_before_negative(numbers):
+    positive_heap = []
+    negative_list = []
+    for num in numbers:
+        if num > 0:
+            heapq.heappush(positive_heap, -num)                                                      
+        else:
+            negative_list.append(num)
+    sorted_positives = [-x for x in positive_heap]
+    return sorted_positives + negative_list
+if __name__ == '__main__':
+    sample_data = [3, -1, 4, -2, 5, -6, 7, -8, 9]
+    result = sort_positive_before_negative(sample_data)
+    print(result)",True,9,1037,10_3_9.py
+10,3,Sort based on a condition,Develop a high-performance sorting algorithm in Python that reorders numbers based on the condition that positive integers come before negative ones.,"def sort_numbers(arr):
+    return sorted(arr, key=lambda x: (x < 0, -abs(x)))
+if __name__ == '__main__':
+    sample_data = [-5, 3, -12, 7, 0, -8, 4]
+    result = sort_numbers(sample_data)
+    print(result)",True,10,1038,10_3_10.py
+9,14,Make a decision with rules,"Generate a production-ready Python application using the rule-based approach to automate workflow routing based on input parameters, ensuring maximum efficiency and clean architecture.","import json
+from typing import Dict, Any
+class WorkflowRouter:
+    def __init__(self):
+        self.rules = [
+            {""condition"": lambda x: ""urgent"" in str(x).lower(), ""action"": ""escalate""},
+            {""condition"": lambda x: ""billing"" in str(x).lower() and not ""urgent"" in str(x).lower(), ""action"": ""finance_queue""},
+            {""condition"": lambda x: len(str(x)) > 50, ""action"": ""complex_review""},
+            {""default_action"": ""standard_processing""}
+        ]
+    def route(self, input_data: Any) -> Dict[str, Any]:
+        normalized_input = str(input_data).lower() if isinstance(input_data, (str, int, float)) else json.dumps(input_data).lower()
+        for rule in self.rules[:-1]:
+            condition_met = False
+            try:
+                result = rule[""condition""](normalized_input)
+                if callable(result):
+                    condition_met = bool(result())
+                elif isinstance(result, str):
+                    condition_met = normalized_input == result.lower()
+            except Exception:
+                continue
+            if condition_met:
+                return {
+                    ""status"": ""routed"",
+                    ""rule_applied"": rule[""action""],
+                    ""input_received"": input_data,
+                    ""priority"": self._get_priority(rule[""action""])
+                }
+        default_action = self.rules[-1][""default_action""]
+        return {
+            ""status"": ""processed"",
+            ""rule_applied"": default_action,
+            ""input_received"": input_data,
+            ""priority"": 3
+        }
+    def _get_priority(self, action: str) -> int:
+        priorities = {""escalate"": 1, ""finance_queue"": 2, ""complex_review"": 4}
+        return priorities.get(action, 5)
+def main():
+    router = WorkflowRouter()
+    sample_inputs = [
+        ""URGENT SERVER FAILURE"",
+        ""Monthly invoice query"",
+        ""This is a very long description of the issue that requires detailed analysis and multiple steps to resolve properly."",
+        ""12345""
+    ]
+    results = []
+    for input_val in sample_inputs:
+        result = router.route(input_val)
+        results.append({
+            ""input"": input_val,
+            **result
+        })
+    output_log = {
+        ""workflow_id"": ""WF-20231027-A"",
+        ""timestamp"": ""2023-10-27T14:35:00Z"",
+        ""routing_decisions"": results,
+        ""summary"": f""Processed {len(results)} requests successfully.""
+    }
+    print(json.dumps(output_log, indent=2))
+if __name__ == '__main__':
+    main()",True,0,1039,9_14.py
+9,14,Make a decision with rules,"Generate a production-ready Python application using the rule-based approach to automate workflow routing based on input parameters, ensuring maximum efficiency and clean architecture.","import json
+class WorkflowRouter:
+    def __init__(self):
+        self.rules = [
+            {""condition"": lambda x: x.get(""priority"", 0) >= ""high"", ""action"": ""escalate""},
+            {""condition"": lambda x: x.get(""department"") == ""finance"" and not x.get(""is_urgent""), ""action"": ""audit_queue""},
+            {""condition"": lambda x: x.get(""type"") in [""billing"", ""tax""], ""action"": ""generate_invoice""},
+        ]
+    def route(self, input_data):
+        for rule in self.rules:
+            if rule[""condition""](input_data):
+                return {**input_data, **{""status"": rule[""action""]}}
+        raise ValueError(""No matching workflow found"")
+def main():
+    sample_input = {""priority"": ""high"", ""department"": ""sales"", ""type"": ""support_ticket""}
+    router = WorkflowRouter()
+    result = router.route(sample_input)
+    print(json.dumps(result, indent=2))
+if __name__ == '__main__':
+    main()",True,1,1040,9_14_1.py
+9,14,Make a decision with rules,"Generate a production-ready Python application using the rule-based approach to automate workflow routing based on input parameters, ensuring maximum efficiency and clean architecture.","import json
+from typing import Dict, Any
+class WorkflowRouter:
+    def __init__(self):
+        self.rules = [
+            {""condition"": lambda x: ""urgent"" in str(x).lower(), ""action"": ""priority_queue""},
+            {""condition"": lambda x: ""finance"" in str(x).lower() and ""report"" not in str(x).lower(), ""action"": ""audit_system""},
+            {""condition"": lambda x: len(str(x)) > 50, ""action"": ""long_text_handler""},
+        ]
+    def route(self, input_data: Any) -> Dict[str, Any]:
+        processed = {
+            ""input_received"": True,
+            ""routing_decision"": None,
+            ""error_message"": None,
+        }
+        for rule in self.rules:
+            if rule[""condition""](str(input_data)):
+                processed[""routing_decision""] = rule[""action""]
+                break
+        return processed
+def main():
+    router = WorkflowRouter()
+    sample_input = ""Urgent financial report regarding Q3 projections""
+    result = router.route(sample_input)
+    output_json = json.dumps(result, indent=2)
+    print(output_json)
+if __name__ == '__main__':
+    main()",True,2,1041,9_14_2.py
+9,14,Make a decision with rules,"Generate a production-ready Python application using the rule-based approach to automate workflow routing based on input parameters, ensuring maximum efficiency and clean architecture.","import json
+from typing import Dict, Any
+class WorkflowRouter:
+    def __init__(self):
+        self.routing_rules = [
+            {
+                ""priority"": 10,
+                ""conditions"": {""department"": ""sales""},
+                ""action"": {""target_queue"": ""high_value_sales"", ""handler_type"": ""automated_email""}
+            },
+            {
+                ""priority"": 20,
+                ""conditions"": {""project_status"": ""active"", ""risk_level"": ""low""},
+                ""action"": {""target_queue"": ""development_sprint"", ""handler_type"": ""auto_commit""}
+            },
+            {
+                ""priority"": 30,
+                ""conditions"": {""department"": ""it_support""},
+                ""action"": {""target_queue"": ""ticket_system"", ""handler_type"": ""triage_bot""}
+            }
+        ]
+    def evaluate_rule(self, input_data: Dict[str, Any]) -> bool:
+        for rule in self.routing_rules:
+            if all(input_data.get(k) == v for k, v in rule[""conditions""].items()):
+                return True
+        return False
+    def route_request(self, request_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
+        matched_rule = None
+        for rule in self.routing_rules:
+            if self.evaluate_rule(data):
+                matched_rule = rule
+                break
+        result = {
+            ""request_id"": request_id,
+            ""status"": ""routed"",
+            ""rule_applied"": json.dumps(matched_rule) if matched_rule else None,
+            ""target_queue"": matched_rule[""action""][""target_queue""] if matched_rule else ""default_general""
+        }
+        return result
+def main():
+    router = WorkflowRouter()
+    sample_request_data = {
+        ""request_id"": ""REQ-20231027-001"",
+        ""department"": ""sales"",
+        ""project_status"": None,
+        ""risk_level"": None
+    }
+    response = router.route_request(
+        request_id=sample_request_data[""request_id""],
+        data=sample_request_data.copy()
+    )
+    print(json.dumps(response, indent=2))
+if __name__ == '__main__':
+    main()",True,3,1042,9_14_3.py
+9,14,Make a decision with rules,"Generate a production-ready Python application using the rule-based approach to automate workflow routing based on input parameters, ensuring maximum efficiency and clean architecture.","import json
+from typing import Dict, Any
+class WorkflowRouter:
+    def __init__(self):
+        self.rules = [
+            {""condition"": lambda x: ""urgent"" in str(x).lower() and ""high"" in str(x).lower(), ""action"": ""escalate""},
+            {""condition"": lambda x: len(str(x)) > 50, ""action"": ""split_task""},
+            {""condition"": lambda x: ""@"" in str(x), ""action"": ""notify_team""},
+        ]
+    def route(self, input_data: Any) -> Dict[str, Any]:
+        processed = {
+            ""input_received"": True,
+            ""actions_taken"": [],
+            ""final_status"": ""processed""
+        }
+        for rule in self.rules:
+            if rule[""condition""](str(input_data)):
+                action_name = rule[""action""]
+                processed[""actions_taken""].append(action_name)
+                if action_name == ""escalate"":
+                    processed[""priority_level""] = 10
+                    processed[""final_status""] = ""critical""
+        return processed
+def main():
+    router = WorkflowRouter()
+    sample_inputs = [
+        ""Project deadline is urgent and high priority"",
+        ""This report contains over fifty pages of data analysis"",
+        ""Meeting scheduled with @john_doe for tomorrow at 3pm"",
+        ""Standard quarterly review request""
+    ]
+    results = []
+    for item in sample_inputs:
+        result = router.route(item)
+        output_record = {
+            ""input"": item,
+            ""routing_decision"": result[""final_status""],
+            ""triggered_actions"": result[""actions_taken""]
+        }
+        if ""priority_level"" in result:
+            output_record[""priority_score""] = result[""priority_level""]
+        results.append(output_record)
+    print(json.dumps(results, indent=2))
+if __name__ == '__main__':
+    main()",True,4,1043,9_14_4.py
+9,14,Make a decision with rules,"Generate a production-ready Python application using the rule-based approach to automate workflow routing based on input parameters, ensuring maximum efficiency and clean architecture.","import json
+class WorkflowRouter:
+    def __init__(self):
+        self.rules = [
+            {""condition"": lambda x: ""urgent"" in str(x).lower(), ""action"": ""escalate""},
+            {""condition"": lambda x: ""billing"" in str(x).lower() and not ""urgent"" in str(x).lower(), ""action"": ""finance_team""},
+            {""condition"": lambda x: len(str(x)) > 50, ""action"": ""review_queue""},
+        ]
+    def route(self, input_data):
+        for rule in self.rules:
+            if rule[""condition""](input_data):
+                return {
+                    ""status"": ""routed"",
+                    ""rule_applied"": rule[""action""],
+                    ""priority"": 10 - len(rule)
+                }
+        return {""status"": ""default_queue""}
+if __name__ == '__main__':
+    test_cases = [
+        ""URGENT: Server Down Now!"",
+        ""Billing inquiry for invoice #452"",
+        ""This is a very long support ticket description that exceeds fifty characters in length""
+    ]
+    results = []
+    router = WorkflowRouter()
+    for case in test_cases:
+        result = router.route(case)
+        results.append({""input"": case, ""output"": json.dumps(result)})
+    print(json.dumps(results))",True,5,1044,9_14_5.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_by_divisibility(items):
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_data = [1, 9, 2, 6, 7, 3, 4, 8]
+    result = reorder_by_divisibility(sample_data)
+    print(result)",True,0,1045,10_5.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_items(items):
+    divisible_by_three = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible_by_three + others
+if __name__ == '__main__':
+    sample_data = [1, 9, 2, 6, 7, 8, 3, 4]
+    result = reorder_items(sample_data)
+    print(result)",True,1,1046,10_5_1.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_divisible_by_three(items):
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_data = [1, 9, 2, 6, 5, 8, 7, 3, 4]
+    result = reorder_divisible_by_three(sample_data)
+    print(result)",True,2,1047,10_5_2.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_divisible_by_three(items):
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_data = [12, 5, 9, 7, 18, 4, 6]
+    result = reorder_divisible_by_three(sample_data)
+    print(result)",True,3,1048,10_5_3.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_divisible_by_three(items):
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_list = [1, 2, 9, 4, 6, 7, 8]
+    result = reorder_divisible_by_three(sample_list)
+    print(result)",True,4,1049,10_5_4.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_items(items):
+    divisible_by_three = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible_by_three + others
+if __name__ == '__main__':
+    sample_data = [1, 9, 2, 6, 7, 8, 3, 4, 5, 10]
+    result = reorder_items(sample_data)
+    print(result)",True,5,1050,10_5_5.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_divisible_by_three(items):
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_list = [1, 9, 2, 6, 8, 3, 4, 7, 5]
+    reordered_items = reorder_divisible_by_three(sample_list)
+    print(reordered_items)",True,6,1051,10_5_6.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"from typing import List
+def reorder_divisible_by_three(items: List[int]) -> List[int]:
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_data: List[int] = [1, 9, 2, 6, 7, 3, 8, 4]
+    result_list: List[int] = reorder_divisible_by_three(sample_data)",True,7,1052,10_5_7.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_items(items):
+    divisible_by_three = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible_by_three + others
+if __name__ == '__main__':
+    sample_list = [1, 9, 2, 6, 5, 8, 7, 3, 4]
+    result = reorder_items(sample_list)
+    print(result)",True,8,1053,10_5_8.py
+10,5,Sort based on a condition,Write production-ready Python logic to reorder items in a list based on the condition that elements divisible by three appear before others.,"def reorder_divisible_by_three(items):
+    divisible = [item for item in items if item % 3 == 0]
+    others = [item for item in items if item % 3 != 0]
+    return divisible + others
+if __name__ == '__main__':
+    sample_data = [1, 9, 2, 6, 7, 3, 4, 8]
+    result = reorder_divisible_by_three(sample_data)
+    print(result)",True,9,1054,10_5_9.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    uppercase = [s for s in strings if s and s[0].isupper()]
+    lowercase = [s for s in strings if s and s[0].islower()]
+    return sorted(uppercase + lowercase, key=lambda x: (x.startswith(str.upper(x)), str.lower(x)))
+if __name__ == '__main__':
+    sample_data = [""apple"", ""Banana"", ""cherry"", ""Date"", ""elderberry""]
+    result = sort_strings(sample_data)
+    print(result)",True,0,1055,10_2.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    upper_first = [s for s in strings if s and s[0].isupper()]
+    lower_first = [s for s in strings if s and s[0].islower()][:len(upper_first)] +\
+                 sorted([s for s in strings if not (s or s[0].isalpha())])
+    return upper_first + lower_first
+if __name__ == '__main__':
+    sample = [""Apple"", ""banana"", ""Cherry"", ""date"", ""Elderberry""]
+    print(sort_strings(sample))",True,1,1056,10_2_1.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    return sorted(
+        strings, 
+        key=lambda s: (s[0].isupper(), s) if len(s) > 0 else ('', s),
+        reverse=True
+    )
+if __name__ == '__main__':
+    sample_data = [""apple"", ""Banana"", ""cherry"", ""Date"", ""elderberry""]
+    result = sort_strings(sample_data)
+    print(result)",True,2,1057,10_2_2.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    uppercase = [s for s in strings if s and s[0].isupper()]
+    lowercase = [s for s in strings if s and not s[0].isupper() and not s[0].isdigit()]
+    return sorted(uppercase) + sorted(lowercase, reverse=True)
+if __name__ == '__main__':
+    sample_data = [""Apple"", ""banana"", ""Cherry"", ""date"", ""Elderberry""]
+    result = sort_strings(sample_data)
+    print(result)",True,3,1058,10_2_3.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    return sorted(
+        strings, 
+        key=lambda s: (s[0].islower(), s) if len(s) > 0 else ('', '')
+    )
+if __name__ == '__main__':
+    sample_data = [""apple"", ""Banana"", ""cherry"", ""Date"", ""elderberry""]
+    print(sort_strings(sample_data))",True,4,1059,10_2_4.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    upper_first = [s for s in strings if s and s[0].isupper()]
+    lower_first = [s for s in strings if not (not s) and s[0].islower() or all(not c.isalpha() for c in s)]
+    return sorted(upper_first + lower_first, key=lambda x: ('a' <= x[0] < 'z', 1 if any(c.isalpha() for c in x) else False))
+if __name__ == '__main__':
+    sample_data = [""apple"", ""Banana"", ""cherry"", ""Date"", ""fig""]
+    sorted_result = sort_strings(sample_data)
+    print(sorted_result)",True,5,1060,10_2_5.py
+10,2,Sort based on a condition,Create an optimized Python function to sort a list of strings based on whether they start with uppercase letters or lowercase letters.,"def sort_strings(strings):
+    return sorted(strings, key=lambda s: (s[0].isupper(), s))
+if __name__ == '__main__':
+    sample_list = [""apple"", ""Banana"", ""cherry"", ""Date"", ""elderberry""]
+    print(sort_strings(sample_list))",True,6,1061,10_2_6.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(strings):
+    if not isinstance(strings, list):
+        raise TypeError(""Input must be a list."")
+    for item in strings:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    filtered_strings = [s for s in strings if len(s) > 10]
+    return sorted(filtered_strings, key=len)
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongerthanbefore"", ""test"", ""abcdefghij""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(result)
+    except Exception as e:
+        raise RuntimeError(f""An error occurred during processing: {e}"") from e",True,0,1062,10_7.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(strings):
+    if not isinstance(strings, list):
+        raise TypeError(""Input must be a list."")
+    for item in strings:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    filtered_strings = [s for s in strings if len(s) > 10]
+    try:
+        return sorted(filtered_strings, key=len)
+    except Exception as e:
+        raise RuntimeError(""Sorting failed due to an unexpected error."") from e
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongerthan10chars"", ""test"", ""abcdefghij""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(""Sorted strings:"", result)
+    except Exception as ex:
+        print(f""An error occurred: {ex}"")",True,1,1063,10_7_1.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(items):
+    try:
+        if not isinstance(items, list):
+            raise TypeError(""Input must be a list."")
+        filtered_items = [item for item in items if len(str(item)) > 10]
+        return sorted(filtered_items)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")
+        raise
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""cherry"", ""longstringhere"", ""short""]
+    result = sort_by_length_exceeding_ten(sample_data)
+    if isinstance(result, list):
+        print(""Sorted items:"", result)",True,2,1064,10_7_2.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    filtered_items = [item for item in items if len(str(item)) > 10]
+    try:
+        return sorted(filtered_items)
+    except Exception as e:
+        raise RuntimeError(f""Sorting failed due to error: {e}"")
+if __name__ == '__main__':
+    sample_data = [""hello"", ""a very long string here"", ""test"", ""another short one""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(result)
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,3,1065,10_7_3.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(strings):
+    if not isinstance(strings, list):
+        raise TypeError(""Input must be a list."")
+    for item in strings:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements in the input list must be strings. Found {type(item).__name__}."")
+    filtered_strings = [s for s in strings if len(s) > 10]
+    try:
+        sorted_strings = sorted(filtered_strings, key=len)
+    except TypeError as e:
+        raise RuntimeError(f""Sorting failed due to mixed types or unsortable elements."") from e
+    return sorted_strings
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongstring"", ""test"", ""abcdefghij""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(""Sorted strings:"", result)
+    except (TypeError, ValueError, RuntimeError) as e:
+        print(f""An error occurred: {e}"")",True,4,1066,10_7_4.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(strings):
+    if not isinstance(strings, list):
+        raise TypeError(""Input must be a list."")
+    for item in strings:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    filtered_strings = [s for s in strings if len(s) > 10]
+    return sorted(filtered_strings, key=len)
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongerthanbefore"", ""ab"", ""exceedingtenchars""]
+    result = sort_by_length_exceeding_ten(sample_data)
+    print(result)",True,5,1067,10_7_5.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    for item in items:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    filtered_items = [item for item in items if len(item) > 10]
+    return sorted(filtered_items, key=len)
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongerthanbefore"", ""test"", ""abcdefghij""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(result)
+    except Exception as e:
+        raise RuntimeError(f""An error occurred during processing: {e}"") from e",True,6,1068,10_7_6.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    for item in items:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    sorted_items = [item for item in items if len(item) > 10]
+    return sorted(sorted_items, key=len)
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongerthanfivechars"", ""abcde"", ""mediumlengthstring""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(""Sorted items:"", result)
+    except (TypeError, ValueError) as e:
+        print(f""Error occurred: {e}"")",True,7,1069,10_7_7.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(items):
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    for item in items:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    filtered_items = [item for item in items if len(item) > 10]
+    try:
+        sorted_filtered = sorted(filtered_items, key=len)
+        return {""original"": items, ""filtered_sorted"": sorted_filtered}
+    except Exception as e:
+        raise RuntimeError(f""An unexpected error occurred during sorting."") from e
+if __name__ == '__main__':
+    sample_data = [""short"", ""this_is_a_long_string_test"", ""medium_length"", ""another_very_long_text_example""]
+    result = sort_by_length_exceeding_ten(sample_data)
+    print(result[""filtered_sorted""])",True,8,1070,10_7_8.py
+10,7,Sort based on a condition,Construct a Python function with strict error handling that sorts input based on the condition of string length exceeding ten characters.,"def sort_by_length_exceeding_ten(strings):
+    if not isinstance(strings, list):
+        raise TypeError(""Input must be a list."")
+    for item in strings:
+        if not isinstance(item, str):
+            raise ValueError(f""All elements must be strings. Got {type(item).__name__}."")
+    filtered_strings = [s for s in strings if len(s) > 10]
+    try:
+        return sorted(filtered_strings, key=len)
+    except Exception as e:
+        raise RuntimeError(""Sorting failed due to an unexpected error."") from e
+if __name__ == '__main__':
+    sample_data = [""hello"", ""worldthisislongerthan10chars"", ""test"", ""abcdefghij""]
+    try:
+        result = sort_by_length_exceeding_ten(sample_data)
+        print(""Sorted strings:"", result)
+    except Exception as ex:
+        print(f""Error occurred: {ex}"")",True,9,1071,10_7_9.py
