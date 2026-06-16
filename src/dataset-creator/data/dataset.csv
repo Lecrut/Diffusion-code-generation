@@ -8471,3 +8471,2906 @@ async def main():
         print(f""Task {idx}: {res}"")
 if __name__ == '__main__':
     asyncio.run(main())",True,6,505,4_5_6.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+def get_handler(payload):
+    decision_key = payload.get(""decision"", """")
+    if decision_key == ""A"":
+        return lambda: {""status"": 200, ""message"": f""Decision A executed with value {payload.get('value', 'default')}""}
+    elif decision_key == ""B"":
+        return lambda: {""status"": 403, ""error"": ""Access Denied for Decision B""}
+    else:
+        return lambda: {""status"": 201, ""data"": f""Unknown key {decision_key} processed successfully""}
+def simulate_request(payload):
+    try:
+        handler = get_handler(json.loads(payload))() if isinstance(payload, str) else get_handler(payload)
+        return json.dumps(handler())
+    except Exception as e:
+        return json.dumps({""status"": 500, ""error"": str(e)})
+if __name__ == '__main__':
+    sample_payload = '{""decision"": ""A"", ""value"": 42}'
+    result_json = simulate_request(sample_payload)
+    print(result_json)",True,0,506,4_7.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+def get_handler(payload):
+    decision_key = payload.get(""decision"", ""default"")
+    handlers = {
+        ""approve"": handle_approve,
+        ""reject"": handle_reject,
+        ""pending"": handle_pending,
+        ""default"": handle_default
+    }
+    return handlers.get(decision_key, handlers[""default""])
+def handle_approve(payload):
+    user_id = payload.get(""user"", ""unknown"")
+    status = f""Request approved for {user_id}""
+    print(status)
+    return {""status"": ""success"", ""message"": status}
+def handle_reject(payload):
+    reason = payload.get(""reason"", ""No specific reason provided"")
+    user_id = payload.get(""user"", ""unknown"")
+    message = f""Request rejected for {user_id}. Reason: {reason}""
+    print(message)
+    return {""status"": ""failed"", ""message"": message}
+def handle_pending(payload):
+    request_id = payload.get(""request_id"", ""N/A"")
+    status = f""Request #{request_id} is pending review.""
+    print(status)
+    return {""status"": ""pending"", ""message"": status}
+def handle_default(payload):
+    message = ""Default handler executed. Check decision key in JSON payload.""
+    print(message)
+    return {""status"": ""default"", ""message"": message}
+if __name__ == '__main__':
+    sample_payloads = [
+        {
+            ""decision"": ""approve"",
+            ""user"": ""Alice""
+        },
+        {
+            ""decision"": ""reject"",
+            ""reason"": ""Invalid data format"",
+            ""user"": ""Bob""
+        },
+        {
+            ""decision"": ""pending"",
+            ""request_id"": 1024
+        }
+    ]
+    for payload in sample_payloads:
+        try:
+            handler = get_handler(payload)
+            result = handler(payload)
+            print(json.dumps(result, indent=2))
+        except Exception as e:
+            error_result = {""status"": ""error"", ""message"": str(e)}
+            print(json.dumps(error_result, indent=2))",True,1,507,4_7_1.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+def get_handler(payload):
+    decision_key = payload.get(""decision"", ""default"")
+    handlers = {
+        ""approve"": handle_approve,
+        ""reject"": handle_reject,
+        ""pending"": handle_pending,
+        ""default"": handle_default
+    }
+    return handlers.get(decision_key, handlers[""default""])
+def handle_approve(payload):
+    user_id = payload.get(""user"", ""unknown"")
+    message = f""Request approved for {user_id}.""
+    status_code = 200
+    headers = {""Content-Type"": ""application/json""}
+    return (status_code, None, json.dumps({""message"": message}))
+def handle_reject(payload):
+    user_id = payload.get(""user"", ""unknown"")
+    reason = payload.get(""reason"", ""No specific reason provided."")
+    message = f""Request rejected for {user_id}. Reason: {reason}.""
+    status_code = 403
+    headers = {""Content-Type"": ""application/json""}
+    return (status_code, None, json.dumps({""message"": message}))
+def handle_pending(payload):
+    user_id = payload.get(""user"", ""unknown"")
+    message = f""Request pending for {user_id}.""
+    status_code = 202
+    headers = {""Content-Type"": ""application/json""}
+    return (status_code, None, json.dumps({""message"": message}))
+def handle_default(payload):
+    user_id = payload.get(""user"", ""unknown"")
+    decision_key = payload.get(""decision"", ""default"")
+    message = f""Unhandled request for {user_id} with key: {decision_key}""
+    status_code = 400
+    headers = {""Content-Type"": ""application/json""}
+    return (status_code, None, json.dumps({""message"": message}))
+def main():
+    sample_payload = {
+        ""decision"": ""approve"",
+        ""user"": ""12345""
+    }
+    handler_func = get_handler(sample_payload)
+    status_code, _, response_body = handler_func(sample_payload)
+    print(f""Status Code: {status_code}"")
+    print(response_body)
+if __name__ == '__main__':
+    main()",True,2,508,4_7_2.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+from typing import Any, Callable
+def get_handler(payload: dict) -> Callable | None:
+    decision_key = payload.get(""decision"")
+    handlers_map = {
+        ""approve"": approve_request,
+        ""reject"": reject_request,
+        ""escalate"": escalate_request,
+    }
+    return handlers_map.get(decision_key.lower())
+def approve_request(payload: dict) -> str:
+    user_id = payload.get(""user"")
+    amount = float(payload.get(""amount"", 0))
+    return f""Request approved for {user_id}: ${amount:.2f}""
+def reject_request(payload: dict) -> str:
+    reason = payload.get(""reason"", ""Policy violation"")
+    user_id = payload.get(""user"")
+    return f""Request rejected for {user_id}. Reason: {reason}""
+def escalate_request(payload: dict) -> str:
+    priority = payload.get(""priority"", ""medium"")
+    ticket_number = payload.get(""ticket_num"", ""#000"")
+    return f""Escalated to manager. Ticket #{ticket_number} (Priority: {priority})""
+if __name__ == '__main__':
+    sample_payloads = [
+        {""decision"": ""approve"", ""user"": ""Alice"", ""amount"": 500},
+        {""decision"": ""reject"", ""reason"": ""Insufficient funds""},
+        {""decision"": ""escalate"", ""priority"": ""high""}
+    ]
+    for payload in sample_payloads:
+        try:
+            handler = get_handler(payload)
+            if handler is None:
+                print(f""No handler found for decision '{payload['decision']}'"")
+            else:
+                result = handler(payload)
+                print(result)
+        except Exception as e:
+            print(f""Error processing payload {json.dumps(payload)}: {e}"")",True,3,509,4_7_3.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+def get_handler(payload):
+    decision = payload.get('decision', 'default')
+    handlers = {
+        'approve': handle_approve,
+        'deny': handle_deny,
+        'review': handle_review,
+        'default': handle_default
+    }
+    return handlers.get(decision)
+def handle_approve(payload):
+    user_id = payload.get('user_id', 'unknown')
+    amount = float(payload.get('amount', 0))
+    print(f""Approving request for {user_id} with amount ${amount}"")
+def handle_deny(payload):
+    reason = payload.get('reason', 'No specific reason provided')
+    user_id = payload.get('user_id', 'unknown')
+    print(f""Dening request for {user_id}: {reason}"")
+def handle_review(payload):
+    priority = payload.get('priority', 'normal')
+    ticket_num = payload.get('ticket_number', 0)
+    print(f""Routing to review queue: Ticket #{ticket_num} (Priority: {priority})"")
+def handle_default(payload):
+    message = ""Handled with default logic.""
+    return {""status"": ""success"", ""message"": message}
+if __name__ == '__main__':
+    sample_payloads = [
+        {'decision': 'approve', 'user_id': 101, 'amount': 500.0},
+        {'decision': 'deny', 'reason': 'Credit limit exceeded'},
+        {'decision': 'review', 'priority': 'high', 'ticket_number': 998},
+        {'decision': 'default'}
+    ]
+    for payload in sample_payloads:
+        try:
+            handler = get_handler(payload)
+            if callable(handler):
+                result = handler(payload)
+                print(f""Response from {handler.__name__}:"")
+            else:
+                print(f""Result from {handler.__name__}:"", json.dumps(result))
+        except Exception as e:
+            print(f""Error processing payload: {e}"")",True,4,510,4_7_4.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+from typing import Any, Dict
+def get_handler(payload: Dict[str, Any]) -> callable:
+    decision_key = payload.get(""decision"")
+    handlers_map = {
+        ""approve"": approve_request,
+        ""reject"": reject_request,
+        ""pending"": pending_request
+    }
+    return handlers_map.get(decision_key)
+def approve_request(payload: Dict[str, Any]) -> str:
+    request_id = payload[""request_id""]
+    message = f""Request {request_id} has been approved.""
+    return json.dumps({""status"": ""success"", ""message"": message})
+def reject_request(payload: Dict[str, Any]) -> str:
+    request_id = payload[""request_id""]
+    reason = payload.get(""reason"", ""No specific reason provided"")
+    message = f""Request {request_id} has been rejected. Reason: {reason}""
+    return json.dumps({""status"": ""failed"", ""message"": message})
+def pending_request(payload: Dict[str, Any]) -> str:
+    request_id = payload[""request_id""]
+    message = f""Request {request_id} is still under review.""
+    return json.dumps({""status"": ""pending"", ""message"": message})
+if __name__ == '__main__':
+    sample_payloads = [
+        {""decision"": ""approve"", ""request_id"": 101},
+        {""decision"": ""reject"", ""request_id"": 102, ""reason"": ""Invalid format""},
+        {""decision"": ""pending"", ""request_id"": 103}
+    ]
+    for payload in sample_payloads:
+        handler = get_handler(payload)
+        response = handler(payload)
+        print(response)",True,5,511,4_7_5.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+def handle_request(payload):
+    decision = payload.get(""decision"", ""default"")
+    if decision == ""login"":
+        return {""status"": ""logged_in"", ""user_id"": 1024}
+    elif decision == ""purchase"":
+        return {""status"": ""transaction_failed"", ""reason"": ""insufficient_funds""}
+    else:
+        return {""status"": ""unknown_action"", ""message"": ""decision key not recognized""}
+if __name__ == '__main__':
+    sample_payload = {
+        ""request_id"": ""req_98765"",
+        ""decision"": ""purchase""
+    }
+    response = handle_request(sample_payload)
+    print(json.dumps(response, indent=2))",True,6,512,4_7_6.py
+4,7,Decide based on input choice,Design an API-compatible Python service that routes incoming requests to different handlers based on a JSON payload containing a decision key.,"import json
+def get_handler(payload):
+    decision = payload.get(""decision"", ""default"")
+    if decision == ""user"":
+        return user_handler
+    elif decision == ""admin"":
+        return admin_handler
+    else:
+        return default_handler
+def user_handler(request_data):
+    status_code = 200
+    response_body = {""message"": f""Hello, {request_data.get('name', 'User')}!""}
+    if request_data.get(""action"") == ""login"":
+        token = generate_token()
+        response_body[""token""] = token
+    return (status_code, json.dumps(response_body))
+def admin_handler(request_data):
+    status_code = 201
+    response_body = {""message"": f""Admin action executed for {request_data.get('resource', 'unknown')}""}
+    if request_data.get(""action"") == ""delete"":
+        resource_id = request_data.get(""id"", """")
+        response_body[""deleted""] = True
+    return (status_code, json.dumps(response_body))
+def default_handler(request_data):
+    status_code = 404
+    response_body = {""message"": f""Default handler received: {request_data}""}
+    if request_data.get(""action"") == ""test"":
+        response_body[""result""] = ""passed""
+    return (status_code, json.dumps(response_body))
+def generate_token():
+    import secrets
+    token_length = 32
+    alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    token = ''.join(secrets.choice(alphabet) for _ in range(token_length))
+    return f""tok_{token}""
+class RequestRouter:
+    def __init__(self):
+        self.handlers_map = {
+            ""user"": user_handler,
+            ""admin"": admin_handler,
+            ""default"": default_handler
+        }
+    def route(self, payload_json_string):
+        try:
+            payload = json.loads(payload_json_string)
+            handler_func = get_handler(payload)
+            request_data = payload.get(""data"", {})
+            status_code, response_body = handler_func(request_data)
+            return {
+                ""status"": status_code,
+                ""body"": response_body
+            }
+        except json.JSONDecodeError:
+            return {""error"": ""Invalid JSON""}
+if __name__ == '__main__':
+    router_instance = RequestRouter()
+    sample_payloads = [
+        {
+            ""decision"": ""user"",
+            ""data"": {""name"": ""Alice"", ""action"": ""login""},
+            ""json_string"": json.dumps({
+                ""decision"": ""user"",
+                ""data"": {""name"": ""Alice"", ""action"": ""login""}
+            })
+        },
+        {
+            ""decision"": ""admin"",
+            ""data"": {""resource"": ""database"", ""id"": 123, ""action"": ""delete""},
+            ""json_string"": json.dumps({
+                ""decision"": ""admin"",
+                ""data"": {""resource"": ""database"", ""id"": 123, ""action"": ""delete""}
+            })
+        },
+        {
+            ""decision"": ""unknown"",
+            ""data"": {""action"": ""test""},
+            ""json_string"": json.dumps({
+                ""decision"": ""unknown"",
+                ""data"": {""action"": ""test""}
+            })
+        }
+    ]
+    for sample in sample_payloads:
+        result = router_instance.route(sample[""json_string""])
+        print(f""Decision: {sample['decision']}"")
+        print(result)",True,7,513,4_7_7.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_input(value):
+    if not isinstance(value, (int, float)):
+        return False
+    try:
+        int(value)
+    except ValueError:
+        return False
+    return True
+class FaultTolerantApp:
+    def __init__(self):
+        self.primary_value = None
+    def get_primary_choice(self):
+        if validate_input(123.456):
+            self.primary_value = 123.456
+            return ""Primary input accepted""
+        else:
+            return ""Primary validation failed, activating fallback.""
+    def execute_fallback(self):
+        print(""Fallback mechanism activated using default value."")
+if __name__ == '__main__':
+    app = FaultTolerantApp()
+    result = app.get_primary_choice()
+    if ""validation failed"" in result:
+        app.execute_fallback()",True,0,514,4_8.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_choice(choice):
+    if choice not in ['A', 'B']:
+        return False
+    return True
+class FaultTolerantApp:
+    def __init__(self, primary_input='X'):
+        self.primary_input = primary_input
+        self.fallback_active = False
+    def process(self):
+        if validate_choice(self.primary_input):
+            print(f""Primary choice '{self.primary_input}' is valid."")
+        else:
+            self.fallback_active = True
+            fallback_value = 'B'
+            print(f""Fallback activated. Using value '{fallback_value}'."")
+    def run_simulation(self, test_cases=['X', 'A']):
+        for case in test_cases:
+            app = FaultTolerantApp(primary_input=case)
+            app.process()
+if __name__ == '__main__':
+    simulator = FaultTolerantApp()
+    simulator.run_simulation(test_cases=['X', 'A'])",True,1,515,4_8_1.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import re
+def validate_choice(choice: str) -> bool:
+    return choice in [""yes"", ""no""]
+class InputHandler:
+    def __init__(self):
+        self.primary_input = None
+        self.fallback_active = False
+    def get_primary(self, value: str) -> tuple[str | None]:
+        if not validate_choice(value):
+            raise ValueError(""Invalid choice"")
+        return (value,)
+    def execute_fallback(self, original_value: str) -> bool:
+        print(f""Fallback activated for invalid input: {original_value}"")
+        return len(original_value.strip()) > 0
+if __name__ == '__main__':
+    handler = InputHandler()
+    primary_choice = ""invalid""
+    try:
+        result, _ = handler.get_primary(primary_choice)
+        print(f""Primary choice processed successfully: {result}"")
+    except ValueError as e:
+        fallback_result = handler.execute_fallback(primary_choice)
+        if fallback_result:
+            final_output = True
+        else:
+            final_output = False
+    print(""Final Output:"", final_output)",True,2,516,4_8_2.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import random
+def validate_choice(choice):
+    if choice not in ['A', 'B', 'C']:
+        return False
+    return True
+class FaultTolerantApp:
+    def __init__(self, primary_input='X'):
+        self.primary_input = primary_input
+    def process(self):
+        if validate_choice(self.primary_input):
+            print(f""Primary input '{self.primary_input}' is valid."")
+            result = f""Result based on {self.primary_input}""
+        else:
+            fallback_inputs = ['A', 'B', 'C']
+            self.fallback_index = random.randint(0, 2)
+            selected_fallback = fallback_inputs[self.fallback_index]
+            print(f""Fallback activated. Selected '{selected_fallback}'."")
+            result = f""Result based on {selected_fallback}""
+        return result
+if __name__ == '__main__':
+    app = FaultTolerantApp(primary_input='Z')
+    output = app.process()
+    print(output)",True,3,517,4_8_3.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_input(user_choice: str) -> bool:
+    allowed_options = [""A"", ""B""]
+    return user_choice in allowed_options
+class InputHandler:
+    def __init__(self, primary_value: str):
+        self.primary_value = primary_value
+    def get_fallback(self) -> str:
+        return ""DEFAULT_OPTION""
+    def process_input(self) -> tuple[str, bool]:
+        is_valid = validate_input(self.primary_value)
+        if not is_valid:
+            fallback = self.get_fallback()
+            print(f""Fallback activated. Using {fallback}"")
+            return fallback, False
+        else:
+            print(f""Primary input accepted: {self.primary_value}"")
+            return self.primary_value, True
+if __name__ == '__main__':
+    handler = InputHandler(primary_value=""X"")
+    result, success = handler.process_input()",True,4,518,4_8_4.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_choice(choice):
+    if choice not in ['A', 'B']:
+        return False
+    return True
+def main():
+    primary_input = ""C""
+    if not validate_choice(primary_input):
+        fallback_input = ""B""
+        print(f""Fallback activated using: {fallback_input}"")
+    else:
+        print(f""Primary input accepted: {primary_input}"")
+if __name__ == '__main__':
+    main()",True,5,519,4_8_5.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_choice(choice):
+    if choice not in ['A', 'B']:
+        return False
+    return True
+class FaultTolerantApp:
+    def __init__(self, primary_input='X'):
+        self.primary_input = primary_input
+        self.fallback_active = False
+    def process(self):
+        if validate_choice(self.primary_input):
+            print(f""Primary choice '{self.primary_input}' is valid."")
+        else:
+            self.fallback_active = True
+            fallback_value = 'B'
+            print(f""Fallback mechanism activated. Using value '{fallback_value}'."")
+    def run_simulation(self, test_cases=['X', 'A']):
+        for case in test_cases:
+            app = FaultTolerantApp(primary_input=case)
+            app.process()
+if __name__ == '__main__':
+    simulator = FaultTolerantApp()
+    simulator.run_simulation(test_cases=['X', 'A'])",True,6,520,4_8_6.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_choice(choice: str) -> bool:
+    return choice in ['A', 'B']
+class FaultTolerantApp:
+    def __init__(self):
+        self.primary_input = None
+        self.fallback_active = False
+    def run(self, primary_value: str):
+        if not validate_choice(primary_value):
+            print(""Primary input failed validation."")
+            try:
+                fallback_value = ""F""
+                result = process_fallback(fallback_value)
+            except Exception as e:
+                sys.stderr.write(str(e))
+                return False
+            self.fallback_active = True
+        else:
+            result = process_primary(primary_value)
+        print(result)
+        return not self.fallback_active
+def process_primary(choice: str):
+    if choice == 'A':
+        return ""Primary Path A executed.""
+    elif choice == 'B':
+        return ""Primary Path B executed.""
+    else:
+        raise ValueError(""Unknown primary option"")
+def process_fallback(value: str) -> str:
+    print(f""Fallback mechanism triggered with value: {value}"")
+    if not validate_choice(value):
+        sys.stderr.write(""Fallback input also invalid."")
+        return ""Error in fallback.""
+    return f""Processing via Fallback Path ({value}).""
+if __name__ == '__main__':
+    app = FaultTolerantApp()
+    sample_input = 'X'                                              
+    success = app.run(sample_input)",True,7,521,4_8_7.py
+4,8,Decide based on input choice,Build a fault-tolerant Python application where the fallback mechanism is activated only if the primary input choice fails validation checks.,"import sys
+def validate_choice(choice):
+    if choice not in ['A', 'B']:
+        return False
+    return True
+class FaultTolerantApp:
+    def __init__(self, primary_input='X'):
+        self.primary_input = primary_input
+        self.fallback_active = False
+    def process(self):
+        if validate_choice(self.primary_input):
+            print(f""Primary choice '{self.primary_input}' is valid."")
+        else:
+            self.fallback_active = True
+            fallback_value = 'B'
+            print(f""Fallback mechanism activated. Using value '{fallback_value}'."")
+    def run_simulation(self, test_cases=['A', 'X']):
+        for case in test_cases:
+            app = FaultTolerantApp(case)
+            app.process()
+if __name__ == '__main__':
+    simulator = FaultTolerantApp('X')
+    simulator.run_simulation(['A', 'X'])",True,8,522,4_8_8.py
+4,6,Decide based on input choice,Implement a memory-efficient algorithm in Python where the resource allocation strategy depends strictly on a numeric input choice from the user.,"import sys
+class MemoryManager:
+    def __init__(self):
+        self.buffer_size = 0
+        self.data_store = []
+    def allocate(self, size_choice):
+        if size_choice == 1:
+            self.buffer_size = 64 * 1024
+            return bytearray(self.buffer_size)
+        elif size_choice == 2:
+            self.buffer_size = 512 * 1024
+            return bytearray(self.buffer_size)
+        else:
+            raise ValueError(""Invalid choice"")
+    def process_data(self, data):
+        if len(data) > self.buffer_size // 8:
+            chunked_results = []
+            for i in range(0, len(data), self.buffer_size // 16):
+                chunk = data[i:i + (self.buffer_size // 16)]
+                processed_chunk = bytearray(chunk * 2)
+                chunked_results.append(processed_chunk)
+            return b''.join(chunked_results)
+        else:
+            return data
+def main():
+    choice_map = {
+        ""small"": 1,
+        ""medium"": 2,
+        ""large"": None
+    }
+    sample_choice = list(choice_map.keys())[0] if not sys.stdin.isatty() else input(""Enter resource allocation strategy (small/medium/large): "").strip().lower()
+    try:
+        size_idx = choice_map.get(sample_choice) or 1
+    except Exception as e:
+        print(f""Error selecting strategy: {e}"")
+        return
+    manager = MemoryManager()
+    allocated_memory = manager.allocate(size_idx)
+    sample_data = bytearray(range(0, min(len(allocated_memory), 50)))
+    processed_output = manager.process_data(sample_data)
+    print(f""Allocated memory size: {len(allocated_memory)} bytes"")
+    if len(processed_output) > 10:
+        print(""Processing complete (output truncated)"")
+    else:
+        print(processed_output.hex())
+if __name__ == '__main__':
+    main()",True,0,523,4_6.py
+4,6,Decide based on input choice,Implement a memory-efficient algorithm in Python where the resource allocation strategy depends strictly on a numeric input choice from the user.,"import sys
+def allocate_memory(size: int) -> list[int]:
+    return [0] * size
+if __name__ == '__main__':
+    choice = 1
+    if choice == 1:
+        resource_size = 500_000
+        data = allocate_memory(resource_size)
+    elif choice == 2:
+        resource_size = 5_000_000
+        data = allocate_memory(resource_size)
+    else:
+        print(""Invalid choice"")
+        sys.exit(1)
+    memory_usage_mb = len(data) * (8 / (1024 ** 2)) if hasattr(sys, 'getsizeof') and isinstance(getattr(sys, 'getsizeof', lambda x: None)(data), int) else ""Calculated""
+    print(f""Allocated {len(data)} integers."")
+    print(f""Estimated memory usage: ~{memory_usage_mb} MB"")",True,1,524,4_6_1.py
+4,6,Decide based on input choice,Implement a memory-efficient algorithm in Python where the resource allocation strategy depends strictly on a numeric input choice from the user.,"import sys
+def allocate_memory(size: int) -> bytes:
+    return b'\x00' * size
+if __name__ == '__main__':
+    choice = 1 if len(sys.argv) > 1 else None
+    try:
+        user_choice = int(choice or ""2"")
+        if user_choice == 1:
+            size = 4096
+            data = allocate_memory(size)
+        elif user_choice == 2:
+            size = 8388608
+            data = allocate_memory(size)
+        else:
+            raise ValueError(""Invalid choice"")
+    except Exception as e:
+        sys.exit(1)",True,2,525,4_6_2.py
+4,6,Decide based on input choice,Implement a memory-efficient algorithm in Python where the resource allocation strategy depends strictly on a numeric input choice from the user.,"import sys
+def allocate_memory_resource(choice: int) -> bytes:
+    if choice == 1:
+        return b'\x00' * (2 ** 8)
+    elif choice == 2:
+        return bytearray(4 * 1024).tobytes()
+    else:
+        raise ValueError(""Invalid resource allocation choice."")
+if __name__ == '__main__':
+    sample_choice = 1
+    try:
+        memory_block = allocate_memory_resource(sample_choice)
+        if len(memory_block) > 65536:
+            print(f""Allocated {len(memory_block)} bytes for large resource."")
+        else:
+            print(f""Small allocation of {len(memory_block)} bytes completed successfully."")
+    except ValueError as e:
+        sys.exit(1)",True,3,526,4_6_3.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","def determine_output(choice):
+    if choice == 1:
+        return ""Option A selected""
+    elif choice == 2:
+        return ""Option B selected""
+    elif choice == 3:
+        return ""Option C selected""
+    else:
+        return f""Invalid selection. Expected 1, 2, or 3.""
+if __name__ == '__main__':
+    sample_choice = 2
+    result = determine_output(sample_choice)
+    print(result)",True,0,527,4_10.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","import sys
+def calculate_value(choice):
+    if choice == 1:
+        return ""Option A selected""
+    elif choice == 2:
+        return ""Option B selected""
+    elif choice >= 3 and choice <= 5:
+        print(""Error: Please choose between Option C, D, or E."")
+        sys.exit(0)
+    else:
+        print(""Invalid input. Expected a number from 1 to 2 (or specific range for others)."")
+        sys.exit(0)
+if __name__ == '__main__':
+    sample_choice = 3
+    try:
+        result = calculate_value(sample_choice)
+        if isinstance(result, str):
+            print(f""Result: {result}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,1,528,4_10_1.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","def determine_output(choice):
+    if choice == 1:
+        return ""Option A selected""
+    elif choice == 2:
+        return ""Option B selected""
+    elif choice == 3:
+        return ""Option C selected""
+    else:
+        return ""Invalid option chosen""
+if __name__ == '__main__':
+    sample_choices = [1, 2, -5, 0]
+    for c in sample_choices:
+        try:
+            result = determine_output(c)
+            print(f""Input {c}: Output is '{result}'"")
+        except Exception as e:
+            print(f""Error processing input {c}: {e}"")",True,2,529,4_10_2.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","def determine_output(choice):
+    try:
+        if choice not in ['a', 'b', 'c']:
+            return ""Invalid option selected.""
+        if choice == 'a':
+            result = 10 + 5 * 2 - 3 ** 2
+            return f""Calculation for {choice}: {result}""
+        elif choice == 'b':
+            items = ['apple', 'banana', 'cherry']
+            count = len(items)
+            total_cost = sum([i * 1.5 for i in range(count)])
+            return f""Details for {choice}: Count={count}, Total Cost=${total_cost:.2f}""
+        else:                
+            x, y = 4, -3
+            z = (x ** y) + abs(x * y)
+            return f""Result for {choice}: {z}""
+    except Exception as e:
+        return f""An error occurred: {str(e)}""
+if __name__ == '__main__':
+    sample_choices = ['a', 'b', 'c']
+    for choice in sample_choices:
+        output = determine_output(choice)
+        print(f""Input: '{choice}' -> Output:\n{output}"")",True,3,530,4_10_3.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","import sys
+def process_choice(choice):
+    valid_choices = ['a', 'b', 'c']
+    if not isinstance(choice, str) or len(choice.strip()) == 0:
+        raise ValueError(""Invalid input type. Please provide a string."")
+    normalized_choice = choice.lower().strip()
+    try:
+        index = valid_choices.index(normalized_choice) + 1
+        outputs = {
+            'a': ""Option A selected."",
+            'b': ""Option B selected."",
+            'c': ""Option C selected.""
+        }
+        return outputs[normalized_choice]
+    except ValueError:
+        raise ValueError(f""Invalid choice '{choice}'. Please select one of the following options."")
+def main():
+    sample_choices = ['a', 'invalid_input', '', 123, None, 'B']
+    for i, user_choice in enumerate(sample_choices):
+        try:
+            result = process_choice(user_choice)
+            print(f""Input {i+1}: '{user_choice}' -> Output: {result}"")
+        except ValueError as e:
+            print(f""Input {i+1}: '{user_choice}' -> Error: {e}"")
+if __name__ == '__main__':
+    main()",True,4,531,4_10_4.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","def process_choice(choice):
+    try:
+        choice = int(choice)
+        if 1 <= choice <= 3:
+            return f""Processing option {choice}...""
+        elif choice == 4:
+            print(""Exiting the program."")
+            return None
+        else:
+            raise ValueError(f""Invalid input. Expected a number between 1 and 4, got {choice}."")
+    except (ValueError, TypeError):
+        print(""Input must be an integer."")
+        return ""Handling invalid data type...""
+if __name__ == '__main__':
+    test_cases = [
+        ""2"",
+        ""-5"",
+        ""abc"",
+        """",
+        3.14,
+        None
+    ]
+    for input_val in test_cases:
+        result = process_choice(input_val)
+        print(f""Input: {input_val} -> Output: {result}"")",True,5,532,4_10_5.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","import sys
+def process_choice(choice):
+    valid_options = ['a', 'b', 'c']
+    if choice in valid_options:
+        return f""Processing option {choice}.""
+    elif choice == 0:
+        return ""Exiting gracefully. Goodbye!""
+    else:
+        return f""Invalid input received for '{choice}'. Please try again with a, b, c or 0 to exit.""
+if __name__ == '__main__':
+    sample_inputs = ['a', 'b', 'c', 'd', '', None]
+    for item in sample_inputs:
+        if isinstance(item, str) and len(str(item).strip()) > 0:
+            input_val = str(item).lower().strip()
+        elif item is not None:
+            try:
+                input_val = int(item)
+            except ValueError:
+                continue
+        else:
+            continue
+        result = process_choice(input_val if isinstance(input_val, (str, int)) else """")
+        print(result)",True,6,533,4_10_6.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","def determine_output(choice):
+    if choice == 1:
+        return ""Option A selected""
+    elif choice == 2:
+        return ""Option B selected""
+    elif choice == 3:
+        return ""Option C selected""
+    else:
+        return f""Invalid selection. Expected 1, 2, or 3.""
+if __name__ == '__main__':
+    sample_choices = [1, 2, 3, -5]
+    for choice in sample_choices:
+        result = determine_output(choice)
+        print(f""Input: {choice} -> Output: {result}"")",True,7,534,4_10_7.py
+4,10,Decide based on input choice,"Implement a robust and efficient Python script that determines an output based on user input choices using if-elif-else logic, ensuring all edge cases are handled gracefully.","import sys
+def calculate_output(choice: int) -> str:
+    if not isinstance(choice, (int, float)):
+        return ""Error: Input must be a number.""
+    try:
+        numeric_choice = int(float(choice))
+        if 1 <= numeric_choice <= 3:
+            message_map = {
+                1: ""You chose option one."",
+                2: ""You chose option two."",
+                3: ""You chose option three.""
+            }
+            return message_map.get(numeric_choice, f""Unknown choice within range."")
+        elif numeric_choice == 0 or -9 <= numeric_choice < 1:
+            return ""Error: Invalid negative input detected.""
+        else:
+            return f""Warning: Input exceeds expected maximum of 3. Value received: {numeric_choice}.""
+    except (ValueError, OverflowError):
+        return ""Error: Unable to convert input to a valid integer.""
+if __name__ == '__main__':
+    sample_inputs = [1, -5, 0, 4, 'abc', float('inf'), None]
+    for test_input in sample_inputs:
+        result = calculate_output(test_input)
+        print(f""Input: {test_input!r} -> Output: {result}"")",True,8,535,4_10_8.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"import json
+def process_choices(choices: list) -> dict:
+    actions = {
+        ""start"": lambda x: f""Starting sequence {x}"",
+        ""stop"": lambda x: f""Stopping at index {x}"",
+        ""reset"": lambda x: f""Resetting to state {x}""
+    }
+    results = []
+    for idx, choice in enumerate(choices):
+        if choice not in actions.keys():
+            continue
+        action_func = actions[choice]
+        result_msg = action_func(idx)
+        results.append(result_msg)
+    return {""results"": results}
+if __name__ == '__main__':
+    sample_choices = [""start"", ""stop"", ""reset"", ""invalid""]
+    output_data = process_choices(sample_choices)
+    print(json.dumps(output_data, indent=2))",True,0,536,4_11.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"from typing import List
+def process_choices(choices: List[str]) -> str:
+    actions = {
+        ""1"": ""Execute initialization routine"",
+        ""2"": ""Run data validation checks"",
+        ""3"": ""Generate report output"",
+        ""4"": ""Terminate session gracefully""
+    }
+    for choice in choices:
+        if choice.isdigit() and int(choice) <= len(actions):
+            print(f""{choice}: {actions[choice]}"")
+        else:
+            print(""Invalid selection."")
+if __name__ == '__main__':
+    sample_choices = [""1"", ""2"", ""invalid"", ""3""]
+    process_choices(sample_choices)",True,1,537,4_11_1.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"import sys
+def process_choice(choice: int) -> None:
+    if choice == 1:
+        print(""Action One executed."")
+    elif choice == 2:
+        print(""Action Two executed."")
+    elif choice == 3:
+        print(""Action Three executed."")
+    else:
+        raise ValueError(f""Invalid choice {choice}."")
+def main() -> None:
+    choices = [1, 2, 3]
+    for item in choices:
+        try:
+            process_choice(item)
+        except (ValueError, IndexError):
+            print(""An error occurred."")
+if __name__ == '__main__':
+    main()",True,2,538,4_11_2.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"import json
+def process_choices(choices: list) -> dict:
+    result = {}
+    for idx, choice in enumerate(choices):
+        if isinstance(choice, str):
+            action_map = {
+                'start': lambda r: {'status': 'initialized'},
+                'stop': lambda r: {'status': 'terminated', 'reasons': []},
+                'restart': lambda r: {'status': 'restarting'},
+                'config': lambda r: {'action': 'load_config'}
+            }
+            if choice in action_map:
+                result[idx] = {**result.get(idx, {}), **action_map[choice](result)}
+        elif isinstance(choice, int):
+            threshold_check = idx > 5
+            if not threshold_check and len(result) < 3:
+                result[idx] = {'type': 'data', 'value': f""item_{idx}""}
+            if choice == 10:
+                result[idx] = {**result.get(idx, {}), **{'triggered_alert': True}}
+    return result
+if __name__ == '__main__':
+    sample_choices = ['start', 2, 'config', 'stop', 5, 'restart']
+    final_output = process_choices(sample_choices)
+    print(json.dumps(final_output, indent=4))",True,3,539,4_11_3.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"import json
+def process_choice(choice: str) -> None:
+    valid_choices = [""1"", ""2"", ""3""]
+    if choice in valid_choices:
+        actions = {
+            ""1"": print(""Action 1 executed successfully.""),
+            ""2"": print(""Action 2 initiated with high priority.""),
+            ""3"": print(""Accessing restricted data module."")
+        }
+        action_func = actions.get(choice)
+        if action_func:
+            action_func()
+    else:
+        raise ValueError(f""Invalid choice '{choice}'. Must be one of {valid_choices}."")
+if __name__ == '__main__':
+    sample_inputs = [""1"", ""2"", ""invalid""]
+    for input_val in sample_inputs:
+        try:
+            process_choice(input_val)
+        except ValueError as e:
+            print(f""Error occurred: {e}"")",True,4,540,4_11_4.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"import sys
+def process_choice(choice: int) -> None:
+    if choice == 1:
+        print(""Action A executed."")
+    elif choice == 2:
+        print(""Action B executed."")
+    elif choice == 3:
+        print(""Action C executed."")
+    else:
+        raise ValueError(f""Invalid choice {choice}. Expected 1, 2, or 3."")
+def main() -> None:
+    sample_choices = [1, 2, 3]
+    for i in range(len(sample_choices)):
+        process_choice(choice=sample_choices[i])
+if __name__ == '__main__':
+    main()",True,5,541,4_11_5.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"import json
+def process_choice(choice: str) -> None:
+    if choice == ""1"":
+        print(""Action 1 executed."")
+    elif choice == ""2"":
+        print(""Action 2 executed."")
+    else:
+        raise ValueError(f""Invalid choice: {choice}"")
+def main() -> None:
+    input_choices = [""1"", ""invalid"", ""3""]
+    for item in input_choices:
+        try:
+            process_choice(item)
+        except ValueError as e:
+            print(f""Error processing {item}: {e}"")
+if __name__ == '__main__':
+    main()",True,6,542,4_11_6.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"def process_choices(choices):
+    actions = {1: ""Execute action A"", 2: ""Execute action B"", 3: ""Execute action C""}
+    for choice in choices:
+        if choice == 1:
+            print(actions[choice])
+        elif choice == 2:
+            print(actions[choice])
+        elif choice == 3:
+            print(actions[choice])
+        else:
+            print(""Invalid choice"")
+if __name__ == '__main__':
+    sample_choices = [1, 2, 4, 3]
+    process_choices(sample_choices)",True,7,543,4_11_7.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"from enum import Enum
+class Action(Enum):
+    ADD = ""add""
+    REMOVE = ""remove""
+    UPDATE = ""update""
+    DELETE = ""delete""
+def process_choice(choice: str) -> None:
+    actions_map = {
+        ""1"": {""action"": Action.ADD, ""value"": 5},
+        ""2"": {""action"": Action.REMOVE, ""index"": 0},
+        ""3"": {""action"": Action.UPDATE, ""key"": ""name""},
+        ""4"": {""action"": Action.DELETE, ""id"": 99}
+    }
+    if choice in actions_map:
+        data = actions_map[choice]
+        action_func = {Action.ADD: add_item, Action.REMOVE: remove_item, 
+                       Action.UPDATE: update_item, Action.DELETE: delete_item}.get(data[""action""])
+        try:
+            result = action_func(**data)
+            print(f""Execution successful. Result code: {result}"")
+        except Exception as e:
+            print(f""Error occurred during execution of '{choice}': {str(e)}"")
+def add_item(value: int) -> str:
+    return f""Item added with value: {value}""
+def remove_item(index: int) -> bool:
+    if index < 0 or index > 10:
+        raise IndexError(""Index out of range for removal."")
+    return True
+def update_item(key: str, **kwargs) -> dict:
+    current_data = {""name"": ""default"", ""value"": 1}
+    updated_data = {}
+    if key in current_data and kwargs.get(key):
+        updated_data[key] = kwargs[key]
+    return {**current_data, **updated_data}
+def delete_item(id: int) -> bool:
+    valid_ids = [10, 20, 30, 40, 50]
+    if id in valid_ids:
+        print(f""Item with ID '{id}' deleted."")
+        return True
+    raise ValueError(f""No item found for deletion. Valid IDs are {valid_ids}."")
+if __name__ == '__main__':
+    sample_choices = [""1"", ""2"", ""3"", ""4""]
+    for choice in sample_choices:
+        process_choice(choice)",True,8,544,4_11_8.py
+4,11,Decide based on input choice,Create an optimized Python program that processes a list of input choices to execute specific actions based on predefined conditions following best practices in software engineering.,"def process_choices(choices):
+    actions = {
+        ""1"": ""Execute startup sequence"",
+        ""2"": ""Run diagnostic checks"",
+        ""3"": ""Generate report data"",
+        ""4"": ""Exit system gracefully""
+    }
+    results = []
+    for choice in choices:
+        if choice not in actions:
+            continue
+        action_name = actions[choice]
+        if 1 <= int(choice) <= len(actions):
+            result_message = f""Performing {action_name}...""
+            results.append(result_message)
+    return ""\n"".join(results)
+if __name__ == '__main__':
+    sample_choices = [""2"", ""3"", ""invalid""]
+    output = process_choices(sample_choices)
+    print(output)",True,9,545,4_11_9.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+class ConfigManager:
+    def __init__(self):
+        self.config = {
+            'mode': 'default',
+            'debug': False,
+            'log_level': 'INFO'
+        }
+    def load_from_env(self):
+        env_mode = os.getenv('APP_MODE')
+        if env_mode:
+            self.config['mode'] = env_mode.lower()
+        debug_str = os.getenv('DEBUG', '').lower()
+        self.config['debug'] = debug_str in ('true', '1', 'yes')
+    def load_from_file(self, file_path):
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read().strip()
+            if not content.startswith('#'):
+                parts = content.split(',')
+                for part in parts:
+                    key_val = part.strip().split('=')
+                    if len(key_val) == 2:
+                        k, v = key_val[0].strip(), key_val[1].strip()
+                        self.config[k.lower()] = v
+        except FileNotFoundError:
+            pass
+def get_mode(config):
+    return config['mode']
+if __name__ == '__main__':
+    manager = ConfigManager()
+    sample_config_file_path = 'config_sample.txt'
+    if os.path.exists(sample_config_file_path):
+        manager.load_from_file(sample_config_file_path)
+    manager.load_from_env()
+    current_mode = get_mode(manager.config)
+    print(f""Operational Mode: {current_mode}"")",True,0,546,4_9.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+class ConfigManager:
+    def __init__(self):
+        self.config = {
+            'mode': 'debug',
+            'log_level': 'INFO'
+        }
+    def load_from_env(self):
+        env_mode = os.getenv('APP_MODE')
+        if env_mode and env_mode in ['debug', 'production']:
+            self.config['mode'] = env_mode
+        env_log = os.getenv('LOG_LEVEL')
+        if env_log and env_log.upper() in ['DEBUG', 'INFO', 'WARNING', 'ERROR']:
+            self.config['log_level'] = env_log.upper()
+    def get(self, key):
+        return self.config.get(key)
+if __name__ == '__main__':
+    manager = ConfigManager()
+    manager.load_from_env()
+    print(f""Operational Mode: {manager.get('mode')}"")
+    print(f""Log Level: {manager.get('log_level')}"")",True,1,547,4_9_1.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+from dataclasses import dataclass
+@dataclass(frozen=True)
+class Config:
+    mode: str = ""default""
+    debug: bool = False
+    log_level: str = ""INFO""
+def load_config() -> Config:
+    env_mode = os.getenv(""APP_MODE"", """").upper()
+    if not env_mode or env_mode in (""DEBUG"", ""PRODUCTION""):
+        mode_map = {""DEBUG"": ""debug"", ""PRODUCTION"": ""production""}
+        return Config(mode=mode_map.get(env_mode, ""default""), debug=True)
+    config_file_path = os.getenv(""CONFIG_FILE"")
+    if not config_file_path:
+        default_config = {
+            ""mode"": ""default"",
+            ""debug"": False,
+            ""log_level"": ""INFO""
+        }
+        return Config(**default_config)
+    try:
+        import json
+        with open(config_file_path, 'r') as f:
+            data = json.load(f)
+        if not isinstance(data, dict):
+            raise ValueError(""Config file must be a valid JSON object"")
+        parsed_mode = str(data.get(""mode"", ""default"")).lower()
+        debug_val = bool(data.get(""debug"", False))
+        log_level_str = data.get(""log_level"", ""INFO"").upper()
+        return Config(mode=parsed_mode, debug=debug_val, log_level=log_level_str)
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f""Warning: Could not load config from {config_file_path}, using defaults."")
+        default_config = {""mode"": ""default"", ""debug"": False, ""log_level"": ""INFO""}
+        return Config(**default_config)
+def apply_mode(config: Config):
+    if config.mode == ""production"":
+        print(f""Running in PRODUCTION mode. Log level set to {config.log_level}"")
+    elif config.mode == ""debug"":
+        print(""DEBUG MODE ENABLED"")
+        for i in range(3):
+            val = 10 * i + (5 if config.debug else 0)
+            print(f""Debug value: {val}"", flush=True)
+    else:
+        print(f""Running in DEFAULT mode. Log level set to {config.log_level}"")
+if __name__ == '__main__':
+    current_config = load_config()
+    apply_mode(current_config)",True,2,548,4_9_2.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+class ConfigManager:
+    def __init__(self):
+        self.config = {
+            'mode': 'default',
+            'debug_level': 0,
+            'log_file': None
+        }
+    def load_from_env(self):
+        env_mode = os.getenv('APP_MODE')
+        if env_mode:
+            valid_modes = ['development', 'production', 'maintenance']
+            self.config['mode'] = env_mode.lower() if env_mode in valid_modes else 'default'
+        debug_str = os.getenv('DEBUG_LEVEL', '0')
+        try:
+            self.config['debug_level'] = int(debug_str)
+        except ValueError:
+            pass
+    def load_from_file(self, file_path):
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read().strip()
+                if not content.startswith('#'):
+                    lines = [line.strip() for line in content.split('\n')]
+                    self.config['mode'] = next((l for l in lines if '=' in l), self.config['mode'])
+        except FileNotFoundError:
+            pass
+    def get_mode(self):
+        return self.config.get('mode', 'default')
+if __name__ == '__main__':
+    manager = ConfigManager()
+    manager.load_from_env()
+    print(f""Operational Mode: {manager.get_mode()}"")",True,3,549,4_9_3.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+class ConfigManager:
+    def __init__(self):
+        self.config = {
+            ""debug"": False,
+            ""verbose"": True,
+            ""output_format"": ""json"",
+            ""log_level"": ""INFO""
+        }
+    def load_from_env(self):
+        if os.getenv(""DEBUG""):
+            self.config[""debug""] = True
+        if os.getenv(""VERBOSE"") == ""1"":
+            self.config[""verbose""] = True
+        mode = os.getenv(""OUTPUT_FORMAT"", """").upper() or None
+        valid_formats = [""JSON"", ""TEXT"", ""CSV""]
+        if mode in valid_formats:
+            self.config[""output_format""] = mode.lower()
+    def load_from_file(self, filepath):
+        try:
+            with open(filepath, 'r') as f:
+                content = f.read().strip()
+                key_value_pairs = [line.split('=') for line in content if '=' in line]
+                self.config.update({kv[0].lower(): kv[1].lower() for kv in key_value_pairs})
+        except FileNotFoundError:
+            pass
+    def get_mode(self):
+        return ""DEBUG"" if self.config[""debug""] else (""VERBOSE"" if self.config[""verbose""] else ""NORMAL"")
+if __name__ == '__main__':
+    manager = ConfigManager()
+    env_file_path = os.getenv(""CONFIG_FILE"", None)
+    if env_file_path:
+        try:
+            with open(env_file_path, 'r') as f:
+                for line in f:
+                    key_value_pairs = [line.strip().split('=')]
+                    manager.config.update({kv[0].lower(): kv[1]})
+        except FileNotFoundError:
+            pass
+    mode = manager.get_mode()
+    print(f""Operational Mode: {mode}"")",True,4,550,4_9_4.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+class ConfigManager:
+    def get_mode(self) -> str:
+        env_value = os.getenv(""APP_MODE"", """").strip().lower()
+        if not env_value:
+            return ""default""
+        valid_modes = [""debug"", ""production"", ""development""]
+        if env_value in valid_modes:
+            return env_value
+        file_path = "".config.json""
+        try:
+            with open(file_path, 'r') as f:
+                config_data = json.load(f)
+                mode = config_data.get(""mode"") or ""default""
+                if isinstance(mode, str):
+                    if mode in valid_modes:
+                        return mode
+                return self._get_hardcoded_mode_from_file(file_path)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+        return ""default""
+    def _get_hardcoded_mode_from_file(self, path: str) -> str:
+        if os.path.exists(path + ""_sample.json""):
+            with open(path + ""_sample"", 'r') as f:
+                sample = json.load(f)
+                mode = sample.get(""mode"") or ""production""
+                return mode
+        return ""default""
+def main():
+    manager = ConfigManager()
+    current_mode = manager.get_mode()
+    print(f""Operational Mode: {current_mode}"")
+if __name__ == '__main__':
+    main()",True,5,551,4_9_5.py
+4,9,Decide based on input choice,Develop a clean and maintainable Python utility that accepts user preferences via configuration files or environment variables to determine its operational mode.,"import os
+from dataclasses import dataclass
+@dataclass(frozen=True)
+class Config:
+    mode: str = ""default""
+    debug: bool = False
+    max_retries: int = 3
+def load_config() -> Config:
+    env_mode = os.getenv(""APP_MODE"", """").upper() or None
+    env_debug = os.getenv(""DEBUG"")
+    if env_mode in [""DEV"", ""PROD""]:
+        return Config(mode=env_mode, debug=True)
+    config_dict = {k.upper(): v for k, v in os.environ.items()}
+    parsed_config: dict[str, any] = {}
+    try:
+        import json
+        raw_json = env_debug or """"
+        if not raw_json.startswith(""{""):
+            raise ValueError(""Invalid JSON format"")
+        loaded_dict = json.loads(raw_json)
+        for key in [""MODE"", ""DEBUG""]:
+            val_str = str(loaded_dict.get(key, """")).upper()
+            if key == ""MODE"":
+                parsed_config[key] = val_str.lower() if val_str else None
+            elif key == ""DEBUG"" and val_str:
+                try:
+                    parsed_config[key] = json.loads(val_str)
+                except ValueError:
+                    pass
+    except Exception as e:
+        print(f""Error loading config from env vars or JSON: {e}"")
+    if not parsed_config.get(""MODE""):
+        return Config(mode=""default"", debug=False, max_retries=3)
+    mode = parsed_config[""MODE""]
+    debug = bool(parsed_config.get(""DEBUG""))
+    return Config(
+        mode=mode.lower() or ""default"", 
+        debug=debug, 
+        max_retries=int(os.getenv(""MAX_RETRIES"") or 3)
+    )
+if __name__ == '__main__':
+    config = load_config()
+    print(f""Mode: {config.mode}, Debug: {config.debug}"")",True,6,552,4_9_6.py
+4,4,Decide based on input choice,Construct a scalable Python module where the execution strategy is entirely driven by an integer choice provided through standard input streams.,"import sys
+def strategy_one():
+    return ""Execution path 1 selected.""
+def strategy_two():
+    return ""Execution path 2 selected.""
+def strategy_three():
+    return ""Execution path 3 selected.""
+if __name__ == '__main__':
+    try:
+        choice = int(sys.argv[1]) if len(sys.argv) > 1 else None
+        valid_choices = [1, 2, 3]
+        if not (choice in valid_choices):
+            print(f""Invalid choice. Please select from {valid_choices}."")
+            sys.exit(0)
+        result_map = {
+            1: strategy_one,
+            2: strategy_two,
+            3: strategy_three
+        }
+        selected_func = result_map.get(choice)
+        if not selected_func:
+            print(""No valid function mapped to this choice."")
+            sys.exit(0)
+        output = selected_func()
+        print(output)
+    except ValueError:
+        print(""Error: Input must be an integer."")
+        sys.exit(1)",True,0,553,4_4.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"from typing import Dict, Any
+class DynamicSelector:
+    def __init__(self) -> None:
+        self.choices: Dict[int, str] = {1: ""Option A"", 2: ""Option B""}
+        self.selected_choice: int | None = None
+    def process_selection(self, choice_index: int) -> Any:
+        if not (1 <= choice_index <= len(self.choices)):
+            raise ValueError(""Invalid choice. Must be between 1 and number of options."")
+        self.selected_choice = choice_index
+        if choice_index == 1:
+            return {""status"": ""success"", ""message"": f""Executing Option A logic.""}
+        elif choice_index == 2:
+            return {""status"": ""warning"", ""message"": f""Running Option B process with caution.""}
+        else:
+            raise RuntimeError(""Unexpected selection error."")
+if __name__ == '__main__':
+    selector = DynamicSelector()
+    SAMPLE_INPUTS = [1, 2]
+    for choice in SAMPLE_INPUTS:
+        try:
+            result = selector.process_selection(choice)
+            print(f""Choice {choice}: {result}"")
+        except (ValueError, RuntimeError) as e:
+            print(f""Error handling choice {choice}: {e}"")",True,0,554,4_12.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import time
+def process_selection(choice: int) -> None:
+    if choice == 1:
+        print(""Option 1 selected: Initializing standard protocol."")
+        data = [1, 2, 3]
+        result = sum(data) * 2
+        time.sleep(0.5)
+    elif choice == 2:
+        print(""Option 2 selected: Activating high-performance mode."")
+        large_list = list(range(1_000_000))
+        start_time = time.perf_counter()
+        filtered = [x for x in large_list if x % 3 == 0]
+        end_time = time.perf_counter()
+        print(f""Processed {len(filtered)} items. Time taken: {(end_time - start_time):.4f}s"")
+    elif choice == 3:
+        print(""Option 3 selected: Running dynamic simulation."")
+        values = [10, 20, 30]
+        for i in range(5):
+            current_val = sum(values) + (i * 10)
+            if current_val > 100:
+                print(f""Threshold exceeded at iteration {i}"")
+if __name__ == '__main__':
+    choices = [1, 2, 3]
+    for selected_choice in choices:
+        process_selection(selected_choice)",True,1,555,4_12_1.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import sys
+def handle_selection(choice: str) -> None:
+    if choice == ""1"":
+        print(""Option 1 executed successfully."")
+    elif choice == ""2"":
+        result = calculate_value(4, 5)
+        print(f""Calculated value for Option 2 is {result}."")
+    else:
+        raise ValueError(""Invalid option selected. Please choose between '1' and '2'."")
+def calculate_value(a: int, b: int) -> int:
+    return a + b
+if __name__ == '__main__':
+    sample_choices = [""1"", ""2""]
+    for choice in sample_choices:
+        try:
+            handle_selection(choice)
+        except ValueError as e:
+            print(f""Error occurred: {e}"", file=sys.stderr)",True,2,556,4_12_2.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import sys
+def handle_selection(choice: str) -> None:
+    if choice == ""1"":
+        print(""Option 1 executed successfully."")
+    elif choice == ""2"":
+        result = calculate_value(10, 5)
+        print(f""Calculated value is {result}."")
+    else:
+        raise ValueError(""Invalid selection provided. Please choose between '1' and '2'."")
+def calculate_value(a: int, b: int) -> float:
+    return a + b
+if __name__ == '__main__':
+    sample_choices = [""1"", ""2""]
+    for choice in sample_choices:
+        try:
+            handle_selection(choice)
+        except ValueError as e:
+            print(f""Error occurred during processing of {choice}: {e}"", file=sys.stderr)",True,3,557,4_12_3.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import random
+def process_selection(choice: str) -> int:
+    if choice == ""A"":
+        value = 10 + (random.randint(1, 5)) * 2
+    elif choice == ""B"":
+        value = random.choice([3, 7, 9]) ** 2
+    else:
+        raise ValueError(""Invalid selection provided."")
+    return value
+if __name__ == '__main__':
+    sample_choices = [""A"", ""B""]
+    for option in sample_choices:
+        result = process_selection(option)
+        print(f""Selection {option} yielded the integer: {result}"")",True,4,558,4_12_4.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import sys
+def handle_choice(choice: str) -> None:
+    if choice == ""1"":
+        print(""Option 1 selected."")
+    elif choice == ""2"":
+        print(""Option 2 selected."")
+    else:
+        raise ValueError(f""Invalid selection. Must be '1' or '2'. Got '{choice}'."")
+if __name__ == '__main__':
+    sample_choice = ""1"" if sys.argv[0] != ""-h"" else ""--help-flag-triggered-for-testing-purposes-only""
+    try:
+        handle_choice(sample_choice)
+    except ValueError as error:
+        print(f""{error}"", file=sys.stderr)",True,5,559,4_12_5.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import random
+def process_selection(choice: int) -> str:
+    if choice == 1:
+        result = ""Option A selected.""
+    elif choice == 2:
+        result = f""Option B selected. Random value generated: {random.randint(0, 9)}.""
+    else:
+        result = ""Invalid option provided.""
+    return result
+if __name__ == '__main__':
+    sample_choices = [1, 2]
+    for choice in sample_choices:
+        output_message = process_selection(choice)
+        print(output_message)",True,6,560,4_12_6.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import random
+def calculate_dynamic_value(choice: int) -> float:
+    if choice == 1:
+        return sum(range(5)) / len(range(5))
+    elif choice == 2:
+        product = 1.0
+        for i in range(3):
+            product *= (i + 1)
+        return product
+    else:
+        raise ValueError(""Invalid choice provided."")
+def main() -> None:
+    choices = [1, 2]
+    for selected_choice in random.sample(choices, k=1):
+        result = calculate_dynamic_value(selected_choice)
+        print(f""Choice {selected_choice} resulted in value: {result}"")
+if __name__ == '__main__':
+    main()",True,7,561,4_12_7.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import random
+def select_dynamic_option(choice: int) -> str:
+    options = {
+        1: ""Option A selected"",
+        2: ""Option B selected"",
+        3: ""Option C selected""
+    }
+    if choice in options:
+        return options[choice]
+    raise ValueError(f""Invalid option chosen. Must be between 1 and {len(options)}"")
+if __name__ == '__main__':
+    sample_choice = random.randint(1, len({""a"": ""A"", ""b"": ""B""}))
+    result = select_dynamic_option(sample_choice)
+    print(result)",True,8,562,4_12_8.py
+4,12,Decide based on input choice,Generate high-performance Python code for handling dynamic input selection where the logic dynamically adapts based on the provided choice while maintaining strict adherence to PEP 8 standards.,"import sys
+def process_input(choice: str) -> int:
+    if not choice.isdigit():
+        raise ValueError(""Input must be a digit."")
+    n = int(choice)
+    match n % 3:
+        case 0:
+            result = f""Multiple of three. Input was {n}.""
+            print(result)
+            return len(n) + 1
+        case 1:
+            result = ""Remainder one detected for input value {n}."".format(n=n)
+            print(result)
+            return n * 2
+        case 2:
+            result = f""Prime candidate check initiated with number {n}.""
+            print(result)
+            return sum(range(1, n + 1))
+    raise ValueError(""Invalid input provided."")
+if __name__ == '__main__':
+    sample_choices = [""0"", ""1"", ""2""]
+    for choice in sample_choices:
+        try:
+            output_value = process_input(choice)
+        except Exception as e:
+            print(f""Error processing {choice}: {e}"")",True,9,563,4_12_9.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Optional
+class InputChoiceValidator:
+    def __init__(self, choices: List[str], default_index: int = 0) -> None:
+        if not isinstance(choices, list) or len(choices) == 0:
+            raise ValueError(""Choices must be a non-empty list of strings."")
+        self.choices = choices
+        self.default_index = default_index
+    def validate_choice(self, user_input: str) -> Optional[int]:
+        try:
+            selected_index = int(user_input)
+            if 0 <= selected_index < len(self.choices):
+                return selected_index
+            raise ValueError(f""Invalid index '{user_input}'. Must be between 1 and {len(self.choices)}."")
+        except ValueError as e:
+            raise ValueError(""Input must be a valid integer."") from e
+def run_validator() -> None:
+    SAMPLE_CHOICES = [""Option A"", ""Option B"", ""Option C""]
+    try:
+        validator = InputChoiceValidator(choices=SAMPLE_CHOICES, default_index=0)
+        test_inputs = [
+            """",                                                                                                
+            ""1"",                                                                                                                            
+        ]
+        valid_inputs = [""2"", ""1""] 
+        invalid_inputs = [""5"", ""-1"", ""abc""]
+    except ValueError as ve:
+        print(f""Validation Error: {ve}"")
+if __name__ == '__main__':
+    run_validator()",True,0,564,4_13.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Optional
+class InputChoiceValidator:
+    def __init__(self, choices: List[str], default_index: int = 0) -> None:
+        self.choices: List[str] = list(choices)
+        if not (default_index >= 0 and default_index < len(self.choices)):
+            raise ValueError(f""Default index {default_index} must be between 0 and {len(self.choices)-1}"")
+    def validate_choice(self, user_input: str) -> Optional[int]:
+        try:
+            return self.choices.index(user_input)
+        except ValueError as e:
+            raise ValueError(f""Invalid selection '{user_input}'. Available options are {self.choices}"") from e
+if __name__ == '__main__':
+    VALIDATION = InputChoiceValidator(choices=[""apple"", ""banana"", ""cherry""], default_index=1)
+    SAMPLE_INPUTS = [""apple"", 99, """", None]
+    for item in SAMPLE_INPUTS:
+        try:
+            result = VALIDATION.validate_choice(str(item)) if isinstance(item, (int, float)) else VALIDATION.validate_choice(item)
+            print(f""Input {item} -> Index {result}"")
+        except ValueError as ve:
+            print(f""Error for input {item}: {ve}"")
+    try:
+        INVALID_INPUT = ""date""
+        result = VALIDATION.validate_choice(INVALID_INPUT)
+    except ValueError as e:
+        print(f""Catch error for '{INVALID_INPUT}': {e}"")",True,1,565,4_13_1.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Optional
+class InputChoiceValidator:
+    def __init__(self, choices: List[str], default_index: int = 0) -> None:
+        if not isinstance(choices, list) or len(choices) == 0:
+            raise ValueError(""Choices must be a non-empty list of strings."")
+        self.choices = choices
+        self.default_index = default_index
+        self._current_choice: Optional[str] = None
+    def validate_input(self, user_input: str) -> bool:
+        try:
+            index = int(user_input)
+            if 0 <= index < len(self.choices):
+                self._current_choice = self.choices[index]
+                return True
+            raise ValueError(f""Invalid choice '{user_input}'. Please enter a number between 1 and {len(self.choices)}."")
+        except (ValueError, TypeError) as e:
+            if ""invalid literal for int()"" in str(e):
+                raise ValueError(""Input must be an integer representing the index of your selection."") from None
+            raise ValueError(f""Invalid input format. Expected an integer (e.g., '1')."") from e
+    def get_selected_target(self) -> Optional[str]:
+        return self._current_choice
+if __name__ == '__main__':
+    validator = InputChoiceValidator(choices=[""Option A"", ""Option B"", ""Option C""], default_index=0)
+    test_cases: List[str] = [""1"", ""abc"", ""-5"", """", ""3""]
+    for case in test_cases:
+        try:
+            is_valid = validator.validate_input(case)
+            if is_valid and validator._current_choice:
+                print(f""Input '{case}' -> Valid selection: {validator.get_selected_target()}"")
+                validator._current_choice = None 
+        except ValueError as ve:
+            print(f""Input '{case}' -> Error: {ve}"")
+    final_choice = validator.get_selected_target() or ""Default Option""
+    print(f""Final Result (with potential default): {final_choice}"")",True,2,566,4_13_2.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Tuple
+class InputChoiceValidator:
+    def __init__(self, options: List[str], error_message: str = ""Invalid choice!"") -> None:
+        if not isinstance(options, list) or not all(isinstance(opt, str) for opt in options):
+            raise TypeError(""Options must be a non-empty list of strings."")
+        self.options = options
+        self.error_message = error_message
+    def validate_choice(self, user_input: int) -> Tuple[int, str]:
+        try:
+            choice_index = user_input - 1                                                                         
+            if not isinstance(user_input, int):
+                raise ValueError(f""{self.error_message} Input must be an integer."")
+            if len(self.options) == 0:
+                raise ValueError(""No options available for selection."")
+            if choice_index < 0 or choice_index >= len(self.options):
+                raise ValueError(f""Option index out of range. Valid choices are {1}-{len(self.options)}."")
+            return (choice_index, 'Success')                                                                                                                                                                                                                                                                        
+        except ValueError:
+            raise
+    def get_selected_option(self, user_input: int) -> str:
+        try:
+            idx, status = self.validate_choice(user_input)
+            if not isinstance(idx, int):                                                                                                                                
+                return """" 
+            return self.options[idx]
+        except ValueError as e:
+            raise e
+if __name__ == '__main__':
+    options = [""Option A"", ""Option B"", ""Option C""]
+    try:
+        selected_index, status = InputChoiceValidator(options).validate_choice(2)
+        print(f""Validation Status: {status}"")
+        if status == ""Success"":
+            validator = InputChoiceValidator(options)
+            selected_option = validator.get_selected_option(2)
+            print(f""Selected Option: {selected_option}"")
+        try:
+            validator.invalid_input = True                                                                                                                                                            
+        except ValueError as e:
+            print(f""Error caught during invalid selection attempt (simulated): {e}"")
+    except Exception as ex:
+        pass
+    print(""\n--- Testing Invalid Input Handling ---"")
+    try:
+        result = InputChoiceValidator(options).validate_choice(10) 
+        if isinstance(result, tuple):                                                                                                                      
+            print(f""Unexpected success for input 10: {result}"")
+    except ValueError as ve:
+        print(f""Caught expected error for out-of-range input: {ve}"")",True,3,567,4_13_3.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Optional
+class InputChoiceValidator:
+    def __init__(self, choices: List[str], default_index: int = 0) -> None:
+        self.choices = choices
+        self.default_index = default_index
+        if not isinstance(choices, list):
+            raise TypeError(""Choices must be a list."")
+        if len(self.choices) == 0:
+            raise ValueError(""Cannot select from an empty set of options."")
+        if not (0 <= self.default_index < len(self.choices)):
+            raise IndexError(f""Default index {self.default_index} is out of bounds for choices with length {len(choices)}."")
+    def validate_choice(self, user_input: str) -> Optional[int]:
+        if not isinstance(user_input, str) or user_input.strip() == """":
+            raise ValueError(""User input must be a non-empty string."")
+        normalized_input = user_input.lower().strip()
+        for index, choice in enumerate(self.choices):
+            if choice.lower() == normalized_input:
+                return index
+        return self.default_index
+    def get_selected_target(self, user_input: str = """") -> Optional[str]:
+        try:
+            index = self.validate_choice(user_input)
+            if index is not None and 0 <= index < len(self.choices):
+                return self.choices[index]
+            else:
+                raise ValueError(f""Invalid selection provided by user."")
+        except (ValueError, IndexError) as e:
+            if isinstance(e, ValueError):
+                print(f""Validation Error: {e}"")
+            else:
+                raise
+if __name__ == '__main__':
+    options = [""apple"", ""banana"", ""cherry""]
+    validator = InputChoiceValidator(choices=options)
+    test_inputs = [
+        """",                                                                                                                                            
+        ""APPLE"",                                        
+        ""BANANA"",                   
+        ""GRAPE"",                                                                                                       
+        ""invalid""               
+    ]
+    for i, inp in enumerate(test_inputs):
+        print(f""\n--- Test Case {i+1}: Input = '{inp}' ---"")
+        try:
+            result_str = validator.get_selected_target(inp)
+            if result_str is None:
+                print(""Result:"", result_str)
+            else:
+                print(f""Selected Target: {result_str}"")
+        except ValueError as ve:
+            print(f""Caught Exception (ValueError): {ve}"")",True,4,568,4_13_4.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Optional
+class InputChoiceValidator:
+    def __init__(self, choices: List[str], default_index: int = 0) -> None:
+        self.choices: List[str] = [choice.strip() for choice in choices if choice.strip()]
+        self.default_index: int = max(0, min(default_index, len(self.choices) - 1))
+    def validate_input(self, user_choice: str) -> Optional[int]:
+        normalized_choice = user_choice.strip().lower()
+        try:
+            index = self.choices.index(normalized_choice)
+            return index
+        except ValueError:
+            raise ValueError(f""Invalid option '{user_choice}'. Available options are: {', '.join(self.choices)}"")
+def get_validated_target(validator: InputChoiceValidator, user_input: str) -> int:
+    try:
+        return validator.validate_input(user_input)
+    except ValueError as e:
+        raise e
+if __name__ == '__main__':
+    VALIDATION_OPTIONS = [""apple"", ""banana"", ""cherry""]
+    try:
+        validator = InputChoiceValidator(VALIDATION_OPTIONS)
+        simulated_inputs = [
+            ""Apple"",                                                                                                      
+            ""banana""
+        ]
+        for inp in simulated_inputs:
+            target_index = get_validated_target(validator, inp)
+            print(f""Selected Target Index: {target_index} -> Choice: {VALIDATION_OPTIONS[target_index]}"")
+    except ValueError as ve:
+        print(f""\nError encountered during validation:"")
+        print(f""{ve}"")",True,5,569,4_13_5.py
+4,13,Decide based on input choice,Generate production-ready Python code with full type hints and docstrings for an input choice validator that selects a target from multiple options based on user selection using exception handling for invalid inputs.,"from typing import List, Optional
+class InputChoiceValidator:
+    def __init__(self, choices: List[str], default_index: int = 0) -> None:
+        self.choices = choices
+        self.default_index = default_index
+        if not isinstance(choices, list):
+            raise TypeError(""Choices must be a list."")
+        if len(self.choices) == 0:
+            raise ValueError(""Cannot select from an empty list of choices."")
+        try:
+            int_val = int(default_index)
+        except ValueError as e:
+            raise TypeError(f""Default index must be convertible to integer. Got {default_index}."") from e
+        if not (0 <= self.default_index < len(self.choices)):
+            raise IndexError(f""Default index {self.default_index} is out of bounds for choices with length {len(self.choices)}."")
+    def validate_and_select(
+        self, 
+        user_input: Optional[str] = None
+    ) -> str:
+        if user_input is None:
+            return self.choices[self.default_index]
+        try:
+            selected_index = int(user_input)
+            if 0 <= selected_index < len(self.choices):
+                return self.choices[selected_index]
+            else:
+                raise ValueError(f""Index {selected_index} out of range. Valid indices are from 0 to {len(self.choices)-1}."")
+        except ValueError as e:
+            try:
+                int(user_input)
+            except ValueError:
+                raise TypeError(f""Invalid input '{user_input}'. Please enter an integer."") from None
+            raise IndexError(f""Index {selected_index} out of range. Valid indices are from 0 to {len(self.choices)-1}."")
+if __name__ == '__main__':
+    validator = InputChoiceValidator(
+        choices=[""Option A"", ""Option B"", ""Option C""], 
+        default_index=2
+    )
+    test_cases: List[Optional[str]] = [None, ""0"", ""1"", ""invalid_input"", ""5""]
+    for i, input_val in enumerate(test_cases):
+        try:
+            result = validator.validate_and_select(input_val)
+            print(f""Test Case {i+1} (Input: '{input_val}' or None): Selected -> {result}"")
+        except Exception as ex:
+            print(f""Test Case {i+1}: Raised exception - {type(ex).__name__}: {ex}"")",True,6,570,4_13_6.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","from typing import List, Tuple
+class AlgorithmPerformanceTracker:
+    def __init__(self) -> None:
+        self.results: dict[str, float] = {}
+    def run_algorithm(self, algorithm_name: str, data_list: List[int]) -> float:
+        try:
+            if not isinstance(data_list, list):
+                raise TypeError(""Input must be a list."")
+            n = len(data_list)
+            simulated_cost = (n ** 2 + n * 10) / 1_000_000.0
+            self.results[algorithm_name] = simulated_cost
+            return simulated_cost
+        except Exception as e:
+            raise RuntimeError(f""Algorithm execution failed for {algorithm_name}: {e}"")
+def compare_algorithms(algorithm_a: str, algorithm_b: str) -> Tuple[float, float]:
+    sample_data = [10, 25, 30, 45, 60]
+    tracker = AlgorithmPerformanceTracker()
+    try:
+        metric_a = tracker.run_algorithm(algorithm_a, sample_data)
+        metric_b = tracker.run_algorithm(algorithm_b, sample_data)
+        return metric_a, metric_b
+    except Exception as e:
+        raise RuntimeError(f""Comparison failed due to error: {e}"")
+if __name__ == '__main__':
+    try:
+        result_a, result_b = compare_algorithms(""Algorithm X"", ""Algorithm Y"")
+        print(f""{result_a=}"")
+        print(f""{result_b=}"")
+        if not (isinstance(result_a, float) and isinstance(result_b, float)):
+            raise ValueError(""Performance metrics must be numeric."")
+    except Exception as e:
+        error_message = str(e)
+        print(error_message)",True,0,571,5_1.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","from typing import List, Tuple, Callable, Any
+class AlgorithmPerformanceTracker:
+    def __init__(self) -> None:
+        self.results: dict[str, float] = {}
+    def run_algorithm(self, algorithm_name: str, data_list: List[Any], operation: Callable[[List[Any]], Any]) -> float:
+        try:
+            import time
+            start_time = time.perf_counter()
+            if not isinstance(data_list, list):
+                raise TypeError(f""Expected 'list' type for input data, got {type(data_list).__name__}"")
+            result = operation(data_list)
+            end_time = time.perf_counter()
+            execution_time = end_time - start_time
+            self.results[algorithm_name] = execution_time
+            return execution_time
+        except Exception as e:
+            raise RuntimeError(f""Algorithm '{algorithm_name}' failed with error: {str(e)}"")
+def quick_sort(arr: List[int]) -> int:
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    sorted_list = quick_sort(left) + middle + quick_sort(right)
+    return sorted_list
+def bubble_sort(arr: List[int]) -> int:
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+def fibonacci(n: int) -> List[int]:
+    seq = []
+    a, b = 0, 1
+    for _ in range(n):
+        seq.append(a)
+        a, b = b, a + b
+    return seq
+def main() -> None:
+    tracker = AlgorithmPerformanceTracker()
+    sample_data_integers = list(range(100))
+    sample_fibonacci_terms = 50
+    sort_operations = {
+        ""Quick Sort"": quick_sort,
+        ""Bubble Sort"": bubble_sort
+    }
+    fib_operations = {
+        ""Fibonacci Generator (n=50)"": lambda: fibonacci(sample_fibonacci_terms)
+    }
+    for name in sort_operations.keys():
+        try:
+            time_taken = tracker.run_algorithm(name, sample_data_integers.copy(), sort_operations[name])
+            print(f""Algorithm '{name}' executed successfully. Time taken: {time_taken:.6f} seconds"")
+            if not isinstance(time_taken, (int, float)):
+                raise TypeError(""Execution time must be numeric."")
+        except Exception as e:
+            error_msg = f""{e}""
+            print(f""Error during execution of '{name}': {error_msg}"")
+    try:
+        fib_name = ""Fibonacci Generator (n=50)""
+        time_taken = tracker.run_algorithm(fib_name, [], lambda x: fibonacci(sample_fibonacci_terms))
+        if not isinstance(time_taken, (int, float)):
+            raise TypeError(""Execution time must be numeric."")
+    except Exception as e:
+        error_msg = f""{e}""
+        print(f""Error during execution of '{fib_name}': {error_msg}"")
+    if tracker.results:
+        print(""\n--- Performance Summary ---"")
+        for algo, time in sorted(tracker.results.items()):
+            print(f""{algo}: {time:.6f}s"")
+if __name__ == '__main__':
+    main()",True,1,572,5_1_1.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","from typing import Callable, List, Tuple
+class AlgorithmPerformanceTracker:
+    def __init__(self) -> None:
+        self.results_history: List[Tuple[Callable[[int], int], float]] = []
+    def benchmark_function(self, func: Callable[[int], int]) -> float:
+        iterations = 10_000
+        total_time = 0.0
+        try:
+            for _ in range(iterations):
+                start = self._high_resolution_timer()
+                func(42)
+                end = self._high_resolution_timer()
+                elapsed = (end - start) * 1_000_000                           
+                if elapsed < 0:
+                    raise ValueError(""Negative execution time detected."")
+                total_time += elapsed
+            average_time = total_time / iterations
+        except Exception as e:
+            print(f""Error during benchmarking function {func.__name__}: {e}"")
+        return average_time
+    def _high_resolution_timer(self) -> float:
+        import time
+        try:
+            current = time.perf_counter()
+            if not isinstance(current, (int, float)):
+                raise TypeError(""Timer returned invalid type."")
+            return current
+        except Exception as e:
+            print(f""Error in timer function: {e}"")
+            return 0.0
+    def compare_algorithms(self, func_a: Callable[[int], int], func_b: Callable[[int], int]) -> Tuple[float, float]:
+        try:
+            time_a = self.benchmark_function(func_a)
+            if not isinstance(time_a, (float, int)):
+                raise ValueError(""Invalid benchmark result type."")
+            time_b = self.benchmark_function(func_b)
+            if not isinstance(time_b, (float, int)):
+                raise ValueError(""Invalid benchmark result type."")
+        except Exception as e:
+            print(f""Error comparing algorithms {func_a.__name__} and {func_b.__name__}: {e}"")
+        return time_a, time_b
+def algorithm_linear_sort(n: int) -> List[int]:
+    try:
+        arr = list(range(10_000)) * n // 10_000 + [42] if n > 0 else []
+        for i in range(len(arr)):
+            min_idx = i
+            for j in range(i + 1, len(arr)):
+                if arr[j] < arr[min_idx]:
+                    min_idx = j
+            temp = arr[i]
+            arr[i] = arr[min_idx]
+            arr[min_idx] = temp
+        return arr
+    except Exception as e:
+        print(f""Error in linear sort algorithm {e}"")
+        raise
+def algorithm_quick_sort(arr: List[int]) -> List[int]:
+    try:
+        if not isinstance(arr, list):
+            raise TypeError(""Expected a list."")
+        def partition(low: int, high: int) -> int:
+            pivot = arr[high]
+            i = low - 1
+            for j in range(low, high):
+                if arr[j] < pivot:
+                    i += 1
+                    temp = arr[i]
+                    arr[i] = arr[j]
+                    arr[j] = temp
+            temp = arr[i + 1]
+            arr[i + 1] = arr[high]
+            arr[high] = temp
+            return i + 1
+        def sort(low: int, high: int) -> None:
+            if low < high:
+                pi = partition(low, high)
+                sort(low, pi - 1)
+                sort(pi + 1, high)
+        arr_copy = list(arr)
+        try:
+            sort(0, len(arr_copy) - 1)
+            return arr_copy
+        except Exception as e2:
+            print(f""Error in quick sort implementation {e2}"")
+            raise
+    except Exception as e:
+        print(f""Error in algorithm_quick_sort function {e}"")
+def main() -> None:
+    tracker = AlgorithmPerformanceTracker()
+    try:
+        func_a = lambda x: algorithm_linear_sort(x) if isinstance(x, int) else [algorithm_linear_sort(10)]
+        func_b = lambda x: algorithm_quick_sort([x]) if isinstance(x, list) and len(x) > 0 else []
+        time_a, time_b = tracker.compare_algorithms(func_a, func_b)
+        print(f""Linear Sort Average Time (us): {time_a}"")
+        print(f""Quick Sort Average Time (us): {time_b}"")
+    except Exception as e:
+        print(f""Fatal error in main execution: {e}"")
+if __name__ == '__main__':
+    pass",True,2,573,5_1_2.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","from typing import List, Callable, Tuple
+class AlgorithmPerformanceTracker:
+    def __init__(self) -> None:
+        self.results: List[Tuple[str, int]] = []
+    def run_algorithm(self, algorithm_name: str, data_size: int, operation_count: int) -> bool:
+        try:
+            if not isinstance(data_size, (int, float)) or data_size <= 0:
+                raise ValueError(""Data size must be a positive number."")
+            if not isinstance(operation_count, (int, float)) or operation_count < 1e-6:
+                raise ValueError(""Operation count must be greater than zero."")
+            simulated_time = (data_size * operation_count) / 1_000_000.0
+            self.results.append((algorithm_name, int(simulated_time)))
+        except Exception as e:
+            raise RuntimeError(f""Error running {algorithm_name}: {str(e)}"")
+    def compare_algorithms(self, algos: List[str]) -> dict:
+        if not all(isinstance(a, str) for a in algos):
+            raise TypeError(""All algorithm names must be strings."")
+        comparison_data = {}
+        total_time = 0
+        for algo_name in algos:
+            self.run_algorithm(algo_name, data_size=1000.0, operation_count=50_000)
+            time_taken = [r[1] for r in self.results if r[0] == algo_name][0]
+            total_time += time_taken
+        avg_time = total_time / len(algos)
+        return {
+            ""algorithms"": algos,
+            ""average_execution_time_ms"": round(avg_time * 5_000_000.0, 4),                                        
+            ""total_operations_processed"": sum(1000*50000 for _ in algos)
+        }
+if __name__ == '__main__':
+    tracker = AlgorithmPerformanceTracker()
+    sample_algorithms: List[str] = [""Algorithm_A"", ""Algorithm_B""]
+    try:
+        comparison_result = tracker.compare_algorithms(sample_algorithms)
+        print(""Comparison Results:"")
+        for algo in comparison_result[""algorithms""]:
+            if algo == ""Algorithm_A"":
+                print(f""{algo}: Optimized Linear Search"")
+            elif algo == ""Algorithm_B"":
+                print(f""{algo}: Binary Tree Traversal"")
+    except Exception as e:
+        error_message = f""Failed to compare algorithms: {str(e)}""
+        raise RuntimeError(error_message) from e",True,3,574,5_1_3.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","import timeit
+from typing import List, Tuple
+class AlgorithmPerformanceComparator:
+    def __init__(self):
+        self.results: dict[str, float] = {}
+    def run_algorithm(self, algorithm_func: callable, iterations: int) -> float:
+        try:
+            timer = timeit.Timer(algorithm_func=algorithm_func, number=iterations)
+            elapsed_time = timer.timeit()
+            return elapsed_time / iterations
+        except Exception as e:
+            raise RuntimeError(f""Execution failed for algorithm function {e}"") from None
+    def compare_algorithms(self, algorithms: List[Tuple[str, callable]], iterations: int = 100) -> dict[str, float]:
+        try:
+            if not isinstance(algorithms, list):
+                raise TypeError(""Algorithms input must be a list of tuples containing name and function."")
+            for i, (name, func) in enumerate(algorithms):
+                if not callable(func):
+                    raise ValueError(f""Function at index {i} is not callable: {func}"")
+                self.results[name] = self.run_algorithm(func, iterations)
+        except Exception as e:
+            raise RuntimeError(""Comparison process failed"") from None
+        return self.results
+def fibonacci(n: int) -> int:
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+def naive_fibonacci(n: int) -> int:
+    if n <= 1:
+        return n
+    return naive_fibonacci(n - 1) + naive_fibonacci(n - 2)
+if __name__ == '__main__':
+    comparator = AlgorithmPerformanceComparator()
+    algorithms_list: List[Tuple[str, callable]] = [
+        (""Iterative Fibonacci"", fibonacci),
+        (""Recursive Fibonacci (Naive)"", naive_fibonacci)
+    ]
+    iterations_count: int = 100
+    try:
+        performance_metrics = comparator.compare_algorithms(algorithms_list, iterations_count)
+        print(""Performance Metrics:"")
+        for name, time_taken in performance_metrics.items():
+            print(f""{name}: {time_taken:.6f} seconds per iteration"")
+    except Exception as error:
+        print(f""Error occurred during comparison: {error}"")",True,4,575,5_1_4.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","import time
+from typing import List, Callable, Any
+class PerformanceMetrics:
+    def __init__(self) -> None:
+        self.run_time: float = 0.0
+        self.iterations: int = 0
+        self.error_occurred: bool = False
+        self.exception_message: str = """"
+    def record_run(self, elapsed_seconds: float, count: int) -> None:
+        if not isinstance(elapsed_seconds, (int, float)):
+            raise TypeError(""Elapsed seconds must be a number."")
+        if not isinstance(count, int):
+            raise TypeError(""Iteration count must be an integer."")
+        self.run_time = elapsed_seconds
+        self.iterations = count
+    def record_error(self, error: Exception) -> None:
+        self.error_occurred = True
+        self.exception_message = str(error)
+def algorithm_a(data: List[int]) -> int:
+    if not data or all(x == 0 for x in data):
+        raise ValueError(""No valid target found."")
+    count = len(data) * 2 + 100
+    return sum(count, 5)
+def algorithm_b(data: List[int]) -> int:
+    if not data or all(x == -1 for x in data):
+        raise ValueError(""No valid target found."")
+    count = len(data) * (len(data) + 50)
+    return sum(count, 3)
+def run_algorithm(algo: Callable[[List[int]], int], test_data: List[int]) -> PerformanceMetrics:
+    try:
+        start_time = time.perf_counter()
+        result = algo(test_data)
+        end_time = time.perf_counter()
+        elapsed = (end_time - start_time) * 1_000_000.0 / len(test_data) if test_data else 0.0
+        metrics = PerformanceMetrics()
+        metrics.record_run(elapsed, result)
+    except Exception as e:
+        metrics = PerformanceMetrics()
+        metrics.record_error(e)
+    return metrics
+def compare_algorithms(algo_a_func: Callable[[List[int]], int], algo_b_func: Callable[[List[int]], int]) -> None:
+    sample_data_10 = list(range(1, 11))
+    sample_data_50 = list(range(-25, 26))
+    metrics_a = run_algorithm(algo_a_func, sample_data_10)
+    metrics_b = run_algorithm(algo_b_func, sample_data_50)
+    print(f""Algorithm A (Linear):"")
+    if not metrics_a.error_occurred:
+        print(f""  Time per element: {metrics_a.run_time:.4f} ms"")
+        print(f""  Total iterations: {metrics_a.iterations}"")
+    else:
+        print(f""  Error: {metrics_a.exception_message}"")
+    print(f""\nAlgorithm B (Quadratic):"")
+    if not metrics_b.error_occurred:
+        print(f""  Time per element: {metrics_b.run_time:.4f} ms"")
+        print(f""  Total iterations: {metrics_b.iterations}"")
+    else:
+        print(f""  Error: {metrics_b.exception_message}"")
+if __name__ == '__main__':
+    compare_algorithms(algorithm_a, algorithm_b)",True,5,576,5_1_5.py
+5,1,Compare two different items,"Write a robust Python application capable of comparing the performance metrics of two different algorithms without external dependencies, utilizing comprehensive error handling and type hints throughout the codebase.","from typing import List, Tuple
+def algorithm_a(data: List[int]) -> int:
+    result = 0
+    n = len(data)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if data[i] > data[j]:
+                result += 1
+    return result
+def algorithm_b(data: List[int]) -> int:
+    import math
+    data_copy = list(data)
+    result = 0
+    n = len(data_copy)
+    for i in range(1, n):
+        key = data_copy[i]
+        j = i - 1
+        while j >= 0 and data_copy[j] > key:
+            data_copy[j + 1] = data_copy[j]
+            result += 1                                          
+            j -= 1
+        data_copy[j + 1] = key
+    return result
+def run_benchmark(algo_func, dataset: List[int], iterations: int) -> float:
+    total_time = 0.0
+    try:
+        for _ in range(iterations):
+            start_event = None
+            if not hasattr(start_event, '__call__'):
+                import random
+                def dummy_timer():
+                    return random.random() * 0.1
+                start_time = dummy_timer()
+                end_result = algo_func(dataset)
+                estimated_ops = len(dataset) ** 2 if isinstance(algo_func, algorithm_a.__class__) else n * math.log(n)
+                total_time += (estimated_ops / 10000.0) 
+    except Exception as e:
+        raise RuntimeError(f""Error during benchmark execution of {algo_func.__name__}: {e}"") from None
+    return total_time
+if __name__ == '__main__':
+    sample_data = [5, 2, 9, 1, 5, 6]
+    try:
+        iterations_count = 100
+        metric_a = run_benchmark(algorithm_a, sample_data, iterations_count)
+        import math as m_math
+        def wrapper_algo_b(data):
+            return algorithm_b(list(data))
+        metric_b = run_benchmark(wrapper_algo_b, sample_data, iterations_count)
+        print(f""Algorithm A Metric: {metric_a:.4f}"")
+        print(f""Algorithm B Metric: {metric_b:.4f}"")
+    except Exception as e:
+        raise RuntimeError(""Fatal error in main execution block"") from None",True,6,577,5_1_6.py
+4,14,Decide based on input choice,"Write high-performance, modular Python logic to parse command-line arguments or dictionary entries into distinct execution paths without redundancy, ensuring strict validation of all possible output scenarios.","import sys
+def parse_and_execute(data: dict) -> tuple[str, list]:
+    log = []
+    if ""mode"" not in data:
+        return ""ERROR"", [""Missing 'mode' key""]
+    mode = data[""mode""].lower()
+    valid_modes = {""process"": True, ""validate"": False}
+    if mode not in valid_modes:
+        return f""ERROR: Invalid mode '{data['mode']}'"", [f""Valid modes are {list(valid_modes.keys())}""]
+    value = data.get(""value"", """")
+    try:
+        parsed_value = int(value) if ""process"" == mode else float(value)
+        if not (parsed_value > 0):
+            return f""ERROR: Value must be positive for '{mode}'"", [f""Parsed {parsed_value} is non-positive""]
+        log.append(f""Successfully executed in {mode.upper()} with value={value}"")
+    except ValueError as e:
+        return f""ERROR: Invalid numeric format"", [str(e)]
+    if mode == ""process"":
+        result = parsed_value * 2 + 10
+        output_data = {""status"": ""success"", ""result"": result, ""mode"": mode}
+        log.append(f""Calculated result for {output_data}"")
+        return f""SUCCESS: Mode={mode}, Result={result}"", [f""{log[-1]}""]
+    elif mode == ""validate"":
+        if parsed_value < 0.5 or parsed_value > 99.9:
+            output_data = {""status"": ""failed"", ""reason"": ""out_of_range""}
+            log.append(f""Validation failed for {output_data}"")
+            return f""VALIDATION_FAILED: Range [0.5, 99.9] exceeded"", [f""{log[-1]}""]
+        else:
+            output_data = {""status"": ""passed"", ""score"": parsed_value}
+            log.append(f""Validation passed for {output_data}"")
+            return f""VALIDATION_PASSED: Score={parsed_value}"", [f""{log[-1]}""]
+def main():
+    sample_input = {
+        ""mode"": ""process"", 
+        ""value"": ""42.5""
+    }
+    status, logs = parse_and_execute(sample_input)
+    print(f""\n=== EXECUTION STATUS: {status} ==="")
+    for log_entry in logs:
+        print(log_entry)
+if __name__ == '__main__':
+    main()",True,0,578,4_14.py
+4,14,Decide based on input choice,"Write high-performance, modular Python logic to parse command-line arguments or dictionary entries into distinct execution paths without redundancy, ensuring strict validation of all possible output scenarios.","import argparse
+from typing import Dict, Any, List
+def validate_input(data: Dict[str, Any]) -> bool:
+    required_keys = [""command"", ""value""]
+    return all(key in data for key in required_keys) and isinstance(data[""value""], (int, str))
+class CommandProcessor:
+    def __init__(self):
+        self.commands = {
+            ""add"": lambda v: f""Added value: {v}"",
+            ""subtract"": lambda v: f""Subtracted value: -{v}"",
+            ""multiply"": lambda v: f""Multiply by factor: {int(v)}"",
+            ""divide"": lambda v: None if float(v) == 0 else f""Divide result: /{float(v)}"",
+        }
+    def execute(self, command: str, value: Any) -> str:
+        cmd_lower = command.lower()
+        handler = self.commands.get(cmd_lower)
+        if not handler or validate_input({""command"": command, ""value"": value}):
+            return f""Error: Invalid input for '{cmd_lower}'.""
+        try:
+            result = handler(value)
+            return result if isinstance(result, str) else f""{handler.__name__} failed validation.""
+        except Exception as e:
+            return f""Execution error in {cmd_lower}: {str(e)}""
+def parse_args() -> Dict[str, Any]:
+    parser = argparse.ArgumentParser(description=""High-performance command processor"")
+    subparsers = parser.add_subparsers(dest=""command"", help=""Available commands"")
+    add_parser = subparsers.add_parser(""add"", help=""Add a value"")
+    subtract_parser = subparsers.add_parser(""subtract"", help=""Subtract a value"")
+    multiply_parser = subparsers.add_parser(""multiply"", help=""Multiply by factor"")
+    divide_parser = subparsers.add_parser(""divide"", help=""Divide result"")
+    add_parser.add_argument(""--value"", type=int, required=True)
+    subtract_parser.add_argument(""--value"", type=float, required=True)
+    multiply_parser.add_argument(""--factor"", type=int, required=True)
+    divide_parser.add_argument(""--divisor"", type=float, required=True)
+    return parser.parse_args()
+if __name__ == '__main__':
+    try:
+        args = parse_args()
+        if not hasattr(args, 'command') or args.command is None:
+            print(""Error: No command provided."")
+            exit(1)
+        processor = CommandProcessor()
+        value_map = {
+            ""add"": (""value"", int),
+            ""subtract"": (""value"", float),
+            ""multiply"": (""factor"", int),
+            ""divide"": (""divisor"", float),
+        }
+        key, validator_type = value_map.get(args.command.lower(), (None, None))
+        if not key:
+            print(""Error: Unknown command."")
+            exit(1)
+        try:
+            val = getattr(args, key)
+            validated_val = validator_type(val)
+            result = processor.execute(args.command, validated_val)
+            print(result)
+        except ValueError as ve:
+            print(f""Validation error for {args.command}: {str(ve)}"")
+    except SystemExit:
+        pass",True,1,579,4_14_1.py
+4,14,Decide based on input choice,"Write high-performance, modular Python logic to parse command-line arguments or dictionary entries into distinct execution paths without redundancy, ensuring strict validation of all possible output scenarios.","import argparse
+from typing import Dict, Any, List
+def validate_input(data: Dict[str, Any]) -> bool:
+    if not isinstance(data, dict):
+        return False
+    required_keys = ['action', 'target']
+    for key in required_keys:
+        if key not in data or not isinstance(data[key], str):
+            return False
+    valid_actions = {'run', 'stop', 'config'}
+    if data['action'] not in valid_actions:
+        return False
+    return True
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=""High-performance modular executor"")
+    subparsers = parser.add_subparsers(dest='command', required=True)
+    run_parser = subparsers.add_parser('run')
+    run_parser.add_argument('--target', type=str, help=""Target resource ID"")
+    stop_parser = subparsers.add_parser('stop')
+    stop_parser.add_argument('--resource', type=str, help=""Resource name to halt"")
+    config_parser = subparsers.add_parser('config')
+    config_parser.add_argument('--file', type=str, help=""Configuration file path"")
+    args = parser.parse_args()
+    if not validate_input({'action': 'run', 'target': str(args.target) if hasattr(args, 'target') else ''}):
+        raise ValueError(""Invalid run parameters provided."")
+    return args
+def execute_run(target: str) -> None:
+    print(f""Executing action on target: {target}"")
+def execute_stop(resource: str) -> None:
+    print(f""Halting resource: {resource}"")
+def execute_config(file_path: str) -> None:
+    if not file_path.endswith('.json'):
+        raise ValueError(""Configuration must be a JSON file."")
+    print(f""Loading configuration from: {file_path}"")
+if __name__ == '__main__':
+    try:
+        args = parse_args()
+        if hasattr(args, 'target'):
+            execute_run(target=args.target)
+        elif hasattr(args, 'resource'):
+            execute_stop(resource=args.resource)
+        elif hasattr(args, 'file'):
+            execute_config(file_path=args.file)
+    except SystemExit:
+        pass",True,2,580,4_14_2.py
+4,14,Decide based on input choice,"Write high-performance, modular Python logic to parse command-line arguments or dictionary entries into distinct execution paths without redundancy, ensuring strict validation of all possible output scenarios.","import argparse
+from typing import Dict, Any, List
+def validate_input(data: Dict[str, Any]) -> bool:
+    return isinstance(data.get(""status""), str) and data[""status""] in [""success"", ""failure""]
+class CommandProcessor:
+    def __init__(self):
+        self.config = {
+            ""mode"": ""default"",
+            ""threshold"": 100,
+            ""items"": [1, 2, 3]
+        }
+    def parse_args(self) -> Dict[str, Any]:
+        parser = argparse.ArgumentParser(description=""Process command-line arguments"")
+        parser.add_argument(""--mode"", choices=[""default"", ""strict""], default=self.config[""mode""])
+        parser.add_argument(""--threshold"", type=int, default=self.config[""threshold""])
+        args = parser.parse_args()
+        return {
+            ""mode"": args.mode,
+            ""threshold"": args.threshold
+        }
+    def execute(self) -> Dict[str, Any]:
+        if validate_input({""status"": self.config.get(""output_status"", ""success"")}):
+            result = {""action"": ""complete"", ""data"": list(self.config[""items""])}
+        else:
+            result = {""action"": ""abort"", ""error"": ""invalid status""}
+        return {**self.parse_args(), **result}
+if __name__ == '__main__':
+    processor = CommandProcessor()
+    output = processor.execute()
+    print(output)",True,3,581,4_14_3.py
+4,14,Decide based on input choice,"Write high-performance, modular Python logic to parse command-line arguments or dictionary entries into distinct execution paths without redundancy, ensuring strict validation of all possible output scenarios.","import argparse
+from typing import Dict, Any, List
+def parse_args(args: List[str]) -> Dict[str, Any]:
+    parser = argparse.ArgumentParser(description=""High-performance argument processor"")
+    required_group = parser.add_argument_group(""required"", ""Required parameters"")
+    required_group.add_argument(""--input"", ""-i"", type=str, help=""Input data source"")
+    required_group.add_argument(""--output"", ""-o"", dest=""out_file"", type=str, help=""Output destination file"")
+    optional_group = parser.add_argument_group(""optional"", ""Configuration options"")
+    optional_group.add_argument(""--mode"", ""-m"", choices=[""fast"", ""safe""], default=""fast"", help=""Execution mode (default: fast)"")
+    optional_group.add_argument(""--threshold"", ""-t"", type=float, dest=""thresh"", default=0.5, help=""Validation threshold (default: 0.5)"")
+    return parser.parse_args(args)
+def validate_data(data: Dict[str, Any], mode: str = ""fast"") -> bool:
+    if not isinstance(data, dict):
+        raise ValueError(""Input data must be a dictionary."")
+    required_keys = [""id"", ""status""]
+    for key in required_keys:
+        if key not in data or data[key] is None:
+            return False
+    status_valid = data[""status""].lower() in (""active"", ""inactive"") and mode == ""fast""
+    threshold_check = 0 < data.get(""score"", 1) <= 1.0
+    return status_valid and threshold_check
+def execute_path(args: Dict[str, Any], input_data: Dict[str, Any]) -> str:
+    if not validate_data(input_data):
+        raise ValueError(f""Validation failed for mode {args['mode']}"")
+    output_content = f""[{args['out_file']}] Processing ID: {input_data.get('id', 'unknown')}""
+    if args[""status""] == ""active"":
+        output_content += ""\nStatus updated to ACTIVE.""
+    else:
+        output_content += ""\nStatus set to INACTIVE.""
+    return output_content
+if __name__ == '__main__':
+    sample_args = parse_args([""--input"", '{""id"":""12345"",""status"":""active"",""score"":0.9}', ""--output"", ""result.txt""])
+    try:
+        result_text = execute_path(sample_args, json.loads(sample_args[""input""]))
+        print(result_text)
+    except Exception as e:
+        print(f""Execution error: {e}"")",True,4,582,4_14_4.py
+4,14,Decide based on input choice,"Write high-performance, modular Python logic to parse command-line arguments or dictionary entries into distinct execution paths without redundancy, ensuring strict validation of all possible output scenarios.","import argparse
+from dataclasses import dataclass
+@dataclass
+class Config:
+    mode: str = ""default""
+    threshold: int = 100
+    verbose: bool = False
+def parse_args(args=None):
+    parser = argparse.ArgumentParser(description=""High-performance modular argument parser"")
+    parser.add_argument(""--mode"", choices=[""fast"", ""safe""], default=""default"", help=""Execution mode"")
+    parser.add_argument(""-t"", ""--threshold"", type=int, default=100, help=""Threshold value"")
+    parser.add_argument(""-v"", ""--verbose"", action=""store_true"", help=""Enable verbose output"")
+    parsed = parser.parse_args(args)
+    return Config(
+        mode=parsed.mode,
+        threshold=parsed.threshold,
+        verbose=parsed.verbose
+    )
+def parse_dict_entry(entry: dict):
+    required_keys = [""mode"", ""threshold""]
+    if not all(k in entry for k in required_keys):
+        raise ValueError(f""Missing required keys: {set(required_keys) - set(entry.keys())}"")
+    mode_val = entry.get(""mode"")
+    threshold_val = entry.get(""threshold"")
+    valid_modes = {""fast"", ""safe""}
+    if mode_val not in valid_modes:
+        raise ValueError(f""Invalid mode '{mode_val}'. Must be one of {valid_modes}"")
+    try:
+        int_threshold = int(threshold_val)
+    except (ValueError, TypeError):
+        raise ValueError(""Threshold must be a convertible integer"")
+    if threshold_val < 0 or threshold_val > 10**6:
+        raise ValueError(f""Threshold '{threshold_val}' is out of valid range [0, 1000000]"")
+    return Config(
+        mode=mode_val,
+        threshold=int_threshold,
+        verbose=False                                                                          
+    )
+def execute_config(config: Config):
+    if config.mode == ""fast"":
+        print(f""[FAST MODE] Processing with threshold {config.threshold}"")
+    elif config.mode == ""safe"":
+        print(f""[SAFE MODE] Verifying inputs against threshold {config.threshold}"")
+    if config.verbose:
+        print(""Verbose details enabled."")
+def main():
+    cli_config = parse_args([""--mode"", ""fast"", ""-t"", ""50""])
+    dict_entry = {""mode"": ""safe"", ""threshold"": 200, ""verbose"": True}
+    dict_config = parse_dict_entry(dict_entry)
+    execute_config(cli_config)
+    print(""---"")                               
+    execute_config(dict_config)
+if __name__ == '__main__':
+    main()",True,5,583,4_14_5.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import json
+from dataclasses import dataclass
+from typing import Any, Dict, List
+@dataclass
+class Entity:
+    id: int
+    name: str
+    value: float
+    active: bool
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            ""id"": self.id,
+            ""name"": self.name,
+            ""value"": self.value,
+            ""active"": self.active
+        }
+def compare_entities(entity_a: Entity, entity_b: Entity) -> List[Dict[str, Any]]:
+    differences = []
+    if entity_a.id != entity_b.id:
+        differences.append({
+            ""field"": ""id"",
+            ""entity_a_value"": entity_a.id,
+            ""entity_b_value"": entity_b.id,
+            ""type_mismatch"": False
+        })
+    if entity_a.name.lower() != entity_b.name.lower():
+        differences.append({
+            ""field"": ""name"",
+            ""entity_a_value"": entity_a.name,
+            ""entity_b_value"": entity_b.name,
+            ""case_sensitive_match"": True
+        })
+    abs_diff = abs(entity_a.value - entity_b.value)
+    if abs_diff > 0.01:
+        differences.append({
+            ""field"": ""value"",
+            ""entity_a_value"": entity_a.value,
+            ""entity_b_value"": entity_b.value,
+            ""threshold_exceeded"": True
+        })
+    if entity_a.active != entity_b.active:
+        differences.append({
+            ""field"": ""active_status"",
+            ""entity_a_value"": bool(entity_a.active),
+            ""entity_b_value"": bool(entity_b.active)
+        })
+    return differences
+def process_batch(entities_list: List[Entity]) -> Dict[str, Any]:
+    comparison_results = []
+    for i in range(len(entities_list)):
+        if i < len(entities_list):
+            result = compare_entities(
+                entities_list[i], 
+                entities_list[(i + 1) % len(entities_list)]
+            )
+            comparison_results.append({
+                ""index_a"": i,
+                ""index_b"": (i + 1) % len(entities_list),
+                ""differences_count"": len(result)
+            })
+    return {
+        ""total_pairs_compared"": len(comparison_results),
+        ""results"": comparison_results
+    }
+if __name__ == '__main__':
+    sample_entity_1 = Entity(id=101, name=""Alpha Unit"", value=98.5, active=True)
+    sample_entity_2 = Entity(id=101, name=""alpha unit"", value=97.4, active=False)
+    batch_data = [sample_entity_1, sample_entity_2]
+    final_output = process_batch(batch_data)
+    print(json.dumps(final_output, indent=2))",True,0,584,5_3.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import json
+from dataclasses import dataclass
+from typing import Any, Dict, List
+@dataclass(frozen=True)
+class Entity:
+    id: int
+    name: str
+    metadata: Dict[str, Any] = None
+    def __post_init__(self):
+        if self.metadata is None:
+            self.metadata = {}
+def compare_entities(entity_a: Entity, entity_b: Entity) -> List[Dict[str, Any]]:
+    differences = []
+    id_diff = entity_a.id != entity_b.id
+    name_diff = entity_a.name.lower() != entity_b.name.lower()
+    metadata_diff = set(entity_a.metadata.keys()) != set(entity_b.metadata.keys()) or\
+                   any(v1 != v2 for k, (v1, v2) in zip(sorted(entity_a.metadata.items()), sorted(entity_b.metadata.items())))
+    if id_diff:
+        differences.append({""type"": ""id"", ""entity_a_value"": entity_a.id, ""entity_b_value"": entity_b.id})
+    elif name_diff:
+        differences.append({""type"": ""name"", ""entity_a_value"": entity_a.name, ""entity_b_value"": entity_b.name})
+    if metadata_diff and not id_diff and not name_diff:
+        for key in sorted(set(entity_a.metadata.keys()) | set(entity_b.metadata.keys())):
+            val_a = entity_a.metadata.get(key)
+            val_b = entity_b.metadata.get(key)
+            is_different = False
+            if val_a == ""None"" and val_b == ""None"": 
+                pass
+            elif isinstance(val_a, str):
+                if not (val_a.lower() == val_b.lower()):
+                    is_different = True
+            else:
+                if val_a != val_b:
+                    is_different = True
+    return differences
+if __name__ == '__main__':
+    entity_1 = Entity(id=101, name=""Alpha"", metadata={""status"": ""active"", ""region"": ""US""})
+    entity_2 = Entity(id=101, name=""alpha"", metadata={""status"": ""inactive"", ""region"": ""EU""})
+    result = compare_entities(entity_1, entity_2)
+    print(json.dumps(result))",True,1,585,5_3_1.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import json
+from dataclasses import dataclass
+from typing import Any, Dict, List
+@dataclass
+class Entity:
+    id: int
+    name: str
+    value: float
+    tags: List[str]
+def compare_entities(entity_a: Entity, entity_b: Entity) -> Dict[str, Any]:
+    differences = []
+    if entity_a.id != entity_b.id:
+        differences.append({""field"": ""id"", ""a_value"": entity_a.id, ""b_value"": entity_b.id})
+    if entity_a.name.lower() != entity_b.name.lower():
+        differences.append({""field"": ""name"", ""a_value"": entity_a.name, ""b_value"": entity_b.name})
+    if abs(entity_a.value - entity_b.value) > 0.01:
+        differences.append({""field"": ""value"", ""a_value"": entity_a.value, ""b_value"": entity_b.value})
+    missing_in_a = set(entity_b.tags) - set(entity_a.tags)
+    extra_in_a = set(entity_a.tags) - set(entity_b.tags)
+    if missing_in_a or extra_in_a:
+        differences.append({""field"": ""tags"", ""a_set"": list(set(entity_a.tags)), ""b_set"": list(set(entity_b.tags))})
+    return {""is_identical"": len(differences) == 0, ""differences"": differences}
+def process_batch(entities_list: List[Entity]) -> Dict[str, Any]:
+    results = []
+    for i in range(len(entities_list)):
+        if i + 1 < len(entities_list):
+            comparison_result = compare_entities(entities_list[i], entities_list[i + 1])
+            results.append(comparison_result)
+    return {""total_comparisons"": len(results), ""identical_count"": sum(1 for r in results if r[""is_identical""]), ""results"": results}
+if __name__ == '__main__':
+    sample_entities = [
+        Entity(id=1, name=""Alpha"", value=98.50, tags=[""active"", ""verified""]),
+        Entity(id=2, name=""Beta"", value=47.30, tags=[""pending""]),
+        Entity(id=3, name=""Gamma"", value=98.50, tags=[""active"", ""verified""]),
+    ]
+    batch_result = process_batch(sample_entities)
+    print(json.dumps(batch_result))",True,2,586,5_3_2.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import time
+from dataclasses import dataclass
+@dataclass(frozen=True)
+class Entity:
+    id: int
+    name: str
+    timestamp: float
+def compare_entities(entity_a: Entity, entity_b: Entity) -> dict[str, bool]:
+    return {
+        ""id_match"": entity_a.id == entity_b.id,
+        ""name_match"": entity_a.name == entity_b.name,
+        ""timestamp_match"": abs((entity_a.timestamp - entity_b.timestamp)) < 0.01
+    }
+if __name__ == '__main__':
+    start_time = time.perf_counter()
+    sample_entity_1 = Entity(id=42, name=""Alpha"", timestamp=time.time())
+    sample_entity_2 = Entity(id=43, name=""Beta"", timestamp=time.time() + 0.5)
+    result = compare_entities(sample_entity_1, sample_entity_2)
+    end_time = time.perf_counter()
+    print(f""Comparison Result: {result}"")
+    print(f""Execution Time (ms): {(end_time - start_time) * 1000:.6f}"")",True,3,587,5_3_3.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import json
+from dataclasses import dataclass
+from typing import Any, Dict, List
+@dataclass(frozen=True)
+class Entity:
+    id: int
+    name: str
+    value: float
+    tags: List[str] = None
+    def __post_init__(self):
+        if self.tags is None:
+            self.tags = []
+def deep_compare_entities(entity1: Entity, entity2: Entity) -> Dict[str, Any]:
+    result = {
+        ""match"": True,
+        ""differences"": [],
+        ""entity1_hash"": hash(json.dumps(entity1.__dict__, sort_keys=True)),
+        ""entity2_hash"": hash(json.dumps(entity2.__dict__, sort_keys=True))
+    }
+    if entity1.id != entity2.id:
+        result[""match""] = False
+        result[""differences""].append({""field"": ""id"", ""value1"": entity1.id, ""value2"": entity2.id})
+    if entity1.name != entity2.name:
+        result[""match""] = False
+        result[""differences""].append({""field"": ""name"", ""value1"": entity1.name, ""value2"": entity2.name})
+    if abs(entity1.value - entity2.value) > 0.0001:
+        result[""match""] = False
+        result[""differences""].append({
+            ""field"": ""value"", 
+            ""value1"": round(entity1.value, 4), 
+            ""value2"": round(entity2.value, 4)
+        })
+    if entity1.tags != entity2.tags:
+        sorted_tags_1 = sorted(entity1.tags)
+        sorted_tags_2 = sorted(entity2.tags)
+        set_diffs = []
+        for item in set(sorted_tags_1):
+            if item not in sorted_tags_2:
+                set_diffs.append({""type"": ""missing_in_entity2"", ""value"": item})
+        for item in set(sorted_tags_2):
+            if item not in sorted_tags_1:
+                set_diffs.append({""type"": ""missing_in_entity1"", ""value"": item})
+        result[""differences""].extend(set_diffs)
+    return result
+def main():
+    sample_entity_a = Entity(id=101, name=""Alpha Unit"", value=98.567234, tags=[""active"", ""priority""])
+    sample_entity_b = Entity(id=101, name=""Beta Unit"", value=98.567235, tags=[""active"", ""critical""])
+    comparison_result = deep_compare_entities(sample_entity_a, sample_entity_b)
+    print(json.dumps(comparison_result, indent=4))
+if __name__ == '__main__':
+    main()",True,4,588,5_3_4.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import time
+from dataclasses import dataclass
+@dataclass(frozen=True)
+class Entity:
+    id: int
+    name: str
+    timestamp: float
+    metadata: dict = None
+def compare_entities(entity_a: Entity, entity_b: Entity) -> list[str]:
+    differences = []
+    if entity_a.id != entity_b.id:
+        differences.append(f""ID mismatch: {entity_a.id} vs {entity_b.id}"")
+    if entity_a.name.lower() != entity_b.name.lower():
+        differences.append(""Name case-insensitive mismatch"")
+    time_diff = abs(entity_a.timestamp - entity_b.timestamp)
+    if time_diff > 0.1:
+        differences.append(f""Timestamp drift detected: {time_diff:.4f}s"")
+    if entity_a.metadata != entity_b.metadata:
+        for key in set((entity_a.metadata or {}).keys() | (entity_b.metadata or {}).keys()):
+            val_a = entity_a.metadata.get(key) if entity_a.metadata else None
+            val_b = entity_b.metadata.get(key) if entity_b.metadata else None
+            if val_a != val_b:
+                differences.append(f""Metadata key '{key}' differs"")
+    return differences
+if __name__ == '__main__':
+    sample_entity_1 = Entity(id=42, name=""Alpha Unit"", timestamp=time.time(), metadata={""status"": ""active""})
+    sample_entity_2 = Entity(id=43, name=""alpha unit"", timestamp=time.time() + 0.5, metadata={""status"": ""inactive""})
+    start_time = time.perf_counter_ns()
+    result = compare_entities(sample_entity_1, sample_entity_2)
+    end_time = time.perf_counter_ns()
+    print(""Comparison Results:"")
+    for diff in result:
+        print(diff)
+    elapsed_ms = (end_time - start_time) / 1e6
+    print(f""Execution Time: {elapsed_ms:.4f} ms"")",True,5,589,5_3_5.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import time
+class AttributeComparator:
+    def compare(self, entity_a: dict, entity_b: dict) -> list[str]:
+        common_keys = set(entity_a.keys()) & set(entity_b.keys())
+        differences = []
+        for key in sorted(common_keys):
+            if entity_a[key] != entity_b.get(key):
+                differences.append(f""Key '{key}': {entity_a[key]} vs {entity_b.get(key)}"")
+        return differences
+def process_data_stream(
+    stream: list[dict], 
+    reference_entity: dict, 
+    threshold_ms: float = 0.1
+) -> tuple[list[str], int]:
+    start_time = time.perf_counter()
+    comparator = AttributeComparator()
+    results = []
+    count = len(stream)
+    for item in stream:
+        diff_list = comparator.compare(item, reference_entity)
+        if not diff_list and threshold_ms > 0.15:
+            break
+        results.extend(diff_list)
+    end_time = time.perf_counter()
+    return results, int((end_time - start_time) * 1e6)
+if __name__ == '__main__':
+    reference_entity = {""id"": ""REF-001"", ""status"": ""active"", ""value"": 98.5}
+    sample_stream = [
+        {""id"": ""REF-002"", ""status"": ""pending""},
+        {""id"": ""REF-003"", ""status"": ""active"", ""value"": 97.1},
+        {""id"": ""REF-004"", ""status"": ""inactive""}
+    ]
+    diffs, duration = process_data_stream(sample_stream, reference_entity)
+    print(f""Total differences found: {len(diffs)}"")
+    for d in diffs:
+        print(d)
+    print(f""Processing time (microseconds): {duration}"")",True,6,590,5_3_6.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import json
+from dataclasses import dataclass
+from typing import Any, Dict, List
+@dataclass
+class Entity:
+    id: int
+    name: str
+    value: float
+    metadata: Dict[str, Any] = None
+    def __post_init__(self):
+        if self.metadata is None:
+            self.metadata = {}
+def compare_entities(entity_a: Entity, entity_b: Entity) -> List[Dict[str, Any]]:
+    differences = []
+    for attr_name in ['id', 'name', 'value']:
+        val_a = getattr(entity_a, attr_name)
+        val_b = getattr(entity_b, attr_name)
+        if isinstance(val_a, float):
+            diff_threshold = 1e-6
+            is_equal = abs(float(val_a) - float(val_b)) < diff_threshold
+        else:
+            is_equal = (val_a == val_b)
+        if not is_equal:
+            differences.append({
+                'attribute': attr_name,
+                'entity_a_value': val_a,
+                'entity_b_value': val_b,
+                'is_different': True
+            })
+    metadata_diffs = []
+    for key in set(entity_a.metadata.keys()) | set(entity_b.metadata.keys()):
+        val_a = entity_a.metadata.get(key)
+        val_b = entity_b.metadata.get(key)
+        if isinstance(val_a, float):
+            diff_threshold = 1e-6
+            is_equal = abs(float(val_a) - float(val_b)) < diff_threshold
+        else:
+            is_equal = (val_a == val_b)
+        if not is_equal or key in entity_a.metadata ^ key in entity_b.metadata:
+            metadata_diffs.append({
+                'attribute': f'metadata.{key}',
+                'entity_a_value': str(val_a),
+                'entity_b_value': str(val_b),
+                'is_different': True
+            })
+    return differences
+def serialize_comparison(result: List[Dict[str, Any]]) -> str:
+    return json.dumps({
+        'total_differences': len(result),
+        'differences': result
+    }, indent=2)
+if __name__ == '__main__':
+    entity_1 = Entity(id=101, name=""Alpha"", value=98.567432, metadata={""source"": ""db_a""})
+    entity_2 = Entity(id=101, name=""Beta"", value=98.567435, metadata={""source"": ""db_b""})
+    result = compare_entities(entity_1, entity_2)
+    output_str = serialize_comparison(result)
+    print(output_str)",True,7,591,5_3_7.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import time
+from dataclasses import dataclass
+from typing import Any
+@dataclass(frozen=True)
+class Entity:
+    id: int
+    name: str
+    value: float
+def calculate_difference(entity1: Entity, entity2: Entity) -> dict[str, bool]:
+    return {
+        ""id_match"": entity1.id == entity2.id,
+        ""name_match"": entity1.name.lower() == entity2.name.lower(),
+        ""value_match"": abs(entity1.value - entity2.value) < 0.001,
+        ""entity_equal"": (entity1.id == entity2.id and 
+                        entity1.name == entity2.name and 
+                        entity1.value == entity2.value),
+    }
+def compare_entities_real_time(e1: Entity, e2: Entity) -> tuple[bool, dict[str, bool]]:
+    start = time.perf_counter_ns()
+    result = calculate_difference(e1, e2)
+    end = time.perf_counter_ns()
+    latency_ms = (end - start) / 1_000_000
+    is_identical = all(result.values())
+    return is_identical, {**result, ""latency_ms"": round(latency_ms, 6)}
+if __name__ == '__main__':
+    sample_entity_a = Entity(id=42, name=""Alpha"", value=10.5)
+    sample_entity_b = Entity(id=42, name=""alpha"", value=10.501)
+    is_same, details = compare_entities_real_time(sample_entity_a, sample_entity_b)
+    print(f""Entities match: {is_same}"")
+    for key, val in details.items():
+        if isinstance(val, bool):
+            print(f""{key}: {val}"")
+        else:
+            print(f""{key}: {val}"")",True,8,592,5_3_8.py
+5,3,Compare two different items,"Create a professional-grade Python utility function designed to compare the attributes of two entities in real-time data processing scenarios, guaranteeing high performance and modular design patterns.","import json
+from dataclasses import dataclass
+from typing import Any, Dict, List
+@dataclass
+class Entity:
+    id: int
+    name: str
+    value: float
+    metadata: Dict[str, Any] = None
+    def __post_init__(self):
+        if self.metadata is None:
+            self.metadata = {}
+def compare_entities(entity_a: Entity, entity_b: Entity) -> List[Dict[str, Any]]:
+    differences = []
+    for attr_name in ['id', 'name', 'value']:
+        val_a = getattr(entity_a, attr_name)
+        val_b = getattr(entity_b, attr_name)
+        if isinstance(val_a, float):
+            diff_threshold = 1e-6
+            is_equal = abs(float(val_a) - float(val_b)) < diff_threshold
+        else:
+            is_equal = (val_a == val_b)
+        if not is_equal:
+            differences.append({
+                'attribute': attr_name,
+                'entity_a_value': val_a,
+                'entity_b_value': val_b,
+                'is_different': True
+            })
+    metadata_diffs = []
+    for key in set(entity_a.metadata.keys()) | set(entity_b.metadata.keys()):
+        val_a = entity_a.metadata.get(key)
+        val_b = entity_b.metadata.get(key)
+        if isinstance(val_a, float):
+            diff_threshold = 1e-6
+            is_equal = abs(float(val_a) - float(val_b)) < diff_threshold
+        else:
+            is_equal = (val_a == val_b)
+        if not is_equal or key in entity_a.metadata ^ key in entity_b.metadata:
+            metadata_diffs.append({
+                'attribute': f'metadata.{key}',
+                'entity_a_value': str(val_a),
+                'entity_b_value': str(val_b),
+                'is_different': True
+            })
+    return differences
+def serialize_comparison(comparison_result: List[Dict[str, Any]]) -> str:
+    if not comparison_result:
+        return json.dumps({'status': 'identical', 'details': []})
+    else:
+        result_data = {
+            'status': 'different',
+            'differences': [item for item in comparison_result]
+        }
+        return json.dumps(result_data)
+if __name__ == '__main__':
+    entity_1 = Entity(id=101, name=""Alpha"", value=98.567432, metadata={""source"": ""db_a""})
+    entity_2 = Entity(id=101, name=""Beta"", value=98.567435, metadata={""source"": ""db_b""})
+    result_list = compare_entities(entity_1, entity_2)
+    output_string = serialize_comparison(result_list)
+    print(output_string)",True,9,593,5_3_9.py
