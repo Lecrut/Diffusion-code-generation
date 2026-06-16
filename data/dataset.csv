@@ -406643,3 +406643,2088 @@ if __name__ == '__main__':
     return result
 if __name__ == '__main__':
     print(generate_pattern(100))",True,3,19991,315_9_3.py
+315,10,Generate repeating patterns easily,"Write a complete, high-quality Python script that generates and prints repeating patterns using nested loops for a user-defined size N, demonstrating patterns like squares and triangles.","import time
+def generate_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+def generate_square(n):
+    for i in range(n):
+        row = """"
+        for j in range(n):
+            row += ""* ""
+        print(row)
+def generate_triangle(n):
+    for i in range(1, n + 1):
+        spaces = "" "" * (n - i)
+        stars = ""*"" * (2 * i - 1)
+        print(spaces + stars)
+if __name__ == '__main__':
+    N = 5
+    print(""--- Square Pattern ---"")
+    generate_square(N)
+    print(""\n--- Triangle Pattern ---"")
+    generate_triangle(N)
+    print(""\n--- Diagonal/Nested Loop Pattern (Square with spaces) ---"")
+    generate_pattern(N)",True,0,19992,315_10.py
+315,10,Generate repeating patterns easily,"Write a complete, high-quality Python script that generates and prints repeating patterns using nested loops for a user-defined size N, demonstrating patterns like squares and triangles.","import time
+def generate_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                print(""*"", end="" "")
+            else:
+                print("" "", end="" "")
+        print()
+def generate_square(n):
+    for i in range(n):
+        row = """"
+        for j in range(n):
+            row += ""* ""
+        print(row)
+def generate_right_triangle(n):
+    for i in range(1, n + 1):
+        for j in range(i):
+            print(""*"", end="" "")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print(""--- Square Pattern (N={}) ---"".format(N))
+    generate_square(N)
+    print(""\n--- Right Triangle Pattern (N={}) ---"".format(N))
+    generate_right_triangle(N)
+    print(""\n--- Diagonal/Square-like Pattern (N={}) ---"".format(N))
+    generate_pattern(N)",True,1,19993,315_10_1.py
+315,10,Generate repeating patterns easily,"Write a complete, high-quality Python script that generates and prints repeating patterns using nested loops for a user-defined size N, demonstrating patterns like squares and triangles.","import sys
+def generate_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                print(""*"", end="" "")
+            else:
+                print("" "", end="" "")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print(f""Pattern for N = {N}:"")
+    generate_pattern(N)",True,2,19994,315_10_2.py
+315,10,Generate repeating patterns easily,"Write a complete, high-quality Python script that generates and prints repeating patterns using nested loops for a user-defined size N, demonstrating patterns like squares and triangles.","import sys
+def generate_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print(f""Pattern for N = {N}:"")
+    generate_pattern(N)
+    print(""\n--- Square Pattern (Filled) ---"")
+    for i in range(N):
+        for j in range(N):
+            print(""*"", end="" "")
+        print()
+    print(""\n--- Triangle Pattern (Right-angled) ---"")
+    for i in range(1, N + 1):
+        for j in range(i):
+            print(""*"", end="""")
+        print()",True,3,19995,315_10_3.py
+315,10,Generate repeating patterns easily,"Write a complete, high-quality Python script that generates and prints repeating patterns using nested loops for a user-defined size N, demonstrating patterns like squares and triangles.","import sys
+def generate_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                print(""*"", end="" "")
+            else:
+                print("" "", end="" "")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print(f""Pattern for N = {N}:"")
+    generate_pattern(N)
+    print(""\n--- Square Pattern (Diagonal emphasis) ---"")
+    for i in range(N):
+        row = """"
+        for j in range(N):
+            if i == j:
+                row += ""*""
+            else:
+                row += "" ""
+        print(row)
+    print(""\n--- Triangle Pattern (Right-angled) ---"")
+    for i in range(1, N + 1):
+        row = """"
+        for j in range(i):
+            row += ""*""
+        print(row)",True,4,19996,315_10_4.py
+315,10,Generate repeating patterns easily,"Write a complete, high-quality Python script that generates and prints repeating patterns using nested loops for a user-defined size N, demonstrating patterns like squares and triangles.","import sys
+def generate_pattern(n):
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print(f""Pattern for N={N}:"")
+    generate_pattern(N)
+    print(""\n--- Square Pattern ---"")
+    for i in range(N):
+        line = """"
+        for j in range(N):
+            if i == j:
+                line += ""*""
+            else:
+                line += "" ""
+        print(line)",True,5,19997,315_10_5.py
+315,11,Generate repeating patterns easily,"Implement an optimized function named 'generate_pattern(n, symbol)' that uses string multiplication and f-strings to efficiently generate and return the complete repeating pattern of a square grid of size N filled with the specified symbol.","def generate_pattern(n, symbol):
+    row = symbol * n
+    pattern = row * n
+    return pattern
+if __name__ == '__main__':
+    N = 3
+    S = '*'
+    result = generate_pattern(N, S)
+    print(result)",True,0,19998,315_11.py
+315,11,Generate repeating patterns easily,"Implement an optimized function named 'generate_pattern(n, symbol)' that uses string multiplication and f-strings to efficiently generate and return the complete repeating pattern of a square grid of size N filled with the specified symbol.","def generate_pattern(n, symbol):
+    row = symbol * n
+    pattern = row * n
+    return pattern
+if __name__ == '__main__':
+    N = 4
+    S = '*'
+    result = generate_pattern(N, S)
+    print(result)",True,1,19999,315_11_1.py
+315,11,Generate repeating patterns easily,"Implement an optimized function named 'generate_pattern(n, symbol)' that uses string multiplication and f-strings to efficiently generate and return the complete repeating pattern of a square grid of size N filled with the specified symbol.","def generate_pattern(n, symbol):
+    row = symbol * n
+    pattern = row * n
+    return pattern
+if __name__ == '__main__':
+    n_val = 3
+    symbol_val = '*'
+    result = generate_pattern(n_val, symbol_val)
+    print(result)",True,2,20000,315_11_2.py
+315,12,Generate repeating patterns easily,"Develop an efficient Python function that generates and prints a right-angled triangle pattern of asterisks (*) for a given number of rows, ensuring the output is clean and follows best practices for loop control.","def print_right_triangle(rows):
+    for i in range(rows):
+        print('*' * (i + 1))
+if __name__ == '__main__':
+    num_rows = 5
+    print_right_triangle(num_rows)",True,0,20001,315_12.py
+315,13,Generate repeating patterns easily,"Write a class named 'PatternGenerator' with a method 'display_repeating_pattern(size, character)' that encapsulates the logic for generating and printing repeating square patterns in an aesthetically pleasing manner.","class PatternGenerator:
+    def display_repeating_pattern(self, size, character):
+        for i in range(size):
+            line = """"
+            for j in range(size):
+                if (i + j) % 2 == 0:
+                    line += character
+                else:
+                    line += "" ""
+            print(line)
+if __name__ == '__main__':
+    generator = PatternGenerator()
+    generator.display_repeating_pattern(5, ""#"")
+    print(""\n"")
+    generator.display_repeating_pattern(7, ""*"")",True,0,20002,315_13.py
+315,13,Generate repeating patterns easily,"Write a class named 'PatternGenerator' with a method 'display_repeating_pattern(size, character)' that encapsulates the logic for generating and printing repeating square patterns in an aesthetically pleasing manner.","class PatternGenerator:
+    def display_repeating_pattern(self, size, character):
+        for i in range(size):
+            line = """"
+            for j in range(size):
+                if (i + j) % 2 == 0:
+                    line += character
+                else:
+                    line += "" ""
+            print(line)
+if __name__ == '__main__':
+    generator = PatternGenerator()
+    generator.display_repeating_pattern(5, '*')
+    print(""\n"")
+    generator.display_repeating_pattern(7, '#')",True,1,20003,315_13_1.py
+315,13,Generate repeating patterns easily,"Write a class named 'PatternGenerator' with a method 'display_repeating_pattern(size, character)' that encapsulates the logic for generating and printing repeating square patterns in an aesthetically pleasing manner.","class PatternGenerator:
+    def display_repeating_pattern(self, size, character):
+        for i in range(size):
+            row = """"
+            for j in range(size):
+                if (i + j) % 2 == 0:
+                    row += character
+                else:
+                    row += "" ""
+            print(row)
+if __name__ == '__main__':
+    generator = PatternGenerator()
+    generator.display_repeating_pattern(5, '*')
+    print(""\n"")
+    generator.display_repeating_pattern(7, '#')",True,2,20004,315_13_2.py
+315,13,Generate repeating patterns easily,"Write a class named 'PatternGenerator' with a method 'display_repeating_pattern(size, character)' that encapsulates the logic for generating and printing repeating square patterns in an aesthetically pleasing manner.","class PatternGenerator:
+    def display_repeating_pattern(self, size, character):
+        for i in range(size):
+            for j in range(size):
+                if (i + j) % 2 == 0:
+                    print(character, end="""")
+                else:
+                    print("" "", end="""")
+            print()
+if __name__ == '__main__':
+    generator = PatternGenerator()
+    generator.display_repeating_pattern(5, ""#"")
+    print(""\n"" * 2)
+    generator.display_repeating_pattern(7, ""@"")",True,3,20005,315_13_3.py
+315,4,Generate repeating patterns easily,"Implement a generator function that yields elements from a repeating pattern defined by a starting value and a step size, ensuring lazy evaluation for memory efficiency when generating large sequences.","def repeating_generator(start, step):
+    current = start
+    while True:
+        yield current
+        current += step
+if __name__ == '__main__':
+    start_value = 0
+    step_size = 3
+    generator = repeating_generator(start_value, step_size)
+    sequence = []
+    for i in range(10):
+        sequence.append(next(generator))
+    print(sequence)",True,0,20006,315_4.py
+315,4,Generate repeating patterns easily,"Implement a generator function that yields elements from a repeating pattern defined by a starting value and a step size, ensuring lazy evaluation for memory efficiency when generating large sequences.","def repeating_generator(start, step):
+    current = start
+    while True:
+        yield current
+        current += step
+if __name__ == '__main__':
+    start_value = 5
+    step_size = 3
+    generator = repeating_generator(start_value, step_size)
+    sequence = []
+    for i in range(10):
+        sequence.append(next(generator))
+    print(f""Generated sequence (first 10 elements): {sequence}"")",True,1,20007,315_4_1.py
+316,0,Print shapes using loops,"Write a complete, well-documented Python script that uses nested loops to print a right-angled triangle pattern of asterisks for a user-defined height.","def print_triangle(height):
+    for i in range(1, height + 1):
+        for j in range(i):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    sample_height = 5
+    print_triangle(sample_height)",True,0,20008,316_0.py
+316,1,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer $N$ and prints an $N 	imes N$ square pattern using nested `for` loops.,"def print_square(N):
+    for i in range(N):
+        for j in range(N):
+            print(""*"", end="""")
+            if j < N - 1:
+                print("" "", end="""")
+            print()
+if __name__ == '__main__':
+    print_square(3)
+    print(""\n"")
+    print_square(5)",True,0,20009,316_1.py
+316,1,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer $N$ and prints an $N 	imes N$ square pattern using nested `for` loops.,"def print_square(N):
+    for i in range(N):
+        for j in range(N):
+            print(""*"", end="""")
+            if j < N - 1:
+                print("" "", end="""")
+            print()
+if __name__ == '__main__':
+    print(""--- Square for N=3 ---"")
+    print_square(3)
+    print(""\n--- Square for N=5 ---"")
+    print_square(5)",True,1,20010,316_1_1.py
+316,1,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer $N$ and prints an $N 	imes N$ square pattern using nested `for` loops.,"import sys
+def print_square(N):
+    for i in range(N):
+        for j in range(N):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    print_square(3)
+    print(""\n"")
+    print_square(5)",True,2,20011,316_1_2.py
+316,1,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer $N$ and prints an $N 	imes N$ square pattern using nested `for` loops.,"def print_square(N):
+    for i in range(N):
+        for j in range(N):
+            print(""*"", end="""")
+            if j < N - 1:
+                print("" "", end="""")
+            print()
+if __name__ == '__main__':
+    print(""--- Example 1 (N=3) ---"")
+    print_square(3)
+    print(""\n--- Example 2 (N=5) ---"")
+    print_square(5)",True,3,20012,316_1_3.py
+315,14,Generate repeating patterns easily,"Create a single, self-contained Python script that prompts the user for input N and then generates three distinct repeating patterns (square, right triangle, and inverted triangle) using efficient iteration techniques.",,False,0,20013,315_14.py
+316,3,Print shapes using loops,Write a robust function that takes an integer $R$ as input and prints a hollow square outline of size $R 	imes R$ using nested loops. Include clear comments explaining the logic.,"def print_hollow_square(R):
+    for i in range(R):
+        for j in range(R):
+            if i == 0 or i == R - 1 or j == 0 or j == R - 1:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print(""--- Hollow Square of size 5x5 ---"")
+    print_hollow_square(5)
+    print(""\n--- Hollow Square of size 3x3 ---"")
+    print_hollow_square(3)",True,0,20014,316_3.py
+316,3,Print shapes using loops,Write a robust function that takes an integer $R$ as input and prints a hollow square outline of size $R 	imes R$ using nested loops. Include clear comments explaining the logic.,"def print_hollow_square(R):
+    for i in range(R):
+        for j in range(R):
+            if i == 0 or i == R - 1 or j == 0 or j == R - 1:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    R_value = 5
+    print_hollow_square(R_value)",True,1,20015,316_3_1.py
+316,3,Print shapes using loops,Write a robust function that takes an integer $R$ as input and prints a hollow square outline of size $R 	imes R$ using nested loops. Include clear comments explaining the logic.,"def print_hollow_square(R):
+    for i in range(R):
+        for j in range(R):
+            if i == 0 or i == R - 1 or j == 0 or j == R - 1:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    R_sample = 5
+    print_hollow_square(R_sample)
+    R_sample = 3
+    print_hollow_square(R_sample)",True,2,20016,316_3_2.py
+316,3,Print shapes using loops,Write a robust function that takes an integer $R$ as input and prints a hollow square outline of size $R 	imes R$ using nested loops. Include clear comments explaining the logic.,"def print_hollow_square(R):
+    for i in range(R):
+        for j in range(R):
+            if i == 0 or i == R - 1 or j == 0 or j == R - 1:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print(""--- Square of size 5 ---"")
+    print_hollow_square(5)
+    print(""\n--- Square of size 3 ---"")
+    print_hollow_square(3)",True,3,20017,316_3_3.py
+316,3,Print shapes using loops,Write a robust function that takes an integer $R$ as input and prints a hollow square outline of size $R 	imes R$ using nested loops. Include clear comments explaining the logic.,"def print_hollow_square(R):
+    for i in range(R):
+        for j in range(R):
+            if i == 0 or i == R - 1 or j == 0 or j == R - 1:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    R1 = 5
+    print(""Hollow square of size"", R1, ""x"", R1)
+    print_hollow_square(R1)
+    R2 = 8
+    print(""\nHollow square of size"", R2, ""x"", R2)
+    print_hollow_square(R2)",True,4,20018,316_3_4.py
+316,2,Print shapes using loops,"Develop a Python program that uses a single loop to print a pattern of numbers from 1 to 5 in a specific triangular arrangement, ensuring optimal space efficiency.",,False,0,20019,316_2.py
+316,5,Print shapes using loops,Implement an efficient solution using nested loops to print a pattern resembling a diamond shape of stars for a given size $N$.,"def print_diamond(n):
+    for i in range(n + 1):
+        spaces = n - i
+        stars = 2 * i + 1
+        print("" "" * spaces + ""*"" * stars)
+        if i < n:
+            print()
+if __name__ == '__main__':
+    N = 5
+    print_diamond(N)",True,0,20020,316_5.py
+316,5,Print shapes using loops,Implement an efficient solution using nested loops to print a pattern resembling a diamond shape of stars for a given size $N$.,"def print_diamond(n):
+    for i in range(n):
+        for j in range(2 * n - 1 - 2 * i):
+            if j < n - i or j >= n + i:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print_diamond(N)",True,1,20021,316_5_1.py
+316,5,Print shapes using loops,Implement an efficient solution using nested loops to print a pattern resembling a diamond shape of stars for a given size $N$.,"def print_diamond(n):
+    for i in range(n + 1):
+        stars = 2 * i + 1
+        spaces = n - i
+        print("" "" * spaces + ""*"" * stars)
+        if i < n:
+            print()
+if __name__ == '__main__':
+    N = 5
+    print_diamond(N)",True,2,20022,316_5_2.py
+316,5,Print shapes using loops,Implement an efficient solution using nested loops to print a pattern resembling a diamond shape of stars for a given size $N$.,"def print_diamond(N):
+    for i in range(N):
+        for j in range(2 * N - 1 - 2 * i):
+            if j < N - i or j >= N + i:
+                print(""*"", end="""")
+            else:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    N = 5
+    print_diamond(N)",True,3,20023,316_5_3.py
+316,6,Print shapes using loops,"Create a Python script that uses nested loops to print a grid of characters (e.g., '#') representing a rectangle of width 10 and height 5. Ensure the output is perfectly aligned.","def print_grid():
+    width = 10
+    height = 5
+    for y in range(height):
+        for x in range(width):
+            print(""#"", end="""")
+        print()
+if __name__ == '__main__':
+    print_grid()",True,0,20024,316_6.py
+316,6,Print shapes using loops,"Create a Python script that uses nested loops to print a grid of characters (e.g., '#') representing a rectangle of width 10 and height 5. Ensure the output is perfectly aligned.","def print_grid():
+    width = 10
+    height = 5
+    symbol = '#'
+    for y in range(height):
+        for x in range(width):
+            print(symbol, end='')
+        print()
+if __name__ == '__main__':
+    print_grid()",True,1,20025,316_6_1.py
+316,6,Print shapes using loops,"Create a Python script that uses nested loops to print a grid of characters (e.g., '#') representing a rectangle of width 10 and height 5. Ensure the output is perfectly aligned.","def print_grid(width, height, char):
+    for y in range(height):
+        for x in range(width):
+            print(char, end="""")
+        print()
+if __name__ == '__main__':
+    width = 10
+    height = 5
+    char = '#'
+    print_grid(width, height, char)",True,2,20026,316_6_2.py
+316,6,Print shapes using loops,"Create a Python script that uses nested loops to print a grid of characters (e.g., '#') representing a rectangle of width 10 and height 5. Ensure the output is perfectly aligned.","def print_grid(width, height, char):
+    for y in range(height):
+        for x in range(width):
+            print(char, end="""")
+            if x < width - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    grid_width = 10
+    grid_height = 5
+    character = '#'
+    print_grid(grid_width, grid_height, character)",True,3,20027,316_6_3.py
+316,7,Print shapes using loops,Write an optimized function that prints a pattern where the $i$-th row consists of $i$ spaces followed by $i$ stars for $i=1$ to 5.,"def print_pattern():
+    for i in range(1, 6):
+        print("" "" * i + ""*"" * i)
+if __name__ == '__main__':
+    print_pattern()",True,0,20028,316_7.py
+316,4,Print shapes using loops,Generate Python code to print a pattern of numbers where each row contains numbers incrementing from 1 up to the current row number. Use appropriate loop control structures.,,False,0,20029,316_4.py
+316,9,Print shapes using loops,Construct a complete program that uses loops to draw an inverted right-angled triangle pattern of characters for a specified number of rows.,"import sys
+def draw_inverted_triangle(rows):
+    for i in range(rows, 0, -1):
+        print(""*"" * i)
+if __name__ == '__main__':
+    num_rows = 5
+    draw_inverted_triangle(num_rows)",True,0,20030,316_9.py
+316,8,Print shapes using loops,Develop Python code utilizing nested loops to print the multiplication table (up to 10) for numbers 1 through 5 in a neatly formatted grid.,"def print_multiplication_table():
+    for i in range(1, 6):
+        for j in range(1, 11):
+            print(f""{i} x {j}: {i * j:3d}"", end="" | "")
+        print()
+if __name__ == '__main__':
+    print_multiplication_table()",True,0,20031,316_8.py
+316,10,Print shapes using loops,"Write a complete, well-commented Python script that uses nested loops to print a 5x5 grid of asterisks (*) to the console. The code must be efficient and follow all Python best practices.","def print_grid():
+    rows = 5
+    cols = 5
+    for i in range(rows):
+        for j in range(cols):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    print_grid()",True,0,20032,316_10.py
+316,10,Print shapes using loops,"Write a complete, well-commented Python script that uses nested loops to print a 5x5 grid of asterisks (*) to the console. The code must be efficient and follow all Python best practices.","def print_grid():
+    size = 5
+    for i in range(size):
+        for j in range(size):
+            print(""*"", end="""")
+        print()
+if __name__ == '__main__':
+    print_grid()",True,1,20033,316_10_1.py
+316,11,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer 'size' and uses a single loop structure (nested loops are acceptable) to print a solid square shape of '#' characters. The function must handle input validation for positive integers.,"def print_square(size):
+    if not isinstance(size, int) or size <= 0:
+        return
+    for i in range(size):
+        for j in range(size):
+            print(""#"", end="""")
+            if j < size - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print_square(5)
+    print(""\n"")
+    print_square(3)
+    print(""\n"")
+    print_square(1)",True,0,20034,316_11.py
+316,11,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer 'size' and uses a single loop structure (nested loops are acceptable) to print a solid square shape of '#' characters. The function must handle input validation for positive integers.,"def print_square(size):
+    if not isinstance(size, int) or size <= 0:
+        return
+    for i in range(size):
+        for j in range(size):
+            print(""#"", end="""")
+            if j < size - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print_square(5)
+    print_square(3)
+    print_square(1)
+    print_square(0)",True,1,20035,316_11_1.py
+316,11,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer 'size' and uses a single loop structure (nested loops are acceptable) to print a solid square shape of '#' characters. The function must handle input validation for positive integers.,"def print_square(size):
+    if not isinstance(size, int) or size <= 0:
+        return
+    for i in range(size):
+        for j in range(size):
+            print(""#"", end="""")
+            if j < size - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print_square(5)
+    print_square(1)
+    print_square(0)
+    print_square(-3)",True,2,20036,316_11_2.py
+316,11,Print shapes using loops,Implement an optimized function named 'print_square' that accepts an integer 'size' and uses a single loop structure (nested loops are acceptable) to print a solid square shape of '#' characters. The function must handle input validation for positive integers.,"def print_square(size):
+    if not isinstance(size, int) or size <= 0:
+        return
+    for i in range(size):
+        for j in range(size):
+            print(""#"", end="""")
+            if j < size - 1:
+                print("" "", end="""")
+        print()
+if __name__ == '__main__':
+    print_square(5)
+    print_square(3)
+    print_square(1)
+    print_square(0)
+    print_square(-2)",True,3,20037,316_11_3.py
+316,13,Print shapes using loops,Write a function 'draw_rectangle' that takes the width and height as arguments and uses nested loops to print an outer boundary and the inner space of a rectangle using the character '@'. The implementation must be professional and efficient.,"def draw_rectangle(width, height):
+    for y in range(height):
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                print('@', end=' ')
+            else:
+                print(' ', end=' ')
+if __name__ == '__main__':
+    draw_rectangle(5, 5)",True,0,20038,316_13.py
+316,13,Print shapes using loops,Write a function 'draw_rectangle' that takes the width and height as arguments and uses nested loops to print an outer boundary and the inner space of a rectangle using the character '@'. The implementation must be professional and efficient.,"def draw_rectangle(width, height):
+    for y in range(height):
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                print('@', end=' ')
+            else:
+                print(' ', end=' ')
+if __name__ == '__main__':
+    draw_rectangle(10, 5)",True,1,20039,316_13_1.py
+316,13,Print shapes using loops,Write a function 'draw_rectangle' that takes the width and height as arguments and uses nested loops to print an outer boundary and the inner space of a rectangle using the character '@'. The implementation must be professional and efficient.,"def draw_rectangle(width, height):
+    for y in range(height):
+        for x in range(width):
+            if x == 0 or x == width - 1 or y == 0 or y == height - 1:
+                print('@', end="""")
+            else:
+                print(' ', end="""")
+    print()
+if __name__ == '__main__':
+    draw_rectangle(10, 5)",True,2,20040,316_13_2.py
+316,12,Print shapes using loops,Develop a Python program that uses a single loop to print a right-angled triangle pattern of numbers starting from 1 up to the current row number. Ensure the output is perfectly aligned and the code is highly readable.,,False,0,20041,316_12.py
+317,0,Cycle through a small range,"Write a complete, robust Python script that cycles sequentially through a predefined small range of integers, from 1 to 10, and prints each number.","if __name__ == '__main__':
+    for i in range(1, 11):
+        print(i)",True,0,20042,317_0.py
+316,14,Print shapes using loops,Generate the most efficient Python code possible to print a pattern where each line 'i' prints 'i' number of spaces followed by 'i' stars ('*'). Use a `for` loop for iteration and ensure the resulting output is a symmetrical triangle pattern.,,False,0,20043,316_14.py
+317,1,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts a start and end integer and uses a `for` loop to iterate and yield the numbers in that range, adhering to best practices.","def cycle_range(start, end):
+    for i in range(start, end + 1):
+        yield i
+if __name__ == '__main__':
+    print(list(cycle_range(5, 10)))
+    print(list(cycle_range(1, 3)))",True,0,20044,317_1.py
+317,1,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts a start and end integer and uses a `for` loop to iterate and yield the numbers in that range, adhering to best practices.","def cycle_range(start, end):
+    for i in range(start, end + 1):
+        yield i
+if __name__ == '__main__':
+    print(list(cycle_range(1, 5)))
+    print(list(cycle_range(10, 12)))",True,1,20045,317_1_1.py
+317,2,Cycle through a small range,"Develop a class named `RangeCycler` with an initializer that sets the minimum and maximum bounds, and implement a method to iterate and print every integer within that defined range in ascending order.","class RangeCycler:
+    def __init__(self, min_val, max_val):
+        self.min = min_val
+        self.max = max_val
+    def print_range(self):
+        for i in range(self.min, self.max + 1):
+            print(i)
+if __name__ == '__main__':
+    cycler = RangeCycler(5, 10)
+    cycler.print_range()",True,0,20046,317_2.py
+317,2,Cycle through a small range,"Develop a class named `RangeCycler` with an initializer that sets the minimum and maximum bounds, and implement a method to iterate and print every integer within that defined range in ascending order.","class RangeCycler:
+    def __init__(self, min_val, max_val):
+        self.min = min_val
+        self.max = max_val
+    def print_range(self):
+        for i in range(self.min, self.max + 1):
+            print(i)
+if __name__ == '__main__':
+    cycler = RangeCycler(5, 12)
+    cycler.print_range()",True,1,20047,317_2_1.py
+317,2,Cycle through a small range,"Develop a class named `RangeCycler` with an initializer that sets the minimum and maximum bounds, and implement a method to iterate and print every integer within that defined range in ascending order.","class RangeCycler:
+    def __init__(self, min_val, max_val):
+        self.min = min_val
+        self.max = max_val
+    def print_range(self):
+        for i in range(self.min, self.max + 1):
+            print(i)
+if __name__ == '__main__':
+    r = RangeCycler(5, 10)
+    r.print_range()",True,2,20048,317_2_2.py
+317,2,Cycle through a small range,"Develop a class named `RangeCycler` with an initializer that sets the minimum and maximum bounds, and implement a method to iterate and print every integer within that defined range in ascending order.","class RangeCycler:
+    def __init__(self, min_val, max_val):
+        self.min = min_val
+        self.max = max_val
+    def print_range(self):
+        for i in range(self.min, self.max + 1):
+            print(i)
+if __name__ == '__main__':
+    r = RangeCycler(5, 12)
+    r.print_range()",True,3,20049,317_2_3.py
+317,2,Cycle through a small range,"Develop a class named `RangeCycler` with an initializer that sets the minimum and maximum bounds, and implement a method to iterate and print every integer within that defined range in ascending order.","class RangeCycler:
+    def __init__(self, min_val, max_val):
+        self.min = min_val
+        self.max = max_val
+    def print_range(self):
+        for i in range(self.min, self.max + 1):
+            print(i)
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    cycler.print_range()",True,4,20050,317_2_4.py
+317,3,Cycle through a small range,"Write a concise Python expression or function using the `range()` function to generate and print all even numbers within the range of 0 to 20, ensuring maximum efficiency.","if __name__ == '__main__':
+    for i in range(0, 21, 2):
+        print(i)",True,0,20051,317_3.py
+317,4,Cycle through a small range,"Create a generator function that cycles through a small, user-defined range (e.g., 5 to 15) and yields each number one by one, suitable for memory efficiency.","def number_cycler(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    start_val = 5
+    end_val = 15
+    cycler = number_cycler(start_val, end_val)
+    for num in cycler:
+        print(num)",True,0,20052,317_4.py
+317,4,Cycle through a small range,"Create a generator function that cycles through a small, user-defined range (e.g., 5 to 15) and yields each number one by one, suitable for memory efficiency.","def range_generator(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    start_val = 5
+    end_val = 15
+    generator = range_generator(start_val, end_val)
+    for number in generator:
+        print(number)",True,1,20053,317_4_1.py
+317,4,Cycle through a small range,"Create a generator function that cycles through a small, user-defined range (e.g., 5 to 15) and yields each number one by one, suitable for memory efficiency.","def number_cycler(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    for num in number_cycler(5, 15):
+        print(num)",True,2,20054,317_4_2.py
+317,5,Cycle through a small range,"Implement an iterative approach using a `while` loop to cycle through the numbers from -3 to 3 and print them, ensuring the control flow is mathematically sound and efficient.",,False,0,20055,317_5.py
+317,7,Cycle through a small range,"Design and implement a highly optimized function that takes a list and cycles through it exactly once, printing each element iteratively.","def cycle_and_print(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    cycle_and_print(sample_list)",True,0,20056,317_7.py
+317,7,Cycle through a small range,"Design and implement a highly optimized function that takes a list and cycles through it exactly once, printing each element iteratively.","def cycle_and_print(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    cycle_and_print(sample_list)",True,1,20057,317_7_1.py
+317,7,Cycle through a small range,"Design and implement a highly optimized function that takes a list and cycles through it exactly once, printing each element iteratively.","def cycle_print(data):
+    for item in data:
+        print(item)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    cycle_print(sample_list)",True,2,20058,317_7_2.py
+317,8,Cycle through a small range,Write the most Pythonic way to cycle through the numbers from 100 down to 95 (a small descending range) and print them using a standard loop structure.,"if __name__ == '__main__':
+    for i in range(100, 94, -1):
+        print(i)",True,0,20059,317_8.py
+317,9,Cycle through a small range,"Develop a reusable function that accepts a list of numbers and cycles through it, printing each number exactly once in a clean, readable manner, following all PEP 8 guidelines.","def cycle_and_print(numbers):
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    sample_list = [10, 25, 33, 48, 51]
+    cycle_and_print(sample_list)",True,0,20060,317_9.py
+317,9,Cycle through a small range,"Develop a reusable function that accepts a list of numbers and cycles through it, printing each number exactly once in a clean, readable manner, following all PEP 8 guidelines.","def cycle_print_numbers(numbers):
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    sample_list = [10, 25, 33, 48, 51]
+    cycle_print_numbers(sample_list)",True,1,20061,317_9_1.py
+317,9,Cycle through a small range,"Develop a reusable function that accepts a list of numbers and cycles through it, printing each number exactly once in a clean, readable manner, following all PEP 8 guidelines.","def cycle_print_numbers(numbers):
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    sample_list = [10, 25, 33, 47, 51]
+    cycle_print_numbers(sample_list)",True,2,20062,317_9_2.py
+317,9,Cycle through a small range,"Develop a reusable function that accepts a list of numbers and cycles through it, printing each number exactly once in a clean, readable manner, following all PEP 8 guidelines.","def cycle_print_numbers(numbers):
+    for number in numbers:
+        print(number)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 45, 50]
+    cycle_print_numbers(sample_list)",True,3,20063,317_9_3.py
+317,10,Cycle through a small range,"Write a robust and efficient Python script that generates and prints all even numbers within a specified small range, from a lower bound to an upper bound, inclusive.","if __name__ == '__main__':
+    lower_bound = 2
+    upper_bound = 20
+    even_numbers = []
+    for number in range(lower_bound, upper_bound + 1):
+        if number % 2 == 0:
+            even_numbers.append(number)
+    print(*even_numbers)",True,0,20064,317_10.py
+317,10,Cycle through a small range,"Write a robust and efficient Python script that generates and prints all even numbers within a specified small range, from a lower bound to an upper bound, inclusive.","if __name__ == '__main__':
+    lower_bound = 2
+    upper_bound = 10
+    even_numbers = []
+    for number in range(lower_bound, upper_bound + 1):
+        if number % 2 == 0:
+            even_numbers.append(number)
+    print(*even_numbers)",True,1,20065,317_10_1.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    if start > end:
+        return
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 8):"")
+    for num in cycle_range(10, 8):
+        print(num)
+    print(""\nTesting cycle_range(0, 3):"")
+    for num in cycle_range(0, 3):
+        print(num)",True,0,20066,317_11.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    if start <= end:
+        for i in range(start, end + 1):
+            yield i
+    elif end < start:
+        for i in range(end, start - 1, -1):
+            yield i
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 8):"")
+    for num in cycle_range(10, 8):
+        print(num)
+    print(""\nTesting cycle_range(5, 5):"")
+    for num in cycle_range(5, 5):
+        print(num)",True,1,20067,317_11_1.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    current = start
+    if start > end:
+        return
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 7):"")
+    for num in cycle_range(10, 7):
+        print(num)
+    print(""\nTesting cycle_range(5, 5):"")
+    for num in cycle_range(5, 5):
+        print(num)",True,2,20068,317_11_2.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    if start <= end:
+        for i in range(start, end + 1):
+            yield i
+    elif end < start:
+        for i in range(end, start - 1, -1):
+            yield i
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(5, 1):"")
+    for num in cycle_range(5, 1):
+        print(num)
+    print(""\nTesting cycle_range(3, 3):"")
+    for num in cycle_range(3, 3):
+        print(num)",True,3,20069,317_11_3.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    if start <= end:
+        for i in range(start, end + 1):
+            yield i
+    elif start > end:
+        for i in range(start, end - 1, -1):
+            yield i
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(5, 1):"")
+    for num in cycle_range(5, 1):
+        print(num)
+    print(""\nTesting cycle_range(3, 3):"")
+    for num in cycle_range(3, 3):
+        print(num)",True,4,20070,317_11_4.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    current = start
+    if start > end:
+        return
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 8):"")
+    for num in cycle_range(10, 8):
+        print(num)
+    print(""\nTesting cycle_range(5, 5):"")
+    for num in cycle_range(5, 5):
+        print(num)",True,5,20071,317_11_5.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    current = start
+    if start > end:
+        return
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(list(cycle_range(5, 10)))
+    print(list(cycle_range(10, 5)))
+    print(list(cycle_range(0, 3)))",True,6,20072,317_11_6.py
+317,11,Cycle through a small range,"Implement an optimized function named `cycle_range` that accepts integer arguments for a start and end value and uses a loop to yield every number in that range, ensuring the implementation is highly performant.","def cycle_range(start, end):
+    if start > end:
+        return
+    for i in range(start, end + 1):
+        yield i
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 8):"")
+    for num in cycle_range(10, 8):
+        print(num)
+    print(""\nTesting cycle_range(0, 3):"")
+    for num in cycle_range(0, 3):
+        print(num)",True,7,20073,317_11_7.py
+317,12,Cycle through a small range,"Develop a complete Python program that iterates through a small numerical cycle defined by `start` and `stop` parameters, storing the sequence in a list and then printing the resulting list.","def iterate_cycle(start, stop):
+    sequence = []
+    current = start
+    while current <= stop:
+        sequence.append(current)
+        current += 1
+    return sequence
+if __name__ == '__main__':
+    start_value = 5
+    stop_value = 12
+    result = iterate_cycle(start_value, stop_value)
+    print(result)",True,0,20074,317_12.py
+317,12,Cycle through a small range,"Develop a complete Python program that iterates through a small numerical cycle defined by `start` and `stop` parameters, storing the sequence in a list and then printing the resulting list.","def cycle_iterator(start, stop):
+    sequence = []
+    current = start
+    while current <= stop:
+        sequence.append(current)
+        current += 1
+    return sequence
+if __name__ == '__main__':
+    start_value = 5
+    stop_value = 10
+    result_list = cycle_iterator(start_value, stop_value)
+    print(result_list)",True,1,20075,317_12_1.py
+317,13,Cycle through a small range,"Write a class method within a `RangeCycler` class that contains a method to generate an iterator for a small range of integers, adhering strictly to best practices for object-oriented programming and efficiency.","class RangeCycler:
+    def generate_range_iterator(self, start: int, end: int) -> iter:
+        return iter(range(start, end))
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 5
+    end_val = 10
+    iterator = cycler.generate_range_iterator(start_val, end_val)
+    result = list(iterator)
+    print(f""Generated range: {result}"")",True,0,20076,317_13.py
+317,13,Cycle through a small range,"Write a class method within a `RangeCycler` class that contains a method to generate an iterator for a small range of integers, adhering strictly to best practices for object-oriented programming and efficiency.","class RangeCycler:
+    def generate_range_iterator(self, start, stop):
+        return iter(range(start, stop))
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 5
+    stop_val = 10
+    iterator = cycler.generate_range_iterator(start_val, stop_val)
+    result = list(iterator)
+    print(result)",True,1,20077,317_13_1.py
+317,13,Cycle through a small range,"Write a class method within a `RangeCycler` class that contains a method to generate an iterator for a small range of integers, adhering strictly to best practices for object-oriented programming and efficiency.","class RangeCycler:
+    def generate_range_iterator(self, start, stop):
+        return iter(range(start, stop))
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 1
+    stop_val = 6
+    iterator = cycler.generate_range_iterator(start_val, stop_val)
+    result = list(iterator)
+    print(result)",True,2,20078,317_13_2.py
+317,13,Cycle through a small range,"Write a class method within a `RangeCycler` class that contains a method to generate an iterator for a small range of integers, adhering strictly to best practices for object-oriented programming and efficiency.","class RangeCycler:
+    def generate_range_iterator(self, start, stop):
+        def iterator():
+            current = start
+            while current < stop:
+                yield current
+                current += 1
+        return iterator()
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 5
+    stop_val = 10
+    iterator = cycler.generate_range_iterator(start_val, stop_val)
+    result = list(iterator)
+    print(result)",True,3,20079,317_13_3.py
+317,13,Cycle through a small range,"Write a class method within a `RangeCycler` class that contains a method to generate an iterator for a small range of integers, adhering strictly to best practices for object-oriented programming and efficiency.","class RangeCycler:
+    def generate_range_iterator(self, start, stop):
+        for i in range(start, stop):
+            yield i
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 1
+    stop_val = 6
+    iterator = cycler.generate_range_iterator(start_val, stop_val)
+    result_list = list(iterator)
+    print(result_list)",True,4,20080,317_13_4.py
+317,14,Cycle through a small range,Create a concise Python function that takes two integers defining the minimum and maximum bounds of a cycle and uses a list comprehension to generate all integers within that small range.,"def generate_cycle(min_val, max_val):
+    return [i for i in range(min_val, max_val + 1)]
+if __name__ == '__main__':
+    min_bound = 5
+    max_bound = 10
+    result = generate_cycle(min_bound, max_bound)
+    print(result)",True,0,20081,317_14.py
+317,14,Cycle through a small range,Create a concise Python function that takes two integers defining the minimum and maximum bounds of a cycle and uses a list comprehension to generate all integers within that small range.,"def generate_cycle(min_val, max_val):
+    return [i for i in range(min_val, max_val + 1)]
+if __name__ == '__main__':
+    min_bound = 3
+    max_bound = 7
+    result = generate_cycle(min_bound, max_bound)
+    print(result)",True,1,20082,317_14_1.py
+317,14,Cycle through a small range,Create a concise Python function that takes two integers defining the minimum and maximum bounds of a cycle and uses a list comprehension to generate all integers within that small range.,"def generate_cycle(min_val, max_val):
+    return [i for i in range(min_val, max_val + 1)]
+if __name__ == '__main__':
+    min_bound = 5
+    max_bound = 10
+    cycle = generate_cycle(min_bound, max_bound)
+    print(cycle)",True,2,20083,317_14_2.py
+318,0,Compare adjacent elements always,"Write a complete, robust Python script to iterate over a list of numbers and print the sum of every adjacent pair.","def sum_adjacent_pairs(numbers):
+    sums = []
+    for i in range(len(numbers) - 1):
+        pair_sum = numbers[i] + numbers[i+1]
+        sums.append(pair_sum)
+    return sums
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result = sum_adjacent_pairs(data)
+    print(result)",True,0,20084,318_0.py
+318,0,Compare adjacent elements always,"Write a complete, robust Python script to iterate over a list of numbers and print the sum of every adjacent pair.","def calculate_adjacent_sums(numbers):
+    sums = []
+    for i in range(len(numbers) - 1):
+        sum_val = numbers[i] + numbers[i+1]
+        sums.append(sum_val)
+    return sums
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result = calculate_adjacent_sums(data)
+    print(result)",True,1,20085,318_0_1.py
+318,0,Compare adjacent elements always,"Write a complete, robust Python script to iterate over a list of numbers and print the sum of every adjacent pair.","def calculate_adjacent_sum(numbers):
+    sums = []
+    for i in range(len(numbers) - 1):
+        sums.append(numbers[i] + numbers[i+1])
+    return sums
+if __name__ == '__main__':
+    data = [1, 2, 3, 4, 5]
+    result = calculate_adjacent_sum(data)
+    print(result)",True,2,20086,318_0_2.py
+318,0,Compare adjacent elements always,"Write a complete, robust Python script to iterate over a list of numbers and print the sum of every adjacent pair.","def calculate_adjacent_sum(numbers):
+    sums = []
+    for i in range(len(numbers) - 1):
+        current_sum = numbers[i] + numbers[i+1]
+        sums.append(current_sum)
+    return sums
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    result = calculate_adjacent_sum(sample_list)
+    print(result)",True,3,20087,318_0_3.py
+318,1,Compare adjacent elements always,Implement an optimized function named `compare_adjacent` that takes a list of numbers and returns a new list containing the differences between all adjacent elements.,"def compare_adjacent(numbers):
+    differences = []
+    for i in range(len(numbers) - 1):
+        diff = numbers[i+1] - numbers[i]
+        differences.append(diff)
+    return differences
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 7, 9]
+    result = compare_adjacent(sample_list)
+    print(result)",True,0,20088,318_1.py
+318,1,Compare adjacent elements always,Implement an optimized function named `compare_adjacent` that takes a list of numbers and returns a new list containing the differences between all adjacent elements.,"def compare_adjacent(data):
+    differences = []
+    for i in range(len(data) - 1):
+        diff = data[i+1] - data[i]
+        differences.append(diff)
+    return differences
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 7, 9]
+    result = compare_adjacent(sample_list)
+    print(result)",True,1,20089,318_1_1.py
+318,1,Compare adjacent elements always,Implement an optimized function named `compare_adjacent` that takes a list of numbers and returns a new list containing the differences between all adjacent elements.,"def compare_adjacent(data):
+    differences = []
+    for i in range(1, len(data)):
+        diff = data[i] - data[i-1]
+        differences.append(diff)
+    return differences
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 7, 9]
+    result = compare_adjacent(sample_list)
+    print(result)",True,2,20090,318_1_2.py
+318,2,Compare adjacent elements always,Develop a class named `AdjacentComparator` with a method to compare every adjacent pair in an input list and store the results in an internal list.,"class AdjacentComparator:
+    def compare_adjacent(self, data):
+        results = []
+        for i in range(len(data) - 1):
+            a = data[i]
+            b = data[i+1]
+            comparison_result = 0
+            if a < b:
+                comparison_result = -1
+            elif a > b:
+                comparison_result = 1
+            else:
+                comparison_result = 0
+            results.append((a, b, comparison_result))
+        return results
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [1, 5, 2, 8, 3]
+    comparison_results = comparator.compare_adjacent(sample_list)
+    print(comparison_results)",True,0,20091,318_2.py
+318,2,Compare adjacent elements always,Develop a class named `AdjacentComparator` with a method to compare every adjacent pair in an input list and store the results in an internal list.,"class AdjacentComparator:
+    def compare_adjacent(self, data):
+        results = []
+        for i in range(len(data) - 1):
+            comparison = data[i] > data[i+1]
+            results.append((data[i], data[i+1], comparison))
+        return results
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [1, 5, 2, 8, 3]
+    comparison_results = comparator.compare_adjacent(sample_list)
+    print(comparison_results)",True,1,20092,318_2_1.py
+318,2,Compare adjacent elements always,Develop a class named `AdjacentComparator` with a method to compare every adjacent pair in an input list and store the results in an internal list.,"class AdjacentComparator:
+    def compare_adjacent(self, data):
+        results = []
+        for i in range(len(data) - 1):
+            result = (data[i], data[i+1])
+            results.append(result)
+        return results
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [1, 5, 2, 8, 3]
+    comparison_results = comparator.compare_adjacent(sample_list)
+    print(comparison_results)",True,2,20093,318_2_2.py
+318,3,Compare adjacent elements always,Write an efficient algorithm to iterate through a list of strings and identify and print all pairs of adjacent strings that have different lengths.,"def find_adjacent_different_lengths(string_list):
+    result = []
+    for i in range(len(string_list) - 1):
+        current_string = string_list[i]
+        next_string = string_list[i+1]
+        if len(current_string) != len(next_string):
+            result.append((current_string, next_string))
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    output = find_adjacent_different_lengths(sample_list)
+    for s1, s2 in output:
+        print(f""('{s1}', '{s2}')"")",True,0,20094,318_3.py
+318,3,Compare adjacent elements always,Write an efficient algorithm to iterate through a list of strings and identify and print all pairs of adjacent strings that have different lengths.,"def find_different_length_pairs(string_list):
+    result = []
+    n = len(string_list)
+    for i in range(n - 1):
+        if len(string_list[i]) != len(string_list[i+1]):
+            result.append((string_list[i], string_list[i+1]))
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    output = find_different_length_pairs(sample_list)
+    for s1, s2 in output:
+        print(f""Pair: ('{s1}', '{s2}')"")",True,1,20095,318_3_1.py
+318,3,Compare adjacent elements always,Write an efficient algorithm to iterate through a list of strings and identify and print all pairs of adjacent strings that have different lengths.,"def find_different_length_pairs(list_of_strings):
+    result = []
+    n = len(list_of_strings)
+    for i in range(n - 1):
+        if len(list_of_strings[i]) != len(list_of_strings[i+1]):
+            result.append((list_of_strings[i], list_of_strings[i+1]))
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    output = find_different_length_pairs(sample_list)
+    for s1, s2 in output:
+        print(f""('{s1}', '{s2}')"")",True,2,20096,318_3_2.py
+318,3,Compare adjacent elements always,Write an efficient algorithm to iterate through a list of strings and identify and print all pairs of adjacent strings that have different lengths.,"def find_different_length_pairs(string_list):
+    result = []
+    for i in range(len(string_list) - 1):
+        current_string = string_list[i]
+        next_string = string_list[i+1]
+        if len(current_string) != len(next_string):
+            result.append((current_string, next_string))
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    output = find_different_length_pairs(sample_list)
+    for s1, s2 in output:
+        print(f""Pair: ('{s1}', '{s2}')"")",True,3,20097,318_3_3.py
+318,3,Compare adjacent elements always,Write an efficient algorithm to iterate through a list of strings and identify and print all pairs of adjacent strings that have different lengths.,"def find_different_length_pairs(string_list):
+    result = []
+    n = len(string_list)
+    for i in range(n - 1):
+        if len(string_list[i]) != len(string_list[i+1]):
+            result.append((string_list[i], string_list[i+1]))
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    output = find_different_length_pairs(sample_list)
+    for s1, s2 in output:
+        print(f""('{s1}', '{s2}')"")",True,4,20098,318_3_4.py
+318,3,Compare adjacent elements always,Write an efficient algorithm to iterate through a list of strings and identify and print all pairs of adjacent strings that have different lengths.,"def find_different_length_adjacent_pairs(string_list):
+    result = []
+    n = len(string_list)
+    for i in range(n - 1):
+        if len(string_list[i]) != len(string_list[i+1]):
+            result.append((string_list[i], string_list[i+1]))
+    return result
+if __name__ == '__main__':
+    sample_list = [""apple"", ""banana"", ""kiwi"", ""grapefruit"", ""orange""]
+    output = find_different_length_adjacent_pairs(sample_list)
+    for s1, s2 in output:
+        print(f""Pair: ('{s1}', '{s2}')"")",True,5,20099,318_3_5.py
+318,4,Compare adjacent elements always,"Implement a generator function that yields tuples containing every pair of adjacent elements from an input iterable, focusing on numerical data.","def adjacent_pairs(data):
+    for i in range(len(data) - 1):
+        yield (data[i], data[i+1])
+if __name__ == '__main__':
+    input_list = [1, 2, 3, 4, 5]
+    result_generator = adjacent_pairs(input_list)
+    output_list = list(result_generator)
+    print(output_list)",True,0,20100,318_4.py
+318,4,Compare adjacent elements always,"Implement a generator function that yields tuples containing every pair of adjacent elements from an input iterable, focusing on numerical data.","def adjacent_pairs(data):
+    for i in range(len(data) - 1):
+        yield (data[i], data[i+1])
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    result_generator = adjacent_pairs(sample_data)
+    output = list(result_generator)
+    print(output)",True,1,20101,318_4_1.py
+318,4,Compare adjacent elements always,"Implement a generator function that yields tuples containing every pair of adjacent elements from an input iterable, focusing on numerical data.","def adjacent_pairs(data):
+    for i in range(len(data) - 1):
+        yield (data[i], data[i+1])
+if __name__ == '__main__':
+    input_list = [1, 2, 3, 4, 5]
+    result_generator = adjacent_pairs(input_list)
+    output = list(result_generator)
+    print(output)",True,2,20102,318_4_2.py
+318,5,Compare adjacent elements always,"Write a production-ready Python function that takes a list of floating-point numbers and returns a list detailing the ratio comparison (element B / element A) for all adjacent pairs (A, B).","def calculate_adjacent_ratios(data):
+    ratios = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a != 0:
+            ratio = b / a
+            ratios.append(ratio)
+        else:
+            ratios.append(float('inf') if b > 0 else float('-inf') if b < 0 else float('nan'))
+    return ratios
+if __name__ == '__main__':
+    sample_data = [10.0, 20.0, 5.0, 0.0, -4.0, 8.0]
+    result = calculate_adjacent_ratios(sample_data)
+    print(result)",True,0,20103,318_5.py
+318,5,Compare adjacent elements always,"Write a production-ready Python function that takes a list of floating-point numbers and returns a list detailing the ratio comparison (element B / element A) for all adjacent pairs (A, B).","def calculate_adjacent_ratios(data):
+    ratios = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a != 0:
+            ratio = b / a
+            ratios.append(ratio)
+        else:
+            ratios.append(float('inf') if b > 0 else float('-inf') if b < 0 else float('nan'))
+    return ratios
+if __name__ == '__main__':
+    sample_data = [10.0, 20.0, 5.0, 0.0, -3.0, 1.0]
+    result = calculate_adjacent_ratios(sample_data)
+    print(result)",True,1,20104,318_5_1.py
+318,5,Compare adjacent elements always,"Write a production-ready Python function that takes a list of floating-point numbers and returns a list detailing the ratio comparison (element B / element A) for all adjacent pairs (A, B).","def calculate_ratios(data):
+    ratios = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a != 0:
+            ratio = b / a
+            ratios.append(ratio)
+        else:
+            ratios.append(float('inf') if b > 0 else float('-inf') if b < 0 else float('nan'))
+    return ratios
+if __name__ == '__main__':
+    sample_data = [10.0, 20.0, 5.0, 0.0, -10.0, 30.0]
+    result = calculate_ratios(sample_data)
+    print(result)",True,2,20105,318_5_2.py
+318,5,Compare adjacent elements always,"Write a production-ready Python function that takes a list of floating-point numbers and returns a list detailing the ratio comparison (element B / element A) for all adjacent pairs (A, B).","def calculate_adjacent_ratios(data):
+    ratios = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        if a != 0:
+            ratio = b / a
+            ratios.append(ratio)
+        else:
+            ratios.append(float('inf') if b > 0 else float('-inf') if b < 0 else float('nan'))
+    return ratios
+if __name__ == '__main__':
+    sample_data = [10.0, 20.0, 5.0, 0.0, -10.0, 30.0]
+    result = calculate_adjacent_ratios(sample_data)
+    print(result)",True,3,20106,318_5_3.py
+315,8,Generate repeating patterns easily,"Design and implement a class method within a `Sequence` class that can generate an infinitely repeating pattern of user-defined elements, optimized to handle large cycle lengths without excessive memory allocation.","class Sequence:
+    def __init__(self, elements):
+        self.elements = elements
+    def generate_infinite_pattern(self):
+        cycle_length = len(self.elements)
+        if cycle_length == 0:
+            return []
+        result = []
+        while True:
+            for i, element in enumerate(self.elements):
+                result.append(element)
+            if result:
+                yield from result
+            if len(result) > 1000000:
+                break
+if __name__ == '__main__':
+    sample_elements = [1, 2, 3, 4]
+    seq = Sequence(sample_elements)
+    print(""Generating first 20 elements:"")
+    for i in range(20):
+        print(next(seq.generate_infinite_pattern()))
+    print(""\nGenerating next 10 elements (to show repetition):"")
+    for i in range(10):
+        print(next(seq.generate_infinite_pattern()))",True,0,20107,315_8.py
+315,8,Generate repeating patterns easily,"Design and implement a class method within a `Sequence` class that can generate an infinitely repeating pattern of user-defined elements, optimized to handle large cycle lengths without excessive memory allocation.","class Sequence:
+    def __init__(self, elements):
+        self.elements = elements
+    def generate_infinite_pattern(self):
+        cycle_length = len(self.elements)
+        if cycle_length == 0:
+            return []
+        result = []
+        while True:
+            for i, element in enumerate(self.elements):
+                result.append(element)
+            yield from self.elements
+if __name__ == '__main__':
+    sample_elements = [1, 2, 3, 4]
+    seq = Sequence(sample_elements)
+    print(""Generating first 16 elements:"")
+    for i in range(16):
+        pass
+class Sequence:
+    def __init__(self, elements):
+        self.elements = elements
+    def generate_infinite_pattern(self):
+        cycle_length = len(self.elements)
+        if cycle_length == 0:
+            return
+        while True:
+            yield from self.elements
+if __name__ == '__main__':
+    sample_elements = [10, 20, 30]
+    seq = Sequence(sample_elements)
+    print(""Generating first 9 elements:"")
+    count = 0
+    for item in seq.generate_infinite_pattern():
+        print(item, end="" "")
+        count += 1
+        if count >= 9:
+            break
+    print(""\n"")
+    print(""Generating next 7 elements (total 16):"")
+    for i in range(9, 16):
+        item = next(seq.generate_infinite_pattern())
+        print(item, end="" "")
+    print(""\n"")",True,1,20108,315_8_1.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_violations(self, data, rule_type):
+        violations = []
+        n = len(data)
+        if n < 2:
+            return violations
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((i, f""Violation: {a} is not greater than {b}""))
+                elif a > b:
+                    violations.append((i, f""Violation: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((i, f""Violation: {a} is not less than {b}""))
+                elif a < b:
+                    violations.append((i, f""Violation: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((i, f""Violation: {a} is not equal to {b}""))
+            else:
+                return violations
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    data1 = [1, 5, 2, 8, 3]
+    rule1 = ""greater_than""
+    violations1 = checker.check_adjacent_violations(data1, rule1)
+    print(f""Data: {data1}, Rule: {rule1}"")
+    if violations1:
+        for index, message in violations1:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    data2 = [10, 5, 12, 3]
+    rule2 = ""greater_than""
+    violations2 = checker.check_adjacent_violations(data2, rule2)
+    print(f""Data: {data2}, Rule: {rule2}"")
+    if violations2:
+        for index, message in violations2:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    data3 = [1, 2, 3, 4]
+    rule3 = ""less_than""
+    violations3 = checker.check_adjacent_violations(data3, rule3)
+    print(f""Data: {data3}, Rule: {rule3}"")
+    if violations3:
+        for index, message in violations3:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    data4 = [5, 5, 1]
+    rule4 = ""equal""
+    violations4 = checker.check_adjacent_violations(data4, rule4)
+    print(f""Data: {data4}, Rule: {rule4}"")
+    if violations4:
+        for index, message in violations4:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)",True,0,20109,318_6.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_rule(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((f""Violation at index {i}: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((f""Violation at index {i}: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((f""Violation at index {i}: {a} is not equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_list1 = [1, 5, 3, 8, 2]
+    print(""--- Checking for 'greater_than' rule ---"")
+    violations1 = checker.check_adjacent_rule(sample_list1, ""greater_than"")
+    if violations1:
+        for violation in violations1:
+            print(violation)
+    else:
+        print(""No violations found."")
+    sample_list2 = [10, 5, 12, 3]
+    print(""\n--- Checking for 'greater_than' rule on second list ---"")
+    violations2 = checker.check_adjacent_rule(sample_list2, ""greater_than"")
+    if violations2:
+        for violation in violations2:
+            print(violation)
+    else:
+        print(""No violations found."")
+    sample_list3 = [5, 5, 10, 10]
+    print(""\n--- Checking for 'equal' rule ---"")
+    violations3 = checker.check_adjacent_rule(sample_list3, ""equal"")
+    if violations3:
+        for violation in violations3:
+            print(violation)
+    else:
+        print(""No violations found."")",True,1,20110,318_6_1.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_violations(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((i, f""Violation: {a} is not greater than {b}""))
+                elif a > b:
+                    violations.append((i, f""Violation: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((i, f""Violation: {a} is not less than {b}""))
+                elif a < b:
+                    violations.append((i, f""Violation: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((i, f""Violation: {a} is not equal to {b}""))
+            else:
+                return []
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data1 = [1, 5, 3, 8, 2]
+    rule1 = ""greater_than""
+    violations1 = checker.check_adjacent_violations(sample_data1, rule1)
+    print(f""Data: {sample_data1}, Rule: {rule1}"")
+    if violations1:
+        for index, message in violations1:
+            print(f""{index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    sample_data2 = [10, 5, 12, 3]
+    rule2 = ""greater_than""
+    violations2 = checker.check_adjacent_violations(sample_data2, rule2)
+    print(f""Data: {sample_data2}, Rule: {rule2}"")
+    if violations2:
+        for index, message in violations2:
+            print(f""{index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    sample_data3 = [5, 5, 5, 5]
+    rule3 = ""greater_than""
+    violations3 = checker.check_adjacent_violations(sample_data3, rule3)
+    print(f""Data: {sample_data3}, Rule: {rule3}"")
+    if violations3:
+        for index, message in violations3:
+            print(f""{index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    sample_data4 = [10, 8, 5]
+    rule4 = ""less_than""
+    violations4 = checker.check_adjacent_violations(sample_data4, rule4)
+    print(f""Data: {sample_data4}, Rule: {rule4}"")
+    if violations4:
+        for index, message in violations4:
+            print(f""{index}: {message}"")
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)",True,2,20111,318_6_2.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_violations(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((f""Violation at index {i}: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((f""Violation at index {i}: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((f""Violation at index {i}: {a} is not equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_list_1 = [1, 5, 3, 8, 2]
+    print(""--- Checking for 'greater_than' rule ---"")
+    violations_gt = checker.check_adjacent_violations(sample_list_1, ""greater_than"")
+    if violations_gt:
+        for violation in violations_gt:
+            print(violation)
+    else:
+        print(""No violations found."")
+    sample_list_2 = [10, 5, 12, 3]
+    print(""\n--- Checking for 'greater_than' rule on second list ---"")
+    violations_gt_2 = checker.check_adjacent_violations(sample_list_2, ""greater_than"")
+    if violations_gt_2:
+        for violation in violations_gt_2:
+            print(violation)
+    else:
+        print(""No violations found."")
+    sample_list_3 = [5, 5, 10, 10]
+    print(""\n--- Checking for 'equal' rule ---"")
+    violations_eq = checker.check_adjacent_violations(sample_list_3, ""equal"")
+    if violations_eq:
+        for violation in violations_eq:
+            print(violation)
+    else:
+        print(""No violations found."")",True,3,20112,318_6_3.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_rule(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""increasing"" and not (a <= b):
+                violations.append((i, a, b))
+            elif rule_type == ""decreasing"" and not (a >= b):
+                violations.append((i, a, b))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_list = [1, 3, 2, 5, 4]
+    increasing_violations = checker.check_adjacent_rule(sample_list, ""increasing"")
+    print(""Increasing Violations:"")
+    if increasing_violations:
+        for index, val1, val2 in increasing_violations:
+            print(f""Violation at index {index}: {val1} and {val2}"")
+    else:
+        print(""No increasing violations found."")
+    decreasing_violations = checker.check_adjacent_rule(sample_list, ""decreasing"")
+    print(""\nDecreasing Violations:"")
+    if decreasing_violations:
+        for index, val1, val2 in decreasing_violations:
+            print(f""Violation at index {index}: {val1} and {val2}"")
+    else:
+        print(""No decreasing violations found."")",True,4,20113,318_6_4.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_rule(self, data, rule_type):
+        violations = []
+        if len(data) < 2:
+            return violations
+        for i in range(len(data) - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((f""Violation at index {i}: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((f""Violation at index {i}: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((f""Violation at index {i}: {a} is not equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_list1 = [1, 5, 3, 8, 2]
+    print(""--- Checking for 'greater_than' rule ---"")
+    result1 = checker.check_adjacent_rule(sample_list1, ""greater_than"")
+    for violation in result1:
+        print(violation)
+    print(""\n--- Checking for 'less_than' rule ---"")
+    result2 = checker.check_adjacent_rule(sample_list1, ""less_than"")
+    for violation in result2:
+        print(violation)
+    sample_list2 = [10, 5, 12, 3]
+    print(""\n--- Checking for 'equal' rule ---"")
+    result3 = checker.check_adjacent_rule(sample_list2, ""equal"")
+    for violation in result3:
+        print(violation)",True,5,20114,318_6_5.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_pairs(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""increasing"" and not (a <= b):
+                violations.append((i, a, b))
+            elif rule_type == ""decreasing"" and not (a >= b):
+                violations.append((i, a, b))
+        return violations
+if __name__ == '__main__':
+    my_list = [1, 3, 2, 5, 4]
+    checker = ListChecker()
+    increasing_violations = checker.check_adjacent_pairs(my_list, ""increasing"")
+    print(""Increasing Violations:"")
+    if increasing_violations:
+        for index, val1, val2 in increasing_violations:
+            print(f""Violation found at index {index}: {val1} and {val2}"")
+    else:
+        print(""No increasing violations found."")
+    decreasing_violations = checker.check_adjacent_pairs(my_list, ""decreasing"")
+    print(""\nDecreasing Violations:"")
+    if decreasing_violations:
+        for index, val1, val2 in decreasing_violations:
+            print(f""Violation found at index {index}: {val1} and {val2}"")
+    else:
+        print(""No decreasing violations found."")",True,6,20115,318_6_6.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_rule(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((f""Violation at index {i}: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((f""Violation at index {i}: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((f""Violation at index {i}: {a} is not equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_list1 = [1, 5, 3, 8, 2]
+    print(""--- Checking 'greater_than' rule ---"")
+    violations1 = checker.check_adjacent_rule(sample_list1, ""greater_than"")
+    if violations1:
+        for violation in violations1:
+            print(violation)
+    else:
+        print(""No violations found."")
+    sample_list2 = [10, 5, 12, 3]
+    print(""\n--- Checking 'less_than' rule ---"")
+    violations2 = checker.check_adjacent_rule(sample_list2, ""less_than"")
+    if violations2:
+        for violation in violations2:
+            print(violation)
+    else:
+        print(""No violations found."")
+    sample_list3 = [4, 4, 6, 6]
+    print(""\n--- Checking 'equal' rule ---"")
+    violations3 = checker.check_adjacent_rule(sample_list3, ""equal"")
+    if violations3:
+        for violation in violations3:
+            print(violation)
+    else:
+        print(""No violations found."")",True,7,20116,318_6_7.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_violations(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((i, f""Violation: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((i, f""Violation: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((i, f""Violation: {a} is not equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    list1 = [1, 5, 3, 8, 2]
+    print(""Checking list:"", list1)
+    rule1 = ""greater_than""
+    violations1 = checker.check_adjacent_violations(list1, rule1)
+    print(f""\nRule: {rule1}"")
+    if violations1:
+        for index, message in violations1:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    list2 = [10, 5, 12, 3]
+    print(""\nChecking list:"", list2)
+    rule2 = ""greater_than""
+    violations2 = checker.check_adjacent_violations(list2, rule2)
+    print(f""\nRule: {rule2}"")
+    if violations2:
+        for index, message in violations2:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    list3 = [5, 5, 10, 10]
+    print(""\nChecking list:"", list3)
+    rule3 = ""equal""
+    violations3 = checker.check_adjacent_violations(list3, rule3)
+    print(f""\nRule: {rule3}"")
+    if violations3:
+        for index, message in violations3:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")",True,8,20117,318_6_8.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_violations(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""greater_than"":
+                if a < b:
+                    violations.append((i, f""Violation: {a} is not greater than {b}""))
+            elif rule_type == ""less_than"":
+                if a > b:
+                    violations.append((i, f""Violation: {a} is not less than {b}""))
+            elif rule_type == ""equal"":
+                if a != b:
+                    violations.append((i, f""Violation: {a} is not equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    list1 = [1, 5, 3, 8, 2]
+    print(""Checking list:"", list1)
+    violations_gt = checker.check_adjacent_violations(list1, ""greater_than"")
+    print(""\nViolations for 'greater_than' rule:"")
+    if violations_gt:
+        for index, message in violations_gt:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    list2 = [10, 5, 8, 3]
+    print(""\nChecking list:"", list2)
+    violations_lt = checker.check_adjacent_violations(list2, ""less_than"")
+    print(""\nViolations for 'less_than' rule:"")
+    if violations_lt:
+        for index, message in violations_lt:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")
+    list3 = [4, 4, 5, 5]
+    print(""\nChecking list:"", list3)
+    violations_eq = checker.check_adjacent_violations(list3, ""equal"")
+    print(""\nViolations for 'equal' rule:"")
+    if violations_eq:
+        for index, message in violations_eq:
+            print(f""Index {index}: {message}"")
+    else:
+        print(""No violations found."")",True,9,20118,318_6_9.py
+318,6,Compare adjacent elements always,"Create a method within an existing list object to check if any two adjacent elements violate a specific comparative rule (e.g., checking if the larger number is always greater than the smaller one) and report the violations.","class ListChecker:
+    def check_adjacent_violations(self, data, rule_type):
+        violations = []
+        n = len(data)
+        for i in range(n - 1):
+            a = data[i]
+            b = data[i+1]
+            if rule_type == ""strictly_increasing"" and not (a < b):
+                violations.append((i, f""Violation: {a} is not strictly less than {b}""))
+            elif rule_type == ""non_decreasing"" and not (a <= b):
+                violations.append((i, f""Violation: {a} is not less than or equal to {b}""))
+        return violations
+if __name__ == '__main__':
+    checker = ListChecker()
+    sample_data_1 = [1, 3, 2, 5, 4]
+    rule_1 = ""strictly_increasing""
+    violations_1 = checker.check_adjacent_violations(sample_data_1, rule_1)
+    print(f""Data: {sample_data_1}, Rule: {rule_1}"")
+    if violations_1:
+        for index, message in violations_1:
+            print(message)
+    else:
+        print(""No violations found."")
+    print(""-"" * 20)
+    sample_data_2 = [1, 2, 2, 4, 3]
+    rule_2 = ""non_decreasing""
+    violations_2 = checker.check_adjacent_violations(sample_data_2, rule_2)
+    print(f""Data: {sample_data_2}, Rule: {rule_2}"")
+    if violations_2:
+        for index, message in violations_2:
+            print(message)
+    else:
+        print(""No violations found."")",True,10,20119,318_6_10.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def strictly_increasing_pairs(data):
+    if len(data) < 2:
+        return
+    for i in range(len(data) - 1):
+        yield data[i+1] > data[i]
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 4, 6, 6, 8]
+    results = list(strictly_increasing_pairs(sample_list))
+    print(results)",True,0,20120,318_7.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def increasing_pairs_iterator(data):
+    n = len(data)
+    if n < 2:
+        return
+    for i in range(n - 1):
+        yield data[i] < data[i+1]
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 4, 6, 6, 8]
+    iterator = increasing_pairs_iterator(sample_list)
+    results = list(iterator)
+    print(results)",True,1,20121,318_7_1.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def strictly_increasing_pairs(data):
+    iterator = iter(data)
+    try:
+        previous = next(iterator)
+    except StopIteration:
+        return
+    for current in iterator:
+        if current > previous:
+            yield True
+        else:
+            yield False
+        previous = current
+if __name__ == '__main__':
+    list1 = [1, 2, 3, 4, 5]
+    print(list1)
+    print(list(strictly_increasing_pairs(list1)))
+    list2 = [1, 3, 2, 4, 5]
+    print(list2)
+    print(list(strictly_increasing_pairs(list2)))
+    list3 = [5, 4, 3, 2, 1]
+    print(list3)
+    print(list(strictly_increasing_pairs(list3)))
+    list4 = [1, 1, 2, 3, 3]
+    print(list4)
+    print(list(strictly_increasing_pairs(list4)))
+    list5 = [10, 20, 30]
+    print(list5)
+    print(list(strictly_increasing_pairs(list5)))
+    list6 = []
+    print(list6)
+    print(list(strictly_increasing_pairs(list6)))",True,2,20122,318_7_2.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def strictly_increasing_pairs(data):
+    if len(data) < 2:
+        return
+    for i in range(len(data) - 1):
+        yield data[i] < data[i+1]
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 4, 6, 8]
+    results = list(strictly_increasing_pairs(sample_list))
+    print(results)",True,3,20123,318_7_3.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def increasing_pairs_iterator(data):
+    n = len(data)
+    if n < 2:
+        return
+    for i in range(n - 1):
+        yield data[i] < data[i+1]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 2, 4, 5]
+    iterator = increasing_pairs_iterator(sample_list)
+    results = list(iterator)
+    print(results)",True,4,20124,318_7_4.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def strictly_increasing_pairs(data):
+    if len(data) < 2:
+        return
+    for i in range(len(data) - 1):
+        yield data[i] < data[i+1]
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 4, 6, 7]
+    results = list(strictly_increasing_pairs(sample_list))
+    print(results)",True,5,20125,318_7_5.py
+318,7,Compare adjacent elements always,Design and implement a highly efficient iterator that yields boolean values indicating whether each adjacent pair in an input list is strictly increasing.,"def is_strictly_increasing_pairs(data):
+    if len(data) < 2:
+        return
+    for i in range(len(data) - 1):
+        yield data[i+1] > data[i]
+if __name__ == '__main__':
+    sample_list = [1, 3, 5, 4, 6, 6, 8]
+    results = list(is_strictly_increasing_pairs(sample_list))
+    print(results)",True,6,20126,318_7_6.py
+318,9,Compare adjacent elements always,"Develop a function that accepts an arbitrary iterable and returns a list of all adjacent pairs, where each pair is represented as a tuple, ensuring the implementation utilizes slicing for optimal performance.","def get_adjacent_pairs(iterable):
+    n = len(iterable)
+    if n < 2:
+        return []
+    pairs = []
+    for i in range(n - 1):
+        pair = (iterable[i], iterable[i+1])
+        pairs.append(pair)
+    return pairs
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = get_adjacent_pairs(data1)
+    print(f""Input: {data1}"")
+    print(f""Output: {result1}"")
+    data2 = ['a', 'b', 'c', 'd']
+    result2 = get_adjacent_pairs(data2)
+    print(f""Input: {data2}"")
+    print(f""Output: {result2}"")
+    data3 = [10, 20]
+    result3 = get_adjacent_pairs(data3)
+    print(f""Input: {data3}"")
+    print(f""Output: {result3}"")
+    data4 = [5]
+    result4 = get_adjacent_pairs(data4)
+    print(f""Input: {data4}"")
+    print(f""Output: {result4}"")
+    data5 = []
+    result5 = get_adjacent_pairs(data5)
+    print(f""Input: {data5}"")
+    print(f""Output: {result5}"")",True,0,20127,318_9.py
+318,9,Compare adjacent elements always,"Develop a function that accepts an arbitrary iterable and returns a list of all adjacent pairs, where each pair is represented as a tuple, ensuring the implementation utilizes slicing for optimal performance.","def get_adjacent_pairs(iterable):
+    n = len(iterable)
+    if n < 2:
+        return []
+    pairs = []
+    for i in range(n - 1):
+        pair = (iterable[i], iterable[i+1])
+        pairs.append(pair)
+    return pairs
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = get_adjacent_pairs(data1)
+    print(f""Input: {data1}"")
+    print(f""Result: {result1}"")
+    data2 = ['a', 'b', 'c', 'd']
+    result2 = get_adjacent_pairs(data2)
+    print(f""Input: {data2}"")
+    print(f""Result: {result2}"")
+    data3 = [10, 20]
+    result3 = get_adjacent_pairs(data3)
+    print(f""Input: {data3}"")
+    print(f""Result: {result3}"")
+    data4 = [5]
+    result4 = get_adjacent_pairs(data4)
+    print(f""Input: {data4}"")
+    print(f""Result: {result4}"")
+    data5 = []
+    result5 = get_adjacent_pairs(data5)
+    print(f""Input: {data5}"")
+    print(f""Result: {result5}"")",True,1,20128,318_9_1.py
+318,9,Compare adjacent elements always,"Develop a function that accepts an arbitrary iterable and returns a list of all adjacent pairs, where each pair is represented as a tuple, ensuring the implementation utilizes slicing for optimal performance.","def get_adjacent_pairs(iterable):
+    n = len(iterable)
+    if n < 2:
+        return []
+    pairs = []
+    for i in range(n - 1):
+        pair = (iterable[i], iterable[i+1])
+        pairs.append(pair)
+    return pairs
+if __name__ == '__main__':
+    sample1 = [1, 2, 3, 4, 5]
+    result1 = get_adjacent_pairs(sample1)
+    print(result1)
+    sample2 = ['a', 'b', 'c', 'd']
+    result2 = get_adjacent_pairs(sample2)
+    print(result2)
+    sample3 = [10, 20]
+    result3 = get_adjacent_pairs(sample3)
+    print(result3)
+    sample4 = [5]
+    result4 = get_adjacent_pairs(sample4)
+    print(result4)
+    sample5 = []
+    result5 = get_adjacent_pairs(sample5)
+    print(result5)",True,2,20129,318_9_2.py
+318,9,Compare adjacent elements always,"Develop a function that accepts an arbitrary iterable and returns a list of all adjacent pairs, where each pair is represented as a tuple, ensuring the implementation utilizes slicing for optimal performance.","def get_adjacent_pairs(iterable):
+    n = len(iterable)
+    if n < 2:
+        return []
+    pairs = []
+    for i in range(n - 1):
+        pair = (iterable[i], iterable[i+1])
+        pairs.append(pair)
+    return pairs
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = get_adjacent_pairs(data1)
+    print(result1)
+    data2 = ['a', 'b', 'c', 'd']
+    result2 = get_adjacent_pairs(data2)
+    print(result2)
+    data3 = [10, 20]
+    result3 = get_adjacent_pairs(data3)
+    print(result3)
+    data4 = [5]
+    result4 = get_adjacent_pairs(data4)
+    print(result4)
+    data5 = []
+    result5 = get_adjacent_pairs(data5)
+    print(result5)",True,3,20130,318_9_3.py
+318,9,Compare adjacent elements always,"Develop a function that accepts an arbitrary iterable and returns a list of all adjacent pairs, where each pair is represented as a tuple, ensuring the implementation utilizes slicing for optimal performance.","def get_adjacent_pairs(iterable):
+    n = len(iterable)
+    if n < 2:
+        return []
+    pairs = []
+    for i in range(n - 1):
+        pair = (iterable[i], iterable[i+1])
+        pairs.append(pair)
+    return pairs
+if __name__ == '__main__':
+    data1 = [1, 2, 3, 4, 5]
+    result1 = get_adjacent_pairs(data1)
+    print(f""Input: {data1}"")
+    print(f""Output: {result1}"")
+    data2 = ['a', 'b', 'c', 'd']
+    result2 = get_adjacent_pairs(data2)
+    print(f""Input: {data2}"")
+    print(f""Output: {result2}"")
+    data3 = [10, 20]
+    result3 = get_adjacent_pairs(data3)
+    print(f""Input: {data3}"")
+    print(f""Output: {result3}"")
+    data4 = [5]
+    result4 = get_adjacent_pairs(data4)
+    print(f""Input: {data4}"")
+    print(f""Output: {result4}"")",True,4,20131,318_9_4.py
+317,6,Cycle through a small range,"Write a script that uses the modulo operator to cycle through a small fixed range of values (1 to 5) multiple times, demonstrating cycling behavior clearly.","def cycle_values(start=1, end=5, repetitions=10):
+    current_value = start
+    for i in range(repetitions):
+        print(current_value)
+        current_value = (current_value % (end - start + 1)) + start
+if __name__ == '__main__':
+    cycle_values()",True,0,20132,317_6.py
+317,6,Cycle through a small range,"Write a script that uses the modulo operator to cycle through a small fixed range of values (1 to 5) multiple times, demonstrating cycling behavior clearly.","def cycle_values(start, end, count):
+    current = start
+    for _ in range(count):
+        current = (current - 1) % (end - start + 1) + start
+        print(current)
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 5
+    num_cycles = 10
+    cycle_values(start_val, end_val, num_cycles)",True,1,20133,317_6_1.py
+317,6,Cycle through a small range,"Write a script that uses the modulo operator to cycle through a small fixed range of values (1 to 5) multiple times, demonstrating cycling behavior clearly.","def cycle_values(start, end, count):
+    cycle = range(start, end + 1)
+    results = []
+    for i in range(count):
+        index = i % len(cycle)
+        results.append(cycle[index])
+    return results
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 5
+    num_cycles = 10
+    cycled_values = cycle_values(start_val, end_val, num_cycles)
+    print(cycled_values)",True,2,20134,317_6_2.py
+318,11,Compare adjacent elements always,"Implement an optimized function that iterates through a list of numbers and explicitly compares every pair of adjacent elements, storing the results in a new list of tuples indicating the relationship between them (e.g., [(a, b), (b, c), ...)]).","def compare_adjacent(numbers):
+    results = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        results.append((a, b))
+    return results
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    comparison_results = compare_adjacent(sample_list)
+    print(comparison_results)",True,0,20135,318_11.py
+318,11,Compare adjacent elements always,"Implement an optimized function that iterates through a list of numbers and explicitly compares every pair of adjacent elements, storing the results in a new list of tuples indicating the relationship between them (e.g., [(a, b), (b, c), ...)]).","def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        results.append((a, b))
+    return results
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    comparison_results = compare_adjacent(sample_list)
+    print(comparison_results)",True,1,20136,318_11_1.py
+318,11,Compare adjacent elements always,"Implement an optimized function that iterates through a list of numbers and explicitly compares every pair of adjacent elements, storing the results in a new list of tuples indicating the relationship between them (e.g., [(a, b), (b, c), ...)]).","def compare_adjacent(data):
+    results = []
+    n = len(data)
+    for i in range(n - 1):
+        a = data[i]
+        b = data[i+1]
+        results.append((a, b))
+    return results
+if __name__ == '__main__':
+    sample_list = [1, 5, 2, 8, 3]
+    comparison_results = compare_adjacent(sample_list)
+    print(comparison_results)",True,2,20137,318_11_2.py
