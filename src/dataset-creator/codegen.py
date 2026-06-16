@@ -18,6 +18,7 @@ CODE_PROMPT_TEMPLATE = (
     "Return only runnable Python code.\n"
     "Include an `if __name__ == '__main__':` block.\n"
     "Use hard-coded sample values instead of interactive input.\n"
+    "The script must execute successfully with exit code 0.\n"
     "No comments, docstrings, markdown, or explanation."
 )
 
@@ -45,9 +46,9 @@ def _clean_code_output(text: str) -> str:
 
 
 def _ensure_main_block(text: str) -> str:
-    if "if __name__ == '__main__':" in text:
+    if re.search(r"if\s+__name__\s*==\s*['\"]__main__['\"]\s*:", text):
         return text
-    return text + "\n\nif __name__ == '__main__':\n  raise EnvironmentError('No skip for testing')\n"
+    return text + "\n\nif __name__ == '__main__':\n    pass\n"
 
 
 def is_valid(code: str, timeout: float = 3.0) -> bool:
@@ -65,7 +66,13 @@ def is_valid(code: str, timeout: float = 3.0) -> bool:
         exec_time = time.time() - start
 
         if proc.returncode != 0:
-            print(f"[VALIDATE] FAILED (compile={compile_time:.2f}s, exec={exec_time:.2f}s, rc={proc.returncode})", flush=True)
+            stderr = proc.stderr.decode("utf-8", errors="ignore").strip().splitlines()
+            reason = stderr[-1] if stderr else "no stderr"
+            print(
+                f"[VALIDATE] FAILED (compile={compile_time:.2f}s, exec={exec_time:.2f}s, "
+                f"rc={proc.returncode}, error={reason})",
+                flush=True,
+            )
             return False
 
         print(f"[VALIDATE] OK (compile={compile_time:.2f}s, exec={exec_time:.2f}s)", flush=True)
@@ -86,14 +93,13 @@ def is_valid(code: str, timeout: float = 3.0) -> bool:
 def generate_code(instruction: str, temperature: float) -> str | None:
     prompt = CODE_PROMPT_TEMPLATE.format(instruction=instruction)
     start = time.time()
-    raw_output = ollama_generate(prompt, temperature)
+    raw_output = ollama_generate(prompt, temperature, use_cache=False)
     elapsed = time.time() - start
     if not raw_output:
         print(f"[OLLAMA] Failed after {elapsed:.2f}s (temp={temperature:.2f})", flush=True)
         return None
 
     result = _ensure_main_block(_clean_code_output(raw_output))
-    print(f"[OLLAMA] Generated in {elapsed:.2f}s (temp={temperature:.2f})", flush=True)
     return result
 
 

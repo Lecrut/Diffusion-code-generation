@@ -11,6 +11,8 @@ import topics
 import codegen as code
 import importlib.util
 import os
+from path_config import DATA_DIR
+
 autoCommit_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'autoCommit.py')
 spec = importlib.util.spec_from_file_location("autoCommit", autoCommit_path)
 autoCommit = importlib.util.module_from_spec(spec)
@@ -21,7 +23,6 @@ INSTR_PER_TOPIC = 15
 VARIANTS_PER_INSTR = 20
 ATTEMPTS_PER_INSTR = 200
 MAX_WORKERS = 3
-DATA_DIR = "data"
 DATASET_FILE = os.path.join(DATA_DIR, "dataset.csv")
 
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -161,4 +162,8 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
 
 
 if __name__ == "__main__":
-    run()
+    try:
+        run()
+    except RuntimeError as exc:
+        print(f"Blad uruchomienia generatora: {exc}", flush=True)
+        raise SystemExit(1)
