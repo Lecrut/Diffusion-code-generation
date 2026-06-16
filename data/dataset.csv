@@ -344406,3 +344406,1547 @@ def print_elements(input_list):
     for item in input_list:
         print(item)
     return print_elements(data)",True,2,17351,278_14_2.py
+279,0,Cycle through a defined range easily,"Write a complete, efficient Python script that iterates through and prints every integer in the range from 10 to 50, inclusive.","if __name__ == '__main__':
+    for i in range(10, 51):
+        print(i)",True,0,17352,279_0.py
+279,1,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that accepts a start and end integer, and yields all numbers in that range using a generator.","def cycle_range(start, end):
+    if start > end:
+        return
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 8):"")
+    for num in cycle_range(10, 8):
+        print(num)
+    print(""\nTesting cycle_range(5, 5):"")
+    for num in cycle_range(5, 5):
+        print(num)",True,0,17353,279_1.py
+279,1,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that accepts a start and end integer, and yields all numbers in that range using a generator.","def cycle_range(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(list(cycle_range(5, 10)))
+    print(list(cycle_range(0, -3)))
+    print(list(cycle_range(10, 10)))",True,1,17354,279_1_1.py
+279,1,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that accepts a start and end integer, and yields all numbers in that range using a generator.","def cycle_range(start, end):
+    if start > end:
+        return
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for num in cycle_range(1, 5):
+        print(num)
+    print(""\nTesting cycle_range(10, 7):"")
+    for num in cycle_range(10, 7):
+        print(num)
+    print(""\nTesting cycle_range(0, 3):"")
+    for num in cycle_range(0, 3):
+        print(num)",True,2,17355,279_1_2.py
+279,1,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that accepts a start and end integer, and yields all numbers in that range using a generator.","def cycle_range(start, end):
+    if start > end:
+        return
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(""Testing cycle_range(1, 5):"")
+    for number in cycle_range(1, 5):
+        print(number)
+    print(""\nTesting cycle_range(10, 8):"")
+    for number in cycle_range(10, 8):
+        print(number)
+    print(""\nTesting cycle_range(5, 5):"")
+    for number in cycle_range(5, 5):
+        print(number)",True,3,17356,279_1_3.py
+279,1,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that accepts a start and end integer, and yields all numbers in that range using a generator.","def cycle_range(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(list(cycle_range(5, 10)))
+    print(list(cycle_range(1, 3)))
+    print(list(cycle_range(10, 10)))",True,4,17357,279_1_4.py
+279,2,Cycle through a defined range easily,Develop a class named 'RangeCycler' with a method to generate the sequence of numbers within a specified inclusive range efficiently.,"class RangeCycler:
+    def generate_sequence(self, start, end):
+        return list(range(start, end + 1))
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 5
+    end_val = 12
+    sequence = cycler.generate_sequence(start_val, end_val)
+    print(sequence)",True,0,17358,279_2.py
+279,2,Cycle through a defined range easily,Develop a class named 'RangeCycler' with a method to generate the sequence of numbers within a specified inclusive range efficiently.,"class RangeCycler:
+    def generate_sequence(self, start, end):
+        sequence = list(range(start, end + 1))
+        return sequence
+if __name__ == '__main__':
+    cycler = RangeCycler()
+    start_val = 5
+    end_val = 12
+    result = cycler.generate_sequence(start_val, end_val)
+    print(result)",True,1,17359,279_2_1.py
+278,12,Print each item separately now,"Develop a command-line utility script using Python that prompts the user to enter a sequence of items, stores them in a list, and then iterates through that list to print each item individually. Use best-practice input/output methods.",,False,0,17360,278_12.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycler:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        if not data_list:
+            return
+        start = max(0, start_index)
+        end = min(len(data_list), end_index + 1)
+        for i in range(start, end):
+            print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60]
+    cycler = ListCycler()
+    print(""Cycling from index 1 to 4:"")
+    cycler.cycle_and_print(my_list, 1, 4)
+    print(""\nCycling from index 0 to 2:"")
+    cycler.cycle_and_print(my_list, 0, 2)
+    print(""\nCycling from index 5 to 10 (out of bounds):"")
+    cycler.cycle_and_print(my_list, 5, 10)
+    print(""\nCycling from index -2 to 3:"")
+    cycler.cycle_and_print(my_list, -2, 3)",True,0,17361,279_5.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class MyList:
+    def __init__(self, data):
+        self.data = data
+    def cycle_and_print(self, start_index, end_index):
+        for i in range(start_index, end_index + 1):
+            if 0 <= i < len(self.data):
+                print(self.data[i])
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50, 60]
+    my_list = MyList(sample_list)
+    my_list.cycle_and_print(1, 4)",True,1,17362,279_5_1.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycle:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        for i in range(start_index, end_index + 1):
+            if 0 <= i < len(data_list):
+                print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60, 70]
+    cycler = ListCycle()
+    start = 1
+    end = 5
+    cycler.cycle_and_print(my_list, start, end)",True,2,17363,279_5_2.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycler:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        for i in range(start_index, end_index + 1):
+            if 0 <= i < len(data_list):
+                print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60]
+    cycler = ListCycler()
+    start = 1
+    end = 4
+    cycler.cycle_and_print(my_list, start, end)",True,3,17364,279_5_3.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycler:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        if not data_list:
+            return
+        n = len(data_list)
+        start = max(0, start_index)
+        end = min(n, end_index)
+        for i in range(start, end):
+            print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60]
+    cycler = ListCycler()
+    print(""Cycling from index 1 to 4:"")
+    cycler.cycle_and_print(my_list, 1, 4)
+    print(""\nCycling from index 0 to 2:"")
+    cycler.cycle_and_print(my_list, 0, 2)
+    print(""\nCycling from index 5 to 6 (out of bounds test):"")
+    cycler.cycle_and_print(my_list, 5, 6)
+    print(""\nCycling from index -1 to 3 (negative start test):"")
+    cycler.cycle_and_print(my_list, -1, 3)",True,4,17365,279_5_4.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycler:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        if not data_list:
+            return
+        start = max(0, start_index)
+        end = min(len(data_list), end_index + 1)
+        for i in range(start, end):
+            print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60]
+    cycler = ListCycler()
+    print(""Cycling from index 1 to 4:"")
+    cycler.cycle_and_print(my_list, 1, 4)
+    print(""\nCycling from index 0 to 2:"")
+    cycler.cycle_and_print(my_list, 0, 2)
+    print(""\nCycling from index 5 to 10 (out of bounds):"")
+    cycler.cycle_and_print(my_list, 5, 10)
+    print(""\nCycling from index -5 to 3:"")
+    cycler.cycle_and_print(my_list, -5, 3)",True,5,17366,279_5_5.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycler:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        if not data_list:
+            return
+        start = max(0, start_index)
+        end = min(len(data_list), end_index + 1)
+        for i in range(start, end):
+            print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60]
+    cycler = ListCycler()
+    print(""Cycling from index 1 to 4:"")
+    cycler.cycle_and_print(my_list, 1, 4)
+    print(""\nCycling from index 0 to 2:"")
+    cycler.cycle_and_print(my_list, 0, 2)
+    print(""\nCycling from index 5 to 10 (out of bounds test):"")
+    cycler.cycle_and_print(my_list, 5, 10)
+    print(""\nCycling from index -5 to 1:"")
+    cycler.cycle_and_print(my_list, -5, 1)",True,6,17367,279_5_6.py
+279,5,Cycle through a defined range easily,"Implement a method within an existing list object that efficiently cycles through all elements of the list in a defined range, printing each element.","class ListCycler:
+    def cycle_and_print(self, data_list, start_index, end_index):
+        if not data_list:
+            return
+        start = max(0, start_index)
+        end = min(len(data_list), end_index + 1)
+        for i in range(start, end):
+            print(data_list[i])
+if __name__ == '__main__':
+    my_list = [10, 20, 30, 40, 50, 60]
+    cycler = ListCycler()
+    print(""Cycling from index 1 to 4:"")
+    cycler.cycle_and_print(my_list, 1, 4)
+    print(""\nCycling from index 0 to 2:"")
+    cycler.cycle_and_print(my_list, 0, 2)
+    print(""\nCycling from index 5 to 10 (out of bounds):"")
+    cycler.cycle_and_print(my_list, 5, 10)
+    print(""\nCycling from index -5 to 1:"")
+    cycler.cycle_and_print(my_list, -5, 1)",True,7,17368,279_5_7.py
+279,6,Cycle through a defined range easily,"Write a robust function that takes a lower bound and an upper bound, and uses the `range()` function to generate and process every number in that inclusive cycle.","def process_range(lower_bound, upper_bound):
+    results = []
+    for number in range(lower_bound, upper_bound + 1):
+        results.append(number)
+    return results
+if __name__ == '__main__':
+    lower = 5
+    upper = 10
+    output = process_range(lower, upper)
+    print(output)",True,0,17369,279_6.py
+279,6,Cycle through a defined range easily,"Write a robust function that takes a lower bound and an upper bound, and uses the `range()` function to generate and process every number in that inclusive cycle.","def cycle_processor(lower_bound, upper_bound):
+    results = []
+    for number in range(lower_bound, upper_bound + 1):
+        results.append(number)
+    return results
+if __name__ == '__main__':
+    lower = 5
+    upper = 10
+    output = cycle_processor(lower, upper)
+    print(output)",True,1,17370,279_6_1.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(start, stop):
+                result = func(i)
+                yield result
+        return wrapper
+    return decorator
+@range_iterator(1, 5)
+def square(n):
+    return n * n
+@range_iterator(2, 6)
+def cube(n):
+    return n ** 3
+if __name__ == '__main__':
+    print(""Square results:"")
+    for item in square():
+        print(item)
+    print(""\nCube results:"")
+    for item in cube():
+        print(item)",True,0,17371,279_7.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(start, stop):
+                result = func(i)
+                yield result
+        return wrapper
+    return decorator
+@range_iterator(1, 5)
+def multiply(n):
+    return n * 2
+@range_iterator(0, 3)
+def add_one(n):
+    return n + 1
+if __name__ == '__main__':
+    print(""Testing multiply function:"")
+    for value in multiply():
+        print(value)
+    print(""\nTesting add_one function:"")
+    for value in add_one():
+        print(value)",True,1,17372,279_7_1.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(start, stop):
+                result = func(i)
+                yield result
+        return wrapper
+    return decorator
+@range_iterator(1, 5)
+def multiply(x):
+    return x * 2
+@range_iterator(0, 3)
+def add_one(x):
+    return x + 1
+if __name__ == '__main__':
+    print(""Testing multiply function:"")
+    for value in multiply():
+        print(value)
+    print(""\nTesting add_one function:"")
+    for value in add_one():
+        print(value)",True,2,17373,279_7_2.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(func):
+    def wrapper(start, step):
+        for i in range(start, start + step):
+            yield i
+    return wrapper
+@range_iterator
+def iterate_range(start, step):
+    for i in range(start, start + step):
+        yield i
+if __name__ == '__main__':
+    print(""Testing iteration from 0 to 4 with step 1:"")
+    for number in iterate_range(0, 1):
+        print(number)
+    print(""-"" * 20)
+    print(""Testing iteration from 2 to 8 with step 2:"")
+    for number in iterate_range(2, 2):
+        print(number)
+    print(""-"" * 20)
+    print(""Testing iteration from 10 to 15 with step -2:"")
+    for number in iterate_range(10, -2):
+        print(number)",True,3,17374,279_7_3.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            return list(range(start, stop))
+        return wrapper
+    return decorator
+@range_iterator(1, 5)
+def get_numbers():
+    pass
+if __name__ == '__main__':
+    result = get_numbers()
+    print(result)",True,4,17375,279_7_4.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            return list(range(start, stop))
+        return wrapper
+    return decorator
+@range_iterator(1, 10)
+def iterate_numbers():
+    pass
+if __name__ == '__main__':
+    result = iterate_numbers()
+    print(result)",True,5,17376,279_7_5.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(start, stop):
+                result = func(i)
+                yield result
+        return wrapper
+    return decorator
+@range_iterator(1, 5)
+def multiply(n):
+    return n * 2
+@range_iterator(0, 3)
+def add_one(n):
+    return n + 1
+if __name__ == '__main__':
+    print(""Testing multiply function:"")
+    for val in multiply():
+        print(val)
+    print(""\nTesting add_one function:"")
+    for val in add_one():
+        print(val)",True,6,17377,279_7_6.py
+279,7,Cycle through a defined range easily,Design and implement a decorator for Python that simplifies iterating over a specified numeric range by automatically handling the iteration logic.,"def range_iterator(start, stop):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for i in range(start, stop):
+                result = func(i)
+                yield result
+        return wrapper
+    return decorator
+@range_iterator(0, 5)
+def multiply(x):
+    return x * 2
+@range_iterator(1, 4)
+def add_one(x):
+    return x + 1
+if __name__ == '__main__':
+    print(""Testing multiply function:"")
+    for value in multiply():
+        print(value)
+    print(""\nTesting add_one function:"")
+    for value in add_one():
+        print(value)",True,7,17378,279_7_7.py
+279,4,Cycle through a defined range easily,Create a script that uses a `while` loop to easily cycle through every even number between 0 and 100.,,False,0,17379,279_4.py
+279,8,Cycle through a defined range easily,"Generate an optimized solution to iterate through a defined range (e.g., 1 to 100) and store the results in a list using a list comprehension for maximum efficiency.","if __name__ == '__main__':
+    result_list = [i for i in range(1, 101)]
+    print(result_list)",True,0,17380,279_8.py
+279,8,Cycle through a defined range easily,"Generate an optimized solution to iterate through a defined range (e.g., 1 to 100) and store the results in a list using a list comprehension for maximum efficiency.","if __name__ == '__main__':
+    result_list = [x for x in range(1, 101)]
+    print(result_list)",True,1,17381,279_8_1.py
+279,9,Cycle through a defined range easily,"Write a complete program that prompts the user for a start and end number and then cycles through all integers between those two values, ensuring the output is clean and easy to follow.","if __name__ == '__main__':
+    start_num = 5
+    end_num = 12
+    for i in range(start_num, end_num + 1):
+        print(i)",True,0,17382,279_9.py
+279,9,Cycle through a defined range easily,"Write a complete program that prompts the user for a start and end number and then cycles through all integers between those two values, ensuring the output is clean and easy to follow.","if __name__ == '__main__':
+    start_number = 5
+    end_number = 12
+    for number in range(start_number, end_number + 1):
+        print(number)",True,1,17383,279_9_1.py
+279,10,Cycle through a defined range easily,"Write a complete, high-quality, and optimized Python script that demonstrates how to cycle through a defined integer range easily using a for loop. The script should accept the start and end values as input.","def cycle_range(start, end):
+    for i in range(start, end + 1):
+        print(i)
+if __name__ == '__main__':
+    start_value = 5
+    end_value = 12
+    cycle_range(start_value, end_value)",True,0,17384,279_10.py
+279,11,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that takes a starting integer and an ending integer, and yields every integer in that range sequentially. Ensure the implementation is memory-efficient.","def cycle_range(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(list(cycle_range(5, 10)))
+    print(list(cycle_range(1, 3)))
+    print(list(cycle_range(10, 9)))",True,0,17385,279_11.py
+279,11,Cycle through a defined range easily,"Implement an optimized function named 'cycle_range' that takes a starting integer and an ending integer, and yields every integer in that range sequentially. Ensure the implementation is memory-efficient.","def cycle_range(start, end):
+    current = start
+    while current <= end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    print(list(cycle_range(5, 10)))
+    print(list(cycle_range(1, 3)))
+    print(list(cycle_range(10, 10)))
+    print(list(cycle_range(20, 18)))",True,1,17386,279_11_1.py
+279,12,Cycle through a defined range easily,"Write a robust Python function that generates a list containing all even numbers within a specified inclusive range [start, end]. The function must be highly efficient.","def find_even_numbers(start, end):
+    result = []
+    for num in range(start, end + 1):
+        if num % 2 == 0:
+            result.append(num)
+    return result
+if __name__ == '__main__':
+    start_value = 1
+    end_value = 20
+    even_list = find_even_numbers(start_value, end_value)
+    print(even_list)",True,0,17387,279_12.py
+279,12,Cycle through a defined range easily,"Write a robust Python function that generates a list containing all even numbers within a specified inclusive range [start, end]. The function must be highly efficient.","def find_even_numbers(start, end):
+    result = []
+    for num in range(start, end + 1):
+        if num % 2 == 0:
+            result.append(num)
+    return result
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 20
+    even_list = find_even_numbers(start_val, end_val)
+    print(even_list)",True,1,17388,279_12_1.py
+279,12,Cycle through a defined range easily,"Write a robust Python function that generates a list containing all even numbers within a specified inclusive range [start, end]. The function must be highly efficient.","def find_even_numbers(start, end):
+    result = []
+    for number in range(start, end + 1):
+        if number % 2 == 0:
+            result.append(number)
+    return result
+if __name__ == '__main__':
+    start_value = 1
+    end_value = 20
+    even_list = find_even_numbers(start_value, end_value)
+    print(even_list)",True,2,17389,279_12_2.py
+279,12,Cycle through a defined range easily,"Write a robust Python function that generates a list containing all even numbers within a specified inclusive range [start, end]. The function must be highly efficient.","def find_even_numbers(start, end):
+    result = []
+    for number in range(start, end + 1):
+        if number % 2 == 0:
+            result.append(number)
+    return result
+if __name__ == '__main__':
+    start_val = 1
+    end_val = 20
+    even_list = find_even_numbers(start_val, end_val)
+    print(even_list)",True,3,17390,279_12_3.py
+279,13,Cycle through a defined range easily,"Develop an optimized method to iterate and print every number in the range from 100 to 200, ensuring the iteration is as fast as possible. Use the most idiomatic Python approach.","if __name__ == '__main__':
+    for i in range(100, 201):
+        print(i)",True,0,17391,279_13.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start cannot be greater than end"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        result = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return result
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range (1 to 5):"")
+    for _ in range(7):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range (10 to 13):"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(5, 5)
+    print(""Cycling through range (5 to 5):"")
+    for _ in range(4):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,0,17392,279_14.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start cannot be greater than end"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def cycle(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range [1, 5]:"")
+    for _ in range(7):
+        print(cycler.cycle())
+    print(""\nCycling through a different range [10, 12]:"")
+    cycler2 = RangeCycler(10, 12)
+    for _ in range(5):
+        print(cycler2.cycle())",True,1,17393,279_14_1.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start cannot be greater than end"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range 1 to 5:"")
+    for _ in range(8):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range 10 to 13:"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(5, 5)
+    print(""Cycling through range 5 to 5:"")
+    for _ in range(3):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,2,17394,279_14_2.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start value cannot be greater than end value"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range [1, 5]:"")
+    for _ in range(7):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range [10, 13]:"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(5, 5)
+    print(""Cycling through range [5, 5]:"")
+    for _ in range(4):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,3,17395,279_14_3.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start value cannot be greater than end value"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range [1, 5]:"")
+    for _ in range(7):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range [10, 13]:"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(5, 5)
+    print(""Cycling through range [5, 5]:"")
+    for _ in range(3):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,4,17396,279_14_4.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start value cannot be greater than end value"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range 1 to 5:"")
+    for _ in range(7):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range 10 to 13:"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(5, 5)
+    print(""Cycling through range 5 to 5:"")
+    for _ in range(4):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,5,17397,279_14_5.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start cannot be greater than end"")
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range [1, 5]:"")
+    for _ in range(7):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range [10, 13]:"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(5, 5)
+    print(""Cycling through range [5, 5]:"")
+    for _ in range(3):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,6,17398,279_14_6.py
+279,14,Cycle through a defined range easily,"Create a class named 'RangeCycler' with a method that can cycle through any defined range of numbers when called. The implementation must be clean, professional, and follow all Python best practices for readability and performance.","class RangeCycler:
+    def __init__(self, start, end):
+        if start > end:
+            raise ValueError(""Start value cannot be greater than end value"")
+        self.start = start
+        self.end = end
+        self._range = list(range(start, end + 1))
+        self._index = 0
+    def get_next(self):
+        if not self._range:
+            return None
+        value = self._range[self._index]
+        self._index = (self._index + 1) % len(self._range)
+        return value
+if __name__ == '__main__':
+    cycler = RangeCycler(1, 5)
+    print(""Cycling through range (1, 5):"")
+    for _ in range(7):
+        print(cycler.get_next(), end="" "")
+    print(""\n"")
+    cycler2 = RangeCycler(10, 13)
+    print(""Cycling through range (10, 13):"")
+    for _ in range(5):
+        print(cycler2.get_next(), end="" "")
+    print(""\n"")
+    cycler3 = RangeCycler(50, 50)
+    print(""Cycling through range (50, 50):"")
+    for _ in range(3):
+        print(cycler3.get_next(), end="" "")
+    print(""\n"")",True,7,17399,279_14_7.py
+280,1,Repeat an action many times now,"Implement an optimized function named `repeat_action` that accepts a string and an integer, and returns the string concatenated with itself the specified number of times. Use the most efficient method available.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string_to_repeat = ""hello""
+    repeat_count = 3
+    result = repeat_action(string_to_repeat, repeat_count)
+    print(result)",True,0,17400,280_1.py
+280,1,Repeat an action many times now,"Implement an optimized function named `repeat_action` that accepts a string and an integer, and returns the string concatenated with itself the specified number of times. Use the most efficient method available.","def repeat_action(s: str, n: int) -> str:
+    if n <= 0:
+        return """"
+    return s * n
+if __name__ == '__main__':
+    string1 = ""hello""
+    number1 = 3
+    result1 = repeat_action(string1, number1)
+    print(f""'{string1}' repeated {number1} times: '{result1}'"")
+    string2 = ""abc""
+    number2 = 5
+    result2 = repeat_action(string2, number2)
+    print(f""'{string2}' repeated {number2} times: '{result2}'"")
+    string3 = ""Python""
+    number3 = 0
+    result3 = repeat_action(string3, number3)
+    print(f""'{string3}' repeated {number3} times: '{result3}'"")
+    string4 = """"
+    number4 = 10
+    result4 = repeat_action(string4, number4)
+    print(f""'{string4}' repeated {number4} times: '{result4}'"")",True,1,17401,280_1_1.py
+280,1,Repeat an action many times now,"Implement an optimized function named `repeat_action` that accepts a string and an integer, and returns the string concatenated with itself the specified number of times. Use the most efficient method available.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string_to_repeat = ""hello""
+    number_of_repeats = 3
+    result = repeat_action(string_to_repeat, number_of_repeats)
+    print(result)",True,2,17402,280_1_2.py
+280,2,Repeat an action many times now,Develop a recursive Python function to print the phrase 'Repeat an action many times now' using recursion to achieve repetition.,"def repeat_phrase(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1, phrase) + "" "" + phrase
+if __name__ == '__main__':
+    number_of_repeats = 5
+    phrase_to_repeat = ""Repeat an action many times now""
+    result = repeat_phrase(number_of_repeats, phrase_to_repeat)
+    print(result)",True,0,17403,280_2.py
+280,2,Repeat an action many times now,Develop a recursive Python function to print the phrase 'Repeat an action many times now' using recursion to achieve repetition.,"def repeat_phrase(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1, phrase) + "" "" + phrase
+if __name__ == '__main__':
+    number_of_repetitions = 5
+    phrase_to_repeat = ""Repeat an action many times now""
+    result = repeat_phrase(number_of_repetitions, phrase_to_repeat)
+    print(result)",True,1,17404,280_2_1.py
+280,2,Repeat an action many times now,Develop a recursive Python function to print the phrase 'Repeat an action many times now' using recursion to achieve repetition.,"def repeat_phrase(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1, phrase) + "" "" + phrase
+if __name__ == '__main__':
+    number_of_repeats = 5
+    target_phrase = ""Repeat an action many times now""
+    result = repeat_phrase(number_of_repeats, target_phrase)
+    print(result)",True,2,17405,280_2_2.py
+280,2,Repeat an action many times now,Develop a recursive Python function to print the phrase 'Repeat an action many times now' using recursion to achieve repetition.,"def repeat_phrase(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1, phrase) + "" "" + phrase
+if __name__ == '__main__':
+    count = 5
+    text = ""Repeat an action many times now""
+    result = repeat_phrase(count, text)
+    print(result)",True,3,17406,280_2_3.py
+280,2,Repeat an action many times now,Develop a recursive Python function to print the phrase 'Repeat an action many times now' using recursion to achieve repetition.,"def repeat_phrase(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1, phrase) + "" "" + phrase
+if __name__ == '__main__':
+    count = 3
+    text = ""Repeat an action many times now""
+    result = repeat_phrase(count, text)
+    print(result)",True,4,17407,280_2_4.py
+280,3,Repeat an action many times now,Write a class named `Repeater` with a method that simulates repeating a given action string a specified number of times. Ensure the implementation is object-oriented and highly reusable.,"class Repeater:
+    def repeat_action(self, action_string, num_times):
+        result = """"
+        for _ in range(num_times):
+            result += action_string + ""\n""
+        return result
+if __name__ == '__main__':
+    repeater = Repeater()
+    action = ""Hello World""
+    count = 3
+    output = repeater.repeat_action(action, count)
+    print(output)",True,0,17408,280_3.py
+280,3,Repeat an action many times now,Write a class named `Repeater` with a method that simulates repeating a given action string a specified number of times. Ensure the implementation is object-oriented and highly reusable.,"class Repeater:
+    def repeat_action(self, action_string: str, num_times: int) -> str:
+        result = """"
+        for _ in range(num_times):
+            result += action_string + ""\n""
+        return result.strip()
+if __name__ == '__main__':
+    repeater = Repeater()
+    action = ""Hello World""
+    count = 3
+    output = repeater.repeat_action(action, count)
+    print(output)",True,1,17409,280_3_1.py
+280,3,Repeat an action many times now,Write a class named `Repeater` with a method that simulates repeating a given action string a specified number of times. Ensure the implementation is object-oriented and highly reusable.,"class Repeater:
+    def repeat_action(self, action_string: str, times: int) -> str:
+        result = """"
+        for _ in range(times):
+            result += action_string + ""\n""
+        return result.strip()
+if __name__ == '__main__':
+    repeater = Repeater()
+    action = ""Hello World""
+    count = 3
+    output = repeater.repeat_action(action, count)
+    print(output)",True,2,17410,280_3_2.py
+280,3,Repeat an action many times now,Write a class named `Repeater` with a method that simulates repeating a given action string a specified number of times. Ensure the implementation is object-oriented and highly reusable.,"class Repeater:
+    def repeat(self, action_string: str, num_times: int) -> str:
+        result = """"
+        for _ in range(num_times):
+            result += action_string + ""\n""
+        return result.strip()
+if __name__ == '__main__':
+    repeater = Repeater()
+    action = ""Hello World""
+    count = 3
+    output = repeater.repeat(action, count)
+    print(output)",True,3,17411,280_3_3.py
+280,0,Repeat an action many times now,"Write a complete, well-documented Python script that repeatedly prints the string 'Repeat an action now' exactly 100 times using a for loop and control flow structures.","def main():
+    for i in range(100):
+        print(""Repeat an action now"")
+if __name__ == '__main__':
+    main()",True,0,17412,280_0.py
+280,4,Repeat an action many times now,"Create an iterative solution in Python to generate and print 'Repeat an action many times now' five times, focusing on readability and best practices for loop construction.","def repeat_action(message, times):
+    for _ in range(times):
+        print(message)
+if __name__ == '__main__':
+    action = 'Repeat an action many times now'
+    repetitions = 5
+    repeat_action(action, repetitions)",True,0,17413,280_4.py
+280,6,Repeat an action many times now,Write a script that reads an integer input from the user and prints the fixed phrase 'Repeat an action many times now' exactly that number of times. Include robust error handling for non-integer input.,"def repeat_phrase(number):
+    phrase = ""Repeat an action many times now""
+    for _ in range(number):
+        print(phrase)
+if __name__ == '__main__':
+    sample_input = ""5""
+    try:
+        num = int(sample_input)
+        repeat_phrase(num)
+    except ValueError:
+        print(""Invalid input. Please enter an integer."")",True,0,17414,280_6.py
+280,6,Repeat an action many times now,Write a script that reads an integer input from the user and prints the fixed phrase 'Repeat an action many times now' exactly that number of times. Include robust error handling for non-integer input.,"def repeat_phrase(number):
+    phrase = ""Repeat an action many times now""
+    for _ in range(number):
+        print(phrase)
+if __name__ == '__main__':
+    sample_input = ""5""
+    try:
+        num = int(sample_input)
+        repeat_phrase(num)
+    except ValueError:
+        print(""Invalid input: Please enter an integer."")",True,1,17415,280_6_1.py
+280,6,Repeat an action many times now,Write a script that reads an integer input from the user and prints the fixed phrase 'Repeat an action many times now' exactly that number of times. Include robust error handling for non-integer input.,"def repeat_phrase(number):
+    phrase = ""Repeat an action many times now""
+    for _ in range(number):
+        print(phrase)
+if __name__ == '__main__':
+    sample_input = ""5""
+    try:
+        num = int(sample_input)
+        repeat_phrase(num)
+    except ValueError:
+        print(""Error: Invalid input. Please enter an integer."")",True,2,17416,280_6_2.py
+280,6,Repeat an action many times now,Write a script that reads an integer input from the user and prints the fixed phrase 'Repeat an action many times now' exactly that number of times. Include robust error handling for non-integer input.,"def repeat_phrase(number):
+    phrase = ""Repeat an action many times now""
+    for _ in range(number):
+        print(phrase)
+if __name__ == '__main__':
+    sample_input = ""5""
+    try:
+        num = int(sample_input)
+        repeat_phrase(num)
+    except ValueError:
+        print(""Invalid input provided. Please enter an integer."")",True,3,17417,280_6_3.py
+280,7,Repeat an action many times now,"Implement a decorator in Python that, when applied to a function, automatically repeats the execution of that function a specified number of times. Provide an example usage.","def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                return func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Hello, {name}"")
+if __name__ == '__main__':
+    greet(""Alice"")",True,0,17418,280_7.py
+280,7,Repeat an action many times now,"Implement a decorator in Python that, when applied to a function, automatically repeats the execution of that function a specified number of times. Provide an example usage.","def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                return func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Hello, {name}"")
+    return ""Greeting done""
+if __name__ == '__main__':
+    result = greet(""World"")
+    print(f""Final result: {result}"")",True,1,17419,280_7_1.py
+280,7,Repeat an action many times now,"Implement a decorator in Python that, when applied to a function, automatically repeats the execution of that function a specified number of times. Provide an example usage.","def repeat(n):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                func(*args, **kwargs)
+        return wrapper
+    return decorator
+@repeat(3)
+def greet(name):
+    print(f""Hello, {name}"")
+if __name__ == '__main__':
+    greet(""Alice"")",True,2,17420,280_7_2.py
+280,8,Repeat an action many times now,Write a highly efficient one-liner using Python's built-in features (like string multiplication) to generate and print 'Repeat an action many times now' fifty times.,if __name__ == '__main__': print('Repeat an action many times now' * 50),True,0,17421,280_8.py
+280,9,Repeat an action many times now,"Develop a function that takes a list of actions (strings) and repeats the entire list, where each item in the original list is repeated N times consecutively. Assume the repetition factor is fixed for this task.","def repeat_list_actions(actions, n):
+    result = []
+    for action in actions:
+        result.extend([action] * n)
+    return result
+if __name__ == '__main__':
+    sample_actions = [""move"", ""jump"", ""attack""]
+    repetition_factor = 3
+    repeated_actions = repeat_list_actions(sample_actions, repetition_factor)
+    print(repeated_actions)",True,0,17422,280_9.py
+280,9,Repeat an action many times now,"Develop a function that takes a list of actions (strings) and repeats the entire list, where each item in the original list is repeated N times consecutively. Assume the repetition factor is fixed for this task.","def repeat_list_actions(actions, n):
+    result = []
+    for action in actions:
+        result.extend([action] * n)
+    return result
+if __name__ == '__main__':
+    sample_actions = [""move"", ""jump"", ""attack""]
+    repetition_factor = 3
+    output = repeat_list_actions(sample_actions, repetition_factor)
+    print(output)",True,1,17423,280_9_1.py
+280,9,Repeat an action many times now,"Develop a function that takes a list of actions (strings) and repeats the entire list, where each item in the original list is repeated N times consecutively. Assume the repetition factor is fixed for this task.","def repeat_list_actions(actions, n):
+    result = []
+    for action in actions:
+        result.extend([action] * n)
+    return result
+if __name__ == '__main__':
+    sample_actions = [""move"", ""jump"", ""say""]
+    repetition_factor = 3
+    repeated_actions = repeat_list_actions(sample_actions, repetition_factor)
+    print(repeated_actions)",True,2,17424,280_9_2.py
+280,10,Repeat an action many times now,"Write a complete, robust Python script that repeatedly prints the message 'Repeat an action many times now' exactly 1000 times, utilizing an efficient loop structure.","if __name__ == '__main__':
+    for _ in range(1000):
+        print('Repeat an action many times now')",True,0,17425,280_10.py
+280,10,Repeat an action many times now,"Write a complete, robust Python script that repeatedly prints the message 'Repeat an action many times now' exactly 1000 times, utilizing an efficient loop structure.","def main():
+    message = 'Repeat an action many times now'
+    count = 1000
+    for i in range(count):
+        print(message)
+if __name__ == '__main__':
+    main()",True,1,17426,280_10_1.py
+280,10,Repeat an action many times now,"Write a complete, robust Python script that repeatedly prints the message 'Repeat an action many times now' exactly 1000 times, utilizing an efficient loop structure.","def main():
+    for _ in range(1000):
+        print('Repeat an action many times now')
+if __name__ == '__main__':
+    main()",True,2,17427,280_10_2.py
+280,10,Repeat an action many times now,"Write a complete, robust Python script that repeatedly prints the message 'Repeat an action many times now' exactly 1000 times, utilizing an efficient loop structure.","def main():
+    message = ""Repeat an action many times now""
+    count = 1000
+    for _ in range(count):
+        print(message)
+if __name__ == '__main__':
+    main()",True,3,17428,280_10_3.py
+280,10,Repeat an action many times now,"Write a complete, robust Python script that repeatedly prints the message 'Repeat an action many times now' exactly 1000 times, utilizing an efficient loop structure.","if __name__ == '__main__':
+    for i in range(1000):
+        print('Repeat an action many times now')",True,4,17429,280_10_4.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string1 = ""abc""
+    count1 = 5
+    result1 = repeat_action(string1, count1)
+    print(f""'{string1}' repeated {count1} times: '{result1}'"")
+    string2 = ""hello""
+    count2 = 1000000
+    result2 = repeat_action(string2, count2)
+    print(f""'{string2}' repeated {count2} times (large count): Length={len(result2)}"")",True,0,17430,280_11.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    test_string = ""abc""
+    test_repetitions = 5
+    result = repeat_action(test_string, test_repetitions)
+    print(result)",True,1,17431,280_11_1.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string1 = ""abc""
+    count1 = 5
+    result1 = repeat_action(string1, count1)
+    print(f""'{string1}' repeated {count1} times is: '{result1}'"")
+    string2 = ""hello""
+    count2 = 10
+    result2 = repeat_action(string2, count2)
+    print(f""'{string2}' repeated {count2} times is: '{result2}'"")
+    string3 = ""Python""
+    count3 = 1
+    result3 = repeat_action(string3, count3)
+    print(f""'{string3}' repeated {count3} times is: '{result3}'"")",True,2,17432,280_11_2.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string1 = ""abc""
+    count1 = 5
+    result1 = repeat_action(string1, count1)
+    print(f""'{string1}' repeated {count1} times is: '{result1}'"")
+    string2 = ""hello""
+    count2 = 1000000
+    result2 = repeat_action(string2, count2)
+    print(f""'{string2}' repeated {count2} times is: '{result2}'"")",True,3,17433,280_11_3.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string_to_repeat = ""abc""
+    repetitions = 1000000
+    result = repeat_action(string_to_repeat, repetitions)
+    print(result)",True,4,17434,280_11_4.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string1 = ""abc""
+    count1 = 5
+    result1 = repeat_action(string1, count1)
+    print(f""'{string1}' repeated {count1} times is: '{result1}'"")
+    string2 = ""hello""
+    count2 = 1000000
+    result2 = repeat_action(string2, count2)
+    print(f""'{string2}' repeated {count2} times is (length {len(result2)}): '{result2[:50]}...'"")",True,5,17435,280_11_5.py
+280,11,Repeat an action many times now,"Implement an optimized function named 'repeat_action' that accepts a string and an integer number of repetitions, and returns the repeated string. Ensure the implementation is time-efficient for large repetition counts.","def repeat_action(s: str, n: int) -> str:
+    return s * n
+if __name__ == '__main__':
+    string1 = ""abc""
+    count1 = 5
+    result1 = repeat_action(string1, count1)
+    print(f""Input string: {string1}, Repetitions: {count1}"")
+    print(f""Result: {result1}"")
+    string2 = ""hello""
+    count2 = 1000000
+    result2 = repeat_action(string2, count2)
+    print(f""Input string: {string2}, Repetitions: {count2}"")
+    print(f""Result length: {len(result2)}"")",True,6,17436,280_11_6.py
+280,12,Repeat an action many times now,Develop a class named 'Repeater' with a method to perform the action 'Repeat an action many times now' a specified number of times using a generator for memory efficiency.,"class Repeater:
+    def repeat_action(self, action, times):
+        for _ in range(times):
+            yield action
+if __name__ == '__main__':
+    repeater = Repeater()
+    action_to_repeat = ""Hello""
+    number_of_times = 5
+    result_generator = repeater.repeat_action(action_to_repeat, number_of_times)
+    repeated_actions = list(result_generator)
+    print(repeated_actions)",True,0,17437,280_12.py
+280,12,Repeat an action many times now,Develop a class named 'Repeater' with a method to perform the action 'Repeat an action many times now' a specified number of times using a generator for memory efficiency.,"class Repeater:
+    def repeat_action(self, action, times):
+        for _ in range(times):
+            yield action
+if __name__ == '__main__':
+    repeater = Repeater()
+    action_to_repeat = ""Hello""
+    number_of_repeats = 5
+    result_generator = repeater.repeat_action(action_to_repeat, number_of_repeats)
+    repeated_actions = list(result_generator)
+    print(repeated_actions)",True,1,17438,280_12_1.py
+280,12,Repeat an action many times now,Develop a class named 'Repeater' with a method to perform the action 'Repeat an action many times now' a specified number of times using a generator for memory efficiency.,"def repeater(action, times):
+    for _ in range(times):
+        yield action
+class Repeater:
+    def repeat_action(self, action, times):
+        return repeater(action, times)
+if __name__ == '__main__':
+    repeater_instance = Repeater()
+    action_to_repeat = ""Hello""
+    number_of_times = 3
+    result_generator = repeater_instance.repeat_action(action_to_repeat, number_of_times)
+    repeated_actions = list(result_generator)
+    print(repeated_actions)",True,2,17439,280_12_2.py
+280,12,Repeat an action many times now,Develop a class named 'Repeater' with a method to perform the action 'Repeat an action many times now' a specified number of times using a generator for memory efficiency.,"def repeater(action, times):
+    for _ in range(times):
+        yield action
+class Repeater:
+    def repeat_action(self, action, times):
+        return repeater(action, times)
+if __name__ == '__main__':
+    my_repeater = Repeater()
+    action_to_repeat = ""Hello""
+    number_of_times = 3
+    result_generator = my_repeater.repeat_action(action_to_repeat, number_of_times)
+    repeated_actions = list(result_generator)
+    print(repeated_actions)",True,3,17440,280_12_3.py
+280,13,Repeat an action many times now,Write a command-line Python program that prompts the user for an integer input and then prints the phrase 'Repeat an action many times now' that many times. Use standard input/output efficiently.,"if __name__ == '__main__':
+    number = 5
+    phrase = ""Repeat an action many times now""
+    for _ in range(number):
+        print(phrase)",True,0,17441,280_13.py
+280,14,Repeat an action many times now,"Create a recursive Python function to print the phrase 'Repeat an action many times now', ensuring the base case and recursive calls are implemented in the most professional and idiomatic Python manner.","def repeat_phrase(n):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1) + ""Repeat an action many times now""
+if __name__ == '__main__':
+    number = 3
+    result = repeat_phrase(number)
+    print(result)",True,0,17442,280_14.py
+280,14,Repeat an action many times now,"Create a recursive Python function to print the phrase 'Repeat an action many times now', ensuring the base case and recursive calls are implemented in the most professional and idiomatic Python manner.","def repeat_phrase_recursive(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return phrase + repeat_phrase_recursive(n - 1, phrase)
+if __name__ == '__main__':
+    n_times = 5
+    phrase_to_repeat = ""Repeat an action many times now""
+    result = repeat_phrase_recursive(n_times, phrase_to_repeat)
+    print(result)",True,1,17443,280_14_1.py
+280,14,Repeat an action many times now,"Create a recursive Python function to print the phrase 'Repeat an action many times now', ensuring the base case and recursive calls are implemented in the most professional and idiomatic Python manner.","def repeat_phrase(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return phrase + repeat_phrase(n - 1, phrase)
+if __name__ == '__main__':
+    number_of_repeats = 5
+    target_phrase = 'Repeat an action many times now'
+    result = repeat_phrase(number_of_repeats, target_phrase)
+    print(result)",True,2,17444,280_14_2.py
+280,14,Repeat an action many times now,"Create a recursive Python function to print the phrase 'Repeat an action many times now', ensuring the base case and recursive calls are implemented in the most professional and idiomatic Python manner.","def repeat_phrase(n):
+    if n == 0:
+        return """"
+    else:
+        return repeat_phrase(n - 1) + ""Repeat an action many times now""
+if __name__ == '__main__':
+    number_of_repeats = 5
+    result = repeat_phrase(number_of_repeats)
+    print(result)",True,3,17445,280_14_3.py
+280,14,Repeat an action many times now,"Create a recursive Python function to print the phrase 'Repeat an action many times now', ensuring the base case and recursive calls are implemented in the most professional and idiomatic Python manner.","def repeat_phrase(n, phrase):
+    if n == 0:
+        return
+    repeat_phrase(n - 1, phrase)
+    print(phrase)
+if __name__ == '__main__':
+    number_of_repeats = 5
+    phrase_to_print = 'Repeat an action many times now'
+    repeat_phrase(number_of_repeats, phrase_to_print)",True,4,17446,280_14_4.py
+280,14,Repeat an action many times now,"Create a recursive Python function to print the phrase 'Repeat an action many times now', ensuring the base case and recursive calls are implemented in the most professional and idiomatic Python manner.","def repeat_phrase_recursive(n, phrase):
+    if n == 0:
+        return """"
+    else:
+        return phrase + repeat_phrase_recursive(n - 1, phrase)
+if __name__ == '__main__':
+    number_of_repeats = 5
+    target_phrase = ""Repeat an action many times now""
+    result = repeat_phrase_recursive(number_of_repeats, target_phrase)
+    print(result)",True,5,17447,280_14_5.py
+281,0,Find the sum of a few values,"Write a complete, robust Python script that prompts the user to enter five integers and then calculates and prints their total sum. Use efficient input handling.","import sys
+if __name__ == '__main__':
+    numbers = [10, 25, 5, 40, 15]
+    total_sum = sum(numbers)
+    print(total_sum)",True,0,17448,281_0.py
+281,0,Find the sum of a few values,"Write a complete, robust Python script that prompts the user to enter five integers and then calculates and prints their total sum. Use efficient input handling.","import sys
+def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_numbers = [10, 25, 32, 8, 40]
+    total = calculate_sum(sample_numbers)
+    print(total)",True,1,17449,281_0_1.py
+281,1,Find the sum of a few values,Implement an optimized function named `calculate_sum` that accepts a list of numbers and returns their total sum using Python's built-in functions for maximum efficiency.,"def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    data = [1, 5, 10, 2, 8]
+    result = calculate_sum(data)
+    print(result)",True,0,17450,281_1.py
+281,1,Find the sum of a few values,Implement an optimized function named `calculate_sum` that accepts a list of numbers and returns their total sum using Python's built-in functions for maximum efficiency.,"def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2, 8]
+    result = calculate_sum(sample_list)
+    print(result)",True,1,17451,281_1_1.py
+281,1,Find the sum of a few values,Implement an optimized function named `calculate_sum` that accepts a list of numbers and returns their total sum using Python's built-in functions for maximum efficiency.,"import time
+def calculate_sum(numbers):
+    return sum(numbers)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2, 8]
+    start_time = time.perf_counter()
+    result = calculate_sum(sample_list)
+    end_time = time.perf_counter()
+    print(result)",True,2,17452,281_1_2.py
+281,2,Find the sum of a few values,Develop a class named `ValueSummer` with a method `sum_values` that initializes with a list and provides a method to calculate and return the sum of all elements in the list. Ensure the implementation is clean and object-oriented.,"class ValueSummer:
+    def __init__(self, values):
+        self.values = values
+    def sum_values(self):
+        return sum(self.values)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 5]
+    summer = ValueSummer(sample_list)
+    total = summer.sum_values()
+    print(total)",True,0,17453,281_2.py
+281,2,Find the sum of a few values,Develop a class named `ValueSummer` with a method `sum_values` that initializes with a list and provides a method to calculate and return the sum of all elements in the list. Ensure the implementation is clean and object-oriented.,"class ValueSummer:
+    def __init__(self, values):
+        self.values = values
+    def sum_values(self):
+        return sum(self.values)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 45]
+    summer = ValueSummer(sample_list)
+    result = summer.sum_values()
+    print(result)",True,1,17454,281_2_1.py
+281,2,Find the sum of a few values,Develop a class named `ValueSummer` with a method `sum_values` that initializes with a list and provides a method to calculate and return the sum of all elements in the list. Ensure the implementation is clean and object-oriented.,"class ValueSummer:
+    def __init__(self, values):
+        self.values = values
+    def sum_values(self):
+        return sum(self.values)
+if __name__ == '__main__':
+    sample_list = [1, 5, 10, 2]
+    summer = ValueSummer(sample_list)
+    result = summer.sum_values()
+    print(result)",True,2,17455,281_2_2.py
+281,2,Find the sum of a few values,Develop a class named `ValueSummer` with a method `sum_values` that initializes with a list and provides a method to calculate and return the sum of all elements in the list. Ensure the implementation is clean and object-oriented.,"class ValueSummer:
+    def __init__(self, values):
+        self.values = values
+    def sum_values(self):
+        return sum(self.values)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 45]
+    summer = ValueSummer(sample_list)
+    total = summer.sum_values()
+    print(total)",True,3,17456,281_2_3.py
+281,2,Find the sum of a few values,Develop a class named `ValueSummer` with a method `sum_values` that initializes with a list and provides a method to calculate and return the sum of all elements in the list. Ensure the implementation is clean and object-oriented.,"class ValueSummer:
+    def __init__(self, values):
+        self.values = values
+    def sum_values(self):
+        return sum(self.values)
+if __name__ == '__main__':
+    sample_list = [10, 25, 30, 5]
+    summer = ValueSummer(sample_list)
+    result = summer.sum_values()
+    print(result)",True,4,17457,281_2_4.py
+281,2,Find the sum of a few values,Develop a class named `ValueSummer` with a method `sum_values` that initializes with a list and provides a method to calculate and return the sum of all elements in the list. Ensure the implementation is clean and object-oriented.,"class ValueSummer:
+    def __init__(self, values):
+        self.values = values
+    def sum_values(self):
+        return sum(self.values)
+if __name__ == '__main__':
+    sample_list = [10, 25, 32, 8]
+    summer = ValueSummer(sample_list)
+    total = summer.sum_values()
+    print(total)",True,5,17458,281_2_5.py
+281,3,Find the sum of a few values,Write a script that reads a line of comma-separated integers from standard input and calculates the sum of all those integers. Handle potential non-integer inputs gracefully.,,False,0,17459,281_3.py
+281,4,Find the sum of a few values,Create a Python function `find_sum_of_specific_values` that takes an arbitrary number of arguments (using `*args`) and returns the sum of all provided numerical values. The code must be highly readable.,"def find_sum_of_specific_values(*args):
+    total = 0
+    for value in args:
+        total += value
+    return total
+if __name__ == '__main__':
+    result1 = find_sum_of_specific_values(1, 2, 3)
+    print(f""Sum of (1, 2, 3): {result1}"")
+    result2 = find_sum_of_specific_values(10, 20, 5)
+    print(f""Sum of (10, 20, 5): {result2}"")
+    result3 = find_sum_of_specific_values()
+    print(f""Sum of (): {result3}"")
+    result4 = find_sum_of_specific_values(1.5, 2.5, 3.0)
+    print(f""Sum of (1.5, 2.5, 3.0): {result4}"")",True,0,17460,281_4.py
+281,4,Find the sum of a few values,Create a Python function `find_sum_of_specific_values` that takes an arbitrary number of arguments (using `*args`) and returns the sum of all provided numerical values. The code must be highly readable.,"def find_sum_of_specific_values(*args):
+    total = 0
+    for value in args:
+        total += value
+    return total
+if __name__ == '__main__':
+    result1 = find_sum_of_specific_values(1, 2, 3)
+    print(f""Sum of (1, 2, 3): {result1}"")
+    result2 = find_sum_of_specific_values(10, 20, 5)
+    print(f""Sum of (10, 20, 5): {result2}"")
+    result3 = find_sum_of_specific_values()
+    print(f""Sum of (): {result3}"")
+    result4 = find_sum_of_specific_values(4.5, 5.5, 10)
+    print(f""Sum of (4.5, 5.5, 10): {result4}"")",True,1,17461,281_4_1.py
+281,4,Find the sum of a few values,Create a Python function `find_sum_of_specific_values` that takes an arbitrary number of arguments (using `*args`) and returns the sum of all provided numerical values. The code must be highly readable.,"def find_sum_of_specific_values(*args):
+    total = 0
+    for value in args:
+        total += value
+    return total
+if __name__ == '__main__':
+    result1 = find_sum_of_specific_values(1, 2, 3)
+    print(f""Sum of (1, 2, 3): {result1}"")
+    result2 = find_sum_of_specific_values(10, 20, 5)
+    print(f""Sum of (10, 20, 5): {result2}"")
+    result3 = find_sum_of_specific_values()
+    print(f""Sum of (): {result3}"")
+    result4 = find_sum_of_specific_values(5.5, 10.5)
+    print(f""Sum of (5.5, 10.5): {result4}"")",True,2,17462,281_4_2.py
+281,4,Find the sum of a few values,Create a Python function `find_sum_of_specific_values` that takes an arbitrary number of arguments (using `*args`) and returns the sum of all provided numerical values. The code must be highly readable.,"def find_sum_of_specific_values(*args):
+    total = 0
+    for value in args:
+        total += value
+    return total
+if __name__ == '__main__':
+    result1 = find_sum_of_specific_values(1, 2, 3)
+    print(f""Sum of (1, 2, 3): {result1}"")
+    result2 = find_sum_of_specific_values(10, 20, 5)
+    print(f""Sum of (10, 20, 5): {result2}"")
+    result3 = find_sum_of_specific_values()
+    print(f""Sum of (): {result3}"")
+    result4 = find_sum_of_specific_values(42)
+    print(f""Sum of (42): {result4}"")",True,3,17463,281_4_3.py
+281,5,Find the sum of a few values,"Implement a generator function `sum_sequence(start, end)` that yields the sum of all integers between `start` (inclusive) and `end` (exclusive). Test this function by calculating the sum from 1 to 10.","def sum_sequence(start, end):
+    current = start
+    while current < end:
+        yield current
+        current += 1
+if __name__ == '__main__':
+    result_generator = sum_sequence(1, 10)
+    total_sum = sum(result_generator)
+    print(total_sum)",True,0,17464,281_5.py
+280,5,Repeat an action many times now,"Design and implement a generator function that yields the phrase 'Repeat an action many times now' indefinitely or up to a specified limit, making it memory-efficient for large repetitions.","def phrase_generator(limit=None):
+    phrase = 'Repeat an action many times now'
+    count = 0
+    if limit is not None:
+        while count < limit:
+            yield phrase
+            count += 1
+    else:
+        while True:
+            yield phrase
+if __name__ == '__main__':
+    print(""Testing with no limit (indefinite):"")
+    generator_infinite = phrase_generator()
+    for i in range(5):
+        print(next(generator_infinite))
+    print(""\nTesting with a limit of 3:"")
+    generator_limited = phrase_generator(limit=3)
+    for i in range(3):
+        print(next(generator_limited))",True,0,17465,280_5.py
+280,5,Repeat an action many times now,"Design and implement a generator function that yields the phrase 'Repeat an action many times now' indefinitely or up to a specified limit, making it memory-efficient for large repetitions.","def phrase_generator(limit=None):
+    phrase = 'Repeat an action many times now'
+    count = 0
+    while True:
+        if limit is not None and count >= limit:
+            break
+        yield phrase
+        count += 1
+if __name__ == '__main__':
+    print(""Testing with no limit (infinite):"")
+    generator_infinite = phrase_generator()
+    for i in range(5):
+        print(next(generator_infinite))
+    print(""\nTesting with a limit of 3:"")
+    generator_limited = phrase_generator(limit=3)
+    for i in range(5):
+        try:
+            print(next(generator_limited))
+        except StopIteration:
+            break",True,1,17466,280_5_1.py
+280,5,Repeat an action many times now,"Design and implement a generator function that yields the phrase 'Repeat an action many times now' indefinitely or up to a specified limit, making it memory-efficient for large repetitions.","def phrase_generator(limit=None):
+    phrase = 'Repeat an action many times now'
+    count = 0
+    while True:
+        if limit is not None and count >= limit:
+            break
+        yield phrase
+        count += 1
+if __name__ == '__main__':
+    print(""Testing without limit:"")
+    generator1 = phrase_generator()
+    for i in range(5):
+        print(next(generator1))
+    print(""\nTesting with a limit of 3:"")
+    generator2 = phrase_generator(limit=3)
+    for i in range(5):
+        try:
+            print(next(generator2))
+        except StopIteration:
+            break",True,2,17467,280_5_2.py
+280,5,Repeat an action many times now,"Design and implement a generator function that yields the phrase 'Repeat an action many times now' indefinitely or up to a specified limit, making it memory-efficient for large repetitions.","def phrase_generator(limit=None):
+    phrase = 'Repeat an action many times now'
+    count = 0
+    while True:
+        yield phrase
+        if limit is not None and count >= limit:
+            break
+        count += 1
+if __name__ == '__main__':
+    print(""Testing without limit:"")
+    generator1 = phrase_generator()
+    for i in range(5):
+        print(next(generator1))
+    print(""\nTesting with limit of 3:"")
+    generator2 = phrase_generator(limit=3)
+    for i in range(5):
+        try:
+            print(next(generator2))
+        except StopIteration:
+            break",True,3,17468,280_5_3.py
+281,6,Find the sum of a few values,Write a standalone Python program to find the sum of the first ten prime numbers. Use an efficient method for prime number generation if necessary.,"import math
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+def find_primes(n):
+    primes = []
+    num = 2
+    while len(primes) < n:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
+if __name__ == '__main__':
+    count = 10
+    prime_numbers = find_primes(count)
+    total_sum = sum(prime_numbers)
+    print(total_sum)",True,0,17469,281_6.py
+281,6,Find the sum of a few values,Write a standalone Python program to find the sum of the first ten prime numbers. Use an efficient method for prime number generation if necessary.,"import math
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+def find_first_n_primes(n):
+    primes = []
+    num = 2
+    while len(primes) < n:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
+if __name__ == '__main__':
+    n = 10
+    first_ten_primes = find_first_n_primes(n)
+    total_sum = sum(first_ten_primes)
+    print(total_sum)",True,1,17470,281_6_1.py
+281,6,Find the sum of a few values,Write a standalone Python program to find the sum of the first ten prime numbers. Use an efficient method for prime number generation if necessary.,"import math
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+def find_first_n_primes(n):
+    primes = []
+    num = 2
+    while len(primes) < n:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
+if __name__ == '__main__':
+    n = 10
+    first_ten_primes = find_first_n_primes(n)
+    total_sum = sum(first_ten_primes)
+    print(total_sum)",True,2,17471,281_6_2.py
+281,6,Find the sum of a few values,Write a standalone Python program to find the sum of the first ten prime numbers. Use an efficient method for prime number generation if necessary.,"import math
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+def find_primes(n):
+    primes = []
+    num = 2
+    while len(primes) < n:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
+if __name__ == '__main__':
+    target_count = 10
+    prime_numbers = find_primes(target_count)
+    sum_of_primes = sum(prime_numbers)
+    print(sum_of_primes)",True,3,17472,281_6_3.py
+281,7,Find the sum of a few values,Design and implement an algorithm within a function `sum_array_elements` that efficiently calculates the sum of elements in a potentially very large list of floating-point numbers. Prioritize performance.,"def sum_array_elements(arr):
+    total = 0.0
+    for element in arr:
+        total += element
+    return total
+if __name__ == '__main__':
+    sample_array = [1.5, 2.75, 3.0, -4.2, 10.1]
+    result = sum_array_elements(sample_array)
+    print(result)",True,0,17473,281_7.py
+281,7,Find the sum of a few values,Design and implement an algorithm within a function `sum_array_elements` that efficiently calculates the sum of elements in a potentially very large list of floating-point numbers. Prioritize performance.,"def sum_array_elements(arr):
+    total = 0.0
+    for element in arr:
+        total += element
+    return total
+if __name__ == '__main__':
+    sample_array = [1.5, 2.75, 3.0, -4.2, 100.1]
+    result = sum_array_elements(sample_array)
+    print(result)",True,1,17474,281_7_1.py
+281,7,Find the sum of a few values,Design and implement an algorithm within a function `sum_array_elements` that efficiently calculates the sum of elements in a potentially very large list of floating-point numbers. Prioritize performance.,"def sum_array_elements(arr):
+    total = 0.0
+    for element in arr:
+        total += element
+    return total
+if __name__ == '__main__':
+    sample_list = [1.5, 2.75, 3.0, -4.2, 0.1]
+    result = sum_array_elements(sample_list)
+    print(result)",True,2,17475,281_7_2.py
+281,7,Find the sum of a few values,Design and implement an algorithm within a function `sum_array_elements` that efficiently calculates the sum of elements in a potentially very large list of floating-point numbers. Prioritize performance.,"def sum_array_elements(arr):
+    total = 0.0
+    for x in arr:
+        total += x
+    return total
+if __name__ == '__main__':
+    sample_array = [1.5, 2.75, 3.0, -4.2, 100.1]
+    result = sum_array_elements(sample_array)
+    print(result)",True,3,17476,281_7_3.py
