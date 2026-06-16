@@ -1,0 +1,9 @@
+from collections import deque
+def reverse_sequence(sequence):
+    dq = deque(sequence)
+    return list(reversed(dq))
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    reversed_result = reverse_sequence(sample_data)
+    print("Original:", sample_data)
+    print("Reversed:", reversed_result)
