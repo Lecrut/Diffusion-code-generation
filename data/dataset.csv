@@ -411657,3 +411657,1260 @@ if __name__ == '__main__':
     print(result1)
     result2 = divide(5.0, 3.0)
     print(result2)",True,1,20320,322_6_1.py
+322,7,Divide one quantity by another,"Write a script that reads two numbers from standard input, converts them to floats, and calculates the division. The script must validate that the user inputs are valid numerical representations.",,False,0,20321,322_7.py
+322,8,Divide one quantity by another,"Design and implement an efficient algorithm using Python's built-in operators to calculate the result of dividing a large integer by another integer, focusing on minimizing intermediate steps where possible.","import sys
+def divide_large_integers(dividend, divisor):
+    return dividend // divisor
+if __name__ == '__main__':
+    dividend = 12345678901234567890
+    divisor = 12345
+    result = divide_large_integers(dividend, divisor)
+    print(result)",True,0,20322,322_8.py
+322,8,Divide one quantity by another,"Design and implement an efficient algorithm using Python's built-in operators to calculate the result of dividing a large integer by another integer, focusing on minimizing intermediate steps where possible.","if __name__ == '__main__':
+    dividend = 12345678901234567890
+    divisor = 12345
+    result = dividend // divisor
+    remainder = dividend % divisor
+    print(f""Dividend: {dividend}"")
+    print(f""Divisor: {divisor}"")
+    print(f""Result (Quotient): {result}"")
+    print(f""Remainder: {remainder}"")",True,1,20323,322_8_1.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_one(self):
+        self.assertEqual(divide(7, 1), 7.0)
+        self.assertEqual(divide(-5, 1), -5.0)
+    def test_division_resulting_in_zero(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(-10, 0), None)                                                                   
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(-5, 0)
+    def test_negative_numbers(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_mixed_signs(self):
+        self.assertEqual(divide(10, -3), -3.3333333333333335)
+        self.assertEqual(divide(-10, 3), -3.3333333333333335)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,20324,322_9.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_one(self):
+        self.assertEqual(divide(7, 1), 7.0)
+        self.assertEqual(divide(-4, 1), -4.0)
+    def test_division_resulting_in_zero(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(-10, 0), None)                                                                                              
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(-5, 0)
+    def test_negative_dividend(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_float_results(self):
+        self.assertAlmostEqual(divide(5, 2), 2.5)
+        self.assertAlmostEqual(divide(7, 4), 1.75)
+        self.assertAlmostEqual(divide(1, 3), 0.3333333333333333)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,20325,322_9_1.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_one(self):
+        self.assertEqual(divide(7, 1), 7.0)
+        self.assertEqual(divide(-5, 1), -5.0)
+    def test_division_resulting_in_zero(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(-10, 0), None)                                                                                              
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(-5, 0)
+    def test_negative_dividend(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_floating_point_results(self):
+        self.assertAlmostEqual(divide(1, 4), 0.25)
+        self.assertAlmostEqual(divide(7, 2), 3.5)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,20326,322_9_2.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(-5, 0)
+    def test_negative_dividend(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_negative_divisor(self):
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_zero_as_dividend(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(0, -5), 0.0)
+    def test_both_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(0, 0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,20327,322_9_3.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_one(self):
+        self.assertEqual(divide(7, 1), 7.0)
+        self.assertEqual(divide(-5, 1), -5.0)
+    def test_division_resulting_in_zero(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(-10, 0), None)                                                                                              
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(-5, 0)
+    def test_negative_dividend(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_division_with_floats(self):
+        self.assertAlmostEqual(divide(10.0, 3.0), 3.3333333333333335)
+        self.assertAlmostEqual(divide(7.5, 2.0), 3.75)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,20328,322_9_4.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_division(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_zero(self):
+        with self.assertRaises(ZeroDivisionError):
+            divide(10, 0)
+        with self.assertRaises(ZeroDivisionError):
+            divide(-5, 0)
+    def test_negative_dividend(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_negative_divisor(self):
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_division_by_one(self):
+        self.assertEqual(divide(7, 1), 7.0)
+        self.assertEqual(divide(-4, 1), -4.0)
+    def test_zero_as_dividend(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(0, -5), 0.0)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,5,20329,322_9_5.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(10, 3), 3.3333333333333335)
+    def test_division_by_one(self):
+        self.assertEqual(divide(7, 1), 7.0)
+        self.assertEqual(divide(-5, 1), -5.0)
+    def test_division_resulting_in_zero(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(-10, 0), None)                                                                                               
+    def test_division_by_zero(self):
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(10, 0)
+        with self.assertRaisesRegex(ZeroDivisionError, ""Cannot divide by zero""):
+            divide(-5, 0)
+    def test_negative_numbers_result_positive(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_division_with_floats(self):
+        self.assertAlmostEqual(divide(10.0, 3.0), 3.3333333333333335)
+        self.assertAlmostEqual(divide(1.0, 4.0), 0.25)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,6,20330,322_9_6.py
+322,9,Divide one quantity by another,"Write a comprehensive test suite using `unittest` for a function that divides two numbers, ensuring that all edge cases, particularly division by zero and handling of negative numbers, are correctly managed.","import unittest
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+class TestDivideFunction(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(divide(10, 2), 5.0)
+        self.assertAlmostEqual(divide(7, 3), 2.3333333333333335)
+    def test_division_by_one(self):
+        self.assertEqual(divide(15, 1), 15.0)
+        self.assertEqual(divide(-8, 1), -8.0)
+    def test_division_resulting_in_zero(self):
+        self.assertEqual(divide(0, 5), 0.0)
+        self.assertEqual(divide(-10, 0), None)                                                                   
+    def test_division_by_zero(self):
+        with self.assertRaises(ZeroDivisionError):
+            divide(10, 0)
+        with self.assertRaises(ZeroDivisionError):
+            divide(-5, 0)
+    def test_negative_dividend(self):
+        self.assertEqual(divide(-10, 2), -5.0)
+        self.assertEqual(divide(10, -2), -5.0)
+        self.assertEqual(divide(-10, -2), 5.0)
+    def test_floating_point_results(self):
+        self.assertAlmostEqual(divide(1, 3), 0.3333333333333333)
+        self.assertAlmostEqual(divide(5, 2), 2.5)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,7,20331,322_9_7.py
+322,10,Divide one quantity by another,"Write a complete, efficient Python script that prompts the user to enter two numbers and then divides the first number by the second. Handle potential division-by-zero errors gracefully using a try-except block.","def divide_numbers(num1, num2):
+    try:
+        result = num1 / num2
+        return result
+    except ZeroDivisionError:
+        return ""Error: Cannot divide by zero.""
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    result = divide_numbers(num1, num2)
+    print(f""The result of dividing {num1} by {num2} is: {result}"")
+    num1 = 10
+    num2 = 0
+    result = divide_numbers(num1, num2)
+    print(f""The result of dividing {num1} by {num2} is: {result}"")",True,0,20332,322_10.py
+322,10,Divide one quantity by another,"Write a complete, efficient Python script that prompts the user to enter two numbers and then divides the first number by the second. Handle potential division-by-zero errors gracefully using a try-except block.","def divide_numbers(a, b):
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        return ""Error: Cannot divide by zero.""
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    result = divide_numbers(num1, num2)
+    print(result)",True,1,20333,322_10_1.py
+322,10,Divide one quantity by another,"Write a complete, efficient Python script that prompts the user to enter two numbers and then divides the first number by the second. Handle potential division-by-zero errors gracefully using a try-except block.","def divide_numbers(a, b):
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        return ""Error: Cannot divide by zero.""
+    except TypeError:
+        return ""Error: Invalid input types. Please enter numbers.""
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    result = divide_numbers(num1, num2)
+    print(result)",True,2,20334,322_10_2.py
+322,10,Divide one quantity by another,"Write a complete, efficient Python script that prompts the user to enter two numbers and then divides the first number by the second. Handle potential division-by-zero errors gracefully using a try-except block.","def divide_numbers(num1, num2):
+    try:
+        result = num1 / num2
+        return result
+    except ZeroDivisionError:
+        return ""Error: Cannot divide by zero.""
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 2
+    result = divide_numbers(num1, num2)
+    print(result)
+    num1 = 10
+    num2 = 0
+    result = divide_numbers(num1, num2)
+    print(result)",True,3,20335,322_10_3.py
+322,10,Divide one quantity by another,"Write a complete, efficient Python script that prompts the user to enter two numbers and then divides the first number by the second. Handle potential division-by-zero errors gracefully using a try-except block.","def divide_numbers(a, b):
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        return ""Error: Cannot divide by zero.""
+    except TypeError:
+        return ""Error: Invalid input. Please enter numbers.""
+if __name__ == '__main__':
+    num1 = 20
+    num2 = 4
+    result = divide_numbers(num1, num2)
+    print(result)",True,4,20336,322_10_4.py
+322,11,Divide one quantity by another,"Implement a standalone Python function named 'divide_quantities' that accepts two floating-point numbers, 'numerator' and 'denominator', and returns the result of their division. The function must include robust error handling for non-numeric inputs or zero denominators.","def divide_quantities(numerator, denominator):
+    try:
+        result = numerator / denominator
+        return result
+    except TypeError:
+        return ""Error: Inputs must be numeric.""
+    except ZeroDivisionError:
+        return ""Error: Denominator cannot be zero.""
+if __name__ == '__main__':
+    print(divide_quantities(10.0, 2.0))
+    print(divide_quantities(15.5, 3.0))
+    print(divide_quantities(10.0, 0.0))
+    print(divide_quantities(""a"", 2.0))
+    print(divide_quantities(5.0, ""b""))",True,0,20337,322_11.py
+322,11,Divide one quantity by another,"Implement a standalone Python function named 'divide_quantities' that accepts two floating-point numbers, 'numerator' and 'denominator', and returns the result of their division. The function must include robust error handling for non-numeric inputs or zero denominators.","def divide_quantities(numerator, denominator):
+    try:
+        result = numerator / denominator
+        return result
+    except TypeError:
+        return ""Error: Both inputs must be numeric.""
+    except ZeroDivisionError:
+        return ""Error: Denominator cannot be zero.""
+if __name__ == '__main__':
+    print(divide_quantities(10.0, 2.5))
+    print(divide_quantities(15.0, 3.0))
+    print(divide_quantities(7.0, 0.0))
+    print(divide_quantities(""a"", 2.0))
+    print(divide_quantities(5.0, ""b""))",True,1,20338,322_11_1.py
+322,11,Divide one quantity by another,"Implement a standalone Python function named 'divide_quantities' that accepts two floating-point numbers, 'numerator' and 'denominator', and returns the result of their division. The function must include robust error handling for non-numeric inputs or zero denominators.","def divide_quantities(numerator, denominator):
+    try:
+        result = numerator / denominator
+        return result
+    except TypeError:
+        return ""Error: Both inputs must be numeric.""
+    except ZeroDivisionError:
+        return ""Error: Denominator cannot be zero.""
+if __name__ == '__main__':
+    print(divide_quantities(10.0, 2.5))
+    print(divide_quantities(15.0, 3.0))
+    print(divide_quantities(10.0, 0.0))
+    print(divide_quantities(""a"", 2.0))
+    print(divide_quantities(5.0, ""b""))",True,2,20339,322_11_2.py
+322,11,Divide one quantity by another,"Implement a standalone Python function named 'divide_quantities' that accepts two floating-point numbers, 'numerator' and 'denominator', and returns the result of their division. The function must include robust error handling for non-numeric inputs or zero denominators.","def divide_quantities(numerator, denominator):
+    try:
+        result = numerator / denominator
+        return result
+    except TypeError:
+        return ""Error: Both inputs must be numeric.""
+    except ZeroDivisionError:
+        return ""Error: Denominator cannot be zero.""
+if __name__ == '__main__':
+    print(divide_quantities(10.0, 2.5))
+    print(divide_quantities(10.0, 0.0))
+    print(divide_quantities(""a"", 2.0))
+    print(divide_quantities(5.0, ""b""))",True,3,20340,322_11_3.py
+322,11,Divide one quantity by another,"Implement a standalone Python function named 'divide_quantities' that accepts two floating-point numbers, 'numerator' and 'denominator', and returns the result of their division. The function must include robust error handling for non-numeric inputs or zero denominators.","def divide_quantities(numerator, denominator):
+    try:
+        result = numerator / denominator
+        return result
+    except TypeError:
+        return ""Error: Both inputs must be numeric.""
+    except ZeroDivisionError:
+        return ""Error: Denominator cannot be zero.""
+if __name__ == '__main__':
+    print(divide_quantities(10.0, 2.5))
+    print(divide_quantities(15.0, 3.0))
+    print(divide_quantities(7.0, 0.0))
+    print(divide_quantities(""a"", 4.0))
+    print(divide_quantities(5.0, ""b""))",True,4,20341,322_11_4.py
+322,12,Divide one quantity by another,"Develop an optimized class named 'RatioCalculator' with a method 'calculate_division(self, a, b)' that performs the division of 'a' by 'b'. The implementation must prioritize clarity and adhere to best practices for mathematical operations.","class RatioCalculator:
+    def calculate_division(self, a, b):
+        if b == 0:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+        return a / b
+if __name__ == '__main__':
+    calculator = RatioCalculator()
+    result1 = calculator.calculate_division(10, 2)
+    print(f""10 / 2 = {result1}"")
+    result2 = calculator.calculate_division(15, 3)
+    print(f""15 / 3 = {result2}"")
+    result3 = calculator.calculate_division(7, 4)
+    print(f""7 / 4 = {result3}"")
+    try:
+        calculator.calculate_division(10, 0)
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")",True,0,20342,322_12.py
+322,12,Divide one quantity by another,"Develop an optimized class named 'RatioCalculator' with a method 'calculate_division(self, a, b)' that performs the division of 'a' by 'b'. The implementation must prioritize clarity and adhere to best practices for mathematical operations.","class RatioCalculator:
+    def calculate_division(self, a, b):
+        if b == 0:
+            raise ZeroDivisionError(""Cannot divide by zero"")
+        return a / b
+if __name__ == '__main__':
+    calculator = RatioCalculator()
+    result1 = calculator.calculate_division(10, 2)
+    print(f""10 / 2 = {result1}"")
+    result2 = calculator.calculate_division(15, 3)
+    print(f""15 / 3 = {result2}"")
+    result3 = calculator.calculate_division(7, 4)
+    print(f""7 / 4 = {result3}"")
+    try:
+        calculator.calculate_division(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Error caught: {e}"")",True,1,20343,322_12_1.py
+322,13,Divide one quantity by another,Write a command-line interface (CLI) Python program that reads two integers from command-line arguments and prints the result of dividing the first argument by the second. Validate that both inputs are successfully provided as integers.,,False,0,20344,322_13.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Division by zero attempted"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(D, N - D)
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 12
+    D_val = 4
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    try:
+        recursive_division(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught exception for division by zero: {e}"")",True,0,20345,322_14.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Division by zero attempted"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(N - D, D) + 1
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val} (using repeated subtraction logic): {result}"")
+    N_val = 10
+    D_val = 0
+    try:
+        recursive_division(N_val, D_val)
+    except ZeroDivisionError as e:
+        print(f""Caught exception for division by zero: {e}"")
+    N_val = 5
+    D_val = 2
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val} (using repeated subtraction logic): {result}"")",True,1,20346,322_14_1.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Division by zero attempted"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(N - D, D) + 1
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 12
+    D_val = 4
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    try:
+        recursive_division(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught exception for division by zero: {e}"")",True,2,20347,322_14_2.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(N - D, D) + (N // D)
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 12
+    D_val = 4
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    try:
+        recursive_division(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught expected error: {e}"")",True,3,20348,322_14_3.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Division by zero attempted"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(N - D, D) + (N // D)
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 12
+    D_val = 4
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    try:
+        recursive_division(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught exception for division by zero: {e}"")",True,4,20349,322_14_4.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(N - D, D) + 1
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""The result of dividing {N_val} by {D_val} is: {result}"")
+    N_val = 12
+    D_val = 4
+    result = recursive_division(N_val, D_val)
+    print(f""The result of dividing {N_val} by {D_val} is: {result}"")
+    try:
+        recursive_division(5, 0)
+    except ZeroDivisionError as e:
+        print(f""Caught exception: {e}"")",True,5,20350,322_14_5.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Division by zero attempted"")
+    if N == 0:
+        return 0
+    if N < D:
+        return 0
+    return recursive_division(D, N - D)
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 3
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 12
+    D_val = 4
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 5
+    D_val = 0
+    try:
+        result = recursive_division(N_val, D_val)
+        print(f""Result of {N_val} divided by {D_val}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Caught exception for {N_val} divided by {D_val}: {e}"")",True,6,20351,322_14_6.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Division by zero attempted"")
+    if N < D and N > 0:
+        return 0
+    if N == D:
+        return 1
+    result = N % D
+    if result == 0:
+        return N // D
+    else:
+        return N // D + (N % D)
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 2
+    try:
+        result = recursive_division(N_val, D_val)
+        print(f""Result of {N_val} divided by {D_val}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")
+    N_val = 10
+    D_val = 0
+    try:
+        result = recursive_division(N_val, D_val)
+        print(f""Result of {N_val} divided by {D_val}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")
+    N_val = 15
+    D_val = 3
+    try:
+        result = recursive_division(N_val, D_val)
+        print(f""Result of {N_val} divided by {D_val}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")",True,7,20352,322_14_7.py
+322,14,Divide one quantity by another,"Create a recursive Python function to calculate the result of dividing an integer $N$ by another integer $D$. The function should recursively call itself until the division is performed, and explicitly raise an appropriate exception if division by zero is attempted at any step.","def recursive_division(N, D):
+    if D == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    if N < D:
+        return 0
+    else:
+        return N % D
+if __name__ == '__main__':
+    N_val = 10
+    D_val = 2
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")
+    N_val = 10
+    D_val = 0
+    try:
+        result = recursive_division(N_val, D_val)
+        print(f""Result of {N_val} divided by {D_val}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")
+    N_val = 5
+    D_val = 8
+    result = recursive_division(N_val, D_val)
+    print(f""Result of {N_val} divided by {D_val}: {result}"")",True,8,20353,322_14_8.py
+323,0,Calculate the difference between values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints their difference. Use robust input validation.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        sample_num1 = 25
+        sample_num2 = 10
+        if not isinstance(sample_num1, (int, float)) or not isinstance(sample_num2, (int, float)):
+            raise ValueError(""Both inputs must be numeric."")
+        difference = calculate_difference(sample_num1, sample_num2)
+        print(difference)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,0,20354,323_0.py
+323,0,Calculate the difference between values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints their difference. Use robust input validation.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    sample_num1 = 50
+    sample_num2 = 25
+    try:
+        num1 = int(sample_num1)
+        num2 = int(sample_num2)
+        result = calculate_difference(num1, num2)
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid integers."")",True,1,20355,323_0_1.py
+323,0,Calculate the difference between values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints their difference. Use robust input validation.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    sample_num1 = 45
+    sample_num2 = 18
+    try:
+        num1 = int(sample_num1)
+        num2 = int(sample_num2)
+        difference = calculate_difference(num1, num2)
+        print(difference)
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid integers."")",True,2,20356,323_0_2.py
+323,0,Calculate the difference between values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints their difference. Use robust input validation.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    sample_num1 = 50
+    sample_num2 = 25
+    try:
+        num1 = int(sample_num1)
+        num2 = int(sample_num2)
+        result = calculate_difference(num1, num2)
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid integers."")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,3,20357,323_0_3.py
+323,0,Calculate the difference between values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints their difference. Use robust input validation.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    sample_num1 = 50
+    sample_num2 = 25
+    try:
+        num1 = float(sample_num1)
+        num2 = float(sample_num2)
+        difference = calculate_difference(num1, num2)
+        print(difference)
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid numbers."")",True,4,20358,323_0_4.py
+323,0,Calculate the difference between values,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints their difference. Use robust input validation.","import sys
+def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    sample_num1 = 45
+    sample_num2 = 18
+    try:
+        if not isinstance(sample_num1, (int, float)) or not isinstance(sample_num2, (int, float)):
+            raise ValueError(""Both inputs must be numbers."")
+        difference = calculate_difference(sample_num1, sample_num2)
+        print(difference)
+    except ValueError as e:
+        print(f""Error: {e}"", file=sys.stderr)
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"", file=sys.stderr)",True,5,20359,323_0_5.py
+323,1,Calculate the difference between values,Implement an optimized function named `calculate_difference` that accepts two floating-point numbers and returns their difference. Ensure the implementation is highly efficient.,"def calculate_difference(a: float, b: float) -> float:
+    return a - b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 4.2
+    result = calculate_difference(num1, num2)
+    print(result)",True,0,20360,323_1.py
+323,1,Calculate the difference between values,Implement an optimized function named `calculate_difference` that accepts two floating-point numbers and returns their difference. Ensure the implementation is highly efficient.,"import math
+def calculate_difference(a: float, b: float) -> float:
+    return a - b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 3.2
+    result = calculate_difference(num1, num2)
+    print(result)",True,1,20361,323_1_1.py
+323,1,Calculate the difference between values,Implement an optimized function named `calculate_difference` that accepts two floating-point numbers and returns their difference. Ensure the implementation is highly efficient.,"import sys
+def calculate_difference(a: float, b: float) -> float:
+    return a - b
+if __name__ == '__main__':
+    num1 = 10.5
+    num2 = 3.2
+    result = calculate_difference(num1, num2)
+    print(result)",True,2,20362,323_1_2.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calculator = NumberOperations()
+    result1 = calculator.subtract(10, 4)
+    print(f""10 - 4 = {result1}"")
+    result2 = calculator.subtract(50, 25)
+    print(f""50 - 25 = {result2}"")",True,0,20363,323_2.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    operations = NumberOperations()
+    result1 = operations.subtract(10, 4)
+    print(f""10 - 4 = {result1}"")
+    result2 = operations.subtract(5.5, 2.5)
+    print(f""5.5 - 2.5 = {result2}"")",True,1,20364,323_2_1.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    operations = NumberOperations()
+    result1 = operations.subtract(10, 4)
+    print(result1)
+    result2 = operations.subtract(5.5, 2.3)
+    print(result2)",True,2,20365,323_2_2.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    operations = NumberOperations()
+    result1 = operations.subtract(10, 4)
+    print(f""10 - 4 = {result1}"")
+    result2 = operations.subtract(5.5, 2.3)
+    print(f""5.5 - 2.3 = {result2}"")",True,3,20366,323_2_3.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calculator = NumberOperations()
+    result1 = calculator.subtract(10, 4)
+    print(result1)
+    result2 = calculator.subtract(50, 25)
+    print(result2)",True,4,20367,323_2_4.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    operations = NumberOperations()
+    result1 = operations.subtract(10, 4)
+    print(result1)
+    result2 = operations.subtract(50, 25)
+    print(result2)",True,5,20368,323_2_5.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calculator = NumberOperations()
+    num1 = 20
+    num2 = 7
+    result = calculator.subtract(num1, num2)
+    print(result)",True,6,20369,323_2_6.py
+323,2,Calculate the difference between values,"Develop a class named `NumberOperations` with a method `subtract(self, a, b)` that calculates and returns the difference between two provided numbers. The class must be designed for reusability.","class NumberOperations:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calculator = NumberOperations()
+    result1 = calculator.subtract(10, 5)
+    print(f""10 - 5 = {result1}"")
+    result2 = calculator.subtract(25, 12)
+    print(f""25 - 12 = {result2}"")",True,7,20370,323_2_7.py
+323,3,Calculate the difference between values,"Write a concise Python expression or one-line function to calculate the absolute difference between two variables, `x` and `y`. Prioritize readability and efficiency.","if __name__ == '__main__':
+    x = 10
+    y = 3
+    difference = abs(x - y)
+    print(difference)",True,0,20371,323_3.py
+323,3,Calculate the difference between values,"Write a concise Python expression or one-line function to calculate the absolute difference between two variables, `x` and `y`. Prioritize readability and efficiency.","if __name__ == '__main__':
+    x = 10
+    y = 3
+    result = abs(x - y)
+    print(result)",True,1,20372,323_3_1.py
+323,3,Calculate the difference between values,"Write a concise Python expression or one-line function to calculate the absolute difference between two variables, `x` and `y`. Prioritize readability and efficiency.","if __name__ == '__main__':
+    x = 10
+    y = 5
+    difference = abs(x - y)
+    print(difference)",True,2,20373,323_3_2.py
+323,4,Calculate the difference between values,"Create a generator function that yields the result of subtracting each element in an input list from a fixed value, demonstrating the concept of calculating differences iteratively.","def subtract_from_fixed(input_list, fixed_value):
+    for element in input_list:
+        yield fixed_value - element
+if __name__ == '__main__':
+    data = [10, 25, 30, 45]
+    constant = 50
+    result_generator = subtract_from_fixed(data, constant)
+    results = list(result_generator)
+    print(results)",True,0,20374,323_4.py
+323,4,Calculate the difference between values,"Create a generator function that yields the result of subtracting each element in an input list from a fixed value, demonstrating the concept of calculating differences iteratively.","def subtract_from_fixed(input_list, fixed_value):
+    for element in input_list:
+        yield fixed_value - element
+if __name__ == '__main__':
+    data = [10, 25, 30, 5]
+    constant = 40
+    result_generator = subtract_from_fixed(data, constant)
+    results = list(result_generator)
+    print(results)",True,1,20375,323_4_1.py
+323,4,Calculate the difference between values,"Create a generator function that yields the result of subtracting each element in an input list from a fixed value, demonstrating the concept of calculating differences iteratively.","def subtract_from_fixed(data, fixed_value):
+    for element in data:
+        yield fixed_value - element
+if __name__ == '__main__':
+    input_list = [10, 25, 30, 45]
+    fixed_number = 50
+    result_generator = subtract_from_fixed(input_list, fixed_number)
+    results = list(result_generator)
+    print(results)",True,2,20376,323_4_2.py
+323,4,Calculate the difference between values,"Create a generator function that yields the result of subtracting each element in an input list from a fixed value, demonstrating the concept of calculating differences iteratively.","def subtract_from_fixed(input_list, fixed_value):
+    for element in input_list:
+        yield fixed_value - element
+if __name__ == '__main__':
+    data = [10, 25, 7, 40]
+    constant = 50
+    result_generator = subtract_from_fixed(data, constant)
+    results = list(result_generator)
+    print(results)",True,3,20377,323_4_3.py
+323,4,Calculate the difference between values,"Create a generator function that yields the result of subtracting each element in an input list from a fixed value, demonstrating the concept of calculating differences iteratively.","def subtract_from_fixed(data, fixed_value):
+    for element in data:
+        yield fixed_value - element
+if __name__ == '__main__':
+    input_list = [10, 20, 30, 40]
+    fixed_number = 50
+    result_generator = subtract_from_fixed(input_list, fixed_number)
+    results = list(result_generator)
+    print(results)",True,4,20378,323_4_4.py
+321,8,Multiply two given amounts,"Write a simple interactive program that continuously asks the user for two numbers until they enter 'quit', and in each iteration, displays their product.",,False,0,20379,321_8.py
+323,6,Calculate the difference between values,Implement a decorator for a function that automatically calculates and returns the difference between the function's result and a predefined constant value.,"def calculate_difference(constant):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result - constant
+        return wrapper
+    return decorator
+@calculate_difference(constant=10)
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = add(5, 3)
+    print(result)",True,0,20380,323_6.py
+323,6,Calculate the difference between values,Implement a decorator for a function that automatically calculates and returns the difference between the function's result and a predefined constant value.,"def calculate_difference(constant_value):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result - constant_value
+        return wrapper
+    return decorator
+@calculate_difference(50)
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(add(10, 20))",True,1,20381,323_6_1.py
+323,6,Calculate the difference between values,Implement a decorator for a function that automatically calculates and returns the difference between the function's result and a predefined constant value.,"import functools
+def calculate_difference(constant_value):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result - constant_value
+        return wrapper
+    return decorator
+@calculate_difference(constant_value=10)
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = add(5, 3)
+    print(result)",True,2,20382,323_6_2.py
+323,6,Calculate the difference between values,Implement a decorator for a function that automatically calculates and returns the difference between the function's result and a predefined constant value.,"import functools
+def calculate_difference_from_constant(constant_value):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result - constant_value
+        return wrapper
+    return decorator
+@calculate_difference_from_constant(constant_value=10)
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = add(5, 3)
+    print(result)",True,3,20383,323_6_3.py
+323,6,Calculate the difference between values,Implement a decorator for a function that automatically calculates and returns the difference between the function's result and a predefined constant value.,"def calculate_difference(constant_value):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result - constant_value
+        return wrapper
+    return decorator
+@calculate_difference(50)
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = add(10, 20)
+    print(result)",True,4,20384,323_6_4.py
+323,6,Calculate the difference between values,Implement a decorator for a function that automatically calculates and returns the difference between the function's result and a predefined constant value.,"def calculate_difference(constant):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            return result - constant
+        return wrapper
+    return decorator
+@calculate_difference(constant=10)
+def add(a, b):
+    return a + b
+if __name__ == '__main__':
+    print(add(5, 3))",True,5,20385,323_6_5.py
+323,7,Calculate the difference between values,"Design and implement a method within a Python class to calculate the difference between two complex numbers, ensuring correct handling of the real and imaginary parts.","class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def difference(self, other):
+        diff_real = self.real - other.real
+        diff_imag = self.imag - other.imag
+        return ComplexNumber(diff_real, diff_imag)
+if __name__ == '__main__':
+    c1 = ComplexNumber(5 + 2j, 1 + 3j)
+    c2 = ComplexNumber(1 + 4j, 0 + 1j)
+    result = c1.difference(c2)
+    print(f""Complex Number 1: {c1.real} + {c1.imag}j"")
+    print(f""Complex Number 2: {c2.real} + {c2.imag}j"")
+    print(f""Difference: {result.real} + {result.imag}j"")",True,0,20386,323_7.py
+323,7,Calculate the difference between values,"Design and implement a method within a Python class to calculate the difference between two complex numbers, ensuring correct handling of the real and imaginary parts.","class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def difference(self, other):
+        diff_real = self.real - other.real
+        diff_imag = self.imag - other.imag
+        return ComplexNumber(diff_real, diff_imag)
+if __name__ == '__main__':
+    c1 = ComplexNumber(5 + 2j, 1 + 3j)
+    c2 = ComplexNumber(1 + 7j, 4 - 1j)
+    result = c1.difference(c2)
+    print(f""C1: {c1.real} + {c1.imag}j"")
+    print(f""C2: {c2.real} + {c2.imag}j"")
+    print(f""Difference (C1 - C2): {result.real} + {result.imag}j"")",True,1,20387,323_7_1.py
+323,7,Calculate the difference between values,"Design and implement a method within a Python class to calculate the difference between two complex numbers, ensuring correct handling of the real and imaginary parts.","class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def difference(self, other):
+        diff_real = self.real - other.real
+        diff_imag = self.imag - other.imag
+        return ComplexNumber(diff_real, diff_imag)
+if __name__ == '__main__':
+    c1 = ComplexNumber(5 + 2j, 3 + 4j)
+    c2 = ComplexNumber(1 + 7j, 6 + 8j)
+    result = c1.difference(c2)
+    print(f""Complex Number 1: {c1.real} + {c1.imag}j"")
+    print(f""Complex Number 2: {c2.real} + {c2.imag}j"")
+    print(f""Difference: {result.real} + {result.imag}j"")",True,2,20388,323_7_2.py
+323,7,Calculate the difference between values,"Design and implement a method within a Python class to calculate the difference between two complex numbers, ensuring correct handling of the real and imaginary parts.","class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+    def difference(self, other):
+        diff_real = self.real - other.real
+        diff_imag = self.imag - other.imag
+        return ComplexNumber(diff_real, diff_imag)
+if __name__ == '__main__':
+    c1 = ComplexNumber(5 + 2j, 1 + 3j)
+    c2 = ComplexNumber(1 + 4j, 2 + 1j)
+    result = c1.difference(c2)
+    print(f""C1: {c1.real} + {c1.imag}j"")
+    print(f""C2: {c2.real} + {c2.imag}j"")
+    print(f""Difference (C1 - C2): {result.real} + {result.imag}j"")",True,3,20389,323_7_3.py
+323,8,Calculate the difference between values,Write an algorithm using list comprehension to generate a new list containing the differences between every adjacent pair of elements in an input list of integers.,"if __name__ == '__main__':
+    input_list = [1, 5, 2, 8, 3]
+    differences = [input_list[i+1] - input_list[i] for i in range(len(input_list) - 1)]
+    print(differences)",True,0,20390,323_8.py
+323,9,Calculate the difference between values,Develop a highly optimized function that calculates the difference between two large lists of numbers by performing element-wise subtraction and returning a new list of results. Assume the lists are of equal length.,"def list_difference(list1, list2):
+    result = []
+    for i in range(len(list1)):
+        result.append(list1[i] - list2[i])
+    return result
+if __name__ == '__main__':
+    list_a = [10, 20, 30, 40, 50]
+    list_b = [2, 4, 6, 8, 10]
+    difference = list_difference(list_a, list_b)
+    print(difference)",True,0,20391,323_9.py
+323,9,Calculate the difference between values,Develop a highly optimized function that calculates the difference between two large lists of numbers by performing element-wise subtraction and returning a new list of results. Assume the lists are of equal length.,"def list_difference(list1, list2):
+    result = []
+    for i in range(len(list1)):
+        result.append(list1[i] - list2[i])
+    return result
+if __name__ == '__main__':
+    list_a = [10, 20, 30, 40, 50]
+    list_b = [3, 5, 7, 9, 11]
+    difference = list_difference(list_a, list_b)
+    print(difference)",True,1,20392,323_9_1.py
+323,9,Calculate the difference between values,Develop a highly optimized function that calculates the difference between two large lists of numbers by performing element-wise subtraction and returning a new list of results. Assume the lists are of equal length.,"def list_difference(list1, list2):
+    result = []
+    for i in range(len(list1)):
+        result.append(list1[i] - list2[i])
+    return result
+if __name__ == '__main__':
+    list_a = [10, 20, 30, 40, 50]
+    list_b = [3, 7, 15, 25, 35]
+    difference = list_difference(list_a, list_b)
+    print(difference)",True,2,20393,323_9_2.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = 15.75
+    num4 = 8.25
+    result2 = calculate_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = -3
+    num6 = 7
+    result3 = calculate_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,0,20394,323_10.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 3.5
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = -5
+    num4 = 12
+    result2 = calculate_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = 7.7
+    num6 = 2.1
+    result3 = calculate_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,1,20395,323_10_1.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 3.5
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = -5
+    num4 = 7
+    result2 = calculate_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = 10.5
+    num6 = 4.5
+    result3 = calculate_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,2,20396,323_10_2.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 4
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = 5.5
+    num4 = 2.2
+    result2 = calculate_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = -10
+    num6 = 3
+    result3 = calculate_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,3,20397,323_10_3.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    float1 = 15.5
+    float2 = 7.2
+    result2 = calculate_difference(float1, float2)
+    print(f""Difference between {float1} and {float2}: {result2}"")
+    int1 = -3
+    int2 = 8
+    result3 = calculate_difference(int1, int2)
+    print(f""Difference between {int1} and {int2}: {result3}"")",True,4,20398,323_10_4.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = 7.5
+    num4 = 3.2
+    result2 = calculate_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = -10
+    num6 = 4
+    result3 = calculate_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,5,20399,323_10_5.py
+323,10,Calculate the difference between values,Write a robust Python function named `calculate_difference` that accepts two numerical arguments and returns their difference. The function must handle both integer and float inputs correctly.,"def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    result1 = calculate_difference(num1, num2)
+    print(f""Difference between {num1} and {num2}: {result1}"")
+    num3 = 7.5
+    num4 = 3.25
+    result2 = calculate_difference(num3, num4)
+    print(f""Difference between {num3} and {num4}: {result2}"")
+    num5 = -10
+    num6 = 4
+    result3 = calculate_difference(num5, num6)
+    print(f""Difference between {num5} and {num6}: {result3}"")",True,6,20400,323_10_6.py
+321,14,Multiply two given amounts,Create an interactive program that continuously asks the user for two numbers and calculates their product until the user enters 'exit'. Ensure the entire program is well-structured and handles potential errors gracefully.,,False,0,20401,321_14.py
+323,11,Calculate the difference between values,Implement an optimized class named `ValueDiffer` with a method to calculate the difference between any two provided values. Ensure the implementation is efficient and adheres to object-oriented best practices.,"class ValueDiffer:
+    def calculate_difference(self, val1, val2):
+        return val1 - val2
+if __name__ == '__main__':
+    differ = ValueDiffer()
+    a = 100
+    b = 45
+    result = differ.calculate_difference(a, b)
+    print(result)",True,0,20402,323_11.py
+323,11,Calculate the difference between values,Implement an optimized class named `ValueDiffer` with a method to calculate the difference between any two provided values. Ensure the implementation is efficient and adheres to object-oriented best practices.,"class ValueDiffer:
+    def calculate_difference(self, val1, val2):
+        return val1 - val2
+if __name__ == '__main__':
+    differ = ValueDiffer()
+    a = 10
+    b = 3
+    result = differ.calculate_difference(a, b)
+    print(result)",True,1,20403,323_11_1.py
+323,12,Calculate the difference between values,"Write a complete, runnable Python script that prompts the user to input two numbers from the console, calculates their difference, and prints the result in a clear, formatted manner. Include error handling for non-numeric input.","if __name__ == '__main__':
+    num1 = 15
+    num2 = 7
+    try:
+        difference = num1 - num2
+        print(f""The first number is: {num1}"")
+        print(f""The second number is: {num2}"")
+        print(f""The difference is: {difference}"")
+    except TypeError:
+        print(""Error: One or both inputs were not valid numbers."")",True,0,20404,323_12.py
+323,12,Calculate the difference between values,"Write a complete, runnable Python script that prompts the user to input two numbers from the console, calculates their difference, and prints the result in a clear, formatted manner. Include error handling for non-numeric input.","def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1 = 15
+        num2 = 7
+        difference = calculate_difference(num1, num2)
+        print(f""The first number is: {num1}"")
+        print(f""The second number is: {num2}"")
+        print(f""The difference is: {difference}"")
+    except TypeError:
+        print(""Error: One or both inputs were not valid numbers."")",True,1,20405,323_12_1.py
+323,12,Calculate the difference between values,"Write a complete, runnable Python script that prompts the user to input two numbers from the console, calculates their difference, and prints the result in a clear, formatted manner. Include error handling for non-numeric input.","def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1_str = ""15""
+        num2_str = ""7""
+        num1 = float(num1_str)
+        num2 = float(num2_str)
+        difference = calculate_difference(num1, num2)
+        print(f""The first number is: {num1}"")
+        print(f""The second number is: {num2}"")
+        print(f""The difference between the two numbers is: {difference}"")
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid numeric values."")",True,2,20406,323_12_2.py
+323,12,Calculate the difference between values,"Write a complete, runnable Python script that prompts the user to input two numbers from the console, calculates their difference, and prints the result in a clear, formatted manner. Include error handling for non-numeric input.","def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1_str = ""15""
+        num2_str = ""7""
+        num1 = float(num1_str)
+        num2 = float(num2_str)
+        difference = calculate_difference(num1, num2)
+        print(f""First number: {num1}"")
+        print(f""Second number: {num2}"")
+        print(f""The difference is: {difference}"")
+    except ValueError:
+        print(""Error: Invalid input. Please enter numeric values."")",True,3,20407,323_12_3.py
+323,12,Calculate the difference between values,"Write a complete, runnable Python script that prompts the user to input two numbers from the console, calculates their difference, and prints the result in a clear, formatted manner. Include error handling for non-numeric input.","def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1_str = ""15""
+        num2_str = ""7""
+        num1 = float(num1_str)
+        num2 = float(num2_str)
+        difference = calculate_difference(num1, num2)
+        print(f""The first number is: {num1}"")
+        print(f""The second number is: {num2}"")
+        print(f""The difference is: {difference}"")
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid numeric values."")",True,4,20408,323_12_4.py
+323,12,Calculate the difference between values,"Write a complete, runnable Python script that prompts the user to input two numbers from the console, calculates their difference, and prints the result in a clear, formatted manner. Include error handling for non-numeric input.","def calculate_difference(num1, num2):
+    return num1 - num2
+if __name__ == '__main__':
+    try:
+        num1 = 15
+        num2 = 7
+        difference = calculate_difference(num1, num2)
+        print(f""The first number is: {num1}"")
+        print(f""The second number is: {num2}"")
+        print(f""The difference between the two numbers is: {difference}"")
+    except TypeError:
+        print(""Error: One or both inputs were not valid numbers."")",True,5,20409,323_12_5.py
+323,14,Calculate the difference between values,"Write a general-purpose utility function that calculates the absolute difference between two numbers, regardless of which number is larger. Name the function appropriately and ensure it uses the most computationally efficient method for this task.","def absolute_difference(a, b):
+    return abs(a - b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 3
+    result = absolute_difference(num1, num2)
+    print(result)",True,0,20410,323_14.py
+323,14,Calculate the difference between values,"Write a general-purpose utility function that calculates the absolute difference between two numbers, regardless of which number is larger. Name the function appropriately and ensure it uses the most computationally efficient method for this task.","def absolute_difference(a, b):
+    return abs(a - b)
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5
+    result = absolute_difference(num1, num2)
+    print(result)",True,1,20411,323_14_1.py
