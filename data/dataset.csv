@@ -408728,3 +408728,2932 @@ if __name__ == '__main__':
     sample_list = [1, 5, 2, 8, 3]
     comparison_results = compare_adjacent(sample_list)
     print(comparison_results)",True,2,20137,318_11_2.py
+318,8,Compare adjacent elements always,"Write the most Pythonic way to process a sequence of complex objects (e.g., dictionaries) by comparing every object with its immediate successor in the sequence.","def compare_successors(sequence):
+    results = []
+    for current, next_item in zip(sequence, sequence[1:]):
+        if current != next_item:
+            results.append((current, next_item))
+    return results
+if __name__ == '__main__':
+    data = [
+        {'id': 1, 'value': 10},
+        {'id': 2, 'value': 20},
+        {'id': 3, 'value': 10},
+        {'id': 4, 'value': 40}
+    ]
+    comparison_results = compare_successors(data)
+    print(comparison_results)",True,0,20138,318_8.py
+318,8,Compare adjacent elements always,"Write the most Pythonic way to process a sequence of complex objects (e.g., dictionaries) by comparing every object with its immediate successor in the sequence.","def compare_successors(sequence):
+    results = []
+    for current, next_item in zip(sequence, sequence[1:]):
+        if current != next_item:
+            results.append((current, next_item))
+    return results
+if __name__ == '__main__':
+    data = [
+        {'id': 1, 'value': 10},
+        {'id': 2, 'value': 15},
+        {'id': 3, 'value': 10},
+        {'id': 4, 'value': 20},
+        {'id': 5, 'value': 20}
+    ]
+    comparison_results = compare_successors(data)
+    for item1, item2 in comparison_results:
+        print(f""Comparing {item1} with {item2}"")",True,1,20139,318_8_1.py
+318,8,Compare adjacent elements always,"Write the most Pythonic way to process a sequence of complex objects (e.g., dictionaries) by comparing every object with its immediate successor in the sequence.","def compare_successors(sequence):
+    results = []
+    for i in range(len(sequence) - 1):
+        current = sequence[i]
+        successor = sequence[i+1]
+        if current != successor:
+            results.append((current, successor))
+    return results
+if __name__ == '__main__':
+    data = [
+        {'id': 1, 'value': 10},
+        {'id': 2, 'value': 15},
+        {'id': 3, 'value': 15},
+        {'id': 4, 'value': 20},
+        {'id': 5, 'value': 20}
+    ]
+    comparison_results = compare_successors(data)
+    print(comparison_results)",True,2,20140,318_8_2.py
+318,8,Compare adjacent elements always,"Write the most Pythonic way to process a sequence of complex objects (e.g., dictionaries) by comparing every object with its immediate successor in the sequence.","def compare_successors(sequence):
+    results = []
+    for i in range(len(sequence) - 1):
+        current = sequence[i]
+        next_item = sequence[i+1]
+        if current != next_item:
+            results.append((current, next_item))
+    return results
+if __name__ == '__main__':
+    data = [
+        {'id': 1, 'value': 10},
+        {'id': 2, 'value': 15},
+        {'id': 3, 'value': 15},
+        {'id': 4, 'value': 20},
+        {'id': 5, 'value': 20}
+    ]
+    comparison_results = compare_successors(data)
+    print(comparison_results)",True,3,20141,318_8_3.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 8.0, 8.0, 7.9]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    print(""--- Adjacent Pair Comparison Report ---"")
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: {rel}"")",True,0,20142,318_12.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            comparison = ""strictly less than""
+        elif a >= b:
+            comparison = ""greater than or equal to""
+        else:
+            comparison = ""equal to""
+        report.append((a, b, comparison))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.0, 2.5, 2.5, 8.1, 8.1, 7.9]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    print(""--- Adjacent Pair Comparison Report ---"")
+    for a, b, comparison in comparison_results:
+        print(f""Comparing {a} and {b}: {comparison}"")",True,1,20143,318_12_1.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 8.0, 8.0, 7.1]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    print(""--- Adjacent Pair Comparison Report ---"")
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: Relationship is {rel}"")",True,2,20144,318_12_2.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 8.0, 8.0, 4.1]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    print(""--- Adjacent Pair Comparison Report ---"")
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: {rel}"")",True,3,20145,318_12_3.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 8.0, 8.0, 4.1]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: {rel}"")",True,4,20146,318_12_4.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        num1 = numbers[i]
+        num2 = numbers[i+1]
+        if num1 < num2:
+            comparison = ""strictly less than""
+        elif num1 >= num2:
+            comparison = ""greater than or equal to""
+        else:
+            comparison = ""error in comparison""
+        report.append(f""Comparing {num1} and {num2}: {comparison}"")
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.0, 2.5, 8.0, 8.0, 1.0, 0.5]
+    report = compare_adjacent_pairs(sample_numbers)
+    for line in report:
+        print(line)",True,5,20147,318_12_5.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 4.0, 4.0, 2.1]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: {rel}"")",True,6,20148,318_12_6.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 8.0, 8.0, 7.9]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    print(""--- Adjacent Pair Comparison Report ---"")
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: Relationship is '{rel}'"")",True,7,20149,318_12_7.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        num1 = numbers[i]
+        num2 = numbers[i+1]
+        if num1 < num2:
+            relationship = ""strictly less than""
+        elif num1 >= num2:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((num1, num2, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.0, 2.5, 2.5, 8.1, 7.9]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    for num1, num2, relation in comparison_results:
+        print(f""Comparing {num1} and {num2}: {relation}"")",True,8,20150,318_12_8.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        num1 = numbers[i]
+        num2 = numbers[i+1]
+        if num1 < num2:
+            relationship = ""strictly less than""
+        elif num1 >= num2:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((num1, num2, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.0, 2.8, 2.8, 5.1, 5.1, 0.5]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    for num1, num2, relation in comparison_results:
+        print(f""Comparing {num1} and {num2}: {relation}"")",True,9,20151,318_12_9.py
+318,12,Compare adjacent elements always,"Develop a standalone script that takes a list of floating-point numbers and prints a detailed report comparing every adjacent pair, highlighting where the relationship is 'strictly less than' or 'greater than or equal to'.","import sys
+def compare_adjacent_pairs(numbers):
+    report = []
+    for i in range(len(numbers) - 1):
+        a = numbers[i]
+        b = numbers[i+1]
+        if a < b:
+            relationship = ""strictly less than""
+        elif a >= b:
+            relationship = ""greater than or equal to""
+        else:
+            relationship = ""equal to""
+        report.append((a, b, relationship))
+    return report
+if __name__ == '__main__':
+    sample_numbers = [1.5, 3.2, 1.5, 8.0, 8.0, 7.1]
+    comparison_results = compare_adjacent_pairs(sample_numbers)
+    print(""--- Adjacent Pair Comparison Report ---"")
+    for a, b, rel in comparison_results:
+        print(f""Comparing {a} and {b}: {a} {rel} {b}"")",True,10,20152,318_12_10.py
+318,14,Compare adjacent elements always,"Create a generator function that yields the result of comparing every adjacent pair in an input iterable, where the comparison is defined as 'is the second element strictly greater than the first element' and yield the boolean result for each pair.","def compare_adjacent(iterable):
+    for i in range(len(iterable) - 1):
+        a = iterable[i]
+        b = iterable[i+1]
+        yield b > a
+if __name__ == '__main__':
+    data1 = [1, 3, 2, 5, 4]
+    print(""Data 1 comparisons:"")
+    for result in compare_adjacent(data1):
+        print(result)
+    data2 = [10, 5, 8, 2, 9]
+    print(""\nData 2 comparisons:"")
+    for result in compare_adjacent(data2):
+        print(result)
+    data3 = [1, 1, 1, 1]
+    print(""\nData 3 comparisons:"")
+    for result in compare_adjacent(data3):
+        print(result)",True,0,20153,318_14.py
+318,14,Compare adjacent elements always,"Create a generator function that yields the result of comparing every adjacent pair in an input iterable, where the comparison is defined as 'is the second element strictly greater than the first element' and yield the boolean result for each pair.","def compare_adjacent(iterable):
+    for i in range(len(iterable) - 1):
+        if iterable[i+1] > iterable[i]:
+            yield True
+        else:
+            yield False
+if __name__ == '__main__':
+    data = [1, 3, 2, 5, 4]
+    results = list(compare_adjacent(data))
+    print(results)",True,1,20154,318_14_1.py
+318,14,Compare adjacent elements always,"Create a generator function that yields the result of comparing every adjacent pair in an input iterable, where the comparison is defined as 'is the second element strictly greater than the first element' and yield the boolean result for each pair.","def compare_adjacent(iterable):
+    for i in range(len(iterable) - 1):
+        yield iterable[i+1] > iterable[i]
+if __name__ == '__main__':
+    data = [1, 3, 2, 5, 4]
+    results = list(compare_adjacent(data))
+    print(results)",True,2,20155,318_14_2.py
+318,14,Compare adjacent elements always,"Create a generator function that yields the result of comparing every adjacent pair in an input iterable, where the comparison is defined as 'is the second element strictly greater than the first element' and yield the boolean result for each pair.","def compare_adjacent(iterable):
+    for i in range(len(iterable) - 1):
+        a = iterable[i]
+        b = iterable[i+1]
+        yield b > a
+if __name__ == '__main__':
+    data1 = [1, 3, 2, 5, 4]
+    print(""Data 1 comparisons:"")
+    for result in compare_adjacent(data1):
+        print(result)
+    data2 = [10, 8, 5, 5, 1]
+    print(""\nData 2 comparisons:"")
+    for result in compare_adjacent(data2):
+        print(result)
+    data3 = [1, 2, 3, 4]
+    print(""\nData 3 comparisons:"")
+    for result in compare_adjacent(data3):
+        print(result)",True,3,20156,318_14_3.py
+318,13,Compare adjacent elements always,Write an efficient function that takes a list of mixed data types (integers and strings) and compares only the adjacent elements. Handle potential type errors gracefully during comparison attempts by logging the error for invalid comparisons.,"def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        try:
+            if a == b:
+                results.append((i, ""Equal""))
+            else:
+                results.append((i, ""Not Equal"", a, b))
+        except TypeError as e:
+            print(f""Error comparing elements at index {i}: {e}"")
+            results.append((i, ""Type Error"", type(a).__name__, type(b).__name__))
+    return results
+if __name__ == '__main__':
+    sample_data = [10, 20, ""30"", 40, ""error""]
+    comparison_results = compare_adjacent(sample_data)
+    for index, status, *details in comparison_results:
+        print(f""Index {index}: Status: {status}"")
+        if status == ""Not Equal"":
+            print(f""  Values: {details[0]} vs {details[1]}"")
+        elif status == ""Type Error"":
+            print(f""  Types involved: {details[0]} vs {details[1]}"")
+    print(""\nRaw Results:"")
+    print(comparison_results)",True,0,20157,318_13.py
+318,13,Compare adjacent elements always,Write an efficient function that takes a list of mixed data types (integers and strings) and compares only the adjacent elements. Handle potential type errors gracefully during comparison attempts by logging the error for invalid comparisons.,"import logging
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
+def compare_adjacent(data):
+    n = len(data)
+    for i in range(n - 1):
+        val1 = data[i]
+        val2 = data[i+1]
+        try:
+            if val1 != val2:
+                logging.warning(f""Comparison failed at index {i}: {val1} != {val2}"")
+        except TypeError as e:
+            logging.error(f""Type error during comparison at index {i}: {e}. Values were {val1} and {val2}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, ""a"", 4, ""b"", 6]
+    print(""--- Testing Comparison ---"")
+    compare_adjacent(sample_data)
+    sample_data_mixed = [10, ""hello"", 20, ""world"", 30]
+    print(""\n--- Testing Mixed Type Comparison ---"")
+    compare_adjacent(sample_data_mixed)
+    sample_data_all_strings = [""apple"", ""banana"", ""cherry""]
+    print(""\n--- Testing All String Comparison ---"")
+    compare_adjacent(sample_data_all_strings)
+    sample_data_error = [1, ""two"", 3]
+    print(""\n--- Testing Error Handling ---"")
+    compare_adjacent(sample_data_error)",True,1,20158,318_13_1.py
+318,13,Compare adjacent elements always,Write an efficient function that takes a list of mixed data types (integers and strings) and compares only the adjacent elements. Handle potential type errors gracefully during comparison attempts by logging the error for invalid comparisons.,"import logging
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
+def compare_adjacent(data):
+    n = len(data)
+    for i in range(n - 1):
+        a = data[i]
+        b = data[i+1]
+        try:
+            if a < b:
+                logging.warning(f""Comparison warning at index {i}: {a} < {b}"")
+            elif a > b:
+                logging.warning(f""Comparison warning at index {i}: {a} > {b}"")
+        except TypeError as e:
+            logging.error(f""Type error during comparison at index {i}: Cannot compare {a} and {b}. Error: {e}"")
+if __name__ == '__main__':
+    sample_data = [10, 20, ""30"", 40, ""50"", 60]
+    print(""--- Starting Comparison ---"")
+    compare_adjacent(sample_data)
+    print(""--- Comparison Finished ---"")",True,2,20159,318_13_2.py
+318,13,Compare adjacent elements always,Write an efficient function that takes a list of mixed data types (integers and strings) and compares only the adjacent elements. Handle potential type errors gracefully during comparison attempts by logging the error for invalid comparisons.,"def compare_adjacent(data):
+    results = []
+    for i in range(len(data) - 1):
+        a = data[i]
+        b = data[i+1]
+        try:
+            if a == b:
+                results.append((i, a, b, ""Equal""))
+            else:
+                results.append((i, a, b, ""Not Equal""))
+        except TypeError as e:
+            print(f""Error comparing elements at indices {i} and {i+1}: {e}"")
+            results.append((i, a, b, ""Type Error""))
+    return results
+if __name__ == '__main__':
+    sample_data = [10, ""20"", 30, ""40"", 50]
+    comparison_results = compare_adjacent(sample_data)
+    for index, val1, val2, status in comparison_results:
+        print(f""Index {index}: Comparing {val1} and {val2}. Result: {status}"")",True,3,20160,318_13_3.py
+318,13,Compare adjacent elements always,Write an efficient function that takes a list of mixed data types (integers and strings) and compares only the adjacent elements. Handle potential type errors gracefully during comparison attempts by logging the error for invalid comparisons.,"import logging
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
+def compare_adjacent_elements(data):
+    n = len(data)
+    for i in range(n - 1):
+        a = data[i]
+        b = data[i+1]
+        try:
+            if a == b:
+                logging.info(f""Elements at index {i} and {i+1} are equal: {a}"")
+            else:
+                logging.warning(f""Elements at index {i} ({a}) and {i+1} ({b}) are not equal."")
+        except TypeError as e:
+            logging.error(f""Type error during comparison at index {i}: {e}. Types involved: {type(a)} and {type(b)}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, ""3"", 4, ""5"", 6]
+    print(""--- Starting Comparison ---"")
+    compare_adjacent_elements(sample_data)
+    print(""--- Comparison Finished ---"")
+    sample_data_mixed = [10, ""11"", 12, ""abc"", 14]
+    print(""\n--- Starting Mixed Comparison ---"")
+    compare_adjacent_elements(sample_data_mixed)
+    print(""--- Mixed Comparison Finished ---"")",True,4,20161,318_13_4.py
+319,0,Fill a grid with values,"Write a complete, efficient Python script that reads dimensions from standard input and fills a 2D grid (matrix) with sequential numbers starting from 1. Use nested loops for optimal performance.","if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    matrix = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(count)
+            count += 1
+        matrix.append(row)
+    for row in matrix:
+        print(row)",True,0,20162,319_0.py
+319,0,Fill a grid with values,"Write a complete, efficient Python script that reads dimensions from standard input and fills a 2D grid (matrix) with sequential numbers starting from 1. Use nested loops for optimal performance.","if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    grid = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(count)
+            count += 1
+        grid.append(row)
+    for row in grid:
+        print(*row)",True,1,20163,319_0_1.py
+319,0,Fill a grid with values,"Write a complete, efficient Python script that reads dimensions from standard input and fills a 2D grid (matrix) with sequential numbers starting from 1. Use nested loops for optimal performance.","if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    count = 1
+    for i in range(rows):
+        for j in range(cols):
+            grid[i][j] = count
+            count += 1
+    for row in grid:
+        print(*row)",True,2,20164,319_0_2.py
+319,0,Fill a grid with values,"Write a complete, efficient Python script that reads dimensions from standard input and fills a 2D grid (matrix) with sequential numbers starting from 1. Use nested loops for optimal performance.","if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    count = 1
+    for i in range(rows):
+        for j in range(cols):
+            grid[i][j] = count
+            count += 1
+    for row in grid:
+        print(row)",True,3,20165,319_0_3.py
+319,0,Fill a grid with values,"Write a complete, efficient Python script that reads dimensions from standard input and fills a 2D grid (matrix) with sequential numbers starting from 1. Use nested loops for optimal performance.","if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    matrix = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(count)
+            count += 1
+        matrix.append(row)
+    for row in matrix:
+        print(*row)",True,4,20166,319_0_4.py
+319,1,Fill a grid with values,"Implement a function named `fill_grid(rows, cols)` that generates and returns a list of lists representing an R x C grid, where each cell is initialized to zero. Ensure the implementation is highly readable and uses list comprehensions.","def fill_grid(rows, cols):
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    return grid
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    result = fill_grid(rows, cols)
+    print(result)",True,0,20167,319_1.py
+319,1,Fill a grid with values,"Implement a function named `fill_grid(rows, cols)` that generates and returns a list of lists representing an R x C grid, where each cell is initialized to zero. Ensure the implementation is highly readable and uses list comprehensions.","def fill_grid(rows, cols):
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    return grid
+if __name__ == '__main__':
+    rows_val = 3
+    cols_val = 4
+    result = fill_grid(rows_val, cols_val)
+    print(result)",True,1,20168,319_1_1.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Testing Less Than ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    index = 1
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Greater Than ---"")
+    index = 2
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'greater_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Equal ---"")
+    index = 3
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'equal')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Boundary Conditions ---"")
+    index = 4
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    index = 5
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is None:
+        print(f""Index {index}: Comparison failed as expected (out of bounds)."")",True,0,20169,318_10.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 5, 30, 15]
+    print(""--- Comparing adjacent elements ---"")
+    index1 = 0
+    result_lt = comparator.compare(sample_list, index1, 'less_than')
+    result_gt = comparator.compare(sample_list, index1, 'greater_than')
+    result_eq = comparator.compare(sample_list, index1, 'equal')
+    print(f""Comparing elements at indices {index1} and {index1 + 1}: ({sample_list[index1]}, {sample_list[index1 + 1]})"")
+    print(f""Is {sample_list[index1]} less than {sample_list[index1 + 1]}? {result_lt}"")
+    print(f""Is {sample_list[index1]} greater than {sample_list[index1 + 1]}? {result_gt}"")
+    print(f""Are {sample_list[index1]} equal to {sample_list[index1 + 1]}? {result_eq}"")
+    print(""\n--- Comparing another pair ---"")
+    index2 = 2
+    result_lt = comparator.compare(sample_list, index2, 'less_than')
+    result_gt = comparator.compare(sample_list, index2, 'greater_than')
+    result_eq = comparator.compare(sample_list, index2, 'equal')
+    print(f""Comparing elements at indices {index2} and {index2 + 1}: ({sample_list[index2]}, {sample_list[index2 + 1]})"")
+    print(f""Is {sample_list[index2]} less than {sample_list[index2 + 1]}? {result_lt}"")
+    print(f""Is {sample_list[index2]} greater than {sample_list[index2 + 1]}? {result_gt}"")
+    print(f""Are {sample_list[index2]} equal to {sample_list[index2 + 1]}? {result_eq}"")
+    print(""\n--- Edge case: Last element ---"")
+    index_last = len(sample_list) - 1
+    result_lt = comparator.compare(sample_list, index_last, 'less_than')
+    print(f""Comparing elements at indices {index_last} and {index_last + 1}: ({sample_list[index_last]}, N/A)"")
+    print(f""Is {sample_list[index_last]} less than next element? {result_lt}"")",True,1,20170,318_10_1.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = self.compare_adjacent(data, index)
+        if operation == 'less':
+            return a < b
+        elif operation == 'greater':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified"")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Testing 'less' comparison ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} < {b} -> {result}"")
+    index = 2
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} < {b} -> {result}"")
+    print(""\n--- Testing 'greater' comparison ---"")
+    index = 3
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'greater')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} > {b} -> {result}"")
+    print(""\n--- Testing 'equal' comparison ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'equal')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} == {b} -> {result}"")
+    print(""\n--- Testing boundary conditions ---"")
+    index = 4
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is None:
+        print(""Index 4 comparison failed (expected None)"")
+    else:
+        result = comparator.compare(sample_list, index, 'less')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} < {b} -> {result}"")",True,2,20171,318_10_2.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Comparing adjacent elements ---"")
+    index1 = 0
+    result_lt = comparator.compare(sample_list, index1, 'less_than')
+    result_gt = comparator.compare(sample_list, index1, 'greater_than')
+    result_eq = comparator.compare(sample_list, index1, 'equal')
+    print(f""Comparing elements at indices {index1} and {index1 + 1} ({sample_list[index1]} and {sample_list[index1 + 1]}):"")
+    print(f""Less than: {result_lt}"")
+    print(f""Greater than: {result_gt}"")
+    print(f""Equal: {result_eq}"")
+    print(""\n--- Another test case ---"")
+    index2 = 2
+    result_lt = comparator.compare(sample_list, index2, 'less_than')
+    result_gt = comparator.compare(sample_list, index2, 'greater_than')
+    result_eq = comparator.compare(sample_list, index2, 'equal')
+    print(f""Comparing elements at indices {index2} and {index2 + 1} ({sample_list[index2]} and {sample_list[index2 + 1]}):"")
+    print(f""Less than: {result_lt}"")
+    print(f""Greater than: {result_gt}"")
+    print(f""Equal: {result_eq}"")
+    print(""\n--- Edge case test (last element) ---"")
+    index3 = 3
+    result_lt = comparator.compare(sample_list, index3, 'less_than')
+    result_gt = comparator.compare(sample_list, index3, 'greater_than')
+    result_eq = comparator.compare(sample_list, index3, 'equal')
+    print(f""Comparing elements at indices {index3} and {index3 + 1} ({sample_list[index3]} and {sample_list[index3 + 1]}):"")
+    print(f""Less than: {result_lt}"")
+    print(f""Greater than: {result_gt}"")
+    print(f""Equal: {result_eq}"")
+    print(""\n--- Invalid operation test ---"")
+    try:
+        comparator.compare(sample_list, 0, 'unknown')
+    except ValueError as e:
+        print(f""Caught expected error: {e}"")",True,3,20172,318_10_3.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Use 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 5, 30, 15]
+    print(""Sample List:"", sample_list)
+    index_to_check = 0
+    result_less = comparator.compare(sample_list, index_to_check, 'less_than')
+    print(f""Comparing elements at indices {index_to_check} and {index_to_check + 1} (10 vs 20): Less Than? {result_less}"")
+    index_to_check = 1
+    result_greater = comparator.compare(sample_list, index_to_check, 'greater_than')
+    print(f""Comparing elements at indices {index_to_check} and {index_to_check + 1} (20 vs 5): Greater Than? {result_greater}"")
+    index_to_check = 2
+    result_equal = comparator.compare(sample_list, index_to_check, 'equal')
+    print(f""Comparing elements at indices {index_to_check} and {index_to_check + 1} (5 vs 30): Equal? {result_equal}"")
+    index_to_check = 3
+    result_not_equal = comparator.compare(sample_list, index_to_check, 'equal')
+    print(f""Comparing elements at indices {index_to_check} and {index_to_check + 1} (30 vs 15): Equal? {result_not_equal}"")
+    index_to_check = 4
+    print(f""Attempting to compare last two elements (Index {index_to_check} and {index_to_check + 1}): {comparator.compare(sample_list, index_to_check, 'less_than')}"")
+    try:
+        comparator.compare(sample_list, 4, 'unknown_op')
+    except ValueError as e:
+        print(f""Caught expected error for invalid operation: {e}"")",True,4,20173,318_10_4.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 5, 30, 15]
+    print(""--- Comparing adjacent elements ---"")
+    index1 = 0
+    result_lt = comparator.compare(sample_list, index1, 'less_than')
+    result_gt = comparator.compare(sample_list, index1, 'greater_than')
+    result_eq = comparator.compare(sample_list, index1, 'equal')
+    print(f""Comparing elements at index {index1} ({sample_list[index1]} and {sample_list[index1+1]}):"")
+    print(f""Less than: {result_lt}"")
+    print(f""Greater than: {result_gt}"")
+    print(f""Equal: {result_eq}"")
+    print(""\n--- Comparing adjacent elements ---"")
+    index2 = 1
+    result_lt = comparator.compare(sample_list, index2, 'less_than')
+    result_gt = comparator.compare(sample_list, index2, 'greater_than')
+    result_eq = comparator.compare(sample_list, index2, 'equal')
+    print(f""Comparing elements at index {index2} ({sample_list[index2]} and {sample_list[index2+1]}):"")
+    print(f""Less than: {result_lt}"")
+    print(f""Greater than: {result_gt}"")
+    print(f""Equal: {result_eq}"")
+    print(""\n--- Comparing adjacent elements ---"")
+    index3 = 3
+    result_lt = comparator.compare(sample_list, index3, 'less_than')
+    result_gt = comparator.compare(sample_list, index3, 'greater_than')
+    result_eq = comparator.compare(sample_list, index3, 'equal')
+    print(f""Comparing elements at index {index3} ({sample_list[index3]} and {sample_list[index3+1]}):"")
+    print(f""Less than: {result_lt}"")
+    print(f""Greater than: {result_gt}"")
+    print(f""Equal: {result_eq}"")
+    print(""\n--- Edge Case: Last element ---"")
+    index4 = len(sample_list) - 1
+    result_lt = comparator.compare(sample_list, index4, 'less_than')
+    print(f""Comparing elements at index {index4} and {index4+1}:"")
+    print(f""Less than: {result_lt}"")",True,5,20174,318_10_5.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Testing Less Than ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} < {b} -> {result}"")
+    index = 2
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} < {b} -> {result}"")
+    print(""\n--- Testing Greater Than ---"")
+    index = 3
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'greater_than')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} > {b} -> {result}"")
+    print(""\n--- Testing Equal ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'equal')
+        print(f""Comparing {sample_list[index]} and {sample_list[index+1]}: {a} == {b} -> {result}"")
+    print(""\n--- Testing Boundary Conditions ---"")
+    index = len(sample_list) - 1
+    a, b = comparator.compare_adjacent(sample_list, index)
+    print(f""Comparing last two elements: {a}, {b}"")
+    index = len(sample_list)
+    result = comparator.compare(sample_list, index, 'less_than')
+    print(f""Index out of bounds comparison result: {result}"")",True,6,20175,318_10_6.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Testing Less Than ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    index = 1
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Greater Than ---"")
+    index = 2
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'greater_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Equal ---"")
+    index = 3
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'equal')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Boundary Conditions ---"")
+    index = len(sample_list) - 2
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    index = len(sample_list) - 1
+    result = comparator.compare(sample_list, index, 'less_than')
+    print(f""Attempting comparison at index {index} (should be None): {result}"")",True,7,20176,318_10_7.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        a, b = self.compare_adjacent(data, index)
+        if a is None or b is None:
+            return None
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified"")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 25, 5, 30, 15]
+    print(""--- Comparing adjacent elements ---"")
+    index = 0
+    result_less = comparator.compare(sample_list, index, 'less_than')
+    print(f""Comparing index {index} ({sample_list[index]}) and {index + 1} ({sample_list[index + 1]}): Less Than -> {result_less}"")
+    index = 1
+    result_greater = comparator.compare(sample_list, index, 'greater_than')
+    print(f""Comparing index {index} ({sample_list[index]}) and {index + 1} ({sample_list[index + 1]}): Greater Than -> {result_greater}"")
+    index = 2
+    result_equal = comparator.compare(sample_list, index, 'equal')
+    print(f""Comparing index {index} ({sample_list[index]}) and {index + 1} ({sample_list[index + 1]}): Equal -> {result_equal}"")
+    index = 3
+    result_unknown = comparator.compare(sample_list, index, 'less_than')
+    print(f""Comparing index {index} ({sample_list[index]}) and {index + 1} ({sample_list[index + 1]}): Less Than -> {result_unknown}"")
+    index = 4
+    result_none = comparator.compare(sample_list, index, 'greater_than')
+    print(f""Comparing index {index} ({sample_list[index]}) and {index + 1} (Out of bounds): Greater Than -> {result_none}"")",True,8,20177,318_10_8.py
+318,10,Compare adjacent elements always,"Write a complete, robust Python class named 'AdjacentComparator' with a method to compare any two adjacent elements in a given list, returning the result of a specified comparison operation (e.g., less than, greater than, or equality).","class AdjacentComparator:
+    def compare_adjacent(self, data, index):
+        if index + 1 < len(data):
+            a = data[index]
+            b = data[index + 1]
+            return a, b
+        return None, None
+    def compare(self, data, index, operation):
+        if index is None or index + 1 >= len(data):
+            return None
+        a, b = data[index], data[index + 1]
+        if operation == 'less_than':
+            return a < b
+        elif operation == 'greater_than':
+            return a > b
+        elif operation == 'equal':
+            return a == b
+        else:
+            raise ValueError(""Invalid operation specified. Must be 'less_than', 'greater_than', or 'equal'."")
+if __name__ == '__main__':
+    comparator = AdjacentComparator()
+    sample_list = [10, 20, 30, 40, 50]
+    print(""--- Testing Less Than ---"")
+    index = 0
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    index = 1
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Greater Than ---"")
+    index = 2
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'greater_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Equal ---"")
+    index = 3
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'equal')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    print(""\n--- Testing Boundary Conditions ---"")
+    index = 4
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is not None and b is not None:
+        result = comparator.compare(sample_list, index, 'less_than')
+        print(f""Comparing {a} and {b} at index {index}: {result}"")
+    index = 5
+    a, b = comparator.compare_adjacent(sample_list, index)
+    if a is None:
+        print(f""Index {index}: No comparison possible (out of bounds)."")",True,9,20178,318_10_9.py
+319,2,Fill a grid with values,Write a robust Python function that takes a list of lists (the grid) as input and modifies it in-place to fill every cell with its row index plus its column index plus one. Provide detailed docstrings.,"def fill_grid(grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            grid[i][j] = i + j + 1
+if __name__ == '__main__':
+    sample_grid = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]
+    print(""Original Grid:"")
+    for row in sample_grid:
+        print(row)
+    fill_grid(sample_grid)
+    print(""\nModified Grid:"")
+    for row in sample_grid:
+        print(row)",True,0,20179,319_2.py
+319,2,Fill a grid with values,Write a robust Python function that takes a list of lists (the grid) as input and modifies it in-place to fill every cell with its row index plus its column index plus one. Provide detailed docstrings.,"def modify_grid(grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            grid[i][j] = i + j + 1
+if __name__ == '__main__':
+    sample_grid = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]
+    print(""Original Grid:"")
+    for row in sample_grid:
+        print(row)
+    modify_grid(sample_grid)
+    print(""\nModified Grid:"")
+    for row in sample_grid:
+        print(row)",True,1,20180,319_2_1.py
+319,2,Fill a grid with values,Write a robust Python function that takes a list of lists (the grid) as input and modifies it in-place to fill every cell with its row index plus its column index plus one. Provide detailed docstrings.,"def modify_grid(grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            grid[i][j] = i + j + 1
+if __name__ == '__main__':
+    sample_grid = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    print(""Original Grid:"")
+    for row in sample_grid:
+        print(row)
+    modify_grid(sample_grid)
+    print(""\nModified Grid:"")
+    for row in sample_grid:
+        print(row)",True,2,20181,319_2_2.py
+319,3,Fill a grid with values,Develop an optimized algorithm to create a square grid of size N x N and fill it with values based on the product of the row and column indices (i * j). The solution must be time-efficient.,"import numpy as np
+def create_grid(N):
+    grid = np.zeros((N, N), dtype=np.int64)
+    for i in range(N):
+        for j in range(N):
+            grid[i, j] = i * j
+    return grid
+if __name__ == '__main__':
+    N_sample = 5
+    result_grid = create_grid(N_sample)
+    print(result_grid)",True,0,20182,319_3.py
+319,3,Fill a grid with values,Develop an optimized algorithm to create a square grid of size N x N and fill it with values based on the product of the row and column indices (i * j). The solution must be time-efficient.,"def create_grid(n):
+    grid = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            grid[i][j] = i * j
+    return grid
+if __name__ == '__main__':
+    N = 5
+    result_grid = create_grid(N)
+    for row in result_grid:
+        print(row)",True,1,20183,319_3_1.py
+319,4,Fill a grid with values,"Write a class named `GridFiller` with a method `generate(rows, cols)` that initializes and returns an R x C grid filled sequentially starting from 1. Ensure the class adheres to object-oriented best practices.","class GridFiller:
+    def generate(self, rows, cols):
+        grid = []
+        count = 1
+        for r in range(rows):
+            row = []
+            for c in range(cols):
+                row.append(count)
+                count += 1
+            grid.append(row)
+        return grid
+if __name__ == '__main__':
+    filler = GridFiller()
+    rows = 3
+    cols = 4
+    result_grid = filler.generate(rows, cols)
+    print(result_grid)",True,0,20184,319_4.py
+319,4,Fill a grid with values,"Write a class named `GridFiller` with a method `generate(rows, cols)` that initializes and returns an R x C grid filled sequentially starting from 1. Ensure the class adheres to object-oriented best practices.","class GridFiller:
+    def generate(self, rows, cols):
+        grid = []
+        count = 1
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                row.append(count)
+                count += 1
+            grid.append(row)
+        return grid
+if __name__ == '__main__':
+    filler = GridFiller()
+    rows_val = 3
+    cols_val = 4
+    result_grid = filler.generate(rows_val, cols_val)
+    print(result_grid)",True,1,20185,319_4_1.py
+319,4,Fill a grid with values,"Write a class named `GridFiller` with a method `generate(rows, cols)` that initializes and returns an R x C grid filled sequentially starting from 1. Ensure the class adheres to object-oriented best practices.","class GridFiller:
+    def generate(self, rows, cols):
+        grid = []
+        count = 1
+        for r in range(rows):
+            row = []
+            for c in range(cols):
+                row.append(count)
+                count += 1
+            grid.append(row)
+        return grid
+if __name__ == '__main__':
+    filler = GridFiller()
+    rows = 3
+    cols = 4
+    result_grid = filler.generate(rows, cols)
+    for row in result_grid:
+        print(row)",True,2,20186,319_4_2.py
+319,4,Fill a grid with values,"Write a class named `GridFiller` with a method `generate(rows, cols)` that initializes and returns an R x C grid filled sequentially starting from 1. Ensure the class adheres to object-oriented best practices.","class GridFiller:
+    def generate(self, rows, cols):
+        grid = []
+        count = 1
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                row.append(count)
+                count += 1
+            grid.append(row)
+        return grid
+if __name__ == '__main__':
+    filler = GridFiller()
+    rows = 3
+    cols = 4
+    result_grid = filler.generate(rows, cols)
+    print(result_grid)",True,3,20187,319_4_3.py
+319,5,Fill a grid with values,"Implement a function that reads dimensions from the user, prompts for input, and then prints the resulting grid structure where each element is filled with its position index (row * 10 + col). Focus on clean I/O handling.","def print_grid(rows, cols):
+    for r in range(rows):
+        for c in range(cols):
+            print(r * 10 + c, end=' ')
+        print()
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    print_grid(rows, cols)",True,0,20188,319_5.py
+319,6,Fill a grid with values,"Write a function that accepts an existing 2D list and fills the grid such that the value at `grid[i][j]` is determined by the sum of its row index and column index. The code must be vectorized if possible, or use efficient iteration.","def fill_grid(grid):
+    rows = len(grid)
+    cols = len(grid[0])
+    indices = [[i + j for j in range(cols)] for i in range(rows)]
+    for i in range(rows):
+        for j in range(cols):
+            grid[i][j] = indices[i][j]
+    return grid
+if __name__ == '__main__':
+    sample_grid = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    result_grid = fill_grid(sample_grid)
+    print(result_grid)",True,0,20189,319_6.py
+319,6,Fill a grid with values,"Write a function that accepts an existing 2D list and fills the grid such that the value at `grid[i][j]` is determined by the sum of its row index and column index. The code must be vectorized if possible, or use efficient iteration.","def fill_grid(grid):
+    rows = len(grid)
+    cols = len(grid[0])
+    new_grid = [[0] * cols for _ in range(rows)]
+    for i in range(rows):
+        for j in range(cols):
+            new_grid[i][j] = i + j
+    return new_grid
+if __name__ == '__main__':
+    sample_grid = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    result_grid = fill_grid(sample_grid)
+    print(result_grid)",True,1,20190,319_6_1.py
+319,6,Fill a grid with values,"Write a function that accepts an existing 2D list and fills the grid such that the value at `grid[i][j]` is determined by the sum of its row index and column index. The code must be vectorized if possible, or use efficient iteration.","def fill_grid(grid):
+    rows = len(grid)
+    cols = len(grid[0])
+    for i in range(rows):
+        for j in range(cols):
+            grid[i][j] = i + j
+if __name__ == '__main__':
+    sample_grid = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    print(""Original Grid:"")
+    for row in sample_grid:
+        print(row)
+    fill_grid(sample_grid)
+    print(""\nFilled Grid (grid[i][j] = i + j):"")
+    for row in sample_grid:
+        print(row)",True,2,20191,319_6_2.py
+319,6,Fill a grid with values,"Write a function that accepts an existing 2D list and fills the grid such that the value at `grid[i][j]` is determined by the sum of its row index and column index. The code must be vectorized if possible, or use efficient iteration.","def fill_grid(grid):
+    rows = len(grid)
+    cols = len(grid[0])
+    indices = [[i + j for j in range(cols)] for i in range(rows)]
+    for i in range(rows):
+        for j in range(cols):
+            grid[i][j] = indices[i][j]
+if __name__ == '__main__':
+    sample_grid = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    print(""Original Grid:"")
+    for row in sample_grid:
+        print(row)
+    fill_grid(sample_grid)
+    print(""\nFilled Grid (grid[i][j] = i + j):"")
+    for row in sample_grid:
+        print(row)",True,3,20192,319_6_3.py
+319,7,Fill a grid with values,"Generate a Python script that prompts the user for the number of rows and columns, then displays the resulting grid formatted nicely using string formatting, where each cell contains its sequential count starting from 1 in row-major order.","def generate_grid(rows, cols):
+    grid = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(str(count))
+            count += 1
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    grid_data = generate_grid(rows, cols)
+    for row in grid_data:
+        print("" "".join(row))",True,0,20193,319_7.py
+319,7,Fill a grid with values,"Generate a Python script that prompts the user for the number of rows and columns, then displays the resulting grid formatted nicely using string formatting, where each cell contains its sequential count starting from 1 in row-major order.","def generate_grid(rows, cols):
+    grid = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(str(count))
+            count += 1
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    result_grid = generate_grid(rows, cols)
+    for row in result_grid:
+        print("" "".join(row))",True,1,20194,319_7_1.py
+319,7,Fill a grid with values,"Generate a Python script that prompts the user for the number of rows and columns, then displays the resulting grid formatted nicely using string formatting, where each cell contains its sequential count starting from 1 in row-major order.","def generate_grid(rows, cols):
+    grid = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(str(count))
+            count += 1
+        grid.append("" "".join(row))
+    return grid
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    result_grid = generate_grid(rows, cols)
+    for row_str in result_grid:
+        print(row_str)",True,2,20195,319_7_2.py
+319,7,Fill a grid with values,"Generate a Python script that prompts the user for the number of rows and columns, then displays the resulting grid formatted nicely using string formatting, where each cell contains its sequential count starting from 1 in row-major order.","def generate_grid(rows, cols):
+    grid = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(str(count))
+            count += 1
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    grid = generate_grid(rows, cols)
+    for row in grid:
+        print("" "".join(row))",True,3,20196,319_7_3.py
+319,7,Fill a grid with values,"Generate a Python script that prompts the user for the number of rows and columns, then displays the resulting grid formatted nicely using string formatting, where each cell contains its sequential count starting from 1 in row-major order.","def generate_grid(rows, cols):
+    grid = []
+    count = 1
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(str(count))
+            count += 1
+        grid.append("" "".join(row))
+    return grid
+if __name__ == '__main__':
+    rows = 3
+    cols = 4
+    result = generate_grid(rows, cols)
+    for row_str in result:
+        print(row_str)",True,4,20197,319_7_4.py
+319,8,Fill a grid with values,"Write an optimized solution to create an M x N grid filled with a specific pattern: the value at position (i, j) should be `(i + j) % 5`. Ensure the creation process is highly efficient.","def create_pattern(M, N):
+    grid = [[0] * N for _ in range(M)]
+    for i in range(M):
+        for j in range(N):
+            grid[i][j] = (i + j) % 5
+    return grid
+if __name__ == '__main__':
+    M_sample = 4
+    N_sample = 5
+    result = create_pattern(M_sample, N_sample)
+    for row in result:
+        print(row)",True,0,20198,319_8.py
+319,8,Fill a grid with values,"Write an optimized solution to create an M x N grid filled with a specific pattern: the value at position (i, j) should be `(i + j) % 5`. Ensure the creation process is highly efficient.","def create_pattern(m, n):
+    grid = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            grid[i][j] = (i + j) % 5
+    return grid
+if __name__ == '__main__':
+    M = 4
+    N = 5
+    result = create_pattern(M, N)
+    for row in result:
+        print(row)",True,1,20199,319_8_1.py
+319,10,Fill a grid with values,"Write a complete, robust Python script that takes a set of predefined values and fills a 2D grid (matrix) based on a specified pattern, ensuring the implementation is highly efficient.","import numpy as np
+def fill_matrix_pattern(rows, cols, pattern):
+    matrix = np.zeros((rows, cols), dtype=int)
+    for r in range(rows):
+        for c in range(cols):
+            index = r * cols + c
+            matrix[r, c] = pattern[index % len(pattern)]
+    return matrix
+if __name__ == '__main__':
+    ROWS = 5
+    COLS = 7
+    PATTERN_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result_matrix = fill_matrix_pattern(ROWS, COLS, PATTERN_VALUES)
+    print(""Result Matrix:"")
+    print(result_matrix)",True,0,20200,319_10.py
+319,10,Fill a grid with values,"Write a complete, robust Python script that takes a set of predefined values and fills a 2D grid (matrix) based on a specified pattern, ensuring the implementation is highly efficient.","import numpy as np
+def fill_grid_pattern(rows, cols, pattern):
+    grid = np.zeros((rows, cols), dtype=int)
+    for r in range(rows):
+        for c in range(cols):
+            grid[r, c] = pattern[r % len(pattern)]
+    return grid
+if __name__ == '__main__':
+    ROWS = 10
+    COLS = 12
+    PATTERN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    result_grid = fill_grid_pattern(ROWS, COLS, PATTERN)
+    print(""Resulting Grid:"")
+    print(result_grid)",True,1,20201,319_10_1.py
+319,10,Fill a grid with values,"Write a complete, robust Python script that takes a set of predefined values and fills a 2D grid (matrix) based on a specified pattern, ensuring the implementation is highly efficient.","import numpy as np
+def fill_matrix_pattern(rows, cols, pattern):
+    matrix = np.zeros((rows, cols), dtype=int)
+    for r in range(rows):
+        for c in range(cols):
+            matrix[r, c] = pattern[r % len(pattern)]
+    return matrix
+if __name__ == '__main__':
+    ROWS = 5
+    COLS = 8
+    PATTERN = [1, 2, 3, 4, 5]
+    result_matrix = fill_matrix_pattern(ROWS, COLS, PATTERN)
+    print(""Result Matrix:"")
+    print(result_matrix)",True,2,20202,319_10_2.py
+319,10,Fill a grid with values,"Write a complete, robust Python script that takes a set of predefined values and fills a 2D grid (matrix) based on a specified pattern, ensuring the implementation is highly efficient.","import numpy as np
+def fill_matrix_pattern(rows, cols, pattern):
+    matrix = np.zeros((rows, cols), dtype=int)
+    for r in range(rows):
+        for c in range(cols):
+            index = r * cols + c
+            value = pattern[index % len(pattern)]
+            matrix[r, c] = value
+    return matrix
+if __name__ == '__main__':
+    ROWS = 5
+    COLS = 7
+    PATTERN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result_matrix = fill_matrix_pattern(ROWS, COLS, PATTERN)
+    print(""Result Matrix:"")
+    print(result_matrix)",True,3,20203,319_10_3.py
+319,10,Fill a grid with values,"Write a complete, robust Python script that takes a set of predefined values and fills a 2D grid (matrix) based on a specified pattern, ensuring the implementation is highly efficient.","import numpy as np
+def fill_matrix_pattern(rows, cols, pattern):
+    matrix = np.zeros((rows, cols), dtype=int)
+    for r in range(rows):
+        for c in range(cols):
+            index = r * cols + c
+            matrix[r, c] = pattern[index % len(pattern)]
+    return matrix
+if __name__ == '__main__':
+    ROWS = 5
+    COLS = 6
+    PATTERN_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result_matrix = fill_matrix_pattern(ROWS, COLS, PATTERN_VALUES)
+    print(result_matrix)",True,4,20204,319_10_4.py
+319,10,Fill a grid with values,"Write a complete, robust Python script that takes a set of predefined values and fills a 2D grid (matrix) based on a specified pattern, ensuring the implementation is highly efficient.","import numpy as np
+def fill_matrix_pattern(rows, cols, pattern):
+    matrix = np.zeros((rows, cols), dtype=int)
+    for r in range(rows):
+        for c in range(cols):
+            index = r * cols + c
+            matrix[r, c] = pattern[index % len(pattern)]
+    return matrix
+if __name__ == '__main__':
+    ROWS = 5
+    COLS = 6
+    PATTERN_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result_matrix = fill_matrix_pattern(ROWS, COLS, PATTERN_VALUES)
+    print(""Result Matrix:"")
+    print(result_matrix)",True,5,20205,319_10_5.py
+319,9,Fill a grid with values,Implement a utility function that takes a grid and performs a depth-first traversal to fill the grid with values from 1 to N*M sequentially. Assume the input grid is an empty matrix of size R x C.,"def fill_grid_dfs(R, C):
+    grid = [[0] * C for _ in range(R)]
+    count = 1
+    def dfs(r, c):
+        nonlocal count
+        if r >= R:
+            return
+        if r < 0 or c >= C:
+            return
+        grid[r][c] = count
+        count += 1
+        dfs(r + 1, c)
+        dfs(r, c + 1)
+    dfs(0, 0)
+    return grid
+if __name__ == '__main__':
+    R_sample = 3
+    C_sample = 4
+    result_grid = fill_grid_dfs(R_sample, C_sample)
+    for row in result_grid:
+        print(row)",True,0,20206,319_9.py
+319,9,Fill a grid with values,Implement a utility function that takes a grid and performs a depth-first traversal to fill the grid with values from 1 to N*M sequentially. Assume the input grid is an empty matrix of size R x C.,"import collections
+def fill_grid_dfs(R, C):
+    grid = [[0] * C for _ in range(R)]
+    counter = 1
+    stack = [(0, 0)]
+    visited = set([(0, 0)])
+    while stack:
+        r, c = stack.pop()
+        grid[r][c] = counter
+        counter += 1
+        neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        for dr, dc in neighbors:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < R and 0 <= nc < C and (nr, nc) not in visited:
+                visited.add((nr, nc))
+                stack.append((nr, nc))
+    return grid
+if __name__ == '__main__':
+    R = 3
+    C = 4
+    result_grid = fill_grid_dfs(R, C)
+    for row in result_grid:
+        print(row)",True,1,20207,319_9_1.py
+319,9,Fill a grid with values,Implement a utility function that takes a grid and performs a depth-first traversal to fill the grid with values from 1 to N*M sequentially. Assume the input grid is an empty matrix of size R x C.,"def fill_grid_dfs(R, C):
+    grid = [[0] * C for _ in range(R)]
+    count = 1
+    def dfs(r, c):
+        nonlocal count
+        if r < 0 or r >= R or c < 0 or c >= C:
+            return
+        grid[r][c] = count
+        count += 1
+        dfs(r + 1, c)
+        dfs(r, c + 1)
+    dfs(0, 0)
+    return grid
+if __name__ == '__main__':
+    R_sample = 3
+    C_sample = 4
+    result_grid = fill_grid_dfs(R_sample, C_sample)
+    for row in result_grid:
+        print(row)",True,2,20208,319_9_2.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","import numpy as np
+def fill_grid(coords, values):
+    if not coords:
+        return np.array([])
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = np.zeros((rows, cols), dtype=int)
+    for (r, c), val in zip(coords, values):
+        row_idx = r - min_r
+        col_idx = c - min_c
+        grid[row_idx, col_idx] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(1, 3), (5, 1), (2, 4), (8, 7)]
+    sample_values = [10, 20, 30, 40]
+    result_grid = fill_grid(sample_coords, sample_values)
+    print(result_grid)",True,0,20209,319_11.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","def fill_grid(coords, values):
+    if not coords:
+        return []
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    for (r, c), val in zip(coords, values):
+        row_index = r - min_r
+        col_index = c - min_c
+        grid[row_index][col_index] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(1, 3), (5, 1), (2, 4), (8, 7)]
+    sample_values = [10, 20, 30, 40]
+    result_grid = fill_grid(sample_coords, sample_values)
+    for row in result_grid:
+        print(row)",True,1,20210,319_11_1.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","import numpy as np
+def fill_grid(coords, values):
+    if not coords:
+        return None
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = np.zeros((rows, cols), dtype=int)
+    for (r, c), val in zip(coords, values):
+        row_idx = r - min_r
+        col_idx = c - min_c
+        grid[row_idx, col_idx] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(1, 3), (5, 1), (2, 4), (6, 2)]
+    sample_values = [10, 20, 30, 40]
+    result_grid = fill_grid(sample_coords, sample_values)
+    print(result_grid)",True,2,20211,319_11_2.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","def fill_grid(coords, values):
+    if not coords:
+        return []
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    for (r, c), val in zip(coords, values):
+        row_idx = r - min_r
+        col_idx = c - min_c
+        grid[row_idx][col_idx] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(0, 0), (1, 2), (3, 1)]
+    sample_values = [10, 20, 30]
+    result_grid = fill_grid(sample_coords, sample_values)
+    for row in result_grid:
+        print(row)",True,3,20212,319_11_3.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","def fill_grid(coords, values):
+    if not coords:
+        return []
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = [[0 for _ in range(cols)] for _ in range(rows)]
+    for (r, c), val in zip(coords, values):
+        row_idx = r - min_r
+        col_idx = c - min_c
+        if 0 <= row_idx < rows and 0 <= col_idx < cols:
+            grid[row_idx][col_idx] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(1, 3), (5, 1), (2, 4), (8, 7)]
+    sample_values = [10, 20, 30, 40]
+    result_grid = fill_grid(sample_coords, sample_values)
+    for row in result_grid:
+        print(row)",True,4,20213,319_11_4.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","import numpy as np
+def fill_grid(coords, values):
+    if not coords:
+        return None
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = np.zeros((rows, cols), dtype=int)
+    for (r, c), val in zip(coords, values):
+        grid[r - min_r, c - min_c] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(1, 3), (5, 1), (2, 4), (6, 2)]
+    sample_values = [10, 20, 30, 40]
+    result_grid = fill_grid(sample_coords, sample_values)
+    print(result_grid)",True,5,20214,319_11_5.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","import math
+def fill_grid(coords, values):
+    if not coords:
+        return []
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = [[0] * cols for _ in range(rows)]
+    for (r, c), val in zip(coords, values):
+        row_index = r - min_r
+        col_index = c - min_c
+        if 0 <= row_index < rows and 0 <= col_index < cols:
+            grid[row_index][col_index] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(1, 3), (5, 1), (2, 4), (8, 7)]
+    sample_values = [10, 20, 30, 40]
+    result_grid = fill_grid(sample_coords, sample_values)
+    for row in result_grid:
+        print(row)",True,6,20215,319_11_6.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","def fill_grid(coords, values):
+    if not coords:
+        return []
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    R = max_r - min_r + 1
+    C = max_c - min_c + 1
+    grid = [[0 for _ in range(C)] for _ in range(R)]
+    for (r, c), val in zip(coords, values):
+        row = r - min_r
+        col = c - min_c
+        grid[row][col] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(0, 0), (1, 2), (3, 1)]
+    sample_values = [10, 20, 30]
+    result_grid = fill_grid(sample_coords, sample_values)
+    print(result_grid)",True,7,20216,319_11_7.py
+319,11,Fill a grid with values,"Implement an optimized function named 'fill_grid' that accepts a list of coordinates and a set of values, and populates an NxM grid initialized with zeros, using the most efficient indexing methods possible.","def fill_grid(coords, values):
+    if not coords:
+        return []
+    min_r = min(c[0] for c in coords)
+    max_r = max(c[0] for c in coords)
+    min_c = min(c[1] for c in coords)
+    max_c = max(c[1] for c in coords)
+    rows = max_r - min_r + 1
+    cols = max_c - min_c + 1
+    grid = [[0] * cols for _ in range(rows)]
+    for (r, c), val in zip(coords, values):
+        grid[r - min_r][c - min_c] = val
+    return grid
+if __name__ == '__main__':
+    sample_coords = [(0, 0), (1, 2), (3, 1)]
+    sample_values = [10, 20, 30]
+    result_grid = fill_grid(sample_coords, sample_values)
+    print(result_grid)",True,8,20217,319_11_8.py
+319,12,Fill a grid with values,"Develop a class named 'GridFiller' with a method to initialize an NxN grid and another method to fill that grid based on a provided sequence of numbers, adhering strictly to object-oriented best practices.","class GridFiller:
+    def __init__(self, n):
+        self.n = n
+        self.grid = [[0 for _ in range(n)] for _ in range(n)]
+    def fill_grid(self, sequence):
+        if len(sequence) != self.n * self.n:
+            raise ValueError(""Sequence length must match the grid size (N*N)"")
+        for i in range(self.n):
+            for j in range(self.n):
+                index = i * self.n + j
+                self.grid[i][j] = sequence[index]
+if __name__ == '__main__':
+    N = 3
+    grid_filler = GridFiller(N)
+    sample_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    grid_filler.fill_grid(sample_sequence)
+    for row in grid_filler.grid:
+        print(row)",True,0,20218,319_12.py
+319,12,Fill a grid with values,"Develop a class named 'GridFiller' with a method to initialize an NxN grid and another method to fill that grid based on a provided sequence of numbers, adhering strictly to object-oriented best practices.","class GridFiller:
+    def __init__(self, n):
+        self.n = n
+        self.grid = [[0 for _ in range(n)] for _ in range(n)]
+    def fill_grid(self, sequence):
+        if len(sequence) != self.n * self.n:
+            raise ValueError(""Sequence length must match the grid size (N*N)"")
+        for i in range(self.n):
+            for j in range(self.n):
+                index = i * self.n + j
+                self.grid[i][j] = sequence[index]
+if __name__ == '__main__':
+    N = 3
+    grid_filler = GridFiller(N)
+    sample_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    try:
+        grid_filler.fill_grid(sample_sequence)
+        print(""Filled Grid:"")
+        for row in grid_filler.grid:
+            print(row)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,1,20219,319_12_1.py
+319,12,Fill a grid with values,"Develop a class named 'GridFiller' with a method to initialize an NxN grid and another method to fill that grid based on a provided sequence of numbers, adhering strictly to object-oriented best practices.","class GridFiller:
+    def __init__(self, n):
+        self.n = n
+        self.grid = [[0 for _ in range(n)] for _ in range(n)]
+    def fill_grid(self, sequence):
+        if len(sequence) != self.n * self.n:
+            raise ValueError(""Sequence length must match the grid size (N*N)"")
+        for i in range(self.n):
+            for j in range(self.n):
+                index = i * self.n + j
+                self.grid[i][j] = sequence[index]
+if __name__ == '__main__':
+    N = 3
+    filler = GridFiller(N)
+    sample_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    try:
+        filler.fill_grid(sample_sequence)
+        print(""Filled Grid:"")
+        for row in filler.grid:
+            print(row)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,20220,319_12_2.py
+319,12,Fill a grid with values,"Develop a class named 'GridFiller' with a method to initialize an NxN grid and another method to fill that grid based on a provided sequence of numbers, adhering strictly to object-oriented best practices.","class GridFiller:
+    def __init__(self, n):
+        self.n = n
+        self.grid = [[0 for _ in range(n)] for _ in range(n)]
+    def fill_grid(self, sequence):
+        if len(sequence) != self.n * self.n:
+            raise ValueError(""Sequence length must match the grid size (N*N)"")
+        for i in range(self.n):
+            for j in range(self.n):
+                index = i * self.n + j
+                self.grid[i][j] = sequence[index]
+if __name__ == '__main__':
+    N = 3
+    filler = GridFiller(N)
+    sample_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    try:
+        filler.fill_grid(sample_sequence)
+        for row in filler.grid:
+            print(row)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,20221,319_12_3.py
+319,13,Fill a grid with values,"Write a clean and efficient Python function that generates and returns a list of lists representing an M x N grid, where each cell's value is determined by the index coordinates (i, j) using a simple arithmetic formula.","def generate_grid(M, N):
+    grid = []
+    for i in range(M):
+        row = []
+        for j in range(N):
+            value = (i * 3 + j) % 10
+            row.append(value)
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    M_val = 4
+    N_val = 5
+    result = generate_grid(M_val, N_val)
+    print(result)",True,0,20222,319_13.py
+319,13,Fill a grid with values,"Write a clean and efficient Python function that generates and returns a list of lists representing an M x N grid, where each cell's value is determined by the index coordinates (i, j) using a simple arithmetic formula.","def generate_grid(m, n):
+    grid = []
+    for i in range(m):
+        row = []
+        for j in range(n):
+            value = (i * 3 + j) % 10
+            row.append(value)
+        grid.append(row)
+    return grid
+if __name__ == '__main__':
+    M = 4
+    N = 5
+    result = generate_grid(M, N)
+    print(result)",True,1,20223,319_13_1.py
+319,14,Fill a grid with values,"Create a script to read input defining the dimensions of a grid and then fill it iteratively with random integers within a specified range, ensuring the use of NumPy for optimal performance if applicable, otherwise use pure Python lists.","import numpy as np
+if __name__ == '__main__':
+    rows = 5
+    cols = 10
+    min_val = 1
+    max_val = 100
+    grid = np.random.randint(min_val, max_val + 1, size=(rows, cols))
+    print(grid)",True,0,20224,319_14.py
+319,14,Fill a grid with values,"Create a script to read input defining the dimensions of a grid and then fill it iteratively with random integers within a specified range, ensuring the use of NumPy for optimal performance if applicable, otherwise use pure Python lists.","import numpy as np
+if __name__ == '__main__':
+    rows = 5
+    cols = 10
+    min_val = 0
+    max_val = 99
+    grid = np.random.randint(min_val, max_val + 1, size=(rows, cols))
+    print(grid)",True,1,20225,319_14_1.py
+320,1,Subtract one value from another,"Implement an optimized function named 'subtract_values' that accepts two numerical arguments, 'a' and 'b', and returns the difference (a - b). Ensure the function is highly efficient.","def subtract_values(a, b):
+    return a - b
+if __name__ == '__main__':
+    result1 = subtract_values(10, 3)
+    print(result1)
+    result2 = subtract_values(-5, 7)
+    print(result2)",True,0,20226,320_1.py
+320,1,Subtract one value from another,"Implement an optimized function named 'subtract_values' that accepts two numerical arguments, 'a' and 'b', and returns the difference (a - b). Ensure the function is highly efficient.","def subtract_values(a, b):
+    return a - b
+if __name__ == '__main__':
+    result1 = subtract_values(10, 4)
+    print(result1)
+    result2 = subtract_values(-5, 3)
+    print(result2)",True,1,20227,320_1_1.py
+320,2,Subtract one value from another,"Develop a class named 'Subtractor' with an initializer that takes two values, and a method to perform the subtraction of the second value from the first. Use best practices for object-oriented programming.","class Subtractor:
+    def __init__(self, first_value, second_value):
+        self.first = first_value
+        self.second = second_value
+    def subtract(self):
+        return self.first - self.second
+if __name__ == '__main__':
+    a = 20
+    b = 7
+    sub = Subtractor(a, b)
+    result = sub.subtract()
+    print(result)",True,0,20228,320_2.py
+320,2,Subtract one value from another,"Develop a class named 'Subtractor' with an initializer that takes two values, and a method to perform the subtraction of the second value from the first. Use best practices for object-oriented programming.","class Subtractor:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    def subtract(self):
+        return self.a - self.b
+if __name__ == '__main__':
+    num1 = 20
+    num2 = 7
+    sub = Subtractor(num1, num2)
+    result = sub.subtract()
+    print(result)",True,1,20229,320_2_1.py
+320,2,Subtract one value from another,"Develop a class named 'Subtractor' with an initializer that takes two values, and a method to perform the subtraction of the second value from the first. Use best practices for object-oriented programming.","class Subtractor:
+    def __init__(self, first, second):
+        self.first = first
+        self.second = second
+    def subtract(self):
+        return self.first - self.second
+if __name__ == '__main__':
+    a = 20
+    b = 7
+    sub = Subtractor(a, b)
+    result = sub.subtract()
+    print(result)",True,2,20230,320_2_2.py
+320,3,Subtract one value from another,Write a concise Python expression that directly calculates the difference between 150 and 75 and stores the result in a variable named 'difference'.,"if __name__ == '__main__':
+    difference = 150 - 75",True,0,20231,320_3.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        num_a = float(a)
+        num_b = float(b)
+        result = num_a - num_b
+        return result
+    except (ValueError, TypeError):
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 3))
+    print(safe_subtract(""15.5"", ""2.5""))
+    try:
+        safe_subtract(10, ""hello"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract([10], 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,20232,320_4.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        num_a = float(a)
+        num_b = float(b)
+        result = num_a - num_b
+        return result
+    except (TypeError, ValueError):
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 3))
+    print(safe_subtract(""20"", ""5""))
+    try:
+        safe_subtract(10, ""five"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract([10], 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,20233,320_4_1.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        num_a = float(a)
+        num_b = float(b)
+        result = num_a - num_b
+        return result
+    except (ValueError, TypeError):
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 3))
+    print(safe_subtract(""15"", ""5""))
+    try:
+        safe_subtract(10, ""five"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract([10], 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,2,20234,320_4_2.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        num_a = float(a)
+        num_b = float(b)
+        result = num_a - num_b
+        return result
+    except ValueError:
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 4))
+    try:
+        safe_subtract(""hello"", 4)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract(5.5, ""three"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,3,20235,320_4_3.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        num_a = float(a)
+        num_b = float(b)
+        result = num_a - num_b
+        return result
+    except (ValueError, TypeError):
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 3))
+    try:
+        safe_subtract(""hello"", 3)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract(5.5, ""text"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract([1, 2], 4)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,4,20236,320_4_4.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except (TypeError, ValueError):
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 3))
+    print(safe_subtract(""15"", ""5""))
+    try:
+        safe_subtract(10, ""five"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract([10], 5)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,5,20237,320_4_5.py
+320,4,Subtract one value from another,Create a robust function that handles potential errors (like non-numeric input) when subtracting one value from another. The function should raise a ValueError if inputs are not valid numbers.,"def safe_subtract(a, b):
+    try:
+        num_a = float(a)
+        num_b = float(b)
+        result = num_a - num_b
+        return result
+    except (ValueError, TypeError):
+        raise ValueError(""Both inputs must be valid numeric values."")
+if __name__ == '__main__':
+    print(safe_subtract(10, 4))
+    try:
+        safe_subtract(""hello"", 4)
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract(5.5, ""text"")
+    except ValueError as e:
+        print(f""Error caught: {e}"")
+    try:
+        safe_subtract([1, 2], 3)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,6,20238,320_4_6.py
+320,5,Subtract one value from another,"Implement a generator function that yields the result of subtracting an arbitrary second number from a fixed starting number (e.g., 100) for a sequence of input numbers provided by the user.","def subtract_sequence(start_number, sequence):
+    for num in sequence:
+        yield start_number - num
+if __name__ == '__main__':
+    fixed_start = 100
+    input_sequence = [10, 25, 5, 40]
+    result_generator = subtract_sequence(fixed_start, input_sequence)
+    results = list(result_generator)
+    print(results)",True,0,20239,320_5.py
+320,5,Subtract one value from another,"Implement a generator function that yields the result of subtracting an arbitrary second number from a fixed starting number (e.g., 100) for a sequence of input numbers provided by the user.","def subtract_sequence(start_number, sequence):
+    for number in sequence:
+        yield start_number - number
+if __name__ == '__main__':
+    fixed_start = 100
+    input_sequence = [10, 25, 5, 40]
+    result_generator = subtract_sequence(fixed_start, input_sequence)
+    results = list(result_generator)
+    print(results)",True,1,20240,320_5_1.py
+320,5,Subtract one value from another,"Implement a generator function that yields the result of subtracting an arbitrary second number from a fixed starting number (e.g., 100) for a sequence of input numbers provided by the user.","def subtract_sequence(start_number, sequence):
+    for num in sequence:
+        yield start_number - num
+if __name__ == '__main__':
+    fixed_start = 100
+    input_sequence = [10, 25, 50, 75]
+    result_generator = subtract_sequence(fixed_start, input_sequence)
+    results = list(result_generator)
+    print(results)",True,2,20241,320_5_2.py
+320,5,Subtract one value from another,"Implement a generator function that yields the result of subtracting an arbitrary second number from a fixed starting number (e.g., 100) for a sequence of input numbers provided by the user.","def subtract_sequence(start_number, sequence):
+    for number in sequence:
+        yield start_number - number
+if __name__ == '__main__':
+    fixed_start = 100
+    input_sequence = [10, 25, 50, 75]
+    result_generator = subtract_sequence(fixed_start, input_sequence)
+    results = list(result_generator)
+    print(results)",True,3,20242,320_5_3.py
+320,5,Subtract one value from another,"Implement a generator function that yields the result of subtracting an arbitrary second number from a fixed starting number (e.g., 100) for a sequence of input numbers provided by the user.","def subtract_sequence(start_number, sequence):
+    for num in sequence:
+        yield start_number - num
+if __name__ == '__main__':
+    fixed_start = 100
+    input_sequence = [10, 25, 40, 55]
+    result_generator = subtract_sequence(fixed_start, input_sequence)
+    results = list(result_generator)
+    print(results)",True,4,20243,320_5_4.py
+320,7,Subtract one value from another,Design and implement a decorator for Python that automatically subtracts a specified constant value from every number passed to it during function execution. Provide an example usage.,"def subtract_constant(constant):
+    def decorator(func):
+        def wrapper(*args):
+            result = 0
+            for arg in args:
+                result += arg - constant
+            return result
+        return wrapper
+    return decorator
+@subtract_constant(5)
+def add_numbers(a, b):
+    return a + b
+@subtract_constant(10)
+def multiply_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    print(add_numbers(3, 4))
+    print(multiply_numbers(2, 5))",True,0,20244,320_7.py
+320,7,Subtract one value from another,Design and implement a decorator for Python that automatically subtracts a specified constant value from every number passed to it during function execution. Provide an example usage.,"def subtract_constant(constant):
+    def decorator(func):
+        def wrapper(*args):
+            new_args = []
+            for arg in args:
+                if isinstance(arg, (int, float)):
+                    new_args.append(arg - constant)
+                else:
+                    new_args.append(arg)
+            return func(*new_args)
+        return wrapper
+    return decorator
+@subtract_constant(5)
+def add(a, b):
+    return a + b
+@subtract_constant(10)
+def multiply(a, b):
+    return a * b
+if __name__ == '__main__':
+    result1 = add(3, 4)
+    print(f""add(3, 4) with constant 5: {result1}"")
+    result2 = multiply(2, 6)
+    print(f""multiply(2, 6) with constant 10: {result2}"")",True,1,20245,320_7_1.py
+320,7,Subtract one value from another,Design and implement a decorator for Python that automatically subtracts a specified constant value from every number passed to it during function execution. Provide an example usage.,"def subtract_constant(constant):
+    def decorator(func):
+        def wrapper(*args):
+            new_args = []
+            for arg in args:
+                if isinstance(arg, (int, float)):
+                    new_args.append(arg - constant)
+                else:
+                    new_args.append(arg)
+            return func(*new_args)
+        return wrapper
+    return decorator
+@subtract_constant(5)
+def subtract_five(a, b):
+    return a + b
+@subtract_constant(10)
+def subtract_ten(x):
+    return x * 2
+if __name__ == '__main__':
+    result1 = subtract_five(3, 4)
+    print(f""Result of subtract_five(3, 4): {result1}"")
+    result2 = subtract_ten(5)
+    print(f""Result of subtract_ten(5): {result2}"")",True,2,20246,320_7_2.py
+320,7,Subtract one value from another,Design and implement a decorator for Python that automatically subtracts a specified constant value from every number passed to it during function execution. Provide an example usage.,"def subtract_constant(constant):
+    def decorator(func):
+        def wrapper(*args):
+            result = 0
+            for arg in args:
+                result += arg - constant
+            return result
+        return wrapper
+    return decorator
+@subtract_constant(5)
+def process_numbers(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    print(process_numbers(10, 20, 30))",True,3,20247,320_7_3.py
+320,7,Subtract one value from another,Design and implement a decorator for Python that automatically subtracts a specified constant value from every number passed to it during function execution. Provide an example usage.,"def subtract_constant(constant):
+    def decorator(func):
+        def wrapper(*args):
+            new_args = []
+            for arg in args:
+                if isinstance(arg, (int, float)):
+                    new_args.append(arg - constant)
+                else:
+                    new_args.append(arg)
+            return func(*new_args)
+        return wrapper
+    return decorator
+@subtract_constant(5)
+def process_numbers(a, b):
+    return a + b
+if __name__ == '__main__':
+    result = process_numbers(10, 20)
+    print(result)",True,4,20248,320_7_4.py
+320,7,Subtract one value from another,Design and implement a decorator for Python that automatically subtracts a specified constant value from every number passed to it during function execution. Provide an example usage.,"def subtract_constant(constant):
+    def decorator(func):
+        def wrapper(*args):
+            result = 0
+            for arg in args:
+                result += arg - constant
+            return result
+        return wrapper
+    return decorator
+@subtract_constant(5)
+def add_numbers(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    print(add_numbers(10, 20, 30))",True,5,20249,320_7_5.py
+320,8,Subtract one value from another,Write a highly optimized one-line lambda expression to define a function that takes two arguments and returns their difference.,"if __name__ == '__main__':
+    diff = lambda a, b: a - b
+    print(diff(10, 3))",True,0,20250,320_8.py
+320,8,Subtract one value from another,Write a highly optimized one-line lambda expression to define a function that takes two arguments and returns their difference.,"if __name__ == '__main__':
+    diff = lambda a, b: a - b
+    print(diff(10, 4))",True,1,20251,320_8_1.py
+320,6,Subtract one value from another,Write a script that reads two integers from standard input and performs the subtraction in reverse order (b - a) and prints the outcome clearly labeled.,"import sys
+if __name__ == '__main__':
+    a = 10
+    b = 5
+    result = b - a
+    print(f""Result: {result}"")",True,0,20252,320_6.py
+320,6,Subtract one value from another,Write a script that reads two integers from standard input and performs the subtraction in reverse order (b - a) and prints the outcome clearly labeled.,"if __name__ == '__main__':
+    a = 10
+    b = 5
+    result = b - a
+    print(f""Result (b - a): {result}"")",True,1,20253,320_6_1.py
+320,10,Subtract one value from another,Implement an efficient Python function named 'subtract_values' that takes two numeric arguments and returns the result of subtracting the second value from the first. Ensure error handling for non-numeric input.,"def subtract_values(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except ValueError:
+        raise TypeError(""Both inputs must be numeric."")
+if __name__ == '__main__':
+    print(subtract_values(10.5, 3.2))
+    try:
+        subtract_values(""hello"", 5)
+    except TypeError as e:
+        print(e)
+    try:
+        subtract_values(10, ""five"")
+    except TypeError as e:
+        print(e)",True,0,20254,320_10.py
+320,10,Subtract one value from another,Implement an efficient Python function named 'subtract_values' that takes two numeric arguments and returns the result of subtracting the second value from the first. Ensure error handling for non-numeric input.,"def subtract_values(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except ValueError:
+        raise TypeError(""Both inputs must be numeric."")
+if __name__ == '__main__':
+    print(subtract_values(10.5, 3.2))
+    try:
+        subtract_values(""hello"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        subtract_values(10, ""a"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,1,20255,320_10_1.py
+320,10,Subtract one value from another,Implement an efficient Python function named 'subtract_values' that takes two numeric arguments and returns the result of subtracting the second value from the first. Ensure error handling for non-numeric input.,"def subtract_values(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except ValueError:
+        raise TypeError(""Both inputs must be numeric."")
+if __name__ == '__main__':
+    print(subtract_values(10.5, 3.2))
+    try:
+        subtract_values(""hello"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        subtract_values(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,2,20256,320_10_2.py
+320,10,Subtract one value from another,Implement an efficient Python function named 'subtract_values' that takes two numeric arguments and returns the result of subtracting the second value from the first. Ensure error handling for non-numeric input.,"def subtract_values(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except ValueError:
+        raise TypeError(""Both inputs must be numeric."")
+if __name__ == '__main__':
+    print(subtract_values(10.5, 3.2))
+    print(subtract_values(20, 5))
+    try:
+        subtract_values(10, ""five"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        subtract_values(""ten"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,3,20257,320_10_3.py
+320,10,Subtract one value from another,Implement an efficient Python function named 'subtract_values' that takes two numeric arguments and returns the result of subtracting the second value from the first. Ensure error handling for non-numeric input.,"def subtract_values(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except ValueError:
+        raise TypeError(""Both inputs must be numeric."")
+if __name__ == '__main__':
+    print(subtract_values(10.5, 3.2))
+    try:
+        subtract_values(""hello"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        subtract_values(5, ""world"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,4,20258,320_10_4.py
+320,10,Subtract one value from another,Implement an efficient Python function named 'subtract_values' that takes two numeric arguments and returns the result of subtracting the second value from the first. Ensure error handling for non-numeric input.,"def subtract_values(a, b):
+    try:
+        result = float(a) - float(b)
+        return result
+    except ValueError:
+        raise TypeError(""Both inputs must be numeric."")
+if __name__ == '__main__':
+    print(subtract_values(10.5, 3.2))
+    try:
+        subtract_values(""a"", 5)
+    except TypeError as e:
+        print(f""Error caught: {e}"")
+    try:
+        subtract_values(10, ""b"")
+    except TypeError as e:
+        print(f""Error caught: {e}"")",True,5,20259,320_10_5.py
+320,0,Subtract one value from another,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then calculates and prints the result of subtracting the second number from the first.","if __name__ == '__main__':
+    num1 = 25
+    num2 = 10
+    result = num1 - num2
+    print(result)",True,0,20260,320_0.py
+320,12,Subtract one value from another,"Develop a class named 'Calculator' with a method 'subtract(self, a, b)' that performs the subtraction $a - b$. Ensure the implementation is clean, readable, and follows object-oriented best practices.","class Calculator:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calc = Calculator()
+    result = calc.subtract(10, 4)
+    print(result)",True,0,20261,320_12.py
+320,12,Subtract one value from another,"Develop a class named 'Calculator' with a method 'subtract(self, a, b)' that performs the subtraction $a - b$. Ensure the implementation is clean, readable, and follows object-oriented best practices.","class Calculator:
+    def subtract(self, a, b):
+        return a - b
+if __name__ == '__main__':
+    calc = Calculator()
+    result = calc.subtract(10, 3)
+    print(result)",True,1,20262,320_12_1.py
+320,9,Subtract one value from another,"Develop a complete program that reads two numbers from the console, validates that they are integers, and then calculates and prints the result of subtracting the smaller number from the larger number.",,False,0,20263,320_9.py
+320,11,Subtract one value from another,"Write a complete, robust script that prompts the user to input two numbers, calculates their difference, and prints the result. Use appropriate type casting and handle potential ValueError exceptions gracefully.","if __name__ == '__main__':
+    num1 = 25
+    num2 = 10
+    try:
+        result = num1 - num2
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input provided."")",True,0,20264,320_11.py
+320,11,Subtract one value from another,"Write a complete, robust script that prompts the user to input two numbers, calculates their difference, and prints the result. Use appropriate type casting and handle potential ValueError exceptions gracefully.","if __name__ == '__main__':
+    num1 = 25
+    num2 = 10
+    try:
+        result = num1 - num2
+        print(result)
+    except ValueError:
+        print(""Error: Invalid input. Please enter valid numbers."")",True,1,20265,320_11_1.py
+321,0,Multiply two given amounts,"Write a complete, robust Python script that prompts the user to enter two numbers and then multiplies them, printing the result clearly.","if __name__ == '__main__':
+    num1 = 15
+    num2 = 7
+    result = num1 * num2
+    print(f""The product of {num1} and {num2} is {result}"")",True,0,20266,321_0.py
+321,0,Multiply two given amounts,"Write a complete, robust Python script that prompts the user to enter two numbers and then multiplies them, printing the result clearly.","if __name__ == '__main__':
+    num1 = 15
+    num2 = 7
+    result = num1 * num2
+    print(result)",True,1,20267,321_0_1.py
+321,1,Multiply two given amounts,Implement an optimized function named 'multiply_two_numbers' that accepts two arguments and returns their product. Ensure the function is highly efficient.,"def multiply_two_numbers(a, b):
+    return a * b
+if __name__ == '__main__':
+    num1 = 12345
+    num2 = 67890
+    result = multiply_two_numbers(num1, num2)
+    print(result)",True,0,20268,321_1.py
+320,13,Subtract one value from another,Create an optimized function using lambda notation to define a subtraction operation that takes two fixed values and returns their difference. Demonstrate its usage with an example calculation.,,False,0,20269,320_13.py
+321,2,Multiply two given amounts,Develop a class named 'Multiplier' with a method to multiply any two numbers provided during initialization or via a separate method.,"class Multiplier:
+    def __init__(self, a=None, b=None):
+        self.a = a
+        self.b = b
+    def multiply(self, x, y):
+        return x * y
+if __name__ == '__main__':
+    m = Multiplier(5, 10)
+    result1 = m.multiply(3, 4)
+    print(f""Result of multiplying 3 and 4: {result1}"")
+    m2 = Multiplier()
+    result2 = m2.multiply(7, 8)
+    print(f""Result of multiplying 7 and 8: {result2}"")",True,0,20270,321_2.py
+321,2,Multiply two given amounts,Develop a class named 'Multiplier' with a method to multiply any two numbers provided during initialization or via a separate method.,"class Multiplier:
+    def __init__(self, a=None, b=None):
+        self.a = a
+        self.b = b
+    def multiply(self, x, y):
+        return x * y
+if __name__ == '__main__':
+    m = Multiplier(5, 10)
+    result = m.multiply(3, 4)
+    print(result)",True,1,20271,321_2_1.py
+321,2,Multiply two given amounts,Develop a class named 'Multiplier' with a method to multiply any two numbers provided during initialization or via a separate method.,"class Multiplier:
+    def __init__(self, a=None, b=None):
+        self.a = a
+        self.b = b
+    def multiply(self, x, y):
+        return x * y
+if __name__ == '__main__':
+    m = Multiplier(5, 10)
+    result1 = m.multiply(3, 4)
+    print(f""Result 1: {result1}"")
+    m2 = Multiplier()
+    result2 = m2.multiply(7, 8)
+    print(f""Result 2: {result2}"")",True,2,20272,321_2_2.py
+321,2,Multiply two given amounts,Develop a class named 'Multiplier' with a method to multiply any two numbers provided during initialization or via a separate method.,"class Multiplier:
+    def __init__(self, a=0, b=0):
+        self.a = a
+        self.b = b
+    def multiply(self, x, y):
+        return x * y
+if __name__ == '__main__':
+    m = Multiplier(5, 10)
+    result1 = m.multiply(3, 4)
+    print(f""Result of multiplying 3 and 4: {result1}"")
+    m2 = Multiplier()
+    result2 = m2.multiply(7, 8)
+    print(f""Result of multiplying 7 and 8: {result2}"")",True,3,20273,321_2_3.py
+320,14,Subtract one value from another,"Write a standalone Python program that reads two integers from standard input, performs the subtraction $A - B$, and prints the result formatted clearly to the console.",,False,0,20274,320_14.py
+321,5,Multiply two given amounts,"Implement a function that takes two floating-point numbers and returns their precise product, handling potential floating-point inaccuracies appropriately (if necessary for simple multiplication).","import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = precise_product(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 3.0
+    result2 = precise_product(num3, num4)
+    print(result2)",True,0,20275,321_5.py
+321,5,Multiply two given amounts,"Implement a function that takes two floating-point numbers and returns their precise product, handling potential floating-point inaccuracies appropriately (if necessary for simple multiplication).","import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = precise_product(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 0.3
+    result2 = precise_product(num3, num4)
+    print(result2)",True,1,20276,321_5_1.py
+321,5,Multiply two given amounts,"Implement a function that takes two floating-point numbers and returns their precise product, handling potential floating-point inaccuracies appropriately (if necessary for simple multiplication).","import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = precise_product(num1, num2)
+    print(result)
+    num3 = 1.0 / 3.0
+    num4 = 0.3
+    result2 = precise_product(num3, num4)
+    print(result2)
+    num5 = 1.0
+    num6 = 7.0
+    result3 = precise_product(num5, num6)
+    print(result3)",True,2,20277,321_5_2.py
+321,5,Multiply two given amounts,"Implement a function that takes two floating-point numbers and returns their precise product, handling potential floating-point inaccuracies appropriately (if necessary for simple multiplication).","import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = precise_product(num1, num2)
+    print(result)",True,3,20278,321_5_3.py
+321,5,Multiply two given amounts,"Implement a function that takes two floating-point numbers and returns their precise product, handling potential floating-point inaccuracies appropriately (if necessary for simple multiplication).","import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = precise_product(num1, num2)
+    print(result)
+    num3 = 1.0
+    num4 = 5.0
+    result2 = precise_product(num3, num4)
+    print(result2)
+    num5 = -3.14159
+    num6 = 2.0
+    result3 = precise_product(num5, num6)
+    print(result3)",True,4,20279,321_5_4.py
+321,5,Multiply two given amounts,"Implement a function that takes two floating-point numbers and returns their precise product, handling potential floating-point inaccuracies appropriately (if necessary for simple multiplication).","import math
+def precise_product(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 0.1
+    num2 = 0.2
+    result = precise_product(num1, num2)
+    print(result)
+    num3 = 1.0
+    num4 = 3.0
+    result2 = precise_product(num3, num4)
+    print(result2)
+    num5 = -1.5
+    num6 = 2.0
+    result3 = precise_product(num5, num6)
+    print(result3)",True,5,20280,321_5_5.py
+321,6,Multiply two given amounts,Write a testable Python function using 'unittest' to verify the correctness of a function designed to multiply two integers.,"import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+        self.assertEqual(multiply(0, 0), 0)
+    def test_large_numbers(self):
+        self.assertEqual(multiply(100, 200), 20000)
+        self.assertEqual(multiply(-500, 1000), -500000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,0,20281,321_6.py
+321,6,Multiply two given amounts,Write a testable Python function using 'unittest' to verify the correctness of a function designed to multiply two integers.,"import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+    def test_mixed_signs(self):
+        self.assertEqual(multiply(5, -3), -15)
+        self.assertEqual(multiply(-5, -3), 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,1,20282,321_6_1.py
+321,6,Multiply two given amounts,Write a testable Python function using 'unittest' to verify the correctness of a function designed to multiply two integers.,"import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(-4, -2), 8)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+    def test_mixed_signs(self):
+        self.assertEqual(multiply(5, -3), -15)
+        self.assertEqual(multiply(-5, -3), 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,2,20283,321_6_2.py
+321,6,Multiply two given amounts,Write a testable Python function using 'unittest' to verify the correctness of a function designed to multiply two integers.,"import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+        self.assertEqual(multiply(0, 0), 0)
+    def test_mixed_signs(self):
+        self.assertEqual(multiply(5, -3), -15)
+        self.assertEqual(multiply(-5, -3), 15)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,3,20284,321_6_3.py
+321,6,Multiply two given amounts,Write a testable Python function using 'unittest' to verify the correctness of a function designed to multiply two integers.,"import unittest
+def multiply(a, b):
+    return a * b
+class TestMultiply(unittest.TestCase):
+    def test_positive_numbers(self):
+        self.assertEqual(multiply(5, 3), 15)
+        self.assertEqual(multiply(10, 2), 20)
+    def test_negative_numbers(self):
+        self.assertEqual(multiply(-5, 3), -15)
+        self.assertEqual(multiply(10, -2), -20)
+        self.assertEqual(multiply(-5, -3), 15)
+    def test_zero(self):
+        self.assertEqual(multiply(0, 5), 0)
+        self.assertEqual(multiply(-10, 0), 0)
+        self.assertEqual(multiply(0, 0), 0)
+    def test_large_numbers(self):
+        self.assertEqual(multiply(100, 200), 20000)
+        self.assertEqual(multiply(-1000, 500), -500000)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)",True,4,20285,321_6_4.py
+321,7,Multiply two given amounts,"Design and implement an optimized solution for multiplying two large integers, considering potential performance implications (e.g., using built-in operators or appropriate types).","import sys
+def multiply_large_integers(num1, num2):
+    return num1 * num2
+if __name__ == '__main__':
+    num1 = 12345678901234567890
+    num2 = 98765432109876543210
+    result = multiply_large_integers(num1, num2)
+    print(result)",True,0,20286,321_7.py
+321,7,Multiply two given amounts,"Design and implement an optimized solution for multiplying two large integers, considering potential performance implications (e.g., using built-in operators or appropriate types).","import sys
+def multiply_large_integers(num1: int, num2: int) -> int:
+    return num1 * num2
+if __name__ == '__main__':
+    num1 = 1234567890123456789
+    num2 = 9876543210987654321
+    result = multiply_large_integers(num1, num2)
+    print(result)",True,1,20287,321_7_1.py
+321,7,Multiply two given amounts,"Design and implement an optimized solution for multiplying two large integers, considering potential performance implications (e.g., using built-in operators or appropriate types).","import sys
+def multiply_large_integers(num1: int, num2: int) -> int:
+    return num1 * num2
+if __name__ == '__main__':
+    a = 1234567890123456789
+    b = 9876543210987654321
+    result = multiply_large_integers(a, b)
+    print(result)",True,2,20288,321_7_2.py
+321,3,Multiply two given amounts,"Write a concise and efficient Python expression that multiplies the variables a and b, assuming they are already defined.",,False,0,20289,321_3.py
+321,9,Multiply two given amounts,"Implement a decorator to wrap a function that multiplies its inputs by a constant factor, demonstrating functional programming principles.","def multiply_by_constant(factor):
+    def decorator(func):
+        def wrapper(*args):
+            result = 1
+            for arg in args:
+                result *= arg
+            return result * factor
+        return wrapper
+    return decorator
+@multiply_by_constant(2)
+def multiply_all(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    print(multiply_all(1, 2, 3))",True,0,20290,321_9.py
+321,9,Multiply two given amounts,"Implement a decorator to wrap a function that multiplies its inputs by a constant factor, demonstrating functional programming principles.","def multiply_by_constant(factor):
+    def decorator(func):
+        def wrapper(*args):
+            result = 1
+            for arg in args:
+                result *= arg
+            return result * factor
+        return wrapper
+    return decorator
+@multiply_by_constant(2)
+def multiply_all(a, b, c):
+    return a + b + c
+if __name__ == '__main__':
+    result = multiply_all(1, 2, 3)
+    print(result)",True,1,20291,321_9_1.py
+321,4,Multiply two given amounts,Create a command-line script using the 'argparse' module to accept two numerical arguments from the command line and calculate their product.,,False,0,20292,321_4.py
+321,11,Multiply two given amounts,Implement an optimized function named 'multiply_two_amounts' that accepts two floating-point numbers and returns their product. Ensure the function is highly efficient and adheres to best practices.,"def multiply_two_amounts(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    result1 = multiply_two_amounts(5.5, 2.0)
+    print(result1)
+    result2 = multiply_two_amounts(-3.14, 10.0)
+    print(result2)
+    result3 = multiply_two_amounts(1.0, 0.0)
+    print(result3)",True,0,20293,321_11.py
+321,11,Multiply two given amounts,Implement an optimized function named 'multiply_two_amounts' that accepts two floating-point numbers and returns their product. Ensure the function is highly efficient and adheres to best practices.,"def multiply_two_amounts(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    result1 = multiply_two_amounts(5.5, 2.0)
+    print(result1)
+    result2 = multiply_two_amounts(-3.14, 10.0)
+    print(result2)",True,1,20294,321_11_1.py
+321,11,Multiply two given amounts,Implement an optimized function named 'multiply_two_amounts' that accepts two floating-point numbers and returns their product. Ensure the function is highly efficient and adheres to best practices.,"import time
+def multiply_two_amounts(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    amount1 = 123.456789
+    amount2 = 987.654321
+    start_time = time.perf_counter()
+    result = multiply_two_amounts(amount1, amount2)
+    end_time = time.perf_counter()
+    print(f""Result: {result}"")
+    print(f""Execution time: {(end_time - start_time):.9f} seconds"")",True,2,20295,321_11_2.py
+321,11,Multiply two given amounts,Implement an optimized function named 'multiply_two_amounts' that accepts two floating-point numbers and returns their product. Ensure the function is highly efficient and adheres to best practices.,"def multiply_two_amounts(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    result1 = multiply_two_amounts(5.5, 2.0)
+    print(result1)
+    result2 = multiply_two_amounts(-3.14, 10.0)
+    print(result2)
+    result3 = multiply_two_amounts(0.0, 99.9)
+    print(result3)",True,3,20296,321_11_3.py
+321,11,Multiply two given amounts,Implement an optimized function named 'multiply_two_amounts' that accepts two floating-point numbers and returns their product. Ensure the function is highly efficient and adheres to best practices.,"def multiply_two_amounts(a: float, b: float) -> float:
+    return a * b
+if __name__ == '__main__':
+    num1 = 12.34
+    num2 = 5.67
+    result = multiply_two_amounts(num1, num2)
+    print(result)",True,4,20297,321_11_4.py
+321,12,Multiply two given amounts,Develop a class named 'Multiplier' with a method 'multiply' that takes two arguments and returns their product. The implementation must be clean and object-oriented.,"class Multiplier:
+    def multiply(self, a, b):
+        return a * b
+if __name__ == '__main__':
+    m = Multiplier()
+    result = m.multiply(5, 10)
+    print(result)",True,0,20298,321_12.py
+321,13,Multiply two given amounts,Write a concise Python function to multiply any two provided numbers. The function should handle integer and float inputs correctly and prioritize readability.,"def multiply(a, b):
+    return a * b
+if __name__ == '__main__':
+    num1 = 10
+    num2 = 5.5
+    result = multiply(num1, num2)
+    print(result)",True,0,20299,321_13.py
+321,13,Multiply two given amounts,Write a concise Python function to multiply any two provided numbers. The function should handle integer and float inputs correctly and prioritize readability.,"def multiply(a, b):
+    return a * b
+if __name__ == '__main__':
+    num1 = 5
+    num2 = 3.5
+    result = multiply(num1, num2)
+    print(result)",True,1,20300,321_13_1.py
+321,10,Multiply two given amounts,"Write a complete, robust Python script that prompts the user to enter two numbers and then multiplies them, printing the result clearly. Use appropriate input validation.","if __name__ == '__main__':
+    num1 = 15
+    num2 = 7
+    try:
+        result = num1 * num2
+        print(f""The product of {num1} and {num2} is: {result}"")
+    except TypeError:
+        print(""Error: One or both inputs were not valid numbers."")",True,0,20301,321_10.py
+322,0,Divide one quantity by another,"Write a complete, well-documented Python script that prompts the user to enter two numbers and then divides the first number by the second. Include robust error handling for division by zero.","def calculate_division(numerator, denominator):
+    if denominator == 0:
+        return ""Error: Cannot divide by zero.""
+    else:
+        return numerator / denominator
+if __name__ == '__main__':
+    num1 = 20
+    num2 = 4
+    result = calculate_division(num1, num2)
+    print(f""The result of dividing {num1} by {num2} is: {result}"")",True,0,20302,322_0.py
+322,1,Divide one quantity by another,Implement an optimized function named 'divide_two_numbers' that takes two floating-point numbers as input and returns their quotient. Ensure the function handles potential division by zero errors gracefully using exceptions.,"def divide_two_numbers(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    num1 = 10.0
+    num2 = 2.0
+    print(f""Result of {num1} / {num2}: {divide_two_numbers(num1, num2)}"")
+    num3 = 15.0
+    num4 = 3.0
+    print(f""Result of {num3} / {num4}: {divide_two_numbers(num3, num4)}"")
+    try:
+        num5 = 10.0
+        num6 = 0.0
+        result = divide_two_numbers(num5, num6)
+        print(f""Result of {num5} / {num6}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Caught exception: {e}"")",True,0,20303,322_1.py
+322,1,Divide one quantity by another,Implement an optimized function named 'divide_two_numbers' that takes two floating-point numbers as input and returns their quotient. Ensure the function handles potential division by zero errors gracefully using exceptions.,"def divide_two_numbers(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    num1 = 10.0
+    num2 = 2.0
+    try:
+        result = divide_two_numbers(num1, num2)
+        print(f""Result of {num1} / {num2}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")
+    num3 = 15.0
+    num4 = 0.0
+    try:
+        result = divide_two_numbers(num3, num4)
+        print(f""Result of {num3} / {num4}: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")",True,1,20304,322_1_1.py
+322,1,Divide one quantity by another,Implement an optimized function named 'divide_two_numbers' that takes two floating-point numbers as input and returns their quotient. Ensure the function handles potential division by zero errors gracefully using exceptions.,"def divide_two_numbers(a, b):
+    if b == 0:
+        raise ZeroDivisionError(""Cannot divide by zero"")
+    return a / b
+if __name__ == '__main__':
+    num1 = 10.0
+    num2 = 2.0
+    try:
+        result = divide_two_numbers(num1, num2)
+        print(f""The result of {num1} divided by {num2} is: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")
+    num3 = 15.0
+    num4 = 0.0
+    try:
+        result = divide_two_numbers(num3, num4)
+        print(f""The result of {num3} divided by {num4} is: {result}"")
+    except ZeroDivisionError as e:
+        print(f""Error: {e}"")",True,2,20305,322_1_2.py
+322,2,Divide one quantity by another,"Develop a class named 'QuantityDivider' with a method 'divide(numerator, denominator)' that performs the division. The implementation must include validation to ensure the denominator is not zero and raise a descriptive ValueError otherwise.","class QuantityDivider:
+    def divide(self, numerator, denominator):
+        if denominator == 0:
+            raise ValueError(""Cannot divide by zero"")
+        return numerator / denominator
+if __name__ == '__main__':
+    divider = QuantityDivider()
+    try:
+        result1 = divider.divide(10, 2)
+        print(f""10 / 2 = {result1}"")
+        result2 = divider.divide(15, 3)
+        print(f""15 / 3 = {result2}"")
+        result3 = divider.divide(7, 2)
+        print(f""7 / 2 = {result3}"")
+        result4 = divider.divide(10, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,0,20306,322_2.py
+322,2,Divide one quantity by another,"Develop a class named 'QuantityDivider' with a method 'divide(numerator, denominator)' that performs the division. The implementation must include validation to ensure the denominator is not zero and raise a descriptive ValueError otherwise.","class QuantityDivider:
+    def divide(self, numerator, denominator):
+        if denominator == 0:
+            raise ValueError(""Cannot divide by zero"")
+        return numerator / denominator
+if __name__ == '__main__':
+    divider = QuantityDivider()
+    try:
+        result1 = divider.divide(10, 2)
+        print(f""10 divided by 2 is: {result1}"")
+        result2 = divider.divide(15, 3)
+        print(f""15 divided by 3 is: {result2}"")
+        result3 = divider.divide(7, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,1,20307,322_2_1.py
+322,2,Divide one quantity by another,"Develop a class named 'QuantityDivider' with a method 'divide(numerator, denominator)' that performs the division. The implementation must include validation to ensure the denominator is not zero and raise a descriptive ValueError otherwise.","class QuantityDivider:
+    def divide(self, numerator, denominator):
+        if denominator == 0:
+            raise ValueError(""Cannot divide by zero"")
+        return numerator / denominator
+if __name__ == '__main__':
+    divider = QuantityDivider()
+    try:
+        result1 = divider.divide(10, 2)
+        print(f""10 / 2 = {result1}"")
+        result2 = divider.divide(15, 3)
+        print(f""15 / 3 = {result2}"")
+        result3 = divider.divide(7, 0)
+    except ValueError as e:
+        print(f""Error caught: {e}"")",True,2,20308,322_2_2.py
+322,3,Divide one quantity by another,"Write a concise Python expression that demonstrates the division of 100 by 5, and then write a short script that uses this result and prints the outcome clearly.",,False,0,20309,322_3.py
+322,4,Divide one quantity by another,"Create a generator function that yields the result of dividing every number in an input list by a fixed divisor, handling zero divisors by skipping those elements.","def divide_list(data, divisor):
+    for number in data:
+        if divisor != 0:
+            yield number / divisor
+if __name__ == '__main__':
+    input_list = [10, 20, 30, 40, 50]
+    divisor = 5
+    result_generator = divide_list(input_list, divisor)
+    results = list(result_generator)
+    print(results)
+    input_list_zero_divisor = [10, 20, 0, 40, 50]
+    divisor_zero = 0
+    result_generator_zero = divide_list(input_list_zero_divisor, divisor_zero)
+    results_zero = list(result_generator_zero)
+    print(results_zero)",True,0,20310,322_4.py
+322,4,Divide one quantity by another,"Create a generator function that yields the result of dividing every number in an input list by a fixed divisor, handling zero divisors by skipping those elements.","def divide_list(data, divisor):
+    for item in data:
+        if divisor != 0:
+            yield item / divisor
+if __name__ == '__main__':
+    input_list = [10, 20, 30, 40, 50]
+    divisor = 5
+    result_generator = divide_list(input_list, divisor)
+    results = list(result_generator)
+    print(results)",True,1,20311,322_4_1.py
+322,4,Divide one quantity by another,"Create a generator function that yields the result of dividing every number in an input list by a fixed divisor, handling zero divisors by skipping those elements.","def divide_list(data, divisor):
+    for number in data:
+        if divisor != 0:
+            yield number / divisor
+if __name__ == '__main__':
+    input_list = [10, 20, 30, 40, 50]
+    divisor = 5
+    result_generator = divide_list(input_list, divisor)
+    results = list(result_generator)
+    print(results)
+    input_list_with_zero = [10, 20, 0, 40, 50]
+    divisor_two = 0
+    result_generator_two = divide_list(input_list_with_zero, divisor_two)
+    results_two = list(result_generator_two)
+    print(results_two)
+    input_list_positive_divisor = [10, 20, 30]
+    divisor_three = 3
+    result_generator_three = divide_list(input_list_positive_divisor, divisor_three)
+    results_three = list(result_generator_three)
+    print(results_three)",True,2,20312,322_4_2.py
+322,4,Divide one quantity by another,"Create a generator function that yields the result of dividing every number in an input list by a fixed divisor, handling zero divisors by skipping those elements.","def divide_list(data, divisor):
+    for number in data:
+        if divisor != 0:
+            yield number / divisor
+if __name__ == '__main__':
+    input_list = [10, 20, 30, 40, 50]
+    divisor = 5
+    result_generator = divide_list(input_list, divisor)
+    output_list = list(result_generator)
+    print(output_list)
+    input_list_with_zero = [10, 20, 0, 40, 50]
+    divisor_zero = 0
+    result_generator_zero = divide_list(input_list_with_zero, divisor_zero)
+    output_list_zero = list(result_generator_zero)
+    print(output_list_zero)",True,3,20313,322_4_3.py
+322,4,Divide one quantity by another,"Create a generator function that yields the result of dividing every number in an input list by a fixed divisor, handling zero divisors by skipping those elements.","def divide_list(numbers, divisor):
+    for number in numbers:
+        if divisor != 0:
+            yield number / divisor
+if __name__ == '__main__':
+    input_list = [10, 20, 30, 5, 0, -15]
+    fixed_divisor = 5
+    result_generator = divide_list(input_list, fixed_divisor)
+    results = list(result_generator)
+    print(results)",True,4,20314,322_4_4.py
+322,5,Divide one quantity by another,Implement a decorator named 'safe_divide' that wraps a division operation. This decorator must catch `ZeroDivisionError` and return a specific string message instead of raising an error.,"def safe_divide(func):
+    def wrapper(*args):
+        try:
+            return func(*args)
+        except ZeroDivisionError:
+            return ""Error: Cannot divide by zero""
+    return wrapper
+@safe_divide
+def divide(a, b):
+    return a / b
+if __name__ == '__main__':
+    print(divide(10, 2))
+    print(divide(10, 0))",True,0,20315,322_5.py
+322,5,Divide one quantity by another,Implement a decorator named 'safe_divide' that wraps a division operation. This decorator must catch `ZeroDivisionError` and return a specific string message instead of raising an error.,"def safe_divide(func):
+    def wrapper(*args):
+        try:
+            result = func(*args)
+            return result
+        except ZeroDivisionError:
+            return ""Error: Cannot divide by zero""
+    return wrapper
+@safe_divide
+def divide(a, b):
+    return a / b
+if __name__ == '__main__':
+    print(divide(10, 2))
+    print(divide(10, 0))",True,1,20316,322_5_1.py
+322,5,Divide one quantity by another,Implement a decorator named 'safe_divide' that wraps a division operation. This decorator must catch `ZeroDivisionError` and return a specific string message instead of raising an error.,"def safe_divide(func):
+    def wrapper(*args):
+        try:
+            result = func(*args)
+            return result
+        except ZeroDivisionError:
+            return ""Error: Cannot divide by zero""
+    return wrapper
+@safe_divide
+def perform_division(a, b):
+    return a / b
+if __name__ == '__main__':
+    print(perform_division(10, 2))
+    print(perform_division(10, 0))",True,2,20317,322_5_2.py
+322,5,Divide one quantity by another,Implement a decorator named 'safe_divide' that wraps a division operation. This decorator must catch `ZeroDivisionError` and return a specific string message instead of raising an error.,"def safe_divide(func):
+    def wrapper(*args):
+        try:
+            result = func(*args)
+            return result
+        except ZeroDivisionError:
+            return ""Error: Cannot divide by zero""
+    return wrapper
+@safe_divide
+def simple_divide(a, b):
+    return a / b
+if __name__ == '__main__':
+    print(simple_divide(10, 2))
+    print(simple_divide(10, 0))",True,3,20318,322_5_3.py
+322,6,Divide one quantity by another,"Write a function that accepts two arguments, 'a' and 'b', and returns the result of $a / b$. The function must use type hinting for all inputs and the return value, assuming both are numeric types.","def divide(a: float, b: float) -> float:
+    return a / b
+if __name__ == '__main__':
+    result1 = divide(10.0, 2.0)
+    print(result1)
+    result2 = divide(7.5, 3.0)
+    print(result2)",True,0,20319,322_6.py
+322,6,Divide one quantity by another,"Write a function that accepts two arguments, 'a' and 'b', and returns the result of $a / b$. The function must use type hinting for all inputs and the return value, assuming both are numeric types.","def divide(a: float, b: float) -> float:
+    return a / b
+if __name__ == '__main__':
+    result1 = divide(10.0, 2.0)
+    print(result1)
+    result2 = divide(5.0, 3.0)
+    print(result2)",True,1,20320,322_6_1.py
