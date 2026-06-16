@@ -1,0 +1,7 @@
+import datetime
+def timestamp_to_date_string(timestamp: int) -> str:
+    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y/%m/%d')
+if __name__ == '__main__':
+    sample_timestamp = 1678886400
+    formatted_date = timestamp_to_date_string(sample_timestamp)
+    print(formatted_date)
