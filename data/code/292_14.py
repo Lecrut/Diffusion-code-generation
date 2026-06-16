@@ -1,0 +1,23 @@
+def calculate_quadrilateral_perimeter(side_lengths):
+    if len(side_lengths) != 4:
+        return "Error: Input must contain exactly four side lengths."
+    if not all(isinstance(side, (int, float)) and side > 0 for side in side_lengths):
+        return "Error: All side lengths must be positive numbers."
+    perimeter = sum(side_lengths)
+    return perimeter
+if __name__ == '__main__':
+    sample1 = [5, 5, 8, 10]
+    result1 = calculate_quadrilateral_perimeter(sample1)
+    print(f"Perimeter of {sample1}: {result1}")
+    sample2 = [3, 4, 5, 6]
+    result2 = calculate_quadrilateral_perimeter(sample2)
+    print(f"Perimeter of {sample2}: {result2}")
+    sample3 = [1, 2, 3]
+    result3 = calculate_quadrilateral_perimeter(sample3)
+    print(f"Perimeter of {sample3}: {result3}")
+    sample4 = [10, -5, 8, 2]
+    result4 = calculate_quadrilateral_perimeter(sample4)
+    print(f"Perimeter of {sample4}: {result4}")
+    sample5 = [7.5, 10.5, 12.0, 9.5]
+    result5 = calculate_quadrilateral_perimeter(sample5)
+    print(f"Perimeter of {sample5}: {result5}")
