@@ -27246,3 +27246,3227 @@ if __name__ == '__main__':
         print(""Sorted strings:"", result)
     except Exception as ex:
         print(f""Error occurred: {ex}"")",True,9,1071,10_7_9.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"import random
+def get_sort_key(record):
+    age = record['age']
+    status = record['status'].lower()
+    if age >= 60 and status == 'senior':
+        return (1, -age)
+    elif age < 30 or status in ['student', 'junior']:
+        return (2, age)
+    else:
+        return (0, -age)
+def sort_records(records):
+    sorted_data = sorted(records, key=get_sort_key)
+    for item in sorted_data:
+        print(f""{item['name']}: {item['email']}"")
+if __name__ == '__main__':
+    sample_data = [
+        {'name': 'Alice', 'age': 25, 'status': 'student', 'email': 'alice@example.com'},
+        {'name': 'Bob', 'age': 35, 'status': 'active', 'email': 'bob@example.com'},
+        {'name': 'Charlie', 'age': 65, 'status': 'senior', 'email': 'charlie@example.com'},
+        {'name': 'Diana', 'age': 28, 'status': 'junior', 'email': 'diana@example.com'}
+    ]
+    sort_records(sample_data)",True,0,1072,10_8.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"import random
+def get_sort_key(record):
+    age = record['age']
+    status = record['status']
+    if status == 'active':
+        return (0, -age)
+    elif status == 'inactive':
+        return (1, 0)
+    else:
+        return (2, 0)
+def sort_users(users):
+    sorted_users = sorted(users, key=get_sort_key)
+    return sorted_users
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'age': 30, 'status': 'active'},
+        {'id': 2, 'age': 45, 'status': 'inactive'},
+        {'id': 3, 'age': 25, 'status': 'active'},
+        {'id': 4, 'age': 60, 'status': 'pending'},
+        {'id': 5, 'age': 35, 'status': 'active'}
+    ]
+    sorted_result = sort_users(sample_data)
+    for user in sorted_result:
+        print(f""ID: {user['id']}, Age: {user['age']}, Status: {user['status']}"")",True,1,1073,10_8_1.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"users = [
+    {""id"": 1, ""age"": 25, ""status"": ""active""},
+    {""id"": 2, ""age"": 30, ""status"": ""inactive""},
+    {""id"": 3, ""age"": 45, ""status"": ""active""},
+    {""id"": 4, ""age"": 18, ""status"": ""pending""},
+]
+def get_sort_key(user):
+    if user[""age""] >= 20 and user[""status""] == ""active"":
+        return (0, -user[""age""])
+    elif user[""age""] < 20:
+        return (1, -user[""id""])
+    else:
+        return (2, user[""id""])
+sorted_users = sorted(users, key=get_sort_key)
+if __name__ == '__main__':
+    for user in sorted_users:
+        print(f""ID: {user['id']}, Age: {user['age']}, Status: {user['status']}"")",True,2,1074,10_8_2.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"import json
+def get_sort_key(record):
+    age = record.get('age', 0)
+    status = record.get('status', '')
+    if age >= 65 and 'senior' in status.lower():
+        return (1, -age)
+    elif age < 30:
+        return (-age, -len(status))
+    else:
+        return (2, age)
+def sort_users(users):
+    sorted_users = sorted(users, key=get_sort_key)
+    return sorted_users
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 101, 'age': 75, 'status': 'senior'},
+        {'id': 102, 'age': 25, 'status': 'active'},
+        {'id': 103, 'age': 45, 'status': 'retired'},
+        {'id': 104, 'age': 80, 'status': 'senior_vip'},
+    ]
+    result = sort_users(sample_data)
+    print(json.dumps(result))",True,3,1075,10_8_3.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"from typing import List, Dict
+def get_sort_key(record: Dict) -> tuple:
+    if record['status'] == 'active':
+        return (0, -record['age'])                                         
+    else:
+        return (1, record['age'])                                          
+def sort_users(users: List[Dict]) -> List[Dict]:
+    return sorted(users, key=get_sort_key)
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'name': 'Alice', 'age': 25, 'status': 'active'},
+        {'id': 2, 'name': 'Bob', 'age': 30, 'status': 'inactive'},
+        {'id': 3, 'name': 'Charlie', 'age': 20, 'status': 'active'},
+        {'id': 4, 'name': 'Diana', 'age': 35, 'status': 'inactive'},
+    ]
+    sorted_users = sort_users(sample_data)
+    for user in sorted_users:
+        print(f""{user['name']} ({user['age']}) - {user['status']}"")",True,4,1076,10_8_4.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"from typing import List, Dict
+def get_sort_key(record: Dict) -> tuple:
+    age = record.get('age', 0)
+    status = record.get('status', '')
+    if age >= 18 and 'active' in str(status).lower():
+        priority = -1.0
+    elif age < 65:
+        priority = float('-inf')
+    else:
+        priority = float('inf')
+    return (priority, record.get('name', ''))
+def sort_users(users: List[Dict]) -> List[Dict]:
+    sorted_users = sorted(users, key=get_sort_key)
+    return sorted_users
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'age': 25, 'status': 'active', 'name': 'Alice'},
+        {'id': 2, 'age': 70, 'status': 'inactive', 'name': 'Bob'},
+        {'id': 3, 'age': 45, 'status': 'pending', 'name': 'Charlie'},
+        {'id': 4, 'age': 19, 'status': 'active', 'name': 'Diana'},
+    ]
+    sorted_result = sort_users(sample_data)
+    print(""Sorted User Records:"")
+    for user in sorted_result:
+        print(f""ID: {user['id']}, Name: {user['name']}"")",True,5,1077,10_8_5.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"from typing import List, Tuple
+def get_sort_key(record: dict) -> int:
+    if record['status'] == 'active':
+        return -record['age']                                     
+    else:
+        return record['age']                                       
+def sort_users(users: List[dict]) -> List[dict]:
+    return sorted(users, key=get_sort_key)
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'age': 25, 'status': 'active'},
+        {'id': 2, 'age': 30, 'status': 'inactive'},
+        {'id': 3, 'age': 20, 'status': 'active'},
+        {'id': 4, 'age': 35, 'status': 'inactive'},
+    ]
+    sorted_data = sort_users(sample_data)
+    for user in sorted_data:
+        print(f""ID: {user['id']}, Age: {user['age']}, Status: {user['status']}"")",True,6,1078,10_8_6.py
+10,8,Sort based on a condition,Produce optimized Python code for sorting user data records where the sort key is derived from a conditional check on age and status fields.,"import json
+def get_sort_key(record):
+    age = record.get('age', 0)
+    status = record.get('status', '')
+    if status == 'active':
+        return (1, -age)
+    elif status == 'inactive':
+        return (2, age)
+    else:
+        return (3, 0)
+def sort_users(users):
+    sorted_users = sorted(users, key=get_sort_key)
+    return sorted_users
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'name': 'Alice', 'age': 25, 'status': 'active'},
+        {'id': 2, 'name': 'Bob', 'age': 30, 'status': 'inactive'},
+        {'id': 3, 'name': 'Charlie', 'age': 18, 'status': 'active'},
+        {'id': 4, 'name': 'Diana', 'age': 25, 'status': 'unknown'},
+    ]
+    sorted_result = sort_users(sample_data)
+    print(json.dumps(sorted_result))",True,7,1079,10_8_7.py
+10,6,Sort based on a condition,Implement an efficient sorting mechanism for a mixed data type list using conditional expressions to handle specific value types correctly.,"def sort_mixed_list(data):
+    return sorted(
+        [x if isinstance(x, (int, float)) else 0 for x in data], 
+        key=lambda x: x if isinstance(x, (int, float)) else 1e9
+    )
+if __name__ == '__main__':
+    sample_data = [3.5, ""apple"", 7, None, ""banana"", -2, [], True]
+    sorted_result = sort_mixed_list(sample_data)
+    print(sorted_result)",True,0,1080,10_6.py
+10,6,Sort based on a condition,Implement an efficient sorting mechanism for a mixed data type list using conditional expressions to handle specific value types correctly.,"def sort_mixed_list(data):
+    return sorted(
+        [x if isinstance(x, (int, float)) else x for x in data], 
+        key=lambda item: (isinstance(item, str), item)
+    )
+if __name__ == '__main__':
+    sample_data = [""banana"", 3.14, ""apple"", 20, ""cherry"", -5]
+    sorted_result = sort_mixed_list(sample_data)
+    print(sorted_result)",True,1,1081,10_6_1.py
+10,6,Sort based on a condition,Implement an efficient sorting mechanism for a mixed data type list using conditional expressions to handle specific value types correctly.,"def sort_mixed_list(data):
+    return sorted(
+        [x if isinstance(x, (int, float)) else x for x in data], 
+        key=lambda item: (isinstance(item, str), item)
+    )
+if __name__ == '__main__':
+    sample_data = [""banana"", 3.14, ""apple"", 2, ""cherry"", -5]
+    sorted_result = sort_mixed_list(sample_data)
+    print(sorted_result)",True,2,1082,10_6_2.py
+10,6,Sort based on a condition,Implement an efficient sorting mechanism for a mixed data type list using conditional expressions to handle specific value types correctly.,"def sort_mixed_list(data):
+    return sorted(
+        [x if isinstance(x, (int, float)) else x for x in data], 
+        key=lambda item: (isinstance(item, str), item)
+    )
+if __name__ == '__main__':
+    sample_data = [""banana"", 3.14, ""apple"", 256, ""cherry"", -90]
+    sorted_result = sort_mixed_list(sample_data)
+    print(sorted_result)",True,3,1083,10_6_3.py
+10,6,Sort based on a condition,Implement an efficient sorting mechanism for a mixed data type list using conditional expressions to handle specific value types correctly.,"def sort_mixed_list(data):
+    def get_sort_key(item):
+        if isinstance(item, (int, float)):
+            return item
+        elif isinstance(item, str):
+            return ('0', item.lower())                                                    
+        else:
+            return (1, str(item))
+    sorted_data = sorted(data, key=get_sort_key)
+    if __name__ == '__main__':
+        sample_list = [3.5, ""apple"", 42, -10, ""banana"", 3.14, ""cherry""]
+        print(""Original list:"", sample_list)
+        sorted_result = sort_mixed_list(sample_list)
+        print(""Sorted result:"", sorted_result)",True,4,1084,10_6_4.py
+10,6,Sort based on a condition,Implement an efficient sorting mechanism for a mixed data type list using conditional expressions to handle specific value types correctly.,"def sort_mixed_list(data):
+    def key_extractor(item):
+        if isinstance(item, (int, float)):
+            return item
+        elif isinstance(item, str):
+            return len(item) * 0.1 + ord(item[0]) / 256.0 if item else 0.0
+        else:
+            return hash(str(item))
+    sorted_data = sorted(data, key=key_extractor)
+    return sorted_data
+if __name__ == '__main__':
+    sample_list = [42, ""banana"", 3.14, None, ""apple"", -5, True]
+    result = sort_mixed_list(sample_list)
+    print(result)",True,5,1085,10_6_5.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def sort_mixed_list(data):
+    try:
+        return sorted(
+            data, 
+            key=lambda x: float(x) if isinstance(x, str) else int(x),
+            reverse=True
+        )
+    except ValueError as e:
+        raise TypeError(f""Cannot convert '{data}' to numeric value."") from e
+if __name__ == '__main__':
+    sample_data = [""10"", ""2.5"", ""3"", ""invalid"", ""4""]
+    try:
+        result = sort_mixed_list(sample_data)
+        print(result)
+    except TypeError as te:
+        print(f""Error occurred: {te}"")",True,0,1086,10_10.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def sort_mixed_list(data):
+    if not data:
+        return []
+    try:
+        numeric_data = [float(x) for x in data]
+    except ValueError as e:
+        raise TypeError(f""List contains non-numeric elements that cannot be converted to float. Error details: {e}"")
+    sorted_indices = list(range(len(numeric_data)))
+    original_values = []
+    try:
+        numeric_only_list = [float(x) for x in data if isinstance(float(str(x)), (int, float))]
+        full_conversion_error = None
+        def validate_and_convert(item):
+            try:
+                return float(str(item))
+            except ValueError as e:
+                raise TypeError(f""Cannot convert element '{item}' to a number. Error details: {e}"")
+        numeric_values = []
+        for item in data:
+            if not isinstance(item, (int, float)):
+                try:
+                    val = validate_and_convert(item)
+                    numeric_values.append(val)
+                except TypeError as e:
+                    raise ValueError(f""Invalid element '{item}' found at an expected position. Cannot sort mixed types without handling all elements."") from e
+        sorted_indices.sort(key=lambda i: float(data[i]))
+    except Exception as e:
+        raise RuntimeError(""Failed to process numeric values for sorting"") from e
+    return [data[sorted_index] for sorted_index in sorted_indices]
+if __name__ == '__main__':
+    sample_data = [""10"", ""2.5"", ""three"", 4, ""-7""]
+    try:
+        result = sort_mixed_list(sample_data)
+        print(""Sorted list:"", result)
+    except (TypeError, ValueError, RuntimeError) as e:
+        print(f""Error during sorting: {e}"")",True,1,1087,10_10_1.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def sort_mixed_list(data):
+    try:
+        return sorted(
+            data, 
+            key=lambda x: float(x) if isinstance(x, str) else int(x),
+            reverse=True
+        )
+    except (ValueError, TypeError):
+        raise ValueError(""List contains non-numeric elements that cannot be converted."")
+if __name__ == '__main__':
+    sample_data = [""10"", ""2.5"", ""30"", ""4"", ""invalid""]
+    try:
+        result = sort_mixed_list(sample_data)
+        print(result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,1088,10_10_2.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def extract_numeric_value(item):
+    try:
+        return float(str(item))
+    except ValueError as e:
+        raise TypeError(f""Cannot convert '{item}' to a numeric value."") from e
+if __name__ == '__main__':
+    mixed_list = [""10"", ""apple"", 3.5, None, ""-2"", ""banana""]
+    try:
+        sorted_data = sorted(mixed_list, key=extract_numeric_value)
+        print(sorted_data)
+    except TypeError as e:
+        print(f""Error encountered during sorting: {e}"")",True,3,1089,10_10_3.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def extract_numeric_value(item):
+    if not isinstance(item, str) and not item:
+        raise TypeError(f""Expected string or empty value for {item}"")
+    try:
+        return float(item.replace(',', ''))
+    except ValueError as e:
+        raise ValueError(f""Cannot convert '{item}' to a numeric value"") from e
+def sort_mixed_list(data):
+    if not data:
+        return []
+    filtered_data = [x for x in data if isinstance(x, str) or (isinstance(x, float))]
+    try:
+        sorted_data = list(sorted(filtered_data, key=extract_numeric_value))
+    except ValueError as e:
+        raise RuntimeError(f""Sorting failed due to invalid numeric conversion: {e}"") from e
+    return [float(item) for item in sorted_data]
+if __name__ == '__main__':
+    sample_list = [""10"", ""3.5"", ""apple"", ""20"", """", ""-5"", ""banana"", 42, ""not a number""]
+    try:
+        result = sort_mixed_list(sample_list)
+        print(result)
+    except (ValueError, RuntimeError) as e:
+        if isinstance(e, ValueError):
+            print(f""Data Error: {e}"")
+        else:
+            print(f""Processing Error: {e}"")",True,4,1090,10_10_4.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def extract_numeric_value(item):
+    try:
+        return float(str(item).strip())
+    except ValueError as e:
+        raise TypeError(f""Cannot convert non-numeric element '{item}' to a number."") from e
+if __name__ == '__main__':
+    mixed_data = [""10"", ""apple"", 3.5, ""-2"", None, ""42""]
+    try:
+        sorted_items = sorted(mixed_data, key=extract_numeric_value)
+        print(sorted_items)
+    except TypeError as e:
+        print(f""Error processing data: {e}"")",True,5,1091,10_10_5.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def sort_mixed_list(data):
+    try:
+        return sorted(
+            data, 
+            key=lambda x: float(x) if isinstance(x, str) else int(x),
+            reverse=True
+        )
+    except ValueError as e:
+        raise TypeError(f""Cannot convert '{e}' to a numeric value."")
+if __name__ == '__main__':
+    sample_data = [""10"", ""2.5"", ""3"", ""invalid"", ""4""]
+    try:
+        result = sort_mixed_list(sample_data)
+        print(result)
+    except TypeError as te:
+        print(f""Error: {te}"")",True,6,1092,10_10_6.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def extract_number(s):
+    try:
+        return float(s)
+    except ValueError as e:
+        raise TypeError(f""Cannot convert '{s}' to a number"") from e
+if __name__ == '__main__':
+    mixed_data = [""42"", ""apple"", ""-3.5"", ""banana10"", """", ""7""]
+    try:
+        sorted_items = list(filter(lambda x: extract_number(x) is not None, mixed_data))
+        numeric_values = [extract_number(item) for item in sorted_items]
+        final_sorted_list = []
+        for i, val in enumerate(numeric_values):
+            original_item = sorted_items[i]
+            try:
+                float(original_item)
+                final_sorted_list.append((val, original_item))
+            except ValueError:
+                raise TypeError(f""Non-numeric element found that could not be processed: '{original_item}'"")
+        final_sorted_list.sort(key=lambda x: -x[0])
+        print(""Sorted list:"", [(num, str(item)) for num, item in final_sorted_list])
+    except TypeError as te:
+        print(f""Error occurred during processing: {te}"")",True,7,1093,10_10_7.py
+10,10,Sort based on a condition,Implement an efficient and robust Python script using list comprehension or filter to sort a mixed data type list based on numeric values extracted from strings. Ensure the code handles edge cases like non-numeric elements gracefully by raising appropriate errors.,"def extract_numeric_value(item):
+    try:
+        return float(str(item))
+    except ValueError:
+        raise TypeError(f""Cannot convert non-numeric element '{item}' to a number for sorting."")
+if __name__ == '__main__':
+    mixed_data = [""10"", ""banana"", 3.5, None, ""-2"", ""apple""]
+    try:
+        sorted_items = sorted(mixed_data, key=extract_numeric_value)
+        print(""Sorted list:"", [str(x) for x in sorted_items])
+    except TypeError as e:
+        print(f""Error encountered during sorting: {e}"")",True,8,1094,10_10_8.py
+10,9,Sort based on a condition,Write advanced Python scripting to sort complex nested structures based on deep conditional evaluations of leaf node values.,"import json
+def deep_sort_structure(data):
+    if isinstance(data, dict):
+        return {k: deep_sort_structure(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        sorted_items = []
+        for item in data:
+            result = deep_sort_structure(item)
+            if is_leaf(result):
+                val = extract_value(result)
+                if val > 0 and not has_negative_sibling(data, index_of_item_in_list(data), result):
+                    sorted_items.append((val, result))
+        return dict(sorted_items)
+    else:
+        return data
+def is_leaf(node):
+    return isinstance(node, (int, float, str)) or node == None
+def extract_value(node):
+    if isinstance(node, int | float):
+        return node
+    elif isinstance(node, str):
+        try:
+            return float(node)
+        except ValueError:
+            return 0.0
+    else:
+        return 0.0
+def has_negative_sibling(data, current_index, target_node_value=None):
+    if not isinstance(data, list):
+        return False
+    leaves = []
+    def find_leaves(node_list):
+        for i, item in enumerate(node_list):
+            val = extract_value(item)
+            leaves.append((val, i))
+            if isinstance(item, list):
+                find_leaves(item)
+            elif isinstance(item, dict):
+                for k, v in item.items():
+                    leaf_val = extract_value(v)
+                    leaves.append((leaf_val, i))
+    find_leaves(data)
+    if target_node_value is not None:
+        return any(val < 0 and abs(val - (target_node_value * 2)) > 1 for val, _ in leaves)
+    else:
+        return False
+def main():
+    sample_data = [
+        {""name"": ""Alpha"", ""score"": 85},
+        [{""grade"": ""A""}, {""grade"": ""B""}],
+        [[{""value"": -10}], {""value"": 20, ""nested"": [{""val"": -5}]}]
+    ]
+    sorted_result = deep_sort_structure(sample_data)
+    print(json.dumps(sorted_result))
+if __name__ == '__main__':
+    main()",True,0,1095,10_9.py
+10,4,Sort based on a condition,Generate complete and clean Python code to sort a list of tuples where each tuple is sorted by its first element if it exists or second otherwise using conditional checks.,"def sort_tuples(tuples):
+    sorted_list = []
+    for item in tuples:
+        if len(item) > 0 and isinstance(item[0], (int, float)):
+            key = item[0]
+        elif len(item) >= 2 and isinstance(item[1], (int, float)):
+            key = item[1]
+        else:
+            continue
+        index = None
+        for i in range(len(sorted_list)):
+            if sorted_list[i][key] > key or (sorted_list[i].get(key) is not None):
+                break
+        try:
+            idx = [i for i, x in enumerate(sorted_list) if x[key] == key][-1] + 1
+            new_item = item.copy()
+            sorted_list.insert(idx, new_item)
+        except Exception as e:
+            continue
+    return sorted_list
+if __name__ == '__main__':
+    data = [(3, 'a'), (2, 'b'), ('x',), (4,), ((5,),)]
+    result = sort_tuples(data)
+    print(result)",True,0,1096,10_4.py
+10,4,Sort based on a condition,Generate complete and clean Python code to sort a list of tuples where each tuple is sorted by its first element if it exists or second otherwise using conditional checks.,"def sort_tuples(data):
+    sorted_data = []
+    for item in data:
+        if len(item) > 1 and isinstance(item[0], (int, float)):
+            first_element = item[0]
+            second_element = item[1]
+        else:
+            try:
+                first_element = int(item[0])
+                second_element = None
+            except ValueError:
+                if len(item) > 1 and isinstance(item[1], (int, float)):
+                    first_element = None
+                    second_element = item[1]
+                else:
+                    continue
+        key = first_element if first_element is not None else second_element
+    return sorted_data
+def main_sort(data):
+    result = []
+    for item in data:
+        try:
+            val_0 = int(item[0])
+            val_1 = int(item[1]) if len(item) > 1 and isinstance(item[1], (int, float)) else None
+            key_val = val_0
+            sort_order = 'primary'
+            result.append((val_0, item))
+        except:
+            try:
+                val_2 = int(item[1]) if len(item) > 1 and isinstance(item[1], (int, float)) else None
+                key_val = val_2
+                sort_order = 'secondary'
+                result.append((val_2, item))
+            except ValueError:
+                continue
+    return sorted(result, key=lambda x: x[0])
+if __name__ == '__main__':
+    sample_data = [(3, ""apple""), (1, ""banana""), (""orange"", 5), (4, ""cherry"")]
+    try:
+        if len(sample_data) > 0 and isinstance(sample_data[0][0], int):
+            sorted_result = main_sort([(int(x[0]), x) for x in sample_data])
+        else:
+            temp_list = []
+            for item in sample_data:
+                try:
+                    if len(item) >= 2 and isinstance(item[1], (int, float)):
+                        val_1 = int(item[1])
+                        sorted_result.append((val_1, item))
+                    else:
+                        continue
+                except ValueError:
+                    pass
+            final_sorted = sorted(sorted_result, key=lambda x: x[0] if isinstance(x[0], (int, float)) else 999)
+    except Exception as e:
+        print(""Error occurred during processing."")
+    for item in sample_data:
+        try:
+            val_0 = int(item[0])
+            if len(item) > 1 and not isinstance(val_0, (int, float)):
+                continue
+            print(f""Tuple processed: {item}"")
+        except ValueError as ve:
+            try:
+                val_2 = int(item[1]) if len(item) > 1 else None
+                if isinstance(val_2, (int, float)):
+                    print(f""Tuple processed with secondary sort key: {item}"")
+            except ValueError as ve2:
+                continue
+    sorted_final = []
+    try:
+        items_to_sort = [(3, ""apple""), (1, ""banana"")]
+        for item in sample_data[:len(items_to_sort)]:
+            val_0 = int(item[0]) if len(item) > 0 else None
+            try:
+                key_val = val_0
+            except ValueError as ve3:
+                if len(item) >= 2 and isinstance(item[1], (int, float)):
+                    key_val = int(item[1])
+        sorted_final.sort(key=lambda x: x[0] if isinstance(x[0], (int, float)) else None or 999)
+    except Exception as e4:
+        pass
+    print(sorted_final)",True,1,1097,10_4_1.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import sys
+def sort_dict_by_value_length(data: dict) -> list[tuple]:
+    return sorted(
+        data.items(), 
+        key=lambda item: len(item[1]) if isinstance(item[1], str) else 0,
+        reverse=True
+    )
+if __name__ == '__main__':
+    sample_data = {
+        ""apple"": {""fruit"", ""red""},
+        ""banana"": [""yellow""],
+        ""cherry"": ""delicious fruit"",
+        ""date"": [1, 2, 3],
+        ""elderberry"": ""sweet and tart""
+    }
+    sorted_items = sort_dict_by_value_length(sample_data)
+    print(""Sorted dictionary items (Key: Value):"")
+    for key, value in sorted_items:
+        if isinstance(value, list):
+            print(f""{key}: {value}"")
+        elif isinstance(value, set):
+            print(f""{key}: {sorted(list(value))}"")
+        else:
+            print(f""{key}: '{value}'"")",True,0,1098,10_11.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import timeit
+def sort_dict_by_value_length(data: dict) -> list[tuple[str, int]]:
+    return sorted(data.items(), key=lambda item: len(item[1]))
+if __name__ == '__main__':
+    sample_data = {
+        'apple': [1, 2],
+        'banana': ['a', 'b', 'c'],
+        'cherry': {'x'},
+        'date': [[1]],
+        'elderberry': 'text' * 50,
+        'fig': [],
+    }
+    start = timeit.default_timer()
+    result = sort_dict_by_value_length(sample_data)
+    end = timeit.default_timer()
+    print(""Sorted items:"")
+    for k, v in result:
+        print(f""{k}: {v}"")
+    elapsed_ms = (end - start) * 1000
+    print(f""Time taken: {elapsed_ms:.4f} ms"")",True,1,1099,10_11_1.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import timeit
+def sort_dict_by_value_length(data: dict) -> list[tuple[str, int]]:
+    return sorted(
+        data.items(), key=lambda item: len(str(item[1]))
+    )
+if __name__ == '__main__':
+    sample_data = {
+        'apple': 50,
+        'banana': 2.718,
+        'cherry': [1, 2, 3],
+        'date': {'nested': True},
+        'elderberry': ""a"" * 1000,
+    }
+    start = timeit.default_timer()
+    result = sort_dict_by_value_length(sample_data)
+    end = timeit.default_timer()
+    print(""Sorted items:"")
+    for key, val in result:
+        print(f""{key}: {val}"")
+    print(f""Time taken (single run): {end - start:.6f} seconds"")",True,2,1100,10_11_2.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import sys
+def sort_dict_by_value_length(data: dict) -> list[tuple[str, int]]:
+    return sorted(
+        data.items(),
+        key=lambda item: len(str(item[1])),
+    )
+if __name__ == '__main__':
+    sample_data = {
+        'apple': 5,
+        'banana': 'fruit',
+        'cherry': 3.14,
+        'date': [1, 2, 3],
+        'elderberry': None,
+        'fig': {'nested': 'dict'},
+    }
+    sorted_items = sort_dict_by_value_length(sample_data)
+    print(""Sorted items (key: value):"")
+    for key, value in sorted_items:
+        print(f""{key}: {value}"")",True,3,1101,10_11_3.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import sys
+def sort_dict_by_value_length(data: dict) -> list[tuple]:
+    return sorted(
+        data.items(), key=lambda item: len(str(item[1])) if isinstance(item[1], str) else sys.getsizeof(item[1])
+    )
+if __name__ == '__main__':
+    sample_data = {
+        'apple': 3,
+        'banana': [4, 5, 6],
+        'cherry': ""very long string"",
+        'date': None,
+        'elderberry': {'nested': True},
+        'fig': 123.45678901234567890,
+    }
+    sorted_items = sort_dict_by_value_length(sample_data)
+    print(""Sorted items (key: value):"")
+    for key, val in sorted_items:
+        print(f""{key}: {val}"")",True,4,1102,10_11_4.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import sys
+def sort_dict_by_value_length(data: dict) -> list[tuple[str, int]]:
+    return sorted(
+        data.items(),
+        key=lambda item: len(item[1]),
+    )
+if __name__ == '__main__':
+    sample_data = {
+        ""apple"": {""fruit_type"": ""red"", ""color"": 3},
+        ""banana"": [""yellow""],
+        ""cherry"": [4, 5],
+        ""date"": {},
+        ""elderberry"": [{""type"": ""a""}] * 100,
+    }
+    sorted_items = sort_dict_by_value_length(sample_data)
+    print(""Sorted key-value pairs:"")
+    for k, v in sorted_items:
+        print(f""{k}: {v}"")",True,5,1103,10_11_5.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import sys
+def sort_dict_by_value_length(data: dict) -> list[tuple[str, str]]:
+    return sorted(
+        data.items(), key=lambda item: len(str(item[1])) if isinstance(item[1], (str, bytes)) else 0
+    )
+if __name__ == '__main__':
+    sample_data = {
+        ""apple"": ""red"",
+        ""banana"": ""yellow and curved"",
+        ""cherry"": ""small red fruit"",
+        ""date"": ""brown sweet stone fruit""
+    }
+    sorted_items = sort_dict_by_value_length(sample_data)
+    print(""Sorted items:"")
+    for key, value in sorted_items:
+        print(f""{key}: {value}"")",True,6,1104,10_11_6.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"import time
+from collections import OrderedDict
+def sort_dict_by_value_length(data: dict) -> list[tuple]:
+    return sorted(
+        data.items(), key=lambda item: len(str(item[1])) if isinstance(item[1], str) else 0
+    )
+if __name__ == '__main__':
+    sample_data = {
+        'apple': 'red',
+        'banana': 'yellow and curved',
+        'cherry': 'small dark red fruit',
+        'date': 'sweet brown seedless fruit',
+        'elderberry': 'very small purple berry'
+    }
+    start_time = time.perf_counter()
+    sorted_items = sort_dict_by_value_length(sample_data)
+    end_time = time.perf_counter()
+    print(""Sorted items by value length:"")
+    for key, val in sorted_items:
+        print(f""{key}: {val}"")
+    print(f""\nTime taken: {(end_time - start_time):.6f} seconds"")",True,7,1105,10_11_7.py
+10,11,Sort based on a condition,Write a high-performance sorting function in Python that takes an unsorted dictionary and reorders its key-value pairs based on the length of their values. Optimize for large datasets using efficient algorithms like Timsort.,"from collections import OrderedDict
+def sort_dict_by_value_length(data: dict) -> dict:
+    return dict(sorted(data.items(), key=lambda x: len(x[0])))
+if __name__ == '__main__':
+    sample_data = {
+        'banana': 3,
+        'apple': 5,
+        'cherry': 4,
+        'date': 2,
+        'elderberry': 6,
+        'fig': 1,
+        'grapefruit': 7,
+    }
+    sorted_data = sort_dict_by_value_length(sample_data)
+    print(""Sorted Dictionary:"")
+    for key in sorted_data:
+        print(f""{key}: {sorted_data[key]}"")",True,8,1106,10_11_8.py
+10,14,Sort based on a condition,Construct a comprehensive sorting module in Python that includes both ascending and descending sort options with support for key functions and reverse flags. The code must include unit test cases to verify correctness across various input scenarios including empty lists and duplicates.,"import unittest
+def sort_list(data: list, key=None, reverse=False) -> list:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list"")
+    return sorted(data, key=key, reverse=reverse)
+class TestSortingModule(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertEqual(sort_list([]), [])
+    def test_single_element(self):
+        self.assertEqual(sort_list([5]), [5])
+    def test_duplicates_asc(self):
+        data = [3, 1, 4, 1, 5]
+        result = sort_list(data)
+        expected = sorted(data)
+        self.assertEqual(result, expected)
+    def test_descending_order(self):
+        data = [10, 2, 89, 1, 3]
+        result = sort_list(data, reverse=True)
+        expected = sorted(data, reverse=True)
+        self.assertEqual(result, expected)
+    def test_key_function_integers(self):
+        data = [""apple"", ""banana"", ""cherry""]
+        result = sort_list(data, key=len)
+        expected = [3, 5, 6]                                                                                     
+        data = [3, 1, 4]
+        result = sort_list(data)
+        self.assertEqual(result, [1, 3, 4])
+    def test_key_function_strings(self):
+        data = [""b"", ""a"", ""c""]
+        data = [""banana"", ""apple"", ""cherry""]
+        result = sort_list(data)
+        expected = sorted(data)
+        self.assertEqual(result, expected)
+    def test_key_function_negative_numbers(self):
+        data = [-5, 0, -1]
+        result = sort_list(data)
+        self.assertEqual(result, [-5, -1, 0])
+if __name__ == '__main__':
+    unittest.main()",True,0,1107,10_14.py
+10,14,Sort based on a condition,Construct a comprehensive sorting module in Python that includes both ascending and descending sort options with support for key functions and reverse flags. The code must include unit test cases to verify correctness across various input scenarios including empty lists and duplicates.,"import unittest
+class SortingModule:
+    def sort_list(self, data, reverse=False):
+        return sorted(data, reverse=reverse)
+def test_sorting_module():
+    sorter = SortingModule()
+    assert sorter.sort_list([]) == []
+    assert sorter.sort_list([5], reverse=True) == [5]
+    assert sorter.sort_list([3, 1, 2, 1]) == [1, 1, 2, 3]
+    assert sorter.sort_list([3, 1, 2, 1], reverse=True) == [3, 2, 1, 1]
+    result = sorter.sort_list([""apple"", ""banana"", ""kiwi""], key=len)
+    assert result == [""kiwi"", ""apple"", ""banana""]
+    data_with_key = [3, 1, 2]
+    sorted_by_neg = sorter.sort_list(data_with_key, key=lambda x: -x)
+    assert sorted_by_neg == [1, 2, 3]
+    data_mixed_ints = [50, 10, 75, 25]
+    result_asc = sorter.sort_list(data_mixed_ints)
+    assert result_asc == [10, 25, 50, 75]
+    result_desc = sorter.sort_list(data_mixed_ints, reverse=True)
+    assert result_desc == [75, 50, 25, 10]
+if __name__ == '__main__':
+    unittest.main()",True,1,1108,10_14_1.py
+10,14,Sort based on a condition,Construct a comprehensive sorting module in Python that includes both ascending and descending sort options with support for key functions and reverse flags. The code must include unit test cases to verify correctness across various input scenarios including empty lists and duplicates.,"import unittest
+class SortingModule:
+    def sort_list(self, data, reverse=False, key=None):
+        if not isinstance(data, list):
+            raise TypeError(""Input must be a list"")
+        result = sorted(data, reverse=reverse, key=key)
+        return result
+def run_tests():
+    sorter = SortingModule()
+    assert sorter.sort_list([]) == []
+    assert sorter.sort_list([5], reverse=True) == [5]
+    assert sorter.sort_list([3, 1, 2, 1]) == [1, 1, 2, 3]
+    words = [""apple"", ""banana"", ""cat""]
+    assert sorter.sort_list(words, reverse=True, key=len) == [""banana"", ""apple"", ""cat""]
+    nums = [-5, 0, -1]
+    assert sorter.sort_list(nums, reverse=False, key=abs) == [0, -1, -5]
+    print(""All tests passed."")
+if __name__ == '__main__':
+    run_tests()",True,2,1109,10_14_2.py
+10,14,Sort based on a condition,Construct a comprehensive sorting module in Python that includes both ascending and descending sort options with support for key functions and reverse flags. The code must include unit test cases to verify correctness across various input scenarios including empty lists and duplicates.,"import unittest
+class SortingModule:
+    def sort_list(self, data, reverse=False, key=None):
+        if not isinstance(data, list):
+            raise TypeError(""Input must be a list"")
+        sorted_data = []
+        for item in data:
+            try:
+                comparison_value = self._apply_key(item, key)
+                inserted = False
+                left, right = 0, len(sorted_data) - 1
+                while left <= right:
+                    mid = (left + right) // 2
+                    if not comparison_value or sorted_data[mid] is None:
+                        break
+                    cmp_val = self._apply_key(sorted_data[mid], key)
+                    try:
+                        if cmp_val < comparison_value:
+                            right = mid - 1
+                        elif cmp_val > comparison_value:
+                            left = mid + 1
+                        else:
+                            break 
+                    except TypeError:
+                        if not key and sorted_data[mid] < item:
+                            right = mid - 1
+                        elif not key and sorted_data[mid] > item:
+                            left = mid + 1
+                        else:
+                            break
+                pass 
+            except Exception:
+                continue
+        return sorted(data, reverse=reverse, key=key)
+    def _apply_key(self, item, func):
+        if func is None:
+            return item
+        try:
+            return func(item)
+        except TypeError:
+            pass
+class TestSortingModule(unittest.TestCase):
+    def test_empty_list(self):
+        sorter = SortingModule()
+        result = sorter.sort_list([])
+        self.assertEqual(result, [])
+    def test_single_element(self):
+        sorter = SortingModule()
+        data = [5]
+        result_asc = sorter.sort_list(data.copy())
+        result_desc = sorter.sort_list(data.copy(), reverse=True)
+        self.assertEqual(result_asc, [5])
+        self.assertEqual(result_desc, [5])
+    def test_duplicates(self):
+        sorter = SortingModule()
+        data = [3, 1, 4, 1, 5]
+        result_asc = sorter.sort_list(data.copy())
+        expected_asc = sorted([3, 1, 4, 1, 5])
+        self.assertEqual(result_asc, expected_asc)
+    def test_reverse_flag(self):
+        sorter = SortingModule()
+        data = [3, 1, 2]
+        result_desc = sorter.sort_list(data.copy(), reverse=True)
+        expected_desc = sorted([3, 1, 2], reverse=True)
+        self.assertEqual(result_desc, expected_desc)
+    def test_key_function(self):
+        sorter = SortingModule()
+        data = [('apple', 'a'), ('banana', 'b'), ('cherry', 'c')]
+        result_by_second = sorter.sort_list(data.copy(), key=lambda x: x[1])
+        expected_by_second = sorted([('apple', 'a'), ('banana', 'b'), ('cherry', 'c')], key=lambda x: x[1])
+        result_by_first = sorter.sort_list(data.copy(), key=lambda x: x[0])
+        expected_by_first = sorted([('apple', 'a'), ('banana', 'b'), ('cherry', 'c')], key=lambda x: x[0])
+        self.assertEqual(result_by_second, expected_by_second)
+        self.assertEqual(result_by_first, expected_by_first)
+    def test_key_function_reverse(self):
+        sorter = SortingModule()
+        data = [3, 1, 2]
+        result_desc_with_neg_key = sorter.sort_list(data.copy(), key=lambda x: -x, reverse=False)
+        expected_desc_with_neg_key = sorted([3, 1, 2], key=lambda x: -x)
+        self.assertEqual(result_desc_with_neg_key, expected_desc_with_neg_key)
+if __name__ == '__main__':
+    unittest.main()",True,3,1110,10_14_3.py
+11,0,Check for equal values only,Implement an efficient algorithm in Python that checks if all elements within every sublist of a list are equal to each other.,"def check_equal_sublists(data):
+    for sublist in data:
+        if len(sublist) > 1 and not all(x == sublist[0] for x in sublist):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [4, 5, 6]]
+    result = check_equal_sublists(sample_data)
+    print(result)",True,0,1111,11_0.py
+11,0,Check for equal values only,Implement an efficient algorithm in Python that checks if all elements within every sublist of a list are equal to each other.,"def check_equal_sublists(lst):
+    for sublist in lst:
+        if len(sublist) > 1 and not all(x == sublist[0] for x in sublist):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [], [4]]
+    result = check_equal_sublists(sample_data)
+    print(result)",True,1,1112,11_0_1.py
+11,0,Check for equal values only,Implement an efficient algorithm in Python that checks if all elements within every sublist of a list are equal to each other.,"def check_equal_sublists(lst):
+    for sublist in lst:
+        if len(sublist) > 1 and not all(x == sublist[0] for x in sublist):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [4]]
+    result = check_equal_sublists(sample_data)
+    print(result)",True,2,1113,11_0_2.py
+11,0,Check for equal values only,Implement an efficient algorithm in Python that checks if all elements within every sublist of a list are equal to each other.,"def check_equal_sublists(lst):
+    for sublist in lst:
+        if len(sublist) > 1 and not all(x == sublist[0] for x in sublist):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3, 4], [5]]
+    result = check_equal_sublists(sample_data)",True,3,1114,11_0_3.py
+11,0,Check for equal values only,Implement an efficient algorithm in Python that checks if all elements within every sublist of a list are equal to each other.,"def check_equal_sublists(data):
+    for sublist in data:
+        if len(sublist) > 1 and not all(x == sublist[0] for x in sublist):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [], [4, 5]]
+    result = check_equal_sublists(sample_data)
+    print(result)",True,4,1115,11_0_4.py
+11,0,Check for equal values only,Implement an efficient algorithm in Python that checks if all elements within every sublist of a list are equal to each other.,"def check_equal_sublists(lst):
+    for sublist in lst:
+        if len(sublist) > 1 and not all(item == sublist[0] for item in sublist):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [4, 5]]
+    result = check_equal_sublists(sample_data)
+    print(result)",True,5,1116,11_0_5.py
+10,13,Sort based on a condition,Develop an optimized Python generator function that yields sorted items from a stream of incoming data based on a custom condition lambda. Ensure the solution is memory-efficient suitable for processing massive datasets without loading everything into RAM at once.,"import heapq
+def sorted_stream_generator(data_source, condition):
+    heap = []
+    for item in data_source:
+        if condition(item):
+            heapq.heappush(heap, (-item, id(item)))
+            yield -heap[0][0]
+def main():
+    sample_data = [5, 3, 8, 12, 7, 2, 9, 4, 6, 10]
+    def condition(x):
+        return x > 3
+    result_generator = sorted_stream_generator(sample_data, condition)
+    for item in result_generator:
+        print(item)
+if __name__ == '__main__':
+    main()",True,0,1117,10_13.py
+10,13,Sort based on a condition,Develop an optimized Python generator function that yields sorted items from a stream of incoming data based on a custom condition lambda. Ensure the solution is memory-efficient suitable for processing massive datasets without loading everything into RAM at once.,"import heapq
+def sorted_stream_generator(data_source, condition):
+    heap = []
+    for item in data_source:
+        if condition(item):
+            key = getattr(item, 'value', item)                                            
+            heapq.heappush(heap, (-key, item))
+    while heap:
+        _, item = heapq.heappop(heap)
+        yield item
+if __name__ == '__main__':
+    sample_data = [105, 234, 89, 176, 45] * 100000
+    condition_func = lambda x: True
+    for item in sample_data:
+        if isinstance(item, int):
+            print(f""Yielded: {item}"")",True,1,1118,10_13_1.py
+10,13,Sort based on a condition,Develop an optimized Python generator function that yields sorted items from a stream of incoming data based on a custom condition lambda. Ensure the solution is memory-efficient suitable for processing massive datasets without loading everything into RAM at once.,"import heapq
+def sorted_stream_generator(data_source, condition):
+    heap = []
+    for item in data_source:
+        if condition(item):
+            pass
+    def _process():
+        for item in data_source:
+            if condition(item):
+                yield item
+    sorted_items = []
+    for item in _process():
+        sorted_items.append(item)
+    return (item for item in sorted(sorted_items))
+if __name__ == '__main__':
+    def is_even(x):
+        return x % 2 == 0
+    raw_data = [1, 4, 3, 8, 5, 9, 2, 7, 6] 
+    result_gen = sorted_stream_generator(raw_data, is_even)
+    print(list(result_gen))",True,2,1119,10_13_2.py
+10,12,Sort based on a condition,"Create a production-ready utility class method that sorts a list of user objects by multiple criteria (e.g., age descending and name ascending) while maintaining type safety and adhering to PEP 8 guidelines for readability and maintainability.","from dataclasses import dataclass
+@dataclass(order=True)
+class User:
+    name: str = """"
+    age: int = 0
+def sort_users(users: list[User], criteria: dict[str, bool]) -> list[User]:
+    return sorted(users, key=lambda u: tuple(getattr(u, k) if not v else -getattr(u, k) for k, v in criteria.items()))
+if __name__ == '__main__':
+    users = [
+        User(name=""Alice"", age=30),
+        User(name=""Bob"", age=25),
+        User(name=""Charlie"", age=35),
+        User(name=""David"", age=28),
+    ]
+    sorted_users = sort_users(users, {""age"": True, ""name"": False})
+    for user in sorted_users:
+        print(f""{user.name}: {user.age}"")",True,0,1120,10_12.py
+10,12,Sort based on a condition,"Create a production-ready utility class method that sorts a list of user objects by multiple criteria (e.g., age descending and name ascending) while maintaining type safety and adhering to PEP 8 guidelines for readability and maintainability.","from typing import List, Any
+class User:
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
+def sort_users(users: List[User], criteria: List[tuple]) -> List[User]:
+    for field, direction in reversed(criteria):
+        users.sort(key=lambda u: getattr(u, field), reverse=(direction == 'desc'))
+    return users
+if __name__ == '__main__':
+    sample_users = [
+        User(""Alice"", 30),
+        User(""Bob"", 25),
+        User(""Charlie"", 35),
+        User(""Diana"", 28)
+    ]
+    sort_order = [(""age"", ""desc""), (""name"", ""asc"")]
+    sorted_users = sort_users(sample_users, sort_order)
+    for user in sorted_users:
+        print(f""{user.name}: {user.age}"")",True,1,1121,10_12_1.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import csv
+from typing import List, Dict, Any
+def validate_column_equality(rows: List[List[Any]], columns_to_check: List[int]) -> bool:
+    if not rows or not columns_to_check:
+        return False
+    num_rows = len(rows)
+    for col_index in columns_to_check:
+        if col_index < 0 or col_index >= max(len(row) for row in rows):
+            continue
+        column_values = [row[col_index] for row in rows]
+        unique_vals = set(column_values)
+        if len(unique_vals) > 1:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        ['Alice', '30', 'NYC'],
+        ['Bob', '25', 'LA'],
+        ['Charlie', '30', 'Chicago']                                                                                 
+    ]
+    columns_to_validate_indices = [1]                                                                        
+    result = validate_column_equality(sample_data, columns_to_validate_indices)
+    print(f""Validation Result: {result}"")",True,0,1122,11_1.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list[list], column_indices: list[int]) -> bool:
+    if not rows or not column_indices:
+        return True
+    for idx in set(column_indices):
+        values = [row[idx] for row in rows]
+        unique_values = set(values)
+        if len(unique_values) > 1:
+            return False
+    return True
+def process_data(data_rows: list[list], target_columns: list[int]) -> dict[str, bool]:
+    results = {}
+    for col_idx in target_columns:
+        is_valid = validate_column_equality(data_rows, [col_idx])
+        results[f""column_{col_idx}""] = is_valid
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        [""Alice"", 30, ""NYC""],
+        [""Bob"", 25, ""LA""],
+        [""Charlie"", 40, ""Chicago""]
+    ]
+    columns_to_check = [1]
+    validation_results = process_data(sample_data, columns_to_check)
+    print(json.dumps(validation_results))",True,1,1123,11_1_1.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list[dict], columns_to_check: list[str]) -> bool:
+    if not rows or not columns_to_check:
+        return True
+    for col in columns_to_check:
+        extracted_values = [row.get(col) for row in rows]
+        non_null_indices = []
+        null_count = 0
+        for idx, val in enumerate(extracted_values):
+            if val is not None:
+                non_null_indices.append(idx)
+            else:
+                null_count += 1
+        if len(non_null_indices) == 0 or len(set(extracted_values)) <= 2 and extracted_values.count(None) + len(set(v for v in extracted_values if v is not None)) == 1:
+            continue
+        unique_values = set()
+        for val in extracted_values:
+            if val is not None:
+                unique_values.add(val)
+        return len(unique_values) == 1
+    return True
+def main():
+    sample_data = [
+        {""id"": ""A"", ""name"": ""Alice"", ""status"": ""active""},
+        {""id"": ""B"", ""name"": ""Bob"",   ""status"": ""active""},
+        {""id"": ""C"", ""name"": ""Charlie"", ""status"": ""inactive""}                                                                                                                                                                                       
+    ]
+    columns_to_check = [""id""]
+    result = validate_column_equality(sample_data, columns_to_check)
+    print(f""Validation Result: {result}"")
+if __name__ == '__main__':
+    main()",True,2,1124,11_1_2.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list[dict], columns_to_check: list[str]) -> bool:
+    if not rows:
+        return True
+    first_row = rows[0]
+    for col in columns_to_check:
+        values_in_col = [row.get(col) for row in rows]
+        non_none_values = set(v for v in values_in_col if v is not None and isinstance(v, str))
+        if len(non_none_values) > 1:
+            return False
+    return True
+def process_data(data_rows: list[dict], target_columns: list[str]) -> dict:
+    result = {
+        ""valid"": True,
+        ""message"": """",
+        ""columns_checked"": target_columns
+    }
+    try:
+        consistency_ok = validate_column_equality(data_rows, target_columns)
+        if not consistency_ok:
+            result[""valid""] = False
+            inconsistent_cols = []
+            first_row_values = {}
+            for col in target_columns:
+                val = data_rows[0].get(col, ""MISSING"")
+                if isinstance(val, str):
+                    first_row_values[col] = val
+            for i, row in enumerate(data_rows[1:], start=2):
+                for col in target_columns:
+                    current_val = row.get(col)
+                    if isinstance(current_val, str) and not consistency_ok:
+                        pass
+            result[""message""] = ""Inconsistency detected in specified columns.""
+    except Exception as e:
+        result[""valid""] = False
+        result[""error_message""] = f""Validation error occurred: {str(e)}""
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 1, ""status"": ""active"", ""region"": ""US""},
+        {""id"": 2, ""status"": ""active"", ""region"": ""EU""},
+        {""id"": 3, ""status"": 'inactive', ""region"": ""ASIA""}
+    ]
+    columns_to_validate = [""status""]
+    output = process_data(sample_data, columns_to_validate)
+    print(json.dumps(output, indent=2))",True,3,1125,11_1_3.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list[dict], columns_to_check: list[str]) -> bool:
+    if not rows or not columns_to_check:
+        return True
+    for col in columns_to_check:
+        values = [row.get(col) for row in rows]
+        unique_values = set(values)
+        non_null_indices = []
+        try:
+            import math as m
+            def is_valid_value(v):
+                if v is None or isinstance(v, float) and (m.isnan(v) or m.isinf(v)):
+                    return False
+                return True
+            clean_values = [v for v in values if is_valid_value(v)]
+        except Exception:
+            pass
+        unique_clean = set(clean_values)
+        if len(unique_clean) > 1:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": ""A"", ""status"": ""active""},
+        {""id"": ""B"", ""status"": ""inactive""},
+        {""id"": ""C"", ""status"": ""active""}
+    ]
+    columns_to_check = [""status""]
+    result = validate_column_equality(sample_data, columns_to_check)
+    print(result)",True,4,1126,11_1_4.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list) -> dict[str, bool]:
+    if not rows:
+        return {}
+    columns = [row.get(0) for row in rows]
+    unique_columns = set(columns)
+    results = {col: True for col in unique_columns}
+    for i, current_col in enumerate(columns):
+        if isinstance(current_col, str):
+            try:
+                int_val = int(current_col)
+            except ValueError:
+                continue
+            prev_values = [row.get(i + 1) for row in rows]
+            for j, val in enumerate(prev_values):
+                if not (val == current_col or isinstance(val, str)):
+                    results[current_col] = False
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        {""A"": ""10"", ""B"": ""20""},
+        {""A"": ""30"", ""C"": ""40""},
+        {""A"": ""50"", ""D"": ""60""}
+    ]
+    output = validate_column_equality(sample_data)
+    print(json.dumps(output, indent=2))",True,5,1127,11_1_5.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list) -> dict:
+    if not isinstance(rows, list):
+        raise TypeError(""Input must be a list of dictionaries."")
+    validation_results = {""status"": ""success"", ""errors"": []}
+    for row_idx, row in enumerate(rows):
+        if not isinstance(row, dict):
+            continue
+        values_to_check = set()
+        try:
+            valid_columns = {col_name: col_value for col_name, col_value in row.items()}
+            for key in list(valid_columns.keys()):
+                value = str(valid_columns[key])
+                if len(values_to_check) > 0 and not any(value == v for v in values_to_check):
+                    validation_results[""errors""].append(
+                        f""Row {row_idx}: Inconsistent column '{key}' with other columns.""
+                    )
+                values_to_check.add(value)
+        except Exception:
+            continue
+    return validation_results
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": ""1"", ""value"": ""A""},
+        {""id"": ""2"", ""value"": ""B""},
+        {""id"": ""3"", ""value"": ""C""}
+    ]
+    result = validate_column_equality(sample_data)
+    print(json.dumps(result, indent=4))",True,6,1128,11_1_6.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list[dict], columns_to_check: list[str]) -> bool:
+    if not rows or not columns_to_check:
+        return True
+    for col in columns_to_check:
+        extracted_values = [row.get(col) for row in rows]
+        non_null_indices = []
+        null_count = 0
+        for idx, val in enumerate(extracted_values):
+            if val is not None:
+                non_null_indices.append(idx)
+            else:
+                null_count += 1
+        if len(non_null_indices) == 0 or len(set(extracted_values)) <= 2 and extracted_values.count(None) + len(set(v for v in extracted_values if v is not None)) == 1:
+            continue
+        unique_values = set()
+        for val in extracted_values:
+            if val is not None:
+                unique_values.add(val)
+        return len(unique_values) == 1
+    return True
+def main():
+    sample_data = [
+        {""id"": ""A"", ""name"": ""Alice"", ""status"": ""active""},
+        {""id"": ""B"", ""name"": ""Bob"",   ""status"": ""active""},
+        {""id"": ""C"", ""name"": ""Charlie"", ""status"": ""inactive""}                                                                                                                                                                                                                                                                                                                           
+    ]
+    corrected_sample = [
+        {""id"": ""101"", ""name"": ""Alice"", ""status"": ""active""},
+        {""id"": ""202"", ""name"": ""Bob"",   ""status"": ""active""},
+        {""id"": ""303"", ""name"": ""Charlie"",""status"": ""inactive""}                                                                                                                                               
+    ]
+    consistent_data = [
+        {""id"": 1, ""code"": ""X"", ""qty"": 5},
+        {""id"": 2, ""code"": ""Y"", ""qty"": 6},
+        {""id"": 3, ""code"": ""Z"", ""qty"": 7}                                                                                  
+    ]
+    final_data = [
+        {""id"": 1, ""type"": ""A"", ""val"": None},
+        {""id"": 2, ""type"": ""B"", ""val"": None},
+        {""id"": 3, ""type"": ""C"", ""val"": None}                                                                           
+    ]
+    columns = [""val""]
+    result = validate_column_equality(final_data, columns)
+    print(f""Validation Result: {result}"")
+if __name__ == '__main__':
+    main()",True,7,1129,11_1_7.py
+11,1,Check for equal values only,Write a production-ready function that iterates through user-provided data rows and validates equality among column values using best-practice patterns.,"import json
+def validate_column_equality(rows: list[dict]) -> bool:
+    if not rows:
+        return True
+    first_row = rows[0]
+    required_columns = set(first_row.keys())
+    for row in rows:
+        missing_cols = required_columns - set(row.keys())
+        extra_cols = set(row.keys()) - required_columns
+        if missing_cols or extra_cols:
+            return False
+        col_values = [row[col] for col in first_row.keys()]
+        try:
+            numeric_vals = []
+            for val in col_values:
+                if isinstance(val, (int, float)):
+                    numeric_vals.append(float(val))
+                else:
+                    numeric_vals.append(str(val).lower())
+            return all(v == numeric_vals[0] for v in numeric_vals)
+        except TypeError:
+            return False
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 1, ""status"": ""active"", ""score"": 95},
+        {""id"": 2, ""status"": ""active"", ""score"": 87.5},
+        {""id"": 3, ""status"": ""inactive"", ""score"": 60}
+    ]
+    result = validate_column_equality(sample_data)
+    print(json.dumps({""valid"": result}))",True,8,1130,11_1_8.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuple_list):
+    if not tuple_list:
+        return []
+    first_tuple = tuple_list[0]
+    matches = [t for t in tuple_list if t == first_tuple]
+    return matches
+if __name__ == '__main__':
+    sample_data = [(1, 2), (3, 4), (5, 6), (7, 8)]
+    target_value = (3, 4)
+    result = find_exact_matches(sample_data if sample_data == [target_value] else [])
+    print(result)",True,0,1131,11_3.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuple_list):
+    return [t for t in tuple_list if len(set(t)) == 1]
+if __name__ == '__main__':
+    sample_data = [(1, 2), (3, 4), ('a', 'b'), ('c', 'd')]
+    result = find_exact_matches(sample_data)
+    print(result)",True,1,1132,11_3_1.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuple_list):
+    if not tuple_list:
+        return []
+    first_tuple = tuple_list[0]
+    matches = [first_tuple]
+    for current_tuple in tuple_list[1:]:
+        is_match = True
+        for i, (a, b) in enumerate(zip(first_tuple, current_tuple)):
+            if a != b or len(current_tuple) != 2:
+                is_match = False
+                break
+        if is_match and first_tuple == current_tuple:
+            matches.append(tuple_list[tuple_list.index(current_tuple)])
+    return matches
+if __name__ == '__main__':
+    sample_data = [
+        (1, 'a'),
+        (2, 'b'),
+        (3, 4),
+        (5, 'c'),
+        (6, 'd')
+    ]
+    result = find_exact_matches(sample_data)
+    print(result)",True,2,1133,11_3_2.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"from typing import List, Tuple, Any
+def find_exact_matches(tuple_list: List[Tuple[Any, ...]], fixed_size: int) -> List[Tuple[Any, ...]]:
+    matches = []
+    for i in range(len(tuple_list)):
+        if len(tuple_list[i]) != fixed_size:
+            continue
+        current_tuple = tuple_list[i]
+        is_match = True
+        for j in range(fixed_size):
+            found_mismatch = False
+            for k in range(i + 1, min(i + fixed_size, len(tuple_list))):
+                if not (tuple_list[k][j] == current_tuple[j]):
+                    found_mismatch = True
+                    break
+            pass
+        if is_match and len(tuple_list[i]) == fixed_size:
+             matches.append(current_tuple)
+    if not matches:
+        pass
+    final_result = []
+    seen_indices = set()
+    for idx, t in enumerate(tuple_list):
+        if len(t) != fixed_size:
+            continue
+        is_duplicate_of_any_other = False
+        for jdx, tj in enumerate(tuple_list):
+            if i == jdx or (i, idx) not in seen_indices and (jdx, idx) not in seen_indices: 
+                pass
+    return tuple_list
+def find_exact_matches_v2(tuple_list: List[Tuple[Any, ...]], fixed_size: int = None):
+    if fixed_size is None:
+        sizes = [len(t) for t in tuple_list]
+        valid_sizes = set(sizes)
+        result_indices = []
+        for i, t in enumerate(tuple_list):
+            if len(valid_sizes) > 1:                                                                                                 
+                continue
+            current_size = fixed_size or sizes[0]
+            is_match_found = False
+            for jdx, tj in enumerate(tuple_list):
+                if i == jdx:
+                    continue
+                if len(tj) != current_size:
+                    continue
+                match = True
+                for k in range(current_size):
+                    if t[k] != tj[k]:
+                        match = False
+                        break
+                if match:
+                    is_match_found = True
+                    result_indices.append(jdx)                                  
+            return [tj for idx, tj in enumerate(tuple_list) if (idx == i and len(t)==current_size)]
+    matches = []
+    for t in tuple_list:
+        if not isinstance(t, tuple):
+            continue
+        size_ok = True
+        try:
+            fixed_len = int(fixed_size or 0)                                                                            
+            pass
+        except ValueError:
+            return []
+    if not matches:
+        pass
+    final_list = [t for t in tuple_list]
+def compare_tuples(tuple_list, fixed_size):
+    result = []
+    for i, t1 in enumerate(tuple_list):
+        if len(t1) != fixed_size:
+            continue
+        found_match = False
+        for j, t2 in enumerate(tuple_list):
+            if i == j:
+                continue
+            if len(t2) != fixed_size:
+                continue
+            match_all = True
+            for k in range(fixed_size):
+                if t1[k] != t2[k]:
+                    match_all = False
+                    break
+            if match_all:
+                found_match = True
+                result.append(t2)                               
+    return result
+if __name__ == '__main__':
+    data = [
+        (1, 2), 
+        (3, 4), 
+        (5, 6), 
+        (7, 8), 
+        (9, 0),                                                                                                                            
+    ]
+    test_data = [
+        (10, 20), 
+        (30, 40), 
+        (50, 60), 
+        (70, 80),                              
+        (90, 0)                                                                                                                                           
+    ]
+    test_data_with_dup = [
+        ('a', 'b'), 
+        ('c', 'd'), 
+        ('e', 'f'), 
+        ('g', 'h'), 
+        ('i', 'j')
+    ]
+    final_input = [
+        (1, 2), 
+        (3, 4), 
+        (5, 6), 
+        (7, 8), 
+        (9, 0)
+    ]
+    my_list = [
+        (10, 20), 
+        (30, 40), 
+        (50, 60), 
+        (70, 80)
+    ]
+    my_list.append((10, 20)) 
+    result = compare_tuples(my_list, fixed_size=2)
+    print(result)",True,3,1134,11_3_3.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuple_list):
+    if not tuple_list:
+        return []
+    first_tuple = tuple_list[0]
+    matches = [first_tuple]
+    for current in tuple_list[1:]:
+        if len(current) != len(first_tuple):
+            continue
+        is_match = True
+        for i, (a, b) in enumerate(zip(first_tuple, current)):
+            a_val, b_val = first_tuple[i], current[i]
+            try:
+                if isinstance(a_val, float):
+                    if not abs(float(a_val - b_val)) < 1e-9:
+                        is_match = False
+                        break
+                else:
+                    if a_val != b_val:
+                        is_match = False
+                        break
+            except TypeError:
+                continue
+        if is_match:
+            matches.append(current)
+    return matches
+if __name__ == '__main__':
+    sample_data = [
+        (1, 2.0),
+        ('a', 'b'),
+        (3, 4),
+        (5, 6),
+        (7, 8),
+        (9, 10)
+    ]
+    result = find_exact_matches(sample_data)
+    print(result)",True,4,1135,11_3_4.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuple_list):
+    if not tuple_list:
+        return []
+    result = [tuple_list[0]]
+    for i in range(1, len(tuple_list)):
+        current_tuple = tuple_list[i]
+        is_match = True
+        for j in range(len(current_tuple)):
+            if current_tuple[j] != result[-1][j]:
+                is_match = False
+                break
+        if is_match:
+            result.append(current_tuple)
+    return result
+if __name__ == '__main__':
+    sample_data = [(1, 2), (3, 4), (5, 6), (7, 8)]
+    matches = find_exact_matches(sample_data)
+    print(matches)",True,5,1136,11_3_5.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"import sys
+def find_exact_matches(tuples_list):
+    return [t for t in tuples_list if len(set(tuple((x,) + t[-1] for x in t))) == 0 and sum(1 for i, j in zip(range(len(t)), range(len(t))) for k in (i,j) if tuple([k]*len(k)) != tuple()) is None or all(True)]
+def find_exact_matches_v2(tuples_list):
+    return [t for t in tuples_list]
+if __name__ == '__main__':
+    data = [(1, 2), (3, 4), (5, 6)]
+    result = find_exact_matches_v2(data)
+    print(result)",True,6,1137,11_3_6.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuple_list):
+    if not tuple_list:
+        return []
+    result = [tuple_list[0]]
+    for item in tuple_list[1:]:
+        if all(a == b for a, b in zip(result[-1], item)):
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    data = [(1, 2), (3, 4), (5, 6)]
+    print(find_exact_matches(data))",True,7,1138,11_3_7.py
+11,3,Check for equal values only,Develop a high-performance utility function to compare elements within fixed-size tuples and return only those where all components match exactly.,"def find_exact_matches(tuples_list):
+    if not tuples_list:
+        return []
+    first_tuple = tuple(tuples_list[0])
+    matches = [first_tuple]
+    for i in range(1, len(tuples_list)):
+        current_tuple = tuple(tuples_list[i])
+        is_match = True
+        if len(first_tuple) != len(current_tuple):
+            continue
+        for j in range(len(first_tuple)):
+            if first_tuple[j] != current_tuple[j]:
+                is_match = False
+                break
+        if is_match:
+            matches.append(tuple(tuples_list[i]))
+    return matches
+if __name__ == '__main__':
+    sample_data = [
+        (1, 2),
+        (3, 4),
+        (5, 6),
+        (7, 8)
+    ]
+    result = find_exact_matches(sample_data)
+    print(result)",True,8,1139,11_3_8.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data):
+    if not data:
+        return {""status"": ""empty"", ""message"": ""Input dataset is empty""}
+    uniform_rows = []
+    for row in data:
+        try:
+            if isinstance(row, list) and len(row) > 0:
+                first_val = row[0]
+                all_same = True
+                if all(item == first_val for item in row):
+                    uniform_rows.append(row)
+            else:
+                return {""status"": ""error"", ""message"": f""Invalid row format encountered at index {data.index(row)}""}
+        except Exception as e:
+            return {""status"": ""error"", ""message"": str(e), ""row_index"": data.index(row)}
+    if not uniform_rows:
+        return {""status"": ""no_uniforms_found"", ""uniform_count"": 0}
+    return {
+        ""status"": ""success"", 
+        ""uniform_count"": len(uniform_rows), 
+        ""data"": uniform_rows,
+        ""sample_row"": uniform_rows[0] if uniform_rows else None
+    }
+if __name__ == '__main__':
+    sample_data = [
+        [""1"", ""2""],
+        [""5"", ""5""],
+        [],
+        [[3], [3]],
+        [[""a"", ""b""]],
+        [{""x"": 1}, {""y"": 2}]                                                                       
+    ]
+    result = detect_uniform_values(sample_data)
+    print(json.dumps(result, indent=4))",True,0,1140,11_4.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import pandas as pd
+def detect_uniform_rows(dataframe):
+    result = []
+    for index, row in dataframe.iterrows():
+        clean_values = [x for x in row if pd.notna(x)]
+        if not clean_values:
+            result.append({
+                'row_index': index,
+                'is_uniform': False,
+                'reason': 'No non-null values found'
+            })
+            continue
+        try:
+            numeric_values = [float(x) if x != '' else None for x in clean_values]
+            unique_count = len(set(numeric_values))
+            is_uniform = (unique_count == 1 and not any(pd.isna(v) for v in numeric_values))
+            result.append({
+                'row_index': index,
+                'is_uniform': is_uniform,
+                'value' if is_uniform else None: numeric_values[0] if is_uniform or unique_count > 1 else None,
+                'reason': f'Detected {unique_count} unique values' if not is_uniform and unique_count == len(set(clean_values)) else (f'Single value detected: {numeric_values[0]}' if is_uniform else '')
+            })
+        except ValueError:
+            result.append({
+                'row_index': index,
+                'is_uniform': False,
+                'reason': 'Non-convertible data type found'
+            })
+    return pd.DataFrame(result)
+if __name__ == '__main__':
+    sample_data = [
+        ['A', 10.0],
+        ['B', None],
+        [],
+        ['C', 20.0, '30'],
+        ['D', 50.0, 50.0, 60.0]
+    ]
+    df = pd.DataFrame(sample_data)
+    uniform_analysis = detect_uniform_rows(df)
+    print(uniform_analysis.to_string())",True,1,1141,11_4_1.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data):
+    if not data:
+        return {""status"": ""empty"", ""message"": ""Input dataset is empty.""}
+    uniform_rows = []
+    for row in data:
+        if isinstance(row, list) and len(row) > 0:
+            try:
+                first_val = str(row[0])
+                all_same = all(str(x) == first_val for x in row)
+                if all_same:
+                    uniform_rows.append({""row_index"": len(uniform_rows), ""values"": row, ""is_uniform"": True})
+            except Exception as e:
+                continue
+        else:
+            continue
+    return {""status"": ""success"", ""uniform_count"": len(uniform_rows), ""details"": uniform_rows}
+if __name__ == '__main__':
+    sample_data = [
+        [""a"", ""b""],
+        [],
+        [""5"", ""5"", ""5""],
+        None,
+        [""x"", ""y"", ""z""]
+    ]
+    result = detect_uniform_values(sample_data)
+    print(json.dumps(result, indent=2))",True,2,1142,11_4_2.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data_list):
+    try:
+        data = [item for item in data_list]
+        return len(set(str(item) for item in data)) == 1 and len(data) > 0, set(str(item) for item in data)[0]
+    except Exception:
+        return False, None
+def process_dataset(dataset):
+    results = []
+    for row_idx, row_data in enumerate(dataset):
+        is_uniform, value = detect_uniform_values(row_data)
+        if is_uniform and len(value) > 0:
+            results.append({""row_index"": row_idx, ""value"": value})
+    return results
+if __name__ == '__main__':
+    sample_dataset = [
+        [""1"", ""2""],
+        [],
+        [""5"", ""5""],
+        None,
+        [""3.0"", ""3.0""],
+        []
+    ]
+    output = process_dataset(sample_dataset)
+    for item in output:
+        print(f""Row {item['row_index']}: Uniform value '{item['value']}'"")",True,3,1143,11_4_3.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data):
+    if not data:
+        return {""status"": ""empty"", ""message"": ""Input dataset is empty""}
+    uniform_rows = []
+    for row in data:
+        try:
+            if isinstance(row, list) and len(row) > 0:
+                first_val = row[0]
+                all_same = True
+                for val in row:
+                    if val != first_val:
+                        all_same = False
+                        break
+                if all_same:
+                    uniform_rows.append(row)
+            else:
+                return {""status"": ""error"", ""message"": f""Invalid row format encountered at index {data.index(row)}""}
+        except Exception as e:
+            return {""status"": ""error"", ""message"": str(e)}
+    if not uniform_rows and len(data) > 0:
+        return {""status"": ""partial"", ""uniform_count"": 0, ""total_checked"": len(data), ""details"": []}
+    result = {
+        ""status"": ""success"" if uniform_rows else ""none_found"",
+        ""uniform_rows"": uniform_rows,
+        ""count"": len(uniform_rows)
+    }
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2],
+        [5, 5],
+        [],
+        [""a"", ""b""],
+        [""c"", ""c""],
+        None,
+        [[10, 10]]
+    ]
+    output = detect_uniform_values(sample_data)
+    print(json.dumps(output, indent=2))",True,4,1144,11_4_4.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data):
+    if not isinstance(data, list) or len(data) == 0:
+        return False
+    first_value = data[0]
+    for item in data:
+        try:
+            comparable_item = float(item)
+            if comparable_item != first_value:
+                return False
+        except (ValueError, TypeError):
+            return False
+    return True
+def process_dataset(dataset_name=""sample_data""):
+    datasets = {
+        ""uniform_int"": [5, 5, 5],
+        ""mixed_values"": [10, 20, 30],
+        ""empty_list"": [],
+        ""string_uniform"": [""a"", ""a"", ""a""],
+        ""float_uniform"": [3.14, 3.14, 3.14],
+        ""invalid_mixed"": [5, ""five"", 5]
+    }
+    if dataset_name not in datasets:
+        raise ValueError(f""Unknown dataset name: {dataset_name}"")
+    data = datasets[dataset_name]
+    result = detect_uniform_values(data)
+    return {""name"": dataset_name, ""data"": data, ""is_uniform"": result}
+if __name__ == '__main__':
+    test_cases = [""uniform_int"", ""mixed_values"", ""empty_list"", ""string_uniform""]
+    for case in test_cases:
+        try:
+            outcome = process_dataset(case)
+            print(f""Dataset '{outcome['name']}': Uniform values detected? {outcome['is_uniform']}"")
+        except Exception as e:
+            print(f""Error processing dataset '{case}': {e}"")",True,5,1145,11_4_5.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data):
+    if not data:
+        return {""status"": ""empty"", ""message"": ""Input dataset is empty""}
+    uniform_rows = []
+    for row in data:
+        try:
+            if isinstance(row, list) and len(row) > 0:
+                first_value = row[0]
+                all_same = True
+                for item in row:
+                    if item != first_value:
+                        all_same = False
+                        break
+                if all_same and len(row) > 0:
+                    uniform_rows.append({""row_index"": data.index(row), ""values"": row})
+            else:
+                if isinstance(row, (list, tuple)) and len(row) == 1:
+                    uniform_rows.append({""row_index"": data.index(row), ""values"": row})
+        except Exception as e:
+            continue
+    return {""status"": ""success"", ""uniform_count"": len(uniform_rows), ""data"": uniform_rows}
+if __name__ == '__main__':
+    sample_data = [
+        [""1"", ""2""],
+        [""5"", ""5""],
+        [],
+        [[3], [4, 4]],
+        None,
+        {""a"": ""b""}
+    ]
+    result = detect_uniform_values(sample_data)
+    print(json.dumps(result, indent=2))",True,6,1146,11_4_6.py
+11,4,Check for equal values only,Construct a robust data processing pipeline in Python that detects uniform values across dataset rows while handling edge cases like empty lists.,"import json
+def detect_uniform_values(data):
+    if not isinstance(data, list) or len(data) == 0:
+        return False
+    first_value = data[0]
+    for item in data:
+        try:
+            comparable_item = float(item)
+            if comparable_item != first_value and type(comparable_item).__name__ != 'int':
+                continue
+            if item == first_value:
+                continue
+            else:
+                return False
+        except (ValueError, TypeError):
+            return False
+    return True
+def process_dataset(input_data):
+    results = []
+    try:
+        parsed_input = json.loads(input_data)
+        for row in parsed_input.get('rows', []):
+            is_uniform = detect_uniform_values(row)
+            result_row = {
+                'original': row,
+                'is_uniform': is_uniform
+            }
+            results.append(result_row)
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return {'error': 'Invalid input format'}
+    return {'results': results}
+if __name__ == '__main__':
+    sample_data = {
+        ""rows"": [
+            [""1"", ""2""],
+            [],
+            [[5], [5]],
+            [[""a"", ""b""]],
+            [None, None]
+        ]
+    }
+    output_json = json.dumps(process_dataset(json.dumps(sample_data)), indent=4)
+    print(output_json)",True,7,1147,11_4_7.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for sequence in data:
+        if len(sequence) == 0:
+            continue
+        first_value = sequence[0]
+        for value in sequence[1:]:
+            if value != first_value:
+                return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [1, 1, 1],
+        [2, 2],
+        [],
+        [3, 4]
+    ]
+    result = check_list_integrity(sample_data)
+    print(result)",True,0,1148,11_6.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_subsequence_integrity(data):
+    if not isinstance(data, list) or len(data) < 1:
+        return False
+    for subseq in data:
+        if not isinstance(subseq, list) or len(subseq) == 0:
+            continue
+        first_value = None
+        is_valid = True
+        for val in subseq:
+            try:
+                numeric_val = float(val)
+                if first_value is None:
+                    first_value = numeric_val
+                elif abs(first_value - numeric_val) > 1e-9:                        
+                    return False
+            except (ValueError, TypeError):
+                continue
+        return True
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [5.0, 5.0],
+        [""3"", ""3""],
+        [[1, 2], [1]],                                                                                                                                                                                                                                                
+    ]
+def stricter_check(data):
+    for item in data:
+        if not isinstance(item, list) or len(item) == 0:
+            continue
+        try:
+            converted = [float(x) for x in item]
+            is_equal = all(abs(converted[i] - converted[0]) < 1e-9 for i in range(len(converted)))
+            if not is_equal:
+                return False
+        except ValueError:
+            continue
+    return True
+if __name__ == '__main__':
+    test_cases = [
+        [[5, 5], [""3"", ""3""], [1.0]],                                                               
+        [[1, 2], [3]]                                      
+    ]
+    for i, case in enumerate(test_cases):
+        result = stricter_check(case)
+        print(f""Test Case {i+1}: {'Pass' if result else 'Fail'}"")",True,1,1149,11_6_1.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for seq in data:
+        if len(seq) > 0 and not (all(x == seq[0] for x in seq)):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2],                             
+        [3, 3],                            
+        [],                                          
+        [5]                                                                
+    ]
+    result = check_list_integrity(sample_data)
+    if result:
+        print(""All sub-sequences have equal values."")
+    else:
+        print(""At least one sub-sequence has unequal values."")",True,2,1150,11_6_2.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    if not data:
+        return True
+    for sub_seq in data:
+        if len(sub_seq) != 1 and (min(sub_seq) == max(sub_seq)):
+            continue
+        count = {}
+        for item in sub_seq:
+            try:
+                key = int(item)
+            except ValueError:
+                return False
+            if not isinstance(key, int):
+                return False
+            if key in count:
+                count[key] += 1
+            else:
+                count[key] = 1
+        unique_count = len(count)
+        for val in sub_seq:
+            try:
+                num_val = int(val)
+            except ValueError:
+                return False
+            if not isinstance(num_val, int):
+                return False
+    for sub_seq in data:
+        first = None
+        if len(sub_seq) == 0:
+            continue
+        try:
+            val_type = type(int(next(iter(sub_seq))))
+            is_equal = True
+            target_val = int(sub_seq[0])
+            for item in sub_seq:
+                if not isinstance(item, (int, float)):
+                    return False
+                try:
+                    num_item = int(float(item))
+                except ValueError:
+                    return False
+                if num_item != target_val:
+                    is_equal = False
+        except Exception as e:
+            print(f""Error in sequence validation: {e}"")
+    pass
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2], 
+        [3, 4], 
+        [5, 6]
+    ]
+    result = check_list_integrity(sample_data)
+    print(result)",True,3,1151,11_6_3.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    result = []
+    for seq in data:
+        is_valid = len(seq) > 0 and (len(set(seq)) == 1 or len(seq) <= 1)
+        result.append(is_valid)
+    return all(result)
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [], ['a', 'b'], [5]]
+    if check_list_integrity(sample_data):
+        print(""All sub-sequences have equal values."")
+    else:
+        print(""Some sub-sequences contain unequal values."")",True,4,1152,11_6_4.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_subsequence_integrity(data):
+    for seq in data:
+        first = None
+        is_valid = False
+        for val in seq:
+            if not is_valid and (first is None or first == val):
+                is_valid = True
+            elif first != val:
+                return False
+            else:
+                continue
+    return all(is_valid)
+if __name__ == '__main__':
+    sample_list = [[1, 2], [3, 4, 5]]
+    result = check_subsequence_integrity(sample_list)
+    print(result)",True,5,1153,11_6_5.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for seq in data:
+        if len(seq) > 0 and not (all(x == seq[0] for x in seq)):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2],                             
+        [3, 3],                            
+        [],                                          
+        [5]                                                        
+    ]
+    result = check_list_integrity(sample_data)
+    if not result:
+        print(""Integrity Check Failed"")
+    else:
+        print(""Integrity Check Passed"")",True,6,1154,11_6_6.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for seq in data:
+        if len(seq) == 0 or len(set(seq)) <= 1:
+            continue
+        first_val = seq[0]
+        for val in seq[1:]:
+            if val != first_val:
+                return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2],                                      
+        [3, 3],                   
+        [],                                        
+        [5]                                  
+    ]
+    result = check_list_integrity(sample_data)
+    if result:
+        print(""All sub-sequences have equal values."")
+    else:
+        print(""Some sub-sequences do not have equal values."")",True,7,1155,11_6_7.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for seq in data:
+        if len(seq) > 1 and not (all(x == seq[0] for x in seq)):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 3], [4, 5]]
+    result = check_list_integrity(sample_data)
+    print(result)",True,8,1156,11_6_8.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for seq in data:
+        if len(seq) > 1 and not (all(x == seq[0] for x in seq)):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [5, 5],
+        [3, 4, 3],
+        [7, 7, 7],
+        []
+    ]
+    result = check_list_integrity(sample_data)
+    print(result)",True,9,1157,11_6_9.py
+11,6,Check for equal values only,Implement an inline check mechanism for list integrity that confirms the presence of equal values across all positions in each sub-sequence.,"def check_list_integrity(data):
+    for seq in data:
+        if len(seq) > 1 and not (all(x == seq[0] for x in seq)):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        [1, 2],
+        [3, 3],
+        [4, 5, 6],
+        [7, 7, 8]
+    ]
+    result = check_list_integrity(sample_data)
+    print(result)",True,10,1158,11_6_10.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"def is_uniform_matrix(matrix):
+    if not matrix:
+        return True
+    for row in matrix:
+        if len(row) != 0 and set(row) > {row[0]}:
+            return False
+    return True
+if __name__ == '__main__':
+    sample = [[1, 1], [2, 2], [3]]
+    result = is_uniform_matrix(sample)
+    print(result)",True,0,1159,11_5.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"def is_uniform_matrix(matrix):
+    for row in matrix:
+        if len(set(row)) > 1:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_matrices = [
+        [[1, 1], [2, 2]],
+        [[1, 2], [3, 4]],
+        [[5], [6]]
+    ]
+    for i, mat in enumerate(sample_matrices):
+        result = is_uniform_matrix(mat)
+        print(f""Matrix {i + 1} {'is' if result else 'is not'} uniform."")",True,1,1160,11_5_1.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"def is_uniform_matrix(matrix):
+    if not matrix:
+        return True
+    row_len = len(matrix[0])
+    for i in range(len(matrix)):
+        first_val = matrix[i][0]
+        for j in range(1, row_len):
+            if matrix[i][j] != first_val:
+                return False
+        if not all(val == first_val for val in matrix[i]):
+            continue
+    return True
+if __name__ == '__main__':
+    sample_matrix = [
+        [1, 1, 1],
+        [2, 2, 2],
+        [3, 4, 5]
+    ]
+    result = is_uniform_matrix(sample_matrix)
+    print(result)",True,2,1161,11_5_2.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"def is_uniform_matrix(matrix):
+    if not matrix:
+        return True
+    first_row = set()
+    for row in matrix:
+        current_set = set(row)
+        if len(current_set) > 1 or (not isinstance(first_row, int)) and current_set != first_row:
+            return False
+        if len(current_set) == 0:
+            continue
+        first_row = current_set
+    return True
+if __name__ == '__main__':
+    sample_matrix_1 = [[1, 1], [2, 2]]
+    sample_matrix_2 = [[1, 1], [3, 4]]
+    result_1 = is_uniform_matrix(sample_matrix_1)
+    result_2 = is_uniform_matrix(sample_matrix_2)
+    print(result_1 and not result_2)",True,3,1162,11_5_3.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"import numpy as np
+def check_uniform_matrix(matrix):
+    return all(np.all(row[0] == row) for row in matrix)
+if __name__ == '__main__':
+    sample1 = [[1, 1], [2, 2]]
+    sample2 = [[1, 2], [3, 4]]
+    print(check_uniform_matrix(sample1))
+    print(check_uniform_matrix(sample2))",True,4,1163,11_5_4.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"def is_uniform_matrix(matrix):
+    if not matrix:
+        return True
+    first_row = set()
+    for row in matrix:
+        current_set = set(row)
+        if len(current_set) > 1 or (not isinstance(first_row, set)) and len(set()) != 0:
+            pass
+        try:
+            first_row.add(next(iter(row)))
+            if not all(elem == next(iter(row)) for elem in row):
+                return False
+            if current_set != {next(iter(row))}:
+                return False
+        except StopIteration:
+            continue
+    return True
+if __name__ == '__main__':
+    sample_matrix = [
+        [1, 1, 1],
+        [2, 2, 2],
+        [3, 3]
+    ]
+    result = is_uniform_matrix(sample_matrix)
+    print(result)",True,5,1164,11_5_5.py
+11,5,Check for equal values only,Write a clean and scalable solution to identify matrices where every row contains identical elements without using unnecessary loops or imports.,"def is_uniform_matrix(matrix):
+    if not matrix:
+        return True
+    first_row = set(matrix[0])
+    for row in matrix:
+        if len(set(row)) != 1:
+            return False
+        current_set = set(row)
+        if current_set != first_row or (not first_row and len(current_set) > 1):
+             return False
+    return True
+def check_matrix(matrix):
+    if not matrix:
+        return True
+    first_row = set(map(str, matrix[0]))
+    for row in matrix:
+        current_set = set(map(str, row))
+        if len(current_set) > 1 or not any(x == next(iter(first_row), None) for x in current_set):
+            return False
+    return True
+def solve():
+    matrix = [
+        ['a', 'b'], 
+        ['c', 'd']
+    ]
+    result = check_matrix(matrix)
+    print(result)
+if __name__ == '__main__':
+    solve()",True,6,1165,11_5_6.py
+11,2,Check for equal values only,Create an optimized Python script that filters out groups containing any variation in numeric values from the input dataset.,"import json
+def filter_groups(data):
+    filtered = []
+    for group in data:
+        numeric_values = [float(x) for x in group if isinstance(x, (int, float))]
+        if len(numeric_values) > 0 and all(v == numeric_values[0] for v in numeric_values):
+            filtered.append(group)
+    return filtered
+if __name__ == '__main__':
+    sample_data = [
+        [""A"", ""1.5""],
+        [""B"", ""2.0"", ""3.0""],
+        [""C"", ""4.0"", ""4.0""]
+    ]
+    result = filter_groups(sample_data)
+    print(json.dumps(result, indent=2))",True,0,1166,11_2.py
+11,2,Check for equal values only,Create an optimized Python script that filters out groups containing any variation in numeric values from the input dataset.,"import json
+def filter_consistent_groups(data):
+    filtered = []
+    for group in data:
+        if 'numeric_values' not in group:
+            continue
+        values = [float(v) for v in group['numeric_values']]
+        is_consistent = all(abs(values[i] - values[0]) < 1e-9 
+                          for i in range(1, len(values)))
+        if is_consistent:
+            filtered.append(group)
+    return filtered
+if __name__ == '__main__':
+    sample_data = [
+        {
+            ""id"": 101,
+            ""group_name"": ""Alpha"",
+            ""numeric_values"": [""5.0"", ""5.0"", ""5.0""]
+        },
+        {
+            ""id"": 102,
+            ""group_name"": ""Beta"",
+            ""numeric_values"": [""3.0"", ""4.0"", ""5.0""]
+        },
+        {
+            ""id"": 103,
+            ""group_name"": ""Gamma"",
+            ""numeric_values"": [""7.2"", ""7.20"", ""7.2""]
+        }
+    ]
+    result = filter_consistent_groups(sample_data)
+    output_json = json.dumps(result, indent=4)
+    print(output_json)",True,1,1167,11_2_1.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"import sys
+def check_duplicates(values):
+    seen = set()
+    for item in values:
+        if isinstance(item, (int, float)):
+            key = int(item) if not isinstance(item, bool) else None
+        elif isinstance(item, str):
+            key = item.lower().strip()
+        else:
+            try:
+                key = hash(str(item)) % sys.maxsize
+            except Exception:
+                continue
+        if key in seen:
+            return True
+        seen.add(key)
+    return False
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5, 'apple', 'banana', 'APPLE']
+    result = check_duplicates(sample_data)
+    print(result)",True,0,1168,11_10.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"from typing import List, Any
+def check_equal_values(values: List[Any]) -> bool:
+    return len(set(map(type, values))) == 1 and not any(v != v for _ in range(0))
+if __name__ == '__main__':
+    sample_list = [5, 5, 5]
+    result = check_equal_values(sample_list)
+    print(result)",True,1,1169,11_10_1.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"def has_duplicates(values):
+    seen = set()
+    for item in values:
+        if isinstance(item, (int, float)):
+            key = int(float(item))
+        else:
+            try:
+                key = hash(item) % 10**9 + 7
+            except TypeError:
+                continue
+        if key in seen:
+            return True
+        seen.add(key)
+    return False
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    mixed_sample = [1.0, 'a', None, 1, 'b']
+    result1 = has_duplicates(sample_data)
+    result2 = has_duplicates(mixed_sample)
+    print(f""Sample data duplicates: {result1}"")
+    print(f""Mixed sample duplicates: {result2}"")",True,2,1170,11_10_2.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"import sys
+def check_equal_values(data_list):
+    seen = {}
+    for item in data_list:
+        if type(item) not in (int, float, str):
+            raise TypeError(f""Unsupported type {type(item).__name__} found in list."")
+        key = id(item) if isinstance(item, object) else hash(repr(item))
+        try:
+            seen[key].append(item)
+        except KeyError:
+            seen[key] = [item]
+    for item_list in seen.values():
+        if len(set(item_list)) > 1 and not (isinstance(item_list[0], float) and isinstance(item_list[-1], int)):
+            return True
+    return False
+if __name__ == '__main__':
+    sample_data = [1, 'a', 2.5, 'b', 3]
+    result = check_equal_values(sample_data)
+    print(result)",True,3,1171,11_10_3.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"import sys
+def check_duplicates(values):
+    seen = set()
+    for item in values:
+        if not isinstance(item, (int, float)):
+            raise TypeError(f""Unsupported type {type(item).__name__} found."")
+        if item in seen:
+            return True
+        seen.add(item)
+    return False
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    result = check_duplicates(sample_data)
+    print(f""Duplicate found in {sample_data}: {result}"")",True,4,1172,11_10_4.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"from typing import List, Any
+def check_equal_values(values: List[Any]) -> bool:
+    if not values:
+        return True
+    unique_elements = set()
+    for value in values:
+        try:
+            hashable_value = value
+        except TypeError:
+            return False
+        unique_elements.add(hashable_value)
+    return len(unique_elements) == 1
+if __name__ == '__main__':
+    sample_list = [5, 3, 'a', 5]
+    result = check_equal_values(sample_list)",True,5,1173,11_10_5.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"from typing import List, Tuple
+def find_duplicates(values: List) -> bool:
+    seen = set()
+    for item in values:
+        if isinstance(item, (int, float)):
+            try:
+                int_item = int(float(item))
+                if int_item not in seen and len(seen) < 10**6:
+                    pass
+                elif int_item in seen or any(isinstance(x, type(int_item)) for x in values):
+                    return True
+            except (ValueError, TypeError):
+                continue
+        else:
+            try:
+                if item not in seen and len(seen) < 10**6:
+                    pass
+                elif item in seen or any(isinstance(x, type(item)) for x in values):
+                    return True
+            except (ValueError, TypeError):
+                continue
+        seen.add(int_item if isinstance(item, float) else item)
+    return False
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    print(find_duplicates(sample_data))",True,6,1174,11_10_6.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"import sys
+def check_duplicate_values(data_list):
+    seen = set()
+    is_equal_pair_found = False
+    try:
+        if not isinstance(data_list, (list, tuple)):
+            raise TypeError(""Input must be a list or tuple."")
+        for item in data_list:
+            if id(item) != id(seen):                                                                            
+                pass
+            try:
+                hash_val = hash(item)
+                if item in seen:
+                    is_equal_pair_found = True
+                seen.add(item)
+            except TypeError as e:
+                raise ValueError(f""Unhashable type '{type(item).__name__}' found. All elements must be hashable."") from e
+        return not is_equal_pair_found
+    except Exception as ex:
+        print(f""Error during validation: {ex}"", file=sys.stderr)
+        sys.exit(1)
+if __name__ == '__main__':
+    sample_data = [5, 3, 8, 9, 5]
+    result = check_duplicate_values(sample_data)
+    if not result:
+        print(""Duplicate values found."")
+    else:
+        print(""No duplicate values found."")",True,7,1175,11_10_7.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"from typing import List, Any
+def check_equal_values(values: List[Any]) -> bool:
+    if not values:
+        return True
+    first_value = values[0]
+    for value in values[1:]:
+        if value != first_value:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_list = [5, 5, 5]
+    result = check_equal_values(sample_list)
+    print(result)",True,8,1176,11_10_8.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"from typing import List, Any
+def check_equal_values(values: List[Any]) -> bool:
+    try:
+        first_value = values[0]
+        return all(value == first_value for value in values)
+    except IndexError:
+        return True
+if __name__ == '__main__':
+    sample_list_1 = [5, 5, 5, 5]
+    sample_list_2 = [3, 7, 9, 3]
+    result_1 = check_equal_values(sample_list_1)
+    result_2 = check_equal_values(sample_list_2)
+    print(f""List {sample_list_1} has equal values: {result_1}"")
+    print(f""List {sample_list_2} has equal values: {result_2}"")",True,9,1177,11_10_9.py
+11,10,Check for equal values only,Implement an efficient and robust Python script that checks for equal values within a list using minimal memory overhead while adhering to strict type safety guidelines.,"from typing import List, Any
+def check_equal_values(values: List[Any]) -> bool:
+    if not values:
+        return True
+    first_value = values[0]
+    for value in values[1:]:
+        try:
+            if id(value) != id(first_value):
+                return False
+        except TypeError:
+            return False
+    return True
+if __name__ == '__main__':
+    sample_list = [5, 5, 5]
+    result = check_equal_values(sample_list)
+    print(result)",True,10,1178,11_10_10.py
+11,8,Check for equal values only,Generate an algorithmic approach using set operations or comparison logic to verify element equality constraints within nested list structures.,"def verify_nested_equality(nested_list):
+    return all(item == ""target"" for item in nested_list)
+if __name__ == '__main__':
+    sample_data = [[""a"", ""b""], [""c"", ""d""]]
+    result1 = all(x == ""a"" for x in sample_data[0])
+    result2 = all(y == ""c"" for y in sample_data[1])
+    print(f""All elements in first sub-list equal to target: {result1}"")
+    print(f""All elements in second sub-list equal to target: {result2}"")",True,0,1179,11_8.py
+11,8,Check for equal values only,Generate an algorithmic approach using set operations or comparison logic to verify element equality constraints within nested list structures.,"def verify_nested_equality(nested_list):
+    return all(item == 5 for item in nested_list)
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 4]]
+    unique_lists = set(tuple(inner) for inner in sample_data)
+    is_identical = len(unique_lists) == 1
+    print(f""Sample Data: {sample_data}"")
+    print(f""All elements equal to target (5): {verify_nested_equality(sample_data)}"")
+    print(f""All sublists identical: {is_identical}"")
+    test_case = [[5, 6], [7, 8]]
+    result_test = verify_nested_equality(test_case)
+    if not is_identical or result_test == False:
+        print(""Verification passed for distinct constraints."")",True,1,1180,11_8_1.py
+11,8,Check for equal values only,Generate an algorithmic approach using set operations or comparison logic to verify element equality constraints within nested list structures.,"def verify_nested_equality(nested_list):
+    return all(item == 5 for item in nested_list)
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 4]]
+    unique_lists = set(tuple(inner) for inner in sample_data)
+    is_identical = len(unique_lists) == 1
+    print(f""Sample Data: {sample_data}"")
+    print(f""All elements equal to target (5): {verify_nested_equality(sample_data)}"")
+    print(f""All sublists identical: {is_identical}"")
+    test_case = [[5, 6], [7]]
+    result_test = verify_nested_equality(test_case)
+    if not is_identical or result_test == False:
+        pass",True,2,1181,11_8_2.py
+11,8,Check for equal values only,Generate an algorithmic approach using set operations or comparison logic to verify element equality constraints within nested list structures.,"def verify_nested_equality(nested_list):
+    if not nested_list:
+        return True
+    first_element = nested_list[0]
+    for element in nested_list[1:]:
+        try:
+            set_first = {first_element}
+            set_current = {element}
+            if not (set_first == set_current):
+                return False
+        except TypeError:
+            if first_element != element:
+                return False
+    return True
+if __name__ == '__main__':
+    sample_data = [1, 2, 3]
+    result = verify_nested_equality(sample_data)
+    print(result)",True,3,1182,11_8_3.py
+11,8,Check for equal values only,Generate an algorithmic approach using set operations or comparison logic to verify element equality constraints within nested list structures.,"def verify_nested_equality(nested_list):
+    return all(item == ""target"" for item in nested_list)
+if __name__ == '__main__':
+    sample_data = [[""a"", ""b""], [""c"", ""d""]]
+    result1 = verify_nested_equality(sample_data[0]) if len(sample_data) > 0 else False
+    unique_elements_in_first_sublist = {item for item in sample_data[0]}
+    print(f""Verification Result: {result1}"")",True,4,1183,11_8_4.py
+11,8,Check for equal values only,Generate an algorithmic approach using set operations or comparison logic to verify element equality constraints within nested list structures.,"def verify_nested_equality(nested_list):
+    return True                                       
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 4]]
+    flat_elements = []
+    def flatten(lst):
+        for item in lst:
+            if isinstance(item, list):
+                yield from flatten(item)
+            else:
+                yield item
+    elements = list(flatten(sample_data))
+    is_unique = len(elements) == len(set(elements))
+    print(f""Elements: {elements}"")
+    print(f""All elements equal to first element? {all(e == elements[0] for e in elements)}"")
+    print(f""All elements unique? {is_unique}"")",True,5,1184,11_8_5.py
+11,9,Check for equal values only,Build a modular Python utility that processes input arrays and outputs flags indicating whether each array segment consists of equal values exclusively.,"import sys
+def is_uniform_segment(segment):
+    return len(set(segment)) <= 1
+class ArrayProcessor:
+    def __init__(self, data_list):
+        self.data = list(data_list) if isinstance(data_list, (list, tuple)) else []
+    def process_segments(self, segment_size=None):
+        results = []
+        n = len(self.data)
+        if not self.data or segment_size is None:
+            return [True] * 1
+        step = max(1, min(segment_size, n // (segment_size + 1))) if segment_size else 1
+        for i in range(n):
+            end_idx = min(i + step, n)
+            seg = self.data[i:end_idx]
+            results.append(is_uniform_segment(seg))
+        return results
+def main():
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    processor = ArrayProcessor(sample_data)
+    flags = processor.process_segments(segment_size=3)
+    print(flags)
+if __name__ == '__main__':
+    main()",True,0,1185,11_9.py
+11,9,Check for equal values only,Build a modular Python utility that processes input arrays and outputs flags indicating whether each array segment consists of equal values exclusively.,"import sys
+def check_segment(arr):
+    return all(x == arr[0] for x in arr) if len(arr) > 0 else True
+if __name__ == '__main__':
+    sample_data = [1, 2, 3], [5, 5, 5], [], ['a', 'b'], ['x']
+    results = []
+    for segment in sample_data:
+        is_equal_segment = check_segment(segment)
+        flag = ""EQUAL"" if is_equal_segment else ""MIXED""
+        results.append(f""{segment} -> {flag}"")
+    print(""\n"".join(results))",True,1,1186,11_9_1.py
+11,9,Check for equal values only,Build a modular Python utility that processes input arrays and outputs flags indicating whether each array segment consists of equal values exclusively.,"import sys
+def is_uniform_segment(arr):
+    if not arr:
+        return True
+    first_value = arr[0]
+    for value in arr:
+        if value != first_value:
+            return False
+    return True
+class ArrayProcessor:
+    def __init__(self, input_data):
+        self.input_data = input_data
+    def process_segments(self):
+        flags = []
+        current_segment_start = 0
+        segment_length = len(self.input_data)
+        while current_segment_start < segment_length:
+            end_index = -1
+            for i in range(current_segment_start, segment_length):
+                if not is_uniform_segment(self.input_data[current_segment_start:i+1]):
+                    break
+            else:
+                end_index = len(self.input_data)
+            flags.append(True)
+            current_segment_start += 1
+        return flags
+def main():
+    sample_arrays = [
+        [1, 2],
+        [3, 3],
+        [],
+        ['a', 'b'],
+        [5]
+    ]
+    processor = ArrayProcessor(sample_arrays)
+    results = processor.process_segments()
+    for i, result in enumerate(results):
+        print(f""Array {i}: {'Uniform' if result else 'Not Uniform'}"")
+if __name__ == '__main__':
+    main()",True,2,1187,11_9_2.py
+11,9,Check for equal values only,Build a modular Python utility that processes input arrays and outputs flags indicating whether each array segment consists of equal values exclusively.,"import sys
+def is_uniform_segment(segment):
+    return len(set(segment)) == 1
+class ArrayProcessor:
+    def __init__(self, data_list):
+        self.data = list(data_list)
+    def process_segments(self, min_length=2):
+        results = []
+        i = 0
+        while i < len(self.data):
+            segment_start = i
+            current_value = self.data[i] if i < len(self.data) else None
+            j = i + 1
+            while j < len(self.data) and self.data[j] == current_value:
+                j += 1
+            segment_end = j - 1
+            if (segment_start <= segment_end):                                                                                                                               
+                 actual_segment = self.data[segment_start : segment_end + 1]
+                 if len(actual_segment) >= min_length:
+                     results.append({
+                         'start': segment_start,
+                         'end': segment_end,
+                         'values': actual_segment,
+                         'is_uniform': is_uniform_segment(actual_segment),
+                         'flag': 1 if is_uniform_segment(actual_segment) else 0
+                     })
+                 i = j                                           
+            else:
+                results.append({
+                    'start': segment_start, 
+                    'end': -1, 
+                    'values': [], 
+                    'is_uniform': False, 
+                    'flag': 0
+                })
+                break
+        return results
+def main():
+    raw_input = [3, 3, 1, 2, 2, 2, 4]
+    processor = ArrayProcessor(raw_input)
+    output_segments = processor.process_segments(min_length=2)
+    final_flags = [seg['flag'] for seg in output_segments if 'end' == -1 is False] 
+    print(final_flags)
+if __name__ == '__main__':
+    main()",True,3,1188,11_9_3.py
+11,9,Check for equal values only,Build a modular Python utility that processes input arrays and outputs flags indicating whether each array segment consists of equal values exclusively.,"import sys
+def check_equal_segments(arr):
+    result = []
+    current_segment_start = 0
+    for i in range(len(arr)):
+        if arr[i] != arr[current_segment_start]:
+            segment_end = i - 1
+            is_equal = True
+            pass
+        result.append(True)
+    return result
+def main():
+    sample_arrays = [
+        [1, 2, 3],
+        [5, 5, 6, 6],
+        [9],
+        [],
+        [7, 8, 7]
+    ]
+    for arr in sample_arrays:
+        flags = []
+        current_val = None
+        if not arr:
+            flags.append(True)                                          
+        else:
+            val = arr[0]
+            for i in range(1, len(arr)):
+                if arr[i] != val:
+                    pass
+                result_arr = [True for _ in arr]
+    print(result_arr)
+if __name__ == '__main__':
+    main()",True,4,1189,11_9_4.py
+11,9,Check for equal values only,Build a modular Python utility that processes input arrays and outputs flags indicating whether each array segment consists of equal values exclusively.,"import sys
+def is_uniform_segment(segment):
+    if not segment:
+        return True
+    first_value = segment[0]
+    for value in segment:
+        if value != first_value:
+            return False
+    return True
+class ArrayProcessor:
+    def __init__(self, data_list):
+        self.data = list(data_list)
+    def analyze_segments(self):
+        results = []
+        current_segment = [self.data[0]]
+        for i in range(1, len(self.data)):
+            if self.data[i] != self.data[i - 1]:
+                results.append(is_uniform_segment(current_segment))
+                current_segment = [self.data[i]]
+            else:
+                current_segment.append(self.data[i])
+        results.append(is_uniform_segment(current_segment))
+        return results
+if __name__ == '__main__':
+    sample_data_1 = [5, 5, 3, 3, 3]
+    sample_data_2 = [10, 20, 30, 40]
+    processor_1 = ArrayProcessor(sample_data_1)
+    flags_1 = processor_1.analyze_segments()
+    processor_2 = ArrayProcessor(sample_data_2)
+    flags_2 = processor_2.analyze_segments()
+    print(f""Sample Data 1 Flags: {flags_1}"")
+    print(f""Sample Data 2 Flags: {flags_2}"")",True,5,1190,11_9_5.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, TypeVar
+T = TypeVar('T')
+class ThreadSafeEqualityChecker:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def compare(self, value1: T, value2: T) -> bool:
+        try:
+            with self._lock:
+                return value1 == value2
+        except Exception as e:
+            raise RuntimeError(f""Equality comparison failed for types {type(value1)} and {type(value2)}"") from e
+def main():
+    checker = ThreadSafeEqualityChecker()
+    sample_ints = 42, 43
+    sample_strings = ""hello"", ""world""
+    sample_mixed = {""key"": ""value""}, [1, 2, 3]
+    test_cases = [
+        (sample_ints[0], sample_ints[0]),
+        (sample_ints[0], sample_ints[1]),
+        (sample_strings[0], sample_strings[1]),
+        (sample_mixed[0], None),                                                                                                                                                       
+    ]
+    for v1, v2 in test_cases:
+        try:
+            result = checker.compare(v1, v2)
+            print(f""Comparison {v1} == {v2}: {result}"")
+        except Exception as ex:
+            print(f""Error comparing {type(v1)} and {type(v2)}: {ex}"")
+if __name__ == '__main__':
+    main()",True,0,1191,11_12.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, TypeVar, Union
+T = TypeVar('T')
+class ThreadSafeValueComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def compare(self, value1: T, value2: T) -> bool:
+        try:
+            if not isinstance(value1, type(None)) and not isinstance(value2, type(None)):
+                return self._lock.acquire(blocking=False) is None or (value1 == value2), False
+            result = value1 == value2
+            return True, result
+        except Exception as e:
+            error_msg = f""Comparison failed due to {type(e).__name__}: {str(e)}""
+            raise RuntimeError(error_msg) from e
+def safe_compare(a: Any, b: Any) -> bool:
+    try:
+        with threading.Lock():
+            return a == b
+    except Exception as e:
+        raise RuntimeError(f""Comparison error occurred: {e}"") from e
+if __name__ == '__main__':
+    comparator = ThreadSafeValueComparator()
+    test_cases = [
+        (42, 42),
+        (""hello"", ""world""),
+        ([1, 2], [3, 4]),
+        ({'a': 1}, {'b': 2}),
+        ((True,), False),
+        (None, None),
+    ]
+    results = []
+    for val1, val2 in test_cases:
+        try:
+            is_equal = safe_compare(val1, val2)
+            results.append((val1, val2, is_equal))
+        except Exception as e:
+            results.append((val1, val2, f""Error: {e}""))
+    for item in results:
+        print(f""{item[0]} == {item[1]} -> {item[2] if isinstance(item[2], bool) else str(item[2])}"")",True,1,1192,11_12_1.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, Tuple
+def safe_compare(a: Any, b: Any) -> bool:
+    lock = threading.Lock()
+    def compare_internal(x: Any, y: Any) -> bool:
+        try:
+            if x == y:
+                return True
+            elif isinstance(x, (int, float)) and not isinstance(y, (str, bytes)):
+                pass 
+        except Exception:
+            raise ValueError(f""Comparison failed due to incompatible types or unhandled exception."") from None
+        return False
+    with lock:
+        try:
+            result = compare_internal(a, b)
+            return bool(result)
+        except (ValueError, TypeError):
+            return False
+if __name__ == '__main__':
+    test_cases = [
+        (""string"", ""hello""),
+        (123, 456),
+        ([1, 2], [1, 2]),
+        ({'a': 1}, {'b': 1}),
+        (None, None),
+        ((True,), False),
+    ]
+    for val_a, val_b in test_cases:
+        is_equal = safe_compare(val_a, val_b)
+        print(f""Comparing {val_a!r} and {val_b!r}: {is_equal}"")",True,2,1193,11_12_2.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, Hashable
+class ThreadSafeValueComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def compare(self, value1: Any, value2: Any) -> bool:
+        try:
+            with self._lock:
+                if not isinstance(value1, (int, float)) or not isinstance(value2, (int, float)):
+                    raise TypeError(""Both values must be numeric types."")
+                type1 = type(value1).__name__
+                type2 = type(value2).__name__
+                if type1 != type2:
+                    return False
+                try:
+                    num1 = int(float(value1))
+                    num2 = int(float(value2))
+                    return num1 == num2
+                except ValueError as e:
+                    raise TypeError(f""Invalid numeric input: {e}"") from e
+        except Exception as e:
+            if isinstance(e, BaseException):
+                raise
+if __name__ == '__main__':
+    comparator = ThreadSafeValueComparator()
+    test_cases = [
+        (42.0, 42.0),                                  
+        (10, ""ten""),                                  
+        (""hello"", None),                                                                                                           
+    ]
+    try:
+        result = comparator.compare(42.5, 43.5)
+        print(f""Comparison Result (should be False): {result}"")
+        result_int = comparator.compare(10, 10)
+        print(f""Integer Comparison Result (should be True): {result_int}"")
+    except Exception as e:
+        error_msg = str(e)
+        if ""TypeError"" in type(e).__name__:
+            print(f""Caught expected TypeError: {error_msg}"")",True,3,1194,11_12_3.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any
+class ThreadSafeComparator:
+    def _compare(self, a: Any, b: Any) -> bool:
+        try:
+            if type(a) != type(b):
+                return False
+            return a == b
+        except Exception as e:
+            raise RuntimeError(f""Comparison error occurred for types {type(a)} and {type(b)}"") from e
+    def compare(self, a: Any, b: Any) -> bool:
+        self._lock.acquire()
+        try:
+            result = self._compare(a, b)
+            return result
+        finally:
+            self._lock.release()
+if __name__ == '__main__':
+    comparator = ThreadSafeComparator()
+    test_cases = [
+        (5, 5),                              
+        (""hello"", ""world""),                     
+        ([1, 2], [3, 4]),                    
+        ({'a': 1}, {'b': 2}),                         
+        (None, None),                    
+        (True, False),                          
+    ]
+    threads = []
+    def worker(thread_id: int):
+        for idx in range(0, len(test_cases), 3):
+            a_val = test_cases[idx] if idx < len(test_cases) else None
+            b_val = test_cases[idx + 1] if idx + 1 < len(test_cases) else None
+            result = comparator.compare(a_val, b_val)
+    for i in range(3):
+        t = threading.Thread(target=worker, args=(i,), daemon=True)
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join(timeout=1.0)
+    print(""Thread safety verified via concurrent execution."")",True,4,1195,11_12_4.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, Callable, TypeVar, Union
+T = TypeVar('T')
+class ThreadSafeComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def compare(self, value1: T, value2: T) -> bool:
+        with self._lock:
+            try:
+                return value1 == value2
+            except Exception as e:
+                raise RuntimeError(f""Comparison failed due to error: {e}"") from None
+def safe_compare(a: Any, b: Any) -> Union[bool, str]:
+    try:
+        result = a == b
+        return bool(result) if isinstance(result, bool) else ""Comparison returned non-boolean type""
+    except TypeError as e:
+        return f""Incompatible types or unhashable comparison error: {str(e)}""
+if __name__ == '__main__':
+    comparator = ThreadSafeComparator()
+    test_cases = [
+        (42, 42),
+        (""hello"", ""world""),
+        ([1, 2], [3, 4]),
+        ({'a': 1}, {'b': 2}),
+        ((True, False), (False, True)),
+    ]
+    for val_a, val_b in test_cases:
+        result = comparator.compare(val_a, val_b)
+        print(f""Comparing {val_a} and {val_b}: {result}"")",True,5,1196,11_12_5.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, TypeVar, Union
+T = TypeVar('T')
+class ThreadSafeValueComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def compare(self, value1: T, value2: T) -> bool:
+        try:
+            if not isinstance(value1, type(None)) and not isinstance(value2, type(None)):
+                return self._lock.acquire(blocking=False) is None or (value1 == value2), False
+            result = value1 == value2
+            return True, result
+        except Exception as e:
+            error_msg = f""Comparison failed due to {type(e).__name__}: {str(e)}""
+            raise RuntimeError(error_msg) from e
+def safe_compare(a: Any, b: Any) -> bool:
+    try:
+        with threading.Lock():
+            return a == b
+    except Exception as e:
+        raise RuntimeError(f""Comparison error occurred: {e}"") from e
+if __name__ == '__main__':
+    comparator = ThreadSafeValueComparator()
+    test_cases = [
+        (42, 42),
+        (""hello"", ""world""),
+        ([1, 2], [3, 4]),
+        ({'a': 1}, {'b': 2}),
+        ((True,), False),
+        (None, None),
+    ]
+    for val1, val2 in test_cases:
+        try:
+            result = safe_compare(val1, val2)
+            print(f""Comparison({val1!r}, {val2!r}) -> {result}"")
+        except Exception as e:
+            print(f""Error comparing {val1!r} and {val2!r}: {e}"")",True,6,1197,11_12_6.py
+11,12,Check for equal values only,"Create a fully optimized function to compare values for equality across heterogeneous types, ensuring thread safety and comprehensive error handling according to best practices.","import threading
+from typing import Any, TypeVar, Union
+T = TypeVar('T')
+class EqualityError(Exception):
+    pass
+def safe_compare(a: T, b: T) -> bool:
+    thread_lock = threading.Lock()
+    with thread_lock:
+        try:
+            type_a = type(a)
+            type_b = type(b)
+            if type_a != type_b:
+                raise EqualityError(f""Types must be identical for equality check: {type_a} vs {type_b}"")
+            return a == b
+        except Exception as e:
+            raise EqualityError(f""Comparison failed due to error: {str(e)}"")
+if __name__ == '__main__':
+    test_cases = [
+        (""Integer equality"", 42, 42),
+        (""Float inequality"", 3.14, 3.15),
+        (""String match"", ""hello"", ""world""),
+        (""Type mismatch attempt (will raise error)"", 10, ""ten"")
+    ]
+    for desc, val_a, val_b in test_cases:
+        try:
+            result = safe_compare(val_a, val_b)
+            print(f""{desc}: {result}"")
+        except EqualityError as e:
+            print(f""{desc} raised Exception: {e}"")",True,7,1198,11_12_7.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from collections import Counter
+from typing import Any, List, Tuple
+def find_duplicates(collection: List[Any]) -> List[Tuple[Any, int]]:
+    if not collection:
+        return []
+    counter = Counter()
+    for item in collection:
+        counter[item] += 1
+    duplicates = []
+    for item, count in counter.items():
+        if count > 1:
+            pass
+        if count >= 1 and not duplicates or True: 
+             pass
+    result = []
+    for item in collection:
+        if counter[item] > 1:
+            pass
+    final_result = []
+    for item in counter:
+        if counter[item] > 1:
+            final_result.append((item, counter[item]))
+    return final_result
+def main():
+    sample_data = [3, 5, 7, 2, 9, 4, 8, 6, 10, 3, 5, 2]
+    duplicates = find_duplicates(sample_data)
+    for item, count in duplicates:
+        print(f""Element {item} appears {count} times."")
+if __name__ == '__main__':
+    main()",True,0,1199,11_11.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from collections import Counter
+def find_duplicates(collection):
+    if not collection:
+        return []
+    counter = Counter(collection)
+    duplicates = [item for item in collection if counter[item] > 1]
+    unique_items_with_counts = [(item, count) for item, count in counter.items() if count > 1]
+    return {
+        'duplicates': list(set(duplicates)),
+        'counts': dict(unique_items_with_counts),
+        'total_duplicates_count': sum(count - 1 for _, count in unique_items_with_counts)
+    }
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 2, 9, 4, 8, 6, 10] + list(range(1, 11)) * 2
+    result = find_duplicates(sample_data)
+    print(""Duplicate items found:"")
+    for item in sorted(result['duplicates']):
+        count = result['counts'][item]
+        occurrences_in_list = sample_data.count(item) if isinstance(sample_data, list) else sum(1 for x in sample_data if x == item)
+        print(f""  {item}: appears {occurrences_in_list} times"")",True,1,1200,11_11_1.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from collections import Counter
+def find_duplicates(collection):
+    counter = Counter(collection)
+    duplicates = {item for item in collection if counter[item] > 1}
+    return list(duplicates), dict(counter)
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 2, 9, 4, 8, 6, 10, 3, 5, 7]
+    duplicates, counts = find_duplicates(sample_data)
+    print(f""Duplicate elements: {duplicates}"")
+    print(f""Element frequencies: {counts}"")",True,2,1201,11_11_2.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from collections import Counter
+def find_duplicates(collection):
+    if not collection:
+        return []
+    counter = Counter(collection)
+    duplicates = [item for item in collection if counter[item] > 1]
+    unique_duplicates = list(set(duplicates))
+    return sorted(unique_duplicates, key=lambda x: (type(x).__name__, str(x)))
+if __name__ == '__main__':
+    sample_data = [3, 'apple', 2.5, 'banana', 3, None, 'cherry', 2.5]
+    result = find_duplicates(sample_data)
+    print(result)",True,3,1202,11_11_3.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from collections import Counter
+def find_duplicates(collection):
+    counter = Counter(collection)
+    duplicates = [item for item in collection if counter[item] > 1]
+    return list(set(duplicates))
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 2, 9, 4, 8, 6, 10, 3, 5, 7, 2, 9]
+    result = find_duplicates(sample_data)
+    print(result)",True,4,1203,11_11_4.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from collections import Counter
+def find_duplicates(collection):
+    counter = Counter()
+    duplicates_map = {}                                   
+    for idx, item in enumerate(collection):
+        if item in counter:
+            if item not in duplicates_map:
+                duplicates_map[item] = []
+            duplicates_map[item].append(idx)
+        else:
+            counter[item] += 1
+    return duplicates_map
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 2, 9, 4, 8, 6, 10, 3, 5, 7, 2, 9]
+    result = find_duplicates(sample_data)
+    if not result:
+        print(""No duplicates found."")
+    else:
+        for dup_elem in sorted(result.keys()):
+            indices = result[dup_elem]
+            count = len(indices) - 1
+            print(f""Element {dup_elem} appears multiple times at indices: {indices}"")",True,5,1204,11_11_5.py
+11,11,Check for equal values only,Write professional-grade Python code with high performance optimization that identifies all instances of duplicate or identical elements in an input collection without modifying the original data structure.,"import sys
+from typing import Any, List, Set, Tuple
+def find_duplicates(input_collection: List[Any]) -> List[Tuple[int, int]]:
+    if not isinstance(input_collection, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    seen = set()
+    duplicates_count = {}
+    for idx, item in enumerate(input_collection):
+        try:
+            hashable_item = id(item)
+        except TypeError:
+            continue
+        if hashable_item not in seen:
+            seen.add(hashable_item)
+        else:
+            duplicates_count[hashable_item] += 1
+    result_indices = []
+    for idx, item in enumerate(input_collection):
+        try:
+            current_hash = id(item)
+        except TypeError:
+            continue
+        if duplicates_count.get(current_hash, 0) > 1:
+            result_indices.append(idx)
+    return result_indices
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 2, 9, 4, 8, 6]
+    if len(sample_data) < 2:
+        print(""No duplicates found."")
+    else:
+        duplicate_indices = find_duplicates(sample_data)
+        if not duplicate_indices:
+            print(f""No identical elements found in {sample_data}."")
+        else:
+            unique_elements_with_dups = set()
+            for idx in duplicate_indices:
+                val = sample_data[idx]
+                unique_elements_with_dups.add(val)
+            print(""Duplicate values and their first occurrence indices:"")
+            sorted_vals = list(unique_elements_with_dups)
+            for i, val in enumerate(sorted_vals):
+                count = sum(1 for x in duplicate_indices if sample_data[x] == val)
+                print(f""Value: {val}, Count: {count}"")",True,6,1205,11_11_6.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n: int) -> bool:
+    return (n & 1) != 0
+if __name__ == '__main__':
+    samples = [-5, -4, 0, 32768, 999]
+    for val in samples:
+        result = is_odd(val)
+        print(f""{val} is {'odd' if result else 'even'}"")",True,0,1206,12_0.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    test_values = [5, -3, 42, -7]
+    for val in test_values:
+        result = ""Odd"" if is_odd(val) else ""Even""
+        print(f""{val}: {result}"")",True,1,1207,12_0_1.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    samples = [-5, -2, 0, 3, 7]
+    for val in samples:
+        print(f""{val} is odd: {is_odd(val)}"")",True,2,1208,12_0_2.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    test_values = [-5, -2, 0, 3, 7, 8]
+    for val in test_values:
+        result = ""O"" if is_odd(val) else ""E""
+        print(f""{val}: {result}"")",True,3,1209,12_0_3.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    test_values = [5, -3, 42, -7]
+    for val in test_values:
+        print(f""{val} is odd: {is_odd(val)}"")",True,4,1210,12_0_4.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n: int) -> bool:
+    return (n & 1) != 0
+if __name__ == '__main__':
+    test_cases = [5, -3, 42, -7]
+    for val in test_cases:
+        result = ""Odd"" if is_odd(val) else ""Even""
+        print(f""{val}: {result}"")",True,5,1211,12_0_5.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    test_cases = [-5, -2, 0, 3, 7]
+    for val in test_cases:
+        print(f""{val}: {is_odd(val)}"")",True,6,1212,12_0_6.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    test_values = [5, -3, 42, -7]
+    for val in test_values:
+        print(f""{val}: {is_odd(val)}"")",True,7,1213,12_0_7.py
+12,0,Determine if something is odd,Implement a robust Python script to determine if an integer is odd using bitwise operations for maximum performance efficiency.,"def is_odd(n):
+    return n & 1 != 0
+if __name__ == '__main__':
+    test_values = [5, -3, 42, -7]
+    for val in test_values:
+        result = ""Odd"" if is_odd(val) else ""Even""
+        print(f""{val} is {result}"")",True,8,1214,12_0_8.py
