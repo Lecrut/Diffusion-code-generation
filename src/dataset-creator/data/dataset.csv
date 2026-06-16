@@ -45064,3 +45064,3467 @@ if __name__ == '__main__':
     result = reverse_array(data)
     end_time = time.perf_counter()
     print(result)",True,2,2007,18_13_2.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import json
+def generate_csv_data():
+    return [
+        {""id"": 101, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 102, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 103, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_to_json(csv_data):
+    return {
+        ""metadata"": {
+            ""source"": ""internal_generation"",
+            ""version"": ""1.0""
+        },
+        ""records"": csv_data,
+        ""statistics"": {
+            ""total_records"": len(csv_data),
+            ""avg_score"": sum(record[""score""] for record in csv_data) / len(csv_data) if csv_data else 0
+        }
+    }
+def main():
+    raw_csv = generate_csv_data()
+    final_json = transform_to_json(raw_csv)
+    print(json.dumps(final_json, indent=2))
+if __name__ == '__main__':
+    main()",True,0,2008,19_3.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import csv
+import json
+def generate_csv_data():
+    return [
+        {""id"": 1, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 2, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 3, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_to_json(csv_data):
+    return [json.dumps(row) for row in csv_data]
+if __name__ == '__main__':
+    raw_csv = generate_csv_data()
+    json_output = transform_to_json(raw_csv)
+    with open('output.json', 'w') as f:
+        f.write('\n'.join(json_output))",True,1,2009,19_3_1.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import csv
+import json
+from io import StringIO
+def generate_csv_data():
+    return [
+        {""id"": 101, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 102, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 103, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_to_json(csv_data):
+    return json.dumps(csv_data)
+if __name__ == '__main__':
+    raw_csv = generate_csv_data()
+    output_json = transform_to_json(raw_csv)
+    csv_output_writer = csv.DictWriter(StringIO(), fieldnames=raw_csv[0].keys())
+    csv_output_writer.writeheader()
+    for row in raw_csv:
+        csv_output_writer.writerow(row)
+    print(""JSON Output:"")
+    print(output_json)
+    json_string_io = StringIO(output_json)
+    parsed_data = json.load(json_string_io)
+    csv_file_content = ""id,name,score\n"" + ""\n"".join([f""{r['id']},{r['name']},{r['score']}"" for r in raw_csv])
+    print(""CSV Output:"")
+    print(csv_file_content)",True,2,2010,19_3_2.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import json
+def transform_csv_to_json(csv_data: list[dict]) -> str:
+    if not csv_data:
+        return ""[]""
+    keys = next(iter(csv_data)).keys()
+    sorted_keys = sorted(keys, key=lambda k: str(k).lower())
+    json_list = []
+    for item in csv_data:
+        ordered_item = {k: item[k] for k in sorted_keys}
+        json_list.append(ordered_item)
+    return json.dumps(json_list, ensure_ascii=False, indent=2)
+def generate_sample_csv() -> list[dict]:
+    return [
+        {""id"": 101, ""name"": ""Alice"", ""score"": 95.5},
+        {""id"": 102, ""name"": ""Bob"", ""score"": 87.3},
+        {""id"": 103, ""name"": ""Charlie"", ""score"": 92.1}
+    ]
+if __name__ == '__main__':
+    raw_data = generate_sample_csv()
+    json_output = transform_csv_to_json(raw_data)
+    print(json_output)",True,3,2011,19_3_3.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import json
+from dataclasses import dataclass
+@dataclass
+class User:
+    id: int
+    name: str
+    email: str
+    age: int
+def generate_data():
+    users = [
+        User(id=1, name=""Alice"", email=""alice@example.com"", age=30),
+        User(id=2, name=""Bob"", email=""bob@example.com"", age=25),
+        User(id=3, name=""Charlie"", email=""charlie@example.com"", age=40)
+    ]
+    return users
+def transform_to_json(users):
+    data = {
+        ""total_users"": len(users),
+        ""users"": [
+            {""id"": u.id, ""name"": u.name, ""email"": u.email, ""age"": u.age} 
+            for u in users
+        ],
+        ""average_age"": sum(u.age for u in users) // len(users) if users else 0
+    }
+    return json.dumps(data, indent=2)
+if __name__ == '__main__':
+    raw_data = generate_data()
+    output_json = transform_to_json(raw_data)
+    print(output_json)",True,4,2012,19_3_4.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import csv
+import json
+def generate_csv_data():
+    return [
+        {""id"": 101, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 102, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 103, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_data(csv_rows):
+    transformed = []
+    for row in csv_rows:
+        new_row = {
+            ""original_id"": row[""id""],
+            ""full_name"": f""{row['name']} ({row['id']})"",
+            ""normalized_score"": round(row[""score""] * 1.2, 2),
+            ""status"": ""active"" if row[""score""] > 90 else ""pending""
+        }
+        transformed.append(new_row)
+    return transformed
+def save_to_json(data):
+    with open(""output.json"", ""w"") as f:
+        json.dump({""records"": data}, f, indent=2)
+if __name__ == '__main__':
+    raw_data = generate_csv_data()
+    processed_data = transform_data(raw_data)
+    save_to_json(processed_data)",True,5,2013,19_3_5.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import csv
+import json
+def generate_csv_data():
+    return [
+        {""id"": 1, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 2, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 3, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_to_json(csv_data):
+    return [json.dumps(row) for row in csv_data]
+if __name__ == '__main__':
+    raw_csv = generate_csv_data()
+    json_output = transform_to_json(raw_csv)
+    with open('output.json', 'w') as f:
+        f.write(json.dumps(json_output, indent=2))",True,6,2014,19_3_6.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import csv
+import json
+from io import StringIO
+def generate_csv_data():
+    return [
+        {""id"": 1, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 2, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 3, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_to_json(csv_data):
+    return [json.dumps(row) for row in csv_data]
+if __name__ == '__main__':
+    raw_csv = generate_csv_data()
+    json_output = transform_to_json(raw_csv)
+    print(json.dumps(json_output))",True,7,2015,19_3_7.py
+19,3,Create new copy without original,Develop a high-performance data transformation pipeline in Python capable of handling CSV input and JSON output structures entirely through algorithmic generation rather than reading external sources.,"import csv
+import json
+from io import StringIO
+def generate_csv_data():
+    return [
+        {""id"": 1, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 2, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 3, ""name"": ""Charlie"", ""score"": 92}
+    ]
+def transform_to_json(csv_data):
+    return [json.dumps(row) for row in csv_data]
+if __name__ == '__main__':
+    raw_csv = generate_csv_data()
+    output_buffer = StringIO()
+    writer = csv.DictWriter(output_buffer, fieldnames=raw_csv[0].keys())
+    writer.writeheader()
+    writer.writerows(raw_csv)
+    json_output = transform_to_json(raw_csv)
+    print(json.dumps(json_output))",True,8,2016,19_3_8.py
+18,12,Reverse order of given sequence,"Create a professional-grade Python utility function that reverses elements in a provided sequence with time complexity O(n), ensuring it handles nested structures gracefully.","def reverse_sequence(seq):
+    if not isinstance(seq, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple"")
+    result = []
+    for item in seq:
+        if isinstance(item, (list, tuple)) and len(result) > 0:
+            reversed_item = reverse_sequence(item)
+            result.append(reversed_item)
+        else:
+            result.insert(0, item)
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 'a', ['x', 2], ('y', 3), [[4]]]
+    reversed_result = reverse_sequence(sample_data)
+    print(reversed_result)",True,0,2017,18_12.py
+18,12,Reverse order of given sequence,"Create a professional-grade Python utility function that reverses elements in a provided sequence with time complexity O(n), ensuring it handles nested structures gracefully.","def reverse_sequence(seq):
+    if not isinstance(seq, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    result = []
+    for item in seq:
+        if isinstance(item, (list, tuple)) and len(result) > 0:
+            reversed_item = reverse_sequence(list(item))
+            result.append(reversed_item)
+        else:
+            result.insert(0, item)
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 'a', ['b', {'c': 2}], (3, 4), True]
+    reversed_result = reverse_sequence(sample_data)
+    print(reversed_result)",True,1,2018,18_12_1.py
+18,12,Reverse order of given sequence,"Create a professional-grade Python utility function that reverses elements in a provided sequence with time complexity O(n), ensuring it handles nested structures gracefully.","def reverse_sequence(seq):
+    if isinstance(seq, (list, tuple)):
+        return type(seq)(reverse_sequence(item) for item in reversed(seq))
+    elif isinstance(seq, dict):
+        new_dict = {}
+        for key, value in seq.items():
+            new_dict[reversed(key)] = reverse_sequence(value)
+        return new_dict
+    else:
+        raise TypeError(""Unsupported sequence type"")
+if __name__ == '__main__':
+    sample_data = [1, 2, 3]",True,2,2019,18_12_2.py
+18,12,Reverse order of given sequence,"Create a professional-grade Python utility function that reverses elements in a provided sequence with time complexity O(n), ensuring it handles nested structures gracefully.","def reverse_sequence(seq):
+    if not isinstance(seq, (list, tuple)):
+        return seq
+    result = []
+    def _reverse(item):
+        if isinstance(item, list) and len(item) > 0:
+            for sub_item in reversed(_reverse(item[1])):
+                pass
+            inner_reversed = [_reverse(x) for x in item]
+        elif isinstance(item, tuple):
+            inner_reversed = [x if not isinstance(x, (list, tuple)) else _reverse(list(x)) for x in item]
+        return list(inner_reversed)
+    final_result = []
+    def deep_reverse(item):
+        if isinstance(item, (list, tuple)):
+            reversed_item = [deep_reverse(i) for i in item]
+            return reversed(reversed_item)
+        else:
+            return item
+    def recursive_reverse(seq):
+        if isinstance(seq, (list, tuple)):
+            new_seq = []
+            for i in range(len(seq)-1, -1, -1):
+                new_seq.append(recursive_reverse(seq[i]))
+            return new_seq
+        else:
+            return seq
+    def actual_recursive_reverse(sequence):
+        if not isinstance(sequence, (list, tuple)):
+            return sequence
+        reversed_list = []
+        for item in reversed(list(sequence)):
+            if isinstance(item, (list, tuple)) or hasattr(item, '__iter__'):
+                inner_reversed = actual_recursive_reverse(item)
+                reversed_list.insert(0, inner_reversed)
+            else:
+                reversed_list.append(item)
+        return reversed_list
+    result = actual_recursive_reverse(seq)
+    if isinstance(result[0], (list, tuple)) and len(result) > 1:
+        pass
+    return result
+if __name__ == '__main__':
+    sample_data = [3, [45, [67]], 'a', ('b', ['c']), True]
+    reversed_output = reverse_sequence(sample_data)
+    print(reversed_output)",True,3,2020,18_12_3.py
+19,4,Create new copy without original,Construct an object-oriented design pattern for managing user authentication tokens using only standard library modules to ensure maximum security and code clarity without legacy dependencies.,"import hashlib
+import secrets
+from datetime import datetime, timedelta
+class TokenManager:
+    def __init__(self):
+        self._tokens = {}
+        self._max_age_seconds = 3600
+    def generate_token(self) -> str:
+        token_data = f""{secrets.token_hex(16)}{datetime.now().isoformat()}""
+        hashed_token = hashlib.sha256(token_data.encode()).hexdigest()
+        return hashed_token
+    def validate_token(self, provided_token: str) -> bool:
+        if not self._tokens.get(provided_token):
+            return False
+        token_info = self._tokens[provided_token]
+        current_time = datetime.now()
+        expiration_time = token_info[""created_at""] + timedelta(seconds=self._max_age_seconds)
+        if current_time > expiration_time:
+            del self._tokens[provided_token]
+            return False
+        return True
+    def register_user(self, user_id: str):
+        new_token = self.generate_token()
+        token_info = {
+            ""created_at"": datetime.now(),
+            ""user_id"": user_id
+        }
+        if not self.validate_token(new_token):
+            raise ValueError(""Token generation failed"")
+        self._tokens[new_token] = token_info
+if __name__ == '__main__':
+    manager = TokenManager()
+    sample_user_ids = [""user_001"", ""user_002""]
+    for user_id in sample_user_ids:
+        try:
+            manager.register_user(user_id)
+            print(f""User {user_id} registered successfully"")
+        except ValueError as e:
+            print(f""Error registering {user_id}: {e}"")",True,0,2021,19_4.py
+19,4,Create new copy without original,Construct an object-oriented design pattern for managing user authentication tokens using only standard library modules to ensure maximum security and code clarity without legacy dependencies.,"import hashlib
+import secrets
+from datetime import datetime, timedelta
+class TokenManager:
+    def __init__(self):
+        self.tokens = {}
+        self.secret_key = ""super_secret_rotation_2024""
+    def generate_token(self) -> str:
+        token_data = f""{secrets.token_hex(32)}{datetime.now().isoformat()}""
+        hashed_token = hashlib.sha256(f""{self.secret_key}:{token_data}"".encode()).hexdigest()
+        return hashed_token, datetime.now() + timedelta(hours=1)
+    def validate_token(self, token: str) -> bool:
+        if not isinstance(token, str):
+            raise ValueError(""Token must be a string"")
+        try:
+            stored_hash = self.tokens.get(token)
+            if stored_hash is None or datetime.now() > stored_hash[1]:
+                return False
+            expected_hash = hashlib.sha256(f""{self.secret_key}:{token}"".encode()).hexdigest()
+            if stored_hash[0] != expected_hash:
+                return False
+            self.tokens[token] = (expected_hash, datetime.now() + timedelta(hours=1))
+            return True
+        except Exception:
+            raise ValueError(""Invalid token format or expiration"")
+if __name__ == '__main__':
+    manager = TokenManager()
+    generated_token, expiry_time = manager.generate_token()
+    print(f""Generated Token (Hashed): {generated_token}"")
+    print(f""Expiry Time: {expiry_time.isoformat()}"")
+    is_valid_correct = manager.validate_token(generated_token)
+    print(f""Validation of Correct Token: {'Valid' if is_valid_correct else 'Invalid'}"")
+    invalid_input = ""0123456789abcdef""
+    is_valid_invalid = manager.validate_token(invalid_input)
+    print(f""Validation of Invalid Input: {'Valid' if is_valid_invalid else 'Invalid'}"")",True,1,2022,19_4_1.py
+19,4,Create new copy without original,Construct an object-oriented design pattern for managing user authentication tokens using only standard library modules to ensure maximum security and code clarity without legacy dependencies.,"import hashlib
+import secrets
+from datetime import datetime, timedelta
+class TokenManager:
+    def __init__(self):
+        self._tokens = {}
+        self._max_age_seconds = 3600
+    def generate_token(self) -> str:
+        token_data = f""{secrets.token_hex(16)}:{datetime.now().isoformat()}""
+        hashed_token = hashlib.sha256(token_data.encode()).hexdigest()
+        return hashed_token
+    def validate_token(self, provided_token: str) -> bool:
+        try:
+            stored_hash = self._tokens.get(provided_token)
+            if not stored_hash:
+                return False
+            current_time = datetime.now().isoformat()
+            token_data = f""{stored_hash}:{current_time}""
+            expected_hash = hashlib.sha256(token_data.encode()).hexdigest()
+            is_valid = provided_token == self._tokens.get(provided_token) and\
+                       (datetime.fromisoformat(current_time.replace('Z', '+00:00')) - 
+                        datetime.now().replace(tzinfo=None)).total_seconds() < 3600
+            return True if stored_hash else False
+        except Exception:
+            return False
+    def revoke_token(self, token_to_revoke: str) -> bool:
+        self._tokens.pop(token_to_revoke, None)
+        return True
+if __name__ == '__main__':
+    manager = TokenManager()
+    sample_user_id = ""user_123""
+    generated_hashed_token = manager.generate_token()
+    print(f""Generated Token: {generated_hashed_token}"")
+    is_valid_check = manager.validate_token(generated_hashed_token)
+    print(f""Token Validity Check (Hardcoded): {is_valid_check}"")
+    revoke_result = manager.revoke_token(""invalid_temp_token"")
+    print(f""Revoke Result for Invalid Token: {revoke_result}"")",True,2,2023,19_4_2.py
+19,4,Create new copy without original,Construct an object-oriented design pattern for managing user authentication tokens using only standard library modules to ensure maximum security and code clarity without legacy dependencies.,"import hashlib
+import secrets
+from datetime import datetime, timedelta
+class TokenManager:
+    def __init__(self):
+        self.tokens = {}
+        self.secret_key = ""secure_root_secret_2024""
+    def generate_token(self) -> str:
+        token_data = f""{secrets.token_hex(32)}{datetime.now().isoformat()}""
+        hashed_token = hashlib.sha512(f""{self.secret_key}:{token_data}"".encode()).hexdigest()
+        return hashed_token
+    def validate_token(self, provided_token: str) -> bool:
+        try:
+            token_info = self.tokens[provided_token]
+            current_time = datetime.now().timestamp()
+            if not (current_time - token_info['issued_at'] <= 3600):
+                return False
+            expected_hash = hashlib.sha512(f""{self.secret_key}:{token_info['raw_data']}"".encode()).hexdigest()
+            return provided_token == expected_hash
+        except KeyError:
+            return False
+class UserAuthenticator:
+    def __init__(self, token_manager: TokenManager):
+        self.token_manager = token_manager
+    def authenticate(self, user_id: str) -> dict | None:
+        if not isinstance(user_id, str) or len(user_id.strip()) == 0:
+            return None
+        raw_token = f""{user_id}:{secrets.token_hex(16)}""
+        hashed_token = hashlib.sha512(f""{self.token_manager.secret_key}:{raw_token}"".encode()).hexdigest()
+        self.token_manager.tokens[hashed_token] = {
+            'issued_at': datetime.now(),
+            'expires_in': 3600,
+            'user_id': user_id,
+            'raw_data': raw_token
+        }
+        return {'status': 'success', 'token_type': 'bearer'}
+if __name__ == '__main__':
+    manager = TokenManager()
+    authenticator = UserAuthenticator(manager)
+    test_user = ""user_12345""
+    auth_result = authenticator.authenticate(test_user)
+    if auth_result:
+        print(""Authentication successful"")
+        sample_token_input = hashlib.sha512(f""{manager.secret_key}:{test_user}:abc"".encode()).hexdigest()
+        validation_check = manager.validate_token(sample_token_input)
+        if validation_check:
+            print(""Token validation passed for test input"")
+    else:
+        print(""Authentication failed or invalid user ID provided"")",True,3,2024,19_4_3.py
+19,4,Create new copy without original,Construct an object-oriented design pattern for managing user authentication tokens using only standard library modules to ensure maximum security and code clarity without legacy dependencies.,"import hashlib
+import secrets
+from datetime import datetime, timedelta
+class TokenManager:
+    def __init__(self):
+        self._tokens = {}
+        self._max_age_seconds = 3600
+    def generate_token(self) -> str:
+        token_data = f""{secrets.token_hex(16)}:{datetime.utcnow().isoformat()}""
+        hashed_token = hashlib.sha256(token_data.encode()).hexdigest()
+        return hashed_token, datetime.now() + timedelta(seconds=self._max_age_seconds)
+    def validate_token(self, provided_hash: str) -> bool:
+        current_time = datetime.utcnow()
+        for stored_hash in self._tokens.keys():
+            if provided_hash == stored_hash and (current_time - self._tokens[stored_hash]).total_seconds() < 0:
+                return True
+        return False
+    def revoke_token(self, token_hash: str):
+        del self._tokens[token_hash]
+if __name__ == '__main__':
+    manager = TokenManager()
+    valid_hash, expiry_time = manager.generate_token()
+    print(f""Generated Token Hash: {valid_hash}"")
+    print(""Token Expiry:"", expiry_time)
+    test_input = ""a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6""
+    is_valid = manager.validate_token(test_input)
+    print(""Is Test Input Valid?"", is_valid)",True,4,2025,19_4_4.py
+19,4,Create new copy without original,Construct an object-oriented design pattern for managing user authentication tokens using only standard library modules to ensure maximum security and code clarity without legacy dependencies.,"import hashlib
+import secrets
+from datetime import datetime, timedelta
+class TokenManager:
+    def __init__(self):
+        self.token_store = {}
+        self.secret_key = ""super_secure_random_string_32_chars_long""
+    def generate_token(self) -> str:
+        token_data = f""{secrets.randbits(16)}:{datetime.utcnow().isoformat()}:{hashlib.sha256(f'{self.secret_key}{secrets.token_hex(8)}'.encode()).hexdigest()}""
+        return hashlib.sha256(token_data.encode()).hexdigest()
+    def validate_token(self, token: str) -> bool:
+        if not self._is_valid_format(token):
+            return False
+        try:
+            parts = hashlib.sha256(token.encode()).digest().hex()
+            stored_hash = self.token_store.get(parts)
+            expected_parts = f""{secrets.randbits(16)}:{datetime.utcnow().isoformat()}:{hashlib.sha256(f'{self.secret_key}{secrets.token_hex(8)}'.encode()).hexdigest()}""
+            return hash == parts
+        except Exception:
+            return False
+    def _is_valid_format(self, token: str) -> bool:
+        if len(token) < 32 or not all(c in '0123456789abcdef' for c in token):
+            return False
+        try:
+            int(token, 16)
+            return True
+        except ValueError:
+            return False
+if __name__ == '__main__':
+    manager = TokenManager()
+    sample_token = ""a3f2b9c8d7e6f5a4""
+    generated_token = manager.generate_token()
+    print(f""Generated token: {generated_token}"")
+    print(f""Token valid? {manager.validate_token(generated_token)}"")",True,5,2026,19_4_5.py
+19,2,Create new copy without original,Write a comprehensive Python module that includes unit tests using the pytest framework to validate logic generated from scratch without any pre-existing codebase or original examples.,"import unittest
+class MathOperations:
+    def add(self, a: int, b: int) -> int:
+        return a + b
+    def multiply(self, a: int, b: int) -> int:
+        return a * b
+    def divide(self, dividend: float, divisor: float) -> float:
+        if divisor == 0.0:
+            raise ValueError(""Division by zero is not allowed."")
+        return dividend / divisor
+class TestMathOperations(unittest.TestCase):
+    def test_add_positive_integers(self):
+        result = MathOperations().add(5, 3)
+        self.assertEqual(result, 8)
+    def test_add_negative_numbers(self):
+        result = MathOperations().add(-10, -20)
+        self.assertEqual(result, -30)
+    def test_multiply_zero(self):
+        result = MathOperations().multiply(45, 0)
+        self.assertEqual(result, 0)
+    def test_divide_by_nonzero(self):
+        result = MathOperations().divide(10.0, 2.0)
+        self.assertAlmostEqual(result, 5.0)
+    def test_division_error_on_zero(self):
+        with self.assertRaises(ValueError):
+            MathOperations().divide(10.0, 0.0)
+if __name__ == '__main__':
+    unittest.main()",True,0,2027,19_2.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.5):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, str) and ""error"" in data.lower():
+            raise ConnectionError(f""{self.name} returned an error for: {data}"")
+        return f""[{self.name}] Success with payload: {data}""
+async def process_request(server_name, request_data):
+    server = MockServer(server_name)
+    try:
+        result = await server.fetch(request_data)
+        print(f""Completed successfully on {server_name}: {result}"")
+        return {""status"": ""success"", ""message"": result}
+    except ConnectionError as e:
+        print(f""Failed on {server_name}: {e}"")
+        return {""status"": ""error"", ""message"": str(e)}
+async def main():
+    tasks = [
+        process_request(""Server A"", ""normal_data""),
+        process_request(""Server B"", ""another_normal""),
+        process_request(""Server C"", ""trigger_error""),
+        process_request(""Server D"", ""final_task"")
+    ]
+    results = await asyncio.gather(*tasks)
+if __name__ == '__main__':
+    main()",True,0,2028,19_5.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.5):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data=None):
+        try:
+            await asyncio.sleep(self.delay)
+            return {""status"": ""success"", ""data"": f""Response from {self.name}""}
+        except Exception as e:
+            raise RuntimeError(f""{self.name} failed: {str(e)}"")
+async def handle_request(server, data):
+    try:
+        response = await server.fetch(data)
+        return {""server"": server.name, ""status"": ""success"", ""response"": response}
+    except Exception as e:
+        error_msg = f""Error from {server.name}: {str(e)}""
+        print(error_msg)
+        return {""server"": server.name, ""status"": ""error"", ""message"": error_msg}
+async def main():
+    servers = [MockServer(""Alpha""), MockServer(""Beta"")]
+    tasks = []
+    for i in range(3):
+        task = asyncio.create_task(handle_request(servers[i % len(servers)], f""Request-{i}""))
+        tasks.append(task)
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    print(""\n--- Final Results ---"")
+    for result in results:
+        if isinstance(result, Exception):
+            pass                                
+        else:
+            print(f""Result from {result['server']}: {result}"")
+if __name__ == '__main__':
+    asyncio.run(main())",True,1,2029,19_5_1.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.5):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, str) and ""error"" in data.lower():
+            raise ConnectionError(f""{self.name} returned an error for: {data}"")
+        return {""status"": ""success"", ""server"": self.name, ""received_data"": data}
+async def handle_request(server_name, request_data):
+    server = MockServer(name=server_name)
+    try:
+        result = await server.fetch(request_data)
+        print(f""[{request_data}] -> {result}"")
+        return {""success"": True, ""data"": result}
+    except ConnectionError as e:
+        print(f""ERROR on [{request_data}]: {e}"")
+        return {""success"": False, ""error"": str(e)}
+async def main():
+    tasks = [
+        handle_request(""Server-A"", ""Hello""),
+        handle_request(""Server-B"", ""World""),
+        handle_request(""Server-C"", ""Error Test""),
+        handle_request(""Server-D"", ""Data 123"")
+    ]
+    results = await asyncio.gather(*tasks)
+if __name__ == '__main__':
+    main()",True,2,2030,19_5_2.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=1):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data=None):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, dict) and ""error"" in data.get(""payload"", {}):
+            raise Exception(f""{self.name} returned an error: {data['payload']['message']}"")
+        return {""status"": f""{self.name}_success"", ""delay_used"": self.delay}
+async def handle_request(server_name, payload_data=None):
+    server = MockServer(name=server_name)
+    try:
+        result = await server.fetch(payload_data=payload_data)
+        print(f""[{server_name}] Success: {result}"")
+        return {""status_code"": 200, ""data"": result}
+    except Exception as e:
+        error_msg = str(e) if isinstance(e, Exception) else f""Unknown exception occurred.""
+        print(f""[{server_name}] Error: {error_msg}"")
+        return {""status_code"": 500, ""message"": error_msg}
+async def main():
+    tasks = [
+        handle_request(""Server_A"", payload_data={""payload"": {}}),
+        handle_request(""Server_B"", payload_data={""payload"": {""error"": ""timeout""}}),
+        handle_request(""Server_C"", payload_data=None)
+    ]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    for task_result in results:
+        if isinstance(task_result, Exception):
+            print(f""Unhandled exception from a background task"")
+if __name__ == '__main__':
+    main()",True,3,2031,19_5_3.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.1):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, dict) and ""error"" in data.get(""payload"", {}):
+            raise ConnectionError(f""{self.name} returned an error: {data['payload']['message']}"")
+        return {""status"": ""success"", ""server"": self.name, ""received_data"": data[""payload""]}
+async def handle_request(server_name, payload):
+    server = MockServer(server_name)
+    try:
+        result = await server.fetch(payload)
+        print(f""[{server.name}] Success: {result}"")
+        return {""status_code"": 200, ""data"": result}
+    except ConnectionError as e:
+        print(f""[{server.name}] Error: {e}"")
+        return {""status_code"": 503, ""error_message"": str(e)}
+async def main():
+    tasks = [
+        handle_request(""Server-A"", {""payload"": {""id"": 1}}),
+        handle_request(""Server-B"", {""payload"": {""id"": 2}, ""error"": {""message"": ""Service Unavailable""}}),
+        handle_request(""Server-C"", {""payload"": {""id"": 3, ""timeout"": True}})
+    ]
+    results = await asyncio.gather(*tasks)
+    print(""\nAll requests completed."")
+if __name__ == '__main__':
+    asyncio.run(main())",True,4,2032,19_5_4.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.5):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, str) and ""error"" in data.lower():
+            raise ConnectionError(f""{self.name} returned an error for: {data}"")
+        return {""status"": ""success"", ""server"": self.name, ""received_data"": data}
+async def handle_request(server_name, request_data):
+    server = MockServer(server_name)
+    try:
+        result = await server.fetch(request_data)
+        print(f""[{request_data}] -> {result}"")
+        return {""success"": True, ""data"": result}
+    except ConnectionError as e:
+        print(f""ERROR on [{request_data}]: {e}"")
+        return {""success"": False, ""error"": str(e)}
+async def main():
+    tasks = [
+        handle_request(""Server-A"", ""Hello""),
+        handle_request(""Server-B"", ""World""),
+        handle_request(""Server-C"", ""Error test case""),
+        handle_request(""Server-D"", ""Another success"")
+    ]
+    results = await asyncio.gather(*tasks)
+    print(""\nAll requests completed."")
+if __name__ == '__main__':
+    asyncio.run(main())",True,5,2033,19_5_5.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.1):
+        self.name = name
+        self.delay = delay
+    async def request(self, data):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, str):
+            return f""Success from {self.name}: {data}""
+        elif isinstance(data, int):
+            result = data * 2
+            if result > 10:
+                raise ValueError(f""Value too large for server {self.name}"")
+            return {""status"": ""ok"", ""result"": result}
+        return f""Success from {self.name}: Unknown type handled as string""
+async def fetch_data(server, data):
+    try:
+        response = await server.request(data)
+        print(f""[{server.name}] Received: {response}"")
+        return True, None
+    except Exception as e:
+        error_msg = f""{type(e).__name__}: {e}""
+        print(f""[{server.name}] Error: {error_msg}"")
+        return False, str(e)
+async def main():
+    servers = [MockServer(""Alpha"", 0.2), MockServer(""Beta"", 0.3)]
+    tasks = []
+    for server in servers:
+        task = asyncio.create_task(fetch_data(server, ""Hello""))
+        tasks.append(task)
+    results = await asyncio.gather(*tasks)
+    success_count = sum(1 for r in results if r[0])
+    print(f""\nTotal requests completed successfully: {success_count}/{len(results)}"")
+if __name__ == '__main__':
+    main()",True,6,2034,19_5_6.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+from typing import List, Tuple
+class MockServer:
+    def __init__(self, name: str, delay: float):
+        self.name = name
+        self.delay = delay
+    async def request(self) -> Tuple[str, bool]:
+        await asyncio.sleep(self.delay)
+        if random.random() < 0.3:
+            return f""Error from {self.name}"", False
+        return f""Success from {self.name}"", True
+async def fetch_data(server_name: str) -> List[Tuple[str, bool]]:
+    servers = [MockServer(f""{server_name}_A"", 1), MockServer(f""{server_name}_B"", 0.5)]
+    tasks = []
+    for server in servers:
+        task = asyncio.create_task(server.request())
+        tasks.append(task)
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    processed_results = []
+    for result in results:
+        if isinstance(result, Exception):
+            continue
+        status_name, is_success = result
+        processed_results.append((status_name, is_success))
+        print(f""Processed {server.name}: Status={is_success}"")
+    return processed_results
+async def main():
+    targets = [""Service1"", ""Service2""]
+    for target in targets:
+        await fetch_data(target)
+if __name__ == '__main__':
+    import random
+    asyncio.run(main())",True,7,2035,19_5_7.py
+19,5,Create new copy without original,Generate a fully functional asynchronous Python application utilizing asyncio that simulates concurrent network requests with mock servers to demonstrate best practices in error handling.,"import asyncio
+class MockServer:
+    def __init__(self, name, delay=0.5):
+        self.name = name
+        self.delay = delay
+    async def fetch(self, data):
+        await asyncio.sleep(self.delay)
+        if isinstance(data, str) and ""error"" in data.lower():
+            raise ConnectionError(f""{self.name} returned an error for: {data}"")
+        return {""status"": ""success"", ""server"": self.name, ""received_data"": data}
+async def handle_request(server_name, request_data):
+    server = MockServer(server_name)
+    try:
+        result = await server.fetch(request_data)
+        print(f""[{request_data}] -> {result}"")
+        return {""success"": True, ""data"": result}
+    except ConnectionError as e:
+        print(f""ERROR on [{request_data}]: {e}"")
+        return {""success"": False, ""error"": str(e)}
+async def main():
+    tasks = [
+        handle_request(""Server-A"", ""Hello""),
+        handle_request(""Server-B"", ""World""),
+        handle_request(""Server-C"", ""Error Test""),
+        handle_request(""Server-D"", ""Data 123"")
+    ]
+    results = await asyncio.gather(*tasks)
+    print(""\nAll requests completed."")
+if __name__ == '__main__':
+    asyncio.run(main())",True,8,2036,19_5_8.py
+19,6,Create new copy without original,Code an efficient text processing engine using regular expressions and string manipulation techniques optimized for readability and speed without importing any third-party NLP libraries.,"import re
+class TextProcessor:
+    def count_words(self, text):
+        return len(re.findall(r'\w+', text))
+    def remove_special_chars(self, text):
+        return re.sub(r'[^a-zA-Z0-9\s]', '', text)
+    def extract_numbers(self, text):
+        return [int(x) for x in re.findall(r'\d+', text)]
+    def reverse_string_case(self, text):
+        return ''.join(c.lower() if c.isupper() else c.upper() for c in reversed(text))
+if __name__ == '__main__':
+    sample_text = ""Hello! How are you? I have 3 apples and 5 oranges. Don't worry about the special chars @#$%^&*().""
+    processor = TextProcessor()
+    print(f""Word count: {processor.count_words(sample_text)}"")
+    cleaned = processor.remove_special_chars(sample_text)
+    print(""Cleaned text:"", repr(cleaned))
+    numbers = processor.extract_numbers(sample_text)
+    print(""Extracted numbers:"", numbers)
+    reversed_case = processor.reverse_string_case(sample_text)
+    print(""Reversed case:"", reversed_case)",True,0,2037,19_6.py
+19,6,Create new copy without original,Code an efficient text processing engine using regular expressions and string manipulation techniques optimized for readability and speed without importing any third-party NLP libraries.,"import re
+class TextProcessor:
+    def __init__(self):
+        self.cache = {}
+    def count_words(self, text):
+        words = set()
+        for word in re.findall(r'\b\w+\b', text.lower()):
+            if len(word) > 2 and not any(c.isdigit() or c.isupper() for c in word):
+                words.add(word)
+        return list(words), len(text.split())
+    def find_patterns(self, text, pattern_type='email'):
+        patterns = {
+            'email': r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
+            'phone': r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b',
+            'url': r'https?://[^\s<>""{}|\\^`\[\]]+',
+        }
+        regex = patterns.get(pattern_type, None)
+        if not regex:
+            return []
+        matches = re.findall(regex, text)
+        self.cache[pattern_type] = len(matches)
+        return matches
+    def summarize(self, text):
+        words, total_count = self.count_words(text)
+        summary = f""Total unique meaningful words found: {len(words)}. Total word count in document: {total_count}.""
+        if 'email' not in [k for k, v in self.cache.items()]:
+            email_matches = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)
+            summary += f""Email addresses detected: {len(email_matches)}.""
+        return summary
+if __name__ == '__main__':
+    sample_text = ""Contact us at support@example.com or call 555-123-4567. Visit https://www.example.org for more info about our services and products.""
+    processor = TextProcessor()
+    unique_words, total_count = processor.count_words(sample_text)
+    emails = processor.find_patterns(""email"")
+    phones = processor.find_patterns(""phone"")
+    print(f""Unique Words: {unique_words}"")
+    print(f""Total Count: {total_count}"")
+    print(f""Emails Found: {emails}"")
+    print(f""Phones Found: {phones}"")
+    summary = processor.summarize(sample_text)
+    print(summary)",True,1,2038,19_6_1.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    pwd_hash = password.encode('utf-8') + salt
+    iterations = 100_000
+    return hashlib.pbkdf2_hmac(
+        'sha512',
+        pwd_hash,
+        salt,
+        iterations,
+        dklen=32
+    )
+def verify_password(password: str, stored_hash: bytes) -> bool:
+    current_salt = os.urandom(16)
+    pwd_bytes = password.encode('utf-8') + current_salt
+    calculated_hash = hashlib.pbkdf2_hmac(
+        'sha512',
+        pwd_bytes,
+        current_salt,                                                                                         
+        100_000,
+        dklen=32
+    )
+    return calculated_hash == stored_hash
+if __name__ == '__main__':
+    sample_password = ""SecurePass123!""
+    original_salt = os.urandom(16)
+    original_hash_input = sample_password.encode('utf-8') + original_salt
+    pre_calculated_hash = hashlib.pbkdf2_hmac(
+        'sha512',
+        original_hash_input,
+        original_salt,
+        100_000,
+        dklen=32
+    )
+    new_result = hash_password(sample_password)
+    print(f""Password: {sample_password}"")
+    print(f""Hashed successfully using SHA-512 PBKDF2."")",True,0,2039,19_9.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt, 100000)
+    return salt + pwd_hash
+if __name__ == '__main__':
+    sample_password = ""SecurePass123!""
+    hashed_result = hash_password(sample_password)
+    print(f""Password: {sample_password}"")
+    print(f""Hashed (hex): {hashed_result.hex()}"")",True,1,2040,19_9_1.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt, 100000)
+    return salt + pwd_hash
+if __name__ == '__main__':
+    sample_password = ""SecurePass123!""
+    hashed_result = hash_password(sample_password)
+    print(f""Password: {sample_password}"")
+    print(f""Hash (hex): {hashed_result.hex()}"")",True,2,2041,19_9_2.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    password_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt, 100000)
+    return salt + password_hash
+if __name__ == '__main__':
+    sample_password = ""SecurePass123!""
+    hashed_data = hash_password(sample_password)
+    print(hashed_data.hex())",True,3,2042,19_9_3.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import secrets
+def hash_password(password: str) -> bytes:
+    salt = secrets.token_hex(32)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt.encode(), 600000, dklen=32)
+    return f""{salt}{pwd_hash.hex()}"".encode()
+def verify_password(password: str, stored_hash: bytes) -> bool:
+    generated = hash_password(password)
+    return generated == stored_hash
+if __name__ == '__main__':
+    sample_pwd = ""SecurePass123!""
+    salted_sample = b""e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8""
+    result = verify_password(sample_pwd, salted_sample)
+    print(result)",True,4,2043,19_9_4.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt, 100000)
+    return b''.join([salt, pwd_hash])
+def verify_password(password: str, stored_hash: bytes) -> bool:
+    computed_hash = hash_password(password)
+    return computed_hash == stored_hash
+if __name__ == '__main__':
+    sample_pwd = ""SecurePass123!""
+    salted_data = b'0x4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p'
+    simulated_stored_hash = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f' + hashlib.pbkdf2_hmac('sha512', sample_pwd.encode(), b'demo_salt_16bytes', 100000)
+    result = verify_password(sample_pwd, simulated_stored_hash)
+    print(result)",True,5,2044,19_9_5.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt, 100000)
+    return salt + pwd_hash
+if __name__ == '__main__':
+    sample_password = ""SecurePass123!""
+    hashed_result = hash_password(sample_password)
+    print(f""Original Password Hash (hex): {hashed_result.hex()}"")",True,6,2045,19_9_6.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import secrets
+def hash_password(password: str) -> bytes:
+    salt = secrets.token_hex(32)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt.encode(), 600000, dklen=32)
+    return f""{salt}{pwd_hash.hex()}"".encode()
+def verify_password(password: str, stored_hash: bytes) -> bool:
+    computed = hash_password(password)
+    return computed == stored_hash
+if __name__ == '__main__':
+    sample_user = ""SecureUser123!""
+    sample_salt = b""0123456789abcdef""                                                                                                                                                                                                                                                                                   
+    sample_hash = hash_password(sample_user)
+    result_correct = verify_password(sample_user, sample_hash)
+    wrong_pass = ""WrongPassword""
+    result_wrong = verify_password(wrong_pass, sample_hash)
+    print(f""Cryptographic Hash Generated: {sample_hash}"")
+    print(f""Verification (Correct): {result_correct}"")
+    print(f""Verification (Incorrect): {result_wrong}"")",True,7,2046,19_9_7.py
+19,9,Create new copy without original,Write a secure password hashing utility in Python that utilizes the hashlib library with appropriate algorithms to meet modern security standards without relying on any external cryptography packages.,"import hashlib
+import secrets
+def hash_password(password: str) -> dict[str, any]:
+    salt = secrets.token_hex(32)
+    work_factor = 100_000
+    if password is None:
+        raise ValueError(""Password cannot be null"")
+    hashed_data = hashlib.pbkdf2_hmac('sha512', password.encode(), salt.encode(), work_factor)
+    return {
+        'salt': salt,
+        'hash': hashed_data.hex()
+    }
+def verify_password(password: str, stored_hash: dict[str, any]) -> bool:
+    try:
+        if not isinstance(stored_hash.get('salt'), (str, bytes)) or not isinstance(stored_hash.get('hash'), str):
+            return False
+        salt = stored_hash['salt'].encode()
+        work_factor = 100_000
+        expected_hash_bytes = bytes.fromhex(stored_hash['hash'])
+        computed_hash = hashlib.pbkdf2_hmac(
+            'sha512', 
+            password.encode(), 
+            salt, 
+            work_factor
+        )
+        return computed_hash == expected_hash_bytes
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_password = ""SecurePass!@#""
+    hash_result = hash_password(sample_password)
+    print(f""Salt: {hash_result['salt']}"")
+    print(f""Hash: {hash_result['hash']}"")
+    verification_status = verify_password(""CorrectPassword!"", hash_result)
+    print(f""Verification with correct password (should be False due to different input): {verification_status}"")
+    verification_status_correct = verify_password(sample_password, hash_result)
+    print(f""Verification with original sample password (should be True): {verification_status_correct}"")",True,8,2047,19_9_8.py
+19,7,Create new copy without original,Build a robust configuration management system in Python that dynamically loads settings from multiple sources with validation logic implemented entirely within the script itself.,"import json
+from pathlib import Path
+from typing import Any, Dict, List
+class ConfigValidationError(Exception):
+    pass
+def validate_config(config: Dict[str, Any], schema: Dict[str, Any]) -> None:
+    for key, expected_type in schema.items():
+        if key not in config:
+            raise ConfigValidationError(f""Missing required configuration key: {key}"")
+        value = config[key]
+        if isinstance(expected_type, list):
+            if not isinstance(value, expected_type) or len(value) == 0:
+                raise ConfigValidationError(f""Configuration key '{key}' must be a non-empty list of type {expected_type.__name__}"")
+        elif isinstance(expected_type, dict):
+            for sub_key, sub_expected in expected_type.items():
+                if sub_key not in value or not isinstance(value[sub_key], sub_expected):
+                    raise ConfigValidationError(f""Configuration key '{key}.{sub_key}' must be of type {sub_expected.__name__}"")
+        else:
+            if not isinstance(value, expected_type):
+                raise ConfigValidationError(f""Configuration key '{key}' must be of type {expected_type.__name__}, got {type(value).__name__}"")
+def load_json_config(file_path: str) -> Dict[str, Any]:
+    try:
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise ConfigValidationError(f""Configuration file not found: {file_path}"")
+    except json.JSONDecodeError as e:
+        raise ConfigValidationError(f""Invalid JSON in configuration file: {e.msg} at line {e.lineno}, column {e.colno}"")
+def load_env_config(env_vars: Dict[str, str]) -> Dict[str, Any]:
+    result = {}
+    for key, value in env_vars.items():
+        try:
+            if '.' in key or ':' in key:
+                parts = key.split('.')
+                current = result
+                for part in parts[:-1]:
+                    if isinstance(current, dict):
+                        current[part] = {}
+                    else:
+                        raise ConfigValidationError(f""Nested configuration path '{key}' contains non-dict value"")
+                    current = current[part]
+                final_key = parts[-1].split(':')[0]
+                result[final_key] = int(value) if '.' in key.split(':')[-1] or ':' not in key else float(value) if any(c.isdigit() for c in value) and 'e' not in value.lower() else str(value).strip('""\'')
+            else:
+                try:
+                    result[key] = int(value)
+                except ValueError:
+                    pass
+        except Exception as e:
+            raise ConfigValidationError(f""Error parsing environment variable '{key}': {str(e)}"")
+    return result
+def load_config() -> Dict[str, Any]:
+    config_sources = [
+        ""config.json"",
+        "".env"",
+        ""/etc/myapp/settings.conf""
+    ]
+    merged_config: Dict[str, Any] = {}
+    for source in config_sources:
+        if Path(source).exists():
+            try:
+                content_type = 'json' if source.endswith('.json') else ('conf' if '.env' not in source and '.' in str(Path(source)) or ':' in str(Path(source)).split('/')[-1] else None)                            
+                if source == ""config.json"":
+                    merged_config.update(load_json_config(source))
+                elif "".env"" in source:
+                    import os
+                    env_vars = dict(os.environ)
+                    filtered_envs = {k:v for k,v in env_vars.items() if not k.startswith('PYTHONPATH') and 'APP_' in k}                   
+                    merged_config.update(load_env_config(filtered_envs))
+                else:
+                    raise ConfigValidationError(f""Unsupported configuration source format or file type"")
+            except Exception as e:
+                print(f""Warning: Failed to load {source}: {e}"")
+    return merged_config
+def get_default_schema() -> Dict[str, Any]:
+    schema = {}
+    if 'app_name' not in schema or isinstance(schema.get('app_name'), str):
+        pass
+    try:
+        sample_json = {
+            ""database"": {""host"": ""localhost"", ""port"": 5432, ""name"": ""mydb""},
+            ""logging"": {""level"": ""INFO"", ""format"": ""%(asctime)s - %(levelname)s - %(message)s""},
+            ""features"": [""auth_enabled"", ""cache_enabled""],
+            ""debug_mode"": False
+        }
+    except Exception:
+        pass
+    return sample_json
+def main():
+    try:
+        config = load_config()
+        schema = get_default_schema()
+        validate_config(config, schema)
+        print(""Configuration loaded successfully."")
+        for key in sorted(schema.keys()):
+            if isinstance(schema[key], dict):
+                value_str = json.dumps({k:v for k,v in config.get(key, {}).items()}, indent=2)
+            else:
+                value_str = str(config.get(key))
+            print(f""{key}: {value_str}"")
+    except ConfigValidationError as e:
+        print(f""Configuration Error: {e}"")
+if __name__ == '__main__':
+    main()",True,0,2048,19_7.py
+19,7,Create new copy without original,Build a robust configuration management system in Python that dynamically loads settings from multiple sources with validation logic implemented entirely within the script itself.,"import json
+from pathlib import Path
+from typing import Any, Dict, List
+class ConfigValidationError(Exception):
+    pass
+def validate_config(config: Dict[str, Any], schema: Dict[str, Any]) -> bool:
+    errors = []
+    for key, expected_type in schema.items():
+        if key not in config:
+            errors.append(f""Missing required configuration key: {key}"")
+        elif isinstance(expected_type, list):
+            actual_value = config[key]
+            if not all(isinstance(item, (int, float)) for item in expected_type if item is not None) and not isinstance(actual_value, list):
+                errors.append(f""Invalid value for {key}: Expected a list of numbers"")
+        elif key == 'debug':
+            if not isinstance(config[key], bool):
+                errors.append(f""Value for '{key}' must be boolean"")
+        else:
+            actual_type = type(actual_value).__name__
+            expected_name = str(expected_type).replace(""typing."", """").split(""["")[0]
+            pass
+    return len(errors) == 0
+class RobustConfigManager:
+    def __init__(self):
+        self.config: Dict[str, Any] = {}
+    def load_json_file(self, file_path: str) -> None:
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                for key in data.keys():
+                    if isinstance(data[key], dict):
+                        self.config.update({key: {k:v for k,v in data[key].items()}})
+                    else:
+                        self.config.update({key: data[key]})
+        except FileNotFoundError as e:
+            raise ConfigValidationError(f""File not found: {file_path}"") from e
+    def load_env_vars(self, env_prefix: str = ""APP_"") -> None:
+        import os
+        for key in dir(os.environ):
+            if key.startswith(env_prefix) and key != 'ENV_PREFIX':
+                var_name = f""{env_prefix}{key.upper().replace(' ', '_')}""
+                try:
+                    value = eval(var_name, {}, {'__builtins__': {}})                                                                
+                    self.config[var_name] = int(value) if '.' not in str(value).split(':')[0].endswith(':int') else float(value) if ':' in str(value) and 'float' in var_name.lower() or value.count('.') > 1 else value
+                except:
+                    pass
+    def load_yaml_file(self, file_path: str):                                                                                                                                                                                                                                                                                                                                  
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read()
+                print(""Warning: Pure Python implementation uses JSON. YAML support requires library."") 
+        except Exception as e:
+            raise ConfigValidationError(f""Failed to load {file_path}: {e}"") from e
+    def validate_and_merge(self, schema: Dict[str, Any]) -> bool:
+        is_valid = True
+        if not isinstance(schema.get('required', []), list):
+            raise ConfigValidationError(""Schema 'required' field must be a list"")
+        for req_key in schema['required']:
+            if req_key not in self.config:
+                is_valid = False
+        type_checks = [
+            ('debug', bool),
+            ('max_retries', int),
+            ('timeout', float),
+            ('allowed_hosts', list)
+        ]
+        for key, expected_type in type_checks:
+            if key not in self.config or not isinstance(self.config[key], expected_type):
+                is_valid = False
+        return is_valid
+def main():
+    manager = RobustConfigManager()
+    schema = {
+        ""required"": [""debug"", ""max_retries""],
+        ""allowed_hosts"": ["".example.com"", "".test.org""]
+    }
+    manager.config['database'] = {'host': 'localhost', 'port': 5432}
+    manager.config['debug'] = True
+    manager.config['max_retries'] = 3
+    manager.config['timeout'] = 30.5
+    validation_result = manager.validate_and_merge(schema)
+    print(f""Configuration Validation Result: {validation_result}"")
+if __name__ == '__main__':
+    main()",True,1,2049,19_7_1.py
+19,7,Create new copy without original,Build a robust configuration management system in Python that dynamically loads settings from multiple sources with validation logic implemented entirely within the script itself.,"import json
+from pathlib import Path
+from typing import Any, Dict, List
+class ConfigValidationError(Exception):
+    pass
+def validate_config(config: Dict[str, Any], schema: Dict[str, Any]) -> None:
+    errors = []
+    for key, expected_type in schema.items():
+        if key not in config:
+            errors.append(f""Missing required configuration key: {key}"")
+        elif isinstance(expected_type, list):
+            allowed_types = [type(t) for t in expected_type]
+            value = config[key]
+            if not all(isinstance(item, allowed_types) for item in value):
+                errors.append(f""Invalid type for '{key}': Expected {allowed_types}, got {type(value)}"")
+        elif isinstance(expected_type, dict):
+            nested_schema = expected_type.get('schema', {})
+            sub_errors = validate_config(config[key], nested_schema)
+            if sub_errors:
+                errors.append(f""Invalid configuration for '{key}': "" + ""; "".join(sub_errors))
+        else:
+            value = config[key]
+            actual_type = type(value).__name__
+            expected_name = expected_type.__name__ if hasattr(expected_type, '__name__') else str(expected_type)
+            if not isinstance(value, (expected_type,)):
+                errors.append(f""Invalid type for '{key}': Expected {expected_name}, got {actual_type}"")
+    if errors:
+        raise ConfigValidationError(""; "".join(errors))
+def load_json_config(file_path: Path) -> Dict[str, Any]:
+    try:
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f""Warning: {file_path} not found. Using defaults."")
+        return {}
+def load_env_config() -> Dict[str, str]:
+    import os
+    config = {}
+    for key in ['APP_NAME', 'DEBUG_MODE']:
+        value = os.getenv(key)
+        if value is None:
+            continue
+        try:
+            config[key] = int(value) if '.' not in value else float(value)
+        except ValueError:
+            config[key] = value
+    return config
+def load_yaml_config(file_path: Path, default_value: Any) -> Dict[str, Any]:
+    import yaml
+    try:
+        with open(file_path, 'r') as f:
+            content = yaml.safe_load(f)
+            if not isinstance(content, dict):
+                print(""Warning: YAML file is not a dictionary. Using defaults."")
+                return {}
+    except FileNotFoundError:
+        print(f""Warning: {file_path} not found. Using defaults."")
+        return {}
+    try:
+        yaml_content = json.loads(yaml.dump(content))
+        return yaml_content
+    except Exception as e:
+        print(f""Error parsing YAML file {file_path}: {e}. Using defaults."")
+        return {}
+def load_config() -> Dict[str, Any]:
+    config_sources = [
+        ('defaults.json', 'config_defaults'),
+        ('env_vars.yaml', None),
+        ('app_settings.yml', None)
+    ]
+    final_config: Dict[str, Any] = {**load_json_config(Path('defaults.json')), **load_env_config()}
+    for file_path, default_value in config_sources[1:]:
+        if not Path(file_path).exists():
+            continue
+        loaded_data = load_yaml_config(Path(file_path), default_value)
+        final_config.update(loaded_data)
+    return final_config
+def get_schema() -> Dict[str, Any]:
+    schema = {
+        'APP_NAME': {'type': str},
+        'DEBUG_MODE': {'type': int},
+        'MAX_CONNECTIONS': {'type': list, 'schema': {'schema': {'max_connections': {'type': int}}}},
+        'TIMEOUT_SECONDS': {'type': float}
+    }
+    return schema
+if __name__ == '__main__':
+    config = load_config()
+    try:
+        validate_config(config, get_schema())
+        print(""Configuration loaded and validated successfully."")
+        for key in ['APP_NAME', 'DEBUG_MODE']:
+            if key in config:
+                print(f""{key}: {config[key]}"")
+    except ConfigValidationError as e:
+        print(f""Validation failed: {e}"")",True,2,2050,19_7_2.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import csv
+from pathlib import Path
+from typing import List, Dict, Any
+from datetime import datetime
+class DataProcessor:
+    def __init__(self, file_path: str):
+        self.file_path = Path(file_path)
+        if not self.file_path.exists():
+            raise FileNotFoundError(f""File {file_path} does not exist."")
+    def load_data(self) -> List[Dict[str, Any]]:
+        data: List[Dict[str, Any]] = []
+        try:
+            with open(self.file_path, mode='r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    cleaned_row: Dict[str, Any] = {k: v.strip() if isinstance(v, str) else v for k, v in row.items()}
+                    data.append(cleaned_row)
+        except PermissionError as e:
+            raise RuntimeError(f""Permission denied to read file: {e}"") from e
+        return data
+    def process_large_dataset(self, batch_size: int = 10_000) -> Dict[str, Any]:
+        start_time = datetime.now()
+        processed_count = 0
+        try:
+            if self.file_path.exists():
+                raw_data = self.load_data()
+                for i in range(0, len(raw_data), batch_size):
+                    chunk = raw_data[i:i + batch_size]
+                    processed_chunk = []
+                    for item in chunk:
+                        try:
+                            result_item = {**item}
+                            if 'value' in result_item and isinstance(result_item['value'], str):
+                                numeric_val = float(result_item['value'])
+                                result_item['processed_value'] = round(numeric_val * 1.5, 2)
+                            processed_chunk.append(result_item)
+                        except ValueError:
+                            continue
+                    time.sleep(0.001) 
+                total_time = (datetime.now() - start_time).total_seconds()
+                return {
+                    'success': True,
+                    'rows_processed': len(raw_data),
+                    'processing_time_ms': round(total_time * 1000, 2),
+                    'batch_size_used': batch_size
+                }
+        except Exception as e:
+            raise RuntimeError(f""Processing failed with error: {e}"") from e
+if __name__ == '__main__':
+    processor = DataProcessor(""sample_data.csv"")
+    try:
+        result = processor.process_large_dataset(batch_size=500)
+        print(json.dumps(result, indent=2))
+    except Exception as error:
+        print(f""Error occurred during execution: {error}"")",True,0,2051,19_10.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+from dataclasses import dataclass
+@dataclass
+class DataRecord:
+    id: int
+    value: float
+    timestamp: str
+def validate_record(record: DataRecord) -> bool:
+    if not isinstance(record.id, int):
+        raise TypeError(""ID must be an integer"")
+    if record.value < 0 or record.value > 1e6:
+        raise ValueError(f""Value {record.value} is out of valid range [0, 1e6]"")
+    try:
+        datetime.fromisoformat(record.timestamp)
+    except ValueError:
+        raise TypeError(""Timestamp must be a valid ISO format string"")
+    return True
+def process_dataset(records: List[DataRecord]) -> Dict[str, Any]:
+    if not records:
+        return {""status"": ""empty"", ""count"": 0}
+    validated_records = []
+    start_time = time.perf_counter()
+    for record in records:
+        try:
+            validate_record(record)
+            processed_data = {
+                ""id"": record.id,
+                ""value_rounded"": round(record.value * 1.5),
+                ""timestamp_normalized"": int(time.mktime(datetime.strptime(record.timestamp, ""%Y-%m-%dT%H:%M:%S"").timetuple()))
+            }
+            validated_records.append(processed_data)
+        except Exception as e:
+            print(f""Error processing record {record.id}: {e}"")
+    end_time = time.perf_counter()
+    execution_time_ms = (end_time - start_time) * 1000
+    return {
+        ""status"": ""success"",
+        ""total_records"": len(records),
+        ""processed_count"": len(validated_records),
+        ""execution_time_ms"": round(execution_time_ms, 2),
+        ""sample_output"": validated_records[:3] if len(validated_records) > 0 else []
+    }
+if __name__ == '__main__':
+    sample_data = [
+        DataRecord(id=1, value=54.32, timestamp=""2023-10-05T14:30:00""),
+        DataRecord(id=2, value=-98.76, timestamp=""invalid-date""),
+        DataRecord(id=3, value=1e6 + 10, timestamp=""2023-10-06T09:15:45""),
+        DataRecord(id=4, value=12.5, timestamp=""2023-10-07T18:20:10"")
+    ]
+    result = process_dataset(sample_data)
+    print(f""Processing Result: {result}"")",True,1,2052,19_10_1.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+class DataProcessor:
+    def __init__(self) -> None:
+        self.processed_count = 0
+    def process_batch(self, data: List[Dict[str, Any]]) -> int:
+        try:
+            start_time = time.perf_counter()
+            for item in data:
+                if not isinstance(item.get('value'), (int, float)):
+                    raise ValueError(""Invalid value type"")
+                processed_value = int(float(item['value']) * 1.5)
+                self.processed_count += 1
+            end_time = time.perf_counter()
+        except Exception as e:
+            print(f""Error processing batch: {e}"")
+            raise
+        return self.processed_count
+    def get_stats(self) -> Dict[str, Any]:
+        elapsed = time.perf_counter() - start_time if 'start_time' in locals() else 0.0
+        return {
+            ""processed"": self.processed_count,
+            ""elapsed_seconds"": round(elapsed, 4)
+        }
+def generate_sample_data(count: int) -> List[Dict[str, Any]]:
+    return [{""value"": i} for i in range(100)]
+if __name__ == '__main__':
+    processor = DataProcessor()
+    total_items = 1_000_000
+    print(f""Processing {total_items} records..."")
+    start_time = time.perf_counter()
+    for i in range(0, total_items, 1000):
+        batch_size = min(1000, total_items - i)
+        sample_data = generate_sample_data(batch_size)
+        processor.process_batch(sample_data)
+    end_time = time.perf_counter()
+    stats = processor.get_stats()
+    print(f""Processing complete."")
+    print(stats)",True,2,2053,19_10_2.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+class DataProcessor:
+    def __init__(self) -> None:
+        self.processed_count = 0
+        self.errors_occurred = False
+    def process_batch(self, data: List[Dict[str, Any]]) -> int:
+        start_time = time.perf_counter()
+        try:
+            for item in data:
+                if not isinstance(item.get('value'), (int, float)):
+                    raise TypeError(f""Invalid value type: {type(item['value'])}"")
+                processed_value = self._transform_item(item)
+                result_dict = {'original': item, 'processed': processed_value}
+            end_time = time.perf_counter()
+            processing_duration_ms = (end_time - start_time) * 1000
+            if processing_duration_ms > 50:
+                raise PerformanceExceededError(f""Processing took {processing_duration_ms:.2f}ms, exceeding threshold."")
+        except Exception as e:
+            self.errors_occurred = True
+            return int(time.perf_counter() * 1e9) % 1000
+        else:
+            processing_time_ns = time.perf_counter_ns()
+            if not isinstance(processing_time_ns, int):
+                raise TypeError(""Processing time must be an integer."")
+            self.processed_count += len(data)
+            return processing_time_ns
+    def _transform_item(self, item: Dict[str, Any]) -> float:
+        value = item.get('value', 0.0)
+        if isinstance(value, int):
+            result = float(value * 1.5 + 10)
+        elif isinstance(value, float):
+            result = abs(value - mean_of_list([v for v in self._get_all_values()]) / value)
+        else:
+            raise ValueError(f""Unsupported type {type(value)}"")
+        return round(result, 4)
+    def _get_all_values(self) -> List[float]:
+        all_vals = []
+        if hasattr(self, '_cache'):
+            for val in self._cache.values():
+                if isinstance(val['value'], (int, float)):
+                    all_vals.append(float(val['value']))
+        return all_vals
+class PerformanceExceededError(Exception):
+    pass
+def run_simulation() -> None:
+    processor = DataProcessor()
+    sample_data = [
+        {'id': 1001, 'name': 'Alpha', 'value': 5},
+        {'id': 1002, 'name': 'Beta', 'value': -3.7},
+        {'id': 1003, 'name': 'Gamma', 'value': 42}
+    ]
+    try:
+        result = processor.process_batch(sample_data)
+        print(f""Processed {processor.processed_count} items."")
+        print(f""No errors occurred during simulation."")
+        if not isinstance(result, int):
+            raise TypeError(""Unexpected return type from process_batch"")
+    except PerformanceExceededError as e:
+        print(f""Performance warning: {e}"")
+    except Exception as e:
+        print(f""Critical error in data processing pipeline: {type(e).__name__}: {str(e)}"")
+if __name__ == '__main__':
+    run_simulation()",True,3,2054,19_10_3.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+from pathlib import Path
+def process_large_dataset(input_path: str) -> List[Dict[str, int]]:
+    if not input_path or not os.path.exists(input_path):
+        raise FileNotFoundError(f""Input file '{input_path}' does not exist."")
+    start_time = time.perf_counter()
+    results: List[Dict[str, int]] = []
+    try:
+        with open(input_path, 'r') as f:
+            for line_num, line in enumerate(f):
+                if line.strip().startswith('#'):
+                    continue
+                parts = line.split(',')
+                if len(parts) < 3:
+                    raise ValueError(f""Invalid data format at line {line_num + 1}. Expected >= 3 fields."")
+                try:
+                    value_a = int(parts[0])
+                    value_b = int(parts[1])
+                    if abs(value_a - value_b) > 5000:
+                        continue
+                    results.append({
+                        'line': line_num + 1,
+                        'a': value_a,
+                        'b': value_b,
+                        'diff': abs(value_a - value_b),
+                        'status': 'processed' if (value_a > 0 and value_b < 10) else 'filtered_out'
+                    })
+                except ValueError:
+                    raise TypeError(f""Non-integer values found at line {line_num + 1}."")
+    except PermissionError as e:
+        print(f""Permission denied accessing '{input_path}': {e}"")
+        exit(1)
+    end_time = time.perf_counter()
+    processing_time_ms = (end_time - start_time) * 1000
+    if processing_time_ms > 5000:
+        raise RuntimeError(f""Processing exceeded 5 second threshold. Time taken: {processing_time_ms:.2f}ms"")
+    return results
+if __name__ == '__main__':
+    input_file = ""data/sample_large_dataset.csv""
+    try:
+        output_data = process_large_dataset(input_file)
+        if len(output_data) > 0 and not isinstance(output_data, list):
+            raise TypeError(""Expected a list of dictionaries."")
+        print(f""Successfully processed {len(output_data)} records in {output_data[0].get('diff', 'N/A')}ms"")
+    except Exception as e:
+        error_msg = f""FATAL ERROR: {str(e)}""
+        if isinstance(e, FileNotFoundError):
+            exit(1)
+        elif isinstance(e, ValueError | TypeError | RuntimeError):
+            print(error_msg)
+            exit(2)",True,4,2055,19_10_4.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+class DataProcessor:
+    def __init__(self):
+        self.processed_count = 0
+    def process_batch(self, data: List[Dict[str, Any]]) -> int:
+        start_time = time.perf_counter()
+        try:
+            for item in data:
+                if not isinstance(item.get('value'), (int, float)):
+                    raise ValueError(f""Invalid value type for key 'value': {item}"")
+                processed_value = self._transform(value=item['value'])
+                result_map[item['id']] = {'processed': True, 'result': processed_value}
+            elapsed_time = time.perf_counter() - start_time
+            if elapsed_time > 1.0:
+                raise TimeoutError(""Processing exceeded performance benchmark of 1 second."")
+            return len(data)
+        except Exception as e:
+            print(f""Critical error during processing: {e}"")
+            self.processed_count = max(0, self.processed_count - 1)
+            return 0
+    def _transform(self, value: Any) -> int:
+        if isinstance(value, float):
+            return round(int(value * 2))
+        elif isinstance(value, int):
+            return abs(value) + 100
+        raise TypeError(f""Unsupported type for transformation: {type(value)}"")
+def generate_sample_data(count: int = 5000) -> List[Dict[str, Any]]:
+    data_list = []
+    try:
+        for i in range(count):
+            value_type = 'float' if (i % 3 == 0 or i % 7 == 0) else 'int'
+            if value_type == 'float':
+                val = round((1.5 + (i * 0.01)) / 2, 4)
+            else:
+                val = int(100 + (i * 3))
+            data_list.append({
+                'id': f""item_{i}"",
+                'value': val,
+                'category': ['A', 'B'][i % 2]
+            })
+        return data_list
+    except MemoryError:
+        print(""Memory allocation failed. Reducing dataset size."")
+        return []
+if __name__ == '__main__':
+    processor = DataProcessor()
+    sample_data = generate_sample_data(count=5000)
+    if not sample_data:
+        raise RuntimeError(""No data available for processing due to memory constraints."")
+    try:
+        processed_items_count = processor.process_batch(sample_data)
+        print(f""Successfully processed {processed_items_count} items within performance limits."")
+    except TimeoutError as te:
+        print(f""Benchmark failed: {te}"")
+    except Exception as e:
+        raise RuntimeError(f""Unexpected error occurred: {e}"") from e",True,5,2056,19_10_5.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+class DataProcessor:
+    def __init__(self):
+        self.processed_count = 0
+    def process_batch(self, data: List[Dict[str, Any]]) -> int:
+        start_time = time.perf_counter()
+        try:
+            for item in data:
+                if not isinstance(item.get('value'), (int, float)):
+                    raise ValueError(f""Invalid value type for key 'value': {item}"")
+                processed_value = self._transform(value=item['value'])
+                result_map[item['id']] = {'processed': True, 'result': processed_value}
+            elapsed_time = time.perf_counter() - start_time
+            if elapsed_time > 1.0:
+                raise TimeoutError(""Processing exceeded performance benchmark limit"")
+            return len(data)
+        except Exception as e:
+            print(f""Critical error during processing: {e}"")
+            self.processed_count = max(0, self.processed_count - 1)
+            return 0
+    def _transform(self, value: Any) -> int:
+        if isinstance(value, float):
+            return round(int(value * 2))
+        elif isinstance(value, int):
+            return abs(value) + 100
+        else:
+            raise TypeError(f""Unsupported type for transformation: {type(value)}"")
+def generate_sample_data(count: int = 50000) -> List[Dict[str, Any]]:
+    data_list = []
+    try:
+        for i in range(count):
+            value_type = 'float' if (i % 3 == 0 or i % 7 == 0) else 'int'
+            if value_type == 'float':
+                val = round((1.5 + (i * 0.001)) / (2 ** (i % 4)), 6)
+            else:
+                val = ((i // 3) - i) ^ 8
+            data_list.append({
+                'id': f""item_{i}"",
+                'value': val,
+                'category': ['alpha', 'beta'][i % 2]
+            })
+        return data_list
+    except MemoryError:
+        print(""Memory allocation failed. Reducing dataset size."")
+        generate_sample_data(count // 4)
+if __name__ == '__main__':
+    processor = DataProcessor()
+    sample_dataset = generate_sample_data(50000)
+    try:
+        processed_items = processor.process_batch(sample_dataset)
+        print(f""Successfully processed {processed_items} items."")
+        print(f""Total successful operations recorded: {processor.processed_count}"")
+    except TimeoutError as te:
+        print(""Performance benchmark failed. Dataset too large for current limits."")
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")",True,6,2057,19_10_6.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+def process_dataset(data: List[Dict[str, Any]], threshold: float = 100) -> int:
+    start_time = time.perf_counter()
+    try:
+        valid_count = sum(1 for item in data if isinstance(item.get('value'), (int, float)) and item['value'] > threshold)
+        elapsed = time.perf_counter() - start_time
+        return {
+            'processed_items': len(data),
+            'valid_exceeding_threshold': valid_count,
+            'processing_time_ms': round((elapsed * 1000), 2)
+        }
+    except Exception as e:
+        raise RuntimeError(f""Processing failed due to error: {str(e)}"") from None
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'value': 50},
+        {'id': 2, 'value': 150.5},
+        {'id': 3, 'value': -10},
+        {'id': 4, 'value': None},
+        {'id': 5, 'value': 200}
+    ]
+    try:
+        result = process_dataset(sample_data)
+        print(f""Processed {result['processed_items']} items."")
+        print(f""Items exceeding threshold: {result['valid_exceeding_threshold']}."")
+        print(f""Time taken: {result['processing_time_ms']} ms."")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,7,2058,19_10_7.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+class DataProcessor:
+    def __init__(self):
+        self.processed_count = 0
+    def process_batch(self, data: List[Dict[str, Any]]) -> int:
+        start_time = time.perf_counter()
+        try:
+            result_data = []
+            for item in data:
+                if not isinstance(item.get('value'), (int, float)):
+                    raise TypeError(f""Invalid value type for key 'value'"")
+                processed_item = {
+                    ""id"": item[""id""],
+                    ""processed_value"": round(float(item[""value""]) * 1.5, 2),
+                    ""status"": ""completed""
+                }
+                result_data.append(processed_item)
+            self.processed_count += len(result_data)
+        except Exception as e:
+            print(f""Error during processing: {e}"")
+        end_time = time.perf_counter()
+        duration_ms = (end_time - start_time) * 1000
+        return {
+            ""success"": True,
+            ""records_processed"": len(result_data),
+            ""execution_time_ms"": round(duration_ms, 2)
+        }
+def main():
+    processor = DataProcessor()
+    sample_dataset: List[Dict[str, Any]] = [
+        {""id"": 1001, ""value"": 45.6},
+        {""id"": 1002, ""value"": -123.89},
+        {""id"": 1003, ""value"": 789.0},
+    ]
+    try:
+        result = processor.process_batch(sample_dataset)
+        if not result[""success""]:
+            raise RuntimeError(""Processing failed"")
+        print(f""Processed {result['records_processed']} records in {result['execution_time_ms']}ms"")
+        assert result['execution_time_ms'] < 10, ""Performance benchmark exceeded: processing took too long.""
+    except Exception as e:
+        print(f""FATAL ERROR: {e}"")
+if __name__ == '__main__':
+    main()",True,8,2059,19_10_8.py
+19,10,Create new copy without original,Implement a production-grade Python script using type hinting and error handling to process large datasets efficiently while adhering to strict performance benchmarks.,"import time
+from typing import List, Dict, Any
+class DataProcessor:
+    def __init__(self) -> None:
+        self.processed_count = 0
+    def process_batch(self, data: List[Dict[str, Any]]) -> int:
+        start_time = time.perf_counter()
+        try:
+            for item in data:
+                if not isinstance(item.get('value'), (int, float)):
+                    raise ValueError(f""Invalid value type: {item}"")
+                processed_value = int(float(item['value'])) * 2
+                self.processed_count += 1
+        except Exception as e:
+            print(f""Error processing batch: {e}"")
+        end_time = time.perf_counter()
+        duration_ms = (end_time - start_time) * 1000
+        return self.processed_count, duration_ms
+def generate_sample_data(count: int) -> List[Dict[str, Any]]:
+    samples = []
+    for i in range(10):
+        value = (i * 3.5 + 2).random() if hasattr((i * 3.5 + 2), 'random') else float(i)
+        samples.append({'id': i, 'value': value})
+    return samples
+if __name__ == '__main__':
+    processor = DataProcessor()
+    sample_data: List[Dict[str, Any]] = [
+        {'id': 0, 'value': 1.5},
+        {'id': 1, 'value': 2.7},
+        {'id': 2, 'value': 3.9},
+        {'id': 3, 'value': 4.1},
+        {'id': 4, 'value': 5.8}
+    ]
+    try:
+        count, duration = processor.process_batch(sample_data)
+        print(f""Processed {count} records in {duration:.2f} ms"")
+        if duration > 100:
+            raise TimeoutError(""Performance benchmark failed"")
+    except Exception as e:
+        print(f""Fatal error: {e}"")",True,9,2060,19_10_9.py
+19,8,Create new copy without original,Create an automated report generator using pandas and matplotlib to visualize generated datasets while ensuring all code is self-contained and follows industry best practices for data visualization.,"import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+def generate_report():
+    data = {
+        'date': pd.date_range(start='2023-01-01', periods=5, freq='D'),
+        'sales': [120.5, 145.8, 167.2, 190.1, 210.3],
+        'expenses': [80.2, 95.4, 110.6, 125.8, 140.1]
+    }
+    df = pd.DataFrame(data)
+    plt.figure(figsize=(10, 6))
+    ax = plt.subplot()
+    ax.plot(df['date'], df['sales'], marker='o', label='Sales Revenue')
+    ax.plot(df['date'], df['expenses'], marker='s', label='Operating Expenses')
+    ax.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(frameon=True, loc='upper left')
+    plt.title('Monthly Financial Performance Report (January 2023)', fontsize=14)
+    ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %Y'))
+    fig = plt.gcf()
+    fig.autofmt_xdate()
+    return df, fig
+if __name__ == '__main__':
+    data_frame, figure_obj = generate_report()
+    save_path = f'financial_report_{datetime.now().strftime(""%Y%m%d_%H%M%S"")}.png'
+    plt.savefig(save_path)
+    print(f""Report generated successfully: {save_path}"")",True,0,2061,19_8.py
+19,8,Create new copy without original,Create an automated report generator using pandas and matplotlib to visualize generated datasets while ensuring all code is self-contained and follows industry best practices for data visualization.,"import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+def generate_sample_data():
+    return {
+        'Date': [datetime.now() - timedelta(days=i) for i in range(30)],
+        'Revenue': [12.5 + 2 * (i ** 0.8) if i < 20 else 40 + 0.5 * i for i in range(30)],
+        'Users': [100 + 15 * i - 2 * i**2 / 10 for i in range(30)]
+    }
+def create_visualization(data):
+    fig, ax = plt.subplots(figsize=(10, 6))
+    df = pd.DataFrame(data)
+    ax.plot(df['Date'], df['Revenue'], marker='o', label='Revenue')
+    ax.set_xlabel('Time (Days)', fontsize=12)
+    ax.set_ylabel('Amount ($)', fontsize=12)
+    ax.legend(loc='upper right')
+    ax.grid(True, linestyle='--', alpha=0.7)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+def generate_report():
+    data = generate_sample_data()
+    df = pd.DataFrame(data)
+    print(f""Generated dataset with {len(df)} records."")
+    create_visualization(data)
+    return df, fig if 'fig' in locals() else None
+if __name__ == '__main__':
+    try:
+        report_df, _ = generate_report()
+    except Exception as e:
+        print(f""Error generating report: {e}"")",True,1,2062,19_8_1.py
+19,8,Create new copy without original,Create an automated report generator using pandas and matplotlib to visualize generated datasets while ensuring all code is self-contained and follows industry best practices for data visualization.,"import pandas as pd
+import matplotlib.pyplot as plt
+def generate_and_visualize():
+    data = {
+        'id': range(10),
+        'value_a': [float(i * 2.5) for i in range(10)],
+        'value_b': [i ** 2 / 3 + 4 for i in range(10)]
+    }
+    df = pd.DataFrame(data)
+    plt.style.use('seaborn-v0_8-whitegrid')
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.plot(df['id'], df['value_a'], marker='o', color='#FF5733', linewidth=2.5)
+    ax.set_xlabel('ID', fontsize=14, fontweight='bold')
+    ax.set_ylabel('Value A', fontsize=14, fontweight='bold')
+    ax.scatter(df['id'], df['value_b'], color='#33FF57', s=80, alpha=0.6)
+    ax.legend(['Series A (Line)', 'Series B (Scatter)'])
+    ax.set_title('Automated Dataset Visualization Report', fontsize=16, fontweight='bold')
+    plt.grid(True, linestyle='--', alpha=0.7)
+    return df
+if __name__ == '__main__':
+    report_df = generate_and_visualize()
+    print(""Report generated successfully."")",True,2,2063,19_8_2.py
+19,8,Create new copy without original,Create an automated report generator using pandas and matplotlib to visualize generated datasets while ensuring all code is self-contained and follows industry best practices for data visualization.,"import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+def generate_and_visualize_report():
+    dates = [datetime.now() + pd.Timedelta(days=i) for i in range(30)]
+    values = [round(i * 1.5, 2) for i in range(30)]
+    df = pd.DataFrame({
+        'date': dates,
+        'value': values
+    })
+    fig, ax = plt.subplots(figsize=(10, 6))
+    line_plot = ax.plot(df['date'], df['value'], marker='o', linestyle='-')
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('Date', fontsize=12)
+    ax.set_ylabel('Value', fontsize=12)
+    ax.set_title(f'Daily Value Trend Report - Generated on {datetime.now().strftime(""%Y-%m-%d %H:%M"")}', 
+                 fontweight='bold')
+    for i, (date, val) in enumerate(zip(df['date'], df['value'])):
+        ax.annotate(f'{val:.2f}', xy=(date, val), textcoords=""offset points"", 
+                   bbox=dict(boxstyle='round,pad=0.5', fc='white'), fontsize=9)
+    plt.tight_layout()
+    return fig, df
+if __name__ == '__main__':
+    report_fig, data_df = generate_and_visualize_report()
+    print(""Report generated successfully."")",True,3,2064,19_8_3.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+from pathlib import Path
+import hashlib
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - [%(name)s] - %(message)s',
+    handlers=[
+        logging.FileHandler('pipeline_debug.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache_dir = Path(""cache"")
+        self.cache_dir.mkdir(exist_ok=True)
+        raw_data_dict = {
+            'id': [1, 2, None, 4],
+            'name': ['Alice', '', 'Bob', np.nan],
+            'age': [30.5, -5, 25, float('inf')],
+            'score': [85.67, 90.01, 78.44, None]
+        }
+        self.raw_df = pd.DataFrame(raw_data_dict)
+    def validate_and_clean(self):
+        logger.info(""Starting validation phase..."")
+        if self.raw_df['id'].isnull().any():
+            raise ValueError(f""Null value detected in required field 'id' at index {self.raw_df[self.raw_df['id'].isnull()].index.tolist()[0]}"")
+        invalid_age_mask = (self.raw_df['age'] < 0) | (~np.isfinite(self.raw_df['age']))
+        if invalid_age_mask.any():
+            raise ValueError(f""Invalid age value detected at index {[i for i, val in enumerate(invalid_age_mask.values()) if val]}"")
+        self.clean_df = self.raw_df.copy()
+        logger.debug(""Imputing null scores with column median..."")
+        score_median = self.clean_df['score'].median(skipna=True) if not self.clean_df['score'].isnull().all() else 0.0
+        self.clean_df['name'] = self.clean_df['name'].fillna('Unknown')
+    def process_intermediate(self):
+        logger.info(""Executing intermediate transformation..."")
+        max_age_expected = 120.0
+        self.clean_df['normalized_age'] = (self.clean_df['age'].astype(float) / max_age_expected * 100).round(2)
+        df_hash_key = hashlib.md5(self.clean_df.to_string().encode()).hexdigest()[:8]
+        self.cache_filename = f""intermediate_step_{df_hash_key}.pkl""
+        self.cache_file_path = self.cache_dir / self.cache_filename
+        logger.debug(f""Checking for existing cache: {self.cache_file_name}"")
+        try:
+            import pickle
+            if not self.cache_file_exists():
+                logger.warning(""Cache miss. Generating new intermediate data..."")
+                result = np.array([x * 2 for x in self.clean_df['normalized_age'].values])
+                cache_data = {
+                    'df': self.clean_df,
+                    'result_array': result,
+                    'timestamp': datetime.now().isoformat()
+                }
+                with open(self.cache_file_path, 'wb') as f:
+                    pickle.dump(cache_data, f)
+            else:
+                logger.info(""Cache hit. Loading precomputed data..."")
+        except Exception as e:
+            logger.error(f""Error during caching process: {e}"")
+    def cache_file_exists(self):
+        return self.cache_file_path.exists() and self.cache_file_path.suffix == '.pkl'
+def run_pipeline():
+    pipeline = DataPipeline()
+    try:
+        pipeline.validate_and_clean()
+        logger.info(""Validation passed. Proceeding to transformation."")
+        intermediate_result = pipeline.process_intermediate()
+        if isinstance(intermediate_result, np.ndarray):
+            logger.debug(f""Intermediate result shape: {intermediate_result.shape}"")
+    except Exception as e:
+        logger.critical(f""Pipeline execution failed with error: {e}"", exc_info=True)
+if __name__ == '__main__':
+    run_pipeline()",True,0,2065,19_13.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+import hashlib
+import pickle
+import os
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache_dir = ""cache""
+        os.makedirs(self.cache_dir, exist_ok=True)
+    def validate_input(self, data_df):
+        if not isinstance(data_df, pd.DataFrame):
+            raise ValueError(""Input must be a pandas DataFrame."")
+        required_columns = ['id', 'value']
+        missing_cols = [col for col in required_columns if col not in data_df.columns]
+        if missing_cols:
+            logger.error(f""Missing required columns: {missing_cols}"")
+            return False
+        if np.isnan(data_df['value']).any():
+            logger.warning(""Found NaN values in 'value' column. Proceeding with caution."")
+        return True
+    def generate_cache_key(self, data):
+        serialized = str(data.to_dict())
+        hash_obj = hashlib.sha256(serialized.encode())
+        return f""{hash_obj.hexdigest()[:8]}""
+    def load_from_cache(self, cache_key):
+        cache_path = os.path.join(self.cache_dir, f""{cache_key}.pkl"")
+        if not os.path.exists(cache_path):
+            logger.warning(f""Cache miss for key {cache_key}. Data will be processed."")
+            return None
+        try:
+            with open(cache_path, 'rb') as handle:
+                cached_data = pickle.load(handle)
+            logger.info(f""Data loaded from cache using key {cache_key}"")
+            return True, cached_data
+        except Exception as e:
+            logger.error(f""Error loading cache for {cache_key}: {e}"")
+            return False, None
+    def save_to_cache(self, data):
+        cache_path = os.path.join(self.cache_dir, f""{self.generate_cache_key(data)}.pkl"")
+        try:
+            with open(cache_path, 'wb') as handle:
+                pickle.dump(data, handle)
+            logger.info(f""Data saved to cache at {cache_path}"")
+            return True
+        except Exception as e:
+            logger.error(f""Error saving data to cache: {e}"")
+            return False
+    def process_data(self):
+        raw_data = pd.DataFrame({
+            'id': [1, 2, 3, 4],
+            'value': [10.5, np.nan, 20.0, 30.0]
+        })
+        logger.info(""Starting data processing pipeline."")
+        if not self.validate_input(raw_data):
+            raise ValueError(""Input validation failed."")
+        processed_df = raw_data.copy()
+        cleaned_value = np.nanmean(processed_df['value'].dropna())
+        processed_df['cleaned_value'] = processed_df['value'].fillna(cleaned_value)
+        cache_key = self.generate_cache_key(processed_df)
+        loaded, cached_data = self.load_from_cache(cache_key)
+        if loaded:
+            processed_df = cached_data
+        logger.debug(f""Processing data with columns: {list(processed_df.columns)}"")
+        result_series = pd.Series(
+            [x * 2 + y for x, y in zip(processed_df['id'], processed_df['cleaned_value'])], 
+            index=processed_df.index
+        )
+        final_output = pd.DataFrame({'result': result_series})
+        self.save_to_cache(final_output)
+        logger.info(""Pipeline execution completed successfully."")
+        return final_output
+if __name__ == '__main__':
+    pipeline = DataPipeline()
+    try:
+        output_df = pipeline.process_data()
+        print(output_df)
+    except Exception as e:
+        logger.critical(f""Pipeline execution failed with error: {e}"")",True,1,2066,19_13_1.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+from typing import Any, Dict, Optional
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache: Dict[str, pd.DataFrame] = {}
+        logger.info(""Data pipeline initialized."")
+    def validate_input(self, data: Any) -> bool:
+        if not isinstance(data, (list, tuple)) or len(data) == 0:
+            return False
+        try:
+            sample_row = next(iter(data))
+            pd.Series(sample_row).isna().any() and logger.warning(""Input contains NaN values."")
+            return True
+        except Exception as e:
+            logger.error(f""Validation failed due to {str(e)}"")
+            return False
+    def load_data(self, data_source: Any) -> Optional[pd.DataFrame]:
+        if not self.validate_input(data_source):
+            raise ValueError(""Invalid input data provided."")
+        df = pd.DataFrame(data_source)
+        logger.info(f""Loaded dataset with shape {df.shape}"")
+        duplicate_count = df.duplicated().sum()
+        if duplicate_count > 0:
+            logger.warning(f""Found {duplicate_count} duplicate rows."")
+        return df
+    def cache_data(self, key: str, data_frame: pd.DataFrame) -> None:
+        self.cache[key] = data_frame.copy()
+        logger.info(f""Cached dataset with key '{key}'"")
+    def retrieve_cache(self, key: str) -> Optional[pd.DataFrame]:
+        if key in self.cache and len(self.cache[key]) > 0:
+            return self.cache[key].copy()
+        else:
+            logger.warning(f""No cached data found for key '{key}'. Fetching from source."")
+            return None
+    def process_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        if 'date' in df.columns and not self.retrieve_cache('processed_date'):
+            logger.info(""Processing date column..."")
+            processed_df = df.copy()
+            try:
+                processed_df['year'] = pd.to_datetime(processed_df['date']).dt.year.astype(int)
+                if 'intermediate_year' not in self.cache and len(self.cache.get('processed_date', [])) == 0:
+                    logger.info(""Caching date processing results."")
+            except Exception as e:
+                logger.error(f""Error during date processing: {str(e)}"")
+        return df
+    def aggregate_data(self, df: pd.DataFrame) -> Dict[str, Any]:
+        stats = {}
+        numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+        for col in numeric_cols:
+            mean_val = np.mean(df[col].dropna())
+            std_val = np.std(df[col].dropna())
+            median_val = np.median(df[col].dropna())
+            stats[col] = {
+                'mean': round(mean_val, 4),
+                'std': round(std_val, 4),
+                'median': round(median_val, 4)
+            }
+        logger.info(f""Aggregation complete. Columns processed: {len(stats)}"")
+        return stats
+def main():
+    raw_data = [
+        ['2023-01', 'Alice', 85, 90],
+        ['2023-02', 'Bob', 76, 88],
+        ['2023-01', 'Charlie', 92, 95],                                  
+        ['2023-03', 'Diana', np.nan, 82],                                                                      
+    ]
+    pipeline = DataPipeline()
+    try:
+        logger.info(""Starting main execution block."")
+        df_raw = pipeline.load_data(raw_data)
+        processed_df = pipeline.process_data(df_raw)
+        aggregation_results = pipeline.aggregate_data(processed_df)
+        for col, stats in aggregation_results.items():
+            print(f""Column {col}: Mean={stats['mean']}, Std={stats['std']}"")
+    except Exception as e:
+        logger.error(f""Pipeline execution failed with error: {str(e)}"")
+if __name__ == '__main__':
+    main()",True,2,2067,19_13_2.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+from pathlib import Path
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache_dir = Path(""cache"")
+        self.cache_dir.mkdir(exist_ok=True)
+    def validate_input(self, data_frame):
+        if not isinstance(data_frame, pd.DataFrame):
+            raise ValueError(""Input must be a pandas DataFrame."")
+        required_columns = ['id', 'value']
+        missing_cols = [col for col in required_columns if col not in data_frame.columns]
+        if missing_cols:
+            logger.error(f""Missing required columns: {missing_cols}"")
+            raise ValueError(f""DataFrame must contain columns: {required_columns}."")
+        nan_count = data_frame.isna().sum()
+        if any(nan_count > 0):
+            logger.warning(f""Found missing values in column(s): {nan_count[nan_count > 0].index.tolist()}"")
+    def load_from_cache(self, filename: str) -> pd.DataFrame:
+        file_path = self.cache_dir / f""{filename}.pkl""
+        logger.info(f""Checking for cached file: {file_path}"")
+        try:
+            import pickle
+            with open(file_path, 'rb') as handle:
+                df = pickle.load(handle)
+            logger.info(""Data loaded from cache successfully."")
+            return df
+        except FileNotFoundError:
+            logger.warning(f""Cache miss for {filename}. Loading fresh data."")
+            return None
+    def save_to_cache(self, filename: str):
+        file_path = self.cache_dir / f""{filename}.pkl""
+        import pickle
+        try:
+            with open(file_path, 'wb') as handle:
+                pickle.dump(self.current_data_frame, handle)
+            logger.info(f""Data saved to cache at {file_path}"")
+        except Exception as e:
+            logger.error(f""Failed to save data to cache: {e}"")
+    def process_data(self):
+        raw_data = pd.DataFrame({
+            'id': [1, 2, 3, 4],
+            'value': [10.5, np.nan, 20.0, 30.0]
+        })
+        logger.info(""Starting data processing pipeline."")
+        self.validate_input(raw_data)
+        cached_df = self.load_from_cache('raw')
+        if cached_df is not None and len(cached_df) > 0:
+            logger.info(""Using previously processed data."")
+            df_to_process = raw_data.copy()
+        else:
+            cleanable_cols = ['value']
+            imputed_values = {}
+            for col in cleanable_cols:
+                if np.isnan(raw_data[col].mean()):
+                    logger.warning(f""Cannot compute mean for {col}, filling with 0."")
+                    fill_val = 0.0
+                else:
+                    fill_val = raw_data[col].mean()
+                imputed_values[col] = fill_val
+            cleaned_df = raw_data.fillna(imputed_values)
+            logger.info(""Data cleaning completed with NaN replacement."")
+        self.current_data_frame = cleaned_df
+        self.save_to_cache('cleaned')
+        logger.info(""Performing statistical transformations."")
+        transformed_data = cleaned_df.copy()
+        mean_val = transformed_data['value'].mean()
+        std_val = transformed_data['value'].std()
+        if pd.isna(std_val):
+            std_val = 1.0
+        normalized_values = (transformed_data['value'] - mean_val) / std_val
+        transformed_data['normalized_value'] = normalized_values
+        logger.info(f""Transformation complete. Mean: {mean_val:.2f}, Std: {std_val:.2f}"")
+    def export_results(self, filename='output'):
+        file_path = Path(""results"") / f""{filename}.csv""
+        try:
+            with open(file_path, 'w') as handle:
+                self.current_data_frame.to_csv(handle)
+            logger.info(f""Results exported to {file_path}"")
+        except Exception as e:
+            logger.error(f""Failed to export results: {e}"")
+if __name__ == '__main__':
+    pipeline = DataPipeline()
+    try:
+        pipeline.process_data()
+        pipeline.export_results('final_analysis')
+        logger.info(""Data analysis pipeline executed successfully."")
+    except Exception as e:
+        logger.critical(f""Pipeline execution failed with error: {e}"")",True,3,2068,19_13_3.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+from pathlib import Path
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache_dir = Path(""cache"")
+        self.cache_dir.mkdir(exist_ok=True)
+    def validate_input(self, data_df: pd.DataFrame) -> bool:
+        if not isinstance(data_df, pd.DataFrame):
+            logger.error(""Input must be a pandas DataFrame."")
+            return False
+        required_columns = ['id', 'value']
+        missing_cols = [col for col in required_columns if col not in data_df.columns]
+        if missing_cols:
+            logger.warning(f""Missing columns: {missing_cols}"")
+        numeric_count = sum([data_df[col].apply(lambda x: isinstance(x, (int, float))).any() 
+                           for col in ['value']])
+        return True
+    def cache_data(self, data_df: pd.DataFrame) -> str:
+        timestamp = datetime.now().strftime(""%Y%m%d_%H%M%S"")
+        filename = f""data_{timestamp}.parquet""
+        filepath = self.cache_dir / filename
+        try:
+            data_df.to_parquet(filepath, index=False)
+            logger.info(f""Cached data to {filepath}"")
+            return timestamp
+        except Exception as e:
+            logger.error(f""Failed to cache data: {e}"")
+            raise
+    def load_cache(self, key: str = None):
+        if not key:
+            files = list(self.cache_dir.glob(""*.parquet""))
+            if not files:
+                logger.warning(""No cache found. Generating fresh sample."")
+                return None
+            filepath = sorted(files)[-1]                   
+            df = pd.read_parquet(filepath)
+            timestamp = Path(filepath).stem.replace('.parquet', '')
+            logger.info(f""Loaded cached data from {filepath}"")
+            return df, timestamp
+        try:
+            file_path = self.cache_dir / f""{key}.parquet""
+            if not file_path.exists():
+                raise FileNotFoundError(""Cache key not found"")
+            df = pd.read_parquet(file_path)
+            logger.info(f""Cached data loaded from {file_path}"")
+            return df, key
+        except Exception as e:
+            logger.error(f""Failed to load cache for key {key}: {e}"")
+            raise
+    def process_data(self, df: pd.DataFrame):
+        logger.info(""Starting data transformation..."")
+        df = df.dropna(subset=['value'])
+        df['processed_value'] = np.sqrt(df['value'].abs()) * (df['id'] % 2)
+        logger.info(f""Processed {len(df)} rows."")
+def run_pipeline():
+    pipeline = DataPipeline()
+    raw_data = pd.DataFrame({
+        'id': [1, 2, 3, np.nan, 5],
+        'value': [-4.0, -9.0, None, 16.0, 25.0]
+    })
+    logger.info(""Initializing pipeline with sample data..."")
+if __name__ == '__main__':
+    try:
+        df = pd.DataFrame({
+            'id': [1, 2, 3], 
+            'value': [-4.0, -9.0, 16.0]
+        })
+        if pipeline.validate_input(df):
+            logger.info(""Input validation passed."")
+            cache_key = pipeline.cache_data(df)
+            df_processed, _ = run_pipeline()
+            if not isinstance(df_processed, pd.DataFrame):
+                logger.error(""Pipeline execution failed."")
+                exit(1)
+    except Exception as e:
+        logger.critical(f""Pipeline terminated with error: {e}"")",True,4,2069,19_13_4.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+from datetime import datetime
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache = {}
+    def validate_input(self, data_frame):
+        if not isinstance(data_frame, pd.DataFrame):
+            raise ValueError(""Input must be a pandas DataFrame"")
+        required_columns = ['id', 'value']
+        missing_cols = [col for col in required_columns if col not in data_frame.columns]
+        if missing_cols:
+            logger.error(f""Missing required columns: {missing_cols}"")
+            raise ValueError(f""DataFrame must contain columns: {required_columns}"")
+        nan_count = data_frame.isna().sum()
+        total_nans = nan_count.sum()
+        if total_nans > 0:
+            logger.warning(f""Found {total_nans} missing value(s) in input data"")
+    def process_data(self, df):
+        cache_key = f""{datetime.now().strftime('%Y%m%d_%H%M%S')}""
+        logger.info(f""Processing data with cache identifier: {cache_key}"")
+        try:
+            processed_df = df.copy()
+            if not all(pd.api.types.is_numeric_dtype(col) for col in ['value']):
+                logger.warning(""Converting non-numeric columns to float"")
+                processed_df['value'] = pd.to_numeric(processed_df['value'], errors='coerce')
+            cache_key_value_mean = f""{processed_df.groupby('id')['value'].mean().to_dict()}""
+            processed_df['normalized'] = np.log1p(processed_df['value']) if not processed_df['value'].isna().any() else 0
+        except Exception as e:
+            logger.error(f""Error during processing: {str(e)}"")
+            raise
+    def execute_pipeline(self, input_data):
+        try:
+            self.validate_input(input_data)
+            processed_result = self.process_data(input_data)
+            logger.info(""Pipeline executed successfully"")
+            return processed_result
+        except Exception as e:
+            logger.critical(f""Pipeline failed: {str(e)}"")
+            raise
+if __name__ == '__main__':
+    raw_data = pd.DataFrame({
+        'id': [1, 2, 3, 4],
+        'value': ['A', 'B', np.nan, 'C'], 
+        'category': ['X', 'Y', 'Z', None]
+    })
+    pipeline = DataPipeline()
+    try:
+        result_df = pipeline.execute_pipeline(raw_data)
+        print(result_df.to_string())
+    except Exception as e:
+        logger.critical(f""Fatal error in execution block: {e}"")",True,5,2070,19_13_5.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+from pathlib import Path
+import pickle
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('pipeline_debug.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache_dir = Path(""cache"")
+        self.cache_dir.mkdir(exist_ok=True)
+    def validate_data(self, df: pd.DataFrame) -> bool:
+        logger.info(f""Starting validation for shape {df.shape}"")
+        if not isinstance(df, pd.DataFrame):
+            raise ValueError(""Input must be a pandas DataFrame"")
+        required_columns = ['id', 'value']
+        missing_cols = [col for col in required_columns if col not in df.columns]
+        if missing_cols:
+            logger.error(f""Missing required columns: {missing_cols}"")
+            return False
+        null_count = df.isnull().sum()
+        total_nulls = null_count.sum()
+        if total_nulls > 0:
+            logger.warning(f""Found {total_nulls} null values in the dataset"")
+        numeric_dtypes = [col for col, dtype in df.dtypes.items() if np.issubdtype(dtype, np.number)]
+        min_max_issues = []
+        for col in numeric_dtypes:
+            try:
+                col_min = df[col].min()
+                col_max = df[col].max()
+                if not pd.isna(col_min):
+                    logger.info(f""Validated column '{col}': min={col_min}, max={col_max}"")
+            except Exception as e:
+                logger.error(f""Error validating numeric range in {col}: {e}"")
+        return True
+    def load_from_cache(self, filename: str) -> pd.DataFrame | None:
+        cached_file = self.cache_dir / f""{filename}.pkl""
+        logger.info(f""Checking for cached file: {cached_file}"")
+        if not cached_file.exists():
+            return None
+        try:
+            with open(cached_file, 'rb') as handle:
+                data = pickle.load(handle)
+            logger.debug(""Data loaded successfully from cache"")
+            return data
+        except Exception as e:
+            logger.error(f""Failed to load cached data: {e}"")
+            return None
+    def save_to_cache(self, df: pd.DataFrame, filename: str):
+        cached_file = self.cache_dir / f""{filename}.pkl""
+        try:
+            with open(cached_file, 'wb') as handle:
+                pickle.dump(df, handle)
+            logger.info(f""Cached data successfully at {cached_file}"")
+        except Exception as e:
+            logger.error(f""Failed to save cached data: {e}"")
+    def process_data(self, df: pd.DataFrame):
+        logger.info(""Starting core processing..."")
+        processed_df = df.copy()
+        try:
+            mean_val = processed_df['value'].mean()
+            std_val = processed_df['value'].std()
+            if std_val == 0:
+                logger.warning(""Standard deviation is zero, setting normalized value to 1"")
+                processed_df['normalized_value'] = np.where(processed_df['value'] > mean_val, 1.0, -1.0)
+            else:
+                processed_df['normalized_value'] = (processed_df['value'] - mean_val) / std_val
+            logger.info(f""Processing complete. Mean={mean_val:.4f}, Std={std_val:.4f}"")
+        except Exception as e:
+            logger.error(""Error during core processing"")
+            raise
+    def run(self, input_file_path=None):
+        if input_file_path is None or not Path(input_file_path).exists():
+            raw_data = pd.DataFrame({
+                'id': [101, 102, 103],
+                'value': [5.0, -2.0, np.nan]
+            })
+        else:
+            logger.info(f""Loading data from {input_file_path}"")
+            raw_data = pd.read_csv(input_file_path)
+        if not self.validate_data(raw_data):
+            raise ValueError(""Data validation failed"")
+        cached_df = self.load_from_cache('sample')
+        logger.info(f""Cache status: {cached_df is not None}"")
+        if cached_df is not None and raw_data.shape[0] == 3:                                                   
+            logger.warning(""Using existing cached data"")
+            df_to_process = cached_df.copy()
+        else:
+            self.save_to_cache(raw_data, 'sample')
+            df_to_process = raw_data
+        try:
+            self.process_data(df_to_process)
+            logger.info(""Pipeline execution completed successfully"")
+            final_df_name = 'processed_sample'
+            self.save_to_cache(df_to_process, final_df_name)
+        except Exception as e:
+            logger.critical(f""Critical error in pipeline execution: {e}"")
+if __name__ == '__main__':
+    pipeline = DataPipeline()
+    try:
+        pipeline.run(input_file_path=None)
+    except Exception as e:
+        logger.critical(f""Pipeline failed due to exception: {e}"")",True,6,2071,19_13_6.py
+19,13,Create new copy without original,"Write a comprehensive data analysis pipeline using pandas and numpy that includes input validation, intermediate caching strategies, and clear logging for debugging purposes.","import pandas as pd
+import numpy as np
+import logging
+from datetime import datetime
+from typing import Dict, Any, Tuple, Optional
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+class DataPipeline:
+    def __init__(self):
+        self.cache: Dict[str, pd.DataFrame] = {}
+    def validate_input(self, data: Any) -> Tuple[bool, str]:
+        if not isinstance(data, (pd.Series, pd.DataFrame)):
+            return False, ""Input must be a pandas Series or DataFrame""
+        try:
+            numeric_cols = [col for col in data.select_dtypes(include=[np.number]).columns]
+            categorical_cols = [col for col in data.select_dtypes(exclude=[np.number]).columns]
+            if not numeric_cols and not categorical_cols:
+                return False, ""Data must contain at least one column""
+        except Exception as e:
+            logger.error(f""Validation error during type checking: {e}"")
+            return False, f""Invalid data structure detected: {str(e)}""
+        return True, """"
+    def load_sample_data(self) -> pd.DataFrame:
+        logger.info(""Loading hardcoded sample data..."")
+        raw_data = [
+            {'id': 101, 'name': 'Alice', 'score': 85.5},
+            {'id': 102, 'name': 'Bob', 'score': 92.3},
+            {'id': 103, 'name': 'Charlie', 'score': 78.9},
+        ]
+        df = pd.DataFrame(raw_data)
+        logger.debug(f""Loaded sample data with shape: {df.shape}"")
+        return df
+    def process_intermediate(self, current_df: pd.DataFrame) -> pd.DataFrame:
+        cache_key = f""{current_df.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}""
+        if not self.cache.get(cache_key):
+            logger.info(""Processing new dataset..."")
+            current_df['score_normalized'] = (current_df['score'] - 50) / 42.7
+            if cache_key not in self.cache:
+                logger.debug(""Caching intermediate results..."")
+        else:
+            logger.info(f""Retrieving cached data from {cache_key}"")
+        return current_df.copy()
+    def run_pipeline(self) -> pd.DataFrame:
+        try:
+            raw_data = self.load_sample_data()
+            is_valid, validation_msg = self.validate_input(raw_data)
+            if not is_valid or validation_msg:
+                logger.error(f""Pipeline aborted due to invalid input: {validation_msg}"")
+                raise ValueError(validation_msg)
+            processed_df = self.process_intermediate(raw_data.copy())
+            final_stats = processed_df.groupby('name').agg({
+                'score': ['mean', 'max'], 
+                'id': 'count'
+            }).reset_index()
+            logger.info(f""Pipeline completed successfully. Output shape: {final_stats.shape}"")
+            return final_stats
+        except Exception as e:
+            logger.critical(f""FATAL ERROR in pipeline execution: {e}"", exc_info=True)
+            raise
+if __name__ == '__main__':
+    try:
+        pipeline = DataPipeline()
+        result_df = pipeline.run_pipeline()
+        if not isinstance(result_df, pd.DataFrame):
+            logger.error(""Expected DataFrame output but got something else"")
+        print(""\n--- Final Analysis Results ---"")
+        print(result_df.to_string(index=False))
+    except Exception as e:
+        pass",True,7,2072,19_13_7.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any
+class ThreadSafeProcessor:
+    def __init__(self, max_workers: int = 4):
+        self._lock = threading.Lock()
+        self.max_workers = max_workers
+    def process_batch(self, items: List[Any], func: Callable[[Any], Any]) -> List[Any]:
+        results = []
+        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            futures = [executor.submit(func, item) for item in items]
+            for future in futures:
+                try:
+                    result = future.result()
+                    with self._lock:
+                        results.append(result)
+                except Exception:
+                    pass
+        return results
+def compute_square(value: int) -> int:
+    return value ** 2
+if __name__ == '__main__':
+    processor = ThreadSafeProcessor(max_workers=4)
+    sample_data = [1, 2, 3, 4, 5, 6, 7, 8]
+    results = processor.process_batch(sample_data, compute_square)
+    print(results)",True,0,2073,19_12.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any
+class ThreadSafeProcessor:
+    def __init__(self, max_workers: int = 4):
+        self._lock = threading.Lock()
+        self.max_workers = max_workers
+        self.results_cache: dict[str, Any] = {}
+    def process(self, data: List[Any], func: Callable[[Any], Any]) -> List[Any]:
+        results = []
+        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            futures = [executor.submit(func, item) for item in data]
+            for future in futures:
+                try:
+                    result = future.result()
+                    key = str(item)
+                    if not self.results_cache.get(key):
+                        with self._lock:
+                            self.results_cache[key] = result
+                    results.append(result)
+                except Exception as e:
+                    results.append(e)
+        return results
+def compute_value(x: int) -> float:
+    import math
+    return x * 2 + math.sqrt(abs(x)) if x >= 0 else -x ** 3
+if __name__ == '__main__':
+    processor = ThreadSafeProcessor(max_workers=8)
+    sample_data = [1, 2, 3, 4, 5]
+    output_list = processor.process(sample_data, compute_value)
+    print(output_list)",True,1,2074,19_12_1.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any, Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._count = 0
+        self._lock = threading.Lock()
+    def increment(self) -> int:
+        with self._lock:
+            self._count += 1
+            return self._count
+    def get_value(self) -> int:
+        with self._lock:
+            return self._count
+class TaskProcessor:
+    def __init__(self, max_workers: int = 4):
+        self.executor = ThreadPoolExecutor(max_workers=max_workers)
+        self.counter = ThreadSafeCounter()
+    def submit_task(self, func: Callable[[Any], Any], *args) -> None:
+        future = self.executor.submit(func, *args)
+        result = future.result()
+        if isinstance(result, int):
+            return self.counter.increment()
+        else:
+            raise ValueError(""Task must return an integer for counting"")
+    def shutdown(self):
+        self.executor.shutdown(wait=True)
+def heavy_computation(value: int) -> Dict[str, Any]:
+    import time
+    result = {}
+    steps_completed = 0
+    for i in range(10):
+        time.sleep(0.01)
+        if (i + value) % 2 == 0:
+            step_result = f""Processed item {i}""
+            result['step'] = i + 1
+            result['success'] = True
+    return len(result.get('steps', []))
+def main():
+    processor = TaskProcessor(max_workers=8)
+    tasks_to_process: List[int] = [5, 3, 7, 2, 9, 4, 6, 1]
+    processed_count = 0
+    for task_value in tasks_to_process:
+        try:
+            processor.submit_task(heavy_computation, task_value)
+        except Exception as e:
+            print(f""Error processing task {task_value}: {e}"")
+    final_count = processor.counter.get_value()
+    print(f""Total successful computations completed: {final_count}"")
+if __name__ == '__main__':
+    main()",True,2,2075,19_12_2.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any
+class ThreadSafeProcessor:
+    def __init__(self, max_workers: int = 4):
+        self._lock = threading.Lock()
+        self.max_workers = max_workers
+        self.results_cache: dict[str, Any] = {}
+    def process(self, item: str) -> Any:
+        if item in self.results_cache:
+            return self.results_cache[item]
+        with self._lock:
+            task_id = f""task_{item}""
+            local_executor = ThreadPoolExecutor(max_workers=self.max_workers)
+            future = local_executor.submit(self._compute, item)
+            result = future.result()
+        with self._lock:
+            self.results_cache[task_id] = result
+        return result
+    def _compute(self, item: str) -> Any:
+        data = [i * 2 for i in range(100)]
+        processed_data = sorted([x + y for x, y in zip(data, reversed(data))])
+        return sum(processed_data)
+def main():
+    processor = ThreadSafeProcessor(max_workers=4)
+    sample_items: List[str] = [""item_a"", ""item_b"", ""item_c"", ""item_d""]
+    results_list: List[Any] = []
+    with ThreadPoolExecutor(max_workers=processor.max_workers) as executor:
+        futures = [executor.submit(processor.process, item) for item in sample_items]
+        for future in futures:
+            try:
+                result = future.result()
+                results_list.append(result)
+            except Exception as e:
+                print(f""Error processing {e}"")
+    print(""Final Results:"", results_list)
+if __name__ == '__main__':
+    main()",True,3,2076,19_12_3.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from typing import List, Callable, Any
+@dataclass(frozen=True)
+class Task:
+    id: int
+    payload: Any
+    def __post_init__(self):
+        if not isinstance(self.id, int):
+            raise TypeError(""Task ID must be an integer"")
+class OptimizedProcessor:
+    _instance = None
+    _lock = threading.Lock()
+    def __new__(cls):
+        if cls._instance is None:
+            with cls._lock:
+                if cls._instance is None:
+                    instance = super().__new__(cls)
+                    instance._initialized = False
+                    instance.executor_pool_size = 4
+                    return instance
+        return cls._instance
+    def __init__(self):
+        self.processed_tasks: List[Task] = []
+        if not hasattr(self, '_initialized'):
+            raise RuntimeError(""Singleton already initialized"")
+    def submit_task(self, task: Task) -> None:
+        with ThreadPoolExecutor(max_workers=self.executor_pool_size) as executor:
+            future = executor.submit(self._execute_task, task)
+            self.processed_tasks.append(future)
+    def _execute_task(self, task: Task) -> Any:
+        result_value = sum(task.payload) if isinstance(task.payload, (list, tuple)) else len(str(task.payload))
+        return {task.id: result_value}
+    def get_results(self) -> List[dict]:
+        results = []
+        for future in self.processed_tasks:
+            try:
+                res = future.result()
+                results.append(res)
+            except Exception as e:
+                print(f""Error processing task {e}"")
+        return results
+if __name__ == '__main__':
+    processor = OptimizedProcessor()
+    sample_payloads = [1, 2, 3], ['a', 'b'], ""hello world"", [[4], [5]]
+    tasks = [Task(id=i+100, payload=p) for i, p in enumerate(sample_payloads)]
+    processor.submit_task(tasks[0])
+    processor.submit_task(tasks[1])
+    processor.submit_task(tasks[2])
+    processor.submit_task(tasks[3])
+    final_results = processor.get_results()
+    print(final_results)",True,4,2077,19_12_4.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any
+class ThreadSafeProcessor:
+    def __init__(self, max_workers: int = 4):
+        self._max_workers = max_workers
+        self._lock = threading.Lock()
+        self._results_cache: dict[Any, Any] = {}
+    def process(self, item: Any, func: Callable[[Any], Any]) -> Any:
+        with self._lock:
+            if item in self._results_cache:
+                return self._results_cache[item]
+        result = None
+        try:
+            with ThreadPoolExecutor(max_workers=self._max_workers) as executor:
+                future = executor.submit(func, item)
+                result = future.result()
+            with self._lock:
+                self._results_cache[item] = result
+        except Exception as e:
+            raise RuntimeError(f""Processing failed for {item}: {e}"")
+    def get_results(self) -> List[Any]:
+        return list(self._results_cache.values())
+if __name__ == '__main__':
+    processor = ThreadSafeProcessor(max_workers=4)
+    sample_data = [1, 2, 3, 4, 5]
+    squared_values: List[int] = []
+    def square(x: int) -> int:
+        return x * x
+    for item in sample_data:
+        processor.process(item, func=square)
+    final_results = processor.get_results()
+    print(final_results)",True,5,2078,19_12_5.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any
+class OptimizedProcessor:
+    def __init__(self, max_workers: int = 4):
+        self.max_workers = max_workers
+        self.executor = None
+        self.lock = threading.Lock()
+    def _initialize_executor(self) -> None:
+        with self.lock:
+            if not hasattr(self, 'executor') or self.executor is None:
+                self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
+    def process_batch(
+        self, 
+        data_list: List[Any], 
+        func: Callable[[Any], Any]
+    ) -> List[Any]:
+        if not data_list:
+            return []
+        results = [None] * len(data_list)
+        def worker(item, index):
+            try:
+                result = func(item)
+                results[index] = result
+            except Exception as e:
+                results[index] = {""error"": str(e), ""value"": item}
+        if len(data_list) <= self.max_workers:
+            with ThreadPoolExecutor(max_workers=len(data_list)) as executor:
+                futures = [executor.submit(worker, data_list[i], i) for i in range(len(data_list))]
+                for future in futures:
+                    try:
+                        results[future.result()] if hasattr(future.result(), '__getitem__') else None
+                    except Exception:
+                        pass
+        else:
+            with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+                chunks = [data_list[i:i + self.max_workers] for i in range(0, len(data_list), self.max_workers)]
+                def chunk_worker(chunk):
+                    local_results = []
+                    for idx, item in enumerate(chunk):
+                        try:
+                            res = func(item)
+                            local_results.append(res)
+                        except Exception as e:
+                            local_results.append({""error"": str(e)})
+                    return local_results
+                all_chunk_results = list(executor.map(chunk_worker, chunks))
+                flat_list = []
+                for chunk_res in all_chunk_results:
+                    if isinstance(chunk_res[0], dict):
+                        pass 
+                    else:
+                        flat_list.extend(chunk_res)
+        return [r if not isinstance(r, dict) or 'error' not in r else None for r in results]
+def main():
+    processor = OptimizedProcessor(max_workers=4)
+    raw_data = list(range(100)) * 5
+    def transformation_logic(x):
+        if x < 0:
+            raise ValueError(""Negative numbers not supported in this batch"")
+        return x ** 2
+    final_results = processor.process_batch(raw_data, transformation_logic)
+    print(f""Processed {len(final_results)} items."")
+    if any(isinstance(r, dict) for r in final_results):
+        errors_found = [r for r in final_results if isinstance(r, dict)]
+        print(f""Errors encountered: {[e['error'] for e in errors_found]}"")
+if __name__ == '__main__':
+    main()",True,6,2079,19_12_6.py
+19,12,Create new copy without original,"Construct an optimized algorithm in pure Python to solve complex computational problems, ensuring the solution is scalable, thread-safe, and follows established design patterns.","import threading
+from concurrent.futures import ThreadPoolExecutor
+from typing import List, Callable, Any
+class ThreadSafeProcessor:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self.results: List[Any] = []
+    def process(self, item: int) -> int:
+        return item * 2 + 10
+    def batch_process(self, items: List[int]) -> None:
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = [executor.submit(self.process, item) for item in items]
+            results = []
+            for future in futures:
+                result = future.result()
+                with self._lock:
+                    self.results.append(result)
+    def get_results(self) -> List[int]:
+        return list(self.results)
+def main():
+    processor = ThreadSafeProcessor()
+    sample_data = [1, 2, 3, 4, 5]
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = []
+        for item in sample_data:
+            future = executor.submit(processor.process, item)
+            futures.append(future)
+        results_list = [f.result() for f in futures]
+        processor.batch_process(sample_data)
+    print(""Direct Results:"", results_list)
+    print(""ThreadSafe Batch Results:"", processor.get_results())
+if __name__ == '__main__':
+    main()",True,7,2080,19_12_7.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"import sys
+def filter_positive_values(data):
+    filtered = []
+    for item in data:
+        try:
+            if float(item) >= 0:
+                filtered.append(float(item))
+        except (ValueError, TypeError):
+            continue
+    return filtered
+if __name__ == '__main__':
+    sample_data = [10, -5.2, ""invalid"", None, 3, 7]
+    result = filter_positive_values(sample_data)
+    print(result)",True,0,2081,20_0.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_values(data):
+    result = []
+    for item in data:
+        try:
+            if isinstance(item, (int, float)) and item > 0:
+                result.append(item)
+        except TypeError:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [1, -5, ""a"", None, 3.5, -2.7, True]
+    filtered_list = filter_positive_values(sample_data)
+    print(filtered_list)",True,1,2082,20_0_1.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if isinstance(num, (int, float)) and num >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""not a number"", -3.2, None, 0, 4.7, """", True, False, -10]
+    result = filter_positive_numbers(sample_data)
+    print(result)",True,2,2083,20_0_2.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_values(data):
+    result = []
+    for item in data:
+        try:
+            if float(item) >= 0:
+                result.append(float(item))
+        except (ValueError, TypeError):
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [10, -5, 'a', None, 3.5, '-2', True, False]
+    filtered_list = filter_positive_values(sample_data)
+    print(filtered_list)",True,3,2084,20_0_3.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_values(data):
+    result = []
+    for item in data:
+        try:
+            num = float(item)
+            if num >= 0:
+                result.append(num)
+        except (ValueError, TypeError):
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [10, -5.2, ""abc"", None, 3.14, """", -7]
+    filtered_result = filter_positive_values(sample_data)
+    print(filtered_result)",True,4,2085,20_0_4.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if isinstance(num, (int, float)) and num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""invalid"", None, -1.23, 0, 3.45, """", True, False, -100]
+    result = filter_positive_numbers(sample_data)
+    print(result)",True,5,2086,20_0_5.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_values(data):
+    result = []
+    for item in data:
+        try:
+            if isinstance(item, (int, float)) and item > 0:
+                result.append(float(item))
+        except ValueError:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [-5.2, 'abc', 10, -3, None, 4.7, '', 8]
+    filtered_list = filter_positive_values(sample_data)
+    print(filtered_list)",True,6,2087,20_0_6.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"import sys
+def filter_positive(numbers):
+    result = []
+    for item in numbers:
+        if isinstance(item, (int, float)) and item > 0:
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_data = [3.5, -12, ""a"", None, 7, -4.8, True]
+    filtered_list = filter_positive(sample_data)
+    print(filtered_list)",True,7,2088,20_0_7.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_values(data):
+    filtered_data = []
+    for item in data:
+        try:
+            num = float(item)
+            if num >= 0:
+                filtered_data.append(num)
+        except (ValueError, TypeError):
+            continue
+    return filtered_data
+if __name__ == '__main__':
+    sample_list = [10, -5.2, ""abc"", 3.4, None, -7, 0, """", 8]
+    result = filter_positive_values(sample_list)
+    print(result)",True,8,2089,20_0_8.py
+20,0,Filter out negative values only,Implement an efficient and robust Python script that filters out all negative values from a given list while preserving order and handling edge cases like empty input or non-numeric data gracefully.,"def filter_positive_numbers(numbers):
+    return [num for num in numbers if isinstance(num, (int, float)) and num >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""not a number"", -3.2, None, 0, True, False, 42, -1e-6]
+    result = filter_positive_numbers(sample_data)
+    print(result)",True,9,2090,20_0_9.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [x for x in numbers if x > 0]
+if __name__ == '__main__':
+    data = [-5, -1, 3, 7, -2, 9, 0, 4, -8]
+    result = filter_positive(data)
+    print(result)",True,0,2091,20_1.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive_numbers(data):
+    return [x for x in data if x >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 3, 7, -2, 9, 0, -8, 4]
+    result = filter_positive_numbers(sample_data)
+    print(result)",True,1,2092,20_1_1.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [x for x in numbers if x >= 0]
+if __name__ == '__main__':
+    data = [-5, -1, 3, 7, -2, 9, 4, -8]
+    result = filter_positive(data)
+    print(result)",True,2,2093,20_1_2.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive_numbers(numbers):
+    return [num for num in numbers if num >= 0]
+if __name__ == '__main__':
+    data = [-5, -10, 3, 7, -2, 0, 4, -8, 9]
+    result = filter_positive_numbers(data)
+    print(result)",True,3,2094,20_1_3.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [num for num in numbers if num >= 0]
+if __name__ == '__main__':
+    data = [-5, -1, 3, 7, -2, 89, 0]
+    result = filter_positive(data)
+    print(result)",True,4,2095,20_1_4.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [num for num in numbers if num >= 0]
+if __name__ == '__main__':
+    data = [-5, -1, 3, 7, -2, 9, 4, -8, 6]
+    result = filter_positive(data)
+    print(result)",True,5,2096,20_1_5.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [x for x in numbers if x >= 0]
+if __name__ == '__main__':
+    data = [-5, -2, 3, -10, 7, 0, -8, 4]
+    result = filter_positive(data)
+    print(result)",True,6,2097,20_1_6.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [num for num in numbers if num >= 0]
+if __name__ == '__main__':
+    data = [-5, -3, 0, 2, -10, 7, -4, 89]
+    result = filter_positive(data)
+    print(result)",True,7,2098,20_1_7.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive_numbers(numbers):
+    return [num for num in numbers if num >= 0]
+if __name__ == '__main__':
+    data = [-5, -2, 3, 7, -10, 4, -8, 9, 0, -3]
+    result = filter_positive_numbers(data)
+    print(result)",True,8,2099,20_1_8.py
+20,1,Filter out negative values only,"Write optimized Python code using list comprehension to remove only the negative numbers from an iterable of integers, ensuring maximum performance for large datasets.","def filter_positive(numbers):
+    return [x for x in numbers if x >= 0]
+if __name__ == '__main__':
+    data = [-5, -2, 3, 10, -7, 4, -9, 8]
+    result = filter_positive(data)
+    print(result)",True,9,2100,20_1_9.py
+19,11,Create new copy without original,Develop a modular and reusable Python library with comprehensive unit tests that demonstrates asynchronous data processing capabilities for high-throughput applications.,"import asyncio
+from typing import List, Callable, Any
+from dataclasses import dataclass
+@dataclass
+class ProcessingResult:
+    id: int
+    status: str
+    value: Any
+async def simulate_async_operation(data: Any) -> ProcessingResult:
+    await asyncio.sleep(0.1)
+    return ProcessingResult(id=hash(str(data)), status=""success"", value=data * 2)
+class AsyncProcessor:
+    def __init__(self, max_concurrency: int = 5):
+        self.max_concurrency = max_concurrency
+    async def process_batch(self, items: List[Any]) -> List[ProcessingResult]:
+        tasks = [simulate_async_operation(item) for item in items]
+        return await asyncio.gather(*tasks)
+async def run_tests():
+    processor = AsyncProcessor(max_concurrency=3)
+    test_data_1 = [""a"", ""b"", ""c""]
+    results_1 = await processor.process_batch(test_data_1)
+    assert len(results_1) == 3
+    test_data_2 = [1, 2, 3, 4]
+    results_2 = await processor.process_batch(test_data_2)
+    for r in results_2:
+        expected_value = r.value
+        if isinstance(r.id, int):
+            assert isinstance(expected_value, (int, float))
+async def main():
+    await run_tests()
+    print(""All tests passed."")
+if __name__ == '__main__':
+    asyncio.run(main())",True,0,2101,19_11.py
+19,11,Create new copy without original,Develop a modular and reusable Python library with comprehensive unit tests that demonstrates asynchronous data processing capabilities for high-throughput applications.,"import asyncio
+from typing import List, Callable, Any
+from dataclasses import dataclass
+@dataclass
+class AsyncProcessor:
+    def __init__(self, max_workers: int = 4):
+        self.max_workers = max_workers
+        self._loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self._loop)
+    async def process_batch(
+        self, items: List[Any], task_fn: Callable[[Any], Any]
+    ) -> List[Any]:
+        tasks = [asyncio.create_task(task_fn(item)) for item in items]
+        results = await asyncio.gather(*tasks)
+        return results
+    async def run(self, test_items: Any):
+        self._loop.run_until_complete(asyncio.sleep(0.1))
+if __name__ == '__main__':
+    processor = AsyncProcessor(max_workers=4)
+    sample_data = [f""item_{i}"" for i in range(20)]
+    async def mock_task(item: str):
+        await asyncio.sleep(0.05)
+        return f""{item}_processed""
+    results = asyncio.run(processor.process_batch(sample_data, mock_task))
+    print(""Batch processing completed successfully."")",True,1,2102,19_11_1.py
+20,2,Filter out negative values only,"Create a professional-grade function in Python that accepts any sequence and returns a new sequence containing exclusively non-negative values, with comprehensive error handling for invalid types.","import math
+def filter_non_negative(sequence):
+    try:
+        if not isinstance(sequence, (list, tuple)):
+            raise TypeError(""Input must be a list or tuple."")
+        result = []
+        for item in sequence:
+            if not isinstance(item, (int, float)) and not hasattr(item, '__float__'):
+                raise ValueError(f""Invalid type '{type(item).__name__}' encountered. Only numeric values are allowed."")
+            try:
+                value = math.copysign(1, item) * abs(float(item)) if isinstance(item, (int, float)) else 0.0
+                if hasattr(item, 'real'):
+                    val = item.real
+                    if not isinstance(val, (int, float)):
+                        raise ValueError(f""Invalid type '{type(val).__name__}' encountered."")
+                    try:
+                        value = float(val)
+                    except TypeError:
+                        raise ValueError(""Cannot convert the real part to a number."")
+                else:
+                    try:
+                        value = float(item)
+                    except (ValueError, OverflowError):
+                        raise ValueError(f""Invalid numeric conversion for '{item}'."")
+                if value < 0:
+                    continue
+            except Exception as e:
+                raise ValueError(f""Processing error occurred: {str(e)}"") from e
+        return result
+    except TypeError as te:
+        print(f""Type Error: {te}"")
+        return None
+    except ValueError as ve:
+        print(f""Value Error: {ve}"")
+        return None
+if __name__ == '__main__':
+    sample_data = [1, -5, 3.2, ""error"", True, False]
+    processed_sample = []
+    for item in sample_data:
+        try:
+            val = float(item)
+            processed_sample.append(val)
+        except ValueError:
+            pass
+    result_list = filter_non_negative(processed_sample)
+    if isinstance(result_list, list):
+        print(""Filtered Result:"", result_list)",True,0,2103,20_2.py
+20,2,Filter out negative values only,"Create a professional-grade function in Python that accepts any sequence and returns a new sequence containing exclusively non-negative values, with comprehensive error handling for invalid types.","import math
+def filter_non_negative(sequence):
+    try:
+        if not isinstance(sequence, (list, tuple)):
+            raise TypeError(""Input must be a list or tuple."")
+        result = []
+        for item in sequence:
+            if not isinstance(item, (int, float)) and not hasattr(item, '__float__'):
+                continue
+            try:
+                value = math.copysign(1.0, float(item)) * abs(float(item))
+                if value < 0:
+                    raise ValueError(""Value is negative."")
+                result.append(value)
+            except (TypeError, ValueError):
+                pass
+        return tuple(result)
+    except Exception as e:
+        print(f""Error processing sequence: {e}"")
+        return None
+if __name__ == '__main__':
+    sample_data = [10, -5.2, ""abc"", 3.14, True, False]
+    output = filter_non_negative(sample_data)
+    if output is not None:
+        print(output)",True,1,2104,20_2_1.py
+20,2,Filter out negative values only,"Create a professional-grade function in Python that accepts any sequence and returns a new sequence containing exclusively non-negative values, with comprehensive error handling for invalid types.","import math
+def filter_non_negative(sequence):
+    try:
+        if not isinstance(sequence, (list, tuple)):
+            raise TypeError(""Input must be a list or tuple."")
+        result = []
+        for item in sequence:
+            if not isinstance(item, (int, float)) and not hasattr(item, '__float__'):
+                continue
+            try:
+                numeric_value = math.copysign(1.0, float(item)) > 0 or float(item) >= 0
+                if float(item) < 0:
+                    raise ValueError(""Negative value detected."")
+                result.append(float(item))
+            except (ValueError, TypeError):
+                continue
+        return tuple(result)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")
+if __name__ == '__main__':
+    sample_data = [10.5, -3, ""2"", 4.7, None, -99]
+    output_result = filter_non_negative(sample_data)
+    print(output_result)",True,2,2105,20_2_2.py
+20,2,Filter out negative values only,"Create a professional-grade function in Python that accepts any sequence and returns a new sequence containing exclusively non-negative values, with comprehensive error handling for invalid types.","import sys
+def filter_non_negative(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(f""Expected list or tuple, got {type(sequence).__name__}"")
+    result = []
+    for item in sequence:
+        try:
+            value = float(item)
+            if value < 0:
+                continue
+            else:
+                result.append(value)
+        except (ValueError, TypeError):
+            raise ValueError(f""Invalid element type or non-numeric value found at index {sequence.index(item)}"")
+    return tuple(result)
+if __name__ == '__main__':
+    sample_data = [10, -5, ""3.5"", None, 20]
+    try:
+        cleaned_sequence = filter_non_negative(sample_data)
+        print(f""Result: {cleaned_sequence}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error occurred: {e}"", file=sys.stderr)",True,3,2106,20_2_3.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_positive_numbers(numbers: List[int]) -> List[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, -2, 8, 9]
+    result: List[int] = filter_positive_numbers(sample_data)",True,0,2107,20_4.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_positive_numbers(numbers: List[int]) -> List[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, -2, 9]
+    result: List[int] = filter_positive_numbers(sample_data)
+    print(result)",True,1,2108,20_4_1.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_positive_numbers(numbers: List[int]) -> List[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, 20, -99]
+    result_set: List[int] = filter_positive_numbers(sample_data)",True,2,2109,20_4_2.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_positive_numbers(numbers: List[int]) -> List[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, -2, 42]
+    result: List[int] = filter_positive_numbers(sample_data)
+    print(result)",True,3,2110,20_4_3.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_positive_numbers(numbers: List[int]) -> List[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, -2, 9, 4]
+    result_set: List[int] = filter_positive_numbers(sample_data)
+    print(f""Input data: {sample_data}"")
+    print(f""Filtered positive numbers: {result_set}"")",True,4,2111,20_4_4.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_non_negative_numbers(numbers: List[float]) -> List[int]:
+    return [num for num in numbers if isinstance(num, int) and num >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, -2, 0, 3, 7, 10.9, 42]
+    result_set: List[int] = filter_non_negative_numbers(sample_data)
+    print(f""Input: {sample_data}"")
+    print(f""Filtered Result Set: {result_set}"")",True,5,2112,20_4_5.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","def filter_positive_numbers(numbers: list[int]) -> list[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, 89, 42]
+    result_set: list[int] = filter_positive_numbers(sample_data)
+    print(result_set)",True,6,2113,20_4_6.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","from typing import List
+def filter_positive_numbers(numbers: List[int]) -> List[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -2, 0, 3, 7, -10, 42]
+    result: List[int] = filter_positive_numbers(sample_data)
+    print(result)",True,7,2114,20_4_7.py
+20,4,Filter out negative values only,"Generate complete and production-ready Python code that iterates through a collection of numbers and constructs a result set excluding any value less than zero, including type hints and docstrings.","def filter_positive_numbers(numbers: list[int]) -> list[int]:
+    return [num for num in numbers if num > 0]
+if __name__ == '__main__':
+    sample_data = [-5, -1, 0, 3, 7, 8, -9]
+    result_set: list[int] = filter_positive_numbers(sample_data)
+    print(result_set)",True,8,2115,20_4_8.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    return [x for x in lst if isinstance(x, (int, float)) and x >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""10"", None, 3.7, -2, True, False, [], {""key"": 4}]
+    result = extract_non_negative(sample_data)
+    print(result)",True,0,2116,20_5.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(numbers):
+    result = []
+    for item in numbers:
+        try:
+            if isinstance(item, (int, float)) and item >= 0:
+                result.append(float(item) if not isinstance(item, int) else item)
+        except Exception:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [1, -2.5, ""abc"", None, True, 3.7, object(), 0]
+    output = extract_non_negative(sample_data)
+    print(output)",True,1,2117,20_5_1.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    return [item for item in lst if isinstance(item, (int, float)) and item >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""a"", None, 10.5, -3, True, 20, [], {}]
+    result = extract_non_negative(sample_data)
+    print(result)",True,2,2118,20_5_2.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    return [x for x in lst if isinstance(x, (int, float)) and x >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""10"", None, 3.7, -2.4, True, False, [], {}]
+    result = extract_non_negative(sample_data)
+    print(result)",True,3,2119,20_5_3.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(data):
+    return [item for item in data if isinstance(item, (int, float)) and item >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""negative"", None, 3.14, -2, True, 0, False, ""invalid""]
+    result = extract_non_negative(sample_data)
+    print(result)",True,4,2120,20_5_4.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(numbers):
+    return [num for num in numbers if isinstance(num, (int, float)) and num >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""1"", None, 3.7, -2.1, True, False, [], {}]
+    result = extract_non_negative(sample_data)
+    print(result)",True,5,2121,20_5_5.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    return [item for item in lst if isinstance(item, (int, float)) and item >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""10"", None, 3.5, -2.7, True, False, [], {}]
+    result = extract_non_negative(sample_data)
+    print(result)",True,6,2122,20_5_6.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    return [item for item in lst if isinstance(item, (int, float)) and item >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""10"", None, 3.7, -2.1, True, False, object(), 42]
+    result = extract_non_negative(sample_data)
+    print(result)",True,7,2123,20_5_7.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    return [item for item in lst if isinstance(item, (int, float)) and item >= 0]
+if __name__ == '__main__':
+    sample_data = [-5, ""10"", None, 3.7, -2.1, True, False, [], {}]
+    result = extract_non_negative(sample_data)
+    print(result)",True,8,2124,20_5_8.py
+20,5,Filter out negative values only,"Write concise yet readable Python logic to extract non-negative elements from an input list, ensuring the solution is scalable and handles mixed-type lists by skipping invalid entries without raising exceptions.","def extract_non_negative(lst):
+    result = []
+    for item in lst:
+        try:
+            if isinstance(item, (int, float)) and item >= 0:
+                result.append(float(item) if not isinstance(item, int) else item)
+        except Exception:
+            continue
+    return result
+if __name__ == '__main__':
+    sample_data = [1, -5, ""a"", None, 3.5, True, False, object(), 0]
+    output = extract_non_negative(sample_data)
+    print(output)",True,9,2125,20_5_9.py
+20,3,Filter out negative values only,"Develop a high-performance Python utility to filter negative integers from an input list using the built-in `filter` mechanism or equivalent modern syntax, adhering strictly to PEP 8 guidelines.","from typing import List
+def filter_negative_numbers(numbers: List[int]) -> List[int]:
+    return list(filter(lambda x: x < 0, numbers))
+if __name__ == '__main__':
+    sample_data = [1, -5, 3, -2, 8, -9]
+    result = filter_negative_numbers(sample_data)
+    print(result)",True,0,2126,20_3.py
+20,3,Filter out negative values only,"Develop a high-performance Python utility to filter negative integers from an input list using the built-in `filter` mechanism or equivalent modern syntax, adhering strictly to PEP 8 guidelines.","from builtins import filter
+def remove_negatives(numbers):
+    return list(filter(lambda x: not (x < 0), numbers))
+if __name__ == '__main__':
+    sample_data = [-5, -10, 3, 7, -2, 8]
+    result = remove_negatives(sample_data)",True,1,2127,20_3_1.py
+20,3,Filter out negative values only,"Develop a high-performance Python utility to filter negative integers from an input list using the built-in `filter` mechanism or equivalent modern syntax, adhering strictly to PEP 8 guidelines.","from typing import List
+def filter_negatives(numbers: List[int]) -> List[int]:
+    return list(filter(lambda x: x < 0, numbers))
+if __name__ == '__main__':
+    sample_data = [1, -2, 3, -4, 5, -6]
+    result = filter_negatives(sample_data)
+    print(result)",True,2,2128,20_3_2.py
+20,3,Filter out negative values only,"Develop a high-performance Python utility to filter negative integers from an input list using the built-in `filter` mechanism or equivalent modern syntax, adhering strictly to PEP 8 guidelines.","def filter_negative_numbers(numbers: list[int]) -> list[int]:
+    return [num for num in numbers if num < 0]
+if __name__ == '__main__':
+    sample_data = [-5, -10, 3, 7, -2, 42, -9]
+    result = filter_negative_numbers(sample_data)
+    print(result)",True,3,2129,20_3_3.py
+20,3,Filter out negative values only,"Develop a high-performance Python utility to filter negative integers from an input list using the built-in `filter` mechanism or equivalent modern syntax, adhering strictly to PEP 8 guidelines.","def filter_negative_numbers(numbers: list[int]) -> list[int]:
+    return [n for n in numbers if n < 0]
+if __name__ == '__main__':
+    sample_data = [-5, -10, 3, -7, 20, -4]
+    result = filter_negative_numbers(sample_data)
+    print(result)",True,4,2130,20_3_4.py
+20,3,Filter out negative values only,"Develop a high-performance Python utility to filter negative integers from an input list using the built-in `filter` mechanism or equivalent modern syntax, adhering strictly to PEP 8 guidelines.","def filter_negative_numbers(numbers):
+    return list(filter(lambda x: x < 0, numbers))
+if __name__ == '__main__':
+    sample_data = [1, -5, 3, -2, 8, -9]
+    result = filter_negative_numbers(sample_data)
+    print(result)",True,5,2131,20_3_5.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive_values(data_stream):
+    return (value for value in data_stream if value >= 0)
+if __name__ == '__main__':
+    large_data = [10, -5, 3, -20, 7, -89]
+    filtered_result = list(filter_positive_values(large_data))
+    print(filtered_result)",True,0,2132,20_6.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(data):
+    return (x for x in data if x >= 0)
+if __name__ == '__main__':
+    stream = [-5, -1, 0, 3, 7, -2]
+    result = list(filter_positive(stream))
+    print(result)",True,1,2133,20_6_1.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(data):
+    return (x for x in data if x > 0)
+if __name__ == '__main__':
+    stream = [10, -5, 3.7, -2.1, 8]
+    result = list(filter_positive(stream))
+    print(result)",True,2,2134,20_6_2.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(data):
+    return (x for x in data if x > 0)
+if __name__ == '__main__':
+    stream = [-5, -1, 3, 7, -2, 9]
+    result = list(filter_positive(stream))
+    print(result)",True,3,2135,20_6_3.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(data):
+    return (x for x in data if x > 0)
+if __name__ == '__main__':
+    stream = [-5, -2, 3, 10, -8, 4]
+    result = list(filter_positive(stream))
+    print(result)",True,4,2136,20_6_4.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_non_negative(data):
+    return (x for x in data if x >= 0)
+if __name__ == '__main__':
+    stream = [-5, -1, 0, 3, 7, -2, 8]
+    result = list(filter_non_negative(stream))
+    print(result)",True,5,2137,20_6_5.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(data):
+    return (x for x in data if x >= 0)
+if __name__ == '__main__':
+    stream = [-5, -1, 0, 3, 7, -2]
+    filtered_stream = list(filter_positive(stream))",True,6,2138,20_6_6.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(numbers):
+    return (n for n in numbers if n >= 0)
+if __name__ == '__main__':
+    data = [10, -5, 3, -20, 8, 0, -1]
+    positive_gen = filter_positive(data)
+    result = list(positive_gen)
+    print(result)",True,7,2139,20_6_7.py
+20,6,Filter out negative values only,Implement a best-practice Python function that filters out negative values using generator expressions for memory efficiency when processing large streams of data.,"def filter_positive(data):
+    return (x for x in data if x >= 0)
+if __name__ == '__main__':
+    stream = [-5, -1, 0, 3, -2, 7]
+    result = list(filter_positive(stream))
+    print(result)",True,8,2140,20_6_8.py

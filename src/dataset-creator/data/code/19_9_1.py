@@ -1,0 +1,11 @@
+import hashlib
+import os
+def hash_password(password: str) -> bytes:
+    salt = os.urandom(16)
+    pwd_hash = hashlib.pbkdf2_hmac('sha512', password.encode(), salt, 100000)
+    return salt + pwd_hash
+if __name__ == '__main__':
+    sample_password = "SecurePass123!"
+    hashed_result = hash_password(sample_password)
+    print(f"Password: {sample_password}")
+    print(f"Hashed (hex): {hashed_result.hex()}")
