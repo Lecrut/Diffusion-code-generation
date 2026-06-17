@@ -1,17 +1,47 @@
-def calculate_rectangle_perimeter(length, width):
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Length and width must be numeric values.")
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative values.")
-    perimeter = 2 * (length + width)
-    return perimeter
+import sys
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, dict):
+            try:
+                current = current[key]
+            except KeyError:
+                return None
+        else:
+            return None
+    return current
+def get_user_profile(profile_data: any) -> tuple[any, bool]:
+    required_fields = ["username", "email"]
+    if not isinstance(profile_data, dict):
+        return None, False
+    try:
+        username = get_nested_value(profile_data, ["user_info", "name"])
+        email = get_nested_value(profile_data, ["contact", "address", "email"])
+        if username is None or email is None:
+            return profile_data, True                                                          
+    except Exception:
+        pass
+    return profile_data, False
 if __name__ == '__main__':
-    print(f"Perimeter of a valid rectangle (5, 10): {calculate_rectangle_perimeter(5, 10)}")
+    sample_profile = {
+        "user_info": {"id": 12345},
+        "contact": None,
+        "address": {"city": "New York", "email": "john.doe@example.com"},
+        "metadata": {"created_at": "2023-01-01"}
+    }
+    result_data, success = get_user_profile(sample_profile)
+    if not isinstance(result_data, dict):
+        print("Error: Invalid profile structure")
+        sys.exit(1)
     try:
-        calculate_rectangle_perimeter(5, "ten")
-    except TypeError as e:
-        print(f"Error caught for invalid type: {e}")
-    try:
-        calculate_rectangle_perimeter(-2, 5)
-    except ValueError as e:
-        print(f"Error caught for negative input: {e}")
+        username = sample_profile["user_info"]["name"]
+        email = sample_profile["contact"]["address"]["email"]
+    except (KeyError, TypeError):
+        fallback_email = None
+        if "address" in sample_profile and isinstance(sample_profile["address"], dict):
+            try:
+                fallback_email = sample_profile["address"].get("email")
+            except AttributeError:
+                pass
+    print(f"Username retrieved successfully.")
+    print(f"Email address: {fallback_email}")

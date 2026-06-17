@@ -1,24 +1,47 @@
-def calculate_rectangle_perimeter(length, width):
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Length and width must be numeric values.")
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative values.")
-    perimeter = 2 * (length + width)
-    return perimeter
+import json
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, (dict, list)) and key in current:
+            try:
+                current = current[key]
+            except Exception:
+                return None
+        else:
+            return None
+    return current
+def get_user_profile(data: dict) -> any:
+    path = ["user", "profile"]
+    if not isinstance(data, dict):
+        print("Error: Input data is not a dictionary.")
+        return None
+    try:
+        value = get_nested_value(data, path)
+        if value is None or (isinstance(value, dict) and "name" in value):
+            name = value.get("name")
+            if isinstance(name, str):
+                print(f"User found: {name}")
+                return True
+            else:
+                print("Error: User profile 'name' is not a string.")
+                return False
+        else:
+            print("Error: Could not locate user profile data.")
+            return False
+    except Exception as e:
+        print(f"Unexpected error occurred: {e}")
+        return None
 if __name__ == '__main__':
-    try:
-        result1 = calculate_rectangle_perimeter(10, 5)
-        print(f"Perimeter for length=10, width=5 is: {result1}")
-        result2 = calculate_rectangle_perimeter(7.5, 3)
-        print(f"Perimeter for length=7.5, width=3 is: {result2}")
-        result3 = calculate_rectangle_perimeter(-4, 6)
-    except (TypeError, ValueError) as e:
-        print(f"Error caught: {e}")
-    try:
-        calculate_rectangle_perimeter("ten", 5)
-    except (TypeError, ValueError) as e:
-        print(f"Error caught: {e}")
-    try:
-        calculate_rectangle_perimeter(10, -5)
-    except (TypeError, ValueError) as e:
-        print(f"Error caught: {e}")
+    sample_data = {
+        "user": {
+            "profile": {
+                "id": 12345,
+                "email": "test@example.com",
+                "name": "Alice Johnson"
+            }
+        },
+        "settings": {
+            "theme": "dark"
+        }
+    }
+    get_user_profile(sample_data)

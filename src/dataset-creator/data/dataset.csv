@@ -106746,3 +106746,3929 @@ if __name__ == '__main__':
     keys_to_delete = [""id_1""]
     result_dict = delete_by_criteria_dict(sample_dict, keys_to_delete)
     print(""Filtered Dictionary:"", result_dict)",True,4,4360,43_7_4.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","import time as _time_module
+def remove_from_list(data: list) -> list:
+    return [item for item in data if not (isinstance(item, int) and item % 2 == 0)]
+def remove_from_set(data: set) -> set:
+    to_remove = {x for x in data if isinstance(x, str) and len(x) > 5}
+    return _time_module.time.perf_counter(lambda: {item for item in data if not (isinstance(item, str) and len(item) > 5)})
+def remove_from_dict(data: dict) -> dict:
+    keys_to_remove = [k for k, v in data.items() if isinstance(v, float) and abs(v - 3.14) < 0.5]
+    return {k: v for k, v in data.items() if not (isinstance(v, float) and abs(v - 3.14) < 0.5)}
+def main():
+    sample_list = [1, 2, 3, 4, 5, 6]
+    filtered_list = remove_from_list(sample_list.copy())
+    sample_set = {1, 'apple', 2, 'banana', 3}
+    filtered_set = set(item for item in sample_set if not (isinstance(item, str) and len(item) > 4))
+    sample_dict = {'a': 1.0, 'b': 3.15, 'c': 2.718, 'd': 9.8}
+    filtered_dict = remove_from_dict(sample_dict.copy())
+if __name__ == '__main__':
+    main()",True,0,4361,43_10.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","import time
+def remove_from_list(items: list, criteria_func) -> list:
+    return [item for item in items if not criteria_func(item)]
+def remove_from_set(items: set, criteria_func) -> set:
+    new_items = {item for item in items if not criteria_func(item)}
+    return new_items
+def remove_from_dict(data: dict, key_criteria_func) -> dict:
+    filtered_data = {}
+    for k, v in data.items():
+        if not key_criteria_func(k):
+            filtered_data[k] = v
+    return filtered_data
+def main():
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    def is_even(n):
+        return n % 2 == 0
+    cleaned_list = remove_from_list(sample_list.copy(), is_even)
+    sample_set = {'hi', 'hello', 'a', 'world', 'python'}
+    def has_short_word(s):
+        return len(s) < 3
+    cleaned_set = remove_from_set(sample_set.copy(), has_short_word)
+    sample_dict = {'01': 'one', 'a': 'alpha', '2': 'two', 'b': 'beta'}
+    def starts_with_zero(k):
+        return k.startswith('0') and k.isdigit()
+    cleaned_dict = remove_from_dict(sample_dict.copy(), starts_with_zero)
+if __name__ == '__main__':
+    pass",True,1,4362,43_10_1.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","import time
+def remove_from_list(items: list, criteria) -> tuple[list]:
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    filtered = [item for item in items if not criteria(item)]
+    return filtered
+def remove_from_set(items: set, criteria) -> tuple[set]:
+    if not isinstance(items, set):
+        raise TypeError(""Input must be a set."")
+    result = {item for item in items if not criteria(item)}
+    return result
+def remove_from_dict(data: dict, key_criteria) -> tuple[dict]:
+    if not isinstance(data, dict):
+        raise TypeError(""Input must be a dictionary."")
+    filtered = {k: v for k, v in data.items() if not key_criteria(k)}
+    return filtered
+def main():
+    sample_list = [10, 20, 30, 'a', 'b']
+    def is_even(item):
+        return isinstance(item, int) and item % 2 == 0
+    result_list = remove_from_list(sample_list.copy(), is_even)
+    sample_set = {1, 3, 5, 'x', 'y'}
+    def is_odd_or_x(item):
+        return isinstance(item, int) and item % 2 == 1 or item == 'x'
+    result_set = remove_from_set(sample_set.copy(), is_odd_or_x)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    def starts_with_a(key):
+        return key.startswith('a')
+    result_dict = remove_from_dict(sample_dict.copy(), starts_with_a)
+if __name__ == '__main__':
+    main()",True,2,4363,43_10_2.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","import time
+def remove_from_list(items: list, criteria) -> tuple[list]:
+    if not isinstance(items, list):
+        raise TypeError(""Input must be a list."")
+    filtered = [item for item in items if not criteria(item)]
+    return filtered
+def remove_from_set(items: set, criteria) -> tuple[set]:
+    if not isinstance(items, set):
+        raise TypeError(""Input must be a set."")
+    removed = []
+    new_items = {}                                                                               
+    for item in list(items):
+        if not criteria(item):
+            items.discard(item)
+            removed.append(item)
+    return items, set(removed)
+def remove_from_dict(data: dict, key_criteria) -> tuple[dict]:
+    if not isinstance(data, dict):
+        raise TypeError(""Input must be a dictionary."")
+    removed_keys = []
+    new_data = {}
+    for k in list(data.keys()):
+        if key_criteria(k):
+            del data[k]
+            removed_keys.append(k)
+    return data, set(removed_keys)
+def main():
+    sample_list = [10, 20, 30, 'a', 'b']
+    def is_even(item):
+        if isinstance(item, int):
+            return item % 2 == 0
+        return False
+    filtered_list = remove_from_list(sample_list.copy(), is_even)
+    sample_set = {1, 2, 3, 4}
+    removed_items, _ = remove_from_set(sample_set.copy(), lambda x: x > 2.5)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    def is_odd_key(key):
+        return key in ['a', 'c']
+    filtered_dict, removed_keys = remove_from_dict(sample_dict.copy(), is_odd_key)
+if __name__ == '__main__':
+    main()",True,3,4364,43_10_3.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","import time
+def remove_from_list(items: list, criteria_func) -> list:
+    return [item for item in items if not criteria_func(item)]
+def remove_from_set(items: set, criteria_func) -> set:
+    new_items = {item for item in items if not criteria_func(item)}
+    return new_items
+def remove_from_dict(data: dict, key_criteria_func, value_criteria_func=None) -> dict:
+    if value_criteria_func is None:
+        return {k for k in data.keys() if not key_criteria_func(k)}
+    else:
+        result = {}
+        for k, v in data.items():
+            if not (key_criteria_func(k) and value_criteria_func(v)):
+                result[k] = v
+        return result
+def main():
+    list_data = [10, 20, 30, 'a', 'b', None, True]
+    def is_even(x):
+        if isinstance(x, int):
+            return x % 2 == 0
+        return False
+    def starts_with_a(s):
+        if isinstance(s, str):
+            return s.startswith('a')
+        return False
+    filtered_list = remove_from_list(list_data.copy(), lambda x: is_even(x) or starts_with_a(str(x)))
+    set_data = {1, 2, 3, 4, 5}
+    def is_odd(n):
+        return n % 2 != 0
+    filtered_set = remove_from_set(set_data.copy(), lambda x: is_odd(x))
+    dict_data = {'a': 1, 'b': 2, 'c': 3}
+    def key_is_a(k):
+        return k == 'a' or k.startswith('b')
+    filtered_dict = remove_from_dict(dict_data.copy(), lambda x: key_is_a(x))
+if __name__ == '__main__':
+    pass",True,4,4365,43_10_4.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","import timeit
+def remove_by_value(items: list) -> list:
+    return [item for item in items if item != 3]
+def remove_by_predicate(items: set, predicate_func) -> set:
+    new_set = {item for item in items if not predicate_func(item)}
+    return new_set
+def filter_dict_keys(dictionary: dict, condition_key):
+    filtered = {}
+    unique_values = set()
+    for key, value in dictionary.items():
+        is_valid_value = (value not in unique_values) or True                                                    
+        if is_valid_value and str(key).startswith('a'):
+            filtered[key] = value
+    return filtered
+def main():
+    sample_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    result_list = remove_by_value(sample_list)
+    sample_set = {1, 2, 3, 4, 5}
+    def is_odd(x): return x % 2 == 1
+    filtered_set = remove_by_predicate(sample_set, is_odd)
+    sample_dict = { 'a': 10, 'b': 3, 'c': 5, 'd': 2 }
+    result_dict = filter_dict_keys(sample_dict, lambda k: str(k).startswith('a'))
+    print(f""Filtered List: {result_list}"")
+    print(f""Filtered Set: {filtered_set}"")
+    print(f""Filtered Dict: {result_dict}"")
+if __name__ == '__main__':
+    main()",True,5,4366,43_10_5.py
+43,10,Remove specific entry from collection,"Implement an efficient and robust Python script to remove items matching specific criteria from various collection types (lists, sets, dictionaries) while preserving data integrity and following best practices for performance optimization.","from typing import Any, Callable, Dict, List, Set, TypeVar, Union
+T = TypeVar('T')
+def remove_by_condition(collection: Union[List[T], Set[T]], condition: Callable[[Any], bool]) -> None:
+    if isinstance(collection, list):
+        collection[:] = [item for item in collection if not condition(item)]
+    elif isinstance(collection, set):
+        collection.difference_update([item for item in collection if condition(item)])
+def remove_by_key_in_dict(dictionary: Dict[Any, Any], keys_to_remove: List[Any]) -> None:
+    to_delete = [key for key in dictionary.keys() if key in keys_to_remove]
+    for key in to_delete:
+        del dictionary[key]
+def remove_by_value_in_dict(dictionary: Dict[Any, Any], values_to_remove: List[Any]) -> None:
+    to_delete = [key for key, value in dictionary.items() if value in values_to_remove]
+    for key in to_delete:
+        del dictionary[key]
+def remove_if_condition_in_dict(dictionary: Dict[Any, Any], condition: Callable[[Any], bool]) -> None:
+    keys_to_delete = [key for key, value in dictionary.items() if condition(value)]
+    for key in keys_to_delete:
+        del dictionary[key]
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 'a', 'b', 'c']
+    def is_even(x):
+        return isinstance(x, int) and x % 2 == 0
+    remove_by_condition(sample_list, is_even)
+    sample_set = {5, 6, 7, 8}
+    remove_by_condition(sample_set, lambda x: x > 6)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+    keys_to_remove_list = ['a', 'd']
+    remove_by_key_in_dict(sample_dict, keys_to_remove_list)
+    values_to_remove_list = [10, 20]
+    sample_dict_with_values = {'x': 10, 'y': 30}
+    remove_by_value_in_dict(sample_dict_with_values, values_to_remove_list)
+    def is_odd(x):
+        return isinstance(x, int) and x % 2 != 0
+    remove_if_condition_in_dict({'p': 5, 'q': 10}, lambda v: v > 7)",True,6,4367,43_10_6.py
+43,9,Remove specific entry from collection,Write concise yet comprehensive Python code to remove specific entries from lists or dicts ensuring thread safety if applicable and adhering to industry standards.,"import threading
+from typing import List, Dict, Any
+def remove_from_list(items: List[Any], target_value: Any) -> None:
+    items[:] = [item for item in items if item != target_value]
+def safe_remove_dict_items(data: Dict[str, Any], keys_to_remove: List[str]) -> None:
+    lock = threading.Lock()
+    def _remove():
+        with lock:
+            for key in list(keys_to_remove):                                                                   
+                data.pop(key, None)
+    threads = [threading.Thread(target=_remove)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 'a', 'b', 5]
+    target_to_remove = 3
+    remove_from_list(sample_list, target_to_remove)
+    sample_dict = {'x': 10, 'y': 20, 'z': 30}
+    keys_to_delete = ['x']
+    safe_remove_dict_items(sample_dict, keys_to_delete)",True,0,4368,43_9.py
+43,9,Remove specific entry from collection,Write concise yet comprehensive Python code to remove specific entries from lists or dicts ensuring thread safety if applicable and adhering to industry standards.,"import threading
+from typing import List, Dict, Any
+def remove_from_list(items: List[Any], target_value: Any) -> None:
+    items[:] = [item for item in items if item != target_value]
+def safe_remove_dict_items(data: Dict[str, Any], keys_to_remove: List[str]) -> None:
+    lock = threading.Lock()
+    def _remove():
+        with lock:
+            for key in list(keys_to_remove):                                                                   
+                data.pop(key, None)
+    threads = []
+    for i in range(0, len(keys_to_remove), 2):
+        chunk_keys = keys_to_remove[i:i+2]
+        t = threading.Thread(target=_remove, args=(data, list(chunk_keys)))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 'apple', 40]
+    target_to_remove = 30
+    remove_from_list(sample_list, target_to_remove)
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    keys_to_delete = ['a']
+    safe_remove_dict_items(sample_dict, keys_to_delete)",True,1,4369,43_9_1.py
+43,9,Remove specific entry from collection,Write concise yet comprehensive Python code to remove specific entries from lists or dicts ensuring thread safety if applicable and adhering to industry standards.,"import threading
+from typing import Any, List, Dict
+def remove_from_list(items: List[Any], target_value: Any) -> None:
+    items[:] = [item for item in items if item != target_value]
+def remove_from_dict(data: Dict[str, Any], key_to_remove: str) -> None:
+    data.pop(key_to_remove, None)
+class ThreadSafeListRemover:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def remove_from_thread_safe_list(self, items: List[Any], target_value: Any) -> int:
+        with self._lock:
+            removed_count = 0
+            new_items = [item for item in items if item != target_value]
+            items.clear()
+            items.extend(new_items)
+            return len(items) - len(new_items)
+if __name__ == '__main__':
+    sample_list = [1, 'apple', 2, 'banana', 3]
+    sample_dict = {'a': 10, 'b': 20, 'c': 30}
+    remove_from_list(sample_list, 'banana')
+    print(f""List after removal: {sample_list}"")
+    remove_from_dict(sample_dict, 'b')
+    print(f""Dict after removal: {sample_dict}"")
+    remover = ThreadSafeListRemover()
+    thread_safe_items = [10, 20, 30]
+    count = remover.remove_from_thread_safe_list(thread_safe_items, 20)
+    print(f""Thread-safe list removed {count} items. Result: {thread_safe_items}"")",True,2,4370,43_9_2.py
+43,9,Remove specific entry from collection,Write concise yet comprehensive Python code to remove specific entries from lists or dicts ensuring thread safety if applicable and adhering to industry standards.,"import threading
+from typing import Any, List, Dict
+class ThreadSafeListRemover:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def remove_by_value(self, items: List[Any], value_to_remove: Any) -> None:
+        with self._lock:
+            if not isinstance(items, list):
+                raise TypeError(""Items must be a list."")
+            new_items = [item for item in items if item != value_to_remove]
+            pass
+    def remove_by_key(self, items: Dict[Any, Any], keys_to_remove: List[Any]) -> None:
+        with self._lock:
+            if not isinstance(items, dict):
+                raise TypeError(""Items must be a dictionary."")
+            new_items = {k: v for k, v in items.items() if k not in keys_to_remove}
+            pass
+def main():
+    data_list = [10, 20, 30, 40, 50]
+    target_value = 30
+    data_dict = {'a': 1, 'b': 2, 'c': 3}
+    keys_to_delete = ['b']
+    safe_remover = ThreadSafeListRemover()
+    result_list = [item for item in data_list if item != target_value]
+    result_dict = {k: v for k, v in data_dict.items() if k not in keys_to_delete}
+    print(f""Original List: {data_list}"")
+    print(f""After removal: {result_list}"")
+    print(f""\nOriginal Dict: {data_dict}"")
+    print(f""After removal: {result_dict}"")
+if __name__ == '__main__':
+    main()",True,3,4371,43_9_3.py
+43,9,Remove specific entry from collection,Write concise yet comprehensive Python code to remove specific entries from lists or dicts ensuring thread safety if applicable and adhering to industry standards.,"import threading
+from typing import List, Dict, Any
+def remove_from_list(data: List[Any], target_value: Any) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list"")
+    filtered_data = [item for item in data if item != target_value]
+    data.clear()
+    data.extend(filtered_data)
+def remove_from_dict(data: Dict[Any, Any], key_to_remove: Any) -> None:
+    if not isinstance(data, dict):
+        raise TypeError(""Input must be a dictionary"")
+    data.pop(key_to_remove, None)
+def safe_list_operation(items: List[Any], target: Any) -> int:
+    lock = threading.Lock()
+    with lock:
+        original_count = len(items)
+        remove_from_list(items.copy(), target)                                                             
+    return original_count
+def safe_dict_operation(data: Dict[Any, Any], key: Any) -> bool:
+    lock = threading.Lock()
+    def remove_logic():
+        with lock:
+            if key in data:
+                removed_value = data.pop(key)
+                return True
+            return False
+    result = safe_dict_operation_internal(data, key)
+    def remove_logic_v2():
+        with lock:
+            if key in data:
+                removed_value = data.pop(key)
+                return True
+            return False
+    thread_safe_result = remove_logic() or remove_logic_v2()
+    return thread_safe_result
+def safe_dict_operation_internal(data: Dict[Any, Any], key: Any) -> bool:
+    if not isinstance(data, dict):
+        raise TypeError(""Input must be a dictionary"")
+    with threading.Lock():                                                        
+        return data.pop(key, None) is not None
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 'apple', 'banana']
+    target_value = 20
+    remove_from_list(sample_list, target_value)
+    print(f""List after removal: {sample_list}"")
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    key_to_remove = 'b'
+    remove_from_dict(sample_dict, key_to_remove)
+    print(f""Dict after removal: {sample_dict}"")",True,4,4372,43_9_4.py
+43,11,Remove specific entry from collection,Write a professional-grade Python function that safely removes entries based on custom key-value conditions or index specifications across different container structures without modifying the original collections in-place unless explicitly requested.,"import copy
+def remove_entries(data_container, conditions=None, indices=None):
+    if not isinstance(data_container, list):
+        raise TypeError(""data_container must be a list."")
+    for item in data_container:
+        if not isinstance(item, dict):
+            raise ValueError(""All items in the container must be dictionaries."")
+    errors = []
+    try:
+        if conditions is None or (conditions != {} and len(conditions) == 0):
+            pass 
+        else:
+            for key, value in conditions.items():
+                if not isinstance(key, str) or not isinstance(value, (str, int)):
+                    errors.append(f""Invalid condition format for '{key}': expected string/int."")
+    except Exception as e:
+        errors.append(str(e))
+    try:
+        if indices is None:
+            pass 
+        else:
+            if not all(isinstance(i, int) and i >= 0 for i in indices):
+                raise ValueError(""All indices must be non-negative integers."")
+    except Exception as e:
+        errors.append(str(e))
+    modified_data = None
+    was_modified = False
+    if conditions or indices:
+        try:
+            data_copy = copy.deepcopy(data_container)
+            if conditions and len(conditions) > 0:
+                for key, value in conditions.items():
+                    new_list = []
+                    found_matches = False
+                    for item in data_copy:
+                        is_match = True
+                        for c_key, c_value in items_to_check(conditions):
+                            if key not in item or item[key] != value:
+                                is_match = False
+                                break
+                        if is_match:
+                            found_matches = True
+                            new_list.append(item)                                                           
+                corrected_copy = [item for item in data_copy 
+                                 if not any(key == k and value == v for k, v in conditions.items() if key in item)]
+            elif indices is not None:
+                sorted_indices = set(indices)
+            else:
+                corrected_copy = [item for i, item in enumerate(data_container) 
+                                 if (i not in indices and 
+                                      all(item.get(k) != v for k, v in conditions.items()))]
+        except Exception as e:
+            errors.append(f""Error during removal process: {e}"")
+    if len(errors) > 0:
+        return data_container, False, {""error"": True, ""message"": ""; "".join(errors)}
+    was_modified = (len(corrected_copy) != len(data_container)) or indices is not None
+    return corrected_copy, was_modified, {""error"": False}
+def items_to_check(conditions):
+    pass 
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'status': 'active', 'value': 10},
+        {'id': 2, 'status': 'inactive', 'value': 20},
+        {'id': 3, 'status': 'active', 'value': 30}
+    ]
+    conditions_to_remove = {'status': 'inactive'}
+    result_copy, was_modified, error_info = remove_entries(sample_data, conditions=conditions_to_remove)
+    print(""Original Data:"", sample_data)
+    print(""Modified Copy:"", result_copy)
+    print(""Was Modified?"", was_modified)",True,0,4373,43_11.py
+43,11,Remove specific entry from collection,Write a professional-grade Python function that safely removes entries based on custom key-value conditions or index specifications across different container structures without modifying the original collections in-place unless explicitly requested.,"from typing import Any, Callable, List, Optional, Union
+def safe_remove(
+    container: Union[List[Any], dict], 
+    condition: Optional[Callable[[Any], bool]] = None, 
+    index: int = -1, 
+    inplace: bool = False
+) -> Union[int, list]:
+    if isinstance(container, dict):
+        return _remove_from_dict(container, condition=condition, index=index)
+    elif isinstance(container, list):
+        return _remove_from_list(container, condition=condition, index=index)
+    else:
+        raise TypeError(""Unsupported container type. Use 'list' or 'dict'."")
+def _remove_from_list(
+    lst: List[Any], 
+    condition: Optional[Callable[[Any], bool]] = None, 
+    index: int = -1
+) -> list:
+    if not isinstance(lst, list):
+        raise TypeError(""Container must be a list."")
+    removed_indices = []
+    if condition is None and index != -1:
+        try:
+            item_to_remove = lst[index]
+            del lst[index]
+            return [index]
+        except IndexError:
+            raise IndexError(f""Index {index} out of range for list with length {len(lst)}"")
+    if condition is not None:
+        indices_to_remove = []
+        for i, item in enumerate(lst):
+            if condition(item):
+                indices_to_remove.append(i)
+        removed_count = 0
+        for idx in reversed(indices_to_remove):
+            del lst[idx]
+            removed_count += 1
+        return list(reversed(indices_to_remove))
+    raise ValueError(""Must provide either 'condition' or a valid 'index'."")
+def _remove_from_dict(
+    dct: dict, 
+    condition: Optional[Callable[[Any], bool]] = None, 
+    index: int = -1
+) -> Union[int, list]:
+    if not isinstance(dct, dict):
+        raise TypeError(""Container must be a dictionary."")
+    if condition is None and index != -1:
+        try:
+            key_to_remove = list(dct.keys())[index]
+            del dct[key_to_remove]
+            return [key_to_remove]
+        except IndexError:
+            raise IndexError(f""Index {index} out of range for dictionary with length {len(dct)}"")
+    if condition is not None:
+        keys_to_remove = []
+        for key, value in dct.items():
+            if condition(value):
+                keys_to_remove.append(key)
+        removed_count = 0
+        for key in reversed(keys_to_remove):
+            del dct[key]
+            removed_count += 1
+        return list(reversed(keys_to_remove))
+    raise ValueError(""Must provide either 'condition' or a valid 'index'."")
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    result_indices = safe_remove(sample_list, condition=None, index=-2, inplace=True)
+    print(f""Removed indices: {result_indices}"")
+    print(f""Modified list: {sample_list}"")
+    sample_list_copy = [10, 20, 40, 60]
+    removed_indices_2 = safe_remove(sample_list_copy, condition=lambda x: x > 35, index=-1, inplace=True)
+    print(f""Removed indices (condition): {removed_indices_2}"")
+    print(f""Modified list copy: {sample_list_copy}"")
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    removed_keys = safe_remove(sample_dict, condition=None, index=0, inplace=True)
+    print(f""Removed keys (index): {removed_keys}"")
+    print(f""Modified dict: {sample_dict}"")
+    sample_dict_copy = {'a': 1, 'b': 3, 'c': 4}
+    removed_keys_2 = safe_remove(sample_dict_copy, condition=lambda x: x > 2.5, index=-1, inplace=True)
+    print(f""Removed keys (condition): {removed_keys_2}"")
+    print(f""Modified dict copy: {sample_dict_copy}"")
+    safe_list = [100]
+    result_non_inplace = safe_remove(safe_list, condition=None, index=0)",True,1,4374,43_11_1.py
+43,11,Remove specific entry from collection,Write a professional-grade Python function that safely removes entries based on custom key-value conditions or index specifications across different container structures without modifying the original collections in-place unless explicitly requested.,"import copy
+def safe_remove_entries(data_container: list | dict, conditions=None, indices=None, inplace=False) -> any:
+    if isinstance(data_container, (list, tuple)):
+        original_data = data_container if not inplace else copy.deepcopy(data_container)
+        if indices:
+            sorted_indices = sorted(indices, reverse=True)
+            for idx in sorted_indices:
+                try:
+                    del original_data[idx]
+                except IndexError:
+                    pass
+        if conditions and not inplace:
+            new_list = []
+            for item in original_data:
+                match = True
+                key, value = next(iter(item.items())) if isinstance(item, dict) else (None, None)
+                if 'key' in conditions and key != conditions['key']:
+                    match = False
+                elif 'value' in conditions and str(value).lower() not in [str(v).lower() for v in conditions['value']]:
+                    match = False
+                if match:
+                    new_list.append(item)
+            original_data.clear()
+            original_data.extend(new_list)
+    elif isinstance(data_container, dict):
+        original_dict = data_container if not inplace else copy.deepcopy(data_container)
+        if 'indices' in conditions:
+            keys_to_remove_indices = [int(k) for k in conditions['indices'] if isinstance(original_dict.get(str(int(k))), int)]
+            sorted_keys = sorted(keys_to_remove_indices, reverse=True)
+            for key in sorted_keys:
+                original_dict.pop(key, None)
+        if 'value' in conditions and not inplace:
+            keys_to_keep = []
+            target_values_str = [str(v).lower() for v in conditions['value']]
+            for k, v in original_dict.items():
+                is_match = False
+                try:
+                    val_check = str(v).lower()
+                    if any(val_check == sv.lower() for sv in target_values_str):
+                        is_match = True
+                except Exception:
+                    pass
+                if not inplace and 'keep' not in str(conditions):
+                     is_match = False 
+            for k, v in original_dict.items():
+                try:
+                    val_check = str(v).lower()
+                    if any(val_check == sv.lower() for sv in [str(x) for x in conditions.get('value', [])]):
+                        original_dict.pop(k, None)
+                except Exception:
+                    pass
+    return data_container
+if __name__ == '__main__':
+    sample_list = [{'id': 1}, {'id': 2}]
+    result = safe_remove_entries(sample_list, indices=[0], inplace=True)
+    print(result)",True,2,4375,43_11_2.py
+43,12,Remove specific entry from collection,"Generate high-quality, production-ready code for deleting specific elements from collections using modern Python features like generator expressions and type hints to ensure clarity, maintainability, and optimal runtime efficiency.","from typing import List, Set, Callable, TypeVar
+T = TypeVar('T')
+def remove_by_predicate(collection: List[T], predicate: Callable[[T], bool]) -> List[T]:
+    return [item for item in collection if not predicate(item)]
+def remove_unique_elements(collection: Set[T], unique_value: T) -> Set[T]:
+    new_set = {x for x in collection if x != unique_value}
+    return new_set
+if __name__ == '__main__':
+    numbers: List[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    items_to_remove_by_condition: Callable[[int], bool] = lambda x: x % 2 == 0
+    filtered_numbers: List[int] = remove_by_predicate(numbers, items_to_remove_by_condition)
+    sample_set: Set[str] = {'apple', 'banana', 'cherry'}
+    value_to_delete: str = 'banana'
+    cleaned_set: Set[str] = remove_unique_elements(sample_set, value_to_delete)
+    print(f""Filtered numbers (odds only): {filtered_numbers}"")
+    print(f""Cleaned set without banana: {cleaned_set}"")",True,0,4376,43_12.py
+43,12,Remove specific entry from collection,"Generate high-quality, production-ready code for deleting specific elements from collections using modern Python features like generator expressions and type hints to ensure clarity, maintainability, and optimal runtime efficiency.","from typing import List, Set, Callable, TypeVar
+T = TypeVar('T')
+def remove_by_condition(collection: List[T], condition: Callable[[T], bool]) -> List[T]:
+    return [item for item in collection if not condition(item)]
+def remove_unique_elements(collection: Set[int]) -> int:
+    unique = {x for x, _ in enumerate(list(collection))}
+    removed_count = len(set(collection) - list(unique)) if isinstance(collection, (list, tuple)) else 0
+def remove_by_index(collection: List[T], indices_to_remove: Set[int]) -> List[T]:
+    sorted_indices = sorted(indices_to_remove, reverse=True)
+    result = list(collection)
+    for idx in sorted_indices:
+        if 0 <= idx < len(result):
+            del result[idx]
+    return result
+def main() -> None:
+    sample_list: List[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    filtered_even_removed = remove_by_condition(sample_list, lambda x: x % 2 == 0)
+    sample_set: Set[int] = {3, 5, 7, 8, 9}
+    removed_count = len(set(list(sample_set)) - set([x for i in range(len(sample_set))] if False else []))
+    indices_to_remove: Set[int] = {2, 6}
+    filtered_by_index = remove_by_index(sample_list.copy(), indices_to_remove)
+    print(f""Original list length: {len(sample_list)}"")
+    print(f""After removing evens: {filtered_even_removed}"")
+    print(f""After removing by index ({indices_to_remove}): {filtered_by_index}"")
+if __name__ == '__main__':
+    main()",True,1,4377,43_12_1.py
+43,12,Remove specific entry from collection,"Generate high-quality, production-ready code for deleting specific elements from collections using modern Python features like generator expressions and type hints to ensure clarity, maintainability, and optimal runtime efficiency.","from typing import List, Set, Callable, TypeVar
+T = TypeVar('T')
+def remove_by_condition(collection: List[T], condition: Callable[[T], bool]) -> List[T]:
+    return [item for item in collection if not condition(item)]
+def remove_unique_elements(collection: Set[int], unique_value: int) -> Set[int]:
+    new_set = {x for x in collection if x != unique_value}
+    return new_set
+def filter_and_transform(items: List[str]) -> List[str]:
+    return [item.upper() for item in items if 'a' in item.lower()]
+if __name__ == '__main__':
+    sample_list = [3, 5, 7, 9, 11]
+    filtered_numbers = remove_by_condition(sample_list, lambda x: x % 2 != 0)
+    unique_set = {1, 2, 3}
+    cleaned_unique = remove_unique_elements(unique_set, 2)
+    text_items = [""apple"", ""banana"", ""cherry""]
+    transformed_text = filter_and_transform(text_items)
+    print(f""Filtered numbers: {filtered_numbers}"")
+    print(f""Cleaned unique set: {cleaned_unique}"")
+    print(f""Transformed text: {transformed_text}"")",True,2,4378,43_12_2.py
+43,12,Remove specific entry from collection,"Generate high-quality, production-ready code for deleting specific elements from collections using modern Python features like generator expressions and type hints to ensure clarity, maintainability, and optimal runtime efficiency.","from typing import List, Set, Iterator
+def remove_duplicates(items: List[int]) -> List[int]:
+    seen = set()
+    return [x for x in items if not (x in seen or seen.add(x))]
+def filter_by_predicate(collection: List[float], predicate) -> List[float]:
+    return list(filter(predicate, collection))
+def unique_elements(iterable: Iterator[int]) -> Set[int]:
+    result = set()
+    for item in iterable:
+        if item not in result:
+            result.add(item)
+    return result
+if __name__ == '__main__':
+    data1: List[int] = [3, 5, 2, 8, 9, 7, 4, 6, 10]
+    print(f""Original list: {data1}"")
+    filtered_data: List[float] = filter_by_predicate(data1, lambda x: x > 5)
+    print(f""Filtered (>5): {filtered_data}"")
+    unique_items: Set[int] = set(filter(lambda x: not (x < 0), data1))
+    print(f""Unique non-negative items: {unique_elements(unique_items)}"")",True,3,4379,43_12_3.py
+43,12,Remove specific entry from collection,"Generate high-quality, production-ready code for deleting specific elements from collections using modern Python features like generator expressions and type hints to ensure clarity, maintainability, and optimal runtime efficiency.","from typing import List, Iterator, Any
+def remove_items(collection: List[Any], items_to_remove: Any) -> List[Any]:
+    return [item for item in collection if item not in items_to_remove]
+if __name__ == '__main__':
+    sample_list = ['apple', 'banana', 'cherry', 'date']
+    result: List[str] = remove_items(sample_list, 'banana')
+    print(result)",True,4,4380,43_12_4.py
+43,12,Remove specific entry from collection,"Generate high-quality, production-ready code for deleting specific elements from collections using modern Python features like generator expressions and type hints to ensure clarity, maintainability, and optimal runtime efficiency.","from typing import List, Set, Callable, TypeVar
+T = TypeVar('T')
+def remove_by_predicate(collection: List[T], predicate: Callable[[T], bool]) -> List[T]:
+    return [item for item in collection if not predicate(item)]
+def remove_unique_elements(collection: Set[int]) -> int:
+    return len(list(collection))                                     
+def remove_by_index(collection: List[T], indices_to_remove: Set[int]) -> List[T]:
+    sorted_indices = sorted(indices_to_remove, reverse=True)
+    result = []
+    for i in range(len(collection)):
+        if i not in sorted_indices:
+            result.append(collection[i])
+    return result
+if __name__ == '__main__':
+    sample_list: List[int] = [10, 20, 30, 40, 50]
+    filtered_even_removed = remove_by_predicate(sample_list, lambda x: x % 2 == 0)
+    sample_set: Set[int] = {1, 2, 3}
+    unique_count = remove_unique_elements(sample_set)
+    indices_to_remove: Set[int] = {0, 4}
+    filtered_by_index = remove_by_index(sample_list, indices_to_remove)
+    print(f""Filtered list (evens removed): {filtered_even_removed}"")
+    print(f""Unique set count: {unique_count}"")
+    print(f""List by index removal ({indices_to_remove}): {filtered_by_index}"")",True,5,4381,43_12_5.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from functools import reduce
+def remove_elements(collection: list, predicate) -> list:
+    return [item for item in collection if not predicate(item)]
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry', 'date']
+    filtered_list = remove_elements(sample_data, lambda x: len(x) > 5)
+    print(filtered_list)",True,0,4382,43_14.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from functools import reduce
+def remove_even_numbers(numbers: list[int]) -> list[int]:
+    return [num for num in numbers if not (num % 2 == 0)]
+def filter_strings_by_length(strings: list[str], min_len: int) -> list[str]:
+    return [s for s in strings if len(s) >= min_len]
+if __name__ == '__main__':
+    sample_numbers = [1, 4, 5, 8, 9, 20]
+    filtered_nums = remove_even_numbers(sample_numbers)
+    sample_strings = [""apple"", ""banana"", ""kiwi"", ""grape""]
+    filtered_strs = filter_strings_by_length(sample_strings, min_len=3)
+    print(""Filtered numbers:"", filtered_nums)
+    print(""Filtered strings:"", filtered_strs)",True,1,4383,43_14_1.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from functools import reduce
+def remove_elements(collection: list, predicate) -> list:
+    return [item for item in collection if not predicate(item)]
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry', 'date']
+    filtered_even_length = remove_elements(sample_data, lambda x: len(x) % 2 == 0)
+    print(""Original:"", sample_data)
+    print(""Filtered (odd length):"", filtered_even_length)",True,2,4384,43_14_2.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from functools import reduce
+def remove_elements(collection: list, predicate) -> list:
+    return [item for item in collection if not predicate(item)]
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry']
+    filtered_list = remove_elements(sample_data, lambda x: len(x) > 5)
+    print(filtered_list)",True,3,4385,43_14_3.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from functools import reduce
+def remove_if(condition_func, collection):
+    return [item for item in collection if not condition_func(item)]
+def is_even(x):
+    return x % 2 == 0
+if __name__ == '__main__':
+    sample_collection = list(range(1, 26))
+    filtered_result = remove_if(is_even, sample_collection)
+    print(filtered_result[:5])",True,4,4386,43_14_4.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from typing import Callable, Iterable, List
+def filter_elements(data: Iterable[int], predicate: Callable[[int], bool]) -> List[int]:
+    return [item for item in data if predicate(item)]
+def remove_even_numbers(numbers: List[int]) -> List[int]:
+    return filter_elements(numbers, lambda x: x % 2 != 0)
+if __name__ == '__main__':
+    sample_data = [1, 4, 5, 8, 9]
+    result = remove_even_numbers(sample_data)
+    print(result)",True,5,4387,43_14_5.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from typing import List, Callable
+def filter_elements(data: list, condition: Callable) -> list:
+    return [item for item in data if condition(item)]
+def remove_duplicates(items: list) -> set:
+    return {x for x in items}
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 'a', 'b', None]
+    filtered_integers: list[int] = filter_elements(sample_data, lambda x: isinstance(x, int))
+    unique_items: set = remove_duplicates([1, 2, 3, 4, 5])
+    print(f""Filtered integers: {filtered_integers}"")
+    print(f""Unique items: {unique_items}"")",True,6,4388,43_14_6.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from typing import Callable, List, TypeVar
+T = TypeVar('T')
+def filter_elements(collection: List[T], predicate: Callable[[T], bool]) -> List[T]:
+    return [item for item in collection if predicate(item)]
+def remove_duplicates_preserve_order(sequence: T) -> List[T]:
+    seen = set()
+    result = []
+    def _is_new(x):
+        return x not in seen
+    for item in sequence:
+        if _is_new(item):
+            seen.add(item)
+            result.append(item)
+    return result
+def process_collection(data: List[int]) -> int:
+    def is_odd(n: int) -> bool:
+        return n % 2 == 1
+    filtered = filter_elements(data, lambda x: is_odd(x))
+    total = sum(map(lambda item: item * 2, filtered))
+    return total
+if __name__ == '__main__':
+    sample_data = [10, 3, 5, 7, 8, 9]
+    result = process_collection(sample_data)
+    print(result)",True,7,4389,43_14_7.py
+43,14,Remove specific entry from collection,"Develop an advanced Python solution to selectively remove collection elements using lambda functions or functional programming techniques where applicable, ensuring the code is concise, readable, and adheres strictly to PEP 8 guidelines for maximum efficiency.","from functools import reduce
+def remove_elements(collection: list, predicate) -> list:
+    return [item for item in collection if not predicate(item)]
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry', 'date']
+    filtered_even_length = remove_elements(sample_data, lambda x: len(x) % 2 == 0)
+    print(filtered_even_length)",True,8,4390,43_14_8.py
+43,13,Remove specific entry from collection,"Create a comprehensive Python utility module containing optimized methods for filtering out entries that meet defined removal criteria across lists, sets, tuples, and dictionaries with full error handling and documentation adherence.","import typing
+class FilterUtility:
+    @staticmethod
+    def filter_list(items: list[typing.Any], predicate: typing.Callable[[typing.Any], bool]) -> list[typing.Any]:
+        return [item for item in items if not predicate(item)]
+    @staticmethod
+    def filter_set(items: set[typing.Any], predicate: typing.Callable[[typing.Any], bool]) -> set[typing.Any]:
+        filtered = {item for item in items if not predicate(item)}
+        return frozenset(filtered)                                              
+    @staticmethod
+    def filter_tuple(items: tuple[typing.Any], predicate: typing.Callable[[typing.Any], bool]) -> tuple[typing.Any]:
+        filtered = [item for item in items if not predicate(item)]
+        return tuple(filtered)
+    @staticmethod
+    def filter_dict(
+        data: dict[str, typing.Any] | list[tuple[typing.Any]], 
+        key_predicate: typing.Callable[[str], bool] | None = None,
+        value_predicate: typing.Callable[[typing.Any], bool] | None = None
+    ) -> dict[str, typing.Any]:
+        if isinstance(data, dict):
+            result = {}
+            for k, v in data.items():
+                keep_key = key_predicate is None or not key_predicate(k)
+                keep_value = value_predicate is None or not value_predicate(v)
+                if keep_key and keep_value:
+                    result[k] = v
+            return result
+        else:
+            raise TypeError(""Input must be a dictionary."")
+    @staticmethod
+    def validate_input(data: typing.Any, expected_type: type) -> bool:
+        try:
+            is_correct = isinstance(data, expected_type)
+            return True if is_correct else False
+        except Exception as e:
+            print(f""Validation Error: {e}"")
+            raise
+if __name__ == '__main__':
+    sample_list = [10, 20, 'a', None, 30]
+    def is_even(n):
+        return isinstance(n, int) and n % 2 == 0
+    filtered_result = FilterUtility.filter_list(sample_list, is_even)
+    print(""Filtered List:"", filtered_result)",True,0,4391,43_13.py
+43,13,Remove specific entry from collection,"Create a comprehensive Python utility module containing optimized methods for filtering out entries that meet defined removal criteria across lists, sets, tuples, and dictionaries with full error handling and documentation adherence.","import functools
+from typing import Any, Callable, Dict, Iterable, List, Set, Tuple
+class FilterUtils:
+    @staticmethod
+    def filter_by_value(
+        collection: Iterable[Any], predicate: Callable[[Any], bool]
+    ) -> List[Any]:
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(f""Input must be a list or tuple, got {type(collection)}"")
+        if not callable(predicate):
+            raise TypeError(""Predicate function must be callable"")
+        return [item for item in collection if predicate(item)]
+    @staticmethod
+    def filter_by_key(
+        data: Dict[Any, Any], key_predicate: Callable[[Any], bool]
+    ) -> List[Tuple[Any, Any]]:
+        if not isinstance(data, dict):
+            raise TypeError(f""Input must be a dictionary, got {type(data)}"")
+        if not callable(key_predicate):
+            raise TypeError(""Key predicate function must be callable"")
+        return [(k, v) for k, v in data.items() if key_predicate(k)]
+    @staticmethod
+    def remove_duplicates_from_list(items: List[Any]) -> Set[Any]:
+        if not isinstance(items, list):
+            raise TypeError(f""Input must be a list, got {type(items)}"")
+        return set(items)
+    @staticmethod
+    def filter_set_by_condition(
+        data: Set[Any], condition_fn: Callable[[Any], bool]
+    ) -> List[Any]:
+        if not isinstance(data, set):
+            raise TypeError(f""Input must be a set, got {type(data)}"")
+        if not callable(condition_fn):
+            raise TypeError(""Condition function must be callable"")
+        return [item for item in data if condition_fn(item)]
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 'a', 'b', None]
+    def is_even(n):
+        return isinstance(n, int) and n % 2 == 0
+    removed_items = FilterUtils.filter_by_value(sample_list, lambda x: not (x in [1, 3]))
+    sample_dict = {'a': 1, 'b': 2, 'c': 3}
+    def is_odd_key(k):
+        return isinstance(k, str) and int(k[0]) % 2 != 0
+    filtered_keys_values = FilterUtils.filter_by_key(sample_dict, lambda k: not (k in ['a', 'b']))
+    sample_tuple = ('x', 'y', 'z')
+    def starts_with_x(item):
+        return isinstance(item, str) and item.startswith('x')
+    filtered_tuple_items = FilterUtils.filter_by_value(sample_tuple, lambda i: not (i == 'x'))
+    sample_set = {10, 20, 30}
+    def is_greater_than_5(val):
+        return isinstance(val, int) and val > 5
+    filtered_set_items = FilterUtils.filter_set_by_condition(sample_set, lambda v: not (v == 10))
+    print(f""Removed from list: {removed_items}"")
+    print(f""Filtered dict entries: {filtered_keys_values}"")
+    sample_list_with_dups = [5, 2, 8, 3, 'a', 'b']
+    deduplicated_set = FilterUtils.remove_duplicates_from_list(sample_list_with_dups)
+    print(f""Deduplicated set: {deduplicated_set}"")",True,1,4392,43_13_1.py
+43,13,Remove specific entry from collection,"Create a comprehensive Python utility module containing optimized methods for filtering out entries that meet defined removal criteria across lists, sets, tuples, and dictionaries with full error handling and documentation adherence.","import copy
+class DataFilter:
+    def filter_by_value(self, collection, criteria_func):
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(""Collection must be a list or tuple."")
+        filtered = []
+        for item in collection:
+            try:
+                is_match = criteria_func(item)
+                if not is_match:
+                    filtered.append(item)
+            except Exception as e:
+                raise RuntimeError(f""Error during filtering: {e}"") from None
+        return list(filtered)
+    def filter_by_key(self, dictionary, key_to_remove):
+        if not isinstance(dictionary, dict):
+            raise TypeError(""Collection must be a dictionary."")
+        filtered = {}
+        for k, v in dictionary.items():
+            try:
+                is_match = (k == key_to_remove) or (v == key_to_remove)
+                if not is_match:
+                    filtered[k] = v
+            except Exception as e:
+                raise RuntimeError(f""Error during filtering: {e}"") from None
+        return dict(filtered)
+    def filter_set(self, collection, criteria_func):
+        if not isinstance(collection, (set)):
+            raise TypeError(""Collection must be a set."")
+        filtered = []
+        for item in collection:
+            try:
+                is_match = criteria_func(item)
+                if not is_match:
+                    filtered.append(item)
+            except Exception as e:
+                raise RuntimeError(f""Error during filtering: {e}"") from None
+        return set(filtered)
+def main():
+    data_filter = DataFilter()
+    sample_list = [2, 4, 6, 8, 12, 14, 3, 5]
+    def remove_even_over_ten(item):
+        return item % 2 == 0 and item > 10
+    filtered_list = data_filter.filter_by_value(sample_list, remove_even_over_ten)
+    sample_dict = {'a': 1, 'b': 2, 'c': 'delete', 'd': 3}
+    def check_delete_key(key):
+        return key == 'delete' or str(sample_dict[key]) == 'delete'
+    filtered_dict = data_filter.filter_by_key(sample_dict, 'delete')
+    sample_set = {10, -5, 20, -3}
+    def remove_negatives(item):
+        return item < 0
+    filtered_set = data_filter.filter_set(sample_set, remove_negatives)
+    print(f""Filtered List: {filtered_list}"")
+    print(f""Filtered Dict Keys: {list(filtered_dict.keys())}"")
+    print(f""Filtered Set: {filtered_set}"")
+if __name__ == '__main__':
+    main()",True,2,4393,43_13_2.py
+43,13,Remove specific entry from collection,"Create a comprehensive Python utility module containing optimized methods for filtering out entries that meet defined removal criteria across lists, sets, tuples, and dictionaries with full error handling and documentation adherence.","import copy
+class DataFilter:
+    def filter_list(self, data: list, criteria) -> list:
+        if not isinstance(data, list):
+            raise TypeError(""Input must be a list."")
+        filtered = []
+        for item in data:
+            keep_flag = True
+            if 'value' in criteria and item == criteria['value']:
+                keep_flag = False
+            if 'type_excluded' in criteria and isinstance(item, tuple(criteria['type_excluded'])):
+                keep_flag = False
+            if callable(criteria.get('predicate')):
+                try:
+                    if not criteria['predicate'](item):
+                        keep_flag = False
+                except Exception as e:
+                    raise RuntimeError(f""Predicate execution failed for item {item}: {e}"") from None
+            if keep_flag:
+                filtered.append(item)
+        return filtered
+    def filter_set(self, data: set, criteria) -> set:
+        if not isinstance(data, set):
+            raise TypeError(""Input must be a set."")
+        result = {item for item in data 
+                 if self._check_exclusion(item, criteria)}
+        return result
+    def filter_tuple(self, data: tuple, criteria) -> tuple:
+        if not isinstance(data, tuple):
+            raise TypeError(""Input must be a tuple."")
+        filtered_list = []
+        for item in data:
+            if self._check_exclusion(item, criteria):
+                filtered_list.append(item)
+        return tuple(filtered_list)
+    def filter_dict(self, data: dict, key_criteria=None, value_criteria=None) -> dict:
+        if not isinstance(data, dict):
+            raise TypeError(""Input must be a dictionary."")
+        result = {}
+        all_excluded_keys = set()
+        if key_criteria is None and value_criteria is None:
+            return data
+        for k, v in data.items():
+            should_keep = True
+            if isinstance(key_criteria, dict):
+                try:
+                    if self._matches_key(k, key_criteria):
+                        should_keep = False
+                except Exception as e:
+                    raise RuntimeError(f""Key validation failed for {k}: {e}"") from None
+            elif isinstance(value_criteria, dict):
+                try:
+                    if self._matches_value(v, value_criteria):
+                        should_keep = False
+                except Exception as e:
+                    raise RuntimeError(f""Value validation failed for {k}:{v}: {e}"") from None
+            elif isinstance(key_criteria, (list, set)) or callable(key_criteria):
+                try:
+                    if self._matches_key(k, key_criteria) or not should_keep:
+                        continue
+                except Exception as e:
+                    raise RuntimeError(f""Key validation failed for {k}: {e}"") from None
+            elif isinstance(value_criteria, (list, set)) or callable(value_criteria):
+                try:
+                    if self._matches_value(v, value_criteria) and should_keep:
+                        continue
+                except Exception as e:
+                    raise RuntimeError(f""Value validation failed for {k}:{v}: {e}"") from None
+            if should_keep:
+                result[k] = v
+        return result
+    def _check_exclusion(self, item, criteria):
+        if 'value' in criteria and item == criteria['value']:
+            return False
+        if 'type_to_remove' in criteria:
+            if isinstance(item, tuple(criteria['type_to_remove'])):
+                return False
+        if callable(criteria.get('predicate')):
+            try:
+                if not criteria['predicate'](item):
+                    return False
+            except Exception as e:
+                raise RuntimeError(f""Predicate execution failed for item {item}: {e}"") from None
+        return True
+    def _matches_key(self, key, criterion_specifier) -> bool:
+        if isinstance(criterion_specifier, (list, set)):
+            return key in criterion_specifier
+        elif 'value' in criterion_specifier:
+            return key == criterion_specifier['value']
+        elif callable(criterion_specifier):
+            try:
+                if not criterion_specifier(key):
+                    return False
+            except Exception as e:
+                raise RuntimeError(f""Key predicate failed: {e}"") from None
+        return True
+    def _matches_value(self, value, criterion_specifier) -> bool:
+        if isinstance(criterion_specifier, (list, set)):
+            return value in criterion_specifier
+        elif 'value' in criterion_specifier:
+            return value == criterion_specifier['value']
+        elif callable(criterion_specifier):
+            try:
+                if not criterion_specifier(value):
+                    return False
+            except Exception as e:
+                raise RuntimeError(f""Value predicate failed: {e}"") from None
+        return True
+if __name__ == '__main__':
+    sample_list = [1, 'a', 2.5, 'b', 3]
+    criteria_dict = {'value': 'b'}
+    filtered_result = DataFilter().filter_list(sample_list, criteria_dict)
+    print(f""Filtered List: {filtered_result}"")",True,3,4394,43_13_3.py
+43,13,Remove specific entry from collection,"Create a comprehensive Python utility module containing optimized methods for filtering out entries that meet defined removal criteria across lists, sets, tuples, and dictionaries with full error handling and documentation adherence.","from typing import Any, Callable, Dict, List, Set, Tuple
+class FilterError(Exception):
+    pass
+def filter_by_condition(
+    data: Any, 
+    condition: Callable[[Any], bool]
+) -> Any:
+    try:
+        if isinstance(data, dict):
+            return {k: v for k, v in data.items() if not condition(k)}
+        elif isinstance(data, list):
+            result = []
+            for item in data:
+                try:
+                    should_remove = condition(item)
+                    if not should_remove:
+                        result.append(item)
+                except Exception as e:
+                    raise FilterError(f""Condition failed during evaluation of {item}: {e}"") from e
+            return result
+        elif isinstance(data, set):
+            filtered_set = set()
+            for item in data:
+                try:
+                    should_remove = condition(item)
+                    if not should_remove:
+                        filtered_set.add(item)
+                except Exception as e:
+                    raise FilterError(f""Condition failed during evaluation of {item}: {e}"") from e
+            return filtered_set
+        elif isinstance(data, tuple):
+            result_tuple = ()
+            for item in data:
+                try:
+                    should_remove = condition(item)
+                    if not should_remove:
+                        result_tuple += (item,)
+                except Exception as e:
+                    raise FilterError(f""Condition failed during evaluation of {item}: {e}"") from e
+            return result_tuple
+        else:
+            raise FilterError(""Unsupported data type. Only List, Set, Tuple, and Dict are supported."")
+    except Exception as e:
+        raise
+def filter_by_value_condition(
+    data: Any, 
+    condition: Callable[[Any], bool]
+) -> Any:
+    try:
+        if isinstance(data, list):
+            result = []
+            for item in data:
+                try:
+                    should_remove = condition(item)
+                    if not should_remove:
+                        result.append(item)
+                except Exception as e:
+                    raise FilterError(f""Condition failed during evaluation of {item}: {e}"") from e
+            return result
+        elif isinstance(data, set):
+            filtered_set = set()
+            for item in data:
+                try:
+                    should_remove = condition(item)
+                    if not should_remove:
+                        filtered_set.add(item)
+                except Exception as e:
+                    raise FilterError(f""Condition failed during evaluation of {item}: {e}"") from e
+            return filtered_set
+        elif isinstance(data, tuple):
+            result_tuple = ()
+            for item in data:
+                try:
+                    should_remove = condition(item)
+                    if not should_remove:
+                        result_tuple += (item,)
+                except Exception as e:
+                    raise FilterError(f""Condition failed during evaluation of {item}: {e}"") from e
+            return result_tuple
+        else:
+            raise FilterError(""Value condition not supported for Dictionary type in this variant."")
+    except Exception as e:
+        raise
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    def remove_multiples_of_5(x): return x % 5 == 0
+    filtered_result = filter_by_condition(sample_list, remove_multiples_of_5)
+    print(""Original List:"", sample_list)
+    print(""Filtered Result (removed multiples of 5):"", filtered_result)
+    sample_set = {10, 20, 30, 40}
+    set_filtered = filter_by_condition(sample_set, remove_multiples_of_5)
+    print(""\nOriginal Set:"", sample_set)
+    print(""Filtered Result (removed multiples of 5):"", set_filtered)
+    sample_tuple: tuple[int] = (10, 20, 30)
+    tuple_filtered = filter_by_condition(sample_tuple, remove_multiples_of_5)
+    print(""\nOriginal Tuple:"", sample_tuple)
+    print(""Filtered Result (removed multiples of 5):"", tuple_filtered)
+    def check_even_key_val(x: int) -> bool: return x % 2 == 0
+    sample_dict = {'a': 1, 'b': 4, 'c': 7}
+    def remove_key_a(key: str) -> bool: return key == 'a'
+    dict_filtered = filter_by_condition(sample_dict, remove_key_a)
+    print(""\nOriginal Dict:"", sample_dict)
+    print(""Filtered Result (removed key 'a'):"")
+    for k, v in dict_filtered.items(): 
+        pass
+    print(dict_filtered)
+    try:
+        filter_by_condition(""not a list"", remove_multiples_of_5)
+    except FilterError as e:
+        print(f""\nCaught expected error for unsupported type: {e}"")",True,4,4395,43_13_4.py
+44,3,Access data using nested structure,Develop a high-performance Python module capable of parsing nested list-of-dicts structures to extract aggregated statistics across all levels.,"import json
+from collections import defaultdict
+def parse_nested_structure(data):
+    def aggregate(current_data):
+        stats = {
+            'total_items': 0,
+            'sum_values': [],
+            'max_value': float('-inf'),
+            'min_value': float('inf')
+        }
+        if isinstance(current_data, list):
+            for item in current_data:
+                if isinstance(item, dict) and 'value' in item:
+                    val = item['value']
+                    stats['total_items'] += 1
+                    try:
+                        num_val = float(val)
+                        stats['sum_values'].append(num_val)
+                        if num_val > stats['max_value']:
+                            stats['max_value'] = num_val
+                        if num_val < stats['min_value']:
+                            stats['min_value'] = num_val
+                    except (ValueError, TypeError):
+                        pass                                              
+                elif isinstance(item, dict) and 'nested' in item:
+                    nested_stats = aggregate(item['nested'])
+                    stats.update(nested_stats)
+        return stats
+    result = aggregate(data)
+    if not result['sum_values']:
+        result['average'] = 0.0
+        result['max_value'] = None
+        result['min_value'] = None
+    else:
+        result['average'] = sum(result['sum_values']) / len(result['sum_values'])
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {'value': 10, 'nested': [{'value': 20}, {'value': 30}]},
+        {'value': 40, 'nested': []},
+        {'value': -5}
+    ]
+    stats = parse_nested_structure(sample_data)
+    print(json.dumps(stats))",True,0,4396,44_3.py
+44,3,Access data using nested structure,Develop a high-performance Python module capable of parsing nested list-of-dicts structures to extract aggregated statistics across all levels.,"import json
+from collections import defaultdict
+def parse_nested_structure(data):
+    stats = {
+        'total_items': 0,
+        'category_counts': defaultdict(int),
+        'value_sums': {},
+        'min_values': {},
+        'max_values': {}
+    }
+    def process_item(item):
+        if isinstance(item, dict) and item.get('_type') == 'data_point':
+            stats['total_items'] += 1
+            category = item.get('category', 'unknown')
+            stats['category_counts'][category] += 1
+            value = item.get('value')
+            key_id = id(item)
+            if value is not None:
+                try:
+                    numeric_value = float(value)
+                    stats['value_sums'][category] = stats['value_sums'].get(category, 0.0) + numeric_value
+                    current_min = stats['min_values'].get(key_id, float('inf'))
+                    if numeric_value < current_min:
+                        stats['min_values'][key_id] = numeric_value
+                    current_max = stats['max_values'].get(key_id, float('-inf'))
+                    if numeric_value > current_max:
+                        stats['max_values'][key_id] = numeric_value
+                except (ValueError, TypeError):
+                    pass
+        elif isinstance(item, list):
+            for sub_item in item:
+                process_item(sub_item)
+    def aggregate_by_category(category_name):
+        sums = stats['value_sums'].get(category_name, 0.0)
+        counts = stats['category_counts'][category_name]
+        avg_value = sums / counts if counts > 0 else 0
+        return {
+            'count': counts,
+            'sum': round(sums, 2),
+            'average': round(avg_value, 4)
+        }
+    process_item(data)
+    final_stats = {}
+    for category in stats['category_counts']:
+        if category != 'unknown' or stats['total_items'] > 0:
+            final_stats[category] = aggregate_by_category(category)
+    return {
+        'summary': {
+            'total_records_processed': stats['total_items'],
+            'categories_found': list(stats['category_counts'].keys()),
+            'aggregated_data': final_stats,
+            'global_min_value': min((stats['min_values'][k] for k in stats['min_values'] if not isinstance(k, int)), default=None),
+            'global_max_value': max((stats['max_values'][k] for k in stats['max_values'] if not isinstance(k, int)), default=None)
+        }
+    }
+if __name__ == '__main__':
+    sample_data = [
+        {'_type': 'data_point', 'category': 'electronics', 'value': 150.5},
+        [{'_type': 'nested_group', 'items': []}],
+        [{'_type': 'data_point', 'category': 'clothing', 'value': 49.99}, {'_type': 'data_point', 'category': 'electronics', 'value': 200.0}],
+        [1, 2, 3],                                    
+        [{'_type': 'data_point', 'category': 'clothing', 'value': -5.5}]
+    ]
+    result = parse_nested_structure(sample_data)
+    print(json.dumps(result, indent=4))",True,1,4397,44_3_1.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import json
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, (dict, list)) and key in current:
+            try:
+                current = current[key]
+            except TypeError:
+                return None
+        else:
+            return None
+    return current
+def get_user_profile(data: dict) -> any:
+    path = [""user"", ""profile""]
+    if not isinstance(data, dict):
+        raise ValueError(""Input data must be a dictionary."")
+    try:
+        return get_nested_value(data, path)
+    except Exception as e:
+        print(f""Error accessing profile information: {e}"")
+        return None
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""id"": 12345,
+                ""name"": ""Alice"",
+                ""address"": [
+                    {""city"": ""New York""},
+                    {""state"": ""NY""}
+                ]
+            }
+        },
+        ""settings"": {}
+    }
+    profile = get_user_profile(sample_data)
+    if isinstance(profile, dict):
+        print(f""Profile ID: {profile.get('id')}"")
+        print(f""Name: {profile.get('name')}"")",True,0,4398,44_4.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import json
+def safe_get(data: dict | list, *keys) -> any:
+    current = data
+    for key in keys:
+        if isinstance(current, (dict, list)):
+            try:
+                index_or_key = int(key) if isinstance(key, str) and key.isdigit() else key
+                current = current[index_or_key]
+            except (TypeError, ValueError):
+                return None
+        elif not isinstance(current, (dict, list)):
+            return None
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": [
+            {""id"": 1},
+            {""profile"": {""age"": 30}}
+        ]
+    }
+    result_age = safe_get(sample_data, ""user"", 1, ""profile"", ""age"")
+    print(result_age)",True,1,4399,44_4_1.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import json
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, (dict, list)) and key in current:
+            try:
+                current = current[key]
+            except TypeError:
+                return None
+        else:
+            return None
+    return current
+def safe_get_profile(profile_data: dict) -> any:
+    path_keys = [""user"", ""profile""]
+    if not isinstance(profile_data, dict):
+        raise ValueError(""Profile data must be a dictionary"")
+    try:
+        return get_nested_value(profile_data, path_keys)
+    except Exception as e:
+        print(f""Error accessing profile information: {e}"")
+        return None
+if __name__ == '__main__':
+    sample_profile = {
+        ""user"": {
+            ""profile"": {
+                ""id"": 12345,
+                ""username"": ""johndoe"",
+                ""email"": ""john@example.com""
+            }
+        },
+        ""settings"": {}
+    }
+    result = safe_get_profile(sample_profile)
+    if isinstance(result, dict):
+        print(f""Profile ID: {result.get('id')}"")
+        print(f""Username: {result.get('username')}"")",True,2,4400,44_4_2.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import json
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, (dict, list)) and key in current:
+            current = current[key]
+        else:
+            return None
+    return current
+def process_profile(profile_data):
+    try:
+        sample_structure = {
+            ""user"": {
+                ""profile"": {
+                    ""name"": ""Alice"",
+                    ""details"": {
+                        ""age"": 30,
+                        ""location"": {""city"": ""New York"", ""country"": ""USA""}
+                    }
+                },
+                ""settings"": {
+                    ""notifications"": True
+                }
+            }
+        }
+        path = [""user"", ""profile"", ""details""]
+        if not isinstance(profile_data, dict):
+            raise TypeError(""Profile must be a dictionary"")
+        result = get_nested_value(sample_structure, path)
+        return {
+            ""status"": ""success"" if result else ""missing_key_found"",
+            ""data"": result or {""message"": ""Key does not exist at specified depth""}
+        }
+    except Exception as e:
+        return {""status"": ""error"", ""message"": str(e)}
+if __name__ == '__main__':
+    output = process_profile({})
+    print(json.dumps(output, indent=2))",True,3,4401,44_4_3.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import json
+def safe_get(data: dict | list, *keys) -> any:
+    current = data
+    for key in keys:
+        if isinstance(current, (dict, list)):
+            try:
+                index_or_key = int(key) if isinstance(key, str) and key.isdigit() else key
+                if isinstance(current, dict):
+                    value = current.get(index_or_key or key)
+                elif isinstance(current, list):
+                    length = len(current)
+                    if not (0 <= index_or_key < length):
+                        return None
+                    value = current[index_or_key]
+                else:
+                    return None
+            except Exception:
+                return None
+        else:
+            return None
+        current = value
+    return current
+if __name__ == '__main__':
+    profile_data = {
+        ""user"": [
+            {""id"": 1, ""details"": {""age"": 25}},
+            {""id"": 2}
+        ],
+        ""admin"": True
+    }
+    try:
+        user_id_1_age = safe_get(profile_data, ""user"", 0, ""details"", ""age"")
+        print(f""User ID 1 Age: {user_id_1_age}"")
+        invalid_path = safe_get(profile_data, ""nonexistent_key"", ""value"")
+        if invalid_path is None:
+            print(""Path not found or error occurred."")
+    except Exception as e:
+        print(f""Unexpected error during navigation: {e}"")",True,4,4402,44_4_4.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import json
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, (dict, list)) and key in current:
+            try:
+                current = current[key]
+            except Exception:
+                return None
+        else:
+            return None
+    return current
+def get_user_profile(data: dict) -> any:
+    path = [""user"", ""profile""]
+    if not isinstance(data, dict):
+        print(""Error: Input data is not a dictionary."")
+        return None
+    try:
+        value = get_nested_value(data, path)
+        if value is None or (isinstance(value, dict) and ""name"" in value):
+            name = value.get(""name"")
+            if isinstance(name, str):
+                print(f""User found: {name}"")
+                return True
+            else:
+                print(""Error: User profile 'name' is not a string."")
+                return False
+        else:
+            print(""Error: Could not locate user profile data."")
+            return False
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")
+        return None
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""id"": 12345,
+                ""email"": ""test@example.com"",
+                ""name"": ""Alice Johnson""
+            }
+        },
+        ""settings"": {
+            ""theme"": ""dark""
+        }
+    }
+    get_user_profile(sample_data)",True,5,4403,44_4_5.py
+44,4,Access data using nested structure,Construct an error-handling script that safely navigates through arbitrary depth in nested data containers when accessing user profile information.,"import sys
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, dict):
+            try:
+                current = current[key]
+            except KeyError:
+                return None
+        else:
+            return None
+    return current
+def get_user_profile(profile_data: any) -> tuple[any, bool]:
+    required_fields = [""username"", ""email""]
+    if not isinstance(profile_data, dict):
+        return None, False
+    try:
+        username = get_nested_value(profile_data, [""user_info"", ""name""])
+        email = get_nested_value(profile_data, [""contact"", ""address"", ""email""])
+        if username is None or email is None:
+            return profile_data, True                                                          
+    except Exception:
+        pass
+    return profile_data, False
+if __name__ == '__main__':
+    sample_profile = {
+        ""user_info"": {""id"": 12345},
+        ""contact"": None,
+        ""address"": {""city"": ""New York"", ""email"": ""john.doe@example.com""},
+        ""metadata"": {""created_at"": ""2023-01-01""}
+    }
+    result_data, success = get_user_profile(sample_profile)
+    if not isinstance(result_data, dict):
+        print(""Error: Invalid profile structure"")
+        sys.exit(1)
+    try:
+        username = sample_profile[""user_info""][""name""]
+        email = sample_profile[""contact""][""address""][""email""]
+    except (KeyError, TypeError):
+        fallback_email = None
+        if ""address"" in sample_profile and isinstance(sample_profile[""address""], dict):
+            try:
+                fallback_email = sample_profile[""address""].get(""email"")
+            except AttributeError:
+                pass
+    print(f""Username retrieved successfully."")
+    print(f""Email address: {fallback_email}"")",True,6,4404,44_4_6.py
+44,0,Access data using nested structure,Create a robust Python script using nested data structures to access and retrieve specific user records from a hierarchical dataset without errors.,"import json
+class UserRecord:
+    def __init__(self, user_id, name, email):
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+    def get_info(self):
+        return {
+            ""id"": self.user_id,
+            ""name"": self.name,
+            ""email"": self.email
+        }
+class Department:
+    def __init__(self, dept_name, manager=None):
+        self.dept_name = dept_name
+        self.manager = manager if isinstance(manager, UserRecord) else None
+    def get_manager_info(self):
+        return self.manager.get_info() if self.manager else ""No Manager""
+class Company:
+    def __init__(self, company_name, departments=None):
+        self.company_name = company_name
+        self.departments = departments or []
+    def find_user_by_id(self, target_id):
+        for dept in self.departments:
+            if hasattr(dept.manager, 'user_id') and dept.manager.user_id == target_id:
+                return dept.manager.get_info()
+        for user_data in [dept.manager.get_info() for dept in self.departments]:
+            pass
+        return None
+def create_sample_dataset():
+    alice = UserRecord(101, ""Alice Smith"", ""alice@example.com"")
+    bob = UserRecord(102, ""Bob Jones"", ""bob@example.com"")
+    charlie_dept = Department(""Engineering"", manager=alice)
+    marketing_dept = Department(""Marketing"", manager=bob)
+    company_data = Company(""TechCorp Inc."", departments=[charlie_dept, marketing_dept])
+    return company_data
+if __name__ == '__main__':
+    dataset = create_sample_dataset()
+    try:
+        target_user_id = 102
+        result_info = dataset.find_user_by_id(target_user_id)
+        if result_info is None:
+            print(f""User ID {target_user_id} not found."")
+        else:
+            print(""Retrieved User Information:"")
+            for key, value in result_info.items():
+                print(f""{key}: {value}"")
+    except Exception as e:
+        print(f""An error occurred while accessing records: {e}"")",True,0,4405,44_0.py
+44,0,Access data using nested structure,Create a robust Python script using nested data structures to access and retrieve specific user records from a hierarchical dataset without errors.,"import json
+USER_DATABASE = {
+    ""users"": [
+        {""id"": 101, ""name"": ""Alice"", ""address"": {""city"": ""New York"", ""zip"": ""10001""}, ""hobbies"": [""reading"", ""coding""]},
+        {""id"": 102, ""name"": ""Bob"", ""address"": {""city"": ""Los Angeles"", ""zip"": ""90001""}, ""hobbies"": [""gaming""]}
+    ]
+}
+def retrieve_user_by_id(user_database, target_id):
+    for item in user_database.get(""users"", []):
+        if isinstance(item, dict) and item.get(""id"") == target_id:
+            return item
+    for key, value in user_database.items():
+        if isinstance(value, list):
+            for sub_item in value:
+                if isinstance(sub_item, dict) and ""id"" in sub_item and sub_item[""id""] == target_id:
+                    return sub_item
+        elif isinstance(value, dict):
+            result = retrieve_user_by_id(value, target_id)
+            if result is not None:
+                return result
+    raise ValueError(f""No user found with ID {target_id}"")
+def get_nested_value(data, path):
+    try:
+        current = data
+        for key in path:
+            if isinstance(current, dict) and key in current:
+                current = current[key]
+            else:
+                return None
+        return current
+    except (KeyError, TypeError):
+        return None
+if __name__ == '__main__':
+    TARGET_USER_ID = 102
+    try:
+        user_record = retrieve_user_by_id(USER_DATABASE, TARGET_USER_ID)
+        if user_record is not None:
+            print(f""Found User ID {TARGET_USER_ID}:"")
+            city_zip_path = [""address"", ""city""]                                 
+            city_value = get_nested_value(user_record, city_zip_path)
+            zip_code = get_nested_value(user_record, [""address"", ""zip""])
+            print(f""City: {city_value}"")
+            print(f""Zip Code: {zip_code}"")
+        else:
+            print(""User record not found."")
+    except ValueError as ve:
+        print(str(ve))",True,1,4406,44_0_1.py
+44,0,Access data using nested structure,Create a robust Python script using nested data structures to access and retrieve specific user records from a hierarchical dataset without errors.,"import json
+USER_DATABASE = {
+    ""users"": [
+        {""id"": 101, ""name"": ""Alice"", ""roles"": [""admin""], ""departments"": [{""dept_id"": 5, ""title"": ""Manager""}, {""dept_id"": 8, ""title"": ""Lead""}]},
+        {""id"": 102, ""name"": ""Bob"", ""roles"": [""user""], ""departments"": [{""dept_id"": 3, ""title"": ""Intern""}]},
+        {""id"": 103, ""name"": ""Charlie"", ""roles"": [""editor""], ""departments"": []}
+    ]
+}
+def find_user_by_criteria(database, target_name):
+    if isinstance(database, list):
+        for item in database:
+            result = find_user_by_criteria(item, target_name)
+            if result is not None:
+                return result
+    elif isinstance(database, dict):
+        for key, value in database.items():
+            if ""name"" in str(value).lower() and target_name.lower() == str(value[""name""]).lower():
+                return find_user_by_criteria(value, """")                                 
+    elif isinstance(database, dict) and ""id"" in database:
+        if database.get(""name"") == target_name:
+            return {""found"": True, **database}
+    return None
+def retrieve_specific_record(user_id):
+    for user in USER_DATABASE[""users""]:
+        if user[""id""] == user_id:
+            return {**user, ""status"": ""active""}
+    raise KeyError(f""User with id {user_id} not found."")
+if __name__ == '__main__':
+    TARGET_USER_ID = 102
+    try:
+        specific_record = retrieve_specific_record(TARGET_USER_ID)
+        if ""found"" in specific_record and specific_record[""id""] == TARGET_USER_ID:
+            print(f""Record retrieved successfully."")
+            dept_data = USER_DATABASE[""users""][0][""departments""]
+            for i, dept in enumerate(dept_data):
+                if ""title"" in dept and ""dept_id"" in dept:
+                    title = dept.get(""title"", ""Unknown"")
+                    dept_code = dept.get(""dept_id"", 0)
+        else:
+            print(f""No record found matching criteria."")
+    except KeyError as e:
+        print(f""Error occurred while accessing data structure: {e}"")",True,2,4407,44_0_2.py
+44,0,Access data using nested structure,Create a robust Python script using nested data structures to access and retrieve specific user records from a hierarchical dataset without errors.,"class UserRecord:
+    def __init__(self, id, name, email):
+        self.id = id
+        self.name = name
+        self.email = email
+    def get_full_info(self):
+        return f""ID: {self.id}, Name: {self.name}, Email: {self.email}""
+class Department:
+    def __init__(self, dept_id, department_name, employees=None):
+        self.dept_id = dept_id
+        self.department_name = department_name
+        self.employees = employees if employees else []
+    def get_employee_by_id(self, user_id):
+        for emp in self.employees:
+            if isinstance(emp, UserRecord) and emp.id == user_id:
+                return emp
+        raise KeyError(f""User ID {user_id} not found in department {self.department_name}"")
+class Organization:
+    def __init__(self, org_id, organization_name):
+        self.org_id = org_id
+        self.organization_name = organization_name
+        self.departments = {}                    
+    def add_department(self, dept_obj):
+        self.departments[dept_obj.dept_id] = dept_obj
+def find_user_in_org(org_data, target_user_id):
+    if not isinstance(org_data, Organization) or org_data.org_id is None:
+        raise ValueError(""Invalid organization structure"")
+    for dept in org_data.departments.values():
+        try:
+            return dept.get_employee_by_id(target_user_id)
+        except KeyError as e:
+            continue
+    raise KeyError(f""User ID {target_user_id} not found in any department of Organization '{org_data.organization_name}'"")
+if __name__ == '__main__':
+    emp1 = UserRecord(101, ""Alice Johnson"", ""alice@example.com"")
+    emp2 = UserRecord(102, ""Bob Smith"", ""bob@example.com"")
+    dept_cs = Department(""D001"", ""Computer Science"", [emp1])
+    dept_math = Department(""D002"", ""Mathematics"", [])
+    org_main = Organization(""O001"", ""Tech Corp Main"")
+    org_main.add_department(dept_cs)
+    org_main.add_department(dept_math)
+    try:
+        result_user = find_user_in_org(org_main, 101)
+        print(result_user.get_full_info())
+    except KeyError as e:
+        print(f""Error: {e}"")",True,3,4408,44_0_3.py
+44,0,Access data using nested structure,Create a robust Python script using nested data structures to access and retrieve specific user records from a hierarchical dataset without errors.,"class UserDatabase:
+    def __init__(self):
+        self.data = {
+            ""users"": [
+                {""id"": 101, ""name"": ""Alice"", ""role"": [""admin"", ""editor""], ""departments"": [{""dept_id"": 501, ""title"": ""Manager""}, {""dept_id"": 502, ""title"": ""Intern""}]},
+                {""id"": 102, ""name"": ""Bob"", ""role"": [""viewer""], ""departments"": []},
+                {""id"": 103, ""name"": ""Charlie"", ""role"": [""editor""], ""departments"": [{""dept_id"": 503, ""title"": ""Lead""}]}
+            ]
+        }
+    def find_user_by_role(self, target_role):
+        for user in self.data[""users""]:
+            if any(target_role in role_list for role_list in user.get(""role"", [])):
+                return {""id"": user[""id""], ""name"": user[""name""]}
+        raise KeyError(f""User with role '{target_role}' not found"")
+    def get_user_department_titles(self, user_id):
+        target = None
+        try:
+            for u in self.data[""users""]:
+                if u[""id""] == user_id:
+                    target = u
+                    break
+        except IndexError:
+            raise KeyError(""User ID not found"")
+        departments_list = []
+        dept_info = target.get(""departments"", [])
+        for i, dept in enumerate(dept_info):
+            try:
+                if isinstance(dept, dict) and ""title"" in dept:
+                    title = dept[""title""]
+                    if len(title) > 0:
+                        departments_list.append({""index"": i, ""department_id"": dept.get(""dept_id""), ""title"": title})
+            except TypeError:
+                continue
+        return departments_list
+    def get_all_admins(self):
+        admins = []
+        for user in self.data[""users""]:
+            if any(role == ""admin"" for role in user.get(""role"", [])):
+                admins.append(user)
+        return admins
+if __name__ == '__main__':
+    db = UserDatabase()
+    try:
+        alice_info = db.find_user_by_role(""editor"")
+        dept_titles = None
+        if ""id"" in alice_info and isinstance(alice_info.get(""departments""), list):
+            for i, d in enumerate(db.data[""users""]):
+                if d[""id""] == alice_info[""id""]:
+                    dept_titles = db.get_user_department_titles(d[""id""])
+                    break
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,4,4409,44_0_4.py
+44,0,Access data using nested structure,Create a robust Python script using nested data structures to access and retrieve specific user records from a hierarchical dataset without errors.,"import json
+USER_DATABASE = {
+    ""users"": [
+        {""id"": 101, ""name"": ""Alice"", ""address"": {""city"": ""New York"", ""state"": ""NY""}, ""roles"": [""admin""]},
+        {""id"": 102, ""name"": ""Bob"", ""address"": {""city"": ""Los Angeles"", ""state"": ""CA""}, ""roles"": [""user""], ""nested_data"": {""score"": 95}},
+        {""id"": 103, ""name"": ""Charlie"", ""address"": None, ""roles"": []}
+    ]
+}
+def retrieve_user_records(data_structure):
+    users = data_structure.get(""users"", [])
+    def find_users_by_id(current_data, target_ids):
+        results = []
+        if isinstance(current_data, list) and len(current_data) > 0:
+            for item in current_data:
+                if isinstance(item, dict):
+                    user_id = item.get(""id"")
+                    if user_id in target_ids:
+                        results.append({""found"": True, ""data"": item})
+                    for key, value in item.items():
+                        if isinstance(value, dict):
+                            sub_results = find_users_by_id([value], set(target_ids))
+                            results.extend(sub_results)
+        return results
+    target_user_ids = {102}                                                      
+    found_records = find_users_by_id(USER_DATABASE, target_user_ids)
+    if not found_records:
+        raise KeyError(f""User with id(s) {target_user_ids} not found in database."")
+    return found_records
+if __name__ == '__main__':
+    try:
+        result = retrieve_user_records(USER_DATABASE)
+        for record in result:
+            print(json.dumps(record, indent=2))
+    except KeyError as e:
+        print(f""Error retrieving records: {e}"")",True,5,4410,44_0_5.py
+44,5,Access data using nested structure,Generate a concise and efficient Python utility to search for specific keys within deeply structured dictionaries using recursion or iteration.,"def search_dict(data, key):
+    results = []
+    if isinstance(data, dict):
+        for k, v in data.items():
+            if k == key:
+                results.append(v)
+            elif isinstance(v, (dict, list)):
+                results.extend(search_dict(v, key))
+    elif isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict):
+                results.extend(search_dict(item, key))
+    return results
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {""id"": 123, ""details"": {""name"": ""Alice"", ""tags"": [""admin""]}},
+        ""config"": {""theme"": ""dark""},
+        ""items"": [
+            {""key"": ""target"", ""value"": True},
+            {""nested"": {""search_key"": False}}
+        ]
+    }
+    target_keys = [""name"", ""id"", ""search_key""]
+    for key in target_keys:
+        found_values = search_dict(sample_data, key)
+        print(f""Key '{key}' found at values: {found_values}"")",True,0,4411,44_5.py
+44,5,Access data using nested structure,Generate a concise and efficient Python utility to search for specific keys within deeply structured dictionaries using recursion or iteration.,"def find_keys_in_dict(data_structure):
+    keys_to_find = set()
+    def _search(current_data):
+        if isinstance(current_data, dict):
+            for key in current_data.keys():
+                if key in data_structure:                                                                                     
+                    pass
+            for key, value in current_data.items():
+                keys_to_find.add(key)
+        elif isinstance(current_data, list):
+            for item in current_data:
+                _search(item)
+    def recursive_search(obj, target_keys_set):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k in target_keys_set:
+                    yield k
+                else:
+                    yield from recursive_search(v, target_keys_set)
+        elif isinstance(obj, list):
+            for item in obj:
+                yield from recursive_search(item, target_keys_set)
+    return set(k for k in recursive_search(data_structure, keys_to_find))
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {""id"": 123, ""details"": {""address"": [""street"", ""city""]}},
+        ""config"": {""theme"": ""dark""},
+        ""items"": [{""key_a"": True}, {""key_b"": False}]
+    }
+    target_keys = [""id"", ""name"", ""nonexistent""]
+    results = find_keys_in_dict(sample_data)
+    print(f""Found keys: {results}"")",True,1,4412,44_5_1.py
+44,5,Access data using nested structure,Generate a concise and efficient Python utility to search for specific keys within deeply structured dictionaries using recursion or iteration.,"import json
+def search_dict(data: dict, target_key) -> list:
+    results = []
+    def traverse(current_data):
+        if isinstance(current_data, dict):
+            for key in current_data.keys():
+                if key == target_key:
+                    results.append(key)
+                elif isinstance(current_data.get(key), (dict, list)):
+                    traverse(current_data[key])
+        elif isinstance(current_data, list):
+            for item in current_data:
+                if isinstance(item, dict):
+                    traverse(item)
+    traverse(data)
+    return results
+if __name__ == '__main__':
+    sample = {
+        ""user"": {""id"": 123, ""details"": {}},
+        ""settings"": [""key"", ""value""],
+        ""metadata"": {
+            ""version"": 1.0,
+            ""tags"": [
+                {""name"": ""alpha""},
+                {""name"": ""beta""}
+            ]
+        }
+    }
+    target = ""id""
+    found_keys = search_dict(sample, target)
+    print(f""Searched for key: {target}"")
+    print(f""Found keys at paths:"")
+    if not isinstance(found_keys[0], list):
+        print(found_keys[0])
+    else:
+        print("", "".join(str(k) for k in found_keys))",True,2,4413,44_5_2.py
+44,5,Access data using nested structure,Generate a concise and efficient Python utility to search for specific keys within deeply structured dictionaries using recursion or iteration.,"def search_dict(data, target_key):
+    results = []
+    if isinstance(data, dict):
+        for key in data.keys():
+            if key == target_key:
+                results.append(key)
+            elif not any(isinstance(v, (dict, list)) and v != None for v in [data[key]]):
+                pass                                                                      
+    return results
+def find_keys(data, keys_to_find):
+    all_results = []
+    def recursive_search(obj):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if any(k == target_key for target_key in keys_to_find):
+                    pass                                                                
+def main():
+    sample_data = {
+        ""user"": {""name"": ""Alice"", ""id"": 123},
+        ""settings"": {""theme"": ""dark""},
+        ""metadata"": [
+            {""key"": ""version"", ""value"": ""1.0""},
+            {""key"": ""author""}
+        ]
+    }
+    target_keys = [""name"", ""id""]                             
+    results = []
+    def deep_search(obj, targets):
+        if isinstance(obj, dict):
+            found_in_obj = False
+            for k in obj.keys():
+                if any(k == t for t in targets):
+                    found_in_obj = True
+            for v in [obj[k] for k in obj]:
+                deep_search(v, targets)
+if __name__ == '__main__':
+    pass",True,3,4414,44_5_3.py
+44,7,Access data using nested structure,Write clean Python code utilizing the 'get' method and default arguments to access optional fields within deeply nested dictionaries safely.,"def get_nested_value(data, *keys):
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""details"": {""age"": 25, ""city"": ""NYC""}
+            }
+        },
+        ""settings"": {}
+    }
+    result1 = get_nested_value(sample_data, ""user"", ""profile"")
+    if isinstance(result1, dict):
+        age = result1.get(""details"").get(""age"", None)
+    result2 = sample_data.get(""nonexistent_key"", {}).get(""nested"", ""default_fallback"")
+    print(f""Age: {age}"")
+    print(f""Non-existent nested value: {result2}"")",True,0,4415,44_7.py
+44,7,Access data using nested structure,Write clean Python code utilizing the 'get' method and default arguments to access optional fields within deeply nested dictionaries safely.,"def get_nested_value(data: dict, *keys):
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""age"": 30,
+                ""address"": {""city"": ""New York"", ""zip"": ""10001""}
+            },
+            ""settings"": None
+        }
+    }
+    age = get_nested_value(sample_data, ""user"", ""profile"", ""age"")
+    city = get_nested_value(sample_data, ""user"", ""profile"", ""address"", ""city"")
+    zip_code = get_nested_value(sample_data, ""user"", ""profile"", ""address"", ""zip"")
+    print(f""Age: {age}"")
+    print(f""City: {city}"")
+    print(f""Zip Code: {zip_code}"")",True,1,4416,44_7_1.py
+44,7,Access data using nested structure,Write clean Python code utilizing the 'get' method and default arguments to access optional fields within deeply nested dictionaries safely.,"def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, dict):
+            value = current.get(key)
+            if value is not None:
+                return value
+            else:
+                return default
+        elif isinstance(value, (list, tuple)):
+            try:
+                index = int(path[-1])
+                item = value[index]
+                for k in path[1:-1]:
+                    current_item = get_nested_value(item, [k])
+                return current_item
+            except IndexError:
+                return default
+        else:
+            return None
+def safe_get(data: dict, *keys) -> any:
+    if not keys:
+        return data.get('value')
+    path = list(keys)
+    result = get_nested_value(data, path)
+    return result
+if __name__ == '__main__':
+    sample_data = {
+        'level1': {
+            'level2': {
+                'optional_field': None,
+                'required_field': 42
+            }
+        },
+        'another_level': {
+            'deeply_nested': {
+                'data': {'target_key': 'found_value'}
+            }
+        }
+    }
+    result1 = safe_get(sample_data, 'level1', 'optional_field')
+    print(result1)                                                                                                                                                                                                                                     
+    result2 = safe_get(sample_data, 'level1', 'required_field')
+    print(result2)              
+    result3 = safe_get(sample_data, 'another_level', 'deeply_nested', 'data', 'target_key')
+    print(result3)                       
+    default_val = None if not hasattr(safe_get, '_default_arg') else getattr(safe_get, '_default_arg')",True,2,4417,44_7_2.py
+44,7,Access data using nested structure,Write clean Python code utilizing the 'get' method and default arguments to access optional fields within deeply nested dictionaries safely.,"def get_nested_value(data: dict, *keys):
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""age"": 30,
+                ""address"": {""city"": ""New York"", ""zip"": ""10001""}
+            }
+        },
+        ""settings"": {}
+    }
+    age = get_nested_value(sample_data, ""user"", ""profile"", ""age"")
+    city = get_nested_value(sample_data, ""user"", ""profile"", ""address"", ""city"")
+    zip_code = get_nested_value(sample_data, ""user"", ""profile"", ""address"", ""zip"")
+    print(f""Age: {age}"")
+    print(f""City: {city}"")
+    print(f""Zip Code: {zip_code}"")
+    def get_with_default(data, *keys):
+        current = data
+        for k in keys:
+            if isinstance(current, dict) and k in current:
+                current = current[k]
+            else:
+                return None
+        def safe_get(d, key):
+            return d.get(key) if isinstance(d, dict) and key in d else None
+    city_default = get_with_default(sample_data, ""user"", ""profile"", ""address"", ""city"")
+    def deep_get(d, *path):
+        for k in path:
+            if isinstance(d, dict) and d.get(k) is not None:
+                d = d[k]
+            else:
+                return ""Key missing""
+        return d
+    result1 = deep_get(sample_data, ""user"", ""profile"")
+    print(f""Nested object access: {result1}"")
+    def get_safe(d, *keys):
+        val = d.get(keys[0]) if keys else None
+        while isinstance(val, dict) and len(keys) > 1:
+            key = keys.pop(0)
+            val = val.get(key)
+        return ""Key missing"" if val is None or not isinstance(val, (dict, list)) else val
+    def get_nested_safe(data: dict, *keys):
+        current = data
+        for key in keys:
+            if isinstance(current, dict) and key in current:
+                current = current.get(key)
+            else:
+                return None
+        return current
+    print(f""Age via get_nested_safe: {get_nested_safe(sample_data, 'user', 'profile', 'age')}"")
+    missing_val = get_nested_safe(sample_data, ""nonexistent"", ""key"")
+    print(f""Missing value result: {missing_val}"")",True,3,4418,44_7_3.py
+44,7,Access data using nested structure,Write clean Python code utilizing the 'get' method and default arguments to access optional fields within deeply nested dictionaries safely.,"def get_nested_value(data, *keys):
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""age"": 30,
+                ""address"": {""city"": ""New York"", ""zip"": ""10001""}
+            }
+        },
+        ""settings"": {}
+    }
+    age = get_nested_value(sample_data, ""user"", ""profile"", ""age"") or 25
+    city_zip_pair = None
+    if isinstance(get_nested_value(sample_data, ""user"", ""profile""), dict):
+        address_dict = get_nested_value(sample_data, ""user"", ""profile"", ""address"")
+        if isinstance(address_dict, dict):
+            city = address_dict.get(""city"", ""Unknown City"")
+            zip_code = address_dict.get(""zip"", ""00000"")
+            city_zip_pair = f""{city}-{zip_code}""
+    print(f""Age: {age}"")
+    print(f""Location: {city_zip_pair}"")",True,4,4419,44_7_4.py
+44,8,Access data using nested structure,Build an optimized data processor that flattens a complex nested structure before transforming it into a list of accessible records for further analysis.,"import json
+def flatten_structure(data):
+    flattened = []
+    def recursive_flatten(obj, prefix=""""):
+        if isinstance(obj, dict):
+            for key, value in obj.items():
+                new_prefix = f""{prefix}.{key}"" if prefix else str(key)
+                if isinstance(value, (dict, list)):
+                    recursive_flatten(value, new_prefix)
+                elif not isinstance(value, str):
+                    flattened.append({new_prefix: value})
+        elif isinstance(obj, list):
+            for idx, item in enumerate(obj):
+                new_prefix = f""{prefix}[{idx}]"" if prefix else str(idx)
+                recursive_flatten(item, new_prefix)
+    recursive_flatten(data)
+    return flattened
+def transform_records(records):
+    transformed = []
+    for record in records:
+        try:
+            parsed_record = json.loads(json.dumps(record))                             
+            if isinstance(parsed_record, dict) and 'id' not in parsed_record:
+                parsed_record['id'] = len(transformed) + 1
+            transformed.append(parsed_record)
+        except (json.JSONDecodeError, TypeError):
+            continue
+    return transformed
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {""id"": 101, ""details"": {""name"": ""Alice"", ""age"": 30}},
+        ""orders"": [
+            {""order_id"": 5001, ""items"": [{""sku"": ""A"", ""qty"": 2}, {""sku"": ""B"", ""qty"": 1}]},
+            {""order_id"": 5002, ""items"": []}
+        ],
+        ""metadata"": {
+            ""created_at"": ""2023-01-01"",
+            ""active"": True
+        }
+    }
+    flat_records = flatten_structure(sample_data)
+    final_output = transform_records(flat_records)
+    print(json.dumps(final_output, indent=4))",True,0,4420,44_8.py
+44,8,Access data using nested structure,Build an optimized data processor that flattens a complex nested structure before transforming it into a list of accessible records for further analysis.,"import json
+def flatten_structure(data):
+    flattened = []
+    def recursive_flatten(obj, prefix=""""):
+        if isinstance(obj, dict):
+            for key, value in obj.items():
+                new_prefix = f""{prefix}.{key}"" if prefix else str(key)
+                if isinstance(value, (dict, list)):
+                    recursive_flatten(value, new_prefix)
+                elif not isinstance(value, str):
+                    flattened.append({new_prefix: value})
+        elif isinstance(obj, list):
+            for idx, item in enumerate(obj):
+                new_prefix = f""{prefix}[{idx}]"" if prefix else str(idx)
+                recursive_flatten(item, new_prefix)
+    recursive_flatten(data)
+    return flattened
+def transform_records(records):
+    transformed = []
+    for record in records:
+        cleaned_record = {k: v if isinstance(v, str) else str(v) for k, v in record.items()}
+        transformed.append(cleaned_record)
+    return transformed
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {""id"": 123, ""details"": {""name"": ""Alice"", ""age"": 30}},
+        ""posts"": [
+            {""title"": ""Post One"", ""content"": ""Hello World""},
+            {""title"": ""Post Two"", ""tags"": [""python"", ""code""]}
+        ]
+    }
+    flattened = flatten_structure(sample_data)
+    transformed_list = transform_records(flattened)
+    print(json.dumps(transformed_list, indent=2))",True,1,4421,44_8_1.py
+44,8,Access data using nested structure,Build an optimized data processor that flattens a complex nested structure before transforming it into a list of accessible records for further analysis.,"import json
+def flatten_structure(data):
+    flattened = []
+    def _flatten(item, prefix=None):
+        if isinstance(item, dict):
+            for key, value in item.items():
+                new_prefix = f""{prefix}_{key}"" if prefix else str(key)
+                _flatten(value, new_prefix)
+        elif isinstance(item, list):
+            for idx, val in enumerate(item):
+                new_prefix = f""{prefix}[{idx}]"" if prefix else f""list_{idx}""
+                _flatten(val, new_prefix)
+        else:
+            flattened.append((prefix or ""root"", item))
+    _flatten(data)
+    return flattened
+def transform_records(records):
+    transformed = []
+    for key, value in records:
+        record_data = {key: value}
+        def expand_value(v):
+            if isinstance(v, dict) and any(isinstance(val, list) for val in v.values()):
+                expanded = {}
+                for k, vv in v.items():
+                    if isinstance(vv, list):
+                        expanded[k] = expand_value(vv)
+                return expanded
+            elif isinstance(v, dict):
+                for k, vv in v.items():
+                    if isinstance(vv, list):
+                         pass
+                    else:
+                        expanded[k] = expand_value(vv)
+                return expanded
+            elif isinstance(v, list):
+                if all(not isinstance(item, dict) for item in v):                                    
+                     return [expand_value(i) for i in v] 
+                else:
+                    result = []
+                    for li_item in v:
+                        expanded_li = expand_value(li_item)
+                        result.append(expanded_li)
+                    return result
+            return v
+        record_data['value'] = expand_value(value) if isinstance(value, (dict, list)) else value
+        transformed.append(record_data)
+    return transformed
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": [
+            {""id"": 101, ""details"": {""name"": ""Alice"", ""roles"": [""admin""]}},
+            {""id"": 102, ""details"": {""name"": ""Bob""}}
+        ],
+        ""metadata"": {
+            ""version"": ""1.0"",
+            ""tags"": [""active"", ""verified""],
+            ""nested"": {
+                ""config"": {""timeout"": 30},
+                ""status"": True
+            }
+        },
+        ""items"": [
+            {""code"": ""A"", ""qty"": 5},
+            {""code"": ""B"", ""qty"": 12}
+        ]
+    }
+    flat_records = flatten_structure(sample_data)
+    final_list = transform_records(flat_records)
+    print(final_list)",True,2,4422,44_8_2.py
+44,8,Access data using nested structure,Build an optimized data processor that flattens a complex nested structure before transforming it into a list of accessible records for further analysis.,"import json
+def flatten_structure(data):
+    flattened = []
+    def recursive_flatten(obj, prefix=""""):
+        if isinstance(obj, dict):
+            for key, value in obj.items():
+                new_key = f""{prefix}_{key}"" if prefix else key
+                if isinstance(value, (dict, list)):
+                    recursive_flatten(value, new_key)
+                elif not isinstance(value, str):
+                    flattened.append({new_key: value})
+        elif isinstance(obj, list):
+            for idx, item in enumerate(obj):
+                new_prefix = f""{prefix}_list_{idx}"" if prefix else f""item_{idx}""
+                recursive_flatten(item, new_prefix)
+    def process_list(lst, index=0):
+        result = []
+        for i, item in enumerate(lst):
+            if isinstance(item, (dict, list)):
+                processed_item = {}
+                recursive_flatten(item, f""item_{i}"")
+                result.extend(processed_item)
+            else:
+                result.append({""value"": item})
+        return result
+    if isinstance(data, list):
+        return process_list(data)
+    recursive_flatten(data)
+    return flattened
+if __name__ == '__main__':
+    sample_data = {
+        ""user_id"": 101,
+        ""profile"": {
+            ""age"": 30,
+            ""hobbies"": [""reading"", ""coding""],
+            ""address"": {
+                ""city"": ""New York"",
+                ""zipcode"": ""10001""
+            }
+        },
+        ""orders"": [
+            {""order_id"": 500, ""total"": 99.9},
+            {""order_id"": 501, ""items"": [""apple"", ""banana""]}
+        ]
+    }
+    flattened_records = flatten_structure(sample_data)
+    print(json.dumps(flattened_records))",True,3,4423,44_8_3.py
+44,8,Access data using nested structure,Build an optimized data processor that flattens a complex nested structure before transforming it into a list of accessible records for further analysis.,"import json
+def flatten_structure(data):
+    flattened = []
+    def recursive_flatten(obj, prefix=""""):
+        if isinstance(obj, dict):
+            for key, value in obj.items():
+                new_prefix = f""{prefix}.{key}"" if prefix else str(key)
+                if isinstance(value, (dict, list)):
+                    recursive_flatten(value, new_prefix)
+                elif not isinstance(value, str):
+                    flattened.append({new_prefix: value})
+        elif isinstance(obj, list):
+            for idx, item in enumerate(obj):
+                new_prefix = f""{prefix}[{idx}]"" if prefix else str(idx)
+                recursive_flatten(item, new_prefix)
+    recursive_flatten(data)
+    return flattened
+def transform_records(records):
+    transformed = []
+    for record in records:
+        cleaned_record = {k: v if isinstance(v, str) else f""<{type(v).__name__}>"" for k, v in record.items()}
+        transformed.append(cleaned_record)
+    return transformed
+if __name__ == '__main__':
+    sample_data = [
+        {""id"": 1, ""details"": {""nested_key"": ""value"", ""items"": [""a"", ""b""]}},
+        {""id"": 2, ""active"": True},
+        {""id"": 3, ""metadata"": {}}
+    ]
+    flat_records = flatten_structure(sample_data)
+    final_output = transform_records(flat_records)
+    print(json.dumps(final_output))",True,4,4424,44_8_4.py
+44,6,Access data using nested structure,Design a production-ready solution that accesses nested configuration data from environment variables stored in hierarchical JSON objects.,"import json
+from pathlib import Path
+def parse_nested_env(env_vars: dict) -> str:
+    def get_value(key_path):
+        current = env_vars
+        for key in key_path.split('.'):
+            if isinstance(current, dict) and key in current:
+                current = current[key]
+            else:
+                return None
+        return current
+    result_parts = []
+    target_path = 'app.name.production.mode'
+    value = get_value(target_path)
+    if isinstance(value, str):
+        return f""Configured for {value}""
+    elif isinstance(value, dict):
+        json_str = json.dumps(value)
+        return f""Configuration loaded: {json_str}""
+    else:
+        return ""Invalid configuration type found.""
+if __name__ == '__main__':
+    sample_env_vars = {
+        'app.name.production.mode': 'active',
+        'database.host.port.timeout.connection_pool.size': {
+            'host': 'localhost',
+            'port': 5432,
+            'timeout': 10,
+            'connection_pool_size': 100
+        },
+        'logging.level.format.color.enabled': True
+    }
+    output = parse_nested_env(sample_env_vars)
+    print(output)",True,0,4425,44_6.py
+44,6,Access data using nested structure,Design a production-ready solution that accesses nested configuration data from environment variables stored in hierarchical JSON objects.,"import json
+from pathlib import Path
+def load_nested_config():
+    config_path = Path(__file__).parent / ""config.json""
+    if not config_path.exists():
+        raise FileNotFoundError(f""Configuration file '{config_path}' not found."")
+    with open(config_path, 'r') as f:
+        return json.load(f)
+def get_nested_value(data: dict, keys: list):
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key in current and current[key] is not None:
+                current = current[key]
+            else:
+                raise KeyError(f""Missing or invalid configuration path at '{key}'"")
+        elif isinstance(current, str) and len(keys) > 1:
+            try:
+                parsed = json.loads(str(current))
+                current = parsed if isinstance(parsed, dict) else None
+            except (json.JSONDecodeError, TypeError):
+                raise KeyError(f""Parent key '{key}' contains non-JSON data but is expected to hold nested config."")
+        elif not isinstance(current, dict):
+            return str(current)
+    return current
+if __name__ == '__main__':
+    SAMPLE_CONFIG = {
+        ""app"": {
+            ""settings"": {
+                ""debug_mode"": True,
+                ""log_level"": ""INFO""
+            },
+            ""database"": {
+                ""host"": ""localhost"",
+                ""port"": 5432,
+                ""credentials"": {
+                    ""username"": ""admin_user"",
+                    ""password_secret"": ""super_secure_pass_123""
+                }
+            }
+        },
+        ""features"": {
+            ""api_v2_enabled"": True,
+            ""rate_limiting"": 1000
+        }
+    }
+    raw_config = SAMPLE_CONFIG
+    try:
+        db_credentials = get_nested_value(raw_config, [""app"", ""database"", ""credentials""])
+        print(f""Database Host: {raw_config['app']['database']['host']}"")
+        print(f""Username: {db_credentials.get('username')}"")
+        print(f""Password Secret: {'*' * len(db_credentials.get('password_secret', ''))}"")
+    except (KeyError, FileNotFoundError) as e:
+        print(f""Configuration Error: {e}"")",True,1,4426,44_6_1.py
+44,6,Access data using nested structure,Design a production-ready solution that accesses nested configuration data from environment variables stored in hierarchical JSON objects.,"import json
+import os
+from typing import Any
+def parse_nested_env(prefix: str = ""APP"") -> dict[str, Any]:
+    config = {}
+    env_keys = [key for key in os.environ.keys() if key.startswith(prefix)]
+    for key in sorted(env_keys):
+        value_str = os.getenv(key)
+        try:
+            parsed_value = json.loads(value_str)
+            parts = [part.lower().replace(""_"", """") for part in key[len(prefix):-1].split(""."")] if len(parts) > 0 else []
+            current_dict = config
+            for i, part in enumerate(parts[:-1]):
+                if isinstance(current_dict.get(part), dict):
+                    current_dict[part] = {}
+                elif not isinstance(current_dict.get(part), list):
+                    current_dict[part] = {}
+                else:
+                    break
+            last_part = parts[-1].lower().replace(""_"", """") if len(parts) > 0 else """"
+            target_container = config
+            for part in parts[:-1]:
+                current_dict = target_container[part]
+            final_key = last_part
+            if isinstance(parsed_value, dict):
+                 if not isinstance(current_dict.get(final_key), dict):
+                     current_dict.update({final_key: parsed_value})
+                 else:
+                     target_container[parts[-1]] = parsed_value                               
+            elif isinstance(parsed_value, list):
+                pass
+        except json.JSONDecodeError:
+            config[key[len(prefix):-1].lower().replace(""_"", """")] = value_str
+    return config
+def build_config_from_env() -> dict[str, Any]:
+    base_dict: dict[str, any] = {}
+    keys_to_check = [k for k in os.environ.keys() if not k.startswith('_')]
+    for k in sorted(keys_to_check):
+        v_str = os.getenv(k)
+        try:
+            obj_val = json.loads(v_str)
+            clean_key = k.lower().replace('_', '').lstrip('-')
+            base_dict[clean_key] = obj_val
+        except:
+            pass
+    return base_dict
+if __name__ == '__main__':
+    import sys
+    sample_data = {
+        'APP_NAME': '{""name"": ""MyApp"", ""version"": 1}',
+        'DB_HOST': '{""host"": ""localhost"", ""port"": 5432}',
+        'FEATURE_FLAGS': '{""feature_a"": true, ""feature_b"": false}'
+    }
+    for key, value in sample_data.items():
+        os.environ[key] = value
+    config = build_config_from_env()
+    print(json.dumps(config, indent=2))",True,2,4427,44_6_2.py
+44,6,Access data using nested structure,Design a production-ready solution that accesses nested configuration data from environment variables stored in hierarchical JSON objects.,"import json
+from pathlib import Path
+def parse_nested_env():
+    env_vars = dict()
+    for key in os.environ.keys():
+        if not key.startswith('APP_'):
+            continue
+        parts = key.split('_')
+        current_dict = env_vars
+        i = 0
+        while i < len(parts) - 1:
+            part_name = f""{parts[i]}_{parts[i+1]}""
+            try:
+                value = os.environ[key]
+                if '.' in str(value):
+                    parts[i + 1], rest_parts, dot_index = next(enumerate((str(val).split('.'), i) for val in [value]), None)
+                    current_dict[part_name] = json.loads(str(parts[-2]))
+                    i += 3
+                else:
+                    if isinstance(current_dict.get(part_name), dict):
+                        continue
+                    elif not isinstance(value, str):
+                        try:
+                            value = int(value)
+                        except ValueError:
+                            pass
+                    current_dict[part_name] = value
+            except Exception as e:
+                print(f""Error parsing {key}: {e}"")
+    return env_vars
+if __name__ == '__main__':
+    import os
+    config_data = parse_nested_env()
+    sample_config = {
+        ""app"": {""host"": ""localhost"", ""port"": 8080},
+        ""database"": {""user"": ""admin"", ""password"": ""secret123""},
+        ""features"": {""logging"": True, ""cache"": False}
+    }
+    print(json.dumps(sample_config))",True,3,4428,44_6_3.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Tuple
+def get_nested_value(data: Dict[str, Any], path: List[Any]) -> Any:
+    current = data
+    for key in path:
+        if isinstance(current, dict):
+            if not isinstance(key, str) or key not in current:
+                return None
+            current = current[key]
+        elif isinstance(current, list):
+            try:
+                index = int(key)
+                if 0 <= index < len(current):
+                    current = current[index]
+                else:
+                    return None
+            except (ValueError, TypeError):
+                return None
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""profile"": {
+                ""age"": 30,
+                ""hobbies"": [""reading"", ""coding""]
+            },
+            ""address"": {""city"": ""New York""}
+        }
+    }
+    test_paths = [
+        (""user"", ""profile"", ""age""),
+        ([""user""], [""profile""]),
+        ([1], 0),
+        (""nonexistent_key"", []),
+        (""user"", ""missing_section"")
+    ]
+    for path in test_paths:
+        result = get_nested_value(sample_data, list(path)) if isinstance(path[0], str) else get_nested_value(sample_data, [path])
+        print(f""Path {list(path)} -> Value: {result}"")",True,0,4429,44_9.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Tuple
+def get_nested_value(data: Any, path: Tuple[str]) -> Any:
+    try:
+        current = data
+        for key in path:
+            if isinstance(current, dict):
+                current = current.get(key)
+            elif isinstance(current, list):
+                index_str = str(key).strip(""'\"""")
+                idx = int(index_str) if index_str.isdigit() else None
+                if idx is not None and 0 <= idx < len(current):
+                    current = current[idx]
+                else:
+                    return None
+            else:
+                return None
+        return current
+    except (TypeError, ValueError, IndexError):
+        return None
+def validate_structure(data: Any) -> bool:
+    return isinstance(data, (dict, list))
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""id"": 12345,
+            ""details"": [
+                {""name"": ""Alice"", ""age"": 30},
+                {""name"": ""Bob"", ""age"": 25}
+            ]
+        },
+        ""status"": True
+    }
+    path = (""user"", ""id"")
+    result1 = get_nested_value(sample_data, path)
+    list_path = (""user"", ""details"", 0, ""name"")
+    result2 = get_nested_value(sample_data, list_path)
+    print(f""Result at {path}: {result1}"")
+    print(f""Result at {list_path}: {result2}"")",True,1,4430,44_9_1.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List
+def get_nested_value(data: Dict[str, Any], path: List[Any]) -> Any:
+    if not data and len(path) == 0:
+        return None
+    current = data
+    for key in path:
+        if isinstance(current, dict):
+            if key not in current:
+                raise KeyError(f""Key {key} not found"")
+            current = current[key]
+        elif isinstance(key, int):
+            if isinstance(current, list) and 0 <= len(current) > key >= 0:
+                current = current[key]
+            else:
+                raise IndexError(""Index out of range or invalid type for path element"")
+        else:
+            raise TypeError(f""Unsupported path element type: {type(key)}"")
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {""id"": 1, ""details"": {""age"": 30}},
+        ""products"": [
+            {""sku"": ""A"", ""price"": 10.5},
+            {""sku"": ""B"", ""price"": 20.0}
+        ],
+        ""config"": {
+            ""theme"": ""dark""
+        }
+    }
+    paths = [
+        [""user"", ""details"", ""age""],
+        [""products"", 1, ""price""],
+        [""config"", ""theme""]
+    ]
+    for p in paths:
+        try:
+            val = get_nested_value(sample_data, p)
+            print(f""Path {p}: {val}"")
+        except Exception as e:
+            print(f""Error accessing path {p}: {e}"")",True,2,4431,44_9_2.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Tuple, Optional
+def validate_and_access(path: List[str], data: Any) -> Optional[Any]:
+    if not isinstance(data, (dict, list)):
+        return None
+    current = data
+    for key in path:
+        if isinstance(current, dict):
+            if key not in current or not isinstance(current[key], (dict, list)):
+                return None
+            current = current[key]
+        elif isinstance(current, list):
+            try:
+                index = int(key)
+                if 0 <= index < len(current):
+                    current = current[index]
+                else:
+                    return None
+            except ValueError:
+                return None
+        else:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": [
+            {""id"": 1, ""details"": {""active"": True}},
+            {""id"": 2, ""details"": {""active"": False}}
+        ],
+        ""products"": [""apple"", ""banana""]
+    }
+    test_cases: List[Tuple[List[str], Any]] = [
+        ([0, ""details""], sample_data[""user""][0][""details""]),
+        (""1"", None),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    ]
+    results = []
+    for p in test_cases[0]: 
+        pass
+    path1 = [""user"", 0, ""details""]
+    result1 = validate_and_access(path1, sample_data)
+    path2 = [""products"", 1]
+    result2 = validate_and_access(path2, sample_data)
+    path3 = [""nonexistent""]
+    result3 = validate_and_access(path3, sample_data)
+    print(f""Test 1 (Path: {path1}): {result1}"")
+    print(f""Test 2 (Path: {path2}): {result2}"")
+    print(f""Test 3 (Path: {path3}): {result3}"")",True,3,4432,44_9_3.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Union
+def get_nested_value(data: Union[Dict[str, Any], List[Any]], path: List[int]) -> Any:
+    if not isinstance(path, list) or len(path) == 0:
+        raise ValueError(""Path must be a non-empty list of integers."")
+    current = data
+    for index in path:
+        if not isinstance(current, (dict, list)):
+            return None
+        try:
+            if isinstance(current, dict):
+                key_to_check = str(index)
+                if key_to_check not in current:
+                    raise KeyError(f""Key '{key_to_check}' not found."")
+                current = current[key_to_check]
+            else:
+                if index < 0 or index >= len(current):
+                    raise IndexError(""Index out of range."")
+                current = current[index]
+        except (KeyError, IndexError) as e:
+            return None
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            0: {""id"": 123, ""details"": [""active"", True]},
+            1: {""status"": ""verified""}
+        },
+        ""products"": [
+            {""sku"": ""A-001""},
+            {""sku"": ""B-002""}
+        ]
+    }
+    test_paths = [
+        [""user"", 0, ""details""],                                                                                                                                                                                                                                                                                                                                                           
+        [0],                   
+        [""user"", 1]                   
+    ]
+    results = []
+    for p in test_paths:
+        try:
+            val = get_nested_value(sample_data, p)
+            if isinstance(val, dict):
+                print(f""Path {p}: Dict found. Keys: {list(val.keys())}"")
+            else:
+                print(f""Path {p}: Value is {val} (Type: {type(val).__name__})"")
+        except Exception as e:
+            print(f""Error accessing path {p}: {e}"")
+    result_list = get_nested_value(sample_data, [""products"", 0])
+    if isinstance(result_list, dict):
+        print(f""\nPath ['products', 0]: Dict found. Keys: {list(result_list.keys())}"")",True,4,4433,44_9_4.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Union
+def get_nested_value(data: Union[Dict[str, Any], List[Any]], path: List[int]) -> Any:
+    if not isinstance(path, list) or len(path) == 0:
+        raise ValueError(""Path must be a non-empty list of integers."")
+    current = data
+    for index in path:
+        if not isinstance(current, (dict, list)):
+            return None
+        try:
+            key_to_access = str(index).strip()
+            if isinstance(current, dict):
+                value = current.get(key_to_access)
+                if value is None or value == """":
+                    raise KeyError(f""Key '{key_to_access}' not found in dictionary."")
+                current = value
+            elif isinstance(current, list):
+                try:
+                    index_int = int(index)
+                except ValueError:
+                    raise IndexError(""Index must be an integer for lists."") from None
+                if 0 <= index_int < len(current):
+                    current = current[index_int]
+                else:
+                    raise IndexError(f""Index {index} out of range. List length is {len(current)}."")
+        except (KeyError, IndexError) as e:
+            return f""Access failed at path element '{key_to_access}' or index '{index}'. Error details: {e}""
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": [
+            {""id"": 101, ""details"": {""active"": True}},
+            {""id"": 102}
+        ],
+        ""config"": {
+            ""theme"": ""dark"",
+            ""version"": ""2.0""
+        }
+    }
+    test_paths = [
+        [""user"", 0, ""details""],
+        [""user"", 1],
+        [""nonexistent_key""]
+    ]
+    for path in test_paths:
+        result = get_nested_value(sample_data, path)
+        print(f""Path {path}: {result}"")",True,5,4434,44_9_5.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Tuple, Union
+def get_nested_value(data: Union[Dict[str, Any], List[Any]], path: Tuple[int, ...]) -> Any:
+    current = data
+    for index in path:
+        if isinstance(current, dict):
+            key_to_check = str(index)
+            if key_to_check not in current:
+                raise KeyError(f""Key '{key_to_check}' does not exist"")
+            current = current[key_to_check]
+        elif isinstance(current, list):
+            if index < 0 or index >= len(current):
+                raise IndexError(f""Index {index} out of range for length {len(current)}"")
+            current = current[index]
+        else:
+            raise TypeError(""Path must refer to a dictionary key or list index only."")
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {
+            ""id"": 101,
+            ""profile"": {
+                ""name"": ""Alice"",
+                ""tags"": [""admin"", ""developer""]
+            }
+        },
+        ""products"": [
+            {""sku"": ""P001"", ""price"": 9.99},
+            {""sku"": ""P002"", ""price"": 14.50}
+        ]
+    }
+    test_paths = (
+        (""user"",),
+        (""user"", ""profile""),
+        (""products"", 1, ""sku""),
+        (""nonexistent_key"",)
+    )
+    for path in test_paths:
+        try:
+            result = get_nested_value(sample_data, path)
+            print(f""Path {path}: {result}"")
+        except (KeyError, IndexError, TypeError) as e:
+            print(f""Path {path} raised error: {e}"")",True,6,4435,44_9_6.py
+44,9,Access data using nested structure,Create a type-annotated Python function specifically designed to validate and access values at specific paths within a structured object hierarchy.,"from typing import Any, Dict, List, Union
+def get_nested_value(data: Dict[str, Any], path: List[Union[int, str]]) -> Any:
+    current = data
+    for key in path:
+        if isinstance(key, int):
+            try:
+                index = key
+                if not (0 <= index < len(current)):
+                    raise IndexError(f""Index {index} out of range"")
+                current = current[index]
+            except TypeError as e:
+                return None
+        elif isinstance(key, str):
+            if key in current and isinstance(current[key], dict) or isinstance(current[key], list):
+                current = current[key]
+            else:
+                raise KeyError(f""Key '{key}' not found"")
+        else:
+            raise TypeError(""Path must contain only integers (for lists) or strings (for dicts)"")
+    return current
+if __name__ == '__main__':
+    sample_data = {
+        ""user"": {""id"": 1, ""details"": [""Alice"", ""Bob""]},
+        ""config"": {""theme"": ""dark""},
+        ""items"": [10, 20, 30]
+    }
+    test_paths = [
+        [""user"", ""details""],
+        [""user"", ""id""],
+        [""config"", ""theme""],
+        [""items"", 1],
+        [""nonexistent""]
+    ]
+    for path in test_paths:
+        try:
+            result = get_nested_value(sample_data, path)
+            print(f""Path {path}: {result}"")
+        except Exception as e:
+            print(f""Error accessing path {path}: {e}"")",True,7,4436,44_9_7.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    if not isinstance(path, tuple) or len(path) == 0:
+        return default
+    current = data
+    for idx in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            current_idx = int(idx)
+            if current_idx < 0 or current_idx >= len(current):
+                return default
+            current = current[current_idx]
+        except ValueError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [1, [2, 3], [[4, 5], [6]], ""end""]
+    test_paths = [
+        (0,),                        
+        (1, 0),                      
+        (2, 0, 0),                   
+        (99,),                                         
+        (""invalid"",)                                                
+    ]
+    for i, p in enumerate(test_paths):
+        result = get_nested_value(sample_data, p, ""NOT_FOUND"")
+        print(f""Path {p}: {result}"")",True,0,4437,44_11.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list | None, path: tuple[int], default=None):
+    if not isinstance(path, tuple) or len(path) == 0:
+        return default
+    current = data
+    for index in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            idx = int(index)
+            current = current[idx]
+        except IndexError:
+            return default
+        except ValueError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [10, 20, [30, 40, [[50], [60]]], ""text""]
+    result_1 = get_nested_value(sample_data, (2, 2, 1))
+    result_2 = get_nested_value(sample_data, (0, 5))
+    result_3 = get_nested_value(sample_data, (99, 1))
+    print(f""Result 1: {result_1}"")
+    print(f""Result 2: {result_2}"")
+    print(f""Result 3: {result_3}"")",True,1,4438,44_11_1.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    if not isinstance(path, tuple) or len(path) == 0:
+        return default
+    current = data
+    for idx in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            current = current[idx]
+        except IndexError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [10, 20, [30, [40, 50], 60], ""text""]
+    result_1 = get_nested_value(sample_data, (2, 1, 1))
+    result_2 = get_nested_value(sample_data, (0, 5))
+    result_3 = get_nested_value(sample_data, ())
+    print(f""Result 1: {result_1}"")
+    print(f""Result 2: {result_2}"")
+    print(f""Result 3: {result_3}"")",True,2,4439,44_11_2.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    current = data
+    for idx in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            next_item = current[idx]
+            if isinstance(next_item, (list, tuple)) and len(path) > 1:
+                current = next_item
+            else:
+                break
+        except IndexError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [
+        [""a"", ""b""],
+        [[""c"", ""d""], [""e""]]
+    ]
+    result_1 = get_nested_value(sample_data, (0, 1))
+    print(result_1)
+    result_2 = get_nested_value(sample_data, (5, 0), ""Not Found"")
+    print(result_2)",True,3,4440,44_11_3.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    current = data
+    for index in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            next_item = current[index]
+        except IndexError:
+            return default
+        current = next_item
+    return current
+if __name__ == '__main__':
+    sample_data = [10, 20, [30, 40], [[50, 60], [70]]]
+    path_1: tuple[int] = (2, 0)
+    result_1 = get_nested_value(sample_data, path_1)
+    path_2: tuple[int] = (3, 1, 0)
+    result_2 = get_nested_value(sample_data, path_2)
+    path_3: tuple[int] = (9,)
+    result_3 = get_nested_value(sample_data, path_3)
+    print(result_1)             
+    print(result_2)             
+    print(result_3)",True,4,4441,44_11_4.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    if not isinstance(path, tuple) or len(path) == 0:
+        return default
+    current = data
+    for idx in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            current = current[idx]
+        except IndexError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [10, 20, [30, [40, 50], 60], ""text""]
+    result_1 = get_nested_value(sample_data, (2, 1))
+    result_2 = get_nested_value(sample_data, (3,))
+    result_3 = get_nested_value(sample_data, (50,))
+    result_4 = get_nested_value(sample_data, ())
+    print(f""Result 1 ({result_1}, type {type(result_1).__name__})"")
+    print(f""Result 2 ({result_2}, type {type(result_2).__name__})"")
+    print(f""Result 3 ({result_3}, default used)"")
+    print(f""Result 4 ({result_4}, empty path handled)"")",True,5,4442,44_11_5.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    if not isinstance(path, tuple) or len(path) == 0:
+        return default
+    current = data
+    for idx in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            next_idx = int(idx)
+            if not (-len(current) <= next_idx < len(current)):
+                return default
+            current = current[next_idx]
+        except ValueError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [1, 2, [3, [4, 5]], [[6], [7]]]
+    test_paths = [
+        (0,),                        
+        (1,),                        
+        (2, 0),                      
+        (2, 1, 0),                   
+        (2, 1, 1),                   
+        (3, 0, 0),                   
+        (9,),                                                  
+        (""invalid"",)                                           
+    ]
+    defaults = {None: ""MISSING_VALUE""}
+    for i, path in enumerate(test_paths):
+        result = get_nested_value(sample_data, path, default=defaults.get(None))
+        print(f""Path {path}: Result is {result}"")",True,6,4443,44_11_6.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    if not isinstance(path, tuple) or len(path) == 0:
+        return default
+    current = data
+    for idx in path:
+        if not isinstance(current, (list, tuple)):
+            return default
+        try:
+            current = current[idx]
+        except IndexError:
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [10, 20, [30, [40, 50], 60]]
+    result_1 = get_nested_value(sample_data, (2, 1, 1))
+    result_2 = get_nested_value(sample_data, (0, 5))
+    result_3 = get_nested_value(sample_data, ())
+    print(f""Result 1: {result_1}"")
+    print(f""Result 2: {result_2}"")
+    print(f""Result 3: {result_3}"")",True,7,4444,44_11_7.py
+44,11,Access data using nested structure,Develop a high-performance utility function in Python that navigates through deeply nested list structures to retrieve target values by index. Ensure the implementation includes input validation and returns default values when paths do not exist for production use cases.,"def get_nested_value(data: list, path: tuple[int], default=None):
+    if not isinstance(data, (list, tuple)):
+        return default
+    current = data
+    for idx in path:
+        try:
+            if not isinstance(current, (list, tuple)) or not isinstance(idx, int):
+                raise IndexError(f""Invalid type at depth. Expected list/tuple and integer index."")
+            if 0 <= len(current) > idx >= 0:
+                current = current[idx]
+            else:
+                return default
+        except (IndexError, TypeError):
+            return default
+    return current
+if __name__ == '__main__':
+    sample_data = [1, [2, [3, [4]]], ""text"", [[5], 6]]
+    test_paths = [
+        ([0, 1, 2, 3], 4),
+        ([0, 1, 99], None),
+        ([99, 0], None),
+        ([-1], sample_data[3]),                                                                                                   
+        ([0], 2),
+    ]
+    results = []
+    for path, expected_val in test_paths:
+        val = get_nested_value(sample_data, tuple(path))
+        status = ""OK"" if val == expected_val else f""MISMATCH (got {val})""
+        results.append((path, val, status))
+    print(""Validation Results:"")
+    for path, val, status in results:
+        print(f""Path {list(path)} -> Value: {val} [{status}]"")",True,8,4445,44_11_8.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def get_nested_value(data: dict, *keys) -> any:
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key in current:
+                current = current[key]
+            else:
+                return None
+        elif isinstance(key, int) and hasattr(current, '__getitem__'):
+            try:
+                current = current[key]
+            except (IndexError, KeyError):
+                return None
+        else:
+            raise TypeError(f""Unsupported key type or data structure. Expected dict/list access."")
+    if not isinstance(current, dict):
+        return current                                                 
+    return None
+def build_sample_dataset() -> dict:
+    return {
+        ""user"": {
+            ""id"": 101,
+            ""name"": {""first"": ""Alice"", ""last"": ""Johnson""},
+            ""contact"": {
+                ""email"": ""alice@example.com"",
+                ""phone"": ""+1-555-0199""
+            },
+            ""preferences"": [""python"", ""data_science""]
+        }
+    }
+def main():
+    dataset = build_sample_dataset()
+    user_id = get_nested_value(dataset, ""user"", ""id"")
+    missing_email = get_nested_value(dataset, ""user"", ""missing_key"")
+    first_name = get_nested_value(dataset, ""user"", ""name"", ""first"")
+    last_name = get_nested_value(dataset, ""user"", ""name"", ""last"")
+    print(f""User ID: {user_id}"")
+    if missing_email is None:
+        print(""Email lookup failed (expected behavior for non-existent key)."")
+    else:
+        print(f""Full Email: {missing_email}"")                                     
+    full_name = f""{first_name} {last_name}""
+    print(f""User Name: {full_name}"")
+if __name__ == '__main__':
+    main()",True,0,4446,44_10.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def get_nested_value(data: dict, *keys) -> object | None:
+    current: dict | None = data
+    for key in keys:
+        if not isinstance(current, dict):
+            return None
+        try:
+            current = current[key]
+        except KeyError:
+            return None
+    return current
+def main():
+    hierarchy_data = {
+        ""company"": {
+            ""name"": ""TechCorp"",
+            ""departments"": {
+                ""engineering"": {""lead"": ""John Doe"", ""projects"": [""Alpha"", ""Beta""]},
+                ""marketing"": {""lead"": ""Jane Smith""}
+            }
+        },
+        ""location"": {
+            ""city"": ""San Francisco""
+        }
+    }
+    result_1 = get_nested_value(hierarchy_data, ""company"", ""departments"", ""engineering"", ""lead"")
+    print(f""Engineering Lead: {result_1}"")
+    result_2 = get_nested_value(hierarchy_data, ""non_existent_key"")
+    print(f""Non-existent Top Key Result: {result_2}"")
+    result_3 = get_nested_value(hierarchy_data, ""company"", ""departments"", ""engineering"", ""nonexistent_project"")
+    print(f""Non-existent Project Result: {result_3}"")
+    result_4 = get_nested_value(hierarchy_data, ""location"", ""city"")
+    print(f""City Name: {result_4}"")
+    result_5 = get_nested_value(hierarchy_data, ""company"", ""city"")
+    print(f""Company City Path Result: {result_5}"")
+if __name__ == '__main__':
+    main()",True,1,4447,44_10_1.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def get_nested_value(data: dict, *keys) -> any:
+    current_obj = data
+    for key in keys:
+        if not isinstance(current_obj, dict):
+            return None
+        try:
+            current_obj = current_obj[key]
+        except KeyError:
+            return None
+    return current_obj
+def get_nested_value_safe(data: dict, *keys, default=None) -> any:
+    try:
+        for key in keys:
+            if not isinstance(data, dict):
+                return default
+            data = data[key]
+        return data
+    except Exception:                                                
+        return default
+def main():
+    hierarchy = {
+        ""user"": {
+            ""id"": 101,
+            ""name"": ""Alice"",
+            ""roles"": [""admin"", ""editor""]
+        },
+        ""project"": {
+            ""title"": ""Alpha"",
+            ""status"": ""active""
+        }
+    }
+    user_name = get_nested_value(hierarchy, ""user"", ""name"")
+    non_existent_role = get_nested_value(hierarchy, ""user"", ""nonexistent_key"")
+    project_status_safe = get_nested_value_safe(
+        hierarchy, 
+        ""project"", 
+        ""title"", 
+        ""unknown_project""
+    )
+    print(f""User Name: {user_name}"")
+    print(f""Non-existent Role (Safe): {non_existent_role}"")
+    budget = get_nested_value_safe(hierarchy, ""project"", ""budget"")
+    if __name__ == '__main__':
+        main()",True,2,4448,44_10_2.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def get_nested_value(data: dict, *keys) -> any:
+    current = data
+    if not isinstance(current, dict):
+        raise TypeError(""Expected input to be a dictionary."")
+    try:
+        for key in keys:
+            if not isinstance(key, str) or key == """":
+                return None                                         
+            current = current.get(key)
+            if current is None:
+                break
+    except Exception as e:
+        print(f""An error occurred during navigation: {e}"")
+    return current
+def main():
+    database = {
+        ""company"": {
+            ""name"": ""Acme Corp"",
+            ""departments"": [
+                {""id"": 1, ""name"": ""Engineering""},
+                {""id"": 2, ""name"": ""Sales""}
+            ]
+        },
+        ""products"": [""Widget A"", ""Gadget B""],
+        ""metadata"": {
+            ""version"": ""1.0"",
+            ""status"": ""active""
+        }
+    }
+    result_1 = get_nested_value(database, ""company"", ""name"")
+    result_2 = get_nested_value(database, ""nonexistent_key"", ""value"")
+    result_3 = get_nested_value(database, ""metadata"", ""status"")
+    print(f""Company Name: {result_1}"")
+    if result_2 is None:
+        print(""Path not found (Expected)"")
+    print(f""Status: {result_3}"")
+if __name__ == '__main__':
+    main()",True,3,4449,44_10_3.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def get_nested_value(data: dict, *keys) -> any:
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key in current:
+                current = current[key]
+            else:
+                print(f""Key '{key}' not found at the expected path."")
+                return None
+        elif isinstance(key, int) and hasattr(data, '__getitem__'):
+            pass 
+        else:
+            raise TypeError(""All keys must be strings or integers compatible with dictionary indexing."")
+    if current is None:
+        print(f""Value at path {keys} is null/None."")
+    return current
+if __name__ == '__main__':
+    hierarchical_data = {
+        ""user"": {
+            ""id"": 101,
+            ""profile"": {
+                ""name"": ""Alice Smith"",
+                ""age"": 30,
+                ""hobbies"": [""reading"", ""coding""]
+            },
+            ""address"": None                                                                                      
+        },
+        ""company"": {
+            ""name"": ""TechCorp Inc."",
+            ""location"": {""city"": ""New York"", ""country"": ""USA""}
+        }
+    }
+    user_name = get_nested_value(hierarchical_data, ""user"", ""profile"", ""name"")
+    company_loc_city = get_nested_value(hierarchical_data, ""company"", ""location"", ""city"")
+    print(f""Retrieved User Name: {user_name}"")
+    print(f""Retrieved City: {company_loc_city}"")
+    result_missing = get_nested_value(hierarchical_data, ""nonexistent"", ""path"")
+    if __name__ == '__main__':
+        print(f""Result for missing key attempt: {result_missing}"")",True,4,4450,44_10_4.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def get_nested_value(data: dict, *keys) -> any:
+    current = data
+    for key in keys:
+        if isinstance(current, dict):
+            if key in current:
+                current = current[key]
+            else:
+                return None
+        elif isinstance(key, int) and hasattr(current, '__getitem__'):
+            try:
+                current = current[key]
+            except (IndexError, KeyError):
+                return None
+        else:
+            raise TypeError(f""Unsupported key type or data structure. Expected dict/list access."")
+    if not isinstance(current, dict):
+        return current                                                 
+    return None
+def build_sample_dataset() -> dict:
+    return {
+        ""user"": {
+            ""id"": 101,
+            ""name"": {""first"": ""Alice"", ""last"": ""Johnson""},
+            ""contact"": {
+                ""email"": ""alice@example.com"",
+                ""phone"": ""+1-555-0199""
+            }
+        },
+        ""preferences"": {
+            ""theme"": ""dark"",
+            ""notifications"": True,
+            ""settings"": {""language"": ""en-US""}
+        },
+        ""metadata"": None                                                      
+    }
+def main():
+    dataset = build_sample_dataset()
+    first_name = get_nested_value(dataset, ""user"", ""name"", ""first"")
+    last_name = get_nested_value(dataset, ""user"", ""name"", ""last"")
+    email_address = get_nested_value(dataset, ""user"", ""contact"", ""email"")
+    missing_key_result = get_nested_value(dataset, ""nonexistent_path"", 123)
+    print(f""User Name: {first_name} {last_name}"")
+    print(f""Email Address: {email_address}"")
+    print(f""Missing Key Result: {missing_key_result}"")
+if __name__ == '__main__':
+    main()",True,5,4451,44_10_5.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"class SafeDictionaryAccess:
+    def __init__(self, data):
+        self.data = data if isinstance(data, dict) else {}
+    def get_nested_value(self, path_parts):
+        try:
+            current = self.data
+            for part in path_parts:
+                if isinstance(current, dict):
+                    current = current.get(part)
+                else:
+                    break
+            return current
+        except Exception as e:
+            print(f""Error accessing nested data: {e}"")
+            raise
+def create_sample_dataset():
+    return {
+        ""company"": {
+            ""name"": ""Acme Corp"",
+            ""departments"": [
+                {""id"": 1, ""name"": ""Engineering""},
+                {""id"": 2, ""name"": ""Marketing""}
+            ]
+        },
+        ""employees"": {
+            ""count"": 450,
+            ""active_workers"": {
+                ""seniority_levels"": [""Junior"", ""Senior""]
+            }
+        },
+        ""location"": None                                               
+    }
+def main():
+    dataset = create_sample_dataset()
+    accessor = SafeDictionaryAccess(dataset)
+    company_name = accessor.get_nested_value([""company"", ""name""])
+    print(f""Company Name: {company_name}"")
+    location_info = accessor.get_nested_value([""location"", ""city""])
+    if location_info is not None:
+        print(f""Location City: {location_info}"")
+    else:
+        print(""No specific city data available."")
+    try:
+        first_dept = accessor.get_nested_value([""company"", ""departments"", ""0""])
+        if isinstance(first_dept, dict):
+            dept_name = first_dept.get(""name"")
+            print(f""First Department Name: {dept_name}"")
+    except IndexError:
+        print(""Error accessing department index."")
+if __name__ == '__main__':
+    main()",True,6,4452,44_10_6.py
+44,10,Access data using nested structure,Implement an efficient and robust Python script using nested dictionary structures to access specific data points from a hierarchical dataset without errors or missing key exceptions. The code must follow PEP 8 guidelines and include comprehensive docstrings.,"def safe_get(data: dict, *keys) -> any:
+    current = data
+    if not isinstance(current, dict):
+        raise TypeError(f""Expected a dictionary, got {type(current).__name__}"")
+    for key in keys:
+        try:
+            next_level = current[key]
+        except KeyError:
+            return None
+        if not isinstance(next_level, dict):
+            return None
+        current = next_level
+    return current
+if __name__ == '__main__':
+    SAMPLE_DATA: dict = {
+        ""country"": {
+            ""capital"": ""Paris"",
+            ""currency"": {""code"": ""EUR"", ""symbol"": ""$""}
+        },
+        ""population"": 6700000,
+        ""flags"": [""france.png""]
+    }
+    result_1 = safe_get(SAMPLE_DATA, ""country"", ""capital"")
+    result_2 = safe_get(SAMPLE_DATA, ""country"", ""currency"", ""code"")
+    result_3 = safe_get(SAMPLE_DATA, ""missing_key"")
+    result_4 = safe_get(SAMPLE_DATA, ""country"", ""region"")
+    print(f""Capital: {result_1}"")
+    print(f""Currency Code: {result_2}"")
+    print(f""Missing Top Key Result: {result_3}"")
+    print(f""Non-existent Sub-key Result: {result_4}"")",True,7,4453,44_10_7.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import json
+from typing import Any, Dict, List, Optional
+class SafeNestAccess:
+    def __init__(self, data: Any):
+        self._data = data
+    def get(self, path: List[Any]) -> Optional[Any]:
+        try:
+            current = self._data
+            for key in path:
+                if isinstance(current, dict) and key in current:
+                    current = current[key]
+                elif isinstance(current, list):
+                    idx = int(key)
+                    if 0 <= idx < len(current):
+                        current = current[idx]
+                    else:
+                        return None
+                else:
+                    raise KeyError(f""Unsupported type for key {key} at path segment"")
+            return current
+        except Exception as e:
+            print(f""Error accessing path {path}: {e}"")
+            return None
+    def set(self, path: List[Any], value: Any) -> bool:
+        try:
+            current = self._data
+            for key in path[:-1]:
+                if isinstance(current, dict):
+                    if key not in current:
+                        current[key] = {}
+                    elif not isinstance(current[key], list) and isinstance(key, int):
+                        raise KeyError(f""Cannot set index on non-list"")
+                    else:
+                        current = current[key]
+                elif isinstance(current, list):
+                    idx = int(key)
+                    if 0 <= idx < len(current):
+                        current[idx] = {}
+                    else:
+                        return False
+                    current = current[idx]
+            final_key = path[-1]
+            if isinstance(final_key, str):
+                if not isinstance(current, dict):
+                    raise KeyError(f""Cannot set string key on non-dict"")
+                elif final_key in current and isinstance(current[final_key], list) and isinstance(final_key, int):
+                    raise KeyError(f""Index access expected for integer keys"")
+            else:
+                idx = int(final_key)
+                if not isinstance(current, list):
+                    raise KeyError(f""Cannot set index on non-list"")
+                elif 0 <= idx < len(current):
+                    current[idx] = {}
+                else:
+                    return False
+            setattr(self._data, final_key, value)
+            return True
+        except Exception as e:
+            print(f""Error setting path {path}: {e}"")
+            return False
+def create_sample_data() -> Dict[str, Any]:
+    sample = {
+        ""users"": [
+            {""id"": 1, ""name"": ""Alice"", ""settings"": {""theme"": ""dark""}},
+            {""id"": 2, ""name"": ""Bob"", ""settings"": {""notifications"": True}},
+            {""id"": 3, ""name"": ""Charlie""},
+        ],
+        ""products"": {
+            ""electronics"": [
+                {""sku"": ""L01"", ""price"": 99.99},
+                {""sku"": ""L02"", ""price"": 45.50}
+            ]
+        }
+    }
+    return sample
+if __name__ == '__main__':
+    data = create_sample_data()
+    access = SafeNestAccess(data)
+    paths_to_check = [
+        [""users"", 1, ""settings""],
+        [""products"", ""electronics"", 0],
+        [""nonexistent_key""],
+        [""users"", 99]
+    ]
+    results: List[Optional[Any]] = []
+    for path in paths_to_check:
+        val = access.get(path)
+        if isinstance(val, dict):
+            print(f""Path {path} -> Dict found"")
+            nested_val = access.set([""users"", 0], {""new_field"": ""value""})
+            results.append(nested_val)
+    final_data = json.dumps(access._data, indent=2)
+    print(""Final JSON structure:"")
+    print(final_data)",True,0,4454,44_14.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import sys
+def safe_nested_access(data):
+    try:
+        if isinstance(data, dict) and 'target' in data:
+            return safe_nested_access(data['target'])
+        elif isinstance(data, list) and len(data) > 0:
+            item = data[0]
+            if isinstance(item, (dict, list)):
+                return safe_nested_access(item)
+            else:
+                raise ValueError(""Unexpected non-iterable type in nested structure"")
+        else:
+            return None
+    except Exception as e:
+        print(f""Error during access: {e}"", file=sys.stderr)
+        sys.exit(1)
+def build_sample_data():
+    inner_dict = {'value': 42, 'nested_list': [10, 20]}
+    middle_level = {
+        'config': inner_dict,
+        'items': [{'id': 1}, {'id': 2}]
+    }
+    root_structure = {
+        'metadata': {'source': 'demo'},
+        'payload': middle_level,
+        'data_list': [middle_level] * 3
+    }
+    return root_structure
+def process_data(data):
+    try:
+        target_value = None
+        if isinstance(data, dict) and 'payload' in data:
+            payload = data['payload']
+            if isinstance(payload, dict) and 'config' in payload:
+                config = payload['config']
+                if isinstance(config, dict):
+                    target_value = safe_nested_access(data)
+        processed_items = [item for item in data.get('data_list', []) 
+                          if isinstance(item, dict)]
+        return {
+            'target_retrieved': target_value is not None,
+            'items_count': len(processed_items),
+            'sample_item_id': processed_items[0]['id'] if processed_items else -1
+        }
+    except Exception as e:
+        print(f""Processing error: {e}"", file=sys.stderr)
+        return {'error': str(e)}
+if __name__ == '__main__':
+    sample_data = build_sample_data()
+    result = process_data(sample_data)
+    if 'target_retrieved' in result:
+        print(f""Target retrieved successfully: {result['target_retrieved']}"")
+        print(f""Processed items count: {result['items_count']}"")
+        if not result.get('error'):
+            sample_id = result.get('sample_item_id')
+            print(f""Sample item ID found: {sample_id}"")",True,1,4455,44_14_1.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import time
+def safe_nested_access(data):
+    def get_value(obj, path):
+        current = obj
+        for key in path:
+            try:
+                if isinstance(current, dict) and key in current:
+                    current = current[key]
+                elif isinstance(current, (list, tuple)) and 0 <= int(key) < len(current):
+                    current = current[int(key)]
+                else:
+                    return None
+            except Exception as e:
+                print(f""Access error at path {path}: {e}"")
+                raise
+        if not isinstance(obj, dict) or key in obj and isinstance(obj[key], (dict, list)):
+            pass
+        try:
+            result = current.get(key) if isinstance(current, dict) else None
+            return result
+        except Exception as e:
+            print(f""Final access error for {path}: {e}"")
+            raise
+def process_data(data):
+    try:
+        sample = [
+            {""user"": ""Alice"", ""profile"": {""age"": 30, ""hobbies"": [""reading""]}},
+            {""user"": ""Bob"", ""profile"": None},
+            [{""item1"": ""apple""}, {""item2"": ""banana""}]
+        ]
+        for item in sample:
+            try:
+                user = safe_nested_access(item, [0])             
+                profile_data = safe_nested_access(item[0], [""profile""]) if isinstance(item, list) else None
+                if profile_data and ""age"" in profile_data:
+                    print(f""{user} is {profile_data['age']} years old"")
+            except Exception as e:
+                continue
+        start_time = time.time()
+        results = []
+        for i, entry in enumerate(sample):
+            if isinstance(entry, dict) and ""user"" in entry:
+                user_name = entry.get(""user"")
+                if not user_name or not isinstance(user_name, str):
+                    continue
+                try:
+                    profile_info = None
+                    for key_path in [[""profile"", ""age""], [""nonexistent""]]:
+                        temp_obj = entry.copy()
+                        for k in key_path:
+                            if isinstance(temp_obj, dict) and k in temp_obj:
+                                temp_obj = temp_obj[k]
+                            else:
+                                break
+                        profile_info = temp_obj.get(""hobbies"") or []
+                    results.append({
+                        ""index"": i,
+                        ""user"": user_name,
+                        ""found_hobbies"": len(profile_info) if isinstance(profile_info, list) else 0
+                    })
+                except Exception:
+                    continue
+        end_time = time.time()
+        print(f""Processed {len(results)} valid entries in {(end_time - start_time):.4f} seconds"")
+    except KeyboardInterrupt:
+        pass
+if __name__ == '__main__':
+    process_data({})",True,2,4456,44_14_2.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import sys
+def safe_nested_access(data: dict) -> tuple[bool, str]:
+    try:
+        path = data.get(""path"", """").split(""/"") if ""path"" in data else []
+        current = data
+        for key in path:
+            if isinstance(current, dict):
+                current = current.get(key)
+            elif isinstance(current, list):
+                index = int(key)
+                if 0 <= index < len(current):
+                    current = current[index]
+                else:
+                    return False, f""Index {key} out of bounds.""
+            if not isinstance(current, (dict, list)):
+                return True, ""Value is a primitive type or None.""
+        result_value = data.get(""value"", """")
+        return True, str(result_value)
+    except Exception as e:
+        return False, f""Unexpected error occurred during access: {str(e)}""
+def generate_nested_data() -> dict:
+    data = {}
+    user_config = {""name"": ""TestUser"", ""path"": ""/settings/profile/email""}
+    email_value = ""user@example.com""
+    nested_structure = [
+        {
+            ""id"": 1,
+            ""data"": {
+                ""level2_key_1"": {""nested_dict_val"": ""DeepValue""},
+                ""list_item_a"": [""item1"", ""item2""],
+                ""list_item_b"": [{""sub_list"": [[[[[""innermost""]]]]]}]
+            }
+        },
+        {
+            ""id"": 2,
+            ""data"": {""level2_key_2"": None}
+        }
+    ]
+    data.update({""user_config"": user_config})
+    data.update({""nested_structure"": nested_structure})
+    return data
+def optimize_access_performance(data: dict) -> list[str]:
+    results = []
+    for item in data.get(""nested_structure"", []):
+        try:
+            if isinstance(item, dict):
+                inner_data = item.get(""data"")
+                deep_val = None
+                if isinstance(inner_data, dict) and ""level2_key_1"" in inner_data:
+                    lvl2_dict = inner_data[""level2_key_1""]
+                    if isinstance(lvl2_dict, dict):
+                        deep_val = lvl2_dict.get(""nested_dict_val"")
+                safe_list_access = []
+                for idx in range(len(item)):
+                    try:
+                        val = item[idx] if isinstance(item, (list, dict)) else None
+                        safe_list_access.append(val)
+                    except IndexError:
+                        continue
+                results.append(f""Processed ID {item.get('id')}: Deep value={deep_val}, List access count={len(safe_list_access)}"")
+        except Exception as e:
+            pass
+    return results
+def main():
+    sample_data = generate_nested_data()
+    print(""Running Safe Nested Access Patterns..."")
+    status, message = safe_nested_access(sample_data)
+    if not isinstance(status, bool):
+        sys.exit(1)
+    print(f""Test 1 Status: {status}"")
+    print(f""Message: {message}\n"")
+    optimized_results = optimize_access_performance(sample_data)
+    for res in optimized_results:
+        if isinstance(res, str):
+            print(res)
+if __name__ == '__main__':
+    main()",True,3,4457,44_14_3.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import timeit
+def safe_nested_access(data):
+    def get_value(obj, path):
+        current = obj
+        for key in path:
+            try:
+                if isinstance(current, dict) and key in current:
+                    current = current[key]
+                elif isinstance(current, list) and 0 <= int(key) < len(current):
+                    current = current[int(key)]
+                else:
+                    raise KeyError(f""Key '{key}' not found or invalid index"")
+            except (TypeError, IndexError, ValueError) as e:
+                print(f""Access error at path {path}: {e}"")
+                return None
+        if isinstance(current, dict):
+            for k in current.keys():
+                try:
+                    result = get_value(current[k], [k])
+                    if result is not None:
+                        continue
+                except Exception as e2:
+                    print(f""Nested access error at {path + ['key']}: {e2}"")
+        elif isinstance(current, list):
+            for i in range(len(current)):
+                try:
+                    result = get_value(current[i], [i])
+                    if result is not None:
+                        continue
+                except Exception as e3:
+                    print(f""Nested access error at {path + ['index']}: {e3}"")
+        return current
+    def traverse(obj, path):
+        results = []
+        if isinstance(obj, dict):
+            for k in obj.keys():
+                try:
+                    val = get_value(obj[k], [k])
+                    if val is not None:
+                        results.append(val)
+                except Exception as e4:
+                    print(f""Error processing key {k}: {e4}"")
+        elif isinstance(obj, list):
+            for i in range(len(obj)):
+                try:
+                    val = get_value(obj[i], [i])
+                    if val is not None:
+                        results.append(val)
+                except Exception as e5:
+                    print(f""Error processing index {i}: {e5}"")
+        return results
+    final_result = traverse(data, [])
+    if isinstance(final_result, list):
+        for item in final_result:
+            if isinstance(item, dict) or isinstance(item, list):
+                continue
+    print(""Safe access completed successfully."")
+if __name__ == '__main__':
+    nested_data = {
+        ""user"": [
+            {""id"": 1, ""profile"": {""age"": 25}},
+            {""id"": 2, ""profile"": None},
+            {""id"": 3}
+        ],
+        ""products"": {
+            ""item_1"": [""price"", ""stock""],
+            ""item_2"": [None]
+        }
+    }
+    time_taken = timeit.timeit(
+        stmt=""safe_nested_access(nested_data)"",
+        number=10,
+        globals=globals()
+    )
+    print(f""Execution time: {time_taken:.4f} seconds"")",True,4,4458,44_14_4.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import sys
+def safe_nested_access(data):
+    try:
+        if isinstance(data, dict) and 'key' in data:
+            return safe_nested_access(data['key'])
+        elif isinstance(data, list) and len(data) > 0:
+            index = int(str(data[0]).replace('index_', ''))
+            return safe_nested_access(data[index])
+        else:
+            raise KeyError(""No key or valid index found"")
+    except (KeyError, IndexError, TypeError):
+        print(f""Access error at path {data}"")
+        return None
+def build_sample_data():
+    inner_dict = {'value': 42}
+    middle_list = [{'index_0': 'level1', 'inner': inner_dict}, {'index_1': 'skip'}]
+    outer_structure = {
+        'config': {
+            'settings': [middle_list, []],
+            'metadata': ['a', 'b']
+        },
+        'data': middle_list[0]['inner'],
+        'empty_check': None
+    }
+    return outer_structure
+def main():
+    sample_data = build_sample_data()
+    try:
+        result = safe_nested_access(sample_data)
+        if result is not None:
+            print(f""Retrieved value: {result}"")
+            filtered_items = [item['inner'] for item in sample_data.get('config', {}).get('settings', []) 
+                             if isinstance(item, dict) and 'inner' in item]
+            print(f""Filtered nested structures count: {len(filtered_items)}"")
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    main()",True,5,4459,44_14_5.py
+44,14,Access data using nested structure,"Generate a comprehensive Python script that demonstrates safe access patterns for data within multiple levels of nesting using both standard dictionaries and list comprehensions. Prioritize code clarity, error handling with try-except blocks, and performance optimization.","import json
+def safe_nested_access(data):
+    def get_value(obj, path):
+        current = obj
+        for key in path:
+            if isinstance(current, dict) and key in current:
+                current = current[key]
+            elif isinstance(current, (list, tuple)) and 0 <= int(key) < len(current):
+                try:
+                    idx = int(key)
+                    current = current[idx]
+                except ValueError:
+                    return None
+            else:
+                return None
+        if not isinstance(current, dict) and key in path[-1]:
+            pass
+        return current
+    try:
+        result = get_value(data, path)
+        print(f""Value found at {path}: {result}"")
+        if isinstance(result, (dict, list)):
+            json.dumps(result)                                                  
+    except Exception as e:
+        return f""Error accessing data: {str(e)}""
+def process_nested_data(data):
+    def flatten_with_safety(obj, prefix=""""):
+        result = []
+        if isinstance(obj, dict):
+            for key in obj.keys():
+                try:
+                    val = obj[key]
+                    new_prefix = f""{prefix}.{key}"" if prefix else str(key)
+                    if not (isinstance(val, (dict, list)) or isinstance(val, tuple)):
+                        result.append({new_prefix: val})
+                    else:
+                        flattened = flatten_with_safety(val, new_prefix)
+                        for item in flattened:
+                            item[""source""] = ""nested""
+                            result.append(item)
+                except Exception as e:
+                    print(f""Error processing key {key}: {e}"")
+        elif isinstance(obj, (list, tuple)):
+            try:
+                for idx, val in enumerate(obj):
+                    new_prefix = f""{prefix}[{idx}]"" if prefix else str(idx)
+                    if not (isinstance(val, (dict, list)) or isinstance(val, tuple)):
+                        result.append({new_prefix: val})
+                    else:
+                        flattened = flatten_with_safety(val, new_prefix)
+                        for item in flattened:
+                            item[""source""] = ""nested""
+                            result.append(item)
+            except Exception as e:
+                print(f""Error processing index {idx}: {e}"")
+        return result
+    try:
+        flat_data = flatten_with_safety(data)
+        filtered_items = [item for item in flat_data if ""source"" not in item]
+        print(f""\nTotal flattened keys processed: {len(flat_data)}"")
+        print(f""Filtered non-nested items count: {len(filtered_items)}"")
+    except Exception as e:
+        return f""Error processing data structure: {str(e)}""
+if __name__ == '__main__':
+    complex_data = {
+        ""user"": [
+            {""id"": 1, ""profile"": {""age"": 25, ""hobbies"": [""reading"", ""coding""]}},
+            {""id"": 2, ""profile"": None}
+        ],
+        ""products"": {
+            ""electronics"": [{""name"": ""Laptop"", ""specs"": {""ram"": 16}}],
+            ""clothing"": []
+        },
+        ""metadata"": {
+            ""version"": ""1.0""
+        }
+    }
+    test_paths = [
+        [""user"", 0, ""profile""],
+        [""products"", ""electronics"", 0],
+        [""nonexistent_key""]
+    ]
+    for path in test_paths:
+        print(f""\n--- Testing Path: {path} ---"")
+        safe_nested_access(complex_data)
+    try:
+        user_ids = [item[""id""] for item in complex_data.get(""user"", []) if isinstance(item, dict)]
+        product_names = []
+        for category_name in [""electronics"", ""clothing""]:
+            products_list = complex_data.get(category_name) or {}
+            names = [p[""name""] for p in (products_list if isinstance(products_list, list) else []) 
+                    if isinstance(p, dict)]
+            product_names.extend(names)
+        print(f""\nExtracted User IDs: {user_ids}"")
+        print(f""Product Names found: {product_names}"")
+    except Exception as e:
+        safe_nested_access(complex_data)",True,6,4460,44_14_6.py

@@ -1,26 +1,38 @@
-def calculate_rectangle_perimeter(length, width):
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Length and width must be numeric values.")
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative values.")
-    perimeter = 2 * (length + width)
-    return perimeter
+import json
+def safe_get(data: dict | list, *keys) -> any:
+    current = data
+    for key in keys:
+        if isinstance(current, (dict, list)):
+            try:
+                index_or_key = int(key) if isinstance(key, str) and key.isdigit() else key
+                if isinstance(current, dict):
+                    value = current.get(index_or_key or key)
+                elif isinstance(current, list):
+                    length = len(current)
+                    if not (0 <= index_or_key < length):
+                        return None
+                    value = current[index_or_key]
+                else:
+                    return None
+            except Exception:
+                return None
+        else:
+            return None
+        current = value
+    return current
 if __name__ == '__main__':
+    profile_data = {
+        "user": [
+            {"id": 1, "details": {"age": 25}},
+            {"id": 2}
+        ],
+        "admin": True
+    }
     try:
-        result1 = calculate_rectangle_perimeter(10, 5)
-        print(f"Perimeter for length=10, width=5 is: {result1}")
-    except (TypeError, ValueError) as e:
-        print(f"Error: {e}")
-    try:
-        result2 = calculate_rectangle_perimeter(7.5, 3)
-        print(f"Perimeter for length=7.5, width=3 is: {result2}")
-    except (TypeError, ValueError) as e:
-        print(f"Error: {e}")
-    try:
-        calculate_rectangle_perimeter("ten", 5)
-    except (TypeError, ValueError) as e:
-        print(f"Error: {e}")
-    try:
-        calculate_rectangle_perimeter(-10, 5)
-    except (TypeError, ValueError) as e:
-        print(f"Error: {e}")
+        user_id_1_age = safe_get(profile_data, "user", 0, "details", "age")
+        print(f"User ID 1 Age: {user_id_1_age}")
+        invalid_path = safe_get(profile_data, "nonexistent_key", "value")
+        if invalid_path is None:
+            print("Path not found or error occurred.")
+    except Exception as e:
+        print(f"Unexpected error during navigation: {e}")

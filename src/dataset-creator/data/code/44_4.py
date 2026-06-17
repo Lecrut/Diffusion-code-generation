@@ -1,17 +1,39 @@
-def calculate_rectangle_perimeter(length, width):
-    if not isinstance(length, (int, float)) or not isinstance(width, (int, float)):
-        raise TypeError("Length and width must be numeric values.")
-    if length < 0 or width < 0:
-        raise ValueError("Length and width must be non-negative values.")
-    perimeter = 2 * (length + width)
-    return perimeter
+import json
+def get_nested_value(data: dict, path: list) -> any:
+    current = data
+    for key in path:
+        if isinstance(current, (dict, list)) and key in current:
+            try:
+                current = current[key]
+            except TypeError:
+                return None
+        else:
+            return None
+    return current
+def get_user_profile(data: dict) -> any:
+    path = ["user", "profile"]
+    if not isinstance(data, dict):
+        raise ValueError("Input data must be a dictionary.")
+    try:
+        return get_nested_value(data, path)
+    except Exception as e:
+        print(f"Error accessing profile information: {e}")
+        return None
 if __name__ == '__main__':
-    print(calculate_rectangle_perimeter(10, 5))
-    try:
-        calculate_rectangle_perimeter(10, "five")
-    except TypeError as e:
-        print(f"Error caught: {e}")
-    try:
-        calculate_rectangle_perimeter(-2, 5)
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    sample_data = {
+        "user": {
+            "profile": {
+                "id": 12345,
+                "name": "Alice",
+                "address": [
+                    {"city": "New York"},
+                    {"state": "NY"}
+                ]
+            }
+        },
+        "settings": {}
+    }
+    profile = get_user_profile(sample_data)
+    if isinstance(profile, dict):
+        print(f"Profile ID: {profile.get('id')}")
+        print(f"Name: {profile.get('name')}")
