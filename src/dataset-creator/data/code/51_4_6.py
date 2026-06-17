@@ -1,0 +1,12 @@
+from typing import Iterable, TypeVar
+T = TypeVar('T')
+def get_first_element(iterable: Iterable[T]) -> T | None:
+    try:
+        return next(iter(iterable))
+    except StopIteration:
+        return None
+if __name__ == '__main__':
+    sample_list = [10, 20, 30]
+    first_item = get_first_element(sample_list)
+    if isinstance(first_item, int):
+        print(f"First element is an integer: {first_item}")

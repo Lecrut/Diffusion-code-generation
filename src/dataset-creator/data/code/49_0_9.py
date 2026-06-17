@@ -1,0 +1,9 @@
+def is_positive(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError("Input must be an integer or a float.")
+    return value > 0
+if __name__ == '__main__':
+    test_cases = [42, -5.7, 0, 3.14]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f"{case} -> {result}")
