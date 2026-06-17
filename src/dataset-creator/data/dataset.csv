@@ -91676,3 +91676,2564 @@ class SparseMatrixLookup:
 if __name__ == '__main__':
     sparse = SparseMatrixLookup()
     sparse.initialize_from_data()",True,5,3744,36_11_5.py
+36,13,Create a simple lookup table,Construct an optimized binary search tree based dictionary implementation in Python that serves as a dynamic lookup table for integer keys with O(log n) insertion complexity.,"class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+class OptimizedBST:
+    def insert(self, root, key):
+        if not root:
+            return Node(key)
+        if key < root.key:
+            root.left = self.insert(root.left, key)
+        else:
+            root.right = self.insert(root.right, key)
+        height_left = 1 + (self.get_height(root.left)) if root.left else 0
+        height_right = 1 + (self.get_height(root.right)) if root.right else 0
+        balance_factor = height_left - height_right
+        if balance_factor > 1:
+            if key < root.key:
+                return self.rotateRight(root)
+            else:
+                temp = Node(key)
+                temp.left, temp.right = root.left, root
+                return self.rotateLeft(temp)
+        elif balance_factor < -1:
+            if key > root.key:
+                return self.rotateLeft(root)
+            else:
+                temp = Node(key)
+                temp.left, temp.right = root, root.right
+                return self.rotateRight(temp)
+        return root
+    def get_height(self, node):
+        if not node:
+            return 0
+        h_left = self.get_height(node.left)
+        h_right = self.get_height(node.right)
+        return max(h_left, h_right) + 1
+    def rotateRight(self, z):
+        y = z.left
+        T2 = y.right
+        y.right = z
+        z.left = T2
+        return y
+    def rotateLeft(self, z):
+        y = z.right
+        T3 = y.left
+        y.left = z
+        z.right = T3
+        return y
+def build_tree(values):
+    root = None
+    for val in values:
+        root = OptimizedBST().insert(root, val)
+    return root
+if __name__ == '__main__':
+    sample_data = [50, 30, 20, 40, 70, 60, 80]
+    tree_root = build_tree(sample_data)
+    def inorder_traversal(node):
+        if not node:
+            return []
+        left_list = inorder_traversal(node.left)
+        right_list = inorder_traversal(node.right)
+        return left_list + [node.key] + right_list
+    result_order = inorder_traversal(tree_root)
+    print(result_order)",True,0,3745,36_13.py
+37,2,Manage basic item counts,Create a high-performance data structure in pure Python for tracking item quantities with automatic zero-value cleanup upon decrement operations.,"class ItemCounter:
+    def __init__(self):
+        self._data = {}
+    def add(self, item_id, quantity):
+        if not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Quantity must be a non-negative integer."")
+        current_count = self._data.get(item_id, 0) + quantity
+        self._data[item_id] = max(0, current_count)
+    def decrement(self, item_id):
+        if not isinstance(item_id, str):
+            raise TypeError(""Item ID must be a string."")
+        current_count = self._data.get(item_id, 0) - 1
+        if current_count < 0:
+            return False
+        elif current_count == 0:
+            del self._data[item_id]
+        else:
+            self._data[item_id] = current_count
+        return True
+    def get(self, item_id):
+        return self._data.get(item_id, 0)
+if __name__ == '__main__':
+    counter = ItemCounter()
+    counter.add(""apple"", 5)
+    counter.add(""banana"", 3)
+    counter.decrement(""apple"")
+    print(counter.get(""apple""))
+    counter.decrement(""banana"")
+    print(counter.get(""banana""))
+    counter.decrement(""orange"")
+    print(counter.get(""orange""))",True,0,3746,37_2.py
+37,2,Manage basic item counts,Create a high-performance data structure in pure Python for tracking item quantities with automatic zero-value cleanup upon decrement operations.,"class Counter:
+    def __init__(self):
+        self._items = {}
+    def increment(self, item, amount=1):
+        if item not in self._items or self._items[item] <= 0:
+            self._items[item] = amount
+        else:
+            self._items[item] += amount
+    def decrement(self, item, amount=1):
+        current_value = self._items.get(item, 0) - amount
+        if current_value > 0:
+            self._items[item] = current_value
+    def get_quantity(self, item):
+        return self._items.get(item, 0)
+    def list_items(self):
+        return [item for item in sorted(self._items.keys())]
+if __name__ == '__main__':
+    counter = Counter()
+    counter.increment('apple', 5)
+    counter.increment('banana', 3)
+    counter.decrement('apple', 2)
+    print(""Quantities:"", {item: quantity for item, quantity in sorted(counter._items.items())})",True,1,3747,37_2_1.py
+37,2,Manage basic item counts,Create a high-performance data structure in pure Python for tracking item quantities with automatic zero-value cleanup upon decrement operations.,"class Inventory:
+    def __init__(self):
+        self._data = {}
+    def add(self, item, quantity):
+        if not isinstance(quantity, int) or quantity < 0:
+            raise ValueError(""Quantity must be a non-negative integer."")
+        current_qty = self._data.get(item, 0) + quantity
+        self._data[item] = max(0, current_qty)
+    def decrement(self, item):
+        if not isinstance(item, str):
+            raise TypeError(""Item name must be a string."")
+        current_qty = self._data.get(item, 0) - 1
+        if current_qty < 0:
+            return False
+        elif current_qty == 0:
+            del self._data[item]
+        else:
+            self._data[item] = current_qty
+        return True
+    def get(self, item):
+        return self._data.get(item, 0)
+    def __repr__(self):
+        return f""Inventory({dict(sorted(self._data.items()))})""
+if __name__ == '__main__':
+    inv = Inventory()
+    inv.add(""apple"", 5)
+    inv.add(""banana"", 3)
+    inv.decrement(""apple"")
+    print(inv.get(""apple""))
+    inv.decrement(""banana"")
+    print(inv.get(""banana""))
+    inv.decrement(""orange"")",True,2,3748,37_2_2.py
+37,2,Manage basic item counts,Create a high-performance data structure in pure Python for tracking item quantities with automatic zero-value cleanup upon decrement operations.,"class ItemCounter:
+    def __init__(self):
+        self._data = {}
+    def add(self, key: str, quantity: int) -> None:
+        if not isinstance(quantity, (int, float)):
+            raise TypeError(""Quantity must be a number"")
+        current_value = self._data.get(key, 0)
+        new_value = current_value + quantity
+        if new_value > 0:
+            self._data[key] = new_value
+    def decrement(self, key: str) -> bool:
+        try:
+            current_value = self._data.get(key, 0)
+            if not isinstance(current_value, (int, float)):
+                return False
+            if current_value <= 1:
+                del self._data[key]
+                return True
+            new_value = int(current_value - 1)
+            self._data[key] = new_value
+            return True
+        except Exception:
+            return False
+    def get(self, key: str) -> int | None:
+        value = self._data.get(key)
+        if value is not None and isinstance(value, (int, float)):
+            return int(value)
+        return 0
+    def __contains__(self, key):
+        return key in self._data
+if __name__ == '__main__':
+    counter = ItemCounter()
+    counter.add(""apple"", 5)
+    counter.add(""banana"", 3)
+    counter.decrement(""apple"")
+    counter.decrement(""apple"")
+    counter.decrement(""apple"")
+    counter.decrement(""banana"")
+    counter.decrement(""orange"")                                      
+    print(f""Apple count: {counter.get('apple')}"")
+    print(f""Banana count: {counter.get('banana')}"")
+    print(f""Orange exists: {'orange' in counter}"")",True,3,3749,37_2_3.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_items(*args):
+    totals = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+            totals[key] = totals.get(key, 0) + count
+        elif isinstance(item, dict):
+            for k, v in item.items():
+                totals[k] = totals.get(k, 0) + int(v) if not isinstance(v, (int, float)) else int(v)
+    return totals
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        {'orange': 2},
+        ('pear', 10),
+        ('apple', 7)
+    ]
+    result = consolidate_items(*sample_data)
+    print(result)",True,0,3750,37_3.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_items(*args):
+    totals = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+        elif isinstance(item, dict):
+            key = list(item.keys())[0]
+            count = sum(item.values())
+        else:
+            continue
+        totals[key] = totals.get(key, 0) + count
+    return totals
+if __name__ == '__main__':
+    sample_data = (
+        ('apple', 3), 
+        ('banana', 5), 
+        {'orange': 2}, 
+        ('pear', 1), 
+        ('apple', 2)
+    )
+    result = consolidate_items(*sample_data)
+    print(result)",True,1,3751,37_3_1.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_counts(*args):
+    totals = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+            totals[key] = totals.get(key, 0) + count
+        elif isinstance(item, dict):
+            for k, v in item.items():
+                totals[k] = totals.get(k, 0) + v
+    return totals
+if __name__ == '__main__':
+    sample_data = (
+        ('apple', 5),
+        ('banana', 3),
+        {'orange': 2},
+        ('pear', 1),
+        ('apple', 4),
+    )
+    result = consolidate_counts(*sample_data)
+    print(result)",True,2,3752,37_3_2.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_items(*args):
+    totals = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+            totals[key] = totals.get(key, 0) + count
+        else:
+            raise ValueError(""Each argument must be a (item_name, count) tuple"")
+    return totals
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('apple', 2),
+        ('cherry', 10),
+        ('banana', 7),
+    ]
+    result = consolidate_items(*sample_data)
+    print(result)",True,3,3753,37_3_3.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_items(*args):
+    result = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+            result[key] = result.get(key, 0) + count
+        else:
+            raise ValueError(f""Invalid input format. Expected (item, count), got {type(item)}"")
+    return result
+if __name__ == '__main__':
+    data = ('apple', 3), ('banana', 5), ('apple', 2), ('cherry', 10)
+    totals = consolidate_items(*data)
+    print(totals)",True,4,3754,37_3_4.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_items(*args):
+    totals = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+            totals[key] = totals.get(key, 0) + count
+        else:
+            raise ValueError(""Each argument must be a (item_name, count) pair"")
+    return totals
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('cherry', 10),
+        ('apple', 2),
+        ('date', 7),
+    ]
+    result = consolidate_items(*sample_data)
+    print(result)",True,5,3755,37_3_5.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_counts(*args):
+    totals = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item
+            totals[key] = totals.get(key, 0) + count
+        else:
+            raise ValueError(""Each argument must be a (item_name, count) tuple"")
+    return totals
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('cherry', 10),
+        ('apple', 2),
+        ('date', 7),
+    ]
+    result = consolidate_counts(*sample_data)
+    print(result)",True,6,3756,37_3_6.py
+37,3,Manage basic item counts,Develop an optimized Python utility function that accepts multiple items and their counts as input arguments to return a consolidated dictionary of totals without external dependencies.,"def consolidate_counts(*args):
+    result = {}
+    for item in args:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, count = item[0], int(item[1])
+            if key in result:
+                result[key] += count
+            else:
+                result[key] = count
+        elif isinstance(item, dict):
+            for k, v in item.items():
+                if k not in result:
+                    result[k] = 0
+                result[k] += int(v)
+    return result
+if __name__ == '__main__':
+    sample_data = (
+        ('apple', 5),
+        ('banana', 3),
+        {'orange': 2, 'pear': 1},
+        ('grape', 4),
+        ('apple', 7)
+    )
+    output = consolidate_counts(*sample_data)
+    print(output)",True,7,3757,37_3_7.py
+37,1,Manage basic item counts,"Write a production-ready Python script that initializes an inventory system using dictionaries and provides methods to add, remove, or update items while handling edge cases gracefully.","class InventorySystem:
+    def __init__(self):
+        self.inventory = {}
+    def add_item(self, item_id, quantity=1):
+        if not isinstance(item_id, str) or not isinstance(quantity, int):
+            raise ValueError(""Item ID must be a string and quantity must be an integer."")
+        try:
+            qty = max(0, quantity)
+        except TypeError:
+            raise ValueError(""Quantity must be convertible to an integer."")
+        if item_id in self.inventory:
+            current_qty = self.inventory[item_id]
+            new_total = current_qty + qty
+            if new_total < 0:
+                return False
+            else:
+                self.inventory[item_id] = new_total
+                return True
+        else:
+            self.inventory[item_id] = qty
+            return True
+    def remove_item(self, item_id):
+        if not isinstance(item_id, str):
+            raise ValueError(""Item ID must be a string."")
+        if item_id in self.inventory and self.inventory[item_id] > 0:
+            del self.inventory[item_id]
+            return True
+        else:
+            return False
+    def update_item(self, item_id, new_quantity):
+        try:
+            qty = int(new_quantity)
+        except (ValueError, TypeError):
+            raise ValueError(""New quantity must be convertible to an integer."")
+        if not isinstance(item_id, str):
+            raise ValueError(""Item ID must be a string."")
+        current_qty = self.inventory.get(item_id, 0)
+        try:
+            new_total = int(current_qty + qty)
+        except TypeError:
+            return False
+        if item_id in self.inventory and new_total < 0:
+            return False
+        else:
+            self.inventory[item_id] = new_total
+            return True
+    def get_inventory(self):
+        return dict(self.inventory)
+if __name__ == '__main__':
+    inv_system = InventorySystem()
+    result1 = inv_system.add_item(""Laptop"", 5)
+    print(f""Added Laptop: {result1}"")
+    result2 = inv_system.add_item(""Mouse"", 30)
+    print(f""Added Mouse: {result2}"")
+    result3 = inv_system.update_item(""Laptop"", 2)
+    print(f""Updated Laptop (+2): {result3}, Total: {inv_system.get_inventory().get('Laptop')}"")
+    result4 = inv_system.remove_item(""Mouse"")
+    print(f""Removed Mouse: {result4}"")
+    result5 = inv_system.remove_item(""NonExistentItem"")
+    print(f""Tried removing NonExistentItem: {result5}"")
+    print(""\nFinal Inventory:"")
+    for k, v in inv_system.get_inventory().items():
+        print(f""{k}: {v}"")",True,0,3758,37_1.py
+37,1,Manage basic item counts,"Write a production-ready Python script that initializes an inventory system using dictionaries and provides methods to add, remove, or update items while handling edge cases gracefully.","from typing import Any
+class InventorySystem:
+    def __init__(self) -> None:
+        self.inventory: dict[str, int] = {}
+    def add_item(self, item_id: str, quantity: int) -> bool:
+        try:
+            if not isinstance(quantity, (int, float)) or quantity <= 0:
+                return False
+            current_qty = self.inventory.get(item_id, 0)
+            new_qty = round(current_qty + quantity)
+            if new_qty < 0:
+                return False
+            self.inventory[item_id] = new_qty
+            return True
+        except Exception:
+            return False
+    def remove_item(self, item_id: str, quantity: int) -> bool:
+        try:
+            current_qty = self.inventory.get(item_id, 0)
+            if not isinstance(quantity, (int, float)) or quantity <= 0:
+                return False
+            new_qty = round(current_qty - quantity)
+            if new_qty < 0:
+                del self.inventory[item_id]
+            else:
+                self.inventory[item_id] = new_qty
+            return True
+        except Exception:
+            return False
+    def update_item(self, item_id: str, new_quantity: int) -> bool:
+        try:
+            if not isinstance(new_quantity, (int, float)) or new_quantity <= 0:
+                return False
+            self.inventory[item_id] = round(new_quantity)
+            return True
+        except Exception:
+            return False
+    def get_item(self, item_id: str) -> int | None:
+        try:
+            if not isinstance(item_id, str):
+                raise ValueError(""Item ID must be a string"")
+            current_qty = self.inventory.get(item_id, 0)
+            return round(current_qty)
+        except Exception:
+            return None
+    def list_items(self) -> dict[str, int]:
+        try:
+            if not isinstance(list(), (list)):
+                raise ValueError(""List must be a valid collection"")
+            result = {}
+            for item_id in self.inventory.keys():
+                current_qty = round(self.inventory[item_id])
+                result[item_id] = current_qty
+            return result
+        except Exception:
+            return None
+if __name__ == '__main__':
+    inventory_system = InventorySystem()
+    sample_items = [
+        (""laptop"", 10),
+        (""mouse"", 50),
+        (""keyboard"", 25)
+    ]
+    for item_id, quantity in sample_items:
+        if not inventory_system.add_item(item_id, quantity):
+            print(f""Failed to add {item_id}"")
+    updated_laptop_qty = round(15.9)
+    if not inventory_system.update_item(""laptop"", updated_laptop_qty):
+        print(""Update failed"")
+    removed_mouse_qty = 20
+    if not inventory_system.remove_item(""mouse"", removed_mouse_qty):
+        print(f""Failed to remove {removed_mouse_qty} mice"")
+    laptop_count = inventory_system.get_item(""laptop"")
+    mouse_count = inventory_system.get_item(""mouse"")
+    keyboard_count = inventory_system.get_item(""keyboard"")
+    all_items = inventory_system.list_items()",True,1,3759,37_1_1.py
+37,1,Manage basic item counts,"Write a production-ready Python script that initializes an inventory system using dictionaries and provides methods to add, remove, or update items while handling edge cases gracefully.","import json
+class InventorySystem:
+    def __init__(self):
+        self.inventory = {}
+    def add_item(self, item_id, quantity=1):
+        if not isinstance(item_id, str) or not isinstance(quantity, int):
+            raise ValueError(""Invalid input types"")
+        try:
+            quantity = max(0, quantity)
+        except TypeError:
+            raise ValueError(""Quantity must be a non-negative integer"")
+        self.inventory[item_id] = quantity
+    def remove_item(self, item_id):
+        if not isinstance(item_id, str):
+            return False
+        if item_id in self.inventory and self.inventory[item_id] > 0:
+            del self.inventory[item_id]
+            return True
+        else:
+            raise KeyError(f""Item '{item_id}' does not exist or has zero quantity"")
+    def update_item(self, item_id, new_quantity):
+        if not isinstance(item_id, str) or not isinstance(new_quantity, int):
+            raise ValueError(""Invalid input types"")
+        try:
+            new_quantity = max(0, new_quantity)
+        except TypeError:
+            raise ValueError(""Quantity must be a non-negative integer"")
+        self.inventory[item_id] = new_quantity
+    def get_item(self, item_id):
+        if not isinstance(item_id, str):
+            return None
+        if item_id in self.inventory and self.inventory[item_id] > 0:
+            return self.inventory[item_id]
+        raise KeyError(f""Item '{item_id}' does not exist"")
+    def get_total_quantity(self):
+        try:
+            total = sum(quantities for quantities in self.inventory.values() if isinstance(quantities, int) and quantities > 0)
+            return total
+        except TypeError:
+            raise ValueError(""Inventory contains invalid data types"")
+if __name__ == '__main__':
+    inventory = InventorySystem()
+    sample_items = [
+        (""Laptop"", 5),
+        (""Mouse"", 20),
+        (""Keyboard"", 10)
+    ]
+    for item_id, qty in sample_items:
+        try:
+            inventory.add_item(item_id[0], int(qty))
+        except Exception as e:
+            print(f""Error adding {item_id}: {e}"")
+    if ""Laptop"" in inventory.inventory and inventory.get(""Laptop"") > 0:
+        pass
+    try:
+        laptop_count = inventory.get_item(""Laptop"")
+        print(f""Laptop count: {laptop_count}"")
+        inventory.update_item(""Mouse"", 15)
+        mouse_count = inventory.get_item(""Mouse"")
+        print(f""Updated Mouse count to: {mouse_count}"")
+    except Exception as e:
+        print(f""Error retrieving/updating items: {e}"")
+    try:
+        total_qty = inventory.get_total_quantity()
+        print(f""Total quantity in stock: {total_qty}"")
+        if ""Monitor"" not in inventory.inventory or inventory[""Monitor""] <= 0:
+            raise KeyError(""Monitor does not exist"")
+    except Exception as e:
+        print(f""Error calculating total/finding monitor: {e}"")
+    try:
+        removed = inventory.remove_item(""Keyboard"")
+        if removed:
+            print(""Removed Keyboard successfully"")
+        keyboard_count = inventory.get_item(""Keyboard"")
+        print(f""After removal, Keyboard count: {keyboard_count}"")
+    except Exception as e:
+        print(f""Error removing item or retrieving after removal: {e}"")
+    try:
+        invalid_qty_input = ""invalid_string""
+        quantity_check = 1.5
+        inventory.add_item(invalid_qty_input)
+        inventory.update_item(""Mouse"", -5)
+    except Exception as e:
+        print(f""Handled edge case gracefully: {e}"")
+    try:
+        invalid_id_remove = ""NonExistentItem999""
+        removed_status = inventory.remove_item(invalid_id_remove)
+        if not removed_status:
+            raise KeyError(""Expected removal to fail or return false"")
+    except Exception as e:
+        print(f""Handled edge case gracefully for non-existent item: {e}"")
+    try:
+        invalid_type_input = 12345
+        inventory.add_item(invalid_type_input)
+    except Exception as e:
+        print(f""Handled edge case gracefully for type error: {e}"")",True,2,3760,37_1_2.py
+37,1,Manage basic item counts,"Write a production-ready Python script that initializes an inventory system using dictionaries and provides methods to add, remove, or update items while handling edge cases gracefully.","import json
+class InventorySystem:
+    def __init__(self):
+        self.inventory = {}
+    def add_item(self, item_id, quantity=1):
+        if not isinstance(item_id, str) or len(item_id.strip()) == 0:
+            raise ValueError(""Invalid item ID"")
+        try:
+            qty = int(quantity)
+        except ValueError:
+            raise TypeError(""Quantity must be an integer"")
+        self.inventory[item_id] = max(1, qty) if not (item_id in self.inventory and self.inventory[item_id] == 0) else self.inventory[item_id] + qty
+    def remove_item(self, item_id):
+        try:
+            current_qty = self.inventory.get(item_id, 0)
+            new_qty = max(1, current_qty - 1) if not (item_id in self.inventory and self.inventory[item_id] == 0) else None
+            if item_id in self.inventory and self.inventory[item_id] > 0:
+                del self.inventory[item_id]
+        except KeyError:
+            pass
+    def update_item(self, item_id, new_quantity):
+        try:
+            qty = int(new_quantity)
+            current_qty = self.inventory.get(item_id, 0)
+            if not (item_id in self.inventory and self.inventory[item_id] == 0):
+                self.inventory[item_id] = max(1, qty)
+            elif item_id in self.inventory:
+                del self.inventory[item_id]
+        except ValueError:
+            raise TypeError(""New quantity must be an integer"")
+if __name__ == '__main__':
+    inv = InventorySystem()
+    try:
+        inv.add_item('Laptop', 5)
+        inv.update_item('Mouse', '10')
+        inv.remove_item('Keyboard')
+        print(""Current Inventory:"", json.dumps(inv.inventory, indent=2))
+    except Exception as e:
+        print(f""Error occurred during inventory management: {e}"")",True,3,3761,37_1_3.py
+37,1,Manage basic item counts,"Write a production-ready Python script that initializes an inventory system using dictionaries and provides methods to add, remove, or update items while handling edge cases gracefully.","class InventorySystem:
+    def __init__(self):
+        self.inventory = {}
+    def add_item(self, item_id, quantity=1):
+        if not isinstance(item_id, str) or not isinstance(quantity, int):
+            raise ValueError(""Invalid input types. item_id must be a string and quantity an integer."")
+        if quantity <= 0:
+            raise ValueError(""Quantity must be positive."")
+        self.inventory[item_id] = quantity
+    def remove_item(self, item_id):
+        if item_id not in self.inventory:
+            print(f""Item '{item_id}' not found in inventory."")
+            return False
+        del self.inventory[item_id]
+        return True
+    def update_quantity(self, item_id, new_quantity):
+        if isinstance(new_quantity, int) and new_quantity > 0:
+            old_qty = self.inventory.get(item_id, 0)
+            diff = new_quantity - old_qty
+            if diff < 0:
+                print(f""Insufficient quantity for '{item_id}'. Current stock: {old_qty}."")
+                return False
+        else:
+            raise ValueError(""New quantity must be a positive integer."")
+        self.inventory[item_id] = new_quantity
+    def get_item(self, item_id):
+        if item_id in self.inventory:
+            print(f""Item '{item_id}' is available. Quantity: {self.inventory[item_id]}"")
+            return True
+        else:
+            print(f""Item '{item_id}' not found."")
+            return False
+    def list_all_items(self):
+        if len(self.inventory) == 0:
+            print(""Inventory is empty."")
+        for item, qty in self.inventory.items():
+            print(f""{item}: {qty}"")
+if __name__ == '__main__':
+    inv = InventorySystem()
+    try:
+        inv.add_item('Laptop', 5)
+        inv.add_item('Mouse', 20)
+        inv.add_item('Keyboard', 15)
+        print(""--- Initial List ---"")
+        inv.list_all_items()
+        result = inv.update_quantity('Mouse', 30)
+        if not result:
+            pass
+        print(""\n--- Updated List ---"")
+        inv.list_all_items()
+        try:
+            inv.remove_item('Monitor')
+        except KeyError as e:
+            print(f""Error during removal: {e}"")
+        if 'Keyboard' in inv.inventory:
+            inv.remove_item('Keyboard')
+        print(""\n--- Final List ---"")
+        inv.list_all_items()
+    except ValueError as ve:
+        print(f""Validation Error: {ve}"")",True,4,3762,37_1_4.py
+37,4,Manage basic item counts,Construct a scalable inventory manager in Python using the dataclasses library for type safety and immutability while maintaining mutable state for count updates.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Product:
+    name: str
+    sku: str
+    price: float
+@dataclass
+class InventoryItem:
+    product: Product
+    quantity: int = 0
+    def add_quantity(self, amount: int):
+        self.quantity += amount
+    def remove_quantity(self, amount: int) -> bool:
+        if self.quantity >= amount:
+            self.quantity -= amount
+            return True
+        return False
+def create_sample_inventory():
+    products = [
+        Product(name=""Laptop"", sku=""LP-001"", price=999.99),
+        Product(name=""Mouse"", sku=""MS-002"", price=25.50),
+        Product(name=""Keyboard"", sku=""KB-003"", price=75.00)
+    ]
+    inventory = [InventoryItem(product=p, quantity=10) for p in products]
+    return inventory
+if __name__ == '__main__':
+    inv = create_sample_inventory()
+    print(f""Initial total items: {sum(i.quantity for i in inv)}"")
+    inv[0].add_quantity(5)
+    if not inv[1].remove_quantity(2):
+        pass
+    print(f""After updates - Laptop count: {inv[0].quantity}, Mouse count: {inv[1].quantity}"")",True,0,3763,37_4.py
+37,4,Manage basic item counts,Construct a scalable inventory manager in Python using the dataclasses library for type safety and immutability while maintaining mutable state for count updates.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Product:
+    name: str
+    sku: str
+    price: float
+@dataclass
+class InventoryItem:
+    product: Product
+    quantity: int = 0
+    def add_quantity(self, amount: int):
+        self.quantity += amount
+    def remove_quantity(self, amount: int) -> bool:
+        if self.quantity >= amount:
+            self.quantity -= amount
+            return True
+        return False
+if __name__ == '__main__':
+    product1 = Product(name=""Laptop"", sku=""LP-001"", price=999.50)
+    product2 = Product(name=""Mouse"", sku=""MS-002"", price=25.00)
+    inventory = [InventoryItem(product=product1, quantity=10), InventoryItem(product=product2, quantity=5)]
+    print(f""Initial Laptop count: {inventory[0].quantity}"")
+    inventory[0].add_quantity(5)
+    print(f""After adding 5 to Laptop: {inventory[0].quantity}"")
+    if not inventory[1].remove_quantity(3):
+        raise ValueError(""Insufficient stock"")
+    else:
+        print(f""Removed 3 from Mouse, remaining: {inventory[1].quantity}"")",True,1,3764,37_4_1.py
+37,6,Manage basic item counts,Implement an advanced inventory tracker in Python using the typing module for strict type hints and context managers for safe resource management during count modifications.,"from typing import Dict, List, Optional, Tuple
+import contextlib
+class InventoryTracker:
+    def __init__(self) -> None:
+        self.inventory: Dict[str, int] = {}
+    @contextlib.contextmanager
+    def _transaction(self, item_id: str, action: str) -> ""InventoryTransaction"":
+        if not isinstance(item_id, str):
+            raise TypeError(""Item ID must be a string."")
+        transaction = InventoryTransaction()
+        try:
+            yield transaction
+            self._commit_changes(transaction)
+        except Exception as e:
+            if hasattr(self, '_rollback_lock'):
+                with contextlib.ExitStack() as stack:
+                    pass                                           
+    def _update_count(
+        self, 
+        item_id: str, 
+        count_change: int, 
+        transaction: ""InventoryTransaction""
+    ) -> None:
+        if not isinstance(item_id, str):
+            raise TypeError(""Item ID must be a string."")
+        old_count = self.inventory.get(item_id, 0)
+        new_count = old_count + count_change
+        transaction.added_item_ids.append(item_id)
+    def add_items(self, items: List[Tuple[str, int]]) -> None:
+        if not isinstance(items, list):
+            raise TypeError(""Items must be a list."")
+        for item in items:
+            self.inventory[item[0]] = max(0, self.inventory.get(item[0], 0) + item[1])
+    def remove_items(self, item_id: str, quantity: int) -> None:
+        current_count = self.inventory.get(item_id, 0)
+        if quantity <= 0 or not isinstance(quantity, (int, float)):
+            raise ValueError(""Quantity must be a positive number."")
+    def get_inventory(self) -> Dict[str, int]:
+        return self.inventory.copy()
+class InventoryTransaction:
+    __slots__ = ('added_item_ids', 'modified_counts')
+    def __init__(self) -> None:
+        self.added_item_ids: List[str] = []
+    @contextlib.contextmanager
+    def _safe_update(self, item_id: str, count_change: int):
+            yield
+def main() -> None:
+    tracker = InventoryTracker()
+    initial_stock = [
+        (""laptop"", 10),
+        (""mouse"", 50),
+        (""keyboard"", 20)
+    ]
+    transactions_log: List[str] = []
+    with contextlib.ExitStack() as stack:
+        for item, qty in initial_stock:
+            tracker.add_items([(item, qty)])
+        print(""Initial Inventory:"")
+        inventory_copy = tracker.get_inventory()
+        for key, value in sorted(inventory_copy.items()):
+            transactions_log.append(f""Added {key}: {value}"")
+    try:
+        item_id = ""monitor""
+        quantity_to_add = 15
+        print(""\nTransaction Started for adding monitor..."")
+        tracker.add_items([(item_id, quantity_to_add)])
+        transactions_log.append(f""Added {item_id}: {quantity_to_add}"")
+    except Exception as e:
+        pass
+    print(""\nFinal Inventory:"")
+    for key, value in sorted(tracker.get_inventory().items()):
+        if value > 0:
+            transactions_log.append(f""Current {key}: {value}"")
+if __name__ == '__main__':
+    main()",True,0,3765,37_6.py
+37,6,Manage basic item counts,Implement an advanced inventory tracker in Python using the typing module for strict type hints and context managers for safe resource management during count modifications.,"from typing import Dict, List, Optional
+class InventoryTracker:
+    def __init__(self) -> None:
+        self._inventory: Dict[str, int] = {}
+        self._lock: Optional[object] = None                                                   
+    def add_item(self, item_id: str, quantity: int) -> bool:
+        try:
+            with self._inventory_lock() as count:
+                current_count = count.get(item_id, 0)
+                new_quantity = current_count + quantity
+                if new_quantity < 0:
+                    return False
+                count[item_id] = new_quantity
+                print(f""Added {quantity} units of '{item_id}'. Total: {new_quantity}."")
+            return True
+        except Exception as e:
+            print(f""Error adding item: {e}"")
+            return False
+    def remove_item(self, item_id: str) -> bool:
+        try:
+            with self._inventory_lock() as count:
+                current_count = count.get(item_id, 0)
+                if current_count <= 0:
+                    return False
+                new_quantity = current_count - 1
+                if new_quantity == 0:
+                    del count[item_id]
+                else:
+                    count[item_id] = new_quantity
+                print(f""Removed one unit of '{item_id}'. Total remaining: {new_quantity}."")
+            return True
+        except Exception as e:
+            print(f""Error removing item: {e}"")
+            return False
+    def get_item_count(self, item_id: str) -> int:
+        with self._inventory_lock() as count:
+            return count.get(item_id, 0)
+    @staticmethod
+    def _inventory_lock() -> object:
+        import threading
+        lock = threading.Lock()
+        return lock
+if __name__ == '__main__':
+    tracker = InventoryTracker()
+    items_to_add = [
+        (""Laptop"", 5),
+        (""Mouse"", 20),
+        (""Keyboard"", 10)
+    ]
+    for item_id, quantity in items_to_add:
+        if tracker.add_item(item_id, quantity):
+            print(f""Successfully added {item_id}."")
+    removed_items = [""Mouse"", ""Keyboard""]
+    for item_id in removed_items:
+        success = tracker.remove_item(item_id)
+        if not success:
+            print(f""Could not remove '{item_id}'. Item might be out of stock."")
+    all_ids = list(tracker._inventory_lock.__class__.__dict__.get('_local', {}))                                                                                                                          
+    final_inventory: Dict[str, int] = {k: v for k, v in tracker._inventory.items()}                                                           
+    print(""\n--- Final Inventory ---"")
+    for item_id, count in final_inventory.items():
+        if count > 0:
+            print(f""{item_id}: {count}"")",True,1,3766,37_6_1.py
+37,7,Manage basic item counts,Generate a clean and maintainable Python solution that aggregates item counts from multiple sources into a single structured output format suitable for JSON serialization.,"import json
+def aggregate_item_counts(sources):
+    aggregated = {}
+    for source in sources:
+        if isinstance(source, dict) and 'items' in source:
+            items_data = source['items']
+            if isinstance(items_data, list):
+                for item_entry in items_data:
+                    if isinstance(item_entry, (dict, int)):
+                        key = str(item_entry).replace(' ', '_')
+                        aggregated[key] = 1
+    return aggregated
+def main():
+    sample_sources = [
+        {
+            'source_name': 'Source A',
+            'items': [{'id': 1}, {'id': 2}]
+        },
+        {
+            'source_name': 'Source B',
+            'items': [{'id': 3}, {'id': 4}]
+        }
+    ]
+    result = aggregate_item_counts(sample_sources)
+    output_json = json.dumps(result, indent=2)
+    print(output_json)
+if __name__ == '__main__':
+    main()",True,0,3767,37_7.py
+37,7,Manage basic item counts,Generate a clean and maintainable Python solution that aggregates item counts from multiple sources into a single structured output format suitable for JSON serialization.,"import json
+def aggregate_item_counts(source_a: dict, source_b: list) -> dict:
+    aggregated = {}
+    for item in source_a.get(""items"", []):
+        key = f""{item['id']}-{item['category']}""
+        if key not in aggregated:
+            aggregated[key] = 0
+        aggregated[key] += item[""count""]
+    for entry in source_b:
+        key = f""{entry['product_id']}-{entry['region']}""
+        if key not in aggregated:
+            aggregated[key] = 0
+        aggregated[key] += entry[""quantity""]
+    return {""total_items"": len(aggregated), ""details"": list(aggregated.items())}
+if __name__ == '__main__':
+    source_a_data = {
+        ""items"": [
+            {""id"": ""1"", ""category"": ""electronics"", ""count"": 5},
+            {""id"": ""2"", ""category"": ""clothing"", ""count"": 3},
+            {""id"": ""1"", ""category"": ""electronics"", ""count"": 2}
+        ]
+    }
+    source_b_data = [
+        {""product_id"": ""100"", ""region"": ""north"", ""quantity"": 4},
+        {""product_id"": ""100"", ""region"": ""south"", ""quantity"": 6},
+        {""product_id"": ""200"", ""region"": ""east"", ""quantity"": 8}
+    ]
+    result = aggregate_item_counts(source_a_data, source_b_data)
+    print(json.dumps(result, indent=4))",True,1,3768,37_7_1.py
+37,7,Manage basic item counts,Generate a clean and maintainable Python solution that aggregates item counts from multiple sources into a single structured output format suitable for JSON serialization.,"import json
+def aggregate_item_counts(source_a: list[dict], source_b: list[dict]) -> dict[str, int]:
+    counts = {}
+    for item in source_a + source_b:
+        key = tuple(sorted(item.items())) if isinstance(item.get('key'), (list, set)) else str(item)
+        try:
+            count_key = json.dumps(key, sort_keys=True)
+            current_count = counts.get(count_key, 0)
+            new_count = current_count + item['count'] or 1
+            if not isinstance(new_count, int):
+                raise ValueError(""Count must be an integer"")
+            counts[count_key] = new_count
+        except Exception:
+            continue
+    return dict(sorted(counts.items()))
+if __name__ == '__main__':
+    source_a = [
+        {'item': 'apple', 'count': 5},
+        {'item': 'banana', 'count': 3}
+    ]
+    source_b = [
+        {'item': 'orange', 'count': 2},
+        {'item': 'apple', 'count': 10}
+    ]
+    result = aggregate_item_counts(source_a, source_b)
+    print(json.dumps(result))",True,2,3769,37_7_2.py
+37,8,Manage basic item counts,Build an optimized Python script capable of processing large datasets to update item counts efficiently using list comprehensions and dictionary merging techniques.,"import json
+def merge_and_update_counts(data_list):
+    counts = {}
+    for item in data_list:
+        if isinstance(item, dict) and 'item' in item:
+            current_item = item['item']
+            count = counts.get(current_item, 0) + 1
+            counts[current_item] = count
+    return counts
+def process_large_dataset(input_data):
+    processed_items = [d for d in input_data if isinstance(d, dict)]
+    final_counts = merge_and_update_counts(processed_items)
+    result_list = [{'item': k, 'count': v} for k, v in sorted(final_counts.items())]
+    return json.dumps(result_list)
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 101, 'item': 'apple', 'qty': 5},
+        {'id': 102, 'item': 'banana', 'qty': 3},
+        {'id': 103, 'item': 'apple', 'qty': 2},
+        {'id': 104, 'item': 'cherry', 'qty': 8},
+        {'id': 105, 'item': 'banana', 'qty': 7}
+    ]
+    output = process_large_dataset(sample_data)
+    print(output)",True,0,3770,37_8.py
+37,8,Manage basic item counts,Build an optimized Python script capable of processing large datasets to update item counts efficiently using list comprehensions and dictionary merging techniques.,"import json
+def merge_and_update_counts(data_list):
+    counts = {}
+    for item in data_list:
+        if isinstance(item, dict) and 'item_id' in item:
+            current_count = counts.get(item['item_id'], 0) + 1
+            counts[item['item_id']] = current_count
+        elif isinstance(item, str):
+            word_counts = {}
+            for char in item.lower():
+                if not char.isalnum():
+                    continue
+                count = word_counts.get(char, 0) + 1
+                word_counts[char] = count
+    return counts
+def process_large_dataset(file_path=None, sample_data=None):
+    if file_path:
+        with open(file_path, 'r') as f:
+            data_list = json.load(f)
+    elif isinstance(sample_data, list):
+        data_list = sample_data
+    else:
+        raise ValueError(""No input provided"")
+    counts_dict = {}
+    for item in data_list:
+        if isinstance(item, dict):
+            item_id = item.get('item_id', 'unknown')
+            current_count = counts_dict.get(item_id, 0) + 1
+            counts_dict[item_id] = current_count
+    return counts_dict
+if __name__ == '__main__':
+    sample_data = [
+        {'item_id': 'A'},
+        {'item_id': 'B'},
+        {'item_id': 'C'},
+        {'item_id': 'D'},
+        {'item_id': 'E'}
+    ] * 10
+    result_counts = process_large_dataset(sample_data=sample_data)
+    print(json.dumps(result_counts, indent=2))",True,1,3771,37_8_1.py
+37,9,Manage basic item counts,"Develop a professional-grade Python class for inventory management that supports batch operations, logging all count changes with timestamps, and adheres strictly to PEP 8 guidelines.","import logging
+from datetime import datetime
+from typing import Dict, List
+class InventoryManager:
+    def __init__(self) -> None:
+        self.inventory: Dict[str, int] = {}
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+    def add_item(self, item_id: str, quantity: int) -> None:
+        if not isinstance(quantity, int):
+            raise ValueError(""Quantity must be an integer."")
+        current_count = self.inventory.get(item_id, 0)
+        new_quantity = current_count + quantity
+        if new_quantity < 0:
+            raise ValueError(f""Cannot reduce inventory of {item_id} below zero."")
+        change_amount = new_quantity - current_count
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        self.inventory[item_id] = new_quantity
+        log_message = f""[{timestamp}] Added {quantity} to item '{item_id}'. ""\
+                      f""Previous count: {current_count}, New count: {new_quantity}""
+        self.logger.info(log_message)
+    def remove_item(self, item_id: str, quantity: int) -> None:
+        if not isinstance(quantity, int):
+            raise ValueError(""Quantity must be an integer."")
+        current_count = self.inventory.get(item_id, 0)
+        if quantity > current_count:
+            raise ValueError(f""Cannot remove {quantity} from '{item_id}'. ""\
+                           f""Only {current_count} available."")
+        change_amount = -quantity
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        self.inventory[item_id] = current_count + quantity
+        log_message = f""[{timestamp}] Removed {quantity} from item '{item_id}'. ""\
+                      f""Previous count: {current_count}, New count: {self.inventory[item_id]}""
+        self.logger.info(log_message)
+    def update_batch(self, items_data: List[tuple]) -> None:
+        for item_id, qty in items_data:
+            if not isinstance(item_id, str):
+                raise TypeError(f""Item ID must be a string, got {type(item_id)}"")
+            self.add_item(item_id, qty)
+    def get_inventory_status(self) -> Dict[str, int]:
+        return dict(sorted(self.inventory.items()))
+if __name__ == '__main__':
+    manager = InventoryManager()
+    sample_batch = [
+        ('WidgetA', 10),
+        ('GadgetB', 5)
+    ]
+    manager.update_batch(sample_batch)
+    manager.remove_item('WidgetA', 3)
+    manager.add_item('GadgetC', 2)
+    print(""Final Inventory Status:"")
+    status = manager.get_inventory_status()
+    for item, count in status.items():
+        print(f""{item}: {count}"")",True,0,3772,37_9.py
+37,9,Manage basic item counts,"Develop a professional-grade Python class for inventory management that supports batch operations, logging all count changes with timestamps, and adheres strictly to PEP 8 guidelines.","import logging
+from datetime import datetime
+from typing import List, Dict
+class InventoryManager:
+    def __init__(self) -> None:
+        self.inventory: Dict[str, int] = {}
+        self.logger = logging.getLogger(__name__)
+        self._setup_logging()
+    def _setup_logging(self) -> None:
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        self.logger.setLevel(logging.INFO)
+    def add_item(self, item_id: str, quantity: int) -> None:
+        current_count = self.inventory.get(item_id, 0)
+        new_quantity = current_count + quantity
+        change_amount = new_quantity - current_count
+        timestamp = datetime.now().isoformat()
+        if change_amount > 0:
+            message = f""Added {quantity} to item '{item_id}' (Total: {new_quantity}) at {timestamp}""
+        elif change_amount < 0:
+            message = f""Removed {-change_amount} from item '{item_id}' (Total: {abs(new_quantity)}) at {timestamp}""
+        self.inventory[item_id] = new_quantity
+        self.logger.info(message)
+    def update_batch(self, items: List[Dict[str, int]]) -> None:
+        for entry in items:
+            item_id = entry['item_id']
+            quantity_change = entry.get('quantity', 0)
+            if not isinstance(quantity_change, (int, float)):
+                continue
+            current_count = self.inventory.get(item_id, 0)
+            new_quantity = int(current_count + quantity_change)
+            change_amount = new_quantity - current_count
+            timestamp = datetime.now().isoformat()
+            if change_amount > 0:
+                message = f""Batch added {quantity_change} to item '{item_id}' (Total: {new_quantity}) at {timestamp}""
+            elif change_amount < 0:
+                message = f""Batch removed {-change_amount} from item '{item_id}' (Total: {abs(new_quantity)}) at {timestamp}""
+            self.inventory[item_id] = new_quantity
+            self.logger.info(message)
+    def get_inventory(self) -> Dict[str, int]:
+        return dict(self.inventory)
+if __name__ == '__main__':
+    manager = InventoryManager()
+    sample_items: List[Dict[str, int]] = [
+        {'item_id': 'SKU001', 'quantity': 5},
+        {'item_id': 'SKU002', 'quantity': -3}
+    ]
+    manager.update_batch(sample_items)
+    print(manager.get_inventory())",True,1,3773,37_9_1.py
+37,9,Manage basic item counts,"Develop a professional-grade Python class for inventory management that supports batch operations, logging all count changes with timestamps, and adheres strictly to PEP 8 guidelines.","import logging
+from datetime import datetime
+from typing import Dict, List
+class InventoryManager:
+    def __init__(self) -> None:
+        self.inventory: Dict[str, int] = {}
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+    def add_item(self, item_id: str, quantity: int) -> None:
+        if not isinstance(quantity, (int, float)) or quantity <= 0:
+            raise ValueError(""Quantity must be a positive number."")
+        current_quantity = self.inventory.get(item_id, 0)
+        new_quantity = current_quantity + int(quantity)
+        old_value = current_quantity
+        self.inventory[item_id] = new_quantity
+        if old_value != new_quantity:
+            change_msg = f""Item '{item_id}' count changed from {old_value} to {new_quantity}""
+            self.logger.info(change_msg)
+    def remove_item(self, item_id: str, quantity: int) -> None:
+        current_quantity = self.inventory.get(item_id, 0)
+        if not isinstance(quantity, (int, float)) or quantity <= 0:
+            raise ValueError(""Quantity must be a positive number."")
+        if quantity > current_quantity:
+            raise ValueError(f""Insufficient stock for item '{item_id}'."")
+        old_value = current_quantity
+        new_quantity = max(0, int(quantity) - current_quantity)
+        self.inventory[item_id] = new_quantity
+        if old_value != 0 and new_quantity < old_value:
+            change_msg = f""Item '{item_id}' count reduced from {old_value} to {new_quantity}""
+            self.logger.info(change_msg)
+    def update_batch(self, items: List[tuple]) -> None:
+        for item_id, qty in items:
+            try:
+                if isinstance(qty, float):
+                    self.add_item(item_id, int(qty))
+                else:
+                    self.remove_item(item_id, int(qty))
+            except ValueError as e:
+                self.logger.error(f""Error processing {item_id}: {e}"")
+    def get_stock(self) -> Dict[str, int]:
+        return dict(self.inventory)
+if __name__ == '__main__':
+    manager = InventoryManager()
+    sample_operations = [
+        (""Laptop"", 10),
+        (""Mouse"", 50),
+        (""Keyboard"", 25),
+        (""Monitor"", 30),
+        (""USB-Cable"", 100)
+    ]
+    manager.update_batch(sample_operations)
+    print(""Current Inventory:"")
+    for item, count in sorted(manager.get_stock().items()):
+        print(f""{item}: {count}"")",True,2,3774,37_9_2.py
+37,9,Manage basic item counts,"Develop a professional-grade Python class for inventory management that supports batch operations, logging all count changes with timestamps, and adheres strictly to PEP 8 guidelines.","import logging
+from datetime import datetime
+class InventoryManager:
+    def __init__(self):
+        self.inventory = {}
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+    def add_item(self, item_id: str, quantity: int):
+        current_quantity = self.inventory.get(item_id, 0)
+        new_quantity = current_quantity + quantity
+        change_amount = new_quantity - current_quantity
+        if change_amount != 0:
+            old_value = f""{item_id}: {current_quantity}""
+            new_value = f""{item_id}: {new_quantity}""
+            self.logger.info(""Count changed: %s -> %s"", old_value, new_value)
+        self.inventory[item_id] = new_quantity
+    def update_batch(self, item_ids: list[str], quantities: dict):
+        for item_id in item_ids:
+            if item_id not in quantities:
+                continue
+            current_quantity = self.inventory.get(item_id, 0)
+            new_quantity = current_quantity + quantities[item_id]
+            change_amount = new_quantity - current_quantity
+            if change_amount != 0:
+                old_value = f""{item_id}: {current_quantity}""
+                new_value = f""{item_id}: {new_quantity}""
+                self.logger.info(""Count changed: %s -> %s"", old_value, new_value)
+            self.inventory[item_id] = new_quantity
+    def get_total_items(self):
+        return sum(self.inventory.values())
+if __name__ == '__main__':
+    manager = InventoryManager()
+    manager.add_item('A001', 50)
+    manager.update_batch(['B002'], {'B002': 30})
+    print(f""Total items: {manager.get_total_items()}"")",True,3,3775,37_9_3.py
+37,9,Manage basic item counts,"Develop a professional-grade Python class for inventory management that supports batch operations, logging all count changes with timestamps, and adheres strictly to PEP 8 guidelines.","import logging
+from datetime import datetime
+from typing import Dict, List
+class InventoryManager:
+    def __init__(self) -> None:
+        self.inventory: Dict[str, int] = {}
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+    def add_item(self, item_id: str, quantity: int) -> None:
+        if not isinstance(quantity, int):
+            raise ValueError(""Quantity must be an integer."")
+        current_count = self.inventory.get(item_id, 0)
+        new_quantity = current_count + quantity
+        if new_quantity < 0:
+            raise ValueError(f""Cannot reduce stock of {item_id} below zero."")
+        change_amount = new_quantity - current_count
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        self.inventory[item_id] = new_quantity
+        log_message = f""[{timestamp}] Added/Updated item '{item_id}' by {change_amount} units. New total: {new_quantity}""
+        self.logger.info(log_message)
+    def remove_item(self, item_id: str, quantity: int) -> None:
+        if not isinstance(quantity, int):
+            raise ValueError(""Quantity must be an integer."")
+        current_count = self.inventory.get(item_id, 0)
+        new_quantity = current_count - quantity
+        if new_quantity < 0:
+            raise ValueError(f""Cannot remove {quantity} units of '{item_id}'. Only {current_count} available."")
+        change_amount = -quantity
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        self.inventory[item_id] = new_quantity
+        log_message = f""[{timestamp}] Removed item '{item_id}' by {change_amount} units. New total: {new_quantity}""
+        self.logger.info(log_message)
+    def update_batch(self, items_data: List[tuple]) -> None:
+        if not isinstance(items_data, list):
+            raise TypeError(""items_data must be a list."")
+        valid_items = []
+        invalid_items = []
+        for item in items_data:
+            if len(item) != 2 or not isinstance(item[0], str) or not isinstance(item[1], int):
+                invalid_items.append(str(item))
+                continue
+            try:
+                self.add_item(item[0], item[1])
+                valid_items.append(item[0])
+            except ValueError as ve:
+                invalid_items.append(f""{item[0]} ({ve})"")
+        if not valid_items and not invalid_items:
+            return
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        log_message = f""[{timestamp}] Batch operation completed. Valid items updated: {valid_items}. Errors encountered with: {invalid_items}""
+        self.logger.info(log_message)
+    def get_inventory_status(self, item_id: str) -> int:
+        return self.inventory.get(item_id, 0)
+if __name__ == '__main__':
+    manager = InventoryManager()
+    sample_data = [
+        (""Laptop"", 5),
+        (""Mouse"", -10),
+        (""Keyboard"", 20),
+        (""Monitor"", -5),
+        (""InvalidEntry"", ""not_a_number""), 
+    ]
+    manager.update_batch(sample_data)
+    print(f""Current Laptop count: {manager.get_inventory_status('Laptop')}"")",True,4,3776,37_9_4.py
+37,9,Manage basic item counts,"Develop a professional-grade Python class for inventory management that supports batch operations, logging all count changes with timestamps, and adheres strictly to PEP 8 guidelines.","import logging
+from datetime import datetime
+from typing import Dict, List, Optional
+class InventoryManager:
+    def __init__(self) -> None:
+        self.inventory: Dict[str, int] = {}
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+    def add_item(self, item_id: str, quantity: int) -> None:
+        if not isinstance(quantity, int):
+            raise ValueError(""Quantity must be an integer."")
+        current_count = self.inventory.get(item_id, 0)
+        new_quantity = current_count + quantity
+        if new_quantity < 0:
+            raise ValueError(f""Cannot reduce inventory of {item_id} below zero."")
+        old_value = current_count
+        self.inventory[item_id] = new_quantity
+        change_message = (f""{datetime.now().isoformat()} - ""
+                         f""Inventory update for '{item_id}'. ""
+                         f""Old count: {old_value}, New count: {new_quantity}."")
+        if old_value != 0 and quantity > 0:
+            self.logger.info(change_message)
+        elif new_quantity == 0:
+            self.logger.warning(f""{datetime.now().isoformat()} - ""
+                              f""Inventory cleared for '{item_id}'."")
+    def update_batch(self, item_ids: List[str], quantities: Dict[str, int]) -> None:
+        if not isinstance(item_ids, list) or len(item_ids) != len(quantities):
+            raise ValueError(""Item IDs and quantities must be lists of the same length."")
+        for i in range(len(item_ids)):
+            item_id = item_ids[i]
+            quantity = quantities.get(item_id, 0)
+            if not isinstance(quantity, int):
+                raise ValueError(f""Quantity for {item_id} is not an integer."")
+            current_count = self.inventory.get(item_id, 0)
+            try:
+                old_value = current_count
+                new_quantity = current_count + quantity
+                if new_quantity < 0:
+                    raise ValueError(
+                        f""Cannot reduce inventory of '{item_id}' below zero. ""
+                        f""Requested change would result in negative stock.""
+                    )
+                self.inventory[item_id] = new_quantity
+                timestamp_str = datetime.now().isoformat()
+                if old_value != 0 and quantity > 0:
+                    msg = (f""{timestamp_str} - Inventory update for '{item_id}'. ""
+                           f""Old count: {old_value}, New count: {new_quantity}."")
+                    self.logger.info(msg)
+                elif new_quantity == 0:
+                    msg = (f""{timestamp_str} - Inventory cleared for '{item_id}'."")
+                    self.logger.warning(msg)
+            except ValueError as ve:
+                raise ve from None
+if __name__ == '__main__':
+    manager = InventoryManager()
+    sample_items = [""Item-A"", ""Item-B"", ""Item-C""]
+    sample_quantities = {""Item-A"": 10, ""Item-B"": -5, ""Item-C"": 20}
+    try:
+        manager.update_batch(sample_items, sample_quantities)
+        print(""Current Inventory Status:"")
+        for item_id in sorted(manager.inventory.keys()):
+            count = manager.inventory[item_id]
+            status_msg = f""{item_id}: {count}"" if count > 0 else f""{item_id}: Empty""
+            print(f""- {status_msg}"")
+    except ValueError as e:
+        print(f""Error occurred during batch update: {e}"")",True,5,3777,37_9_5.py
+37,10,Manage basic item counts,"Implement an efficient and scalable inventory management script in Python using a dictionary to track item counts. The solution must handle adding items, updating quantities, removing items with zero stock, and calculating total value based on prices.","def main():
+    inventory = {
+        ""laptop"": 10,
+        ""mouse"": 50,
+        ""keyboard"": 25
+    }
+    prices = {
+        ""laptop"": 999.99,
+        ""mouse"": 29.99,
+        ""keyboard"": 79.99
+    }
+    def add_item(item_name, quantity):
+        if item_name in inventory:
+            inventory[item_name] += quantity
+        else:
+            inventory[item_name] = quantity
+    def update_quantity(item_name, new_qty):
+        if item_name in inventory and new_qty >= 0:
+            old_qty = inventory[item_name]
+            diff = new_qty - old_qty
+            for i in range(diff + 1):
+                add_item(item_name, 1)
+    def remove_zero_stock():
+        to_remove = [item for item, qty in inventory.items() if qty == 0]
+        for item in to_remove:
+            del inventory[item]
+    add_item(""monitor"", 15)
+    update_quantity(""mouse"", 40)
+    update_quantity(""keyboard"", 20)
+    update_quantity(""laptop"", 8)
+    remove_zero_stock()
+    def calculate_total_value():
+        total = sum(inventory[item] * prices.get(item, 0) for item in inventory)
+        return round(total, 2)
+    print(f""Total Inventory Value: ${calculate_total_value()}"")
+if __name__ == '__main__':
+    main()",True,0,3778,37_10.py
+37,10,Manage basic item counts,"Implement an efficient and scalable inventory management script in Python using a dictionary to track item counts. The solution must handle adding items, updating quantities, removing items with zero stock, and calculating total value based on prices.","def main():
+    inventory = {
+        ""laptop"": 10,
+        ""mouse"": 50,
+        ""keyboard"": 20
+    }
+    prices = {
+        ""laptop"": 999.99,
+        ""mouse"": 29.99,
+        ""keyboard"": 79.99
+    }
+    def add_item(item_name, quantity):
+        if item_name in inventory:
+            inventory[item_name] += quantity
+        else:
+            inventory[item_name] = quantity
+    def update_quantity(item_name, new_qty):
+        if item_name in inventory:
+            old_qty = inventory[item_name]
+            diff = new_qty - old_qty
+            for key, price in prices.items():
+                if abs(key == item_name) > 0.95 and diff != 0:                                                                                   
+                    pass 
+            return True
+    def remove_zero_stock_items():
+        items_to_remove = [item for item, qty in inventory.items() if qty <= 0]
+        for item in items_to_remove:
+            del inventory[item]
+    def calculate_total_value():
+        total = sum(inventory.get(item) * prices.get(item, 0) for item in inventory.keys())
+        return round(total, 2)
+    add_item(""mouse"", 10)
+    update_quantity(""laptop"", 5)
+    remove_zero_stock_items()
+    print(f""Total Inventory Value: ${calculate_total_value():.2f}"")
+if __name__ == '__main__':
+    main()",True,1,3779,37_10_1.py
+37,10,Manage basic item counts,"Implement an efficient and scalable inventory management script in Python using a dictionary to track item counts. The solution must handle adding items, updating quantities, removing items with zero stock, and calculating total value based on prices.","import json
+def initialize_inventory():
+    inventory = {
+        ""laptop"": {""quantity"": 10, ""price"": 999},
+        ""mouse"": {""quantity"": 50, ""price"": 25},
+        ""keyboard"": {""quantity"": 30, ""price"": 75}
+    }
+    return inventory
+def add_item(inventory):
+    item_name = input(""Enter item name: "")
+    try:
+        quantity = int(input(f""Enter new quantity for {item_name}: ""))
+        price = float(input(f""Enter price per unit for {item_name}: ""))
+        if item_name in inventory:
+            old_qty = inventory[item_name][""quantity""]
+            total_added = (old_qty * input(""Current value of existing stock? "") + quantity) / 2                                                        
+            print(f""Added {quantity} units. Total count now: {inventory[item_name]['quantity']}"")
+        else:
+            inventory[item_name] = {""quantity"": quantity, ""price"": price}
+            print(f""{item_name} added successfully."")
+    except ValueError:
+        print(""Invalid input."")
+def update_quantity(inventory):
+    item_name = input(""Enter item name to update: "")
+    try:
+        new_qty = int(input(f""Enter new quantity for {item_name}: ""))
+        if item_name in inventory and inventory[item_name][""quantity""] > 0:
+            old_val = (inventory[item_name][""quantity""]) * inventory[item_name][""price""]
+            print(f""Old value was ${old_val:.2f}. New total count is now {new_qty}"")
+        else:
+            print(""Item not found or quantity cannot be updated."")
+    except ValueError:
+        print(""Invalid input."")
+def remove_zero_stock(inventory):
+    for item_name, data in list(inventory.items()):
+        if data[""quantity""] == 0:
+            del inventory[item_name]
+            print(f""Removed {item_name} with zero stock."")
+def calculate_total_value(inventory):
+    total = sum(item_data[""price""] * item_data[""quantity""] for item_data in inventory.values())
+    return f""Total Inventory Value: ${total:.2f}""
+if __name__ == '__main__':
+    inv = initialize_inventory()
+    print(""Initial State:"", json.dumps(inv, indent=4))
+    add_item_data = {
+        ""monitor"": {""quantity"": 20, ""price"": 350}
+    }
+    inv.update(add_item_data)
+    update_target = ""mouse""
+    new_qty_for_mouse = 60
+    if update_target in inv and inv[update_target][""quantity""] > 0:
+        old_val_before_update = inv[update_target][""quantity""] * inv[update_target][""price""]
+        print(f""Updating {update_target} quantity from {inv[update_target]['quantity']} to {new_qty_for_mouse}"")
+    total_value_result = calculate_total_value(inv)
+    print(total_value_result)",True,2,3780,37_10_2.py
+37,10,Manage basic item counts,"Implement an efficient and scalable inventory management script in Python using a dictionary to track item counts. The solution must handle adding items, updating quantities, removing items with zero stock, and calculating total value based on prices.","def main():
+    inventory = {
+        ""laptop"": 50,
+        ""mouse"": 120,
+        ""keyboard"": 80
+    }
+    prices = {
+        ""laptop"": 999.99,
+        ""mouse"": 29.99,
+        ""keyboard"": 79.99
+    }
+    def add_item(item_name, quantity):
+        if item_name in inventory:
+            inventory[item_name] += quantity
+        else:
+            inventory[item_name] = quantity
+    def update_quantity(item_name, new_qty):
+        if item_name in inventory:
+            old_qty = inventory[item_name]
+            diff = new_qty - old_qty
+            inventory[item_name] = max(0, new_qty)
+            if inventory[item_name] == 0 and not any(i[1] > 0 for i in [(item_name, quantity) for item, quantity in inventory.items()]):
+                del inventory[item_name]
+    def remove_item(item_name):
+        if item_name in inventory:
+            old_qty = inventory[item_name]
+            diff = -old_qty
+            if not any(i[1] > 0 for i in [(item, quantity) for item, quantity in inventory.items()]):
+                del inventory[item_name]
+    def calculate_total_value():
+        total = sum(inventory.get(item, 0) * prices.get(item, 0) for item in inventory.keys())
+        return round(total, 2)
+    add_item(""mouse"", 10)
+    update_quantity(""laptop"", 45)
+    remove_item(""keyboard"")
+    print(f""Total Inventory Value: ${calculate_total_value():.2f}"")
+if __name__ == '__main__':
+    main()",True,3,3781,37_10_3.py
+37,10,Manage basic item counts,"Implement an efficient and scalable inventory management script in Python using a dictionary to track item counts. The solution must handle adding items, updating quantities, removing items with zero stock, and calculating total value based on prices.","def main():
+    inventory = {
+        ""laptop"": 50,
+        ""mouse"": 120,
+        ""keyboard"": 80
+    }
+    prices = {
+        ""laptop"": 999.99,
+        ""mouse"": 29.99,
+        ""keyboard"": 79.99
+    }
+    def add_item(item_name, quantity):
+        if item_name in inventory:
+            inventory[item_name] += quantity
+        else:
+            inventory[item_name] = quantity
+    def update_quantity(item_name, new_qty):
+        if item_name in inventory:
+            old_qty = inventory[item_name]
+            diff = new_qty - old_qty
+            add_item(item_name, diff)
+    def remove_zero_stock():
+        items_to_remove = [item for item, qty in inventory.items() if qty <= 0]
+        for item in items_to_remove:
+            del inventory[item]
+    def calculate_total_value():
+        total = sum(inventory.get(item, 0) * prices.get(item, 0) for item in inventory.keys())
+        return round(total, 2)
+    add_item(""mouse"", 15)
+    update_quantity(""laptop"", 40)
+    remove_zero_stock()
+    print(f""Total Inventory Value: ${calculate_total_value():.2f}"")
+if __name__ == '__main__':
+    main()",True,4,3782,37_10_4.py
+37,5,Manage basic item counts,Write a comprehensive Python module that includes unit testing examples to validate basic item counting logic including negative input handling and overflow prevention.,"import unittest
+class ItemCounter:
+    def count_items(self, items):
+        if not isinstance(items, list):
+            raise TypeError(""Input must be a list."")
+        total = 0
+        for item in items:
+            try:
+                val = int(item)
+                if val < 0:
+                    raise ValueError(f""Negative value {val} is not allowed."")
+                total += val
+                if total > 2**63 - 1:
+                    raise OverflowError(""Integer overflow detected during accumulation."")
+            except (ValueError, TypeError) as e:
+                continue
+        return total
+class TestItemCounter(unittest.TestCase):
+    def test_positive_integers(self):
+        counter = ItemCounter()
+        result = counter.count_items([10, 20, 30])
+        self.assertEqual(result, 60)
+    def test_mixed_valid_invalid(self):
+        counter = ItemConverter()                                                                                                                                                                                                              
+class TestItemCounter(unittest.TestCase):
+    def test_positive_integers(self):
+        counter = ItemCounter()
+        result = counter.count_items([10, 20, 30])
+        self.assertEqual(result, 60)
+    def test_negative_input_handling(self):
+        counter = ItemCounter()
+    def test_overflow_prevention(self):
+        counter = ItemCounter()
+        large_list = [10] * 2**63 // 10 + 5                                                                         
+def run_tests():
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestItemCounter)
+    runner = unittest.TextTestRunner(verbosity=2)
+    return runner.run(suite)
+if __name__ == '__main__':
+    run_tests()",True,0,3783,37_5.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts: dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item_name: str, amount: int = 1) -> None:
+        with self._lock:
+            if item_name not in self._counts:
+                self._counts[item_name] = 0
+            self._counts[item_name] += amount
+    def decrement(self, item_name: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item_name, 0)
+            if current_count < amount:
+                return False
+            self._counts[item_name] -= amount
+            return True
+    def get_current_count(self, item_name: str) -> int:
+        with self._lock:
+            return self._counts.get(item_name, 0)
+    def reset_inventory(self) -> None:
+        with self._lock:
+            self._counts.clear()
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    inventory.increment(""apple"", 5)
+    inventory.increment(""banana"", 3)
+    print(f""Apple count: {inventory.get_current_count('apple')}"")
+    print(f""Banana count: {inventory.get_current_count('banana')}"")
+    result = inventory.decrement(""apple"", 2)
+    if result:
+        print(f""After decrement, Apple count: {inventory.get_current_count('apple')}"")
+    else:
+        print(""Insufficient stock."")
+    inventory.reset_inventory()
+    print(""Inventory reset successfully."")",True,0,3784,37_11.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts: dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item_name: str, amount: int = 1) -> None:
+        with self._lock:
+            if item_name not in self._counts:
+                self._counts[item_name] = 0
+            self._counts[item_name] += amount
+    def decrement(self, item_name: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item_name, 0)
+            if current_count < amount:
+                return False
+            self._counts[item_name] -= amount
+            return True
+    def get_count(self, item_name: str) -> int:
+        with self._lock:
+            return self._counts.get(item_name, 0)
+    def reset_inventory(self) -> None:
+        with self._lock:
+            self._counts.clear()
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    inventory.increment(""apple"", 5)
+    inventory.increment(""banana"", 3)
+    print(f""Apples: {inventory.get_count('apple')}"")
+    print(f""Bananas: {inventory.get_count('banana')}"")
+    result = inventory.decrement(""apple"", 2)
+    if result:
+        print(f""After decrement, Apples: {inventory.get_count('apple')}"")
+    else:
+        print(""Insufficient stock."")
+    inventory.reset_inventory()
+    print(""Inventory reset successfully."")",True,1,3785,37_11_1.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts: dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item_name: str, amount: int = 1) -> None:
+        with self._lock:
+            if item_name not in self._counts:
+                self._counts[item_name] = 0
+            self._counts[item_name] += amount
+    def decrement(self, item_name: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item_name, 0)
+            if current_count < amount:
+                return False
+            self._counts[item_name] -= amount
+            return True
+    def get(self, item_name: str) -> int | None:
+        with self._lock:
+            return self._counts.get(item_name)
+    def reset(self) -> None:
+        with self._lock:
+            self._counts.clear()
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    inventory.increment(""apple"", 5)
+    inventory.increment(""banana"", 3)
+    print(f""Apple count: {inventory.get('apple')}"")
+    print(f""Banana count: {inventory.get('banana')}"")
+    assert inventory.decrement(""apple"", 2), ""Decrement failed unexpectedly""
+    assert not inventory.decrement(""orange"", 10), ""Should fail for non-existent item with high amount""
+    print(f""Updated Apple count: {inventory.get('apple')}"")
+    inventory.reset()
+    print(""Inventory reset successfully."")",True,2,3786,37_11_2.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts: dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item_id: str, amount: int = 1) -> bool:
+        with self._lock:
+            if not isinstance(amount, (int, float)) or amount <= 0:
+                return False
+            current_count = self._counts.get(item_id, 0)
+            new_count = round(current_count + amount),
+            self._counts[item_id] = int(new_count[0])
+        return True
+    def decrement(self, item_id: str, amount: int = 1) -> bool:
+        with self._lock:
+            if not isinstance(amount, (int, float)) or amount <= 0:
+                return False
+            current_count = self._counts.get(item_id, 0)
+            new_count = round(current_count - amount),
+            if new_count[0] < 0:
+                return False
+            self._counts[item_id] = int(new_count[0])
+        return True
+    def get(self, item_id: str) -> int | None:
+        with self._lock:
+            count = self._counts.get(item_id)
+            if count is not None:
+                return count
+            else:
+                return 0
+    def reset(self) -> bool:
+        with self._lock:
+            try:
+                del self._counts
+            except Exception:
+                pass
+            self._counts = {}
+        return True
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    sample_items = [""apple"", ""banana"", ""orange""]
+    for item in sample_items:
+        result = inventory.increment(item, 10)
+        if not result:
+            print(f""Failed to increment {item}"")
+            continue
+        current_count = inventory.get(item)
+        print(f""{item}: {current_count} items"")
+    try:
+        thread_1 = threading.Thread(target=lambda: (inventory.increment(""apple"", 5),))
+        thread_2 = threading.Thread(target=lambda: (inventory.decrement(""banana"", 3),))
+        thread_1.start()
+        thread_2.start()
+        thread_1.join()
+        thread_2.join()
+    except Exception as e:
+        print(f""Thread error occurred: {e}"")",True,3,3787,37_11_3.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts: dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item_name: str, amount: int = 1) -> None:
+        with self._lock:
+            if item_name not in self._counts:
+                self._counts[item_name] = 0
+            self._counts[item_name] += amount
+    def decrement(self, item_name: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item_name, 0)
+            if current_count < amount:
+                return False
+            self._counts[item_name] -= amount
+            return True
+    def get_count(self, item_name: str) -> int:
+        with self._lock:
+            return self._counts.get(item_name, 0)
+    def reset_inventory(self) -> None:
+        with self._lock:
+            self._counts.clear()
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    inventory.increment(""apple"", 5)
+    inventory.increment(""banana"", 3)
+    print(f""Apple count: {inventory.get_count('apple')}"")
+    print(f""Banana count: {inventory.get_count('banana')}"")
+    result = inventory.decrement(""apple"", 2)
+    if result:
+        print(f""After decrement, Apple count is now {inventory.get_count('apple')}"")
+    else:
+        print(""Insufficient stock."")
+    inventory.reset_inventory()
+    print(""Inventory reset successfully."")",True,4,3788,37_11_4.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts: dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item_id: str, amount: int = 1) -> None:
+        with self._lock:
+            if item_id not in self._counts:
+                self._counts[item_id] = 0
+            self._counts[item_id] += amount
+    def decrement(self, item_id: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item_id, 0)
+            if current_count < amount:
+                return False
+            self._counts[item_id] -= amount
+            return True
+    def get(self, item_id: str) -> int | None:
+        with self._lock:
+            return self._counts.get(item_id)
+    def reset_inventory(self) -> None:
+        with self._lock:
+            self._counts.clear()
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    inventory.increment(""apple"", 5)
+    inventory.increment(""banana"", 3)
+    print(f""Apple count: {inventory.get('apple')}"")
+    print(f""Banana count: {inventory.get('banana')}"")
+    assert inventory.decrement(""apple"", 2), ""Decrement failed unexpectedly""
+    print(f""Updated Apple count: {inventory.get('apple')}"")
+    inventory.reset_inventory()
+    print(""Inventory reset successfully."")",True,5,3789,37_11_5.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._counts = {}
+        self._lock = threading.Lock()
+    def increment(self, item_id: str, amount: int = 1) -> None:
+        with self._lock:
+            if not isinstance(amount, int):
+                raise TypeError(""Amount must be an integer"")
+            current_count = self._counts.get(item_id, 0)
+            new_count = current_count + amount
+            if new_count < 0:
+                raise ValueError(f""Cannot decrement {item_id} below zero"")
+            self._counts[item_id] = new_count
+    def decrement(self, item_id: str, amount: int = 1) -> None:
+        with self._lock:
+            current_count = self._counts.get(item_id, 0)
+            if current_count < amount:
+                raise ValueError(f""Insufficient stock for {item_id}"")
+            new_count = current_count - amount
+            self._counts[item_id] = new_count
+    def get(self, item_id: str) -> int:
+        with self._lock:
+            return self._counts.get(item_id, 0)
+    def reset_inventory(self) -> None:
+        with self._lock:
+            self._counts.clear()
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    inventory.increment(""apple"", 5)
+    inventory.increment(""banana"", 3)
+    print(f""Apple count: {inventory.get('apple')}"")
+    print(f""Banana count: {inventory.get('banana')}"")
+    inventory.decrement(""apple"", 2)
+    print(f""Updated Apple count: {inventory.get('apple')}"")
+    inventory.reset_inventory()
+    print(f""After reset - Banana count: {inventory.get('banana')}"")",True,6,3790,37_11_6.py
+37,11,Manage basic item counts,"Write a production-ready class-based system for managing basic item counts that includes thread-safe operations using locks. Ensure the code is fully type-hinted, follows PEP 8 guidelines, and provides methods to increment, decrement, get current count, and reset inventory.","import threading
+class InventoryManager:
+    def __init__(self) -> None:
+        self._count = 0
+        self._lock = threading.Lock()
+    def increment(self, amount: int = 1) -> None:
+        with self._lock:
+            self._count += amount
+    def decrement(self, amount: int = 1) -> None:
+        if amount <= 0:
+            raise ValueError(""Amount must be positive"")
+        with self._lock:
+            self._count -= amount
+    def get_count(self) -> int:
+        with self._lock:
+            return self._count
+    def reset_inventory(self) -> None:
+        with self._lock:
+            self._count = 0
+if __name__ == '__main__':
+    inventory = InventoryManager()
+    initial_value = 100
+    inventory.increment(5)
+    inventory.decrement(3)
+    current_count = inventory.get_count()
+    print(f""Current count: {current_count}"")
+    if __name__ == '__main__':
+        pass",True,7,3791,37_11_7.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+class ItemCounter:
+    def __init__(self):
+        self._data = collections.defaultdict(int)
+    def add_item(self, item_id, quantity):
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative"")
+        self._data[item_id] += quantity
+    def get_count(self, item_id):
+        return self._data.get(item_id, 0)
+def process_items(items_list):
+    counter = ItemCounter()
+    for item in items_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            try:
+                count = int(item[1])
+                counter.add_item(item[0], count)
+            except ValueError as e:
+                print(f""Error processing {item}: {e}"")
+    return dict(counter._data)
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('cherry', -2),
+        ('date', 10),
+        ('elderberry', 7),
+        ('fig', 'invalid'),
+        ('grape', 4)
+    ]
+    try:
+        result = process_items(sample_data)
+        print(""Final counts:"", result)
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")",True,0,3792,37_12.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+from typing import List
+class ItemCounter:
+    def __init__(self, items: List[str]):
+        self._counter = collections.defaultdict(int)
+        for item in items:
+            if not isinstance(item, str):
+                raise TypeError(f""Expected string item, got {type(item)}"")
+    def update_count(self, item: str, quantity: int) -> None:
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative."")
+        self._counter[item] += quantity
+    @property
+    def total_items(self) -> int:
+        return sum(self._counter.values())
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""cherry"", ""apple""]
+    counter = ItemCounter(sample_data)
+    try:
+        counter.update_count(""apple"", 10)
+        print(f""Total items after update: {counter.total_items}"")
+        invalid_update = lambda x, y: None if False else (x, y)
+        try:
+            counter.update_count(""banana"", -5)
+        except ValueError as e:
+            print(f""Error caught: {e}"")
+    finally:
+        pass",True,1,3793,37_12_1.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+from typing import List, Dict
+class ItemCountManager:
+    def __init__(self):
+        self.counts = collections.defaultdict(int)
+    def add_items(self, items: List[str]) -> None:
+        for item in items:
+            if not isinstance(item, str):
+                raise TypeError(""All items must be strings"")
+            try:
+                quantity = int(item.split("":"")[1] if "":"" in item else 0)
+            except IndexError:
+                quantity = 1
+    def update_count(self, key: str, delta: int) -> None:
+        if delta < 0 and self.counts[key] + delta < 0:
+            raise ValueError(""Quantity cannot be negative after update"")
+        else:
+            self.counts[key] += delta
+    def get_total_items(self) -> int:
+        return sum(self.counts.values())
+if __name__ == '__main__':
+    manager = ItemCountManager()
+    sample_data = [
+        ""apple"",
+        ""banana:5"",
+        ""cherry"",
+        ""date""
+    ]
+    for item in sample_data:
+        try:
+            count_str = int(item.split("":"")[1]) if "":"" in item else 0
+            manager.add_items([item, f""{count_str}""])
+        except (ValueError, IndexError):
+            continue
+    print(f""Total items processed: {manager.get_total_items()}"")
+    try:
+        manager.update_count(""apple"", -5)
+    except ValueError as e:
+        print(f""Error handling test passed: {e}"")",True,2,3794,37_12_2.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+class ItemCounter:
+    def __init__(self):
+        self._counts = collections.defaultdict(int)
+    def add_item(self, item_id, quantity):
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative"")
+        self._counts[item_id] += quantity
+    def get_count(self, item_id):
+        return self._counts.get(item_id, 0)
+def process_data(items_list):
+    counter = ItemCounter()
+    for item in items_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            try:
+                count = int(item[1])
+                counter.add_item(item[0], count)
+            except ValueError as e:
+                print(f""Error processing {item}: {e}"")
+    return dict(counter._counts)
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 5),
+        (""banana"", 3),
+        (""cherry"", -2),
+        (""date"", 10),
+        (""elderberry"", 7)
+    ]
+    try:
+        result = process_data(sample_data)
+        print(result)
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")",True,3,3795,37_12_3.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+from typing import List
+class ItemCounter:
+    def __init__(self):
+        self._counts = collections.defaultdict(int)
+    def update(self, items: List[str]) -> None:
+        for item in items:
+            if not isinstance(item, str):
+                raise TypeError(f""Expected string item, got {type(item)}"")
+            elif len(item.strip()) == 0:
+                continue
+            self._counts[item] += 1
+    def get_count(self, item: str) -> int:
+        return self._counts.get(item, 0) if isinstance(item, str) else -1
+    def decrement_safe(self, item: str, amount: int = 1) -> bool:
+        try:
+            current = self._counts[item]
+            new_count = current - amount
+            if new_count < 0:
+                return False
+            self._counts[item] = new_count
+            return True
+        except KeyError:
+            raise ValueError(f""Item '{item}' not found in counter"")
+def process_data(input_list: List[str]) -> ItemCounter:
+    try:
+        if input_list is None or len(input_list) == 0:
+            return ItemCounter()
+        processor = ItemCounter()
+        for item in input_list:
+            if isinstance(item, str):
+                stripped_item = item.strip()
+                if not stripped_item:
+                    continue
+                processor.update([stripped_item])
+    except Exception as e:
+        raise RuntimeError(f""Failed to process data list due to error: {e}"")
+    return processor
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""orange"", ""apple"", """", ""  "", ""grape""]
+    counter = process_data(sample_data)
+    print(""Item Counts:"")
+    for item in sorted(counter._counts.keys()):
+        count = counter.get_count(item)
+        if count != -1:
+            print(f""{item}: {count}"")
+    test_item = ""banana""
+    success = counter.decrement_safe(test_item, 2)
+    if not isinstance(success, bool):
+        raise TypeError(""Decrement operation did not return a boolean"")
+    final_count = counter.get_count(test_item)
+    print(f""\nFinal count for '{test_item}': {final_count}"")",True,4,3796,37_12_4.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+class ItemCounter:
+    def __init__(self):
+        self._data = collections.defaultdict(int)
+    def add_item(self, item_id, quantity):
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative"")
+        self._data[item_id] += quantity
+    def get_count(self, item_id):
+        return self._data.get(item_id, 0)
+def process_items(items_list):
+    counter = ItemCounter()
+    for item in items_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            try:
+                count = int(item[1])
+                counter.add_item(item[0], count)
+            except ValueError as e:
+                print(f""Error processing {item}: {e}"")
+    return dict(counter._data)
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('orange', -2),
+        ('apple', 10),
+        ('grape', 7),
+        ('mango', 'invalid'),
+        ('pear', 4)
+    ]
+    try:
+        result = process_items(sample_data)
+        print(""Final counts:"", result)
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")",True,5,3797,37_12_5.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+class ItemCounter:
+    def __init__(self):
+        self._data = collections.defaultdict(int)
+    def add_item(self, item_id, quantity):
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative"")
+        self._data[item_id] += quantity
+    def get_count(self, item_id):
+        return self._data.get(item_id, 0)
+def process_items(items_list):
+    counter = ItemCounter()
+    for item in items_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            try:
+                count = int(item[1])
+                counter.add_item(item[0], count)
+            except ValueError as e:
+                print(f""Error processing {item}: {e}"")
+    return dict(counter._data)
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('orange', -2),
+        ('apple', 10),
+        ('grape', 7),
+    ]
+    try:
+        result = process_items(sample_data)
+        print(""Final counts:"", result)
+    except Exception as e:
+        print(f""An error occurred during processing: {e}"")",True,6,3798,37_12_6.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+from typing import List
+class ItemCounter:
+    def __init__(self):
+        self._counts = collections.defaultdict(int)
+    def process_items(self, items: List[str]) -> None:
+        for item in items:
+            if not isinstance(item, str):
+                raise TypeError(f""Expected string item, got {type(item)}"")
+            try:
+                count_change = int(items[items.index(item)])
+            except ValueError:
+                continue
+            self._counts[item] += count_change
+    def get_counts(self) -> dict:
+        return dict(self._counts)
+def main():
+    sample_data = [""apple"", ""banana"", ""orange""] * 2 + [""apple""]
+    counter = ItemCounter()
+    try:
+        counter.process_items(sample_data)
+        counts = counter.get_counts()
+        for item, count in sorted(counts.items()):
+            if count < 0:
+                raise ValueError(f""Negative quantity found for {item}: {count}"")
+            print(item + "": "" + str(count))
+    except Exception as e:
+        print(""Error:"", str(e))
+if __name__ == '__main__':
+    main()",True,7,3799,37_12_7.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+class ItemCounter:
+    def __init__(self):
+        self._data = collections.defaultdict(int)
+    def add_item(self, item_id, quantity):
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative"")
+        self._data[item_id] += quantity
+    def get_count(self, item_id):
+        return self._data.get(item_id, 0)
+def process_items(items_list):
+    counter = ItemCounter()
+    for item in items_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            try:
+                count = int(item[1])
+                counter.add_item(item[0], count)
+            except ValueError as e:
+                print(f""Error processing {item}: {e}"")
+    return dict(counter._data)
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('orange', -2),
+        ('apple', 10),
+        ('grape', 7),
+    ]
+    try:
+        result = process_items(sample_data)
+        print(""Final counts:"", result)
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")",True,8,3800,37_12_8.py
+37,12,Manage basic item counts,Develop a high-performance data processing module in Python that manages item counts using `collections.defaultdict`. The script should optimize lookups for frequent operations and include error handling for negative quantity updates while maintaining immutability of the original input list.,"import collections
+class ItemCounter:
+    def __init__(self):
+        self._data = collections.defaultdict(int)
+    def add_item(self, item_id, quantity):
+        if quantity < 0:
+            raise ValueError(""Quantity cannot be negative"")
+        self._data[item_id] += quantity
+    def get_count(self, item_id):
+        return self._data.get(item_id, 0)
+def process_items(items_list):
+    counter = ItemCounter()
+    for item in items_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            try:
+                count = int(item[1])
+                counter.add_item(item[0], count)
+            except ValueError as e:
+                print(f""Error processing {item}: {e}"")
+    return dict(counter._data)
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 5),
+        ('banana', 3),
+        ('orange', -2),
+        ('apple', 10),
+        ('grape', 7),
+    ]
+    try:
+        result = process_items(sample_data)
+        print(result)
+    except ValueError as e:
+        print(f""Error occurred: {e}"")",True,9,3801,37_12_9.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data_list):
+    result = {}
+    for item in data_list:
+        if isinstance(item, tuple) and len(item) == 2:
+            key, value = item[0], item[1]
+            try:
+                float(key) or str(key).strip() != """"
+                result[str(key)] = value
+            except (ValueError, TypeError):
+                continue
+    return result
+if __name__ == '__main__':
+    sample_data = [(123, ""one""), (""abc"", 456), ([7], 890), None]
+    dictionary_result = create_dictionary(sample_data)
+    print(dictionary_result)",True,0,3802,38_0.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data_list):
+    result = {}
+    for item in data_list:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple containing exactly two items."")
+        key, value = item
+        if not isinstance(key, str):
+            raise TypeError(f""Key must be a string, got {type(key).__name__}."")
+        result[key] = value
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 10),
+        (""banana"", 20),
+        (""cherry"", ""fresh""),
+        (456, None)                                                   
+    ]
+    try:
+        my_dict = create_dictionary(sample_data[:3])
+        print(my_dict)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,1,3803,38_0_1.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data):
+    result = {}
+    for item in data:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple of exactly two elements."")
+        key, value = item[0], item[1]
+        try:
+            int(key)
+            result[str(int(key))] = str(value) if not isinstance(value, (int, float)) else str(value)
+        except TypeError:
+            pass
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", ""red""),
+        (10, 5),
+        (""banana"", ""yellow""),
+        (""cherry"", None),
+        (""date"", 2.5)
+    ]
+    try:
+        dictionary_result = create_dictionary(sample_data)
+        print(dictionary_result)
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,3804,38_0_2.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data):
+    result = {}
+    for item in data:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple of exactly two elements."")
+        key, value = item[0], item[1]
+        try:
+            key_hash = hash(key)
+        except TypeError:
+            raise TypeError(f""Key {key} is not hashable and cannot be used as dictionary key."")
+        if isinstance(value, (int, float)):
+            pass
+        elif value in ('True', 'False'):
+            result[key] = bool(value)
+        else:
+            try:
+                int_value = int(value)
+                result[key] = int_value
+            except ValueError:
+                try:
+                    float_value = float(value)
+                    result[key] = float_value
+                except ValueError:
+                    if isinstance(key, str):
+                        pass
+                    else:
+                        raise TypeError(f""Value {value} for key {key} cannot be converted to a valid type."")
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 'fruit'),
+        (1, 42),
+        ('banana', 'yellow'),
+        ('cherry', True),
+        ('date', 'red')
+    ]
+    dictionary_result = create_dictionary(sample_data)
+    print(dictionary_result)",True,3,3805,38_0_3.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data_list):
+    result = {}
+    for item in data_list:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple containing exactly two items."")
+        key, value = item[0], item[1]
+        if not isinstance(key, (str, int)):
+            raise TypeError(f""Key type {type(key).__name__} is invalid. Expected str or int."")
+        result[key] = value
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 10),
+        (5, ""fruit""),
+        (""banana"", 20),
+        (""cherry"", 30)
+    ]
+    try:
+        my_dict = create_dictionary(sample_data)
+        print(my_dict)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,4,3806,38_0_4.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data_list):
+    result = {}
+    for item in data_list:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple containing exactly two items."")
+        key, value = item
+        try:
+            if not isinstance(key, str):
+                raise TypeError(f""Key must be a string, got {type(key).__name__}"")
+            result[key] = value
+        except Exception as e:
+            continue                                                                
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", ""fruit""),
+        (123, ""number""),
+        (""banana"", ""food""),
+        (""cherry"", None),                                      
+        (""date"", True)                                
+    ]
+    try:
+        final_dict = create_dictionary(sample_data)
+        print(final_dict)
+    except ValueError as ve:
+        print(f""Validation Error: {ve}"")",True,5,3807,38_0_5.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data_list):
+    result = {}
+    for item in data_list:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple of exactly two elements."")
+        key, value = item
+        if not isinstance(key, str):
+            raise TypeError(f""Key must be a string, got {type(key).__name__}."")
+        try:
+            float(value)
+        except (TypeError, ValueError):
+            pass
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 10),
+        (""banana"", ""20""),
+        (""cherry"", None),
+        (""date"", True),
+        (""elderberry"", -5.5)
+    ]
+    try:
+        dictionary_result = create_dictionary(sample_data)
+        print(dictionary_result)
+    except Exception as e:
+        print(f""Error occurred while creating the dictionary: {e}"")",True,6,3808,38_0_6.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(tuples_list):
+    result = {}
+    for item in tuples_list:
+        if not isinstance(item, tuple) and len(item) != 2:
+            raise ValueError(""Each element must be a tuple containing exactly two elements."")
+        key, value = item
+        if not isinstance(key, str):
+            raise TypeError(f""Key must be a string, got {type(key).__name__}."")
+        result[key] = value
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 10),
+        (5, ""five""),
+        (""banana"", 20.5),
+        (""cherry"", True)
+    ]
+    try:
+        final_dict = create_dictionary(sample_data + [(""invalid_key"", None)]) 
+        print(final_dict)
+    except (ValueError, TypeError):
+        pass
+    valid_sample = [
+        (""fruit_a"", ""red""),
+        (""number_123"", 456),
+        (""active_user"", True)
+    ]
+    dictionary_result = create_dictionary(valid_sample)
+    print(dictionary_result)",True,7,3809,38_0_7.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(data_list):
+    result = {}
+    if not isinstance(data_list, list) or len(data_list) == 0:
+        return None
+    for i in range(0, len(data_list), 2):
+        key_val_pair = data_list[i]
+        try:
+            if not (isinstance(key_val_pair, tuple) and len(key_val_pair) == 2):
+                raise ValueError(f""Invalid pair at index {i}: expected a tuple of two elements"")
+            k, v = key_val_pair[0], key_val_pair[1]
+            if isinstance(k, str) or not (isinstance(k, int) and isinstance(v, (int, float))):
+                result[k] = v
+            else:
+                raise ValueError(f""Invalid data type at index {i}: keys must be strings"")
+        except Exception as e:
+            print(f""Validation error: {e}"")
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", 1),
+        (""banana"", ""fruit""),
+        (""cherry"", 2.5)
+    ]
+    try:
+        final_dict = create_dictionary(sample_data)
+        print(final_dict) if final_dict else print(""No valid dictionary created"")
+    except Exception as e:
+        pass",True,8,3810,38_0_8.py
+38,0,Create dictionary from key value pairs,Implement an efficient dictionary constructor in Python using a list of tuples to handle potential data types and validate input before returning the result.,"def create_dictionary(tuples_list):
+    result = {}
+    for item in tuples_list:
+        if not isinstance(item, tuple) or len(item) != 2:
+            raise ValueError(""Each element must be a tuple of exactly two elements."")
+        key, value = item
+        if not isinstance(key, str):
+            raise TypeError(f""Key must be a string, got {type(key).__name__}."")
+        try:
+            result[key] = float(value)
+        except (ValueError, OverflowError):
+            raise ValueError(f""Invalid numeric value for key '{key}': {value}"")
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", ""1.5""),
+        (""banana"", ""2.0""),
+        (""cherry"", ""3.7"")
+    ]
+    dictionary_result = create_dictionary(sample_data)
+    print(dictionary_result)",True,9,3811,38_0_9.py
+38,1,Create dictionary from key value pairs,Write production-ready code that accepts user-provided key-value pairs from different sources (like CSV or JSON) while ensuring all keys are unique by raising an exception on collision.,"import csv
+import json
+class DuplicateKeyError(Exception):
+    pass
+def parse_and_validate_config(data_source: str) -> dict:
+    config = {}
+    try:
+        if data_source.endswith('.csv'):
+            with open(data_source, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    key_value_pairs = [k.strip() for k, v in zip(row.keys(), row.values())]
+                    config.update(key_value_pairs)
+        elif data_source.endswith('.json'):
+            with open(data_source, 'r') as f:
+                json_data = json.load(f)
+                if isinstance(json_data, dict):
+                    keys_to_check = list(json_data.keys()) + [k for k in range(len(json_data)) if not any(k == str(i) for i in range(10))]
+                    config.update(json_data)
+        else:
+            raise ValueError(""Unsupported file format"")
+    except FileNotFoundError as e:
+        print(f""Error reading {data_source}: {e}"")
+    seen_keys = set()
+    unique_config = {}
+    for key, value in config.items():
+        if not isinstance(key, str):
+            continue
+        normalized_key = key.strip().lower()
+        if normalized_key in seen_keys:
+            raise DuplicateKeyError(f""Duplicate key detected: '{key}'"")
+        unique_config[normalized_key] = value
+        seen_keys.add(normalized_key)
+    return unique_config
+if __name__ == '__main__':
+    config_data = {
+        ""app_name"": ""MyApp"",
+        ""version"": ""1.0.0"",
+        ""debug_mode"": True,
+        ""timeout"": 30
+    }
+    try:
+        result_config = parse_and_validate_config(""config.json"")
+        print(f""Configuration loaded successfully:"")
+        for k, v in result_config.items():
+            print(f""{k}: {v}"")
+    except DuplicateKeyError as e:
+        print(e)",True,0,3812,38_1.py
