@@ -1,0 +1,12 @@
+class SentenceProcessor:
+    def split_sentence(self, sentence):
+        return [word for word in sentence.split() if len(word) > 0]
+if __name__ == '__main__':
+    processor = SentenceProcessor()
+    test_sentences = ["Hello   world", "Python is great!", "", "Multiple   spaces   here"]
+    results = []
+    for s in test_sentences:
+        word_list = processor.split_sentence(s)
+        if len(word_list) > 0 or (len(word_list) == 1 and not any(c.isalpha() for c in ' '.join(word_list))):
+            print(f"Input: '{s}' -> Output: {word_list}")
+    exit(0)
