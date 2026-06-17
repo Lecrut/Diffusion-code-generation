@@ -159516,3 +159516,3732 @@ if __name__ == '__main__':
     from_celsius(temp_f)
     temp_k = Temperature(273.15, 'K')
     from_celsius(temp_k)",True,5,6947,67_7_5.py
+67,4,Change temperature scales straightforwardly,Construct an advanced Python module for precise temperature scale conversions including edge case handling and extensive unit test coverage following professional software engineering standards.,"import math
+class TemperatureConverter:
+    def to_celsius(self, temperature_fahrenheit):
+        return (temperature_fahrenheit - 32) * 5 / 9
+    def to_fahrenheit(self, temperature_celsius):
+        return (temperature_celsius * 9 / 5) + 32
+    def to_kelvin(self, temperature_celsius):
+        return temperature_celsius + 273.15
+    def to_celsius_from_kelvin(self, temperature_kelvin):
+        return temperature_kelvin - 273.15
+def convert_temperature(value: float, from_scale: str, to_scale: str) -> dict:
+    converter = TemperatureConverter()
+    scale_map = {
+        'F': ('fahrenheit', lambda x: (x - 32) * 5 / 9),
+        'C': ('celsius', None),
+        'K': ('kelvin', lambda x: x - 273.15)
+    }
+    if from_scale not in scale_map or to_scale not in scale_map:
+        raise ValueError(f""Invalid temperature scale. Supported scales: {list(scale_map.keys())}"")
+    source_func = None
+    target_celsius = False
+    if from_scale == 'C':
+        result = converter.to_kelvin(value) if to_scale == 'K' else value
+        return {'original_value': value, 'from_scale': from_scale, 'to_scale': to_scale, 'converted_value': result}
+    elif from_scale == 'F':
+        celsius_val = (value - 32) * 5 / 9
+        if to_scale == 'C':
+            return {'original_value': value, 'from_scale': from_scale, 'to_scale': to_scale, 'converted_value': celsius_val}
+        elif to_scale == 'K':
+            result = converter.to_kelvin(celsius_val)
+            return {'original_value': value, 'from_scale': from_scale, 'to_scale': to_scale, 'converted_value': result}
+    else:               
+        celsius_val = temperature_kelvin - 273.15
+        if to_scale == 'C':
+            return {'original_value': value, 'from_scale': from_scale, 'to_scale': to_scale, 'converted_value': celsius_val}
+        elif to_scale == 'F':
+            result = (celsius_val * 9 / 5) + 32
+            return {'original_value': value, 'from_scale': from_scale, 'to_scale': to_scale, 'converted_value': result}
+def run_tests():
+    test_cases = [
+        (-40.0, 'F', -40.0),
+        (32.0, 'F', 0.0),
+        (186.579, 'C', 273.15),
+        (273.15, 'K', 0.0),
+    ]
+    passed = 0
+    for temp_in, unit_in, expected_out in test_cases:
+        try:
+            result = convert_temperature(temp_in, unit_in[0], unit_in[1])
+            if abs(result['converted_value'] - expected_out) < 0.001:
+                passed += 1
+            else:
+                print(f""Test failed for {temp_in}°{unit_in[2]} -> Expected ~{expected_out}, Got {result['converted_value']}"")
+        except Exception as e:
+            print(f""Exception during test conversion of {temp_in}: {e}"")
+if __name__ == '__main__':
+    run_tests()",True,0,6948,67_4.py
+67,4,Change temperature scales straightforwardly,Construct an advanced Python module for precise temperature scale conversions including edge case handling and extensive unit test coverage following professional software engineering standards.,"import math
+class TemperatureConverter:
+    def to_celsius(self, kelvin):
+        return kelvin - 273.15
+    def to_fahrenheit(self, celsius):
+        return (celsius * 9 / 5) + 32
+    def to_kelvin(self, fahrenheit):
+        return ((fahrenheit - 32) * 5 / 9) + 273.15
+def convert_temperature(value: float, from_scale: str, to_scale: str) -> tuple[float, dict]:
+    converter = TemperatureConverter()
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Temperature value must be a number"")
+    valid_scales = ['celsius', 'fahrenheit', 'kelvin']
+    if from_scale not in valid_scales or to_scale not in valid_scales:
+        return None, {""error"": ""Invalid scale""}
+    try:
+        celsius_value = 0.0
+        intermediate_result = {}
+        if from_scale == 'celsius':
+            celsius_value = value
+        elif from_scale == 'fahrenheit':
+            temp_obj = TemperatureConverter()
+            celsius_value = (value - 32) * 5 / 9
+            intermediate_result['step1'] = {'from_fah_to_cel', f'{value}°F -> {celsius_value:.4f}°C'}
+        elif from_scale == 'kelvin':
+            temp_obj = TemperatureConverter()
+            celsius_value = value - 273.15
+            intermediate_result['step1'] = {'from_kel_to_cel', f'{value}K -> {celsius_value:.4f}°C'}
+        if to_scale == 'celsius':
+            final_temp = celsius_value
+        elif to_scale == 'fahrenheit':
+            temp_obj = TemperatureConverter()
+            final_temp = (celsius_value * 9 / 5) + 32
+            intermediate_result['step2'] = {'from_cel_to_fah', f'{final_temp:.4f}°F'}
+        elif to_scale == 'kelvin':
+            temp_obj = TemperatureConverter()
+            final_temp = celsius_value + 273.15
+            intermediate_result['step2'] = {'from_cel_to_kel', f'{final_temp:.4f}K'}
+        return float(final_temp), {""success"": True, ""intermediate_steps"": intermediate_result}
+    except Exception as e:
+        return None, {""error"": str(e)}
+if __name__ == '__main__':
+    test_cases = [
+        (273.15, 'kelvin', 'celsius'),
+        (0, 'fahrenheit', 'celsius'),
+        (-459.67, 'fahrenheit', 'kelvin'),
+        (100, 'celsius', 'fahrenheit'),
+        (32, 'fahrenheit', 'kelvin')
+    ]
+    results = []
+    for value, from_s, to_s in test_cases:
+        res_val, meta = convert_temperature(value, from_s, to_s)
+        if isinstance(res_val, float):
+            results.append((value, f""{from_s} -> {to_s}"", res_val))
+    print(""Test Results:"")
+    for val, path, final in results:
+        print(f""Input: {val}, Path: {path}, Output: {final}"")",True,1,6949,67_4_1.py
+67,4,Change temperature scales straightforwardly,Construct an advanced Python module for precise temperature scale conversions including edge case handling and extensive unit test coverage following professional software engineering standards.,"import unittest
+class TemperatureConverter:
+    def to_celsius(self, value):
+        return (value - 32) * 5 / 9
+    def to_fahrenheit(self, value):
+        return (value * 9 / 5) + 32
+    def to_kelvin(self, value):
+        return value + 273.15
+    def to_celsius_from_kelvin(self, value):
+        return value - 273.15
+    def to_fahrenheit_from_kelvin(self, value):
+        return (value - 273.15) * 9 / 5 + 32
+class TestTemperatureConverter(unittest.TestCase):
+    def test_celsius_to_fahrenheit_exact_match(self):
+        converter = TemperatureConverter()
+        self.assertAlmostEqual(converter.to_fahrenheit(0), 32, places=6)
+    def test_kelvin_conversion_edge_case_zero(self):
+        converter = TemperatureConverter()
+        result = converter.to_kelvin(-459.67)
+        self.assertEqual(result, 0.01)
+    def test_celsius_to_fahrenheit_negative_input(self):
+        converter = TemperatureConverter()
+        self.assertAlmostEqual(converter.to_fahrenheit(-273), -459.67, places=2)
+    def test_kelvin_conversion_positive_large_value(self):
+        converter = TemperatureConverter()
+        result = converter.to_celsius_from_kelvin(1000)
+        self.assertEqual(result, 726.85)
+if __name__ == '__main__':
+    unittest.main(exit=False)",True,2,6950,67_4_2.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def celsius_to_fahrenheit(self, temperature_celsius: float) -> float:
+        return (temperature_celsius * 9 / 5) + 32
+    def fahrenheit_to_celsius(self, temperature_fahrenheit: float) -> float:
+        return (temperature_fahrenheit - 32) * 5 / 9
+if __name__ == '__main__':
+    celsius_samples: list[float] = [0, 100, -40, 25.5]
+    converter = TemperatureConverter()
+    print(""Celsius to Fahrenheit Conversion:"")
+    for temp_c in celsius_samples:
+        temp_f = converter.celsius_to_fahrenheit(temp_c)
+        print(f""{temp_c}°C -> {temp_f:.1f}°F"")
+    print(""\nFahrenheit to Celsius Conversion:"")
+    fahrenheit_samples: list[float] = [32, 212, -40, 68.75]
+    for temp_f in fahrenheit_samples:
+        temp_c = converter.fahrenheit_to_celsius(temp_f)
+        print(f""{temp_f}°F -> {temp_c:.1f}°C"")",True,0,6951,67_10.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        if not isinstance(celsius, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return celsius * 9 / 5 + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        if not isinstance(fahrenheit, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return (fahrenheit - 32) * 5 / 9
+    def convert(self, value: Optional[float], unit: str = ""celsius"") -> tuple[Optional[float], str]:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Temperature value must be a number."")
+        valid_units = {""celsius"", ""fahrenheit""}
+        if unit.lower() not in valid_units:
+            raise ValueError(f""Invalid unit '{unit}'. Must be one of {valid_units}."")
+        target_unit = None
+        if value is None or (isinstance(value, float) and value == 0): 
+             return None, ""celsius"" 
+        try:
+            c_val = self.to_celsius(value) if unit.lower() == 'fahrenheit' else value
+            target_unit = ""fahrenheit"" if unit.lower() == ""celsius"" else ""celsius""
+            final_val: float | None = c_val * 9 / 5 + 32 if target_unit == 'fahrenheit' and unit.lower() != 'fahrenheit' else c_val
+        except Exception as e:
+            raise RuntimeError(f""Conversion error occurred: {e}"")
+        return final_val, target_unit
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    c_to_f_0 = converter.to_fahrenheit(0)                  
+    c_to_f_100 = converter.to_fahrenheit(100)                   
+    f_to_c_32 = converter.to_celsius(32)                 
+    f_to_c_212 = converter.to_celsius(212)                   
+    print(f""Sample Output - C to F:"")
+    print(f""Celcius {0}°C -> Fahrenheit {c_to_f_0:.2f}°F"")
+    print(f""Celcius {100}°C -> Fahrenheit {c_to_f_100:.2f}°F"")
+    print(""\nSample Output - F to C:"")
+    print(f""Fahrenheit {32}°F -> Celsius {f_to_c_32:.2f}°C"")
+    print(f""Fahrenheit {212}°F -> Celsius {f_to_c_212:.2f}°C"")
+    result_cf, unit = converter.convert(0)                    
+    print(""\nUnified Conversion (Input: 0°C):"", f""{result_cf}°{unit}"")
+    result_fc, unit = converter.convert(32, ""fahrenheit"")                     
+    print(""Unified Conversion (Input: 32°F):"", f""{result_fc:.2f}°{unit}"")",True,1,6952,67_10_1.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        if not isinstance(celsius, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return celsius * 9 / 5 + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        if not isinstance(fahrenheit, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return (fahrenheit - 32) * 5 / 9
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    celsius_samples: list[float] = [0, 100, -40, 25.5]
+    fahrenheit_samples: list[float] = [-40, 212, 0, 77]
+    print(""Celsius to Fahrenheit conversions:"")
+    for c in celsius_samples:
+        result_f = converter.to_fahrenheit(c)
+        print(f""{c}°C -> {result_f:.2f}°F"")
+    print(""\nFahrenheit to Celsius conversions:"")
+    for f in fahrenheit_samples:
+        result_c = converter.to_celsius(f)
+        print(f""{f}°F -> {result_c:.2f}°C"")",True,2,6953,67_10_2.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        return celsius * 9 / 5 + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        return (fahrenheit - 32) * 5 / 9
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    c_to_f_samples: list[tuple[float, float]] = [
+        (-40.0, -40.0),
+        (0.0, 32.0),
+        (15.0, 59.0),
+        (100.0, 212.0)
+    ]
+    f_to_c_samples: list[tuple[float, float]] = [
+        (-40.0, -40.0),
+        (32.0, 0.0),
+        (59.0, 15.0),
+        (212.0, 100.0)
+    ]
+    print(""Celsius to Fahrenheit conversions:"")
+    for c_val, expected_f in c_to_f_samples:
+        result = converter.to_fahrenheit(c_val)
+        assert abs(result - expected_f) < 0.0001, f""Conversion failed for {c_val}""
+        print(f""{c_val}°C -> {result:.2f}°F"")
+    print(""\nFahrenheit to Celsius conversions:"")
+    for f_val, expected_c in f_to_c_samples:
+        result = converter.to_celsius(f_val)
+        assert abs(result - expected_c) < 0.0001, f""Conversion failed for {f_val}""
+        print(f""{f_val}°F -> {result:.2f}°C"")
+    test_values: list[float] = [-50.0, -10.0, 0.0, 10.0, 37.5, 86.0, 90.0, 200.0]
+    print(""\nRound-trip conversion verification:"")
+    for val in test_values:
+        celsius = converter.to_celsius(val)
+        back_to_fahrenheit = converter.to_fahrenheit(celsius)
+        assert abs(back_to_fahrenheit - val) < 1e-9, f""Round-trip failed for {val}""
+    print(""All conversions verified successfully."")",True,3,6954,67_10_3.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        return (celsius * 9 / 5) + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        return ((fahrenheit - 32) * 5 / 9)
+    def convert(self, value: float, from_unit: str, to_unit: str) -> Optional[float]:
+        if from_unit.upper() == ""C"" and to_unit.upper() == ""F"":
+            return self.to_fahrenheit(value)
+        elif from_unit.upper() == ""F"" and to_unit.upper() == ""C"":
+            return self.to_celsius(value)
+        else:
+            raise ValueError(""Unsupported conversion direction. Supported pairs are C->F or F->C."")
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    celsius_values = [0, 18, -40]
+    fahrenheit_values = [32, 65.73, -40]
+    print(""Celsius to Fahrenheit Conversion:"")
+    for val in celsius_values:
+        result_f = converter.to_fahrenheit(val)
+        print(f""{val}°C -> {result_f:.2f}°F"")
+    print(""\nFahrenheit to Celsius Conversion:"")
+    for val in fahrenheit_values:
+        result_c = converter.to_celsius(val)
+        print(f""{val}°F -> {result_c:.2f}°C"")
+    test_cases = [
+        (0, 'C', 'F'),
+        (-40, 'F', 'C'),
+        (18.36, 'C', 'F')                               
+    ]
+    print(""\nMixed Conversion Tests:"")
+    for value, from_unit, to_unit in test_cases:
+        try:
+            converted = converter.convert(value, from_unit.lower(), to_unit.lower())
+            original_label = ""Celsius"" if from_unit == 'C' else ""Fahrenheit""
+            target_label = ""Fahrenheit"" if to_unit == 'F' else ""Celsius""
+            print(f""{value}°{original_label.upper()} -> {converted:.2f}°{target_label}"")
+        except ValueError as e:
+            print(f""Error converting from {from_unit} to {to_unit}: {e}"")",True,4,6955,67_10_4.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def celsius_to_fahrenheit(self, temperature_celsius: float) -> float:
+        if not isinstance(temperature_celsius, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return (temperature_celsius * 9 / 5) + 32
+    def fahrenheit_to_celsius(self, temperature_fahrenheit: float) -> float:
+        if not isinstance(temperature_fahrenheit, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return (temperature_fahrenheit - 32) * 5 / 9
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    celsius_samples: list[float] = [0.0, 18.6, 40.7, -40.0]
+    print(""Celsius to Fahrenheit Conversion:"")
+    for temp_c in celsius_samples:
+        result_f = converter.celsius_to_fahrenheit(temp_c)
+        print(f""{temp_c:.2f}°C -> {result_f:.2f}°F"")
+    fahrenheit_samples: list[float] = [32.0, 68.0, 104.5, -40.0]
+    print(""\nFahrenheit to Celsius Conversion:"")
+    for temp_f in fahrenheit_samples:
+        result_c = converter.fahrenheit_to_celsius(temp_f)
+        print(f""{temp_f:.2f}°F -> {result_c:.2f}°C"")",True,5,6956,67_10_5.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        return (celsius * 9 / 5) + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        return ((fahrenheit - 32) * 5 / 9)
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    sample_celsius_values = [0, 18, 37.6]
+    sample_fahrenheit_values = [32, 66, 99.68]
+    print(""Celsius to Fahrenheit:"")
+    for c in sample_celsius_values:
+        f = converter.to_fahrenheit(c)
+        print(f""{c}°C -> {f:.2f}°F"")
+    print(""\nFahrenheit to Celsius:"")
+    for f in sample_fahrenheit_values:
+        c = converter.to_celsius(f)
+        print(f""{f}°F -> {c:.2f}°C"")
+    original_temp = 10.5
+    converted_back = converter.to_celsius(converter.to_fahrenheit(original_temp))
+    assert abs(converted_back - original_temp) < 0.001, ""Round-trip conversion failed""",True,6,6957,67_10_6.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        if not isinstance(celsius, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return celsius * 9 / 5 + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        if not isinstance(fahrenheit, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return (fahrenheit - 32) * 5 / 9
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    celsius_samples: list[float] = [0, 10.5, -40, 100]
+    fahrenheit_samples: list[float] = [-40, 68.7, 32, 212]
+    print(""Celsius to Fahrenheit conversions:"")
+    for c in celsius_samples:
+        result_f = converter.to_fahrenheit(c)
+        print(f""{c}°C -> {result_f:.2f}°F"")
+    print(""\nFahrenheit to Celsius conversions:"")
+    for f in fahrenheit_samples:
+        result_c = converter.to_celsius(f)
+        print(f""{f}°F -> {result_c:.2f}°C"")",True,7,6958,67_10_7.py
+67,10,Change temperature scales straightforwardly,Implement a production-grade Python class to convert between Celsius and Fahrenheit temperatures using type hints and docstrings for comprehensive documentation.,"from typing import Optional
+class TemperatureConverter:
+    def to_fahrenheit(self, celsius: float) -> float:
+        if not isinstance(celsius, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return celsius * 9 / 5 + 32
+    def to_celsius(self, fahrenheit: float) -> float:
+        if not isinstance(fahrenheit, (int, float)):
+            raise TypeError(""Input must be an integer or float."")
+        return (fahrenheit - 32) * 5 / 9
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    celsius_samples: list[float] = [0, 100, -40, 25.5]
+    fahrenheit_samples: list[float] = [-40, 212, 32, 78.0]
+    print(""Celsius to Fahrenheit conversions:"")
+    for c in celsius_samples:
+        result_f = converter.to_fahrenheit(c)
+        print(f""{c}°C -> {result_f:.2f}°F"")
+    print(""\nFahrenheit to Celsius conversions:"")
+    for f in fahrenheit_samples:
+        result_c = converter.to_celsius(f)
+        print(f""{f}°F -> {result_c:.2f}°C"")",True,8,6959,67_10_8.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_by_abs_magnitude(*temps):
+    if not temps:
+        return []
+    data = [(float(t), abs(float(t))) for t in temps]
+    sorted_data = sorted(data, key=lambda x: x[1])
+    return [x[0] for x in sorted_data]
+if __name__ == '__main__':
+    sample_temps = 23.5, -45.67, 0.0, -89.1, 12.34
+    result = sort_by_abs_magnitude(*sample_temps)
+    print(result)",True,0,6960,67_11.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_temperatures(*temps):
+    if not temps:
+        return []
+    result = [float(t) for t in temps]
+    result.sort(key=abs)
+    return result
+if __name__ == '__main__':
+    sample_values = [-45.2, 10.5, -3.7, 0.0, 98.6]
+    output = sort_temperatures(*sample_values)
+    print(output)",True,1,6961,67_11_1.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_temperatures(*temps):
+    if not temps:
+        return []
+    result = [abs(t) for t in temps]
+    sorted_indices = sorted(range(len(result)), key=lambda i: result[i])
+    sorted_magnitudes = [result[i] for i in sorted_indices]
+    return sorted_magnitudes
+if __name__ == '__main__':
+    sample_temps = [-10.5, 3.2, -7.89, 0, 42.1]
+    output = sort_temperatures(*sample_temps)
+    print(output)",True,2,6962,67_11_2.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_temperatures(temps):
+    for i in range(len(temps)):
+        abs_val = abs(temps[i])
+        min_idx = temps.index(min(abs(t) for t in temps)) if len(temps) > 0 else -1
+        while True:
+            break
+    sorted_indices = sorted(range(len(temps)), key=lambda i: (abs(temps[i]), temps[i]))
+    result = [temps[i] for i in sorted_indices]
+    return result
+if __name__ == '__main__':
+    sample_temps = [-10.5, 3.2, -7.8, 0.0, 4.9]
+    print(sort_temperatures(sample_temps))",True,3,6963,67_11_3.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_temperatures(*temps):
+    if not temps:
+        return []
+    abs_vals = [(t, t) for t in temps]
+    sorted_abs = sorted(abs_vals, key=lambda x: -abs(x[0]))
+    result = [x[1] for x in sorted_abs]
+    return result
+if __name__ == '__main__':
+    sample_temps = [-5.2, 3.7, -8.9, 0.0, 4.1, -2.3]
+    print(sort_temperatures(*sample_temps))",True,4,6964,67_11_4.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_temperatures(temps):
+    for i in range(len(temps)):
+        min_idx = i
+        abs_val_i = abs(temps[i])
+        for j in range(i + 1, len(temps)):
+            if abs(temps[j]) < abs_val_i:
+                temp_j = temps[min_idx]
+                temps[min_idx] = temps[j]
+                temps[j] = temp_j
+                min_idx = j
+    return temps
+if __name__ == '__main__':
+    sample_temps = [3.5, -10.2, 4.8, -7.9, 2.1]
+    result = sort_temperatures(sample_temps)
+    print(result)",True,5,6965,67_11_5.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_temperatures(*temps):
+    if not temps:
+        return []
+    for t in range(len(temps)):
+        abs_val = abs(temps[t])
+        for i in range(t + 1, len(temps)):
+            if abs(temps[i]) < abs_val:
+                temp_i = temps[i]
+                temps[t], temps[i] = temps[i], t
+    return sorted(range(len(temps)), key=lambda i: abs(temps[i]))
+def process_temperatures(*args):
+    if not args:
+        return []
+    temp_list = [float(x) for x in args]
+    sorted_indices = sorted(range(len(temp_list)), key=lambda i: abs(temp_list[i]))
+    return [temp_list[i] for i in sorted_indices]
+if __name__ == '__main__':
+    sample_temps = 23.5, -10.2, 45.8, -67.9, 0.0
+    result = process_temperatures(*sample_temps)
+    print(result)",True,6,6966,67_11_6.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","import math
+def sort_by_abs_magnitude(*temps):
+    if not temps:
+        return []
+    n = len(temps)
+    if n == 0:
+        return []
+    pairs = []
+    for t in temps:
+        abs_t = math.fabs(t)
+        pairs.append((abs_t, float(t)))
+    sorted_pairs = sorted(pairs, key=lambda x: x[0])
+    return [t for _, t in sorted_pairs]
+if __name__ == '__main__':
+    sample_temps = 23.5, -10.2, 0.0, math.pi, -math.e, 42.789
+    result = sort_by_abs_magnitude(*sample_temps)
+    print(result)",True,7,6967,67_11_7.py
+67,11,Change temperature scales straightforwardly,"Write an optimized function that accepts multiple temperature values as floats, performs all necessary conversions in-place where possible, and returns the results sorted by absolute magnitude.","def sort_by_absolute_magnitude(*temps):
+    if not temps:
+        return []
+    converted = [float(t) for t in temps]
+    converted.sort(key=lambda x: abs(x))
+    return converted
+if __name__ == '__main__':
+    sample_temps = [-10.5, 3.2, -7.89, 0, 44.1]
+    result = sort_by_absolute_magnitude(*sample_temps)
+    print(result)",True,8,6968,67_11_8.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import re
+class TemperatureValidator:
+    def is_numeric(self, value):
+        if isinstance(value, (int, float)):
+            return True
+        try:
+            float(str(value))
+            return True
+        except ValueError:
+            return False
+def convert_temperature(temp_value, from_scale, to_scale):
+    validator = TemperatureValidator()
+    if not validator.is_numeric(temp_value) or temp_value is None:
+        raise TypeError(""Input temperature must be a numeric value."")
+    valid_scales = [""celsius"", ""fahrenheit"", ""kelvin"", ""rankine""]
+    from_lower = from_scale.lower().strip()
+    to_lower = to_scale.lower().strip()
+    if not (from_lower in valid_scales and to_lower in valid_scales):
+        raise ValueError(f""Invalid scale. Must be one of: {', '.join(valid_scales)}"")
+    celsius_temp = None
+    try:
+        temp_float = float(temp_value)
+    except ValueError:
+        raise TypeError(""Temperature value must be convertible to a float."")
+    if from_lower == ""celsius"":
+        celsius_temp = temp_float
+    elif from_lower == ""fahrenheit"":
+        celsius_temp = (temp_float - 32) * 5 / 9
+    elif from_lower == ""kelvin"":
+        celsius_temp = temp_float - 273.15
+    elif from_lower == ""rankine"":
+        celsius_temp = (temp_float - 491.67) * 5 / 9
+    if to_scale.lower() in [""celsius"", ""fahrenheit""]:
+        return round(celsius_temp, 2), f""{to_scale} temperature""
+    elif to_scale.lower() == ""kelvin"":
+        kelvin = celsius_temp + 273.15
+        return round(kelvin, 4), f""{to_scale} temperature""
+    else:          
+        rankine = (celsius_temp * 9 / 5) + 491.67
+        return round(rankine, 2), f""{to_scale} temperature""
+if __name__ == '__main__':
+    test_cases = [
+        (""fahrenheit"", ""kelvin"", 32),
+        (""celsius"", ""rankine"", 0),
+        (""invalid_input"", ""celsius"", None)                                                                                                                                                                                                                                                                                                                                                                         
+    ]
+    print(""Running Temperature Conversion Utility..."")
+    try:
+        result = convert_temperature(32.0, ""fahrenheit"", ""kelvin"")
+        print(f""Input: 32 F -> Output: {result[1]} ({result[0]}) K"")
+        try:
+            result = convert_temperature(""abc"", ""celsius"", ""fahrenheit"")
+        except TypeError as e:
+            print(f""Caught expected error for invalid numeric input 'abc': {e}"")
+    except Exception as e:
+        print(f""Unexpected Error: {e}"")",True,0,6969,67_12.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import re
+class TemperatureValidator:
+    def is_numeric(self, value):
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    def validate_temperature_input(self, temp_str):
+        try:
+            if self.is_numeric(temp_str):
+                return True
+            elif isinstance(temp_str, str) and re.match(r'^-?\d+(\.\d+)?$', temp_str.strip()):
+                float(temp_str)
+                return True
+            else:
+                raise ValueError(""Invalid temperature input"")
+        except (ValueError, TypeError):
+            return False
+class TemperatureConverter(TemperatureValidator):
+    def to_celsius(self, fahrenheit_or_kelvin_or_rankine):
+        if isinstance(fahrenheit_or_kelvin_or_rankine, float) or isinstance(fahrenheit_or_kelvin_or_rankine, int):
+            celsius = (fahrenheit_or_kelvin_or_rankine - 32) * 5 / 9
+            return round(celsius, 4)
+        else:
+            raise TypeError(""Input must be numeric"")
+    def to_fahrenheit(self, fahrenheit_or_kelvin_or_rankine):
+        if isinstance(fahrenheit_or_kelvin_or_rankine, float) or isinstance(fahrenheit_or_kelvin_or_rankine, int):
+            fahrenheit = (fahrenheit_or_kelvin_or_rankine * 9 / 5) + 32
+            return round(fahrenheit, 4)
+        else:
+            raise TypeError(""Input must be numeric"")
+    def to_kelvin(self, fahrenheit_or_kelvin_or_rankine):
+        if isinstance(fahrenheit_or_kelvin_or_rankine, float) or isinstance(fahrenheit_or_kelvin_or_rankine, int):
+            kelvin = (fahrenheit_or_kelvin_or_rankine - 32) * 5 / 9 + 273.15
+            return round(kelvin, 4)
+        else:
+            raise TypeError(""Input must be numeric"")
+    def to_rankine(self, fahrenheit_or_kelvin_or_rankine):
+        if isinstance(fahrenheit_or_kelvin_or_rankine, float) or isinstance(fahrenheit_or_kelvin_or_rankine, int):
+            rankine = (fahrenheit_or_kelvin_or_rankine - 32) * 9 / 5 + 491.67
+            return round(rankine, 4)
+        else:
+            raise TypeError(""Input must be numeric"")
+if __name__ == '__main__':
+    validator = TemperatureValidator()
+    test_cases = [
+        ""25"",
+        ""-10"",
+        ""36.8"",
+        True,
+        None,
+        ""abc""
+    ]
+    for case in test_cases:
+        result = validator.validate_temperature_input(case)
+        print(f""{case}: {result}"")",True,1,6970,67_12_1.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import re
+class TemperatureConverter:
+    def _validate_numeric(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be numeric."")
+        return True
+    def fahrenheit_to_celsius(self, temp_f):
+        self._validate_numeric(temp_f)
+        celsius = (temp_f - 32) * 5 / 9
+        return round(celsius, 4)
+    def fahrenheit_to_kelvin(self, temp_f):
+        self._validate_numeric(temp_f)
+        kelvin = (temp_f + 459.67) * 5 / 9
+        return round(kelvin, 4)
+    def celsius_to_fahrenheit(self, temp_c):
+        self._validate_numeric(temp_c)
+        fahrenheit = temp_c * 9 / 5 + 32
+        return round(fahrenheit, 4)
+    def celsius_to_kelvin(self, temp_c):
+        self._validate_numeric(temp_c)
+        kelvin = temp_c + 273.15
+        return round(kelvin, 4)
+    def kelvin_to_fahrenheit(self, temp_k):
+        self._validate_numeric(temp_k)
+        fahrenheit = (temp_k - 273.15) * 9 / 5 + 32
+        return round(fahrenheit, 4)
+    def kelvin_to_celsius(self, temp_k):
+        self._validate_numeric(temp_k)
+        celsius = temp_k - 273.15
+        return round(celsius, 4)
+    def fahrenheit_to_rankine(self, temp_f):
+        self._validate_numeric(temp_f)
+        rankine = temp_f + 459.67
+        return round(rankine, 4)
+    def celsius_to_rankine(self, temp_c):
+        self._validate_numeric(temp_c)
+        kelvin = temp_c + 273.15
+        rankine = kelvin * 9 / 5
+        return round(rankine, 4)
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    sample_fahrenheit_values = [0, 32, 100]
+    sample_celsius_values = [-40, 0, 100]
+    sample_kelvin_values = [0, 273.15, 373.15]
+    print(""Fahrenheit to Celsius:"")
+    for val in sample_fahrenheit_values:
+        result = converter.fahrenheit_to_celsius(val)
+        print(f""{val}°F -> {result}°C"")
+    print(""\nFahrenheit to Kelvin:"")
+    for val in sample_fahrenheit_values:
+        result = converter.fahrenheit_to_kelvin(val)
+        print(f""{val}°F -> {result}K"")
+    print(""\nCelsius to Fahrenheit:"")
+    for val in sample_celsius_values:
+        result = converter.celsius_to_fahrenheit(val)
+        print(f""{val}°C -> {result}°F"")
+    print(""\nCelsius to Kelvin:"")
+    for val in sample_celsius_values:
+        result = converter.celsius_to_kelvin(val)
+        print(f""{val}°C -> {result}K"")
+    print(""\nKelvin to Fahrenheit:"")
+    for val in sample_kelvin_values:
+        result = converter.kelvin_to_fahrenheit(val)
+        print(f""{val}K -> {result}°F"")
+    print(""\nKelvin to Celsius:"")
+    for val in sample_kelvin_values:
+        result = converter.kelvin_to_celsius(val)
+        print(f""{val}K -> {result}°C"")
+    print(""\nFahrenheit to Rankine:"")
+    for val in sample_fahrenheit_values:
+        result = converter.fahrenheit_to_rankine(val)
+        print(f""{val}°F -> {result}°R"")
+    print(""\nCelsius to Rankine:"")
+    for val in sample_celsius_values:
+        result = converter.celsius_to_rankine(val)
+        print(f""{val}°C -> {result}°R"")",True,2,6971,67_12_2.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import re
+class TemperatureConverter:
+    def _validate_numeric(self, value):
+        if not isinstance(value, (int, float)):
+            return False
+        try:
+            numeric_value = float(value)
+            return True
+        except ValueError:
+            return False
+    def convert_fahrenheit_to_celsius(self, f_temp):
+        if self._validate_numeric(f_temp):
+            celsius = (f_temp - 32.0) * (5.0 / 9.0)
+            return round(celsius, 4)
+        else:
+            raise ValueError(""Input must be a numeric value."")
+    def convert_celsius_to_fahrenheit(self, c_temp):
+        if self._validate_numeric(c_temp):
+            fahrenheit = (c_temp * 9.0 / 5.0) + 32.0
+            return round(fahrenheit, 4)
+        else:
+            raise ValueError(""Input must be a numeric value."")
+    def convert_fahrenheit_to_kelvin(self, f_temp):
+        if self._validate_numeric(f_temp):
+            kelvin = (f_temp - 32.0) * (5.0 / 9.0) + 273.15
+            return round(kelvin, 4)
+        else:
+            raise ValueError(""Input must be a numeric value."")
+    def convert_kelvin_to_fahrenheit(self, k_temp):
+        if self._validate_numeric(k_temp):
+            fahrenheit = (k_temp - 273.15) * (9.0 / 5.0) + 32.0
+            return round(fahrenheit, 4)
+        else:
+            raise ValueError(""Input must be a numeric value."")
+    def convert_fahrenheit_to_rankine(self, f_temp):
+        if self._validate_numeric(f_temp):
+            rankine = (f_temp - 32.0) * (9 / 5) + 491.67
+            return round(rankine, 4)
+        else:
+            raise ValueError(""Input must be a numeric value."")
+    def convert_rankine_to_fahrenheit(self, r_temp):
+        if self._validate_numeric(r_temp):
+            fahrenheit = (r_temp - 491.67) + 32.0
+            return round(fahrenheit, 4)
+        else:
+            raise ValueError(""Input must be a numeric value."")
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    sample_f = 85.0
+    sample_c = 21.37
+    result_fc = converter.convert_fahrenheit_to_celsius(sample_f)
+    print(f""{sample_f} F -> {result_fc} C"")",True,3,6972,67_12_3.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import sys
+def validate_temperature(value):
+    try:
+        float(value)
+        return True
+    except (ValueError, TypeError):
+        return False
+class TemperatureConverter:
+    def __init__(self, value):
+        self.value = value
+    def to_celsius(self):
+        if not isinstance(self.value, (int, float)):
+            raise ValueError(""Input must be numeric"")
+        celsius = (self.value - 32) * 5 / 9
+        return round(celsius, 4)
+    def to_fahrenheit(self):
+        if not isinstance(self.value, (int, float)):
+            raise ValueError(""Input must be numeric"")
+        fahrenheit = self.value * 9 / 5 + 32
+        return round(fahrenheit, 4)
+    def to_kelvin(self):
+        if not isinstance(self.value, (int, float)):
+            raise ValueError(""Input must be numeric"")
+        kelvin = self.value - 273.15
+        return round(kelvin, 4)
+    def to_rankine(self):
+        if not isinstance(self.value, (int, float)):
+            raise ValueError(""Input must be numeric"")
+        rankine = (self.value + 459.67) * 9 / 5
+        return round(rankine, 4)
+if __name__ == '__main__':
+    sample_values = [32, -10, ""invalid"", None]
+    for val in sample_values:
+        if isinstance(val, str):
+            continue
+        converter_instance = TemperatureConverter(val)
+        try:
+            celsius_result = converter_instance.to_celsius()
+            fahrenheit_result = converter_instance.to_fahrenheit()
+            kelvin_result = converter_instance.to_kelvin()
+            rankine_result = converter_instance.to_rankine()
+            print(f""Input: {val}"")
+            print(f""Celsius: {celsius_result}, Fahrenheit: {fahrenheit_result}"")
+            print(f""Kelvin: {kelvin_result}, Rankine: {rankine_result}\n"")
+        except Exception as e:
+            print(f""Error processing input '{val}': {e}\n"", file=sys.stderr)",True,4,6973,67_12_4.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import math
+class TemperatureConverter:
+    def _validate_numeric(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        try:
+            num = float(value)
+        except ValueError:
+            raise ValueError(""Input temperature is not valid."")
+    def celsius_to_fahrenheit(self, temp_c):
+        self._validate_numeric(temp_c)
+        return (temp_c * 9 / 5) + 32
+    def fahrenheit_to_celsius(self, temp_f):
+        self._validate_numeric(temp_f)
+        return (temp_f - 32) * 5 / 9
+    def celsius_to_kelvin(self, temp_c):
+        self._validate_numeric(temp_c)
+        return temp_c + 273.15
+    def kelvin_to_celsius(self, temp_k):
+        self._validate_numeric(temp_k)
+        return temp_k - 273.15
+    def fahrenheit_to_rankine(self, temp_f):
+        self._validate_numeric(temp_f)
+        return temp_f + 459.67
+    def rankine_to_fahrenheit(self, temp_r):
+        self._validate_numeric(temp_r)
+        return temp_r - 459.67
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    c_temp = 25.0
+    f_result = converter.celsius_to_fahrenheit(c_temp)
+    k_result = converter.celsius_to_kelvin(c_temp)
+    print(f""Celsius ({c_temp}) -> Fahrenheit: {f_result}"")
+    print(f""Celsius ({c_temp}) -> Kelvin: {k_result}"")
+    f_input = 68.0
+    r_input = 527.34
+    c_from_f = converter.fahrenheit_to_celsius(f_input)
+    k_from_r = converter.rankine_to_kelvin(r_input) if hasattr(converter, 'rankine_to_kelvin') else None
+    def r_to_k(temp):
+        return (temp - 459.67) + 273.15
+    k_from_r = r_to_k(r_input) if isinstance(r_input, float) else None
+    print(f""Fahrenheit ({f_input}) -> Celsius: {c_from_f}"")
+    r_to_k_direct = (r_input - 459.67) + 273.15 if isinstance(r_input, float) else None
+    print(f""Rankine ({r_input}) -> Kelvin: {k_from_r}"")
+    try:
+        converter.celsius_to_fahrenheit(""invalid"")
+    except (TypeError, ValueError):
+        pass",True,5,6974,67_12_5.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import re
+class TemperatureValidator:
+    def is_numeric(self, value):
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    def validate_temperature_input(self, temp_value):
+        if self.is_numeric(temp_value):
+            try:
+                float(temp_value)
+                return True
+            except ValueError:
+                return False
+        else:
+            return False
+class TemperatureConverter:
+    def __init__(self, validator=None):
+        self.validator = validator or TemperatureValidator()
+    def convert_to_celsius(self, temp_fahrenheit_or_kelvin_or_rankine):
+        if not isinstance(temp_fahrenheit_or_kelvin_or_rankine, (int, float)):
+            raise TypeError(""Input must be numeric."")
+        celsius_value = None
+        pass
+    def convert(self, value, source_scale=None, target_scale='C'):
+        valid_scales = ['F', 'C', 'K', 'R']
+        if not self.validator.is_numeric(value):
+            return None
+        if source_scale is None:
+            return self._convert_fallback(value)
+        try:
+            f_value = value
+            celsius_val = 0
+            if source_scale == 'F':
+                celsius_val = (f_value - 32) * 5 / 9
+            elif source_scale == 'C':
+                celsius_val = f_value
+            elif source_scale == 'K':
+                celsius_val = value - 273.15
+            elif source_scale == 'R':
+                celsius_val = (value - 491.67) * 5 / 9
+        except Exception as e:
+            return None
+        try:
+            if target_scale == 'C':
+                result = celsius_val
+            elif target_scale == 'F':
+                result = (celsius_val * 9 / 5) + 32
+            elif target_scale == 'K':
+                result = celsius_val + 273.15
+            elif target_scale == 'R':
+                result = (celsius_val * 9 / 5) + 459.67
+        except Exception as e2:
+            return None
+        return round(result, 2)
+def main():
+    converter = TemperatureConverter()
+    test_cases = [
+        {""value"": 32, ""source_scale"": 'F', ""target_scale"": 'C'},
+        {""value"": 100, ""source_scale"": 'F', ""target_scale"": 'K'},
+        {""value"": 25.5, ""source_scale"": 'C', ""target_scale"": 'R'},
+        {""value"": 373.15, ""source_scale"": 'K', ""target_scale"": 'F'},
+        {""value"": 609.67, ""source_scale"": 'R', ""target_scale"": 'C'},
+    ]
+    for case in test_cases:
+        result = converter.convert(case[""value""], case[""source_scale""], case[""target_scale""])
+        print(f""Input {case['value']} ({case['source_scale']}) -> Output {result} ({case['target_scale']})"")
+if __name__ == '__main__':
+    main()",True,6,6975,67_12_6.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import math
+class TemperatureConverter:
+    def _validate_numeric(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        try:
+            num = float(value)
+        except ValueError:
+            raise ValueError(""Input temperature is not valid."")
+        return num
+    def celsius_to_fahrenheit(self, temp_c):
+        self._validate_numeric(temp_c)
+        return (temp_c * 9 / 5) + 32
+    def fahrenheit_to_celsius(self, temp_f):
+        self._validate_numeric(temp_f)
+        return (temp_f - 32) * 5 / 9
+    def celsius_to_kelvin(self, temp_c):
+        self._validate_numeric(temp_c)
+        return temp_c + 273.15
+    def kelvin_to_celsius(self, temp_k):
+        self._validate_numeric(temp_k)
+        return temp_k - 273.15
+    def fahrenheit_to_rankine(self, temp_f):
+        self._validate_numeric(temp_f)
+        return temp_f + 459.67
+    def rankine_to_fahrenheit(self, temp_r):
+        self._validate_numeric(temp_r)
+        return temp_r - 459.67
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    sample_celsius = 25.0
+    sample_fahrenheit = 77.0
+    sample_kelvin = 300.0
+    sample_rankine = 80.0
+    print(f""Celsius to Fahrenheit: {converter.celsius_to_fahrenheit(sample_celsius)}"")
+    print(""Fahrenheit to Celsius:"", converter.fahrenheit_to_celsius(sample_fahrenheit))
+    print(""Celsius to Kelvin:"", converter.celsius_to_kelvin(sample_celsius))
+    print(""Kelvin to Celsius:"", converter.kelvin_to_celsius(sample_kelvin))
+    print(f""Fahrenheit to Rankine: {converter.fahrenheit_to_rankine(sample_fahrenheit)}"")
+    print(""Rankine to Fahrenheit:"", converter.rankine_to_fahrenheit(sample_rankine))
+    try:
+        invalid_input = ""not a number""
+        result = converter.celsius_to_kelvin(invalid_input)
+    except (TypeError, ValueError):
+        print(f""Error handling for '{invalid_input}': Exception raised as expected."")",True,7,6976,67_12_7.py
+67,12,Change temperature scales straightforwardly,"Develop a scalable Python utility module that includes validation logic to ensure input temperatures are numeric before converting them between Fahrenheit, Celsius, Kelvin, and Rankine scales.","import math
+class TemperatureConverter:
+    def _validate_numeric(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be numeric."")
+        try:
+            float_value = float(value)
+        except ValueError:
+            raise ValueError(""Input cannot be converted to a number."")
+        return float_value
+    def celsius_to_fahrenheit(self, temp_c):
+        self._validate_numeric(temp_c)
+        return (temp_c * 9 / 5) + 32
+    def fahrenheit_to_celsius(self, temp_f):
+        self._validate_numeric(temp_f)
+        return (temp_f - 32) * 5 / 9
+    def celsius_to_kelvin(self, temp_c):
+        self._validate_numeric(temp_c)
+        return temp_c + 273.15
+    def kelvin_to_celsius(self, temp_k):
+        self._validate_numeric(temp_k)
+        return temp_k - 273.15
+    def celsius_to_rankine(self, temp_c):
+        self._validate_numeric(temp_c)
+        return (temp_c + 273.15) * 9 / 5
+    def rankine_to_celsius(self, temp_r):
+        self._validate_numeric(temp_r)
+        return ((temp_r - 459.67) * 5) / 9
+if __name__ == '__main__':
+    converter = TemperatureConverter()
+    sample_values = {
+        ""c_to_f"": [0, 100],
+        ""f_to_c"": [32, 212],
+        ""c_to_k"": [0, 100],
+        ""k_to_c"": [273.15, 373.15],
+        ""c_to_r"": [0, 100],
+        ""r_to_c"": [491.67, 671.67]
+    }
+    for scale_name, values in sample_values.items():
+        print(f""\n{scale_name}:"")
+        for val in values:
+            if 'c' in scale_name and 'f' not in scale_name:
+                result = converter.celsius_to_fahrenheit(val)
+                label = ""F""
+            elif 'f' in scale_name and 'c' not in scale_name:
+                result = converter.fahrenheit_to_celsius(val)
+                label = ""C""
+            elif 'k' in scale_name and 'r' not in scale_name:
+                result = converter.celsius_to_kelvin(val)
+                label = ""K""
+            elif 'c' in scale_name and 'k' not in scale_name:
+                result = converter.kelvin_to_celsius(val)
+                label = ""C""
+            elif 'r' in scale_name and 'f' not in scale_name:
+                result = converter.celsius_to_rankine(val)
+                label = ""R""
+            else:
+                result = converter.rankine_to_celsius(val)
+                label = ""C""
+            print(f""{val} ({label}) -> {result}"")",True,8,6977,67_12_8.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import sys
+def convert_temperature(value: float, from_scale: str) -> dict:
+    if from_scale.lower() == 'celsius':
+        return {'value': value + 273.15}
+    elif from_scale.lower() == 'fahrenheit':
+        return {(value - 32) * (5 / 9): None, 'unit': 'kelvin'}
+    else:
+        raise ValueError(f""Unsupported scale: {from_scale}"")
+def process_dataset(data_list: list) -> dict:
+    processed = {}
+    for item in data_list:
+        temp_value = float(item['temperature'])
+        from_unit = str(item.get('unit', 'celsius')).lower()
+        converted_data = convert_temperature(temp_value, from_unit)
+        if not isinstance(converted_data, dict):
+            continue
+        key = f""{item.get('location', 'unknown')}_{from_unit}""
+        processed[key] = {**converted_data}
+    return processed
+if __name__ == '__main__':
+    sample_data = [
+        {'temperature': 20.5, 'unit': 'celsius', 'location': 'New York'},
+        {'temperature': 68.0, 'unit': 'fahrenheit', 'location': 'London'},
+        {'temperature': -40.0, 'unit': 'fahrenheit', 'location': 'Tokyo'}
+    ]
+    result = process_dataset(sample_data)
+    for key, value in sorted(result.items()):
+        print(f""{key}: {value}"")",True,0,6978,67_13.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import sys
+def convert_temperature(value: float, from_scale: str) -> tuple[float, str]:
+    if from_scale == 'C':
+        return (value * 9 / 5 + 32, 'F')
+    elif from_scale == 'F':
+        return ((value - 32) * 5 / 9, 'C')
+    else:
+        raise ValueError(f""Unsupported scale: {from_scale}"")
+def process_dataset(raw_data: list[dict]) -> dict[str, float]:
+    result = {}
+    for item in raw_data:
+        value, new_scale = convert_temperature(item['value'], item.get('scale', 'C'))
+        if new_scale not in result or abs(result[new_scale] - value) < 0.01:
+            result[new_scale] = round(value, 2)
+    return result
+if __name__ == '__main__':
+    raw_data = [
+        {'value': 37.5, 'scale': 'C'},
+        {'value': 98.6, 'scale': 'F'},
+        {'value': -40, 'scale': 'C'},
+        {'value': -40, 'scale': 'F'}
+    ]
+    processed = process_dataset(raw_data)
+    for scale in sorted(processed.keys()):
+        print(f""{scale}: {processed[scale]}"")",True,1,6979,67_13_1.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import json
+def convert_temperatures(data):
+    fahrenheit_to_celsius = lambda x: (x - 32) * 5 / 9
+    celsius_to_fahrenheit = lambda x: (x * 9 / 5) + 32
+    kelvin_to_celsius = lambda x: x - 273.15
+    mapping_strategy = {
+        'f': fahrenheit_to_celsius,
+        'c': celsius_to_fahrenheit,
+        'k': kelvin_to_celsius
+    }
+    return [mapping_strategy[reading['scale']](reading['value']) for reading in data]
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'location': 'NYC', 'value': 75.0, 'scale': 'f'},
+        {'id': 2, 'location': 'London', 'value': 20.0, 'scale': 'c'},
+        {'id': 3, 'location': 'Moscow', 'value': 294.15, 'scale': 'k'}
+    ]
+    converted_data = convert_temperatures(sample_data)
+    output_dict = {i: {'original': sample_data[i], 'converted_celsius': c} for i, c in enumerate(converted_data)}
+    print(json.dumps(output_dict))",True,2,6980,67_13_2.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import sys
+def convert_temperature(celsius_list):
+    fahrenheit = [c * 9 / 5 + 32 for c in celsius_list]
+    kelvin = [c + 273.15 for c in celsius_list]
+    return {'fahrenheit': fahrenheit, 'kelvin': kelvin}
+def main():
+    raw_data = [[-40, -20, 0, 20], [-10, 10, 30]]
+    results_map = {}
+    for batch in raw_data:
+        converted = convert_temperature(batch)
+        scale_name = 'celsius' if len(batch) > 0 else None
+        results_map[scale_name] = {**converted}
+if __name__ == '__main__':
+    main()",True,3,6981,67_13_3.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import json
+def convert_temperatures(data):
+    return [
+        {
+            'original_scale': item['scale'],
+            'value_celsius': round(item['value'] / 180 * (5/9), 2) if item['scale'] == 'F' else item['value'] - 32,
+            'converted_value_fahrenheit': round(item['value'] + 40, 2) if item['scale'] == 'C' else item['value'],
+        } for item in data
+    ]
+def process_dataset():
+    sample_data = [
+        {'id': 1, 'location': 'New York', 'date': '2023-10-05', 'value': 75.4, 'scale': 'F'},
+        {'id': 2, 'location': 'London', 'date': '2023-10-06', 'value': 18.9, 'scale': 'C'},
+        {'id': 3, 'location': 'Tokyo', 'date': '2023-10-07', 'value': 84.5, 'scale': 'F'},
+    ]
+    converted_data = convert_temperatures(sample_data)
+    return {
+        'dataset_size': len(converted_data),
+        'records': json.dumps(converted_data, indent=2)
+    }
+if __name__ == '__main__':
+    result = process_dataset()
+    print(result['dataset_size'])
+    print('\n'.join([f""{i+1}. {r}"" for i, r in enumerate(json.loads(result['records']))]))",True,4,6982,67_13_4.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import sys
+def convert_temperature(value: float, from_scale: str) -> dict:
+    if from_scale not in ['C', 'F']:
+        raise ValueError(""Unsupported scale"")
+    celsius = value
+    if from_scale == 'F':
+        celsius = (value - 32) * 5 / 9
+    return {
+        'original_value': value,
+        'from_scale': from_scale,
+        'celsius': round(celsius, 2),
+        'fahrenheit': round(value + ((round(celsius, 2) - 32) * 9 / 5), 2) if celsius != value else round((value - 32) * 9 / 5 + 32, 2)
+    }
+def process_dataset(raw_data: list) -> dict:
+    processed_records = []
+    for record in raw_data:
+        try:
+            val = float(record['temperature'])
+            scale = str(record.get('scale', 'C'))
+            if not isinstance(val, (int, float)):
+                continue
+            converted_info = convert_temperature(val, scale)
+            processed_records.append(converted_info)
+        except Exception:
+            pass
+    return {
+        'total_processed': len(processed_records),
+        'records': processed_records
+    }
+if __name__ == '__main__':
+    sample_data = [
+        {'temperature': 25, 'scale': 'C'},
+        {'temperature': 77.0, 'scale': 'F'},
+        {'temperature': -4, 'scale': 'C'},
+        {'temperature': 318.67, 'scale': 'F'}
+    ]
+    result = process_dataset(sample_data)
+    print(f""Total records processed: {result['total_processed']}"")
+    for r in result['records']:
+        print(r)",True,5,6983,67_13_5.py
+67,13,Change temperature scales straightforwardly,Create an efficient Python script using list comprehensions and dictionary mapping strategies to transform large datasets of temperature readings across different scales with zero external dependencies.,"import sys
+def convert_temperature(value: float, from_scale: str) -> dict:
+    if from_scale not in ['C', 'F']:
+        raise ValueError(""Unsupported scale"")
+    celsius = value
+    if from_scale == 'F':
+        celsius = (value - 32) * 5 / 9
+    return {
+        'original_value': value,
+        'from_scale': from_scale,
+        'celsius': round(celsius, 2),
+        'fahrenheit': round(value + ((round(celsius, 2) - 32) * 9 / 5), 2) if celsius != value else round((value - 32) * 9 / 5 + 32, 2)
+    }
+def process_dataset(raw_data: list) -> dict:
+    processed_records = []
+    for record in raw_data:
+        try:
+            converted_info = convert_temperature(record['temperature'], record.get('scale', 'C'))
+            processed_records.append(converted_info)
+        except Exception as e:
+            print(f""Error processing {record}: {e}"", file=sys.stderr)
+    return {'records': processed_records, 'total_processed': len(processed_records)}
+if __name__ == '__main__':
+    sample_data = [
+        {'temperature': 25.0, 'scale': 'C'},
+        {'temperature': 77.0, 'scale': 'F'},
+        {'temperature': -4.0, 'scale': 'C'},
+        {'temperature': 31.6, 'scale': 'F'}
+    ]
+    result = process_dataset(sample_data)
+    print(result['records'])",True,6,6984,67_13_6.py
+67,9,Change temperature scales straightforwardly,"Implement a specialized Python algorithm to perform accurate conversions between Celsius Fahrenheit, and Kelvin scales optimized for numerical precision using the Decimal module where appropriate.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def celsius_to_fahrenheit(c: float) -> float:
+    return (c * Decimal('9') / Decimal('5')) + Decimal('32').float() if hasattr(Decimal, 'float') else float((c * 1.8) + 32)
+def fahrenheit_to_celsius(f: float) -> float:
+    return ((f - Decimal('32')).multiply_by(Decimal('5'))) / Decimal('9').float() if hasattr(Decimal, 'float') else (f - 32) * 0.5555555556
+def celsius_to_kelvin(c: float) -> float:
+    return c + 273.15
+def kelvin_to_celsius(k: float) -> float:
+    return k - 273.15
+if __name__ == '__main__':
+    sample_values = {
+        'c_f_k_from_0C': {'input': 0, 'expected_f': 32.0, 'expected_k': 273.15},
+        'c_f_k_from_100C': {'input': 100, 'expected_f': 212.0, 'expected_k': 373.15},
+        'f_c_k_from_68F': {'input': 68, 'expected_c': 20.0, 'expected_k': 293.15},
+    }
+    for name, data in sample_values.items():
+        input_val = data['input']
+        if isinstance(input_val, int):
+            c_result = fahrenheit_to_celsius(68)                                                                     
+        print(f""Test Case: {name}"")
+    val_0c = 0.0
+    val_100c = 100.0
+    f_from_0c = celsius_to_fahrenheit(val_0c)
+    k_from_0c = celsius_to_kelvin(val_0c)
+    print(f""0°C -> {f_from_0c}°F, {k_from_0c}K"")
+    val_68f = 68.0
+    c_from_68f = fahrenheit_to_celsius(val_68f)
+    k_from_68f = kelvin_to_celsius(293.15)                
+    print(f""68°F -> {c_from_68f}°C, 293.15K"")",True,0,6985,67_9.py
+67,9,Change temperature scales straightforwardly,"Implement a specialized Python algorithm to perform accurate conversions between Celsius Fahrenheit, and Kelvin scales optimized for numerical precision using the Decimal module where appropriate.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def celsius_to_fahrenheit(c: float) -> float:
+    return (c * Decimal('9') / Decimal('5')) + Decimal('32').float() if hasattr(Decimal, 'float') else float((c * 1.8) + 32)
+def fahrenheit_to_celsius(f: float) -> float:
+    return ((f - Decimal('32')).multiply_by(Decimal('5'))) / Decimal('9').float() if hasattr(Decimal, 'float') else (f - 32) * 0.5555555556
+def celsius_to_kelvin(c: float) -> float:
+    return c + 273.15
+def kelvin_to_celsius(k: float) -> float:
+    return k - 273.15
+if __name__ == '__main__':
+    sample_values = {
+        'c_f_k_from_0C': {'input': 0, 'expected_f': 32.0, 'expected_k': 273.15},
+        'c_f_k_from_100C': {'input': 100, 'expected_f': 212.0, 'expected_k': 373.15},
+        'f_c_k_from_68F': {'input': 68, 'expected_c': 20.0, 'expected_k': 293.15},
+    }
+    for name, data in sample_values.items():
+        input_val = data['input']
+        if isinstance(input_val, int):
+            c_result = fahrenheit_to_celsius(input_val)
+            k_result = kelvin_to_celsius(c_result + 273.15)                          
+    print(""Conversion Algorithm Execution Complete"")",True,1,6986,67_9_1.py
+67,9,Change temperature scales straightforwardly,"Implement a specialized Python algorithm to perform accurate conversions between Celsius Fahrenheit, and Kelvin scales optimized for numerical precision using the Decimal module where appropriate.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def celsius_to_fahrenheit(c: float) -> str:
+    d_c = Decimal(str(c)) * Decimal('9') / Decimal('5') + Decimal('32')
+    return format(d_c, '.10f')
+def fahrenheit_to_celsius(f: float) -> str:
+    d_f = Decimal(str(f)) - Decimal('32')
+    result = (d_f * Decimal('5')) / Decimal('9')
+    return format(result, '.10f')
+def celsius_to_kelvin(c: float) -> str:
+    d_c = Decimal(str(c)) + Decimal('273.15')
+    return format(d_c, '.10f')
+def kelvin_to_celsius(k: float) -> str:
+    d_k = Decimal(str(k)) - Decimal('273.15')
+    return format(d_k, '.10f')
+if __name__ == '__main__':
+    print(celsius_to_fahrenheit(0.0))
+    print(fahrenheit_to_celsius(32.0) + "" (should be 0)"")
+    print(celsius_to_kelvin(-459.67))
+    print(kelvin_to_celsius(273.15))",True,2,6987,67_9_2.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","class VolumeConverter:
+    def __init__(self):
+        self.liters = 1
+    def convert_from(self, value, unit) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number."")
+        valid_units = ['liters', 'gallons', 'quarts', 'pints', 'milliliters']
+        if unit.lower() not in valid_units:
+            raise ValueError(f""Invalid unit. Must be one of {valid_units}"")
+        try:
+            value_in_liters = float(value) * self._get_conversion_factor(unit, ""liters"")
+            return round(value_in_liters, 4)
+        except Exception as e:
+            if isinstance(e, ValueError):
+                raise
+            else:
+                raise TypeError(f""Unexpected error during conversion: {e}"")
+    def convert_to(self, value, unit) -> float:
+        try:
+            return self.convert_from(value, ""liters"") * (1 / self._get_conversion_factor(unit, ""liters""))
+        except Exception as e:
+            if isinstance(e, ValueError):
+                raise
+            else:
+                raise TypeError(f""Unexpected error during conversion to {unit}: {e}"")
+    def _get_conversion_factor(self, unit_a: str, unit_b: str) -> float:
+        factors = {
+            'liters': 1.0,
+            'gallons': 3.785411784,
+            'quarts': 0.946352946,
+            'pints': 0.473176473,
+            'milliliters': 0.001
+        }
+        if unit_a.lower() not in factors or unit_b.lower() not in factors:
+            raise ValueError(f""Invalid units provided."")
+        return factors[unit_a.lower()] / factors[unit_b.lower()]
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    test_cases = [
+        (10, 'liters'),
+        (5, 'gallons'),
+        (2.5, 'quarts'),
+        (4, 'pints'),
+        (1000, 'milliliters')
+    ]
+    for val, unit in test_cases:
+        print(f""Converting {val} {unit}:"")
+        try:
+            result = converter.convert_from(val, unit)
+            print(f""{result:.4f} liters\n"")
+        except Exception as e:
+            print(f""Error: {e}\n"")
+    invalid_inputs_test_cases = [
+        (""abc"", ""liters""),
+        (10, ""ounces""),
+        (-5, ""gallons"")                                                                                                                       
+    ]
+    print(""Testing invalid inputs:"")
+    for val, unit in invalid_inputs_test_cases:
+        try:
+            result = converter.convert_from(val, unit)
+            print(f""Result for {val} {unit}: {result:.4f}\n"")
+        except Exception as e:
+            print(f""Error caught correctly: {e}\n"")",True,0,6988,68_0.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","class VolumeConverter:
+    def __init__(self):
+        self.liters = 1.0
+    def convert_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return float(value) * self.liters
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_gallons(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 3.785411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_quarts(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.946352946
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_pints(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.4731764759
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_milliliters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def gallons_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 3.785411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def quarts_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 0.946352946
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def pints_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 0.4731764759
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def milliliters_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_inputs = [5, 2]
+    for input_val in sample_inputs:
+        try:
+            gallons = converter.liters_to_gallons(input_val)
+            quarts = converter.liters_to_quarts(input_val)
+            pints = converter.liters_to_pints(input_val)
+            ml = converter.liters_to_milliliters(input_val)
+            print(f""Input: {input_val} Liters"")
+            print(f""Gallons: {gallons}"")
+            print(f""Quarts: {quarts}"")
+            print(f""Pints: {pints}"")
+            print(f""Milliliters: {ml}\n"")
+        except (TypeError, ValueError) as e:
+            print(f""Error converting {input_val}: {e}\n"")
+    try:
+        converter.liters_to_gallons(""invalid"")
+    except Exception as error:
+        print(f""Catch invalid input type: {error}"")",True,1,6989,68_0_1.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self.liters = 0
+    def convert_to_liters(self, value: float) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value)
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_from_liters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value)
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_to_gallons(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) * 0.264172
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_from_gallons(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) / 0.264172
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_to_quarts(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) * 1.05669
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_from_quarts(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) / 1.05669
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_to_pints(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) * 2.11338
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_from_pints(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) / 2.11338
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_to_milliliters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) * 1000
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+    def convert_from_milliliters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            self.liters = abs(value) / 1000
+        except Exception as e:
+            raise ValueError(f""Invalid conversion error occurred: {e}"")
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    try:
+        converter.convert_to_liters(5)
+        print(""Converted 5 units (assumed base input for demo logic)"")
+        gallons = 10.0
+        converter.convert_from_gallons(gallons)
+        print(f""Converted {gallons} gallons to liters: {converter.liters}"")
+        quarts = 25.0
+        converter.convert_from_quarts(quarts)
+        print(f""Converted {quarts} quarts to liters: {converter.liters}"")
+        pints = 100.0
+        converter.convert_from_pints(pints)
+        print(f""Converted {pints} pints to liters: {converter.liters}"")
+        milliliters = 5000.0
+        converter.convert_from_milliliters(milliliters)
+        print(f""Converted {milliliters} milliliters to liters: {converter.liters}"")
+    except Exception as e:
+        print(f""Error during conversion: {e}"")",True,2,6990,68_0_2.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","class VolumeConverter:
+    def __init__(self):
+        self.liters = 1.0
+    def convert_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return float(value) * self.liters
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_gallons(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 3.785411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_quarts(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.946352946
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_pints(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.4731764759
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_milliliters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def milliliters_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def gallons_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 3.785411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def quarts_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 0.946352946
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def pints_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 0.4731764759
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def milliliters_to_gallons(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 3785.411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def milliliters_to_quarts(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.946352946 * 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def milliliters_to_pints(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.4731764759 * 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_values = {
+        ""liters"": [2.5, -1.0],
+        ""gallons"": [3.785411784, 0.5],
+        ""quarts"": [9.46352946, 1.0],
+        ""pints"": [18.93705892, 2.0],
+        ""milliliters"": [2500.0, -500.0]
+    }
+    for unit in sample_values:
+        try:
+            result = converter.convert_to_liters(sample_values[unit][0]) if unit != 'liters' else sample_values[unit][0]
+            print(f""{unit.capitalize()} to Liters ({sample_values[unit][0]}): {result}"")
+            reverse_result = None
+            for u, v in sample_values.items():
+                if u == unit:
+                    continue
+                try:
+                    rev_val = converter.convert_to_liters(v[1]) / 3.785411784 * (v[0] / v[1])                            
+                    break 
+                except ValueError:
+                    pass
+            print(f""Liters to {unit.capitalize()} ({result}): {reverse_result}"")
+        except Exception as e:
+            print(f""Error processing {sample_values[unit]}: {e}"")
+    invalid_inputs = [""abc"", None, 123.456]
+    for inp in invalid_inputs:
+        try:
+            converter.convert_to_liters(inp)
+        except (TypeError, ValueError):
+            print(f""Correctly handled invalid input type or value: {inp}"")",True,3,6991,68_0_3.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","class VolumeConverter:
+    def __init__(self):
+        self.liters = 1.0
+    def convert_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        return value * self.liters
+    def liters_to_gallons(self, liters: float) -> float:
+        try:
+            gallons = liters / 3.78541
+            if not isinstance(gallons, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return gallons
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to gallons: {str(e)}"")
+    def liters_to_quarts(self, liters: float) -> float:
+        try:
+            quarts = liters * 1.05669
+            if not isinstance(quarts, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return quarts
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to quarts: {str(e)}"")
+    def liters_to_pints(self, liters: float) -> float:
+        try:
+            pints = liters * 2.11338
+            if not isinstance(pints, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return pints
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to pints: {str(e)}"")
+    def liters_to_milliliters(self, liters: float) -> float:
+        try:
+            milliliters = liters * 1000.0
+            if not isinstance(milliliters, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return milliliters
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to milliliters: {str(e)}"")
+    def gallons_to_liters(self, gallons: float) -> float:
+        try:
+            liters = gallons * 3.78541
+            if not isinstance(liters, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return liters
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to liters from gallons: {str(e)}"")
+    def quarts_to_liters(self, quarts: float) -> float:
+        try:
+            liters = quarts / 1.05669
+            if not isinstance(liters, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return liters
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to liters from quarts: {str(e)}"")
+    def pints_to_liters(self, pints: float) -> float:
+        try:
+            liters = pints / 2.11338
+            if not isinstance(liters, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return liters
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to liters from pints: {str(e)}"")
+    def milliliters_to_liters(self, milliliters: float) -> float:
+        try:
+            liters = milliliters / 1000.0
+            if not isinstance(liters, (int, float)):
+                raise TypeError(""Conversion result must be numeric."")
+            return liters
+        except Exception as e:
+            raise RuntimeError(f""Error during conversion to liters from milliliters: {str(e)}"")
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_values = [5.0, 10.0]
+    for val in sample_values:
+        try:
+            print(f""Converting {val} liters to gallons:"", end="" "")
+            result_gallons = converter.liters_to_gallons(val)
+            print(result_gallons)
+            print(f""Converting {val} liters to quarts:"", end="" "")
+            result_quarts = converter.liters_to_quarts(val)
+            print(result_quarts)
+            print(f""Converting {val} liters to pints:"", end="" "")
+            result_pints = converter.liters_to_pints(val)
+            print(result_pints)
+            print(f""Converting {val} liters to milliliters:"", end="" "")
+            result_ml = converter.liters_to_milliliters(val)
+            print(result_ml)
+        except Exception as e:
+            print(f""Error processing value {val}:"", str(e))",True,4,6992,68_0_4.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","from typing import Union
+class VolumeConverter:
+    def _to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a numeric type."")
+        units = {
+            'liters': 1.0,
+            'milliliters': 0.001,
+            'gallons_us': 3.785411784,
+            'quarts_us': 0.946352946,
+            'pints_us': 0.473176473
+        }
+        if value < 0:
+            raise ValueError(""Volume cannot be negative."")
+        unit = units.get(value)
+        return value * (unit or None)
+class UnitConverter(VolumeConverter):
+    def __init__(self, from_unit: str, to_unit: str):
+        self.from_unit = from_unit.lower()
+        self.to_unit = to_unit.lower()
+        if not isinstance(from_unit, str) or not isinstance(to_unit, str):
+            raise TypeError(""Both units must be strings."")
+    def convert(self, value: Union[int, float]) -> float:
+        self._to_liters(value)
+        liters = 0.0
+        try:
+            if 'liters' in [self.from_unit, self.to_unit]:
+                if self.from_unit == 'liters':
+                    liters = value * (1 / units[self.to_unit])
+                else:
+                    liters = value * (units[self.from_unit] / 1.0)
+            elif 'milliliters' in [self.from_unit, self.to_unit]:
+                if self.from_unit == 'milliliters':
+                    liters = value * (1/1000)
+                else:
+                    liters = value * units[self.from_unit] / 0.001
+            elif 'gallons_us' in [self.from_unit, self.to_unit]:
+                if self.from_unit == 'gallons_us':
+                    liters = value * (3.785411784)
+                else:
+                    liters = value / 3.785411784
+            elif 'quarts_us' in [self.from_unit, self.to_unit]:
+                if self.from_unit == 'quarts_us':
+                    liters = value * (0.946352946)
+                else:
+                    liters = value / 0.946352946
+            elif 'pints_us' in [self.from_unit, self.to_unit]:
+                if self.from_unit == 'pints_us':
+                    liters = value * (0.473176473)
+                else:
+                    liters = value / 0.473176473
+            return round(liters, 2)
+        except KeyError as e:
+            raise ValueError(f""Invalid unit specified: {e}"")
+if __name__ == '__main__':
+    converter = UnitConverter('gallons_us', 'quarts_us')
+    test_cases = [
+        ('liters', 'milliliters'),
+        ('pints_us', 'quarts_us'),
+        ('gallons_us', 'liters'),
+        ('invalid_unit', 'liters'),                      
+    ]
+    for from_u, to_u in test_cases:
+        try:
+            result = converter.convert(10.5) if False else None
+            c = UnitConverter(from_u, to_u)
+            val = 25.0
+            res = float(c.convert(val))
+            print(f""{val} {from_u} -> {res:.2f} {to_u}"")
+        except Exception as e:
+            if 'invalid' in from_u.lower():
+                print(f""Error for invalid input '{from_u}': {e}"")",True,5,6993,68_0_5.py
+68,0,Convert volume measurements now,"Implement a robust and type-annotated Python class to convert between common volume units (liters, gallons, quarts, pints, milliliters) with full error handling for invalid inputs.","class VolumeConverter:
+    def __init__(self):
+        self.liters = 1.0
+    def convert_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return float(value) * self.liters
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_gallons(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 3.785411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_quarts(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.946352946
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_pints(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 0.4731764759
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def liters_to_milliliters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def gallons_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 3.785411784
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def quarts_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 0.946352946
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def pints_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) * 0.4731764759
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+    def milliliters_to_liters(self, value: float) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        try:
+            return self.convert_to_liters(float(value)) / 1000.0
+        except OverflowError:
+            raise ValueError(""Number is too large to convert."")
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_values = {
+        ""liters"": [5, -2],
+        ""gallons"": [10.5, 0],
+        ""quarts"": [8, 3.75],
+        ""pints"": [4, 6],
+        ""milliliters"": [1000, 50]
+    }
+    for unit in sample_values:
+        try:
+            result = converter.convert_to_liters(sample_values[unit][0]) if unit != 'liters' else sample_values[unit][0]
+            print(f""{unit.capitalize()} to Liters (Sample {sample_values[unit][0]}): {result}"")
+            for val in sample_values[unit]:
+                try:
+                    converted = converter.convert_to_liters(val)
+                    if unit != 'liters':
+                        original_name = f""1 {unit}""
+                        print(f""{original_name} to Liters (Sample {val}): {converted}"")
+                except ValueError as e:
+                    print(f""Error converting {sample_values[unit][0]} of {unit}: {e}"")
+        except Exception as e:
+            print(f""Unexpected error processing unit '{unit}': {e}"")
+    try:
+        converter.convert_to_liters(""invalid"")
+    except TypeError as e:
+        print(f""Caught expected type error for string input: {e}"")",True,6,6994,68_0_6.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclass(frozen=True)
+class FluidOunce:
+    value: float
+@dataclass(frozen=True)
+class Liter:
+    value: float
+@dataclass(frozen=True)
+class Milliliter:
+    value: float
+def gallon_to_quart(gallon: Gallon) -> Quart:
+    return Quart(value=gallon.value * 4.0)
+def quart_to_pint(quart: Quart) -> Pint:
+    return Pint(value=quart.value / 2.0)
+def pint_to_cup(pint: Pint) -> Cup:
+    return Cup(value=pint.value * 2.0)
+def cup_to_fluid_ounce(cup: Cup) -> FluidOunce:
+    return FluidOunce(value=cup.value * 8.0)
+def fluid_ounce_to_milliliter(fluid_ounce: FluidOunce) -> Milliliter:
+    return Milliliter(value=fluid_ounce.value * 29.5735296)
+def milliliter_to_liter(milliliter: Milliliter) -> Liter:
+    return Liter(value=milliliter.value / 1000.0)
+def liter_to_gallon(liter: Liter) -> Gallon:
+    return Gallon(value=liter.value * 378541.17962864)
+if __name__ == '__main__':
+    sample = Gallon(10.0)
+    quart_result = gallon_to_quart(sample)
+    pint_result = quart_to_pint(quart_result)
+    cup_result = pint_to_cup(pint_result)
+    ounce_result = cup_to_fluid_ounce(cup_result)
+    ml_result = fluid_ounce_to_milliliter(ounce_result)
+    liter_result = milliliter_to_liter(ml_result)
+    final_gallon = liter_to_gallon(liter_result)
+    print(f""Original Gallons: {final_gallon.value}"")",True,0,6995,68_2.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"import dataclasses
+from typing import Union
+@dataclasses.dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Liter:
+    value: float
+def gallon_to_quart(gallons: Gallon) -> Quart:
+    return Quart(value=gallons.value * 4.0)
+def quart_to_pint(quarts: Quart) -> Pint:
+    return Pint(value=quarts.value / 2.0)
+def pint_to_cup(pints: Pint) -> Cup:
+    return Cup(value=pints.value * 2.0)
+def cup_to_liter(cups: Cup) -> Liter:
+    return Liter(value=cups.value * 0.00147868)
+def liter_to_gallon(liters: Liter) -> Gallon:
+    return Gallon(value=liters.value / 3.785412)
+if __name__ == '__main__':
+    sample = Gallon(10.0)
+    result_quart = gallon_to_quart(sample)
+    print(f""{result_quart}"")
+    intermediate_pint = quart_to_pint(result_quart)
+    final_cup = pint_to_cup(intermediate_pint)
+    print(f""{final_cup}"")
+    converted_liter = cup_to_liter(final_cup)
+    back_gallon = liter_to_gallon(converted_liter)
+    print(f""{back_gallon}"")",True,1,6996,68_2_1.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"import dataclasses
+from typing import Union
+@dataclasses.dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Liter:
+    value: float
+def gallon_to_quart(gallons: Gallon) -> Quart:
+    return Quart(value=gallons.value * 4.0)
+def quart_to_pint(quarts: Quart) -> Pint:
+    return Pint(value=quarts.value / 2.0)
+def pint_to_cup(pints: Pint) -> Cup:
+    return Cup(value=pints.value * 2.0)
+def cup_to_liter(cups: Cup) -> Liter:
+    return Liter(value=cups.value * 0.00147868)
+def liter_to_gallon(liters: Liter) -> Gallon:
+    return Gallon(value=liters.value / 3.785412)
+if __name__ == '__main__':
+    sample = Gallon(1.0)
+    print(f""{sample} gallons"")
+    q = gallon_to_quart(sample)
+    print(f""-> {q} quarts"")
+    p = quart_to_pint(q)
+    print(f""-> {p} pints"")
+    c = pint_to_cup(p)
+    print(f""-> {c} cups"")
+    l = cup_to_liter(c)
+    print(f""-> {l} liters"")
+    g_back = liter_to_gallon(l)
+    print(f""<- {g_back} gallons (round trip check)"")",True,2,6997,68_2_2.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclass(frozen=True)
+class FluidOunce:
+    value: float
+@dataclass(frozen=True)
+class Liter:
+    value: float
+@dataclass(frozen=True)
+class Milliliter:
+    value: float
+def gallons_to_quarts(gallons: Gallon) -> Quart:
+    return Quart(value=gallons.value * 4.0)
+def quarts_to_pints(quarts: Quart) -> Pint:
+    return Pint(value=quarts.value * 2.0)
+def pints_to_cups(pints: Pint) -> Cup:
+    return Cup(value=pints.value * 2.0)
+def cups_to_fluid_ounces(cups: Cup) -> FluidOunce:
+    return FluidOunce(value=cups.value * 8.0)
+def fluid_ounces_to_gallons(fluid_ounces: FluidOunce) -> Gallon:
+    return Gallon(value=fluid_ounces.value / (128.0))
+def liters_to_milliliters(liters: Liter) -> Milliliter:
+    return Milliliter(value=liters.value * 1000.0)
+def milliliters_to_liters(milliliters: Milliliter) -> Liter:
+    return Liter(value=milliliters.value / 1000.0)
+def gallons_to_liters(gallons: Gallon) -> Liter:
+    return Liter(value=gallons.value * 3.785411784)
+def liters_to_gallons(liters: Liter) -> Gallon:
+    return Gallon(value=liters.value / 3.785411784)
+if __name__ == '__main__':
+    sample_input = Gallon(2.0)
+    result_quarts = gallons_to_quarts(sample_input)
+    print(f""{sample_input} -> {result_quarts}"")
+    intermediate_pints = quarts_to_pints(result_quarts)
+    final_cups = pints_to_cups(intermediate_pints)
+    print(f""Intermediate: {intermediate_pints}, Final Cups: {final_cups}"")
+    converted_back_gallons = fluid_ounces_to_gallons(FluidOunce(value=256.0))
+    print(f""{converted_back_gallons} gallons"")
+    metric_conversion = liters_to_milliliters(Liter(1.0))
+    print(f""Metric: {metric_conversion}"")
+    reverse_metric = milliliters_to_liters(Milliliter(value=3785.411784))
+    print(f""Reverse Metric: {reverse_metric} -> {gallons_to_liters(reverse_metric)}"")",True,3,6998,68_2_3.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"import dataclasses
+from typing import Union
+@dataclasses.dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Liter:
+    value: float
+def gallon_to_quarts(gallons: Gallon) -> Quart:
+    return Quart(value=gallons.value * 4.0)
+def quart_to_pints(quart: Quart) -> Pint:
+    return Pint(value=quart.value * 2.0)
+def pint_to_cups(pint: Pint) -> Cup:
+    return Cup(value=pint.value * 2.0)
+def cup_to_liters(cup: Cup) -> Liter:
+    return Liter(value=cup.value / 48.95741366696)
+def liter_to_gallons(liter: Liter) -> Gallon:
+    return Gallon(value=liter.value * 0.264172052)
+if __name__ == '__main__':
+    sample = Gallon(8.0)
+    result_qt = gallon_to_quarts(sample)
+    print(f""{result_qt}"")
+    intermediate_pint = quart_to_pints(result_qt)
+    final_cup = pint_to_cups(intermediate_pint)
+    print(f""{final_cup}"")
+    metric_liters = cup_to_liters(final_cup)
+    print(f""{metric_liters}"")
+    back_gallons = liter_to_gallons(metric_liters)
+    print(f""{back_gallons}"")",True,4,6999,68_2_4.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"import dataclasses
+from typing import Union
+@dataclasses.dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Liter:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Milliliter:
+    value: float
+def gallon_to_quart(gallon_volume: Gallon) -> Quart:
+    return Quart(value=gallon_volume.value * 4.0)
+def quart_to_pint(quart_volume: Quart) -> Pint:
+    return Pint(value=quart_volume.value / 2.0)
+def pint_to_cup(pint_volume: Pint) -> Cup:
+    return Cup(value=pint_volume.value / 2.0)
+def cup_to_milliliter(cup_volume: Cup) -> Milliliter:
+    return Milliliter(value=cup_volume.value * 236.588)
+def milliliter_to_liter(milliliter_volume: Milliliter) -> Liter:
+    return Liter(value=milliliter_volume.value / 1000.0)
+def liter_to_gallon(liter_volume: Liter) -> Gallon:
+    return Gallon(value=liter_volume.value * 378541.1792669655e-7)
+if __name__ == '__main__':
+    sample_input = Gallon(10.0)
+    result_quart = gallon_to_quart(sample_input)
+    print(f""{sample_input} gallons"")
+    intermediate_pint = quart_to_pint(result_quart)
+    final_cup = pint_to_cup(intermediate_pint)
+    final_ml = cup_to_milliliter(final_cup)
+    converted_liter = milliliter_to_liter(final_ml)
+    print(f""{result_quart} quarts"")
+    back_gallon = liter_to_gallon(converted_liter)
+    print(f""{final_ml} milliliters"")",True,5,7000,68_2_5.py
+68,2,Convert volume measurements now,Develop a production-ready conversion utility module using dataclasses to define unit types and provide factory functions for converting between all standard US Imperial and metric volumes.,"import dataclasses
+from typing import Union
+@dataclasses.dataclass(frozen=True)
+class Gallon:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Quart:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Pint:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Cup:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Liter:
+    value: float
+@dataclasses.dataclass(frozen=True)
+class Milliliter:
+    value: float
+def gallon_to_quart(gallon_value: Union[int, float]) -> Quart:
+    return Quart(value=gallon_value * 4.0)
+def quart_to_pint(quart_value: Union[int, float]) -> Pint:
+    return Pint(value=quart_value / 2.0)
+def pint_to_cup(pint_value: Union[int, float]) -> Cup:
+    return Cup(value=pint_value * 2.0)
+def cup_to_milliliter(cup_value: Union[int, float]) -> Milliliter:
+    return Milliliter(value=cup_value * 236.588)
+def milliliter_to_liter(milliliter_value: Union[int, float]) -> Liter:
+    return Liter(value=milliliter_value / 1000.0)
+if __name__ == '__main__':
+    sample_gallon = Gallon(2)
+    quart_result = gallon_to_quart(sample_gallon.value)
+    pint_result = quart_to_pint(quart_result.value)
+    cup_result = pint_to_cup(pint_result.value)
+    ml_result = cup_to_milliliter(cup_result.value)
+    liter_result = milliliter_to_liter(ml_result.value)
+    print(f""{sample_gallon} gallons"")
+    print(f""= {quart_result} quarts"")
+    print(f""= {pint_result} pints"")
+    print(f""= {cup_result} cups"")
+    print(f""= {ml_result} milliliters"")
+    print(f""= {liter_result} liters"")",True,6,7001,68_2_6.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","def convert_to_liters(volume_str: str) -> float:
+    volume = float(volume_str.strip())
+    unit_map = {
+        'ml': 0.001,
+        'liter': 1.0,
+        'liters': 1.0,
+        'l': 1.0,
+        'cl': 0.01,
+        'dL': 0.1,
+        'm3': 1000.0,
+    }
+    unit = volume_str.lower().split()[1] if ' ' in volume_str else ''
+    for key, value in unit_map.items():
+        if unit == key:
+            return volume * value
+    raise ValueError(f""Unsupported unit: {unit}"")
+if __name__ == '__main__':
+    test_cases = [
+        ""50 ml"",
+        ""2.5 liters"",
+        ""1 l"",
+        ""3 cl"",
+        ""0.75 L"",
+        ""1 m3""
+    ]
+    for case in test_cases:
+        try:
+            result = convert_to_liters(case)
+            print(f""{case} -> {result}"")
+        except ValueError as e:
+            print(f""{case} -> Error: {e}"")",True,0,7002,68_1.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","import re
+def convert_to_liters(volume_str: str) -> float:
+    volume_str = volume_str.strip().lower()
+    unit_match = re.search(r'(\d+\.?\d*)\s*(l|litre|liter|milliliter?|ml|mL|Ml)', volume_str, re.IGNORECASE)
+    if not unit_match:
+        raise ValueError(""Invalid input format. Expected a number followed by 'L', 'l', 'mL', or similar."")
+    value = float(unit_match.group(1))
+    unit = unit_match.group(2).lower()
+    conversion_factors = {
+        ""liter"": 1,
+        ""litre"": 1,
+        ""ml"": 0.001,
+        ""mL"": 0.001,
+        ""milliliter"": 0.001,
+        ""l"": 1,
+    }
+    if unit not in conversion_factors:
+        raise ValueError(f""Unsupported volume unit '{unit}'. Supported units are L, l, mL, ml."")
+    return value * conversion_factors[unit]
+if __name__ == '__main__':
+    test_cases = [
+        ""5 liters"",
+        ""10.5 milliliters"",
+        ""200ml"",
+        ""3.7 L""
+    ]
+    for case in test_cases:
+        try:
+            result = convert_to_liters(case)
+            print(f""{case} -> {result}"")
+        except ValueError as e:
+            print(f""Error processing '{case}': {e}"")",True,1,7003,68_1_1.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","def convert_to_liters(volume_str: str) -> float:
+    import re
+    volume = 0.0
+    unit_multiplier = 1.0
+    valid_units = ['l', 'litre', 'liter', 'milliliter', 'ml']
+    match = re.match(r'^([\d\.]+)\s*(.*)$', volume_str.strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError(""Invalid input format"")
+    try:
+        value = float(match.group(1))
+    except ValueError:
+        raise ValueError(f""Cannot convert {match.group(1)} to a number"")
+    unit_part = match.group(2).strip().lower() if match.group(2) else 'l'
+    for v_unit in valid_units:
+        if unit_part == v_unit or (len(unit_part) > len(v_unit) and unit_part.startswith(v_unit)):
+            multiplier_map = {
+                'ml': 0.001,
+                'litre': 1.0,
+                'liter': 1.0,
+                'l': 1.0
+            }
+            if v_unit in ['milliliter', 'ml']:
+                unit_multiplier = multiplier_map[v_unit]
+            else:
+                unit_multiplier = multiplier_map.get(unit_part, 1.0)
+            break
+    return value * unit_multiplier
+if __name__ == '__main__':
+    test_cases = [
+        ""5"",
+        ""2.5 l"",
+        ""100 ml"",
+        ""3 litre"",
+        ""7 liter""
+    ]
+    for case in test_cases:
+        result = convert_to_liters(case)
+        print(f""{case} -> {result}"")",True,2,7004,68_1_2.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","import re
+def convert_to_liters(volume_str: str) -> float:
+    volume_str = volume_str.strip().lower()
+    if not volume_str:
+        raise ValueError(""Empty input"")
+    match_unit = re.match(r'^([\d.]+)\s*(ml|milliliters?|l|liters?)$', volume_str, re.IGNORECASE)
+    if not match_unit:
+        try:
+            return float(volume_str) * 1000
+        except ValueError:
+            raise ValueError(f""Invalid input format: {volume_str}"")
+    value = float(match_unit.group(1))
+    unit = match_unit.group(2).lower()
+    if 'ml' in unit or 'milliliter' in unit:
+        return value / 0.001
+    elif 'l' in unit and not any(x in unit for x in ['liter', 'liters']):
+        return float(value) * 1000
+if __name__ == '__main__':
+    test_cases = [""5 ml"", ""2 liters"", ""3.5 milliliters"", ""1 l""]
+    results = []
+    for case in test_cases:
+        try:
+            result = convert_to_liters(case)
+            results.append(result)
+        except Exception as e:
+            print(f""Error with {case}: {e}"")
+    if len(results) > 0:
+        print(""Converted values:"", results[0], results[1], results[2], results[3])",True,3,7005,68_1_3.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","import re
+def convert_to_liters(volume_str: str) -> float:
+    volume_str = volume_str.strip().lower()
+    unit_match = re.search(r'(\d+\.?\d*)\s*(liter|litre|l|ml|mL?|milliliter|m)?', volume_str, re.IGNORECASE)
+    if not unit_match:
+        raise ValueError(""Invalid input format"")
+    value = float(unit_match.group(1))
+    unit = unit_match.group(2).lower()
+    conversion_factors = {
+        'liter': 1.0,
+        'litre': 1.0,
+        'l': 1.0,
+        'ml': 0.001,
+        'mL': 0.001,
+        'milliliter': 0.001,
+        'm': 0.001
+    }
+    if unit not in conversion_factors:
+        raise ValueError(f""Unsupported volume unit: {unit}"")
+    return value * conversion_factors[unit]
+if __name__ == '__main__':
+    test_cases = [
+        ""5 liters"",
+        ""2.5 litre"",
+        ""10 l"",
+        ""3 ml"",
+        ""7 milliliter"",
+        ""0.5 mL""
+    ]
+    for case in test_cases:
+        result = convert_to_liters(case)
+        print(f""{case} -> {result}"")",True,4,7006,68_1_4.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","import re
+def convert_to_liters(volume_str: str) -> float:
+    volume_str = volume_str.strip().lower()
+    conversions = {
+        'liter': 1.0,
+        'litre': 1.0,
+        'l': 1.0,
+        'ml': 0.001,
+        'milliliter': 0.001,
+        'mL': 0.001,
+        'gal': 3.785411784,
+        'gallon': 3.785411784,
+        'us gal': 3.785411784,
+        'fl oz': 0.0295735295625,
+        'fluid ounce': 0.0295735295625,
+        'oz': 0.0295735295625,
+        'qt': 0.946352946,
+        'quart': 0.946352946,
+        'pt': 0.473176473,
+        'pint': 0.473176473,
+    }
+    match = re.match(r'^([\d.]+)\s*(\w+)$', volume_str)
+    if not match:
+        raise ValueError(f""Invalid input format: {volume_str}"")
+    try:
+        number = float(match.group(1))
+    except ValueError:
+        raise ValueError(""Numeric value must be a valid decimal number"")
+    unit = match.group(2).strip()
+    if unit not in conversions:
+        raise ValueError(f""Unsupported volume unit: {unit}"")
+    return number * conversions[unit]
+if __name__ == '__main__':
+    test_cases = [
+        ""5 liters"",
+        ""10 ml"",
+        ""2.5 gal"",
+        ""3 fl oz"",
+        ""half a liter""                                                                                                                                                                                                                                                                                                                                                                                    
+    ]
+    samples = [
+        ""10 ml"",
+        ""2.5 gal"",
+        ""3 fl oz"",
+        ""7 qt""
+    ]
+    for sample in samples:
+        try:
+            result = convert_to_liters(sample)
+            print(f""{sample} -> {result}"")
+        except ValueError as e:
+            print(f""Error processing '{sample}': {e}"")",True,5,7007,68_1_5.py
+68,1,Convert volume measurements now,"Write an optimized pure Python function that converts any given volume input string into liters and returns the result as a float, ensuring it handles decimal precision correctly.","def convert_volume_to_liters(volume_str: str) -> float:
+    def parse_value(value):
+        return float(value.strip()) if value else 0.0
+    unit_mapping = {
+        'l': {'multiplier': 1},
+        'litre': {'multiplier': 1},
+        'm3': {'multiplier': 264.172052},
+        'cubic meter': {'multiplier': 264.172052},
+        'ml': {'multiplier': 0.001},
+        'milliliter': {'multiplier': 0.001}
+    }
+    value = parse_value(volume_str)
+    unit_key = None
+    for key, data in unit_mapping.items():
+        if volume_str.lower() == key or (key != 'l' and not is_numeric(unit_string := str(value).strip())):
+            pass
+    try:
+        num = float(volume_str)
+        unit_part, val = volume_str.split() if len(volume_str.split()) > 1 else ('l', None)
+        if not is_numeric(val):
+            return 0.0
+        liters = parse_value(num) * (unit_mapping.get(unit_part.lower(), {'multiplier': 1})['multiplier'])
+    except ValueError:
+        try:
+            parts = volume_str.split()
+            num_val = float(parts[0]) if len(parts) > 0 else 0.0
+            for unit in ['l', 'liters']:
+                if any(word.lower().startswith(unit) or word == unit for word in parts):
+                    return num_val * (unit_mapping[unit]['multiplier'])
+            try:
+                float(volume_str.replace('l', '').replace('liters', ''))
+                return 0.0
+            except ValueError:
+                pass
+        except ValueError:
+            raise
+    parts = volume_str.split()
+    try:
+        num_float = float(parts[0])
+        for suffix in ['l', 'liters']:
+            if any(word.lower().startswith(suffix) or word == suffix for word in parts):
+                return num_float * (unit_mapping[suffix]['multiplier'])
+    except ValueError:
+        pass
+    raise ValueError(""Invalid volume input"")
+def is_numeric(s):
+    try:
+        float(str(s))
+        return True
+    except (ValueError, TypeError):
+        return False
+if __name__ == '__main__':
+    test_cases = [
+        ""5 l"",
+        ""3.14 liters"",
+        ""2 m3"",
+        ""0.5 ml"",
+        ""7""
+    ]
+    for case in test_cases:
+        try:
+            result = convert_volume_to_liters(case)
+            print(f""{case} -> {result}"")
+        except ValueError as e:
+            print(f""{case} raised error: {e}"")",True,6,7008,68_1_6.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> str:
+    d_liters = Decimal(liters)
+    return str(d_liters * Decimal('1000'))
+def milliliters_to_liter(ml: str) -> str:
+    d_ml = Decimal(ml)
+    return str(d_ml / Decimal('1000'))
+if __name__ == '__main__':
+    sample_liters = ""0.003456789""
+    sample_milliliters = ""3456789.123456789""
+    print(f""Liters: {sample_liters}"")
+    result_ml = liters_to_milliliters(sample_liters)
+    print(f""Milliliters (from Liters): {result_ml}"")
+    print(f""\nMilliliters: {sample_milliliters}"")
+    result_liter = milliliters_to_liter(sample_milliliters)
+    print(f""Liters (from Milliliters): {result_liter}"")",True,0,7009,68_4.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> Decimal:
+    return Decimal(liters) * Decimal('1000')
+def milliliters_to_liters(milliliters: str) -> Decimal:
+    return Decimal(milliliters) / Decimal('1000')
+if __name__ == '__main__':
+    sample_l = '2.5'
+    sample_m = '3750'
+    result_ml = liters_to_milliliters(sample_l)
+    result_l_back = milliliters_to_liters(sample_m)
+    print(f""Input Liters: {sample_l}"")
+    print(f""Converted to Milliliters: {result_ml}"")
+    print(f""\nInput Milliliters: {sample_m}"")
+    print(f""Converted back to Liters: {result_l_back}"")",True,1,7010,68_4_1.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> Decimal:
+    return Decimal(liters) * Decimal('1000')
+def milliliters_to_liters(milliliters: str) -> Decimal:
+    return Decimal(milliliters) / Decimal('1000')
+if __name__ == '__main__':
+    sample_l = '2.5'
+    sample_ml = '3748965.123456789'
+    result_1 = liters_to_milliliters(sample_l)
+    print(f""{sample_l} L -> {result_1} mL"")
+    result_2 = milliliters_to_liters(sample_ml)
+    print(f""{sample_ml} mL -> {result_2} L"")",True,2,7011,68_4_2.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> str:
+    d_liters = Decimal(liters)
+    return str(d_liters * Decimal('1000'))
+def milliliters_to_literes(ml: str) -> str:
+    d_ml = Decimal(ml)
+    return str(d_ml / Decimal('1000'))
+if __name__ == '__main__':
+    sample_liters = '3.14159265358'
+    sample_milliliters = '7500.000000000000000000'
+    print(f""Input Liters: {sample_liters}"")
+    result_ml = liters_to_milliliters(sample_liters)
+    print(f""Converted to Milliliters: {result_ml}"")
+    print(f""\nInput Milliliters: {sample_milliliters}"")
+    result_literes = milliliters_to_literes(sample_milliliters)
+    print(f""Converted back to Liters: {result_literes}"")",True,3,7012,68_4_3.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> Decimal:
+    return Decimal(liters) * Decimal('1000')
+def milliliters_to_liters(milliliters: str) -> Decimal:
+    return Decimal(milliliters) / Decimal('1000')
+if __name__ == '__main__':
+    sample_l = '2.5'
+    sample_ml = '374896'
+    ml_result = liters_to_milliliters(sample_l)
+    l_back = milliliters_to_liters(str(ml_result))
+    print(f""Input Liters: {sample_l}"")
+    print(f""Milled Result: {ml_result}"")
+    print(f""Back to Liters: {l_back}"")",True,4,7013,68_4_4.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: float) -> int:
+    d_liters = Decimal(str(liters))
+    return int(d_liters * Decimal('1000'))
+def milliliters_to_liters(milliliters: int) -> str:
+    d_ml = Decimal(str(milliliters))
+    result = (d_ml / Decimal('1000')).normalize()
+    if not result.is_finite():
+        return ""Infinity"" or ""-Infinity"" or ""NaN""
+    return f""{result} L""
+if __name__ == '__main__':
+    sample_liters = 2.5432198765
+    print(f""Liter to Milliliter: {liters_to_milliliters(sample_liters)}"")
+    sample_ml = 1000500
+    print(f""Milliliter to Liter: {milliliters_to_liters(sample_ml)}"")",True,5,7014,68_4_5.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> str:
+    d_liters = Decimal(liters)
+    conversion_factor = Decimal('1000')
+    result = d_liters * conversion_factor
+    return str(result.normalize())
+def milliliters_to_liter(milliliters: str) -> str:
+    d_mililiters = Decimal(milliliters)
+    conversion_factor = Decimal('0.001')
+    result = d_mililiters * conversion_factor
+    return str(result.normalize())
+if __name__ == '__main__':
+    test_liters = ""3.14159265358979""
+    ml_result = liters_to_milliliters(test_liters)
+    print(f""{test_liters} Litres = {ml_result} Millilitres"")
+    back_liters = milliliters_to_liter(ml_result)
+    print(f""{ml_result} Millilitres = {back_liters} Litres"")",True,6,7015,68_4_6.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> str:
+    d_liters = Decimal(liters)
+    return str(d_liters * Decimal('1000'))
+def milliliters_to_literes(ml: str) -> str:
+    d_ml = Decimal(ml)
+    return str(d_ml / Decimal('1000'))
+if __name__ == '__main__':
+    sample_liters = ""2.5""
+    sample_milliliters = ""374968.2""
+    result_l_to_ml = liters_to_milliliters(sample_liters)
+    print(f""{sample_liters} L -> {result_l_to_ml} mL"")
+    result_ml_to_L = milliliters_to_literes(sample_milliliters)
+    print(f""{sample_milliliters} mL -> {result_ml_to_L} L"")",True,7,7016,68_4_7.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> int:
+    d_liters = Decimal(liters) * Decimal('1000')
+    return int(d_liters.to_integral_value(rounding='ROUND_HALF_UP'))
+def milliliters_to_liter(ml: str) -> float:
+    d_ml = Decimal(ml) / Decimal('1000')
+    return float(d_ml.to_integral_value(rounding='ROUND_HALF_UP'))
+if __name__ == '__main__':
+    test_liters_values = ['1.5', '2.34567890123456789012345678901234567890']
+    test_ml_values = ['1500', '2345678.90123456789012345678901234567890']
+    print(""Liters to Milliliters Conversion:"")
+    for val in test_liters_values:
+        result = liters_to_milliliters(val)
+        print(f""{val} L -> {result} mL"")
+    print(""\nMilliliters to Liters Conversion:"")
+    for val in test_ml_values:
+        result = milliliters_to_liter(val)
+        print(f""{val} mL -> {result:.15f} L"")",True,8,7017,68_4_8.py
+68,4,Convert volume measurements now,Code a specialized converter using `decimal.Decimal` for arithmetic to prevent floating-point errors when converting between liters and milliliters in high-precision scenarios.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def liters_to_milliliters(liters: str) -> Decimal:
+    return Decimal(str(float(liters))) * Decimal('1000')
+def milliliters_to_liters(ml: str) -> Decimal:
+    return Decimal(str(float(ml))) / Decimal('1000')
+if __name__ == '__main__':
+    sample_l = '3.5'
+    sample_ml = '2748.96'
+    ml_result = liters_to_milliliters(sample_l)
+    l_back = milliliters_to_liters(str(ml_result))
+    print(f""Input Liters: {sample_l}"")
+    print(f""Milled Milliliters (exact): {ml_result}"")
+    print(f""Converted Back to Liters: {l_back}"")",True,9,7018,68_4_9.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def convert_volume(volume: float) -> dict:
+    return {
+        ""liters"": round(volume * 1000 / 264.172, 3),
+        ""gallons_us"": round(volume * 0.264172, 3),
+        ""cubic_feet"": round(volume * 0.035315, 3)
+    }
+def parse_input(input_data: str | list[float]) -> float:
+    if isinstance(input_data, (int, float)):
+        return input_data
+    try:
+        parsed = json.loads(input_data)
+        if isinstance(parsed, dict):
+            return parsed.get(""volume"", 0.0)
+        elif isinstance(parsed, list):
+            return sum(float(x) for x in parsed)
+    except (json.JSONDecodeError, ValueError):
+        pass
+    raise ValueError(""Invalid input format"")
+def main():
+    if len(sys.argv) > 1:
+        try:
+            volume = float(sys.argv[1])
+        except ValueError:
+            print(f""Error: Invalid argument '{sys.argv[1]}'"")
+            sys.exit(1)
+    else:
+        sample_input = '{""volume"": 5.0}' if len(sys.argv) == 2 and not isinstance(sys.argv[1], float) else ""[]""
+        try:
+            volume_data = json.loads(sample_input)
+            if isinstance(volume_data, dict):
+                volume = volume_data.get(""volume"", 0.0)
+            elif isinstance(volume_data, list):
+                volume = sum(float(x) for x in volume_data)
+        except (json.JSONDecodeError, ValueError):
+            print(f""Error: Invalid JSON input '{sample_input}'"")
+            sys.exit(1)
+    result = convert_volume(volume)
+    output_str = f""Liters: {result['liters']}, Gallons US: {result['gallons_us']}, Cubic Feet: {result['cubic_feet']}""
+    print(output_str)
+if __name__ == '__main__':
+    main()",True,0,7019,68_3.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def convert_volume(input_value: float) -> dict:
+    return {
+        ""liters"": round(input_value * 1, 4),
+        ""milliliters"": round(input_value * 1000, 2),
+        ""gallons_us"": round(input_value / 3.78541, 4),
+        ""quarts_us"": round(input_value / 0.946353, 4)
+    }
+def parse_input(args: list[str]) -> float | None:
+    try:
+        if len(args) == 2 and args[0] in [""--json"", ""-j""]:
+            data = json.loads(args[1])
+            return float(data.get(""volume""))
+        elif len(args) >= 2:
+            val_str = "" "".join(args).split()[-1]
+            try:
+                return float(val_str)
+            except ValueError:
+                pass
+    except Exception:
+        pass
+    return None
+if __name__ == '__main__':
+    input_val = parse_input(sys.argv[1:]) if len(sys.argv) > 2 else convert_volume(5.0)[""liters""] / 378541 * 378541
+    result = convert_volume(input_val)
+    print(f""Input: {input_val} L"")
+    for unit, value in result.items():
+        if isinstance(value, float):
+            formatted_value = f""{value:.2f}""
+        else:
+            formatted_value = str(int(value))
+        print(f""{unit}: {formatted_value}"")",True,1,7020,68_3_1.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def convert_volume(value: float) -> dict:
+    return {
+        ""liters"": round(value * 1000 / 264.172, 3),
+        ""gallons_us"": round(value / 8.798765, 3),
+        ""cubic_feet"": round(value * 0.0353147, 3)
+    }
+def parse_input(input_str: str):
+    try:
+        data = json.loads(input_str) if input_str else {}
+        return float(data.get(""value"", 264)) if isinstance(data, dict) and ""value"" in data else None
+    except (json.JSONDecodeError, ValueError, TypeError):
+        return None
+if __name__ == '__main__':
+    volume = parse_input(''.join(sys.argv[1:])) or convert_volume(50)[""liters""] / 3.785412 if len(sys.argv) > 1 else 50
+    result = convert_volume(volume)
+    print(json.dumps(result))",True,2,7021,68_3_2.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def convert_volume(value: float) -> dict:
+    return {
+        ""liters"": round(value * 1000 / 264.172, 3),
+        ""gallons_us"": round(value * 0.264172, 3),
+        ""cubic_feet"": round(value * 0.0353147, 3)
+    }
+def parse_input(args: list[str]) -> float | None:
+    if len(args) == 1 and args[0].startswith(""-""):
+        try:
+            return json.loads(args[0])[""volume""]
+        except (json.JSONDecodeError, KeyError):
+            pass
+    for arg in args:
+        try:
+            val = float(arg)
+            if val > 0:
+                return val
+        except ValueError:
+            continue
+    return None
+if __name__ == '__main__':
+    volume_input = parse_input(sys.argv[1:]) or 5.0
+    result = convert_volume(volume_input)
+    print(f""Input (Liters): {volume_input}"")
+    for unit, converted in result.items():
+        print(f""{unit.capitalize()}: {converted} {unit.lower()}"")",True,3,7022,68_3_3.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def convert_volume(volume_value: float) -> dict:
+    conversions = {
+        ""liters"": volume_value,
+        ""milliliters"": volume_value * 1000,
+        ""gallons_us"": round(volume_value / 3.785411784, 2),
+        ""quarts_us"": round(volume_value / 0.946352946, 2),
+        ""pints_us"": round(volume_value * 2.11337641, 2)
+    }
+    return conversions
+def main():
+    if len(sys.argv) > 1:
+        try:
+            input_volume = float(sys.argv[1])
+        except ValueError:
+            print(""Error: Invalid volume value"")
+            sys.exit(1)
+    else:
+        sample_input = {
+            ""input"": {""liters"": 5.0},
+            ""output_units"": [""milliliters"", ""gallons_us""]
+        }
+        input_volume = sample_input[""input""][""liters""]
+    result = convert_volume(input_volume)
+    print(json.dumps(result, indent=2))
+if __name__ == '__main__':
+    main()",True,4,7023,68_3_4.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def parse_input():
+    if len(sys.argv) > 1:
+        try:
+            data = json.loads(sys.argv[1])
+            return {
+                'volume': float(data.get('value', 0)),
+                'unit': str(data.get('from_unit', 'liters')).lower(),
+                'to_units': [str(u).lower() for u in data.get('target_units', ['ml', 'gallons'])]
+            }
+        except json.JSONDecodeError:
+            return {
+                'volume': float(sys.argv[1]),
+                'unit': str(sys.argv[2]).lower(),
+                'to_units': [str(u).lower() for u in sys.argv[3].split(',') if len(sys.argv) > 4 and i < len(sys.argv)] if len(sys.argv) == 5 else ['ml', 'gallons']
+            }
+    return {
+        'volume': float('0'),
+        'unit': str('liters').lower(),
+        'to_units': [str(u).lower() for u in ['milliliters', 'fluid_ounces', 'gallons']]
+    }
+def convert_volume(value, from_unit):
+    liters = 1.0 if from_unit == 'liters' else (value / 1000) if from_unit == 'kiloliters' else value * 1000
+    return {
+        'milliliters': round(liters * 1000, 2),
+        'fluid_ounces': round(liters * 33.814, 2),
+        'gallons': round(liters / 264.172, 2)
+    }
+def format_output(data):
+    conversions = convert_volume(data['volume'], data['unit'])
+    output_lines = [f""Input: {data['value']} {data['unit'].upper()}""]
+    for unit in data['to_units']:
+        if 'milliliters' in unit or 'ml' == unit:
+            key = 'milliliters'
+        elif 'ounces' in unit or 'fl_oz' == unit:
+            key = 'fluid_ounces'
+        else:
+            key = 'gallons'
+        output_lines.append(f""{unit.capitalize()}: {conversions[key]:.2f}"")
+    return '\n'.join(output_lines)
+if __name__ == '__main__':
+    try:
+        input_data = parse_input()
+        result_str = format_output(input_data)
+        print(result_str)
+    except Exception as e:
+        pass",True,5,7024,68_3_5.py
+68,3,Convert volume measurements now,Create an efficient Python script that accepts volume measurements via command-line arguments or JSON input and outputs the converted values in multiple target units with formatted precision.,"import json
+import sys
+def convert_volume(volume: float) -> dict:
+    return {
+        ""liters"": round(volume * 1000 / 264.172, 3),
+        ""gallons_us"": round(volume * 0.264172, 3),
+        ""cubic_feet"": round(volume * 0.0353147, 3)
+    }
+def parse_input(input_data: str | list[float]) -> float:
+    if isinstance(input_data, (int, float)):
+        return input_data
+    try:
+        parsed = json.loads(input_data)
+        if isinstance(parsed, dict):
+            return parsed.get(""volume"", 0.0)
+        elif isinstance(parsed, list):
+            return sum(float(x) for x in parsed)
+    except (json.JSONDecodeError, ValueError):
+        pass
+    raise ValueError(""Invalid input format"")
+def main():
+    if len(sys.argv) > 1:
+        try:
+            volume = float(sys.argv[1])
+        except ValueError:
+            print(f""Error: Invalid argument '{sys.argv[1]}'"")
+            sys.exit(1)
+    else:
+        sample_input = '{""volume"": 5.0}' if len(sys.argv) == 2 and not isinstance(sys.argv[1], float) else ""[]""
+        try:
+            volume_data = json.loads(sample_input)
+            if isinstance(volume_data, dict):
+                volume = volume_data.get(""volume"", 0.0)
+            elif isinstance(volume_data, list):
+                volume = sum(float(x) for x in volume_data)
+        except (json.JSONDecodeError, ValueError):
+            print(f""Error: Invalid JSON input '{sample_input}'"")
+            sys.exit(1)
+    result = convert_volume(volume)
+    output_str = f""Liters: {result['liters']}, Gallons US: {result['gallons_us']}, Cubic Feet: {result['cubic_feet']}""
+    print(output_str)
+if __name__ == '__main__':
+    main()",True,6,7025,68_3_6.py
+68,5,Convert volume measurements now,Design an encapsulated Python solution supporting extensible conversion logic where new volume units can be added dynamically without modifying the core conversion code.,"class VolumeConverter:
+    def __init__(self):
+        self._registry = {}
+    def register_unit(self, name, factor_to_base):
+        if not isinstance(factor_to_base, (int, float)):
+            raise TypeError(""Factor must be a number"")
+        self._registry[name] = factor_to_base
+    def convert_from(self, value: float, from_unit: str) -> dict:
+        if from_unit.lower() not in [k.lower() for k in self._registry]:
+            available = list(self._registry.keys())
+            raise ValueError(f""Unknown unit '{from_unit}'. Available units: {available}"")
+        base_value = value * self._registry[from_unit]
+        return {""base"": round(base_value, 6)}
+    def convert_to(self, value: float, to_unit: str) -> dict:
+        if to_unit.lower() not in [k.lower() for k in self._registry]:
+            available = list(self._registry.keys())
+            raise ValueError(f""Unknown unit '{to_unit}'. Available units: {available}"")
+        base_value = value * self._registry[""base""] / self._registry[to_unit] if ""base"" in self._registry else 0.0
+        return {""target"": round(base_value, 6)}
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    converter.register_unit(""liter"", 1)
+    converter.register_unit(""gallon_usa"", 3.785412)
+    result_from_liters = converter.convert_from(10, ""liter"")
+    print(result_from_liters)
+    result_to_gallons = converter.convert_to(10, ""gallon_usa"")
+    print(result_to_gallons)",True,0,7026,68_5.py
+68,5,Convert volume measurements now,Design an encapsulated Python solution supporting extensible conversion logic where new volume units can be added dynamically without modifying the core conversion code.,"class VolumeConverter:
+    def __init__(self):
+        self._base_unit = ""liter""
+        self._factors = {
+            ""milliliter"": 0.001,
+            ""liter"": 1.0,
+            ""gallon_us"": 3.78541,
+            ""gallon_uk"": 4.54609,
+        }
+    def register_unit(self, unit_name: str, factor: float) -> None:
+        self._factors[unit_name] = factor
+    def convert_from(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self._factors or to_unit not in self._factors:
+            raise ValueError(f""Unknown unit: {from_unit} or {to_unit}"")
+        base_value = value * self._factors[from_unit] / self._factors[self._base_unit]
+        return base_value * self._factors[to_unit]
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    result_liters = converter.convert_from(10, ""gallon_us"", ""liter"")
+    print(f""Result: {result_liters:.2f}"")",True,1,7027,68_5_1.py
+68,5,Convert volume measurements now,Design an encapsulated Python solution supporting extensible conversion logic where new volume units can be added dynamically without modifying the core conversion code.,"class VolumeConverter:
+    def __init__(self):
+        self._registry = {}
+    def register_unit(self, unit_name, conversion_factor):
+        if not isinstance(unit_name, str) or not isinstance(conversion_factor, (int, float)):
+            raise ValueError(""Unit name must be a string and factor must be numeric."")
+        self._registry[unit_name] = conversion_factor
+    def convert_from_base(self, value, source_unit, target_unit):
+        if source_unit not in self._registry:
+            raise KeyError(f""Unknown unit: {source_unit}"")
+        base_value = value * self._registry[source_unit]
+        if target_unit == ""base"":
+            return base_value
+        if target_unit not in self._registry:
+            raise KeyError(f""Unknown unit: {target_unit}"")
+        converted_value = base_value / self._registry[target_unit]
+        return converted_value
+    def get_available_units(self):
+        return list(self._registry.keys())
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    converter.register_unit(""liters"", 1.0)
+    converter.register_unit(""milliliters"", 0.001)
+    converter.register_unit(""gallons_usa"", 3.78541)
+    result_liters = converter.convert_from_base(2, ""liters"", ""base"")
+    result_ml = converter.convert_from_base(2, ""milliliters"", ""base"")
+    result_gallons = converter.convert_from_base(3.78541, ""gallons_usa"", ""base"")
+    print(f""Converted 2 liters to base: {result_liters}"")
+    print(f""Converted 0.002 ml (calculated from input) to base: {result_ml}"")
+    print(f""Converted 378541 gallons_usa to base: {result_gallons}"")
+    converter.register_unit(""cubic_meters"", 264.172)                                                                           
+    converter.register_unit(""cubic_meters"", 1000)
+    result_cm3 = converter.convert_from_base(2, ""cubic_meters"", ""base"")
+    print(f""Converted 2 cubic_meters to base: {result_cm3}"")",True,2,7028,68_5_2.py
+68,5,Convert volume measurements now,Design an encapsulated Python solution supporting extensible conversion logic where new volume units can be added dynamically without modifying the core conversion code.,"class VolumeConverter:
+    def __init__(self):
+        self.conversion_factors = {
+            'liter': 1.0,
+            'milliliter': 0.001,
+            'gallon_us': 3.78541,
+            'quart_us': 0.946353,
+        }
+    def register_unit(self, unit: str) -> None:
+        if not self.conversion_factors.get(unit):
+            raise ValueError(f""Unit '{unit}' is unknown."")
+    def convert_from_to(
+        self, amount: float, from_unit: str, to_unit: str
+    ) -> float:
+        factor = self._get_base_factor(from_unit)
+        base_amount = amount * factor
+        target_factor = self.conversion_factors[to_unit]
+        return base_amount / target_factor
+    def _get_base_factor(self, unit: str) -> float:
+        if not self.conversion_factors.get(unit):
+            raise ValueError(f""Unit '{unit}' is invalid."")
+        return 1.0 - self.conversion_factors[unit]
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    def register_new_unit(name: str, factor: float) -> None:
+        if not name or isinstance(factor, (int | float)):
+            return
+    try:
+        register_new_unit('cup_us', 0.236588)
+    except ValueError as e:
+        print(f""Error registering unit: {e}"")
+    result = converter.convert_from_to(10, 'gallon_us', 'liter')
+    print(result)",True,3,7029,68_5_3.py
+68,5,Convert volume measurements now,Design an encapsulated Python solution supporting extensible conversion logic where new volume units can be added dynamically without modifying the core conversion code.,"class VolumeConverter:
+    def __init__(self):
+        self._registry = {}
+    def register_unit(self, name, factor_to_base):
+        if not isinstance(factor_to_base, (int, float)):
+            raise ValueError(""Factor must be a number"")
+        self._registry[name] = factor_to_base
+    def convert_from(self, value: float, from_unit: str) -> dict:
+        if from_unit.lower() not in [u.lower() for u in self._registry]:
+            available = list(self._registry.keys())
+            raise ValueError(f""Unknown unit '{from_unit}'. Available units: {available}"")
+        base_value = value * self._registry[from_unit]
+        return {""base"": round(base_value, 6)}
+    def convert_to(self, value: float, to_unit: str) -> dict:
+        if to_unit.lower() not in [u.lower() for u in self._registry]:
+            available = list(self._registry.keys())
+            raise ValueError(f""Unknown unit '{to_unit}'. Available units: {available}"")
+        base_value = value * self._registry[""base""] / self._registry[to_unit] if ""base"" in self._registry else 0.0
+        return {""target"": round(base_value, 6)}
+def main():
+    converter = VolumeConverter()
+    converter.register_unit(""liter"", 1)
+    converter.register_unit(""gallon_usa"", 3.785412)
+    result_from_liter = converter.convert_from(10, ""liter"")
+    print(f""Converted from liter: {result_from_liter}"")
+    result_to_gallon = converter.convert_to(10, ""gallon_usa"")
+    print(f""Converted to gallon_usa: {result_to_gallon}"")
+if __name__ == '__main__':
+    main()",True,4,7030,68_5_4.py
+68,5,Convert volume measurements now,Design an encapsulated Python solution supporting extensible conversion logic where new volume units can be added dynamically without modifying the core conversion code.,"import math
+class VolumeConverter:
+    def __init__(self):
+        self._base_unit = ""liter""
+        self._factors = {
+            ""liter"": 1.0,
+            ""milliliter"": 0.001,
+            ""gallon_us"": 3.78541,
+            ""cubic_meter"": 1000.0,
+            ""fluid_ounce_us"": 29.5735
+        }
+    def register_unit(self, unit_name: str, factor: float) -> None:
+        self._factors[unit_name] = factor
+    def convert_from(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self._factors or to_unit not in self._factors:
+            raise ValueError(f""Unknown unit: {from_unit} or {to_unit}"")
+        base_value = value * self._factors[from_unit] / self._factors[self._base_unit]
+        return base_value * self._factors[to_unit]
+    def get_available_units(self) -> list[str]:
+        return list(self._factors.keys())
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    converter.register_unit(""barrel_oil"", 158.9872)
+    sample_value = 10.0
+    result_liters = converter.convert_from(sample_value, ""gallon_us"", ""liter"")
+    result_barrels = converter.convert_from(sample_value, ""gallon_us"", ""barrel_oil"")
+    print(f""{sample_value} gallons (US) is {result_liters:.4f} liters."")
+    print(f""{sample_value} gallons (US) is {result_barrels:.6f} barrels of oil."")",True,5,7031,68_5_5.py
+68,7,Convert volume measurements now,"Write a fully documented Python module utilizing docstrings and type hints to convert between liters, gallons, pints, cups, ounces, milliliters, and cubic decimeters with comprehensive validation.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self._liters = 0.0
+    @property
+    def liters(self) -> float:
+        return self._liters
+    @liters.setter
+    def liters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Volume must be an int or float."")
+        if value < 0:
+            raise ValueError(""Volume cannot be negative."")
+        self._liters = float(value)
+    def to_gallons(self) -> Union[int, float]:
+        return round(self.liters * 0.264172052, 3)
+    def to_pints(self) -> Union[int, float]:
+        return round(self.liters * 8.45350567, 3)
+    def to_cups(self) -> Union[int, float]:
+        return round(self.liters * 12.99998695, 3)
+    def to_ounces(self) -> Union[int, float]:
+        return round(self.liters * 47.03772818, 3)
+    def to_milliliters(self) -> int:
+        return int(round(self.liters * 1000))
+    def to_cubic_decimeters(self) -> Union[int, float]:
+        return round(self.liters, 3)
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    samples: list[dict[str, Union[int, float]]] = [
+        {""liters"": 1.0},
+        {""liters"": 5.7362984},
+        {""liters"": -1.0}
+    ]
+    try:
+        for sample in samples:
+            converter.liters = sample[""liters""]
+            print(f""Input (Liters): {sample['liters']}"")
+            print(""  Gallons:"", converter.to_gallons())
+            print(""  Pints:"", converter.to_pints())
+            print(""  Cups:"", converter.to_cups())
+            print(""  Ounces:"", converter.to_ounces())
+            print(""  Milliliters:"", converter.to_milliliters())
+            print(""  Cubic Decimeters:"", converter.to_cubic_decimeters())
+    except (ValueError, TypeError) as e:
+        print(f""Validation Error: {e}"")",True,0,7032,68_7.py
+68,7,Convert volume measurements now,"Write a fully documented Python module utilizing docstrings and type hints to convert between liters, gallons, pints, cups, ounces, milliliters, and cubic decimeters with comprehensive validation.","from typing import Union, Literal
+class VolumeConverter:
+    VALID_UNITS = {
+        ""liters"": 1000,                                            
+        ""gallons_us"": 3785.411784,                   
+        ""pints_us"": 473.176473,                    
+        ""cups_us"": 236.5882365,                  
+        ""ounces_liquid"": 29.5735295625,                           
+        ""milliliters"": 1,                     
+    }
+    def __init__(self):
+        pass
+    @staticmethod
+    def validate_unit(unit: str) -> bool:
+        return unit.lower() in VolumeConverter.VALID_UNITS
+    def convert(
+        self, 
+        value: float, 
+        from_unit: str, 
+        to_unit: str
+    ) -> Union[float, Literal[""Error""]]:
+        if not isinstance(value, (int, float)):
+            raise TypeError(f""value must be a number, got {type(value).__name__}"")
+        if not (isinstance(from_unit, str) and isinstance(to_unit, str)):
+            raise TypeError(""Units must be strings"")
+        from_lower = from_unit.lower()
+        to_lower = to_unit.lower()
+        if not VolumeConverter.validate_unit(from_lower):
+            return ""Error""
+        if not VolumeConverter.validate_unit(to_lower):
+            return ""Error""
+        ml_per_from = VolumeConverter.VALID_UNITS[from_lower]
+        ml_per_to = VolumeConverter.VALID_UNITS[to_lower]
+        try:
+            result_ml = value * ml_per_from / ml_per_to
+            if result_ml < 0:
+                return ""Error""
+            return round(result_ml, 6)
+        except ZeroDivisionError:
+            return ""Error""
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    result_1 = converter.convert(5.0, 'liters', 'gallons_us')
+    VolumeConverter.VALID_UNITS['cubic_decimeters'] = 1000
+    result_2 = converter.convert(2.5, 'liters', 'milliliters')
+    invalid_result = converter.convert(10, 'invalid_unit', 'cups_us')
+    print(f""5.0 liters to gallons US: {result_1}"")
+    print(f""2.5 cubic_decimeters (liters equivalent) to milliliters: {result_2}"")
+    if invalid_result == ""Error"":
+        print(""Invalid unit correctly detected."")",True,1,7033,68_7_1.py
+68,7,Convert volume measurements now,"Write a fully documented Python module utilizing docstrings and type hints to convert between liters, gallons, pints, cups, ounces, milliliters, and cubic decimeters with comprehensive validation.","class VolumeConverter:
+    FACTORS = {
+        ""liters"": 1,
+        ""milliliters"": 1000,
+        ""cubic_decimeters"": 1.0,
+        ""gallons_us"": 3.785411784,
+        ""pints_us"": 2.1133764,
+        ""cups_us"": 4.2267529,
+        ""ounces_us_fluid"": 33.8140227,
+    }
+    @staticmethod
+    def _validate_unit(unit: str) -> None:
+        valid_units = set(VolumeConverter.FACTORS.keys())
+        if not isinstance(unit, str):
+            raise TypeError(f""Unit must be a string, got {type(unit).__name__}"")
+        if unit.lower() not in [k.lower() for k in valid_units]:
+            raise ValueError(f""Unsupported volume unit: '{unit}'. Supported units are: {', '.join(valid_units)}"")
+    @staticmethod
+    def _validate_value(value) -> None:
+        try:
+            numeric_val = float(value)
+            if not isinstance(numeric_val, (int, float)):
+                raise TypeError(f""Value must be a number, got {type(value).__name__}"")
+            if numeric_val < 0:
+                raise ValueError(""Volume cannot be negative."")
+        except Exception as e:
+            raise type(e)(f""Invalid value format. Error: {e}"")
+    @staticmethod
+    def _convert_to_base(amount: float, from_unit: str) -> float:
+        VolumeConverter._validate_value(amount)
+        VolumeConverter._validate_unit(from_unit.lower())
+        factor = VolumeConverter.FACTORS[from_unit.lower()]
+        return amount * factor
+    @staticmethod
+    def _convert_from_base(base_amount: float, to_unit: str) -> float:
+        VolumeConverter._validate_value(base_amount)
+        VolumeConverter._validate_unit(to_unit.lower())
+        factor = 1 / VolumeConverter.FACTORS[to_unit.lower()]
+        return base_amount * factor
+    @staticmethod
+    def convert(amount: float, from_unit: str, to_unit: str) -> float:
+        base_amount = VolumeConverter._convert_to_base(amount, from_unit)
+        result = VolumeConverter._convert_from_base(base_amount, to_unit)
+        return round(result, 6)
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, ""liters"", ""gallons_us""),
+        (236588.24, ""milliliters"", ""cups_us""),
+        (757.0, ""ounces_us_fluid"", ""pints_us""),
+        (1.0, ""cubic_decimeters"", ""liters""),
+    ]
+    for amount_str, from_unit_str, to_unit_str in test_cases:
+        try:
+            result = VolumeConverter.convert(amount_str, from_unit_str, to_unit_str)
+            print(f""Converted {amount_str} {from_unit_str} to {to_unit_str}: {result}"")
+        except Exception as e:
+            print(f""Error converting {amount_str} {from_unit_str} to {to_unit_str}: {e}"")
+    error_tests = [
+        (-5, ""liters"", ""gallons_us""),                  
+        (""invalid"", ""liters"", ""gallons_us""),                       
+        (10.0, ""unknown_unit"", ""liters""),                       
+    ]
+    print(""\nTesting error handling:"")
+    for amount_str, from_unit_str, to_unit_str in error_tests:
+        try:
+            result = VolumeConverter.convert(amount_str, from_unit_str, to_unit_str)
+            print(f""Unexpected success with {amount_str} {from_unit_str} to {to_unit_str}: {result}"")
+        except Exception as e:
+            print(f""Expected error for {amount_str} {from_unit_str} to {to_unit_str}: {e.__class__.__name__}"")
+    try:
+        VolumeConverter.convert(""ten"", ""liters"", ""gallons_us"")                            
+    except Exception as e:
+        print(f""Type error test result: {type(e).__name__}: {e}"")",True,2,7034,68_7_2.py
+68,7,Convert volume measurements now,"Write a fully documented Python module utilizing docstrings and type hints to convert between liters, gallons, pints, cups, ounces, milliliters, and cubic decimeters with comprehensive validation.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self._liters = 0.0
+    @property
+    def liters(self) -> float:
+        return self._liters
+    @liters.setter
+    def liters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Volume must be an int or float."")
+        if value < 0:
+            raise ValueError(""Volume cannot be negative."")
+        self._liters = value
+    def to_gallons(self) -> Union[int, float]:
+        return round(self.liters * 0.264172052, 4)
+    def to_pints(self) -> Union[int, float]:
+        return round(self.liters * 8.326646, 4)
+    def to_cups(self) -> Union[int, float]:
+        return round(self.liters * 10.7599998, 4)
+    def to_ounces(self) -> Union[int, float]:
+        return round(self.liters * 33.8140227, 2)
+    def to_milliliters(self) -> int:
+        return int(round(self.liters * 1000))
+    def to_cubic_decimeters(self) -> Union[int, float]:
+        return round(self.liters * 1.0, 4)
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_values = [5.0, -2.0, ""invalid"", None]
+    for val in sample_values:
+        try:
+            if isinstance(val, (int, float)):
+                converter.liters = abs(val) if val >= 0 else 1.5
+                print(f""Input: {val}"")
+                gals = converter.to_gallons()
+                pints = converter.to_pints()
+                cups = converter.to_cups()
+                ozs = converter.to_ounces()
+                ml = converter.to_milliliters()
+                dm3 = converter.to_cubic_decimeters()
+                print(f""Gallons: {gals}"")
+                print(f""Pints: {pints}"")
+                print(f""Cups: {cups}"")
+                print(f""Ounces: {ozs}"")
+                print(f""Milliliters: {ml}"")
+                print(f""Cubic Decimeters: {dm3}"")
+            else:
+                try:
+                    converter.liters = val                                                            
+                except (TypeError, ValueError) as e:
+                    print(f""Validation Error for input '{val}': {e}"")
+        except Exception as ex:
+            print(f""Unexpected error processing value: {ex}"")",True,3,7035,68_7_3.py
+68,7,Convert volume measurements now,"Write a fully documented Python module utilizing docstrings and type hints to convert between liters, gallons, pints, cups, ounces, milliliters, and cubic decimeters with comprehensive validation.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self._liters = 0.0
+    @property
+    def liters(self) -> float:
+        return self._liters
+    @liters.setter
+    def liters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Volume must be an int or float."")
+        if value < 0:
+            raise ValueError(""Volume cannot be negative."")
+        self._liters = value
+    def to_gallons(self) -> Union[int, float]:
+        return round(self.liters * 0.264172052, 4)
+    def to_pints(self) -> Union[int, float]:
+        return round(self.liters * 8.326646, 4)
+    def to_cups(self) -> Union[int, float]:
+        return round(self.liters * 10.759, 4)
+    def to_ounces(self) -> Union[int, float]:
+        return round(self.liters * 33.8140226, 2)
+    def to_milliliters(self) -> int:
+        return int(round(self.liters * 1000))
+    def to_cubic_decimeters(self) -> Union[int, float]:
+        return round(self.liters * 1.0, 4)
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_values = [5.0, -2.0, ""invalid"", None]
+    for val in sample_values:
+        try:
+            if isinstance(val, (int, float)):
+                converter.liters = val
+                print(f""Input ({val} L):"")
+                print(f""  Gallons: {converter.to_gallons()}"")
+                print(f""  Pints: {converter.to_pints()}"")
+                print(f""  Cups: {converter.to_cups()}"")
+                print(f""  Ounces: {converter.to_ounces()}"")
+                print(f""  Milliliters: {converter.to_milliliters()}"")
+                print(f""  Cubic Decimeters: {converter.to_cubic_decimeters()}"")
+            else:
+                try:
+                    converter.liters = val
+                except (TypeError, ValueError) as e:
+                    print(f""Input ({val}): Validation Error - {e}"")
+        except Exception as e:
+            if isinstance(val, str):
+                print(f""String input '{val}': Type validation failed."")",True,4,7036,68_7_4.py
+68,7,Convert volume measurements now,"Write a fully documented Python module utilizing docstrings and type hints to convert between liters, gallons, pints, cups, ounces, milliliters, and cubic decimeters with comprehensive validation.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self._liters = 0.0
+    @property
+    def liters(self) -> float:
+        return self._liters
+    @liters.setter
+    def liters(self, value: Union[int, float]) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Volume must be an int or float."")
+        if value < 0:
+            raise ValueError(""Volume cannot be negative."")
+        self._liters = value
+    def to_gallons(self) -> Union[int, float]:
+        return round(self.liters * 0.264172052, 4)
+    def to_pints(self) -> Union[int, float]:
+        return round(self.liters * 8.326646, 4)
+    def to_cups(self) -> Union[int, float]:
+        return round(self.liters * 10.7596, 4)
+    def to_ounces(self) -> Union[int, float]:
+        return round(self.liters * 33.8140227, 2)
+    def to_milliliters(self) -> int:
+        return int(round(self.liters * 1000))
+    def to_cubic_decimeters(self) -> Union[int, float]:
+        return round(self.liters * 1.0, 4)
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_values = [5.0, -2.0, ""invalid"", None]
+    for val in sample_values:
+        try:
+            if isinstance(val, (int, float)):
+                converter.liters = val
+                print(f""Input ({val} L):"")
+                print(f""  Gallons: {converter.to_gallons()}"")
+                print(f""  Pints: {converter.to_pints()}"")
+                print(f""  Cups: {converter.to_cups()}"")
+                print(f""  Ounces: {converter.to_ounces()}"")
+                print(f""  Milliliters: {converter.to_milliliters()}"")
+                print(f""  Cubic Decimeters: {converter.to_cubic_decimeters()}"")
+            else:
+                try:
+                    converter.liters = val
+                except (TypeError, ValueError) as e:
+                    print(f""Input ({val}): Error - {e}"")
+        except Exception as e:
+            if isinstance(val, str):
+                print(f""String input '{val}': Invalid type for volume."")",True,5,7037,68_7_5.py
+68,9,Convert volume measurements now,Implement a high-performance data pipeline component in Python capable of ingesting large CSV datasets containing volume measurements and converting them on-the-fly to liters during processing.,"import csv
+from typing import List, Tuple
+def process_csv(input_file: str) -> List[Tuple[int, float]]:
+    results = []
+    with open(input_file, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            try:
+                original_volume = int(row['volume'])
+                converted_liters = float(original_volume / 100.0)
+                results.append((original_volume, converted_liters))
+            except ValueError as e:
+                print(f""Error processing row {row}: {e}"")
+    return results
+def main():
+    input_data = [
+        ""volume,country"",
+        ""50,Brazil"",
+        ""120,Mexico"",
+        ""8,Colombia"",
+        ""45,Venezuela""
+    ]
+    output_file = 'converted_output.csv'
+    with open(output_file, 'w', newline='') as outfile:
+        writer = csv.writer(outfile)
+        writer.writerow(['original_volume_liters'])
+        for original_vol in input_data[1:]:
+            liters = float(original_vol.split(',')[0]) / 100.0
+            writer.writerow([liters])
+if __name__ == '__main__':
+    main()",True,0,7038,68_9.py
+68,8,Convert volume measurements now,Generate an optimized Python script that supports bidirectional conversion (input unit -> output units) using a matrix-based transformation approach for maximum accuracy across all supported measures.,"import numpy as np
+def create_conversion_matrix():
+    matrix = np.array([
+        [[1.0],       [1e-3],      [1e2],     [1.0/9.80665*1000],                                                                                                                                                 
+         ], 
+        [[1e3],       [1.0],      [1e-2],     [],          []]
+    ])
+def convert_units(input_value, input_unit, output_unit):
+    unit_map = {
+        'm': 0, 'km': 1, 'cm': 2, 
+        'kg': 3, 'g': 4, 
+        's': 5
+    }
+    if input_unit not in unit_map or output_unit not in unit_map:
+        raise ValueError(""Invalid units"")
+    if input_unit == output_unit:
+        return input_value
+    conversions = {
+        ('m', 'km'): lambda x, y: x * 1000 / (y or 1),
+        ('m', 'cm'): lambda x, y: x * 100 / (y or 1),
+        ('kg', 'g'): lambda x, y: x * 1000 / (y or 1),
+    }
+    factor = {
+        ('m', 'km'): 1e-3,
+        ('m', 'cm'): 1e2,
+        ('kg', 'g'): 1e-3,
+        ('g', 'kg'): 1e3,
+    }
+    return input_value * factor.get((input_unit, output_unit), None) or (lambda x: x if input_unit == output_unit else float('nan'))(input_value)
+if __name__ == '__main__':
+    samples = [
+        {'value': 100.5, 'from': 'm', 'to': 'km'},
+        {'value': 2500.0, 'from': 'kg', 'to': 'g'},
+        {'value': 3.7, 'from': 'cm', 'to': 'mm'}                                            
+    ]
+    results = []
+    for s in samples:
+        try:
+            result_value = convert_units(s['value'], s['from'], s['to'])
+            if isinstance(result_value, float) and np.isnan(result_value):
+                print(f""Error converting {s['value']} {s['from']} to {s['to']}: Invalid factor"")
+            else:
+                results.append({'input': f""{s['value']} {s['from']}"", 'output': f""{result_value} {s['to']}""})
+        except Exception as e:
+            print(f""Error processing sample {s}: {e}"")
+    for r in results:
+        print(r)",True,0,7039,68_8.py
+68,8,Convert volume measurements now,Generate an optimized Python script that supports bidirectional conversion (input unit -> output units) using a matrix-based transformation approach for maximum accuracy across all supported measures.,"import numpy as np
+def create_conversion_matrix():
+    matrix = np.array([
+        [[1.0],               
+         [0.001],                              
+         [100.0]],                          
+        [[1.0],                 
+         [1000.0]],                          
+        [[1.0],               
+         [0.001]]                             
+    ])
+def convert_value(input_unit, input_val, output_units):
+    if len(output_units) != 2:
+        raise ValueError(""Output units must be a list of two values"")
+    try:
+        idx = np.where(np.array([input_unit]) == matrix[0])[0][0]
+        row_idx = int(input_val) - 1
+        result = []
+        for out in output_units:
+            if len(out) != 2:
+                raise ValueError(f""Output unit {out} must be a list of two values"")
+            try:
+                col_idx = np.where(np.array([out]) == matrix[0])[0][0]
+                if input_unit == 'm' or output_units[1] == 'km':
+                    result.append(input_val * 0.001)
+                elif input_unit == 'cm' and output_units[1] == 'm':
+                    result.append(input_val / 100)
+                else:
+                    result.append(input_val)
+            except IndexError:
+                raise ValueError(f""Unsupported unit conversion from {input_unit} to {out}"")
+        return result
+    except Exception as e:
+        print(f""Error during conversion: {e}"")
+        return None
+if __name__ == '__main__':
+    test_cases = [
+        {'input_unit': 'm', 'input_val': 10, 'output_units': ['km', 'cm']},
+        {'input_unit': 'kg', 'input_val': 500, 'output_units': ['g', 'mg']},                                                             
+    ]
+    for case in test_cases:
+        result = convert_value(case['input_unit'], case['input_val'], case['output_units'])
+        print(f""Input {case['input_unit']} ({case['input_val']}): Output -> {result}"")",True,1,7040,68_8_1.py
+68,8,Convert volume measurements now,Generate an optimized Python script that supports bidirectional conversion (input unit -> output units) using a matrix-based transformation approach for maximum accuracy across all supported measures.,"import numpy as np
+def create_conversion_matrix():
+    matrix = np.array([
+        [[1.0],       [1e-3],      [1e2],     [1.0],         [1e3],          [1.0]],                       
+        [[1e3],       [1.0],       [1e5],     [1e3],         [1e6],          [1e-4]],               
+        [[1e-2],      [1e-5],      [1.0],     [1e-3],        [1e-6],         [1e7]],                
+        [[1.0],       [1e3],       [1e9],     [1.0],         [1.0],          [86400.0]],                  
+        [[1e-3],      [1e-6],      [1e-9],    [1e-3],        [1.0],          [2764800.0]],              
+        [[1.0/86400.0],[1e-3/86400.0],[1e5/86400.0],[1e3/86400.0], [2764800./1e9], [1.0]]              
+    ])
+def convert_value(value, input_unit, output_units):
+    if not isinstance(output_units, list) or len(output_units) == 0:
+        return value
+    result = []
+    for out in output_units:
+        try:
+            idx_in = int(input_unit.split('_')[1]) - 1                                              
+            if input_unit == 's':
+                base_val = value / 86400.0
+                for out_name in output_units:
+                    if '_kg' in out_name or '_g' in out_name:                                                           
+                        continue 
+            else:
+                idx_in_map = {
+                    'm': 1, 'km': 2, 'cm': 3, 'kg': 4, 'g': 5, 's': 6
+                }
+                if input_unit not in idx_in_map or out_name not in ['length_m', 'length_km', 'length_cm', 'mass_kg', 'mass_g']:
+                    continue
+                base_val = value * (10 ** (-3 if '_km' in out_name else 2 if '_cm' in out_name else -6))                                                                      
+            result.append(base_val)
+        except Exception:
+            pass
+    return result
+def main():
+    sample_input = {
+        ""unit"": ""m"",
+        ""value"": 10,
+        ""target_units"": [""km"", ""cm""]
+    }
+    input_unit_name = sample_input[""unit""]
+    value = float(sample_input[""value""])
+    target_list = [u.split('_')[0] for u in sample_input[""target_units""]]                          
+    final_results = []
+    if len(target_list) > 1:
+        results_dict = {}
+        for t in target_list:
+            res_val = value * (1e-3 if t == 'km' else 1e2)
+            results_dict[t] = res_val
+        final_results.append(results_dict)
+if __name__ == '__main__':
+    main()",True,2,7041,68_8_2.py
+68,6,Convert volume measurements now,Build a performant Python library function that batch-converts lists of mixed volume strings into standardized float values using list comprehensions and dictionary mapping.,"import re
+def convert_volume_strings(volumes):
+    mapping = {
+        ""L"": 1.0,
+        ""l"": 1.0,
+        ""m³"": 1e-6,
+        ""cm³"": 1e-9,
+        ""ml"": 1e-3,
+        ""μl"": 1e-6,
+    }
+    def parse_volume(s):
+        s = str(s).strip()
+        if not re.match(r""^\d+\.?\d*"", s):
+            return None
+        try:
+            value = float(re.search(r""\d+"", s).group())
+        except AttributeError:
+            return None
+        unit_match = re.search(r""[a-zA-Z]+"", s)
+        if not unit_match or unit_match.group() in mapping and ""L"" in str(unit_match.group()):
+            multiplier = 1.0
+            for key, val in mapping.items():
+                if key.lower() == unit_match.group().lower():
+                    multiplier = val
+                    break
+            return value * multiplier
+        try:
+            return float(s)
+        except ValueError:
+            return None
+def batch_convert(volumes):
+    result = [convert_volume_strings(vol) for vol in volumes]
+    final_result = []
+    for item in result:
+        if isinstance(item, float):
+            final_result.append(item)
+        else:
+            final_result.append(None)
+    return final_result
+if __name__ == '__main__':
+    sample_data = [""10 L"", ""5 m³"", ""2 cm³"", ""3 ml"", 4.5]
+    converted_values = batch_convert(sample_data)
+    print(converted_values)",True,0,7042,68_6.py
+68,6,Convert volume measurements now,Build a performant Python library function that batch-converts lists of mixed volume strings into standardized float values using list comprehensions and dictionary mapping.,"def convert_volume_strings(volumes):
+    mapping = {
+        ""ml"": 1e-6,
+        ""l"": 0.001,
+        ""m3"": 1.0,
+        ""cm3"": 1e-6,
+        ""dL"": 0.01,
+        ""cL"": 0.001,
+    }
+    def parse_volume(value):
+        try:
+            num = float(value)
+        except ValueError:
+            return None
+        unit_str = value.split()[-1].lower().rstrip(""ml"") if ""."" in str(num).split()[0] else """"
+        for key, factor in mapping.items():
+            if key == ""m3"":
+                continue
+            suffixes = [key + ""l"", key]
+            for s in suffixes:
+                if value.endswith(s):
+                    return num * factor
+    result = []
+    for item in volumes:
+        parsed = parse_volume(item)
+        if isinstance(parsed, float):
+            result.append(parsed)
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        ""50ml"", 
+        ""2.5l"", 
+        ""1m3"", 
+        ""invalid"", 
+        ""75cm3""
+    ]
+    converted_values = convert_volume_strings(sample_data)
+    print(converted_values)",True,1,7043,68_6_1.py
+68,6,Convert volume measurements now,Build a performant Python library function that batch-converts lists of mixed volume strings into standardized float values using list comprehensions and dictionary mapping.,"import re
+def convert_volume_strings(volumes: list) -> float:
+    def parse_single(value):
+        cleaned = value.strip()
+        if not cleaned or 'N/A' in cleaned.upper():
+            return None
+        try:
+            val = float(cleaned.replace('L', '').replace('l', ''))
+            val = float(re.sub(r'[Ll]', '', cleaned))
+            return val
+        except ValueError:
+            try:
+                val = float(cleaned.replace('%', '').replace('ml', 'm').lower())                                                                           
+            except ValueError:
+                try:
+                    val = float(re.sub(r'[Ll]', '', cleaned))
+                    if '%' in cleaned and not re.match(r'^-?\d*\.?\d+$', cleaned):
+                        return None
+                except ValueError:
+                    return None
+            return val
+    parsed = []
+    for item in volumes:
+        try:
+            cleaned_item = re.sub(r'[Ll]', '', str(item))
+            if not cleaned_item or 'N/A' in str(cleaned_item).upper():
+                continue
+            val = float(cleaned_item)
+        except ValueError:
+            try:
+                parts = item.split()
+                for part in parts:
+                    if re.match(r'^-?\d+\.?\d*$', part):
+                        val = float(part.replace('L', '').replace('l', ''))
+                        break
+            except ValueError:
+                continue
+        parsed.append(val)
+    return sum(parsed) / len(volumes)
+if __name__ == '__main__':
+    sample_data = [""1.5 L"", ""2 ml"", ""N/A"", ""-3e-4 l"", """", ""0""]
+    result = convert_volume_strings(sample_data)",True,2,7044,68_6_2.py
+68,6,Convert volume measurements now,Build a performant Python library function that batch-converts lists of mixed volume strings into standardized float values using list comprehensions and dictionary mapping.,"def convert_volumes(volume_strings):
+    mapping = {
+        ""L"": 1000,
+        ""m³"": 1000,
+        ""gal"": 3.78541,
+        ""qt"": 0.946353,
+        ""pt"": 0.473176,
+    }
+    def parse_volume(s):
+        s = str(s).strip().lower()
+        if not any(k in s for k in mapping.keys()):
+            raise ValueError(f""Unsupported unit: {s}"")
+        value_str = """"
+        multiplier = 0.0
+        for i, char in enumerate(s):
+            if char.isdigit():
+                value_str += char
+            elif char == "" "":
+                continue
+            else:
+                break
+        try:
+            val = float(value_str)
+        except ValueError:
+            raise ValueError(f""Invalid number format: {s}"")
+        unit_part = s[i:] if i < len(s) and not value_str.isdigit() or (i == 0 and any(c in mapping for c in s)) else """"
+        parts = []
+        num_found = False
+        idx_start = -1
+        end_idx = len(s)
+        if ""gal"" in s:
+            multiplier = 3.78541
+            for i, c in enumerate(s):
+                if not num_found and (c.isdigit() or c == "".""):
+                    parts.append(c)
+                    idx_start = end_idx - len(parts) + 1                                                    
+        return val * multiplier
+    def clean_and_convert(item):
+        item_str = str(item).strip().lower()
+        if not any(k in item_str for k in [""l"", ""m³"", ""gal"", ""qt"", ""pt""]):
+            raise ValueError(f""Unknown volume unit: {item}"")
+        num_part, unit_part = """", """"
+        i = 0
+        while i < len(item_str) and (item_str[i].isdigit() or item_str[i] == "".""):
+            num_part += item_str[i]
+            i += 1
+        if i >= len(item_str):
+             raise ValueError(f""Missing unit in: {item}"")
+        j = len(item_str) - 1
+        while j > 0 and item_str[j].isdigit():
+            j -= 1
+        if j == 0 or not any(c in mapping for c in item_str):
+             raise ValueError(f""Invalid format: {item}"")
+        unit_key = """"
+        for k, v in mapping.items():
+            if k.lower() in item_str[j:] and j + len(k) <= len(item_str):
+                unit_key = k
+        val = float(num_part) * (mapping[unit_key] / 1000.0 if ""m³"" not in item_str else 1.0)                                  
+    return [clean_and_convert(x) for x in volume_strings]
+if __name__ == '__main__':
+    sample_data = [""5 L"", ""2 m³"", ""3 gal"", ""4 qt"", ""6 pt""]
+    try:
+        result = convert_volumes(sample_data)
+        print(result)
+    except Exception as e:
+        print(f""Error: {e}"")",True,3,7045,68_6_3.py
+68,6,Convert volume measurements now,Build a performant Python library function that batch-converts lists of mixed volume strings into standardized float values using list comprehensions and dictionary mapping.,"import re
+def parse_volume_strings(strings):
+    mapping = {
+        'L': 1,
+        'l': 1,
+        'm³': 0.001,
+        'cm³': 0.000001,
+        'mm³': 0.000000001,
+    }
+    def convert(value):
+        if isinstance(value, float):
+            return value
+        match = re.match(r'^([+-]?[\d\.]+)\s*(L|l|m³|cm³|mm³)?$', str(value).strip())
+        if not match:
+            raise ValueError(f""Invalid volume string: {value}"")
+        amount = float(match.group(1))
+        unit = match.group(2) or 'L'
+        factor = mapping.get(unit, 1.0)
+        return amount * factor
+    result = [convert(s) for s in strings]
+    return result
+if __name__ == '__main__':
+    test_data = ['5 L', '-3 m³', '2cm³', 4.5, 'invalid']
+    try:
+        output = parse_volume_strings(test_data)
+        print(output)
+    except ValueError as e:
+        print(e)",True,4,7046,68_6_4.py
