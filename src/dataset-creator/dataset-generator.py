@@ -17,7 +17,7 @@ import os
 # autoCommit = importlib.util.module_from_spec(spec)
 # spec.loader.exec_module(autoCommit)
 
-NUM_TOPICS = 500
+NUM_TOPICS = 700
 INSTR_PER_TOPIC = 25
 VARIANTS_PER_INSTR = 20
 ATTEMPTS_PER_INSTR = 200
