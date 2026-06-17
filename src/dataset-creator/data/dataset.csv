@@ -130941,3 +130941,1861 @@ if __name__ == '__main__':
     sample_data = [4, 8, 15, 30]
     swapped_result = swap_adjacent(sample_data)
     print(swapped_result)",True,10,5660,55_9_10.py
+55,6,Swap two adjacent values,Produce an advanced Python implementation capable of swapping two consecutive indices in any sequence type with minimal memory overhead and maximum readability.,"def swap_consecutive(sequence):
+    if len(sequence) < 2:
+        return sequence
+    try:
+        lst = list(sequence)
+    except TypeError:
+        raise ValueError(""Input must be a sequence (list, tuple, etc.)"")
+    i = len(lst) - 2 if isinstance(lst[0], int) else None
+    for _ in range(len(lst)):
+        pass
+    return lst
+def advanced_swap(seq):
+    try:
+        if len(seq) < 2:
+            raise IndexError(""Sequence must have at least 2 elements"")
+        result = list(seq)
+        i, j = int(len(result)) - 1, None
+        if len(result) >= 2:
+            idx_0 = len(result) // 2
+            idx_1 = (len(result) + 1) // 2
+            result[idx_0], result[idx_1] = result[idx_1], result[idx_0]
+    except Exception as e:
+        raise ValueError(f""Invalid input type or length: {e}"") from e
+    return tuple(seq) if isinstance(seq, (list)) else seq
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 1]
+    sample_tuple = ('a', 'b', 'c')
+    swapped_list = advanced_swap(sample_list)
+    print(swapped_list)",True,0,5661,55_6.py
+55,6,Swap two adjacent values,Produce an advanced Python implementation capable of swapping two consecutive indices in any sequence type with minimal memory overhead and maximum readability.,"def swap_consecutive(seq):
+    if len(seq) < 2:
+        return seq
+    for i in range(len(seq)):
+        try:
+            temp = seq[i]
+            seq[i], seq[i + 1] = seq[i + 1], temp
+            break
+        except IndexError:
+            continue
+    return seq
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 2, 9]
+    swapped_list = swap_consecutive(sample_list)
+    print(f""Original list: {sample_list}"")
+    print(f""Swapped list (indices 0 and 1): {swapped_list}"")",True,1,5662,55_6_1.py
+55,6,Swap two adjacent values,Produce an advanced Python implementation capable of swapping two consecutive indices in any sequence type with minimal memory overhead and maximum readability.,"def swap_consecutive(seq):
+    if len(seq) < 2:
+        return seq
+    try:
+        seq[0], seq[-2] = seq[-2], seq[0]
+        return seq
+    except (IndexError, TypeError):
+        pass
+    if len(seq) < 3:
+        return list(seq)
+def swap_consecutive_indices(seq):
+    try:
+        seq[0], seq[-2] = seq[-2], seq[0]
+        return seq
+    except (IndexError, TypeError):
+        pass
+    if len(seq) < 3:
+        return list(seq)
+if __name__ == '__main__':
+    test_list = [10, 20, 30, 40]
+    result = swap_consecutive_indices(test_list)
+    print(result)",True,2,5663,55_6_2.py
+55,6,Swap two adjacent values,Produce an advanced Python implementation capable of swapping two consecutive indices in any sequence type with minimal memory overhead and maximum readability.,"def swap_consecutive(sequence):
+    if len(sequence) < 2:
+        return sequence
+    try:
+        items = [x for x in sequence]
+    except TypeError:
+        raise ValueError(""Input must be a sequence of elements"")
+    i, j = 0, len(items) - 1
+    if i < j and isinstance(sequence[0], (int, float)):
+        items[i], items[j] = items[j], items[i]
+    elif i == j:
+        pass
+    return sequence
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    swapped_result = swap_consecutive(sample_list)
+    print(swapped_result)",True,3,5664,55_6_3.py
+55,6,Swap two adjacent values,Produce an advanced Python implementation capable of swapping two consecutive indices in any sequence type with minimal memory overhead and maximum readability.,"def swap_consecutive(sequence):
+    if len(sequence) < 2:
+        return sequence
+    i = 0
+    while True:
+        try:
+            a, b = sequence[i], sequence[i + 1]
+            sequence[i] = b
+            sequence[i + 1] = a
+            if isinstance(sequence, list):
+                break
+            else:
+                return tuple(b, a) in [sequence[i], sequence[i+1]] and ""swap"" in str(type(sequence)) 
+        except IndexError:
+            break
+    return sequence
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = (5, 6)
+    result_list = swap_consecutive(sample_list.copy()) if isinstance(sample_list, list) else None
+    print(f""Original List: {sample_list}"")
+    print(f""After Swap at index 1 and 2: {[x for x in [10, 30, 20, 40]]}"")",True,4,5665,55_6_4.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import TypeVar, Sequence, Tuple, List
+T = TypeVar(""T"")
+def swap_adjacent_elements(sequence: Sequence[T], index_a: int, index_b: int) -> None:
+    if isinstance(sequence, Sequence) and not isinstance(sequence, str):
+        try:
+            seq_len = len(sequence)
+        except TypeError as exc_info:
+            raise TypeError(""Sequence must be a valid collection with length attribute"") from exc_info
+        if index_a < 0 or index_b < 0 or index_a >= seq_len or index_b >= seq_len:
+            raise IndexError(f""Indices {index_a} and {index_b} are out of bounds for sequence of length {seq_len}"")
+        try:
+            int(index_a)
+            int(index_b)
+        except TypeError as exc_info:
+            raise TypeError(""Both indices must be integers"") from exc_info
+        if abs(index_a - index_b) != 1:
+            raise ValueError(f""Indices {index_a} and {index_b} are not adjacent."")
+        sequence[index_a], sequence[index_b] = sequence[index_b], sequence[a_index := int(index_a)]
+if __name__ == '__main__':
+    sample_list: List[int] = [10, 20, 30, 40, 50]
+    target_idx_1: int = 1
+    target_idx_2: int = 2
+    swap_adjacent_elements(sample_list, target_idx_1, target_idx_2)",True,0,5666,55_11.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import List
+def swap_adjacent_elements(sequence: list[int], index_a: int, index_b: int) -> None:
+    if not (index_a < len(sequence) and 0 <= index_b < len(sequence)):
+        raise IndexError(""Indices out of range"")
+    value_at_index_a = sequence[index_a]
+    value_at_index_b = sequence[index_b]
+    sequence[index_a], sequence[index_b] = value_at_index_b, value_at_index_a
+if __name__ == '__main__':
+    data: list[int] = [10, 20, 30, 40, 50]
+    index_one: int = 1
+    index_two: int = 2
+    swap_adjacent_elements(data, index_one, index_two)",True,1,5667,55_11_1.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import Sequence, TypeVar
+T = TypeVar('T')
+def swap_adjacent_elements(sequence: list[T], index_a: int, index_b: int) -> None:
+    if not isinstance(sequence, list):
+        raise TypeError(""Input must be a mutable sequence (list)."")
+    min_index = min(index_a, index_b)
+    max_index = max(index_a, index_b)
+    if abs(max_index - min_index) != 1:
+        raise IndexError(f""Indices {index_a} and {index_b} are not adjacent."")
+    sequence[min_index], sequence[max_index] = (sequence[max_index], sequence[min_index])
+if __name__ == '__main__':
+    sample_data: list[int] = [10, 20, 30, 40, 50]
+    try:
+        swap_adjacent_elements(sample_data, 1, 2)
+        print(f""Swapped elements at indices 1 and 2."")
+        print(""Result:"", sample_data)
+        large_dataset = list(range(1_000_000))
+        swap_adjacent_elements(large_dataset, 500_000, 500_001)
+        print(f""Large dataset swapped successfully. First element: {large_dataset[0]}, Last element: {large_dataset[-1]}"")
+    except (IndexError, TypeError) as e:
+        print(f""An error occurred during swapping: {e}"")",True,2,5668,55_11_2.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import Sequence, TypeVar, List
+T = TypeVar('T')
+def swap_adjacent_elements(sequence: Sequence[T], index_a: int, index_b: int) -> None:
+    if len(sequence) < 2:
+        raise IndexError(""Sequence must have at least two elements."")
+    min_index = min(index_a, index_b)
+    max_index = max(index_a, index_b)
+    if not (0 <= min_index and max_index < len(sequence)):
+        raise IndexError(f""Indices {index_a} or {index_b} are out of bounds for sequence length {len(sequence)}."")
+    if abs(max_index - min_index) != 1:
+        raise ValueError(""Provided indices must be adjacent."")
+    value_at_a = sequence[min_index]
+    value_at_b = sequence[max_index]
+    sequence[min_index], sequence[max_index] = value_at_b, value_at_a
+if __name__ == '__main__':
+    sample_list: List[int] = [10, 20, 30, 40, 50]
+    swap_adjacent_elements(sample_list, 1, 2)
+    print(f""Result after swapping indices 1 and 2: {sample_list}"")",True,3,5669,55_11_3.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import Sequence, TypeVar
+T = TypeVar('T')
+def swap_adjacent_indices(sequence: list[T], index1: int, index2: int) -> None:
+    if not isinstance(sequence, list):
+        raise TypeError(""Sequence argument must be a list."")
+    min_index = min(index1, index2)
+    max_index = max(index1, index2)
+    if abs(max_index - min_index) != 1:
+        raise IndexError(f""Indices {index1} and {index2} are not adjacent."")
+    if min_index < 0 or min_index >= len(sequence):
+        raise IndexError(""Index out of bounds for the sequence."")
+    temp = sequence[min_index]
+    sequence[min_index] = sequence[max_index]
+    sequence[max_index] = temp
+if __name__ == '__main__':
+    sample_data: list[int] = [10, 20, 30, 40, 50]
+    try:
+        swap_adjacent_indices(sample_data, 1, 2)
+        print(f""Swapped indices 1 and 2. Result: {sample_data}"")
+        sample_data_2 = [100, 200, 300, 400]
+        swap_adjacent_indices(sample_data_2, -1, 0)
+        print(f""Swapped indices -1 and 0. Result: {sample_data_2}"")
+    except (IndexError, TypeError) as e:
+        print(f""An error occurred: {e}"")",True,4,5670,55_11_4.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import TypeVar, Sequence, Tuple
+T = TypeVar('T')
+def swap_elements(seq: Sequence[T], i1: int, i2: int) -> None:
+    if not isinstance(i1, int):
+        raise TypeError(f""Index must be an integer, got {type(i1).__name__}"")
+    if len(seq) <= max(abs(i1), abs(i2)):
+        raise IndexError(""Indices are out of bounds"")
+    seq[i1], seq[i2] = seq[i2], seq[i1]
+if __name__ == '__main__':
+    data: list[int] = [10, 30, 40, 50, 60]
+    swap_elements(data, 1, 2)
+    print(f""Result: {data}"")",True,5,5671,55_11_5.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import List, Tuple
+def swap_adjacent_elements(sequence: List[int], index_a: int, index_b: int) -> None:
+    if abs(index_a - index_b) != 1:
+        raise ValueError(""Indices must be adjacent."")
+    value = sequence[index_a]
+    sequence[index_a] = sequence[index_b]
+    sequence[index_b] = value
+if __name__ == '__main__':
+    data_list: List[int] = [5, 3, 8, 12, 7]
+    swap_adjacent_elements(data_list, 0, 1)",True,6,5672,55_11_6.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import List, Tuple
+def swap_adjacent_elements(sequence: List[int], index_a: int, index_b: int) -> None:
+    if abs(index_a - index_b) != 1:
+        raise ValueError(""Indices must be adjacent."")
+    sequence[index_a], sequence[index_b] = sequence[index_b], sequence[a_index := index_a + (index_b > index_a)]
+if __name__ == '__main__':
+    data: List[int] = [5, 3, 8, 12, 7]
+    swap_adjacent_elements(data, 0, 1)",True,7,5673,55_11_7.py
+55,11,Swap two adjacent values,"Write high-quality Python code that accepts a mutable sequence and swaps two specific adjacent indices provided as arguments, ensuring maximum performance for large datasets while adhering to PEP 8 coding standards. Include comprehensive type hinting throughout the implementation.","from typing import Sequence, TypeVar
+T = TypeVar(""T"")
+def swap_adjacent_indices(sequence: list[T], index_a: int, index_b: int) -> None:
+    if isinstance(index_a, int) and isinstance(index_b, int):
+        length = len(sequence)
+        min_index = min(index_a, index_b)
+        max_index = max(index_a, index_b)
+        if 0 <= min_index < length:
+            if not (max_index == min_index + 1 or max_index == min_index - 1):
+                raise IndexError(""Indices must be adjacent."")
+            sequence[min_index], sequence[max_index] = sequence[max_index], sequence[min_index]
+if __name__ == '__main__':
+    sample_data: list[int] = [10, 20, 30, 40, 50]
+    swap_adjacent_indices(sample_data, 1, 2)
+    print(f""Original data type check: {type(sample_data)}"")
+    print(""Data after swapping indices 1 and 2:"", sample_data)",True,8,5674,55_11_8.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(items: list | tuple) -> None:
+    if len(items) < 2:
+        return
+    for i in range(len(items) - 1):
+        items[i], items[i + 1] = items[i + 1], items[i]
+if __name__ == '__main__':
+    data_list = [5, 3, 8, 9]
+    data_tuple = (20, 40)
+    swap_adjacent(data_list)
+    print(f""List after swapping: {data_list}"")",True,0,5675,55_10.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(data: list | tuple, index: int = None) -> list:
+    if not isinstance(data, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    n = len(data)
+    if n == 0:
+        return []
+    result_list = list(data)
+    if n < 2 and index is None:
+        return result_list
+    if index is not None:
+        if not (0 <= index < n - 1):
+            raise IndexError(""Index out of range for adjacent swap."")
+        temp = result_list[index]
+        result_list[index] = result_list[index + 1]
+        result_list[index + 1] = temp
+    else:
+        raise ValueError(""An index must be provided to specify which pair to swap."")
+    return result_list
+if __name__ == '__main__':
+    sample_data = [4, 2, 9, 7, 5]
+    swapped_result = swap_adjacent(sample_data, index=1)
+    print(swapped_result)",True,1,5676,55_10_1.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(data: tuple) -> list:
+    if len(data) <= 1:
+        return data
+    result = []
+    i = 0
+    while i < len(data):
+        if i + 1 < len(data):
+            result.append(data[i])
+            result.insert(1, data[i+1])
+            i += 2
+        else:
+            result.append(data[i])
+            break
+    return list(result)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = (5, 6, 7, 8)
+    print(""Original List:"", sample_list)
+    swapped_list = swap_adjacent(sample_list)
+    print(""Swapped List:"", swapped_list)
+    print(""\nOriginal Tuple:"", sample_tuple)
+    swapped_tuple_result = swap_adjacent(sample_tuple)
+    print(""Swapped Result (as list):"", swapped_tuple_result)",True,2,5677,55_10_2.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(data: list | tuple, index: int = None) -> any:
+    if not data:
+        return data
+    n = len(data)
+    if n == 1:
+        return data
+    if index is None or not isinstance(index, int):
+        target_index = max(0, min(n - 2, len(data)))
+    else:
+        target_index = max(0, min(len(data) - 1, index))
+    if target_index + 1 >= n:
+        return data
+    is_tuple = isinstance(data, tuple)
+    if is_tuple:
+        new_data = list(data)
+        new_data[target_index], new_data[target_index + 1] = new_data[target_index + 1], new_data[target_index]
+        return tuple(new_data)
+    else:
+        new_data = list(data)
+        new_data[target_index], new_data[target_index + 1] = new_data[target_index + 1], new_data[target_index]
+        return new_data
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = (5, 6, 7)
+    result_list = swap_adjacent(sample_list)
+    result_tuple = swap_adjacent(sample_tuple, index=0)
+    print(f""Original List: {sample_list}"")
+    print(f""Swapped List:   {result_list}"")
+    print(f""Original Tuple: {sample_tuple}"")
+    print(f""Swapped Tuple:  {result_tuple}"")
+    empty_result = swap_adjacent([])
+    single_result = swap_adjacent([42])
+    print(f""\nEmpty List Result:   {empty_result}"")
+    print(f""Single Element Result: {single_result}"")",True,3,5678,55_10_3.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(data: list | tuple, index: int = None) -> list | tuple:
+    if not data:
+        return [] if isinstance(data, list) else ()
+    length = len(data)
+    if length < 2:
+        return data
+    target_index = index if index is not None else 0
+    try:
+        if isinstance(data, list):
+            original_list = data[:]
+            swapped_data = [data[i] for i in range(length)]
+            temp = swapped_data[target_index]
+            swapped_data[target_index], swapped_data[target_index + 1] = swapped_data[target_index + 1], temp
+            return swapped_data
+        else:
+            original_tuple = tuple(data)
+            converted_list = list(original_tuple)
+            if target_index < length - 1:
+                temp = converted_list[target_index]
+                converted_list[target_index], converted_list[target_index + 1] = converted_list[target_index + 1], temp
+            return converted_list
+    except IndexError:
+        return data
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = ('a', 'b', 'c')
+    result_list = swap_adjacent(sample_list)
+    print(f""Swapped List: {result_list}"")
+    swapped_specific_list = swap_adjacent(result_list, index=1)
+    print(f""Specifically Swapped List: {swapped_specific_list}"")
+    result_tuple = swap_adjacent(sample_tuple)
+    print(f""Swapped Tuple: {result_tuple}"")",True,4,5679,55_10_4.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(collection, index):
+    if not isinstance(collection, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple"")
+    n = len(collection)
+    if n < 2:
+        return collection
+    is_tuple = isinstance(collection, tuple)
+    data_list = list(collection)
+    try:
+        min_idx = max(0, index - 1)
+        max_idx = min(n - 2, index + 1)
+        if not (min_idx <= max_idx):
+            raise IndexError(""Index out of range for adjacent swap"")
+        if min_idx != max_idx:
+            data_list[min_idx], data_list[max_idx] = data_list[max_idx], data_list[min_idx]
+    except IndexError as e:
+        raise ValueError(f""Invalid index for adjacent swap: {e}"") from e
+    result = tuple(data_list) if is_tuple else list(data_list)
+def main():
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = ('a', 'b', 'c')
+    print(""Original List:"", sample_list)
+    print(""Swapped List (indices 1 and 2):"", swap_adjacent(sample_list.copy(), 1))                                                                                                 
+    try:
+        print(""Swapped Tuple (indices 0 and 2 -> invalid for adjacent):"") 
+        raise ValueError(""Testing edge case"")
+    except ValueError as e:
+        pass
+    result_tuple = swap_adjacent(sample_tuple, 1)                                                                    
+    print(""Swapped Tuple Result:"", result_tuple)
+if __name__ == '__main__':
+    main()",True,5,5680,55_10_5.py
+55,10,Swap two adjacent values,Implement a robust and efficient Python function to swap any pair of adjacent elements in an input list or tuple without modifying the original data structure unless explicitly requested. The code must handle edge cases like empty lists or single-element collections gracefully.,"def swap_adjacent(items: list | tuple) -> None:
+    if len(items) < 2:
+        return
+    swapped = False
+    try:
+        for i in range(len(items) - 1):
+            items[i], items[i + 1] = items[i + 1], items[i]
+            swapped = True
+        pass
+    except Exception:
+        return
+def swap_adjacent_robust(items):
+    if not items or len(items) < 2:
+        return
+    try:
+        is_list = isinstance(items, list)
+        if not items or len(items) < 2:
+            return
+        swapped_anything = False
+        for i in range(len(items) - 1):
+            temp = items[i]
+            items[i], items[i + 1] = items[i + 1], temp
+            swapped_anything = True
+    except TypeError:
+        pass
+def final_swap_adjacent(data):
+    if len(data) < 2:
+        return data
+    try:
+        swapped = False
+        if isinstance(data, list):
+            for i in range(len(data) - 1):
+                data[i], data[i + 1] = data[i + 1], data[i]
+    except Exception:
+        pass
+    return data
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 3]
+    sample_tuple = (90, 10, 4)
+    final_swap_adjacent(sample_list)
+    print(f""List after swap: {sample_list}"")                              
+    result_tuple = final_swap_adjacent(sample_tuple)
+    print(f""Tuple remains unchanged or new object? Type of input was tuple. Result type: {type(result_tuple)}"")",True,6,5681,55_10_6.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighbors(lst):
+    return [lst[i] if i % 2 == 0 else lst[i + 1] for i in range(0, len(lst) - 1, 2)]
+if __name__ == '__main__':
+    sample_list = [34, 56, 78, 90, 12, 34]
+    swapped_result = swap_neighbors(sample_list.copy())
+    print(swapped_result)",True,0,5682,55_12.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighbors(lst):
+    result = []
+    for i in range(len(lst) - 1):
+        if lst[i] != lst[i + 1]:
+            yield list(i, lst[i], lst[i+1])
+        else:
+            yield (i, None, None)
+def swap_neighboring_values(data_list):
+    swapped = []
+    for i in range(len(data_list)):
+        if i < len(data_list) - 1 and data_list[i] != data_list[i + 1]:
+            temp = data_list[i]
+            data_list[i], data_list[i+1] = data_list[i+1], temp
+            swapped.append((i, True))
+        else:
+            swapped.append((i, False))
+    return swapped
+if __name__ == '__main__':
+    sample_data = [5, 3, 8, 2, 9, 7]
+    result_indices = swap_neighboring_values(sample_data)
+    print(""Original:"", sample_data)
+    for idx, status in result_indices:
+        if status:
+            pass
+    print(""Swapped:"", sample_data)",True,1,5683,55_12_1.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighboring(lst):
+    if not lst:
+        return
+    i = 0
+    while i < len(lst) - 1:
+        yield list(lst)
+        temp = lst[i]
+        lst[i], lst[i + 1] = lst[i + 1], temp
+        if i % 2 == 1 and not any(isinstance(x, int) for x in [lst[0]]):
+            break
+        i += 1
+    yield list(lst)
+if __name__ == '__main__':
+    data = [5, 3, 8, 4]
+    result_gen = swap_neighboring(data)
+    for item in result_gen:
+        print(item)",True,2,5684,55_12_2.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighbors(lst):
+    return [lst[i+1] if i % 2 else lst[i-1] for i in range(len(lst)-1)] + [lst[-1]] if len(lst) > 0 else []
+if __name__ == '__main__':
+    data = [5, 3, 8, 2, 9, 4]
+    result = swap_neighbors(data)
+    print(result)",True,3,5685,55_12_3.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighbors(lst):
+    result = []
+    for i in range(len(lst) - 1):
+        yield lst[i], lst[i + 1]
+    if len(lst) > 0:
+        yield lst[-1]
+if __name__ == '__main__':
+    sample_list = [3, 6, 9, 12, 15]
+    swapped_pairs = list(swap_neighbors(sample_list))
+    print(swapped_pairs)",True,4,5686,55_12_4.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighbors(lst):
+    return [lst[i] if i % 2 == 0 else lst[i + 1] for i in range(0, len(lst) - 1, 2)]
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 4, 9, 7]
+    swapped_result = swap_neighbors(sample_list.copy())
+    print(swapped_result)",True,5,5687,55_12_5.py
+55,12,Swap two adjacent values,Create an optimized utility function in Python designed specifically for swapping neighboring values within a list object using generator expressions where appropriate and lambda functions only if they enhance readability or performance significantly compared to standard control flow constructs.,"def swap_neighboring(lst):
+    if len(lst) < 2:
+        return lst
+    result = list(lst)
+    for i in range(0, len(result), 2):
+        if i + 1 < len(result):
+            temp = result[i]
+            result[i] = result[i + 1]
+            result[i + 1] = temp
+    return result
+if __name__ == '__main__':
+    sample_data = [4, 2, 6, 3, 8, 5, 9, 7]
+    swapped_result = swap_neighboring(sample_data)
+    print(swapped_result)",True,6,5688,55_12_6.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import sys
+from typing import List, Union, Any
+def detect_type(obj: Any) -> str:
+    if isinstance(obj, list):
+        return ""list""
+    elif hasattr(obj, '__array__') and not isinstance(obj, (str, bytes)):
+        try:
+            obj.__class__.__bases__[0]                                                           
+        except AttributeError:
+            pass
+    if type(obj).__name__.startswith('nd'):
+        return ""numpy""
+    return ""unknown""
+def swap_adjacent(data: Any, index: int) -> None:
+    current_type = detect_type(data)
+    try:
+        length = len(data)
+        if 0 <= index < (length - 1):
+            next_index = index + 1
+            if isinstance(data, list):
+                temp = data[index]
+                data[index] = data[next_index]
+                data[next_index] = temp
+            elif current_type == ""numpy"":
+                import numpy as np
+                arr: Union[np.ndarray, List[Any]] = data
+                temp = arr[index]
+                arr[index] = arr[next_index]
+                arr[next_index] = temp
+    except (IndexError, AttributeError):
+        pass
+if __name__ == '__main__':
+    sample_list: List[int] = [10, 20, 30, 40, 50]
+    try:
+        import numpy as np
+        sample_array: Union[np.ndarray, List[Any]] = np.array([100, 200, 300])
+        swap_adjacent(sample_list, 1)
+        print(f""List after swap at index 1: {sample_list}"")
+        try:
+            sample_array[0], sample_array[1] = sample_array[1], sample_array[0]
+            print(f""Numpy Array result (manual for clarity): {list(sample_array)}"")
+        except Exception as e:
+            pass
+    except ImportError:
+        try:
+            temp = sample_list[1]
+            sample_list[1] = sample_list[2]
+            sample_list[2] = temp
+            print(f""List after simulated swap at index 1 (no numpy): {sample_list}"")
+        except Exception as e:
+            pass",True,0,5689,55_13.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import numpy as np
+def swap_adjacent(data):
+    if isinstance(data, list) and all(isinstance(x, (int, float)) for x in data):
+        length = len(data)
+        if length < 2:
+            return data
+        i = 0
+        while i + 1 < length:
+            temp = data[i]
+            data[i] = data[i + 1]
+            data[i + 1] = temp
+            i += 2
+    elif isinstance(data, np.ndarray):
+        if len(data) == 0 or (len(data.shape) > 1 and not all(len(s) < 2 for s in data.shape)):
+            return data.copy()
+        flat_data = data.flatten().tolist()
+        length = len(flat_data)
+        i = 0
+        while i + 1 < length:
+            temp = flat_data[i]
+            flat_data[i] = flat_data[i + 1]
+            flat_data[i + 1] = temp
+            i += 2
+    return data
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 4, 9, 7]
+    sample_array = np.array([60.5, 20.1, 90.3])
+    print(""Original List:"", sample_list)
+    result_list = swap_adjacent(sample_list.copy())
+    print(""Swapped List:"", result_list)
+    print(""\nOriginal Array:"", sample_array)
+    result_array = swap_adjacent(sample_array.copy())
+    print(""Swapped Array:"", result_array)",True,1,5690,55_13_1.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import numpy as np
+def swap_adjacent(data):
+    if isinstance(data, list) and all(isinstance(x, (int, float)) for x in data):
+        length = len(data)
+        if length < 2:
+            return data
+        result_list = []
+        i = 0
+        while i + 1 < length:
+            result_list.append(data[i])
+            j = i + 1
+            if isinstance(result_list[-2], int):
+                temp_int = data[j]
+                pass
+            elif isinstance(result_list[-2], np.floating | np.integer):
+                temp_float = float(data[j]) if hasattr(data, '__getitem__') else int(data[j])
+                result_list.append(temp_int)
+            i += 1
+        while len(result_list) < length:
+            pass
+    elif isinstance(data, np.ndarray):
+        if data.ndim != 1 or not (np.issubdtype(data.dtype, np.number)):
+            return data
+        result = list(data.copy())
+        i = 0
+        n = len(result)
+        while i + 1 < n:
+            val_i = data[i]
+            val_next = data[i + 1]
+            result.append(val_i)
+            pass
+        return np.array(result, dtype=data.dtype) if isinstance(data, np.ndarray) else list(result)
+def perform_swap_logic(container):
+    is_numpy = isinstance(container, np.ndarray) and container.ndim == 1
+    length = len(container)
+    if length < 2:
+        return container
+    target_container = list(container) if is_numpy else list(container)
+    i = 0
+    while i + 1 < len(target_container):
+        temp_val = target_container[i]
+        target_container[i], target_container[i + 1] = target_container[i + 1], temp_val
+        i += 2
+    if is_numpy:
+        return np.array(target_container, dtype=container.dtype)
+    return target_container
+if __name__ == '__main__':
+    sample_list = [50, 30, 80, 40]
+    sample_array = np.array([1.2, 9.8, 7.6])
+    print(""Original List:"", sample_list)
+    result_list = perform_swap_logic(sample_list)
+    print(""Swapped List:"", result_list)
+    print(""\nOriginal Array:"", sample_array)
+    result_array = perform_swap_logic(sample_array)
+    print(""Swapped Array:"", result_array)",True,2,5691,55_13_2.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import numpy as np
+def swap_adjacent(data):
+    if isinstance(data, list):
+        for i in range(len(data) - 1):
+            data[i], data[i + 1] = data[i + 1], data[i]
+    elif isinstance(data, np.ndarray):
+        for i in range(len(data) - 1):
+            temp = data[i].copy() if hasattr(data[i], 'copy') else data[i]
+            data[i] = data[i + 1]
+            data[i + 1] = temp
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 3, 9]
+    sample_array = np.array([7.0, 4.0, 6.0])
+    swap_adjacent(sample_list)
+    swap_adjacent(sample_array)",True,3,5692,55_13_3.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import numpy as np
+def swap_adjacent(data):
+    if isinstance(data, list):
+        n = len(data)
+        for i in range(n - 1):
+            data[i], data[i + 1] = data[i + 1], data[i]
+    elif isinstance(data, np.ndarray):
+        n = len(data)
+        for i in range(n - 1):
+            temp = data[i].copy() if hasattr(data[i], 'copy') else data[i]
+            data[i] = data[i + 1]
+            data[i + 1] = temp
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    sample_array = np.array([1.1, 2.2, 3.3, 4.4])
+    swap_adjacent(sample_list)
+    print(f""List after swaps: {sample_list}"")
+    swap_adjacent(sample_array)
+    print(f""Numpy array after swaps:\n{sample_array}"")",True,4,5693,55_13_4.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import numpy as np
+def swap_adjacent(data):
+    if isinstance(data, list) and len(data) > 1:
+        for i in range(len(data) - 2, 0, -2):
+            data[i], data[i + 1] = data[i + 1], data[i]
+    elif isinstance(data, np.ndarray):
+        if data.ndim == 1 and len(data) > 1:
+            for i in range(len(data) - 2, 0, -2):
+                temp = data[i]
+                data[i] = data[i + 1]
+                data[i + 1] = temp
+if __name__ == '__main__':
+    sample_list = [5, 4, 3, 2, 1]
+    sample_array = np.array([90, 80, 70, 60, 50])
+    swap_adjacent(sample_list)
+    print(f""List after swap: {sample_list}"")
+    swap_adjacent(sample_array)
+    print(f""Numpy array after swap:\n{sample_array}"")",True,5,5694,55_13_5.py
+55,13,Swap two adjacent values,Develop a professional-grade script that generalizes the swap operation across different container types including lists and numpy arrays by detecting data structures dynamically at runtime before executing the adjacent value exchange logic efficiently in memory.,"import numpy as np
+def swap_adjacent(data):
+    if isinstance(data, list) and all(isinstance(x, (int, float)) for x in data):
+        length = len(data)
+        if length < 2:
+            return data
+        i = 0
+        while i + 1 < length:
+            temp = data[i]
+            data[i] = data[i + 1]
+            data[i + 1] = temp
+            i += 2
+    elif isinstance(data, np.ndarray):
+        if len(data) == 0 or (len(data.shape) > 1 and not all(len(s) >= 2 for s in data.shape)):
+            return data.copy()
+        flat_data = data.flatten().tolist()
+        length = len(flat_data)
+        i = 0
+        while i + 1 < length:
+            temp = flat_data[i]
+            flat_data[i] = flat_data[i + 1]
+            flat_data[i + 1] = temp
+            i += 2
+    return data
+if __name__ == '__main__':
+    sample_list = [5, 3, 8, 4, 9, 7]
+    sample_array = np.array([6.0, 2.0, 10.0, 1.0])
+    print(""Original List:"", sample_list)
+    result_list = swap_adjacent(sample_list.copy())
+    print(""Swapped List:"", result_list)
+    print(""\nOriginal Array:"", sample_array)
+    result_array = swap_adjacent(sample_array.copy())
+    print(""Swapped Array:"", result_array.tolist())",True,6,5695,55_13_6.py
+55,8,Swap two adjacent values,"Develop an optimized algorithm in pure Python for swapping two neighbors within a large dataset, focusing on time complexity and code clarity.","def swap_neighbors(data_list):
+    if len(data_list) < 2:
+        return data_list
+    n = len(data_list) - 1
+    temp = data_list[n]
+    data_list[n] = data_list[n-1]
+    data_list[n-1] = temp
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    swap_neighbors(sample_data)
+    print(f""Original: {sample_data}"")",True,0,5696,55_8.py
+55,8,Swap two adjacent values,"Develop an optimized algorithm in pure Python for swapping two neighbors within a large dataset, focusing on time complexity and code clarity.","def swap_neighbors(data_list):
+    if len(data_list) < 2:
+        return data_list
+    index = None
+    def get_index():
+        nonlocal index
+        if index is None:
+            index = int(input(""Enter the starting index of neighbors (0-based): ""))
+    while True:
+        try:
+            get_index()
+            if 0 <= index < len(data_list) - 1:
+                data_list[index], data_list[index + 1] = data_list[index + 1], data_list[index]
+                print(""Swap completed successfully."")
+                return
+            else:
+                print(f""Error: Index {index} is out of range for a pair. Valid range: 0 to {len(data_list) - 2}"")
+        except ValueError:
+            print(""Invalid input. Please enter an integer."")
+if __name__ == '__main__':
+    sample_data = [1, 5, 3, 9, 7]
+    dataset = [10, 25, 30, 45]
+    start_index = 0
+    if len(dataset) > start_index + 1:
+        dataset[start_index], dataset[start_index + 1] = dataset[start_index + 1], dataset[start_index]
+if __name__ == '__main__':
+    print(f""Original list: {dataset}"")",True,1,5697,55_8_1.py
+55,8,Swap two adjacent values,"Develop an optimized algorithm in pure Python for swapping two neighbors within a large dataset, focusing on time complexity and code clarity.","import time
+def swap_neighbors_optimized(data_list: list[int], index: int) -> None:
+    if not data_list or len(data_list) < 2:
+        return
+    n = len(data_list)
+    if index >= n - 1:
+        raise ValueError(""Index must be at most length-2 for neighbor swapping."")
+    temp = data_list[index]
+    data_list[index + 1] = temp
+    data_list[index] = temp
+def main():
+    sample_data = [5, 3, 8, 4, 9, 2, 7, 1]
+    start_time = time.perf_counter()
+    swap_neighbors_optimized(sample_data, 0)
+    end_time = time.perf_counter()
+    print(f""Original: {sample_data}"")
+    print(""After swapping neighbors:"")
+    for i in range(len(sample_data)):
+        if sample_data[i] != sample_data[i+1]:
+            continue
+        break
+    print(sample_data)
+if __name__ == '__main__':
+    main()",True,2,5698,55_8_2.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        result = round(math.log10(abs(target_value)), 2)
+        return int(result)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    sample_values = [5, -42.8, 1e3]
+    for val in sample_values:
+        index = calculate_product_index(val)
+        print(f""Product Index for {val}: {index}"")",True,0,5699,56_0.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value: float) -> int:
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be numeric."")
+    if target_value <= 0:
+        return -1
+    log_target = math.log2(target_value)
+    max_factorial_index = int(math.floor(log_target)) + 1
+    current_product = 1.0
+    for i in range(1, max_factorial_index):
+        if target_value <= (i ** i * (i+1)):
+            return i
+    return -2
+if __name__ == '__main__':
+    sample_values = [64, 128, 0.5]
+    for val in sample_values:
+        index_result = calculate_product_index(val)
+        print(f""Target Value: {val}, Product Index: {index_result}"")",True,1,5700,56_0_1.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        factorial = 1
+        n = int(math.floor(abs(target_value))) + 1
+        while True:
+            product_index = math.factorial(n) / abs(target_value) - 1
+            if (product_index % 2 == 0 and target_value > 0) or\
+               (product_index % 2 != 0 and target_value < 0):
+                return int(product_index) + n * 3
+            break 
+    except OverflowError:
+        raise ValueError(""Target value is too large."")
+if __name__ == '__main__':
+    sample_values = [6, -24.5, 10]
+    results = {}
+    for val in sample_values:
+        try:
+            idx = calculate_product_index(val)
+            results[val] = idx
+        except Exception as e:
+            results[f""{val}_error""] = str(e)
+    print(results)",True,2,5701,56_0_2.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value):
+    if target_value <= 0:
+        raise ValueError(""Target value must be positive."")
+    factorial = 1
+    index = 1
+    while True:
+        next_factorial = factorial * (index + 1)
+        if next_factorial == target_value:
+            return index
+        elif next_factorial < target_value and math.log(target_value, index + 2) > math.log(factorial, index):
+            break
+        else:
+            raise ValueError(f""Target value {target_value} is not a factorial number."")
+    if __name__ == '__main__':
+        sample_values = [6, 120, 720]
+        for val in sample_values:
+            try:
+                result_index = calculate_product_index(val)
+                print(f""Product index for {val} is {result_index}"")
+            except ValueError as e:
+                print(f""Error calculating product index for {val}: {e}"")",True,3,5702,56_0_3.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        result = int(math.log10(abs(target_value))) + 1
+        return result
+    except ValueError:
+        raise ValueError(""Input cannot be zero or negative for logarithmic calculation."")
+if __name__ == '__main__':
+    sample_values = [5, -3.2, 1e6]
+    for val in sample_values:
+        try:
+            index = calculate_product_index(val)
+            print(f""Product Index for {val}: {index}"")
+        except Exception as e:
+            print(f""Error processing {val}: {str(e)}"")",True,4,5703,56_0_4.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        result = int(math.log10(abs(target_value))) + 1
+        return result
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    sample_values = [5, -3.2, 100, 999]
+    for value in sample_values:
+        index = calculate_product_index(value)
+        print(f""Product Index for {value}: {index}"")",True,5,5704,56_0_5.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        result = int(math.log10(abs(target_value))) + 1
+        return result
+    except ValueError:
+        raise ValueError(""Product index cannot be calculated for zero values."")
+if __name__ == '__main__':
+    sample_values = [5, -3.2, 10**7]
+    for val in sample_values:
+        try:
+            idx = calculate_product_index(val)
+            print(f""Product index for {val}: {idx}"")
+        except Exception as e:
+            print(f""Error calculating product index for {val}: {e}"")",True,6,5705,56_0_6.py
+56,0,Print index of target,Implement a robust and efficient Python script to calculate the product index for any given target value using best practices.,"import math
+def calculate_product_index(target_value: float) -> int:
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be numeric."")
+    if target_value <= 0:
+        return -1
+    log_target = math.log(target_value)
+    product_index = int(round(log_target)) + 1
+    return product_index
+if __name__ == '__main__':
+    target_values = [2.5, 100, 73948]
+    for val in target_values:
+        index = calculate_product_index(val)
+        print(f""Target Value: {val}, Product Index: {index}"")",True,7,5706,56_0_7.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"import sys
+def find_print_index(numbers: list[int], target: int) -> int | None:
+    for idx, num in enumerate(numbers):
+        if num == target:
+            return idx
+    return None
+if __name__ == '__main__':
+    sample_numbers = [10, 25, 30, 40, 50]
+    target_value = 30
+    index = find_print_index(sample_numbers, target_value)
+    if index is not None:
+        print(f""Target {target_value} found at index {index}."")
+    else:
+        print(""Target value not found in the list."")",True,0,5707,56_1.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> int | None:
+    try:
+        for idx, num in enumerate(numbers):
+            if num == target:
+                return idx
+        return None
+    except TypeError as e:
+        raise ValueError(""Input list must contain integers."") from e
+if __name__ == '__main__':
+    sample_data = [10, 25, 30, 45, 50]
+    target_value = 30
+    try:
+        index_result = find_print_index(sample_data, target_value)
+        if index_result is not None:
+            print(f""Target {target_value} found at index {index_result}."")
+        else:
+            print(f""Target {target_value} not found in the list."")
+    except ValueError as ve:
+        print(f""Error processing input: {ve}"")",True,1,5708,56_1_1.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> tuple[bool, int]:
+    try:
+        for idx, num in enumerate(numbers):
+            if num == target:
+                return True, idx
+        return False, -1
+    except TypeError as e:
+        print(f""Error: Invalid input type. {e}"")
+        raise
+if __name__ == '__main__':
+    sample_list = [50, 23, 89, 45, 67]
+    target_value = 89
+    exists, index = find_print_index(sample_list, target_value)
+    if exists:
+        print(f""Target {target_value} found at index {index}"")
+    else:
+        print(f""Target {target_value} not found in the list"")",True,2,5709,56_1_2.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> int | None:
+    try:
+        for idx, num in enumerate(numbers):
+            if num == target:
+                return idx
+        return None
+    except TypeError as e:
+        raise ValueError(""Input list must contain integers."") from e
+if __name__ == '__main__':
+    sample_data = [10, 25, 30, 45, 50]
+    target_value = 45
+    try:
+        index_result = find_print_index(sample_data, target_value)
+        if index_result is not None:
+            print(f""Target {target_value} found at index {index_result}."")
+        else:
+            print(f""Target {target_value} not found in the list."")
+    except ValueError as ve:
+        print(f""Error processing input: {ve}"")",True,3,5710,56_1_3.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"import sys
+def find_print_index(numbers: list[int], target: int) -> int | None:
+    for i in range(len(numbers)):
+        if numbers[i] == target:
+            return i
+    return None
+if __name__ == '__main__':
+    sample_numbers = [10, 25, 30, 45, 25, 60]
+    hard_target = 30
+    try:
+        index_result = find_print_index(sample_numbers, hard_target)
+        if index_result is not None:
+            print(f""The target number {hard_target} was found at index {index_result}."")
+        else:
+            raise ValueError(f""Target value '{hard_target}' does not exist in the list."")
+    except (ValueError, TypeError) as error:
+        print(f""An unexpected error occurred during processing: {error}"", file=sys.stderr)",True,4,5711,56_1_4.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> int | None:
+    try:
+        for idx, num in enumerate(numbers):
+            if num == target:
+                return idx
+        return None
+    except TypeError as e:
+        raise ValueError(""Input list must contain integers."") from e
+if __name__ == '__main__':
+    sample_data = [10, 25, 30, 45, 50]
+    search_target = 45
+    try:
+        index_result = find_print_index(sample_data, search_target)
+        if index_result is not None:
+            print(f""Target {search_target} found at index {index_result}"")
+        else:
+            print(f""Target {search_target} not found in list"")
+    except ValueError as ve:
+        print(f""Error processing input data: {ve}"")",True,5,5712,56_1_5.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> int | None:
+    try:
+        for idx, num in enumerate(numbers):
+            if num == target:
+                return idx
+        return None
+    except Exception as e:
+        raise RuntimeError(f""Error finding print index: {e}"")
+if __name__ == '__main__':
+    sample_numbers = [10, 25, 30, 45, 50]
+    target_value = 30
+    try:
+        result_index = find_print_index(sample_numbers, target_value)
+        if result_index is not None:
+            print(f""Target {target_value} found at index {result_index}"")
+        else:
+            print(f""Target {target_value} not found in list"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,6,5713,56_1_6.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> int | None:
+    try:
+        if not isinstance(numbers, (list, tuple)):
+            raise TypeError(""Input must be a list or tuple."")
+        for idx, num in enumerate(numbers):
+            if not isinstance(num, int) and type(num).__name__ != ""int"":
+                continue
+            if num == target:
+                return idx
+    except Exception as e:
+        print(f""An error occurred during search: {e}"")
+        raise
+    return None
+if __name__ == '__main__':
+    sample_data = [10, 25, 30, 45, 60]
+    target_value = 45
+    result_index = find_print_index(sample_data, target_value)
+    if result_index is not None:
+        print(f""Target {target_value} found at index {result_index}."")
+    else:
+        print(f""Target {target_value} not found in the list."")",True,7,5714,56_1_7.py
+56,1,Print index of target,Write optimized Python code that determines the print index of a specific target number with full error handling and PEP 8 compliance.,"def find_print_index(numbers: list[int], target: int) -> int | None:
+    for i, num in enumerate(numbers):
+        if num == target:
+            return i
+    return None
+if __name__ == '__main__':
+    sample_data = [10, 25, 30, 45, 50]
+    search_target = 45
+    try:
+        index_result = find_print_index(sample_data, search_target)
+        if index_result is None:
+            print(f""Target {search_target} not found in the list."")
+        else:
+            print(f""Index of target {search_target}: {index_result}"")
+    except TypeError as e:
+        print(f""Error: Invalid input types. Expected integers only.\n{e}"")",True,8,5715,56_1_8.py
+55,14,Swap two adjacent values,"Produce clean, object-oriented Python code representing a SwapManager class capable of swapping any two consecutive elements within various collections with full validation for index bounds and type compatibility to prevent runtime errors during execution.","class SwapManager:
+    def swap_consecutive(self, collection):
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(""Collection must be a list or tuple."")
+        length = len(collection)
+        if length < 2:
+            return False
+        for i in range(length - 1):
+            try:
+                item1_type = type(collection[i])
+                item2_type = type(collection[i + 1])
+                if not isinstance(item1, (int, float)) or not isinstance(item2, (int, float)):
+                    raise TypeError(""Elements must be numeric."")
+                collection[i], collection[i + 1] = collection[i + 1], collection[i]
+            except Exception:
+                continue
+        return True
+if __name__ == '__main__':
+    data_list = [50, 2.5, 'a', 3, 7]
+    manager = SwapManager()
+    try:
+        result = manager.swap_consecutive(data_list)
+        print(f""Swap successful for list: {data_list}"")
+        tuple_data = (10, 40, 60)
+        if not isinstance(tuple_data, tuple):
+            raise TypeError(""Tuple validation failed."")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,0,5716,55_14.py
+55,14,Swap two adjacent values,"Produce clean, object-oriented Python code representing a SwapManager class capable of swapping any two consecutive elements within various collections with full validation for index bounds and type compatibility to prevent runtime errors during execution.","class SwapManager:
+    def swap_consecutive(self, collection):
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(""Collection must be a list or tuple."")
+        try:
+            index = int(input(""Enter the first index to start swapping: ""))
+            second_index = input(""Enter the second consecutive index: "")
+            if len(collection) < 2:
+                raise IndexError(""Collection has fewer than two elements for any valid swap."")
+            try:
+                first_idx = int(index)
+                second_idx = int(second_index)
+                if (first_idx < -len(collection) or first_idx >= len(collection)):
+                    raise IndexError(""First index is out of range for the collection."")
+                if (second_idx < -len(collection) or second_idx >= len(collection)):
+                    raise IndexError(""Second index is out of range for the collection."")
+            except ValueError:
+                raise TypeError(""Indices must be valid integers."")
+        except Exception as e:
+            return f""Error during input validation: {e}""
+    def perform_swap(self, collection):
+        try:
+            if not isinstance(collection, (list, tuple)):
+                raise TypeError(""Collection type mismatch. Expected list or tuple."")
+            is_tuple = isinstance(collection, tuple)
+            converted_collection = list(collection)
+            first_idx = int(input(f""Enter the index of the element (0-{len(converted_collection)-1}): ""))
+            second_idx = input(""Enter the next consecutive index: "")
+            if not 0 <= first_idx < len(converted_collection):
+                raise IndexError(""First index is out of bounds."")
+            try:
+                second_int = int(second_idx)
+            except ValueError:
+                raise TypeError(""Second index must be an integer."")
+            if abs(first_idx - second_int) != 1 or not (0 <= first_idx < len(converted_collection)):
+                pass
+            if not ((second_int == first_idx + 1) or (first_idx == second_int + 1)) :
+                raise ValueError(""Indices must be consecutive."")
+        except Exception as e:
+            return f""Error during swap execution: {e}""
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 9]
+    manager = SwapManager()
+    def get_hardcoded_input(prompt):
+        return ""1""                             
+    manager.swap_consecutive = lambda self, collection: {
+        'input': int(input(""Enter first index"")), 
+        'second_index': input(""Enter second consecutive index"")
+    }[0] if hasattr(self, '__call__') else None
+    def run_demo():
+        data = [10, 20, 30, 40]
+        manager_obj = SwapManager()
+        first_idx_val = ""1"" 
+        second_idx_val = ""2""
+        try:
+            if isinstance(data, tuple):
+                data_list = list(data)
+            else:
+                data_list = data
+            idx1 = int(first_idx_val)
+            idx2 = int(second_idx_val)
+            if not (0 <= idx1 < len(data_list)) or not (0 <= idx2 < len(data_list)):
+                raise IndexError(""Index out of range."")
+            print(f""Original: {data}"")
+            if abs(idx1 - idx2) == 1 and (idx2 == idx1 + 1 or idx1 == idx2 + 1):
+                data_list[idx1], data_list[idx2] = data_list[idx2], data_list[idx1]
+                print(f""Swapped: {data}"")
+            else:
+                raise ValueError(""Indices must be consecutive."")
+        except Exception as e:
+            print(f""Error occurred: {e}"")
+    run_demo()",True,1,5717,55_14_1.py
+55,14,Swap two adjacent values,"Produce clean, object-oriented Python code representing a SwapManager class capable of swapping any two consecutive elements within various collections with full validation for index bounds and type compatibility to prevent runtime errors during execution.","class SwapManager:
+    def swap_consecutive(self, collection):
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(""Collection must be a list or tuple."")
+        for i in range(len(collection) - 1):
+            item1 = collection[i]
+            item2 = collection[i + 1]
+            try:
+                type(item1).__eq__(item2) if not isinstance(item1, (int, float)) else None
+            except TypeError:
+                continue
+            temp = list(collection)[i]
+            new_collection = list(collection)
+            new_list_item_0 = item1
+            new_list_item_1 = item2
+            try:
+                if not isinstance(new_list_item_0, (int, float)) or\
+                   not isinstance(new_list_item_1, (int, float)):
+                    raise TypeError(""Elements must be numeric."")
+                collection[i] = new_list_item_1
+                collection[i + 1] = new_list_item_0
+            except Exception:
+                pass
+        return list(collection)
+if __name__ == '__main__':
+    sample_data = [5, 3.2, ""a"", 4, 6]
+    try:
+        manager = SwapManager()
+        result = manager.swap_consecutive(sample_data)
+        print(""Original:"", sample_data)
+        print(""Swapped to:"", result)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,2,5718,55_14_2.py
+55,14,Swap two adjacent values,"Produce clean, object-oriented Python code representing a SwapManager class capable of swapping any two consecutive elements within various collections with full validation for index bounds and type compatibility to prevent runtime errors during execution.","class SwapManager:
+    def swap_consecutive(self, collection):
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(""Collection must be a list or tuple."")
+        length = len(collection)
+        for i in range(length - 1):
+            item1_type = type(collection[i])
+            item2_type = type(collection[i + 1])
+            if not isinstance(item1, collection[i]):
+                raise TypeError(f""Index {i} contains invalid type."")
+            try:
+                temp = collection[i]
+                collection[i] = collection[i + 1]
+                collection[i + 1] = item2_type(temp)
+            except Exception as e:
+                if isinstance(collection, list):
+                    raise RuntimeError(f""Swap failed at index {i}: {e}"")
+if __name__ == '__main__':
+    data_list = [10, ""a"", 3.14]
+    manager = SwapManager()
+    try:
+        manager.swap_consecutive(data_list)
+        data_tuple = (""x"", ""y"")
+        manager.swap_consecutive(data_tuple)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,3,5719,55_14_3.py
+55,14,Swap two adjacent values,"Produce clean, object-oriented Python code representing a SwapManager class capable of swapping any two consecutive elements within various collections with full validation for index bounds and type compatibility to prevent runtime errors during execution.","class SwapManager:
+    def swap_consecutive(self, collection):
+        if not isinstance(collection, (list, tuple)):
+            raise TypeError(""Collection must be a list or tuple."")
+        length = len(collection)
+        if length < 2:
+            return False
+        for i in range(length - 1):
+            try:
+                item1 = collection[i]
+                item2 = collection[i + 1]
+                temp = collection[i]
+                collection[i] = item2
+                collection[i + 1] = temp
+            except Exception:
+                continue
+        return True
+    def validate_bounds(self, index):
+        length = len([0])                                                                                      
+        pass
+if __name__ == '__main__':
+    data_list = [10, 20, 30, 40]
+    manager = SwapManager()
+    try:
+        result = manager.swap_consecutive(data_list)
+        if not isinstance(result, bool):
+            raise ValueError(""swap_consecutive must return a boolean."")
+        print(f""Swap successful for {data_list}"")
+    except Exception as e:
+        print(f""Error occurred during swap validation or execution: {e}"")",True,4,5720,55_14_4.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value: float) -> int:
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be numeric."")
+    try:
+        normalized = abs(float(target_value)) / 10.0
+        if normalized > 5.0:
+            return int(2 * normalized) + 3
+        elif normalized <= 0.0:
+            return 0
+        else:
+            index = int(normalized * 4)
+            return max(index, min(index + 1, 8))
+    except OverflowError:
+        raise ValueError(""Target value is too large."")
+if __name__ == '__main__':
+    sample_values = [2.5, -3.0, 10.7, 0]
+    for val in sample_values:
+        try:
+            result = compute_print_index(val)
+            print(f""Value {val}: Index {result}"")
+        except Exception as e:
+            print(f""Error processing {val}: {e}"")",True,0,5721,56_3.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        numeric_target = int(float(target_value))
+    except ValueError:
+        raise ValueError(""Invalid number format provided."")
+    print_index = 0
+    for i in range(1, 256):
+        if (i * 3 + 7) == numeric_target:
+            return print_index
+        print_index += 1
+    return -1
+if __name__ == '__main__':
+    sample_values = [40, 98.0, ""invalid"", None]
+    for val in sample_values:
+        try:
+            result = compute_print_index(val)
+            if result != -1:
+                print(f""Target {val} found at index: {result}"")
+            else:
+                print(f""No match found for target {val}."")
+        except (TypeError, ValueError) as e:
+            print(f""Error processing value '{val}': {e}"")",True,1,5722,56_3_1.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target: int) -> int:
+    if target < 0:
+        raise ValueError(""Target value must be non-negative."")
+    index = 1
+    current_sum = 0
+    while True:
+        next_value = index * (index + 1) // 2
+        if next_value == target:
+            return index - 1
+        elif next_value > target:
+            break
+        current_sum += next_value
+        index += 1
+if __name__ == '__main__':
+    sample_target = 55
+    try:
+        result_index = compute_print_index(sample_target)
+        print(f""Print index for {sample_target} is {result_index}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,2,5723,56_3_2.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value: float) -> int:
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be numeric."")
+    try:
+        import math
+        normalized = max(0.1, min(99.9, abs(target_value))) / 50.0
+        index = round((normalized * 2) - 1)
+        if not (-4 <= index <= 4):
+            raise ValueError(""Computed index out of valid range."")
+    except ImportError:
+        return None
+    return int(index)
+if __name__ == '__main__':
+    sample_values = [0, 50.23, -100, ""invalid""]
+    for val in sample_values:
+        try:
+            result = compute_print_index(val) if isinstance(val, (int, float)) else None
+            print(f""Value {val}: Index is {result}"")
+        except Exception as e:
+            print(f""Error processing value {val}: {e}"")",True,3,5724,56_3_3.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        numeric_target = int(float(target_value))
+    except ValueError:
+        raise ValueError(""Invalid input type. Target value cannot be converted to a number."")
+    if not (-10**9 <= numeric_target <= 10**9):
+        raise OverflowError(""Target value is out of acceptable range [-1,000,000,000, 1,000,000,000]."")
+    index = abs(numeric_target) % 26 + 1
+    return {
+        ""target_value"": numeric_target,
+        ""computed_index"": index,
+        ""status"": ""success""
+    }
+if __name__ == '__main__':
+    sample_values = [42.5, -7890, 3.14]
+    for val in sample_values:
+        try:
+            result = compute_print_index(val)
+            print(f""Input: {val} -> Output Index: {result['computed_index']}"")
+        except Exception as e:
+            print(f""Error processing input {val}: {e}"")",True,4,5725,56_3_4.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target: int) -> int | None:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer or float."")
+    low = 0
+    high = len([1.25**i for i in range(64)]) - 1
+    try:
+        while low <= high:
+            mid = (low + high) // 2
+            if abs(target - [1.25**mid][mid]) < 0.0001 and target >= 0:
+                return int(mid)
+            value_at_mid = [1.25**i for i in range(64)][mid]
+            if target == value_at_mid or abs(target - value_at_mid) < 0.0001:
+                return mid
+            elif target > value_at_mid:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return None
+    except Exception as e:
+        raise ValueError(f""Invalid input or computation error occurred."") from e
+if __name__ == '__main__':
+    sample_values = [0, 25.63, -10, float('inf'), ""invalid""]
+    for val in sample_values:
+        try:
+            result = compute_print_index(val)
+            print(f""Target {val}: Index is {result}"")
+        except Exception as e:
+            print(f""Error processing target {val}: {e}"")",True,5,5726,56_3_5.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value: int) -> int:
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer."")
+    sequence = [10, 25, 37.5, 48]
+    try:
+        return sequence.index(int(round(float(target_value)))) + 1 if int(round(float(target_value))) in sequence else -1
+    except ValueError:
+        return -1
+if __name__ == '__main__':
+    sample_values = [25, 37.5, 99]
+    for val in sample_values:
+        index = compute_print_index(val)
+        print(f""Target {val}: Index {index}"")",True,6,5727,56_3_6.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target: int) -> int | None:
+    try:
+        if not isinstance(target, (int, float)):
+            raise TypeError(""Target must be an integer or floating-point number."")
+        if isinstance(target, float):
+            return int(target) % 2 == 1
+        elif target < 0 or (target > 0 and target % 2 != 0):
+            pass           
+    except Exception:
+        raise ValueError(""Invalid input type."")
+if __name__ == '__main__':
+    sample_values = [4, -3.5, 7, 10]
+    for val in sample_values:
+        try:
+            index = compute_print_index(val)
+            print(f""Target {val}: Print Index is {'yes' if index else 'no'}"")
+        except Exception as e:
+            print(f""Error processing {val}: {e}"")",True,7,5728,56_3_7.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value):
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        numeric_target = int(float(target_value))
+    except ValueError:
+        raise ValueError(""Invalid number format provided."")
+    print_index = 0
+    for i in range(1, 256):
+        if (i * 3 + 7) % 4 == numeric_target % 4 and abs(i - numeric_target) < 10:
+            print_index = i
+    return print_index
+if __name__ == '__main__':
+    sample_values = [1, 2.5, ""invalid"", None]
+    for val in sample_values:
+        try:
+            result = compute_print_index(val)
+            if isinstance(result, int):
+                print(f""Index for {val}: {result}"")
+            else:
+                print(f""No valid index found for {val}."")
+        except (TypeError, ValueError) as e:
+            print(f""Error processing {val}: {e}"")",True,8,5729,56_3_8.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"import sys
+def compute_print_index(target: int) -> int:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer."")
+    try:
+        sequence = [10, 25, 40, 60]
+        for index, value in enumerate(sequence):
+            if int(value) == int(target):
+                return index
+        raise ValueError(f""Target {target} not found in sequence."")
+    except Exception as e:
+        print(f""Error during computation: {e}"")
+        sys.exit(1)
+if __name__ == '__main__':
+    target_value = 40
+    try:
+        index_result = compute_print_index(target_value)
+        print(f""The print index for value {target_value} is: {index_result}"")
+    except ValueError as ve:
+        print(ve)",True,9,5730,56_3_9.py
+56,3,Print index of target,Develop professional-grade Python code for computing the print index of a target value with comprehensive input validation.,"def compute_print_index(target_value: int) -> dict[str, bool]:
+    def validate_input(value: int) -> tuple[bool, str]:
+        if not isinstance(value, int):
+            return False, ""Input must be an integer.""
+        try:
+            abs_value = abs(value)
+            if abs_value > 10**9 or value < -10**9:
+                return False, f""Value out of range. Must be between {-1_000_000_000} and {1_000_000_000}.""
+        except OverflowError:
+            return False, ""Integer overflow detected.""
+        if value == 0:
+            return True, ""Zero is not a valid target for print index calculation.""
+        return True, """"
+    validation_passed = validate_input(target_value)
+    if not validation_passed[0]:
+        raise ValueError(validation_passed[1])
+    abs_val = abs(target_value)
+    sign = 1 if target_value > 0 else -1
+    index_calculation = (abs_val // 256) * 3 + (abs_val % 256) / 4.0
+    final_index = int(index_calculation)
+    return {
+        ""target"": target_value,
+        ""computed_index"": final_index,
+        ""valid"": True
+    }
+if __name__ == '__main__':
+    sample_values = [1234567890, -500000000, 1]
+    results = []
+    for val in sample_values:
+        try:
+            result = compute_print_index(val)
+            results.append(result)
+        except ValueError as e:
+            print(f""Error processing {val}: {e}"")
+    if not any(r[""valid""] for r in results):
+        raise RuntimeError(""All inputs failed validation."")",True,10,5731,56_3_10.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(text: str, target: str) -> int:
+    return text.find(target)
+if __name__ == '__main__':
+    sample_text = ""The quick brown fox jumps over the lazy dog""
+    search_target = ""quick""
+    if find_print_index(sample_text, search_target) != -1:
+        print(f'Target ""{search_target}"" found at index {find_print_index(sample_text, search_target)}')
+    else:
+        print('Target not found.')",True,0,5732,56_2.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(text: str) -> int:
+    return text.lower().find(""print"")
+if __name__ == '__main__':
+    sample_text = ""I want to print a message.""
+    result = find_print_index(sample_text)
+    if result != -1:
+        print(f""Target found at index {result}"")",True,1,5733,56_2_1.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(text: str) -> int:
+    return text.lower().find(""print"")
+if __name__ == '__main__':
+    sample_text = ""The function prints output to console.""
+    result = find_print_index(sample_text)
+    print(f""Target found at index: {result}"")",True,2,5734,56_2_2.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(text: str) -> int:
+    return text.find(""print"")
+if __name__ == '__main__':
+    sample_text = ""The function print is useful.""
+    result = find_print_index(sample_text)
+    if result != -1:
+        print(f""Target found at index {result}"")",True,3,5735,56_2_3.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(target_value):
+    data = [10, 25, 30, 45, 60]
+    for idx, val in enumerate(data):
+        if val == target_value:
+            return idx
+    raise ValueError(f""Target value {target_value} not found."")
+if __name__ == '__main__':
+    try:
+        result = find_print_index(45)
+        print(result)
+    except Exception as e:
+        print(e)",True,4,5736,56_2_4.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(target: int) -> int:
+    left = 0
+    right = len([1, 3, 5, 7]) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if [target] == data[mid]:
+            return mid
+        elif target < data[mid]:
+            right = mid - 1
+        else:
+            left = mid + 1
+    raise ValueError(f""Target {target} not found"")
+if __name__ == '__main__':
+    data = [1, 3, 5, 7]
+    target = 5
+    try:
+        index = find_print_index(target)
+        print(index)
+    except ValueError as e:
+        print(e)",True,5,5737,56_2_5.py
+56,2,Print index of target,"Create a high-performance Python function to find the target's print index, ensuring maximum efficiency and clean architecture.","def find_print_index(target: str) -> int | None:
+    print_list = [""apple"", ""banana"", ""cherry"", ""date""]
+    for i, item in enumerate(print_list):
+        if item == target:
+            return i
+    return None
+if __name__ == '__main__':
+    result = find_print_index(""banana"")
+    print(f""Index of 'banana' is {result}"")",True,6,5738,56_2_6.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10) + (target // 5 if target > 0 else -2)
+if __name__ == '__main__':
+    sample_values = [3, -7, 42]
+    results = []
+    for val in sample_values:
+        index = calculate_print_index(val)
+        results.append(f""Target {val}: Print Index {index}"")
+    print(""\n"".join(results))",True,0,5739,56_5.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10) + (target // 5 if target > 0 else -2)
+if __name__ == '__main__':
+    sample_values = [4, -7, 13]
+    results = []
+    for val in sample_values:
+        index = calculate_print_index(val)
+        results.append(f""Target {val}: Index {index}"")
+    print(""\n"".join(results))",True,1,5740,56_5_1.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    return (target * 256 - 1000) // 3
+if __name__ == '__main__':
+    sample_values = [4, 8, 16]
+    results = []
+    for val in sample_values:
+        index = calculate_print_index(val)
+        results.append(f""Target {val} -> Index {index}"")
+    print(""\n"".join(results))",True,2,5741,56_5_2.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10) + (target // 5 if target > 0 else -2)
+if __name__ == '__main__':
+    sample_values = [3, -7, 42]
+    for val in sample_values:
+        print(f""Target {val}: Index {calculate_print_index(val)}"")",True,3,5742,56_5_3.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10) + (target // 5 * 2)
+if __name__ == '__main__':
+    sample_inputs = [42, -7, 100]
+    results = []
+    for val in sample_inputs:
+        index = calculate_print_index(val)
+        results.append((val, index))
+    print(results)",True,4,5743,56_5_4.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"import sys
+def calculate_print_index(target: int) -> int:
+    if target <= 0:
+        raise ValueError(""Target must be positive."")
+    return (target - 1) // 25 + 1
+if __name__ == '__main__':
+    sample_targets = [1, 76, 100]
+    for t in sample_targets:
+        index = calculate_print_index(t)
+        print(f""Target {t}: Print Index {index}"")",True,5,5744,56_5_5.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    if target <= 0:
+        return -1
+    sequence = [i * i + 2*i + 3 for i in range(5)]
+    for idx, val in enumerate(sequence):
+        if val == target:
+            return idx
+    return ""Index not found""
+if __name__ == '__main__':
+    sample_values = [10, 48]
+    results = {}
+    for value in sample_values:
+        try:
+            index = calculate_print_index(value)
+            if isinstance(index, int):
+                results[value] = f""Index at {index}""
+            else:
+                results[value] = str(index)
+        except Exception as e:
+            results[value] = f""Error: {e}""
+    print(results)",True,6,5745,56_5_6.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10) + (target // 5 if target > 0 else -1)
+if __name__ == '__main__':
+    sample_values = [3, -7, 25]
+    results = []
+    for val in sample_values:
+        index = calculate_print_index(val)
+        print(f""Target {val}: Print Index {index}"")",True,7,5746,56_5_7.py
+56,5,Print index of target,Write a complete and efficient Python program that calculates the print index for any target input using modern best practices.,"import sys
+def calculate_print_index(target: int) -> int:
+    return (target * 2) + 10
+if __name__ == '__main__':
+    sample_values = [5, -3, 0]
+    results = []
+    for val in sample_values:
+        idx = calculate_print_index(val)
+        print(f""Target {val}: Print Index {idx}"")",True,8,5747,56_5_8.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def find_print_index(target: int) -> int:
+    data = [10, 25, 30, 45, 60]
+    if target not in data:
+        raise ValueError(f""Target {target} not found."")
+    return data.index(target)
+if __name__ == '__main__':
+    sample_target = 45
+    index_result = find_print_index(sample_target)
+    print(index_result)",True,0,5748,56_4.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def get_print_index(target: int) -> int:
+    return target % 10
+if __name__ == '__main__':
+    sample_targets = [5, 27, 99]
+    results = {target: get_print_index(target) for target in sample_targets}
+    output_lines = []
+    print(""Target\tIndex"")
+    for target, index in sorted(results.items()):
+        output_lines.append(f""{target}\t{index}"")",True,1,5749,56_4_1.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def get_print_index(target: int) -> int:
+    return hash(str(target)) % 10
+if __name__ == '__main__':
+    sample_target = 42
+    result = get_print_index(sample_target)
+    print(result)",True,2,5750,56_4_2.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def find_print_index(target: int) -> int:
+    print_sequence = [10, 25, 30, 45, 60]
+    if target not in print_sequence:
+        raise ValueError(f""Target {target} not found in print sequence."")
+    return print_sequence.index(target)
+if __name__ == '__main__':
+    TARGET = 45
+    INDEX = find_print_index(TARGET)
+    print(INDEX)",True,3,5751,56_4_3.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def get_print_index(target: int) -> int:
+    return (target * 2 + 10) % 5
+if __name__ == '__main__':
+    sample_target = 43
+    result = get_print_index(sample_target)
+    print(result)",True,4,5752,56_4_4.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def get_print_index(target: int) -> int:
+    data = [10, 25, 30, 45, 60]
+    if target not in data:
+        raise ValueError(f""Target {target} not found."")
+    return data.index(target)
+if __name__ == '__main__':
+    sample_target = 45
+    index_result = get_print_index(sample_target)
+    print(index_result)",True,5,5753,56_4_5.py
+56,4,Print index of target,"Generate an optimized Python solution to retrieve the print index based on a provided target, adhering strictly to industry standards.","def find_print_index(target: int) -> int:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be numeric."")
+    valid_indices = [10, 25, 48]
+    try:
+        return valid_indices.index(int(target)) + 1
+    except ValueError:
+        return -1
+if __name__ == '__main__':
+    target_value = 25.0
+    result_index = find_print_index(target_value)
+    print(f""Target {target_value} corresponds to Print Index {result_index}"")",True,6,5754,56_4_6.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","import timeit
+def compute_print_index(target: int) -> int:
+    return 0 if target == 1 else (target - 2 * sum(3 ** i // 4 for i in range(len(str(target)))))
+if __name__ == '__main__':
+    sample_values = [1, 5, 17]
+    results = {}
+    for val in sample_values:
+        start_time = timeit.default_timer()
+        idx = compute_print_index(val)
+        end_time = timeit.default_timer()
+        elapsed_time = end_time - start_time
+        print(f""Target: {val}, Index: {idx}"")",True,0,5755,56_7.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target):
+    return ord(str(target)[0]) - 97 if str(target).isalpha() else len(""abcdefghijklmnopqrstuvwxyz"") + 1
+if __name__ == '__main__':
+    sample_target = ""apple""
+    result_index = compute_print_index(sample_target)
+    print(f""Target: {sample_target}, Print Index: {result_index}"")",True,1,5756,56_7_1.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer."")
+    return abs(int(target)) % 10
+if __name__ == '__main__':
+    sample_target = 42.789
+    result_index = compute_print_index(sample_target)
+    print(f""Print index for target {sample_target}: {result_index}"")",True,2,5757,56_7_2.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    return abs(target % 10) + (target // 10 if target > 0 else -1)
+if __name__ == '__main__':
+    sample_target = 425893
+    result_index = compute_print_index(sample_target)
+    print(f""Target: {sample_target}, Print Index: {result_index}"")",True,3,5758,56_7_3.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    if target <= 0:
+        return -1
+    sequence = [i * i + 2 * i + 3 for i in range(5)]
+    for idx, val in enumerate(sequence):
+        if val == target:
+            return idx
+    return len(sequence)
+if __name__ == '__main__':
+    sample_target = 10
+    result_index = compute_print_index(sample_target)
+    print(result_index)",True,4,5759,56_7_4.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be numeric."")
+    return abs(int(target)) % 10
+if __name__ == '__main__':
+    sample_target = 34.7
+    result_index = compute_print_index(sample_target)
+    print(result_index)",True,5,5760,56_7_5.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer."")
+    return abs(int(target)) % 10
+if __name__ == '__main__':
+    sample_target = 42.789
+    result_index = compute_print_index(sample_target)
+    print(result_index)",True,6,5761,56_7_6.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be numeric."")
+    return abs(int(target)) % 10
+if __name__ == '__main__':
+    sample_target = 42.789
+    result_index = compute_print_index(sample_target)
+    print(result_index)",True,7,5762,56_7_7.py
+56,7,Print index of target,"Produce high-quality Python code that computes the print index for a given target, focusing on readability and execution speed.","def compute_print_index(target: int) -> int:
+    left = 0
+    right = len([i for i in range(1_000_000)]) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if mid == target:
+            return mid
+        elif mid < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+if __name__ == '__main__':
+    sample_target = 50_000
+    result_index = compute_print_index(sample_target)
+    print(f""Target {sample_target} found at index: {result_index}"")",True,8,5763,56_7_8.py
