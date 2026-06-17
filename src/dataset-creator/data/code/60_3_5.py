@@ -1,0 +1,6 @@
+def is_leap_year(year: int) -> bool:
+    return (year % 400 == 0 and year % 100 != 0) or (year % 4 == 0 and year % 100 != 0)
+if __name__ == '__main__':
+    sample_years = [2000, 2001, 2023, 2024]
+    for y in sample_years:
+        print(f"{y}: {is_leap_year(y)}")
