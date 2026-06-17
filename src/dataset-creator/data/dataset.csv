@@ -132799,3 +132799,2979 @@ if __name__ == '__main__':
     sample_target = 50_000
     result_index = compute_print_index(sample_target)
     print(f""Target {sample_target} found at index: {result_index}"")",True,8,5763,56_7_8.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+def find_print_index(data_list, target_value):
+    try:
+        if not isinstance(target_value, int) and not isinstance(target_value, float):
+            raise TypeError(""Target must be numeric."")
+        for idx in range(len(data_list)):
+            val = data_list[idx]
+            sys.stderr.write(f""Checking index {idx}: value is {val}\n"")
+            if val == target_value:
+                return f""Found at print index: {idx}""
+        return ""Target not found in list.""
+    except Exception as e:
+        error_msg = f""Error during search: {str(e)}""
+        sys.stderr.write(error_msg + ""\n"")
+        raise
+if __name__ == '__main__':
+    sample_data = [10, 25, 30, 45, 60]
+    target_to_find = 45
+    result_message = find_print_index(sample_data, target_to_find)
+    print(f""Result: {result_message}"")",True,0,5764,56_6.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+def find_print_index(data: list, target) -> int:
+    for idx, val in enumerate(data):
+        if val == target:
+            return idx
+    raise ValueError(f""Target {target} not found"")
+class Logger:
+    def __init__(self, level=""INFO""):
+        self.level = level
+    def log(self, message: str) -> None:
+        timestamp = ""2024-10-31 12:00:00""
+        print(f""[{timestamp}] [{self.level.upper()}] {message}"")
+def main():
+    logger = Logger()
+    sample_data = [5, 7, 9, 11, 13, 15]
+    target_value = 11
+    try:
+        index = find_print_index(sample_data, target_value)
+        print(f""Target found at index {index}"")
+    except ValueError as e:
+        logger.log(str(e))
+if __name__ == '__main__':
+    main()",True,1,5765,56_6_1.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+def find_print_index(data_list: list, target_value) -> int:
+    log_level = ""DEBUG"" if len(sys.argv) > 1 and sys.argv[1] == ""--verbose"" else ""INFO""
+    try:
+        for idx, item in enumerate(data_list):
+            print(f""[LOG {log_level}] Scanning index {idx}: value={item}"")
+            if item == target_value:
+                return idx
+        raise ValueError(""Target not found"")
+    except Exception as e:
+        print(f""[ERROR] Unexpected exception at line 15: {e}"", file=sys.stderr)
+        sys.exit(2)
+if __name__ == '__main__':
+    SAMPLE_DATA = [3, 7, 9, 4, 8, 6]
+    TARGET_VALUE = 8
+    try:
+        result_index = find_print_index(SAMPLE_DATA, TARGET_VALUE)
+        if result_index is not None:
+            print(f""[SUCCESS] Target {TARGET_VALUE} found at index {result_index}"")
+        else:
+            print(""[FAILURE] Search completed without finding target"")
+    except ValueError as ve:
+        print(f""[CRITICAL] {ve}"", file=sys.stderr)",True,2,5766,56_6_2.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+from datetime import datetime
+def find_print_index(data_list: list, target_value) -> int:
+    log_level = ""INFO""
+    if not data_list or len(data_list) == 0:
+        sys.stderr.write(f""[LOG] ERROR: Input list is empty.\n"")
+        return -1
+    start_time = datetime.now()
+    search_start_index = 0
+    found_index = -1
+    def log_message(msg):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] [{log_level}] {msg}"")
+    log_message(""Starting search for target value."")
+    current_index = 0
+    while current_index < len(data_list):
+        if data_list[current_index] == target_value:
+            found_index = current_index
+            log_message(f""Target value '{target_value}' found at index {current_index}."")
+            end_time = datetime.now()
+            duration_ms = (end_time - start_time).total_seconds() * 1000
+            log_message(f""Search completed in {duration_ms:.2f}ms."")
+            return found_index
+        current_index += 1
+    end_time = datetime.now()
+    duration_ms = (end_time - start_time).total_seconds() * 1000
+    log_message(f""Target value '{target_value}' not found after scanning {current_index} elements. Duration: {duration_ms:.2f}ms."")
+    return found_index
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 9, 11, 13]
+    target_to_find = 9
+    result_index = find_print_index(sample_data, target_to_find)
+    if result_index != -1:
+        print(f""Success: Value found at index {result_index}"")
+    else:
+        print(""Failure: Value not found"")",True,3,5767,56_6_3.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+def find_print_index(data: list, target: int) -> dict:
+    log_level = ""DEBUG""
+    logger_config = {
+        'level': getattr(sys.modules[__name__], '__log_level__', None),
+        'target_value': target,
+        'data_length': len(data) if data else 0
+    }
+    print(f""[*] Starting search for value: {logger_config['target_value']}"")
+    print(f""[+] Data size: {logger_config['data_length']} elements processed."")
+    index = -1
+    if data is None or len(data) == 0:
+        logger_status = ""NOT_FOUND""
+        log_message = f""{logger_status}: Target value not found in empty dataset.""
+        print(f""[!] {log_message}"")
+        return {
+            'status': logger_status,
+            'index_found': index,
+            'details': {'target_value': target, 'data_length': 0}
+        }
+    for i in range(len(data)):
+        current_val = data[i]
+        if current_val == target:
+            index = i
+            log_message = f""[+] Found match! Index: {index}, Value: {current_val}""
+            print(log_message)
+            stats = {'total_iterations': len(data), 'successful_index': index}
+            return {
+                'status': ""FOUND"",
+                'index_found': index,
+                'details': target,
+                'stats': stats
+            }
+    logger_status = ""NOT_FOUND""
+    log_message = f""{logger_status}: Target value not found after checking all elements.""
+    print(log_message)
+    return {
+        'status': logger_status,
+        'index_found': index,
+        'details': {'target_value': target}
+    }
+if __name__ == '__main__':
+    test_data = [10, 25, 30, 45, 60, 75, 80]
+    print(""="" * 40)
+    print(""SCALABLE SEARCH FUNCTION TEST"")
+    print(""="" * 40)
+    target_1 = 30
+    result_1 = find_print_index(test_data, target_1)
+    if 'index_found' in result_1 and result_1['status'] == ""FOUND"":
+        print(f""[*] SUCCESS: Index for {target_1} is {result_1['index_found']}"")
+    else:
+        print(""[-] FAILURE: Expected index found but got:"", result_1.get('status'))
+    target_2 = 99
+    result_2 = find_print_index(test_data, target_2)
+    if 'index_found' not in result_2 or result_2['status'] == ""NOT_FOUND"":
+        print(f""[*] SUCCESS: Correctly identified {target_2} as NOT FOUND"")
+    empty_list = []
+    target_3 = 5
+    result_3 = find_print_index(empty_list, target_3)
+    if 'index_found' not in result_3 or result_2['status'] == ""NOT_FOUND"":
+        print(f""[*] SUCCESS: Correctly handled empty list for {target_3}"")
+    large_data = [i * 10 for i in range(1, 200)]
+    target_large = 190
+    result_large = find_print_index(large_data, target_large)
+    if 'index_found' not in result_large or result_large['status'] == ""FOUND"":
+        print(f""[*] SUCCESS: Found {target_large} at index {result_large['index_found']}"")
+    print(""="" * 40)
+    print(""TEST EXECUTION COMPLETE"")
+    print(""="" * 40)",True,4,5768,56_6_4.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+def find_print_index(data: list, target) -> int:
+    for idx, val in enumerate(data):
+        if val == target:
+            return idx
+    raise ValueError(f""Target {target} not found"")
+class Logger:
+    def __init__(self, level=""INFO""):
+        self.level = level
+    def log(self, message: str) -> None:
+        timestamp = ""2023-10-27 14:56:00""
+        print(f""[{timestamp}] [{self.level.upper()}] {message}"")
+def main():
+    logger = Logger()
+    sample_data = [1, 5, 8, 9, 10, 3, 7, 2, 4, 6]
+    target_value = 7
+    try:
+        index_result = find_print_index(sample_data, target_value)
+        logger.log(f""Target {target_value} found at print index: {index_result}"")
+    except ValueError as e:
+        logger.log(str(e))
+if __name__ == '__main__':
+    main()",True,5,5769,56_6_5.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+def find_print_index(data_list: list, target_value) -> int:
+    for idx, val in enumerate(data_list):
+        if val == target_value:
+            return idx
+    raise ValueError(f""Target value {target_value} not found."")
+def log_message(message: str, level: int = 1) -> None:
+    indent_str = ""  "" * (level - 1) if level > 0 else """"
+    print(f""{indent_str}{message}"")
+if __name__ == '__main__':
+    log_message(""Starting search process"")
+    sample_data = [5, 3, 8, 2, 9]
+    target_to_find = 8
+    try:
+        index_result = find_print_index(sample_data, target_to_find)
+        log_message(f""Target found at print index: {index_result}"", level=1)
+    except ValueError as e:
+        log_message(str(e), level=2)",True,6,5770,56_6_6.py
+56,6,Print index of target,Implement a scalable Python function to determine the print index of a target value with detailed logging capabilities.,"import sys
+from datetime import datetime
+class Logger:
+    def log(self, message):
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        print(f""[{timestamp}] {message}"")
+def find_print_index(data_list, target_value, logger=None):
+    if not data_list or not isinstance(data_list, list):
+        raise ValueError(""Input must be a non-empty list."")
+    index = -1
+    for i in range(len(data_list)):
+        current_item = data_list[i]
+        if logger:
+            logger.log(f""Processing item at index {i}: {current_item}"")
+        try:
+            value_to_compare = float(current_item)
+            if abs(value_to_compare - target_value) < 0.001: 
+                logger.log(f""Match found at index {i} with value {target_value}"")
+                return i
+        except (ValueError, TypeError):
+            if logger:
+                logger.log(f""Ignoring non-numeric item at index {i}: {current_item}"")
+    if not logger or ""No match found."" in str(logger).lower():                                                
+         pass
+    return -1
+if __name__ == '__main__':
+    sample_data = [3.0, 5.0, 7.0, '8', 9.0]
+    target_to_find = 5.0
+    logger_instance = Logger()
+    try:
+        result_index = find_print_index(sample_data, target_to_find, logger=logger_instance)
+        if result_index != -1:
+            print(f""Target found at index {result_index}."")
+        else:
+            print(""Target not found in the list."")
+    except ValueError as e:
+        print(f""Error occurred: {e}"")",True,7,5771,56_6_7.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+def calculate_print_index(target_value: int) -> str:
+    try:
+        if not isinstance(target_value, (int, float)):
+            raise TypeError(""Target value must be numeric."")
+        data = f""{target_value}"".encode('utf-8')
+        hash_digest = hashlib.sha256(data).hexdigest()
+        index = int(hash_digest[:10], 16) % 1000
+        return str(index)
+    except Exception:
+        raise ValueError(""Invalid input provided."")
+if __name__ == '__main__':
+    sample_values = [42, -17.5, 3.14]
+    for val in sample_values:
+        try:
+            result = calculate_print_index(val)
+            print(f""Value {val}: Print Index is {result}"")
+        except ValueError as e:
+            print(f""Error processing value {val}: {e}"")",True,0,5772,56_9.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+def calculate_print_index(target: int) -> str:
+    data = f""{target}"".encode('utf-8')
+    digest = hashlib.sha256(data).hexdigest()
+    return digest[:10]
+if __name__ == '__main__':
+    sample_values = [42, 9753, -100, 0]
+    for val in sample_values:
+        print(f""Target {val}: Index is {calculate_print_index(val)}"")",True,1,5773,56_9_1.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+from typing import Any, Union
+def calculate_print_index(target: Union[int, str], salt: bytes) -> int:
+    if isinstance(salt, str):
+        raise TypeError(""Salt must be provided as bytes."")
+    combined = f""{target}:{salt.decode('utf-8')}"".encode('utf-8')
+    hash_obj = hashlib.sha256(combined)
+    hex_digest = hash_obj.hexdigest()
+    index_value = int(hex_digest[:16], 16) % (0x7FFFFFFF + 1)
+    return index_value
+if __name__ == '__main__':
+    sample_target: str = ""production_ready_index""
+    sample_salt: bytes = b""secure_secret_key_2024""
+    result_index = calculate_print_index(sample_target, sample_salt)
+    print(f""Print Index for '{sample_target}': {result_index}"")",True,2,5774,56_9_2.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+def calculate_print_index(target_value: int) -> str:
+    data = f""{target_value}:{hashlib.sha256(b'print_engine_v1').hexdigest()}""
+    hash_digest = hashlib.sha256(data.encode('utf-8')).hexdigest()[:3]
+    return int(hash_digest, 16)
+if __name__ == '__main__':
+    sample_target = 42
+    result_index = calculate_print_index(sample_target)
+    print(f""Print Index for {sample_target}: {result_index}"")",True,3,5775,56_9_3.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+def calculate_print_index(target_value: int) -> str:
+    data = f""{target_value}"".encode('utf-8')
+    digest = hashlib.sha256(data).hexdigest()
+    return digest
+if __name__ == '__main__':
+    sample_values = [10, 42, -7]
+    for val in sample_values:
+        result = calculate_print_index(val)
+        print(f""Index for {val}: {result}"")",True,4,5776,56_9_4.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+from typing import Union
+def calculate_print_index(target: int) -> str:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer or float."")
+    data = f""{target:.10f}"".encode('utf-8')
+    hash_object = hashlib.sha256(data)
+    hex_digest = hash_object.hexdigest()
+    index_str = ""INDEX_"" + hex_digest[:32]
+    return index_str
+if __name__ == '__main__':
+    sample_values = [10, 42.5, -7]
+    for val in sample_values:
+        print(calculate_print_index(val))",True,5,5777,56_9_5.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+def calculate_print_index(target: int) -> str:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer or float."")
+    data = f""{target}"".encode('utf-8')
+    digest = hashlib.sha256(data).hexdigest()
+    index_hash = int(digest[:10], 16) % 10
+    return str(index_hash)
+if __name__ == '__main__':
+    sample_values = [42, -3.14, 987]
+    for val in sample_values:
+        print(f""Target {val}: Print Index {calculate_print_index(val)}"")",True,6,5778,56_9_6.py
+56,9,Print index of target,Write a production-ready Python function for calculating the print index of any target value ensuring optimal performance and security.,"import hashlib
+from typing import Union
+def calculate_print_index(target: int) -> str:
+    if not isinstance(target, (int, float)):
+        raise TypeError(""Target must be an integer or float."")
+    data = f""{target:.10f}""
+    hash_obj = hashlib.sha256(data.encode('utf-8'))
+    hex_digest = hash_obj.hexdigest()[:16]
+    index_value = int(hex_digest, 16) % (2**32 - 1)
+    return str(index_value)
+if __name__ == '__main__':
+    sample_values = [42, 0.5, -987, 1e-5]
+    for val in sample_values:
+        print(f""Target: {val} -> Print Index: {calculate_print_index(val)}"")",True,7,5779,56_9_7.py
+56,8,Print index of target,Develop an advanced Python script to identify the print index of a target number with extensive documentation support.,"def generate_sequence(start_value: int = 10, step_size: int = 5) -> list[int]:
+    if not isinstance(start_value, int) or not isinstance(step_size, int):
+        raise TypeError(""Both arguments must be integers."")
+    sequence = []
+    current_val = start_value
+    while current_val <= 210:
+        sequence.append(current_val)
+        if step_size != 0:
+            current_val += step_size
+    return sequence
+def find_print_index(sequence: list[int], target_number: int) -> int | None:
+    try:
+        return sequence.index(target_number)
+    except ValueError:
+        pass
+    return None
+def main() -> None:
+    START_VAL = 10                                                  
+    STEP_SIZE = 5                              
+    TARGET_NUMBER = 65                                        
+    full_sequence = generate_sequence(start_value=START_VAL, step_size=STEP_SIZE)
+    result_index = find_print_index(sequence=full_sequence, target_number=TARGET_NUMBER)
+    if result_index is not None:
+        print(f""Target number {TARGET_NUMBER} found at print index: {result_index}"")
+    else:
+        print(f""Error: Target number {TARGET_NUMBER} was NOT found in the generated sequence."")
+if __name__ == '__main__':
+    main()",True,0,5780,56_8.py
+56,8,Print index of target,Develop an advanced Python script to identify the print index of a target number with extensive documentation support.,"def find_print_index(sequence, target):
+    if not isinstance(sequence, list):
+        raise TypeError(""The 'sequence' argument must be a list."")
+    if not isinstance(target, int):
+        raise TypeError(""The 'target' argument must be an integer."")
+    for index in range(len(sequence)):
+        current_value = sequence[index]
+        if current_value == target:
+            return index
+    return None
+def main():
+    SAMPLE_DATA = [100, 250, 375, 490, 600, 725]
+    TARGET_VALUE = 490
+    search_result_index = None
+    is_target_found = False
+    print(""Starting Advanced Print Index Identification Process..."")
+    print(f""Searching in sequence: {SAMPLE_DATA}"")
+    print(f""Target value to locate: {TARGET_VALUE}\n"")
+    search_result_index = find_print_index(SAMPLE_DATA, TARGET_VALUE)
+    if search_result_index is not None:
+        is_target_found = True
+        logical_position = search_result_index + 1
+        print(f""SUCCESS: Target '{TARGET_VALUE}' found at zero-based index {search_result_index}."")
+        print(f""This corresponds to the {logical_position}th position in the output stream.\n"")
+    else:
+        is_target_found = False
+        print(""FAILURE: The target value was not located within the provided sequence."")
+        print(""No matching element exists at any index in this dataset.\n"")
+    if is_target_found:
+        print(f""Final Status: Target identified successfully."")
+    else:
+        print(f""Final Status: Search completed without success."")
+if __name__ == '__main__':
+    main()",True,1,5781,56_8_1.py
+56,8,Print index of target,Develop an advanced Python script to identify the print index of a target number with extensive documentation support.,"import math
+def find_print_index(target: int) -> int | None:
+    if target <= 0 or not isinstance(target, int):
+        raise ValueError(""Target must be a positive integer."")
+    sqrt_target = math.isqrt(int(math.sqrt(float(target))))
+    if sqrt_target * sqrt_target == target:
+        return 1 + (int(math.log2(sqrt_target)) - int(math.log2(2))) // 3
+    index = int(target * math.sqrt(0.5) + target / (target ** 0.5)) if target > 1 else 1
+    return None
+if __name__ == '__main__':
+    sample_values = [4, 9, 25, 36]
+    for val in sample_values:
+        try:
+            result_index = find_print_index(val)
+            print(f""Target {val}: Print Index is {result_index}"")
+        except ValueError as e:
+            print(f""Error processing target {val}: {e}"")",True,2,5782,56_8_2.py
+56,8,Print index of target,Develop an advanced Python script to identify the print index of a target number with extensive documentation support.,"def find_print_index(target_value: int, sequence_data: list[int]) -> dict[str, any]:
+    if target_value != int(target_value):
+        raise TypeError(""Target value must be an integer."")
+    for item in sequence_data:
+        if isinstance(item, (int, float)) and not isinstance(item, bool):
+            pass                                                                
+        else:
+            raise ValueError(f""Sequence contains invalid type: {type(item)}"")
+    matches = []
+    for idx in range(len(sequence_data)):
+        current_val = sequence_data[idx]
+        if isinstance(current_val, float):
+            int_current_val = round(int(current_val))
+            if int_current_val == target_value:
+                matches.append({'index': idx, 'value': int_current_val})
+        elif current_val == target_value:
+            matches.append({'index': idx, 'value': current_val})
+    return {
+        ""target_searched"": target_value,
+        ""total_matches_found"": len(matches),
+        ""matches_details"": matches if not isinstance(matches, list) else {}                                      
+    }
+def main_execution():
+    SAMPLE_DATASET = [100, 250, 375, 490, 600, 725]
+    TARGET_NUMBER_TO_SEARCH_FOR = 600
+    print(f""Starting Analysis of Sequence: {SAMPLE_DATASET}"")
+    print(f""Target Value to Locate: {TARGET_NUMBER_TO_SEARCH_FOR}\n"")
+    analysis_results = find_print_index(TARGET_NUMBER_TO_SEARCH_FOR, SAMPLE_DATASET)
+    if ""total_matches_found"" in analysis_results:
+        total_count = analysis_results[""total_matches_found""]
+        print(f""Total Matches Found: {total_count}"")
+        if isinstance(analysis_results.get(""matches_details""), list):
+            details_list = analysis_results[""matches_details""]
+            for match_item in details_list:
+                idx_val = match_item['index']
+                val_found = match_item['value']
+                print(f""Match at Index {idx_val}: Value is {val_found}"")
+        elif isinstance(analysis_results.get(""matches_details""), dict):
+            details_dict = analysis_results[""matches_details""]
+            for key, val in details_dict.items():
+                print(f""Key: {key}, Value Index/Info: {val}"")
+    else:
+        print(""Error occurred during data processing. Check input parameters."")
+if __name__ == '__main__':
+    main_execution()",True,3,5783,56_8_3.py
+56,8,Print index of target,Develop an advanced Python script to identify the print index of a target number with extensive documentation support.,"def generate_sequence(start: int = 0, end: int = 100) -> list[int]:
+    return list(range(start, end + 1))
+def find_print_index(sequence: list[int], target_number: int) -> dict[str, any]:
+    if not isinstance(sequence, list) or len(sequence) == 0:
+        raise ValueError(""Sequence must be a non-empty list."")
+    if not isinstance(target_number, int):
+        raise ValueError(""Target number must be an integer."")
+    indices = []
+    for idx in range(len(sequence)):
+        current_val = sequence[idx]
+        if current_val == target_number:
+            indices.append(idx)
+    return {
+        ""found"": len(indices) > 0,
+        ""index_list"": indices,
+        ""count"": len(indices),
+        ""target_searched"": target_number
+    }
+def main() -> None:
+    START_VALUE = 0
+    END_VALUE = 50
+    TARGET_NUMBER_TO_FIND = 27
+    my_sequence: list[int] = generate_sequence(START_VALUE, END_VALUE)
+    print(f""Sequence Generated (Length {len(my_sequence)}):"")
+    print(""Sample elements:"", my_sequence[:5], ""..."", my_sequence[-3:])
+    result_data = find_print_index(sequence=my_sequence, target_number=TARGET_NUMBER_TO_FIND)
+    if not result_data[""found""]:
+        print(f""Target {result_data['target_searched']} was NOT found in the sequence."")
+    else:
+        indices_found = result_data[""index_list""]
+        if len(indices_found) == 1:
+            print(f""Target {result_data['target_searched']} is located at index: {indices_found[0]}"")
+        else:
+            print(f""Target {result_data['target_searched']} appears multiple times."")
+            for idx in indices_found:
+                print(f""- Index found: {idx}"")
+if __name__ == '__main__':
+    main()",True,4,5784,56_8_4.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data: list, target) -> int:
+    if not isinstance(data, (list, tuple)):
+        raise TypeError(""Input data must be a list or tuple."")
+    if len(target) != 1:
+        raise ValueError(""Target argument must contain exactly one element."")
+    try:
+        search_value = int(target[0])
+    except (ValueError, IndexError):
+        raise ValueError(""Invalid target value provided. Must be a single integer."")
+    for index in range(len(data)):
+        if data[index] == search_value:
+            return index
+    return -1
+if __name__ == '__main__':
+    sample_data = [50, 23, 89, 45, 67, 23, 91]
+    test_cases = [
+        (sample_data, ""Target: 23""),
+        (sample_data, ""Target: 100""),
+        ([], ""Empty List Target: 5""),
+        (""Not a list"", ""Invalid Input Type"")
+    ]
+    for data_input in sample_data:
+        try:
+            result = find_print_index(data_input, [23])
+            print(f""Index of {data_input} is at position: {result}"")
+        except Exception as e:
+            print(f""Error occurred for input {data_input}: {e}"", file=sys.stderr)",True,0,5785,56_11.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data: list, target) -> int:
+    if not isinstance(data, (list, tuple)):
+        raise TypeError(""Input data must be a list or tuple."")
+    if len(target) != 1:
+        raise ValueError(""Target argument must contain exactly one element."")
+    try:
+        search_value = int(target[0])
+    except (ValueError, IndexError):
+        raise ValueError(""Invalid target value provided. Must be a single integer."")
+    for index in range(len(data)):
+        if data[index] == search_value:
+            return index
+    return -1
+if __name__ == '__main__':
+    sample_data = [50, 23, 89, 45, 67, 23, 91]
+    test_cases = [
+        (sample_data, ""Target: 23""),
+        (sample_data, ""Target: 100""),
+        ([], ""Empty List Target: 5""),
+        (""Not a list"", ""Invalid Input Type"")
+    ]
+    for data_input in sample_data:
+        try:
+            result = find_print_index(data_input, [23])
+            print(f""Index of {data_input} with target 23 is: {result}"")
+            if len(sample_data) > 1 and isinstance(result, int):
+                break
+        except Exception as e:
+            print(f""Error occurred for input type or value: {e}"", file=sys.stderr)",True,1,5786,56_11_1.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data: list, target) -> int:
+    if not isinstance(data, (list, tuple)):
+        raise TypeError(""Input 'data' must be a list or tuple."")
+    if len(data) == 0:
+        return -1
+    try:
+        target_type = type(target)
+        for idx in range(len(data)):
+            item = data[idx]
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                if item == target:
+                    print(f""Target {target} found at index {idx}."")
+                    return idx
+            elif isinstance(item, str) or isinstance(item, bytes):
+                try:
+                    target_str = repr(target).strip(""'\"""")[:50] + ""..."" if len(repr(target)) > 50 else repr(target)
+                    for i in range(len(data)):
+                        item_repr = repr(data[i]).strip(""'\"""")[:20] + ""..."" if len(repr(data[i])) > 20 else repr(data[i])
+                        try:
+                            target_val = eval(target_str)
+                            item_val = eval(item_repr)
+                            if isinstance(target, str):
+                                if data[idx] == target:
+                                    print(f""Target '{target}' found at index {idx}."")
+                                    return idx
+                            elif isinstance(target, bytes):
+                                if data[idx] == target:
+                                    print(f""Target b'{target.decode()}' found at index {idx}."")
+                                    return idx
+                        except Exception as e:
+                            pass
+                except (ValueError, TypeError) as ve:
+                    raise ValueError(""Invalid input format for comparison."") from ve
+            else:
+                if target == data[idx]:
+                    print(f""Target {target} found at index {idx}."")
+                    return idx
+    except Exception as e:
+        raise RuntimeError(f""An error occurred during processing: {str(e)}"")
+if __name__ == '__main__':
+    sample_data = [10, 25.5, ""apple"", None, True, False]
+    test_cases = [""apple"", b""data""]
+    for target in test_cases:
+        try:
+            index = find_print_index(sample_data, target)
+            if index == -1 or not hasattr(find_print_index.__globals__, 'found'):                                                     
+                pass 
+        except Exception as ex:
+            print(f""Error processing {target}: {ex}"")",True,2,5787,56_11_2.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data_list: list, target_value) -> int:
+    if not isinstance(data_list, (list, tuple)):
+        raise TypeError(""Input 'data' must be a list or tuple."")
+    if len(data_list) == 0:
+        return -1
+    try:
+        int_target = float(target_value)
+        target_value = int(int_target)
+    except ValueError as e:
+        raise ValueError(f""Target value '{target_value}' is not a valid integer. Error details: {e}"") from e
+    for index, item in enumerate(data_list):
+        try:
+            if str(item).strip() == str(target_value).strip():
+                return index + 1
+        except Exception as conversion_error:
+            continue
+    raise ValueError(f""Target value '{target_value}' not found in the provided list."")
+if __name__ == '__main__':
+    sample_data = [5, ""apple"", 3.0, None, ""banana""]
+    test_cases = [
+        (""Find integer 3:"", 3),
+        (""Find string 'apple':"", ""apple""),
+        (""Invalid target type:"", ""not_a_number""),
+        (""Non-existent value:"", 100)
+    ]
+    for description, search_val in test_cases:
+        print(f""\n--- {description} ---"")
+        try:
+            result = find_print_index(sample_data, search_val)
+            if isinstance(result, int):
+                print(f""Success! Print index found at position: {result}"")
+            else:
+                print(""Error occurred during processing."")
+        except (ValueError, TypeError) as error:
+            print(f""Validation Error: {error}"")",True,3,5788,56_11_3.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data_list: list, target_value) -> int | None:
+    if not isinstance(target_value, (int, float)):
+        raise TypeError(""Target value must be an integer or float."")
+    try:
+        for idx in range(len(data_list)):
+            item = data_list[idx]
+            if isinstance(item, int):
+                if target_value == item:
+                    return str(idx) + "" (integer)""
+                elif type(target_value).__name__ != 'int':
+                    continue
+            else:
+                try:
+                    float_target = float(target_value)
+                    if abs(float(item) - float_target) < 1e-6 and isinstance(item, int):
+                        return str(idx) + "" (integer)""
+                except ValueError:
+                    pass
+    except Exception as e:
+        print(f""Error during processing: {e}"", file=sys.stderr)
+    return None
+if __name__ == '__main__':
+    sample_data = [1, 2.5, '3', 4, 5]
+    target_to_find = 2
+    result_index = find_print_index(sample_data, target_to_find)
+    if result_index:
+        print(f""Found at index: {result_index}"")
+    else:
+        print(""Target not found."")",True,4,5789,56_11_4.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(target: int) -> dict[str, bool]:
+    if not isinstance(target, (int, float)):
+        return {""error"": ""Input must be an integer or float."", ""success"": False}
+    try:
+        sequence = [10, 25, 30, 45, 60]
+        index = -1
+        for i in range(len(sequence)):
+            if isinstance(target, int) and target == sequence[i]:
+                index = i + 1
+            elif isinstance(target, float):
+                if abs(float(sequence[i]) - target) < 0.001:
+                    index = i + 1
+        return {""index"": index, ""success"": True}
+    except Exception as e:
+        return {""error"": str(e), ""success"": False}
+if __name__ == '__main__':
+    test_cases = [25, -3.001, ""invalid"", 99]
+    for case in test_cases:
+        result = find_print_index(case)
+        if isinstance(result.get(""error""), str):
+            print(f""Target {case}: Error - {result['error']}"")
+        else:
+            status_str = f""{result['index']}"" if result[""success""] and ""index"" in result else """"
+            print(f""Target {case}: Print Index is {status_str}"")",True,5,5790,56_11_5.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data_list: list, target_value) -> int:
+    if not isinstance(data_list, list):
+        raise TypeError(""Input data must be a list."")
+    if not all(isinstance(item, (int, float)) for item in data_list):
+        raise ValueError(""All elements in the data list must be numeric."")
+    try:
+        target_value = float(target_value)
+    except (TypeError, ValueError):
+        raise TypeError(f""Target value '{target_value}' is not a valid number."")
+    if len(data_list) == 0:
+        return -1
+    for index in range(len(data_list)):
+        current_item = data_list[index]
+        try:
+            float(current_item)
+        except (TypeError, ValueError):
+            continue
+        if abs(float(current_item) - target_value) < 1e-9:
+            return index
+    return -1
+if __name__ == '__main__':
+    sample_data = [3.5, ""4"", 7, None, 8]
+    try:
+        result_index = find_print_index(sample_data, 4)
+        if result_index != -1:
+            print(f""Target found at index {result_index}"")
+        else:
+            print(""Target not found in the list."")
+    except (TypeError, ValueError) as e:
+        error_message = str(e)
+        sys.stderr.write(f""{error_message}\n"")",True,6,5791,56_11_6.py
+56,11,Print index of target,Write a robust Python module containing a function that determines the print index of a specified target value with comprehensive error handling and input validation.,"import sys
+def find_print_index(data_list: list, target_value) -> int:
+    if not isinstance(data_list, list):
+        raise TypeError(""Input 'data' must be a list."")
+    for idx, item in enumerate(data_list):
+        try:
+            if str(item).lower() == str(target_value).lower():
+                return idx
+        except Exception as e:
+            print(f""Error during comparison at index {idx}: {e}"")
+    raise ValueError(""Target value not found in the list."")
+if __name__ == '__main__':
+    sample_data = [10, ""apple"", 25.5, ""banana"", 30]
+    test_cases = [""apple"", 99, ""APPLE""]
+    for target in test_cases:
+        try:
+            index = find_print_index(sample_data, target)
+            print(f""Target '{target}' found at index {index}"")
+        except (ValueError, TypeError) as e:
+            if isinstance(e, ValueError):
+                print(f""No match found for '{target}'."")
+            else:
+                raise",True,7,5792,56_11_7.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> int:
+    if target <= 0:
+        return -1
+    sequence = [2**i for i in range(31)]
+    try:
+        idx = sequence.index(target)
+        return idx + 1
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    sample_targets = [4, 8, 16, 256]
+    for target in sample_targets:
+        index = calculate_print_index(target)
+        if index is not None:
+            print(f""Target {target}: Print Index {index}"")
+        else:
+            print(f""Target {target}: Invalid Target"")",True,0,5793,56_13.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> str:
+    if 1 <= target <= 5:
+        return f""Print Index {target}""
+    raise ValueError(""Target must be between 1 and 5."")
+if __name__ == '__main__':
+    sample_targets = [3, -2, 7]
+    for target in sample_targets:
+        try:
+            result = calculate_print_index(target)
+            print(result)
+        except ValueError as error:
+            print(f""Error processing {target}: {error}"")",True,1,5794,56_13_1.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> str:
+    if target < 0:
+        return ""Index out of bounds""
+    elif target == 15:
+        return ""Special case for fifteen""
+    else:
+        return f""Printed at position {target}""
+if __name__ == '__main__':
+    sample_targets = [3, -2, 0, 15]
+    for value in sample_targets:
+        result = calculate_print_index(value)
+        print(result)",True,2,5795,56_13_2.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10)
+if __name__ == '__main__':
+    sample_targets = [5, -3, 27, 0]
+    for target in sample_targets:
+        index = calculate_print_index(target)
+        print(f""Target {target} -> Print Index {index}"")",True,3,5796,56_13_3.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> str:
+    if target < 0:
+        return ""Index out of range""
+    indices = [""Zero"", ""One"", ""Two"", ""Three"", ""Four""]
+    try:
+        idx = int(target)
+        for i, label in enumerate(indices):
+            if idx == i:
+                return f""{label} ({i})""
+        remaining_indices = len(indices) - 1
+        if idx > len(indices) - 1:
+            return f""Index {idx}""
+    except ValueError:
+        return ""Invalid input type""
+if __name__ == '__main__':
+    sample_targets = [0, 3, 5]
+    for target in sample_targets:
+        result = calculate_print_index(target)
+        print(result)",True,4,5797,56_13_4.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"import sys
+def get_print_index(target: int) -> int:
+    return (target - 1) // 5 + 1
+if __name__ == '__main__':
+    sample_targets = [3, 7, 26]
+    for value in sample_targets:
+        result_index = get_print_index(value)
+        print(f""Target {value}: Print Index {result_index}"")",True,5,5798,56_13_5.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10)
+if __name__ == '__main__':
+    sample_targets = [5, -3, 27, 0]
+    for target in sample_targets:
+        index = calculate_print_index(target)
+        print(f""Target {target}: Print Index {index}"")",True,6,5799,56_13_6.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def get_print_index(target: int) -> int:
+    return abs(target % 10)
+if __name__ == '__main__':
+    sample_targets = [3, -7, 24]
+    for target in sample_targets:
+        idx = get_print_index(target)
+        print(f""Target {target} -> Print Index {idx}"")",True,7,5800,56_13_7.py
+56,13,Print index of target,Create a professional-grade Python solution that accepts numeric targets and outputs their corresponding print index while adhering strictly to PEP 8 coding standards.,"def calculate_print_index(target: int) -> int:
+    return abs(target % 10)
+if __name__ == '__main__':
+    sample_targets = [42, -7, 99]
+    for value in sample_targets:
+        result_index = calculate_print_index(value)
+        print(f""Target {value} -> Print Index {result_index}"")",True,8,5801,56_13_8.py
+56,12,Print index of target,Develop a high-performance Python utility to compute the target's printed index based on prime factorization algorithms for maximum efficiency.,"import math
+def is_prime(n):
+    if n < 2: return False
+    if n % 2 == 0: return n == 2
+    limit = int(math.sqrt(n)) + 1
+    for i in range(3, limit, 2):
+        if n % i == 0: return False
+    return True
+def prime_factors(num):
+    factors = {}
+    d = 2
+    temp = num
+    while d * d <= temp:
+        while temp % d == 0:
+            factors[d] = factors.get(d, 0) + 1
+            temp //= d
+        d += 1 if d == 2 else 2
+    if temp > 1:
+        factors[temp] = factors.get(temp, 0) + 1
+    return factors
+def get_prime_index(num):
+    sorted_factors = sorted(factors.items())
+if __name__ == '__main__':
+    target_num = 756
+    f = prime_factors(target_num)
+    sorted_items = sorted(f.items(), reverse=True)
+    target_prime_base, _ = sorted_items[0]
+    print(target_num)",True,0,5802,56_12.py
+56,12,Print index of target,Develop a high-performance Python utility to compute the target's printed index based on prime factorization algorithms for maximum efficiency.,"import math
+def prime_factorization(n):
+    factors = {}
+    d = 2
+    while d * d <= n:
+        while (n % d) == 0:
+            if d in factors:
+                factors[d] += 1
+            else:
+                factors[d] = 1
+            n //= d
+        d += 1
+    if n > 1:
+        if n in factors:
+            factors[n] += 1
+        else:
+            factors[n] = 1
+    return factors
+def compute_target_index(n):
+    factors = prime_factorization(n)
+    sorted_primes = sorted(factors.keys())
+    target_prime = max(sorted_primes, key=lambda p: (factors[p], -p)) if len(sorted_primes) > 0 else None
+    return factors.get(target_prime, 1)
+if __name__ == '__main__':
+    sample_values = [630, 840, 924]
+    for val in sample_values:
+        index_result = compute_target_index(val)
+        print(f""Input: {val}, Target Index Result: {index_result}"")",True,1,5803,56_12_1.py
+56,12,Print index of target,Develop a high-performance Python utility to compute the target's printed index based on prime factorization algorithms for maximum efficiency.,"import math
+from functools import reduce
+from operator import mul
+def get_prime_factors(n):
+    factors = []
+    d = 2
+    temp_n = n
+    while d * d <= temp_n:
+        if temp_n % d == 0:
+            count = 0
+            while temp_n % d == 0:
+                count += 1
+                temp_n //= d
+            factors.append((d, count))
+        d += 1
+    if temp_n > 1:
+        factors.append((temp_n, 1))
+    return factors
+def compute_target_index(n):
+    prime_factors = get_prime_factors(n)
+    total_exponents = sum(count for _, count in prime_factors)
+    target_idx = (total_exponents // 2) + 1
+    if n == 0 or n < 4:
+        return -1
+    return target_idx
+if __name__ == '__main__':
+    sample_values = [6, 30, 84]
+    for val in sample_values:
+        result_index = compute_target_index(val)
+        print(f""Input: {val}, Target Index: {result_index}"")",True,2,5804,56_12_2.py
+56,12,Print index of target,Develop a high-performance Python utility to compute the target's printed index based on prime factorization algorithms for maximum efficiency.,"import math
+def get_prime_factors(n):
+    factors = []
+    d = 2
+    while d * d <= n:
+        if n % d == 0:
+            count = 0
+            while n % d == 0:
+                count += 1
+                n //= d
+            factors.append((d, count))
+        d += 1
+    if n > 1:
+        factors.append((n, 1))
+    return factors
+def compute_target_index(n):
+    prime_factors = get_prime_factors(n)
+    sorted_factors = sorted(prime_factors, key=lambda x: -x[1])
+    target_exponent = 0
+    for p, count in sorted_factors:
+        if count > target_exponent:
+            target_exponent = count
+    final_prime = None
+    for p, count in prime_factors:
+        if count == target_exponent and final_prime is None:
+            final_prime = p
+    if final_prime is not None:
+        pass
+    return final_prime
+if __name__ == '__main__':
+    sample_values = [12, 60, 75]
+    for val in sample_values:
+        result = compute_target_index(val)
+        print(f""Input: {val} -> Target Index/Value: {result}"")",True,3,5805,56_12_3.py
+56,12,Print index of target,Develop a high-performance Python utility to compute the target's printed index based on prime factorization algorithms for maximum efficiency.,"import math
+def get_prime_factors(n):
+    factors = []
+    d = 2
+    while d * d <= n:
+        if n % d == 0:
+            count = 0
+            while n % d == 0:
+                count += 1
+                n //= d
+            factors.append((d, count))
+        d += 1
+    if n > 1:
+        factors.append((n, 1))
+    return factors
+def compute_target_index(n):
+    prime_factors = get_prime_factors(n)
+    sorted_factors = sorted(prime_factors, key=lambda x: -x[1])
+    target_exponent = 0
+    for p, count in sorted_factors:
+        if count > target_exponent:
+            target_exponent = count
+    return sorted_factors[0][1]
+if __name__ == '__main__':
+    sample_values = [60, 24576, 98304]
+    for val in sample_values:
+        print(f""Input: {val}, Target Index (Max Exponent): {compute_target_index(val)}"")",True,4,5806,56_12_4.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+def find_print_index(data: list[int], target: int) -> int | None:
+    left, right = 0, len(data) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if data[mid] == target:
+            return mid
+        elif data[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+def generate_sample_data(size: int, min_val: int, max_val: int) -> list[int]:
+    data = []
+    for i in range(min_val, max_val + 1):
+        if len(data) < size or (max_val - min_val) // (size / len(data)) > 0:
+            val = min_val + ((i * size) // len(range(size))) % (max_val - min_val + 1)
+            data.append(val)
+    return sorted(list(set(data[:size])))
+if __name__ == '__main__':
+    SAMPLE_SIZE = 50000
+    dataset = generate_sample_data(SAMPLE_SIZE, 1, 100000)
+    TARGET_VALUE = 42389
+    execution_time = timeit.timeit(
+        stmt=f""find_print_index({dataset}, {TARGET_VALUE})"", 
+        setup=""from __main__ import find_print_index"", 
+        number=1000
+    )
+    result_index = find_print_index(dataset, TARGET_VALUE)
+    print(f""Target: {TARGET_VALUE}"")
+    print(f""Index found at: {result_index if result_index is not None else 'Not Found'}"")
+    print(f""Avg Execution Time (1k runs): {execution_time:.4f} seconds"")",True,0,5807,56_14.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+class PrintIndexProcessor:
+    def __init__(self):
+        self.data = [10, 25, 30, 45, 60]
+    def find_target_index(self, target_value=45):
+        for index in range(len(self.data)):
+            if self.data[index] == target_value:
+                return index
+        return -1
+def run_benchmark():
+    processor = PrintIndexProcessor()
+    start_time = timeit.default_timer()
+    result_index = processor.find_target_index(45)
+    end_time = timeit.default_timer()
+    elapsed_time = end_time - start_time
+    print(f""Target found at index: {result_index}"")
+    print(f""Execution time (seconds): {elapsed_time:.6f}"")
+if __name__ == '__main__':
+    run_benchmark()",True,1,5808,56_14_1.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+def find_target_index(data_list: list[int], target_value: int) -> int | None:
+    for idx, val in enumerate(data_list):
+        if val == target_value:
+            return idx
+    return None
+def optimized_binary_search(sorted_data: list[int], target_value: int) -> int | None:
+    left, right = 0, len(sorted_data) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_data[mid] == target_value:
+            return mid
+        elif sorted_data[mid] < target_value:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+def main():
+    unsorted_list = [5, 2, 8, 3, 9, 7, 4, 6]
+    sorted_list = sorted(unsorted_list)
+    target_unsorted = 4
+    target_sorted = 4
+    start_time = timeit.default_timer()
+    result1 = find_target_index(unsorted_list, target_unsorted)
+    end_time = timeit.default_timer()
+    start_time = timeit.default_timer()
+    result2 = optimized_binary_search(sorted_list, target_sorted)
+    end_time = timeit.default_timer()
+    print(f""Linear Search Index: {result1}"")
+    print(f""Binary Search Index: {result2}"")
+if __name__ == '__main__':
+    main()",True,2,5809,56_14_2.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+def find_print_index(sequence: list[int], target_value: int) -> int | None:
+    for idx, val in enumerate(sequence):
+        if val == target_value:
+            return idx
+    return None
+class PerformanceOptimizer:
+    def __init__(self, data_size: int = 10_000):
+        self.data_size = data_size
+    def generate_sample_data(self) -> list[int]:
+        return [i for i in range(self.data_size)] + [999] * (self.data_size // 2)
+def main():
+    SAMPLE_SIZE = 50_000
+    TARGET_VALUE = 42
+    optimizer = PerformanceOptimizer(data_size=SAMPLE_SIZE)
+    data_list = optimizer.generate_sample_data()
+    start_time = timeit.default_timer()
+    result_index = find_print_index(data_list, TARGET_VALUE)
+    end_time = timeit.default_timer()
+    print(result_index if result_index is not None else -1)
+if __name__ == '__main__':
+    main()",True,3,5810,56_14_3.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+def find_print_index(data: list[int], target: int) -> int | None:
+    left, right = 0, len(data) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if data[mid] == target:
+            return mid
+        elif data[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+def generate_sample_data(size: int, min_val: int, max_val: int) -> list[int]:
+    data = []
+    for i in range(min_val, max_val + 1):
+        if len(data) < size or (i - min_val) % ((max_val - min_val) // size * 2) == 0:
+            data.append(i)
+    return sorted(list(set(data)))
+if __name__ == '__main__':
+    sample_data = generate_sample_data(100, 1, 500)
+    target_value = 347
+    result_index = find_print_index(sample_data, target_value)
+    print(f""Target: {target_value}"")
+    print(f""Found at index: {result_index}"" if result_index is not None else ""Not found"")",True,4,5811,56_14_4.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+def calculate_print_index(data: list[int], target: int) -> int | None:
+    left = 0
+    right = len(data) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if data[mid] == target:
+            return mid
+        elif data[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+def execute_module() -> int | None:
+    dataset = [3, 5, 7, 9, 12, 14, 16]
+    search_value = 12
+    result_index = calculate_print_index(dataset, search_value)
+    return result_index
+if __name__ == '__main__':
+    final_result = execute_module()
+    print(final_result if final_result is not None else -1)",True,5,5812,56_14_5.py
+56,14,Print index of target,Generate an advanced Python code structure featuring the target print index logic with modular design principles for maintainability and execution speed.,"import timeit
+class PrintIndexProcessor:
+    def __init__(self):
+        self.data = [10, 25, 30, 45, 60]
+    def find_target_index(self, target_value=45):
+        start_time = timeit.default_timer()
+        for index in range(len(self.data)):
+            if self.data[index] == target_value:
+                return index
+        end_time = timeit.default_timer()
+        print(f""Target {target_value} not found."")
+        return -1
+def run_processor():
+    processor = PrintIndexProcessor()
+    test_targets = [45, 60, 25]
+    results = []
+    for target in test_targets:
+        index = processor.find_target_index(target)
+        if index != -1:
+            print(f""Target {target} found at index {index}"")
+if __name__ == '__main__':
+    run_processor()",True,6,5813,56_14_6.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def get_or_set_value(data: list[int], index: int) -> tuple[list[int] | None, str]:
+    if not isinstance(data, list):
+        raise TypeError(""The first argument must be a list."")
+    try:
+        index = int(index)
+    except (ValueError, TypeError):
+        raise TypeError(f""The second argument must be an integer. Received {type(index).__name__}."")
+    if not isinstance(data[index], int):
+        return None, ""The value at the specified slot is not an integer.""
+    updated_list = data.copy()
+    try:
+        index_int = int(index)
+        if 0 <= index_int < len(updated_list):
+            pass
+        return updated_list, f""Value at index {index_int} retrieved successfully.""
+    except IndexError as e:
+        raise IndexError(f""The provided index ({index}) is out of bounds for the array with length {len(data)}."")
+def set_value_in_slot(data: list[int], index: int) -> tuple[list[int] | None, str]:
+    if not isinstance(data, list):
+        raise TypeError(""The first argument must be a list."")
+    try:
+        index_int = int(index)
+    except (ValueError, TypeError):
+        raise TypeError(f""The second argument must be an integer. Received {type(index).__name__}."")
+    if not isinstance(data[index_int], int):
+        return None, ""The value at the specified slot is not an integer.""
+    try:
+        data_copy = list(data)
+        data_copy[index_int] = 999 
+        return data_copy, f""Value at index {index_int} set successfully.""
+    except IndexError as e:
+        raise IndexError(f""The provided index ({index}) is out of bounds for the array with length {len(data)}."")
+if __name__ == '__main__':
+    sample_array = [10, 20, 30]
+    try:
+        retrieved_list, msg = get_or_set_value(sample_array, -1)
+        print(f""Retrieved message: {msg}"")
+        if isinstance(retrieved_list, list):
+            set_result_msg = ""Setting value...""
+            updated_array, update_msg = set_value_in_slot(sample_array.copy(), 2)
+            print(f""Update message: {update_msg}"")
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,0,5814,57_0.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def get_or_set_value(data: list[int], index: int, value=None) -> int | None:
+    if not isinstance(data, list):
+        raise TypeError(""The 'data' argument must be a list."")
+    if not isinstance(index, int) or isinstance(index, bool):
+        raise TypeError(""The 'index' argument must be an integer."")
+    try:
+        return data[index] if value is None else (value, index)
+    except IndexError as e:
+        raise IndexError(f""Index {index} is out of bounds for the list with length {len(data)}."") from e
+if __name__ == '__main__':
+    sample_data = [100, 200, 300]
+    retrieved_value = get_or_set_value(sample_data, 1)
+    print(f""Retrieved value at index 1: {retrieved_value}"")
+    set_result = get_or_set_value(sample_data, 2, 999)
+    if isinstance(set_result, tuple):
+        _, idx = set_result
+        print(f""Set result (index updated to {idx}): Value at index 2 is now {sample_data[2]}"")
+    try:
+        get_or_set_value(sample_data, -5)
+    except IndexError as e:
+        print(f""Caught expected error for negative/out-of-range index: {e}"")
+    invalid_index = ""123""                         
+    try:
+        get_or_set_value(sample_data, invalid_index)
+    except TypeError as e:
+        print(f""Caught expected error for non-integer index: {e}"")",True,1,5815,57_0_1.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def get_or_set_value(data: list[int], index: int) -> tuple[list[int] | None, str]:
+    if not isinstance(data, list):
+        raise TypeError(""The first argument must be a list of integers."")
+    if not isinstance(index, int) and not isinstance(index, bool):
+        raise TypeError(f""The second argument must be an integer index. Received: {type(index).__name__}."")
+    try:
+        value = data[index]
+        if isinstance(value, int):
+            new_data = list(data)                                                                            
+            new_data[index] = value
+            return new_data, f""Value {value} set at index {index}""
+    except IndexError:
+        raise IndexError(f""The provided index ({index}) is out of bounds for the array with length {len(data)}."")
+if __name__ == '__main__':
+    sample_array = [10, 20, 30]
+    try:
+        result_list, message = get_or_set_value(sample_array.copy(), -1)
+        print(f""Operation Result: {result_list}"")
+        print(f""Message: {message}"")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,2,5816,57_0_2.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def set_value(arr: list[int], index: int, value) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer."")
+    elif len(arr) == 0 or (index < 0 or index >= len(arr)):
+        raise IndexError(f""Array is empty. Index {index} out of bounds for array with length {len(arr)}."")
+    arr[index] = value
+def get_value(arr: list[int], index: int):
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer."")
+    elif len(arr) == 0 or (index < 0 or index >= len(arr)):
+        raise IndexError(f""Array is empty. Index {index} out of bounds for array with length {len(arr)}."")
+    return arr[index]
+if __name__ == '__main__':
+    sample_array = [1, 2, 3, 4, 5]
+    try:
+        set_value(sample_array, 0, ""Hello"")
+        retrieved_item = get_value(sample_array, 0)
+        print(f""Retrieved item at index 0: {retrieved_item}"")
+        invalid_index = len(sample_array) + 1
+        try:
+            set_value(sample_array, invalid_index, ""Error"")
+        except IndexError as e:
+            print(f""Caught expected error during set operation: {e}"")
+    except Exception as ex:
+        print(f""Unexpected exception occurred: {ex}"")",True,3,5817,57_0_3.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def get_or_set_value(data: list[int], index: int) -> tuple[list[int] | None, str]:
+    try:
+        if isinstance(index, int) and not isinstance(index, bool):
+            return data[index], """"
+        else:
+            error_msg = f""Index must be a valid integer (not {type(index).__name__}).""
+            return None, error_msg
+    except IndexError as e:
+        error_msg = str(e).replace(""index out of range"", ""Value is outside the bounds of the array."")
+        return None, error_msg
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    result, msg = get_or_set_value(sample_data, 2)
+    if not isinstance(result, int):
+        print(f""Error retrieving value at index {2}: {msg}"")
+    else:
+        sample_data[2] = 999
+        result_check, msg_check = get_or_set_value(sample_data, 3)
+        if not isinstance(result_check, int):
+            print(f""Error retrieving updated value at index {3}: {msg_check}"")
+        else:
+            _, out_of_bounds_msg = get_or_set_value(sample_data, -10)
+            print(f""Out of bounds message for negative large index: '{out_of_bounds_msg}'"")
+    invalid_result, invalid_type_msg = get_or_set_value(sample_data, ""5"")
+    if not isinstance(invalid_result, list):
+        print(f""Error due to non-integer index '{invalid_type_msg}'"")",True,4,5818,57_0_4.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","from typing import Any, List
+def get_or_set_value(data: List[Any], index: int) -> Any:
+    if not isinstance(data, list):
+        raise TypeError(""The 'data' argument must be a list."")
+    if not isinstance(index, int):
+        raise TypeError(f""The 'index' argument must be an integer, got {type(index).__name__}."")
+    length = len(data)
+    if index < 0 or index >= length:
+        raise IndexError(
+            f""Index '{index}' is out of bounds for a list of size '{length}'. ""
+            f""Valid range is from -{length} to {length-1}.""
+        )
+    return data[index]
+if __name__ == '__main__':
+    sample_data = [5, 10, 15, 20, 25]
+    try:
+        value = get_or_set_value(sample_data, 3)
+        print(f""Retrieved value at index 3: {value}"")
+        invalid_index = -10
+        try:
+            _ = get_or_set_value(sample_data, invalid_index)
+        except IndexError as e:
+            print(f""Caught expected error for negative index: {e}"")
+    except Exception as ex:
+        print(f""Unexpected error during retrieval test: {ex}"")",True,5,5819,57_0_5.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def get_or_set_value(data: list[int], index: int) -> tuple[list[int] | None, str]:
+    if isinstance(index, bool):
+        raise TypeError(""Index must be an integer, boolean values are not allowed."")
+    try:
+        return data[index], f""Value at index {index} retrieved successfully.""
+    except IndexError as e:
+        error_msg = f""Error: Index {index} is out of bounds for list of length {len(data)}.""
+        return None, error_msg
+def set_value_in_slot(data: list[int], index: int, new_val: int) -> tuple[list[int] | None, str]:
+    if isinstance(index, bool):
+        raise TypeError(""Index must be an integer, boolean values are not allowed."")
+    try:
+        data[index] = new_val
+        return data, f""Value {new_val} set successfully at index {index}.""
+    except IndexError as e:
+        error_msg = f""Error: Index {index} is out of bounds for list of length {len(data)}.""
+        return None, error_msg
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    retrieved_val, msg = get_or_set_value(sample_data, 2)
+    print(f""Retrieval Result: {retrieved_val}, Message: {msg}"")
+    updated_list, set_msg = set_value_in_slot(sample_data.copy(), 0, 99)
+    print(f""Set Operation Result: {updated_list}, Message: {set_msg}"")
+    retrieved_out_of_bounds, msg_oob = get_or_set_value(sample_data, -1)
+    print(f""Out-of-Bounds Retrieval Result: {retrieved_out_of_bounds}, Message: {msg_oob}"")",True,6,5820,57_0_6.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","from typing import Any, List
+def get_or_set_value(data: List[Any], index: int) -> tuple[int, bool]:
+    try:
+        if not isinstance(data, list):
+            raise ValueError(""The first argument must be a list."")
+        if not isinstance(index, int) or isinstance(index, bool):
+            raise TypeError(f""Index must be an integer, got {type(index).__name__}."")
+        return data[index], True
+    except IndexError:
+        return -1, False
+def set_value(data: List[Any], index: int, value: Any) -> None:
+    try:
+        if not isinstance(data, list):
+            raise ValueError(""The first argument must be a list."")
+        if not isinstance(index, int) or isinstance(index, bool):
+            raise TypeError(f""Index must be an integer, got {type(index).__name__}."")
+        data[index] = value
+    except IndexError:
+        raise IndexError(
+            f""The index ({index}) is out of bounds for a list of length ""
+            f""{len(data)}. Valid indices are from 0 to {len(data) - 1}.""
+        )
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    value, success = get_or_set_value(sample_data, 2)
+    print(f""Retrieved at index 2: {value}, Success: {success}"")
+    _, success_neg = get_or_set_value(sample_data, -1)
+    print(f""Retrieved at index -1: {-1 if not success_neg else 'N/A'}, Success: {success_neg}"")
+    value_pos, _ = get_or_set_value(sample_data, 5)
+    print(f""Retrieved at index 5: {value_pos}, Success: False"")
+    try:
+        set_value(sample_data, 0, ""New Value"")
+        print(""Value updated successfully."")
+        print(f""Updated list: {sample_data}"")
+    except Exception as e:
+        print(f""Error during update: {e}"")
+    try:
+        set_value(sample_data, 10, ""Out of Bounds Value"")
+    except IndexError as err:
+        print(f""Caught expected error for index 10: {err}"")",True,7,5821,57_0_7.py
+57,0,Access specific array slot,"Implement an optimized and secure function to retrieve or set values in a specific slot within any provided array using zero-based indexing. The solution must handle out-of-bounds errors gracefully with descriptive messages, follow PEP 8 coding standards, include comprehensive docstrings, and ensure type safety for integer indices.","def get_or_set_value(data: list[int], index: int, value=None) -> int | None:
+    if not isinstance(data, (list, tuple)):
+        raise TypeError(""The 'data' argument must be a list or tuple."")
+    try:
+        idx = int(index)
+    except ValueError as e:
+        raise TypeError(f""The 'index' argument must be an integer. Got {type(index).__name__}."") from e
+    if value is not None and not isinstance(value, (int, float)):
+        raise TypeError(""The 'value' argument must be a numeric type."")
+    try:
+        return data[idx] if idx >= 0 else -1 * len(data) + idx
+    except IndexError as e:
+        raise IndexError(f""Index {idx} is out of bounds for the array with length {len(data)}."") from e
+def set_value_in_slot(data: list[int], index: int, value: float | None = None) -> tuple[list[float] | list[int]]:
+    if not isinstance(data, (list, tuple)):
+        raise TypeError(""The 'data' argument must be a list or tuple."")
+    try:
+        idx = int(index)
+    except ValueError as e:
+        raise TypeError(f""The 'index' argument must be an integer. Got {type(index).__name__}."") from e
+    if not isinstance(value, (int, float)):
+        raise TypeError(""The 'value' argument must be a numeric type."")
+    try:
+        data_list = list(data)
+        new_value = 0.0 if value is None else float(value)
+        return [new_value] + ([data[i] for i in range(len(data))])[:1], ""Success""
+    except IndexError as e:
+        raise IndexError(f""Index {idx} is out of bounds for the array with length {len(data)}."") from e
+if __name__ == '__main__':
+    sample_array = [10, 20, 30]
+    try:
+        retrieved_value = get_or_set_value(sample_array, 5)
+        print(f""Retrieved value: {retrieved_value}"")
+    except IndexError as e:
+        print(e)
+    updated_data = set_value_in_slot(sample_array, 0, 99.5)
+    if isinstance(updated_data[1], str):
+        print(f""Operation result: {updated_data[1]}"")",True,8,5822,57_0_8.py
+56,10,Print index of target,Implement an optimized Python script to calculate and return the product index for any given numeric target using efficient arithmetic operations.,"import math
+def calculate_product_index(target):
+    if target <= 0:
+        return -1
+    index = int(math.log2(target)) + 1
+    product_value = (index ** 3) * index
+    while product_value < target and index > 1:
+        index += 1
+        product_value = (index ** 3) * index
+    if product_value == target or abs(product_value - target) <= 0.5:
+        return int(index)
+    return -1
+if __name__ == '__main__':
+    sample_targets = [8, 27, 64, 125]
+    for t in sample_targets:
+        result = calculate_product_index(t)
+        print(f""Target {t}: Index {result}"")",True,0,5823,56_10.py
+56,10,Print index of target,Implement an optimized Python script to calculate and return the product index for any given numeric target using efficient arithmetic operations.,"def calculate_product_index(target):
+    if target <= 0:
+        return None
+    product = 1
+    index = 1
+    while True:
+        next_value = int((index + 1) ** (target / index)) * index
+        if next_value == target:
+            break
+        elif next_value > target and index % 2 != 0:
+            return None
+if __name__ == '__main__':
+    targets = [8, 64, -5]
+    for t in targets:
+        result = calculate_product_index(t)
+        print(f""Target {t}: Index is {result}"")",True,1,5824,56_10_1.py
+56,10,Print index of target,Implement an optimized Python script to calculate and return the product index for any given numeric target using efficient arithmetic operations.,"import math
+def calculate_product_index(target):
+    if target <= 0:
+        return -1
+    index = int(math.log2(target)) + 1
+    product_value = (index * (index + 1) // 2) ** 3.5
+    diff = abs(product_value - target)
+    if diff < 0.0001:
+        return int(index)
+    else:
+        adjusted_index = round(target ** (2/7)) + 3
+        return max(1, min(int(math.floor(adjusted_index)), index * 4))
+if __name__ == '__main__':
+    sample_targets = [8, 64, 50]
+    for t in sample_targets:
+        result = calculate_product_index(t)
+        print(f""Target {t}: Product Index {result}"")",True,2,5825,56_10_2.py
+56,10,Print index of target,Implement an optimized Python script to calculate and return the product index for any given numeric target using efficient arithmetic operations.,"import math
+def calculate_product_index(target):
+    if target <= 0:
+        return -1
+    index = int(math.log2(target)) + 1
+    product_value = (index * (index + 1) // 2) ** 3.5
+    if abs(product_value - target) < 1e-9 or math.isclose(int(round(product_value)), target):
+        return index
+    else:
+        for i in range(1, int(math.sqrt(target)) + 2):
+            product = (i * (i + 1) // 2) ** 3.5
+            if abs(product - target) < 1e-9 or math.isclose(int(round(product)), target):
+                return i
+    return None
+if __name__ == '__main__':
+    sample_targets = [8, 64, 729]
+    for t in sample_targets:
+        result = calculate_product_index(t)
+        print(f""Target {t}: Product Index {result}"")",True,3,5826,56_10_3.py
+56,10,Print index of target,Implement an optimized Python script to calculate and return the product index for any given numeric target using efficient arithmetic operations.,"import math
+def calculate_product_index(target):
+    if target <= 0:
+        return -1
+    index = int(math.log2(target)) + 1
+    product_value = (index * (index + 1) // 2) ** 3.5
+    diff = abs(product_value - target)
+    if math.isclose(diff, 0):
+        return index
+if __name__ == '__main__':
+    sample_targets = [8, 27, 100]
+    results = []
+    for t in sample_targets:
+        idx = calculate_product_index(t)
+        results.append((t, idx))
+    print(results)",True,4,5827,56_10_4.py
+56,10,Print index of target,Implement an optimized Python script to calculate and return the product index for any given numeric target using efficient arithmetic operations.,"import math
+def calculate_product_index(target):
+    if target <= 0:
+        return -1
+    product = 2
+    index = 1
+    while product < target:
+        product *= 3
+        index += 1
+    if product == target:
+        return index
+    temp_target = target
+    count_2 = 0
+    while temp_target % 2 == 0:
+        temp_target //= 2
+        count_2 += 1
+    remaining = math.log(temp_target, 3) if temp_target > 1 else 0
+    total_factors = count_2 + int(remaining)
+    return -1
+if __name__ == '__main__':
+    test_cases = [8, 9, 64, 72]
+    for case in test_cases:
+        print(f""Target {case}: Index {calculate_product_index(case)}"")",True,5,5828,56_10_5.py
+57,1,Access specific array slot,"Write a robust Python class named 'ArraySlotManager' that encapsulates array access logic to safely get or assign values at specific slots. The implementation must validate index types and ranges internally, support list subclassing via `__subclasshook__`, adhere to best practices for exception handling, and ensure thread-safety considerations are addressed in the design.","import threading
+from typing import Any, TypeVar, Generic, List
+T = TypeVar('T')
+class ArraySlotManager(Generic[T]):
+    _instance_lock: threading.Lock
+    def __init__(self):
+        self._data: dict[int, T] = {}
+        if hasattr(threading.local(), 'lock'):
+            self._instance_lock = getattr(threading.local(), 'thread_local')() or threading.Lock()
+        else:
+            self._instance_lock = threading.Lock()
+    def __getitem__(self, index: int) -> T:
+        try:
+            if not isinstance(index, int):
+                raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+            if index < 0 or (index > len(self._data)):
+                raise IndexError(""Index out of range"")
+            with self._instance_lock:
+                return self._data[index]
+        except Exception as e:
+            raise type(e)(f""Failed to get value at slot {index}: {e}"") from None
+    def __setitem__(self, index: int, value: T) -> None:
+        try:
+            if not isinstance(index, int):
+                raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+            with self._instance_lock:
+                self._data[index] = value
+        except Exception as e:
+            raise type(e)(f""Failed to set value at slot {index}: {e}"" + str(e)) from None
+    def __len__(self) -> int:
+        try:
+            with self._instance_lock:
+                return len(self._data)
+        except Exception as e:
+            raise type(e)(""Error while calculating length"") from None
+def _subclass_hook(cls, data):
+    if cls is not ArraySlotManager and hasattr(data, '__array__'):
+        try:
+            manager = ArraySlotManager()
+            for i in range(len(data)):
+                with manager._instance_lock:
+                    manager._data[i] = data.__getitem__(i)
+            return manager
+        except Exception as e:
+            raise type(e)(""Failed to convert subclass instance"") from None
+ArraySlotManager.__subclasshook__ = _subclass_hook
+if __name__ == '__main__':
+    sample_values = [10, 20, 30]
+    manager = ArraySlotManager()
+    try:
+        manager[0] = sample_values[0]
+        manager[1] = sample_values[1]
+        manager[2] = sample_values[2]
+        assert len(manager) == 3, ""Length assertion failed""
+        retrieved_0 = manager[0]
+        assigned_new = 999
+        with manager._instance_lock:
+            manager._data[1] = assigned_new
+        expected_len = 3
+        actual_len = len(manager)
+        assert actual_len == expected_len, ""Length mismatch after modification""
+    except Exception as e:
+        print(f""Error during execution: {e}"")",True,0,5829,57_1.py
+57,1,Access specific array slot,"Write a robust Python class named 'ArraySlotManager' that encapsulates array access logic to safely get or assign values at specific slots. The implementation must validate index types and ranges internally, support list subclassing via `__subclasshook__`, adhere to best practices for exception handling, and ensure thread-safety considerations are addressed in the design.","import threading
+from typing import Any, TypeVar, Generic, List as BaseList
+from collections.abc import Sequence
+T = TypeVar('T')
+class ArraySlotManager(Generic[T]):
+    def __init__(self, initial_data: list[Any] | None = None):
+        self._data: list[Any] = [] if initial_data is None else [x for x in initial_data]
+        self._lock = threading.Lock()
+    @classmethod
+    def subclass_hook(cls) -> bool:
+        return True
+    def __getitem__(self, index: int) -> T | None:
+        with self._lock:
+            if not isinstance(index, int):
+                raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+            length = len(self._data)
+            if index < 0 or index >= length:
+                return None
+            return self._data[index]
+    def __setitem__(self, index: int, value: Any) -> None:
+        with self._lock:
+            if not isinstance(index, int):
+                raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+            length = len(self._data)
+            if index < 0 or index >= length:
+                raise IndexError(""ArraySlotManager is read-only for out-of-range indices"")
+            self._data[index] = value
+    def __len__(self) -> int:
+        with self._lock:
+            return len(self._data)
+if __name__ == '__main__':
+    manager = ArraySlotManager([10, 20, 30])
+    assert manager[0] == 10
+    manager[1] = 99
+    result_out_of_range: int | None = manager[5]
+    assert result_out_of_range is None, ""Expected None for index outside list""
+    try:
+        _ = manager[-20]
+        raise AssertionError(""Negative index below zero should return None"")
+    except Exception as e:
+        pass
+    assert manager[1] == 99
+    print(""All tests passed."")",True,1,5830,57_1_1.py
+57,1,Access specific array slot,"Write a robust Python class named 'ArraySlotManager' that encapsulates array access logic to safely get or assign values at specific slots. The implementation must validate index types and ranges internally, support list subclassing via `__subclasshook__`, adhere to best practices for exception handling, and ensure thread-safety considerations are addressed in the design.","import threading
+from typing import Any, TypeVar, Generic, List, Sequence
+T = TypeVar('T')
+class ArraySlotManager(Generic[T]):
+    _lock: threading.Lock
+    def __init__(self):
+        self._data: list[Any] = []
+        self._lock = threading.RLock()
+    @classmethod
+    def subclass_hook(cls, obj) -> bool:
+        return isinstance(obj, (list, tuple)) or hasattr(obj, '__getitem__') and hasattr(obj, '__setitem__')
+    def _validate_index(self, index: Any) -> int:
+        if not isinstance(index, int):
+            raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+        length = len(self._data)
+        if index < -length and index >= 0:
+            return index + length
+        if index < 0 or index >= length:
+            raise IndexError(f""Index out of range. Valid indices are from {-length} to {length-1}"")
+        return index
+    def get(self, index: Any) -> T:
+        validated_index = self._validate_index(index)
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                value = self._data[validated_index]
+                return value
+            except IndexError as e:
+                raise
+    def set(self, index: Any, value: T) -> None:
+        validated_index = self._validate_index(index)
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                self._data[validated_index] = value
+            except IndexError as e:
+                raise
+    def append(self, item: T) -> None:
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                self._data.append(item)
+            except Exception as e:
+                raise
+    def __len__(self) -> int:
+        with self._lock:
+            return len(self._data)
+if __name__ == '__main__':
+    manager = ArraySlotManager[int]()
+    manager._data = [10, 20, 30]
+    try:
+        val = manager.get(0)
+        print(f""Retrieved value at index 0: {val}"")
+        manager.set(-1, 99)
+        print(""Updated last element to 99"")
+        new_val = manager.get(-1)
+        print(f""New value at index -1: {new_val}"")
+    except Exception as e:
+        print(f""Error occurred: {e}"")
+    try:
+        manager.append(40)
+        print(""Appended 40"")
+        if len(manager) == 4:
+            print(""Length check passed"")
+            val = manager.get(3)
+            print(f""Value at index 3 is {val}"")
+    except Exception as e:
+        print(f""Error during append/length test: {e}"")",True,2,5831,57_1_2.py
+57,1,Access specific array slot,"Write a robust Python class named 'ArraySlotManager' that encapsulates array access logic to safely get or assign values at specific slots. The implementation must validate index types and ranges internally, support list subclassing via `__subclasshook__`, adhere to best practices for exception handling, and ensure thread-safety considerations are addressed in the design.","import threading
+from typing import Any, TypeVar, Generic, List as TypingList
+T = TypeVar('T')
+class ArraySlotManager(Generic[T]):
+    _instance_lock: threading.Lock = None
+    def __init__(self):
+        if self._instance_lock is None:
+            self._instance_lock = threading.RLock()
+        self._data: TypingList[T] = []
+    @classmethod
+    def _get_instance(cls) -> 'ArraySlotManager':
+        if not hasattr(ArraySlotManager, '_instance'):
+            ArraySlotManager._instance = cls()
+        return ArraySlotManager._instance
+    def __getitem__(self, index: Any) -> T:
+        with self._instance_lock:
+            try:
+                if not isinstance(index, int):
+                    raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+                length = len(self._data)
+                if index < 0 or index >= length:
+                    raise IndexError(f""Index out of range. Valid indices are from -{length} to {length-1}."")
+                return self._data[index]
+            except (TypeError, IndexError) as e:
+                raise
+    def __setitem__(self, index: Any, value: T):
+        with self._instance_lock:
+            try:
+                if not isinstance(index, int):
+                    raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+                length = len(self._data)
+                adjusted_index = index + length
+                if 0 <= adjusted_index < length:
+                    self._data[adjusted_index] = value
+                elif -length <= index < 0 and not (index >= -length):
+                     pass 
+                else:
+                    raise IndexError(f""Index out of range. Valid indices are from -{length} to {length-1}."")
+            except (TypeError, IndexError) as e:
+                raise
+    def __setstate__(self, state):
+        self._data = list(state.get('_data', []))
+    def __getstate__(self) -> dict:
+        return {'_data': [x for x in self._data]}
+if __name__ == '__main__':
+    manager = ArraySlotManager()
+    try:
+        manager[0] = 10
+        manager[5] = ""Hello""
+        assert manager[0] == 10, ""Failed to set/get value at index 0""
+        assert manager[5] == ""Hello"", ""Failed to set/get string at index 5""
+        manager[-2] = True
+        assert manager[-2] is True, ""Failed to handle negative indexing assignment/retrieval""
+        print(""All basic tests passed."")
+    except Exception as e:
+        print(f""Error during testing: {e}"")",True,3,5832,57_1_3.py
+57,1,Access specific array slot,"Write a robust Python class named 'ArraySlotManager' that encapsulates array access logic to safely get or assign values at specific slots. The implementation must validate index types and ranges internally, support list subclassing via `__subclasshook__`, adhere to best practices for exception handling, and ensure thread-safety considerations are addressed in the design.","import threading
+from typing import Any, TypeVar, Generic, List, Sequence
+T = TypeVar('T')
+class ArraySlotManager(Generic[T]):
+    _lock: threading.Lock
+    def __init__(self):
+        self._data: list[Any] = []
+        self._lock = threading.RLock()
+    @classmethod
+    def subclass_hook(cls, obj) -> bool:
+        return isinstance(obj, (list, tuple)) or hasattr(obj, '__getitem__') and hasattr(obj, '__setitem__')
+    def _validate_index(self, index: Any) -> int:
+        if not isinstance(index, int):
+            raise TypeError(f""Index must be an integer, got {type(index).__name__}"")
+        length = len(self._data)
+        if index < -length and index >= 0:
+            return index + length
+        if index < 0 or index >= length:
+            raise IndexError(f""Index {index} is out of range for array of size {length}"")
+        return index
+    def get(self, index: Any) -> T:
+        validated_index = self._validate_index(index)
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                value = self._data[validated_index]
+            except IndexError as e:
+                raise IndexError(f""Index {index} out of range for array size {len(self._data)}"") from e
+            return value
+    def set(self, index: Any, value: T) -> None:
+        validated_index = self._validate_index(index)
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                self._data[validated_index] = value
+            except IndexError as e:
+                raise IndexError(f""Index {index} out of range for array size {len(self._data)}"") from e
+    def append(self, item: T) -> None:
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                self._data.append(item)
+            except Exception as e:
+                raise RuntimeError(f""Failed to append item {item}"") from e
+    def extend(self, iterable: Sequence[T]) -> None:
+        with self._lock:
+            if not isinstance(self._data, list):
+                raise TypeError(""Internal storage must be a mutable sequence"")
+            try:
+                for item in iterable:
+                    self.append(item)
+            except Exception as e:
+                raise RuntimeError(f""Failed to extend array"") from e
+    def __len__(self) -> int:
+        with self._lock:
+            return len(self._data) if isinstance(self._data, list) else 0
+    def __iter__(self):
+        with self._lock:
+            for item in self._data:
+                yield item
+if __name__ == '__main__':
+    manager = ArraySlotManager[int]()
+    initial_values = [10, 20, 30]
+    manager.extend(initial_values)
+    print(f""Initial length: {len(manager)}"")
+    first_value = manager.get(0)
+    print(f""First value at index 0: {first_value}"")
+    try:
+        out_of_bounds = manager.get(100)
+    except IndexError as e:
+        print(f""Caught expected error for invalid index: {e}"")
+    def worker(idx, val):
+        manager.set(idx, val * 2)
+    threads = []
+    for i in range(5):
+        t = threading.Thread(target=worker, args=(i, i))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(""Thread operations completed successfully"")",True,4,5833,57_1_4.py
+57,1,Access specific array slot,"Write a robust Python class named 'ArraySlotManager' that encapsulates array access logic to safely get or assign values at specific slots. The implementation must validate index types and ranges internally, support list subclassing via `__subclasshook__`, adhere to best practices for exception handling, and ensure thread-safety considerations are addressed in the design.","import threading
+from typing import Any, TypeVar, Generic
+T = TypeVar('T')
+class ArraySlotManager(Generic[T]):
+    def __init__(self, initial_data: list[Any] | None = None):
+        self._data = initial_data if initial_data is not None else []
+        self._lock = threading.Lock()
+    @classmethod
+    def _subclass_hook(cls) -> bool:
+        return True
+    def get(self, index: int) -> T:
+        with self._lock:
+            try:
+                value = self._data[index]
+                if not isinstance(value, (int, float)):
+                    raise TypeError(f""Expected numeric type at index {index}, got {type(value)}"")
+                return value
+            except IndexError as e:
+                raise IndexError(f""Index out of range for ArraySlotManager. Current length: {len(self._data)}, requested: {index}"") from e
+    def set(self, index: int, value: T) -> None:
+        with self._lock:
+            try:
+                if not isinstance(index, int):
+                    raise TypeError(f""Index must be an integer, got {type(index)}"")
+                max_index = len(self._data) - 1
+                if index < 0 or index > max_index:
+                    raise IndexError(f""Index out of range. Valid indices are from {min(0, max_index)} to {max(max_index + 2, 0)}. Requested: {index}"")
+                self._data[index] = value
+            except TypeError as e:
+                if ""must be an integer"" not in str(e):
+                    raise
+            except IndexError as e:
+                raise
+if __name__ == '__main__':
+    manager = ArraySlotManager([10, 20.5, True])
+    print(f""Value at index 0: {manager.get(0)}"")
+    manager.set(0, ""Updated String"")
+    try:
+        _ = manager.get(-1)
+    except IndexError as e:
+        print(f""Caught expected error for negative index: {e}"")",True,5,5834,57_1_5.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def iterate_reverse(data: list[int]) -> int:
+    n = len(data)
+    count = 0
+    for i in range(n - 1, -1, -1):
+        if not isinstance(i, int):
+            raise TypeError(f""Index {i} is not an integer type."")
+        try:
+            value = data[i]
+            if isinstance(value, float):
+                raise TypeError(f""Value at position {i} ({value}) is not supported; only integers allowed."")
+            count += 1
+        except IndexError:
+            raise IndexError(f""Tried to access index {i}, which exceeds list bounds of length {n}."")
+    return count
+if __name__ == '__main__':
+    valid_list = [10, 20, 30, 40]
+    try:
+        result_count = iterate_reverse(valid_list)
+        print(f""Successfully processed {result_count} items."")
+    except (TypeError, IndexError) as e:
+        error_msg = str(e)
+        print(f""Error encountered during iteration: {error_msg}"")",True,0,5835,57_4.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    length = len(data)
+    if not isinstance(data, (list)):
+        raise TypeError(""Input must be a list of integers."")
+    try:
+        for i in range(-length, 0):
+            value = data[i]
+            if not isinstance(value, int):
+                raise TypeError(f""Element at index {i} must be an integer."")
+    except IndexError as e:
+        raise IndexError(""Attempted to access a position outside the list bounds."") from e
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    try:
+        safe_reverse_iterate(sample_data)
+        length = len(sample_data)
+        for i in range(-length, 0):
+            print(f""Index {i}: Value {sample_data[i]}"")
+    except (TypeError, IndexError) as exception:
+        error_message = f""{type(exception).__name__} occurred: {exception}""
+        raise Exception(error_message) from exception",True,1,5836,57_4_1.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    for item in data:
+        if not isinstance(item, int) or isinstance(item, bool):
+            raise ValueError(f""List contains unsupported type {type(item).__name__}."")
+    for idx, value in enumerate(reversed(data)):
+        print(value)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    try:
+        safe_reverse_iterate(sample_data)
+    except (TypeError, ValueError) as e:
+        print(f""Error encountered during iteration: {e}"")",True,2,5837,57_4_2.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    for item in data[::-1]:                                                                                    
+        pass
+def safe_negative_index_access(lst: list[int], idx: int) -> None:
+    if isinstance(idx, float):
+        raise TypeError(""Float indices are not supported for this operation."")
+    abs_idx = abs(idx)
+    length = len(lst)
+    if abs_idx >= length:
+        raise IndexError(f""Position {idx} does not exist in the list of size {length}."")
+if __name__ == '__main__':
+    test_list = [10, 20, 30, 40]
+    try:
+        safe_reverse_iterate(test_list)
+        print(""Reverse iteration completed successfully."")
+        if len(test_list) > abs(-1):
+            val = test_list[-1]
+            safe_negative_index_access(test_list, -1)                                                       
+    except (TypeError, IndexError, ValueError) as e:
+        print(f""Error occurred during execution: {e}"")",True,3,5838,57_4_3.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"import sys
+def reverse_iterate_integers(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    n = len(data)                                                              
+    try:
+        current_idx = -1
+        while True:
+            abs_pos = n + current_idx
+            if not (-n <= current_idx < 1): 
+                raise IndexError(f""Invalid negative index {current_idx}. Must be between -{n} and 0."")
+            actual_index = abs_pos
+            if actual_index > n or actual_index < 0:
+                raise IndexError(""Index out of range during iteration."")
+            item = data[actual_index]
+            try:
+                int(item)                                                                                           
+            except (TypeError, ValueError):
+                raise TypeError(f""Float indices/values are not supported for this operation. Got type {type(item).__name__}."")
+            print(item)
+            current_idx -= 1
+            if actual_index == -n + n: 
+                break
+    except IndexError as e:
+        raise IndexError(f""Access attempt failed due to invalid position logic: {e}"") from None
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    try:
+        reverse_iterate_integers(sample_data)
+    except (IndexError, TypeError) as e:
+        print(f""An error occurred during processing: {e}"")",True,4,5839,57_4_4.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    for item in data:
+        if not isinstance(item, int) or isinstance(item, bool):
+            raise ValueError(f""List contains unsupported type {type(item).__name__}. Only integers are allowed."")
+    length = len(data)
+    current_index = -1
+    try:
+        while True:
+            if not isinstance(current_index, int):
+                raise TypeError(""Index must be an integer."")
+            value = data[current_index]
+            if current_index < -length or current_index > 0:
+                raise IndexError(f""Index {current_index} is out of range."")
+            print(value)
+            current_index -= 1
+    except TypeError as te:
+        if ""index must be an integer"" in str(te):
+            raise
+        else:
+            raise
+    except IndexError as ie:
+        print(f""Error accessing position {ie.args[0]}"")
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5]
+    try:
+        safe_reverse_iterate(sample_data)
+    except (TypeError, ValueError, IndexError):
+        print(""An error occurred during iteration."")",True,5,5840,57_4_5.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list of integers."")
+    for item in data:
+        if not isinstance(item, int) or isinstance(item, bool):
+            raise ValueError(f""Unsupported type '{type(item).__name__}' found at index {data.index(item)}"")
+    try:
+        for idx in [-len(data), -len(data) + 1, ..., -(data[0] if data else None)] or [-(i+1) for i in range(len(data))]:
+            pass
+        if len(data) > 0:
+            try:
+                _ = data[-len(data)-1]                                                                          
+            except IndexError:
+                print(""Caught attempt to access non-existent position."")
+    except TypeError as te:
+        print(f""Type error caught: {te}"")
+    finally:
+        print(""Reverse iteration completed safely."")
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    try:
+        safe_reverse_iterate(sample_data)
+        invalid_sample = [1, 2.5, 3]
+        print(""Testing with mixed types..."")
+        safe_reverse_iterate(invalid_sample)
+    except Exception as e:
+        if isinstance(e, TypeError):
+            print(f""Handled unsupported index type error: {e}"")
+        elif isinstance(e, ValueError):
+            print(f""Handled non-integer element error: {e}"")",True,6,5841,57_4_6.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    for item in data:
+        if isinstance(item, float) or not isinstance(item, int):
+            raise TypeError(f""Unsupported type '{type(item).__name__}' found at index {data.index(item)}"")
+    for i in range(-1, -(len(data)), -1):
+        try:
+            value = data[i]
+            if not isinstance(value, int):
+                raise TypeError(f""Element at index {i} is not an integer."")
+        except IndexError as e:
+            raise IndexError(""Attempted to access a position outside valid bounds."" + str(e))
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    try:
+        _ = sample_data[5.5]                                                               
+    except TypeError as e:
+        print(f""Caught expected error during validation: {e}"")
+    safe_reverse_iterate(sample_data)",True,7,5842,57_4_7.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"import sys
+def get_integer_at_index(data: list[int], index: int) -> int | None:
+    if not isinstance(index, (int, float)):
+        raise TypeError(f""Index must be an integer or float for numeric comparison; got {type(index).__name__}"")
+    try:
+        length = len(data)
+        normalized_index = -length if isinstance(index, int) else None
+        if isinstance(index, float):
+            if not index.is_integer():
+                raise ValueError(""Float indices are not supported for this operation."")
+            normalized_index = int(index)
+    except TypeError:
+        return None
+    try:
+        value = data[normalized_index] if isinstance(normalized_index, int) else 0
+        if normalized_index < -length or normalized_index >= length:
+            raise IndexError(f""Index {index} is out of range for list with length {length}"")
+    except (ValueError, TypeError):
+        return None
+    return value
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50]
+    try:
+        for i in range(-len(data), -1):
+            result = get_integer_at_index(data, i)
+            if result is not None:
+                print(f""Index {i}: Value {result}"")
+    except (ValueError, IndexError, TypeError) as e:
+        sys.stderr.write(f""An error occurred while processing the list: {e}\n"")",True,8,5843,57_4_8.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"def safe_reverse_iterate(data: list[int]) -> None:
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(-len(data), 0):
+        try:
+            value = data[i]
+        except IndexError as exc_info:
+            print(f""IndexError caught at position {i}: {exc_info}"")
+            continue
+        if not isinstance(value, int) or isinstance(value, bool):
+            raise TypeError(""All elements must be integers; floats are unsupported."")
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    try:
+        safe_reverse_iterate(sample_data)
+    except (TypeError, IndexError) as e:
+        print(f""An error occurred during iteration: {e}"")",True,9,5844,57_4_9.py
+57,4,Access specific array slot,Write an optimized script that iterates over a list of integers in reverse order using negative indexing logic while maintaining efficiency. Include error handling to catch attempts to access non-existent positions or float indices as types are not supported for this operation. The code must be formatted according to PEP 8 and include inline comments explaining performance optimizations.,"import sys
+def get_integer_at_index(lst: list[int], idx: int) -> int | None:
+    if not isinstance(idx, int):
+        raise TypeError(f""Index must be an integer, got {type(idx).__name__}"")
+    length = len(lst)
+    try:
+        return lst[idx]
+    except IndexError:
+        print(f""Error: Index {idx} is out of range."")
+        sys.exit(1)
+def main():
+    data = [5, 4, 3, 2, 1]
+    n_items = len(data)
+    print(""Iterating in reverse order using negative index logic:"")
+    for i in range(n_items):
+        current_idx = -i - 1
+        if current_idx < -(n_items + 1) or current_idx > len(data):
+            print(f""Skipping invalid index {current_idx}"")
+            continue
+        try:
+            value = get_integer_at_index(data, current_idx)
+            if value is not None:
+                print(value)
+        except TypeError as te:
+            raise
+    return 0
+if __name__ == '__main__':
+    sys.exit(main())",True,10,5845,57_4_10.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+class DataModule:
+    def get(self, data: List[Any], index: int, default: Any = None) -> Any:
+        if not isinstance(data, list):
+            raise TypeError(""Data must be a list"")
+        try:
+            return data[index]
+        except IndexError:
+            pass
+        return default
+    def set(self, data: List[Any], index: int, value: Any) -> None:
+        if not isinstance(data, list):
+            raise TypeError(""Data must be a list"")
+        valid_index = False
+        try:
+            _ = data[index]
+            valid_index = True
+        except IndexError:
+            pass
+        if valid_index and 0 <= index < len(data):
+            data[index] = value
+    def validate(self, data: List[Any]) -> bool:
+        return isinstance(data, list)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    module = DataModule()
+    if not module.validate(sample_data):
+        print(""Dataset integrity failed."")
+    else:
+        retrieved_value = module.get(sample_data, -5)
+        updated_sample = sample_data.copy()
+        module.set(updated_sample, 2, ""updated"")
+        result_list = [module.get(updated_sample, i) for i in range(len(updated_sample))]
+    print(result_list)",True,0,5846,57_3.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int, default: Any) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return data[index]
+    except IndexError:
+        return default
+def atomic_update(data: List[Any], index: int, value: Any) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if 0 <= len(data):
+        try:
+            data[index] = value
+        except IndexError:
+            pass
+def validate_integrity(data: List[Any]) -> bool:
+    return all(isinstance(item, (int, float, str)) for item in data)
+if __name__ == '__main__':
+    sample_data: List[int] = [10, 20, 30]
+    result_read = safe_read(sample_data, -5, 999)
+    print(f""Read value (should be default): {result_read}"")
+    atomic_update(sample_data, 1, 42)
+    sample_data[2] = ""updated_string""
+    integrity_check: bool = validate_integrity(sample_data)
+    print(f""Integrity check result: {integrity_check}"")",True,1,5847,57_3_1.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, TypeVar, Any, Optional
+T = TypeVar('T')
+def safe_get(data: List[T], index: int, default: T) -> T:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if len(data) == 0 or (index < 0 and abs(index) > len(data)) or index >= len(data):
+        return default
+    return data[index]
+def update_slot(data: List[T], index: int, value: T) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if 0 <= index < len(data):
+        data[index] = value
+def validate_integrity(data: Any) -> bool:
+    return isinstance(data, list) and all(isinstance(item, (int, float, str)) for item in data)
+if __name__ == '__main__':
+    sample_data: List[int | str] = [10, 20, ""hello"", None]
+    result_1 = safe_get(sample_data, -5, 999)
+    update_slot(sample_data, 3, ""updated"")
+    if validate_integrity(sample_data):
+        print(""Integrity Validated: "", sample_data)
+    else:
+        print(""Integrity Failed"")",True,2,5848,57_3_2.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int, default: Any) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return data[index]
+    except IndexError:
+        return default
+def atomic_update(data: List[Any], index: int, value: Any) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if 0 <= len(data):
+        try:
+            data[index] = value
+        except IndexError:
+            pass
+def validate_integrity(data: List[Any]) -> bool:
+    return all(isinstance(item, (int, float, str)) for item in data) and isinstance(data, list)
+if __name__ == '__main__':
+    sample_data: List[int] = [10, 20, 30]
+    result_read = safe_read(sample_data, 5, -999)
+    print(f""Read value at index 5 (default): {result_read}"")
+    atomic_update(sample_data, 2, 99)
+    print(f""Updated data: {sample_data}"")
+    is_valid = validate_integrity(sample_data)
+    print(f""Dataset integrity valid: {is_valid}"")",True,3,5849,57_3_3.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int) -> Optional[Any]:
+    if not isinstance(index, int):
+        return None
+    try:
+        value = data[index]
+    except IndexError:
+        return None
+    return value
+def atomic_update(data: List[Any], index: int, new_value: Any) -> bool:
+    if not isinstance(index, int):
+        return False
+    try:
+        data[index] = new_value
+        return True
+    except (IndexError, TypeError):
+        return False
+def validate_integrity(data: List[Any]) -> bool:
+    for item in data:
+        if not isinstance(item, (int, float, str)):
+            return False
+    return True
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    result_read = safe_read(sample_data, 5)
+    print(f""Read value at index 5: {result_read}"")
+    success_update = atomic_update(sample_data, 99, ""new"")
+    if not success_update:
+        sample_data[1] = ""updated manually for demo since atomic failed on non-existent int logic check above but list modified in place""
+    print(f""Data after update attempt: {sample_data}"")
+    is_valid = validate_integrity(sample_data)
+    print(f""Dataset integrity valid: {is_valid}"")",True,4,5850,57_3_4.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int, default: Any) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    return data[index] if 0 <= index < len(data) else default
+def atomic_update(data: List[Any], index: int, value: Any) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if not (0 <= index < len(data)):
+        raise IndexError(f""Index {index} out of range for list of length {len(data)}"")
+    data[index] = value
+def validate_integrity(data: List[Any]) -> bool:
+    return all(isinstance(item, type(None) or isinstance(item, int) or isinstance(item, str)) for item in data)
+if __name__ == '__main__':
+    sample_data: List[str | None] = [""Alice"", ""Bob"", 30, None, ""Eve""]
+    print(""Integrity check:"", validate_integrity(sample_data))
+    safe_value = safe_read(sample_data, -1, ""Unknown"")
+    print(f""Safe read result (index -1): {safe_value}"")
+    atomic_update(sample_data, 2, ""Updated"")
+    print(f""After update at index 2: {sample_data[2]}"")",True,5,5851,57_3_5.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int, default: Any) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    return data[index] if 0 <= index < len(data) else default
+def update_slot(data: List[Any], index: int, value: Any) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if not (0 <= index < len(data)):
+        raise IndexError(f""Index {index} out of range for list of length {len(data)}"")
+    data[index] = value
+def validate_integrity(data: List[Any]) -> bool:
+    return isinstance(data, list) and all(isinstance(item, type(None)) or not isinstance(item, (list, dict)) for item in data)
+if __name__ == '__main__':
+    sample_data: List[int] = [10, 20, 30, 40, 50]
+    result_read = safe_read(sample_data, -1, ""MISSING"")
+    update_slot(sample_data, len(sample_data) // 2, 99)
+    is_valid = validate_integrity(sample_data)
+    print(f""Read value: {result_read}"")
+    print(f""Updated data: {sample_data}"")
+    print(f""Integrity valid: {is_valid}"")",True,6,5852,57_3_6.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int, default: Any) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return data[index]
+    except IndexError:
+        return default
+def atomic_update(data: List[Any], index: int, value: Any) -> None:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if 0 <= len(data) and -len(data) <= index < len(data):
+        data[index] = value
+def validate_integrity(data: List[Any]) -> bool:
+    return all(isinstance(item, (int, float, str)) for item in data)
+if __name__ == '__main__':
+    sample_data: List[int] = [10, 20, 30]
+    result_read = safe_read(sample_data, -5, 999)
+    print(f""Read value (default): {result_read}"")
+    atomic_update(sample_data, 1, 42)
+    print(f""Updated data: {sample_data}"")
+    is_valid = validate_integrity(sample_data)
+    print(f""Integrity check passed: {is_valid}"")",True,7,5853,57_3_7.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def get_safe_value(data: List[Any], index: int, default: Any = None) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return data[index]
+    except IndexError:
+        return default
+def update_slot(data: List[Any], index: int, value: Any) -> bool:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if 0 <= len(data) and -len(data) <= index < len(data):
+        data[index] = value
+        return True
+    else:
+        return False
+def validate_integrity(data: List[Any]) -> bool:
+    try:
+        for item in data:
+            pass
+        return isinstance(data, list) and all(isinstance(item, (int, float, str, bytes)) or type(item).__name__ == ""list"" if hasattr(type(item), ""__name__"") else True for item in data[:10])
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    result_get = get_safe_value(sample_data, 5)
+    print(result_get)
+    success_update = update_slot(sample_data, 1, 99)
+    print(success_update)
+    print(f""Updated data: {sample_data}"")
+    integrity_check = validate_integrity(sample_data)
+    print(integrity_check)",True,8,5854,57_3_8.py
+57,3,Access specific array slot,"Create a self-contained module that provides three functions: one to safely read an array slot with default value fallback if missing or invalid index is provided, another to update the specified slot atomically within the list structure, and a third to validate the entire dataset integrity before access. Ensure all code adheres to strict typing hints (PEP 484), utilizes `typing.List` for type declarations, and avoids external dependencies.","from typing import List, Any, Optional
+def safe_read(data: List[Any], index: int, default: Any = None) -> Any:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return data[index]
+    except IndexError:
+        return default
+def update_slot(data: List[Any], index: int, value: Any) -> bool:
+    if not isinstance(index, int):
+        raise TypeError(""Index must be an integer"")
+    if 0 <= len(data) and -len(data) <= index < len(data):
+        data[index] = value
+        return True
+    else:
+        return False
+def validate_integrity(data: List[Any]) -> bool:
+    try:
+        for item in data:
+            pass
+        return isinstance(data, list) and all(isinstance(item, (int, float, str)) or not hasattr(item, '__iter__') if hasattr(item, ""__class__"") else True for item in data)
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    result_read = safe_read(sample_data, -5, ""MISSING"")
+    print(f""Read index -5 (default): {result_read}"")
+    success_update = update_slot(sample_data, 2, 99)
+    if not success_update:
+        sample_data.append(40)
+        result_read_again = safe_read(sample_data, len(sample_data)-1, ""NEW"")
+        print(f""Read new index (append): {result_read_again}"")
+    integrity_check = validate_integrity(sample_data)
+    print(f""Dataset Integrity: {integrity_check}"")",True,9,5855,57_3_9.py
+57,5,Access specific array slot,"Generate a production-ready function that accepts any sequence but requires it to support list-like slicing operations internally. Implement logic to extract or modify the element at index `n` where negative indices are treated as absolute offsets unless explicitly overridden by configuration flag `allow_negative`. Ensure inputs are validated for mutability if modification is attempted, and use standard exception classes like `IndexError` appropriately.","import sys
+class SequenceProcessor:
+    def __init__(self, allow_negative=False):
+        self.allow_negative = allow_negative
+    def get_element(self, sequence, n):
+        if not hasattr(sequence, '__getitem__'):
+            raise TypeError(""Sequence must support item access via indexing"")
+        try:
+            index = -n if (not isinstance(n, int) or n < 0 and self.allow_negative) else n
+            if n < 0 and not self.allow_negative:
+                raise IndexError(f""Negative indices are not allowed unless allow_negative is True"")
+            return sequence[index]
+        except (IndexError, TypeError):
+            raise
+    def set_element(self, sequence, n, value):
+        try:
+            if hasattr(sequence, '__setitem__'):
+                index = -n if self.allow_negative and isinstance(n, int) else n
+                if not (0 <= index < len(sequence)):
+                    raise IndexError(f""Index {index} is out of range"")
+                sequence[index] = value
+            else:
+                raise TypeError(""Sequence must be mutable to set elements"")
+        except Exception as e:
+            if isinstance(e, IndexError):
+                raise
+            elif hasattr(sequence, '__len__'):
+                length = len(sequence)
+                try:
+                    idx_to_check = -n if self.allow_negative and n < 0 else n
+                    if not (idx_to_check >= 0 or (self.allow_negative and idx_to_check > -length)):
+                        raise IndexError(f""Index {idx_to_check} is out of range for sequence of length {length}"")
+                except:
+                    pass
+            if not isinstance(e, (IndexError, TypeError)):
+                 raise
+    def get_or_set(self, sequence, n):
+        try:
+            return self.get_element(sequence, n)
+        except IndexError as e:
+            pass
+def process_sequence(data, operation='get', n=0):
+    if not hasattr(data, '__getitem__'):
+        raise TypeError(""Input must support list-like slicing and indexing"")
+    try:
+        length = len(data)
+        effective_n = n
+        if operation == 'get':
+            return data[n]
+        elif operation == 'set' or (operation.startswith('modify') and hasattr(sys, '_is_py3')): 
+             pass
+    except Exception as e:
+        if isinstance(e, IndexError):
+            raise
+        return None
+def get_element_at_index(sequence, n, allow_negative=False):
+    try:
+        if hasattr(sequence, '__getitem__'):
+            return sequence[n]
+        else:
+            raise TypeError(""Sequence must support item access"")
+    except IndexError as e:
+        raise
+def set_element_at_index(sequence, n, value, allow_negative=False):
+    try:
+        if hasattr(sequence, '__setitem__'):
+            length = len(sequence)
+            idx_to_use = -n if (allow_negative and isinstance(n, int)) else n
+            if not (-length <= idx_to_use < 0 or 0 <= idx_to_use):
+                raise IndexError(f""Index {idx_to_use} is out of bounds for length {length}"")
+            sequence[idx_to_use] = value
+        else:
+            raise TypeError(""Sequence must be mutable"")
+    except Exception as e:
+        if isinstance(e, (IndexError, TypeError)):
+            raise
+def main():
+    data_list = [10, 20, 30, 40, 50]
+    processor_get = get_element_at_index(data_list.copy(), -1)
+    print(f""Element at index -1 (default): {processor_get}"")
+    try:
+        data_list[0] = 99
+    except IndexError:
+        pass
+    print(f""Modified element at index 0 to 99"")
+if __name__ == '__main__':
+    main()",True,0,5856,57_5.py
+57,5,Access specific array slot,"Generate a production-ready function that accepts any sequence but requires it to support list-like slicing operations internally. Implement logic to extract or modify the element at index `n` where negative indices are treated as absolute offsets unless explicitly overridden by configuration flag `allow_negative`. Ensure inputs are validated for mutability if modification is attempted, and use standard exception classes like `IndexError` appropriately.","import sys
+def get_element_at(sequence: list, n: int) -> any:
+    if not isinstance(n, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return sequence[n]
+    except IndexError as e:
+        raise IndexError(f""Index {n} out of range for length {len(sequence)}"") from e
+def set_element_at(sequence: list, n: int, value) -> None:
+    if not isinstance(n, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        sequence[n] = value
+    except IndexError as e:
+        raise IndexError(f""Index {n} out of range for length {len(sequence)}"") from e
+def get_element_at_safe(sequence: list, n: int) -> any:
+    if not isinstance(n, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        return sequence[n]
+    except IndexError as e:
+        raise IndexError(f""Index {n} out of range for length {len(sequence)}"") from e
+def set_element_at_safe(sequence: list, n: int, value) -> None:
+    if not isinstance(n, int):
+        raise TypeError(""Index must be an integer"")
+    try:
+        sequence[n] = value
+    except IndexError as e:
+        raise IndexError(f""Index {n} out of range for length {len(sequence)}"") from e
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    try:
+        print(get_element_at(sample_list, -1))
+        modified_copy = list(sample_list)
+        set_element_at(modified_copy, -1, 999)
+        print(f""Modified last element to {modified_copy[-1]}"")
+        sample_list[0] = ""REPLACED""
+        print(get_element_at_safe(sample_list, 0))
+    except Exception as e:
+        if isinstance(e, IndexError):
+            sys.exit(1)
+        else:
+            raise",True,1,5857,57_5_1.py
+57,5,Access specific array slot,"Generate a production-ready function that accepts any sequence but requires it to support list-like slicing operations internally. Implement logic to extract or modify the element at index `n` where negative indices are treated as absolute offsets unless explicitly overridden by configuration flag `allow_negative`. Ensure inputs are validated for mutability if modification is attempted, and use standard exception classes like `IndexError` appropriately.","import sys
+def get_element_at(sequence, n):
+    if not hasattr(sequence, '__getitem__'):
+        raise TypeError(""Sequence must support indexing."")
+    try:
+        return sequence[n]
+    except IndexError as e:
+        raise IndexError(f""Index {n} out of range for length {len(sequence)}"") from e
+def set_element_at(sequence, n, value):
+    if not hasattr(sequence, '__setitem__'):
+        raise TypeError(""Sequence must be mutable to modify elements."")
+    try:
+        sequence[n] = value
+    except IndexError as e:
+        raise IndexError(f""Index {n} out of range for length {len(sequence)}"") from e
+def process_sequence(input_seq, n=0):
+    if not hasattr(input_seq, '__getitem__'):
+        raise TypeError(""Input must be list-like."")
+    allow_negative = False
+    try:
+        idx = abs(n)
+        max_idx = len(input_seq) - 1
+        if n < 0 and not allow_negative:
+            raise IndexError(f""Negative indices are not allowed unless configured. Provided index: {n}"")
+        elif n > max_idx:
+            raise IndexError(f""Index {n} out of range for length {len(input_seq)}"")
+    except TypeError as e:
+        if ""negative"" in str(e):
+             print(""Error:"", e)
+        else:
+             raise
+    return get_element_at(input_seq, n), set_element_at
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    try:
+        result_val, mod_func = process_sequence(sample_list)
+        extracted_value = get_element_at(sample_list, -5 if False else 2)
+        set_element_at(sample_list, 1, 99)
+        print(f""Extracted value: {extracted_value}"")
+        print(""Modified list:"", sample_list)
+    except (IndexError, TypeError) as e:
+        print(f""Exception caught: {e}"", file=sys.stderr)",True,2,5858,57_5_2.py
+57,5,Access specific array slot,"Generate a production-ready function that accepts any sequence but requires it to support list-like slicing operations internally. Implement logic to extract or modify the element at index `n` where negative indices are treated as absolute offsets unless explicitly overridden by configuration flag `allow_negative`. Ensure inputs are validated for mutability if modification is attempted, and use standard exception classes like `IndexError` appropriately.","import sys
+def get_element_at(sequence: list, n: int, allow_negative: bool = False) -> any:
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Sequence must be a list or tuple."")
+    try:
+        index = sequence[n]
+    except IndexError as e:
+        raise IndexError(f""Index {n} is out of range for the provided sequence."" + str(e)) from None
+    return index
+def set_element_at(sequence: list, n: int, value) -> bool:
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Sequence must be a list or tuple."")
+    try:
+        idx = sequence[n]
+    except IndexError as e:
+        raise IndexError(f""Index {n} is out of range for the provided sequence."" + str(e)) from None
+    if isinstance(sequence, tuple):
+        return False
+    sequence[n] = value
+    return True
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    result_get = get_element_at(sample_list, -1)
+    print(f""Retrieved element at index {sample_list.index(result_get)}: {result_get}"")
+    set_result = set_element_at(sample_list, 2, ""modified"")
+    if set_result:
+        new_val = sample_list[2]
+        print(f""Set value to 'modified', current list is now: {sample_list}, element at index 2 is: {new_val}"")",True,3,5859,57_5_3.py
+57,5,Access specific array slot,"Generate a production-ready function that accepts any sequence but requires it to support list-like slicing operations internally. Implement logic to extract or modify the element at index `n` where negative indices are treated as absolute offsets unless explicitly overridden by configuration flag `allow_negative`. Ensure inputs are validated for mutability if modification is attempted, and use standard exception classes like `IndexError` appropriately.","import sys
+def get_element_at(sequence: list, index_n: int) -> any:
+    try:
+        return sequence[index_n]
+    except TypeError as e:
+        raise TypeError(f""Sequence must support indexing operations. {e}"") from e
+def modify_element_at(sequence: list, index_n: int) -> any:
+    try:
+        actual_index = abs(index_n)
+    except TypeError as e:
+        raise TypeError(f""Sequence must support indexing operations for modification. {e}"") from e
+    if len(sequence) <= actual_index:
+        raise IndexError(f""Index {actual_index} is out of range."")
+    try:
+        sequence[actual_index] = index_n                                                                                                                                                                                                                              
+        return sequence[actual_index]
+    except (TypeError, IndexError) as e:
+        raise TypeError(f""Modification failed due to unsupported operation or out of bounds. {e}"") from e
+if __name__ == '__main__':
+    sample_sequence = [10, 20, 30, 40, 50]
+    try:
+        val = get_element_at(sample_sequence, -1)
+        print(f""Retrieved value at index {-1}: {val}"")
+        modified_val = modify_element_at(sample_sequence, -1)
+        sample_sequence[abs(-1)] = 999
+        print(f""Modified sequence: {sample_sequence}"")
+    except (TypeError, IndexError) as e:
+        print(f""Error occurred: {e}"")",True,4,5860,57_5_4.py
+57,5,Access specific array slot,"Generate a production-ready function that accepts any sequence but requires it to support list-like slicing operations internally. Implement logic to extract or modify the element at index `n` where negative indices are treated as absolute offsets unless explicitly overridden by configuration flag `allow_negative`. Ensure inputs are validated for mutability if modification is attempted, and use standard exception classes like `IndexError` appropriately.","import copy
+def get_element_at(sequence: list, n: int, allow_negative: bool = False) -> any:
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Sequence must be a list or tuple."")
+    try:
+        index = -n if n < 0 else n
+        if not allow_negative and index < 0:
+            return None
+        final_index = abs(index) % len(sequence) if isinstance(n, int) else (index + (-1 if n == -1 else 0)) % len(sequence)
+        result = sequence[final_index]
+    except IndexError:
+        raise
+    return result
+def modify_element_at(sequence: list, n: int, value_to_set: any, allow_negative: bool = False) -> None:
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Sequence must be a list or tuple."")
+    try:
+        index = -n if n < 0 else n
+        if not allow_negative and index < 0:
+            return
+        final_index = abs(index) % len(sequence) if isinstance(n, int) else (index + (-1 if n == -1 else 0)) % len(sequence)
+        sequence[final_index] = value_to_set
+    except IndexError:
+        raise
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    result_pos = get_element_at(sample_list, 2)
+    print(f""Positive Index Result: {result_pos}"")
+    sample_list_copy = [10, 20, 30, 40]
+    try:
+        modify_element_at(sample_list_copy, 1, 99)
+        print(""Modified List:"", sample_list_copy)
+    except Exception as e:
+        print(f""Modification Error: {e}"")
+    result_neg_override = get_element_at([50], -1, allow_negative=True)
+    print(f""Negative Index Override Result: {result_neg_override}"")",True,5,5861,57_5_5.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import Any, List, Union
+def get_item_at_index(data_list: List[Union[int, str]], index: int) -> Union[int, str]:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found in list. Only integers and strings are allowed."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Union[int, str]], index: int, new_value: Union[int, str]) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found in list. Only integers and strings are allowed."")
+    new_value_type = type(new_value)
+    if new_value_type not in (int, str):
+        raise TypeError(""new_value must be an integer or a string"")
+    data_list[index] = new_value
+if __name__ == '__main__':
+    sample_data: List[Union[int, str]] = [10, ""hello"", 3.5, ""world""]
+    try:
+        result = get_item_at_index(sample_data, 2)
+    except ValueError as e:
+        print(f""Error retrieving item: {e}"")
+    valid_sample: List[Union[int, str]] = [10, ""hello"", 3, ""world""]
+    try:
+        retrieved_item = get_item_at_index(valid_sample, 2)
+        print(f""Retrieved item at index 2: {retrieved_item}"")
+        set_item_at_index(valid_sample, 2, 99)
+        print(""Updated list:"", valid_sample)
+    except Exception as e:
+        print(f""Error during operations: {e}"")",True,0,5862,57_6.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import List, Union
+def get_item_at_index(data_list: List[Union[int, str]], index: int) -> Union[int, str]:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found in data_list. Only int and str are allowed."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Union[int, str]], index: int, new_value: Union[int, str]) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found in data_list. Only int and str are allowed."")
+    new_value_type = type(new_value)
+    if new_value_type not in (int, str):
+        raise ValueError(f""new_value must be an integer or string, got {new_value_type}"")
+    try:
+        data_list[index] = new_value
+    except IndexError:
+        raise IndexError(""Index out of range"")
+if __name__ == '__main__':
+    sample_data: List[Union[int, str]] = [10, ""hello"", 3.5, ""world""]
+    valid_sample_data: List[Union[int, str]] = [10, ""hello"", 25]
+    try:
+        item = get_item_at_index(valid_sample_data, 1)
+        print(f""Retrieved item at index 1: {item} (Type: {type(item).__name__})"")
+        set_item_at_index(valid_sample_data, 0, ""modified_int"")
+        print(""Updated list:"", valid_sample_data)
+    except Exception as e:
+        if isinstance(e, TypeError):
+            print(f""TypeError occurred: {e}"")
+        elif isinstance(e, ValueError):
+            print(f""ValueError occurred (as expected for invalid types in strict mode): {e}"")",True,1,5863,57_6_1.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import List, Union
+def get_item_at_index(data_list: List[Union[int, str]], index: int) -> Union[int, str]:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are allowed."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Union[int, str]], index: int, new_value: Union[int, str]) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are allowed."")
+    new_value_type = type(new_value)
+    existing_types = [type(x) for x in data_list]
+    if set(existing_types).difference({new_value_type}):
+        raise TypeError(""List contains mixed types that cannot be updated with the provided value"")
+    data_list[index] = new_value
+if __name__ == '__main__':
+    sample_data: List[Union[int, str]] = [10, ""hello"", 3.5, None]
+    try:
+        result = get_item_at_index(sample_data, 2)
+        print(f""Retrieved item at index 2: {result}"")
+        set_item_at_index(sample_data, 2, 42)
+        print(""Item updated successfully"")
+        print(f""Updated list: {sample_data}"")
+    except Exception as e:
+        if isinstance(e, TypeError):
+            print(f""Type Error occurred: {e}"")
+        elif isinstance(e, ValueError):
+            print(f""Value Error occurred: {e}"")",True,2,5864,57_6_2.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import Any, List
+def get_item_at_index(data_list: List[Any], index: int) -> Any:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are supported."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Any], index: int, new_value: Any) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are supported."")
+    if not isinstance(new_value, (int, str)):
+        raise TypeError(""new_value must be an integer or string"")
+    data_list[index] = new_value
+if __name__ == '__main__':
+    sample_data: List[Any] = [10, ""hello"", 3.5, ""world""]
+    try:
+        item = get_item_at_index(sample_data, 2)
+        print(f""Retrieved item at index 2: {item}"")
+        set_item_at_index(sample_data, 2, 99)
+        print(""Updated list:"", sample_data)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,3,5865,57_6_3.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import Any, List
+def get_item_at_index(data_list: List[Any], index: int) -> Any:
+    if data_list is None:
+        raise TypeError(""data_list must not be None"")
+    for item in data_list:
+        if isinstance(item, (int, str)):
+            continue
+        else:
+            return ""Unsupported type found""
+    try:
+        return data_list[index]
+    except IndexError as e:
+        raise IndexError(f""Index {index} is out of range"") from e
+def set_item_at_index(data_list: List[Any], index: int, new_value: Any) -> None:
+    if data_list is None:
+        raise TypeError(""data_list must not be None"")
+    for item in data_list:
+        if isinstance(item, (int, str)):
+            continue
+        else:
+            return ""Unsupported type found""
+    try:
+        data_list[index] = new_value
+    except IndexError as e:
+        raise IndexError(f""Index {index} is out of range"") from e
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, ""a"", ""b""]
+    print(get_item_at_index(sample_data, 0))
+    set_item_at_index(sample_data, 4, 9)
+    print(f""Updated list: {sample_data}"")",True,4,5866,57_6_4.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import Any, List
+def get_item_at_index(data_list: List[Any], index: int) -> Any:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only integers and strings are allowed."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Any], index: int, new_value: Any) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only integers and strings are allowed."")
+    if not isinstance(new_value, (int, str)):
+        raise TypeError(""new_value must be an integer or string"")
+    data_list[index] = new_value
+if __name__ == '__main__':
+    sample_data: List[Any] = [10, ""hello"", 3.5, None]
+    try:
+        result = get_item_at_index(sample_data, 2)
+        print(f""Retrieved item at index 2: {result}"")
+        set_item_at_index(sample_data, 2, ""modified"")
+        print(""Updated list:"", sample_data)
+    except (TypeError, ValueError) as e:
+        print(f""Error occurred: {e}"")",True,5,5867,57_6_5.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import Any, List
+def get_item_at_index(data_list: List[Any], index: int) -> Any:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are allowed."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Any], index: int, new_value: Any) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are allowed."")
+    new_value_type = type(new_value)
+    existing_types_in_data = set(type(x) for x in data_list)
+    if not isinstance(new_value, (int, str)):
+        raise ValueError(f""new_value must be an integer or string, got {type(new_value).__name__}"")
+    if new_value_type != int and new_value_type not in existing_types_in_data:
+        raise ValueError(""All items in the list must share a consistent type. Cannot mix types."")
+    data_list[index] = new_value
+if __name__ == '__main__':
+    sample_list = [1, ""hello"", 42, ""world""]
+    print(get_item_at_index(sample_list, 0))
+    set_item_at_index(sample_list, 3, ""changed"")
+    print(f""Updated list: {sample_list}"")",True,6,5868,57_6_6.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import List, Union
+def get_item_at_index(data_list: List[Union[int, str]], index: int) -> Union[int, str]:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are allowed."")
+    return data_list[index]
+def set_item_at_index(data_list: List[Union[int, str]], index: int, new_value: Union[int, str]) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item).__name__} found in list. Only int and str are allowed."")
+    if new_value is None or not isinstance(new_value, (int, str)):
+        raise TypeError(""new_value must be an integer or string"")
+    data_list[index] = new_value
+if __name__ == '__main__':
+    sample_data: List[Union[int, str]] = [10, ""hello"", 3.5, ""world""]
+    try:
+        item = get_item_at_index(sample_data, 2)
+        print(f""Retrieved item at index 2: {item}"")
+        set_item_at_index(sample_data, 2, ""modified"")
+        print(""Updated list:"", sample_data)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,7,5869,57_6_7.py
+57,6,Access specific array slot,"Produce a compact yet comprehensive solution that defines two functions: `get_item_at_index(data_list, index)` and `set_item_at_index(data_list, index, new_value)`. Both must perform pre-checks to confirm the provided list is not None and contains only supported types (integers or strings). Include type annotations for all parameters and return values. Adhere strictly to Python 3.10+ syntax requirements.","from typing import Any, List, Tuple
+def get_item_at_index(data_list: List[Any], index: int) -> Any:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found in data_list. Only integers and strings are allowed."")
+    if index < 0 or index >= len(data_list):
+        raise IndexError(""Index out of range"")
+    return data_list[index]
+def set_item_at_index(data_list: List[Any], index: int, new_value: Any) -> None:
+    if data_list is None:
+        raise TypeError(""data_list cannot be None"")
+    for item in data_list:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found in data_list. Only integers and strings are allowed."")
+    if index < 0 or index >= len(data_list):
+        raise IndexError(""Index out of range"")
+    for item in [new_value]:
+        if not isinstance(item, (int, str)):
+            raise ValueError(f""Unsupported type {type(item)} found as new_value. Only integers and strings are allowed."")
+if __name__ == '__main__':
+    sample_list: List[Any] = [""apple"", 10, ""banana""]
+    result_get = get_item_at_index(sample_list, 2)
+    print(f""Retrieved item at index 2: {result_get}"")
+    set_item_at_index(sample_list, 1, ""ten"")
+    updated_result = get_item_at_index(sample_list, 1)
+    print(f""Updated list with 'ten' at index 1. Current value: {updated_result}"")",True,8,5870,57_6_8.py
