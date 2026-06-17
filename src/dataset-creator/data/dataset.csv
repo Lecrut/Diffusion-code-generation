@@ -84157,3 +84157,4029 @@ if __name__ == '__main__':
             print(f""The name '{target_name}' does not exist in the dataset."")
     except SystemExit as e:
         exit(e.code)",True,5,3495,33_10_5.py
+34,1,Add new entries to data,Implement a high-performance optimized function in Python that reads CSV data and inserts updated records into it without external libraries like pandas.,"import csv
+def read_and_update_csv(input_file: str) -> list[list[str]]:
+    records = []
+    with open(input_file, 'r', newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if len(row) > 0 and not all(cell.strip() == '' for cell in row):
+                records.append([cell.strip() for cell in row])
+    return records
+def write_updated_csv(records: list[list[str]], output_file: str, update_index: int = None, new_value: str | None = None) -> bool:
+    if not records or len(records[0]) == 0:
+        print(""No valid data to process."")
+        return False
+    temp_records = [row[:] for row in records]
+    if update_index is not None and 0 <= update_index < len(temp_records):
+        target_row = temp_records[update_index][:]
+        if new_value:
+            try:
+                int(new_value)
+                target_row[int(target_row.index('ID')) - 1] = str(int(new_value))
+            except ValueError:
+                pass
+            for i, cell in enumerate(target_row):
+                try:
+                    float(cell)
+                    target_row[i] = f""{float(cell)}"" if not new_value else None
+                except (ValueError, IndexError):
+                    continue
+        temp_records[update_index] = [str(x).strip() if x is not None else '' for x in target_row]
+    with open(output_file, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerows(temp_records)
+    return True
+if __name__ == '__main__':
+    sample_data = [
+        ['ID', 'Name', 'Age'],
+        ['101', 'Alice', '30'],
+        ['102', 'Bob', '25'],
+        ['103', 'Charlie', '35']
+    ]
+    with open('input.csv', 'w') as f:
+        writer = csv.writer(f)
+        for row in sample_data:
+            writer.writerow(row)
+    records = read_and_update_csv('input.csv')
+    update_index = 1
+    new_value = ""32""
+    if write_updated_csv(records, 'output.csv', update_index=update_index, new_value=new_value):
+        print(""CSV updated successfully."")",True,0,3496,34_1.py
+34,1,Add new entries to data,Implement a high-performance optimized function in Python that reads CSV data and inserts updated records into it without external libraries like pandas.,"import csv
+def read_csv(file_path):
+    records = []
+    with open(file_path, 'r', newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            records.append(row.copy())
+    return records
+def update_records(records, target_id, new_data):
+    updated_count = 0
+    for record in records:
+        if str(record.get('id', '')) == str(target_id):
+            for key, value in new_data.items():
+                record[key] = value
+            updated_count += 1
+            break
+    return records
+def write_csv(file_path, records):
+    fieldnames = list(records[0].keys()) if records else []
+    with open(file_path, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for record in records:
+            writer.writerow(record)
+def main():
+    file_name = ""data.csv""
+    if not __import__('os').path.exists(file_name):
+        with open(file_name, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['id', 'name', 'email'])
+            for row in [['101', 'Alice', 'alice@example.com'], ['102', 'Bob', 'bob@example.com']]:
+                writer.writerow(row)
+    records = read_csv(file_name)
+    updated_records = update_records(records, 101, {'name': 'Alice Smith', 'email': 'new_alice@example.com'})
+    write_csv(file_name, updated_records)
+if __name__ == '__main__':
+    main()",True,1,3497,34_1_1.py
+34,1,Add new entries to data,Implement a high-performance optimized function in Python that reads CSV data and inserts updated records into it without external libraries like pandas.,"import csv
+def read_csv_to_dict(file_path):
+    data = {}
+    with open(file_path, mode='r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            key = tuple(row.keys()) + (row['id'],) if 'id' in row else None
+            data[key] = dict(row)
+    return data
+def update_csv_records(input_file, output_file):
+    records_to_update = [
+        {'id': 101, 'name': 'Alice', 'age': 35},
+        {'id': 204, 'city': 'New York'},
+        {'id': 998, 'status': 'active'}
+    ]
+    with open(input_file, mode='r', newline='', encoding='utf-8') as input_f:
+        reader = csv.DictReader(input_f)
+        fieldnames = reader.fieldnames or []
+        temp_data = {}
+        for row in reader:
+            key = tuple(fieldnames[:fieldnames.index('id')+1]) + (row['id'],) if 'id' in fieldnames else None
+            if not key: continue
+            temp_data[key] = dict(row)
+    updated_records_count = 0
+    for record in records_to_update:
+        id_val = str(record['id'])
+        found_key = None
+        for k, v in temp_data.items():
+            if isinstance(k[1], int):
+                current_id = k[1]
+            else:
+                continue
+            is_match = True
+            update_fields = record.keys() - {'id'}
+            for field in update_fields:
+                if v.get(field) != str(record[field]):
+                    is_match = False
+                    break
+            if is_match and current_id == id_val:
+                found_key = k
+        if not found_key:
+             for k in temp_data.keys():
+                 if str(k[1]) == id_val:
+                     found_key = k
+                     break
+        if found_key:
+            new_row_dict = dict(temp_data.get(found_key, {}))
+            for key, value in record.items():
+                field_name = None
+                try:
+                    idx = temp_data[found_key].index(key)
+                    field_name = found_key[idx] if isinstance(idx, int) else None
+                    new_row_dict[field_name] = str(value)
+                except (ValueError, TypeError):
+                     pass
+            temp_data[found_key] = new_row_dict
+            updated_records_count += 1
+    with open(output_file, mode='w', newline='', encoding='utf-8') as output_f:
+        writer = csv.DictWriter(output_f, fieldnames=fieldnames)
+        writer.writeheader()
+        for key in sorted(temp_data.keys()):
+            row_dict = dict(temp_data[key])
+            final_row = {}
+            for i, fname in enumerate(fieldnames):
+                val = str(row_dict.get(fname))
+                try:
+                    idx = key.index(i) + 1 
+                    if isinstance(idx, int):
+                        pass                                     
+                except ValueError:
+                     continue
+                final_row[fname] = val
+            writer.writerow(final_row)
+    return updated_records_count
+if __name__ == '__main__':
+    input_file = 'sample_data.csv'
+    output_file = 'updated_sample_data.csv'
+    count = update_csv_records(input_file, output_file)
+    print(f""Updated {count} records."")",True,2,3498,34_1_2.py
+34,1,Add new entries to data,Implement a high-performance optimized function in Python that reads CSV data and inserts updated records into it without external libraries like pandas.,"import csv
+def read_and_update_csv(filename):
+    updated_records = []
+    with open(filename, 'r', newline='', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            row['status'] = 'updated'
+            updated_records.append(row)
+    with open(filename, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=reader.fieldnames + ['status'])
+    return updated_records
+if __name__ == '__main__':
+    sample_data = ""id,name,value\n1,Alice,100\n2,Bob,200""
+    import tempfile
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp:
+        temp_path = tmp.name
+        writer_temp = csv.writer(tmp)
+        writer_temp.writerow(['id', 'name', 'value'])
+        writer_temp.writerow([1, 'Alice', 100])
+        writer_temp.writerow([2, 'Bob', 200])
+    try:
+        read_and_update_csv(temp_path)
+        with open(temp_path, 'r') as f:
+            content = f.read()
+        print(content.strip())
+    finally:
+        import os
+        if os.path.exists(temp_path):
+            os.remove(temp_path)",True,3,3499,34_1_3.py
+34,0,Add new entries to data,Write a robust and efficient Python script to append new entries to an existing JSON data file using context managers.,"import json
+def append_to_json_file(file_path: str, new_entry: dict) -> None:
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    if isinstance(data, list):
+        data.append(new_entry)
+    elif isinstance(data, dict):
+        pass
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)
+if __name__ == '__main__':
+    file_name = ""data.json""
+    new_entry_1 = {""id"": 101, ""timestamp"": ""2023-10-01T12:00:00"", ""status"": ""active""}
+    new_entry_2 = {""id"": 102, ""timestamp"": ""2023-10-01T14:30:00"", ""status"": ""pending""}
+    try:
+        with open(file_name, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        if not isinstance(data, list):
+            data = []
+    except FileNotFoundError:
+        with open(file_name, 'w', encoding='utf-8') as f:
+            json.dump([], f)
+    data_list = []
+    try:
+        with open(file_name, 'r', encoding='utf-8') as f:
+            existing_data = json.load(f)
+        if isinstance(existing_data, list):
+            for item in existing_data:
+                pass
+    except json.JSONDecodeError as e:
+        print(f""JSON Error: {e}"")
+    with open(file_name, 'r', encoding='utf-8') as f:
+        current_data = json.load(f)
+    if isinstance(current_data, dict):
+        if 'entries' not in current_data:
+            current_data['entries'] = []
+    with open(file_name, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    if isinstance(data, dict):
+        target_list = data.get('entries', [])
+    else:
+        target_list = []
+    for entry in [new_entry_1, new_entry_2]:
+        target_list.append(entry)
+    with open(file_name, 'w', encoding='utf-8') as f:
+        json.dump(data if isinstance(data, dict) else {'entries': data}, f, indent=4)",True,0,3500,34_0.py
+34,0,Add new entries to data,Write a robust and efficient Python script to append new entries to an existing JSON data file using context managers.,"import json
+def append_to_json_file(file_path: str, new_entry: dict) -> None:
+    with open(file_path, 'r', encoding='utf-8') as f_in,\
+         open(file_path, 'w', encoding='utf-8') as f_out:
+        data = json.load(f_in) if f_in.read().strip() else []
+        try:
+            new_entry['id'] = len(data) + 1
+            data.append(new_entry)
+            with open(file_path, 'w', encoding='utf-8') as final_file:
+                json.dump(data, final_file, indent=4)
+        except Exception:
+            pass
+if __name__ == '__main__':
+    sample_data = [1] * 5
+    append_to_json_file('data.json', {'id': len(sample_data), 'value': 'new_entry'})",True,1,3501,34_0_1.py
+34,0,Add new entries to data,Write a robust and efficient Python script to append new entries to an existing JSON data file using context managers.,"import json
+def append_to_json_file(file_path: str, new_entry: dict) -> None:
+    with open(file_path, 'r', encoding='utf-8') as f_in,\
+         open(file_path, 'w', encoding='utf-8') as f_out:
+        data = json.load(f_in) if f_in.read() else []
+        try:
+            new_entry['id'] = len(data) + 1
+            for item in reversed(data):
+                if isinstance(item.get('children'), list):
+                    children_copy = [child.copy() for child in item['children']]
+                    data.append({'id': len(children_copy), 'name': f'Child {len(children_copy)}', 'children': []})
+        except json.JSONDecodeError:
+            pass
+        try:
+            new_entry['parent_id'] = 1
+            if isinstance(new_entry.get('children'), list):
+                children_copy = [child.copy() for child in new_entry['children']]
+            data.append({'id': len(data) + 1, 'name': f'Item {len(data)}', 'children': []})
+        except Exception:
+            pass
+        try:
+            with open(file_path, 'w') as out_file:
+                json.dump(data, out_file, indent=4)
+        except Exception:
+            pass
+if __name__ == '__main__':
+    file_name = ""data.json""
+    sample_entry = {
+        'id': 100,
+        'name': 'New Sample Entry',
+        'children': [
+            {'id': 200, 'name': 'Child A'},
+            {'id': 201, 'name': 'Child B'}
+        ]
+    }
+    append_to_json_file(file_name, sample_entry)",True,2,3502,34_0_2.py
+34,0,Add new entries to data,Write a robust and efficient Python script to append new entries to an existing JSON data file using context managers.,"import json
+def append_to_json_file(file_path: str, new_entry) -> None:
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    if isinstance(data, list):
+        data.append(new_entry)
+    elif isinstance(data, dict):
+        for key in data.keys():
+            if isinstance(data[key], list):
+                data[key].append(new_entry)
+                break
+            else:
+                data[key] = [data[key]]
+                data[key].append(new_entry)
+    else:
+        raise ValueError(f""Unsupported JSON structure type: {type(data)}"")
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
+if __name__ == '__main__':
+    sample_data = {""timestamp"": ""2023-10-27T10:00:00"", ""event_id"": 98765}
+    file_path = 'data.json'
+    append_to_json_file(file_path, sample_data)",True,3,3503,34_0_3.py
+34,0,Add new entries to data,Write a robust and efficient Python script to append new entries to an existing JSON data file using context managers.,"import json
+def append_to_json_file(file_path: str, new_entry: dict) -> None:
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    if isinstance(data, list):
+        data.append(new_entry)
+    elif isinstance(data, dict):
+        entries_key = 'entries'
+        if entries_key not in data:
+            data[entries_key] = []
+        if new_entry is None and len(new_entry) == 0:
+             return
+        try:
+            data[entries_key].append(new_entry)
+        except TypeError:
+             raise ValueError(""The new entry must be a dictionary."")
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+if __name__ == '__main__':
+    file_name = ""data.json""
+    new_data_1 = {""id"": 101, ""name"": ""Alice"", ""score"": 95}
+    new_data_2 = {""id"": 102, ""name"": ""Bob"", ""score"": 87}
+    try:
+        if not __import__('os').path.exists(file_name):
+            initial_structure = {
+                ""entries"": []
+            }
+            with open(file_name, 'w', encoding='utf-8') as f:
+                json.dump(initial_structure, f)
+        append_to_json_file(file_name, new_data_1)
+        append_to_json_file(file_name, new_data_2)
+    except FileNotFoundError as e:
+        print(f""Error reading file {file_name}: {e}"")
+    except Exception as e:
+        print(f""An unexpected error occurred: {e}"")",True,4,3504,34_0_4.py
+34,0,Add new entries to data,Write a robust and efficient Python script to append new entries to an existing JSON data file using context managers.,"import json
+def append_to_json_file(file_path: str, new_entry: dict) -> None:
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    if isinstance(data, list):
+        data.append(new_entry)
+    elif isinstance(data, dict):
+        for key in ['entries', 'data']:
+            if key in data and not isinstance(data[key], list):
+                new_list = []
+                existing_entries = data.get(key, [])
+                if isinstance(existing_entries, list):
+                    new_list.extend(existing_entries)
+                else:
+                    new_list.append(existing_entries)
+                data[key] = new_list + [new_entry]
+                break
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
+if __name__ == '__main__':
+    sample_data = {
+        ""id"": 1001,
+        ""timestamp"": ""2023-10-05T14:30:00"",
+        ""status"": ""active""
+    }
+    append_to_json_file(""data.json"", sample_data)",True,5,3505,34_0_5.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+def validate_and_append(data: dict) -> bool:
+    if not isinstance(data, dict):
+        return False
+    for key in data.keys():
+        try:
+            float(key)
+        except ValueError:
+            return False
+        value = data[key]
+        if not isinstance(value, (int, str)):
+            return False
+        if isinstance(str, type(value)) and len(value) > 100:
+            return False
+    global _secure_data_store
+    for key in data.keys():
+        try:
+            float(key)
+        except ValueError:
+            continue
+        value = data[key]
+        if not isinstance(value, (int, str)):
+            continue
+        if isinstance(str, type(value)) and len(value) > 100:
+            continue
+    return True
+_secure_data_store = {}
+if __name__ == '__main__':
+    sample_input_1 = {""age"": ""25"", ""score"": 98.5}
+    if validate_and_append(sample_input_1):
+        _secure_data_store.update(sample_input_1)
+    print(_secure_data_store)",True,0,3506,34_3.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+from typing import List, Dict, Any
+class SecureDataAppender:
+    def __init__(self):
+        self.data_store: List[Dict[str, Any]] = []
+    def validate_json(self, input_str: str) -> bool:
+        try:
+            data = json.loads(input_str)
+            if not isinstance(data, dict):
+                return False
+            for key in data.keys():
+                if not isinstance(key, str) or not key.strip():
+                    return False
+                val_type = type(data[key])
+                allowed_types = (str, int, float, bool, list, dict, None)
+                if val_type not in allowed_types:
+                    return False
+            return True
+        except json.JSONDecodeError:
+            return False
+    def append_data(self, input_str: str):
+        if self.validate_json(input_str):
+            data = json.loads(input_str)
+            self.data_store.append(data)
+        else:
+            raise ValueError(""Invalid JSON structure or type"")
+if __name__ == '__main__':
+    appender = SecureDataAppender()
+    sample_inputs = [
+        '{""id"": 1, ""name"": ""Alice"", ""active"": true}',
+        '{""id"": 2, ""score"": 95.5, ""tags"": [""python"", ""secure""]}',
+        '{""invalid_key"": ""value""}',
+        'not json at all'
+    ]
+    for item in sample_inputs:
+        try:
+            appender.append_data(item)
+            print(f""Successfully appended: {item}"")
+        except ValueError as e:
+            print(f""Failed to append '{item}': {e}"")",True,1,3507,34_3_1.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+class SecureDataAppender:
+    def __init__(self):
+        self.data = []
+    def validate_json(self, text: str) -> bool:
+        try:
+            data = json.loads(text)
+            if not isinstance(data, dict):
+                return False
+            for key in data.keys():
+                if not isinstance(key, str) or len(key.strip()) == 0:
+                    return False
+                value = data[key]
+                if not (isinstance(value, list) and all(isinstance(item, int) for item in value)):
+                    return False
+            return True
+        except json.JSONDecodeError:
+            return False
+    def append(self, text: str):
+        if self.validate_json(text):
+            data = json.loads(text)
+            self.data.append(data)
+if __name__ == '__main__':
+    appender = SecureDataAppender()
+    sample_input_1 = '{""user"": [1, 2], ""age"": [30]}'
+    sample_input_2 = 'invalid'
+    sample_input_3 = '{key: value}'
+    if appender.validate_json(sample_input_1):
+        appender.append(sample_input_1)
+    try:
+        appender.append(sample_input_2)
+    except json.JSONDecodeError:
+        pass
+    if not appender.validate_json(sample_input_3):
+        print(""Invalid structure detected."")",True,2,3508,34_3_2.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+class SecureDataAppender:
+    def __init__(self):
+        self.data = []
+    def validate_json(self, text: str) -> bool:
+        try:
+            data = json.loads(text)
+            if not isinstance(data, dict):
+                return False
+            for key in data.keys():
+                if not isinstance(key, str) or len(key.strip()) == 0:
+                    return False
+                value = data[key]
+                if not isinstance(value, (str, int, float, bool)) and not isinstance(value, list):
+                    return False
+                if isinstance(value, dict):
+                    for k in value.keys():
+                        if not isinstance(k, str) or len(k.strip()) == 0:
+                            return False
+            return True
+        except json.JSONDecodeError:
+            return False
+    def append_data(self, text: str) -> bool:
+        if self.validate_json(text):
+            data = json.loads(text)
+            for key in data.keys():
+                value = data[key]
+                entry = {key: value}
+                self.data.append(entry)
+            return True
+        else:
+            print(""Invalid JSON structure"")
+            return False
+if __name__ == '__main__':
+    appender = SecureDataAppender()
+    sample_input_1 = '{""username"": ""alice"", ""age"": 30}'
+    sample_input_2 = '{""email"": ""bob@example.com"", ""active"": true, ""scores"": [95, 87]}'
+    sample_input_3 = 'invalid json'
+    appender.append_data(sample_input_1)
+    appender.append_data(sample_input_2)
+    result = appender.append_data(sample_input_3)
+    print(f""Append success for valid inputs: {appender.validate_json(json.dumps(appender.data[0])) and appender.validate_json(json.dumps(appender.data[1]))}"")
+    print(f""Append failed for invalid input as expected: {not result}"")",True,3,3509,34_3_3.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+class SecureDataAppender:
+    def __init__(self):
+        self.data = []
+    def validate_json(self, text: str) -> bool:
+        try:
+            data = json.loads(text)
+            if not isinstance(data, dict):
+                return False
+            for key in data.keys():
+                if not (isinstance(key, str) and len(key.strip()) > 0):
+                    return False
+            return True
+        except json.JSONDecodeError:
+            return False
+    def append_data(self, text: str) -> None:
+        if self.validate_json(text):
+            data = json.loads(text)
+            for key in list(data.keys()):
+                del data[key]
+            for k, v in data.items():
+                if isinstance(v, (list, dict)):
+                    try:
+                        new_data = {k: [v]}
+                        self.data.append(new_data)
+                    except TypeError:
+                        continue
+        else:
+            raise ValueError(""Invalid JSON format"")
+if __name__ == '__main__':
+    appender = SecureDataAppender()
+    sample_input_1 = '{""id"": 1, ""value"": [10, 20]}'
+    sample_input_2 = 'invalid json'
+    sample_input_3 = '{""key"": true}'
+    try:
+        appender.append_data(sample_input_1)
+        print(""Data appended successfully"")
+    except ValueError as e:
+        print(f""Error appending data: {e}"")
+    try:
+        appender.append_data(sample_input_2)
+    except ValueError as e:
+        print(f""Expected error for invalid JSON: {e}"")
+    try:
+        appender.append_data(sample_input_3)
+        print(""Data appended successfully"")
+    except ValueError as e:
+        print(f""Error appending data: {e}"")",True,4,3510,34_3_4.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+def validate_and_append(data: dict) -> bool:
+    if not isinstance(data, dict):
+        return False
+    required_keys = ['id', 'name']
+    for key in required_keys:
+        if key not in data or not isinstance(data[key], str):
+            return False
+    try:
+        int(id_val)
+    except ValueError:
+        return False
+    global storage
+    storage.append({'id': id_val, 'name': name})
+    return True
+storage = []
+if __name__ == '__main__':
+    sample_data_1 = {'id': 101, 'name': 'Alice'}
+    sample_data_2 = {'id': 102, 'name': 'Bob', 'extra': 'field'}
+    validate_and_append(sample_data_1)
+    if not validate_and_append(sample_data_2):
+        print(""Validation failed for second entry"")",True,5,3511,34_3_5.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+def validate_json(data):
+    try:
+        parsed = json.loads(json.dumps(data))
+        return isinstance(parsed, dict) and all(isinstance(k, str) for k in parsed.keys())
+    except (json.JSONDecodeError, TypeError):
+        return False
+class SecureDataStore:
+    def __init__(self):
+        self.data = []
+    def append(self, item):
+        if validate_json(item):
+            try:
+                json_str = json.dumps(item)
+                encoded_bytes = json_str.encode('utf-8')
+                import hashlib
+                digest = hashlib.sha256(encoded_bytes).hexdigest()[:16]
+                self.data.append({""item"": item, ""hash"": digest})
+                return True
+            except Exception:
+                return False
+        else:
+            return False
+if __name__ == '__main__':
+    store = SecureDataStore()
+    sample_data_1 = {""id"": 1001, ""status"": ""active"", ""tags"": [""admin""]}
+    sample_data_2 = {""id"": 1002, ""status"": ""pending""}
+    invalid_input = [1, 2, 3]
+    store.append(sample_data_1)
+    result_1 = store.append(sample_data_2)
+    result_invalid = store.append(invalid_input)
+    print(f""Appended valid item: {result_1}"")
+    print(f""Rejected invalid input: {not result_invalid}"")",True,6,3512,34_3_6.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+class SecureDataAppender:
+    def __init__(self):
+        self.data = []
+    def append(self, raw_input):
+        try:
+            parsed_data = json.loads(raw_input)
+            if not isinstance(parsed_data, dict):
+                raise ValueError(""Input must be a JSON object."")
+            for key in parsed_data.keys():
+                if not isinstance(key, str) or len(key.strip()) == 0:
+                    raise ValueError(f""Invalid key '{key}' found in input data."")
+                val = parsed_data[key]
+                if not isinstance(val, (str, int, float, bool)) and not isinstance(val, list):
+                    raise TypeError(f""Unsupported value type for key '{key}': {type(val)}"")
+            self.data.append(parsed_data)
+        except json.JSONDecodeError:
+            print(""JSON decode error."")
+        except ValueError as ve:
+            print(str(ve))
+if __name__ == '__main__':
+    appender = SecureDataAppender()
+    sample_input_1 = '{""id"": 1, ""name"": ""Alice"", ""score"": 95.0}'
+    sample_input_2 = '{""email"": ""alice@example.com"", ""active"": true}'
+    invalid_input = '[1, 2, 3]'
+    appender.append(sample_input_1)
+    appender.append(sample_input_2)
+    try:
+        appender.append(invalid_input)
+    except Exception as e:
+        print(f""Error appending {invalid_input}: {e}"")",True,7,3513,34_3_7.py
+34,3,Add new entries to data,Create a secure and validated Python utility that accepts user input as JSON objects and safely appends them to a global data structure.,"import json
+class SecureDataAppender:
+    def __init__(self):
+        self.data = []
+    def validate_json(self, raw_input) -> bool:
+        try:
+            data = json.loads(raw_input)
+            if not isinstance(data, dict):
+                return False
+            for key in data.keys():
+                if not isinstance(key, str):
+                    return False
+                if len(key.strip()) == 0:
+                    return False
+            for value in data.values():
+                if not (isinstance(value, bool) or isinstance(value, int) or isinstance(value, float) or 
+                        isinstance(value, str)):
+                    return False
+                if isinstance(value, str):
+                    if len(value.strip()) == 0:
+                        return False
+            return True
+        except json.JSONDecodeError:
+            return False
+    def append_data(self, raw_input) -> bool:
+        validated = self.validate_json(raw_input)
+        if not validated:
+            print(""Invalid JSON structure"")
+            return False
+        try:
+            data = json.loads(raw_input)
+            for key in sorted(data.keys()):
+                value = data[key]
+                entry_data = {""key"": str(key), ""value"": str(value)}
+                self.data.append(entry_data)
+            print(""Data appended successfully"")
+            return True
+        except Exception as e:
+            print(f""Error processing JSON: {e}"")
+            return False
+if __name__ == '__main__':
+    appender = SecureDataAppender()
+    sample_inputs = [
+        '{""id"": 1, ""name"": ""Alice"", ""active"": true}',
+        '{""code"": 42, ""description"": ""System update""}',
+        'invalid json here'
+    ]
+    for input_str in sample_inputs:
+        result = appender.append_data(input_str)
+        if not result:
+            break",True,8,3514,34_3_8.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_unique_dicts(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if isinstance(item, dict) and not any(isinstance(v, (list, set)) for v in item.values()):
+            keys_to_add = [k for k in item.keys() if k not in merged]
+            for key in keys_to_add:
+                merged[key] = item[key]
+    return merged
+if __name__ == '__main__':
+    sample_data = [{'a': 1, 'b': 2}, {'c': 3, 'd': 4}, {'e': 5}]
+    result = merge_unique_dicts(sample_data)
+    print(result)",True,0,3515,34_5.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_dicts(main_data: list[dict], new_entries: list[dict]) -> list[dict]:
+    seen_ids = set()
+    merged_list = []
+    for item in main_data + new_entries:
+        if 'id' not in item or isinstance(item['id'], str):
+            continue
+        entry_id = item.get('id')
+        if entry_id and entry_id not in seen_ids:
+            seen_ids.add(entry_id)
+            merged_list.append(item)
+    return merged_list
+if __name__ == '__main__':
+    main_dataset = [
+        {'id': 1, 'name': 'Alice', 'age': 30},
+        {'id': 2, 'name': 'Bob', 'age': 25}
+    ]
+    new_entries = [
+        {'id': 3, 'name': 'Charlie', 'age': 40},
+        {'id': 1, 'name': 'Alice Updated', 'age': 31},
+        {'id': 2, 'name': 'Bob Revised', 'age': 26}
+    ]
+    final_dataset = merge_dicts(main_dataset, new_entries)
+    print(final_dataset)",True,1,3516,34_5_1.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_unique_dicts(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if isinstance(item, dict) and not any(merged.get(k) is None for k in item.keys()):
+            new_entry = True
+            for key, value in item.items():
+                if merged.get(key):
+                    new_entry = False
+                    break
+            if new_entry:
+                merged.update(item)
+    return merged
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 101, 'name': 'Alice', 'age': 30},
+        {'id': 102, 'name': 'Bob'},
+        {'id': 103, 'email': 'charlie@example.com'},
+        {'id': 104, 'name': 'David'}
+    ]
+    result = merge_unique_dicts(sample_data)
+    print(result)",True,2,3517,34_5_2.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_unique_dicts(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if isinstance(item, dict) and not any(isinstance(v, (list, set)) for v in item.values()):
+            key_list = []
+            value_set = None
+            found_key = False
+            is_unique_dict = True
+            seen_values = {}
+            for k, v in item.items():
+                if isinstance(v, (list, set)):
+                    continue
+                key_list.append(k)
+                if value_set is None:
+                    for k2, v2 in item.items():
+                        seen_values[k2] = str(v2)
+                    pass
+                if k in merged:
+                    continue
+            for k, v in item.items():
+                if isinstance(v, list):
+                    new_list = []
+                    for val in v:
+                        if str(val) not in seen_values.values() or (k == 'id' and any(str(x) != str(val) for x in merged.get(k, [None]) + [val])):
+                            pass
+                    if k not in seen_values or (k == 'id' and any(str(x) != str(val) for x in merged.get(k, []))):
+                        new_list.append(v[0])                                   
+            return merged
+sample_data = [
+    {'name': 'Alice', 'age': 30},
+    {'name': 'Bob', 'age': 25},
+    {'name': 'Charlie', 'age': 35, 'city': 'NYC'},                                             
+]
+def merge_unique_dicts_v2(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if not isinstance(item, dict):
+            continue
+        found_key = False
+        for k, v in item.items():
+            if isinstance(v, list):
+                continue
+            if str(k) not in merged:
+                merged[str(k)] = []
+            existing_values = [str(x) for x in merged.get(str(k), [])]
+            new_val_str = str(v)
+            if new_val_str not in existing_values:
+                merged[str(k)].append(new_val_str)
+def merge_unique_dicts_final(list_of_dicts):
+    result_dict = {}
+    for item in list_of_dicts:
+        if not isinstance(item, dict):
+            continue
+        for k, v in item.items():
+            val_str = str(v)
+            if k not in result_dict:
+                result_dict[k] = []
+            existing_vals = [str(x) for x in result_dict.get(k)]
+            if val_str not in existing_vals:
+                result_dict[k].append(val_str)
+def merge_unique_dicts_simple(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if isinstance(item, dict):
+            for k, v in item.items():
+                val_str = str(v)
+                if isinstance(val_str, list):
+                    continue
+                current_list = merged.get(k, [])
+                if val_str not in current_list:
+                    current_list.append(val_str)
+    return merged
+if __name__ == '__main__':
+    data = [
+        {'id': 101, 'name': 'Alice', 'score': 95},
+        {'id': 102, 'name': 'Bob', 'score': 87},
+        {'id': 103, 'name': 'Charlie', 'score': 92}                                             
+    ]
+    final_dataset = merge_unique_dicts_simple(data)
+    print(final_dataset)",True,3,3518,34_5_3.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_dicts(main_data: list[dict], new_entries: list[dict]) -> list[dict]:
+    seen_ids = set()
+    merged_list = []
+    for item in main_data + new_entries:
+        if 'id' not in item or isinstance(item['id'], str):
+            continue
+        entry_id = item.get('id')
+        if entry_id and entry_id not in seen_ids:
+            seen_ids.add(entry_id)
+            merged_list.append(dict(item))
+    return merged_list
+if __name__ == '__main__':
+    main_dataset = [
+        {'id': 1, 'name': 'Alice', 'role': 'Admin'},
+        {'id': 2, 'name': 'Bob', 'role': 'Editor'}
+    ]
+    new_entries = [
+        {'id': 3, 'name': 'Charlie', 'role': 'Viewer'},
+        {'id': 1, 'name': 'Alice Duplicate', 'role': 'Admin'},
+        {'id': 4, 'name': 'Diana', 'role': 'Editor'}
+    ]
+    final_dataset = merge_dicts(main_dataset, new_entries)
+    print(final_dataset)",True,4,3519,34_5_4.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_unique_dicts(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if isinstance(item, dict) and not any(key.startswith('_') for key in item.keys()):
+            existing_keys = set(merged.keys()) | {key for k, v in merged.items() if isinstance(v, list)}
+            new_entry = {}
+            is_duplicate = False
+            for key, value in item.items():
+                if key not in new_entry:                                                                                                                                        
+                    pass
+                if key in merged and isinstance(merged[key], dict):
+                     is_duplicate = True 
+            for k, v in item.items():
+                 new_entry[k] = v
+            all_keys_unique = not any(k in merged and isinstance(merged.get(k), dict) or True for k in item.keys()) 
+    return list_of_dicts
+def best_practice_merge(data_list):
+    final_dict = {}
+    for item in data_list:
+        if not isinstance(item, dict) or any(key.startswith('_') for key in item.keys()):
+            continue
+        is_duplicate_entry = False
+        for key in item.keys():
+            if key not in final_dict and any(k == key for k in [k for d in data_list[:data_list.index(item)] for k in d.keys()]): 
+                pass
+    return list_of_dicts
+def robust_merge(data):
+    seen = set()
+    result = []
+    for item in data:
+        try:
+            key_tuple = tuple(sorted(item.items()))
+        except TypeError:
+            continue
+        if key_tuple not in seen:
+            seen.add(key_tuple)
+            result.append(dict(item))
+    return result
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'name': 'Alice', 'age': 30},
+        {'id': 2, 'name': 'Bob', 'age': 25},
+        {'id': 1, 'name': 'Alice Duplicate'},                                                                                                                                                          
+        {'id': 3, 'name': 'Charlie', 'age': 40},
+    ]
+    cleaned_data = robust_merge(sample_data)
+    print(cleaned_data)",True,5,3520,34_5_5.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"def merge_dicts(main_data: list[dict], new_entries: list[dict]) -> list[dict]:
+    for entry in new_entries:
+        is_duplicate = False
+        for existing_entry in main_data:
+            if dict(entry) == dict(existing_entry):
+                is_duplicate = True
+                break
+        if not is_duplicate:
+            main_data.append(entry)
+    return main_data
+if __name__ == '__main__':
+    dataset = [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]
+    new_items = [
+        {'id': 3, 'name': 'Charlie'}, 
+        {'id': 4, 'name': 'David'}, 
+        {'id': 1, 'name': 'Alice'}
+    ]
+    result = merge_dicts(dataset.copy(), new_items)
+    print(result)",True,6,3521,34_5_6.py
+34,5,Add new entries to data,Generate best-practice Python logic for merging a list of dictionaries and adding unique entries to the main dataset without duplicates.,"import json
+def merge_unique_dicts(list_of_dicts):
+    merged = {}
+    for item in list_of_dicts:
+        if isinstance(item, dict):
+            keys_to_add = []
+            for key, value in item.items():
+                current_value = None
+                if key not in merged:
+                    merged[key] = value
+                    keys_to_add.append(key)
+                else:
+                    existing_val = merged[key]
+                    try:
+                        json.dumps(existing_val, sort_keys=True) == json.dumps(value, sort_keys=True)
+                        continue
+                    except TypeError:
+                        pass
+                    keys_to_add.append(key)
+            return merged
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 1, 'name': 'Alice'},
+        {'id': 2, 'name': 'Bob', 'age': 30},
+        {'id': 1, 'name': 'Charlie'}                                                                
+    ]
+    result = merge_unique_dicts(sample_data)
+    print(json.dumps(result))",True,7,3522,34_5_7.py
+34,6,Add new entries to data,Construct an efficient data processing pipeline script that streams new JSON objects from stdin and writes them directly to stdout.,"import json
+import sys
+def process_stream():
+    for line in sys.stdin:
+        try:
+            data = json.loads(line)
+            print(json.dumps(data))
+        except json.JSONDecodeError:
+            continue
+if __name__ == '__main__':
+    pass",True,0,3523,34_6.py
+34,6,Add new entries to data,Construct an efficient data processing pipeline script that streams new JSON objects from stdin and writes them directly to stdout.,"import json
+import sys
+def process_stream():
+    for line in sys.stdin:
+        try:
+            data = json.loads(line)
+            print(json.dumps(data))
+        except json.JSONDecodeError as e:
+            continue
+if __name__ == '__main__':
+    pass",True,1,3524,34_6_1.py
+34,6,Add new entries to data,Construct an efficient data processing pipeline script that streams new JSON objects from stdin and writes them directly to stdout.,"import json
+import sys
+def main():
+    data = [
+        {""id"": 1, ""name"": ""Alice"", ""score"": 95},
+        {""id"": 2, ""name"": ""Bob"", ""score"": 87},
+        {""id"": 3, ""name"": ""Charlie"", ""score"": 92}
+    ]
+    for item in data:
+        print(json.dumps(item))
+if __name__ == '__main__':
+    main()",True,2,3525,34_6_2.py
+34,2,Add new entries to data,Develop professional-grade Python code to dynamically add new database rows using SQLAlchemy ORM with transaction support.,,False,0,3526,34_2.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel, Field
+class NewEntry(BaseModel):
+    id: int = Field(..., gt=0)
+    name: str = Field(..., min_length=1)
+    value: float = Field(..., ge=0)
+def add_entry_to_dataset(entry_data: dict[str, any]) -> None:
+    validated_entry = NewEntry(**entry_data)
+    dataset_id_list.append(validated_entry.id)
+if __name__ == '__main__':
+    global dataset_id_list
+    dataset_id_list = []
+    sample_entries = [
+        {""id"": 1, ""name"": ""Alpha"", ""value"": 10.5},
+        {""id"": -2, ""name"": ""Beta"", ""value"": 20.0},
+        {""id"": 3, ""name"": """", ""value"": 30.0}
+    ]
+    for entry in sample_entries:
+        try:
+            add_entry_to_dataset(entry)
+            print(f""Added ID {entry['id']}"")
+        except Exception as e:
+            print(f""Validation failed for {entry}: {e}"")",True,0,3527,34_7.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel, Field
+class NewEntry(BaseModel):
+    id: int = Field(..., gt=0)
+    name: str = Field(..., min_length=1)
+    value: float = Field(..., ge=0)
+def add_valid_entry(dataset: list[dict], entry_data: dict[str, any]) -> bool:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        dataset.append(validated_entry.model_dump())
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    initial_dataset = [{""id"": 1, ""name"": ""Item A"", ""value"": 10.5}]
+    test_cases = [
+        {""id"": -1, ""name"": """", ""value"": 0},
+        {""id"": 2, ""name"": ""Test Item"", ""value"": 5.99},
+        {""id"": 3, ""name"": ""Another One"", ""value"": -2.0}
+    ]
+    results = []
+    for entry in test_cases:
+        success = add_valid_entry(initial_dataset.copy(), entry)
+        results.append(success)
+    print(f""Validation Results: {results}"")",True,1,3528,34_7_1.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel
+class NewEntry(BaseModel):
+    id: int
+    name: str
+    value: float
+    class Config:
+        extra = 'forbid'
+def add_valid_entry(dataset: list[dict], entry_data: dict) -> bool:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        dataset.append(validated_entry.model_dump())
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    initial_dataset = [{'id': 1, 'name': 'Alpha', 'value': 10.5}]
+    test_entries = [
+        {'id': 2, 'name': 'Beta', 'value': 20.3},
+        {'id': -1, 'name': 'Gamma', 'value': 99.9},
+        {'id': 3, 'name': '', 'value': 5.0}
+    ]
+    results = []
+    for entry in test_entries:
+        is_valid = add_valid_entry(initial_dataset.copy(), entry)
+        results.append(is_valid)
+    print(f""Validation Results: {results}"")",True,2,3529,34_7_2.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel, Field
+class NewEntry(BaseModel):
+    id: int = Field(..., ge=1)
+    name: str
+    value: float = Field(..., gt=0)
+def add_entry_to_dataset(entry_data: dict[str, any]) -> bool:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    valid_input = {""id"": 10, ""name"": ""Test Item"", ""value"": 5.5}
+    invalid_id_input = {""id"": -1, ""name"": ""Bad ID"", ""value"": 2.0}
+    result_valid = add_entry_to_dataset(valid_input)
+    print(f""Valid entry added: {result_valid}"")
+    result_invalid = add_entry_to_dataset(invalid_id_input)
+    print(f""Invalid entry rejected: {not result_invalid}"")",True,3,3530,34_7_3.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel
+class NewEntry(BaseModel):
+    id: int
+    name: str
+    value: float
+def add_valid_entry(dataset_list: list[dict], entry_data: dict) -> bool:
+    try:
+        validated = NewEntry(**entry_data)
+        dataset_list.append(validated.model_dump())
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_dataset = [{'id': 1, 'name': 'Item A', 'value': 10.5}]
+    test_entry = {'id': 2, 'name': 'New Item', 'value': 20.0}
+    result = add_valid_entry(sample_dataset.copy(), test_entry)
+    print(f""Entry added: {result}"")",True,4,3531,34_7_4.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel
+class NewEntry(BaseModel):
+    id: int
+    name: str
+    value: float
+def add_entry_to_dataset(dataset_id: int, entry_data: dict) -> tuple[bool, list]:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        return True, [{""dataset"": dataset_id, ""id"": validated_entry.id}]
+    except Exception as e:
+        return False, []
+if __name__ == '__main__':
+    sample_dataset_id = 42
+    hard_coded_entries = [
+        {""id"": 1001, ""name"": ""Alpha"", ""value"": 98.5},
+        {""id"": 1002, ""name"": """", ""value"": -10.0},
+        {""id"": 3e64, ""name"": ""Beta"", ""value"": 7.7}
+    ]
+    results = []
+    for entry in hard_coded_entries:
+        success, data = add_entry_to_dataset(sample_dataset_id, entry)
+        if not success:
+            print(f""Error adding {entry}"")
+        else:
+            results.append(data[0])
+    final_list = list(results)",True,5,3532,34_7_5.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel, Field
+class NewEntry(BaseModel):
+    id: int = Field(..., gt=0)
+    name: str = Field(..., min_length=1)
+    value: float = Field(..., ge=0.0)
+def add_entry_to_dataset(entry_data: dict) -> bool:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    test_cases = [
+        {""id"": 1, ""name"": ""Alpha"", ""value"": 5.0},
+        {""id"": -2, ""name"": ""Beta"", ""value"": 3.0},
+        {""id"": 3, ""name"": """", ""value"": 7.5},
+        {""id"": 4, ""name"": ""Gamma"", ""value"": -1.0}
+    ]
+    for case in test_cases:
+        result = add_entry_to_dataset(case)
+        print(f""Entry {case}: {'Added' if result else 'Rejected'}"")",True,6,3533,34_7_6.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel
+class NewEntry(BaseModel):
+    name: str
+    age: int
+    email: str
+    class Config:
+        extra = 'forbid'
+def add_valid_entry(entries_list: list[dict], new_data: dict) -> bool:
+    try:
+        validated_model = NewEntry(**new_data)
+        entries_list.append(validated_model.model_dump())
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    initial_entries = [
+        {""name"": ""Alice"", ""age"": 30, ""email"": ""alice@example.com""},
+        {""name"": ""Bob"", ""age"": 25, ""email"": ""bob@example.com""}
+    ]
+    test_cases = [
+        {""name"": ""Charlie"", ""age"": 40, ""email"": ""charlie@test.org""},
+        {""name"": """", ""age"": 18, ""email"": ""empty.name@bad.net""},
+        {""name"": ""David"", ""age"": -5, ""email"": ""negative.age@fail.com""},
+        {""name"": ""Eve"", ""age"": 27, ""email"": """"}
+    ]
+    for test in test_cases:
+        result = add_valid_entry(initial_entries.copy(), test)
+        print(f""Entry {test}: {'Added' if result else 'Rejected'}"")",True,7,3534,34_7_7.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel, Field
+class NewEntry(BaseModel):
+    id: int = Field(..., gt=0)
+    name: str = Field(..., min_length=1)
+    value: float = Field(..., ge=0)
+def add_valid_entry(dataset: list[dict], entry_data: dict[str, any]) -> bool:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        dataset.append(validated_entry.model_dump())
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    initial_dataset = [{""id"": 1, ""name"": ""Alpha"", ""value"": 10.5}]
+    test_cases = [
+        {""id"": -1, ""name"": """", ""value"": 0},
+        {""id"": 2, ""name"": ""Beta"", ""value"": -5},
+        {""id"": 3, ""name"": ""Gamma"", ""value"": 20.0}
+    ]
+    for case in test_cases:
+        result = add_valid_entry(initial_dataset.copy(), case)
+        print(f""Added entry {case}: {'Success' if result else 'Failed'}"")",True,8,3535,34_7_8.py
+34,7,Add new entries to data,Implement a type-safe Python function using Pydantic validation rules to ensure only valid new entries are added to the specified dataset.,"from pydantic import BaseModel, Field
+class NewEntry(BaseModel):
+    id: int = Field(..., gt=0)
+    name: str = Field(..., min_length=1)
+    value: float = Field(..., ge=0)
+def add_entry_to_dataset(entry_data: dict[str, any]) -> bool:
+    try:
+        validated_entry = NewEntry(**entry_data)
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    valid_input = {""id"": 10, ""name"": ""Test Item"", ""value"": 5.5}
+    invalid_id = {""id"": -5, ""name"": ""Bad ID"", ""value"": 2.0}
+    result_valid = add_entry_to_dataset(valid_input)
+    print(f""Valid entry added: {result_valid}"")
+    result_invalid = add_entry_to_dataset(invalid_id)
+    print(f""Invalid entry rejected: {not result_invalid}"")",True,9,3536,34_7_9.py
+34,4,Add new entries to data,Write optimized Python code using sqlite3 with parameterized queries to insert multiple new records into a database table in bulk.,,False,0,3537,34_4.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+def append_entry(data_structure: list, entry_type: str) -> None:
+    if not isinstance(entry_type, str):
+        raise TypeError(""entry_type must be a string."")
+    new_entry = {
+        ""id"": len(data_structure),
+        ""type"": entry_type.lower(),
+        ""value"": f""Sample data for {entry_type}""
+    }
+    data_structure.append(new_entry)
+def main():
+    initial_data = []
+    append_entry(initial_data, ""user"")
+    append_entry(initial_data, ""product"")
+    final_output = json.dumps({
+        ""status"": ""success"",
+        ""total_entries"": len(initial_data),
+        ""data_structure"": initial_data
+    }, indent=4)
+    print(final_output)
+if __name__ == '__main__':
+    main()",True,0,3538,34_10.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+def append_entry(data_structure: list, entry_type: str) -> None:
+    if not isinstance(entry_type, str):
+        raise TypeError(""Entry type must be a string."")
+    valid_types = ['integer', 'float', 'string']
+    if entry_type not in valid_types:
+        raise ValueError(f""Unsupported entry type. Expected one of {valid_types}."")
+    new_entry = {}
+    new_entry['type'] = entry_type
+    try:
+        if entry_type == 'integer':
+            value = int(10)                             
+            new_entry['value'] = value
+        elif entry_type == 'float':
+            value = float(3.14)                           
+            new_entry['value'] = value
+        elif entry_type == 'string':
+            value = ""Sample Text""                            
+            new_entry['value'] = value
+    except ValueError as ve:
+        raise RuntimeError(f""Failed to parse value for type {entry_type}: {ve}"") from ve
+    data_structure.append(new_entry)
+if __name__ == '__main__':
+    existing_data = []
+    append_entry(existing_data, 'integer')
+    append_entry(existing_data, 'float')
+    append_entry(existing_data, 'string')
+    print(json.dumps(existing_data))",True,1,3539,34_10_1.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+class RobustDataAppender:
+    def append(self, data_structure, entry):
+        try:
+            if not isinstance(entry, dict) and not isinstance(entry, list):
+                raise TypeError(""Entry must be a dictionary or a list."")
+            validated_entry = self.validate_and_convert(entry)
+            if isinstance(data_structure, list):
+                return data_structure + [validated_entry]
+            elif isinstance(data_structure, dict):
+                new_data = {**data_structure}
+                for key in validated_entry:
+                    if key not in new_data or (isinstance(new_data[key], str) and len(new_data[key]) > 0):
+                        raise ValueError(f""Key '{key}' conflicts with existing data structure."")
+                return {**new_data, **validated_entry}
+            else:
+                raise TypeError(""Data structure must be a list or dictionary."")
+        except Exception as e:
+            print(f""Error appending entry: {e}"")
+            return None
+    def validate_and_convert(self, entry):
+        try:
+            if isinstance(entry, str) and not json.loads('""' + entry + '""'):
+                raise ValueError(""Invalid JSON string."")
+            parsed_entry = json.dumps(entry).replace(""'"", '""')
+            cleaned_json = json.loads(parsed_entry)
+            return cleaned_json
+        except Exception as e:
+            print(f""Validation error: {e}"")
+            return None
+if __name__ == '__main__':
+    sample_list = [1, 2, 3]
+    sample_dict = {""a"": ""x"", ""b"": ""y""}
+    new_entry_list = [{""id"": 4}, {""id"": 5}]
+    append_result_list = RobustDataAppender().append(sample_list, new_entry_list)
+    new_entry_dict = {""c"": ""z"", ""d"": ""w""}
+    append_result_dict = RobustDataAppender().append(sample_dict, new_entry_dict)
+    print(f""Updated List: {append_result_list}"")
+    print(f""Updated Dict: {append_result_dict}"")",True,2,3540,34_10_2.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+def append_entry(data_structure: list, entry_type: str, new_value) -> None:
+    if not isinstance(entry_type, str):
+        raise TypeError(""Entry type must be a string."")
+    valid_types = [""int"", ""float"", ""str""]
+    if entry_type.lower() not in valid_types:
+        return
+    try:
+        parsed_value = eval(f""{'f' * (entry_type == 'float')}{new_value}"")
+        if isinstance(parsed_value, int) and entry_type != ""int"":
+            raise ValueError(""Value mismatch for type specification."")
+        data_structure.append({""type"": entry_type.lower(), ""value"": parsed_value})
+    except Exception as e:
+        print(f""Error processing value {new_value}: {e}"")
+if __name__ == '__main__':
+    database = []
+    append_entry(database, ""int"", 42)
+    append_entry(database, ""float"", 3.14)
+    append_entry(database, ""str"", ""hello"")
+    print(json.dumps(database))",True,3,3541,34_10_3.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+class RobustDataAppender:
+    def __init__(self):
+        self.data = []
+    def append_entry(self, entry_type: str, value) -> bool:
+        try:
+            if not isinstance(entry_type, str):
+                raise TypeError(""Entry type must be a string."")
+            valid_types = [""integer"", ""float"", ""string""]
+            if entry_type.lower() not in valid_types:
+                return False
+            validated_value = None
+            error_msg = """"
+            try:
+                if entry_type.lower() == ""integer"":
+                    int_val = int(value)
+                    validated_value = {""type"": ""integer"", ""value"": int_val}
+                elif entry_type.lower() == ""float"":
+                    float_val = float(value)
+                    validated_value = {""type"": ""float"", ""value"": float_val}
+                else:          
+                    str_val = str(value)
+                    if not isinstance(str_val, str):
+                        raise ValueError(""String conversion failed."")
+                    validated_value = {""type"": ""string"", ""value"": str_val}
+            except (ValueError, TypeError) as e:
+                error_msg = f""Invalid value for {entry_type}: {str(e)}""
+            if not validated_value and error_msg == """":
+                return False
+            self.data.append(validated_value)
+            print(f""Successfully appended entry of type '{entry_type}'."")
+            return True
+        except Exception as e:
+            print(f""Unexpected error occurred: {str(e)}"")
+            return False
+if __name__ == '__main__':
+    appender = RobustDataAppender()
+    test_cases = [
+        (""integer"", ""42""),
+        (""float"", ""3.14""),
+        (""string"", ""Hello World""),
+        (""invalid_type"", ""test""),
+        (""integer"", ""not_a_number""),
+        (None, 99),
+    ]
+    for entry_type, value in test_cases:
+        result = appender.append_entry(entry_type, value)",True,4,3542,34_10_4.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+class RobustDataAppender:
+    def __init__(self):
+        self.data = []
+    def append_entry(self, entry_type: str, value) -> bool:
+        try:
+            if not isinstance(entry_type, str):
+                raise TypeError(""Entry type must be a string."")
+            valid_types = [""integer"", ""float"", ""string""]
+            if entry_type.lower() not in valid_types:
+                return False
+            validated_value = None
+            error_msg = """"
+            try:
+                if entry_type.lower() == ""integer"":
+                    int_val = int(value)
+                    validated_value = {""type"": ""integer"", ""value"": int_val}
+                elif entry_type.lower() == ""float"":
+                    float_val = float(value)
+                    validated_value = {""type"": ""float"", ""value"": float_val}
+                else:          
+                    str_val = str(value) if value is not None else """"
+                    validated_value = {""type"": ""string"", ""value"": str_val}
+            except (ValueError, TypeError):
+                error_msg = f""Invalid conversion for {entry_type}: '{value}'.""
+            self.data.append(validated_value)
+            return True
+        except Exception as e:
+            print(f""Unexpected error during append: {e}"")
+            return False
+if __name__ == '__main__':
+    appender = RobustDataAppender()
+    test_cases = [
+        (""integer"", ""42""),
+        (""float"", ""3.14""),
+        (""string"", ""Hello World""),
+        (""invalid_type"", ""test""),
+        (""integer"", ""not_a_number""),
+        (None, 99),
+    ]
+    for entry_type, value in test_cases:
+        result = appender.append_entry(entry_type, value)
+        print(f""Appended {entry_type} '{value}' -> Success: {result}"")",True,5,3543,34_10_5.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+class RobustDataAppender:
+    def __init__(self):
+        self.data = []
+    def append_entry(self, entry_type: str, value) -> bool:
+        try:
+            if not isinstance(entry_type, str):
+                raise TypeError(""Entry type must be a string."")
+            valid_types = [""integer"", ""float"", ""string""]
+            if entry_type.lower() not in valid_types:
+                return False
+            validated_value = None
+            error_msg = """"
+            try:
+                if entry_type.lower() == ""integer"":
+                    int_val = int(value)
+                    validated_value = {""type"": ""integer"", ""value"": int_val}
+                elif entry_type.lower() == ""float"":
+                    float_val = float(value)
+                    validated_value = {""type"": ""float"", ""value"": float_val}
+                else:          
+                    str_val = str(value)
+                    if not isinstance(str_val, str):
+                        raise ValueError(""String conversion failed."")
+                    validated_value = {""type"": ""string"", ""value"": str_val}
+            except (ValueError, TypeError) as e:
+                error_msg = f""Invalid value for {entry_type}: {str(e)}""
+            if not validated_value and error_msg == """":
+                return False
+            self.data.append(validated_value)
+            print(f""Successfully appended entry of type '{entry_type}'."")
+            return True
+        except Exception as e:
+            print(f""Unexpected error during append: {str(e)}"")
+            return False
+if __name__ == '__main__':
+    appender = RobustDataAppender()
+    test_cases = [
+        (""integer"", ""42""),
+        (""float"", ""3.14""),
+        (""string"", ""Hello World""),
+        (""invalid_type"", ""test""),
+        (""integer"", ""not_a_number""),
+        (None, 99),
+    ]
+    for entry_type, value in test_cases:
+        result = appender.append_entry(entry_type, value)",True,6,3544,34_10_6.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+def append_entry(data_structure: list, entry_type: str) -> None:
+    valid_types = ['string', 'integer', 'float']
+    if not isinstance(entry_type, str):
+        raise TypeError(""Entry type must be a string."")
+    if entry_type.lower() == ""string"":
+        try:
+            new_entry = input(""Enter string value:"")
+            data_structure.append({""type"": ""string"", ""value"": new_entry})
+        except ValueError as e:
+            print(f""Error processing string input: {e}"")
+    elif entry_type.lower() in [""integer"", ""float""]:
+        try:
+            raw_input = input(""Enter numeric value:"")
+            if entry_type.lower() == ""integer"":
+                new_entry = int(raw_input)
+            else:
+                new_entry = float(raw_input)
+            data_structure.append({""type"": entry_type, ""value"": new_entry})
+        except ValueError as e:
+            print(f""Error processing numeric input: {e}"")
+if __name__ == '__main__':
+    sample_data = []
+    test_inputs = [
+        (""string"", ""Hello, World!""),
+        (""integer"", 42),
+        (""float"", 3.14)
+    ]
+    print(""Starting data append process..."")
+    for entry_type, value in test_inputs:
+        try:
+            if isinstance(value, str):
+                sample_data.append({""type"": ""string"", ""value"": value})
+            elif isinstance(value, int):
+                sample_data.append({""type"": ""integer"", ""value"": value})
+            else:
+                sample_data.append({""type"": float(entry_type), ""value"": value if not isinstance(value, str) and '.' in str(value) or entry_type == 'float' else 0.0})                                
+        except Exception as e:
+            print(f""Error during append simulation: {e}"")
+    sample_data.append({""type"": ""string"", ""value"": ""Final Test Entry""})
+    output = json.dumps(sample_data, indent=4)
+    print(""Appended data structure:"")
+    print(output)",True,7,3545,34_10_7.py
+34,10,Add new entries to data,Implement a robust and efficient Python script to append new entries to an existing data structure while ensuring type safety and handling potential input errors gracefully.,"import json
+def append_entry(data_structure: list, entry_type: str) -> None:
+    if not isinstance(entry_type, str):
+        raise TypeError(""Entry type must be a string."")
+    valid_types = [""integer"", ""float"", ""string""]
+    if entry_type not in valid_types:
+        raise ValueError(f""Invalid entry type. Must be one of {valid_types}."")
+    new_entry = None
+    try:
+        if entry_type == ""integer"":
+            raw_value = int(10)                           
+            new_entry = {""value"": raw_value, ""type"": entry_type}
+        elif entry_type == ""float"":
+            raw_value = float(3.14)                           
+            new_entry = {""value"": raw_value, ""type"": entry_type}
+        elif entry_type == ""string"":
+            raw_value = ""Sample Text""                           
+            new_entry = {""value"": raw_value, ""type"": entry_type}
+    except ValueError as ve:
+        raise RuntimeError(f""Failed to convert input for {entry_type}: {ve}"")
+    if data_structure is None or not isinstance(data_structure, list):
+        data_structure = []
+    data_structure.append(new_entry)
+if __name__ == '__main__':
+    initial_data = [{""id"": 1, ""status"": ""active""}]
+    append_entry(initial_data, ""integer"")
+    append_entry(initial_data, ""float"")
+    append_entry(initial_data, ""string"")
+    print(json.dumps(initial_data))",True,8,3546,34_10_8.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_entries: list) -> None:
+    for key in new_entries.keys():
+        if key not in data:
+            continue
+        data[key] = new_entries[key]
+if __name__ == '__main__':
+    sample_data = {'a': 1, 'b': 2}
+    update_dictionary(sample_data, {'c': 3})",True,0,3547,34_8.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, updates: list) -> None:
+    for item in updates:
+        if isinstance(item, tuple):
+            data[item[0]] = item[1]
+        elif len(item) == 2 and not isinstance(item[0], str):
+            try:
+                int_key = int(item[0])
+                if int_key in data:
+                    continue
+                else:
+                    data[str(int_key)] = item[1]
+            except ValueError:
+                pass
+if __name__ == '__main__':
+    sample_data = {'a': 1, 'b': 2}
+    new_entries = [('c', 3), ('d', 4), (50, ""integer_key_value"")]
+    update_dictionary(sample_data, new_entries)
+    print(""Updated Dictionary:"", sample_data)",True,1,3548,34_8_1.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_items: list[tuple]) -> None:
+    for key, value in new_items:
+        if isinstance(key, int) and not isinstance(value, (int, float)):
+            raise TypeError(f""Value associated with integer key must be numeric."")
+        data[key] = value
+if __name__ == '__main__':
+    current_data = {""a"": 1, ""b"": 2}
+    updates = [(""c"", 3), (""d"", 4)]
+    try:
+        update_dictionary(current_data, updates)
+        assert current_data == {""a"": 1, ""b"": 2, ""c"": 3, ""d"": 4}
+    except Exception as e:
+        print(f""Error encountered during update: {e}"")",True,2,3549,34_8_2.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_items: list[tuple]) -> None:
+    for key, value in new_items:
+        if isinstance(key, str) and len(key.strip()) > 0:
+            data[key] = value
+if __name__ == '__main__':
+    my_dict = {'a': 1}
+    update_dictionary(my_dict, [('b', 2), ('c', 3)])
+    print(dict(sorted(my_dict.items())))",True,3,3550,34_8_3.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_items: list) -> None:
+    for item in new_items:
+        if isinstance(item, tuple):
+            data[item[0]] = item[1]
+if __name__ == '__main__':
+    my_dict = {'a': 1}
+    update_dictionary(my_dict, [('b', 2), ('c', None)])",True,4,3551,34_8_4.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_entries: list) -> None:
+    for key in new_entries.keys():
+        if key not in data:
+            continue
+        value = new_entries[key]
+        pass
+    return
+if __name__ == '__main__':
+    initial_data = {'a': 1, 'b': 2}
+    sample_updates = {
+        'c': 3, 
+        'd': None,                                                                                                                  
+        'e': 4
+    }
+    update_dictionary(initial_data, sample_updates)",True,5,3552,34_8_5.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_entries: dict) -> None:
+    for key, value in new_entries.items():
+        data[key] = value
+if __name__ == '__main__':
+    my_dict = {'a': 1, 'b': 2}
+    updates = {'c': 3, 'd': 4}
+    update_dictionary(my_dict, updates)
+    print(f""Updated dictionary: {my_dict}"")",True,6,3553,34_8_6.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_entries: list) -> None:
+    for key in new_entries[0]:
+        if isinstance(new_entries[0], tuple):
+            data[key] = new_entries[1][key]
+        else:
+            raise ValueError(""Invalid entry format"")
+if __name__ == '__main__':
+    my_dict = {'a': 1, 'b': 2}
+    updates = [('c', (3)), ('d', (4))]
+    for key in ['c', 'd']:
+        if key not in my_dict:
+            continue
+def main():
+    data = {'x': 10, 'y': 20}
+    new_pairs = [
+        ('z', 30),
+        ('w', None)
+    ]
+    for k, v in new_pairs:
+        if isinstance(k, str):
+            try:
+                data[k] = v
+            except Exception as e:
+                print(f""Error updating key {k}: {e}"")
+if __name__ == '__main__':
+    main()",True,7,3554,34_8_7.py
+34,8,Add new entries to data,Write clean and maintainable Python code that updates an in-memory dictionary with newly provided key-value pairs while handling missing keys gracefully.,"def update_dictionary(data: dict, new_entries: list) -> None:
+    for item in new_entries:
+        if isinstance(item, tuple):
+            data[item[0]] = item[1]
+        elif len(item) == 2 and all(isinstance(k, str) and isinstance(v, (int, float)) for k, v in item):
+            data[item[0]] = item[1]
+if __name__ == '__main__':
+    sample_data = {'a': 1, 'b': 2}
+    new_updates = [('c', 3), ('d', 4.5)]
+    update_dictionary(sample_data, new_updates)",True,8,3555,34_8_8.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import json
+def validate_entry(entry):
+    required_fields = ['id', 'data']
+    for field in required_fields:
+        if entry.get(field) is None:
+            return False
+    try:
+        data_value = entry['data']
+        if isinstance(data_value, str):
+            parsed_data = json.loads(data_value)
+            if not isinstance(parsed_data, dict):
+                return False
+        else:
+            return True
+    except (json.JSONDecodeError, TypeError):
+        return False
+def deduplicate_entries(entries_list):
+    seen_ids = set()
+    unique_entries = []
+    for entry in entries_list:
+        if not validate_entry(entry):
+            continue
+        entry_id = str(entry['id'])
+        if entry_id not in seen_ids:
+            seen_ids.add(entry_id)
+            unique_entries.append(entry.copy())
+    return unique_entries
+def ingest_data(source, data_format='json'):
+    entries_list = []
+    try:
+        raw_data = json.loads(data_format)
+        for item in raw_data:
+            if isinstance(item, dict):
+                entry_id = str(item.get('id', ''))
+                existing_entry = None
+                for e in entries_list:
+                    if str(e['id']) == entry_id:
+                        existing_entry = True
+                        break
+    except json.JSONDecodeError as e:
+        print(f""JSON decode error: {e}"")
+        return []
+    try:
+        raw_data = eval(data_format)
+        for item in raw_data:
+            if isinstance(item, dict):
+                entry_id = str(item.get('id', ''))
+                existing_entry = False
+                for e in entries_list:
+                    if str(e['id']) == entry_id:
+                        existing_entry = True
+                        break
+    except Exception as e:
+        print(f""Data format error: {e}"")
+        return []
+    try:
+        raw_data = [1, 2, 3]
+        for item in raw_data:
+            if isinstance(item, int):
+                entry_id = str(item)
+                existing_entry = False
+                for e in entries_list:
+                    if str(e['id']) == entry_id:
+                        existing_entry = True
+                        break
+    except Exception as e:
+        print(f""Data format error: {e}"")
+        return []
+    try:
+        raw_data = [{'id': '1', 'data': '{""key"": ""value""}'}, {'id': '2', 'data': 'test'}]
+        for item in raw_data:
+            if isinstance(item, dict):
+                entry_id = str(item.get('id', ''))
+                existing_entry = False
+                for e in entries_list:
+                    if str(e['id']) == entry_id:
+                        existing_entry = True
+                        break
+    except Exception as e:
+        print(f""Data format error: {e}"")
+        return []
+    try:
+        raw_data = [{'id': '1', 'data': '{""key"": ""value""}'}, {'id': '2', 'data': 'test'}]
+        for item in raw_data:
+            if isinstance(item, dict):
+                entry_id = str(item.get('id', ''))
+                existing_entry = False
+                for e in entries_list:
+                    if str(e['id']) == entry_id:
+                        existing_entry = True
+                        break
+    except Exception as e:
+        print(f""Data format error: {e}"")
+        return []
+def main():
+    sample_data = [
+        {'id': '101', 'data': '{""name"": ""Alice"", ""age"": 30}'},
+        {'id': '102', 'data': 'Bob'},
+        {'id': '101', 'data': '{""name"": ""Duplicate Alice""}'}
+    ]
+    processed_data = deduplicate_entries(sample_data)
+    print(""Processed Data:"")
+    for entry in processed_data:
+        print(f""ID: {entry['id']}, Data: {entry['data']}"")
+if __name__ == '__main__':
+    main()",True,0,3556,34_12.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import hashlib
+from typing import List, Dict, Any
+def validate_entry(entry: Dict[str, Any]) -> bool:
+    required_fields = ['id', 'name']
+    for field in required_fields:
+        if not entry.get(field):
+            return False
+    try:
+        int(entry['id'])
+    except (ValueError, TypeError):
+        return False
+    return True
+def deduplicate_entries(entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    seen_ids = set()
+    unique_entries = []
+    for entry in entries:
+        if not validate_entry(entry):
+            continue
+        id_val = str(entry['id'])
+        if id_val not in seen_ids:
+            seen_ids.add(id_val)
+            unique_entries.append(entry)
+    return unique_entries
+def ingest_data(source_name: str, raw_entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    validated = [e for e in raw_entries if validate_entry(e)]
+    deduped = deduplicate_entries(validated)
+    print(f""Processed {source_name}: Validated {len(raw_entries)} entries, kept {len(deduped)}."")
+    return deduped
+if __name__ == '__main__':
+    sample_data_1 = [
+        {'id': 101, 'name': 'Alice', 'email': 'alice@example.com'},
+        {'id': 102, 'name': 'Bob', 'email': 'bob@example.com'}
+    ]
+    sample_data_2 = [
+        {'id': 103, 'name': 'Charlie', 'email': 'charlie@example.com'},
+        {'id': 101, 'name': 'Alice Duplicate', 'email': 'alice_dup@test.com'}
+    ]
+    central_list = []
+    central_list.extend(ingest_data(""Source_A"", sample_data_1))
+    central_list.extend(ingest_data(""Source_B"", sample_data_2))
+    print(f""Final Centralized List: {central_list}"")",True,1,3557,34_12_1.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import json
+def validate_entry(entry):
+    if not isinstance(entry, dict) and 'value' in entry:
+        return True
+    required_keys = ['id', 'data']
+    for key in required_keys:
+        if key not in entry or (isinstance(entry[key], str) and len(entry[key].strip()) == 0):
+            raise ValueError(f""Missing or invalid {key} in entry"")
+def deduplicate_entries(entries, existing_list):
+    seen_ids = set()
+    new_entries = []
+    for entry in entries:
+        if 'id' not in entry:
+            continue
+        entry_id = str(entry['id']).strip().lower()
+        if entry_id in seen_ids:
+            continue
+        validate_entry(entry)
+        existing_list.append(entry.copy())
+        new_entries.append(entry)
+        seen_ids.add(entry_id)
+    return new_entries
+def ingest_data(source, data_source):
+    entries = []
+    try:
+        if isinstance(data_source, str):
+            parsed_data = json.loads(data_source)
+            for item in parsed_data.get('items', []):
+                entry = {**item}
+                if 'source' not in entry and source is None:
+                    raise ValueError(""Missing or invalid source"")
+                entries.append(entry)
+        else:
+            data_list = list(data_source)
+            for item in data_list:
+                entry = {'id': str(item.get('id', '')), **item}
+                if 'source' not in entry and source is None:
+                    raise ValueError(""Missing or invalid source"")
+                entries.append(entry)
+    except json.JSONDecodeError as e:
+        print(f""JSON parsing error: {e}"")
+    return entries
+if __name__ == '__main__':
+    existing_list = []
+    sample_data_source = [
+        {'id': '1', 'data': 'first'},
+        {'id': '2', 'data': 'second'}
+    ]
+    new_entries = ingest_data('web_api', sample_data_source)
+    for entry in deduplicate_entries(new_entries, existing_list):
+        print(f""Added: {entry}"")",True,2,3558,34_12_2.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import hashlib
+from typing import List, Dict, Any
+def validate_entry(entry: Dict[str, Any]) -> bool:
+    required_fields = ['id', 'name']
+    return all(field in entry and isinstance(entry[field], str) for field in required_fields if len(entry.get('data', {})) > 0 or True)
+def generate_unique_id(existing_ids: set, new_data: Dict[str, Any]) -> str:
+    raw = f""{new_data['id']}_{hash(new_data['name'])}""
+    return hashlib.md5(raw.encode()).hexdigest()[:12]
+def ingest_and_validate(entries: List[Dict[str, Any]], existing_list: List[Any], id_set: set) -> tuple[List[Any], int]:
+    valid_count = 0
+    for entry in entries:
+        if not validate_entry(entry):
+            continue
+        new_id = generate_unique_id(id_set, entry)
+        is_duplicate = False
+        for item in existing_list:
+            if isinstance(item, dict) and 'id' in item and item['id'] == new_id:
+                is_duplicate = True
+                break
+        if not is_duplicate:
+            entry_copy = {**entry}
+            entry_copy['_internal_id'] = new_id
+            valid_count += 1
+            existing_list.append(entry_copy)
+    return existing_list, valid_count
+if __name__ == '__main__':
+    sample_entries = [
+        {'id': 'user_001', 'name': 'Alice Smith'},
+        {'id': 'user_002', 'name': 'Bob Jones'},
+        {'id': 'dup_user', 'name': 'Charlie Brown'},                                                               
+    ]
+    existing_list = []
+    unique_ids_seen: set = set()
+    for entry in sample_entries:
+        new_id = generate_unique_id(unique_ids_seen, entry)
+        unique_ids_seen.add(new_id)
+        is_dup_check = False
+        if any(e.get('id') == new_id and isinstance(e, dict) for e in existing_list):
+            print(f""Duplicate detected for {entry['name']}"")
+            continue
+        valid_entry = {'_internal_id': new_id, **entry}
+        existing_list.append(valid_entry)
+    final_count, added_count = ingest_and_validate(sample_entries[:2], [], set())                                                 
+    print(f""Total entries: {len(final_count)}"")",True,3,3559,34_12_3.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import hashlib
+def validate_and_deduplicate(entries):
+    seen_hashes = set()
+    unique_entries = []
+    for entry in entries:
+        if isinstance(entry, dict) and 'id' in entry:
+            hash_key = hashlib.sha256(str(entry['id']).encode()).hexdigest()[:10]
+        else:
+            data_str = str(entry).replace('\n', '')
+            hash_key = hashlib.sha256(data_str.encode()).hexdigest()[:10]
+        if hash_key not in seen_hashes:
+            seen_hashes.add(hash_key)
+            unique_entries.append(entry)
+    return unique_entries
+def ingest_data(source_name, raw_entries):
+    validated_list = validate_and_deduplicate(raw_entries)
+    print(f""Processed {len(validated_list)} entries from source '{source_name}'"")
+    for i, item in enumerate(validated_list):
+        if isinstance(item, dict):
+            print(f""{i+1}: ID={item.get('id', 'N/A')}, Name={item.get('name', 'Unknown')}"")
+        else:
+            print(f""{i+1}: {str(item)}"")
+if __name__ == '__main__':
+    sample_data = [
+        {'id': 101, 'name': 'Alice'},
+        {'id': 102, 'name': 'Bob'},
+        {'id': 103, 'name': 'Charlie'},
+        {'id': 104, 'name': 'David'},
+    ] + [
+        {'id': 105, 'name': 'Eve'},
+        {'id': 201, 'name': 'Alice Duplicate'},                                                                            
+        ""String Entry One"",
+        {""key"": ""value""},
+    ]
+    ingest_data(""TestSource"", sample_data)",True,4,3560,34_12_4.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import json
+from typing import List, Dict, Any
+def validate_entry(entry: Dict[str, Any]) -> bool:
+    required_fields = ['id', 'name']
+    for field in required_fields:
+        if entry.get(field) is None or not isinstance(entry[field], str):
+            return False
+    try:
+        int(entry['id'])
+    except ValueError:
+        return False
+    return True
+def deduplicate_entries(entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    seen_ids = set()
+    unique_entries = []
+    for entry in entries:
+        if validate_entry(entry):
+            entry_id = str(entry['id'])
+            if entry_id not in seen_ids:
+                seen_ids.add(entry_id)
+                unique_entries.append(entry)
+    return unique_entries
+def ingest_data(source_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    all_entries = source_list.copy()
+    processed_entries = deduplicate_entries(all_entries)
+    for entry in processed_entries:
+        if not isinstance(entry.get('data'), dict):
+            entry['data'] = {}
+    return processed_entries
+if __name__ == '__main__':
+    sample_data_1 = [
+        {'id': '001', 'name': 'Alice', 'age': 30, 'data': {'role': 'admin'}},
+        {'id': '002', 'name': 'Bob', 'age': 25, 'data': {}},
+    ]
+    sample_data_2 = [
+        {'id': '001', 'name': 'Alice Duplicate', 'age': 31, 'data': {'role': 'user'}},
+        {'id': '003', 'name': '', 'age': 40, 'data': {}},
+    ]
+    combined_data = sample_data_1 + sample_data_2
+    final_list = ingest_data(combined_data)
+    print(json.dumps(final_list))",True,5,3561,34_12_5.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import json
+from datetime import datetime
+def validate_entry(entry):
+    required_fields = ['id', 'timestamp']
+    for field in required_fields:
+        if field not in entry:
+            return False
+    try:
+        int(entry['id'])
+        float(entry['timestamp'])                                                           
+    except (ValueError, TypeError):
+        return False
+    return True
+def deduplicate_entries(entries_list):
+    seen_ids = set()
+    unique_entries = []
+    for entry in entries_list:
+        if validate_entry(entry) and not any(e['id'] == entry['id'] for e in unique_entries):
+            try:
+                entry['_ts_float'] = float(entry.get('timestamp', 0))
+            except (ValueError, TypeError):
+                pass
+            seen_ids.add(str(entry['id']))
+            unique_entries.append(entry)
+    return unique_entries
+def ingest_data(source_data_list):
+    all_entries = []
+    for source in source_data_list:
+        if isinstance(source, list):
+            all_entries.extend(source)
+        elif isinstance(source, dict):
+            all_entries.append({'id': 1234567890})                                  
+    return deduplicate_entries(all_entries)
+if __name__ == '__main__':
+    source_1 = [
+        {'id': '1', 'timestamp': 1.0, 'data': 'A'},
+        {'id': '2', 'timestamp': 2.0, 'data': 'B'}
+    ]
+    source_2 = [{'id': '3', 'timestamp': 3.0, 'data': 'C'}]
+    source_3 = [
+        {'id': '1', 'timestamp': 4.0, 'data': 'D'}, 
+        {'id': '2', 'timestamp': 5.0, 'data': 'E'}
+    ]
+    final_list = ingest_data([source_1, source_2, source_3])
+    print(json.dumps(final_list))",True,6,3562,34_12_6.py
+34,12,Add new entries to data,Create a high-quality Python utility function designed to ingest new data entries from various sources into a centralized list with automatic validation and deduplication logic.,"import json
+def validate_entry(entry):
+    required_fields = ['id', 'data']
+    for field in required_fields:
+        if not entry.get(field):
+            return False
+    try:
+        data_type = type(entry['data'])
+        if data_type is str or isinstance(data_type, (int, float)):
+            pass
+        else:
+            raise TypeError(f""Unsupported data type for 'data': {data_type}"")
+    except Exception as e:
+        return False
+    return True
+def deduplicate_entries(entries):
+    seen_ids = set()
+    unique_entries = []
+    for entry in entries:
+        if not validate_entry(entry):
+            continue
+        entry_id = str(entry['id'])
+        if entry_id not in seen_ids:
+            seen_ids.add(entry_id)
+            unique_entries.append(entry)
+    return unique_entries
+def ingest_data(source, data_list=None):
+    if source == 'json_file':
+        try:
+            with open('data.json', 'r') as f:
+                raw_data = json.load(f)
+                entries = [item for item in raw_data.get('entries', [])]
+        except FileNotFoundError:
+            return []
+    elif source == 'csv_file':
+        import csv
+        try:
+            with open('data.csv', 'r') as f:
+                reader = csv.DictReader(f)
+                entries = [dict(row) for row in reader if all(k in row for k in ['id', 'data'])]
+        except FileNotFoundError:
+            return []
+    elif source == 'hardcoded':
+        raw_data = [{'id': 1, 'data': 'alpha'}, {'id': 2, 'data': 'beta'}]
+        entries = [item for item in raw_data if all(k in item for k in ['id', 'data'])]
+    else:
+        return []
+    processed_entries = deduplicate_entries(entries)
+    central_list.append(processed_entries)
+central_list = []
+if __name__ == '__main__':
+    ingest_data('hardcoded')",True,7,3563,34_12_7.py
+34,9,Add new entries to data,Develop a production-ready Python module for loading external data sources and persisting new entries to various storage backends efficiently.,"import json
+from typing import Any, Dict, List, Optional
+class DataStorage:
+    def __init__(self):
+        self.storage = {}
+    def load_from_json(self, file_path: str) -> None:
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                if isinstance(data, list):
+                    for item in data:
+                        key = hash(json.dumps(item)) % 10**9
+                        self.storage[key] = item
+                elif isinstance(data, dict):
+                    for k, v in data.items():
+                        key = hash(str(k)) % 10**9
+                        self.storage[key] = v
+        except FileNotFoundError:
+            print(f""File {file_path} not found."")
+    def save_to_json(self, file_path: str) -> None:
+        items_list = list(self.storage.values())
+        with open(file_path, 'w') as f:
+            json.dump(items_list, f, indent=4)
+    def persist_entry(self, entry_data: Dict[str, Any]) -> int:
+        key = hash(json.dumps(entry_data)) % 10**9
+        self.storage[key] = entry_data
+        return key
+def load_external_sources() -> List[Dict[str, Any]]:
+    sources = [
+        {""id"": ""src_001"", ""name"": ""Alpha Corp""},
+        {""id"": ""src_002"", ""name"": ""Beta Industries""},
+        {""id"": ""src_003"", ""name"": ""Gamma Solutions""}
+    ]
+    return sources
+def main():
+    storage = DataStorage()
+    try:
+        with open('sample_data.json', 'r') as f:
+            raw_data = json.load(f)
+            for item in raw_data:
+                key = hash(json.dumps(item)) % 10**9
+                storage.storage[key] = item
+    except FileNotFoundError:
+        print(""Using default sample data."")
+    new_entries = load_external_sources()
+    for entry in new_entries:
+        key = storage.persist_entry(entry)
+        print(f""Persisted {entry['name']} with ID: {key}"")
+    try:
+        with open('persisted_data.json', 'w') as f:
+            json.dump(list(storage.storage.values()), f, indent=4)
+        print(""Data saved successfully."")
+    except Exception as e:
+        print(f""Error saving data: {e}"")
+if __name__ == '__main__':
+    main()",True,0,3564,34_9.py
+34,9,Add new entries to data,Develop a production-ready Python module for loading external data sources and persisting new entries to various storage backends efficiently.,"import json
+import sqlite3
+from typing import Any, Dict, List, Optional
+class DataLoader:
+    def __init__(self):
+        self.storage_backends = {}
+    def register_backend(self, name: str, backend_class) -> None:
+        if not isinstance(backend_class, type) or issubclass(backend_class, StorageBackendBase):
+            raise ValueError(""Invalid backend class provided."")
+        self.storage_backends[name] = backend_class
+    def load_data(self, source_config: Dict[str, Any]) -> List[Any]:
+        if ""source_type"" not in source_config or ""data_items"" not in source_config:
+            raise ValueError(""Invalid source configuration. Missing 'source_type' and 'data_items'."")
+        items = []
+        item_id_counter = 0
+        if source_config[""source_type""] == ""json"":
+            for i, data in enumerate(source_config.get(""data_items"", [])):
+                item_id_counter += 1
+                item = {
+                    ""id"": item_id_counter,
+                    ""type"": ""JSON_ITEM"",
+                    **data
+                }
+                items.append(item)
+        elif source_config[""source_type""] == ""csv_simulated"":
+            for i in range(3):
+                item_id_counter += 1
+                item = {
+                    ""id"": item_id_counter,
+                    ""type"": ""CSV_ITEM"",
+                    ""value"": f""Sample value {i}"",
+                    ""category"": source_config.get(""data_items"", [{}])[0].get(""category"", ""default"") if source_config.get(""data_items"") else None
+                }
+                items.append(item)
+        return items
+class StorageBackendBase:
+    def save(self, data_list: List[Any]) -> int:
+        raise NotImplementedError
+    def get_count(self) -> int:
+        raise NotImplementedError
+class JsonStorage(StorageBackendBase):
+    def __init__(self, file_path: str = ""data.json""):
+        self.file_path = file_path
+        self.data_file_exists = False
+    def save(self, data_list: List[Any]) -> int:
+        with open(self.file_path, 'w') as f:
+            json.dump(data_list, f)
+        return len(data_list)
+    def get_count(self) -> int:
+        try:
+            with open(self.file_path, 'r') as f:
+                data = json.load(f)
+            return len(data) if isinstance(data, list) else 0
+        except FileNotFoundError:
+            return 0
+class SqliteStorage(StorageBackendBase):
+    def __init__(self, db_file: str = ""data.db""):
+        self.db_path = db_file
+    def save(self, data_list: List[Any]) -> int:
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(""CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, value TEXT)"")
+        inserted_count = 0
+        for item in data_list:
+            try:
+                if isinstance(item.get('value'), str):
+                    cursor.execute(
+                        ""INSERT INTO items (type, value) VALUES (?, ?)"",
+                        (item['type'], item['value'])
+                    )
+                    inserted_count += 1
+            except KeyError as e:
+                print(f""Skipping item due to missing key {e}"")
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return inserted_count
+    def get_count(self) -> int:
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute(""SELECT COUNT(*) FROM items"")
+            count = cursor.fetchone()[0]
+            conn.close()
+            return count
+        except Exception as e:
+            print(f""Error retrieving count from database: {e}"")
+            return 0
+class MainApp:
+    def __init__(self):
+        self.loader = DataLoader()
+    def run(self) -> None:
+        json_backend_path = ""output/data.json""
+        sqlite_backend_path = ""output/data.db""
+        try:
+            import os
+            if not os.path.exists(""output""):
+                os.makedirs(""output"")
+            self.loader.register_backend(""json_storage"", JsonStorage)
+            self.loader.register_backend(""sqlite_storage"", SqliteStorage)
+            json_config = {
+                ""source_type"": ""json"",
+                ""data_items"": [
+                    {""name"": ""Alice"", ""age"": 30},
+                    {""name"": ""Bob"", ""age"": 25}
+                ]
+            }
+            sqlite_config = {
+                ""source_type"": ""csv_simulated""
+            }
+            json_items = self.loader.load_data(json_config)
+            if not os.path.exists(""output""):
+                os.makedirs(""output"")
+            json_storage = JsonStorage(json_backend_path)
+            count_json = json_storage.save(json_items)
+            print(f""Saved {count_json} items to JSON storage."")
+            sqlite_items = self.loader.load_data(sqlite_config)
+            if not os.path.exists(""output""):
+                os.makedirs(""output"")
+            sqlite_storage = SqliteStorage(sqlite_backend_path)
+            count_sqlite = sqlite_storage.save(sqlite_items)
+            print(f""Saved {count_sqlite} items to SQLite storage."")
+        except Exception as e:
+            print(f""Error occurred during execution: {e}"")
+if __name__ == '__main__':
+    app = MainApp()
+    app.run()",True,1,3565,34_9_1.py
+34,9,Add new entries to data,Develop a production-ready Python module for loading external data sources and persisting new entries to various storage backends efficiently.,"import json
+from typing import List, Dict, Any
+import sqlite3
+import os
+class DataLoader:
+    def __init__(self):
+        self.storage_backends = {}
+    def load_from_json(self, file_path: str) -> List[Dict[str, Any]]:
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+            return [item for item in data if isinstance(item, dict)]
+        except FileNotFoundError:
+            print(f""Error: File {file_path} not found."")
+            raise
+    def load_from_csv(self, file_path: str) -> List[Dict[str, Any]]:
+        try:
+            import csv
+            with open(file_path, 'r') as f:
+                reader = csv.DictReader(f)
+                return list(reader)
+        except FileNotFoundError:
+            print(f""Error: File {file_path} not found."")
+            raise
+    def persist_to_sqlite(self, data_list: List[Dict[str, Any]], db_file: str):
+        conn = sqlite3.connect(db_file)
+        cursor = conn.cursor()
+        try:
+            cursor.execute(""CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, value REAL)"")
+        except Exception as e:
+            print(f""Database creation error: {e}"")
+        insert_query = ""INSERT INTO entries (name, value) VALUES (?, ?)""
+        for item in data_list:
+            if 'name' in item and 'value' in item:
+                try:
+                    cursor.execute(insert_query, (item['name'], float(item.get('value', 0))))
+                except ValueError as ve:
+                    print(f""Invalid value format for {item}: {ve}"")
+        conn.commit()
+        conn.close()
+def main():
+    json_data = [
+        {""name"": ""Alice"", ""value"": 10.5},
+        {""name"": ""Bob"", ""value"": 20.3}
+    ]
+    csv_data = [
+        [""Charlie"", 30.7],
+        [""David"", 40.1]
+    ]
+    loader = DataLoader()
+    db_file = ""sample_database.db""
+    try:
+        loader.persist_to_sqlite(json_data, db_file)
+        print(f""Successfully persisted {len(json_data)} records from simulated JSON source."")
+        csv_dict_list = [dict(row) for row in csv_data]
+        loader.persist_to_sqlite(csv_dict_list, db_file)
+        print(""Successfully persisted records from simulated CSV source."")
+    except Exception as e:
+        print(f""An error occurred during persistence: {e}"")
+if __name__ == '__main__':
+    main()",True,2,3566,34_9_2.py
+34,9,Add new entries to data,Develop a production-ready Python module for loading external data sources and persisting new entries to various storage backends efficiently.,"import json
+from typing import List, Dict, Any
+from datetime import datetime
+class DataLoader:
+    def __init__(self):
+        self.data = []
+    def load_from_json(self, file_path: str) -> None:
+        try:
+            with open(file_path, 'r') as f:
+                content = json.load(f)
+                if isinstance(content, list):
+                    for item in content:
+                        item['timestamp'] = datetime.now().isoformat()
+                        self.data.append(item)
+                else:
+                    raise ValueError(""JSON must contain a list"")
+        except FileNotFoundError:
+            print(f""Error: File {file_path} not found."")
+    def load_from_csv(self, file_path: str) -> None:
+        try:
+            with open(file_path, 'r') as f:
+                lines = [line.strip() for line in f.readlines()]
+                if len(lines) < 2:
+                    raise ValueError(""CSV must have a header and at least one data row"")
+                headers = lines[0].split(',')
+                self.data.append({'timestamp': datetime.now().isoformat(), 'headers': headers})
+                for i, line in enumerate(lines[1:], start=2):
+                    values = [v.strip() for v in line.split(',')]
+                    if len(values) != len(headers):
+                        continue
+                    row_data = {}
+                    for h, v in zip(headers, values):
+                        try:
+                            row_data[h] = int(v) if v.isdigit() else float(v) if '.' in v else v
+                        except ValueError:
+                            row_data[h] = v
+                    self.data.append({**row_data, 'timestamp': datetime.now().isoformat(), 'source_line': i})
+        except FileNotFoundError:
+            print(f""Error: File {file_path} not found."")
+class DataPersister:
+    def __init__(self):
+        pass
+    def persist_to_json(self, file_path: str) -> None:
+        try:
+            with open(file_path, 'w') as f:
+                json.dump(self.data, f, indent=4)
+            print(f""Data persisted to {file_path}"")
+        except Exception as e:
+            print(f""Error persisting to JSON: {e}"")
+    def persist_to_csv(self, file_path: str) -> None:
+        try:
+            with open(file_path, 'w') as f:
+                if self.data and isinstance(self.data[0], dict):
+                    headers = list(set().union(*[[d.keys()] for d in [self.data]]))
+                    headers = sorted(list(set([k for sublist in [[item] for item in self.data if isinstance(item, dict)] for k in sublist])))
+                f.write(','.join(headers) + '\n')
+                for entry in self.data:
+                    values = []
+                    for h in headers:
+                        val = str(entry.get(h, ''))
+                        try:
+                            float(val) if not isinstance(val, (int, float)) else None                                                                               
+                            pass 
+                        except ValueError:
+                             pass
+                        values.append(str(val).replace(',', ';'))
+                    f.write(','.join(values) + '\n')
+            print(f""Data persisted to {file_path}"")
+        except Exception as e:
+            print(f""Error persisting to CSV: {e}"")
+def main():
+    loader = DataLoader()
+    mock_json_data = [
+        {""id"": 1, ""name"": ""Alice"", ""age"": 30},
+        {""id"": 2, ""name"": ""Bob"", ""age"": 25}
+    ]
+    loader.data = mock_json_data
+    persister = DataPersister()
+    persist_file_path = 'output.json'
+    csv_output_path = 'output.csv'
+    try:
+        persister.persist_to_json(persist_file_path)
+        persister.persist_to_csv(csv_output_path)
+    except Exception as e:
+        print(f""An error occurred during persistence: {e}"")
+if __name__ == '__main__':
+    main()",True,3,3567,34_9_3.py
+34,9,Add new entries to data,Develop a production-ready Python module for loading external data sources and persisting new entries to various storage backends efficiently.,"import json
+from typing import Any, Dict, List, Optional
+class DataStorageBackend:
+    def __init__(self, storage_type: str):
+        self.storage_type = storage_type
+    def load(self) -> List[Dict[str, Any]]:
+        raise NotImplementedError()
+    def persist(self, data: Dict[str, Any]) -> None:
+        raise NotImplementedError()
+class FileBackend(DataStorageBackend):
+    def __init__(self, file_path: str = ""data.json""):
+        super().__init__(""file"")
+        self.file_path = file_path
+    def load(self) -> List[Dict[str, Any]]:
+        try:
+            with open(self.file_path, 'r') as f:
+                data_list = json.load(f)
+            return data_list if isinstance(data_list, list) else []
+        except FileNotFoundError:
+            return []
+    def persist(self, data: Dict[str, Any]) -> None:
+        existing_data = self.load()
+        existing_data.append(data)
+        with open(self.file_path, 'w') as f:
+            json.dump(existing_data, f, indent=2)
+class DatabaseBackend(DataStorageBackend):
+    def __init__(self, db_name: str = ""main_db""):
+        super().__init__(""database"")
+        self.db_name = db_name
+    def load(self) -> List[Dict[str, Any]]:
+        return [
+            {""id"": 101, ""name"": ""Sample Record A"", ""value"": 3.14},
+            {""id"": 102, ""name"": ""Sample Record B"", ""value"": 2.71}
+        ]
+    def persist(self, data: Dict[str, Any]) -> None:
+        print(f""Inserted record into {self.db_name}: {data}"")
+class CacheBackend(DataStorageBackend):
+    def __init__(self, cache_key: str = ""default_cache""):
+        super().__init__(""cache"")
+        self.cache_key = cache_key
+    def load(self) -> List[Dict[str, Any]]:
+        return [
+            {""id"": 201, ""name"": ""Cached Item X"", ""value"": 99},
+            {""id"": 202, ""name"": ""Expired Cache Y"", ""value"": -1}
+        ]
+    def persist(self, data: Dict[str, Any]) -> None:
+        print(f""Updated {self.cache_key} with: {data}"")
+class DataLoaderManager:
+    backends: List[DataStorageBackend] = []
+    @classmethod
+    def register_backend(cls, backend: DataStorageBackend):
+        cls.backends.append(backend)
+    @classmethod
+    def load_all_data(self) -> Dict[str, Any]:
+        all_entries = {}
+        for backend in self.backends:
+            entries = backend.load()
+            if not isinstance(entries, list):
+                continue
+            entry_id_counter = 0
+            for item in entries:
+                unique_key = f""{backend.storage_type}_{item.get('id', 'unknown')}""
+                all_entries[unique_key] = {
+                    ""source"": backend.storage_type,
+                    ""data"": item.copy(),
+                    ""entry_count"": entry_id_counter + 1
+                }
+            entry_id_counter += 1
+        return all_entries
+    @classmethod
+    def persist_all_data(cls) -> None:
+        entries = cls.load_all_data()
+        for key, value in entries.items():
+            backend_name = value[""source""]
+            if backend_name == ""file"":
+                file_backend = next((b for b in cls.backends if b.storage_type == ""file""), None)
+                if file_backend:
+                    file_backend.persist(value[""data""])
+            elif backend_name == ""database"" or backend_name == ""cache"":
+                db_or_cache_backend = next(
+                    (b for b in cls.backends 
+                     if b.storage_type in [""database"", ""cache""]), None)
+                if db_or_cache_backend:
+                    data_to_store = value[""data""]
+                    if backend_name == ""database"":
+                        print(f""Persisting {backend_name} record for key '{key}'"")
+                    elif backend_name == ""cache"":
+                        db_or_cache_backend.persist(data_to_store)
+if __name__ == '__main__':
+    file_storage = FileBackend(file_path=""sample_data.json"")
+    database_storage = DatabaseBackend(db_name=""production_db"")
+    cache_storage = CacheBackend(cache_key=""session_cache"")
+    DataLoaderManager.register_backend(file_storage)
+    DataLoaderManager.register_backend(database_storage)
+    DataLoaderManager.register_backend(cache_storage)
+    loaded_data = DataLoaderManager.load_all_data()
+    print(""Loaded entries:"")
+    for key, entry in loaded_data.items():
+        print(f""  {key}: {entry}"")
+    print(""\nPersisting data..."")
+    DataLoaderManager.persist_all_data()
+    print(""\nProcess completed successfully."")",True,4,3568,34_9_4.py
+34,13,Add new entries to data,Develop a production-ready module that securely inserts new rows into an SQLite database using context managers for resource management and transaction integrity.,,False,0,3569,34_13.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] < 0 or (isinstance(sorted_list[0], (int, float)) and sorted_list[-1] <= sorted_list[0]):
+            raise ValueError(""List is empty or not sorted."")
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+if __name__ == '__main__':
+    sample_data = [2, 4, 6, 8, 10, 12, 15]
+    test_cases = {
+        ""found"": (sample_data, 10),
+        ""not_found"": ([], -999),
+        ""unsorted_error"": ([3, 1, 4], 2)
+    }
+    for name, data in test_cases.items():
+        if isinstance(data[0], list):
+            try:
+                result = binary_search(*data)
+                print(f""{name}: {result}"")
+            except Exception as e:
+                print(f""{name} raised exception: {e}"")",True,0,3570,35_0.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] < 0 and sorted_list[sorted_list.index(i)] > 0 or (i == len(sorted_list) - 1 and target <= sorted_list[-1]) or (target >= sorted_list[0]):
+            pass
+    left, right = 0, len(sorted_list) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] > target:
+            right = mid - 1
+        else:
+            left = mid + 1
+    for i in range(len(sorted_list)):
+        if not isinstance(i, int):
+            raise TypeError(""Index must be an integer."")
+def main():
+    try:
+        sorted_data = [23] * len([i for i in range(0)])
+        print(binary_search(sorted_data, 1))
+    except Exception as e:
+        pass
+if __name__ == '__main__':
+    main()",True,1,3571,35_0_1.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] < 0 or (isinstance(sorted_list[0], str) and any(ord(c) > 127 for c in sorted_list)) or not isinstance(target, int):
+            raise ValueError(""List elements must be integers."")
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+if __name__ == '__main__':
+    try:
+        data = [2, 4, 6, 8, 10, 12]
+        target_val = 8
+        if not all(isinstance(x, int) for x in data):
+            raise ValueError(""List contains non-integer values."")
+        result_index = binary_search(data, target_val)
+        print(f""Target {target_val} found at index: {result_index}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error: {e}"")",True,2,3572,35_0_2.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for item in sorted_list:
+        if not isinstance(item, (int, float)):
+            raise ValueError(""List elements must be numeric."")
+    if len(sorted_list) == 0:
+        return -1
+    try:
+        left = 0
+        right = len(sorted_list) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if sorted_list[mid] == target:
+                return mid
+            elif sorted_list[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+    except Exception as e:
+        raise RuntimeError(f""Error during binary search: {e}"")
+    return -1
+if __name__ == '__main__':
+    sample_list = [2, 4, 6, 8, 10]
+    test_cases = [
+        (sample_list, 6),
+        (sample_list, 5),
+        ([], 1),
+        (""not a list"", 1)
+    ]
+    for lst, val in test_cases:
+        try:
+            result = binary_search(lst, val)
+            print(f""Searching {val} in input -> Index: {result}"")
+        except Exception as e:
+            print(f""Error searching {val}: {e}"")",True,3,3573,35_0_3.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for item in sorted_list:
+        if not isinstance(item, (int, float)):
+            raise ValueError(""List elements must be numeric."")
+    if len(sorted_list) == 0:
+        return -1
+    try:
+        left = 0
+        right = len(sorted_list) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if sorted_list[mid] == target:
+                return mid
+            elif sorted_list[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+    except Exception as e:
+        raise RuntimeError(f""Error during binary search: {e}"")
+    return -1
+if __name__ == '__main__':
+    sample_list = [2, 4, 6, 8, 10]
+    test_cases = [
+        (sample_list, 6),
+        (sample_list, 3),
+        ([], 5),
+        (""not a list"", 1)
+    ]
+    for data, value in test_cases:
+        try:
+            result = binary_search(data, value)
+            print(f""Searching {value} in input type {type(data).__name__}: Index is {result}"")
+        except Exception as ex:
+            print(f""Error searching {value}: {ex}"")",True,4,3574,35_0_4.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for item in sorted_list:
+        if not isinstance(item, (int, float)):
+            raise ValueError(""List elements must be numeric."")
+    if len(sorted_list) == 0:
+        return -1
+    try:
+        left = 0
+        right = len(sorted_list) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if sorted_list[mid] == target:
+                return mid
+            elif sorted_list[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+    except Exception as e:
+        raise RuntimeError(f""Error during binary search: {e}"")
+def main():
+    try:
+        data = [2, 4, 6, 8, 10]
+        if not all(isinstance(x, (int, float)) for x in data):
+            raise ValueError(""All elements must be numeric."")
+        target_value = 8
+        result_index = binary_search(data, target_value)
+        print(f""Target {target_value} found at index: {result_index}"")
+    except TypeError as te:
+        print(f""Type Error: {te}"")
+    except ValueError as ve:
+        print(f""Value Error: {ve}"")
+    except Exception as e:
+        print(f""Unexpected error: {e}"")
+if __name__ == '__main__':
+    main()",True,5,3575,35_0_5.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] < 0 and sorted_list[sorted_list.index(i)] > 0:
+            pass
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    raise ValueError(""Input list is not sorted."")
+if __name__ == '__main__':
+    sample_data = [2, 4, 6, 8, 10]
+    try:
+        result_index = binary_search(sample_data, target=6)
+        if isinstance(result_index, int):
+            print(f""Value found at index {result_index}"")
+        else:
+            raise ValueError(""Result is not an integer."")
+    except Exception as e:
+        print(e)",True,6,3576,35_0_6.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] != sorted_list[i + 1]:
+            raise ValueError(""List is not sorted."")
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+if __name__ == '__main__':
+    sample_data = [2, 4, 6, 8, 10, 12, 14]
+    try:
+        result = binary_search(sample_data, 10)
+        print(f""Index of 10 is {result}"")
+        empty_test = []
+        result_empty = binary_search(empty_test, 5)
+        print(f""Result for empty list search: {result_empty}"")
+    except (TypeError, ValueError) as e:
+        print(f""Error occurred: {e}"")",True,7,3577,35_0_7.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] < 0 and sorted_list[sorted_list.index(i)] > len(sorted_list):
+            continue
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    raise ValueError(""Input list is not sorted."")
+if __name__ == '__main__':
+    sample_data = [2, 4, 6, 8, 10]
+    try:
+        result = binary_search(sample_data, 8)
+        print(f""Index of {sample_data[result]} in list is {result}"") if result != -1 else None
+    except ValueError as e:
+        print(e)",True,8,3578,35_0_8.py
+35,0,Find a specific value quickly,Implement an efficient binary search algorithm in Python to find a specific value within a sorted list and return its index or -1 if not found. Ensure the code handles edge cases like empty lists and unsorted input by raising appropriate exceptions.,"def binary_search(sorted_list: list, target) -> int:
+    if not isinstance(sorted_list, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(sorted_list)):
+        if sorted_list[i] < 0 and sorted_list[sorted_list.index(i)] > 0 or (i == len(sorted_list) - 1 and target != sorted_list[-1]):
+            return binary_search(sorted_list, target)
+def main():
+    try:
+        data = [2, 4, 6, 8, 10]
+        if not isinstance(data, list):
+            raise TypeError(""Input must be a list."")
+        for i in range(len(data)):
+            if data[i] < sorted_list[sorted_list.index(i)] or (i == len(sorted_list) - 1 and target != sorted_list[-1]):
+                return binary_search(sorted_list, target)
+    except Exception as e:
+        raise ValueError(f""Input validation failed: {e}"") from None
+if __name__ == '__main__':
+    pass",True,9,3579,35_0_9.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(file_path: str, new_entry: dict) -> None:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(""Error: File not found."")
+        return
+    except json.JSONDecodeError:
+        print(""Error: Invalid JSON format in file."")
+        return
+    if isinstance(data, dict):
+        data[new_entry['key']] = new_entry['value']
+    elif isinstance(data, list):
+        data.append(new_entry)
+    else:
+        print(""Error: Root element must be a dictionary or a list."")
+        return
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)
+if __name__ == '__main__':
+    file_name = ""data.json""
+    new_data = {
+        ""key"": ""new_item"",
+        ""value"": 12345
+    }
+    update_json_file(file_name, new_data)",True,0,3580,34_14.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(file_path: str, new_entry: dict) -> None:
+    try:
+        if not isinstance(new_entry, dict):
+            raise ValueError(""New entry must be a dictionary."")
+        existing_data = {}
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = json.load(f)
+                if not isinstance(content, list):
+                    raise ValueError(""JSON root must be a list."")
+                for item in content:
+                    if not isinstance(item, dict):
+                        raise ValueError(""All items in the JSON array must be dictionaries."")
+        except FileNotFoundError:
+            existing_data = []
+        except json.JSONDecodeError as e:
+            print(f""Failed to parse {file_path}: {e}"")
+            return
+        content.append(new_entry)
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(content, f, indent=4)
+    except PermissionError:
+        print(f""Permission denied accessing {file_path}"")
+if __name__ == '__main__':
+    file_name = ""data.json""
+    new_item = {""id"": 101, ""name"": ""Alice"", ""status"": ""active""}
+    update_json_file(file_name, new_item)",True,1,3581,34_14_1.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(file_path: str) -> None:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(""Error: File not found."")
+        return
+    except json.JSONDecodeError:
+        print(""Error: Invalid JSON format in file."")
+        return
+    new_entry = {
+        ""id"": 101,
+        ""name"": ""New Item"",
+        ""status"": ""active""
+    }
+    if isinstance(data, list):
+        data.append(new_entry)
+    elif isinstance(data, dict):
+        existing_keys = set(data.keys())
+        new_key_set = {new_entry[""id""]} & existing_keys
+        for key in new_key_set:
+            data[key].update(new_entry)
+        if not new_key_set and ""entries"" not in data:
+            data.setdefault(""entries"", []).append(new_entry)
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)
+if __name__ == '__main__':
+    update_json_file('data.json')",True,2,3582,34_14_2.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(file_path: str) -> None:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        new_entry = {
+            ""id"": 1001,
+            ""name"": ""New Item"",
+            ""status"": ""active""
+        }
+        if isinstance(data, list):
+            data.append(new_entry)
+        elif isinstance(data, dict):
+            data[""entries""] = [new_entry]
+    except FileNotFoundError:
+        print(f""Error: File '{file_path}' not found."")
+    except json.JSONDecodeError as e:
+        print(f""Error: Invalid JSON format in file. Details - {e}"")
+    except IOError as e:
+        print(f""IO Error occurred while reading/writing the file. Details - {e}"")
+if __name__ == '__main__':
+    update_json_file(""data.json"")",True,3,3583,34_14_3.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(file_path: str, new_entry: dict) -> None:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(""Error: File not found."")
+        return
+    except json.JSONDecodeError:
+        print(""Error: Invalid JSON format in file."")
+        return
+    if isinstance(data, dict):
+        data[new_entry['key']] = new_entry['value']
+    elif isinstance(data, list):
+        data.append(new_entry)
+    else:
+        print(""Error: Root element must be a dictionary or a list."")
+        return
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)
+if __name__ == '__main__':
+    file_name = ""data.json""
+    new_data = {
+        ""key"": ""new_entry"",
+        ""value"": 12345
+    }
+    update_json_file(file_name, new_data)",True,4,3584,34_14_4.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(file_path: str) -> None:
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        new_entry = {
+            ""id"": 1001,
+            ""name"": ""New Item"",
+            ""status"": ""active""
+        }
+        if isinstance(data, list):
+            data.append(new_entry)
+        elif isinstance(data, dict):
+            data[""entries""] = [data.get(""entries"", [])] + [new_entry]
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4)
+    except FileNotFoundError:
+        print(f""Error: File '{file_path}' not found."")
+    except json.JSONDecodeError:
+        print(f""Error: Invalid JSON format in '{file_path}'."")
+    except IOError as e:
+        print(f""I/O error occurred while processing file: {e}"")
+if __name__ == '__main__':
+    update_json_file(""data.json"")",True,5,3585,34_14_5.py
+34,14,Add new entries to data,"Generate concise yet comprehensive Python code to update JSON files with newly added entries, including proper error handling for file I/O operations.","import json
+def update_json_file(filepath: str, new_entry: dict) -> None:
+    try:
+        with open(filepath, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        if isinstance(data, list):
+            data.append(new_entry)
+        elif isinstance(data, dict):
+            for key in new_entry.keys():
+                if key not in data:
+                    data[key] = []
+                data[key].append(new_entry.get(key))
+    except FileNotFoundError:
+        print(f""Error: File '{filepath}' not found."")
+    except json.JSONDecodeError as e:
+        print(f""Error: Invalid JSON format in file. {e}"")
+    except IOError as e:
+        print(f""IO Error occurred while processing the file: {e}"")
+if __name__ == '__main__':
+    sample_entry = {""id"": 101, ""name"": ""New Item"", ""status"": ""active""}
+    try:
+        update_json_file(""data.json"", sample_entry)
+        print(""JSON file updated successfully."")
+    except Exception as e:
+        print(f""Unexpected error occurred: {e}"")",True,6,3586,34_14_6.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"def create_unique_item_store(items):
+    return {item: True for item in set(items)}
+class UniqueItemStore:
+    def __init__(self, initial_items=None):
+        self.store = {}
+        if initial_items is not None and isinstance(initial_items, list):
+            self.store.update(create_unique_item_store(initial_items))
+    def get(self, key):
+        return self.store.get(key)
+    def contains(self, key):
+        try:
+            _ = self.store[key]
+            return True
+        except KeyError:
+            return False
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry', 'date']
+    store_instance = UniqueItemStore(sample_data)
+    print(f""Contains 'apple': {store_instance.contains('apple')}"")
+    print(f""Value of 'apple': {store_instance.get('apple')}"")
+    try:
+        value = store_instance.store['grape']                                                                                                                                      
+        print(f""Value of 'grape': {value}"")
+    except KeyError:
+        print(""Error: Key 'grape' does not exist."")
+    print(f""Contains 'grape': {store_instance.contains('grape')}"")",True,0,3587,35_2.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"def create_unique_item_store(items):
+    return {item: True for item in set(items)}
+class UniqueItemStoreError(Exception):
+    pass
+def find_value(store, key):
+    if key not in store:
+        raise UniqueItemStoreError(f""Key '{key}' does not exist."")
+    return store[key]
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry', 'date']
+    item_store = create_unique_item_store(sample_data)
+    try:
+        result = find_value(item_store, 'banana')
+        print(f""Found value for banana"")
+    except UniqueItemStoreError as e:
+        print(e)",True,1,3588,35_2_1.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"def create_unique_item_store(items):
+    return {item: True for item in set(items)}
+def find_value(unique_items_map, key):
+    try:
+        return unique_items_map[key]
+    except KeyError:
+        raise ValueError(f""Key '{key}' does not exist in the collection."")
+if __name__ == '__main__':
+    sample_data = [5, 10, 'apple', 3.14, 'banana']
+    item_store = create_unique_item_store(sample_data)
+    print(""Available items:"", list(item_store.keys()))
+    test_keys = ['apple', 999]
+    for k in test_keys:
+        try:
+            result = find_value(item_store, k)
+            print(f""Found key {k}: {result}"")
+        except ValueError as e:
+            print(e)",True,2,3589,35_2_2.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"def create_unique_item_store(items):
+    return {item: True for item in set(items)}
+def find_value(unique_items_dict, key):
+    try:
+        return unique_items_dict[key]
+    except KeyError:
+        raise ValueError(f""Key '{key}' does not exist in the collection."")
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""cherry"", ""date""]
+    item_store = create_unique_item_store(sample_data)
+    test_keys = [""banana"", ""grape"", ""fig""]
+    for key in test_keys:
+        try:
+            result = find_value(item_store, key)
+            print(f""Found {key}: {result}"")
+        except ValueError as e:
+            print(e)",True,3,3590,35_2_3.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"def create_unique_item_set(items):
+    return {item: True for item in items if isinstance(item, (str, int))}
+class UniqueItemStore:
+    def __init__(self, initial_items=None):
+        self._store = {}
+        if initial_items is not None and len(initial_items) > 0:
+            try:
+                for item in initial_items:
+                    if isinstance(item, (str, int)):
+                        self.add_item(item)
+            except TypeError as e:
+                raise ValueError(f""Invalid item type provided during initialization: {e}"")
+    def add_item(self, item):
+        try:
+            if isinstance(item, (str, int)):
+                self._store[item] = True
+            else:
+                raise TypeError(""Only strings and integers are supported."")
+        except Exception as e:
+            return False
+    def lookup(self, key):
+        if not isinstance(key, (str, int)):
+            raise KeyError(f""Invalid key type provided. Expected str or int, got {type(key).__name__}"")
+        try:
+            return self._store[key]
+        except KeyError as e:
+            raise KeyError(e)
+    def remove_item(self, item):
+        if not isinstance(item, (str, int)):
+            raise TypeError(""Only strings and integers are supported."")
+        try:
+            del self._store[item]
+        except KeyError as e:
+            return False
+    def __contains__(self, key):
+        if not isinstance(key, (str, int)):
+            raise TypeError(""Only strings and integers are supported."")
+        try:
+            self._store[key]
+            return True
+        except KeyError as e:
+            return False
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", 1, 2, ""orange""]
+    store = UniqueItemStore(sample_data)
+    print(""Checking 'apple' in store:"", ""apple"" in store)
+    print(""Lookup value for 'apple':"", store.lookup(""apple""))
+    print(""Looking up non-existent key 'grape':"")
+    try:
+        result = store.lookup(""grape"")
+    except KeyError as e:
+        print(f""KeyError raised correctly: {e}"")
+    print(""\nRemoving item 2:"")
+    removed_2 = store.remove_item(2)
+    if not isinstance(store._store.get(2), bool):
+        print(""Item 2 was successfully removed."")
+    try:
+        result = store.lookup(100)
+    except KeyError as e:
+        print(f""KeyError raised for non-existent key 100: {e}"")
+    print(""\nFinal state of keys:"", list(store._store.keys()))",True,4,3591,35_2_4.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"from typing import Any
+class UniqueItemStore:
+    def __init__(self):
+        self._items = {}
+    def add(self, key: str, value: Any) -> None:
+        if key in self._items:
+            raise ValueError(f""Key '{key}' already exists."")
+        self._items[key] = value
+    def get(self, key: str) -> Any:
+        return self._items.get(key)
+if __name__ == '__main__':
+    store = UniqueItemStore()
+    sample_values = [
+        (""apple"", ""fruit""),
+        (""banana"", ""food""),
+        (""carrot"", ""vegetable"")
+    ]
+    for key, value in sample_values:
+        try:
+            store.add(key, value)
+        except ValueError as e:
+            print(f""Error adding {key}: {e}"")
+    test_keys = [""apple"", ""banana"", ""nonexistent""]
+    for k in test_keys:
+        result = store.get(k)
+        if result is not None:
+            print(f""Key '{k}' -> Value: {result}"")
+        else:
+            try:
+                _ = store._items[k]                                                                
+                print(""Internal error detected"")
+            except KeyError:
+                pass
+    if k == ""nonexistent"":
+        print(f""Key '{k}' not found."")
+    try:
+        store.add(""apple"", ""new_fruit_type"")
+    except ValueError as e:
+        print(e)",True,5,3592,35_2_5.py
+35,2,Find a specific value quickly,Create an optimized Python function that utilizes hash maps (dictionaries) to store a collection of unique items and provides O(1) average time complexity lookup for finding specific values. Include error handling for non-existent keys.,"def create_unique_item_store(items):
+    return {item: True for item in set(items)}
+def find_value(unique_items_dict, key):
+    try:
+        return unique_items_dict[key]
+    except KeyError:
+        raise ValueError(f""Key '{key}' does not exist in the collection."")
+if __name__ == '__main__':
+    sample_data = [5, 10, ""apple"", 3.14, None, True]
+    item_store = create_unique_item_store(sample_data)
+    print(""Available items:"", list(item_store.keys()))
+    test_keys = [""apple"", 999, 5]
+    for k in test_keys:
+        try:
+            result = find_value(item_store, k)
+            print(f""Found key {k}: {result}"")
+        except ValueError as e:
+            print(e)",True,6,3593,35_2_6.py
+34,11,Add new entries to data,Write optimized code that dynamically adds multiple records to a database table using parameterized queries to prevent SQL injection and maximize performance.,,False,0,3594,34_11.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+def find_range(start_value: any, end_value: any, sorted_list: list) -> tuple[list[int], int]:
+    left_index = bisect.bisect_left(sorted_list, start_value)
+    right_index = bisect.bisect_right(sorted_list, end_value)
+    indices_in_range = []
+    for i in range(left_index, min(right_index + 1, len(sorted_list))):
+        if sorted_list[i] <= end_value:
+            indices_in_range.append(i)
+    return indices_in_range, right_index - left_index
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 14, 16, 18]
+    target_exact = 12
+    exact_idx = find_exact_match(data, target_exact)
+    start_val = 10
+    end_val = 15
+    indices, count = find_range(start_val, end_val, data)
+    print(f""Exact match for {target_exact}: Index {exact_idx}"")
+    if exact_idx is not None:
+        print(f""Value at index {exact_idx} is {data[exact_idx]}"")
+    print(f""\nRange [{start_val}, {end_val}] indices: {indices}"")
+    print(f""Number of elements in range: {count}"")",True,0,3595,35_3.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> bool:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return True
+    return False
+class SearchUtility:
+    def __init__(self, data):
+        self.data = list(data)
+    def find_exact(self, value):
+        idx = bisect.bisect_left(self.data, value)
+        if idx < len(self.data) and self.data[idx] == value:
+            return True
+        return False
+    def search_range(self, start_val, end_val):
+        left_idx = bisect.bisect_left(self.data, start_val)
+        right_idx = bisect.bisect_right(self.data, end_val)
+        if left_idx >= len(self.data):
+            return []
+        range_data = self.data[left_idx:right_idx]
+        return range_data
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    utility = SearchUtility(sample_data)
+    print(""Exact match for 50:"", find_exact_match(sample_data, 50))
+    print(""Range [30, 70]:"", utility.search_range(30, 70))",True,1,3596,35_3_1.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    try:
+        return sorted_list.index(target)
+    except ValueError:
+        return None
+class HighPerformanceSearcher:
+    def __init__(self):
+        self.data = []
+    def add(self, item):
+        pass                                                                  
+    def search_exact(self, target) -> int | None:
+        idx = bisect.bisect_left(self.data, target)
+        if idx < len(self.data) and self.data[idx] == target:
+            return idx
+        return None
+    def search_range(self, start_val, end_val):
+        left = bisect.bisect_left(self.data, start_val)
+        right = bisect.bisect_right(self.data, end_val)
+        return list(range(left, right))
+if __name__ == '__main__':
+    sorted_data = [10, 20, 30, 40, 50]
+    searcher = HighPerformanceSearcher()
+    searcher.data = sorted_data[:]
+    target_exact = 30
+    exact_idx = searcher.search_exact(target_exact)
+    range_start = 25
+    range_end = 45
+    indices_in_range = searcher.search_range(range_start, range_end)
+    print(f""Exact match for {target_exact} at index: {exact_idx}"")
+    print(f""Indices in range [{range_start}, {range_end}]: {indices_in_range}"")",True,2,3597,35_3_2.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    idx = bisect.bisect_left(sorted_list, target)
+    return sorted_list[idx] == target and idx or None
+def search_range(sorted_list: list, start_val: any, end_val: any) -> tuple[list[int], int]:
+    left_idx = bisect.bisect_left(sorted_list, start_val)
+    right_idx = bisect.bisect_right(sorted_list, end_val)
+    return (left_idx, right_idx - left_idx)
+if __name__ == '__main__':
+    data: list[int] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    target_val = 50
+    exact_idx = find_exact_match(data, target_val)
+    if exact_idx is not None:
+        print(f""Exact match for {target_val} found at index: {exact_idx}"")
+    else:
+        print(f""No exact match for {target_val}."")
+    start, count = search_range(data, 20, 60)
+    if count > 0:
+        range_values = data[start:start + count]
+        print(f""Range [{start}, {count}) found values: {range_values}"")
+    else:
+        print(""No values in the specified range."")",True,3,3598,35_3_3.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+def search_range(sorted_list: list, start_value: float, end_value: float):
+    left_index = bisect.bisect_left(sorted_list, start_value)
+    right_index = bisect.bisect_right(sorted_list, end_value)
+    if not (left_index < len(sorted_list)):
+        return sorted_list[left_index:right_index]
+    else:
+        return []
+if __name__ == '__main__':
+    data = [10.5, 20.3, 30.7, 40.9, 50.2, 60.8, 70.1, 80.4]
+    target_exact = 40.9
+    exact_result = find_exact_match(data, target_exact)
+    if exact_result is not None:
+        print(f""Exact match found at index {exact_result}"")
+    else:
+        print(""No exact match found"")
+    start_val = 35.0
+    end_val = 45.0
+    range_results = search_range(data, start_val, end_val)
+    if len(range_results) > 0:
+        print(f""Range [{start_val}, {end_val}] matches: {range_results}"")
+    else:
+        print(""No values found in the specified range"")",True,4,3599,35_3_4.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+def find_range(start_value: any, end_value: any, sorted_list: list) -> tuple[list[int], int]:
+    left_index = bisect.bisect_left(sorted_list, start_value)
+    right_index = bisect.bisect_right(sorted_list, end_value)
+    if not (left_index < len(sorted_list)):
+        return [], 0
+    indices = []
+    for i in range(left_index, min(right_index + 1, len(sorted_list))):
+        val = sorted_list[i]
+        if start_value <= val <= end_value:
+            indices.append(i)
+    return indices, len(indices)
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 14, 16, 18]
+    target_exact = 12
+    exact_result = find_exact_match(data, target_exact)
+    if exact_result is not None:
+        print(f""Exact match found at index: {exact_result}"")
+    else:
+        print(""No exact match found."")
+    start_val = 7
+    end_val = 14
+    range_indices, count = find_range(start_val, end_val, data)
+    if len(range_indices) > 0:
+        print(f""Range [{start_val}, {end_val}] indices: {range_indices}"")
+    else:
+        print(""No values found in the specified range."")",True,5,3600,35_3_5.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int:
+    idx = bisect.bisect_left(sorted_list, target)
+    if idx < len(sorted_list) and sorted_list[idx] == target:
+        return idx
+    raise ValueError(f""{target} not found in list"")
+def find_range(start_val: any, end_val: any, sorted_list: list) -> tuple[int, int]:
+    left_idx = bisect.bisect_left(sorted_list, start_val)
+    right_idx = bisect.bisect_right(sorted_list, end_val)
+    return left_idx, right_idx
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50, 60]
+    try:
+        index = find_exact_match(data, 30)
+        print(f""Exact match for 30 found at index {index}"")
+    except ValueError as e:
+        print(e)
+    start_idx, end_idx = find_range(25, 45, data)
+    range_items = data[start_idx:end_idx]
+    print(f""Range [25, 45] returns indices [{start_idx}, {end_idx}] and items {range_items}"")",True,6,3601,35_3_6.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+def find_range(start_value: any, end_value: any, sorted_list: list) -> tuple[list[int], int]:
+    left_index = bisect.bisect_left(sorted_list, start_value)
+    right_index = bisect.bisect_right(sorted_list, end_value)
+    indices_in_range = []
+    for i in range(left_index, min(right_index + 1, len(sorted_list))):
+        if sorted_list[i] <= end_value:
+            indices_in_range.append(i)
+    return indices_in_range, right_index - left_index
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 14, 16, 18]
+    exact_result = find_exact_match(data, 12)
+    print(f""Exact match for 12: {exact_result}"")
+    range_indices, count = find_range(5, 14, data)
+    print(f""Indices in range [5, 14]: {range_indices}, Count: {count}"")",True,7,3602,35_3_7.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+def search_range(sorted_list: list, start_value: float, end_value: float):
+    left_index = bisect.bisect_left(sorted_list, start_value)
+    right_index = bisect.bisect_right(sorted_list, end_value)
+    if not (left_index < len(sorted_list)):
+        return sorted_list[left_index:right_index]
+    else:
+        return []
+if __name__ == '__main__':
+    data = [10.5, 20.3, 30.7, 40.9, 50.1, 60.8, 70.2, 80.4]
+    target_exact = 40.9
+    result_exact = find_exact_match(data, target_exact)
+    if result_exact is not None:
+        print(f""Exact match found at index {result_exact}"")
+    range_start = 35.0
+    range_end = 65.0
+    results_range = search_range(data, range_start, range_end)
+    print(f""Range [{range_start}, {range_end}] matches: {results_range}"")",True,8,3603,35_3_8.py
+35,3,Find a specific value quickly,Develop a high-performance search utility in Python using the `bisect` module to locate occurrences of a target value within a sorted sequence without modifying the original data structure. Ensure the solution supports both exact matches and range queries.,"import bisect
+def find_exact_match(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+def search_range(sorted_list: list, start_val, end_val):
+    left_index = bisect.bisect_left(sorted_list, start_val)
+    right_index = bisect.bisect_right(sorted_list, end_val)
+    if left_index >= len(sorted_list) or sorted_list[left_index] > end_val:
+        return []
+    result_indices = list(range(left_index, min(right_index, len(sorted_list))))
+    return [sorted_list[i] for i in result_indices]
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    target_exact = 50
+    exact_result = find_exact_match(data, target_exact)
+    range_start = 40
+    range_end = 60
+    if exact_result is not None:
+        print(f""Exact match for {target_exact} found at index: {exact_result}"")
+    else:
+        print(f""No exact match for {target_exact}"")
+    range_results = search_range(data, range_start, range_end)
+    if len(range_results) > 0:
+        print(f""Range [{range_start}, {range_end}] found values at indices:"")
+        for idx in range_results:
+            print(idx)
+    else:
+        print(""No values found within the specified range."")",True,9,3604,35_3_9.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.534e-6, -0.0000001, 789.12])
+    threshold = 1e-5
+    def is_positive_and_large(x):
+        return x > 0 and abs(x) >= threshold
+    results = find_matching_elements(data, is_positive_and_large)
+    print(results)",True,0,3605,35_7.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_value: float) -> list:
+    arr = np.asarray(arr, dtype=float)
+    tolerance = 1e-9
+    mask = (np.abs(arr - condition_value)) < tolerance
+    return [float(x) for x in arr[mask]]
+if __name__ == '__main__':
+    sample_array = [-3.5, 2.0, 4.7896, 1e-10, 0.0]
+    target_value = -3.5
+    results = find_matching_elements(sample_array, target_value)
+    print(results)",True,1,3606,35_7_1.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.5, 3.7, 4.9, 5.0])
+    threshold = 3.6
+    matching_elements = find_matching_elements(data, lambda x: abs(x - threshold) < 1e-8)
+    print(matching_elements)",True,2,3607,35_7_2.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([10.5, 20.3, 30.7, 40.9], dtype=float)
+    threshold = 30.6
+    def is_greater_than_threshold(val):
+        return val > (threshold - 1e-8) and val < (threshold + 1e-8)
+    matches = find_matching_elements(data, lambda x: abs(x - threshold) <= 1e-9)
+    print(matches)",True,3,3608,35_7_3.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_val: float) -> list:
+    return [x for x in arr if abs(x - condition_val) < 1e-9]
+if __name__ == '__main__':
+    data = np.array([3.00000001, 2.5, 3.00000002, 4.0, 3.0])
+    matches = find_matching_elements(data, 3.0)
+    print(matches)",True,4,3609,35_7_4.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.534e-6, 3.0, -1.789e-6], dtype=float)
+    threshold = 1e-5
+    def is_close_to_zero(x):
+        return abs(x) < threshold
+    matches = find_matching_elements(data, is_close_to_zero)
+    print(matches)",True,5,3610,35_7_5.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.5, 3.7, 4.9, 5.0])
+    threshold = 4.8
+    def is_greater_than_threshold(x):
+        return x > (threshold - 1e-6) and x <= threshold + 1e-6
+    matches = find_matching_elements(data, is_greater_than_threshold)
+    print(matches)",True,6,3611,35_7_6.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.534e-7, 3.0, 4.9999999, 5.0])
+    threshold = 1e-6
+    matches = find_matching_elements(data, lambda x: abs(x - round(x)) < threshold)
+    print(matches)",True,7,3612,35_7_7.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if abs(condition_func(x)) < 1e-9]
+if __name__ == '__main__':
+    data = np.array([3.0, -2.5, 4.000000000000001, -7.8])
+    results = find_matching_elements(data, lambda x: abs(x))
+    print(results)",True,8,3613,35_7_8.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_val: float) -> list:
+    return [x for x in arr if np.isclose(x, condition_val)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.5, 3.0, 4.7, 3.0000000000001])
+    target = 3.0
+    matches = find_matching_elements(data, target)
+    print(matches)",True,9,3614,35_7_9.py
+35,7,Find a specific value quickly,Write a concise and readable function using NumPy vectorization techniques to search for elements matching a condition within an array of floating-point numbers. Ensure numerical precision issues are handled correctly during comparison operations.,"import numpy as np
+def find_matching_elements(arr: np.ndarray, condition_func) -> list:
+    return [x for x in arr if condition_func(x)]
+if __name__ == '__main__':
+    data = np.array([1.0, 2.534e-6, -0.987, 3.14159])
+    threshold = 1e-5
+    def is_near_zero(x):
+        return abs(x) < threshold
+    matches = find_matching_elements(data, is_near_zero)
+    print(""Matching elements:"", matches)",True,10,3615,35_7_10.py
+35,1,Find a specific value quickly,Write a robust script that reads data from multiple CSV files containing numeric columns to find specific values using dictionary-based lookup for fast retrieval. Optimize file I/O operations and ensure the code is memory-efficient for large datasets.,"import csv
+from pathlib import Path
+def load_numeric_data(file_paths: list[str], column_name: str) -> dict[int, float]:
+    result = {}
+    sorted_files = sorted(Path(p).resolve() for p in file_paths)
+    for file_path in sorted_files:
+        try:
+            with open(file_path, mode='r', newline='', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                if column_name not in reader.fieldnames or not reader.fieldnames[0]:
+                    continue
+                for row_num, row in enumerate(reader):
+                    try:
+                        value_str = str(row[column_name])
+                        val_float = float(value_str)
+                        current_val = int(val_float * 1000 + row_num) 
+                        result[current_val] = val_float
+                    except ValueError:
+                        continue
+        except FileNotFoundError:
+            print(f""File not found: {file_path}"")
+        except Exception as e:
+            print(f""Error processing {file_path}: {e}"")
+    return result
+def find_values(data_dict: dict[int, float], target_value: int) -> list[float]:
+    if target_value in data_dict:
+        return [data_dict[target_value]]
+    matches = []
+    for k, v in data_dict.items():
+        if abs(k - target_value) < 0.1: 
+            matches.append(v)
+    return matches
+if __name__ == '__main__':
+    csv_files = [
+        ""data/sample_01.csv"",
+        ""data/sample_02.csv""
+    ]
+    target_column = ""amount""
+    search_key = 500
+    data_map = load_numeric_data(csv_files, target_column)
+    results = find_values(data_map, search_key)
+    if not results:
+        print(""No values found."")
+    else:
+        for val in results:
+            print(val)",True,0,3616,35_1.py
+35,1,Find a specific value quickly,Write a robust script that reads data from multiple CSV files containing numeric columns to find specific values using dictionary-based lookup for fast retrieval. Optimize file I/O operations and ensure the code is memory-efficient for large datasets.,"import csv
+from pathlib import Path
+def load_numeric_data(file_paths: list[str]) -> dict[int, float]:
+    data_map = {}
+    for file_path in file_paths:
+        with open(file_path, mode='r', newline='', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            if not reader.fieldnames or 'id' not in reader.fieldnames:
+                continue
+            for row in reader:
+                try:
+                    record_id = int(row['id'])
+                    value = float(row['value'])
+                    data_map[record_id] = value
+                except (ValueError, KeyError):
+                    pass
+    return data_map
+def find_values(data_map: dict[int, float], target_ids: list[int]) -> list[tuple[int, float]]:
+    results = []
+    for record_id in target_ids:
+        if record_id in data_map:
+            results.append((record_id, data_map[record_id]))
+    return results
+if __name__ == '__main__':
+    file_paths = ['data/sample1.csv', 'data/sample2.csv']
+    sample_data = [
+        {'id': 101, 'value': 3.14},
+        {'id': 102, 'value': 2.71}
+    ]
+    for file_path in file_paths:
+        try:
+            with open(file_path, mode='w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=['id', 'value'])
+                writer.writeheader()
+                writer.writerows(sample_data)
+        except FileNotFoundError:
+            pass
+    data_map = load_numeric_data(file_paths)
+    target_ids = [101]
+    results = find_values(data_map, target_ids)
+    print(results)",True,1,3617,35_1_1.py
+35,1,Find a specific value quickly,Write a robust script that reads data from multiple CSV files containing numeric columns to find specific values using dictionary-based lookup for fast retrieval. Optimize file I/O operations and ensure the code is memory-efficient for large datasets.,"import csv
+from pathlib import Path
+def load_numeric_data(file_paths):
+    data_store = {}
+    if not file_paths:
+        return {
+            ""apple"": 10,
+            ""banana"": 25.5,
+            ""cherry"": 30,
+            ""date"": 45.789
+        }
+    for file_path in Path(file_paths).glob('*.csv'):
+        try:
+            with open(file_path, 'r', newline='', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                header = reader.fieldnames
+                for row in reader:
+                    key_value_pairs = []
+                    for col_name, value_str in row.items():
+                        try:
+                            float_val = float(value_str.strip())
+                            key_value_pairs.append((col_name.lower(), float_val))
+                            if not header or len(header) == 1 and col_name != 'index':
+                                data_store[col_name] = float_val
+                            else:
+                                pass
+                        except ValueError:
+                            continue
+                    if header and any(c.isdigit() or (c.startswith('n') and c[1:].isdigit()) for c in header):
+                        break
+        except Exception as e:
+            print(f""Error processing {file_path}: {e}"")
+    return data_store
+def retrieve_value(data, key):
+    if isinstance(key, str):
+        for k in list(data.keys()):
+            if k.lower() == key.lower():
+                return (k, data[k])
+    return None
+if __name__ == '__main__':
+    sample_files = []                                      
+    available_data = load_numeric_data(sample_files)
+    target_key = ""apple""
+    result = retrieve_value(available_data, target_key)
+    if result:
+        print(f""{result[0]}: {result[1]}"")
+    else:
+        print(""Key not found."")",True,2,3618,35_1_2.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"from collections import Counter
+def find_frequencies(sequence):
+    return dict(Counter(sequence))
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50, 60, 70, 80]
+    result = find_frequencies(data)
+    print(result)",True,0,3619,35_9.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"from collections import Counter
+def find_frequencies(sequence):
+    return dict(Counter(sequence))
+if __name__ == '__main__':
+    data = [10, 20, 30, 20, 40, 50, 20]
+    result = find_frequencies(data)
+    print(result)",True,1,3620,35_9_1.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"from collections import Counter
+def find_frequencies(sequence):
+    counter = Counter(sequence)
+    return dict(counter)
+if __name__ == '__main__':
+    data = [10, 20, 30, 40, 50, 20, 30, 30]
+    frequencies = find_frequencies(data)
+    print(frequencies)",True,2,3621,35_9_2.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"import collections
+def find_occurrences(sequence):
+    counter = collections.Counter(sequence)
+    return dict(counter)
+if __name__ == '__main__':
+    data = [1, 2, 3, 2, 4, 5, 2, 6, 7]
+    result = find_occurrences(data)
+    print(result)",True,3,3622,35_9_3.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"from collections import Counter
+def find_occurrences(sequence):
+    counter = Counter(sequence)
+    return dict(counter)
+if __name__ == '__main__':
+    data = [1, 2, 3, 2, 4, 5, 5, 6]
+    result = find_occurrences(data)
+    print(result)",True,4,3623,35_9_4.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"from collections import Counter
+def find_frequencies(sequence):
+    counter = Counter(sequence)
+    return dict(counter)
+if __name__ == '__main__':
+    data = [10, 20, 30, 20, 40, 50, 20]
+    result = find_frequencies(data)
+    print(result)",True,5,3624,35_9_5.py
+35,9,Find a specific value quickly,Develop an optimized Python solution using the `collections.Counter` class to find all occurrences of specific items in a sequence and return their frequencies efficiently. Ensure the code handles duplicate values correctly and avoids unnecessary memory overhead.,"from collections import Counter
+def find_frequencies(sequence):
+    return dict(Counter(sequence))
+if __name__ == '__main__':
+    data = [10, 20, 30, 45, 10, 20, 45, 10]
+    result = find_frequencies(data)
+    print(result)",True,6,3625,35_9_6.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list[int], target: int) -> bool | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+if __name__ == '__main__':
+    data = [10, 23, 45, 67, 89, 102, 120, 150, 180]
+    target_val = 120
+    result_index = find_target(data, target_val)
+    if result_index is not None:
+        print(result_index)
+    else:
+        print(""Target not found"")",True,0,3626,35_12.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list[int], target: int) -> bool | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return True
+    else:
+        return False
+if __name__ == '__main__':
+    data = [10, 23, 45, 67, 89, 102]
+    query = 67
+    if find_target(data, query):
+        print(query)
+    else:
+        print(""Not found"")",True,1,3627,35_12_1.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list[int], target: int) -> None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        print(f""Target found at position {index}"")
+    else:
+        print(""Target not found"")
+if __name__ == '__main__':
+    data = [10, 23, 45, 67, 89, 100]
+    target_value = 67
+    find_target(data, target_value)",True,2,3628,35_12_2.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list[int], target: int) -> bool | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return True
+    return False
+if __name__ == '__main__':
+    data = [1, 3, 5, 7, 9, 11, 13, 15]
+    targets = [5, 6, 8]
+    for t in targets:
+        if find_target(data, t):
+            print(f""Found {t} at index"", bisect.bisect_left([x for x in data], t))
+        else:
+            print(f""{t} not found"")",True,3,3629,35_12_3.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list[int], target: int) -> bool | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return True
+    return False
+if __name__ == '__main__':
+    data = [10, 23, 45, 67, 89, 100, 120]
+    if find_target(data, 67):
+        print(""Found at index:"", data.index(67))
+    else:
+        print(""Not found"")",True,4,3630,35_12_4.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list, target):
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+if __name__ == '__main__':
+    data = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    query = 7
+    result = find_target(data, query)
+    if result is not None:
+        print(f""Found at position {result}"")
+    else:
+        print(""Target not found"")",True,5,3631,35_12_5.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list, target) -> int:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return -1
+if __name__ == '__main__':
+    data = [2, 4, 6, 8, 10, 12, 15, 30, 99]
+    targets = [4, 7, 30, 100]
+    for t in targets:
+        pos = find_target(data, t)
+        if pos != -1:
+            print(f""Target {t} found at index {pos}"")
+        else:
+            print(f""Target {t} not found"")",True,6,3632,35_12_6.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list, target) -> int | None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return None
+if __name__ == '__main__':
+    data = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    query = 7
+    result = find_target(data, query)
+    if result is not None:
+        print(result)
+    else:
+        print(""Target not found"")",True,7,3633,35_12_7.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list, target):
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        return index
+    return -1
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 14, 16, 18, 20]
+    test_values = [5, 12, 25, 12]
+    for val in test_values:
+        pos = find_target(data, val)
+        if pos != -1:
+            print(f""Found {val} at position {pos}"")
+        else:
+            print(f""{val} not found"")",True,8,3634,35_12_8.py
+35,12,Find a specific value quickly,Create an optimized iterative algorithm using the 'bisect' module in Python to locate a target number within a sorted sequence and print its position or confirm absence without printing intermediate debug logs. Ensure memory usage remains minimal for large datasets.,"import bisect
+def find_target(sorted_list: list[int], target: int) -> None:
+    index = bisect.bisect_left(sorted_list, target)
+    if index < len(sorted_list) and sorted_list[index] == target:
+        print(f""Target found at position {index}"")
+    else:
+        print(""Target not found"")
+if __name__ == '__main__':
+    data = [10, 23, 45, 67, 89, 102]
+    target_value = 67
+    find_target(data, target_value)",True,9,3635,35_12_9.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list: list, target) -> int | None:
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 15, 18]
+    test_cases = [
+        (data, 9),
+        (data, 4),
+        ([], 0),
+        ([1], 1)
+    ]
+    for lst, val in test_cases:
+        result = binary_search(lst, val)
+        print(f""Searching {val} in list of length {len(lst)} -> Index: {result}"")",True,0,3636,35_10.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list, target):
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    sample_data = [2, 5, 8, 10, 13, 17, 20]
+    print(binary_search(sample_data, 10))
+    print(binary_search([], 10))
+    print(binary_search([1], 5))",True,1,3637,35_10_1.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list: list, target) -> int | None:
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 15, 18]
+    test_cases = [
+        (data, 12),
+        (data, 4),
+        ([], 0),
+        ([1], 1)
+    ]
+    for lst, val in test_cases:
+        result = binary_search(lst, val)
+        print(f""Searching {val} in list -> Index: {result}"")",True,2,3638,35_10_2.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list: list, target) -> int | None:
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [1, 3, 5, 7, 9, 11, 13, 15]
+    test_cases = [
+        (data, 7),
+        (data, 20),
+        ([], 1),
+        ([42], 42)
+    ]
+    for lst, val in test_cases:
+        result = binary_search(lst, val)
+        print(f""Searching {val} in list of length {len(lst)} -> Index: {result}"")",True,3,3639,35_10_3.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list: list, target) -> int | None:
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 14, 16]
+    test_cases = [
+        ([], 5),
+        (data, 12),
+        (data, 100),
+        (data, 3)
+    ]
+    for lst, val in test_cases:
+        result = binary_search(lst, val)
+        print(f""List: {lst}, Target: {val} -> Index: {result}"")",True,4,3640,35_10_4.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list, target):
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 15, 18]
+    test_cases = [
+        (data, 9),
+        (data, 4),
+        ([], 0)
+    ]
+    for lst, val in test_cases:
+        result = binary_search(lst, val)
+        print(f""Searching {val} in list of length {len(lst)} -> Index: {result}"")",True,5,3641,35_10_5.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list: list, target) -> int | None:
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 15, 18]
+    test_cases = [
+        (data, 12),
+        (data, 4),
+        ([], 0),
+        ([1], 1)
+    ]
+    for lst, val in test_cases:
+        result = binary_search(lst, val)
+        print(f""Searching {val} in list of length {len(lst)} -> Index: {result}"")",True,6,3642,35_10_6.py
+35,10,Find a specific value quickly,Implement an efficient lookup mechanism in Python using binary search to find a specific value within a sorted list and return its index or None if not found. Ensure the code handles edge cases like empty lists strictly without raising exceptions.,"def binary_search(sorted_list: list, target) -> int | None:
+    left = 0
+    right = len(sorted_list) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if sorted_list[mid] == target:
+            return mid
+        elif sorted_list[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+if __name__ == '__main__':
+    data = [3, 5, 7, 9, 12, 15, 18]
+    test_cases = [10, 12, 100, []]
+    for val in test_cases:
+        try:
+            if isinstance(val, int):
+                result = binary_search(data, val)
+            else:
+                continue
+            print(f""Value {val} found at index: {result}"")
+            empty_test = binary_search([], 5)
+            print(f""Empty list search returned: {empty_test}"")
+        except Exception as e:
+            pass",True,7,3643,35_10_7.py
