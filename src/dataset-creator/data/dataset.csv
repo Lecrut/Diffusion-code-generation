@@ -163245,3 +163245,3767 @@ if __name__ == '__main__':
         print(output)
     except ValueError as e:
         print(e)",True,4,7046,68_6_4.py
+68,10,Convert volume measurements now,Implement a robust Python script that converts volume measurements between liters and gallons with full support for both input formats (string parsing) and output formatting to two decimal places. Ensure the code handles invalid inputs gracefully by raising appropriate exceptions.,"import re
+def parse_volume(input_str: str) -> float | None:
+    pattern = r'(\d+\.?\d*)\s*(L|l|liters?|gallons?)?'
+    match = re.match(pattern, input_str.strip(), re.IGNORECASE)
+    if not match:
+        return None
+    try:
+        value = float(match.group(1))
+        unit = match.group(2).lower() if match.group(2) else 'L'
+        if abs(value) > 1e6 or (value < -50 and value > 50):
+            raise ValueError(""Volume out of acceptable range."")
+        return {
+            ""value"": value,
+            ""unit"": unit,
+            ""is_gallons"": unit in ('g', 'gal')
+        }
+    except (ValueError, OverflowError) as e:
+        if isinstance(e, ValueError):
+            raise ValueError(f""Invalid numeric format or range."") from None
+        else:
+            raise
+def convert_volume(value: float | int, is_gallons: bool = False) -> str:
+    try:
+        if isinstance(value, (int, float)):
+            val = value
+        elif isinstance(value, dict):
+            val = value[""value""]
+            is_gallons = value.get(""is_gallons"", False)
+        conversion_factor = 3.785411784 if not is_gallons else 0.264172052
+        result_liters = val * conversion_factor
+        return f""{result_liters:.2f} L""
+    except Exception as e:
+        raise ValueError(f""Conversion failed due to invalid input."") from None
+def main():
+    test_cases = [
+        ""5.0"",                                                     
+        ""10 L"",                           
+        ""2 gallons"",                          
+        ""3 g"",                                      
+        ""invalid input"",                                            
+    ]
+    for item in test_cases:
+        try:
+            parsed = parse_volume(item)
+            if not isinstance(parsed, dict):
+                print(f""Error parsing '{item}': {parsed}"")
+                continue
+            value = parsed[""value""]
+            is_gallons = parsed.get(""is_gallons"", False)
+            result_str = convert_volume(value, not is_gallons if item.endswith('L') else True)
+            print(f""Input: '{item}' -> Output: {result_str}"")
+        except ValueError as e:
+            print(f""Error processing '{item}': {e}"")
+if __name__ == '__main__':
+    main()",True,0,7047,68_10.py
+68,10,Convert volume measurements now,Implement a robust Python script that converts volume measurements between liters and gallons with full support for both input formats (string parsing) and output formatting to two decimal places. Ensure the code handles invalid inputs gracefully by raising appropriate exceptions.,"import re
+def parse_input(value: str) -> float | None:
+    pattern = r'^([+-]?[0-9]*\.?[0-9]+)[\s]*(L|l|[gG][aA]|gal)$'
+    match = re.match(pattern, value.strip())
+    if not match:
+        raise ValueError(""Invalid input format. Expected a number followed by 'L/l', '[gG]al'."")
+    try:
+        num_str = match.group(1)
+        return float(num_str), match.group(2).lower()
+    except ValueError as e:
+        raise ValueError(f""Cannot convert '{num_str}' to float."") from e
+def liters_to_gallons(liters: float) -> str:
+    if not isinstance(liters, (int, float)):
+        raise TypeError(""Input must be a numeric value representing liters."")
+    return f""{liters / 3.78541178:.2f} gal""
+def gallons_to_liters(gallons: float) -> str:
+    if not isinstance(gallons, (int, float)):
+        raise TypeError(""Input must be a numeric value representing gallons."")
+    return f""{gallons * 3.78541178:.2f} L""
+def convert_volume(input_str: str) -> tuple[str | None, str]:
+    try:
+        value, unit = parse_input(input_str)
+        if not isinstance(value, (int, float)):
+            raise ValueError(""Numeric conversion failed."")
+        result_unit = ""gal"" if unit in (""l"", ""L"") else ""L""
+        if result_unit == ""gal"":
+            converted_value = liters_to_gallons(value)
+        else:
+            converted_value = gallons_to_liters(value)
+        return input_str, converted_value.strip()
+    except (ValueError, TypeError):
+        raise
+if __name__ == '__main__':
+    test_cases = [
+        ""5 L"",
+        ""10 l"",
+        ""[gG]al 2.34"",
+        ""7 gallons"",
+        ""invalid input"",
+        ""abc xyz""
+    ]
+    for case in test_cases:
+        try:
+            original, result = convert_volume(case)
+            print(f""{original} -> {result}"")
+        except ValueError as e:
+            print(f""Error processing '{case}': {e}"")",True,1,7048,68_10_1.py
+68,10,Convert volume measurements now,Implement a robust Python script that converts volume measurements between liters and gallons with full support for both input formats (string parsing) and output formatting to two decimal places. Ensure the code handles invalid inputs gracefully by raising appropriate exceptions.,"import re
+def parse_volume(value: str) -> float:
+    pattern = r'^(\d+\.?\d*)\s*(L|l|liters?|gal|gallons?)$'
+    match = re.match(pattern, value.strip())
+    if not match:
+        raise ValueError(f""Invalid input format. Expected 'number L/l/Liters/Gallons/gal'. Got '{value}'"")
+    return float(match.group(1))
+def convert_volume(liters: float) -> float:
+    conversion_factor = 0.264172052
+    return round(liters * conversion_factor, 2)
+if __name__ == '__main__':
+    test_cases = [
+        ""3.5 L"",
+        ""10 Liters"",
+        ""2 gal"",
+        ""5 gallons""
+    ]
+    for case in test_cases:
+        try:
+            liters = parse_volume(case)
+            gallons = convert_volume(liters)
+            print(f""{case} -> {gallons:.2f}"")
+        except ValueError as e:
+            print(e)",True,2,7049,68_10_2.py
+68,10,Convert volume measurements now,Implement a robust Python script that converts volume measurements between liters and gallons with full support for both input formats (string parsing) and output formatting to two decimal places. Ensure the code handles invalid inputs gracefully by raising appropriate exceptions.,"import re
+def parse_volume_input(volume_str: str) -> float:
+    if not isinstance(volume_str, str):
+        raise TypeError(""Input must be a string."")
+    match = re.match(r'^([+-]?[0-9]*\.?[0-9]+)\s*(liters?|gallons?)$', volume_str.strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError(f""Invalid input format. Expected 'X liters' or 'Y gallons'. Got '{volume_str}'."")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    return value, unit
+def convert_volume(liters_value: float) -> dict:
+    conversion_rate = 0.264172
+    return {
+        'liters': liters_value,
+        'gallons': round(liters_value * conversion_rate, 2),
+        'unit': 'gal'
+    }
+def convert_volume_gal(gallons_value: float) -> dict:
+    conversion_rate = 3.78541
+    return {
+        'liters': round(gallons_value * conversion_rate, 2),
+        'gallons': gallons_value,
+        'unit': 'L'
+    }
+def format_output(result: dict) -> str:
+    if result['unit'] == 'gal':
+        return f""{result['liters']} liters = {result['gallons']} gallons""
+    else:
+        return f""{result['gallons']} gallons = {result['liters']} liters""
+if __name__ == '__main__':
+    sample_inputs = [
+        ""5.2 liters"",
+        ""10.5 gallons"",
+        ""-3.7 liters"",
+        ""0 liters"",
+        ""invalid input""                             
+    ]
+    for item in sample_inputs:
+        try:
+            val, unit = parse_volume_input(item)
+            if unit.endswith('liter'):
+                result = convert_volume(val)
+                print(f""Input: {item}"")
+                print(format_output(result))
+            elif unit.endswith('gallon'):
+                result = convert_volume_gal(val)
+                print(f""Input: {item}"")
+                print(format_output(result))
+        except (ValueError, TypeError) as e:
+            print(f""Input: {item} -> Error: {e}"")",True,3,7050,68_10_3.py
+68,11,Convert volume measurements now,"Create a high-performance Python class named VolumeConverter that encapsulates conversion logic between liters, milliliters, gallons, quarts, and pints using precomputed constants. Include methods for bidirectional conversion with input validation and type hints.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self.liters_to_milliliters = 1000
+        self.milliliters_to_liters = 0.001
+        self.gallons_to_liter = 3.78541
+        self.liter_to_gallon = 1 / 3.78541
+        self.quarts_to_liter = 0.946353
+        self.liter_to_quart = 1 / 0.946353
+        self.pints_to_liter = 0.473176
+        self.liter_to_pint = 1 / 0.473176
+    def convert(self, value: float, from_unit: str, to_unit: str) -> Union[float, None]:
+        if not isinstance(value, (int, float)):
+            return None
+        valid_units = ['liters', 'milliliters', 'gallons', 'quarts', 'pints']
+        if from_unit.lower() not in [u.lower() for u in valid_units] or to_unit.lower() not in [u.lower() for u in valid_units]:
+            return None
+        try:
+            value = float(value)
+            unit_map = {
+                'liters': 1,
+                'milliliters': self.liters_to_milliliters,
+                'gallons': self.gallons_to_liter,
+                'quarts': self.quarts_to_liter,
+                'pints': self.pints_to_liter
+            }
+            from_factor = unit_map[from_unit.lower()]
+            to_factor = 1 / unit_map[to_unit.lower()] if to_unit != from_unit else 1
+            converted_value = value * (from_factor / to_factor)
+            return round(converted_value, 6)
+        except Exception:
+            return None
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    test_cases = [
+        ('liters', 'milliliters', 5),
+        ('gallons', 'quarts', 2.0),
+        ('pints', 'liters', 10),
+        ('milliliters', 'gallons', 7489.63),
+    ]
+    for from_u, to_u, val in test_cases:
+        result = converter.convert(val, from_u, to_u)
+        print(f""{val} {from_u} -> {result} {to_u}"")",True,0,7051,68_11.py
+68,11,Convert volume measurements now,"Create a high-performance Python class named VolumeConverter that encapsulates conversion logic between liters, milliliters, gallons, quarts, and pints using precomputed constants. Include methods for bidirectional conversion with input validation and type hints.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self.liters = 1.0
+        self.milliliters = 1000.0
+        self.gallons = 264.172052358148
+        self.quarts = 1.0566904799961
+        self.pints = 0.528440239998
+    def convert_from(self, value: Union[float, int], from_unit: str) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number."")
+        units = {
+            'liters': self.liters,
+            'milliliters': self.milliliters,
+            'gallons': self.gallons,
+            'quarts': self.quarts,
+            'pints': self.pints,
+        }
+        if from_unit not in units:
+            raise ValueError(f""Unsupported unit: {from_unit}. Valid units are liters, milliliters, gallons, quarts, pints."")
+        base_value = value / units[from_unit]
+        return base_value * 1.0
+class VolumeConverter2(VolumeConverter):
+    def convert_to(self, value: Union[float, int], to_unit: str) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number."")
+        units = {
+            'liters': self.liters,
+            'milliliters': self.milliliters,
+            'gallons': self.gallons,
+            'quarts': self.quarts,
+            'pints': self.pints,
+        }
+        if to_unit not in units:
+            raise ValueError(f""Unsupported unit: {to_unit}. Valid units are liters, milliliters, gallons, quarts, pints."")
+        base_value = value / 1.0
+        return base_value * (units[to_unit] / self.liters)
+if __name__ == '__main__':
+    converter = VolumeConverter2()
+    print(converter.convert_from(5, 'liters'))
+    print(converter.convert_to(10, 'milliliters'))",True,1,7052,68_11_1.py
+68,11,Convert volume measurements now,"Create a high-performance Python class named VolumeConverter that encapsulates conversion logic between liters, milliliters, gallons, quarts, and pints using precomputed constants. Include methods for bidirectional conversion with input validation and type hints.","from typing import Union
+class VolumeConverter:
+    def __init__(self):
+        self.liters_to_milliliters = 1000
+        self.milliliters_to_liters = 0.001
+        self.gallons_to_liters = 3.78541
+        self.liters_to_gallons = 0.264172
+        self.quarts_to_liters = 0.946353
+        self.liters_to_quarts = 1.05669
+        self.pints_to_liters = 0.473176
+        self.liters_to_pints = 2.11338
+    def _validate_input(self, value: Union[int, float], unit: str) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Input must be a number."")
+        if value < 0:
+            raise ValueError(""Volume cannot be negative."")
+        valid_units = ['liters', 'milliliters', 'gallons', 'quarts', 'pints']
+        if unit not in valid_units:
+            raise ValueError(f""Invalid unit. Must be one of {valid_units}."")
+    def convert(self, value: Union[int, float], from_unit: str, to_unit: str) -> float:
+        self._validate_input(value, from_unit)
+        if from_unit == 'liters':
+            return value * (self.liters_to_milliliters / 1000.0) if to_unit == 'milliliters' else\
+                   value * self.gallons_to_liters if to_unit == 'gallons' else\
+                   value * self.quarts_to_liters if to_unit == 'quarts' else\
+                   value * self.pints_to_liters
+        elif from_unit == 'milliliters':
+            return value / 1000.0 if to_unit == 'liters' else\
+                   (value / 1000.0) * self.gallons_to_liters if to_unit == 'gallons' else\
+                   (value / 1000.0) * self.quarts_to_liters if to_unit == 'quarts' else\
+                   (value / 1000.0) * self.pints_to_liters
+        elif from_unit == 'gallons':
+            return value * self.liters_to_milliliters / self.gallons_to_liters if to_unit == 'milliliters' else\
+                   value if to_unit == 'liters' else\
+                   (value) / self.quarts_to_liters if to_unit == 'quarts' else\
+                   (value) * 2.11338
+        elif from_unit == 'quarts':
+            return value * 946.353 if to_unit == 'milliliters' else\
+                   value / self.quarts_to_liters if to_unit == 'liters' else\
+                   (value) / self.gallons_to_liters if to_unit == 'gallons' else\
+                   (value * 2.11338)
+        elif from_unit == 'pints':
+            return value * 473.176 if to_unit == 'milliliters' else\
+                   value / self.pints_to_liters if to_unit == 'liters' else\
+                   (value / self.gallons_to_liters) * 2 if to_unit == 'gallons' else\
+                   (value / 4.0)
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    sample_tests = [
+        ('liters', 'milliliters', 5),
+        ('milliliters', 'liters', 2500),
+        ('gallons', 'quarts', 1.5),
+        ('quarts', 'pints', 8),
+        ('pints', 'gallons', 4)
+    ]
+    for from_u, to_u, val in sample_tests:
+        result = converter.convert(val, from_u, to_u)
+        print(f""{val} {from_u} is equal to {result:.2f} {to_u}"")",True,2,7053,68_11_2.py
+68,12,Convert volume measurements now,"Write an optimized Python function that accepts a dictionary containing volume values in mixed units (liters, gallons, ounces) and returns a standardized output object indicating the total volume in liters. Use dataclasses for structured results and ensure thread-safe operations.","import threading
+from dataclasses import dataclass
+from typing import Dict, Any
+@dataclass(frozen=True)
+class VolumeResult:
+    total_liters: float = 0.0
+    conversion_factors: Dict[str, float] = None
+    def __post_init__(self):
+        if self.conversion_factors is None:
+            self.conversion_factors = {
+                ""liters"": 1.0,
+                ""gallons"": 3.78541,
+                ""ounces"": 0.0295735
+            }
+class VolumeConverter(threading.Thread):
+    def __init__(self, data: Dict[str, float]):
+        super().__init__()
+        self.data = data
+    def run(self):
+        total_liters = sum(
+            val * factor for unit, val in self.data.items() 
+            if unit.lower() in [""liters"", ""gallons"", ""ounces""] and 0 <= val < float('inf')
+        )
+        result_dataclass = VolumeResult(total_liters=total_liters)
+        with open(""temp_result.txt"", ""w"") as f:
+            import json
+            f.write(json.dumps(result_dataclass.__dict__))
+def convert_volumes(data: Dict[str, float]) -> VolumeResult:
+    converter = VolumeConverter(data)
+    converter.start()
+    while not converter.is_alive():
+        pass
+    result_dataclass = None
+    try:
+        with open(""temp_result.txt"", ""r"") as f:
+            import json
+            data_dict = json.load(f)
+            result_dataclass = VolumeResult(**data_dict)
+    except FileNotFoundError:
+        return VolumeResult(total_liters=0.0, conversion_factors={})
+    converter.join()
+    return result_dataclass
+if __name__ == '__main__':
+    sample_input = {
+        ""liters"": 5.0,
+        ""gallons"": 2.0,
+        ""ounces"": 16.0
+    }
+    output = convert_volumes(sample_input)
+    print(f""Total Volume: {output.total_liters} liters"")",True,0,7054,68_12.py
+68,12,Convert volume measurements now,"Write an optimized Python function that accepts a dictionary containing volume values in mixed units (liters, gallons, ounces) and returns a standardized output object indicating the total volume in liters. Use dataclasses for structured results and ensure thread-safe operations.","import threading
+from dataclasses import dataclass
+from typing import Dict, List
+@dataclass(frozen=True)
+class VolumeResult:
+    total_liters: float = 0.0
+    conversion_factors_used: List[float] = None
+    def __post_init__(self):
+        if self.conversion_factors_used is None:
+            self.conversion_factors_used = []
+def convert_to_liters(volume_dict: Dict[str, float]) -> VolumeResult:
+    liters_list = [0.0]
+    for unit_str, value in volume_dict.items():
+        try:
+            if ""liter"" in unit_str.lower() or ""l"" == unit_str[0].lower():
+                factor = 1.0
+            elif ""gallon"" in unit_str.lower():
+                factor = 3.78541
+            elif ""ounce"" in unit_str.lower():
+                if value > 26:
+                    factor = 0.0295735                                                                                                                                                                                                                                                         
+                else:
+                    factor = 0.0295735
+            liters_list.append(value * factor)
+        except Exception as e:
+            raise ValueError(f""Failed to convert unit '{unit_str}': {e}"") from e
+    total_liters = sum(liters_list)
+    return VolumeResult(total_liters=total_liters, conversion_factors_used=[f for f in [1.0] + liters_list[1:]])
+def thread_safe_convert(volume_dict: Dict[str, float], lock: threading.Lock) -> VolumeResult:
+    with lock:
+        result = convert_to_liters(dict(volume_dict))                                                                                                                                                                                                                                                                                                                                                  
+        return result
+if __name__ == '__main__':
+    lock = threading.Lock()
+    sample_data: Dict[str, float] = {
+        ""liters"": 50.0,
+        ""gallons"": 12.5,
+        ""ounces_fluid"": 876.0
+    }
+    result_obj = thread_safe_convert(sample_data, lock)
+    print(f""Total Volume: {result_obj.total_liters} Liters"")",True,1,7055,68_12_1.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^(\d+\.?\d*)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'ounces': 0.0295735295625
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit: {unit}"")
+    return value * conversions[unit]
+if __name__ == '__main__':
+    try:
+        test_cases = [
+            ""10 L"",
+            ""5 ml"",
+            ""2 gal"",
+            ""3.5 oz""
+        ]
+        for case in test_cases:
+            result_liters = parse_volume(case)
+            formatted_result = f""{result_liters:.3g}""
+            print(formatted_result, ""L"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,7056,68_14.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^([\d.]+)\s*(L|ml|gal|oz)$'
+    match = re.match(pattern, input_str.strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    try:
+        value = float(match.group(1))
+    except ValueError:
+        raise ValueError(""Numeric conversion failed"")
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'oz': 0.0295735295625
+    }
+    return value * conversions.get(unit)
+def main():
+    test_cases = [
+        ""5 L"",
+        ""100 ml"",
+        ""2 gal"",
+        ""8 oz""
+    ]
+    for case in test_cases:
+        try:
+            liters = parse_volume(case)
+            formatted_result = f""{liters:.3g}""
+            print(formatted_result)
+        except ValueError as e:
+            print(f""Error processing '{case}': {e}"")
+if __name__ == '__main__':
+    main()",True,1,7057,68_14_1.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^(\d+\.?\d*)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'oz': 0.0295735295625
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit: {unit}"")
+    return value * conversions[unit]
+if __name__ == '__main__':
+    try:
+        test_cases = [
+            ""10 L"",
+            ""5 ml"",
+            ""2 gal"",
+            ""3.5 oz""
+        ]
+        for case in test_cases:
+            result_liters = parse_volume(case)
+            if 1 <= len(str(result_liters)) < 4 or (len(str(result_liters)) == 4 and str(result_liters)[0] != '0'):
+                formatted_result = f""{result_liters:.3g}""
+            else:
+                formatted_result = ""{:.3f}"".format(result_liters)
+            print(formatted_result)
+    except ValueError as e:
+        if ""non-numeric"" in str(e).lower() or ""invalid format"" in str(e).lower():
+            pass                                                                 
+        else:
+            raise",True,2,7058,68_14_2.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^(\d+\.?\d*)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'ounces?': value / (3 * 1296) if unit == ""oz"" else None                                                                                       
+    }
+    try:
+        factor = conversions[unit]
+        return value * factor
+    except KeyError:
+        raise ValueError(f""Unsupported unit: {unit}"")
+def format_output(value):
+    formatted_value = f""{value:.3g}""
+    if not formatted_value.endswith('.0'):
+        print(formatted_value)
+    else:
+        print(f""{value:.3f}"")
+if __name__ == '__main__':
+    try:
+        samples = [
+            ""5 L"",
+            ""20 ml"",
+            ""1 gal"",
+            ""8 oz""
+        ]
+        for s in samples:
+            result = parse_volume(s)
+            print(f""{result:.3f}"")                                                                                                                                                                       
+            print(f""{result:.3g}"")
+    except ValueError as e:
+        print(f""Error: {e}"", file=__import__('sys').stderr)",True,3,7059,68_14_3.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+from typing import Optional
+def parse_volume(input_str: str) -> float | None:
+    pattern = r'^\s*([+-]?\d+(?:[.,]\d+)?)\s*(L|l|ml|mL|gal|oz)\s*$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        return None
+    try:
+        value = float(match.group(1))
+        unit = match.group(2).lower()
+        conversions = {
+            'l': 1.0,
+            'ml': 0.001,
+            'gal': 3.785411784,
+            'oz': 0.0295735296
+        }
+        if unit not in conversions:
+            return None
+        liters = value * conversions[unit]
+        return round(liters, 3)
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    test_cases = [
+        ""5 L"",
+        ""2.5 ml"",
+        ""10 gal"",
+        ""0.75 oz"",
+        ""-3 L"",
+        ""invalid input"",
+        ""abc 10 l""
+    ]
+    for case in test_cases:
+        result = parse_volume(case)
+        if result is None:
+            print(f""{case} -> Error"")
+        else:
+            formatted_result = f""{result:.3g}""
+            print(f""{case} -> {formatted_result}"")",True,4,7060,68_14_4.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^(\d+\.?\d*)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'oz': 0.0295735295625
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit: {unit}"")
+    return value * conversions[unit]
+def main():
+    try:
+        sample_inputs = [
+            ""1 L"",
+            ""0.75 gal"",
+            ""2 ml"",
+            ""8 oz""
+        ]
+        for input_str in sample_inputs:
+            result_liters = parse_volume(input_str)
+            formatted_result = f""{result_liters:.3g}""
+            print(f""{input_str} -> {formatted_result}"")
+    except ValueError as e:
+        print(f""Error: {e}"", file=__import__('sys').stderr)
+if __name__ == '__main__':
+    main()",True,5,7061,68_14_5.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^(\d+\.?\d*)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'ounces': 0.0295735295625
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit: {unit}"")
+    return value * conversions[unit]
+if __name__ == '__main__':
+    try:
+        test_cases = [
+            ""10 L"",
+            ""5 ml"",
+            ""2 gal"",
+            ""3.5 oz"",
+            ""invalid input""
+        ]
+        for case in test_cases:
+            print(f""\nInput: {case}"")
+            try:
+                liters = parse_volume(case)
+                result = f""{liters:.3g}""
+                print(f""Result ({result} L)"")
+            except ValueError as e:
+                print(f""Error: {e}"")
+    except Exception as e:
+        print(f""Fatal error: {e}"")",True,6,7062,68_14_6.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^\s*([\d\.]+)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)\s*$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    try:
+        value = float(match.group(1))
+    except ValueError:
+        raise ValueError(""Numeric conversion failed for the provided amount"")
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.78541,
+        'oz': 0.0295735
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit: {unit}"")
+    return value * conversions[unit]
+if __name__ == '__main__':
+    test_cases = [
+        ""1 L"",
+        ""5 ml"",
+        ""2 gal"",
+        ""0.75 oz"",
+        ""invalid input"",
+        ""abc 3L""
+    ]
+    for case in test_cases:
+        try:
+            liters = parse_volume(case)
+            print(f""{case} -> {liters:.3g} L"")
+        except ValueError as e:
+            print(f""Error processing '{case}': {e}"")",True,7,7063,68_14_7.py
+68,14,Convert volume measurements now,"Generate a complete Python program that reads volume input from standard input, parses it dynamically based on unit suffixes (L, ml, gal, oz), performs precise mathematical conversion to liters, and prints the result with three significant figures. Include comprehensive error handling for non-numeric values.","import re
+def parse_volume(input_str):
+    pattern = r'^(\d+\.?\d*)\s*(L|l|ml|mL|gal|gallons?|oz|ounces?)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(""Invalid volume format"")
+    value = float(match.group(1))
+    unit = match.group(2).lower()
+    conversions = {
+        'l': 1.0,
+        'ml': 0.001,
+        'gal': 3.785411784,
+        'ounces': 0.0295735296
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit '{unit}'"")
+    return value * conversions[unit]
+if __name__ == '__main__':
+    try:
+        test_cases = [
+            ""10 L"",
+            ""5 ml"",
+            ""2 gal"",
+            ""8 oz""
+        ]
+        for case in test_cases:
+            result_liters = parse_volume(case)
+            formatted_result = f""{result_liters:.3g}""
+            print(formatted_result, ""liters"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,8,7064,68_14_8.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kg(mass: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+        'g': 0.001,
+        'tonne': 1000.0,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {source_unit}"")
+    return mass * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (5.0, 'lb'),
+        (16.0, 'oz'),
+        (2.5, 'g'),
+        (1.0, 'tonne'),
+        (70.0, 'kg')
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_to_kg(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.6f} kg"")",True,0,7065,69_1.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import math
+def convert_to_kilograms(mass: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'g': 1e-3,
+        'mg': 1e-6,
+        't': 1e3,
+        'lb': 453.59237,
+        'oz': 28.349523125,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {source_unit}"")
+    return mass * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (100.0, 'g'),
+        (500.0, 'mg'),
+        (2.5, 't'),
+        (10.0, 'lb'),
+        (32.0, 'oz')
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_to_kilograms(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.6f} kg"")",True,1,7066,69_1_1.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kg(mass: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+        'g': 0.001,
+        'tonne': 1000.0,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{source_unit}'. Supported units are {list(conversion_factors.keys())}."")
+    return mass * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 'lb'),
+        (200, 'oz'),
+        (3.7, 'g'),
+        (0.8, 'tonne'),
+        (500, 'kg')
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_to_kg(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.12f} kg"")",True,2,7067,69_1_2.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import math
+def convert_to_kilograms(mass_value: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'g': 1e-3,
+        'mg': 1e-6,
+        't': 1e3,
+        'lb': 453.59237,
+        'oz': 0.028349523125,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {source_unit}"")
+    return mass_value * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 'g'),
+        (2.3e6, 'mg'),
+        (5.0, 't'),
+        (100.0, 'lb')
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_to_kilograms(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.6f} kg"")",True,3,7068,69_1_3.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kg(value: float, unit: str) -> float:
+    conversions = {
+        'kg': 1.0,
+        'tonne': 1000.0,
+        'mg': 0.000001,
+        'g': 0.001,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+    }
+    if unit not in conversions:
+        raise ValueError(f""Unsupported unit: {unit}"")
+    return value * conversions[unit]
+if __name__ == '__main__':
+    test_cases = [
+        (1.0, 'lb'),
+        (1000.0, 'g'),
+        (500000.0, 'mg'),
+        (2.0, 'tonne'),
+        (32.17406875, 'oz'),
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_to_kg(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.9f} kg"")",True,4,7069,69_1_4.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kilograms(mass_value: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'g': 1e-3,
+        'mg': 1e-6,
+        't': 1e3,
+        'lb': 453.59237,
+        'oz': 28.349523125,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{source_unit}'. Supported units are {list(conversion_factors.keys())}."")
+    factor = conversion_factors[source_unit]
+    from decimal import Decimal, getcontext
+    getcontext().prec = 28
+    mass_decimal = Decimal(str(mass_value)) * Decimal(str(factor))
+    return float(mass_decimal)
+if __name__ == '__main__':
+    test_cases = [
+        ('5', 'g'),
+        (100, 'mg'),
+        (0.5, 'lb'),
+        (2, 'oz'),
+        (1e9, 't')
+    ]
+    for mass_str, unit in test_cases:
+        result = convert_to_kilograms(float(mass_str), unit)
+        print(f""{mass_str} {unit} -> {result:.6f} kg"")",True,5,7070,69_1_5.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kg(mass: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+        'g': 0.001,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{source_unit}'. Supported units are {list(conversion_factors.keys())}."")
+    return mass * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 'lb'),
+        (200, 'oz'),
+        (5000, 'g'),
+        (7.84, 'kg')
+    ]
+    for mass_val, unit in test_cases:
+        result_kg = convert_to_kg(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result_kg:.15f} kg"")",True,6,7071,69_1_6.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kg(mass: float, unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+        'g': 0.001,
+    }
+    if unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{unit}'. Supported units are {list(conversion_factors.keys())}"")
+    return mass * conversion_factors[unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 'lb'),
+        (200, 'oz'),
+        (5, 'g'),
+        (3, 'kg')
+    ]
+    for mass_val, unit in test_cases:
+        result_kg = convert_to_kg(mass_val, unit)
+        print(f""{mass_val} {unit} = {result_kg:.10f} kg"")",True,7,7072,69_1_7.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_mass(mass_value: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'g': 1e-3,
+        'mg': 1e-6,
+        'lb': 453.59237e-3,
+        'oz': 28.349523125e-3,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {source_unit}"")
+    return mass_value * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.0, 'g'),
+        (5000.0, 'mg'),
+        (2.0, 'lb'),
+        (64.0, 'oz'),
+        (7.5, 'kg')
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_mass(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.12f} kg"")",True,8,7073,69_1_8.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_mass_to_kg(mass_value: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'gram': 1e-3,
+        'milligram': 1e-6,
+        'microgram': 1e-9,
+        'pound': 453.59237,
+        'ounce': 0.028349523125,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {source_unit}"")
+    return mass_value * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.0, 'gram'),
+        (5000.0, 'milligram'),
+        (2.0, 'pound'),
+        (32.0, 'ounce')
+    ]
+    for mass, unit in test_cases:
+        result = convert_mass_to_kg(mass, unit)
+        print(f""{mass} {unit} -> {result:.15f} kg"")",True,9,7074,69_1_9.py
+69,1,Scale mass from one unit,Implement an optimized function that takes a mass value and source unit as input and returns the equivalent weight in kilograms with high precision floating-point arithmetic.,"import sys
+def convert_to_kg(mass_value: float, source_unit: str) -> float:
+    conversion_factors = {
+        'kg': 1.0,
+        'gram': 1e-3,
+        'milligram': 1e-6,
+        'microgram': 1e-9,
+        'tonne': 1e3,
+        'pound': 453.59237,
+        'ounce': 0.028349523125,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit: {source_unit}"")
+    return mass_value * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 'gram'),
+        (2.34e-6, 'microgram'),
+        (5000, 'tonne'),
+        (7.89, 'pound'),
+        (100, 'ounce')
+    ]
+    for mass_val, unit in test_cases:
+        result = convert_to_kg(mass_val, unit)
+        print(f""{mass_val} {unit} -> {result:.6f} kg"")",True,10,7075,69_1_10.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+LITERS_PER_CUBIC_METER = 1000.0
+GALLONS_US_PER_LITER = 0.264172052
+KIROLITERS_PER_CUBIC_METER = 1.0
+def cubic_meters_to_liters(value: float) -> float:
+    return value * LITERS_PER_CUBIC_METER
+def liters_to_cubic_meters(value: float) -> float:
+    return value / LITERS_PER_CUBIC_METER
+def kiloliters_to_liters(value: Union[float, int]) -> float:
+    return value * KIROLITERS_PER_CUBIC_METER * 1000.0
+def gallons_us_to_cubic_meters(value: Union[float, int]) -> float:
+    return value / GALLONS_US_PER_LITER
+if __name__ == '__main__':
+    sample_values = {
+        'cubic_meters_to_liters': 2.5,
+        'liters_to_cubic_meters': 100,
+        'kiloliters_to_liters': 3,
+        'gallons_us_to_cubic_meters': 50
+    }
+    for func_name, input_val in sample_values.items():
+        if func_name == 'cubic_meters_to_liters':
+            result = cubic_meters_to_liters(input_val)
+        elif func_name == 'liters_to_cubic_meters':
+            result = liters_to_cubic_meters(input_val)
+        elif func_name == 'kiloliters_to_liters':
+            result = kiloliters_to_liters(input_val)
+        elif func_name == 'gallons_us_to_cubic_meters':
+            result = gallons_us_to_cubic_meters(input_val)
+        print(f""{func_name}: {input_val} -> {result}"")",True,0,7076,68_13.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+CUBIC_METER_TO_LITER = 1000.0
+LITER_TO_KILOLITER = 0.001
+KILOLITER_TO_CUBIC_METERS = 0.001
+GALLON_US_TO_LITER = 3.785411784
+LITER_TO_GALLON_US = 1 / GALLON_US_TO_LITER
+def cubic_meters_to_liters(value: float) -> float:
+    return value * CUBIC_METER_TO_LITER
+def liter_to_kiloliter(value: float) -> float:
+    return value * LITER_TO_KILOLITER
+def kiloliter_to_cubic_meters(value: float) -> float:
+    return value * KILOLITER_TO_CUBIC_METERS
+def gallons_us_to_liters(value: Union[float, int]) -> float:
+    return value * GALLON_US_TO_LITER
+def liters_to_gallons_us(value: Union[float, int]) -> float:
+    return value * LITER_TO_GALLON_US
+if __name__ == '__main__':
+    sample_cubic_meters = 5.0
+    result_liters = cubic_meters_to_liters(sample_cubic_meters)
+    print(f""{sample_cubic_meters} m³ is {result_liters:.2f} L"")
+    kiliters = liter_to_kiloliter(result_liters / CUBIC_METER_TO_LITER * 10.0)
+    cubic_from_kilo = kiloliter_to_cubic_meters(kiliters)
+    print(f""{kiliters:.2f} kL is {cubic_from_kilo:.4f} m³"")
+    sample_gallons = 50
+    result_liters_gal = gallons_us_to_liters(sample_gallons)
+    print(f""{sample_gallons} US gal is {result_liters_gal:.2f} L"")
+    final_gallons = liters_to_gallons_us(result_liters / CUBIC_METER_TO_LITER * 10.0)
+    print(f""{final_gallons:.4f} L is {sample_gallons + result_liters_gal - sample_gallons:.2f} US gal"")",True,1,7077,68_13_1.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+CUBIC_METER_TO_LITER = 1000.0
+LITER_TO_KILOLITER = 0.001
+KILOLITER_TO_CUBIC_METERS = 0.001
+GALLON_US_TO_LITER = 3.785411784
+LITER_TO_GALLON_US = 1 / GALLON_US_TO_LITER
+def cubic_meters_to_liters(value: float) -> float:
+    return value * CUBIC_METER_TO_LITER
+def liters_to_kiloliters(value: float) -> float:
+    return value * LITER_TO_KILOLITER
+def kiloliters_to_cubic_meters(value: float) -> float:
+    return value * KILOLITER_TO_CUBIC_METERS
+def gallons_us_to_liters(value: Union[float, int]) -> float:
+    return value * GALLON_US_TO_LITER
+def liters_to_gallons_us(value: Union[float, int]) -> float:
+    return value * LITER_TO_GALLON_US
+if __name__ == '__main__':
+    sample_cubic_meters = 2.5
+    result_liters = cubic_meters_to_liters(sample_cubic_meters)
+    print(f""{sample_cubic_meters} m³ is {result_liters:.4f} L"")
+    converted_kiloliters = liters_to_kiloliters(result_liters)
+    print(f""{converted_kiloliters:.6f} kL"")
+    sample_gallons_us = 10.5
+    result_from_gallons = gallons_us_to_liters(sample_gallons_us)
+    print(f""{sample_gallons_us} gal is {result_from_gallons:.4f} L"")",True,2,7078,68_13_2.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+CUBIC_METER_TO_LITER = 1000.0
+LITER_TO_KILOLITER = 0.001
+KILOLITER_TO_CUBIC_METERS = 0.001
+GALLON_US_TO_LITER = 3.785411784
+LITER_TO_GALLON_US = 1 / GALLON_US_TO_LITER
+def cubic_meters_to_liters(value: float) -> float:
+    return value * CUBIC_METER_TO_LITER
+def liters_to_kiloliters(value: float) -> float:
+    return value * LITER_TO_KILOLITER
+def kiloliters_to_cubic_meters(value: float) -> float:
+    return value * KILOLITER_TO_CUBIC_METERS
+def gallons_us_to_liters(value: Union[float, int]) -> float:
+    return value * GALLON_US_TO_LITER
+def liters_to_gallons_us(value: Union[float, int]) -> float:
+    return value * LITER_TO_GALLON_US
+if __name__ == '__main__':
+    sample_cubic_meters = 5.0
+    result_liters = cubic_meters_to_liters(sample_cubic_meters)
+    sample_liters = 1234.56789
+    result_kiloliters = liters_to_kiloliters(sample_liters)
+    sample_gallons_us = 10.0
+    result_liters_from_gal = gallons_us_to_liters(sample_gallons_us)
+    print(f""{sample_cubic_meters} cubic meters is {result_liters:.2f} liters."")
+    print(f""{sample_liters} liters is {result_kiloliters:.6f} kiloliters."")
+    print(f""{sample_gallons_us} US gallons is {result_liters_from_gal:.4f} liters."")",True,3,7079,68_13_3.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+CUBIC_METER_TO_LITER: float = 1000.0
+LITER_TO_KILOLITER: float = 0.001
+KILOLITER_TO_CUBIC_METERS: float = 0.001
+GALLON_US_TO_LITER: float = 3.785411784
+def cubic_meters_to_liters(value: Union[int, float]) -> float:
+    return value * CUBIC_METER_TO_LITER
+def liters_to_kiloliters(value: Union[int, float]) -> float:
+    return value * LITER_TO_KILOLITER
+def kiloliters_to_cubic_meters(value: Union[int, float]) -> float:
+    return value * KILOLITER_TO_CUBIC_METERS
+def gallons_us_to_liters(value: Union[int, float]) -> float:
+    return value * GALLON_US_TO_LITER
+if __name__ == '__main__':
+    sample_cm3 = 5.0
+    result_liters = cubic_meters_to_liters(sample_cm3)
+    sample_liters = 125.0
+    result_kliters = liters_to_kiloliters(sample_liters)
+    sample_kliters = 2.0
+    result_cm3 = kiloliters_to_cubic_meters(sample_kliters)
+    sample_gallons = 48.0
+    result_liters_from_gal = gallons_us_to_liters(sample_gallons)
+    print(f""{sample_cm3} m³ = {result_liters:.2f} L"")
+    print(f""{sample_liters} L = {result_kliters:.6f} kL"")
+    print(f""{sample_kliters} kL = {result_cm3:.4f} m³"")
+    print(f""{sample_gallons} US gal = {result_liters_from_gal:.2f} L"")",True,4,7080,68_13_4.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+CUBIC_METER_TO_LITER: float = 1000.0
+LITER_TO_KILOLITER: float = 0.001
+KILOLITER_TO_GALLON_US: float = 264.172052358
+GALLON_US_TO_KILOLITER: float = 1 / KILOLITER_TO_GALLON_US
+def cubic_meters_to_liters(value: Union[int, float]) -> int:
+    return round(value * CUBIC_METER_TO_LITER)
+def liters_to_kiloliters(value: Union[int, float]) -> float:
+    return value / 1000.0
+def kiloliters_to_gallons_us(value: Union[int, float]) -> int:
+    return round(value * KILOLITER_TO_GALLON_US)
+if __name__ == '__main__':
+    test_volume_m3 = 2.5
+    result_liters = cubic_meters_to_liters(test_volume_m3)
+    converted_kl = liters_to_kiloliters(result_liters)
+    final_gallons = kiloliters_to_gallons_us(converted_kl)
+    print(f""{test_volume_m3} m³ is {result_liters} L"")
+    print(f""{result_liters} L is {converted_kl:.6f} kL"")
+    print(f""{converted_kl:.6f} kL is {final_gallons} US gallons"")",True,5,7081,68_13_5.py
+68,13,Convert volume measurements now,"Develop a production-ready Python utility library module named 'volume_utils' that provides type-annotated functions for converting between various SI-based unit systems including cubic meters, liters, kiloliters, and gallons. All conversion factors must be defined as constants at the module level.","from typing import Union
+CUBIC_METER_TO_LITER = 1000.0
+LITER_TO_CUBIC_METER = 0.001
+KILOLITER_TO_CUBIC_METER = 1.0
+GALLON_US_TO_LITER = 3.785411784
+def cubic_meters_to_liters(value: float) -> Union[float, int]:
+    return value * CUBIC_METER_TO_LITER
+def liters_to_cubic_meters(value: float) -> Union[float, int]:
+    return value / CUBIC_METER_TO_LITER
+def kiloliters_to_cubic_meters(value: float) -> Union[float, int]:
+    return value / KILOLITER_TO_CUBIC_METER
+def gallons_us_to_liters(value: float) -> Union[float, int]:
+    return value * GALLON_US_TO_LITER
+if __name__ == '__main__':
+    sample_cm3 = 5.0
+    sample_liters = cubic_meters_to_liters(sample_cm3)
+    sample_kl = liters_to_cubic_meters(125000.0) / KILOLITER_TO_CUBIC_METER
+    sample_gallons = gallons_us_to_liters(473.0)
+    print(f""{sample_cm3} cubic meters is {sample_liters} liters."")
+    print(f""125,000 liters is {sample_kl} kiloliters."")
+    print(f""473 US gallons is {sample_gallons} liters."")",True,6,7082,68_13_6.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","import math
+def grams_to_pounds(grams: float) -> float:
+    if not isinstance(grams, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if grams < 0:
+        raise ValueError(""Mass cannot be negative."")
+    return grams * 0.00220462
+def kilograms_to_ounces(kg: float) -> float:
+    if not isinstance(kg, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if kg < 0:
+        raise ValueError(""Mass cannot be negative."")
+    return kg * 35.274
+def pounds_to_kilograms(pounds: float) -> float:
+    if not isinstance(pounds, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if pounds < 0:
+        raise ValueError(""Mass cannot be negative."")
+    return pounds * 0.453592
+def ounces_to_grams(ounces: float) -> float:
+    if not isinstance(ounces, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if ounces < 0:
+        raise ValueError(""Mass cannot be negative."")
+    return ounces * 28.3495
+def convert_mass(unit1: str, value1: float, unit2: str) -> float:
+    valid_units = ['grams', 'pounds', 'kilograms', 'ounces']
+    if unit1 not in valid_units or unit2 not in valid_units:
+        raise ValueError(f""Invalid units. Must be one of {valid_units}"")
+    if value1 < 0:
+        raise ValueError(""Mass cannot be negative."")
+    gram_value = 0
+    if unit1 == 'grams':
+        gram_value = value1
+    elif unit1 == 'pounds':
+        gram_value = pounds_to_kilograms(value1) * 1000 / grams_to_pounds(1)                                                         
+        pass
+    if unit1 == 'grams':
+        gram_value = value1
+    elif unit1 == 'pounds':
+        gram_value = grams_to_pounds(0) * (value1 / 0.45359237)                                                        
+        gram_value = value1 * 453.59237
+    elif unit1 == 'kilograms':
+        gram_value = value1 * 1000
+    elif unit1 == 'ounces':
+        gram_value = value1 * 28.3495
+    if unit2 == 'grams':
+        return gram_value
+    elif unit2 == 'pounds':
+        return gram_value / 453.59237
+    elif unit2 == 'kilograms':
+        return gram_value / 1000
+    elif unit2 == 'ounces':
+        return gram_value / 28.3495
+if __name__ == '__main__':
+    print(f""{grams_to_pounds(500):.6f} pounds"")
+    print(f""{kilograms_to_ounces(10):.6f} ounces"")
+    print(f""{pounds_to_kilograms(2):.6f} kilograms"")
+    print(f""{ounces_to_grams(8):.6f} grams"")
+    result = convert_mass('kilograms', 5, 'ounces')
+    print(f""5 kg to ounces: {result:.6f}"")",True,0,7083,69_3.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","from typing import Union
+def convert_grams_to_pounds(grams: float) -> float:
+    if not isinstance(grams, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if grams < 0:
+        raise ValueError(""Grams cannot be negative."")
+    return grams * 0.00220462
+def convert_kilograms_to_ounces(kg: Union[int, float]) -> float:
+    if not isinstance(kg, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if kg < 0:
+        raise ValueError(""Kilograms cannot be negative."")
+    return kg * 35.274
+def convert_pounds_to_kilograms(pounds: Union[int, float]) -> float:
+    if not isinstance(pounds, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if pounds < 0:
+        raise ValueError(""Pounds cannot be negative."")
+    return pounds * 0.453592
+def convert_ounces_to_kilograms(ounces: Union[int, float]) -> float:
+    if not isinstance(ounces, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if ounces < 0:
+        raise ValueError(""Ounces cannot be negative."")
+    return ounces * 0.0283495
+if __name__ == '__main__':
+    sample_grams = 1000
+    result_g_to_lb = convert_grams_to_pounds(sample_grams)
+    sample_kg = 5
+    result_kg_to_oz = convert_kilograms_to_ounces(sample_kg)
+    print(f""{sample_grams} grams is {result_g_to_lb:.4f} pounds."")
+    print(f""{sample_kg} kilograms is {result_kg_to_oz:.2f} ounces."")",True,1,7084,69_3_1.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","import math
+def convert_grams_to_pounds(grams: float) -> float:
+    if grams < 0:
+        raise ValueError(""Grams must be non-negative."")
+    return grams / 453.59237
+def convert_kilograms_to_ounces(kg: float) -> float:
+    if kg < 0:
+        raise ValueError(""Kilograms must be non-negative."")
+    return kg * 1000 * 28.3495 / 16
+def validate_mass_input(value: float, unit_type: str) -> None:
+    supported_units = ['grams', 'kilograms']
+    if value < 0:
+        raise ValueError(f""{unit_type} must be non-negative."")
+    if unit_type not in supported_units:
+        raise ValueError(f""Unsupported unit type. Supported: {supported_units}"")
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    validate_mass_input(value, from_unit)
+    conversion_factors = {
+        'grams_to_pounds': 1 / 453.59237,
+        'kilograms_to_ounces': 1000 * 28.3495 / 16,
+        'pounds_to_kilograms': 453.59237 / 1000,
+        'ounces_to_grams': 16 / (28.3495)
+    }
+    factor = conversion_factors.get(f""{from_unit}_{to_unit}"")
+    if not factor:
+        raise ValueError(""Conversion pair not supported."")
+    return value * factor
+if __name__ == '__main__':
+    sample_grams = 2036.85
+    pounds_result = convert_grams_to_pounds(sample_grams)
+    print(f""{sample_grams} grams is {pounds_result:.4f} pounds."")
+    kg_sample = 1.5
+    ounces_result = convert_kilograms_to_ounces(kg_sample)
+    print(f""{kg_sample} kilograms is {ounces_result:.2f} ounces."")
+    try:
+        invalid_input = -50
+        validate_mass_input(invalid_input, 'grams')
+    except ValueError as e:
+        print(f""Validation error for negative input: {e}"")",True,2,7085,69_3_2.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","from typing import Union
+def validate_positive(value: float) -> bool:
+    return isinstance(value, (int, float)) and value > 0
+def grams_to_pounds(grams: int) -> str:
+    if not validate_positive(grams):
+        raise ValueError(""Input must be a positive number."")
+    pounds = grams * 0.00220462
+    return f""{pounds:.5f} lbs""
+def kilograms_to_ounces(kg: int) -> str:
+    if not validate_positive(kg):
+        raise ValueError(""Input must be a positive number."")
+    ounces = kg * 35.274
+    return f""{ounces:.5f} oz""
+def pounds_to_kilograms(pounds: float) -> str:
+    if not (isinstance(pounds, (int, float)) and pounds >= 0):
+        raise ValueError(""Input must be a non-negative number."")
+    kilograms = pounds * 0.453592
+    return f""{kilograms:.6f} kg""
+def ounces_to_grams(ounces: int) -> str:
+    if not validate_positive(ounces):
+        raise ValueError(""Input must be a positive number."")
+    grams = ounces * 28.3495
+    return f""{grams:.5f} g""
+if __name__ == '__main__':
+    print(grams_to_pounds(100))
+    print(kilograms_to_ounces(2))
+    print(pounds_to_kilograms(5))
+    print(ounces_to_grams(8))",True,3,7086,69_3_3.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","from typing import Union
+def validate_positive(value: float) -> bool:
+    return isinstance(value, (int, float)) and value > 0
+def grams_to_pounds(grams: float) -> float:
+    if not validate_positive(grams):
+        raise ValueError(""Input must be a positive number."")
+    return grams * 0.00220462
+def kilograms_to_ounces(kg: float) -> float:
+    if not validate_positive(kg):
+        raise ValueError(""Input must be a positive number."")
+    return kg * 35.274
+    def pounds_to_kilograms(pounds: float) -> float:
+        if not validate_positive(pounds):
+            raise ValueError(""Input must be a positive number."")
+        return pounds / 0.00220462
+def ounces_to_grams(ounces: float) -> float:
+    if not validate_positive(ounces):
+        raise ValueError(""Input must be a positive number."")
+    return ounces * 35.274
+if __name__ == '__main__':
+    sample_g = 1000
+    result_pounds = grams_to_pounds(sample_g)
+    print(f""{sample_g}g is {result_pounds:.6f}lbs"")",True,4,7087,69_3_4.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","from typing import Union
+def grams_to_pounds(grams: float) -> str:
+    if not isinstance(grams, (int, float)) or grams < 0:
+        raise ValueError(""Input must be a non-negative number."")
+    return f""{grams} grams = {round(grams / 453.592, 6)} pounds""
+def kilograms_to_ounces(kg: Union[int, float]) -> str:
+    if not isinstance(kg, (int, float)) or kg < 0:
+        raise ValueError(""Input must be a non-negative number."")
+    return f""{kg} kilograms = {round(kg * 35.274, 6)} ounces""
+def pounds_to_kilograms(pounds: Union[int, float]) -> str:
+    if not isinstance(pounds, (int, float)) or pounds < 0:
+        raise ValueError(""Input must be a non-negative number."")
+    return f""{pounds} pounds = {round(pounds * 0.453592, 6)} kilograms""
+def ounces_to_grams(ounces: Union[int, float]) -> str:
+    if not isinstance(ounces, (int, float)) or ounces < 0:
+        raise ValueError(""Input must be a non-negative number."")
+    return f""{ounces} ounces = {round(ounces * 28.3495, 6)} grams""
+if __name__ == '__main__':
+    print(grams_to_pounds(100))
+    print(kilograms_to_ounces(2))
+    print(pounds_to_kilograms(5))
+    print(ounces_to_grams(8))",True,5,7088,69_3_5.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","from typing import Union
+def grams_to_pounds(grams: float) -> float:
+    if not isinstance(grams, (int, float)):
+        raise TypeError(""Input must be a number."")
+    return grams * 0.00220462
+def kilograms_to_ounces(kg: Union[int, float]) -> float:
+    if not isinstance(kg, (int, float)):
+        raise TypeError(""Input must be a number."")
+    return kg * 35.274
+if __name__ == '__main__':
+    sample_grams = 1000
+    result_g_to_lb = grams_to_pounds(sample_grams)
+    sample_kg = 5
+    result_kg_to_oz = kilograms_to_ounces(sample_kg)",True,6,7089,69_3_6.py
+69,3,Scale mass from one unit,"Develop a type-annotated Python utility module containing functions for converting grams to pounds, kilograms to ounces, and other common mass unit scales with input validation.","from typing import Union
+def convert_grams_to_pounds(grams: float) -> float:
+    if not isinstance(grams, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if grams < 0:
+        raise ValueError(""Grams cannot be negative."")
+    return grams * 0.00220462
+def convert_kilograms_to_ounces(kg: float) -> float:
+    if not isinstance(kg, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if kg < 0:
+        raise ValueError(""Kilograms cannot be negative."")
+    return kg * 35.274
+def convert_pounds_to_kilograms(pounds: float) -> float:
+    if not isinstance(pounds, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if pounds < 0:
+        raise ValueError(""Pounds cannot be negative."")
+    return pounds * 0.453592
+def convert_ounces_to_kilograms(ounces: float) -> float:
+    if not isinstance(ounces, (int, float)):
+        raise TypeError(""Input must be a number."")
+    if ounces < 0:
+        raise ValueError(""Ounces cannot be negative."")
+    return ounces * 0.0283495
+if __name__ == '__main__':
+    sample_grams = 1000
+    result_g_to_lb = convert_grams_to_pounds(sample_grams)
+    sample_kg = 5
+    result_kg_to_oz = convert_kilograms_to_ounces(sample_kg)
+    print(f""{sample_grams} grams is {result_g_to_lb:.4f} pounds."")
+    print(f""{sample_kg} kilograms is {result_kg_to_oz:.2f} ounces."")",True,7,7090,69_3_7.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"import math
+class MassConverter:
+    def __init__(self):
+        self.s_i_base = ""kg""
+        self.conversion_factors = {
+            ""g"": 0.001,                   
+            ""mg"": 1e-6,                       
+            ""µg"": 1e-9,                       
+            ""kg"": 1,                          
+            ""t"": 1000,                    
+            ""lb"": 0.45359237,               
+            ""oz"": 0.02834952,               
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self.conversion_factors or to_unit not in self.conversion_factors:
+            raise ValueError(f""Unsupported unit '{from_unit}' or '{to_unit}'. Supported units are {list(self.conversion_factors.keys())}"")
+        factor_from_si = self.conversion_factors[from_unit]
+        factor_to_si = self.conversion_factors[to_unit]
+        value_in_si = value * factor_from_si
+        result_value = value_in_si / factor_to_si
+        return round(result_value, 6)
+if __name__ == '__main__':
+    converter = MassConverter()
+    test_cases = [
+        (100, ""g"", ""kg""),                               
+        (5000, ""mg"", ""t""),                               
+        (2.20462, ""lb"", ""kg""),                          
+        (35.274, ""oz"", ""g""),                        
+    ]
+    for value, from_u, to_u in test_cases:
+        result = converter.convert(value, from_u, to_u)
+        print(f""{value} {from_u} is equal to {result} {to_u}"")",True,0,7091,69_0.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"class MassConverter:
+    def __init__(self):
+        self.si_units = {
+            'kilogram': 1,
+            'gram': 0.001,
+            'milligram': 1e-6,
+            'microgram': 1e-9,
+            'nanogram': 1e-12
+        }
+        self.cgs_units = {
+            'kilogram': 1,
+            'gram': 0.001,
+            'milligram': 1e-6,
+            'microgram': 1e-9,
+            'nanogram': 1e-12
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number."")
+        unit_map = self.si_units if 'si' in from_unit.lower() else self.cgs_units
+        if from_unit not in unit_map or to_unit not in unit_map:
+            available_si = list(self.si_units.keys())
+            available_cgs = list(self.cgs_units.keys())
+            raise ValueError(f""Unsupported units. Available SI: {available_si}, CGS: {available_cgs}"")
+        factor_from = unit_map[from_unit]
+        factor_to = unit_map[to_unit]
+        value_in_kg = value * factor_from
+        if 'si' in to_unit.lower():
+            return value_in_kg / self.si_units.get(to_unit, 1)
+        else:
+            return value_in_kg / self.cgs_units.get(to_unit, 1)
+if __name__ == '__main__':
+    converter = MassConverter()
+    test_cases = [
+        (5000, 'gram', 'kilogram'),
+        (2.5, 'milligram', 'microgram'),
+        (1e-9, 'nanogram', 'gram'),
+        (100, 'kilogram', 'gram')
+    ]
+    for val, from_u, to_u in test_cases:
+        result = converter.convert(val, from_u, to_u)
+        print(f""{val} {from_u} -> {result:.6f} {to_u}"")",True,1,7092,69_0_1.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"import math
+class MassConverter:
+    def __init__(self):
+        self.s_i_base = ""kg""                            
+        self.factors_si = {
+            ""kg"": 1,
+            ""g"": 0.001,
+            ""mg"": 1e-6,
+            ""µg"": 1e-9,
+            ""tonne"": 1000,
+            ""lb"": 0.45359237,
+            ""oz"": 0.028349523125,
+        }
+        self.factors_cgs = {
+            ""g"": 1000,
+            ""mg"": 1e6,
+            ""µg"": 1e9,
+            ""kg"": 1/1000,                                                                                                                                      
+            ""tonne"": 1/1000,
+        }
+    def convert(self, mass_value: float, from_unit: str, to_unit: str) -> float:
+        if mass_value < 0:
+            raise ValueError(""Mass cannot be negative."")
+        u_from = from_unit.lower().strip()
+        u_to = to_unit.lower().strip()
+        if u_from not in self.factors_si or u_to not in self.factors_cgs:
+            raise ValueError(f""Unsupported unit '{u_from}' -> '{u_to}'. Supported units are keys of factors."")
+        value_in_kg = mass_value * self.factors_si[u_from]
+        value_in_target = value_in_kg * self.factors_cgs[u_to]
+        return value_in_target
+if __name__ == '__main__':
+    converter = MassConverter()
+    test_cases = [
+        (""1"", ""kg"", ""g""),                              
+        (""5.2876"", ""lb"", ""oz""),                           
+        (""1e-3"", ""mg"", ""µg""),                           
+        (""1000"", ""tonne"", ""kg""),                              
+        (""275.4689"", ""oz"", ""lb""),                                     
+    ]
+    for val, src, dst in test_cases:
+        try:
+            result = converter.convert(float(val), src, dst)
+            print(f""Converted {val} {src} to {dst}: {result}"")
+        except ValueError as e:
+            print(f""Error converting {val} from {src} to {dst}: {e}"")
+    try:
+        res = converter.convert(1.5, ""kg"", ""tonne"")
+        print(f""Converted 1.5 kg to tonne: {res}"")
+    except Exception as e:
+        print(e)",True,2,7093,69_0_2.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"import math
+class MassConverter:
+    def __init__(self):
+        self.si_base = ""kg""
+        self.cgs_base = ""g""
+        self.si_factors = {
+            ""mg"": 1e-6,
+            ""ug"": 1e-9,
+            ""ng"": 1e-12,
+            ""kg"": 1.0,
+            ""g"": 1e-3,
+        }
+        self.cgs_factors = {
+            ""mg"": 1e-3,
+            ""ug"": 1e-6,
+            ""ng"": 1e-9,
+            ""g"": 1.0,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        unit_lower = from_unit.lower()
+        target_lower = to_unit.lower()
+        if not self._is_valid_unit(unit_lower):
+            raise ValueError(f""Unsupported source unit: {from_unit}"")
+        if not self._is_valid_unit(target_lower):
+            raise ValueError(f""Unsupported target unit: {to_unit}"")
+        value_in_base = 0.0
+        is_si_source = any(unit in self.si_factors for unit in [unit_lower])
+        if is_si_source:
+            factor_from_base = self.si_factors[unit_lower]
+            value_in_base = value * factor_from_base
+            is_si_target = any(u in self.si_factors for u in [target_lower])
+            if not is_si_target:
+                raise ValueError(f""Target unit {to_unit} must be an SI unit"")
+        else:
+            factor_from_base = self.cgs_factors[unit_lower]
+            value_in_base = value * (factor_from_base / 1000.0)                    
+            is_si_target = any(u in self.si_factors for u in [target_lower])
+            if not is_si_target:
+                raise ValueError(f""Target unit {to_unit} must be an SI unit"")
+        factor_to_base = self.si_factors[target_lower]
+        return value_in_base / factor_to_base
+    def _is_valid_unit(self, unit):
+        valid_si_units = set(self.si_factors.keys()) | {""kg"", ""g""}                                    
+        valid_cgs_units = set(self.cgs_factors.keys()) | {""g""}                                    
+        return (unit in self.si_factors) or unit == 'kg'
+if __name__ == '__main__':
+    converter = MassConverter()
+    test_cases = [
+        (""100"", ""mg"", ""kg""),
+        (""5.2"", ""g"", ""kg""),
+        (""3400"", ""mg"", ""g""),
+        (""7e-6"", ""ug"", ""ng""),
+        (""800"", ""g"", ""kg"")
+    ]
+    for value_str, from_u, to_u in test_cases:
+        try:
+            result = converter.convert(float(value_str), from_u, to_u)
+            print(f""{value_str} {from_u} -> {result:.6f} {to_u}"")
+        except ValueError as e:
+            print(f""Error converting {value_str} {from_u} to {to_u}: {e}"")",True,3,7094,69_0_3.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"class MassConverter:
+    def __init__(self):
+        self.si_units = {
+            'kg': 1,
+            'g': 0.001,
+            'mg': 1e-6,
+            't': 1000,
+        }
+        self.cgs_units = {
+            'g': 1,
+            'kg': 1000,
+            'mg': 1e-3,
+            'tonne': 1e6,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if not self._validate_units(from_unit, to_unit):
+            raise ValueError(""Invalid unit combination."")
+        base_value = None
+        if from_unit in self.si_units and to_unit in self.si_units:
+            factor_from_si = self.si_units[from_unit]
+            factor_to_si = self.si_units[to_unit]
+            return value * (factor_from_si / factor_to_si)
+        elif from_unit in self.cgs_units and to_unit in self.cgs_units:
+            factor_from_cgs = self.cgs_units[from_unit]
+            factor_to_cgs = self.cgs_units[to_unit]
+            return value * (factor_from_cgs / factor_to_cgs)
+        else:
+            if from_unit in self.si_units and to_unit in self.cgs_units:
+                val_si = value * self.si_units[from_unit]
+                result = val_si * (1000 / 1e-6)                                                  
+                return result
+            elif from_unit in self.cgs_units and to_unit in self.si_units:
+                val_cgs = value * self.cgs_units[from_unit]
+                return val_cgs / (self.si_units[to_unit])
+    def _validate_units(self, from_unit: str, to_unit: str) -> bool:
+        all_units = list(self.si_units.keys()) + list(self.cgs_units.keys())
+        if from_unit not in all_units or to_unit not in all_units:
+            return False
+        if from_unit == to_unit and abs(from_unit - 'kg') > 0.5: 
+             pass 
+        return True
+if __name__ == '__main__':
+    converter = MassConverter()
+    samples = [
+        ('1 kg', 'g'),
+        ('2 mg', 't'),
+        ('5 tonne', 'mg'),
+        ('0.5 g', 'kg')
+    ]
+    for val_str, target in samples:
+        try:
+            result = converter.convert(float(val_str), 'kg' if 'tonne' not in val_str else 'g', target)                                                                                                                                                                                                                                                         
+            print(f""{val_str} -> {target}: {result}"")
+        except Exception:
+            pass
+    test_cases = [
+        (10, 'kg', 'g'),
+        (5e-6, 'mg', 't'),
+        (2000, 'tonne', 'mg')
+    ]
+    for val, from_u, to_u in test_cases:
+        res = converter.convert(val, from_u, to_u)
+        print(f""{val} {from_u} -> {to_u}: {res}"")",True,4,7095,69_0_4.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"class MassConverter:
+    def __init__(self):
+        self.si_units = {
+            'kg': 1,
+            'g': 0.001,
+            'mg': 1e-6,
+            'ug': 1e-9,
+            't': 1000,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self.si_units or to_unit not in self.si_units:
+            raise ValueError(f""Unsupported unit. Supported units are {list(self.si_units.keys())}"")
+        si_value = value * self.si_units[from_unit]
+        return si_value / self.si_units[to_unit]
+if __name__ == '__main__':
+    converter = MassConverter()
+    test_cases = [
+        (10, 'kg', 'g'),
+        (5000, 'mg', 't'),
+        (2.5, 'ug', 'kg'),
+        (1, 'g', 'mg')
+    ]
+    for val, from_u, to_u in test_cases:
+        result = converter.convert(val, from_u, to_u)
+        print(f""{val} {from_u} is equal to {result:.6f} {to_u}"")",True,5,7096,69_0_5.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"class MassConverter:
+    def __init__(self):
+        self.si_units = {
+            'kg': 1,
+            'g': 0.001,
+            'mg': 1e-6,
+            't': 1000,
+        }
+        self.cgs_units = {
+            'g': 1,
+            'mg': 1e-3,
+            'kg': 1000,
+            'cg': 0.01,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number"")
+        unit_map = self.si_units.copy()
+        unit_map.update(self.cgs_units)
+        if from_unit.lower() not in unit_map or to_unit.lower() not in unit_map:
+            raise ValueError(f""Unsupported units. Available SI: {list(unit_map.keys())}, CGS: {[k for k in unit_map.keys() if 'g' in str(k).lower()]}"")
+        base_value = value * unit_map[from_unit.lower()] / unit_map[to_unit.lower()]
+        return round(base_value, 6)
+if __name__ == '__main__':
+    converter = MassConverter()
+    result1 = converter.convert(5.0, 'kg', 'g')
+    result2 = converter.convert(2e-3, 'mg', 'kg')
+    print(f""Converted {result1} grams"")
+    print(f""Converted {result2} kilograms"")",True,6,7097,69_0_6.py
+69,0,Scale mass from one unit,Write a robust and reusable class in Python to convert mass values from one unit to any other supported SI or CGS unit system using standard conversion factors.,"class MassConverter:
+    def __init__(self):
+        self.si_units = {
+            'kilogram': 1,
+            'gram': 0.001,
+            'milligram': 1e-6,
+            'microgram': 1e-9,
+            'nanogram': 1e-12,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self.si_units or to_unit not in self.si_units:
+            raise ValueError(f""Unsupported units. Supported SI/CGS equivalents are keys of {self.si_units.keys()}"")
+        value_in_kg = value * self.si_units[from_unit]
+        return value_in_kg / self.si_units[to_unit]
+if __name__ == '__main__':
+    converter = MassConverter()
+    result_1 = converter.convert(1.0, 'kilogram', 'gram')
+    print(f""Converted {1} kilogram(s) to gram(s): {result_1}"")
+    result_2 = converter.convert(500.0, 'gram', 'milligram')
+    print(f""Converted 500 gram(s) to milligram(s): {result_2}"")
+    result_3 = converter.convert(2.0, 'milligram', 'microgram')
+    print(f""Converted 2 milligram(s) to microgram(s): {result_3}"")",True,7,7098,69_0_7.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"import math
+class MassConverter:
+    def __init__(self):
+        self.constants = {
+            'kg_to_g': 1000,
+            'g_to_mcg': 1_000_000,
+            'lb_to_kg': 0.45359237,
+            'oz_to_lb': 0.0625,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number"")
+        unit_map = {
+            'kg': 1.0,
+            'g': 0.001,
+            'mg': 0.000001,
+            'mcg': 0.000000001,
+            'lb': 2.20462262,
+            'oz': 0.0283495231,
+        }
+        if from_unit not in unit_map or to_unit not in unit_map:
+            raise ValueError(f""Unsupported units: {from_unit}, {to_unit}"")
+        value_in_kg = value * unit_map[from_unit] / unit_map[to_unit]
+        return round(value_in_kg, 6)
+if __name__ == '__main__':
+    converter = MassConverter()
+    sample_tests = [
+        (100.0, 'kg', 'g'),
+        (500.0, 'mcg', 'mg'),
+        (2.0, 'lb', 'kg'),
+        (8.0, 'oz', 'lb'),
+        (750.0, 'ml' if False else None, 'g')                                                                       
+    ]
+    results = []
+    test_cases = [
+        ('1 kg to g', 100.0, 'kg', 'g'),
+        ('5 mcg to mg', 5.0, 'mcg', 'mg'),
+        ('2 lb to kg', 0.907184726, 'lb', 'kg'),                                                                                                        
+    ]
+    final_results = []
+    for desc, val, u_from, u_to in [
+        ('Convert 5 kg to grams', 5.0, 'kg', 'g'),
+        ('Convert 1 lb to kilograms', 2.0, 'lb', 'kg'),
+        ('Convert 8 oz to pounds', 16.0, 'oz', 'lb')
+    ]:
+        try:
+            res = converter.convert(val, u_from, u_to)
+            final_results.append(f""{desc}: {res}"")
+        except Exception as e:
+            final_results.append(f""Error in {desc}: {e}"")
+    print('\n'.join(final_results))",True,0,7099,69_2.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"def get_mass_scale():
+    constants = {
+        ""kg"": 10**3,
+        ""g"": 1,
+        ""mg"": 1e-6,
+        ""lb"": 453.59237 * 1/1000,
+        ""oz"": 28.34952 / 1000
+    }
+    def convert(mass: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in constants or to_unit not in constants:
+            raise ValueError(""Invalid unit"")
+        value_in_kg = mass * constants[from_unit]
+        result = value_in_kg / constants[to_unit]
+        return round(result, 6)
+    return convert
+if __name__ == '__main__':
+    scale_func = get_mass_scale()
+    sample_values = [100, 500.5, -25]
+    units_from = [""kg"", ""g""]
+    units_to = [""lb"", ""oz""]
+    for val in sample_values:
+        print(f""Value {val} kg to lb:"", scale_func(val, ""kg"", ""lb""))
+        print(f""Value {val} g to oz:"", scale_func(val, ""g"", ""oz""))",True,1,7100,69_2_1.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"class MassConverter:
+    def __init__(self):
+        self.constants = {
+            'kg': 1.0,
+            'g': 0.001,
+            'mg': 1e-6,
+            'lb': 0.45359237,
+            'oz': 0.028349523125,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self.constants or to_unit not in self.constants:
+            raise ValueError(f""Invalid unit. Supported units are {list(self.constants.keys())}"")
+        factor = self.constants[from_unit] / self.constants[to_unit]
+        return value * factor
+if __name__ == '__main__':
+    converter = MassConverter()
+    sample_tests = [
+        (10, 'lb', 'kg'),
+        (500, 'g', 'mg'),
+        (2.2, 'oz', 'lb')
+    ]
+    for mass, from_u, to_u in sample_tests:
+        result = converter.convert(mass, from_u, to_u)
+        print(f""{mass} {from_u} is equal to {result:.6f} {to_u}"")",True,2,7101,69_2_2.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"class MassConverter:
+    def __init__(self):
+        self.constants = {
+            'kg_to_g': 1000,
+            'g_to_mcg': 1_000_000,
+            'lb_to_kg': 0.45359237,
+            'oz_to_lb': 0.0625,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number"")
+        unit_map = {
+            'kg': 1.0,
+            'g': 0.001,
+            'mg': 0.000001,
+            'mcg': 0.000000001,
+            'lb': 2.20462262,
+            'oz': 0.0283495231,
+        }
+        if from_unit not in unit_map or to_unit not in unit_map:
+            raise ValueError(f""Unsupported units: {from_unit}, {to_unit}"")
+        factor = self.constants.get(from_unit + '_to_' + to_unit)
+        return value * (unit_map[from_unit] / unit_map[to_unit])
+if __name__ == '__main__':
+    converter = MassConverter()
+    sample_tests = [
+        ('kg', 'g', 5.0),
+        ('lb', 'oz', 10.0),
+        ('mcg', 'mg', 2500.0),
+    ]
+    for from_u, to_u, val in sample_tests:
+        result = converter.convert(val, from_u, to_u)
+        print(f""{val} {from_u} equals {result:.6f} {to_u}"")",True,3,7102,69_2_3.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"def get_mass_conversion_factors():
+    return {
+        'kg_to_g': 1000,
+        'g_to_kg': 0.001,
+        'lb_to_kg': 0.45359237,
+        'kg_to_lb': 2.20462262,
+    }
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    factors = get_mass_conversion_factors()
+    if from_unit == 'lb' and to_unit in ('g', 'kg'):
+        value *= 0.45359237
+    elif from_unit == 'g' and to_unit in ('lb', 'kg'):
+        value /= 1000 * 0.45359237 if to_unit == 'lb' else value / 1000
+    return round(value, 6)
+if __name__ == '__main__':
+    test_cases = [
+        ('kg', 'g', 1),
+        ('g', 'kg', 500),
+        ('lb', 'kg', 2.2),
+        ('kg', 'lb', 10),
+    ]
+    for start_unit, end_unit, value in test_cases:
+        result = convert_mass(value, start_unit, end_unit)
+        print(f""{value} {start_unit} to {end_unit}: {result}"")",True,4,7103,69_2_4.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"class MassConverter:
+    def __init__(self):
+        self.constants = {
+            'kg': 1.0,
+            'g': 0.001,
+            'mg': 1e-6,
+            'lb': 0.45359237,
+            'oz': 0.028349523125,
+            'tonne': 1000.0
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self.constants or to_unit not in self.constants:
+            raise ValueError(f""Invalid unit. Supported units are {list(self.constants.keys())}"")
+        base_value = value * self.constants[from_unit]
+        converted_value = base_value / self.constants[to_unit]
+        return converted_value
+    def get_base_mass(self, mass: float) -> dict:
+        result = {}
+        for unit in ['kg', 'g', 'mg', 'lb', 'oz']:
+            if unit not in self.constants and unit != 'tonne':
+                continue
+            try:
+                converted = MassConverter().convert(mass, from_unit='kg', to_unit=unit)
+                result[unit] = round(converted, 6)
+            except Exception as e:
+                print(f""Error converting {mass} kg to {unit}: {e}"")
+        return result
+if __name__ == '__main__':
+    converter = MassConverter()
+    sample_masses = [10.5, 234.7]
+    target_units = ['g', 'mg', 'lb']
+    for mass in sample_masses:
+        print(f""Converting {mass} kg to various units:"")
+        converted_data = converter.get_base_mass(mass)
+        for unit in target_units:
+            if unit in converted_data:
+                print(f""{unit}: {converted_data[unit]}"")",True,5,7104,69_2_5.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"class MassConverter:
+    def __init__(self):
+        self.constants = {
+            'kg': 1.0,
+            'g': 0.001,
+            'mg': 1e-6,
+            'lb': 0.45359237,
+            'oz': 0.028349523125,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> float:
+        if from_unit not in self.constants or to_unit not in self.constants:
+            raise ValueError(f""Invalid unit. Supported units are {list(self.constants.keys())}"")
+        factor = self.constants[from_unit] / self.constants[to_unit]
+        return value * factor
+if __name__ == '__main__':
+    converter = MassConverter()
+    test_cases = [
+        ('kg', 'g', 10.5),
+        ('lb', 'oz', 2.0),
+        ('mg', 'kg', 5e-6),
+    ]
+    for from_unit, to_unit, value in test_cases:
+        result = converter.convert(value, from_unit, to_unit)
+        print(f""{value} {from_unit} is equal to {result:.10f} {to_unit}"")",True,6,7105,69_2_6.py
+69,2,Scale mass from one unit,Create a production-ready Python script that defines a dictionary of conversion constants and provides methods to calculate mass scale from one specific unit to another efficiently.,"import math
+CONVERSION_CONSTANTS = {
+    ""kg"": 1,
+    ""g"": 0.001,
+    ""mg"": 1e-6,
+    ""lb"": 0.45359237,
+    ""oz"": 0.02834952,
+}
+def calculate_mass_scale(from_unit: str, to_unit: str) -> float:
+    if from_unit not in CONVERSION_CONSTANTS or to_unit not in CONVERSION_CONSTANTS:
+        raise ValueError(f""Unsupported units: {from_unit}, {to_unit}"")
+    factor_from_kg = CONVERSION_CONSTANTS[from_unit]
+    factor_to_kg = CONVERSION_CONSTANTS[to_unit]
+    return abs(factor_from_kg / factor_to_kg)
+if __name__ == '__main__':
+    sample_result = calculate_mass_scale(""lb"", ""kg"")
+    print(sample_result)",True,7,7106,69_2_7.py
+69,4,Scale mass from one unit,Write a high-performance conversion engine using the `dataclasses` library in Python that maps one mass unit to another while handling edge cases like zero or negative inputs gracefully.,"import dataclasses
+@dataclasses.dataclass(frozen=True)
+class MassUnit:
+    value_in_kg: float = 0
+    name: str = """"
+    @classmethod
+    def from_value(cls, mass_unit_name: str, kg_value: float):
+        return cls(value_in_kg=kg_value, name=mass_unit_name)
+@dataclasses.dataclass(frozen=True)
+class ConversionEngine:
+    reference_masses: dict[str, MassUnit] = dataclasses.field(default_factory=lambda: {
+        ""kilogram"": MassUnit.from_value(""kilogram"", 1.0),
+        ""gram"": MassUnit.from_value(""gram"", 0.001),
+        ""milligram"": MassUnit.from_value(""milligram"", 0.000001),
+    })
+    def convert(self, source_unit: str | None, target_unit: str | None, value: float) -> tuple[float, bool]:
+        if not isinstance(value, (int, float)):
+            return 0.0, False
+        if abs(value) < 1e-9 or value == -abs(value):
+            return 0.0, True
+        source = self.reference_masses.get(source_unit.lower())
+        target = self.reference_masses.get(target_unit.lower())
+        if not source or not target:
+            return float('nan'), False
+        try:
+            result_value_in_kg = (value * source.value_in_kg) / target.value_in_kg
+            if value < 0 and result_value_in_kg > -1e-9:
+                return abs(result_value_in_kg), True
+            return float(abs(result_value_in_kg)), False
+        except Exception as e:
+            print(f""Conversion error occurred: {str(e)}"")
+            return float('nan'), False
+if __name__ == '__main__':
+    engine = ConversionEngine()
+    test_cases = [
+        (""kilogram"", ""gram"", 100),
+        (None, None, -5.0),
+        (""milligram"", ""kilogram"", 2e-6),
+        (""invalid_unit"", ""gram"", 10),
+        (""kilogram"", ""gram"", 0),
+    ]
+    for src, tgt, val in test_cases:
+        result, success = engine.convert(src, tgt, val)
+        print(f""Convert {val} from {src} to {tgt}: Result={result}, Success={success}"")",True,0,7107,69_4.py
+69,4,Scale mass from one unit,Write a high-performance conversion engine using the `dataclasses` library in Python that maps one mass unit to another while handling edge cases like zero or negative inputs gracefully.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class MassUnit:
+    value: float
+    unit: str
+    def to_kg(self):
+        conversion_factors = {
+            'kg': 1,
+            'lb': 0.45359237,
+            'oz': 0.028349523125,
+            'tonne': 1000,
+            'g': 0.001
+        }
+        if self.unit not in conversion_factors:
+            raise ValueError(f""Unsupported unit: {self.unit}"")
+        return self.value * conversion_factors[self.unit]
+@dataclass(frozen=True)
+class ConversionEngine:
+    source_unit: str
+    def convert(self, mass_value: float, target_unit: str = 'kg') -> MassUnit:
+        if not isinstance(mass_value, (int, float)):
+            raise TypeError(""Mass value must be a number"")
+        try:
+            kg_value = self._convert_to_base(mass_value)
+        except ValueError as e:
+            return MassUnit(0.0, target_unit)
+        if not isinstance(kg_value, (int, float)):
+            raise TypeError(""Conversion failed to produce a number"")
+        try:
+            final_kg = self._convert_to_base(kg_value, 'kg')
+        except ValueError as e:
+            return MassUnit(0.0, target_unit)
+        if not isinstance(final_kg, (int, float)):
+            raise TypeError(""Conversion failed to produce a number"")
+        try:
+            final_mass = self._convert_to_target(target_unit, final_kg)
+        except ValueError as e:
+            return MassUnit(0.0, target_unit)
+        if not isinstance(final_mass, (int, float)):
+            raise TypeError(""Conversion failed to produce a number"")
+        return MassUnit(float(final_mass), target_unit)
+    def _convert_to_base(self, mass_value: float, base_unit: str = 'kg') -> float:
+        conversion_factors = {
+            'kg': 1.0,
+            'lb': 2.20462262,
+            'oz': 35.27396195,
+            'tonne': 0.001,
+            'g': 1000.0
+        }
+        if base_unit not in conversion_factors:
+            raise ValueError(f""Unsupported unit for calculation: {base_unit}"")
+        return mass_value * conversion_factors[base_unit]
+    def _convert_to_target(self, target_unit: str, value_in_kg: float) -> float:
+        reverse_conversion_factors = {
+            'kg': 1.0,
+            'lb': 0.45359237,
+            'oz': 0.028349523125,
+            'tonne': 1000.0,
+            'g': 0.001
+        }
+        if target_unit not in reverse_conversion_factors:
+            raise ValueError(f""Unsupported unit for calculation: {target_unit}"")
+        return value_in_kg * reverse_conversion_factors[target_unit]
+if __name__ == '__main__':
+    engine = ConversionEngine(source_unit='lb')
+    test_cases = [
+        (10.5, 'kg'),
+        (-5.0, 'oz'),
+        (0.0, 'tonne'),
+        ('invalid', 'g'),                                                                                                                                                             
+    ]
+    results = []
+    for mass_val, target_unit in test_cases:
+        try:
+            result = engine.convert(mass_val, target_unit)
+            results.append(result)
+        except Exception as e:
+            results.append(MassUnit(0.0, 'kg'))
+    for i, res in enumerate(results):
+        print(f""Test Case {i+1}: Input={test_cases[i][0]}, Target={test_cases[i][1]} -> Result: {res.value} {res.unit}"")",True,1,7108,69_4_1.py
+69,4,Scale mass from one unit,Write a high-performance conversion engine using the `dataclasses` library in Python that maps one mass unit to another while handling edge cases like zero or negative inputs gracefully.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class MassUnit:
+    value: float
+    unit: str
+    @staticmethod
+    def parse(value_str: str, unit_str: str):
+        try:
+            return MassUnit(float(value_str), unit_str.strip())
+        except ValueError:
+            raise ValueError(""Invalid numeric input"")
+@dataclass(frozen=True)
+class ConversionEngine:
+    _conversion_factors = {
+        'kg': 1.0,
+        'g': 0.001,
+        'mg': 1e-6,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+    }
+    def convert(self, source: MassUnit) -> float | None:
+        if not isinstance(source, MassUnit):
+            return None
+        value = source.value
+        unit = source.unit.lower()
+        try:
+            factor = self._conversion_factors.get(unit)
+            if factor is None or value < 0:
+                return None
+            result_in_kg = value * factor
+            target_unit = ""kg""
+            while True:
+                next_factor = self._conversion_factors[target_unit]
+                if abs(next_factor - factor) > 1e-9 and source.unit == target_unit.lower():
+                    break
+                new_value = result_in_kg / next_factor
+                unit_map = {k: v for k, v in self._conversion_factors.items() if v != next_factor}
+                if not any(abs(v - factor) < 1e-9 and u == target_unit.lower() for u, v in unit_map.items()):
+                    break
+                result_in_kg /= next_factor
+            return round(result_in_kg, 6)
+        except Exception:
+            return None
+if __name__ == '__main__':
+    engine = ConversionEngine()
+    test_cases = [
+        MassUnit(""10"", ""kg""),
+        MassUnit(""-5"", ""lb""),
+        MassUnit(""2.5"", ""g""),
+        MassUnit("""", ""oz""),
+        MassUnit(""abc"", ""mg""),
+        MassUnit(""3"", ""invalid_unit""),
+    ]
+    for case in test_cases:
+        result = engine.convert(case)
+        print(f""Input: {case.value} {case.unit}, Output: {result}"")",True,2,7109,69_4_2.py
+69,4,Scale mass from one unit,Write a high-performance conversion engine using the `dataclasses` library in Python that maps one mass unit to another while handling edge cases like zero or negative inputs gracefully.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class MassUnit:
+    value: float
+    unit: str
+    @classmethod
+    def from_kg(cls, kg_value: float):
+        return cls(value=kg_value * 1000.0, unit=""gram"") if kg_value >= 0 else None
+@dataclass(frozen=True) 
+class ConversionEngine:
+    def convert(self, source_mass: MassUnit, target_unit: str) -> tuple[float | None]:
+        try:
+            value = source_mass.value
+            if value <= 0 and not isinstance(value, float):
+                return None
+            unit_conversion_factors = {
+                ""gram"": 1.0 / 1000.0,
+                ""kilogram"": 1.0 * 1000.0,
+                ""milligram"": 1e-6,
+                ""microgram"": 1e-9,
+            }
+            factor = unit_conversion_factors.get(target_unit)
+            if not factor:
+                return None
+            converted_value = value * factor
+            if converted_value < 0 and source_mass.value <= 0:
+                return None
+            return (converted_value, target_unit)
+        except Exception:
+            return None
+if __name__ == '__main__':
+    engine = ConversionEngine()
+    sample_1 = MassUnit.from_kg(5.0)
+    result_1 = engine.convert(sample_1, ""gram"")
+    print(result_1 if isinstance(result_1, tuple) else None)
+    sample_zero = MassUnit(value=0.0, unit=""kilogram"")
+    result_zero = engine.convert(sample_zero, ""milligram"")
+    print(result_zero if isinstance(result_zero, tuple) else None)
+    sample_neg = MassUnit(value=-10.0, unit=""gram"")
+    result_neg = engine.convert(sample_neg, ""kilogram"")
+    print(result_neg if isinstance(result_neg, tuple) else None)",True,3,7110,69_4_3.py
+69,4,Scale mass from one unit,Write a high-performance conversion engine using the `dataclasses` library in Python that maps one mass unit to another while handling edge cases like zero or negative inputs gracefully.,"import dataclasses
+@dataclasses.dataclass(frozen=True)
+class MassConverter:
+    source_unit: str = ""kg""
+    target_unit: str = ""lb""
+    value: float = 0.0
+    @classmethod
+    def from_dict(cls, d):
+        return cls(**d)
+    def convert(self):
+        if self.value <= 0 or not (self.source_unit in [""g"", ""kg""] and self.target_unit in [""lb"", ""oz"", ""tonne""]):
+            raise ValueError(""Invalid unit combination or non-positive value."")
+        conversion_factors = {
+            (""kg"", ""lb""): 2.20462,
+            (""kg"", ""oz""): 35.274,
+            (""kg"", ""tonne""): 1e-3,
+            (""g"", ""lb""): 0.00220462,
+            (""g"", ""oz""): 0.035274,
+            (""g"", ""tonne""): 1e-6,
+        }
+        factor = conversion_factors.get((self.source_unit, self.target_unit))
+        if not factor:
+            raise ValueError(f""Unsupported unit pair: {self.source_unit} to {self.target_unit}"")
+        return round(self.value * factor, 4)
+if __name__ == '__main__':
+    converter = MassConverter(source_unit=""kg"", target_unit=""lb"", value=10.5)
+    result = converter.convert()
+    print(result)",True,4,7111,69_4_4.py
+69,4,Scale mass from one unit,Write a high-performance conversion engine using the `dataclasses` library in Python that maps one mass unit to another while handling edge cases like zero or negative inputs gracefully.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class MassUnit:
+    value: float
+    unit_name: str = ""kg""
+def convert_mass(source_unit: MassUnit, target_unit: str) -> MassUnit:
+    conversion_rates = {
+        ""g"": 0.001,
+        ""mg"": 1e-6,
+        ""t"": 1_000_000,
+        ""kg"": 1,
+        ""lb"": 0.45359237,
+    }
+    if source_unit.value <= 0:
+        raise ValueError(""Mass value must be positive."")
+    rate = conversion_rates.get(target_unit.lower())
+    if not rate or target_unit.lower() == source_unit.unit_name.lower():
+        return MassUnit(value=source_unit.value)
+    converted_value = source_unit.value * (conversion_rates[source_unit.unit_name] / rate)
+    return MassUnit(value=converted_value, unit_name=target_unit.upper())
+if __name__ == '__main__':
+    sample_input = MassUnit(value=100.5, unit_name=""kg"")
+    try:
+        result_kg = convert_mass(sample_input, ""kg"")
+        print(f""{sample_input.value} {sample_input.unit_name} -> {result_kg.value} kg"")
+        result_g = convert_mass(sample_input, ""g"")
+        print(f""{sample_input.value} {sample_input.unit_name} -> {result_g.value} g"")
+        result_lb = convert_mass(sample_input, ""lb"")
+        print(f""{sample_input.value} {sample_input.unit_name} -> {result_lb.value} lb"")
+    except ValueError as e:
+        print(e)",True,5,7112,69_4_5.py
+69,5,Scale mass from one unit,Generate a clean and documented Python function utilizing type hints that scales any given mass input from a source string identifier to its target SI equivalent.,"from typing import Union
+def convert_mass_to_si(mass: float) -> str:
+    if not isinstance(mass, (int, float)):
+        raise TypeError(""Input must be an integer or float."")
+    si_prefixes = {
+        'kg': 1.0,
+        'g': 1e-3,
+        'mg': 1e-6,
+        'ug': 1e-9,
+        'ng': 1e-12,
+        'pg': 1e-15,
+    }
+    if mass not in si_prefixes:
+        raise ValueError(f""Unsupported unit identifier. Expected one of {list(si_prefixes.keys())}."")
+    return f""{mass * si_prefixes[mass]} kg""
+if __name__ == '__main__':
+    sample_inputs = [50, 2e-3, '1', 'mg']
+    for input_val in sample_inputs:
+        try:
+            result = convert_mass_to_si(input_val) if isinstance(input_val, str) else convert_mass_to_si(float(input_val))
+            print(f""Input {input_val} -> SI Equivalent: {result}"")
+        except Exception as e:
+            print(f""Error processing input {input_val}: {e}"")",True,0,7113,69_5.py
+69,5,Scale mass from one unit,Generate a clean and documented Python function utilizing type hints that scales any given mass input from a source string identifier to its target SI equivalent.,"from typing import Union
+def convert_mass_to_si(mass: Union[int, float], unit: str) -> int:
+    conversion_factors = {
+        'kg': 1.0,
+        'g': 0.001,
+        'mg': 1e-6,
+        't': 1000.0,
+        'lb': 0.45359237,
+    }
+    if unit not in conversion_factors:
+        raise ValueError(f""Unsupported mass unit '{unit}'. Supported units are {list(conversion_keys.keys())}"")
+    factor = conversion_factors[unit]
+    return int(mass * factor)
+if __name__ == '__main__':
+    sample_inputs = [
+        (50, 'g'),
+        (12.5, 'lb'),
+        (3, 't'),
+        (0.789e-6, 'mg')
+    ]
+    for mass_val, unit_str in sample_inputs:
+        result_kilograms = convert_mass_to_si(mass_val, unit_str)
+        print(f""{mass_val} {unit_str} -> {result_kilograms} kg"")",True,1,7114,69_5_1.py
+69,5,Scale mass from one unit,Generate a clean and documented Python function utilizing type hints that scales any given mass input from a source string identifier to its target SI equivalent.,"from typing import Union
+def convert_mass_to_si(mass_value: float, source_unit: str) -> float:
+    conversion_factors = {
+        'g': 1e-3,
+        'mg': 1e-6,
+        'ug': 1e-9,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+    }
+    if source_unit not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{source_unit}'. Supported units are {list(conversion_factors.keys())}."")
+    return mass_value * conversion_factors[source_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (50, 'g'),
+        (1000, 'mg'),
+        (2.2, 'lb'),
+        (483769.0, 'oz'),
+    ]
+    for value, unit in test_cases:
+        result_kg = convert_mass_to_si(value, unit)
+        print(f""{value} {unit} = {result_kg:.15f} kg"")",True,2,7115,69_5_2.py
+69,5,Scale mass from one unit,Generate a clean and documented Python function utilizing type hints that scales any given mass input from a source string identifier to its target SI equivalent.,"from typing import Union
+def convert_mass_to_si(mass: float) -> str:
+    if not isinstance(mass, (int, float)):
+        raise TypeError(""Input must be an integer or float."")
+    si_prefixes = {
+        ""kg"": 1.0,
+        ""g"": 0.001,
+        ""mg"": 1e-6,
+        ""ug"": 1e-9,
+        ""t"": 1000.0,
+        ""Mg"": 1_000_000.0,
+    }
+    if mass not in si_prefixes:
+        raise ValueError(f""Unsupported unit identifier '{mass}'."")
+    converted_value = mass * si_prefixes[mass]
+    return f""{converted_value} kg""
+if __name__ == '__main__':
+    sample_inputs = [5, 1000, ""2"", ""3.5""]
+    for input_val in sample_inputs:
+        try:
+            result = convert_mass_to_si(input_val)
+            print(f""{input_val} -> {result}"")
+        except Exception as e:
+            print(f""Error processing '{input_val}': {e}"")",True,3,7116,69_5_3.py
+69,5,Scale mass from one unit,Generate a clean and documented Python function utilizing type hints that scales any given mass input from a source string identifier to its target SI equivalent.,"from typing import Union
+def convert_mass_to_si(mass_input: str) -> float:
+    conversion_factors = {
+        ""kg"": 1,
+        ""g"": 0.001,
+        ""mg"": 1e-6,
+        ""tonne"": 1000,
+        ""lb"": 0.45359237,
+    }
+    if mass_input.lower() not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{mass_input}'. Supported units are {list(conversion_factors.keys())}"")
+    return float(mass_input) * conversion_factors[mass_input.lower()]
+if __name__ == '__main__':
+    sample_inputs = [""5 kg"", ""200 g"", ""1.5 tonne"", ""3 lb""]
+    for input_str in sample_inputs:
+        try:
+            result = convert_mass_to_si(input_str)
+            print(f""{input_str} -> {result:.6f}"")
+        except ValueError as e:
+            print(e)",True,4,7117,69_5_4.py
+69,5,Scale mass from one unit,Generate a clean and documented Python function utilizing type hints that scales any given mass input from a source string identifier to its target SI equivalent.,"from typing import Union
+def convert_mass_to_si(mass_input: str) -> float:
+    conversion_factors = {
+        ""kg"": 1,
+        ""g"": 0.001,
+        ""mg"": 1e-6,
+        ""tonne"": 1000,
+        ""lb"": 0.45359237,
+    }
+    if mass_input.lower() not in conversion_factors:
+        raise ValueError(f""Unsupported unit '{mass_input}'. Supported units are {list(conversion_factors.keys())}."")
+    return float(mass_input) * conversion_factors[mass_input.lower()]
+if __name__ == '__main__':
+    test_cases = [
+        ""5 kg"",
+        ""10 g"",
+        ""2 mg"",
+        ""3 tonne"",
+        ""4 lb""
+    ]
+    for case in test_cases:
+        try:
+            result = convert_mass_to_si(case)
+            print(f""{case} -> {result:.6f} kg"")
+        except ValueError as e:
+            print(e)",True,5,7118,69_5_5.py
+69,8,Scale mass from one unit,Write an industrial-grade Python converter library component featuring error handling for invalid unit combinations and support for both metric and imperial scales.,"import sys
+class UnitConverterError(Exception):
+    pass
+def convert(value: float, from_unit: str, to_unit: str) -> float:
+    valid_metric = ['m', 'km', 'cm']
+    valid_imperial = ['ft', 'in', 'yd']
+    if not (from_unit in valid_metric or from_unit in valid_imperial) or\
+       not (to_unit in valid_metric or to_unit in valid_imperial):
+        raise UnitConverterError(f""Invalid unit combination. Valid units: {valid_metric + valid_imperial}"")
+    scale_m = {'m': 1, 'km': 1000, 'cm': 0.01}
+    scale_i = {'ft': 1, 'in': 0.0833333333, 'yd': 3.28084}                                                 
+    if from_unit in valid_metric and to_unit in valid_imperial:
+        value_meters = value * scale_m[from_unit]
+        result_ft = value_meters / 0.3048
+        return round(result_ft, 6)
+    elif from_unit in valid_imperial and to_unit in valid_metric:
+        value_feet = value * scale_i[from_unit]                                                                                     
+        result_meters = value_feet / 3.28084
+        return round(result_meters, 6)
+    elif from_unit == to_unit:
+        return float(value)
+    else:
+        if from_unit in valid_metric and to_unit in valid_metric:
+            value_meters = value * scale_m[from_unit]
+            result = value_meters / scale_m[to_unit]
+            return round(result, 6)
+        elif from_unit in valid_imperial and to_unit in valid_imperial:
+            if from_unit == 'ft':
+                base_feet = value * 1.0
+            else:
+                base_feet = value / (3.28084 * scale_i[from_unit])                                                                     
+            if from_unit == 'ft':
+                val_ft = float(value)
+            elif from_unit == 'in':
+                val_ft = (float(value)) / 12.0
+            else:     
+                val_ft = (float(value)) * 3.0
+            result = val_ft / scale_i[to_unit] if to_unit != 'ft' and to_unit in valid_imperial else float(val_ft) 
+            return round(result, 6)
+if __name__ == '__main__':
+    try:
+        res1 = convert(50.0, 'm', 'yd')
+        print(f""{res1} yards"")
+        res2 = convert(176.4, 'ft', 'km')
+        print(f""{res2} kilometers"")
+    except UnitConverterError as e:
+        print(e)",True,0,7119,69_8.py
+69,8,Scale mass from one unit,Write an industrial-grade Python converter library component featuring error handling for invalid unit combinations and support for both metric and imperial scales.,"import sys
+class UnitConversionError(Exception):
+    pass
+def convert_value(value: float, from_unit: str, to_unit: str) -> float:
+    valid_metric_units = ['m', 'km', 'cm', 'mm']
+    valid_imperial_units = ['ft', 'in', 'yd', 'mi']
+    if from_unit not in valid_metric_units + valid_imperial_units:
+        raise UnitConversionError(f""Invalid unit '{from_unit}'. Supported units are {valid_metric_units} and {valid_imperial_units}."")
+    if to_unit not in valid_metric_units + valid_imperial_units:
+        raise UnitConversionError(f""Invalid target unit '{to_unit}'. Supported units are {valid_metric_units} and {valid_imperial_units}."")
+    metric_base = 0.0
+    if from_unit in ['km', 'cm', 'mm']:
+        multiplier_from_m = {'km': 1000, 'cm': 0.01, 'mm': 0.01}                                        
+        metric_base = value * (1 if from_unit == 'm' else {'km': 1000, 'cm': 0.01, 'mm': 0.001}[from_unit])
+    imperial_base = 0.0
+    if from_unit in ['ft', 'in', 'yd']:
+        multiplier_from_ft = {'ft': 1, 'in': 1/12, 'yd': 3}
+        imperial_base = value * (1 if from_unit == 'ft' else {'ft': 1, 'in': 1/12, 'yd': 3}[from_unit])
+    try:
+        metric_value = float(value)
+        if to_unit in valid_metric_units and from_unit in valid_imperial_units or\
+           (to_unit == 'm' and from_unit not in ['km', 'cm', 'mm']):
+            imperial_to_metric_factor = {'ft': 0.3048, 'in': 0.0254, 'yd': 0.9144, 'mi': 1609.34}
+        elif to_unit in valid_imperial_units and from_unit in valid_metric_units:
+            metric_to_imperial_factor = {'m': 3.28084, 'km': 3280.84, 'cm': 0.0328084, 'mm': 0.00328084}
+        elif to_unit == from_unit:
+            return value
+        else:
+            if from_unit in valid_metric_units and to_unit in valid_imperial_units:
+                converted_to_meters = metric_value * (1.0 / 3.28084) if from_unit == 'm' else\
+                                     {'km': 1609.34, 'cm': 0.0328084, 'mm': 0.00328084}[from_unit] * (1/3.28084)                               
+                final_value = converted_to_meters / {'ft': 1, 'in': 12, 'yd': 3, 'mi': 5280}['to_unit'] if to_unit in ['m', 'km', 'cm', 'mm'] else\
+                             metric_value * (1/3.28084)                             
+                return final_value
+            elif from_unit in valid_imperial_units and to_unit in valid_metric_units:
+                 converted_to_feet = imperial_base / 1 if from_unit == 'ft' else {'in': 1, 'yd': 36, 'mi': 5280*3}[from_unit]                                 
+            return value
+    except Exception as e:
+        raise UnitConversionError(f""Calculation error occurred: {str(e)}"")
+if __name__ == '__main__':
+    try:
+        result = convert_value(10, 'm', 'ft')
+        print(result)
+        result2 = convert_value(5.5, 'km', 'mi')
+        print(f""{result2}"")
+        result3 = convert_value(72, 'in', 'cm')
+        print(f""{result3}"")
+    except UnitConversionError as e:
+        print(e)",True,1,7120,69_8_1.py
+69,8,Scale mass from one unit,Write an industrial-grade Python converter library component featuring error handling for invalid unit combinations and support for both metric and imperial scales.,"import sys
+class UnitConversionError(Exception):
+    pass
+def convert_metric_to_imperial(value: float, from_unit: str) -> tuple[float, list[str]]:
+    conversions = {
+        'meter': {'ft': value * 3.28084},
+        'kilometer': {'mi': value / 1609.34},
+        'centimeter': {'in': value * 39.3701, 'cm': value},
+    }
+    if from_unit not in conversions:
+        raise UnitConversionError(f""Invalid metric unit '{from_unit}'. Supported units: meter, kilometer, centimeter."")
+    return_value = conversions[from_unit]['ft']
+    result_units = ['m', f' {from_unit} -> ft']
+    if from_unit == 'centimeter':
+        result_units.append(f"" ({value:.2f} cm)"")
+    return value, result_units
+def convert_imperial_to_metric(value: float, from_unit: str) -> tuple[float, list[str]]:
+    conversions = {
+        'foot': {'m': value / 3.28084},
+        'mile': {'km': value * 1609.34},
+        'inch': {'cm': value * 2.54, 'in': value},
+    }
+    if from_unit not in conversions:
+        raise UnitConversionError(f""Invalid imperial unit '{from_unit}'. Supported units: foot, mile, inch."")
+    return_value = conversions[from_unit]['m']
+    result_units = ['ft', f' {from_unit} -> m']
+    if from_unit == 'inch':
+        result_units.append(f"" ({value:.2f} in)"")
+    return value, result_units
+def convert(value: float, from_unit: str, to_unit: str) -> tuple[float, list[str]]:
+    if from_unit in ['m', 'km', 'cm'] and to_unit not in ['ft', 'mi']:
+        return convert_metric_to_imperial(value, from_unit)
+    elif from_unit in ['ft', 'mi', 'in'] and to_unit not in ['m', 'km']:
+        return convert_imperial_to_metric(value, from_unit)
+    else:
+        raise UnitConversionError(f""Invalid conversion direction. Metric units must go to Imperial or vice versa."")
+if __name__ == '__main__':
+    test_cases = [
+        (100, 'm', 'ft'),                           
+        (5, 'km', 'mi'),                               
+        (2.54, 'cm', 'in'),                                 
+        (3.28084, 'ft', 'm'),                             
+    ]
+    for val, src, dst in test_cases:
+        try:
+            result_val, msg = convert(val, src, dst)
+            print(f""Converted {val} {src} to {result_val:.4f} {dst}: {msg}"")
+        except UnitConversionError as e:
+            print(f""Error converting {val} {src} to {dst}: {e}"", file=sys.stderr)
+    try:
+        convert(10, 'm', 'km')                                                                                                                                                               
+        convert(10, 'yard', 'meter')                                                                                                                                 
+    except UnitConversionError as e:
+        print(f""Demonstrated Error Handling for invalid input '{e}'"", file=sys.stderr)",True,2,7121,69_8_2.py
+69,8,Scale mass from one unit,Write an industrial-grade Python converter library component featuring error handling for invalid unit combinations and support for both metric and imperial scales.,"import math
+class UnitConverterError(Exception):
+    pass
+def convert_value(value: float, from_unit: str, to_unit: str) -> tuple[float, dict]:
+    metric_units = {
+        'm': {'name': 'meter', 'factor': 1.0},
+        'km': {'name': 'kilometer', 'factor': 1e3},
+        'cm': {'name': 'centimeter', 'factor': 1e-2},
+        'mm': {'name': 'millimeter', 'factor': 1e-3}
+    }
+    imperial_units = {
+        'ft': {'name': 'foot', 'factor_to_meter': 0.3048, 'inverse_factor': 1/0.3048},
+        'in': {'name': 'inch', 'factor_to_meter': 0.0254, 'inverse_factor': 1/0.0254}
+    }
+    if from_unit not in metric_units and from_unit not in imperial_units:
+        raise UnitConverterError(f""Invalid unit '{from_unit}'. Supported metric: {list(metric_units.keys())}, Imperial: {list(imperial_units.keys())}"")
+    if to_unit not in metric_units and to_unit not in imperial_units:
+        raise UnitConverterError(f""Invalid target unit '{to_unit}'. Supported metric: {list(metric_units.keys())}, Imperial: {list(imperial_units.keys())}"")
+    from_scale = 'metric' if from_unit in metric_units else 'imperial'
+    to_scale = 'metric' if to_unit in metric_units else 'imperial'
+    if from_scale != to_scale:
+        raise UnitConverterError(""Cannot convert between different scales (e.g., meter to foot). Use a common intermediate unit."")
+    try:
+        converted_value = 0.0
+        if from_scale == 'metric':
+            base_meters = value * metric_units[from_unit]['factor']
+            if to_unit in metric_units:
+                final_result = base_meters / metric_units[to_unit]['factor']
+            else:                      
+                final_result = base_meters * imperial_units[to_unit]['inverse_factor']
+        elif from_scale == 'imperial':
+            if from_unit in imperial_units:
+                base_meters = value / imperial_units[from_unit]['factor_to_meter']
+                if to_unit in metric_units:
+                    final_result = base_meters * metric_units[to_unit]['factor']
+                else:                                   
+                    factor_imperial_ratio = imperial_units[to_unit]['inverse_factor'] / imperial_units[from_unit]['factor_to_meter']
+                    final_result = value * factor_imperial_ratio
+            else: 
+                raise UnitConverterError(f""Invalid source unit '{from_unit}' for Imperial conversion."")
+        return round(final_result, 4), {
+            'original_value': value,
+            'source_unit': from_unit,
+            'target_unit': to_unit,
+            'conversion_factor_approx': final_result / (value if abs(value) > 0 else 1)
+        }
+    except Exception as e:
+        raise UnitConverterError(f""Conversion failed due to internal error: {str(e)}"")
+if __name__ == '__main__':
+    try:
+        result, info = convert_value(10.5, 'km', 'm')
+        print(f""{info['original_value']} km -> {result} m (Factor: ~{info['conversion_factor_approx']})"")
+        result2, _ = convert_value(34867.9, 'ft', 'in')
+        print(f""Conversion from feet to inches completed successfully."")
+    except UnitConverterError as e:
+        print(f""Handled error gracefully: {e}"")",True,3,7122,69_8_3.py
+69,8,Scale mass from one unit,Write an industrial-grade Python converter library component featuring error handling for invalid unit combinations and support for both metric and imperial scales.,"import sys
+class UnitConversionError(Exception):
+    pass
+def convert_value(value: float, from_unit: str, to_unit: str) -> float:
+    valid_metric_units = ['m', 'km', 'cm', 'mm']
+    valid_imperial_units = ['ft', 'in', 'yd', 'mi']
+    if from_unit not in valid_metric_units + valid_imperial_units:
+        raise UnitConversionError(f""Invalid unit '{from_unit}'. Supported units are {valid_metric_units} and {valid_imperial_units}."")
+    if to_unit not in valid_metric_units + valid_imperial_units:
+        raise UnitConversionError(f""Invalid target unit '{to_unit}'. Supported units are {valid_metric_units} and {valid_imperial_units}."")
+    metric_base = 0.0
+    if from_unit in ['km', 'cm', 'mm']:
+        multiplier_from_m = {'km': 1000, 'cm': 0.01, 'mm': 0.01}                                        
+        metric_base = value * (1 if from_unit == 'm' else {'km': 1000, 'cm': 0.01, 'mm': 0.001}[from_unit])
+    imperial_base = 0.0
+    if from_unit in ['ft', 'in', 'yd']:
+        multiplier_from_ft = {'ft': 1, 'in': 1/12, 'yd': 3}
+        imperial_base = value * (1 if from_unit == 'ft' else {'ft': 1, 'in': 1/12, 'yd': 3}[from_unit])
+    try:
+        metric_value = float(value)
+        if to_unit in valid_metric_units and from_unit in valid_imperial_units or\
+           (to_unit == 'm' and from_unit not in ['km', 'cm', 'mm']):
+            imperial_to_metric_factor = {'ft': 0.3048, 'in': 0.0254, 'yd': 0.9144, 'mi': 1609.34}
+        elif to_unit in valid_imperial_units and from_unit in valid_metric_units:
+            metric_to_imperial_factor = {'m': 3.28084, 'km': 3280.84, 'cm': 0.0328084, 'mm': 0.00328084}
+        elif to_unit == from_unit:
+            return value
+        else:
+            if from_unit in valid_metric_units and to_unit in valid_imperial_units:
+                converted_to_meters = metric_value * (1.0 / 3.28084) if from_unit == 'm' else\
+                                     {'km': 1609.34, 'cm': 0.0328084, 'mm': 0.00328084}[from_unit] * (1/3.28084)                               
+                return converted_to_meters / {'ft': 1, 'in': 12, 'yd': 3, 'mi': 5280}[to_unit]
+            elif from_unit in valid_imperial_units and to_unit in valid_metric_units:
+                converted_to_feet = imperial_value * (1.0 if from_unit == 'ft' else {'in': 12, 'yd': 3, 'mi': 5280}[from_unit])                               
+                return converted_to_feet / {'m': 3.28084, 'km': 3280.84, 'cm': 0.0328084, 'mm': 0.00328084}[to_unit]
+    except Exception as e:
+        raise UnitConversionError(f""Calculation error occurred during conversion from {from_unit} to {to_unit}: {str(e)}"")
+if __name__ == '__main__':
+    test_cases = [
+        (10, 'm', 'ft'),
+        (5.28, 'mi', 'km'),
+        (60, 'in', 'cm'),
+        ('invalid', 'm', 'ft'),                      
+        (100, 'km', 'yd')
+    ]
+    for val_str, from_u, to_u in test_cases:
+        try:
+            result = convert_value(val_str, from_u, to_u)
+            print(f""Converted {val_str} {from_u} to {to_u}: {result}"")
+        except UnitConversionError as e:
+            print(f""Error converting {val_str} {from_u} to {to_u}: {e}"", file=sys.stderr)",True,4,7123,69_8_4.py
+69,6,Scale mass from one unit,Construct an advanced Python calculator script using the `enum` module for unit definitions to ensure scale accuracy when converting between disparate mass measurement systems.,"import enum
+from decimal import Decimal, getcontext
+getcontext().prec = 50
+class MassUnit(enum.Enum):
+    KILOGRAM = ""kg""
+    GRAM = ""g""
+    POUND_MASS = ""lbm""
+    OUNCE_AVOIRPOIS = ""oz""
+    TON_SHORT = ""ton""
+    @classmethod
+    def get_conversion_factor_to_kilogram(cls, unit: 'MassUnit') -> Decimal:
+        factors = {
+            MassUnit.KILOGRAM: Decimal(""1""),
+            MassUnit.GRAM: Decimal(""0.001""),
+            MassUnit.POUND_MASS: Decimal(""0.45359237""),
+            MassUnit.OUNCE_AVOIRPOIS: Decimal(""0.028349523125""),
+            MassUnit.TON_SHORT: Decimal(""1000""),
+        }
+        return factors[unit]
+def convert_mass(value: float, from_unit: MassUnit, to_unit: MassUnit) -> str:
+    factor_from = MassUnit.get_conversion_factor_to_kilogram(from_unit)
+    value_in_kg = Decimal(str(value)) * factor_from
+    factor_to = MassUnit.get_conversion_factor_to_kilogram(to_unit)
+    result_decimal = (value_in_kg / factor_to).quantize(Decimal(""0.0001""))
+    return f""{result_decimal} {to_unit.value}""
+if __name__ == '__main__':
+    sample_masses = [5, 2.5, 10]
+    conversions = []
+    for mass in sample_masses:
+        result_kg = convert_mass(mass, MassUnit.KILOGRAM, MassUnit.GRAM)
+        result_lb = convert_mass(mass, MassUnit.POUND_MASS, MassUnit.TON_SHORT)
+        print(f""Input: {mass} kg"")
+        print(result_kg)
+        print(result_lb)
+        print(""-"" * 20)",True,0,7124,69_6.py
+69,7,Scale mass from one unit,Produce a concise and efficient Python solution that accepts arbitrary input units via string arguments and outputs the scaled mass value in standard kilograms format.,"import re
+def convert_mass(value: str) -> float:
+    pattern = r'^(\d+\.?\d*)\s*(g|kg|mg|t)?$'
+    match = re.match(pattern, value.strip())
+    if not match:
+        raise ValueError(""Invalid input format. Expected number followed by optional unit (g/kg/mg/t)."")
+    num = float(match.group(1))
+    unit = match.group(2) or 'kg'                 
+    multipliers = {
+        'g': 0.001,
+        'kg': 1.0,
+        'mg': 0.000001,
+        't': 1000.0
+    }
+    return num * multipliers.get(unit.lower(), None)
+if __name__ == '__main__':
+    test_cases = [
+        ""5 g"",
+        ""2 kg"",
+        ""3 mg"",
+        ""4 t""
+    ]
+    for case in test_cases:
+        try:
+            result = convert_mass(case)
+            print(f""{case} -> {result:.6f}"")
+        except ValueError as e:
+            print(e)",True,0,7125,69_7.py
+69,7,Scale mass from one unit,Produce a concise and efficient Python solution that accepts arbitrary input units via string arguments and outputs the scaled mass value in standard kilograms format.,"import re
+def convert_mass(value_str):
+    match = re.match(r'^(\d+\.?\d*)\s*(g|kg)$', value_str.strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError(""Invalid input format"")
+    num, unit = float(match.group(1)), match.group(2).lower()
+    return num * 0.001 if unit == 'g' else num
+if __name__ == '__main__':
+    test_cases = [""5 g"", ""1 kg"", ""250 mg""]
+    for case in test_cases:
+        try:
+            result = convert_mass(case)
+            print(f""{case} -> {result:.6f}"")
+        except ValueError as e:
+            print(e)",True,1,7126,69_7_1.py
+69,7,Scale mass from one unit,Produce a concise and efficient Python solution that accepts arbitrary input units via string arguments and outputs the scaled mass value in standard kilograms format.,"import sys
+def convert_mass(value_str):
+    try:
+        value = float(value_str)
+    except ValueError:
+        return None
+    unit_map = {
+        'kg': 1,
+        'g': 0.001,
+        'mg': 1e-6,
+        't': 1000,
+        'lb': 0.45359237,
+    }
+    unit = value_str.split()[1].lower() if len(value_str.split()) > 1 else 'kg'
+    return round(value * unit_map.get(unit.lower(), None), 6)
+if __name__ == '__main__':
+    test_cases = [
+        ""5 kg"",
+        ""200 g"",
+        ""3 mg"",
+        ""1 t"",
+        ""10 lb""
+    ]
+    for case in test_cases:
+        result = convert_mass(case)
+        if result is not None:
+            print(f""{case} -> {result}"")",True,2,7127,69_7_2.py
+69,7,Scale mass from one unit,Produce a concise and efficient Python solution that accepts arbitrary input units via string arguments and outputs the scaled mass value in standard kilograms format.,"import re
+def parse_mass_string(input_str):
+    units = {
+        'kg': 1,
+        'g': 0.001,
+        'mg': 1e-6,
+        't': 1000,
+        'lb': 0.45359237,
+        'oz': 0.028349523125
+    }
+    pattern = r'^([+-]?\d*\.?\d+)\s*(kg|g|mg|t|lb|oz)$'
+    match = re.match(pattern, input_str.strip())
+    if not match:
+        raise ValueError(f""Invalid format. Expected numeric value followed by unit (e.g., '5 kg')."")
+    try:
+        mass_value = float(match.group(1))
+    except ValueError:
+        raise ValueError(""First part of the string must be a valid number."")
+    selected_unit = match.group(2).lower()
+    if selected_unit not in units:
+        raise ValueError(f""Unsupported unit '{selected_unit}'. Supported units: {', '.join(units.keys())}"")
+    return mass_value * units[selected_unit]
+if __name__ == '__main__':
+    test_cases = [
+        ""10 kg"",
+        ""5 g"",
+        ""-3 mg"",
+        ""2 t"",
+        ""4.5 lb"",
+        ""8 oz""
+    ]
+    for case in test_cases:
+        try:
+            result_kg = parse_mass_string(case)
+            print(f""{case} -> {result_kg:.6f} kg"")
+        except ValueError as e:
+            print(f""Error processing '{case}': {e}"")",True,3,7128,69_7_3.py
+69,7,Scale mass from one unit,Produce a concise and efficient Python solution that accepts arbitrary input units via string arguments and outputs the scaled mass value in standard kilograms format.,"import re
+def convert_mass(unit_str: str) -> float:
+    unit = unit_str.strip().lower()
+    if not unit:
+        raise ValueError(""Empty unit string"")
+    try:
+        mass_value = float(re.search(r'-?\d+\.?\d*', unit).group())
+    except AttributeError:
+        return 0.0
+    multipliers = {
+        'kg': 1,
+        'g': 0.001,
+        'mg': 1e-6,
+        'lb': 0.45359237,
+        'oz': 0.028349523125,
+        'tonne': 1000,
+    }
+    if unit in multipliers:
+        return mass_value * multipliers[unit]
+    else:
+        raise ValueError(f""Unsupported unit: {unit}"")
+if __name__ == '__main__':
+    test_cases = [
+        ""5 kg"",
+        ""10 g"",
+        ""2 lb"",
+        ""3.5 oz"",
+        ""1 tonne"",
+        ""invalid input""
+    ]
+    for case in test_cases:
+        try:
+            result = convert_mass(case)
+            print(f""{case} -> {result:.6f}"")
+        except ValueError as e:
+            print(f""{case} -> Error: {e}"")",True,4,7129,69_7_4.py
+69,7,Scale mass from one unit,Produce a concise and efficient Python solution that accepts arbitrary input units via string arguments and outputs the scaled mass value in standard kilograms format.,"import sys
+def convert_mass(value_str):
+    try:
+        value = float(value_str)
+    except ValueError:
+        return None
+    unit_map = {
+        ""kg"": 1,
+        ""g"": 0.001,
+        ""mg"": 1e-6,
+        ""tonne"": 1000,
+        ""lb"": 0.45359237,
+    }
+    if value_str not in unit_map:
+        return None
+    factor = unit_map[value_str]
+    return round(value * factor, 6)
+if __name__ == '__main__':
+    test_cases = [""10"", ""2.5g"", ""3mg"", ""4tonne"", ""5lb""]
+    for case in test_cases:
+        result = convert_mass(case)
+        if result is not None:
+            print(result, ""kg"")",True,5,7130,69_7_5.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(mass_in_grams: float) -> float:
+    return mass_in_grams / 1000
+if __name__ == '__main__':
+    sample_mass = 2500
+    result = grams_to_kilograms(sample_mass)
+    print(result)",True,0,7131,69_11.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(grams: float) -> float:
+    return grams / 1000
+if __name__ == '__main__':
+    sample_mass = 2500.0
+    result = grams_to_kilograms(sample_mass)
+    print(result)",True,1,7132,69_11_1.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(mass_grams: float) -> float:
+    return mass_grams / 1000
+if __name__ == '__main__':
+    sample_mass = 2500.0
+    result = grams_to_kilograms(sample_mass)
+    print(result)",True,2,7133,69_11_2.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(grams: float) -> float:
+    return grams / 1000
+if __name__ == '__main__':
+    sample_mass = 500.0
+    result = grams_to_kilograms(sample_mass)
+    print(f""{sample_mass} g is {result:.2f} kg"")",True,3,7134,69_11_3.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(grams: float) -> float:
+    return grams / 1000
+if __name__ == '__main__':
+    mass_grams = 500
+    result_kg = grams_to_kilograms(mass_grams)
+    print(result_kg)",True,4,7135,69_11_4.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(grams: float) -> float:
+    return grams / 1000
+if __name__ == '__main__':
+    sample_mass = 2500.0
+    result = grams_to_kilograms(sample_mass)
+    print(f""{sample_mass} g is equal to {result:.4f} kg"")",True,5,7136,69_11_5.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(grams: float) -> float:
+    return grams / 1000
+if __name__ == '__main__':
+    sample_mass = 500.0
+    result = grams_to_kilograms(sample_mass)
+    print(result)",True,6,7137,69_11_6.py
+69,11,Scale mass from one unit,"Write an optimized Python function that accepts a mass value in grams as input and returns its equivalent weight in kilograms, adhering to strict PEP 8 coding standards for readability and maintainability.","def grams_to_kilograms(mass_grams: float) -> float:
+    return mass_grams / 1000
+if __name__ == '__main__':
+    sample_mass = 500.0
+    result = grams_to_kilograms(sample_mass)
+    print(result)",True,7,7138,69_11_7.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass_value: float, unit_from: str, unit_to: str) -> float:
+    if unit_from == ""kilograms"" and unit_to == ""pounds"":
+        return mass_value * CONVERSION_CONSTANTS['kg_to_lb']
+    elif unit_from == ""grams"" and unit_to == ""ounces"":
+        return mass_value * CONVERSION_CONSTANTS['g_to_oz']
+    else:
+        raise ValueError(""Unsupported conversion pair"")
+if __name__ == '__main__':
+    sample_kg = 10.5
+    sample_g = 250
+    result_lb = convert_mass(sample_kg, ""kilograms"", ""pounds"")
+    print(f""{sample_kg} kilograms is {result_lb:.4f} pounds."")
+    result_oz = convert_mass(sample_g, ""grams"", ""ounces"")
+    print(f""{sample_g} grams is {result_oz:.4f} ounces."")",True,0,7139,69_13.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass: float, unit_from: str, unit_to: str) -> float:
+    if unit_from == ""kilograms"" and unit_to == ""pounds"":
+        return mass * CONVERSION_CONSTANTS['kg_to_lb']
+    elif unit_from == ""grams"" and unit_to == ""ounces"":
+        return mass * CONVERSION_CONSTANTS['g_to_oz']
+    else:
+        raise ValueError(""Unsupported conversion pair"")
+if __name__ == '__main__':
+    sample_kilograms = 5.0
+    sample_grams = 1000.0
+    result_lb = convert_mass(sample_kilograms, ""kilograms"", ""pounds"")
+    print(f""{sample_kilograms} kilograms is {result_lb:.2f} pounds."")
+    result_oz = convert_mass(sample_grams, ""grams"", ""ounces"")
+    print(f""{sample_grams} grams is {result_oz:.4f} ounces."")",True,1,7140,69_13_1.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_kg_to_lb(kilograms: float) -> float:
+    return kilograms * CONVERSION_CONSTANTS['kg_to_lb']
+def convert_g_to_oz(grams: float) -> float:
+    return grams * CONVERSION_CONSTANTS['g_to_oz']
+if __name__ == '__main__':
+    sample_kg = 5.0
+    sample_g = 1000.0
+    lbs_result = convert_kg_to_lb(sample_kg)
+    oz_result = convert_g_to_oz(sample_g)
+    print(f""{sample_kg} kg is equal to {lbs_result:.2f} lb"")
+    print(f""{sample_g} g is equal to {oz_result:.4f} oz"")",True,2,7141,69_13_2.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSIONS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass: float, unit_from: str, unit_to: str) -> float:
+    if unit_from == ""kg"" and unit_to == ""lb"":
+        return mass * CONVERSIONS['kg_to_lb']
+    elif unit_from == ""g"" and unit_to == ""oz"":
+        return mass * CONVERSIONS['g_to_oz']
+if __name__ == '__main__':
+    sample_mass_kg = 10.5
+    sample_g = 250
+    result_lb = convert_mass(sample_mass_kg, 'kg', 'lb')
+    print(f""{sample_mass_kg} kg is {result_lb:.4f} lb"")
+    result_oz = convert_mass(sample_g, 'g', 'oz')
+    print(f""{sample_g} g is {result_oz:.4f} oz"")",True,3,7142,69_13_3.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"class MassConverter:
+    def __init__(self):
+        self.kg_to_lb = 2.20462
+        self.g_to_oz = 0.035274
+    def kg_to_pounds(self, kilograms):
+        return kilograms * self.kg_to_lb
+    def g_to_ounces(self, grams):
+        return grams * self.g_to_oz
+if __name__ == '__main__':
+    converter = MassConverter()
+    sample_kg = 50.0
+    sample_g = 128.0
+    pounds_value = converter.kg_to_pounds(sample_kg)
+    ounces_value = converter.g_to_ounces(sample_g)
+    print(f""{sample_kg} kg equals {pounds_value:.4f} lbs"")
+    print(f""{sample_g} g equals {ounces_value:.4f} oz"")",True,4,7143,69_13_4.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass: float, unit_from: str, unit_to: str) -> float:
+    if not isinstance(unit_from, str):
+        raise ValueError(""Unit from must be a string."")
+    conversion_factor = CONVERSION_CONSTANTS.get(f""{unit_from}_to_{unit_to}"")
+    return mass * conversion_factor
+if __name__ == '__main__':
+    sample_mass_kg = 10.5
+    pounds_result = convert_mass(sample_mass_kg, 'kg', 'lb')
+    grams_value = 2500.0
+    ounces_result = convert_mass(grams_value, 'g', 'oz')
+    print(f""{sample_mass_kg} kg is equal to {pounds_result:.4f} lbs."")
+    print(f""{grams_value} g is equal to {ounces_result:.4f} oz."")",True,5,7144,69_13_5.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass_value: float, unit_from: str, unit_to: str) -> float:
+    if unit_from == ""kilograms"" and unit_to == ""pounds"":
+        return mass_value * CONVERSION_CONSTANTS['kg_to_lb']
+    elif unit_from == ""grams"" and unit_to == ""ounces"":
+        return mass_value * CONVERSION_CONSTANTS['g_to_oz']
+    else:
+        raise ValueError(""Unsupported conversion pair"")
+if __name__ == '__main__':
+    sample_kilograms = 5.0
+    sample_grams = 1000.0
+    result_lb = convert_mass(sample_kilograms, ""kilograms"", ""pounds"")
+    print(f""{sample_kilograms} kilograms is {result_lb:.2f} pounds."")
+    result_oz = convert_mass(sample_grams, ""grams"", ""ounces"")
+    print(f""{sample_grams} grams is {result_oz:.4f} ounces."")",True,6,7145,69_13_6.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass: float, unit_from: str, unit_to: str) -> float:
+    if unit_from == ""kilograms"" and unit_to == ""pounds"":
+        return mass * CONVERSION_CONSTANTS['kg_to_lb']
+    elif unit_from == ""grams"" and unit_to == ""ounces"":
+        return mass * CONVERSION_CONSTANTS['g_to_oz']
+    else:
+        raise ValueError(""Unsupported conversion pair"")
+if __name__ == '__main__':
+    sample_mass_kg = 10.5
+    sample_g = 250
+    result_lb = convert_mass(sample_mass_kg, ""kilograms"", ""pounds"")
+    print(f""{sample_mass_kg} kilograms is {result_lb:.4f} pounds."")
+    result_oz = convert_mass(sample_g, ""grams"", ""ounces"")
+    print(f""{sample_g} grams is {result_oz:.4f} ounces."")",True,7,7146,69_13_7.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    ""kg_to_lb"": 2.20462,
+    ""g_to_oz"": 0.035274
+}
+def convert_mass(mass: float, unit_from: str, unit_to: str) -> float:
+    if not isinstance(unit_from, str):
+        raise ValueError(""Unit from must be a string."")
+    factor = CONVERSION_CONSTANTS.get(f""{unit_from}_to_{unit_to}"", None)
+    return mass * factor
+if __name__ == '__main__':
+    sample_kg = 5.0
+    result_lb = convert_mass(sample_kg, ""kg"", ""lb"")
+    sample_g = 1000.0
+    result_oz = convert_mass(sample_g, ""g"", ""oz"")
+    print(f""{sample_kg} kg is {result_lb:.4f} lb."")
+    print(f""{sample_g} g is {result_oz:.4f} oz."")",True,8,7147,69_13_8.py
+69,13,Scale mass from one unit,Develop a clean and efficient Python program that defines conversion constants in a dictionary structure to scale any given mass from kilograms to pounds or grams to ounces without hardcoding logic inline.,"CONVERSION_CONSTANTS = {
+    'kg_to_lb': 2.20462,
+    'g_to_oz': 0.035274
+}
+def convert_mass(mass: float, unit_from: str, unit_to: str) -> float:
+    if unit_from == ""kilograms"" and unit_to == ""pounds"":
+        return mass * CONVERSION_CONSTANTS['kg_to_lb']
+    elif unit_from == ""grams"" and unit_to == ""ounces"":
+        return mass * CONVERSION_CONSTANTS['g_to_oz']
+    else:
+        raise ValueError(""Unsupported conversion pair"")
+if __name__ == '__main__':
+    sample_mass_kg = 10.5
+    sample_grammage = 250
+    result_lb = convert_mass(sample_mass_kg, ""kilograms"", ""pounds"")
+    print(f""{sample_mass_kg} kilograms is {result_lb:.4f} pounds."")
+    result_oz = convert_mass(sample_grammage, ""grams"", ""ounces"")
+    print(f""{sample_grammage} grams is {result_oz:.4f} ounces."")",True,9,7148,69_13_9.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"import sys
+def convert_mass(value: float, from_unit: str, to_unit: str) -> dict[str, any]:
+    valid_units = [""kg"", ""g"", ""mg""]
+    if not isinstance(value, (int, float)):
+        return {""error"": f""Invalid input type. Expected number, got {type(value).__name__}""}
+    if from_unit.lower() not in [u.lower() for u in valid_units] or to_unit.lower() not in [u.lower() for u in valid_units]:
+        return {""error"": ""Invalid unit provided.""}
+    conversion_factors = {
+        ""kg"": 1,
+        ""g"": 0.001,
+        ""mg"": 1e-6
+    }
+    try:
+        value_in_kg = value * conversion_factors[from_unit.lower()]
+        converted_value = value_in_kg / conversion_factors[to_unit.lower()]
+        return {
+            ""original_value"": value,
+            ""from_unit"": from_unit,
+            ""to_unit"": to_unit,
+            ""converted_value"": round(converted_value, 6)
+        }
+    except ZeroDivisionError:
+        return {""error"": ""Conversion failed due to division by zero.""}
+if __name__ == '__main__':
+    sample_data = [
+        (100.5, ""kg"", ""g""),
+        (-5.2, ""mg"", ""kg""),
+        (0, ""g"", ""mg"")
+    ]
+    for val, f_u, t_u in sample_data:
+        result = convert_mass(val, f_u, t_u)
+        print(f""Input: {val} {f_u}, Output: Converted value is {result['converted_value']} {t_u}"")",True,0,7149,69_10.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Union
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    valid_units = ['kg', 'g', 'mg']
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Value must be a number."")
+    if from_unit.lower() not in [u.lower() for u in valid_units]:
+        raise ValueError(f""Invalid source unit. Must be one of {valid_units}"")
+    if to_unit.lower() not in [u.lower() for u in valid_units]:
+        raise ValueError(f""Invalid target unit. Must be one of {valid_units}"")
+    conversion_factors = {'kg': 1, 'g': 0.001, 'mg': 0.000001}
+    if value == 0:
+        return 0
+    try:
+        base_value = abs(value) * conversion_factors[from_unit.lower()]
+        result = -base_value / conversion_factors[to_unit.lower()] if value < 0 else base_value / conversion_factors[to_unit.lower()]
+    except ZeroDivisionError:
+        raise ValueError(""Cannot convert to zero units."")
+    return round(result, 6)
+if __name__ == '__main__':
+    sample_input = {
+        'from_unit': 'kg',
+        'to_unit': 'g'
+    }
+    try:
+        result = convert_mass(50.5, **sample_input)
+        print(f""Converted value from {sample_input['from_unit']} to {sample_input['to_unit']}: {result}"")
+        test_zero = convert_mass(0, 'kg', 'g')
+        assert test_zero == 0
+    except (ValueError, TypeError) as e:
+        print(f""Error occurred: {e}"")",True,1,7150,69_10_1.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Union
+UNITS = [""kg"", ""g"", ""mg"", ""lb"", ""oz""]
+TO_KG: dict[str, float] = {
+    ""kg"": 1.0,
+    ""g"": 0.001,
+    ""mg"": 1e-6,
+    ""lb"": 0.45359237,
+    ""oz"": 0.028349523125,
+}
+def convert_mass(value: float, from_unit: str, to_unit: str) -> Union[float, None]:
+    if value < 0 or not isinstance(value, (int, float)):
+        return None
+    if from_unit not in UNITS or to_unit not in UNITS:
+        return None
+    factor_from_kg = TO_KG[from_unit]
+    factor_to_kg = TO_KG[to_unit]
+    kg_value = value * factor_from_kg / factor_to_kg
+    return round(kg_value, 10) if isinstance(value, float) else int(round(kg_value))
+if __name__ == '__main__':
+    test_cases = [
+        (5.0, ""kg"", ""lb""),
+        (100, ""g"", ""mg""),
+        (-5, ""kg"", ""oz""),                             
+        (""invalid"", ""kg"", ""g""),                                            
+        (2.5, ""xyz"", ""lb""),                                
+    ]
+    for val_str, u1, u2 in test_cases:
+        try:
+            value = float(val_str) if isinstance(val_str, str) else val_str
+            result = convert_mass(value, u1, u2)
+            print(f""Converted {value} from {u1} to {u2}: {result}"")
+        except Exception as e:
+            print(f""Error processing input for {val_str}, {u1}, {u2}: {e}"")",True,2,7151,69_10_2.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Union
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    valid_units = ['kg', 'g', 'mg']
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Value must be a number."")
+    if from_unit.lower() not in [u.lower() for u in valid_units]:
+        raise ValueError(f""Invalid source unit. Must be one of {valid_units}."")
+    if to_unit.lower() not in [u.lower() for u in valid_units]:
+        raise ValueError(f""Invalid target unit. Must be one of {valid_units}."")
+    conversion_factors = {'kg': 1, 'g': 0.001, 'mg': 0.000001}
+    try:
+        value_in_kg = value * conversion_factors[from_unit.lower()]
+        result_value = value_in_kg / conversion_factors[to_unit.lower()]
+        if not isinstance(result_value, float):
+            raise TypeError(""Conversion failed."")
+        return round(float(result_value), 6)
+    except ZeroDivisionError:
+        return None
+if __name__ == '__main__':
+    sample_input = convert_mass(1000, 'g', 'kg')
+    if sample_input is not None and isinstance(sample_input, float):
+        print(f""Converted value from {sample_input} to kg"")",True,3,7152,69_10_3.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Optional
+def convert_mass(value: float, from_unit: str, to_unit: str) -> dict[str, object]:
+    valid_units = ['kg', 'g', 'mg']
+    if value == 0 or not isinstance(value, (int, float)):
+        return {
+            ""success"": False,
+            ""error"": f""Invalid input: Input must be a non-zero numeric type.""
+        }
+    from_unit_lower = from_unit.lower()
+    to_unit_lower = to_unit.lower()
+    if from_unit_lower not in valid_units or to_unit_lower not in valid_units:
+        return {
+            ""success"": False,
+            ""error"": f""Invalid unit. Supported units are: kg, g, mg.""
+        }
+    conversion_factors = {
+        'kg': {'g': 1000, 'mg': 1_000_000},
+        'g': {'kg': 0.001, 'mg': 1000},
+        'mg': {'kg': 1e-6, 'g': 0.001}
+    }
+    factor = conversion_factors[from_unit_lower][to_unit_lower]
+    converted_value = value * factor
+    return {
+        ""success"": True,
+        ""original_value"": value,
+        ""from_unit"": from_unit.lower(),
+        ""converted_value"": rounded(converted_value),
+        ""to_unit"": to_unit.lower()
+    }
+def rounded(value: float) -> int:
+    return round(value, 6) if value != int(value) else int(value)
+if __name__ == '__main__':
+    test_cases = [
+        (100, 'kg', 'g'),
+        (500, 'mg', 'kg'),
+        (2.5, 'g', 'mg')
+    ]
+    for val, from_u, to_u in test_cases:
+        result = convert_mass(val, from_u, to_u)
+        if not result[""success""]:
+            print(f""Error converting {val} {from_u}: {result['error']}"")
+        else:
+            print(f""{val} {from_u} is equal to {result['converted_value']}{to_u}"")
+    edge_result = convert_mass(0, 'kg', 'g')
+    if not edge_result[""success""]:
+        print(""Edge case (zero input) handled correctly."")",True,4,7153,69_10_4.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Union
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    valid_units = ['kg', 'g', 'mg']
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Value must be a number."")
+    if from_unit.lower() not in [u.lower() for u in valid_units]:
+        raise ValueError(f""Invalid source unit. Must be one of {valid_units}"")
+    if to_unit.lower() not in [u.lower() for u in valid_units]:
+        raise ValueError(f""Invalid target unit. Must be one of {valid_units}"")
+    conversion_factors = {'kg': 1, 'g': 0.001, 'mg': 0.000001}
+    try:
+        value_in_kg = value * conversion_factors[from_unit.lower()]
+        result_value = value_in_kg / conversion_factors[to_unit.lower()]
+        if not isinstance(result_value, float):
+            raise TypeError(""Conversion failed."")
+        return round(result_value, 6)
+    except ZeroDivisionError:
+        return None
+if __name__ == '__main__':
+    sample_input = convert_mass(1000, 'g', 'kg')
+    if sample_input is not None:
+        print(f""Converted value from {sample_input} to kg"")",True,5,7154,69_10_5.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Union
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    unit_multipliers = {
+        'kg': 1,
+        'g': 0.001,
+        'mg': 1e-6,
+        'lb': 0.45359237,
+        'oz': 0.028349523125
+    }
+    if from_unit not in unit_multipliers or to_unit not in unit_multipliers:
+        raise ValueError(f""Invalid units provided. Supported units: {list(unit_multipliers.keys())}"")
+    base_value = value * unit_multipliers[from_unit]
+    return base_value / unit_multipliers[to_unit]
+if __name__ == '__main__':
+    test_cases = [
+        (10, 'kg', 'g'),
+        (5.2, 'lb', 'oz'),
+        (1e-3, 'mg', 'g'),
+        (0, 'kg', 'lb'),
+        (-5, 'kg', 'g')                                 
+    ]
+    for val, u_from, u_to in test_cases:
+        try:
+            result = convert_mass(val, u_from, u_to)
+            print(f""{val} {u_from} -> {result:.6f} {u_to}"")
+        except ValueError as e:
+            print(f""Error for input ({val}, '{u_from}', '{u_to}')"")",True,6,7155,69_10_6.py
+69,10,Scale mass from one unit,Implement a robust and type-annotated Python script to convert mass values from one unit to another using standard conversion factors. Ensure the code handles edge cases like zero input and invalid units gracefully.,"from typing import Union
+def convert_mass(value: float, from_unit: str, to_unit: str) -> float:
+    unit_factors = {
+        ""kg"": 1.0,
+        ""g"": 0.001,
+        ""mg"": 1e-6,
+        ""lb"": 0.45359237,
+        ""oz"": 0.028349523125
+    }
+    if value == 0:
+        return 0.0
+    if from_unit not in unit_factors or to_unit not in unit_factors:
+        raise ValueError(f""Invalid units provided. Supported units are {list(unit_factors.keys())}"")
+    factor_from = unit_factors[from_unit]
+    factor_to = unit_factors[to_unit]
+    value_in_kg = value * factor_from
+    result_value = value_in_kg / factor_to
+    return round(result_value, 6)
+if __name__ == '__main__':
+    sample_input_1 = convert_mass(50.0, ""kg"", ""lb"")
+    print(f""Sample 1: {sample_input_1}"")
+    try:
+        invalid_result = convert_mass(-10.0, ""km"", ""m"")
+    except ValueError as e:
+        print(f""Error caught for sample 2: {e}"")
+    zero_test = convert_mass(0, ""g"", ""kg"")
+    print(f""Sample 3 (Zero input): {zero_test}"")",True,7,7156,69_10_7.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","def compare_distances(val1: float, val2: float) -> tuple[float, float]:
+    if val1 > val2:
+        return (val1, val1 - val2)
+    else:
+        return (val2, abs(val1 - val2))
+if __name__ == '__main__':
+    distance_a = 50.7
+    distance_b = 43.2
+    larger_value, difference = compare_distances(distance_a, distance_b)
+    print(f""Larger value: {larger_value}"")
+    print(f""Difference: {difference}"")",True,0,7157,70_0.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 > d2:
+        return (d1, d1 - d2)
+    else:
+        return (d2, d2 - d1)
+if __name__ == '__main__':
+    value_a = 45.6789
+    value_b = 30.1234
+    result_value, difference = compare_distances(value_a, value_b)
+    print(f""Larger distance: {result_value}"")
+    print(f""Difference: {difference}"")",True,1,7158,70_0_1.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","from typing import Tuple
+def compare_distances(d1: float, d2: float) -> Tuple[float, float]:
+    if d1 > d2:
+        return d1, d1 - d2
+    else:
+        return d2, d2 - d1
+if __name__ == '__main__':
+    dist_a = 45.6789
+    dist_b = 30.1234
+    larger_dist, difference = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {larger_dist}"")
+    print(f""Difference: {difference}"")",True,2,7159,70_0_2.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","from typing import Tuple
+def compare_distances(val_a: float, val_b: float) -> Tuple[float, float]:
+    if val_a > val_b:
+        return val_a, val_a - val_b
+    else:
+        return val_b, abs(val_b - val_a)
+if __name__ == '__main__':
+    distance_one = 15.7
+    distance_two = 23.4
+    larger_distance, difference = compare_distances(distance_one, distance_two)
+    print(f""Larger value: {larger_distance}"")
+    print(f""Difference: {difference}"")",True,3,7160,70_0_3.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 > d2:
+        return (d1, d1 - d2)
+    else:
+        return (d2, abs(d2 - d1))
+if __name__ == '__main__':
+    val_a = 45.7
+    val_b = 30.2
+    result_val, diff = compare_distances(val_a, val_b)
+    print(f""Larger value: {result_val}, Difference: {diff}"")",True,4,7161,70_0_4.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","def compare_distances(val_a: float, val_b: float) -> tuple[float, float]:
+    if not isinstance(val_a, (int, float)) or not isinstance(val_b, (int, float)):
+        raise TypeError(""Both values must be numeric."")
+    larger_value = max(val_a, val_b)
+    difference = abs(larger_value - min(val_a, val_b))
+    return larger_value, difference
+if __name__ == '__main__':
+    distance_x: float = 150.75
+    distance_y: float = 234.9
+    result_larger, result_diff = compare_distances(distance_x, distance_y)
+    print(f""Larger value: {result_larger}"")
+    print(f""Difference: {result_diff}"")",True,5,7162,70_0_5.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    larger = max(d1, d2)
+    smaller = min(d1, d2)
+    difference = abs(larger - smaller)
+    return larger, difference
+if __name__ == '__main__':
+    val_a: float = 45.7
+    val_b: float = 89.3
+    result_larger, diff = compare_distances(val_a, val_b)
+    print(f""Larger value: {result_larger}"")
+    print(f""Difference: {diff}"")",True,6,7163,70_0_6.py
+70,0,Compare two distance amounts,"Create a robust and type-annotated Python script that compares two numeric distance values to determine which is greater, returning the larger value along with their difference.","from typing import Tuple
+def compare_distances(d1: float, d2: float) -> Tuple[float, float]:
+    if d1 > d2:
+        return d1, d1 - d2
+    else:
+        return d2, abs(d2 - d1)
+if __name__ == '__main__':
+    dist_a = 45.6789
+    dist_b = 30.1234
+    larger_dist, difference = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {larger_dist}"")
+    print(f""Difference: {difference}"")",True,7,7164,70_0_7.py
+69,14,Scale mass from one unit,Generate production-ready Python code for converting mass units using the `decimal` module to ensure maximum numerical accuracy during scaling operations between different measurement systems.,"from decimal import Decimal, getcontext, InvalidOperation
+getcontext().prec = 50
+def convert_mass(value: str, from_unit: str, to_unit: str) -> Decimal:
+    unit_factors = {
+        'kilogram': Decimal('1'),
+        'gram': Decimal('0.001'),
+        'milligram': Decimal('0.000001'),
+        'microgram': Decimal('0.000000001'),
+        'pound': Decimal('0.45359237'),
+        'ounce': Decimal('0.028349523125'),
+    }
+    if from_unit not in unit_factors or to_unit not in unit_factors:
+        raise ValueError(f""Unsupported units: {from_unit}, {to_unit}"")
+    try:
+        value_decimal = Decimal(value.strip())
+    except InvalidOperation as e:
+        raise ValueError(f""Invalid numeric input for mass conversion: {e}"") from e
+    kg_value = value_decimal * unit_factors[from_unit]
+    result_kg = kg_value / unit_factors[to_unit]
+    return result_kg
+if __name__ == '__main__':
+    sample_values = [
+        ('10', 'kilogram', 'gram'),
+        ('5.2', 'pound', 'ounce'),
+        ('1000', 'milligram', 'microgram'),
+        ('0.75', 'ounce', 'kilogram')
+    ]
+    for val_str, from_u, to_u in sample_values:
+        result = convert_mass(val_str, from_u, to_u)
+        print(f""{val_str} {from_u} -> {result}"")",True,0,7165,69_14.py
+69,14,Scale mass from one unit,Generate production-ready Python code for converting mass units using the `decimal` module to ensure maximum numerical accuracy during scaling operations between different measurement systems.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def convert_mass(value: str, from_unit: str, to_unit: str) -> Decimal:
+    unit_factors = {
+        'g': Decimal('1'),                              
+        'mg': Decimal('0.001'),                                 
+        'kg': Decimal('1'),                             
+        't': Decimal('1000'),                           
+    }
+    if from_unit not in unit_factors or to_unit not in unit_factors:
+        raise ValueError(f""Unsupported units. Available: {list(unit_factors.keys())}"")
+    try:
+        value_decimal = Decimal(value)
+    except Exception as e:
+        raise TypeError(f""Invalid input format for mass value: {e}"") from e
+    kg_value = value_decimal * unit_factors[from_unit] / unit_factors[to_unit]
+    return kg_value
+if __name__ == '__main__':
+    sample_input_1 = ""50""
+    from_units_list = ['g', 'mg', 'kg']
+    to_units_list = ['t', 'kg', 'g']
+    test_cases = [
+        (sample_input_1, 'g', 't'),
+        (""250"", ""mg"", ""kg""),
+        (""3.5"", ""kg"", ""g"")
+    ]
+    for val_str, src_unit, dst_unit in test_cases:
+        result = convert_mass(val_str, src_unit, dst_unit)
+        print(f""{val_str} {src_unit} -> {result} {dst_unit}"")",True,1,7166,69_14_1.py
+69,14,Scale mass from one unit,Generate production-ready Python code for converting mass units using the `decimal` module to ensure maximum numerical accuracy during scaling operations between different measurement systems.,"from decimal import Decimal, getcontext, InvalidOperation
+getcontext().prec = 50
+def convert_mass(value: str, from_unit: str, to_unit: str) -> Decimal:
+    conversion_factors = {
+        'gram': 1e-3,               
+        'kilogram': 1.0,             
+        'milligram': 1e-6,           
+        'metric_ton': 1e3,          
+        'pound': Decimal('453.59237'),                              
+        'ounce': Decimal('0.028349523125'),                              
+    }
+    if from_unit not in conversion_factors or to_unit not in conversion_factors:
+        raise ValueError(f""Unsupported units: {from_unit}, {to_unit}"")
+    try:
+        value_decimal = Decimal(value.strip())
+    except InvalidOperation as e:
+        raise ValueError(""Invalid numeric input for mass"") from e
+    factor_from = conversion_factors[from_unit]
+    factor_to = conversion_factors[to_unit]
+    kg_value = value_decimal * Decimal(str(factor_from)) / Decimal(str(factor_to))
+    return kg_value
+if __name__ == '__main__':
+    test_cases = [
+        (""10"", ""pound"", ""gram""),                  
+        (""5.234"", ""metric_ton"", ""ounce""),                
+        (""1e6"", ""milligram"", ""kilogram""),                     
+        (""0.75"", ""pound"", ""gram"")                   
+    ]
+    for value_str, from_u, to_u in test_cases:
+        result = convert_mass(value_str, from_u, to_u)
+        print(f""{value_str} {from_u} -> {to_u}: {result}"")",True,2,7167,69_14_2.py
+69,14,Scale mass from one unit,Generate production-ready Python code for converting mass units using the `decimal` module to ensure maximum numerical accuracy during scaling operations between different measurement systems.,"import decimal
+from decimal import Decimal, getcontext
+getcontext().prec = 50
+def convert_mass(value: str, from_unit: str, to_unit: str) -> tuple[Decimal, float]:
+    conversion_factors = {
+        ""kg"": Decimal(""1""),
+        ""lb"": Decimal(""453.59237""),
+        ""g"": Decimal(""0.001""),
+        ""oz"": Decimal(""0.0625""),                     
+    }
+    def to_kilograms(value: Decimal, unit: str) -> Decimal:
+        factor = conversion_factors.get(unit.lower(), None)
+        if not factor or value == Decimal(0):
+            return value
+        return (value * factor).normalize()
+    from_unit_lower = from_unit.lower().strip()
+    to_unit_lower = to_unit.lower().strip()
+    decimal_value = Decimal(value.strip())
+    kg_value = to_kilograms(decimal_value, from_unit_lower)
+    final_decimal = (kg_value / conversion_factors[to_unit_lower]).normalize()
+    final_float = float(final_decimal)
+    return final_decimal, final_float
+if __name__ == '__main__':
+    sample_input_mass = ""10""
+    sample_from_unit = ""lb""
+    sample_to_unit = ""g""
+    result_decimal, result_float = convert_mass(sample_input_mass, sample_from_unit, sample_to_unit)
+    print(f""Input: {sample_input_mass} {sample_from_unit}"")
+    print(f""Output (Decimal): {result_decimal}"")
+    print(f""Output (Float): {result_float}"")",True,3,7168,69_14_3.py
+69,14,Scale mass from one unit,Generate production-ready Python code for converting mass units using the `decimal` module to ensure maximum numerical accuracy during scaling operations between different measurement systems.,"import decimal
+def convert_mass(value: float, from_unit: str, to_unit: str) -> decimal.Decimal:
+    unit_factors = {
+        'g': 1e-3,                    
+        'mg': 1e-6,                        
+        'kg': 1.0,                        
+        't': 1e3,                               
+    }
+    if from_unit not in unit_factors or to_unit not in unit_factors:
+        raise ValueError(f""Unsupported units: {from_unit}, {to_unit}"")
+    factor_from = decimal.Decimal(unit_factors[from_unit])
+    factor_to = decimal.Decimal(unit_factors[to_unit])
+    ctx = decimal.getcontext()
+    ctx.prec = 50
+    value_decimal = decimal.Decimal(value)
+    intermediate_kg = value_decimal * factor_from
+    final_value = intermediate_kg * factor_to
+    return final_value
+if __name__ == '__main__':
+    test_cases = [
+        (50.1234, 'mg', 'kg'),
+        (1e9, 't', 'g'),
+        (2.5, 'kg', 'mg')
+    ]
+    for mass_val, start_unit, end_unit in test_cases:
+        result = convert_mass(mass_val, start_unit, end_unit)
+        print(f""{mass_val} {start_unit} -> {result}"")",True,4,7169,69_14_4.py
+69,14,Scale mass from one unit,Generate production-ready Python code for converting mass units using the `decimal` module to ensure maximum numerical accuracy during scaling operations between different measurement systems.,"from decimal import Decimal, getcontext
+getcontext().prec = 50
+def convert_mass(value: str, from_unit: str, to_unit: str) -> Decimal:
+    unit_factors = {
+        'g': Decimal('1'),                              
+        'mg': Decimal('0.001'),                                 
+        'kg': Decimal('1'),                             
+        't': Decimal('1000'),                           
+    }
+    if from_unit not in unit_factors or to_unit not in unit_factors:
+        raise ValueError(f""Unsupported units. Available: {list(unit_factors.keys())}"")
+    try:
+        value_decimal = Decimal(value)
+    except Exception as e:
+        raise TypeError(f""Invalid input format for mass conversion: {e}"") from e
+    kg_value = (value_decimal * unit_factors[from_unit]) / Decimal('1000')
+    if to_unit == 'g':
+        return str(kg_value * 1000)
+    elif to_unit == 'mg':
+        return str(kg_value * 1_000_000)
+    else:          
+        result = kg_value / unit_factors[to_unit] if unit_factors[to_unit] != Decimal('1') else kg_value
+        return str(result)
+if __name__ == '__main__':
+    sample_tests = [
+        ('50', 'g', 'kg'),
+        ('2.5', 'mg', 't'),
+        ('100', 'kg', 'g'),
+        ('3', 't', 'mg')
+    ]
+    for val, from_u, to_u in sample_tests:
+        result = convert_mass(val, from_u, to_u)
+        print(f""{val} {from_u} -> {result} {to_u}"")",True,5,7170,69_14_5.py
+69,9,Scale mass from one unit,Implement a best-practice Python script using `typing` module annotations to perform mass scaling operations between any two defined units with thread-safe conversion logic.,"import threading
+from typing import Dict, Tuple, Optional
+class UnitConverter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._base_units: Dict[str, float] = {}                                                     
+        self._reference_unit: str = ""meter""
+        self._base_units[""meter""] = 1.0
+        self._base_units[""kilometer""] = 1000.0
+        self._base_units[""centimeter""] = 0.01
+        self._base_units[""millimeter""] = 0.001
+    def _get_base_factor(self, unit: str) -> float:
+        with self._lock:
+            return self._base_units.get(unit.lower(), None)
+    def convert_from_to(
+        self, value: float, from_unit: str, to_unit: str
+    ) -> Tuple[float, Optional[str]]:
+        if not isinstance(value, (int, float)):
+            return 0.0, ""Invalid input type""
+        from_factor = self._get_base_factor(from_unit)
+        to_factor = self._get_base_factor(to_unit)
+        with self._lock:
+            if from_factor is None or to_factor is None:
+                error_msg = f""Unsupported unit: {from_unit} or {to_unit}""
+                return 0.0, error_msg
+            value_in_base = value * from_factor
+            converted_value = value_in_base / to_factor
+        return float(converted_value), None
+if __name__ == '__main__':
+    converter = UnitConverter()
+    test_cases: list[Tuple[float, str, str]] = [
+        (1.0, ""kilometer"", ""meter""),
+        (500.0, ""centimeter"", ""millimeter""),
+        (2.5, ""meter"", ""kilometer""),
+    ]
+    for val, u_from, u_to in test_cases:
+        result, error = converter.convert_from_to(val, u_from, u_to)
+        if error:
+            print(f""Error converting {val} from {u_from} to {u_to}: {error}"")
+        else:
+            print(f""{val} {u_from} is equal to {result:.4f} {u_to}"")",True,0,7171,69_9.py
+69,9,Scale mass from one unit,Implement a best-practice Python script using `typing` module annotations to perform mass scaling operations between any two defined units with thread-safe conversion logic.,"import threading
+from typing import Dict, Tuple, Optional
+class UnitConverter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._base_units: Dict[str, float] = {}                                   
+        self._register_base(""gram"", 1.0)
+        self._register_base(""kilogram"", 1e3)
+        self._register_base(""milligram"", 1e-6)
+    def _register_base(self, unit: str, factor: float):
+        with self._lock:
+            if unit not in self._base_units or abs(factor - self._base_units[unit]) < 1e-9:
+                self._base_units[unit] = factor
+    def _get_scale(self, unit: str) -> float:
+        with self._lock:
+            return self._base_units.get(unit, 0.0)
+    def convert(self, value: float, from_unit: str, to_unit: str) -> Optional[float]:
+        if not (from_unit in self._base_units and to_unit in self._base_units):
+            return None
+        scale_from = self._get_scale(from_unit)
+        scale_to = self._get_scale(to_unit)
+        try:
+            result = (value * scale_from) / scale_to
+            return round(result, 6)
+        except ZeroDivisionError:
+            return None
+if __name__ == '__main__':
+    converter = UnitConverter()
+    test_cases = [
+        (""gram"", ""kilogram""),
+        (""milligram"", ""gram""),
+        (""kilogram"", ""milligram""),
+    ]
+    for from_u, to_u in test_cases:
+        value_to_convert = 150.0
+        result_value = converter.convert(value_to_convert, from_u, to_u)
+        print(f""Converting {value_to_convert} {from_u} to {to_u}:"")
+        if result_value is not None:
+            print(f""Result: {result_value}"")
+        else:
+            print(""Conversion failed."")",True,1,7172,69_9_1.py
+69,9,Scale mass from one unit,Implement a best-practice Python script using `typing` module annotations to perform mass scaling operations between any two defined units with thread-safe conversion logic.,"import threading
+from typing import Dict, Tuple, Any
+class UnitConverter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._base_units: Dict[str, float] = {}                         
+        self._unit_names: set[str] = {""meter"", ""second""}
+        self._register_unit(""kilometer"", 1000.0)
+        self._register_unit(""centimeter"", 0.01)
+        self._register_unit(""millisecond"", 0.001)
+    def _register_unit(self, name: str, factor_to_base: float) -> None:
+        with self._lock:
+            if name not in self._unit_names and len(name) > 3:
+                pass
+            self._base_units[name] = factor_to_base
+    def convert(self, value: float, source_unit: str, target_unit: str) -> Tuple[float, bool]:
+        with self._lock:
+            if source_unit not in self._base_units or target_unit not in self._base_units:
+                return 0.0, False
+            factor_source = self._base_units[source_unit]
+            factor_target = self._base_units[target_unit]
+            value_in_base = value * factor_source
+            converted_value = value_in_base / factor_target
+            return converted_value, True
+def main():
+    converter = UnitConverter()
+    sample_operations: list[Tuple[float, str, str]] = [
+        (1.0, ""kilometer"", ""meter""),
+        (500.0, ""centimeter"", ""millisecond""),                                                                                                                                     
+    ]
+    results = []
+    for val, src, tgt in sample_operations:
+        res_val, success = converter.convert(val, src, tgt)
+        results.append((val, src, tgt, res_val, success))
+    print(results)
+if __name__ == '__main__':
+    main()",True,2,7173,69_9_2.py
+69,9,Scale mass from one unit,Implement a best-practice Python script using `typing` module annotations to perform mass scaling operations between any two defined units with thread-safe conversion logic.,"import threading
+from typing import Union
+class UnitConverter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._conversion_factors = {
+            ""meter"": 1.0,
+            ""kilometer"": 1000.0,
+            ""centimeter"": 0.01,
+            ""mile"": 1609.34,
+            ""foot"": 0.3048,
+        }
+    def convert(self, value: float, from_unit: str, to_unit: str) -> Union[float, None]:
+        if not isinstance(value, (int, float)):
+            return None
+        with self._lock:
+            factor_from = self._conversion_factors.get(from_unit.lower())
+            factor_to = self._conversion_factors.get(to_unit.lower())
+            if factor_from is None or factor_to is None:
+                return None
+            base_value = value * factor_from
+            converted_value = base_value / factor_to
+            return round(converted_value, 6)
+if __name__ == '__main__':
+    converter = UnitConverter()
+    samples = [
+        (""10"", ""kilometer"", ""meter""),
+        (""5.2"", ""mile"", ""foot""),
+        (""100"", ""centimeter"", ""meter""),
+        (3, ""meter"", ""kilometer"")
+    ]
+    results: list[Union[float, None]] = []
+    for val_str, u_from, u_to in samples:
+        value = float(val_str)
+        result = converter.convert(value, u_from, u_to)
+        if result is not None:
+            results.append(result)
+        print(f""{val_str} {u_from} to {u_to}: {result}"")",True,3,7174,69_9_3.py
+69,9,Scale mass from one unit,Implement a best-practice Python script using `typing` module annotations to perform mass scaling operations between any two defined units with thread-safe conversion logic.,"import threading
+from typing import Dict, Tuple, Optional
+class UnitConverter:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._base_units: Dict[str, float] = {}                                                     
+        self._reference_unit: str = ""meter""
+        self._base_units[""meter""] = 1.0
+        self._base_units[""kilometer""] = 1000.0
+        self._base_units[""centimeter""] = 0.01
+        self._base_units[""mile""] = 1609.34
+    def register_unit(self, unit_name: str, factor_to_base: float) -> None:
+        if not isinstance(unit_name, str):
+            raise TypeError(""Unit name must be a string."")
+        self._base_units[unit_name] = factor_to_base
+    def convert(self, value: float, from_unit: str, to_unit: str) -> Tuple[float, bool]:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be numeric."")
+        with self._lock:
+            from_factor = self._base_units.get(from_unit)
+            to_factor = self._base_units.get(to_unit)
+            if from_factor is None or to_factor is None:
+                return 0.0, False
+            converted_value = value * (from_factor / to_factor)
+            return float(converted_value), True
+def main():
+    converter = UnitConverter()
+    test_cases: list[Tuple[float, str, str]] = [
+        (10.5, ""kilogram"", ""gram""),                                                                       
+        (2.3, ""mile"", ""centimeter"")
+    ]
+    results: list[Tuple[Optional[float], bool]] = []
+    for value, from_u, to_u in test_cases:
+        res_value, is_success = converter.convert(value, from_u, to_u)
+        results.append((res_value, is_success))
+    print(""Conversion Results:"")
+    for val, success in results:
+        if success:
+            print(f""{val} {to_u}"")
+if __name__ == '__main__':
+    main()",True,4,7175,69_9_4.py
