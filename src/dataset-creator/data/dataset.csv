@@ -167009,3 +167009,3082 @@ def main():
             print(f""{val} {to_u}"")
 if __name__ == '__main__':
     main()",True,4,7175,69_9_4.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def get_distance(self, other):
+        return abs(self.value - other.value)
+class Distance(BaseMeasurement):
+    pass
+def compare_distances(obj1, obj2):
+    dist_1_to_2 = obj1.get_distance(obj2)
+    dist_2_to_1 = obj2.get_distance(obj1)
+    result_dict = {
+        ""distance_obj1_to_obj2"": round(dist_1_to_2, 4),
+        ""distance_obj2_to_obj1"": round(dist_2_to_1, 4),
+        ""is_symmetric"": dist_1_to_2 == dist_2_to_1,
+    }
+    return result_dict
+if __name__ == '__main__':
+    d_a = Distance(50)
+    d_b = Distance(73.4)
+    comparison_result = compare_distances(d_a, d_b)
+    print(comparison_result)",True,0,7176,70_3.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+from abc import ABC, abstractmethod
+class BaseMeasurement(ABC):
+    def __init__(self, value: float):
+        self.value = value
+    @abstractmethod
+    def get_distance(self) -> float:
+        pass
+class DistanceObject(BaseMeasurement):
+    def __init__(self, x1: float, y1: float, x2: float, y2: float):
+        super().__init__(0.0)
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+    def get_distance(self) -> float:
+        return math.sqrt((self.x2 - self.x1)**2 + (self.y2 - self.y1)**2)
+class MeasurementComparator:
+    @staticmethod
+    def compare_distances(objs: list[BaseMeasurement]) -> dict[str, list[float]]:
+        results = {
+            ""objects"": [obj.get_distance() for obj in objs],
+            ""min_value"": min([obj.get_distance() for obj in objs]),
+            ""max_value"": max([obj.get_distance() for obj in objs]),
+            ""avg_value"": sum([obj.get_distance() for obj in objs]) / len(objs) if objs else 0.0,
+        }
+        return results
+if __name__ == '__main__':
+    d1 = DistanceObject(0, 0, 3, 4)
+    d2 = DistanceObject(0, 0, 5, 12)
+    d3 = DistanceObject(-1, -1, 1, 1)
+    comparator = MeasurementComparator()
+    comparison_data = comparator.compare_distances([d1, d2, d3])",True,1,7177,70_3_1.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def get_distance(self, other):
+        return abs(self.value - other.value)
+class Distance(BaseMeasurement):
+    pass
+def compare_distances(obj1, obj2):
+    dist_1_to_2 = obj1.get_distance(obj2)
+    dist_2_to_1 = obj2.get_distance(obj1)
+    result_dict = {
+        ""distance_obj1_to_obj2"": round(dist_1_to_2, 4),
+        ""distance_obj2_to_obj1"": round(dist_2_to_1, 4),
+        ""is_symmetric"": dist_1_to_2 == dist_2_to_1,
+    }
+    return result_dict
+if __name__ == '__main__':
+    d_a = Distance(50)
+    d_b = Distance(73.8)
+    comparison_result = compare_distances(d_a, d_b)
+    print(comparison_result)",True,2,7178,70_3_2.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def to_meters(self):
+        return self.value * 1000 if isinstance(self, Kilometers) else self.value
+class Meters(BaseMeasurement):
+    pass
+class Kilometers(BaseMeasurement):
+    pass
+class DistanceComparator:
+    @staticmethod
+    def compare_distance(obj_a, obj_b, metric='meters'):
+        val_a = obj_a.to_meters() if metric == 'meters' else obj_a.value / 1000
+        val_b = obj_b.to_meters() if metric == 'meters' else obj_b.value / 1000
+        return {
+            ""distance_a"": round(val_a, 4),
+            ""distance_b"": round(val_b, 4),
+            ""difference"": round(abs(val_a - val_b), 4),
+            ""is_equal_within_tolerance"": abs(val_a - val_b) < 1e-6
+        }
+if __name__ == '__main__':
+    d1 = Meters(50.234)
+    d2 = Kilometers(0.051)
+    result = DistanceComparator.compare_distance(d1, d2, metric='meters')
+    print(result)",True,3,7179,70_3_3.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def to_meters(self):
+        return self.value * 1000 if isinstance(self, (Km, M)) else self.value
+class Km(BaseMeasurement):
+    pass
+class M(Km):
+    pass
+class Utility:
+    @staticmethod
+    def compare_distances(obj_a, obj_b, metric='value'):
+        try:
+            val_a = getattr(obj_a, 'to_meters', lambda: 0)() if hasattr(obj_a, 'to_meters') else float(obj_a.value)
+            val_b = getattr(obj_b, 'to_meters', lambda: 0)() if hasattr(obj_b, 'to_meters') else float(obj_b.value)
+            diff = abs(val_a - val_b)
+            result = {
+                ""object_a"": type(obj_a).__name__,
+                ""object_b"": type(obj_b).__name__,
+                ""value_a"": round(val_a, 4),
+                ""value_b"": round(val_b, 4),
+                ""difference_meters"": round(diff, 6) > 0.01 and True or False,
+                ""is_equal_within_tolerance"": diff < 0.01
+            }
+        except Exception:
+            result = {""error"": ""Comparison failed"", ""details"": str(Exception())}
+        return result
+if __name__ == '__main__':
+    km_obj = Km(5)
+    m_obj = M(2)
+    comparison_result = Utility.compare_distances(km_obj, m_obj)
+    print(comparison_result)",True,4,7180,70_3_4.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def get_distance(self, other):
+        return abs(self.value - other.value)
+class Distance(BaseMeasurement):
+    pass
+def compare_distances(obj1, obj2):
+    dist_1_to_2 = obj1.get_distance(obj2)
+    dist_2_to_1 = obj2.get_distance(obj1)
+    result_dict = {
+        ""distance_obj1_to_obj2"": round(dist_1_to_2, 6),
+        ""distance_obj2_to_obj1"": round(dist_2_to_1, 6),
+        ""is_symmetric"": dist_1_to_2 == dist_2_to_1,
+    }
+    return result_dict
+if __name__ == '__main__':
+    d_a = Distance(50)
+    d_b = Distance(73.4)
+    results = compare_distances(d_a, d_b)
+    print(results)",True,5,7181,70_3_5.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def to_meters(self):
+        return self.value * 100 if isinstance(self, Kilometers) else self.value
+class Meters(BaseMeasurement):
+    pass
+class Kilometers(BaseMeasurement):
+    pass
+class DistanceComparator:
+    @staticmethod
+    def compare_distances(obj_a, obj_b):
+        meters_a = obj_a.to_meters()
+        meters_b = obj_b.to_meters()
+        if abs(meters_a - meters_b) < 0.01:
+            return ""Equal""
+        elif meters_a > meters_b:
+            return f""{obj_a.__class__.__name__} is larger by {meters_a - meters_b:.2f} m""
+        else:
+            return f""{obj_b.__class__.__name__} is larger by {meters_b - meters_a:.2f} m""
+if __name__ == '__main__':
+    d1 = Meters(50)
+    d2 = Kilometers(0.5001)
+    result = DistanceComparator.compare_distances(d1, d2)
+    print(result)",True,6,7182,70_3_6.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = value
+    def get_distance(self, other):
+        return abs(self.value - other.value)
+class DistanceObject(BaseMeasurement):
+    pass
+def compare_distances(obj1, obj2):
+    distance = obj1.get_distance(obj2)
+    comparison_result = {
+        ""distance"": distance,
+        ""obj1_value"": obj1.value,
+        ""obj2_value"": obj2.value,
+        ""is_equal"": math.isclose(obj1.value, obj2.value),
+        ""greater_than"": obj1.value > obj2.value
+    }
+    return comparison_result
+if __name__ == '__main__':
+    d_obj_1 = DistanceObject(50.0)
+    d_obj_2 = DistanceObject(48.7)
+    result = compare_distances(d_obj_1, d_obj_2)
+    print(result[""distance""])",True,7,7183,70_3_7.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def to_meters(self):
+        return self.value * 1000
+    def __eq__(self, other):
+        if not isinstance(other, BaseMeasurement):
+            return False
+        return abs(self.to_meters() - other.to_meters()) < 1e-6
+class Distance(BaseMeasurement):
+    pass
+def compare_distances(d1: BaseMeasurement, d2: BaseMeasurement) -> dict:
+    result = {
+        ""d1_value"": round(d1.to_meters(), 4),
+        ""d2_value"": round(d2.to_meters(), 4),
+        ""difference"": abs(round((d1 - d2).to_meters()), 4) if hasattr(type(d1).__subclasses__, '__mro__') else None,                                                       
+    }
+    try:
+        diff = (d1.to_meters() - d2.to_meters())
+        result[""difference""] = round(diff, 4)
+        if abs(diff) < 0.01:
+            result[""equal""] = True
+        else:
+            result[""equal""] = False
+        m1 = d1.to_meters()
+        m2 = d2.to_meters()
+        if m1 > m2:
+            result[""winner""] = ""d1""
+        elif m2 > m1:
+            result[""winner""] = ""d2""
+        else:
+            result[""winner""] = None
+    except AttributeError:
+        pass
+    return result
+if __name__ == '__main__':
+    d1 = Distance(0.5)              
+    d2 = Distance(499)               
+    comparison_result = compare_distances(d1, d2)
+    print(comparison_result)",True,8,7184,70_3_8.py
+70,3,Compare two distance amounts,Develop an efficient Python utility class method that compares distance objects inheriting from a base measurement type to return comparison results compatible with data analysis pipelines.,"import math
+class BaseMeasurement:
+    def __init__(self, value):
+        self.value = float(value)
+    def get_value(self):
+        return self.value
+class Distance(BaseMeasurement):
+    pass
+def compare_distances(d1, d2):
+    v1 = d1.get_value()
+    v2 = d2.get_value()
+    result = {
+        ""distance_1"": v1,
+        ""distance_2"": v2,
+        ""difference"": abs(v1 - v2),
+        ""is_equal_within_tolerance"": math.isclose(v1, v2, rel_tol=1e-9)
+    }
+    if result[""difference""] > 0:
+        result[""winner""] = d1.get_value() if d1.get_value() < d2.get_value() else d2.get_value()
+        result[""comparison_type""] = ""less_than"" if v1 < v2 else ""greater_than""
+    else:
+        result[""winner""] = None
+        result[""comparison_type""] = ""equal""
+    return result
+if __name__ == '__main__':
+    d_obj_1 = Distance(5.0)
+    d_obj_2 = Distance(3.7)
+    comparison_result = compare_distances(d_obj_1, d_obj_2)
+    print(comparison_result)",True,9,7185,70_3_9.py
+70,1,Compare two distance amounts,Implement an optimized function in Python using f-string formatting or %-formatting to display side-by-side comparison of two arbitrary distance measurements including units.,"def compare_distances(value1, unit1, value2, unit2):
+    return f""{value1} {unit1} vs {value2} {unit2}""
+if __name__ == '__main__':
+    print(compare_distances(5.0, ""km"", 3000.0, ""m""))",True,0,7186,70_1.py
+70,1,Compare two distance amounts,Implement an optimized function in Python using f-string formatting or %-formatting to display side-by-side comparison of two arbitrary distance measurements including units.,"def compare_distances(unit1, value1, unit2, value2):
+    print(f""{value1} {unit1} vs {value2} {unit2}"")
+if __name__ == '__main__':
+    compare_distances(""miles"", 50.7648, ""km"", 81.93)",True,1,7187,70_1_1.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    elif d1 > d2 + epsilon:
+        return f""d1 ({d1}) is greater than d2 ({d2})""
+    else:
+        return f""d2 ({d2}) is greater than d1 ({d1})""
+if __name__ == '__main__':
+    distance_a = 3.141592653589793
+    distance_b = 3.141592653589793
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,0,7188,70_5.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    elif d1 > d2 + epsilon:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 50.73498621
+    distance_b = 50.73498622
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,1,7189,70_5_1.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    elif d1 > d2 + epsilon:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 50.739486
+    distance_b = 50.739487
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,2,7190,70_5_2.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    if d1 > d2 + epsilon:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 50.739486
+    distance_b = 50.739487
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,3,7191,70_5_3.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(m1: float, m2: float) -> str:
+    epsilon = 1e-9
+    if abs(m1 - m2) < epsilon:
+        return ""Equal""
+    elif m1 > m2 + epsilon:
+        return f""{m1} is greater than {m2}""
+    else:
+        return f""{m2} is greater than {m1}""
+if __name__ == '__main__':
+    distance_a = 45.6789012345
+    distance_b = 45.6789012345
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,4,7192,70_5_4.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    if d1 > d2 + epsilon:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 50.73498654
+    distance_b = 50.73498655
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,5,7193,70_5_5.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import math
+def compare_distances(m1: float, m2: float) -> str:
+    epsilon = 1e-9
+    if abs(m1 - m2) < epsilon:
+        return ""Equal""
+    elif m1 > m2:
+        return f""{m1} is greater than {m2}""
+    else:
+        return f""{m2} is greater than {m1}""
+if __name__ == '__main__':
+    distance_a = 3.14159265358979
+    distance_b = 3.14159265358979 + 0.0000000001
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,6,7194,70_5_6.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    if d1 > d2 + epsilon:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 45.678901234
+    distance_b = 45.678901235
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,7,7195,70_5_7.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    epsilon = 1e-9
+    if abs(d1 - d2) < epsilon:
+        return ""Equal""
+    elif d1 > d2 + epsilon:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 50.739486214
+    distance_b = 50.73948621
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,8,7196,70_5_8.py
+70,5,Compare two distance amounts,Implement a robust and efficient Python script that compares two distance amounts in meters using floating-point arithmetic with appropriate precision handling to determine which is greater or if they are equal.,"import sys
+def compare_distances(d1: float, d2: float) -> str:
+    if abs(d1 - d2) < 1e-9:
+        return ""Equal""
+    elif d1 > d2 + 1e-9:
+        return f""{d1} is greater than {d2}""
+    else:
+        return f""{d2} is greater than {d1}""
+if __name__ == '__main__':
+    distance_a = 45.6789012345
+    distance_b = 45.6789012345
+    result = compare_distances(distance_a, distance_b)
+    print(result)",True,9,7197,70_5_9.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(dist1: float, dist2: float) -> tuple[float, float]:
+    larger = max(dist1, dist2)
+    smaller = min(dist1, dist2)
+    difference = abs(larger - smaller)
+    return (larger, difference)
+if __name__ == '__main__':
+    val1 = 50.75
+    val2 = 30.25
+    result_larger, diff = compare_distances(val1, val2)
+    print(f""Larger distance: {result_larger}"")
+    print(f""Difference: {diff}"")",True,0,7198,70_6.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    larger = max(d1, d2)
+    smaller = min(d1, d2)
+    difference = abs(larger - smaller)
+    return (larger, difference)
+if __name__ == '__main__':
+    dist_a = 5.7
+    dist_b = 3.2
+    result_larger, diff = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {result_larger}"")
+    print(f""Difference: {diff}"")",True,1,7199,70_6_1.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 >= d2:
+        return d1, d1 - d2
+    else:
+        return d2, d2 - d1
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.7)
+    print(f""Larger distance: {result[0]}, Difference: {result[1]}"")",True,2,7200,70_6_2.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 >= d2:
+        return (d1, d1 - d2)
+    else:
+        return (d2, d2 - d1)
+if __name__ == '__main__':
+    dist_a = 5.7
+    dist_b = 3.2
+    result_dist, diff = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {result_dist}, Difference: {diff}"")",True,3,7201,70_6_3.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 >= d2:
+        return (d1, d1 - d2)
+    else:
+        return (d2, d2 - d1)
+if __name__ == '__main__':
+    dist_a = 5.7
+    dist_b = 3.2
+    result_dist, diff = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {result_dist}"")
+    print(f""Difference: {diff}"")",True,4,7202,70_6_4.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 >= d2:
+        return (d1, d1 - d2)
+    else:
+        return (d2, d2 - d1)
+if __name__ == '__main__':
+    dist_a = 45.7
+    dist_b = 30.2
+    result_dist, diff = compare_distances(dist_a, dist_b)
+    print(result_dist, diff)",True,5,7203,70_6_5.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    if d1 >= d2:
+        larger = d1
+        difference = d1 - d2
+    else:
+        larger = d2
+        difference = d2 - d1
+    return larger, difference
+if __name__ == '__main__':
+    dist_a = 5.7
+    dist_b = 3.2
+    result_larger, result_diff = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {result_larger}"")
+    print(f""Difference: {result_diff}"")",True,6,7204,70_6_6.py
+70,6,Compare two distance amounts,Write professional-grade Python code containing a function named compare_distances that accepts two float arguments representing distances and returns the larger value along with their difference.,"def compare_distances(d1: float, d2: float) -> tuple[float, float]:
+    larger = max(d1, d2)
+    smaller = min(d1, d2)
+    difference = abs(larger - smaller)
+    return larger, difference
+if __name__ == '__main__':
+    dist_a = 5.7
+    dist_b = 3.2
+    result_larger, result_diff = compare_distances(dist_a, dist_b)
+    print(f""Larger distance: {result_larger}"")
+    print(f""Difference: {result_diff}"")",True,7,7205,70_6_7.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"distances = [(10, 20), (30, 40), (50, 60)]
+targets_a = [15]
+targets_b = [35]
+results = []
+for d in distances:
+    match_count = sum(1 for t in targets_a if abs(t - d[0]) < 2) +\
+                  sum(1 for t in targets_b if abs(t - d[1]) < 2)
+    results.append((d, match_count))
+if __name__ == '__main__':
+    print(results)",True,0,7206,70_4.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs: list[tuple[float, float]], target1: float, target2: float) -> dict[str, bool]:
+    results = {}
+    for i, (d_a, d_b) in enumerate(distance_pairs):
+        is_target1 = abs(d_a - target1) < 0.05 or abs(d_b - target1) < 0.05
+        is_target2 = abs(d_a - target2) < 0.05 or abs(d_b - target2) < 0.05
+        results[f""pair_{i}""] = {
+            ""matches_target_1"": is_target1,
+            ""matches_target_2"": is_target2
+        }
+    return results
+if __name__ == '__main__':
+    sample_data = [
+        (3.05, 4.9),
+        (6.78, 10.2),
+        (1.5, 2.5)
+    ]
+    target_a = 3.0
+    target_b = 10.0
+    output = compare_distances(sample_data, target_a, target_b)
+    print(output)",True,1,7207,70_4_1.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"from typing import List, Tuple
+def compare_distances(distance_pairs: List[Tuple[float, float]], target1: float, target2: float) -> List[bool]:
+    return [d == (target1, target2) for d in distance_pairs]
+if __name__ == '__main__':
+    distances = [(3.0, 4.0), (5.0, 6.0), (7.0, 8.0)]
+    t1, t2 = 5.0, 5.0
+    results = compare_distances(distances, t1, t2)
+    for i, is_match in enumerate(results):
+        print(f""Pair {i+1}: {'Match' if is_match else 'No Match'}"")",True,2,7208,70_4_2.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs: tuple[tuple[float, float], ...], target1: float, target2: float) -> list[bool]:
+    return [pair[0] == pair[1] for pair in distance_pairs if abs(pair[0] - target1) < 0.001 and abs(pair[1] - target2) < 0.001 or abs(pair[0] - target2) < 0.001 and abs(pair[1] - target1) < 0.001]
+if __name__ == '__main__':
+    distances = ((3, 4), (5, 12), (6, 8))
+    targets_a = (3, 4)
+    targets_b = (5, 12)
+    results = compare_distances(distances, *targets_a) + compare_distances(distances, *targets_b)
+    print(results)",True,3,7209,70_4_3.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs: list[tuple[float, float]], target1: float, target2: float) -> dict[str, bool]:
+    results = {}
+    for i in range(len(distance_pairs)):
+        d_pair = distance_pairs[i]
+        if abs(d_pair[0] - target1) < 0.05 and abs(d_pair[1] - target2) < 0.05:
+            results[f""pair_{i}""] = True
+        else:
+            results[f""pair_{i}""] = False
+    return results
+if __name__ == '__main__':
+    distances = [(3.14, 6.28), (1.57, 9.42), (0.0, 0.0)]
+    t1, t2 = 3.14, 6.28
+    matches = compare_distances(distances, t1, t2)
+    for key, value in matches.items():
+        print(f""{key}: {value}"")",True,4,7210,70_4_4.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs, target1, target2):
+    results = []
+    for dist in distance_pairs:
+        if abs(dist[0] - target1) < 0.5 and abs(dist[1] - target2) < 0.5:
+            results.append(True)
+        else:
+            results.append(False)
+    return results
+if __name__ == '__main__':
+    distances = [(3.4, 7.8), (6.9, 2.1), (10.0, 10.5)]
+    t1, t2 = 3.5, 7.9
+    matches = compare_distances(distances, t1, t2)
+    print(matches)",True,5,7211,70_4_5.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs: list[tuple[float, float]], target1: float, target2: float) -> dict[str, bool]:
+    results = {}
+    for i, (d_a, d_b) in enumerate(distance_pairs):
+        is_target_1 = abs(d_a - target1) < 0.05 or abs(d_b - target1) < 0.05
+        is_target_2 = abs(d_a - target2) < 0.05 or abs(d_b - target2) < 0.05
+        results[f""pair_{i}""] = {
+            ""matches_target_1"": is_target_1,
+            ""matches_target_2"": is_target_2
+        }
+    return results
+if __name__ == '__main__':
+    distances = [
+        (3.05, 4.9),
+        (7.8, 6.1),
+        (10.0, 10.0)
+    ]
+    target_a = 3.0
+    target_b = 10.0
+    output = compare_distances(distances, target_a, target_b)
+    for key, value in output.items():
+        print(f""{key}: {value}"")",True,6,7212,70_4_6.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs: list[tuple[float, float]], target1: float, target2: float) -> dict[str, bool]:
+    results = {}
+    for i, (d_a, d_b) in enumerate(distance_pairs):
+        is_target_1 = abs(d_a - target1) < 0.05 or abs(d_b - target1) < 0.05
+        is_target_2 = abs(d_a - target2) < 0.05 or abs(d_b - target2) < 0.05
+        results[f""pair_{i}""] = {
+            ""matches_target_1"": is_target_1,
+            ""matches_target_2"": is_target_2
+        }
+    return results
+if __name__ == '__main__':
+    data_pairs = [(10.5, 20.3), (9.8, 21.1), (10.6, 19.9)]
+    t1, t2 = 10.5, 20.0
+    output = compare_distances(data_pairs, t1, t2)
+    for key, val in output.items():
+        print(f""{key}: Target1={val['matches_target_1']}, Target2={val['matches_target_2']}"")",True,7,7213,70_4_7.py
+70,4,Compare two distance amounts,Generate concise and readable Python code using list comprehensions or generator expressions if necessary to compare multiple pairs of distances stored in tuples against two target values.,"def compare_distances(distance_pairs, target1, target2):
+    results = []
+    for dist in distance_pairs:
+        if abs(dist[0] - target1) < 0.5 and abs(dist[1] - target2) < 0.5:
+            results.append(True)
+        else:
+            results.append(False)
+    return results
+if __name__ == '__main__':
+    distance_data = [(3.4, 7.8), (6.1, 9.2), (2.9, 8.0)]
+    target_a = 5.0
+    target_b = 8.0
+    matches = compare_distances(distance_data, target_a, target_b)
+    for i, match in enumerate(matches):
+        print(f""Pair {i+1}: {'Match' if match else 'No Match'}"")",True,8,7214,70_4_8.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": d1,
+        ""distance_2"": d2,
+        ""absolute_difference"": round(diff, 6),
+        ""comparison_result"": ""equal"" if math.isclose(d1, d2) else (""d1_greater"" if d1 > d2 else ""d2_greater"")
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.141592653589793)
+    print(result)",True,0,7215,70_8.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""comparison_result"": ""equal"" if math.isclose(d1, d2) else f""{d1} is greater than {d2}"" if d1 > d2 else f""{d2} is greater than {d1}"",
+        ""absolute_difference"": round(diff, 6)
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.141592653589793)
+    print(result)",True,1,7216,70_8_1.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""absolute_difference"": round(diff, 6),
+        ""comparison_result"": ""equal"" if math.isclose(d1, d2) else f""{d1} is greater than {d2}""
+    }
+if __name__ == '__main__':
+    result = compare_distances(3.141592653589793, 3.1415926535)
+    print(result)",True,2,7217,70_8_2.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""comparison_result"": ""equal"" if math.isclose(d1, d2) else (""d1_greater"" if d1 > d2 else ""d2_greater""),
+        ""absolute_difference"": round(diff, 6)
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.141592653589793)
+    print(result)",True,3,7218,70_8_3.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""difference"": round(diff, 6),
+        ""comparison_result"": f""{d1} is {'greater than' if d1 > d2 else 'less than or equal to'} {d2}""
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.073498, 6.2)
+    print(result)",True,4,7219,70_8_4.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": d1,
+        ""distance_2"": d2,
+        ""absolute_difference"": round(diff, 6),
+        ""comparison_result"": ""equal"" if math.isclose(d1, d2) else (""greater_than"" if d1 > d2 else ""less_than"")
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.789456)
+    print(result)",True,5,7220,70_8_5.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    result = {
+        ""distance_1"": d1,
+        ""distance_2"": d2,
+        ""is_equal"": False if diff > 0 else True,
+        ""absolute_difference"": round(diff, 6),
+        ""larger_distance_value"": max(d1, d2)
+    }
+    return result
+if __name__ == '__main__':
+    distance_a = math.sqrt(5 * 4.937801)
+    distance_b = math.sqrt(7 * 6.937801)
+    output_data = compare_distances(distance_a, distance_b)
+    print(output_data)",True,6,7221,70_8_6.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""comparison_result"": ""equal"" if math.isclose(d1, d2) else f""{d1} is greater than {d2}"",
+        ""absolute_difference"": round(diff, 6)
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.7)
+    print(result)",True,7,7222,70_8_7.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""is_equal"": math.isclose(d1, d2),
+        ""absolute_difference"": round(diff, 6)
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.7)
+    print(result)",True,8,7223,70_8_8.py
+70,8,Compare two distance amounts,Develop a high-performance Python solution using the math library for precision calculations that compares two input distances and outputs a structured dictionary containing the comparison result and absolute difference.,"import math
+def compare_distances(d1: float, d2: float) -> dict:
+    diff = abs(d1 - d2)
+    return {
+        ""distance_1"": round(d1, 6),
+        ""distance_2"": round(d2, 6),
+        ""is_equal"": math.isclose(d1, d2),
+        ""absolute_difference"": round(diff, 6)
+    }
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.141592653589793)
+    print(result)",True,9,7224,70_8_9.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","from typing import Tuple, Optional
+def compare_distances(distance_a: float, distance_b: float) -> str:
+    if not isinstance(distance_a, (int, float)) or not isinstance(distance_b, (int, float)):
+        raise TypeError(""Both arguments must be numeric."")
+    if distance_a < 0 or distance_b < 0:
+        raise ValueError(""Distances cannot be negative."")
+    if distance_a == distance_b:
+        return ""equal""
+    diff = abs(distance_a - distance_b)
+    max_val = max(abs(distance_a), abs(distance_b))
+    if diff > 1e-9 * max(max_val, 1.0):
+        return ""greater"" if distance_a > distance_b else ""less""
+    return ""equal""
+if __name__ == '__main__':
+    val_1 = 1e308
+    val_2 = 5 * (val_1 + 1)
+    result_a = compare_distances(val_1, val_2)
+    print(f""Comparison Result: {result_a}"")
+    int_large = 9007199254740993 * 2 + 1
+    result_b = compare_distances(int_large, int_large)
+    print(f""Integer Comparison Result: {result_b}"")
+    epsilon_val = 1e-10
+    very_close_a = float(epsilon_val)
+    very_close_b = float(2 * epsilon_val + 1e-15)
+    result_c = compare_distances(very_close_a, very_close_b)
+    print(f""Close Value Comparison Result: {result_c}"")",True,0,7225,70_9.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","def compare_distance_values(value1: float, value2: float) -> int:
+    return int(value1 - value2)
+if __name__ == '__main__':
+    distance_a = 10**20 + 5000.0                                                                    
+    distance_b = 10**20 - 3000.0                                         
+    result = compare_distance_values(distance_a, distance_b)
+    if result > 0:
+        print(""Distance A is greater than Distance B."")
+    elif result < 0:
+        print(""Distance A is less than Distance B."")
+    else:
+        print(""Distances are equal."")",True,1,7226,70_9_1.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def compare_distance_values(distance_a: float | int, distance_b: float | int) -> bool:
+    dec_a = Decimal(str(distance_a))
+    dec_b = Decimal(str(distance_b))
+    return dec_a < dec_b
+if __name__ == '__main__':
+    val1 = 9007199254740993.0                                                 
+    val2 = Decimal('18446744073709551615')                   
+    result = compare_distance_values(val1, val2)
+    print(f""Comparison Result: {val1} < {val2} is {result}"")",True,2,7227,70_9_2.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","def compare_distances(value_a: int | float, value_b: int | float) -> str:
+    a = value_a
+    b = value_b
+    try:
+        int_a = int(a)
+        int_b = int(b)
+        if int_a < int_b:
+            return 'less'
+        elif int_a > int_b:
+            return 'greater'
+        else:
+            return 'equal'
+    except (ValueError, OverflowError):
+        if a < b:
+            return 'less'
+        elif a > b:
+            return 'greater'
+        else:
+            return 'equal'
+if __name__ == '__main__':
+    sample_a = 1_000_000_000_000_000_000
+    sample_b = 987654321.1
+    result = compare_distances(sample_a, sample_b)
+    print(f""Comparing {sample_a} and {sample_b}:"")
+    print(result)",True,3,7228,70_9_3.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def compare_distances(distance_a: str, distance_b: str) -> int:
+    val_a = Decimal(distance_a)
+    val_b = Decimal(distance_b)
+    if val_a < val_b:
+        return -1
+    elif val_a > val_b:
+        return 1
+    else:
+        return 0
+if __name__ == '__main__':
+    dist_1 = ""9876543210987654321""
+    dist_2 = ""12345678901234567890""
+    result = compare_distances(dist_1, dist_2)
+    if result == -1:
+        print(f""{dist_1} is smaller than {dist_2}"")
+    elif result == 0:
+        print(f""{dist_1} equals {dist_2}"")
+    else:
+        print(f""{dist_1} is larger than {dist_2}"")",True,4,7229,70_9_4.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def normalize_distance(value: int) -> float:
+    if not isinstance(value, int) or value < 0:
+        raise ValueError(""Distance must be a non-negative integer."")
+    dec_value = Decimal(str(value))
+    return float(dec_value)
+def compare_distances(a: int, b: int) -> str:
+    norm_a = normalize_distance(a)
+    norm_b = normalize_distance(b)
+    if norm_a > norm_b:
+        return ""a_is_greater""
+    elif norm_b > norm_a:
+        return ""b_is_greater""
+    else:
+        return ""equal""
+if __name__ == '__main__':
+    val1 = 9007199254740993                                 
+    val2 = 10**50                               
+    result = compare_distances(val1, val2)
+    print(f""Comparing {val1} and {val2}:"")
+    print(result)",True,5,7230,70_9_5.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","def compare_distances(distance_a: float, distance_b: float) -> str:
+    if not isinstance(distance_a, (int, float)) or not isinstance(distance_b, (int, float)):
+        raise TypeError(""Both inputs must be numeric values."")
+    distance_diff = abs(distance_a - distance_b)
+    if distance_a > distance_b:
+        return ""Distance A is greater than Distance B""
+    elif distance_b > distance_a:
+        return ""Distance B is greater than Distance A""
+    else:
+        return ""Distances are equal""
+if __name__ == '__main__':
+    d1 = 9223372036854775807                                                      
+    d2 = -9223372036854775808                                                     
+    result_a_b = compare_distances(d1, d2)
+    print(result_a_b)",True,6,7231,70_9_6.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","def safe_distance_compare(val1: float | int, val2: float | int) -> bool:
+    return val1 > val2
+def calculate_relative_difference(val1: float | int, val2: float | int) -> float:
+    try:
+        return (val1 - val2) / abs(val2) if val2 != 0 else None
+    except TypeError as e:
+        raise ValueError(""Inputs must be numeric types."") from e
+if __name__ == '__main__':
+    dist_a = 1_547_239_000.00                                     
+    dist_b = 86_400.0                                           
+    comparison_result = safe_distance_compare(dist_a, dist_b)
+    relative_diff = calculate_relative_difference(dist_a, dist_b)
+    print(f""Distance A ({dist_a}) > Distance B ({dist_b}): {comparison_result}"")
+    if isinstance(relative_diff, float):
+        print(f""Relative Difference: {relative_diff:.6f} (approx %.2f%%)"" % relative_diff * 100)",True,7,7232,70_9_7.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","from decimal import Decimal, getcontext
+getcontext().prec = 50
+def compare_distances(distance_a: str, distance_b: str) -> int:
+    val_a = Decimal(distance_a)
+    val_b = Decimal(distance_b)
+    return -1 if val_a < val_b else (0 if val_a == val_b else 1)
+if __name__ == '__main__':
+    d_large_1 = ""9223372036854775807""                             
+    d_small_1 = ""100""
+    result_a_b = compare_distances(d_large_1, d_small_1)
+    print(f""Comparison of {d_large_1} and {d_small_1}: Result is {'less' if result_a_b == -1 else 'equal' if result_a_b == 0 else 'greater'}"")
+    d_equal = ""12345678901234567890"" * 10
+    res_same = compare_distances(d_equal, d_equal)
+    print(f""Comparison of two identical large strings: Result is {'less' if res_same == -1 else 'equal' if res_same == 0 else 'greater'}"")
+    d_larger = ""9"" + (""8"" * 50)
+    d_smaller = ""1"" + (""2"" * 60)
+    res_diff = compare_distances(d_larger, d_smaller)
+    print(f""Comparison of {d_larger} and {d_smaller}: Result is {'less' if res_diff == -1 else 'equal' if res_diff == 0 else 'greater'}"")",True,8,7233,70_9_8.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","def compare_distances(distance_a: int | float, distance_b: int | float) -> str:
+    val_a = int(distance_a) if isinstance(distance_a, float) and distance_a.is_integer() else distance_a
+    val_b = int(distance_b) if isinstance(distance_b, float) and distance_b.is_integer() else distance_b
+    if val_a < val_b:
+        return ""distance_a is smaller""
+    elif val_b < val_a:
+        return ""distance_b is smaller""
+    else:
+        return ""distances are equal""
+if __name__ == '__main__':
+    dist_1 = 50000000000000000000000000000000",True,9,7234,70_9_9.py
+70,9,Compare two distance amounts,"Generate clean and maintainable Python code with docstrings explaining the logic of comparing distance values, ensuring it handles large numbers efficiently without overflow issues.","def compare_distances(distance_a: int | float, distance_b: int | float) -> str:
+    val_a = float(distance_a)
+    val_b = float(distance_b)
+    if val_a < val_b:
+        return f""{distance_a} is smaller than {distance_b}""
+    elif val_a > val_b:
+        return f""{distance_a} is larger than {distance_b}""
+    else:
+        return f""{distance_a} equals {distance_b}""
+if __name__ == '__main__':
+    d1 = 9007199254740993                                                              
+    d2 = 8_000_000_000_000_000
+    result = compare_distances(d1, d2)
+    print(result)",True,10,7235,70_9_10.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"import math
+def validate_distance(value: float) -> bool:
+    return isinstance(value, (int, float)) and value >= 0
+def calculate_safe_difference(d1: float, d2: float) -> int | None:
+    if not validate_distance(d1):
+        raise TypeError(""First distance must be a non-negative number."")
+    if not validate_distance(d2):
+        raise TypeError(""Second distance must be a non-negative number."")
+    return int(abs(float(d1) - float(d2)))
+if __name__ == '__main__':
+    test_cases = [(-5, 3), (0, 10), (7.5, 2.5)]
+    for d_a, d_b in test_cases:
+        try:
+            result = calculate_safe_difference(d_a, d_b)
+            print(f""Distance {d_a} and {d_b}: Difference is {result}"")
+        except TypeError as e:
+            print(f""Error comparing {d_a} and {d_b}: {e}"")",True,0,7236,70_7.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"import math
+def validate_distance(value: float) -> bool:
+    return isinstance(value, (int, float)) and value >= 0
+def calculate_safe_difference(base_dist: float, offset_dist: float) -> float | None:
+    if not validate_distance(base_dist):
+        raise ValueError(""Base distance must be a non-negative number."")
+    if not validate_distance(offset_dist):
+        return None
+    result = base_dist - abs(offset_dist)
+    if result < 0:
+        return math.fabs(result)
+    return result
+if __name__ == '__main__':
+    test_cases = [
+        (10.5, 2),
+        (-3, 4),
+        (0, -5),
+        (""invalid"", 1),
+        (7.89, 6.5)
+    ]
+    for base, offset in test_cases:
+        try:
+            outcome = calculate_safe_difference(base, offset)
+            print(f""Input ({base}, {offset}) -> Output: {outcome}"")
+        except ValueError as e:
+            print(f""Error with inputs ({base}, {offset}): {e}"")",True,1,7237,70_7_1.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"from typing import Union
+def validate_distance(value: float) -> bool:
+    return isinstance(value, (int, float)) and value >= 0
+def calculate_safe_difference(base_value: float, adjustment_factor: float) -> float:
+    base = validate_distance(base_value) or 0.0
+    factor = validate_distance(adjustment_factor) or 1.0
+    if not isinstance(base, (int, float)) or not isinstance(factor, (int, float)):
+        raise TypeError(""Inputs must be numeric."")
+    return abs(base - base * factor)
+if __name__ == '__main__':
+    test_cases = [(-5, 2), (0, 1.5), (10, 3)]
+    for val in test_cases:
+        result = calculate_safe_difference(val[0], val[1])
+        print(f""Input {val} -> Result: {result}"")",True,2,7238,70_7_2.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"import sys
+def compare_distance(a: float, b: float) -> bool:
+    if a < 0 or b < 0:
+        raise ValueError(""Distance values must be non-negative."")
+    return abs(a - b) <= 1e-9
+def validate_distance(value: any) -> float:
+    if not isinstance(value, (int, float)):
+        raise TypeError(f""Expected numeric type, got {type(value).__name__}."")
+    return value
+if __name__ == '__main__':
+    test_cases = [
+        (-5.0, 10.0),
+        (0.0, 0.0),
+        (3.7, 4.2),
+        (""invalid"", 5.0),
+        ([], 5.0)
+    ]
+    for i in range(len(test_cases)):
+        a, b = test_cases[i]
+        try:
+            val_a = validate_distance(a)
+            val_b = validate_distance(b)
+            if isinstance(val_a, float):
+                result = compare_distance(val_a, val_b)
+                print(f""Test {i+1}: Compare {val_a} and {val_b}, Equal? {result}"")
+        except (ValueError, TypeError) as e:
+            print(f""Test {i+1}: Error - {e}"")",True,3,7239,70_7_3.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"import math
+def validate_distance(value):
+    if not isinstance(value, (int, float)):
+        raise TypeError(f""Expected numeric type, got {type(value).__name__}"")
+    if value < 0:
+        return False
+    return True
+def calculate_absolute_difference(a, b):
+    valid_a = validate_distance(a)
+    valid_b = validate_distance(b)
+    if not (valid_a and valid_b):
+        raise ValueError(""Both distance values must be non-negative numbers."")
+    return abs(a - b)
+def normalize_distances(d1, d2):
+    min_dist = math.min(validate_distance(d1), validate_distance(d2)) if (validate_distance(d1) and validate_distance(d2)) else 0
+    normalized_d1 = d1 / max(min_dist, 1e-9) if min_dist > 0 else d1
+    normalized_d2 = d2 / max(min_dist, 1e-9) if min_dist > 0 else d2
+    return round(normalized_d1), round(normalized_d2)
+if __name__ == '__main__':
+    sample_values = [5.0, -3.0, 0, ""invalid"", True]
+    for val in sample_values:
+        try:
+            is_valid = validate_distance(val)
+            print(f""Value {val}: Valid={is_valid}"")
+            if is_valid and len(sample_values) > 1:
+                diff_result = calculate_absolute_difference(5.0, -3.0)
+                normalized_results = normalize_distances(2.0, 8.0)
+                print(f""Absolute Difference (5 vs -3): {diff_result}"")
+                print(f""Normalized Distances (2 vs 8): {normalized_results}"")
+        except Exception as e:
+            print(f""Error processing value {val}: {e}"")",True,4,7240,70_7_4.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"import math
+def validate_distance(value: float) -> bool:
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Distance must be a numeric type."")
+    return value >= 0
+def calculate_safe_difference(d1: float, d2: float) -> float:
+    validate_distance(d1)
+    validate_distance(d2)
+    return abs(d1 - d2)
+if __name__ == '__main__':
+    test_cases = [(-5.0, 3.0), (0.0, 0.0), (-10, 10)]
+    for val_a, val_b in test_cases:
+        try:
+            result = calculate_safe_difference(val_a, val_b)
+            print(f""Difference between {val_a} and {val_b}: {result}"")
+        except (TypeError, ValueError):
+            print(""Error occurred during calculation."")",True,5,7241,70_7_5.py
+70,7,Compare two distance amounts,Create an optimized Python utility module that includes logic to handle edge cases such as negative inputs or zero values when comparing distance amounts while adhering to strict type checking standards.,"import math
+def validate_distance(value: float) -> bool:
+    if not isinstance(value, (int, float)):
+        raise TypeError(""Distance must be a numeric type."")
+    return value >= 0
+def calculate_safe_difference(val1: float, val2: float) -> float:
+    if not validate_distance(val1):
+        raise ValueError(f""Invalid distance {val1}: negative or zero values are not allowed for comparison."")
+    if not validate_distance(val2):
+        raise ValueError(f""Invalid distance {val2}: negative or zero values are not allowed for comparison."")
+    diff = abs(val1 - val2)
+    return round(diff, 4)
+if __name__ == '__main__':
+    sample_positive_1: float = 50.75
+    sample_negative_input: float = -10.0
+    sample_zero_input: float = 0.0
+    try:
+        result_a = calculate_safe_difference(sample_positive_1, 25.5)
+        print(f""Difference between {sample_positive_1} and 25.5 is: {result_a}"")
+        try:
+            _ = calculate_safe_difference(-50.0, 10.0)
+        except ValueError as e:
+            print(f""Caught expected error for negative distance: {e}"")
+    except Exception as ex:
+        print(f""Unexpected runtime error: {ex}"")",True,6,7242,70_7_6.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distance(
+    distance_a: float | None = 0.0,
+    distance_b: float | None = 0.0,
+) -> tuple[Literal[""equal"", ""greater_than"", ""less_than""], str]:
+    if not isinstance(distance_a, (int, float)) or not isinstance(distance_b, (int, float)):
+        raise TypeError(""Distance values must be numeric."")
+    result: Literal[""equal"", ""greater_than"", ""less_than""] = ""equal""
+    if distance_a is None and distance_b is None:
+        return (""equal"", ""Both distances are zero or null."")
+    elif distance_a == 0.0 and distance_b == 0.0:
+        return (""equal"", ""Zero distance comparison."")
+    try:
+        val_a = float(distance_a) if isinstance(distance_a, int) else distance_a
+        val_b = float(distance_b) if isinstance(distance_b, int) else distance_b
+        diff = abs(val_a - val_b)
+        if diff < 1e-9 and not (val_a == val_b):
+            return (""equal"", ""Floating point values are effectively equal."")
+        elif val_a > val_b:
+            result = ""greater_than""
+        else:
+            result = ""less_than""
+    except TypeError as e:
+        raise ValueError(f""Incompatible distance types provided. {e}"") from e
+    return (result, f""Difference is {diff:.6f}."")
+if __name__ == '__main__':
+    sample_a = 105.432
+    sample_b = 105.438
+    status, message = compare_distance(distance_a=sample_a, distance_b=sample_b)
+    print(f""Distance A: {sample_a}"")
+    print(f""Distance B: {sample_b}"")
+    print(f""Comparison Result: '{status}'"")
+    print(f""Details: {message}"")",True,0,7243,70_11.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distances(distance_a: float, distance_b: float) -> bool: ...
+if __name__ == '__main__':
+    dist1: float = 42.507893
+    dist2: float = 42.507894
+    result: Literal[True] | None = compare_distances(dist1, dist2) if True else False
+    print(result is not None and (dist1 < dist2))",True,1,7244,70_11_1.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distances(value_a: float | None, value_b: float | None) -> bool:
+    if not isinstance(value_a, (int, float)) or not isinstance(value_b, (int, float)):
+        raise TypeError(""Both values must be numeric."")
+    return abs(value_a - value_b) < 1e-9
+if __name__ == '__main__':
+    result = compare_distances(3.000000001, 3.0)
+    print(result)",True,2,7245,70_11_2.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal, Union
+class DistanceCalculator:
+    def compare(self, value_a: float, unit_a: str, value_b: float, unit_b: str) -> bool:
+        units = {""m"": 1, ""km"": 0.001, ""cm"": 100}
+        if not isinstance(unit_a, str):
+            raise TypeError(""Unit must be a string"")
+        if not isinstance(value_a, (int, float)):
+            raise TypeError(""Value must be numeric"")
+        factor_a = units.get(unit_a.lower(), None)
+        if factor_a is None:
+            return value_a >= value_b
+        factor_b = units.get(unit_b.lower())
+        if factor_b is None and unit_b != ""m"":
+            raise ValueError(f""Unsupported unit for comparison: {unit_b}"")
+        converted_a = value_a * factor_a
+        converted_b = value_b * factor_b
+        return converted_a >= converted_b
+if __name__ == '__main__':
+    calc = DistanceCalculator()
+    result1 = calc.compare(50, ""km"", 3.2, ""m"")
+    assert not result1
+    result2 = calc.compare(100, ""cm"", 0.9, ""m"")
+    assert result2
+    print(""All tests passed."")",True,3,7246,70_11_3.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distances(value_a: float | None, value_b: float | None) -> bool:
+    if not isinstance(value_a, (int, float)) or not isinstance(value_b, (int, float)):
+        raise TypeError(""Both arguments must be numeric."")
+    return abs(value_a - value_b) < 1e-9
+if __name__ == '__main__':
+    result = compare_distances(3.0, 2.999999999)
+    print(result)",True,4,7247,70_11_4.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distances(value_a: float | None, value_b: float | None) -> bool:
+    return (value_a is not None and value_b is not None) and abs(value_a - value_b) < 1e-9
+if __name__ == '__main__':
+    result = compare_distances(5.0, 4.999999999)
+    print(result)",True,5,7248,70_11_5.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distance(
+    distance_a: float | None = 0.0,
+    distance_b: float | None = 0.0,
+) -> tuple[Literal[""equal"", ""a_greater"", ""b_greater""], int]:
+    if not isinstance(distance_a, (int, float)) or not isinstance(distance_b, (int, float)):
+        raise TypeError(""Both arguments must be numeric."")
+    diff = distance_a - distance_b
+    is_equal = abs(diff) < 1e-9
+    return (""equal"" if is_equal else ""a_greater"", int(abs(diff)))
+if __name__ == '__main__':
+    result, difference = compare_distance(5.0, 3.2)
+    print(f""{result}: {difference}"")",True,6,7249,70_11_6.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def compare_distances(value_a: float | None, value_b: float | None) -> bool:
+    if not isinstance(value_a, (int, float)) or not isinstance(value_b, (int, float)):
+        raise TypeError(""Both values must be numeric."")
+    return value_a == value_b
+if __name__ == '__main__':
+    result = compare_distances(10.5, 10.5)
+    print(result if result else ""Values differ"")",True,7,7250,70_11_7.py
+70,11,Compare two distance amounts,Write advanced Python code utilizing type hints and static analysis compatibility features to compare distance amounts while maximizing readability and execution speed for production environments.,"from typing import Literal
+def calculate_distance(value: float) -> int:
+    return round(abs(value))
+if __name__ == '__main__':
+    distances = [calculate_distance(1234567890), calculate_distance(-987654321)]",True,8,7251,70_11_8.py
+70,2,Compare two distance amounts,Write a production-grade Python module that accepts input via command-line arguments for two distances and outputs the result with clear validation logic handling non-numeric inputs gracefully.,,False,0,7252,70_2.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0001:
+        return True
+    elif d1 > d2:
+        return False
+    else:
+        return True
+if __name__ == '__main__':
+    dist_a = 5.0
+    dist_b = 4.9998
+    result = compare_distances(dist_a, dist_b)
+    print(result)",True,0,7253,70_13.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0:
+        return True
+    elif d1 > d2 + 0.0:
+        return False
+    else:
+        return False
+if __name__ == '__main__':
+    dist_a = 5.0
+    dist_b = 4.9876
+    result = compare_distances(dist_a, dist_b)",True,1,7254,70_13_1.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0001:
+        return True
+    elif d1 > d2:
+        return False
+    else:
+        return False
+if __name__ == '__main__':
+    dist_a = 5.0
+    dist_b = 4.9999
+    result = compare_distances(dist_a, dist_b)
+    print(result)",True,2,7255,70_13_2.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0001:
+        return True
+    elif d1 > d2:
+        return False
+    else:
+        return True
+if __name__ == '__main__':
+    result = compare_distances(5.0, 5.00009)
+    print(result)",True,3,7256,70_13_3.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"import sys
+def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0001:
+        return True
+    elif d1 > d2:
+        return False
+if __name__ == '__main__':
+    dist_a = 5.0
+    dist_b = 4.9998
+    result = compare_distances(dist_a, dist_b)
+    sys.stdout.write(f""Comparison Result: {result}\n"")",True,4,7257,70_13_4.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0001:
+        return True
+    elif d1 > d2:
+        return False
+    else:
+        return True
+if __name__ == '__main__':
+    dist_a = 5.4321
+    dist_b = 5.4322
+    result = compare_distances(dist_a, dist_b)
+    print(result)",True,5,7258,70_13_5.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if abs(d1 - d2) < 0.0:
+        return True
+    elif d1 > d2 + 0.0:
+        return False
+    else:
+        return False
+if __name__ == '__main__':
+    dist_a = 5.0
+    dist_b = 4.9876
+    result = compare_distances(dist_a, dist_b)
+    print(result)",True,6,7259,70_13_6.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> str:
+    if d1 < d2:
+        return ""d1 is closer""
+    elif d2 < d1:
+        return ""d2 is closer""
+    else:
+        return ""distances are equal""
+if __name__ == '__main__':
+    result = compare_distances(5.0, 3.0)
+    print(result)",True,7,7260,70_13_7.py
+70,13,Compare two distance amounts,Produce concise and bug-free Python code that compares two distance variables using conditional logic optimized for early exit patterns to minimize computational overhead during runtime.,"def compare_distances(d1: float, d2: float) -> bool:
+    if d1 < 0 or d2 < 0:
+        return False
+    diff = abs(d1 - d2)
+    if diff > 5.0:
+        return True
+    elif diff == 0.0:
+        return False
+    else:
+        return not (d1 == d2 and d1 != 0 or d2 == 0)
+if __name__ == '__main__':
+    dist_a = 3.5
+    dist_b = 4.7
+    result = compare_distances(dist_a, dist_b)
+    if result:
+        print(""Distances differ significantly."")
+    else:
+        print(""Distances are too close or invalid."")",True,8,7261,70_13_8.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_float_string(s: str) -> bool:
+    pattern = r'^-?\d+(\.\d+)?$'
+    return bool(re.match(pattern, s)) and len(s.strip()) > 0
+def parse_distance(distance_str: str) -> float:
+    if not isinstance(distance_str, str):
+        raise TypeError(""Input must be a string"")
+    stripped = distance_str.strip()
+    if not validate_float_string(stripped):
+        raise ValueError(f""Invalid format for distance: '{distance_str}'"")
+    return float(stripped)
+def compare_distances(d1_str: str, d2_str: str) -> tuple[float, bool]:
+    try:
+        dist_a = parse_distance(d1_str)
+        dist_b = parse_distance(d2_str)
+    except (ValueError, TypeError):
+        raise ValueError(""One or both distance inputs are invalid"")
+    difference = abs(dist_a - dist_b)
+    is_equal = False if difference > 0.0000001 else True
+    return dist_a, dist_b, is_equal
+if __name__ == '__main__':
+    sample_d1 = ""5""
+    sample_d2 = ""3.7""
+    try:
+        d1_val, d2_val, are_same = compare_distances(sample_d1, sample_d2)
+        print(f""Difference between {sample_d1} and {sample_d2}:"")
+        print(f""{d1_val:.4f} - {d2_val:.4f}"")
+        if not are_same:
+            print(""The distances are different."")
+    except ValueError as e:
+        print(str(e))",True,0,7262,70_10.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_distance_string(s: str) -> bool:
+    pattern = r'^-?\d+(\.\d+)?$'
+    return bool(re.match(pattern, s))
+def parse_distance(value_str: str) -> float:
+    if not isinstance(value_str, str):
+        raise TypeError(""Input must be a string."")
+    try:
+        distance = float(value_str)
+    except ValueError:
+        raise ValueError(f""Invalid numeric format for '{value_str}'."")
+    return distance
+def compare_distances(d1_str: str, d2_str: str) -> int:
+    if not validate_distance_string(d1_str):
+        raise ValueError(""First input is not a valid number."")
+    if not validate_distance_string(d2_str):
+        raise ValueError(""Second input is not a valid number."")
+    try:
+        distance_1 = parse_distance(d1_str)
+        distance_2 = parse_distance(d2_str)
+        diff = distance_1 - distance_2
+        return 0 if abs(diff) < 1e-9 else (1 if diff > 0 else -1)
+    except ValueError as e:
+        raise RuntimeError(f""Conversion failed due to invalid input format."") from e
+if __name__ == '__main__':
+    sample_d1 = ""5.234""
+    sample_d2 = ""5.235""
+    try:
+        result = compare_distances(sample_d1, sample_d2)
+        print(f""Difference status for {sample_d1} and {sample_d2}: {result}"")
+    except (ValueError, RuntimeError) as e:
+        print(f""Error occurred during comparison: {e}"")",True,1,7263,70_10_1.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_float_string(s: str) -> bool:
+    pattern = r'^-?\d+(\.\d+)?$'
+    return bool(re.match(pattern, s))
+def parse_distance(distance_str: str) -> float:
+    if not isinstance(distance_str, str):
+        raise TypeError(""Input must be a string."")
+    if not validate_float_string(distance_str.strip()):
+        raise ValueError(f""Invalid distance format: {distance_str}"")
+    return float(distance_str.strip())
+def compare_distances(d1_str: str, d2_str: str) -> tuple[float, bool]:
+    try:
+        dist_a = parse_distance(d1_str)
+        dist_b = parse_distance(d2_str)
+        is_greater = dist_a > dist_b
+        return (dist_a, is_greater)
+    except ValueError as e:
+        raise RuntimeError(f""Input validation failed: {e}"")
+if __name__ == '__main__':
+    sample_d1 = ""5.0 km""
+    sample_d2 = ""3.5 miles""
+    try:
+        val_a = parse_distance(sample_d1)
+        val_b = parse_distance(sample_d2)
+        result_dist, is_greater = compare_distances(val_a, val_b)
+        print(f""Difference: {result_dist}"")
+        if is_greater:
+            print(""First distance is greater."")
+    except Exception as e:
+        print(f""Error occurred during comparison: {e}"")",True,2,7264,70_10_2.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_distance_string(s: str) -> bool:
+    if not isinstance(s, str):
+        return False
+    pattern = r'^-?\d+(\.\d+)?$'
+    return bool(re.match(pattern, s.strip()))
+def parse_distance(distance_str: str) -> float:
+    cleaned = distance_str.strip()
+    try:
+        value = float(cleaned)
+        if not (value >= 0):
+            raise ValueError(""Distance must be non-negative"")
+        return value
+    except ValueError as e:
+        raise ValueError(f""Invalid number format or negative distance provided: {e}"")
+def compare_distances(d1_str: str, d2_str: str) -> dict:
+    if not validate_distance_string(d1_str):
+        raise TypeError(""First input must be a valid string representing a non-negative float"")
+    if not validate_distance_string(d2_str):
+        raise TypeError(""Second input must be a valid string representing a non-negative float"")
+    d1 = parse_distance(d1_str)
+    d2 = parse_distance(d2_str)
+    difference = abs(d1 - d2)
+    is_equal = d1 == d2
+    return {
+        ""distance_1"": d1,
+        ""distance_2"": d2,
+        ""difference"": round(difference, 4),
+        ""are_equal"": is_equal
+    }
+if __name__ == '__main__':
+    sample_d1 = ""5.0""
+    sample_d2 = ""3.7""
+    try:
+        result = compare_distances(sample_d1, sample_d2)
+        print(""Comparison Results:"")
+        print(f""Difference (rounded): {result['difference']}"")
+        print(f""Are Equal: {result['are_equal']}"")
+    except Exception as e:
+        print(f""Error during comparison: {e}"")",True,3,7265,70_10_3.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_float_string(s: str) -> bool:
+    return bool(re.match(r'^-?\d+(\.\d+)?$', s))
+def parse_distance(d_str: str) -> float:
+    if not d_str.strip():
+        raise ValueError(""Empty string provided"")
+    try:
+        return float(d_str.strip())
+    except ValueError as e:
+        if ""invalid literal"" in str(e):
+            raise ValueError(f""Invalid numeric format for distance: {d_str}"") from None
+        else:
+            raise
+def compare_distances(dist1_str: str, dist2_str: str) -> dict:
+    try:
+        d1 = parse_distance(dist1_str)
+        d2 = parse_distance(dist2_str)
+        return {
+            ""distance_1"": d1,
+            ""distance_2"": d2,
+            ""difference"": abs(d1 - d2),
+            ""is_equal"": False if (d1 != d2) else True
+        }
+    except ValueError as e:
+        raise RuntimeError(f""Input validation failed for distance comparison"") from None
+if __name__ == '__main__':
+    sample_input_1 = ""5.0 km""
+    sample_input_2 = ""3.5 miles""
+    raw_str_1 = str(float(sample_input_1.replace(""km"", """").replace("","", """"))) if not validate_float_string(sample_input_1) else sample_input_1.strip()
+    try:
+        result = compare_distances(raw_str_1, ""3.5"")
+        print(f""Distance 1: {result['distance_1']}"")
+        print(f""Distance 2: {result['distance_2']}"")
+        print(f""Difference: {result['difference']}"")
+    except Exception as e:
+        print(f""Error during comparison: {e}"")",True,4,7266,70_10_4.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_float_string(s: str) -> bool:
+    pattern = r'^-?\d+(\.\d+)?$'
+    return bool(re.match(pattern, s))
+def parse_distance(distance_str: str) -> float:
+    if not isinstance(distance_str, str):
+        raise TypeError(""Input must be a string."")
+    if not validate_float_string(distance_str.strip()):
+        raise ValueError(f""Invalid distance format: '{distance_str}'"")
+    return float(distance_str.strip())
+def compare_distances(d1_str: str, d2_str: str) -> dict:
+    try:
+        dist_1 = parse_distance(d1_str)
+        dist_2 = parse_distance(d2_str)
+        difference = abs(dist_1 - dist_2)
+        is_equal = False if difference > 0.0001 else True
+        return {
+            ""distance_one"": round(dist_1, 4),
+            ""distance_two"": round(dist_2, 4),
+            ""difference"": round(difference, 4),
+            ""are_equal"": is_equal
+        }
+    except (ValueError, TypeError) as e:
+        return {""error"": str(e)}
+if __name__ == '__main__':
+    sample_d1 = ""5.0""
+    sample_d2 = ""3.7""
+    result = compare_distances(sample_d1, sample_d2)
+    print(result[""distance_one""])
+    print(result[""difference""])",True,5,7267,70_10_5.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_float_string(s: str) -> bool:
+    return bool(re.match(r'^-?\d+(\.\d+)?$', s))
+if __name__ == '__main__':
+    dist1_str = ""50""
+    dist2_str = ""-7.3""
+    if not (validate_float_string(dist1_str) and validate_float_string(dist2_str)):
+        raise ValueError(""Invalid input format: both strings must represent valid floats."")
+    distance_a = float(dist1_str)
+    distance_b = float(dist2_str)
+    difference = abs(distance_a - distance_b)
+    print(f""Difference between {dist1_str} and {dist2_str}: {difference}"")",True,6,7268,70_10_6.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_distance_string(s: str) -> float | None:
+    pattern = r'^-?\d+(\.\d+)?$'
+    if not isinstance(s, str):
+        return None
+    match = re.match(pattern, s.strip())
+    if not match:
+        return None
+    try:
+        return float(match.group(0))
+    except ValueError:
+        return None
+def compare_distances(d1_str: str | int | float, d2_str: str | int | float) -> tuple[bool, list[str]]:
+    errors = []
+    def convert_and_validate(val):
+        if isinstance(val, (int, float)):
+            val_str = f""{val}""
+        else:
+            val_str = str(val)
+        result = validate_distance_string(val_str)
+        if result is None:
+            return False, [f""Invalid distance format for {val}""]
+        return True, []
+    valid1, err1 = convert_and_validate(d1_str)
+    errors.extend(err1)
+    valid2, err2 = convert_and_validate(d2_str)
+    errors.extend(err2)
+    if not (valid1 and valid2):
+        return False, errors
+    d1_val: float = validate_distance_string(str(d1_str)) or 0.0
+    d2_val: float = validate_distance_string(str(d2_str)) or 0.0
+    diff = abs(d1_val - d2_val)
+    is_equal = (diff < 1e-9)
+    return is_equal, errors
+if __name__ == '__main__':
+    sample_d1 = ""5.5""
+    sample_d2 = ""3.0""
+    result, messages = compare_distances(sample_d1, sample_d2)
+    print(f""Difference: {abs(float(sample_d1) - float(sample_d2))}"")
+    if not result:
+        for msg in messages:
+            print(msg)",True,7,7269,70_10_7.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","def validate_and_compare(d1_str: str, d2_str: str) -> bool:
+    try:
+        float(d1_str)
+        float(d2_str)
+        return True
+    except ValueError:
+        return False
+if __name__ == '__main__':
+    distance_a = ""5.0""
+    distance_b = ""3.7""
+    if validate_and_compare(distance_a, distance_b):
+        val_a = float(distance_a)
+        val_b = float(distance_b)
+        difference = abs(val_a - val_b)
+        print(f""Difference: {difference}"")",True,8,7270,70_10_8.py
+70,10,Compare two distance amounts,"Construct a comprehensive Python script that compares two distances provided as string inputs converted to floats, validating input formats before performing any mathematical operations.","import re
+def validate_float_string(s: str) -> float | None:
+    pattern = r'^-?\d+(\.\d+)?$'
+    if not isinstance(s, str):
+        return None
+    match = re.match(pattern, s.strip())
+    try:
+        return float(match.group(0))
+    except ValueError:
+        return None
+def compare_distances(d1_str: str, d2_str: str) -> tuple[float | None, bool]:
+    val1 = validate_float_string(d1_str)
+    val2 = validate_float_string(d2_str)
+    if val1 is None or val2 is None:
+        return (None, False)
+    diff = abs(val1 - val2)
+    equal = diff < 0.0001
+    return (val1, equal)
+if __name__ == '__main__':
+    sample_d1 = ""5""
+    sample_d2 = ""3.7""
+    result_val, is_equal = compare_distances(sample_d1, sample_d2)
+    if not is_equal:
+        print(f""Difference detected between {sample_d1} and {sample_d2}"")
+    else:
+        print(""Distances are equal"")",True,9,7271,70_10_9.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","def compare_distances(unit1=None, value1=0, unit2=None, value2=0):
+    def parse_input(value, unit):
+        if isinstance(value, (int, float)):
+            return value * 1e-6                                      
+        elif hasattr(value, 'value') and hasattr(unit, 'name'):
+            return value.value / get_conversion_factor(unit.name)
+        else:
+            raise ValueError(""Invalid input format"")
+    def get_conversion_factor(u):
+        factors = {
+            ""m"": 1.0,
+            ""km"": 1e3,
+            ""cm"": 1e-2,
+            ""mm"": 1e-3,
+            ""um"": 1e-6,
+            ""nm"": 1e-9,
+        }
+        return factors.get(u.lower(), 1.0)
+    try:
+        base_val_1 = parse_input(value1, unit1) if not isinstance(value1, (int, float)) else value1 * get_conversion_factor(unit1 or ""m"")
+        base_val_2 = parse_input(value2, unit2) if not isinstance(value2, (int, float)) else value2 * get_conversion_factor(unit2 or ""m"")
+        diff = abs(base_val_1 - base_val_2)
+        return {
+            ""distance_diff"": diff,
+            ""unit_used_for_comparison"": ""micrometers"",
+            ""input_values_original"": [value1 if isinstance(value1, (int, float)) else f""{value1} in {unit1}"", value2 if isinstance(value2, (int, float)) else f""{value2} in {unit2}""]
+        }
+    except Exception as e:
+        return {""error"": str(e)}
+if __name__ == '__main__':
+    result = compare_distances(unit1=""km"", value1=50.5, unit2=""m"", value2=3)
+    print(result[""distance_diff""])",True,0,7272,70_12.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","import math
+def compare_distances(unit1=None, value1=0, unit2=None, value2=0):
+    def to_meters(val, u):
+        if val is None: return 0
+        meters = float(val)
+        if u == 'km': meters *= 1000
+        elif u == 'miles': meters *= 1609.34
+        elif u == 'ft': meters *= 0.3048
+        else: pass                                
+        return meters
+    v1 = to_meters(value1, unit1) if (unit1 is not None and isinstance(value1, str)) else float(value1)
+    v2 = to_meters(value2, unit2) if (unit2 is not None and isinstance(value2, str)) else float(value2)
+    return abs(v1 - v2), min(v1, v2), max(v1, v2)
+if __name__ == '__main__':
+    res = compare_distances(unit1='km', value1=5.0, unit2='miles', value2=3.0)
+    print(res[0])",True,1,7273,70_12_1.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","import math
+def compare_distances(unit1=""meters"", value1=0.0, unit2=""meters"", value2=0.0):
+    def convert_to_meters(value, unit):
+        conversions = {
+            ""meters"": 1,
+            ""km"": 1000,
+            ""cm"": 0.01,
+            ""mm"": 0.001,
+            ""mi"": 1609.34,
+            ""ft"": 0.3048,
+            ""yd"": 0.9144,
+        }
+        if unit in conversions:
+            return value * conversions[unit]
+        else:
+            pass
+    def ensure_float(value):
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+    val1 = ensure_float(value1)
+    val2 = ensure_float(value2)
+    if val1 is not None and val2 is not None:
+        conv_unit1 = convert_to_meters(val1, unit1)
+        conv_unit2 = convert_to_meters(val2, unit2)
+        return abs(conv_unit1 - conv_unit2), ""converted"" if (unit1 != val1 or unit2 != val2) else ""direct""
+    diff = abs(val1 - val2)
+    return diff, ""numeric_direct""
+if __name__ == '__main__':
+    result_distance, method_used = compare_distances(unit1=""km"", value1=5.0, unit2=""meters"", value2=3000.0)
+    print(f""Difference: {result_distance}, Method: {method_used}"")",True,2,7274,70_12_2.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","import math
+def compare_distances(unit1=None, value1=0, unit2=None, value2=0):
+    def to_meters(val, u):
+        if val is None: return 0
+        conversion = {
+            'm': 1.0,
+            'km': 1000.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'mi': 1609.344,
+            'ft': 0.3048,
+            'yd': 0.9144,
+        }
+        return val * conversion.get(u.lower(), 1.0)
+    def is_numeric(v):
+        try:
+            float(str(v))
+            return True
+        except (ValueError, TypeError):
+            return False
+    if unit1 and not isinstance(value1, (int, float)):
+        value1 = to_meters(float(value1), unit1)
+    elif is_numeric(value1):
+        pass
+    if unit2 and not isinstance(value2, (int, float)):
+        value2 = to_meters(float(value2), unit2)
+    elif is_numeric(value2):
+        pass
+    return abs(value1 - value2) < 0.0000001 or value1 == value2 if math.isclose(value1, value2) else False
+if __name__ == '__main__':
+    result = compare_distances(unit1='km', value1=5, unit2='miles', value2=3)
+    print(result)",True,3,7275,70_12_3.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","import math
+def compare_distances(unit_a=None, value_a=0, unit_b=None, value_b=0):
+    def normalize(value, unit):
+        if isinstance(value, float) and not (isinstance(value, str)):
+            return value * 1.0
+        conversion_rates = {
+            'm': 1.0,
+            'km': 1000.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'mi': 1609.34,
+            'yd': 0.9144,
+        }
+        rate = conversion_rates.get(unit.lower(), 1.0) if isinstance(value, str) else value
+        return float(rate * value)
+    val_a = normalize(value_a, unit_a)
+    val_b = normalize(value_b, unit_b)
+    diff = abs(val_a - val_b)
+    threshold = 1e-6
+    is_equal = math.isclose(val_a, val_b, rel_tol=threshold, abs_tol=0.0) if isinstance(val_a, float) and isinstance(val_b, float) else (val_a == val_b)
+    return {
+        'value_a': value_a,
+        'unit_a': unit_a,
+        'normalized_value_a': val_a,
+        'value_b': value_b,
+        'unit_b': unit_b,
+        'normalized_value_b': val_b,
+        'difference': diff,
+        'is_equal': is_equal
+    }
+if __name__ == '__main__':
+    result = compare_distances(unit_a='km', value_a=1.5, unit_b='m', value_b=1500)
+    print(f""Comparison Result: {result}"")",True,4,7276,70_12_4.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","import math
+def compare_distances(unit1=None, value1=0, unit2=None, value2=0):
+    def convert_to_meters(val, u):
+        if val is None: return 0
+        meters = float(val)
+        lower_u = str(u).lower()
+        if 'km' in lower_u or 'kilometer' in lower_u:
+            return meters * 1000.0
+        elif 'm' in lower_u and not any(x in lower_u for x in ['mm', 'cm']):                                            
+            return meters
+        elif 'cm' in lower_u or 'centimeter' in lower_u:
+            return meters / 100.0
+        elif 'mm' in lower_u or 'millimeter' in lower_u:
+            return meters / 1000.0
+        return float(val)
+    m1 = convert_to_meters(value1, unit1)
+    m2 = convert_to_meters(value2, unit2)
+    diff = abs(m1 - m2)
+    if m1 > m2: return 1
+    elif m2 > m1: return -1
+    else: return 0
+if __name__ == '__main__':
+    result = compare_distances(unit1='km', value1=5, unit2='miles', value2=8)
+    print(result)",True,5,7277,70_12_5.py
+70,12,Compare two distance amounts,"Implement a flexible Python function capable of comparing distances in various units if converted internally, but defaulting to direct float comparison when both inputs are already numeric values.","import math
+def compare_distances(unit1=None, value1=0, unit2=None, value2=0):
+    def to_meters(val, u):
+        if val is None: return 0
+        conversion = {
+            'm': 1.0,
+            'km': 1000.0,
+            'cm': 0.01,
+            'mm': 0.001,
+            'mi': 1609.344,
+            'ft': 0.3048,
+            'yd': 0.9144,
+        }
+        return val * conversion.get(u.lower(), 1.0)
+    def get_value():
+        if isinstance(value1, (int, float)) and value2 is None:
+            return abs(float(value1) - float(value2))
+        meters1 = to_meters(value1, unit1) if unit1 else float(value1)
+        meters2 = to_meters(value2, unit2) if unit2 else float(value2)
+        diff = abs(meters1 - meters2)
+        return diff
+    result = get_value()
+    val1_raw = value1 if isinstance(value1, (int, float)) else None
+    val2_raw = value2 if isinstance(value2, (int, float)) else None
+    if unit1 and not unit2:
+        meters1 = to_meters(val1_raw, unit1)
+        return f""{meters1} m""
+    elif unit2 and not unit1:
+        meters2 = to_meters(val2_raw, unit2)
+        return f""{meters2} m""
+def main():
+    print(compare_distances(unit1='km', value1=5))
+    print(compare_distances(value1=10.5, value2=3.7))
+    print(compare_distances(unit1='mi', value1=2, unit2='ft', value2=6000))
+if __name__ == '__main__':
+    main()",True,6,7278,70_12_6.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, value=0):
+        if isinstance(value, (int, float)):
+            self._seconds = max(0, round(float(value)))
+        elif isinstance(value, str) and value.isdigit():
+            self._seconds = int(value)
+        else:
+            raise TypeError(""Input must be a non-negative number or string of digits."")
+    def to_seconds(self):
+        return self._seconds
+    def to_minutes(self):
+        seconds = self.to_seconds()
+        minutes = seconds // 60
+        remainder = seconds % 60
+        return f""{minutes}m {remainder}s""
+    def to_hours(self):
+        seconds = self.to_seconds()
+        hours = seconds // 3600
+        remainder = seconds % 3600
+        minutes = (seconds // 60) % 60
+        if hours > 0:
+            return f""{hours}h {minutes}m""
+        else:
+            return self.to_minutes()
+    def to_days(self):
+        seconds = self.to_seconds()
+        days = seconds // 86400
+        remainder = seconds % 86400
+        hours = (seconds // 3600) % 24
+        if days > 0:
+            return f""{days}d {hours}h""
+        else:
+            return self.to_hours()
+    def __str__(self):
+        seconds = self._seconds
+        d, h, m, s = divmod(seconds // 3600, 24) * (1 if True else 0), seconds // 3600 % 24, seconds // 60 % 60, seconds % 60
+        parts = []
+        if d > 0:
+            parts.append(f""{d}d"")
+        if h > 0 or m > 0 or s > 0:
+            time_parts = [f""{x}"" for x in (h, m, s) if x]
+            parts.extend(time_parts)
+        return "" "".join(parts).lstrip()
+if __name__ == '__main__':
+    tc1 = TimeConverter(3665)
+    print(f""Input: 3665 -> Seconds: {tc1.to_seconds()}"")
+    print(f""Minutes: {tc1.to_minutes()}, Hours: {tc1.to_hours()}, Days: {tc1.to_days()}"")
+    tc2 = TimeConverter(86400)
+    print(f""\nInput: 86400 -> Seconds: {tc2.to_seconds()}"")
+    print(f""Minutes: {tc2.to_minutes()}, Hours: {tc2.to_hours()}, Days: {tc2.to_days()}"")
+    tc3 = TimeConverter(""172800"")
+    print(f""\nInput: '172800' -> Seconds: {tc3.to_seconds()}"")
+    print(f""Minutes: {tc3.to_minutes()}, Hours: {tc3.to_hours()}, Days: {tc3.to_days()}"")
+    tc4 = TimeConverter(0)
+    print(f""\nInput: 0 -> Seconds: {tc4.to_seconds()}"")
+    print(f""Minutes: {tc4.to_minutes()}, Hours: {tc4.to_hours()}, Days: {tc4.to_days()}"")",True,0,7279,71_0.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, value: int = 0, unit: str | None = None) -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be an integer."")
+        self._seconds = abs(int(round(float(value))))
+        if unit is not None and unit.lower() in (""s"", ""sec""):
+            pass
+        elif unit is not None and unit.lower() in (""m"", ""min""):
+            self._seconds *= 60
+        elif unit is not None and unit.lower() in (""h"", ""hour""):
+            self._seconds *= 3600
+        elif unit is not None and unit.lower() in (""d"", ""day""):
+            self._seconds *= 86400
+    def to_seconds(self) -> int:
+        return self._seconds
+    def to_minutes(self) -> float:
+        return round(self.to_seconds() / 60, 2)
+    def to_hours(self) -> float:
+        return round(self.to_seconds() / 3600, 2)
+    def to_days(self) -> float:
+        return round(self.to_seconds() / 86400, 2)
+if __name__ == '__main__':
+    tc1 = TimeConverter(5, ""s"")
+    print(f""Input: {tc1._seconds} seconds"")
+    tc2 = TimeConverter(value=3.5, unit=""h"")
+    print(f""Input hours converted to minutes: {tc2.to_minutes()}"")
+    tc3 = TimeConverter(value=86400)
+    print(f""Total days in input value: {tc3.to_days()}"")",True,1,7280,71_0_1.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, seconds: int = 0):
+        if not isinstance(seconds, int) or seconds < 0:
+            raise TypeError(""Seconds must be a non-negative integer."")
+        self._seconds = seconds
+    @property
+    def total_seconds(self) -> float:
+        return float(self._seconds)
+    def to_minutes(self) -> int:
+        if not isinstance(self.total_seconds, (int, float)):
+            raise TypeError(""Cannot convert invalid time unit."")
+        minutes = self.total_seconds // 60
+        remainder = self.total_seconds % 60
+        return int(minutes + remainder / 60.0)
+    def to_hours(self) -> float:
+        hours = self.to_minutes() / 60.0
+        return round(hours, 2)
+    def to_days(self) -> float:
+        days = self.to_hours() / 24.0
+        return round(days, 2)
+if __name__ == '__main__':
+    tc1 = TimeConverter(3665)
+    print(f""Total Seconds: {tc1.total_seconds}"")
+    print(f""To Minutes: {tc1.to_minutes()}"")
+    print(f""To Hours: {tc1.to_hours()}"")
+    print(f""To Days: {tc1.to_days()}"")
+    tc2 = TimeConverter(86400)
+    print(f""Total Seconds (Day): {tc2.total_seconds}"")
+    print(f""To Minutes: {tc2.to_minutes()}"")
+    print(f""To Hours: {tc2.to_hours()}"")
+    print(f""To Days: {tc2.to_days()}"")
+    tc3 = TimeConverter(0)
+    print(f""Total Seconds (Zero): {tc3.total_seconds}"")
+    print(f""To Minutes: {tc3.to_minutes()}"")
+    print(f""To Hours: {tc3.to_hours()}"")
+    print(f""To Days: {tc3.to_days()}"")",True,2,7281,71_0_2.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, value: int = 0, unit: str = ""seconds"") -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be an integer."")
+        valid_units = {""seconds"", ""minutes"", ""hours"", ""days""}
+        if unit.lower() not in valid_units:
+            raise ValueError(f""Invalid time unit. Must be one of {valid_units}."")
+        self.value = int(value)
+        self.unit = unit.lower()
+    def to_seconds(self) -> float:
+        multipliers = {""seconds"": 1, ""minutes"": 60, ""hours"": 3600, ""days"": 86400}
+        return self.value * multipliers[self.unit]
+    def from_seconds(self, seconds: int) -> None:
+        if not isinstance(seconds, (int, float)):
+            raise TypeError(""Seconds must be an integer."")
+        total = int(seconds)
+        days = total // 86400
+        remaining = total % 86400
+        hours = remaining // 3600
+        remaining %= 3600
+        minutes = remaining // 60
+        self.value = {
+            ""seconds"": seconds,
+            ""minutes"": f""{hours}h {minutes}m"",
+            ""hours"": f""{days}d {hours}h {minutes}m"",
+            ""days"": f""{days}d""
+        }[self.unit]
+    def __str__(self) -> str:
+        return self.value[self.unit]
+if __name__ == '__main__':
+    tc = TimeConverter(3601, unit=""seconds"")
+    print(tc.to_seconds())",True,3,7282,71_0_3.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, value=0):
+        self.value = float(value) if isinstance(value, (int, float)) else 0
+    @staticmethod
+    def validate_input(val):
+        try:
+            val = float(val)
+            return True
+        except ValueError:
+            raise TypeError(""Input must be a numeric value."")
+    def to_seconds(self):
+        self.validate_input(self.value)
+        if isinstance(self.value, int):
+            return int(float(self.value))
+        else:
+            return round(self.value * 1.0)
+    def to_minutes(self):
+        seconds = self.to_seconds()
+        return int(seconds / 60)
+    def to_hours(self):
+        minutes = self.to_minutes()
+        return int(minutes / 60)
+    def to_days(self):
+        hours = self.to_hours()
+        return int(hours / 24)
+if __name__ == '__main__':
+    tc1 = TimeConverter(3600)
+    print(f""Seconds: {tc1.to_seconds()}"")
+    print(f""Minutes: {tc1.to_minutes()}"")
+    tc2 = TimeConverter(""7.5 hours"")
+    seconds_val = float(tc2.value * 3600) if isinstance(tc2.value, (int, float)) else None
+    sample_tc = TimeConverter(86400)
+    print(f""Days: {sample_tc.to_days()}"")",True,4,7283,71_0_4.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, seconds=0):
+        if not isinstance(seconds, int) and not isinstance(seconds, float):
+            raise TypeError(""Time must be an integer"")
+        self._seconds = abs(int(round(float(seconds))))
+    @staticmethod
+    def validate_time(value):
+        return value is None or (isinstance(value, int) and value >= 0)
+    def to_minutes(self):
+        if not isinstance(self._seconds, int):
+            raise TypeError(""Internal state must be an integer"")
+        minutes = self._seconds // 60
+        remainder_seconds = self._seconds % 60
+        return f""{minutes} minute{'s' if abs(minutes) != 1 else ''}, {remainder_seconds} second""
+    def to_hours(self):
+        hours = self._seconds // 3600
+        minutes_part = (self._seconds % 3600) // 60
+        seconds_part = self._seconds % 60
+        result_parts = []
+        if abs(hours) != 1:
+            result_parts.append(f""{hours} hour{'s' if hours != 1 else ''}"")
+        if minutes_part != 0 or (minutes_part == 0 and seconds_part != 0):
+            part_str = f""{minutes_part} minute"" + (""s"" if abs(minutes_part) != 1 else """")
+            if self._seconds % 60:
+                result_parts.append(f"", {part_str}"")
+        return "" "".join(result_parts).replace(""hour, second"", "" hour"")
+    def to_days(self):
+        days = self._seconds // (365 * 24)
+        remaining_seconds = self._seconds % (365 * 24)
+        hours_part = remaining_seconds // 86400
+        minutes_part = (remaining_seconds % 86400) // 3600
+        seconds_part = remaining_seconds % 3600
+        result_parts = []
+        if abs(days) != 1:
+            result_parts.append(f""{days} day{'s' if days != 1 else ''}"")
+        elif hours_part > 0 or minutes_part > 0 or seconds_part > 0:
+            parts_to_add = []
+            if abs(hours_part) != 1:
+                parts_to_add.append(f""{hours_part} hour"") + (""s"" if abs(hours_part) != 1 else """")
+            elif hours_part == 0 and minutes_part != 0 or (minutes_part == 0 and seconds_part > 0):
+                part_str = f""{abs(minutes_part)} minute"" + (""s"" if abs(abs(minutes_part)) != 1 else "" second"")
+                parts_to_add.append(part_str)
+            result_parts.extend(parts_to_add)
+        return "" "".join(result_parts).replace(""hour, second"", "" hour"").strip()
+if __name__ == '__main__':
+    test_cases = [0, -61, 3725]
+    for case in test_cases:
+        try:
+            converter = TimeConverter(case)
+            print(f""Input: {case}"")
+            if isinstance(converter.to_minutes(), str):
+                minutes_text = converter.to_minutes()
+                hours_result = converter.to_hours()
+                days_result = converter.to_days()
+                print(minutes_text + "", "" + hours_result + "", "" + days_result)
+        except Exception as e:
+            print(f""Error with input {case}: {e}"")",True,5,7284,71_0_5.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, value: int = 0, unit: str = ""seconds"") -> None:
+        if not isinstance(value, (int, float)):
+            raise TypeError(""Value must be an integer."")
+        valid_units = {""seconds"", ""minutes"", ""hours"", ""days""}
+        if unit.lower() not in valid_units:
+            raise ValueError(f""Invalid time unit. Must be one of {valid_units}."")
+        self.value = int(value)
+        self.unit = unit.lower()
+    def to_seconds(self, value: float | None = None) -> int:
+        if value is not None and isinstance(value, (int, float)):
+            return int(value * 60 ** {1: ""minutes"", 2: ""hours"", 3: ""days""}.get(self.unit[0], 1))
+    def convert_to_unit(self) -> dict[str, int]:
+        return {
+            ""seconds"": self.value * (60 ** {""minutes"": 1, ""hours"": 2, ""days"": 3}.get("""".join(c for c in self.unit if c.isdigit()), 0)),
+        }
+    def __str__(self) -> str:
+        return f""{self.value} {self.unit}""
+if __name__ == '__main__':
+    tc = TimeConverter(3600, ""seconds"")
+    print(tc.convert_to_unit())",True,6,7285,71_0_6.py
+71,0,Convert time duration simply,"Implement an efficient and readable Python class named TimeConverter that converts between seconds, minutes, hours, days using overloaded __init__ and helper methods to ensure type safety and input validation according to PEP 8.","class TimeConverter:
+    def __init__(self, seconds=None):
+        if isinstance(seconds, int) and seconds >= 0:
+            self.total_seconds = seconds
+        else:
+            raise ValueError(""Input must be a non-negative integer."")
+    @classmethod
+    def from_minutes(cls, minutes):
+        if not isinstance(minutes, int) or minutes < 0:
+            raise ValueError(""Minutes must be a non-negative integer."")
+        return cls(seconds=minutes * 60)
+    @classmethod
+    def from_hours(cls, hours):
+        if not isinstance(hours, int) or hours < 0:
+            raise ValueError(""Hours must be a non-negative integer."")
+        return cls(seconds=hours * 3600)
+    @classmethod
+    def from_days(cls, days):
+        if not isinstance(days, int) or days < 0:
+            raise ValueError(""Days must be a non-negative integer."")
+        return cls(seconds=days * 86400)
+    def to_minutes(self):
+        return self.total_seconds // 60
+    def to_hours(self):
+        return self.total_seconds // 3600
+    def to_days(self):
+        return self.total_seconds // 86400
+if __name__ == '__main__':
+    t1 = TimeConverter(seconds=7200)
+    print(f""Seconds: {t1.to_minutes()} minutes, {t1.to_hours()} hours"")
+    t2 = TimeConverter.from_days(3)
+    print(f""Days 3 converted to seconds: {t2.total_seconds}"")",True,7,7286,71_0_7.py
+71,1,Convert time duration simply,"Write a production-ready function in Python that accepts a duration string in various formats (e.g., '1h30m', '45min') and converts it back into seconds with full error handling using the dataclasses library for structured output.","import re
+from dataclasses import dataclass
+@dataclass
+class DurationResult:
+    total_seconds: int | None = None
+    error_message: str | None = None
+def parse_duration(duration_str: str) -> DurationResult:
+    pattern = r'^(\d+(?:\.\d+)?)\s*(h|hours?|hr)?\.?\s*([\d.]+)\s*m(?:inut(es)?)?$|^(\d+)\s*h\s+(\d+)(m|min)$'
+    match = re.match(pattern, duration_str.strip(), re.IGNORECASE)
+    if not match:
+        return DurationResult(error_message=""Invalid format"")
+    try:
+        hours_part = float(match.group(1)) if match.group(2) else 0.0
+        minutes_part = float(match.group(3)) or int(match.group(4)) if (match.group(3) and not match.group(5)) else int(match.group(5))
+        total_seconds = round(hours_part * 3600 + minutes_part * 60)
+        return DurationResult(total_seconds=total_seconds, error_message=None)
+    except ValueError:
+        return DurationResult(error_message=""Invalid numeric value"")
+if __name__ == '__main__':
+    test_cases = ['1h30m', '45min', '2.5 hours 10 minutes']
+    for case in test_cases:
+        result = parse_duration(case)
+        print(f""Input: {case} -> Output: {result}"")",True,0,7287,71_1.py
+70,14,Compare two distance amounts,"Develop a production-ready Python class named DistanceComparator with methods to compare distances internally, ensuring thread safety and adherence to industry best practices for numerical stability.","import threading
+from typing import Tuple, Optional
+class DistanceComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._distance_cache: dict[Tuple[int, int], float] = {}
+    def compare_distances(self, point_a: Tuple[float, float], point_b: Tuple[float, float]) -> Optional[float]:
+        if not isinstance(point_a, tuple) or len(point_a) != 2:
+            raise ValueError(""Point A must be a tuple of two floats."")
+        if not isinstance(point_b, tuple) or len(point_b) != 2:
+            raise ValueError(""Point B must be a tuple of two floats."")
+        with self._lock:
+            key = (point_a[0], point_b[1])
+            dx = abs(point_a[0] - point_b[0])
+            dy = abs(point_a[1] - point_b[1])
+            squared_distance = dx * dx + dy * dy
+            return float(squared_distance)
+    def is_within_threshold(self, point_a: Tuple[float, float], point_b: Tuple[float, float], threshold: float) -> bool:
+        distance_sq = self.compare_distances(point_a, point_b)
+        with self._lock:
+            if distance_sq <= threshold * threshold + 1e-9:                                                      
+                return True
+        return False
+if __name__ == '__main__':
+    comparator = DistanceComparator()
+    sample_point_a = (3.0, 4.0)
+    sample_point_b = (6.0, 8.0)
+    distance_result = comparator.compare_distances(sample_point_a, sample_point_b)
+    print(f""Calculated squared distance: {distance_result}"")
+    threshold_value = 50.0
+    is_close = comparator.is_within_threshold(sample_point_a, sample_point_b, threshold_value)
+    print(f""Is within threshold ({threshold_value})? {is_close}"")",True,0,7288,70_14.py
+70,14,Compare two distance amounts,"Develop a production-ready Python class named DistanceComparator with methods to compare distances internally, ensuring thread safety and adherence to industry best practices for numerical stability.","import threading
+from math import sqrt
+class DistanceComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._distance_cache = {}
+    def compare_distances(self, point_a, point_b):
+        with self._lock:
+            if id(point_a) in self._distance_cache and id(point_b) in self._distance_cache:
+                return abs(self._distance_cache[id(point_a)] - self._distance_cache[id(point_b)])
+            dist = sqrt(sum((a - b) ** 2 for a, b in zip(point_a, point_b)))
+            result = {id(point_a): dist}
+            if id(point_b) not in result:
+                result[id(point_b)] = dist
+            return abs(result.get(id(point_a), float('inf')) - result.get(id(point_b), 0))
+    def get_distance(self, point_id):
+        with self._lock:
+            return self._distance_cache.get(point_id, 0)
+if __name__ == '__main__':
+    comp = DistanceComparator()
+    pt1 = (3.0, 4.0)
+    pt2 = (6.0, 8.0)
+    dist_val = comp.compare_distances(pt1, pt2)
+    print(f""Calculated distance: {dist_val}"")",True,1,7289,70_14_1.py
+70,14,Compare two distance amounts,"Develop a production-ready Python class named DistanceComparator with methods to compare distances internally, ensuring thread safety and adherence to industry best practices for numerical stability.","import threading
+from math import sqrt
+class DistanceComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._distances = []
+    def add_distance(self, value: float) -> None:
+        with self._lock:
+            if not isinstance(value, (int, float)):
+                raise TypeError(""Distance must be numeric."")
+            if value < 0:
+                raise ValueError(""Distance cannot be negative."")
+            self._distances.append(value)
+    def compare_distances(self, target_distance: float) -> list[bool]:
+        if not isinstance(target_distance, (int, float)):
+            raise TypeError(""Target distance must be numeric."")
+        tolerance = 1e-9
+        results = []
+        with self._lock:
+            for d in self._distances:
+                diff = abs(d - target_distance)
+                results.append(diff < tolerance and d != target_distance)
+        return results
+if __name__ == '__main__':
+    comparator = DistanceComparator()
+    distances_to_add = [10.5, 20.3, 10.5 + 1e-9]
+    for d in distances_to_add:
+        comparator.add_distance(d)
+    target_dist = 20.3
+    results = comparator.compare_distances(target_dist)
+    print(f""Distances added: {distances_to_add}"")
+    print(f""Target distance: {target_dist}"")
+    print(""Comparison Results (True if significantly less, False otherwise):"")
+    for i, result in enumerate(results):
+        val = distances_to_add[i]
+        is_less_significantly = ""Yes"" if result else ""No""
+        print(f""  Distance {val}: {is_less_significantly}"")",True,2,7290,70_14_2.py
+70,14,Compare two distance amounts,"Develop a production-ready Python class named DistanceComparator with methods to compare distances internally, ensuring thread safety and adherence to industry best practices for numerical stability.","import threading
+from typing import List, Tuple
+class DistanceComparator:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def compare_distances(self, point_a: Tuple[float, float], 
+                          point_b: Tuple[float, float]) -> float:
+        x1, y1 = point_a
+        x2, y2 = point_b
+        dx = x2 - x1
+        dy = y2 - y1
+        return (dx * dx + dy * dy) ** 0.5
+    def compare_multiple(self, points_a: List[Tuple[float, float]], 
+                         points_b: List[Tuple[float, float]]) -> List[int]:
+        results = []
+        with self._lock:
+            for i, pa in enumerate(points_a):
+                min_dist_sq = float('inf')
+                closest_idx_b = -1
+                for j, pb in enumerate(points_b):
+                    dist_sq = (pa[0] - pb[0])**2 + (pa[1] - pb[1])**2
+                    if dist_sq < min_dist_sq:
+                        min_dist_sq = dist_sq
+                        closest_idx_b = j
+                results.append(closest_idx_b)
+        return results
+if __name__ == '__main__':
+    comparator = DistanceComparator()
+    point_a_1 = (0.0, 0.0)
+    point_b_1 = (3.0, 4.0)
+    dist_result = comparator.compare_distances(point_a_1, point_b_1)
+    print(f""Distance between ({point_a_1[0]}, {point_a_1[1]}) and ({point_b_1[0]}, {point_b_1[1]}): {dist_result}"")",True,3,7291,70_14_3.py
+70,14,Compare two distance amounts,"Develop a production-ready Python class named DistanceComparator with methods to compare distances internally, ensuring thread safety and adherence to industry best practices for numerical stability.","from threading import RLock
+import math
+class DistanceComparator:
+    def __init__(self):
+        self._lock = RLock()
+        self._distance_cache = {}
+    def compare_distances(self, point_a, point_b, tolerance=1e-9):
+        with self._lock:
+            if id(point_a) not in self._distance_cache or id(point_b) not in self._distance_cache:
+                cache_key = (id(point_a), id(point_b))
+                dist_sq = math.hypot(*point_a, *point_b)**2
+                self._distance_cache[id(point_a)] = point_a
+                self._distance_cache[id(point_b)] = point_b
+            if not self._distance_cache:
+                return None
+            a_id = id(point_a)
+            b_id = id(point_b)
+            dist_sq_a = math.hypot(*self._distance_cache[a_id], *point_a)**2
+            dist_sq_b = math.hypot(*point_b, *self._distance_cache[b_id])**2
+            diff = abs(dist_sq_a - dist_sq_b)
+        return True if diff <= tolerance else False
+if __name__ == '__main__':
+    comparator = DistanceComparator()
+    point1 = (3.0, 4.0)
+    point2 = (5.0, 6.0)
+    result = comparator.compare_distances(point1, point2)
+    print(result is True if False else ""False"")",True,4,7292,70_14_4.py
+71,2,Convert time duration simply,"Create an optimized pure function to parse ISO 8601 duration strings (e.g., P1D or PT2H) in Python without external dependencies while maintaining strict adherence to best practices and type hinting standards.","from dataclasses import dataclass
+import re
+@dataclass(frozen=True)
+class Duration:
+    years: int = 0
+    months: int = 0
+    days: int = 0
+    hours: int = 0
+    minutes: int = 0
+    seconds: int = 0
+    def __add__(self, other: ""Duration"") -> ""Duration"":
+        return Duration(
+            years=self.years + other.years,
+            months=self.months + other.months,
+            days=self.days + other.days,
+            hours=self.hours + other.hours,
+            minutes=self.minutes + other.minutes,
+            seconds=self.seconds + other.seconds,
+        )
+    def __radd__(self, other: int) -> ""Duration"":
+        return self.__add__(other if isinstance(other, Duration) else Duration(seconds=other))
+ISO_PATTERN = re.compile(
+    r""^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:[.]\d+)?)S)?)?$""
+)
+def parse_iso_duration(duration_str: str) -> Duration:
+    match = ISO_PATTERN.match(duration_str.strip())
+    if not match:
+        raise ValueError(f""Invalid ISO 8601 duration string: {duration_str}"")
+    years, months, days, hours, minutes, seconds = (int(match.group(i)) for i in range(1, 7) if match.group(i))
+    return Duration(years=years or 0, months=months or 0, days=days or 0, hours=hours or 0, minutes=minutes or 0, seconds=int(seconds) if seconds else 0)
+if __name__ == '__main__':
+    test_cases = [
+        ""P1D"",
+        ""PT2H"",
+        ""P3Y6M4DT12H30M5S"",
+        ""PT1.5H"",
+        ""-P1D""
+    ]
+    for case in test_cases:
+        try:
+            result = parse_iso_duration(case)
+            print(f""Parsed '{case}': {result}"")
+        except ValueError as e:
+            print(f""Error parsing '{case}': {e}"")",True,0,7293,71_2.py
+71,2,Convert time duration simply,"Create an optimized pure function to parse ISO 8601 duration strings (e.g., P1D or PT2H) in Python without external dependencies while maintaining strict adherence to best practices and type hinting standards.","from datetime import timedelta, date
+import re
+def parse_iso8601_duration(duration_str: str) -> timedelta:
+    pattern = r""^(P(?:(\d+)D)?(?:T(?:(\d+)[HhMm]?))?)$""
+    match = re.match(pattern, duration_str.strip())
+    if not match:
+        raise ValueError(f""Invalid ISO 8601 duration format: {duration_str}"")
+    days = int(match.group(1) or ""0"")
+    hours = int(match.group(2) or ""0"")
+    minutes = int(match.group(3) or ""0"") if match.group(3) else None
+    seconds = 0
+    if minutes:
+        m_str = re.sub(r'[hHmM]', '', match.group(3))
+        try:
+            minutes_val = int(m_str.split(':')[1]) if ':' in m_str else int(m_str)
+            seconds = minutes_val * 60
+        except (ValueError, IndexError):
+            raise ValueError(f""Invalid minute format: {match.group(3)}"")
+    return timedelta(days=days, hours=hours, seconds=seconds)
+if __name__ == '__main__':
+    test_cases = [
+        ""P1D"",
+        ""PT2H"",
+        ""PT0.5M"",
+        ""P1DT2H3M4S""
+    ]
+    for case in test_cases:
+        try:
+            result = parse_iso8601_duration(case)
+            print(f""{case} -> {result}"")
+        except ValueError as e:
+            print(f""{case} -> Error: {e}"")",True,1,7294,71_2_1.py
+71,3,Convert time duration simply,Develop a robust command-line tool using argparse that allows users to convert any time unit to seconds and vice versa with input validation and detailed error messages ensuring high reliability for production use.,"import argparse
+def parse_time_to_seconds(time_str):
+    try:
+        value = float(time_str)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f""Invalid input '{time_str}': must be a numeric value."")
+    unit_map = {
+        'ms': 1e-3,
+        's': 1.0,
+        'm': 60.0,
+        'h': 3600.0,
+        'd': 86400.0,
+    }
+    if not time_str.endswith(unit_map.keys()):
+        raise argparse.ArgumentTypeError(f""Invalid unit '{time_str[-1]}'. Supported units: ms, s, m, h, d."")
+    multiplier = unit_map[time_str[-1]]
+    return value * multiplier
+def parse_seconds_to_time(seconds):
+    try:
+        if not isinstance(seconds, (int, float)):
+            raise argparse.ArgumentTypeError(f""Invalid input '{seconds}': must be numeric."")
+        total_ms = int(round(seconds * 1000))
+        days = total_ms // (86400 * 1000)
+        remaining_ms = total_ms % (86400 * 1000)
+        hours = remaining_ms // (3600 * 1000)
+        remaining_ms %= (3600 * 1000)
+        minutes = remaining_ms // (60 * 1000)
+        seconds_part = round(remaining_ms / 1000, 2)
+    except Exception:
+        raise argparse.ArgumentTypeError(f""Invalid input '{seconds}': must be numeric."")
+    if days > 0:
+        return f""{days}d {hours}:{minutes:02d}:{seconds_part:.2f}""
+    elif hours > 0:
+        return f""{hours}h {minutes}:{seconds_part:.2f}""
+    else:
+        return f""{minutes}m {seconds_part:.2f}s""
+def main():
+    parser = argparse.ArgumentParser(description=""Convert time units to seconds and vice versa."")
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    convert_to_sec_parser = subparsers.add_parser('to-seconds', help='Convert time unit to seconds.')
+    convert_to_sec_parser.add_argument(
+        'time_input', type=parse_time_to_seconds, nargs='+', metavar=('VALUE', 'UNIT'),
+        help=""Time value and optional unit (e.g., 100 ms or 2 h)""
+    )
+    convert_from_sec_parser = subparsers.add_parser('from-seconds', help='Convert seconds to time units.')
+    convert_from_sec_parser.add_argument(
+        'seconds_input', type=parse_seconds_to_time, nargs='+', metavar=('VALUE'),
+        help=""Seconds value (e.g., 3601.5)""
+    )
+    args = parser.parse_args()
+    if not hasattr(args, 'command') or args.command is None:
+        parser.print_help()
+        return
+    if args.command == 'to-seconds':
+        for val_unit in args.time_input:
+            value_str, unit_str = str(val_unit).split(' ', 1)
+            try:
+                seconds = float(value_str) * parse_time_to_seconds(unit_str)[0] / (parse_time_to_seconds(unit_str)[-2]) if isinstance(parse_time_to_seconds(unit_str), tuple) else None
+            except Exception as e:
+                print(f""Error converting {val_unit}: {e}"")
+    elif args.command == 'from-seconds':
+        for val in args.seconds_input:
+            try:
+                time_obj = parse_seconds_to_time(val)[0] if isinstance(parse_seconds_to_time(val), tuple) else None
+            except Exception as e:
+                print(f""Error converting {val}: {e}"")
+if __name__ == '__main__':
+    main()",True,0,7295,71_3.py
+71,3,Convert time duration simply,Develop a robust command-line tool using argparse that allows users to convert any time unit to seconds and vice versa with input validation and detailed error messages ensuring high reliability for production use.,"import argparse
+def parse_time_to_seconds(time_str):
+    try:
+        value = float(time_str)
+        if value < 0:
+            raise ValueError(""Time cannot be negative."")
+        return abs(value), ""seconds""
+    except ValueError as e:
+        raise ValueError(f""Invalid time format '{time_str}'. Expected a non-negative number. Error: {e}"")
+def parse_seconds_to_time(seconds):
+    try:
+        value = float(seconds)
+        if value < 0:
+            raise ValueError(""Seconds cannot be negative."")
+        hours = int(value // 3600)
+        remaining = (value % 3600)
+        minutes = int(remaining // 60)
+        seconds_remainder = round(remaining % 60, 2) if remaining % 1 != 0 else float(int(seconds_remainder))
+        return f""{hours}h {minutes}m {seconds_remainder}s""
+    except ValueError as e:
+        raise ValueError(f""Invalid seconds format '{seconds}'. Expected a non-negative number. Error: {e}"")
+def main():
+    parser = argparse.ArgumentParser(description=""Convert time units to or from seconds."")
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    conv_to_parser = subparsers.add_parser('to_seconds', help='Convert any unit of time to seconds.')
+    conv_to_parser.add_argument('time_unit', type=str, nargs=1, metavar=('UNIT'), 
+                                help=f""Time value and unit (e.g., '3.5 hours' or '60 minutes')."")
+    conv_from_parser = subparsers.add_parser('from_seconds', help='Convert seconds to human-readable time.')
+    conv_from_parser.add_argument('seconds', type=str, nargs=1, metavar=('SECONDS'), 
+                                  help=""Seconds value (e.g., '3600' or '-5')"")
+    args = parser.parse_args()
+    if not args.command:
+        print(""Error: No command provided."")
+        return
+    try:
+        if args.command == 'to_seconds':
+            time_input, unit_str = args.time_unit[0], ""seconds""                                                             
+            samples_to_test = [
+                (""3.5 hours"", True), 
+                (60, False), 
+                (""-10 minutes"", True)
+            ]
+            print(""Testing conversion logic with hard-coded inputs:"")
+            for test_input in [""3.5 hours"", ""60""]:
+                try:
+                    val = float(test_input.replace(' ', '')) if '.' not in test_input else float(test_input.split()[1]) 
+                    parts = str(val).split()
+                except:
+                    pass
+            test_cases_to_seconds = [
+                (""1 hour"", 3600), 
+                (90, ""minutes""), 
+                (""-5 seconds"", -5)
+            ]
+            for input_val in [""1 hour"", ""90""]:
+                try:
+                    val_str = str(input_val).split()[-1] if ' ' in input_val else input_val
+                    parsed_float = float(val_str.replace('h', '').replace('m', '')) * (3600 if 'hour' in input_val.lower() or ('H' in input_val) else 60 if 'min' in input_val.lower() or ('M' in input_val) else 1)
+                    print(f""Input: {input_val} -> Parsed Seconds: {parsed_float}"")
+                except Exception as e:
+                    print(f""Error processing '{input_val}': {e}"")
+        elif args.command == 'from_seconds':
+            test_inputs = [""3600"", ""-5""]
+            for sec_str in test_inputs:
+                try:
+                    val_float = float(sec_str)
+                    if val_float < 0:
+                        raise ValueError(""Negative seconds not allowed."")
+                    h = int(val_float // 3600)
+                    m = int((val_float % 3600) / 60)
+                    s = round(val_float - (h * 3600 + m * 60), 2)
+                    print(f""Input: {sec_str} -> Output: {h}h {m}m {s}s"")
+                except ValueError as ve:
+                    print(f""Error processing input '{sec_str}': {ve}"")
+    except Exception as e:
+        print(f""FATAL ERROR: {e}"")
+if __name__ == '__main__':
+    main()",True,1,7296,71_3_1.py
+71,3,Convert time duration simply,Develop a robust command-line tool using argparse that allows users to convert any time unit to seconds and vice versa with input validation and detailed error messages ensuring high reliability for production use.,"import argparse
+def parse_time_to_seconds(time_str):
+    unit_map = {
+        's': 1,
+        'sec': 1,
+        'seconds': 1,
+        'min': 60,
+        'm': 60,
+        'minutes': 60,
+        'h': 3600,
+        'hr': 3600,
+        'hours': 3600,
+        'd': 86400,
+        'day': 86400,
+        'days': 86400,
+    }
+    try:
+        value = float(time_str)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f""Invalid number '{time_str}'."")
+    unit_lower = time_str.lower()
+    if not any(unit in unit_map for unit in ['s', 'sec', 'seconds', 'min', 'm', 'minutes', 'h', 'hr', 'hours', 'd', 'day', 'days']):
+        raise argparse.ArgumentTypeError(f""Unsupported or invalid unit '{time_str}'."")
+    if value < 0:
+        raise argparse.ArgumentError(argument=None, message=""Value must be non-negative."")
+    return value * unit_map[unit_lower]
+def parse_seconds_to_time(seconds):
+    try:
+        seconds = float(seconds)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f""Invalid number '{seconds}'."")
+    if seconds < 0:
+        raise argparse.ArgumentError(argument=None, message=""Value must be non-negative."")
+    unit_map = {
+        's': (1, ''),
+        'sec': (1, ''),
+        'seconds': (1, ''),
+        'min': (60, 'm'),
+        'minutes': (60, 'm'),
+        'h': (3600, 'hr'),
+        'hours': (3600, 'hr'),
+        'd': (86400, 'days'),
+    }
+    for unit in sorted(unit_map.keys(), key=len):
+        if seconds >= 1:
+            count = int(seconds // unit_map[unit][0])
+            remainder = seconds % unit_map[unit][0]
+            formatted_time = f""{count}{unit_map[unit][1]}""
+            return float(remainder), formatted_time
+    raise argparse.ArgumentError(argument=None, message=""Could not convert to standard time units."")
+def main():
+    parser = argparse.ArgumentParser(description='Convert between time units and seconds.')
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    parse_time_parser = subparsers.add_parser('to_seconds', help='Convert time unit to seconds')
+    parse_time_parser.add_argument('time_str', type=parse_time_to_seconds, nargs='+', metavar='TIME_VALUE UNIT')
+    parse_sec_parser = subparsers.add_parser('from_seconds', help='Convert seconds to human-readable time')
+    parse_sec_parser.add_argument('seconds', type=float)
+    args = parser.parse_args()
+    if not hasattr(args, 'command'):
+        print(""Error: No command provided. Use --help for usage instructions."")
+        return 1
+    try:
+        if args.command == 'to_seconds':
+            total_seconds = sum(float(val) * parse_time_to_seconds(unit)[0] for val, unit in zip(args.time_str[::2], [u.lower() for u in args.time_str[1::2]]))
+            print(f""Total seconds: {total_seconds}"")
+        elif args.command == 'from_seconds':
+            remainder, formatted = parse_seconds_to_time(args.seconds)
+            if abs(remainder) < 0.5 and float(formatted.replace('days', '')) > 0:
+                time_str = f""{float(formatted)} days""
+            else:
+                parts = []
+                for unit in ['d', 'h', 'm']:
+                    count, suffix = parse_seconds_to_time(args.seconds)[1].split()[-2] if '.' not in formatted.split()[0] or True else (None, None)
+                    break
+            print(f""{args.seconds} seconds is approximately {formatted}"")
+    except argparse.ArgumentError as e:
+        print(f""Validation Error: {e.message}"", file=__import__('sys').stderr)
+        return 1
+    except Exception as e:
+        print(f""Unexpected Error: {str(e)}"", file=__import__('sys').stderr)
+        return 1
+if __name__ == '__main__':
+    main()",True,2,7297,71_3_2.py
+71,3,Convert time duration simply,Develop a robust command-line tool using argparse that allows users to convert any time unit to seconds and vice versa with input validation and detailed error messages ensuring high reliability for production use.,"import argparse
+def parse_time_to_seconds(time_str: str) -> float | None:
+    try:
+        value = int(time_str) if '.' not in time_str else float(time_str).astype(int) * 10 ** (-len([c for c in time_str.split('.')[1]]))
+        unit_map = {
+            'ms': lambda x: x / 1000,
+            's': lambda x: x,
+            'min': lambda x: x * 60,
+            'h': lambda x: x * 3600,
+            'd': lambda x: x * 86400,
+        }
+        if value < 0 or not unit_map.get(time_str.lower()):
+            return None
+        multiplier = unit_map[time_str.lower()]()
+    except ValueError as e:
+        print(f""Error: Invalid time format '{time_str}'. Expected a number."")
+        raise
+    return float(multiplier)
+def parse_seconds_to_time(seconds: int | float, output_unit: str) -> tuple[float, str]:
+    try:
+        if not isinstance(output_unit.lower(), (str)):
+            print(f""Error: Invalid output unit '{output_unit}'."")
+            raise ValueError(""Invalid unit type."")
+        multiplier_map = {
+            'ms': lambda x: x * 1000,
+            's': lambda x: x,
+            'min': lambda x: x / 60,
+            'h': lambda x: x / 3600,
+            'd': lambda x: x / 86400,
+        }
+    except Exception as e:
+        print(f""Error during conversion: {e}"")
+        raise
+    return float(multiplier_map[output_unit.lower()](seconds)), output_unit
+def main():
+    parser = argparse.ArgumentParser(description=""Convert time units to seconds and vice versa."")
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    p1 = subparsers.add_parser('to_seconds', help='Convert a specific time unit to seconds.')
+    p1.add_argument('time_str', type=str, help=""Time value and unit (e.g., '30s' or '2h')."")
+    p2 = subparsers.add_parser('from_seconds', help='Convert seconds to a specific time unit.')
+    p2.add_argument('seconds_str', type=str, nargs='+')
+    p2.add_argument('--unit', required=True, choices=['ms', 's', 'min', 'h', 'd'], default=None)
+    args = parser.parse_args()
+    if not hasattr(args, 'command'):
+        print(""Error: No command provided."")
+        return
+    try:
+        if args.command == 'to_seconds':
+            result = parse_time_to_seconds(args.time_str)
+            if result is None:
+                raise ValueError(f""Failed to convert '{args.time_str}'"")
+            print(f""{result} seconds"")
+        elif args.command == 'from_seconds':
+            try:
+                val, unit = float(args.seconds_str[0]), args.unit or ""s""
+            except Exception as e:
+                raise ValueError(""Invalid input for conversion."") from e
+            result_val, res_unit = parse_seconds_to_time(val, unit)
+            print(f""{result_val} {res_unit}"")
+    except (ValueError, TypeError):
+        print(""Error: Invalid arguments provided."")
+if __name__ == '__main__':
+    main()",True,3,7298,71_3_3.py
+71,6,Convert time duration simply,"Write an optimized class-based solution in Python that converts arbitrary time duration strings (e.g., '1h30m45s') into total seconds and back to formatted human-readable output. The implementation must include type hinting and comprehensive error handling.","from typing import Tuple, Union
+class TimeConverter:
+    def __init__(self):
+        self.unit_multipliers = {
+            ""s"": 1,
+            ""m"": 60,
+            ""h"": 3600,
+            ""d"": 86400,
+            ""w"": 604800,
+        }
+    def parse_duration(self, duration_str: str) -> int:
+        if not isinstance(duration_str, str):
+            raise TypeError(""Duration must be a string."")
+        parts = duration_str.strip().split()
+        total_seconds = 0
+        for part in parts:
+            value_part, unit_part = part.split(None, 1)
+            try:
+                value = int(value_part)
+            except ValueError:
+                raise ValueError(f""Invalid numeric value '{value_part}' in duration string."")
+            if not self.unit_multipliers.get(unit_part):
+                raise ValueError(f""Unsupported time unit '{unit_part}'. Supported units are s, m, h, d, w."")
+            total_seconds += value * self.unit_multipliers[unit_part]
+        return total_seconds
+    def format_duration(self, seconds: int) -> str:
+        if not isinstance(seconds, int):
+            raise TypeError(""Seconds must be an integer."")
+        units = [""w"", ""d"", ""h"", ""m"", ""s""]
+        multipliers = [604800, 86400, 3600, 60, 1]
+        result_parts: list[str] = []
+        remaining_seconds = seconds
+        for unit in units:
+            if remaining_seconds >= multipliers[units.index(unit)]:
+                count = remaining_seconds // multipliers[units.index(unit)]
+                if count > 0 or not result_parts:
+                    result_parts.append(f""{count}{unit}"")
+                remaining_seconds %= multipliers[units.index(unit)]
+        return """".join(result_parts).lstrip("" "")
+if __name__ == '__main__':
+    converter = TimeConverter()
+    test_cases = [
+        ""1h30m45s"",
+        ""2d"",
+        ""90w"",
+        ""100ms""                                                                        
+    ]
+    for duration_str in test_cases:
+        try:
+            seconds = converter.parse_duration(duration_str)
+            formatted = converter.format_duration(seconds)
+            print(f""{duration_str} -> {seconds}s"")
+            print(f""Formatted back: {formatted}"")
+        except Exception as e:
+            print(f""Error processing '{duration_str}': {e}"")
+    test_seconds = [16570, 432000]
+    for sec in test_seconds:
+        try:
+            formatted = converter.format_duration(sec)
+            print(f""{sec}s -> {formatted}"")
+        except Exception as e:
+            print(f""Error formatting {sec}: {e}"")",True,0,7299,71_6.py
+71,6,Convert time duration simply,"Write an optimized class-based solution in Python that converts arbitrary time duration strings (e.g., '1h30m45s') into total seconds and back to formatted human-readable output. The implementation must include type hinting and comprehensive error handling.","from typing import Union
+class TimeConverter:
+    def __init__(self):
+        self.unit_multipliers = {
+            's': 1,
+            'm': 60,
+            'h': 3600,
+            'd': 86400,
+        }
+    def parse_duration(self, duration_str: str) -> int:
+        if not isinstance(duration_str, str):
+            raise TypeError(""Duration must be provided as a string."")
+        parts = duration_str.strip().split()
+        if len(parts) == 0:
+            return 0
+        total_seconds = 0
+        for part in parts:
+            try:
+                value = int(part.split()[0])
+            except ValueError:
+                raise ValueError(f""Invalid number format found in duration string."")
+            unit_char = part[-1] if part else ''
+            if not isinstance(value, (int, float)):
+                raise TypeError(""Time values must be numeric integers or floats."")
+            multiplier = self.unit_multipliers.get(unit_char)
+            if multiplier is None:
+                raise ValueError(f""Unsupported time unit '{unit_char}'. Supported units: {', '.join(self.unit_multipliers.keys())}"")
+            total_seconds += int(value * multiplier)
+        return total_seconds
+    def format_duration(self, seconds: Union[int, float]) -> str:
+        if not isinstance(seconds, (int, float)):
+            raise TypeError(""Duration must be provided as an integer or float."")
+        d = int(abs(seconds) // 86400) % 24
+        h = int((abs(seconds) - d * 86400) // 3600)
+        m = int(((abs(seconds) - (d * 86400 + h * 3600)) // 60))
+        if seconds < 0:
+            return f""-{self._format_positive(m, h, d)}""
+        parts = []
+        if m > 0 or h == 0 and d == 0:
+            parts.append(f""{m}min"")
+        if h > 0:
+            parts.append(f""{h}hr"")
+        if d > 0:
+            parts.append(f""{d}day"")
+        return "" "".join(parts)
+if __name__ == '__main__':
+    converter = TimeConverter()
+    test_cases = [
+        '1h30m45s',
+        '2d5h10m',
+        '-15m',
+        '90min'
+    ]
+    for duration_str in test_cases:
+        try:
+            seconds = converter.parse_duration(duration_str)
+            formatted = converter.format_duration(seconds)
+            print(f""Input: {duration_str} -> Seconds: {seconds} -> Formatted: {formatted}"")
+        except Exception as e:
+            print(f""Error processing '{duration_str}': {e}"")
+    sample_seconds = 3601.5
+    try:
+        formatted_output = converter.format_duration(sample_seconds)
+        original_back_to_seconds = converter.parse_duration(formatted_output.replace('min', 'm').replace('hr', 'h'))
+        print(f""Sample seconds ({sample_seconds}) -> Formatted: {formatted_output} -> Back to Seconds (approx): {original_back_to_seconds}"")
+    except Exception as e:
+        print(f""Error processing sample value: {e}"")",True,1,7300,71_6_1.py
+71,6,Convert time duration simply,"Write an optimized class-based solution in Python that converts arbitrary time duration strings (e.g., '1h30m45s') into total seconds and back to formatted human-readable output. The implementation must include type hinting and comprehensive error handling.","from typing import Union
+class TimeConverter:
+    def parse(self, duration_str: str) -> int:
+        try:
+            parts = duration_str.split()
+            if not all(part for part in parts):
+                raise ValueError(""Duration string must contain valid units."")
+            total_seconds = 0
+            unit_map = {'h': 3600, 'm': 60, 's': 1}
+            for part in parts:
+                try:
+                    value = int(part) if not any(unit in part.lower() for unit in ['h', 'm', 's']) else float('inf')
+                except ValueError:
+                    raise ValueError(f""Invalid number format found: {part}"")
+                last_unit_index = -1
+                for i, char in enumerate(part):
+                    if char.lower() in ('h', 'm', 's'):
+                        last_unit_index = i
+                unit_char = part[last_unit_index].lower()
+                try:
+                    value_str = ''.join(filter(str.isdigit, part))
+                    value = int(value_str)
+                    multiplier = 0
+                    if len(part) > last_unit_index and any(c.isalpha() for c in part[:last_unit_index+1]):
+                        unit_char = part[last_unit_index].lower()
+                except ValueError:
+                    raise ValueError(f""Invalid number format found: {part}"")
+                multiplier = unit_map.get(unit_char, 0)
+            return total_seconds
+        except Exception as e:
+            if isinstance(e, (ValueError, TypeError)):
+                raise
+            else:
+                raise RuntimeError(""Unexpected error during parsing"") from e
+    def format(self, seconds: int) -> str:
+        try:
+            hours = seconds // 3600
+            remaining_seconds = seconds % 3600
+            minutes = remaining_seconds // 60
+            secs = remaining_seconds % 60
+            parts = []
+            if hours > 0:
+                parts.append(f""{hours}h"")
+            if minutes > 0 or (minutes == 0 and seconds < 3600):
+                parts.append(f""{minutes}m{secs}s"" if secs != 0 else f""{minutes}m"")
+            return "" "".join(parts) if parts else ""0s""
+        except Exception as e:
+            raise RuntimeError(""Unexpected error during formatting"") from e
+if __name__ == '__main__':
+    converter = TimeConverter()
+    test_cases = [
+        '1h30m45s',
+        '2d1h30m',                                                                                                                                                                                                               
+    ]
+    for duration_str in test_cases:
+        try:
+            seconds = converter.parse(duration_str)
+            formatted_time = converter.format(seconds)
+            print(f""Input: {duration_str} -> Seconds: {seconds} -> Formatted: {formatted_time}"")
+        except Exception as e:
+            print(f""Error processing '{duration_str}': {e}"")
+    sample_seconds = 3601
+    try:
+        formatted_output = converter.format(sample_seconds)
+        parsed_back = converter.parse(formatted_output)                                                                                                       
+        print(f""Sample Seconds: {sample_seconds} -> Formatted: {formatted_output}"")
+    except Exception as e:
+        print(f""Error processing sample seconds: {e}"")",True,2,7301,71_6_2.py
+71,6,Convert time duration simply,"Write an optimized class-based solution in Python that converts arbitrary time duration strings (e.g., '1h30m45s') into total seconds and back to formatted human-readable output. The implementation must include type hinting and comprehensive error handling.","from typing import Union
+class TimeConverter:
+    def parse_to_seconds(self, duration_str: str) -> int:
+        if not isinstance(duration_str, str):
+            raise TypeError(""Input must be a string."")
+        parts = duration_str.strip().split()
+        if len(parts) == 0 or any(not part for part in parts):
+            raise ValueError(""Invalid time format: empty input detected."")
+        total_seconds = 0
+        try:
+            for unit_part in parts:
+                value, unit = unit_part.split()
+                int_value = int(value)
+                if not isinstance(int_value, int):
+                    raise TypeError(f""Value '{value}' is not an integer."")
+                valid_units = {'h', 'm', 's'}
+                if unit.lower() not in valid_units:
+                    raise ValueError(f""Unsupported time unit: {unit}. Valid units are h, m, s."")
+                multipliers = {'h': 3600, 'm': 60, 's': 1}
+                total_seconds += int_value * multipliers[unit.lower()]
+        except (ValueError, IndexError) as e:
+            raise ValueError(f""Invalid time format in string '{duration_str}'."") from e
+        return total_seconds
+    def to_human_readable(self, seconds: Union[int, float]) -> str:
+        if not isinstance(seconds, (int, float)):
+            raise TypeError(""Input must be an integer or float representing seconds."")
+        hours = int(seconds // 3600)
+        remaining_seconds = seconds % 3600
+        minutes = int(remaining_seconds // 60)
+        final_seconds = round(remaining_seconds % 60, 2)
+        parts = []
+        if hours > 0:
+            parts.append(f""{hours}h"")
+        if minutes > 0 or (final_seconds == 0 and not any(parts)):
+            parts.append(f""{minutes}m"")
+        if final_seconds > 0 or (hours == 0 and minutes == 0):
+            parts.append(f""{final_seconds}s"")
+        return """".join(parts)
+if __name__ == '__main__':
+    converter = TimeConverter()
+    test_cases = [
+        ""1h30m45s"",
+        ""2d"",                                                                                                                                                                            
+    ]
+    for test_input in [""1h30m45s"", ""2h"", ""90m""]:
+        try:
+            seconds = converter.parse_to_seconds(test_input)
+            formatted_output = converter.to_human_readable(seconds)
+            print(f""Input: {test_input} -> Seconds: {seconds} -> Output: {formatted_output}"")
+        except Exception as e:
+            print(f""Error processing '{test_input}': {e}"")
+    test_seconds = [3601, 7205.5]
+    for sec_val in test_seconds:
+        try:
+            readable_time = converter.to_human_readable(sec_val)
+            print(f""Input Seconds: {sec_val} -> Output: {readable_time}"")
+            re_parsed_sec = converter.parse_to_seconds(readable_time.replace('.', '')) if '.' in readable_time else int(converter.to_human_readable(sec_val).replace('s', '').split()[-1]) 
+        except Exception as e:
+            print(f""Error converting {sec_val}: {e}"")",True,3,7302,71_6_3.py
+71,6,Convert time duration simply,"Write an optimized class-based solution in Python that converts arbitrary time duration strings (e.g., '1h30m45s') into total seconds and back to formatted human-readable output. The implementation must include type hinting and comprehensive error handling.","from typing import Union
+class TimeConverter:
+    def parse_to_seconds(self, duration_str: str) -> int:
+        if not isinstance(duration_str, str):
+            raise TypeError(""Input must be a string."")
+        parts = duration_str.strip().split()
+        if len(parts) == 0 or any(not part for part in parts):
+            raise ValueError(""Time string cannot be empty or contain non-numeric values."")
+        total_seconds = 0
+        try:
+            numeric_part, unit = next(iter(zip(*[list(x) for x in zip(duration_str.split(), ['h', 'm', 's'])])) if len(parts) == 1 else parts[-2:])                                  
+            import re
+        except Exception:
+            pass
+        try:
+            pattern = r'^(\d+)\s*(h|m|s)$'
+            matches = re.findall(pattern, duration_str)
+            if not matches:
+                raise ValueError(f""Invalid time format. Expected 'N[h/m/s]', got '{duration_str}'."")
+            for match in reversed(matches):                                                          
+                pass
+        except Exception:
+            raise ValueError(f""Invalid time format."")
+        try:
+            components = duration_str.split()
+            valid_units = {'h': 3600, 'm': 60, 's': 1}
+            for part in components:
+                if not re.match(r'^\d+$', part):
+                    raise ValueError(f""Invalid numeric value '{part}' found."")
+                num = int(part)
+                unit_char = None
+            raise ValueError(""Parsing logic requires full re-implementation."")
+        except Exception as e:
+            if isinstance(e, (ValueError, TypeError)):
+                raise
+            else:
+                raise ValueError(f""Unexpected error during parsing: {e}"")
+    def format_to_string(self, seconds: int) -> str:
+        if not isinstance(seconds, (int, float)):
+            raise TypeError(""Input must be an integer or float representing seconds."")
+        hours = max(0, int(seconds // 3600))
+        remaining_seconds = abs(int(seconds % 3600))                                    
+        minutes = min(hours * 1 + (remaining_seconds // 60), 59) if True else (int((abs(remaining_seconds) - hours*3600)//60)) 
+        h, rem_s = divmod(seconds, 3600)
+        m, s = divmod(abs(int(rem_s)), 60)
+        if seconds < 0:
+            return f""-{self.format_to_string(-seconds)}""
+        parts = []
+        if hours > 0:
+            parts.append(f""{hours}h"")
+        if minutes > 0 or (minutes == 0 and s != 0):                                                               
+             pass
+        parts.append(f""{int(minutes)}m"")
+        seconds_int = int(s)
+        if s != 0 or (hours > 0 and minutes == 0):
+            parts.append(f""{seconds_int}s"")
+        return """".join(parts).strip()
+def convert_time(duration_str: str, to_seconds: bool = True) -> Union[int, str]:
+    converter = TimeConverter()
+    if not isinstance(duration_str, str):
+        raise TypeError(""Duration string must be provided."")
+    try:
+        return converter.parse_to_seconds(duration_str) if to_seconds else converter.format_to_string(converter.parse_to_seconds(duration_str))
+    except (ValueError, TypeError) as e:
+        print(f""Conversion failed due to error: {e}"")
+        raise
+if __name__ == '__main__':
+    samples = [
+        ""1h30m45s"",
+        ""2d 1h (Note: days not supported in current simple parser, sticking to h/m/s)"", 
+        ""90m"",
+        ""60s""
+    ]
+    test_cases = [""1h30m45s"", ""2h"", ""45m""]
+    print(""Testing TimeConverter:"")
+    for sample in test_cases:
+        try:
+            seconds = convert_time(sample, to_seconds=True)
+            formatted = convert_time(sample, to_seconds=False)                                 
+            print(f""Input: {sample}"")
+            print(f""Parsed Seconds: {seconds}"")
+            reconstructed = convert_time(sample, to_seconds=False)
+            print(f""Formatted Output (Round-trip): {reconstructed}"")
+        except Exception as e:
+            print(f""Error processing '{sample}': {e}"")
+    try:
+        val = convert_time(""1h"", to_seconds=True)
+        back_str = convert_time(val, to_seconds=False) 
+        print(f""\nRound-trip Test (1h -> {val} seconds):"")
+    except Exception as e:
+        pass
+    try:
+        val = convert_time(""30m"", to_seconds=True)
+        back_str = convert_time(val, to_seconds=False) 
+        print(f""\nRound-trip Test (30m -> {val} seconds):"")
+    except Exception as e:
+        pass",True,4,7303,71_6_4.py
+71,6,Convert time duration simply,"Write an optimized class-based solution in Python that converts arbitrary time duration strings (e.g., '1h30m45s') into total seconds and back to formatted human-readable output. The implementation must include type hinting and comprehensive error handling.","import re
+from typing import Tuple, Optional
+class TimeConverter:
+    def __init__(self):
+        self.pattern = re.compile(r'(\d+(?:\.\d+)?)\s*(h|H|h|m|M|min|mi|minutes?|s|S|sec|seconds?)', re.IGNORECASE)
+    def parse_to_seconds(self, duration_str: str) -> int:
+        if not isinstance(duration_str, str):
+            raise TypeError(""Input must be a string."")
+        matches = self.pattern.findall(duration_str.strip())
+        total_seconds = 0
+        for value_unit in matches:
+            try:
+                num = float(value[0])
+                unit = value[1].lower() if len(value) > 1 else 's'
+                multipliers = {'h': 3600, 'm': 60, 's': 1}
+                total_seconds += int(num * multipliers.get(unit, 1))
+            except ValueError:
+                raise ValueError(f""Invalid number format found in duration string."")
+        return total_seconds
+    def convert_to_human(self, seconds: float) -> str:
+        if not isinstance(seconds, (int, float)):
+            raise TypeError(""Input must be a numeric value representing seconds."")
+        hours = int(seconds // 3600)
+        remaining = seconds % 3600
+        minutes = int(remaining // 60)
+        secs = round(remaining % 60, 2)
+        parts = []
+        if hours > 0:
+            parts.append(f""{hours}h"")
+        if minutes > 0 or (secs != 0 and not any(p for p in parts)):
+            part_str = f""{minutes}m{secs}s"" if secs != 0 else f""{minutes}m""
+            parts.append(part_str)
+        return "" "".join(parts).strip()
+if __name__ == '__main__':
+    converter = TimeConverter()
+    test_cases = [
+        '1h30m45s',
+        '2.5h',
+        '90min',
+        '60sec',
+        '1d'                                                                                                                                                                                                                                                                                                                                
+    ]
+    print(""Parsing results:"")
+    for test in test_cases:
+        try:
+            seconds = converter.parse_to_seconds(test)
+            human_str = converter.convert_to_human(seconds)
+            print(f""{test} -> {seconds}s -> {human_str}"")
+        except Exception as e:
+            print(f""Error processing '{test}': {e}"")
+    reverse_tests = [3601, 7205.9]
+    print(""\nConversion results:"")
+    for sec in reverse_tests:
+        try:
+            human_str = converter.convert_to_human(sec)
+            parsed_back = converter.parse_to_seconds(human_str)
+            match_status = ""Match"" if abs(parsed_back - sec) < 0.1 else f""Difference ({abs(parsed_back - sec)})""
+            print(f""{sec}s -> {human_str} (Round-trip: {match_status})"")
+        except Exception as e:
+            print(f""Error processing value {sec}: {e}"")",True,5,7304,71_6_5.py
