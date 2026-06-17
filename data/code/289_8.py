@@ -1,0 +1,33 @@
+import sys
+def convert_distance(value, unit):
+    conversions = {
+        'm': 0.001,
+        'km': 1.0,
+        'cm': 0.00001,
+        'mm': 0.000001,
+        'mi': 1.60934,
+        'yd': 0.9144,
+        'ft': 0.3048,
+        'in': 0.0254
+    }
+    if unit in conversions:
+        return value * conversions[unit]
+    else:
+        raise ValueError(f"Unsupported unit: {unit}")
+if __name__ == '__main__':
+    sample_distances = [
+        (1000, 'm'),
+        (5, 'mi'),
+        (120000, 'cm'),
+        (10, 'km')
+    ]
+    for distance, unit in sample_distances:
+        try:
+            result_km = convert_distance(distance, unit)
+            print(f"Input: {distance} {unit}")
+            print(f"Output: {result_km:.4f} km")
+            print("-" * 20)
+        except ValueError as e:
+            print(f"Error processing {distance} {unit}: {e}", file=sys.stderr)
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}", file=sys.stderr)

@@ -1,0 +1,27 @@
+def find_min_max(data):
+    if not data:
+        return None, None
+    minimum = data[0]
+    maximum = data[0]
+    for x in data:
+        if x < minimum:
+            minimum = x
+        if x > maximum:
+            maximum = x
+    return minimum, maximum
+if __name__ == '__main__':
+    sample_list = [15, 3, 88, 42, 9, 71]
+    minimum_val, maximum_val = find_min_max(sample_list)
+    print(f"List: {sample_list}")
+    print(f"Minimum: {minimum_val}")
+    print(f"Maximum: {maximum_val}")
+    sample_tuple = (100, 50, 200, 10, 150)
+    minimum_val_t, maximum_val_t = find_min_max(sample_tuple)
+    print(f"\nTuple: {sample_tuple}")
+    print(f"Minimum: {minimum_val_t}")
+    print(f"Maximum: {maximum_val_t}")
+    empty_list = []
+    minimum_val_e, maximum_val_e = find_min_max(empty_list)
+    print(f"\nEmpty List: {empty_list}")
+    print(f"Minimum: {minimum_val_e}")
+    print(f"Maximum: {maximum_val_e}")

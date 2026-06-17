@@ -1,0 +1,12 @@
+import datetime
+def convert_date_format(date_string):
+    try:
+        date_obj = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        new_format = date_obj.strftime('%m/%d/%Y')
+        return new_format
+    except ValueError:
+        return "Error: Invalid date format. Please use YYYY-MM-DD."
+if __name__ == '__main__':
+    sample_date = "2023-10-27"
+    converted_date = convert_date_format(sample_date)
+    print(converted_date)
