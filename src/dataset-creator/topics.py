@@ -4,8 +4,7 @@ import re
 import pandas as pd
 
 from ollama import ollama_generate 
-from path_config import DATA_DIR
-
+DATA_DIR = "data2"
 TOPICS_FILE = DATA_DIR / "topics.csv"
 
 TOPICS_TEMPERATURES = [i * 0.05 for i in range(21)]

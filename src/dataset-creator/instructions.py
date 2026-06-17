@@ -5,8 +5,7 @@ import re
 import pandas as pd
 from tqdm import tqdm
 from ollama import ollama_generate
-from path_config import DATA_DIR
-
+DATA_DIR = "data2"
 INSTR_FILE = DATA_DIR / "instructions.csv"
 
 INSTRUCTION_TEMPERATURES = [i * 0.05 for i in range(21)]

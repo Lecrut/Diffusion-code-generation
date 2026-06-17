@@ -5,8 +5,8 @@ import json
 import subprocess
 import platform
 from threading import Lock
-from path_config import DATA_DIR
 
+DATA_DIR = "data2"
 
 OLLAMA_URL = "http://localhost:11434"
 # MODEL = "gemma4:e2b" - Default model 
