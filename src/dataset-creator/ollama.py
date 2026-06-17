@@ -10,7 +10,7 @@ DATA_PATH = "data2"
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 MODEL = "qwen3.5:9b"
 CACHE_FILE = "cache.json"
-REQUEST_TIMEOUT = 60
+REQUEST_TIMEOUT = 300
 
 os.makedirs(DATA_PATH, exist_ok=True)
 session = requests.Session()
