@@ -1,0 +1,10 @@
+import sys
+def main():
+    text = "Hello World Python Programming"
+    words = text.split()
+    print(f"Original string: {text}")
+    print(f"Split result ({len(words)} items):")
+    for i, word in enumerate(words, 1):
+        print(f"{i}. '{word}'")
+if __name__ == '__main__':
+    main()
