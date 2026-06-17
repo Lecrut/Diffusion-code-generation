@@ -5,9 +5,9 @@ import re
 import pandas as pd
 from tqdm import tqdm
 from ollama import ollama_generate
-from path_config import DATA_DIR
+from path_config import DATA_PATH
 
-INSTR_FILE = DATA_DIR / "instructions.csv"
+INSTR_FILE = DATA_PATH / "instructions.csv"
 
 INSTRUCTION_TEMPERATURES = [i * 0.05 for i in range(21)]
 
@@ -26,7 +26,7 @@ INSTRUCTIONS_PROMPT_TEMPLATE = (
     "]\n"
 )
 
-os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(DATA_PATH, exist_ok=True)
 
 def _normalize_instr(s: str) -> str:
     s = s.strip().lower()

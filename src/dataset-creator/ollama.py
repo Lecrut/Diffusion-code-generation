@@ -5,7 +5,7 @@ import json
 import subprocess
 import platform
 from threading import Lock
-from path_config import DATA_DIR
+from path_config import DATA_PATH
 
 
 OLLAMA_URL = "http://localhost:11434"
@@ -15,7 +15,7 @@ MODEL = "qwen3.5:4b"
 
 CACHE_FILE = "cache.json"
 
-os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(DATA_PATH, exist_ok=True)
 session = requests.Session()
 ollama_lock = Lock()
 
