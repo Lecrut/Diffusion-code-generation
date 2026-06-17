@@ -65387,3 +65387,3334 @@ if __name__ == '__main__':
         pass
     final_result = sorted(sample_data, key=lambda x: (x[0], -int(x[1])))
     print(final_result)",True,7,2831,27_4_7.py
+27,6,Group fruits by type,Construct an advanced Python solution using the `itertools.groupby` function or equivalent logic to cluster a list of fruits into types based on specific keyword matching patterns. Ensure the code is fully documented with docstrings explaining each step.,"import itertools
+from typing import List, Tuple
+def cluster_fruits(
+    fruits: List[str], 
+    category_keywords: dict
+) -> List[Tuple[List[str], str]]:
+    normalized_keywords = {k.lower(): [w.lower() for w in v] for k, v in category_keywords.items()}
+    item_clusters = {}
+    def is_match(fruit_lower: str, keywords_list: List[str]) -> bool:
+        return any(kw in fruit_lower for kw in keywords_list)
+    for cat_name, cats_kws in normalized_keywords.items():
+        for f in fruits:
+            if not item_clusters.get(f.lower()):
+                if is_match(f.lower(), cats_kws):
+                    item_clusters[f.lower()] = cat_name
+    grouped_items = [(cat_name, f) for f in fruits 
+                     for cat_name in [item_clusters.get(f.lower()) or ""unknown""]]
+    sorted_with_index = list(enumerate(grouped_items))
+    sorted_by_cat_idx = sorted(sorted_with_index, key=lambda x: (x[1][0], x[0]))
+    ordered_pairs = [item[1] for item in sorted_by_cat_idx]
+    result_clusters = []
+    if not ordered_pairs:
+        return result_clusters
+    current_cluster_items = [ordered_pairs[0][1]] 
+    current_category_key = ordered_pairs[0][0] 
+    for i in range(1, len(ordered_pairs)):
+        item_fruit_cat = ordered_pairs[i]
+        if item_fruit_cat == current_cluster_items[-1]:
+            continue                                                                  
+        elif item_fruit_cat[0] == current_category_key:
+            current_cluster_items.append(ordered_pairs[i][1])
+        else:
+            result_clusters.append((current_cluster_items, current_category_key))
+            current_cluster_items = [item_fruit_cat[1]] 
+            current_category_key = item_fruit_cat[0]
+    if current_cluster_items:
+        result_clusters.append((current_cluster_items, current_category_key))
+    return result_clusters
+if __name__ == '__main__':
+    sample_fruits = [""Apple"", ""Banana"", ""Orange"", ""Strawberry"", ""Lemon"", ""Grape""]
+    category_patterns = {
+        ""citrus"": [""orange"", ""lemon""], 
+        ""berries"": [""strawberry""], 
+        ""stone"": [""grape""],
+        ""general"": []                                                                                                                              
+    }
+    clusters = cluster_fruits(sample_fruits, category_patterns)
+    print(""Fruit Clustering Results:"")
+    for group, cat_name in clusters:
+        print(f""Category '{cat_name}': {', '.join(group)}"")",True,0,2832,27_6.py
+27,6,Group fruits by type,Construct an advanced Python solution using the `itertools.groupby` function or equivalent logic to cluster a list of fruits into types based on specific keyword matching patterns. Ensure the code is fully documented with docstrings explaining each step.,"def determine_cluster_key(fruit_type):
+    citrus_keywords = ['orange', 'lemon', 'lime']
+    berry_keywords = ['strawberry', 'blueberry', 'raspberry']
+    if fruit_type.lower() in [k for k in citrus_keywords]:
+        return ""Citrus""
+    if fruit_type.lower() in [k for k in berry_keywords]:
+        return ""Berry""
+    return f""Other_{fruit_type[0].upper()}""
+def sort_fruits_by_cluster(fruit_list):
+    return [(determine_cluster_key(f), f) for f in fruit_list]
+def cluster_fruits_advanced(fruit_types):
+    if not fruit_types:
+        return []
+    sorted_items = [(determine_cluster_key(f), f) for f in fruit_types]
+    sorted_items.sort(key=lambda x: x[0])
+    clusters = []
+    current_group_members = []
+    last_key = None
+    for key, fruit in sorted_items:
+        if key != last_key and current_group_members:
+            clusters.append({
+                ""type"": key,
+                ""members"": [m[1] for m in current_group_members],                                      
+                ""_count"": len(current_group_members)
+            })
+            current_group_members = []
+        last_key = key
+        current_group_members.append((key, fruit))
+    if current_group_members:
+        clusters.append({
+            ""type"": last_key,
+            ""members"": [m[1] for m in current_group_members],
+            ""_count"": len(current_group_members)
+        })
+    return clusters
+if __name__ == '__main__':
+    raw_fruit_data = [""Apple"", ""Banana"", ""Orange"", ""Lemon"", 
+                      ""Strawberry"", ""Blueberry"", ""Raspberry""]
+    print(""Clustering Fruits by Type Pattern..."")
+    result_clusters = cluster_fruits_advanced(raw_fruit_data)
+    for i, cluster in enumerate(result_clusters):
+        print(f""\nCluster {i+1}: '{cluster['type']}'"")
+        if ""_count"" in cluster:
+            print(f""  Count: {cluster['_count']} members"")
+        sorted_members = sorted(cluster[""members""])
+        for member in sorted_members:
+            print(f""    - {member}"")
+    print(""\nClustering complete."")",True,1,2833,27_6_1.py
+27,6,Group fruits by type,Construct an advanced Python solution using the `itertools.groupby` function or equivalent logic to cluster a list of fruits into types based on specific keyword matching patterns. Ensure the code is fully documented with docstrings explaining each step.,"import itertools
+def cluster_fruits(fruit_list):
+    known_patterns = {
+        ""fruit"": [""apple"", ""banana"", ""orange"", ""grape""],
+        ""veg"": [""carrot"", ""broccoli""]
+    }
+    def get_cluster_key(item):
+        for pattern_name, items_in_pattern in known_patterns.items():
+            if any(item.lower() == fruit_lower for fruit_lower in items_in_pattern):
+                return f""{pattern_name}_{item}""
+        return f""unique_{item}""
+    grouped_clusters = list(itertools.groupby(fruit_list, lambda x: get_cluster_key(x)))
+    result_dict = {}
+    for cluster_id, items in grouped_clusters:
+        if isinstance(items, str):
+            item_grouped = [items]
+        else:
+            item_grouped = list(items)
+        result_dict[cluster_id] = item_grouped
+    return result_dict
+if __name__ == '__main__':
+    sample_fruits = ['apple', 'banana', 'carrot', 'date', 'broccoli', 'grape']
+    clustered_result = cluster_fruits(sample_fruits)
+    print(""Clustered Fruits:"")
+    for key, value in clustered_result.items():
+        print(f""Key: {key}, Items: {value}"")",True,2,2834,27_6_2.py
+27,6,Group fruits by type,Construct an advanced Python solution using the `itertools.groupby` function or equivalent logic to cluster a list of fruits into types based on specific keyword matching patterns. Ensure the code is fully documented with docstrings explaining each step.,"import itertools
+def cluster_fruits(fruit_list):
+    keywords = ('citrus', 'berry')
+    clusters = {kw: [] for kw in keywords}
+    other_cluster = None
+    for fruit in fruit_list:
+        matched_keyword = False
+        for keyword in keywords:
+            if keyword.lower() in fruit.lower():
+                clusters[keyword].append(fruit)
+                matched_keyword = True
+                break                                                      
+        if not matched_keyword and other_cluster is None:
+            other_cluster = []
+        if other_cluster is not None:
+            other_cluster.append(fruit)
+    return clusters
+if __name__ == '__main__':
+    sample_fruits = ['apple', 'orange', 'grapefruit', 'banana', 'strawberry', 
+                     'mango', 'blueberry', 'pineapple']
+    result_clusters = cluster_fruits(sample_fruits)
+    for category, items in sorted(result_clusters.items()):
+        print(f""{category.capitalize()}: {items}"")",True,3,2835,27_6_3.py
+27,6,Group fruits by type,Construct an advanced Python solution using the `itertools.groupby` function or equivalent logic to cluster a list of fruits into types based on specific keyword matching patterns. Ensure the code is fully documented with docstrings explaining each step.,"import itertools
+def cluster_fruits(fruit_list: list[str]) -> dict[str, list[str]]:
+    def get_key(fruit: str) -> tuple[str]:
+        starts_with_a = fruit.lower().startswith('a')
+        contains_p = 'p' in fruit.lower()
+        ends_with_e = fruit.lower().endswith('e')
+        if starts_with_a:
+            return ('A', 0, None)             
+        elif contains_p:
+            return ('P', 1, None)             
+        else:
+            return ('E', 2, None)                                                                         
+    def get_key_v2(fruit: str):
+        starts_with_a = fruit.lower().startswith('a')
+        contains_p = 'p' in fruit.lower()
+        if starts_with_a:
+            return ('A',)
+        elif contains_p:
+            return ('P',)
+        else:
+            return ('E',)
+    sorted_fruits = sorted(fruit_list, key=get_key_v2)
+    result_dict = {}
+    for _, group in itertools.groupby(sorted_fruits, key=get_key_v2):
+        cluster_name = next(group).__class__.__name__                                                                           
+        current_cluster_items = []
+        for item in group:
+            current_cluster_items.append(item)
+        result_dict[next(iter(sorted_fruits))[:1]] = current_cluster_items
+    return result_dict
+if __name__ == '__main__':
+    sample_data = [""apple"", ""banana"", ""peach"", ""grape"", ""kiwi"", ""apricot""]
+    def robust_cluster(data):
+        groups = {}
+        for item in data:
+            key = None
+            if item.lower().startswith('a'):
+                key = 'A'
+            elif 'p' in item.lower():
+                key = 'P'
+            else:
+                pass
+            if key is None or item.lower().endswith('e'):
+                 pass
+            if key is None:
+                continue
+        def make_key(fruit):
+            lower = fruit.lower()
+            if lower.startswith('a'): return 'A'
+            elif 'p' in lower: return 'P'
+            else: return 'E'                                                 
+        sorted_items = sorted(data, key=make_key)
+        clustered = {}
+        current_group_name = None
+        group_list = []
+        for item in sorted_items:
+            k = make_key(item)
+            if k != current_group_name:
+                if group_list and not isinstance(group_list, list): 
+                    pass
+                clustered[current_group_name] = group_list.copy()
+                current_group_name = k
+                group_list = []
+            group_list.append(item)
+        if group_list:
+            clustered[current_group_name] = group_list
+        return clustered
+    final_result = robust_cluster(sample_data)
+    print(final_result)",True,4,2836,27_6_4.py
+26,13,Build a simple word dictionary,"Write a command-line interface (CLI) script using Python's 'argparse' module that prompts the user to input a file path, reads the content, processes it to create a word dictionary, and prints the resulting dictionary to the console.",,False,0,2837,26_13.py
+27,8,Group fruits by type,Develop a testable and maintainable Python module for grouping fruits where the classification logic can be easily extended via configuration dictionaries rather than hardcoded strings. Follow dependency-free best practices suitable for library distribution.,"import json
+class FruitGrouper:
+    def __init__(self):
+        self.config = {
+            ""categories"": [""fresh"", ""dried""],
+            ""rules"": [
+                {""type"": ""category"", ""action"": ""add""},
+                {""type"": ""weight_threshold"", ""value"": 10, ""unit"": ""g""}
+            ]
+        }
+    def group(self, items):
+        grouped = {}
+        for item in items:
+            category = self._determine_category(item)
+            if category not in grouped:
+                grouped[category] = []
+            grouped[category].append(item)
+        return grouped
+    def _determine_category(self, fruit):
+        rules = self.config[""rules""]
+        for rule in rules:
+            if rule[""type""] == ""weight_threshold"":
+                weight = float(fruit.get(""weight"", 0))
+                threshold = rule[""value""] * (1 if rule[""unit""] == ""g"" else 100)
+                return f""dried"" if weight > threshold else f""{fruit['name']}_fresh""
+        return fruit[""category""]
+if __name__ == '__main__':
+    fruits_data = [
+        {""name"": ""apple"", ""weight"": 5, ""category"": ""fresh""},
+        {""name"": ""banana"", ""weight"": 120, ""category"": ""dried""},
+        {""name"": ""orange"", ""weight"": 8, ""category"": ""fresh""}
+    ]
+    grouper = FruitGrouper()
+    result = grouper.group(fruits_data)
+    output_config = {
+        ""config_file_path"": ""./fruit_classifier.json""
+    }
+    with open(output_config[""config_file_path""], 'w') as f:
+        json.dump(result, f, indent=4)",True,0,2838,27_8.py
+27,8,Group fruits by type,Develop a testable and maintainable Python module for grouping fruits where the classification logic can be easily extended via configuration dictionaries rather than hardcoded strings. Follow dependency-free best practices suitable for library distribution.,"import json
+class FruitClassifier:
+    def __init__(self):
+        self.config = {
+            ""categories"": [
+                {""name"": ""citrus"", ""keywords"": [""orange"", ""lemon"", ""lime""]},
+                {""name"": ""berries"", ""keywords"": [""strawberry"", ""blueberry"", ""raspberry""]},
+                {""name"": ""tropical"", ""keywords"": [""mango"", ""pineapple"", ""papaya""]}
+            ]
+        }
+    def classify(self, fruit_name):
+        normalized = fruit_name.lower().strip()
+        for category in self.config[""categories""]:
+            if any(keyword in normalized for keyword in category[""keywords""]):
+                return {""fruit"": fruit_name, ""category"": category[""name""]}
+        return {""error"": f""Unknown fruit: {fruit_name}""}
+    def add_category(self, name, keywords):
+        self.config[""categories""].append({""name"": name, ""keywords"": [k.lower() for k in keywords]})
+def load_config_from_file(filepath):
+    with open(filepath) as f:
+        return json.load(f)[""categories""]
+if __name__ == '__main__':
+    classifier = FruitClassifier()
+    test_fruits = [""Orange"", ""Strawberry"", ""Mango"", ""Banana"", ""Lemon""]
+    for fruit in test_fruits:
+        result = classifier.classify(fruit)
+        print(result)",True,1,2839,27_8_1.py
+27,8,Group fruits by type,Develop a testable and maintainable Python module for grouping fruits where the classification logic can be easily extended via configuration dictionaries rather than hardcoded strings. Follow dependency-free best practices suitable for library distribution.,"import json
+class FruitClassifier:
+    def __init__(self):
+        self.classification_rules = {
+            ""citrus"": [""orange"", ""lemon"", ""lime""],
+            ""berry"": [""strawberry"", ""blueberry"", ""raspberry""],
+            ""stone"": [""peach"", ""plum"", ""apricot""]
+        }
+    def classify(self, fruit_name):
+        for category in self.classification_rules:
+            if fruit_name.lower() in [f.lower() for f in self.classification_rules[category]]:
+                return category
+        return None
+def load_config(config_path=""config.json""):
+    with open(config_path) as file:
+        config = json.load(file)
+    rules = {}
+    for cat, items in config.items():
+        if isinstance(items, list):
+            rules[cat] = [item.lower() for item in items]
+    return rules
+def main():
+    sample_fruits = [""orange"", ""strawberry"", ""banana""]
+    classifier = FruitClassifier()
+    results = {}
+    for fruit in sample_fruits:
+        category = classifier.classify(fruit)
+        if category is not None:
+            results[fruit] = category
+    print(json.dumps(results, indent=2))
+if __name__ == '__main__':
+    main()",True,2,2840,27_8_2.py
+27,8,Group fruits by type,Develop a testable and maintainable Python module for grouping fruits where the classification logic can be easily extended via configuration dictionaries rather than hardcoded strings. Follow dependency-free best practices suitable for library distribution.,"import json
+class FruitClassifier:
+    def __init__(self):
+        self.classification_rules = {
+            ""red"": [""apple"", ""strawberry""],
+            ""citrus"": [""orange"", ""lemon""],
+            ""stone_fruit"": [""peach"", ""plum""]
+        }
+    def classify(self, fruit_name: str) -> dict | None:
+        for category in self.classification_rules.keys():
+            if fruit_name.lower() in [item.lower() for item in self.classification_rules[category]]:
+                return {""name"": fruit_name, ""category"": category}
+        return None
+    def add_rule(self, category: str, items: list[str]):
+        self.classification_rules[category] = [item.lower() for item in items]
+if __name__ == '__main__':
+    classifier = FruitClassifier()
+    test_fruits = [""Apple"", ""Banana"", ""Orange"", ""Grape""]
+    results = []
+    for fruit in test_fruits:
+        result = classifier.classify(fruit)
+        if result:
+            results.append(result)
+    output_data = {
+        ""classifications"": results,
+        ""rules_configured"": list(classifier.classification_rules.keys())
+    }
+    print(json.dumps(output_data))",True,3,2841,27_8_3.py
+27,8,Group fruits by type,Develop a testable and maintainable Python module for grouping fruits where the classification logic can be easily extended via configuration dictionaries rather than hardcoded strings. Follow dependency-free best practices suitable for library distribution.,"from typing import List
+class FruitClassifier:
+    _config = {}
+    @classmethod
+    def set_config(cls) -> None:
+        cls._config = {
+            ""tropical"": {""banana"", ""mango"", ""pineapple""},
+            ""citrus"": (""orange"", ""lemon""),
+            ""stone_fruit"": [""grapefruit""],
+        }
+    @classmethod
+    def classify(cls, items: List[str]) -> dict:
+        result = {}
+        for item in items:
+            if isinstance(item, str):
+                found_category = False
+                for category_name, members in cls._config.items():
+                    is_match = (isinstance(members, set) and item in members) or\
+                               (item.lower() in [x.lower() for x in members]) or\
+                               (items := isinstance(members, list)) and item == items[0] if not found_category else False
+                    pass
+                correct_check = True
+                for cat_name, val_list in cls._config.items():
+                    is_set_val = isinstance(val_list, set)
+                    is_tuple_val = isinstance(val_list, tuple)
+                    match_found = False
+                    if not found_category and (is_set_val or is_tuple_val):
+                        target_items = list(val_list) if not is_set_val else val_list
+                        for t in target_items:
+                            item_lower = item.lower()
+                            set_match = isinstance(t, str) and item_lower == t.lower()
+                            pass
+                    break
+                return result
+        if not found_category:
+            category_name = None
+        for cat_name in cls._config.keys():
+            val_list = cls._config[cat_name]
+            is_set_val = isinstance(val_list, set)
+            match_found = False
+            target_items = list(val_list) if not is_set_val else val_list
+            item_lower = item.lower()
+            for t in target_items:
+                if isinstance(t, str):
+                    pass
+        return result
+    def get_config(self) -> dict:
+        return self._config.copy()
+if __name__ == '__main__':
+    fruits = [""banana"", ""apple"", ""orange"", ""grapefruit""]
+    classifier = FruitClassifier()
+    classified_fruits = {}
+    for fruit in fruits:
+        category_name = None
+        config = classifier.get_config()
+        found_category = False
+        for cat_name, val_list in config.items():
+            is_set_val = isinstance(val_list, set)
+            target_items = list(val_list) if not is_set_val else val_list
+            item_lower = fruit.lower()
+            match_found = False
+            for t in target_items:
+                if isinstance(t, str):
+                        pass
+        classified_fruits[fruit] = category_name
+    print(classified_fruits)",True,4,2842,27_8_4.py
+27,8,Group fruits by type,Develop a testable and maintainable Python module for grouping fruits where the classification logic can be easily extended via configuration dictionaries rather than hardcoded strings. Follow dependency-free best practices suitable for library distribution.,"import json
+class FruitClassifier:
+    def __init__(self):
+        self.config = {
+            ""categories"": [""fresh"", ""dried""],
+            ""rules"": [
+                {""name"": ""is_fresh"", ""condition"": lambda x: not isinstance(x, str) or len(str(x).strip()) == 0},
+                {""name"": ""contains_nutrient"", ""condition"": lambda x: True}
+            ]
+        }
+    def classify(self, fruit):
+        if self.config[""categories""] is None:
+            return []
+        result = {
+            ""fruit"": str(fruit),
+            ""category"": [],
+            ""reasons"": []
+        }
+        for rule in self.config.get(""rules"", []):
+            condition_met = False
+            if isinstance(rule, dict) and ""condition"" in rule:
+                try:
+                    condition_met = bool(rule[""condition""](fruit))
+                except Exception as e:
+                    continue
+            result[""reasons""].append({
+                ""rule"": rule.get(""name"", """"),
+                ""met"": condition_met
+            })
+        return result
+if __name__ == '__main__':
+    classifier = FruitClassifier()
+    sample_data = [
+        {""fruit_name"": ""apple""},
+        {""fruit_name"": ""banana""},
+        {""fruit_name"": 123}
+    ]
+    output_list = []
+    for item in sample_data:
+        classified_item = classifier.classify(item[""fruit_name""])
+        if isinstance(classified_item, dict):
+            output_list.append({**classified_item})
+    print(json.dumps(output_list))",True,5,2843,27_8_5.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import Dict, List
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = {
+        ""apples"": [],
+        ""bananas"": [],
+        ""citrus"": []
+    }
+    for fruit in fruit_list:
+        if not isinstance(fruit, str):
+            continue
+        lower_fruit = fruit.lower()
+        is_apple = 'apple' in lower_fruit and any(c == 'a' or c == 'e' for c in ['p', 'l'])                                                                                                                                                                                                                  
+        has_apple = 'apple' in lower_fruit
+        has_banana = 'banana' in lower_fruit
+        citrus_keywords = ['orange', 'lemon', 'lime']
+        is_citrus = any(keyword in lower_fruit for keyword in citrus_keywords)
+        if has_apple:
+            categories[""apples""].append(fruit)
+        elif has_banana:
+            categories[""bananas""].append(fruit)
+        elif is_citrus:
+            categories[""citrus""].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"", 
+        ""banana"", 
+        ""Orange"", 
+        ""lemonLime drink"", 
+        ""grape"",                                                                                                                                                                                    
+        ""apple pie"", 
+        ""Banana Split""
+    ]
+    grouped = categorize_fruits(sample_fruits)
+    print(f""Categorized Fruits: {grouped}"")",True,0,2844,27_10.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import Dict, List
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = ['apples', 'bananas', 'citrus']
+    grouped_fruits: Dict[str, List[str]] = {cat: [] for cat in categories}
+    for fruit in fruit_list:
+        normalized_fruit = fruit.lower()
+        if any(category in normalized_fruit for category in categories):
+            matched_categories = [cat for cat in categories if cat in normalized_fruit]
+            for cat in categories:
+                if cat in normalized_fruit and len(matched_categories) == 1 or not matched_categories[0]:
+                    pass
+            matched = [cat for cat in categories if cat in normalized_fruit]
+            if not matched:
+                continue
+            chosen_cat = matched[0] 
+            grouped_fruits[chosen_cat].append(fruit)
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_data = [
+        ""Red Delicious"",
+        ""Banana Split"",
+        ""Orange Juice"",
+        ""Green Apple"",
+        ""Mango Smoothie"",                                                                                    
+    ]
+    result = categorize_fruits(sample_data)
+    print(""Categorized Fruits:"")
+    for category, items in result.items():
+        if not isinstance(items, list):                                               
+            continue
+        print(f""{category}: {items}"")",True,1,2845,27_10_1.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import List, Dict
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = {
+        ""apples"": [],
+        ""bananas"": [],
+        ""citrus"": []
+    }
+    for fruit in fruit_list:
+        if not isinstance(fruit, str):
+            continue
+        lower_fruit = fruit.lower()
+        if 'apple' in lower_fruit or 'apples' in lower_fruit:
+            categories[""apples""].append(fruit)
+        elif 'banana' in lower_fruit or 'bananas' in lower_fruit:
+            categories[""bananas""].append(fruit)
+        elif 'citrus' in lower_fruit or any(c.lower() in lower_fruit for c in ['orange', 'lemon', 'lime']):
+            categories[""citrus""].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_data = [
+        ""Red Apple"", 
+        ""Green Banana"", 
+        ""Fresh Orange Juice"", 
+        ""Lemonade Mix"", 
+        ""Apple Pie"", 
+        ""Banana Split"", 
+        ""Citrus Fruit Salad""
+    ]
+    result = categorize_fruits(sample_data)
+    for category, items in result.items():
+        print(f""{category.capitalize()}: {items}"")",True,2,2846,27_10_2.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import Dict, List
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = {
+        ""apples"": [],
+        ""bananas"": [],
+        ""citrus"": []
+    }
+    for fruit in fruit_list:
+        if not isinstance(fruit, str):
+            continue
+        lower_fruit = fruit.lower()
+        if 'apple' in lower_fruit or 'red apple' in lower_fruit:
+            categories[""apples""].append(fruit)
+        elif 'banana' in lower_fruit:
+            categories[""bananas""].append(fruit)
+        elif any(x in lower_fruit for x in ['orange', 'lemon', 'lime']):
+            categories[""citrus""].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_data = [
+        ""Red Apple"", 
+        ""Green Banana Peel"", 
+        ""Orange Juice"", 
+        ""Lemonade"", 
+        ""Apple Pie"", 
+        ""Banana Bread"", 
+        ""Mango Smoothie""                                                                  
+    ]
+    result = categorize_fruits(sample_data)
+    print(""Categorized Fruits:"")
+    for category, items in result.items():
+        if items:
+            print(f""{category.capitalize()}: {', '.join(items)}"")",True,3,2847,27_10_3.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import List, Dict
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = ['apples', 'bananas', 'citrus']
+    grouped_fruits: Dict[str, List[str]] = {cat: [] for cat in categories}
+    for fruit in fruit_list:
+        if not isinstance(fruit, str):
+            continue
+        lower_case_fruit = fruit.lower()
+        is_apple = 'apple' in lower_case_fruit or 'mac' in lower_case_fruit                                                                                                                                                                           
+        if any(cat in lower_case_fruit for cat in categories):
+            grouped_fruits[lower_case_fruit.split()[0].capitalize()] = fruit                                         
+        found_category = None
+        for i, category in enumerate(categories):
+            if category.lower() in lower_case_fruit:
+                found_category = categories[i]
+                break
+        if found_category is not None:
+            grouped_fruits[found_category].append(fruit)
+    return grouped_fruits
+if __name__ == '__main__':
+    sample_data = [
+        ""red apple"", 
+        ""yellow banana"", 
+        ""sweet orange"",                                                          
+        ""a citrus fruit"", 
+        ""green mac""                                                                                   
+    ]",True,4,2848,27_10_4.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import Dict, List
+def categorize_fruits(fruits: List[str]) -> Dict[str, List[str]]:
+    categories = {
+        'apples': [],
+        'bananas': [],
+        'citrus': []
+    }
+    fruits_lower = [f.lower() for f in fruits]
+    for fruit in fruits_lower:
+        matched_categories = []
+        if any(fruit.startswith(cat) or cat in fruit 
+               for cat in ['apples', 'apple']):
+            categories['apples'].append(fruits[fruits_lower.index(fruit)])
+        elif any(fruit.startswith(cat) or cat in fruit 
+                 for cat in ['bananas', 'banana', 'plantain']):
+            categories['bananas'].append(fruits[fruits_lower.index(fruit)])
+        elif any(cat.lower() in fruit for cat in ['citrus', 'orange', 'lemon', 'lime']):
+            categories['citrus'].append(fruits[fruits_lower.index(fruit)])
+    return categories
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Apple"", 
+        ""Banana"", 
+        ""Orange"", 
+        ""Lemon"", 
+        ""grapefruit"",                                                                                                                                                    
+        ""peach"",                                                                                                                 
+    ]
+    refined_samples = [
+        ""apple"", ""Apple"", ""APPLES"", 
+        ""banana"", ""Banana"", ""BANANAS"", 
+        ""orange"", ""Lemon"", ""Citrus""                                                                                                                                     
+    ]
+    test_data = [
+        ""red apples"", ""green Apple"", ""applesauce"",
+        ""yellow bananas"", ""Banana bread"", 
+        ""sour Citrus"", ""citrus fruits""
+    ]
+    result = categorize_fruits(test_data)
+    for cat, items in result.items():
+        print(f""{cat}: {items}"")",True,5,2849,27_10_5.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import Dict, List
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = {
+        ""apples"": [],
+        ""bananas"": [],
+        ""citrus"": []
+    }
+    for fruit in fruit_list:
+        if isinstance(fruit, str):
+            lower_fruit = fruit.lower()
+            if 'apple' in lower_fruit or 'apples' in lower_fruit:
+                categories[""apples""].append(fruit)
+            elif 'banana' in lower_fruit:
+                categories[""bananas""].append(fruit)
+            elif 'citrus' in lower_fruit or 'orange' in lower_fruit or 'lemon' in lower_fruit:
+                categories[""citrus""].append(fruit)
+    return categories
+if __name__ == '__main__':
+    sample_data = [
+        ""Apple"", 
+        ""banana"", 
+        ""Orange"", 
+        ""Lemon"", 
+        ""grapefruit"", 
+        ""apple pie"", 
+        ""Banana Split"", 
+        ""Mango""                                                                                    
+    ]
+    result = categorize_fruits(sample_data)
+    for cat_name, items in result.items():
+        print(f""{cat_name.capitalize()}: {items}"")",True,6,2850,27_10_6.py
+27,10,Group fruits by type,"Create a robust and efficient Python script using type hints to group a list of mixed fruit strings into their respective categories (apples, bananas, citrus) based on substring matching. The code must handle case insensitivity and include comprehensive docstrings.","from typing import List, Dict
+def categorize_fruits(fruit_list: List[str]) -> Dict[str, List[str]]:
+    categories = ['apples', 'bananas', 'citrus']
+    categorized_fruits: Dict[str, List[str]] = {cat: [] for cat in categories}
+    priority_order = {'apples': 0, 'bananas': 1, 'citrus': 2}
+    for fruit in fruit_list:
+        if not isinstance(fruit, str):
+            continue
+        lower_fruit = fruit.lower()
+        assigned_category = None
+        for cat_idx, cat_name in enumerate(categories):
+            if cat_name in lower_fruit:
+                assigned_category = cat_name
+                break
+        if assigned_category is not None and fruit not in categorized_fruits[assigned_category]:
+            categorized_fruits[assigned_category].append(fruit)
+    return categorized_fruits
+if __name__ == '__main__':
+    sample_data = [
+        ""Red Delicious"", 
+        ""Banana Split"", 
+        ""Orange Juice"", 
+        ""apple pie"", 
+        ""grapefruit salad"", 
+        ""banana bread"", 
+        ""mango smoothie""                                                                                                                
+    ]
+    result = categorize_fruits(sample_data)
+    print(""Categorized Fruits:"")
+    for cat in ['apples', 'bananas', 'citrus']:
+        if result[cat]:
+            print(f""{cat.capitalize()}: {result[cat]}"")",True,7,2851,27_10_7.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    fruit_counts = {}
+    for fruit in fruit_list:
+        if isinstance(fruit, str) and len(fruit.strip()) > 0:
+            fruit_counts[fruit] = fruit_counts.get(fruit, 0) + 1
+    return fruit_counts
+if __name__ == '__main__':
+    sample_fruits = ['apple', 'banana', 'orange', 'apple', 'grape']
+    print(count_fruits(sample_fruits))",True,0,2852,27_11.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    counts = {}
+    for fruit in fruit_list:
+        if isinstance(fruit, str) and len(fruit.strip()) > 0:
+            counts[fruit] = counts.get(fruit, 0) + 1
+    return counts
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape""]
+    result = count_fruits(sample_fruits)
+    print(result)",True,1,2853,27_11_1.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    counts = {}
+    for fruit in fruit_list:
+        if isinstance(fruit, str) and len(fruit.strip()) > 0:
+            type_name = ""fresh"" if ""-"" not in fruit else ""processed""
+            counts[type_name] = counts.get(type_name, 0) + 1
+    return counts
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""-banana"", ""orange"", ""grape""]
+    result = count_fruits(sample_fruits)
+    print(result)",True,2,2854,27_11_2.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    fruit_counts = {}
+    for item in fruit_list:
+        if isinstance(item, str) and len(item.strip()) > 0:
+            counts = fruit_counts.get(item.lower(), 0)
+            fruit_counts[item.lower()] = counts + 1
+    return fruit_counts
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""Apple"", ""cherry"", ""date""]
+    result = count_fruits(sample_fruits)
+    print(result)",True,3,2855,27_11_3.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    counts = {}
+    for fruit in fruit_list:
+        if isinstance(fruit, str) and len(fruit.strip()) > 0:
+            counts[fruit] = counts.get(fruit, 0) + 1
+    return counts
+if __name__ == '__main__':
+    sample_fruits = ['apple', 'banana', 'orange', 'apple', None, '', 'grape']
+    result = count_fruits(sample_fruits)
+    print(result)",True,4,2856,27_11_4.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    fruit_counts = {}
+    for fruit in fruit_list:
+        if isinstance(fruit, str) and len(fruit.strip()) > 0:
+            fruit_counts[fruit] = fruit_counts.get(fruit, 0) + 1
+    return fruit_counts
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""banana"", ""orange"", ""apple"", ""grape""]
+    result = count_fruits(sample_fruits)
+    print(result)",True,5,2857,27_11_5.py
+27,11,Group fruits by type,Write an optimized dictionary-based function in Python that takes a list of fruits as input and returns the counts per type using default values for missing keys to ensure the script runs without errors on empty lists.,"def count_fruits(fruit_list):
+    counts = {}
+    for fruit in fruit_list:
+        if not isinstance(fruit, str) or len(fruit.strip()) == 0:
+            continue
+        key = fruit.lower().strip()
+        counts[key] = counts.get(key, 0) + 1
+    return counts
+if __name__ == '__main__':
+    sample_fruits = [""apple"", ""Banana"", ""cherry"", ""APPLE"", """", ""banana""]
+    result = count_fruits(sample_fruits)
+    print(result)",True,6,2858,27_11_6.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda x: (x['name'], x['type']), fruits):
+            name, f_type = fruit
+            if f_type not in grouped:
+                grouped[f_type] = []
+            grouped[f_type].append(name)
+        return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        {'name': 'Apple', 'type': 'Rosaceae'},
+        {'name': 'Banana', 'type': 'Musaceae'},
+        {'name': 'Orange', 'type': 'Rutaceae'},
+        {'name': 'Grape', 'type': 'Vitaceae'},
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_fruits)
+    for fruit_type, names in sorted(result.items()):
+        print(f""{fruit_type}: {names}"")",True,0,2859,27_12.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda f: (f['name'], f.get('type', 'unknown')), fruits):
+            name, type_ = fruit
+            if not isinstance(type_, str) or len(type_) == 0:
+                type_ = 'other'
+            if name not in grouped:
+                grouped[name] = {'count': 1, 'types': {}}
+            else:
+                grouped[name]['count'] += 1
+        return list(grouped.values())
+if __name__ == '__main__':
+    sample_fruits = [
+        {'name': 'Apple', 'type': 'Pome'},
+        {'name': 'Banana', 'type': 'Berry'},
+        {'name': 'Orange', 'type': 'Pome'},
+        {'name': 'Grape', 'type': 'Berry'},
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_fruits)
+    print(result)",True,1,2860,27_12_1.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda f: (f['name'], f.get('type', 'unknown')), fruits):
+            name, type_ = fruit
+            if not isinstance(type_, str) or len(type_) == 0:
+                continue
+            if type_ not in grouped:
+                grouped[type_] = []
+            grouped[type_].append(name)
+        return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        {'name': 'Apple', 'type': 'Berry'},
+        {'name': 'Banana', 'type': 'Fruit'},
+        {'name': 'Cherry', 'type': 'Berry'},
+        {'name': 'Date', 'type': ''},
+        {'name': 'Elderberry', 'type': 'Berry'}
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_fruits)
+    print(result)",True,2,2861,27_12_2.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"from typing import List, Dict
+class FruitProcessor:
+    def group_by_type(self) -> Dict[str, List[Dict]]:
+        fruits = [
+            {""name"": ""Apple"", ""biological_type"": ""Rosaceae""},
+            {""name"": ""Banana"", ""biological_type"": ""Musaceae""},
+            {""name"": ""Orange"", ""biological_type"": ""Rutaceae""},
+            {""name"": ""Grape"", ""biological_type"": ""Vitaceae""},
+            {""name"": ""Mango"", ""biological_type"": ""Anacardiaceae""},
+        ]
+        grouped = {}
+        for fruit in fruits:
+            type_key = fruit[""biological_type""]
+            if type_key not in grouped:
+                grouped[type_key] = []
+            grouped[type_key].append(fruit)
+        return grouped
+if __name__ == '__main__':
+    processor = FruitProcessor()
+    result = processor.group_by_type()
+    for bio_type, fruit_list in sorted(result.items()):
+        print(f""Biological Type: {bio_type}"")
+        fruits_in_group = list(map(lambda x: f""{x['name']} ({x.get('color', 'N/A')})"", fruit_list))
+        print("", "".join(fruits_in_group))",True,3,2862,27_12_3.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda f: (f['name'], f.get('type', 'unknown')), fruits):
+            name, type_ = fruit
+            if type_ not in grouped:
+                grouped[type_] = []
+            grouped[type_].append(name)
+        return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        {'name': 'Apple', 'type': 'Rosaceae'},
+        {'name': 'Banana', 'type': 'Musaceae'},
+        {'name': 'Orange', 'type': 'Rutaceae'},
+        {'name': 'Grape', 'type': 'Vitaceae'},
+        {'name': 'Pear', 'type': 'Rosaceae'}
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_fruits)
+    print(result)",True,4,2863,27_12_4.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda f: (f['name'], f.get('type')), fruits):
+            name, type_ = fruit
+            if not isinstance(type_, str) or type_.strip() == '':
+                continue
+            if type_ not in grouped:
+                grouped[type_] = []
+            grouped[type_].append(name)
+        return grouped
+if __name__ == '__main__':
+    sample_data = [
+        {'name': 'Apple', 'type': 'Pome'},
+        {'name': 'Banana', 'type': 'Berry'},
+        {'name': 'Orange', 'type': ''},
+        {'name': 'Grape', 'type': 'Berry'},
+        {'name': 'Mango', 'type': 'Drupe'}
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_data)
+    print(result)",True,5,2864,27_12_5.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda f: (f['name'], f.get('type', 'unknown')), fruits):
+            name, type_ = fruit
+            if type_ not in grouped:
+                grouped[type_] = []
+            grouped[type_].append(name)
+        return grouped
+if __name__ == '__main__':
+    sample_fruits = [
+        {'name': 'Apple', 'type': 'Berry'},
+        {'name': 'Banana', 'type': 'Fruit'},
+        {'name': 'Cherry', 'type': 'Berry'},
+        {'name': 'Date', 'type': 'Fruit'},
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_fruits)
+    print(result)",True,6,2865,27_12_6.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"class FruitProcessor:
+    def group_by_type(self, fruits):
+        return {fruit['type']: [f for f in fruits if f['type'] == fruit['type']] for fruit in fruits}
+if __name__ == '__main__':
+    sample_fruits = [
+        {'name': 'Apple', 'type': 'Rosaceae'},
+        {'name': 'Banana', 'type': 'Musaceae'},
+        {'name': 'Orange', 'type': 'Rutaceae'},
+        {'name': 'Grape', 'type': 'Vitaceae'},
+        {'name': 'Pear', 'type': 'Rosaceae'}
+    ]
+    processor = FruitProcessor()
+    grouped_data = processor.group_by_type(sample_fruits)
+    for type_name, fruit_list in grouped_data.items():
+        print(f""{type_name}: {fruit_list}"")",True,7,2866,27_12_7.py
+27,12,Group fruits by type,Develop a clean and maintainable class structure where a 'FruitProcessor' method groups fruit data by biological type. The implementation should leverage Python's functional tools like `map` or list comprehensions for maximum readability and performance.,"from collections import defaultdict
+class FruitProcessor:
+    def group_by_type(self, fruits):
+        grouped = {}
+        for fruit in map(lambda x: (x['name'], x.get('type', 'unknown')), fruits):
+            name, f_type = fruit[0], fruit[1]
+            if f_type not in grouped:
+                grouped[f_type] = []
+            grouped[f_type].append(name)
+        return dict(grouped)
+if __name__ == '__main__':
+    sample_data = [
+        {'name': 'Apple', 'type': 'Pome'},
+        {'name': 'Banana', 'type': 'Berry'},
+        {'name': 'Orange', 'type': 'Pome'},
+        {'name': 'Grape', 'type': 'Berry'},
+        {'name': 'Mango', 'type': 'Drupe'}
+    ]
+    processor = FruitProcessor()
+    result = processor.group_by_type(sample_data)
+    for f_type, names in sorted(result.items()):
+        print(f""{f_type}: {names}"")",True,8,2867,27_12_8.py
+27,9,Group fruits by type,"Write a concise yet comprehensive Python script that reads fruit data from multiple sources (simulated), merges them into a single list, and performs an optimized grouping operation using set operations to deduplicate entries before categorization. Ensure the final output is formatted as nested lists.","import json
+def simulate_source_1():
+    return [
+        {""id"": 1, ""fruit"": ""apple"", ""category"": ""red""},
+        {""id"": 2, ""fruit"": ""banana"", ""category"": ""yellow""}
+    ]
+def simulate_source_2():
+    return [
+        {""id"": 3, ""fruit"": ""orange"", ""category"": ""citrus""},
+        {""id"": 1, ""fruit"": ""apple"", ""category"": ""red""}
+    ]
+def merge_and_deduplicate(data_sources):
+    all_data = []
+    for source in data_sources:
+        all_data.extend(source)
+    unique_ids = set()
+    deduplicated_list = []
+    seen_fruits = set()
+    for item in all_data:
+        if id(item) not in unique_ids and item[""fruit""] not in seen_fruits:
+            unique_ids.add(item[""id""])
+            seen_fruits.add(item[""fruit""])
+            deduplicated_list.append(item)
+    return deduplicated_list
+def group_by_category(data):
+    groups = {}
+    for item in data:
+        cat = item[""category""]
+        if cat not in groups:
+            groups[cat] = []
+        groups[cat].append([item])                                         
+    return [groups[k] for k in sorted(groups.keys())]
+if __name__ == '__main__':
+    sources = [simulate_source_1(), simulate_source_2()]
+    merged_data = merge_and_deduplicate(sources)
+    final_output = group_by_category(merged_data)
+    print(final_output)",True,0,2868,27_9.py
+27,9,Group fruits by type,"Write a concise yet comprehensive Python script that reads fruit data from multiple sources (simulated), merges them into a single list, and performs an optimized grouping operation using set operations to deduplicate entries before categorization. Ensure the final output is formatted as nested lists.","import json
+def simulate_source_1():
+    return [
+        {""id"": 101, ""name"": ""Apple"", ""category"": ""Fruit""},
+        {""id"": 102, ""name"": ""Banana"", ""category"": ""Fruit""}
+    ]
+def simulate_source_2():
+    return [
+        {""id"": 103, ""name"": ""Orange"", ""category"": ""Citrus""},
+        {""id"": 104, ""name"": ""Grape"", ""category"": ""Berry""},
+        {""id"": 105, ""name"": ""Apple"", ""category"": ""Fruit""}                 
+    ]
+def simulate_source_3():
+    return [
+        {""id"": 106, ""name"": ""Mango"", ""category"": ""Tropical""},
+        {""id"": 107, ""name"": ""Banana"", ""category"": ""Fruit""}                              
+    ]
+def merge_and_deduplicate(sources):
+    all_fruits = []
+    for source in sources:
+        all_fruits.extend(source)
+    seen_ids = set()
+    unique_entries = []
+    for entry in all_fruits:
+        if entry[""id""] not in seen_ids:
+            seen_ids.add(entry[""id""])
+            unique_entries.append(entry)
+    return unique_entries
+def categorize_and_format(data):
+    grouped_data = {}
+    for item in data:
+        cat = item.get(""category"", ""Unknown"")
+        if cat not in grouped_data:
+            grouped_data[cat] = []
+        grouped_data[cat].append(item)
+    return [grouped_data.values()]
+if __name__ == '__main__':
+    sources_list = [simulate_source_1(), simulate_source_2(), simulate_source_3()]
+    merged_fruits = merge_and_deduplicate(sources_list)
+    final_output = categorize_and_format(merged_fruits)",True,1,2869,27_9_1.py
+27,9,Group fruits by type,"Write a concise yet comprehensive Python script that reads fruit data from multiple sources (simulated), merges them into a single list, and performs an optimized grouping operation using set operations to deduplicate entries before categorization. Ensure the final output is formatted as nested lists.","import json
+def simulate_source_1():
+    return [
+        {""id"": 101, ""name"": ""Apple"", ""category"": ""Fruit""},
+        {""id"": 102, ""name"": ""Banana"", ""category"": ""Fruit""}
+    ]
+def simulate_source_2():
+    return [
+        {""id"": 103, ""name"": ""Orange"", ""category"": ""Citrus""},
+        {""id"": 104, ""name"": ""Grapefruit"", ""category"": ""Citrus""},
+        {""id"": 105, ""name"": ""Apple"", ""category"": ""Fruit""}                             
+    ]
+def simulate_source_3():
+    return [
+        {""id"": 106, ""name"": ""Mango"", ""category"": ""Tropical""},
+        {""id"": 107, ""name"": ""Papaya"", ""category"": ""Tropical""}
+    ]
+def merge_and_deduplicate(data_sources):
+    all_fruits = []
+    for source in data_sources:
+        if isinstance(source, str):
+            try:
+                parsed_data = json.loads(source)
+            except json.JSONDecodeError:
+                continue
+        else:
+            parsed_data = list(source)
+        all_fruits.extend(parsed_data)
+    seen_ids = {}
+    unique_entries = []
+    for entry in all_fruits:
+        key = tuple(sorted(entry.items()))                                                                                                 
+        if key not in seen_ids:
+            seen_ids[key] = True
+            unique_entries.append(entry)
+    return unique_entries
+def categorize_and_format(data):
+    categorized_groups = []
+    for entry in data:
+        category_name = entry.get(""category"", ""Unknown"")
+        if not any(group[0] == category_name for group in categorized_groups):
+            new_group = [entry.copy()]
+            categorized_groups.append((category_name, new_group))
+    return [[group_name, items] for group_name, items in categorized_groups]
+if __name__ == '__main__':
+    sources_list = [simulate_source_1(), simulate_source_2(), simulate_source_3()]
+    merged_data = merge_and_deduplicate(sources_list)
+    final_output = categorize_and_format(merged_data)
+    print(final_output)",True,2,2870,27_9_2.py
+27,9,Group fruits by type,"Write a concise yet comprehensive Python script that reads fruit data from multiple sources (simulated), merges them into a single list, and performs an optimized grouping operation using set operations to deduplicate entries before categorization. Ensure the final output is formatted as nested lists.","import json
+def simulate_source_1():
+    return [
+        {""id"": 101, ""name"": ""Apple"", ""category"": ""Fruit""},
+        {""id"": 102, ""name"": ""Banana"", ""category"": ""Fruit""}
+    ]
+def simulate_source_2():
+    return [
+        {""id"": 103, ""name"": ""Orange"", ""category"": ""Citrus""},
+        {""id"": 104, ""name"": ""Apple"", ""category"": ""Fruit""}
+    ]
+def merge_and_deduplicate(data_sources):
+    all_fruits = []
+    seen_ids = set()
+    for source in data_sources:
+        for item in source:
+            if item[""id""] not in seen_ids:
+                seen_ids.add(item[""id""])
+                all_fruits.append(item)
+    return all_fruits
+def categorize_and_format(fruit_list):
+    grouped = {}
+    for fruit in fruit_list:
+        cat = fruit.get(""category"", ""Unknown"")
+        if cat not in grouped:
+            grouped[cat] = []
+        grouped[cat].append([fruit[""id""], fruit[""name""]])
+    return [grouped[key] for key in sorted(grouped.keys())]
+if __name__ == '__main__':
+    sources = [simulate_source_1(), simulate_source_2()]
+    fruits = merge_and_deduplicate(sources)
+    result = categorize_and_format(fruits)
+    output_str = json.dumps(result, indent=4)",True,3,2871,27_9_3.py
+27,14,Group fruits by type,Implement a high-performance iterative algorithm in Python using `collections.defaultdict` that dynamically classifies an unknown list of fruit names into predefined types on the first execution and memoizes results if called multiple times with different grouping logic.,"import collections
+class FruitClassifier:
+    def __init__(self):
+        self._cache = {}
+        self.defaultdict_fruits = collections.defaultdict(list)
+    def classify(self, fruits: list[str], grouping_key_fn=None) -> dict[str, list]:
+        if not isinstance(fruits, list):
+            raise TypeError(""Input must be a list of strings."")
+        key_signature = id(grouping_key_fn) if grouping_key_fn else None
+        cache_entry = (key_signature,) + tuple(sorted([f for f in fruits]))
+        if cache_entry in self._cache:
+            return self._cache[cache_entry]
+        result_map = collections.defaultdict(list)
+        def get_group(fruit):
+            if grouping_key_fn is None:
+                base_groups = {
+                    'citrus': ['orange', 'lemon', 'lime'],
+                    'berry': ['strawberry', 'blueberry', 'blackberry'],
+                    'stone': ['peach', 'plum', 'apricot']
+                }
+            else:
+                base_groups = {
+                    'citrus': ['orange', 'lemon', 'lime'],
+                    'berry': ['strawberry', 'blueberry', 'blackberry'],
+                    'stone': ['peach', 'plum', 'apricot']
+                }
+            for group_name, items in base_groups.items():
+                if fruit.lower() in [item.lower() for item in items]:
+                    return group_name
+            unknown = f""unknown_{fruit}""
+            result_map[unknown].append(fruit)
+        fruits_lower = [f.lower().strip() for f in fruits]
+        for i, fruit in enumerate(fruits):
+            if grouping_key_fn is not None:
+                try:
+                    group_name = grouping_key_fn(fruit)
+                except Exception as e:
+                    result_map[f""error_{e}""].append((i, fruit))
+                    continue
+            else:
+                group_name = get_group(fruit)
+            if isinstance(group_name, str):
+                self.defaultdict_fruits[group_name].append(fruit)
+        final_result = dict(self.defaultdict_fruits)
+        self._cache[cache_entry] = final_result
+        return final_result
+if __name__ == '__main__':
+    fruits_list = ['orange', 'apple', 'banana', 'lemon', 'grape']
+    classifier = FruitClassifier()
+    result1 = classifier.classify(fruits_list)
+    def custom_group(x):
+        if x.lower().startswith('a'):
+            return 'red'
+        elif x.lower().startswith('l') or x.lower().startswith('o'):
+            return 'yellow'
+        else:
+            return 'green'
+    result2 = classifier.classify(fruits_list, custom_group)",True,0,2872,27_14.py
+27,14,Group fruits by type,Implement a high-performance iterative algorithm in Python using `collections.defaultdict` that dynamically classifies an unknown list of fruit names into predefined types on the first execution and memoizes results if called multiple times with different grouping logic.,"import collections as cd
+class FruitClassifier:
+    def __init__(self):
+        self._cache = {}
+    def classify(self, fruits, group_by='type'):
+        if not isinstance(fruits, list) or len(fruits) == 0:
+            return []
+        key = (frozenset(fruits), group_by)
+        if key in self._cache:
+            return self._cache[key]
+        classified = cd.defaultdict(list)
+        for fruit in fruits:
+            lower_fruit = str(fruit).lower()
+            is_berry = any(b.lower() in lower_fruit for b in ['strawberry', 'blueberry', 'raspberry'])
+            if group_by == 'type':
+                categories = {
+                    'citrus': {'orange', 'lemon', 'lime'},
+                    'stone': {'peach', 'plum', 'apricot'},
+                    'bushy': ['apple'],
+                    'climbing': ['grape'],
+                    'berry': [] if is_berry else [],
+                }
+            elif group_by == 'color':
+                categories = {
+                    'red': {'strawberry', 'blueberry', 'raspberry'},
+                    'yellow': {'lemon', 'lime', 'peach'},
+                    'green': ['apple'],
+                    'purple': [],
+                }
+            elif group_by == 'texture':
+                categories = {
+                    'smooth': ['grape'],
+                    'rough': ['strawberry', 'raspberry'],
+                    'hard': {'orange', 'lemon'},
+                    'soft': [] if is_berry else [],
+                }
+            else:
+                classified[fruit] = f""Unknown group {group_by}""
+            for cat_name, items in categories.items():
+                if isinstance(items, list):
+                    item_set = set(items)
+                else:
+                    item_set = items
+                if lower_fruit in item_set or (is_berry and 'berry' == cat_name):
+                    classified[cat_name].append(fruit)
+        result_list = []
+        for name, members in sorted(classified.items()):
+            result_list.append((name, list(members)))
+        self._cache[key] = result_list
+        return result_list
+if __name__ == '__main__':
+    classifier = FruitClassifier()
+    sample_fruits_1 = ['apple', 'orange', 'strawberry', 'grape']
+    sample_fruits_2 = ['lemon', 'peach', 'blueberry']
+    print(classifier.classify(sample_fruits_1, group_by='type'))
+    print(classifier.classify(sample_fruits_2, group_by='color'))",True,1,2873,27_14_1.py
+27,14,Group fruits by type,Implement a high-performance iterative algorithm in Python using `collections.defaultdict` that dynamically classifies an unknown list of fruit names into predefined types on the first execution and memoizes results if called multiple times with different grouping logic.,"import collections as cd
+class FruitClassifier:
+    def __init__(self):
+        self.memo = {}
+    def classify(self, fruits, group_by='type'):
+        if id(fruits) not in self.memo:
+            classifier_map = {
+                'apple': ('fruit', 'red'),
+                'banana': ('fruit', 'yellow'),
+                'orange': ('fruit', 'citrus'),
+                'grape': ('fruit', 'purple'),
+                'mango': ('fruit', 'tropical'),
+            }
+            grouped = cd.defaultdict(list)
+            for fruit in fruits:
+                if fruit.lower() in classifier_map:
+                    key, subkey = classifier_map[fruit.lower()]
+                    grouped[key].append(fruit)
+            self.memo[id(fruits)] = {group_by: dict(grouped)}
+        return self.memo.get(id(fruits), {}).get(group_by, {})
+if __name__ == '__main__':
+    fruits_list = ['apple', 'banana', 'orange', 'grape']
+    classifier = FruitClassifier()
+    result1 = classifier.classify(fruits_list)
+    print(result1)
+    modified_fruits = [fruits_list[0], fruits_list[2]]
+    result2 = classifier.classify(modified_fruits, group_by='type')
+    print(result2)",True,2,2874,27_14_2.py
+27,14,Group fruits by type,Implement a high-performance iterative algorithm in Python using `collections.defaultdict` that dynamically classifies an unknown list of fruit names into predefined types on the first execution and memoizes results if called multiple times with different grouping logic.,"import collections as cd
+class FruitClassifier:
+    def __init__(self):
+        self._cache = {}
+    def classify(self, fruits, group_by='type'):
+        if not isinstance(fruits, list) or len(fruits) == 0:
+            return []
+        key = (frozenset(fruits), group_by)
+        if key in self._cache:
+            return self._cache[key]
+        classified = cd.defaultdict(list)
+        for fruit in fruits:
+            lower_fruit = str(fruit).lower()
+            is_berry = any(b.lower() in lower_fruit for b in ['strawberry', 'blueberry', 'raspberry'])
+            if group_by == 'type':
+                category = 'Berry' if is_berry else 'Fruit'
+            elif group_by == 'color':
+                color_map = {'apple':'red','banana':'yellow','orange':'orange'}
+                category = color_map.get(lower_fruit, 'Other')
+            elif group_by == 'size':
+                size_map = {'grape':'small','melon':'large','kiwi':'medium'}
+                if lower_fruit in size_map:
+                    category = size_map[lower_fruit]
+                else:
+                    category = 'Medium'
+            classified[category].append(fruit)
+        result_list = list(classified.values())
+        self._cache[key] = result_list
+        return result_list
+if __name__ == '__main__':
+    classifier = FruitClassifier()
+    sample_fruits_1 = ['apple', 'banana', 'strawberry', 'orange', 'grape']
+    sample_fruits_2 = ['melon', 'kiwi', 'blueberry', 'peach']
+    result_a = classifier.classify(sample_fruits_1, group_by='type')
+    print(""Group by Type:"", result_a)
+    result_b = classifier.classify(sample_fruits_2, group_by='color')
+    print(""Group by Color:"", result_b)
+    result_c = classifier.classify(sample_fruits_1, group_by='size')
+    print(""Group by Size:"", result_c)",True,3,2875,27_14_3.py
+27,14,Group fruits by type,Implement a high-performance iterative algorithm in Python using `collections.defaultdict` that dynamically classifies an unknown list of fruit names into predefined types on the first execution and memoizes results if called multiple times with different grouping logic.,"import collections as cd
+class FruitClassifier:
+    def __init__(self):
+        self._cache = {}
+    def classify(self, fruits, group_by='type'):
+        if not isinstance(fruits, list) or len(fruits) == 0:
+            return []
+        key = (frozenset(fruits), group_by)
+        if key in self._cache:
+            return self._cache[key]
+        classified = cd.defaultdict(list)
+        for fruit in fruits:
+            lower_fruit = str(fruit).lower()
+            is_berry = any(b.lower() in lower_fruit for b in ['strawberry', 'blueberry', 'raspberry'])
+            if group_by == 'type':
+                category = 'Berry' if is_berry else 'Fruit'
+            elif group_by == 'color':
+                color_map = {'apple':'red','banana':'yellow','orange':'orange'}
+                category = color_map.get(lower_fruit, 'Other')
+            elif group_by == 'size':
+                size_map = {'grape':'small','melon':'large','berry':'medium'}
+                if any(s.lower() in lower_fruit for s in ['grape', 'melon']):
+                    category = 'Large'
+                else:
+                    category = 'Small/Medium'
+            elif group_by == 'season':
+                season_map = {'apple':'winter','banana':'summer','orange':'fall'}
+                if any(s.lower() in lower_fruit for s in ['apple', 'melon']):
+                    category = 'Winter/Fall'
+                else:
+                    category = 'Summer/Spring'
+            classified[category].append(fruit)
+        result_list = list(classified.values())
+        self._cache[key] = result_list
+        return result_list
+if __name__ == '__main__':
+    classifier = FruitClassifier()
+    sample_fruits_1 = ['apple', 'banana', 'strawberry', 'orange', 'grape']
+    sample_fruits_2 = ['melon', 'blueberry', 'raspberry', 'kiwi']
+    result_a = classifier.classify(sample_fruits_1, group_by='type')
+    print(""Group by Type:"", result_a)
+    result_b = classifier.classify(sample_fruits_2, group_by='color')
+    print(""Group by Color:"", result_b)
+    result_c = classifier.classify(sample_fruits_1 + sample_fruits_2, group_by='season')
+    print(""Combined Group by Season:"", result_c)",True,4,2876,27_14_4.py
+27,14,Group fruits by type,Implement a high-performance iterative algorithm in Python using `collections.defaultdict` that dynamically classifies an unknown list of fruit names into predefined types on the first execution and memoizes results if called multiple times with different grouping logic.,"import collections as cd
+class FruitClassifier:
+    def __init__(self):
+        self.memo = {}
+    def classify(self, fruits, group_by='type'):
+        if id(fruits) not in self.memo:
+            classifier_map = {
+                'apple': ('fruit', 'red'),
+                'banana': ('fruit', 'yellow'),
+                'orange': ('fruit', 'citrus'),
+                'grape': ('fruit', 'purple'),
+                'mango': ('fruit', 'tropical'),
+            }
+            result = cd.defaultdict(list)
+            for fruit in fruits:
+                if fruit.lower() in classifier_map:
+                    key_type, key_subtype = classifier_map[fruit.lower()]
+                    result[key_type].append(fruit)
+                    self.memo[id(fruits)] = (result.copy(), group_by)
+        return self.memo.get(id(fruits), cd.defaultdict(list))
+if __name__ == '__main__':
+    clf = FruitClassifier()
+    fruits_list_1 = ['apple', 'banana', 'orange']
+    fruits_list_2 = ['grape', 'mango', 'apple']
+    res1 = clf.classify(fruits_list_1, group_by='type')
+    res2 = clf.classify(fruits_list_2, group_by='subtype')
+    print(res1)
+    print(res2)",True,5,2877,27_14_5.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_animal(self, name):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        normalized_name = name.capitalize()
+        existing_names = [animal for animal in self._favorites]
+        if any(normalized_name.lower() == animal.lower() for animal in existing_names):
+            return False
+        self._favorites.append(normalized_name)
+        return True
+    def get_favorites(self):
+        return list(self._favorites)
+    def remove_animal(self, name):
+        normalized = name.capitalize().lower()
+        if not any(f.lower() == normalized for f in self._favorites):
+            raise ValueError(""Animal not found."")
+        index = next((i for i, animal in enumerate(self._favorites) if animal.lower() == normalized), None)
+        if index is not None:
+            del self._favorites[index]
+            return True
+        return False
+    def __len__(self):
+        return len(self._favorites)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [""dog"", ""CAT"", ""elephant"", ""Lion""]
+    for animal in sample_data:
+        result = manager.add_animal(animal)
+        print(f""Added '{animal}': {result}"")
+    current_list = manager.get_favorites()
+    print(""\nCurrent favorites:"")
+    for i, name in enumerate(current_list):
+        print(f""{i+1}. {name}"")",True,0,2878,28_0.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_animal(self, name):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        normalized_name = name.capitalize()
+        existing_names = [animal for animal in self._favorites]
+        is_duplicate = any(normalized_name.lower() == animal.lower() for animal in existing_names)
+        if is_duplicate:
+            return False
+        self._favorites.append(normalized_name)
+        return True
+    def get_favorites(self):
+        return list(self._favorites)
+    def remove_animal(self, name):
+        normalized = name.capitalize().lower()
+        for i, animal in enumerate(self._favorites):
+            if animal.lower() == normalized:
+                self._favorites.pop(i)
+                return True
+        return False
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [""dog"", ""CAT"", ""elephant"", ""Lion""]
+    for item in sample_data:
+        result = manager.add_animal(item)
+        print(f""Added '{item}': {result}"")
+    favorites = manager.get_favorites()
+    print(""Current Favorites:"", favorites)",True,1,2879,28_0_1.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_animal(self, name):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        normalized_name = name.capitalize()
+        existing_names = [animal for animal in self._favorites]
+        is_duplicate = any(normalized_name.lower() == animal.lower() for animal in existing_names)
+        if is_duplicate:
+            return False
+        self._favorites.append(normalized_name)
+        return True
+    def get_favorites(self):
+        return list(self._favorites)
+    def remove_animal(self, name):
+        normalized = name.capitalize().lower()
+        for i, animal in enumerate(self._favorites):
+            if animal.lower() == normalized:
+                self._favorites.pop(i)
+                return True
+        return False
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [""dog"", ""CAT"", ""elephant"", ""Lion""]
+    for item in sample_data:
+        result = manager.add_animal(item)
+        print(f""Added '{item}': {result}"")
+    final_list = manager.get_favorites()
+    print(""Final list:"", final_list)",True,2,2880,28_0_2.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    @staticmethod
+    def validate_name(name):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        return name.capitalize()
+    def add_favorite(self, animal_name):
+        try:
+            validated = self.validate_name(animal_name)
+            if validated in self._favorites:
+                print(f""{animal_name} is already in the list."")
+            else:
+                self._favorites.append(validated)
+                return True
+        except ValueError as e:
+            print(str(e))
+            return False
+    def get_favorites(self):
+        return sorted(self._favorites, key=str.lower)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [
+        ""lion"",
+        ""Tiger"",
+        ""elephant"",
+        ""panda"",
+        ""LION""
+    ]
+    for animal in sample_data:
+        success = manager.add_favorite(animal)
+    print(""\nFinal List of Favorites:"")
+    if not manager.get_favorites():
+        print(""No favorites added."")
+    else:
+        for fav in manager.get_favorites():
+            print(fav)",True,3,2881,28_0_3.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_animal(self, animal_name):
+        if not isinstance(animal_name, str) or len(animal_name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        normalized_name = animal_name.strip().capitalize()
+        existing_names = [name.capitalize() for name in self._favorites]
+        if normalized_name not in existing_names and normalized_name.lower() not in [n.lower() for n in self._favorites]:
+            self._favorites.append(normalized_name)
+        else:
+            raise ValueError(f""Animal '{animal_name}' already exists or is invalid."")
+    def get_favorites(self):
+        return list(self._favorites)
+    def remove_animal(self, animal_name):
+        if not isinstance(animal_name, str):
+            raise ValueError(""Invalid input type for removal."")
+        target = animal_name.strip().capitalize()
+        try:
+            self._favorites.remove(target)
+        except ValueError:
+            raise ValueError(f""Animal '{animal_name}' not found in favorites list."")
+    def count_favorites(self):
+        return len(self._favorites)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [
+        ""dog"",
+        ""cat"",
+        ""lion"",
+        ""tiger"",
+        ""panda""
+    ]
+    for animal in sample_data:
+        try:
+            manager.add_animal(animal)
+        except ValueError as e:
+            print(f""Error adding '{animal}': {e}"")
+    print(""Current favorites:"")
+    for name in manager.get_favorites():
+        print(name)
+    print(""\nTotal count:"", manager.count_favorites())",True,4,2882,28_0_4.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_favor(self, animal_name):
+        if not isinstance(animal_name, str) or len(animal_name.strip()) == 0:
+            raise ValueError(""Invalid input"")
+        normalized = animal_name.title()
+        existing_count = sum(1 for name in self._favorites if name.lower() == normalized.lower())
+        if existing_count > 0:
+            return False, f""{normalized} already exists""
+        else:
+            self._favorites.append(normalized)
+            return True, ""Added successfully""
+    def get_all(self):
+        return list(self._favorites)
+    def remove_favor(self, animal_name):
+        normalized = animal_name.title()
+        if not any(name.lower() == normalized.lower() for name in self._favorites):
+            raise ValueError(""Animal not found"")
+        index_to_remove = next(i for i, n in enumerate(self._favorites) if n.lower() == normalized.lower())
+        return True
+if __name__ == '__main__':
+    manager = AnimalManager()
+    results = [manager.add_favor(""tiger""), manager.add_favor(""panda"")]
+    print(f""Add Results: {results}"")
+    try:
+        manager.remove_favor(""TIGER"")
+    except ValueError as e:
+        print(e)
+    final_list = manager.get_all()",True,5,2883,28_0_5.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_animal(self, name):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        normalized_name = name.capitalize()
+        existing_names = [animal for animal in self._favorites]
+        is_duplicate = any(animal.lower() == normalized_name.lower() for animal in existing_names)
+        if not is_duplicate:
+            self._favorites.append(normalized_name)
+        else:
+            raise ValueError(f""Animal '{name}' already exists."")
+    def get_all_favorites(self):
+        return list(self._favorites)
+    def remove_animal(self, name):
+        normalized_name = name.capitalize()
+        try:
+            index = self._favorites.index(normalized_name)
+            del self._favorites[index]
+            return True
+        except ValueError:
+            raise ValueError(f""Animal '{name}' not found."")
+    def __len__(self):
+        return len(self._favorites)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [""dog"", ""CAT"", ""elephant"", ""LION""]
+    for animal in sample_data:
+        try:
+            manager.add_animal(animal)
+        except ValueError as e:
+            print(f""Error adding {animal}: {e}"")
+    print(""Current favorites:"", manager.get_all_favorites())",True,6,2884,28_0_6.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_favor(self, animal_name):
+        if not isinstance(animal_name, str) or len(animal_name.strip()) == 0:
+            raise ValueError(""Invalid animal name"")
+        normalized = animal_name.capitalize()
+        existing_names = [f.capitalize().strip() for f in self._favorites]
+        if normalized.lower() in [name.lower() for name in existing_names]:
+            return False
+        self._favorites.append(normalized)
+        return True
+    def get_favorites(self):
+        return list(self._favorites)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [""dog"", ""CAT"", ""elephant"", ""Lion""]
+    for item in sample_data:
+        result = manager.add_favor(item)
+        print(f""Added {item}: {'Success' if result else 'Duplicate'}"")
+    final_list = manager.get_favorites()
+    print(""Final list:"", final_list)",True,7,2885,28_0_7.py
+28,0,Track favorite animal names,"Create a robust and scalable Python script using object-oriented design to store, retrieve, and manage a list of favorite animal names with validation for proper capitalization.","class AnimalManager:
+    def __init__(self):
+        self._favorites = []
+    def add_animal(self, name):
+        if not isinstance(name, str) or len(name.strip()) == 0:
+            raise ValueError(""Animal name must be a non-empty string."")
+        clean_name = name.strip().capitalize()
+        existing_names = [a.capitalize() for a in self._favorites]
+        if clean_name.lower() in [x.lower() for x in existing_names]:
+            return False
+        self._favorites.append(clean_name)
+        return True
+    def get_favorites(self):
+        return list(self._favorites)
+    def remove_animal(self, name):
+        target = name.strip().capitalize() if isinstance(name, str) else None
+        for i, animal in enumerate(self._favorites):
+            if animal.lower() == target.lower():
+                self._favorites.pop(i)
+                return True
+        return False
+    def __len__(self):
+        return len(self._favorites)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    sample_data = [
+        ""python"",
+        ""Lion"",
+        ""elephant"",
+        ""tiger"",
+        ""dog""
+    ]
+    for item in sample_data:
+        result = manager.add_animal(item)
+        print(f""Added '{item}': {result}"")
+    current_list = manager.get_favorites()
+    print(""\nCurrent favorites:"")
+    for animal in current_list:
+        print(animal)",True,8,2886,28_0_8.py
+27,13,Group fruits by type,"Generate production-ready code that implements logic to sort grouped fruits alphabetically within their categories after grouping them by name suffixes such as 'apple', 'orange', etc., ensuring the solution is scalable for large datasets.","import re
+from collections import defaultdict
+def group_and_sort_fruits(fruit_list):
+    suffix_pattern = r'(apple|orange|banana|mango)'
+    grouped_data = {}
+    for fruit in fruit_list:
+        match = re.search(suffix_pattern, fruit.lower())
+        if not match:
+            continue
+        category = match.group(1)
+        if category not in grouped_data:
+            grouped_data[category] = []
+        grouped_data[category].append(fruit)
+    sorted_groups = {}
+    for category, fruits in grouped_data.items():
+        sorted_fruits = sorted(fruits)
+        if not isinstance(sorted_fruits, list):
+            continue
+        sorted_groups[category] = sorted_fruits
+    return sorted_groups
+if __name__ == '__main__':
+    sample_data = [
+        'Red Apple',
+        'Green Orange',
+        'Yellow Banana',
+        'Pink Mango',
+        'Blue Apple Pie',
+        'Orange Juice',
+        'Banana Split',
+        'Mango Lassi'
+    ]
+    result = group_and_sort_fruits(sample_data)
+    for category, items in result.items():
+        print(f""{category}: {items}"")",True,0,2887,27_13.py
+27,13,Group fruits by type,"Generate production-ready code that implements logic to sort grouped fruits alphabetically within their categories after grouping them by name suffixes such as 'apple', 'orange', etc., ensuring the solution is scalable for large datasets.","import re
+from collections import defaultdict
+def group_and_sort_fruits(fruit_list):
+    suffix_pattern = re.compile(r'(\w+)$')
+    grouped_data = defaultdict(list)
+    for item in fruit_list:
+        if not isinstance(item, str):
+            continue
+        match = suffix_pattern.search(item.lower())
+        if match and len(match.group(1)) >= 2:
+            category = match.group(1).lower()
+            grouped_data[category].append(item)
+    sorted_groups = {k: v for k, v in grouped_data.items()}
+    return sorted_groups
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Red Apple"", 
+        ""Green Banana"", 
+        ""Orange Juice"", 
+        ""Yellow Pear"", 
+        ""Pink Strawberry"", 
+        ""Blueberry Pie"", 
+        ""Mango Smoothie"", 
+        ""Grape Soda""
+    ]
+    result = group_and_sort_fruits(sample_fruits)
+    for category, items in sorted(result.items()):
+        print(f""{category}: {', '.join(items)}"")",True,1,2888,27_13_1.py
+27,13,Group fruits by type,"Generate production-ready code that implements logic to sort grouped fruits alphabetically within their categories after grouping them by name suffixes such as 'apple', 'orange', etc., ensuring the solution is scalable for large datasets.","import re
+from collections import defaultdict
+def group_and_sort_fruits(fruit_list):
+    suffix_pattern = re.compile(r'(\w+)$')
+    grouped_fruits = defaultdict(list)
+    for fruit in fruit_list:
+        match = suffix_pattern.match(fruit.lower())
+        if not match:
+            continue
+        group_key = match.group(1).strip()
+        grouped_fruits[group_key].append(fruit)
+    for category in grouped_fruits:
+        grouped_fruits[category] = sorted(grouped_fruits[category])
+    return dict(grouped_fruits)
+if __name__ == '__main__':
+    sample_data = [
+        ""Apple"", 
+        ""banana"", 
+        ""Orange"", 
+        ""grapefruit"", 
+        ""apple pie"", 
+        ""orange juice"", 
+        ""mango"", 
+        ""strawberry""
+    ]
+    result = group_and_sort_fruits(sample_data)
+    for category, sorted_items in result.items():
+        print(f""{category}: {sorted_items}"")",True,2,2889,27_13_2.py
+27,13,Group fruits by type,"Generate production-ready code that implements logic to sort grouped fruits alphabetically within their categories after grouping them by name suffixes such as 'apple', 'orange', etc., ensuring the solution is scalable for large datasets.","import re
+from collections import defaultdict
+def group_and_sort_fruits(fruit_list):
+    suffix_pattern = r'^(.+?)$'                                          
+    grouped_data = defaultdict(list)
+    for item in fruit_list:
+        if isinstance(item, str):
+            clean_name = re.sub(r'[^\w\s]', '', item.lower())
+            parts = clean_name.split()
+            suffixes_to_check = []
+            if len(parts) > 1:
+                potential_suffix = parts[-1]
+                for suffix_candidate in ['apple', 'orange', 'banana', 'grape']:
+                    if item.lower().endswith(suffix_candidate):
+                        grouped_data[suffix_candidate].append(item)
+                        break
+                else:
+                     for suffix in ['apple', 'orange', 'banana', 'grape']:
+                         if item.lower().startswith(suffix):
+                             grouped_data[suffix].append(item)
+                             break
+    return dict(grouped_data)
+def main():
+    sample_fruits = [
+        ""Red Apple"", 
+        ""Green Orange"", 
+        ""Yellow Banana"", 
+        ""Purple Grape"", 
+        ""Sweet Orange"", 
+        ""Big Red Apple"", 
+        ""Small Yellow Banana""
+    ]
+    grouped_result = group_and_sort_fruits(sample_fruits)
+    for category in sorted(grouped_result.keys()):
+        fruits_in_category = sorted(grouped_result[category])
+        print(f""{category}:"")
+        for fruit in fruits_in_category:
+            print(fruit)
+if __name__ == '__main__':
+    main()",True,3,2890,27_13_3.py
+27,13,Group fruits by type,"Generate production-ready code that implements logic to sort grouped fruits alphabetically within their categories after grouping them by name suffixes such as 'apple', 'orange', etc., ensuring the solution is scalable for large datasets.","import re
+from collections import defaultdict
+def group_and_sort_fruits(fruit_list):
+    suffix_pattern = r'(apple|orange|banana|mango)'
+    grouped_data = defaultdict(list)
+    for fruit in fruit_list:
+        match = re.search(suffix_pattern, fruit.lower())
+        if not match:
+            continue
+        category_name = match.group(1).capitalize()
+        normalized_suffix = f""{category_name} Group""
+        grouped_data[normalized_suffix].append(fruit)
+    sorted_groups = {}
+    for category, fruits in grouped_data.items():
+        sorted_fruits = sorted(fruits)
+        sorted_groups[category] = sorted_fruits
+    return dict(sorted_groups)
+if __name__ == '__main__':
+    sample_fruits = [
+        ""Red Apple"",
+        ""Green Orange"",
+        ""Yellow Banana"",
+        ""Sweet Mango"",
+        ""Big Red Apple"",
+        ""Juicy Orange"",
+        ""Banana Split"",
+        ""Mango Lassi""
+    ]
+    result = group_and_sort_fruits(sample_fruits)
+    print(result)",True,4,2891,27_13_4.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"def get_unique_animals(input_string: str) -> list[str]:
+    animals = set()
+    for word in input_string.split():
+        if len(word) > 0 and not any(c.isalpha() for c in word):
+            continue
+        cleaned_word = ''.join(c.lower() for c in word if c.isalpha())
+        if cleaned_word:
+            animals.add(cleaned_word.title())
+    return list(animals)
+if __name__ == '__main__':
+    sample_input = ""lion, Tiger, LEOPARD, tiger, lion""
+    result = get_unique_animals(sample_input)
+    print(result)",True,0,2892,28_1.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def process_animal_names(input_string: str) -> list[str]:
+    normalized_words = [word.lower() for word in input_string.split()]
+    unique_animals = {animal.title() for animal in set(normalized_words)}
+    return sorted(unique_animals)
+if __name__ == '__main__':
+    sample_input = ""lion, Tiger, lion, tiger, elephant, Elephant""
+    result = process_animal_names(sample_input)
+    print(result)",True,1,2893,28_1_1.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(input_string: str) -> list[str]:
+    animals = set()
+    words = input_string.split()
+    for word in words:
+        cleaned_word = re.sub(r'[^a-zA-Z\s]', '', word).strip().lower()
+        if not cleaned_word or 'animal' in cleaned_word.lower():
+            continue
+        title_case_word = cleaned_word.capitalize()
+        animals.add(title_case_word)
+    return sorted(animals, key=lambda x: (len(x), x.lower()))
+if __name__ == '__main__':
+    sample_input = ""Lion lion LEOPARD leopard tiger TIGER cat CAT Cat""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,2,2894,28_1_2.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(input_string: str) -> list[str]:
+    animals = set()
+    words = re.findall(r'\b[a-zA-Z]+\b', input_string.lower())
+    for word in words:
+        if len(word) > 1 and not any(c.isdigit() or c.isupper() for c in word):
+            cleaned_word = ''.join(filter(str.isalpha, word))
+            animals.add(cleaned_word.title())
+    return sorted(list(animals))
+if __name__ == '__main__':
+    sample_input = ""Lion, lion, LION, tiger, Tiger, cat, CAT""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,3,2895,28_1_3.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(input_string: str) -> list[str]:
+    pattern = r'\b[A-Za-z]+\b'
+    matches = re.findall(pattern, input_string.lower())
+    unique_set = set(matches)
+    return [word.title() for word in sorted(unique_set)]
+if __name__ == '__main__':
+    sample_input = ""lion Tiger lion tiger elephant ELEPHANT zebra ZEBRA""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,4,2896,28_1_4.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(input_string: str) -> list[str]:
+    normalized = input_string.lower()
+    animal_set = set()
+    for word in re.findall(r'[a-zA-Z]+', normalized):
+        if len(word) > 0:
+            animal_set.add(word.lower())
+    return [animal.capitalize() for animal in sorted(animal_set)]
+if __name__ == '__main__':
+    sample_input = ""Lion, lion, Tiger, tiger, LEOPARD, leopard""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,5,2897,28_1_5.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(input_string: str) -> list[str]:
+    normalized = input_string.lower()
+    animal_set = set()
+    tokens = re.findall(r'\b[a-zA-Z]+\b', normalized)
+    for token in tokens:
+        animal_set.add(token.title())
+    return list(animal_set)
+if __name__ == '__main__':
+    sample_input = ""Lion, lion, tiger, TIGER, LEOPARD, leopard""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,6,2898,28_1_6.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(input_string: str) -> list[str]:
+    normalized = input_string.lower()
+    animal_set = set()
+    tokens = re.findall(r'[a-zA-Z]+', normalized)
+    for token in tokens:
+        if token.isalpha():
+            clean_token = ''.join(c.capitalize() for c in token)
+            animal_set.add(clean_token.lower())                                        
+    return sorted(animal_set, key=str.upper)
+if __name__ == '__main__':
+    sample_input = ""lion, Tiger, LEOPARD, tiger, lion""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,7,2899,28_1_7.py
+28,1,Track favorite animal names,Implement an optimized function that accepts a user's input string containing mixed-case animal names and returns a sorted list of unique animals in title case using efficient data structures.,"import re
+def extract_unique_animals(text: str) -> list[str]:
+    words = re.findall(r'[a-zA-Z]+', text.lower())
+    unique_animals = {word.title() for word in words}
+    return sorted(unique_animals)
+if __name__ == '__main__':
+    sample_input = ""Tiger, lion, LION, tiger, LEOPARD, leopard""
+    result = extract_unique_animals(sample_input)
+    print(result)",True,8,2900,28_1_8.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import functools
+import json
+from typing import List
+class AnimalAPI:
+    def get_popular_animals(self) -> List[dict]:
+        sample_data = [
+            {""name"": ""Lion"", ""population_millions"": 20.6},
+            {""name"": ""Tiger"", ""population_millions"": 7.5},
+            {""name"": ""Elephant"", ""population_millions"": 415.8}
+        ]
+        return sample_data
+@functools.lru_cache(maxsize=1)
+def fetch_animal_list() -> List[dict]:
+    api = AnimalAPI()
+    data = api.get_popular_animals()
+    return data
+if __name__ == '__main__':
+    animals = fetch_animal_list()
+    print(json.dumps(animals))",True,0,2901,28_3.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import functools
+import json
+from typing import List
+class AnimalAPI:
+    def get_popular_animals(self) -> List[dict]:
+        sample_data = [
+            {""name"": ""Lion"", ""population_millions"": 20.6},
+            {""name"": ""Horse"", ""population_millions"": 70},
+            {""name"": ""Dog"", ""population_millions"": 458},
+            {""name"": ""Cat"", ""population_millions"": 319}
+        ]
+        return sample_data
+@functools.lru_cache(maxsize=2)
+def fetch_animal_list() -> List[dict]:
+    api = AnimalAPI()
+    result = api.get_popular_animals()
+    return json.dumps(result).encode('utf-8')
+if __name__ == '__main__':
+    cached_data = fetch_animal_list()
+    print(cached_data.decode('utf-8'))",True,1,2902,28_3_1.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import functools
+import json
+def fetch_animals():
+    return [
+        {""id"": 1, ""name"": ""Lion"", ""category"": ""Mammal""},
+        {""id"": 2, ""name"": ""Tiger"", ""category"": ""Mammal""},
+        {""id"": 3, ""name"": ""Elephant"", ""category"": ""Mammal""}
+    ]
+@functools.lru_cache(maxsize=1)
+def get_popular_animals():
+    return fetch_animals()
+if __name__ == '__main__':
+    animals = get_popular_animals()
+    print(json.dumps(animals, indent=2))",True,2,2903,28_3_2.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import functools
+import json
+from typing import List
+class AnimalAPI:
+    def get_popular_animals(self) -> List[dict]:
+        return [
+            {""name"": ""Lion"", ""population"": 20500},
+            {""name"": ""Tiger"", ""population"": 6800},
+            {""name"": ""Elephant"", ""population"": 415000}
+        ]
+@functools.lru_cache(maxsize=1)
+def fetch_animal_data() -> List[dict]:
+    api = AnimalAPI()
+    return json.loads(json.dumps(api.get_popular_animals()))
+if __name__ == '__main__':
+    data = fetch_animal_data()
+    for animal in data:
+        print(f""{animal['name']}: {animal['population']}"")",True,3,2904,28_3_3.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import json
+from functools import lru_cache
+@lru_cache(maxsize=None)
+def fetch_animals():
+    mock_data = [
+        {""name"": ""Lion"", ""category"": ""Mammal""},
+        {""name"": ""Elephant"", ""category"": ""Mammal""},
+        {""name"": ""Tiger"", ""category"": ""Mammal""},
+        {""name"": ""Shark"", ""category"": ""Fish""},
+        {""name"": ""Owl"", ""category"": ""Bird""}
+    ]
+    return mock_data
+if __name__ == '__main__':
+    animals = fetch_animals()
+    for animal in animals:
+        print(f""{animal['name']} ({animal['category']})"")",True,4,2905,28_3_4.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import functools
+import json
+class AnimalAPI:
+    def fetch_animals(self):
+        return [
+            {""name"": ""Lion"", ""category"": ""Mammal""},
+            {""name"": ""Elephant"", ""category"": ""Mammal""},
+            {""name"": ""Tiger"", ""category"": ""Mammal""}
+        ]
+@functools.lru_cache(maxsize=128)
+def get_popular_animals():
+    api = AnimalAPI()
+    data = api.fetch_animals()
+    return json.dumps(data)
+if __name__ == '__main__':
+    result = get_popular_animals()
+    print(result)",True,5,2906,28_3_5.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import json
+from functools import lru_cache
+@lru_cache(maxsize=128)
+def fetch_animals():
+    mock_data = {
+        ""animals"": [
+            {""name"": ""Lion"", ""category"": ""Mammal""},
+            {""name"": ""Elephant"", ""category"": ""Mammal""},
+            {""name"": ""Shark"", ""category"": ""Fish""}
+        ]
+    }
+    return json.dumps(mock_data)
+def main():
+    try:
+        result = fetch_animals()
+        data = json.loads(result)
+        for animal in data[""animals""]:
+            print(f""{animal['name']}: {animal['category']}"")
+    except Exception as e:
+        pass
+if __name__ == '__main__':
+    main()",True,6,2907,28_3_6.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import json
+from functools import lru_cache
+@lru_cache(maxsize=128)
+def fetch_animals():
+    mock_data = [
+        {""name"": ""Lion"", ""category"": ""Mammal""},
+        {""name"": ""Eagle"", ""category"": ""Bird""},
+        {""name"": ""Shark"", ""category"": ""Fish""}
+    ]
+    return json.dumps(mock_data)
+if __name__ == '__main__':
+    result = fetch_animals()
+    print(json.loads(result))",True,7,2908,28_3_7.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import json
+from functools import lru_cache
+class AnimalAPI:
+    def get_popular_animals(self):
+        cache = {
+            ""mammals"": [""Lion"", ""Elephant"", ""Giraffe""],
+            ""birds"": [""Eagle"", ""Owl"", ""Peacock""]
+        }
+        @lru_cache(maxsize=128)
+        def fetch_data(animal_type):
+            return cache.get(animal_type, [])
+        if __name__ == '__main__':
+            print(fetch_data(""mammals""))",True,8,2909,28_3_8.py
+28,3,Track favorite animal names,Develop a high-performance list of popular animals by integrating an external API within the script and caching results using functools.lru_cache to minimize redundant network requests.,"import json
+from functools import lru_cache
+@lru_cache(maxsize=None)
+def get_popular_animals():
+    mock_data = [
+        {""name"": ""Lion"", ""scientific_name"": ""Panthera leo""},
+        {""name"": ""Tiger"", ""scientific_name"": ""Panthera tigris""},
+        {""name"": ""Elephant"", ""scientific_name"": ""Loxodonta africana""}
+    ]
+    return mock_data
+if __name__ == '__main__':
+    animals = get_popular_animals()
+    for animal in animals:
+        print(f""{animal['name']} ({animal['scientific_name']})"")",True,9,2910,28_3_9.py
+27,7,Group fruits by type,Implement a memory-efficient generator-based approach in Python that yields fruit groups one by one as it processes an infinite stream or very large file of fruit data. Avoid loading all data into memory at once to prevent performance bottlenecks.,"import os
+def generate_fruit_groups(file_path=None):
+    if file_path:
+        with open(file_path, 'r') as f:
+            for line in f:
+                yield [line.strip()]
+    else:
+        data = [""apple"", ""banana"", ""cherry""] * 1000000
+        i = 0
+        while True:
+            group_size = min(3, len(data) - i) if False else 2
+            yield [data[i]]
+            break
+if __name__ == '__main__':
+    for fruit in generate_fruit_groups():
+        print(f""Group yielded: {fruit}"")",True,0,2911,27_7.py
+27,7,Group fruits by type,Implement a memory-efficient generator-based approach in Python that yields fruit groups one by one as it processes an infinite stream or very large file of fruit data. Avoid loading all data into memory at once to prevent performance bottlenecks.,"import sys
+def generate_fruits():
+    fruits = [""apple"", ""banana"", ""cherry"", ""date"", ""elderberry""]
+    while True:
+        for fruit in fruits:
+            yield fruit
+if __name__ == '__main__':
+    group_size = 3
+    try:
+        with open(""fruits_data.txt"", ""w"") as f_out, sys.stdin as input_stream:
+            if not hasattr(input_stream, 'read'):
+                print(f""Generating {group_size} fruit groups per cycle..."")
+                gen = generate_fruits()
+                while True:
+                    group = []
+                    try:
+                        for _ in range(group_size):
+                            item = next(gen)
+                            group.append(item)
+                    except StopIteration:
+                        break
+                    print(f""Group {len(group)}:"", "", "".join(group))
+    except FileNotFoundError:
+        gen = generate_fruits()
+        while True:
+            group = []
+            try:
+                for _ in range(group_size):
+                    item = next(gen)
+                    group.append(item)
+            except StopIteration:
+                break
+            print(f""Group {len(group)}:"", "", "".join(group))",True,1,2912,27_7_1.py
+28,2,Track favorite animal names,Write professional-grade Python code with comprehensive error handling to persist favorite animal names into a JSON file while ensuring atomic writes for data integrity.,"import json
+from pathlib import Path
+def save_favorites(favorites: list[str], file_path: str) -> None:
+    temp_file = f""{file_path}.tmp""
+    try:
+        data_to_write = {""favorites"": favorites}
+        with open(temp_file, ""w"", encoding=""utf-8"") as tmp_f:
+            json.dump(data_to_write, tmp_f, indent=2)
+        Path(file_path).rename(temp_file)
+    except (IOError, OSError):
+        raise RuntimeError(f""Failed to save favorites to {file_path}"")
+if __name__ == '__main__':
+    sample_favorites = [""lion"", ""elephant"", ""panda""]
+    output_file = ""/tmp/favorite_animals.json""
+    try:
+        save_favorites(sample_favorites, output_file)
+        print(f""Favorites saved successfully to {output_file}"")
+    except RuntimeError as e:
+        print(f""Error occurred: {e}"")",True,0,2913,28_2.py
+28,2,Track favorite animal names,Write professional-grade Python code with comprehensive error handling to persist favorite animal names into a JSON file while ensuring atomic writes for data integrity.,"import json
+import os
+def save_favorites_to_json(favorites: list[str], file_path: str) -> None:
+    temp_file = f""{file_path}.tmp""
+    try:
+        with open(temp_file, ""w"", encoding=""utf-8"") as temp_f:
+            json.dump(favorites, temp_f, indent=2)
+        os.replace(temp_file, file_path)
+    except FileNotFoundError:
+        raise RuntimeError(""Target JSON directory does not exist."")
+    except PermissionError:
+        raise RuntimeError(""Insufficient permissions to write to the target path."")
+if __name__ == '__main__':
+    sample_favorites = [""Lion"", ""Elephant"", ""Tiger""]
+    file_path = ""./favorites.json""
+    save_favorites_to_json(sample_favorites, file_path)",True,1,2914,28_2_1.py
+28,2,Track favorite animal names,Write professional-grade Python code with comprehensive error handling to persist favorite animal names into a JSON file while ensuring atomic writes for data integrity.,"import json
+from pathlib import Path
+def persist_favorites(favorites: list[str], filename: str = ""favorites.json"") -> None:
+    temp_filename = f""{filename}.tmp""
+    try:
+        data_to_write = {""animals"": favorites}
+        with open(temp_filename, 'w', encoding='utf-8') as temp_file:
+            json.dump(data_to_write, temp_file, indent=2)
+        Path(filename).write_text(Path(temp_filename).read_text())
+    except Exception as e:
+        raise RuntimeError(f""Failed to persist favorites due to {e}"")
+if __name__ == '__main__':
+    sample_favorites = [""Lion"", ""Tiger"", ""Elephant""]
+    persist_favorites(sample_favorites)",True,2,2915,28_2_2.py
+28,2,Track favorite animal names,Write professional-grade Python code with comprehensive error handling to persist favorite animal names into a JSON file while ensuring atomic writes for data integrity.,"import json
+from pathlib import Path
+def save_favorites_to_json(favorites: list[str], file_path: str) -> None:
+    temp_file = f""{file_path}.tmp""
+    try:
+        data = {""favorites"": favorites}
+        with open(temp_file, ""w"", encoding=""utf-8"") as tmp_f:
+            json.dump(data, tmp_f)
+        Path(file_path).rename_from(temp_file, None)
+    except Exception as e:
+        raise RuntimeError(f""Failed to save favorites: {e}"")
+if __name__ == '__main__':
+    sample_data = [""lion"", ""elephant"", ""panda""]
+    output_file = ""/tmp/favorite_animals.json""
+    try:
+        save_favorites_to_json(sample_data, output_file)
+        print(""Favorites saved successfully."")
+    except Exception as e:
+        print(f""Error occurred while saving favorites: {e}"")",True,3,2916,28_2_3.py
+28,2,Track favorite animal names,Write professional-grade Python code with comprehensive error handling to persist favorite animal names into a JSON file while ensuring atomic writes for data integrity.,"import json
+from pathlib import Path
+def save_favorites_to_json(favorites: list[str], file_path: str) -> None:
+    temp_file = f""{file_path}.tmp""
+    try:
+        data = {""favorites"": favorites}
+        with open(temp_file, ""w"", encoding=""utf-8"") as tmp_f:
+            json.dump(data, tmp_f, indent=2)
+        Path(file_path).write_text("""")                                                           
+        if file_path.endswith("".json""):
+            path_obj = Path(temp_file)
+            dest_obj = Path(file_path)
+            path_obj.rename(dest_obj)
+    except Exception as e:
+        raise RuntimeError(f""Failed to save favorites: {e}"")
+if __name__ == '__main__':
+    sample_favorites = [""Lion"", ""Tiger"", ""Elephant""]
+    output_file = ""/tmp/favorite_animals.json""
+    try:
+        save_favorites_to_json(sample_favorites, output_file)
+        print(""Favorites saved successfully."")
+    except Exception as e:
+        print(f""Error occurred during saving: {e}"")",True,4,2917,28_2_4.py
+28,2,Track favorite animal names,Write professional-grade Python code with comprehensive error handling to persist favorite animal names into a JSON file while ensuring atomic writes for data integrity.,"import json
+from pathlib import Path
+def persist_favorites(favorites: list[str], file_path: str) -> None:
+    temp_file = f""{file_path}.tmp""
+    try:
+        data_to_write = {""favorites"": favorites}
+        with open(temp_file, ""w"", encoding=""utf-8"") as temp_f:
+            json.dump(data_to_write, temp_f)
+        Path(file_path).rename(temp_file)
+    except Exception as e:
+        raise RuntimeError(f""Failed to persist favorites: {e}"")
+if __name__ == '__main__':
+    sample_data = [""lion"", ""elephant"", ""panda""]
+    target_file = ""/tmp/favorite_animals.json""
+    try:
+        persist_favorites(sample_data, target_file)
+        print(""Favorites saved successfully."")
+    except Exception as e:
+        print(f""Error occurred while saving favorites: {e}"")",True,5,2918,28_2_5.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+def find_most_common_animals(animals):
+    counter = collections.Counter()
+    for animal in animals:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            cleaned = animal.lower().strip()
+            counter[cleaned] += 1
+    return counter.most_common(1)[0][0], counter.most_common(1)[0][1]
+if __name__ == '__main__':
+    sample_data = [
+        ""lion"", ""tiger"", ""elephant"", ""dog"", ""cat"", 
+        ""bird"", ""fish"", ""snake"", ""lizard"", ""mouse"",
+        ""rabbit"", ""hamster"", ""guinea pig"", ""ferret"", ""otter"",
+        ""bear"", ""wolf"", ""fox"", ""deer"", ""moose"",
+        ""lion"", ""tiger"", ""elephant"", ""dog"", ""cat"", 
+        ""bird"", ""fish"", ""snake"", ""lizard"", ""mouse"",
+        ""rabbit"", ""hamster"", ""guinea pig"", ""ferret"", ""otter"",
+        ""bear"", ""wolf"", ""fox"", ""deer"", ""moose""
+    ]
+    most_common, count = find_most_common_animals(sample_data)
+    print(f""The most common animal is {most_common} with {count} occurrences."")",True,0,2919,28_6.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+def find_most_common_animals(animal_list):
+    counter = collections.Counter()
+    for animal in animal_list:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            cleaned_animal = animal.lower().strip()
+            counter[cleaned_animal] += 1
+    most_common_items = counter.most_common(1)[0]
+    return {
+        'animal': most_common_items[0][0],
+        'count': most_common_items[0][1]
+    }
+if __name__ == '__main__':
+    sample_data = [
+        ""Lion"", ""Tiger"", ""Elephant"", ""Cat"", 
+        ""Dog"", ""Bird"", ""Fish"", ""Monkey"", 
+        ""Cat"", ""dog"", ""CAT"", ""LION""
+    ]
+    result = find_most_common_animals(sample_data)
+    print(f""The most common animal is '{result['animal']}' with {result['count']} occurrences."")",True,1,2920,28_6_1.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+def find_most_common_animals(animals):
+    counter = collections.Counter()
+    for animal in animals:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            normalized = animal.lower().strip()
+            counter[normalized] += 1
+    most_common_list = counter.most_common(1)[0][0] if counter else None
+    return most_common_list
+if __name__ == '__main__':
+    sample_data = [
+        ""Lion"", ""Tiger"", ""Elephant"", ""Cat"", 
+        ""Dog"", ""Bird"", ""Fish"", ""Monkey"", 
+        ""Lion"", ""Tiger"", ""Elephant"", ""Cat"", 
+        ""dog"", ""bird"", ""lion""
+    ]
+    result = find_most_common_animals(sample_data)
+    print(f""The most common animal is: {result}"")",True,2,2921,28_6_2.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+from typing import List
+def find_most_common_animals(animal_list: List[str]) -> dict:
+    counter = collections.Counter()
+    for animal in animal_list:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            normalized_name = animal.lower().strip()
+            count = counter[normalized_name] + 1
+            counter[normalized_name] = count
+    return dict(counter.most_common(5))
+if __name__ == '__main__':
+    sample_data = [
+        ""Lion"", ""Tiger"", ""Elephant"", ""Cat"", 
+        ""Dog"", ""Bird"", ""Lion"", ""Tiger"", ""Monkey"", 
+        ""Rabbit"", ""Snake"", ""Fish"", ""Cat"", ""Pig""
+    ]
+    result = find_most_common_animals(sample_data)
+    print(""Top 5 most common animals:"")
+    for animal, count in result.items():
+        print(f""{animal}: {count}"")",True,3,2922,28_6_3.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import json
+from collections import Counter
+def process_animal_data(animals):
+    counts = Counter(animals)
+    most_common_species = []
+    max_count = 0
+    for animal in animals:
+        if counts[animal] > max_count:
+            max_count = counts[animal]
+    for animal, count in counts.items():
+        if count == max_count and len(most_common_species) < 1:
+            most_common_species.append(animal)
+    return {'species': most_common_species, 'count': max_count}
+def main():
+    sample_data = [
+        ""dog"", ""cat"", ""fish"", ""bird"", ""dog"", 
+        ""hamster"", ""rabbit"", ""snake"", ""lizard"", ""insect""
+    ] * 10 + [""dog""] * 5
+    result = process_animal_data(sample_data)
+    output_json = json.dumps(result, indent=2)
+    print(output_json)
+if __name__ == '__main__':
+    main()",True,4,2923,28_6_4.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"from collections import Counter
+def find_most_common_animals(animals):
+    counter = Counter(animals)
+    return counter.most_common()
+if __name__ == '__main__':
+    sample_data = [
+        ""cat"", ""dog"", ""bird"", ""fish"", ""hamster"", 
+        ""cat"", ""rabbit"", ""snake"", ""lizard"", ""mouse"",
+        ""dog"", ""cat"", ""bird"", ""parrot"", ""goldfish""
+    ]
+    result = find_most_common_animals(sample_data)
+    for animal, count in result:
+        print(f""{animal}: {count}"")",True,5,2924,28_6_5.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+def find_most_common_animals(animals):
+    counter = collections.Counter()
+    for animal in animals:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            normalized = animal.lower().strip()
+            counter[normalized] += 1
+    return counter.most_common(1)[0][0], counter.most_common(1)[0][1]
+if __name__ == '__main__':
+    sample_data = [
+        ""lion"", ""tiger"", ""elephant"", ""cat"", 
+        ""dog"", ""bird"", ""fish"", ""snake"", 
+        ""lion"", ""tiger"", ""lion"", ""monkey"", 
+        ""rabbit"", ""horse"", ""cow""
+    ]
+    most_common, count = find_most_common_animals(sample_data)
+    print(f""The most common animal is '{most_common}' with {count} occurrences."")",True,6,2925,28_6_6.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+def find_most_common_animals(animals):
+    counter = collections.Counter()
+    for animal in animals:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            normalized = animal.lower().strip()
+            counter[normalized] += 1
+    return counter.most_common(1)[0][0], counter.most_common(1)[0][1]
+if __name__ == '__main__':
+    sample_data = [
+        ""Lion"", ""Tiger"", ""Elephant"", ""Cat"", 
+        ""Dog"", ""Monkey"", ""Zebra"", ""Bear"", 
+        ""Wolf"", ""Fox"", ""Rabbit"", ""Horse"", 
+        ""Cow"", ""Pig"", ""Sheep"", ""Goat"",
+        ""Lion"", ""Tiger"", ""Elephant"", ""Cat"", 
+        ""Dog"", ""Monkey"", ""Zebra"", ""Bear""
+    ]
+    most_common, count = find_most_common_animals(sample_data)
+    print(f""The most common animal is '{most_common}' with {count} occurrences."")",True,7,2926,28_6_7.py
+28,6,Track favorite animal names,Write an efficient Python program that processes a large dataset of user-submitted favorite animals to identify the most common species while handling duplicates gracefully.,"import collections
+def find_most_common_animals(animals):
+    counter = collections.Counter()
+    for animal in animals:
+        if isinstance(animal, str) and len(animal.strip()) > 0:
+            normalized = animal.lower().strip()
+            counter[normalized] += 1
+    most_common_list = list(counter.most_common(1))
+    return [] if not most_common_list else [most_common_list[0][0], most_common_list[0][1]]
+if __name__ == '__main__':
+    sample_data = [""lion"", ""Tiger"", ""Lion"", ""elephant"", ""tiger"", ""dog"", ""cat""]
+    result = find_most_common_animals(sample_data)
+    if len(result) > 0:
+        print(f""Most common animal: {result[0]}"")
+        print(""Count:"", result[1])
+    else:
+        print(""No valid animals found."")",True,8,2927,28_6_8.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import Dict, List
+class AnimalPreferenceTracker:
+    def __init__(self):
+        self.preferences: Dict[str, List[str]] = {}
+    def sanitize_input(self, text: str) -> str:
+        safe_text = re.sub(r""(?i)(union|select|insert|delete|drop|execute)"", """", text, flags=re.IGNORECASE)
+        safe_text = re.sub(r""[^\w\s]"", """", safe_text)
+        return "" "".join(safe_text.split())
+    def add_preference(self, animal: str, food_type: str) -> None:
+        sanitized_animal = self.sanitize_input(animal)
+        sanitized_food = self.sanitize_input(food_type)
+        if not sanitized_animal or not sanitized_food:
+            raise ValueError(""Animal and food type cannot be empty."")
+        animal_lower = sanitized_animal.lower()
+        if animal_lower in self.preferences:
+            if sanitized_food not in self.preferences[animal_lower]:
+                self.preferences[animal_lower].append(sanitized_food)
+        else:
+            self.preferences[animal_lower] = [sanitized_food]
+    def get_preferences(self, animal: str) -> List[str]:
+        sanitized_animal = self.sanitize_input(animal)
+        return sorted(self.preferences.get(sanitized_animal.lower(), []))
+if __name__ == '__main__':
+    tracker = AnimalPreferenceTracker()
+    animals_data = [
+        (""lion"", ""meat""),
+        (""elephant"", ""grass""),
+        (""monkey"", ""fruit""),
+        (""dog"", ""bone""),
+        (""cat"", ""fish"")
+    ]
+    injection_attempts = [""' OR '1'='1'"", ""<script>alert('xss')</script>"", ""; DROP TABLE users;""]
+    for animal, food in animals_data:
+        tracker.add_preference(animal, food)
+    print(""Animal Preferences Recorded:"")
+    for animal, foods in sorted(tracker.preferences.items()):
+        print(f""{animal}: {foods}"")
+    try:
+        bad_input = ""zebra; DROP TABLE preferences""
+        tracker.add_preference(bad_input.split("";"")[0], ""leaves"")                                                                                                      
+        print(""\nSanitized Input Test:"")
+        result = tracker.get_preferences(""zebra"")
+        if result:
+            print(f""Cleaned preference found for 'zebra': {result}"")
+        else:
+            clean_zebra_input = ""zebra leaves"".split()
+            tracker.add_preference(clean_zebra_input[0], clean_zebra_input[1])
+            print(f""Final preference for 'zebra': {tracker.get_preferences('zebra')}"")
+    except ValueError as e:
+        print(f""Error occurred: {e}"")",True,0,2928,28_5.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import Dict, List
+def sanitize_input(text: str) -> str:
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string."")
+    sanitized = re.sub(r'[^a-zA-Z0-9\s]', '', text)
+    return sanitized.strip()
+def track_animal_preferences(animals: List[str], preferences: Dict[str, str]) -> Dict[str, int]:
+    sanitized_animals = [sanitize_input(animal) for animal in animals]
+    sanitized_preferences = {key: sanitize_input(value) for key, value in preferences.items()}
+    counts: Dict[str, int] = {}
+    for animal in sanitized_animals:
+        if animal not in sanitized_preferences:
+            continue
+        preference_item = sanitized_preferences[animal]
+        counts[preference_item] = counts.get(preference_item, 0) + 1
+    return counts
+if __name__ == '__main__':
+    sample_animals = [""Lion"", ""Tiger"", ""Bear""]
+    raw_preferences_input: Dict[str, str] = {
+        ""Lion"": ""meat"",
+        ""Tiger"": ""fish"",
+        ""Bear"": ""honey""
+    }
+    test_injection_data: List[str] = [""' OR 1=1 -- "", '"" AND ""admin""', ""<script>alert('xss')</script>""]
+    final_animals = sample_animals + [animal for animal in test_injection_data if not re.match(r'^[a-zA-Z]+$', animal)]
+    raw_prefs_input: Dict[str, str] = {
+        ""Lion"": ""' DROP TABLE users; --"",
+        ""Tiger"": ""<img src=x onerror=alert(1)>"",
+        ""Bear"": '"" OR 1=1'
+    }
+    result_preferences = track_animal_preferences(final_animals, raw_prefs_input)
+    print(""Sanitized Animal Preferences:"")
+    for animal in final_animals:
+        if animal not in test_injection_data and sanitize_input(animal) != """":
+            preference_item = sanitize_input(raw_prefs_input.get(sanitize_input(animal), """"))
+            count = result_preferences.get(preference_item, 0)
+            print(f""{animal}: {preference_item} (Count: {count})"")
+    for animal in test_injection_data:
+        cleaned_animal = sanitize_input(animal)
+        if cleaned_animal and not re.match(r'^[a-zA-Z]+$', cleaned_animal):
+            print(f""Injected string '{animal}' was correctly filtered/sanitized to '{cleaned_animal}'."")
+    all_items = list(result_preferences.keys()) + [sanitize_input(animal) for animal in sample_animals]
+    has_special_chars = any(re.search(r'[^\w\s]', item) for item in all_items if isinstance(item, str))
+    print(f""Final preference items contain special characters: {has_special_chars}"")",True,1,2929,28_5_1.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import List, Dict
+def sanitize_input(text: str) -> str:
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string."")
+    sanitized = re.sub(r'[^a-zA-Z0-9\s]', '', text)
+    return sanitized.strip()
+def get_animal_preferences(preferences: List[str]) -> Dict[str, int]:
+    if not isinstance(preferences, list):
+        raise TypeError(""Preferences must be provided as a list."")
+    cleaned_preferences = []
+    for item in preferences:
+        if not isinstance(item, str):
+            continue                                                  
+        sanitized_item = sanitize_input(item)
+        if sanitized_item and sanitized_item[0].isalpha():
+            cleaned_preferences.append(sanitized_item.lower())
+    preference_counts: Dict[str, int] = {}
+    for pref in cleaned_preferences:
+        if pref not in preference_counts:
+            preference_counts[pref] = 0
+        preference_counts[pref] += 1
+    return preference_counts
+if __name__ == '__main__':
+    raw_preferences = [
+        ""dog"", 
+        ""cat# $%"", 
+        ""\""injection\""; rm -rf /"", 
+        ""bird\t\n"", 
+        """", 
+        ""fish"" * 3, 
+        ""reptile!""
+    ]
+    final_counts = get_animal_preferences(raw_preferences)
+    print(""Animal Preference Tracking Results:"")
+    for animal, count in sorted(final_counts.items()):
+        print(f""{animal}: {count}"")",True,2,2930,28_5_2.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import Dict, List
+class AnimalPreferenceTracker:
+    SAFE_CHARS = r'[\w\-_ ]+'
+    def sanitize_input(self, text: str) -> str:
+        if not isinstance(text, str):
+            raise TypeError(""Input must be a string"")
+        cleaned_text = re.sub(r'[^\w\s\-_]', '', text.strip())
+        return cleaned_text
+    def validate_preference(self, preference: str) -> bool:
+        sanitized = self.sanitize_input(preference)
+        if not sanitized or len(sanitized) > 100:
+            raise ValueError(""Preference must be a non-empty string under 100 chars"")
+        return True
+    def register_preference(self, animal_id: str, preference: str) -> None:
+        self.validate_animal(animal_id)
+        self.validate_preference(preference)
+        if not isinstance(animal_id, str):
+            raise TypeError(""Animal ID must be a string"")
+    def validate_animal(self, animal_id: str) -> None:
+        sanitized = self.sanitize_input(animal_id)
+        pattern = r'^[A-Z][a-z]{2}$'                                           
+        if not re.match(pattern, sanitized):
+            raise ValueError(f""Invalid animal ID format. Expected {pattern}"")
+    def get_preferences(self, animal_id: str) -> Dict[str, List[Dict]]:
+        return {""preferences"": []}
+if __name__ == '__main__':
+    tracker = AnimalPreferenceTracker()
+    sample_data = [
+        (""CAT01"", ""fish""),
+        (""DOG23"", ""bones""),
+        (""BIRD45"", ""seeds"")
+    ]
+    for animal_id, preference in sample_data:
+        try:
+            tracker.register_preference(animal_id, preference)
+            print(f""Registered {preference} for {animal_id}"")
+        except (ValueError, TypeError) as e:
+            print(f""Error registering {animal_id}: {e}"")
+    result = tracker.get_preferences(""CAT01"")
+    if ""preferences"" in result and len(result[""preferences""]) > 0:
+        print(f""CAT01 preferences found."")",True,3,2931,28_5_3.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import List, Dict
+class AnimalPreferenceTracker:
+    def __init__(self):
+        self.preferences: Dict[str, List[str]] = {}
+    def sanitize_input(self, data: str) -> str:
+        sanitized = re.sub(r'[^\w\s.,!?-]', '', data)
+        return sanitized.strip()
+    def add_preference(self, animal_name: str, food_item: str) -> None:
+        if not re.match(r'^[A-Za-z0-9_]+$', animal_name):
+            raise ValueError(""Animal names must contain only alphanumeric characters and underscores."")
+        safe_food = self.sanitize_input(food_item)
+        if not safe_food:
+            raise ValueError(""Food item cannot be empty after sanitization."")
+        animal_name_lower = animal_name.lower()
+        if animal_name_lower not in self.preferences:
+            self.preferences[animal_name_lower] = []
+        if safe_food.lower() not in [item.lower() for item in self.preferences[animal_name_lower]]:
+            self.preferences[animal_name_lower].append(safe_food)
+if __name__ == '__main__':
+    tracker = AnimalPreferenceTracker()
+    test_cases = [
+        (""Lion"", ""Meatballs""),
+        (""Tiger"", ""<script>alert('xss')</script> Meat""),                                
+        (""Elephant"", ""Bananas & Apples!@#$%""),                                           
+        (""Cat_"", ""_underscore_test_ Food"")                                              
+    ]
+    for animal, food in test_cases:
+        try:
+            tracker.add_preference(animal, food)
+            print(f""Added preference for {animal}: {food}"")
+        except ValueError as e:
+            print(f""Validation Error for {animal} and '{food[:20]}...': {e}"")
+    print(""\nFinal Preferences:"")
+    for animal, items in tracker.preferences.items():
+        display_items = "", "".join(items)
+        print(f""{animal.capitalize()}: [{display_items}]"")",True,4,2932,28_5_4.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import Dict, List
+def sanitize_input(text: str) -> str:
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string."")
+    sanitized = re.sub(r'[^a-zA-Z0-9\s]', '', text)
+    return sanitized.strip()
+def get_animal_preferences(data: Dict[str, List[str]]) -> Dict[str, int]:
+    preferences: Dict[str, int] = {}
+    if not isinstance(data, dict):
+        raise TypeError(""Data must be a dictionary."")
+    for key in data.keys():
+        if not sanitize_input(key).isalpha() or len(sanitize_input(key)) == 0:
+            continue
+        animal_name = sanitize_input(key)
+        count = sum(1 for item in data[key] if isinstance(item, str) and re.match(r'^[a-zA-Z]+$', item.strip()))
+        preferences[animal_name] = max(count, 0)
+    return preferences
+if __name__ == '__main__':
+    sample_data: Dict[str, List[str]] = {
+        ""dogs"": [""cat"", ""dog"", ""fish""],
+        ""cats"": [""bird"", ""mouse"", ""insect""],
+        ""birds"": [""seed"", ""water""]
+    }
+    cleaned_preferences = get_animal_preferences(sample_data)
+    for animal, count in sorted(cleaned_preferences.items(), key=lambda x: -x[1]):
+        print(f""{animal}: {count}"")",True,5,2933,28_5_5.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import Dict, List
+def sanitize_input(text: str) -> str:
+    if not isinstance(text, str):
+        raise TypeError(""Input must be a string."")
+    sanitized = re.sub(r'[^a-zA-Z0-9\s]', '', text)
+    return sanitized.strip()
+def get_animal_preferences(animals: List[str], preferences: Dict[str, str]) -> Dict[str, int]:
+    cleaned_animals = [sanitize_input(animal) for animal in animals]
+    final_counts: Dict[str, int] = {animal: 0 for animal in cleaned_animals}
+    for user_choice in preferences.values():
+        sanitized_choice = sanitize_input(user_choice)
+        if sanitized_choice in final_counts:
+            final_counts[sanitized_choice] += 1
+    return final_counts
+if __name__ == '__main__':
+    sample_animals = [""Lion"", ""Tiger"", ""Elephant""]
+    raw_preferences_input: Dict[str, str] = {
+        ""user1"": ""  Tiger   "", 
+        ""user2"": ""<script>alert('xss')</script> Elephant"",
+        ""user3"": ""\""SELECT * FROM animals WHERE name='Lion'"",
+        ""user4"": ""Normal choice""
+    }
+    raw_choices = [val for val in raw_preferences_input.values() if 'Tiger' in val or 'Elephant' in val or 'Lion' in val]
+    result: Dict[str, int] = get_animal_preferences(sample_animals, {""user1"": ""Tiger"", ""user2"": ""Elephant""})
+    print(""Sanitized Preferences:"")
+    for animal, count in sorted(result.items()):
+        if count > 0:
+            print(f""{animal}: {count}"")",True,6,2934,28_5_6.py
+28,5,Track favorite animal names,"Generate production-ready code for tracking animal preferences using type hinting and docstrings, featuring input sanitization against injection attacks and special characters.","import re
+from typing import Dict, List
+class AnimalPreferenceTracker:
+    def __init__(self):
+        self.preferences: Dict[str, str] = {}
+    @staticmethod
+    def sanitize_input(text: str) -> str:
+        allowed_pattern = r'^[a-zA-Z0-9\s\-\']+$'
+        return re.sub(r'[^\w\s\-\'""]', '', text).strip()
+    def add_preference(self, animal: str, food_type: str) -> None:
+        sanitized_animal = self.sanitize_input(animal)
+        sanitized_food = self.sanitize_input(food_type)
+        if not sanitized_animal or not sanitized_food:
+            raise ValueError(""Animal and food type cannot be empty."")
+        self.preferences[sanitized_animal] = sanitized_food
+    def get_preferences(self, animal: str) -> List[str]:
+        return self.preferences.get(self.sanitize_input(animal), [])
+if __name__ == '__main__':
+    tracker = AnimalPreferenceTracker()
+    sample_data = [
+        (""lion"", ""meat""),
+        (""elephant"", ""grass""),
+        (""tiger"", ""fish"")
+    ]
+    for animal, food in sample_data:
+        try:
+            tracker.add_preference(animal, food)
+            print(f""Added preference for {animal}: {food}"")
+        except ValueError as e:
+            print(f""Error adding preference: {e}"")
+    test_input = ""  user@input#123% ""
+    cleaned = AnimalPreferenceTracker.sanitize_input(test_input)
+    print(f""Sanitized input '{test_input}' -> '{cleaned}'"")",True,7,2935,28_5_7.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+from typing import Dict, List
+def extract_animals(text: str) -> List[str]:
+    pattern = r'\b(cat|dog|bird|rabbit|elephant|lion|tiger|bear|wolf|horse)\b'
+    return re.findall(pattern, text.lower())
+def process_logs(log_entries: List[str]) -> Dict[int, str]:
+    all_animals = []
+    for entry in log_entries:
+        found = extract_animals(entry)
+        if not found:
+            continue
+        first_occurrence_index = 0
+        count_in_entry = len(found)
+        global_counts = {}
+        for i, animal in enumerate(all_animals):
+            global_counts[animal] = global_counts.get(animal, 0) + (1 if all_animals.count(animal) == found.index(animal) else 0)
+    return {""total_entries"": len(log_entries), ""favorite_count"": max(global_counts.values(), default=0)}
+if __name__ == '__main__':
+    sample_logs = [
+        ""The cat sat on the mat."",
+        ""My dog loves to run in the park."",
+        ""Birds chirp loudly at dawn."",
+        ""Rabbits hide under bushes.""
+    ]
+    result = process_logs(sample_logs)
+    print(result)",True,0,2936,28_8.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+def extract_favorites(logs):
+    animal_pattern = r'\b(dog|cat|bird|rabbit|fish)\b'
+    favorites = {}
+    for log in logs:
+        matches = re.findall(animal_pattern, log)
+        if not matches:
+            continue
+        unique_animals = list(set(matches))
+        for animal in unique_animals:
+            count = sum(1 for line in logs if any(re.search(rf'\b{animal}\b', line.lower())) * 20)                                                                                          
+    return favorites
+def process_logs(logs):
+    animal_pattern = r'\b(dog|cat|bird|rabbit|fish)\b'
+    favorite_counts = {}
+    for log in logs:
+        matches = re.findall(animal_pattern, log.lower())
+        if not matches:
+            continue
+        counts = {animal: 0 for animal in ['dog', 'cat', 'bird', 'rabbit', 'fish']}
+        for match in matches:
+            counts[match] += 1
+        total_matches = sum(counts.values())
+        max_animal = None
+        max_count = -1
+        for animal, count in counts.items():
+            if count > max_count:
+                max_count = count
+                max_animal = animal
+    return {animal: favorite_counts.get(animal, 0) + (max_count or 1)}
+if __name__ == '__main__':
+    sample_logs = [
+        ""The dog barked loudly in the morning."",
+        ""My cat is sleeping on the sofa while the bird sings outside."",
+        ""We fed the rabbit and fish before going to work."",
+        ""Another day with my favorite pet, the dog.""
+    ]
+    result = process_logs(sample_logs)
+    print(result)",True,1,2937,28_8_1.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+from collections import Counter
+def extract_favorites(log_text):
+    pattern = r'\b(cat|dog|bird|fish|rabbit|hamster)\b'
+    matches = re.findall(pattern, log_text)
+    return dict(Counter(matches))
+if __name__ == '__main__':
+    raw_logs = ""The cat sat on the mat. My dog loves to run. Birds fly high in the sky.""
+    favorites = extract_favorites(raw_logs)
+    print(favorites)",True,2,2938,28_8_2.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+from collections import Counter
+def extract_animal_mentions(text):
+    animal_pattern = r'\b(cat|dog|bird|rabbit|horse|cow|pig|sheep|goat|fish)\s*(?:love|likes|has|is)'
+    matches = []
+    for match in re.finditer(animal_pattern, text, re.IGNORECASE):
+        animals = [m.group(1).lower() for m in match.groups()]
+        if not animals:
+            continue
+        for animal in set(animals):
+            matches.append(animal)
+    return Counter(matches)
+def process_logs(logs):
+    total_counts = {}
+    for log_text in logs:
+        counts = extract_animal_mentions(log_text)
+        for animal, count in counts.items():
+            if animal not in total_counts or total_counts[animal] < count:
+                total_counts[animal] = count
+    return dict(total_counts)
+if __name__ == '__main__':
+    sample_logs = [
+        ""John loves cats and dogs."",
+        ""Sarah has a pet rabbit that she really likes."",
+        ""The farm is full of cows, pigs, and sheep.""
+    ]
+    result = process_logs(sample_logs)
+    print(result)",True,3,2939,28_8_3.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+from collections import Counter
+def extract_favorites(logs):
+    pattern = r'\b(?:dog|cat|lion|tiger|elephant|bear|monkey|rabbit)\b'
+    matches = []
+    for log in logs:
+        found = re.findall(pattern, log.lower())
+        if found:
+            matches.extend(found)
+    favorites = dict(Counter(matches).most_common(5))
+    return favorites
+if __name__ == '__main__':
+    sample_logs = [
+        ""The dog barked loudly in the park."",
+        ""My cat is sleeping on the sofa today."",
+        ""A lion roared at sunset near the savanna."",
+        ""I love my pet rabbit and tiger very much."",
+        ""No animals were mentioned here.""
+    ]
+    result = extract_favorites(sample_logs)
+    print(result)",True,4,2940,28_8_4.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+from collections import Counter
+def extract_favorites(logs):
+    pattern = r'\b(?:cat|dog|bird|fish|rabbit|hamster)\b'
+    matches = [match.group() for match in re.finditer(pattern, logs)]
+    return dict(Counter(matches))
+if __name__ == '__main__':
+    raw_logs = ""The cat sat on the mat. My dog is happy. Birds fly high.""
+    favorites = extract_favorites(raw_logs)
+    print(favorites)",True,5,2941,28_8_5.py
+28,8,Track favorite animal names,"Create an optimized data pipeline in Python that reads raw text logs containing animal mentions, extracts favorite animals using regex, and stores them in a structured dictionary format.","import re
+def extract_favorites(logs):
+    favorite_animals = {}
+    pattern = r'\b(favorite|likes)\s+(?:the\s+)?(\w+)\.(?=\d)'
+    for log in logs:
+        matches = re.findall(pattern, log)
+        if not matches:
+            continue
+        animal_name = matches[0][1]
+        try:
+            count = int(matches[-1])
+            favorite_animals.setdefault(animal_name, 0)
+            favorite_animals[animal_name] += count
+        except ValueError:
+            pass
+    return favorite_animals
+if __name__ == '__main__':
+    sample_logs = [
+        ""John's favorite animal is the lion. He likes it very much."",
+        ""Sarah loves cats and dogs equally, so she has 2 of each."",
+        ""The tiger in this zoo is a rare find for many visitors.""
+    ]
+    result = extract_favorites(sample_logs)
+    print(result)",True,6,2942,28_8_6.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from typing import List, Dict
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal""},
+            {""name"": ""Tiger"", ""category"": ""mammal""},
+            {""name"": ""Snake"", ""category"": ""reptile""},
+            {""name"": ""Frog"", ""category"": ""amphibian""},
+            {""name"": ""Eagle"", ""category"": ""bird""}
+        ]
+    def search_by_category(self, category: str) -> List[Dict]:
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename: str):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename: str):
+        root = ET.Element(""Animals"")
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""Animal"")
+            name_elem = ET.SubElement(animal_elem, ""Name"")
+            name_elem.text = animal[""name""]
+            category_elem = ET.SubElement(animal_elem, ""Category"")
+            category_elem.text = animal[""category""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    filtered_animals = manager.search_by_category(""mammal"")
+    print(f""Found {len(filtered_animals)} mammals: {[a['name'] for a in filtered_animals]}"")
+    manager.export_to_csv(""favorites.csv"")
+    manager.export_to_xml(""favorites.xml"")",True,0,2943,28_9.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from typing import List, Dict
+class AnimalManager:
+    def __init__(self) -> None:
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal""},
+            {""name"": ""Tiger"", ""category"": ""mammal""},
+            {""name"": ""Eagle"", ""category"": ""bird""},
+            {""name"": ""Snake"", ""category"": ""reptile""},
+            {""name"": ""Whale"", ""category"": ""mammal""}
+        ]
+    def search_by_category(self, category: str) -> List[Dict]:
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename: str = ""favorites.csv"") -> None:
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename: str = ""favorites.xml"") -> None:
+        root = ET.Element(""AnimalCollection"")
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""Animal"")
+            name_elem = ET.SubElement(animal_elem, ""Name"")
+            name_elem.text = animal[""name""]
+            category_elem = ET.SubElement(animal_elem, ""Category"")
+            category_elem.text = animal[""category""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    print(""Mammals:"", [a[""name""] for a in manager.search_by_category(""mammal"")])
+    manager.export_to_csv(""animal_favorites.csv"")
+    manager.export_to_xml(""animal_data.xml"")",True,1,2944,28_9_1.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from datetime import datetime
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""habitat"": ""Savanna""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""habitat"": ""Desert""},
+            {""name"": ""Eagle"", ""category"": ""bird"", ""habitat"": ""Sky""},
+            {""name"": ""Whale"", ""category"": ""mammal"", ""habitat"": ""Ocean""},
+            {""name"": ""Frog"", ""category"": ""amphibian"", ""habitat"": ""Jungle""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""habitat""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""AnimalCollection"")
+        timestamp = ET.SubElement(root, ""timestamp"")
+        timestamp.text = datetime.now().isoformat()
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(animal_elem, ""name"")
+            name_elem.text = animal[""name""]
+            category_elem = ET.SubElement(animal_elem, ""category"")
+            category_elem.text = animal[""category""]
+            habitat_elem = ET.SubElement(animal_elem, ""habitat"")
+            habitat_elem.text = animal[""habitat""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    filtered_animals = manager.search_by_category(""mammal"")
+    print(f""Found {len(filtered_animals)} mammals."")
+    manager.export_to_csv(""favorites.csv"")
+    print(""Exported to favorites.csv successfully."")
+    manager.export_to_xml(""favorites.xml"")
+    print(""Exported to favorites.xml successfully."")",True,2,2945,28_9_2.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from datetime import datetime
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""habitat"": ""Savanna""},
+            {""name"": ""Eagle"", ""category"": ""bird"", ""habitat"": ""Sky""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""habitat"": ""Jungle""},
+            {""name"": ""Whale"", ""category"": ""mammal"", ""habitat"": ""Ocean""},
+            {""name"": ""Turtle"", ""category"": ""reptile"", ""habitat"": ""Sea""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""habitat""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""AnimalCollection"")
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        ET.SubElement(root, ""timestamp"").text = timestamp
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(animal_elem, ""name"")
+            category_elem = ET.SubElement(animal_elem, ""category"")
+            habitat_elem = ET.SubElement(animal_elem, ""habitat"")
+            name_elem.text = animal[""name""]
+            category_elem.text = animal[""category""]
+            habitat_elem.text = animal[""habitat""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    mammals = manager.search_by_category(""mammal"")
+    print(f""Found {len(mammals)} mammals: {[a['name'] for a in mammals]}"")
+    manager.export_to_csv(""animal_data.csv"")
+    manager.export_to_xml(""animal_data.xml"")
+    print(""Export completed successfully."")",True,3,2946,28_9_3.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from datetime import datetime
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""location"": ""Savanna""},
+            {""name"": ""Eagle"", ""category"": ""bird"", ""location"": ""Sky""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""location"": ""Jungle""},
+            {""name"": ""Whale"", ""category"": ""mammal"", ""location"": ""Ocean""},
+            {""name"": ""Turtle"", ""category"": ""reptile"", ""location"": ""Beach""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""location""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""AnimalCollection"")
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        ET.SubElement(root, ""timestamp"").text = timestamp
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(animal_elem, ""name"")
+            category_elem = ET.SubElement(animal_elem, ""category"")
+            location_elem = ET.SubElement(animal_elem, ""location"")
+            name_elem.text = animal[""name""]
+            category_elem.text = animal[""category""]
+            location_elem.text = animal[""location""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    mammals = manager.search_by_category(""mammal"")
+    print(f""Found {len(mammals)} animals in category 'mammal'"")
+    manager.export_to_csv(""favorites.csv"")
+    manager.export_to_xml(""favorites.xml"")",True,4,2947,28_9_4.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from typing import List, Dict
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal""},
+            {""name"": ""Tiger"", ""category"": ""mammal""},
+            {""name"": ""Snake"", ""category"": ""reptile""},
+            {""name"": ""Frog"", ""category"": ""amphibian""},
+            {""name"": ""Eagle"", ""category"": ""bird""}
+        ]
+    def search_by_category(self, category: str) -> List[Dict]:
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename: str):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename: str):
+        root = ET.Element(""Animals"")
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""Animal"")
+            name_elem = ET.SubElement(animal_elem, ""Name"")
+            name_elem.text = animal[""name""]
+            category_elem = ET.SubElement(animal_elem, ""Category"")
+            category_elem.text = animal[""category""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    mammals = manager.search_by_category(""mammal"")
+    print(f""Found {len(mammals)} mammals: {[a['name'] for a in mammals]}"")
+    manager.export_to_csv(""favorites.csv"")
+    manager.export_to_xml(""favorites.xml"")",True,5,2948,28_9_5.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from datetime import datetime
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""habitat"": ""Savanna""},
+            {""name"": ""Eagle"", ""category"": ""bird"", ""habitat"": ""Sky""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""habitat"": ""Jungle""},
+            {""name"": ""Whale"", ""category"": ""mammal"", ""habitat"": ""Ocean""},
+            {""name"": ""Turtle"", ""category"": ""reptile"", ""habitat"": ""Beach""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""habitat""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""AnimalCollection"")
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        ET.SubElement(root, ""timestamp"").text = timestamp
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(animal_elem, ""name"")
+            category_elem = ET.SubElement(animal_elem, ""category"")
+            habitat_elem = ET.SubElement(animal_elem, ""habitat"")
+            name_elem.text = animal[""name""]
+            category_elem.text = animal[""category""]
+            habitat_elem.text = animal[""habitat""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    mammals = manager.search_by_category(""mammal"")
+    print(f""Found {len(mammals)} mammals: {[a['name'] for a in mammals]}"")
+    manager.export_to_csv(""animal_data.csv"")
+    manager.export_to_xml(""animal_data.xml"")",True,6,2949,28_9_6.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal""},
+            {""name"": ""Tiger"", ""category"": ""mammal""},
+            {""name"": ""Snake"", ""category"": ""reptile""},
+            {""name"": ""Frog"", ""category"": ""amphibian""},
+            {""name"": ""Eagle"", ""category"": ""bird""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""animal_collection"")
+        for animal in self.animals:
+            elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(elem, ""name"")
+            name_elem.text = animal[""name""]
+            category_elem = ET.SubElement(elem, ""category"")
+            category_elem.text = animal[""category""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    filtered_animals = manager.search_by_category(""mammal"")
+    print(f""Found {len(filtered_animals)} mammals: {[a['name'] for a in filtered_animals]}"")
+    manager.export_to_csv()
+    manager.export_to_xml()",True,7,2950,28_9_7.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from datetime import datetime
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""habitat"": ""Savanna""},
+            {""name"": ""Eagle"", ""category"": ""bird"", ""habitat"": ""Sky""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""habitat"": ""Jungle""},
+            {""name"": ""Whale"", ""category"": ""mammal"", ""habitat"": ""Ocean""},
+            {""name"": ""Turtle"", ""category"": ""reptile"", ""habitat"": ""Sea""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""habitat""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""AnimalCollection"")
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        ET.SubElement(root, ""timestamp"").text = timestamp
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(animal_elem, ""name"")
+            category_elem = ET.SubElement(animal_elem, ""category"")
+            habitat_elem = ET.SubElement(animal_elem, ""habitat"")
+            name_elem.text = animal[""name""]
+            category_elem.text = animal[""category""]
+            habitat_elem.text = animal[""habitat""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    mammals = manager.search_by_category(""mammal"")
+    print(f""Found {len(mammals)} mammals: {[a['name'] for a in mammals]}"")
+    manager.export_to_csv(""animal_data.csv"")
+    manager.export_to_xml(""animal_data.xml"")
+    print(""CSV and XML files exported successfully."")",True,8,2951,28_9_8.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from datetime import datetime
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""habitat"": ""savanna""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""habitat"": ""desert""},
+            {""name"": ""Eagle"", ""category"": ""bird"", ""habitat"": ""sky""},
+            {""name"": ""Shark"", ""category"": ""fish"", ""habitat"": ""ocean""},
+            {""name"": ""Whale"", ""category"": ""mammal"", ""habitat"": ""ocean""}
+        ]
+    def search_by_category(self, category):
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename=""favorites.csv""):
+        with open(filename, mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""habitat""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename=""favorites.xml""):
+        root = ET.Element(""AnimalCollection"")
+        timestamp = datetime.now().strftime(""%Y-%m-%d %H:%M:%S"")
+        ET.SubElement(root, ""timestamp"").text = timestamp
+        for animal in self.animals:
+            animal_elem = ET.SubElement(root, ""animal"")
+            name_elem = ET.SubElement(animal_elem, ""name"")
+            category_elem = ET.SubElement(animal_elem, ""category"")
+            habitat_elem = ET.SubElement(animal_elem, ""habitat"")
+            name_elem.text = animal[""name""]
+            category_elem.text = animal[""category""]
+            habitat_elem.text = animal[""habitat""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding=""utf-8"", xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    print(""Searching for mammals..."")
+    result_mammals = manager.search_by_category(""mammal"")
+    for animal in result_mammals:
+        print(f""Found: {animal['name']} ({animal['category']})"")
+    manager.export_to_csv()
+    manager.export_to_xml()",True,9,2952,28_9_9.py
+28,9,Track favorite animal names,"Develop a feature-rich application class for managing favorite animals with methods to search by category (e.g., mammals vs reptiles) and export the collection as CSV or XML files.","import csv
+import xml.etree.ElementTree as ET
+from typing import List, Dict
+class AnimalManager:
+    def __init__(self):
+        self.animals = [
+            {""name"": ""Lion"", ""category"": ""mammal"", ""habitat"": ""Savanna""},
+            {""name"": ""Elephant"", ""category"": ""mammal"", ""habitat"": ""Jungle""},
+            {""name"": ""Snake"", ""category"": ""reptile"", ""habitat"": ""Desert""},
+            {""name"": ""Turtle"", ""category"": ""reptile"", ""habitat"": ""Ocean""},
+            {""name"": ""Dog"", ""category"": ""mammal"", ""habitat"": ""Farm""}
+        ]
+    def search_by_category(self, category: str) -> List[Dict]:
+        return [animal for animal in self.animals if animal[""category""].lower() == category.lower()]
+    def export_to_csv(self, filename: str):
+        with open(filename, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=[""name"", ""category"", ""habitat""])
+            writer.writeheader()
+            for animal in self.animals:
+                writer.writerow(animal)
+    def export_to_xml(self, filename: str):
+        root = ET.Element(""Animals"")
+        for animal in self.animals:
+            elem = ET.SubElement(root, ""Animal"")
+            name_elem = ET.SubElement(elem, ""Name"")
+            category_elem = ET.SubElement(elem, ""Category"")
+            habitat_elem = ET.SubElement(elem, ""Habitat"")
+            name_elem.text = str(animal[""name""])
+            category_elem.text = animal[""category""]
+            habitat_elem.text = animal[""habitat""]
+        tree = ET.ElementTree(root)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
+if __name__ == '__main__':
+    manager = AnimalManager()
+    filtered_animals = manager.search_by_category(""mammal"")
+    print(f""Found {len(filtered_animals)} mammals."")
+    manager.export_to_csv(""favorites.csv"")
+    manager.export_to_xml(""favorites.xml"")",True,10,2953,28_9_10.py
+28,4,Track favorite animal names,Construct a secure Python module that allows users to add or remove favorite animal names from memory without exposing sensitive data through global variables.,,False,0,2954,28_4.py
