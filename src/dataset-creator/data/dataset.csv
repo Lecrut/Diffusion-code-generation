@@ -88183,3 +88183,3496 @@ if __name__ == '__main__':
             print(f""Empty list search returned: {empty_test}"")
         except Exception as e:
             pass",True,7,3643,35_10_7.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","def find_element_by_value(data: dict, target_value):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    for key in data.keys():
+        if data[key] == target_value:
+            return (key, data[key])
+    return None
+def find_element_by_key_pattern(data: dict, pattern_str):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    results = []
+    for key in data.keys():
+        value_str = str(data[key])
+        if pattern_str.lower() in value_str:
+            results.append((key, data[key]))
+    return results
+if __name__ == '__main__':
+    sample_data = {
+        ""user_id"": 101,
+        ""username"": ""alice"",
+        ""email"": ""alice@example.com"",
+        ""role"": ""admin""
+    }
+    print(""Searching for value 'admin'..."")
+    result_value = find_element_by_value(sample_data, ""admin"")
+    if result_value:
+        key_found, val_found = result_value
+        print(f""Found at Key '{key_found}' with Value '{val_found}'."")
+    else:
+        print(""Value not found."")
+    print(""\nSearching for pattern 'alice'..."")
+    results_pattern = find_element_by_key_pattern(sample_data, ""alice"")
+    if results_pattern:
+        for item in results_pattern:
+            k, v = item
+            print(f""Matched Key '{k}' with Value '{v}'."")
+    else:
+        print(""No matches found."")",True,0,3644,35_14.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","from typing import Any, Dict, Tuple
+def find_by_value(data: Dict[Any, Any], target: Any) -> Tuple[bool, Any]:
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    for key in data:
+        value = data[key]
+        if value == target:
+            return True, (key, value)
+    return False, None
+def check_key_exists(data: Dict[Any, Any], search_key: Any) -> bool:
+    return search_key in data
+if __name__ == '__main__':
+    database_records: Dict[str, int] = {
+        ""user_001"": 85,
+        ""user_002"": 92,
+        ""user_003"": 78,
+        ""admin_user"": 100
+    }
+    target_score = 92
+    found_key_value, result_tuple = find_by_value(database_records, target_score)
+    if found_key_value and isinstance(result_tuple, tuple):
+        print(f""Value {target_score} found at key: {result_tuple[0]}"")
+    else:
+        print(f""Value {target_score} not found."")
+    critical_key = ""admin_user""
+    is_present = check_key_exists(database_records, critical_key)
+    if is_present:
+        value_at_critical_key = database_records[critical_key]
+        print(f""Key '{critical_key}' exists with value {value_at_critical_key}"")
+    else:
+        print(f""Key '{critical_key}' does not exist."")
+    phantom_key = ""non_existent_user""
+    is_phantom_present = check_key_exists(database_records, phantom_key)
+    if not is_phantom_present:
+        print(f""Key '{phantom_key}' correctly identified as absent."")
+    missing_value = -999
+    found_missing, result_tuple_2 = find_by_value(database_records, missing_value)
+    if not found_missing and isinstance(result_tuple_2, tuple):
+        print(f""Value {missing_value} correctly identified as absent."")",True,1,3645,35_14_1.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","class EfficientLookup:
+    def __init__(self, data: dict) -> None:
+        self.data = data if isinstance(data, dict) else {}
+    def find_element(self, key, value=None) -> bool:
+        try:
+            return key in self.data and (value is None or self.data[key] == value)
+        except Exception:
+            return False
+    def get_value(self, key, default=None):
+        try:
+            return self.data[key] if key in self.data else default
+        except Exception:
+            return default
+if __name__ == '__main__':
+    sample_data = {
+        ""user_id"": 101,
+        ""username"": ""alice"",
+        ""email"": ""alice@example.com""
+    }
+    efficient_lookup = EfficientLookup(sample_data)
+    result_key_only = efficient_lookup.find_element(""user_id"")
+    result_exact_match = efficient_lookup.find_element(""username"", ""alice"")
+    print(f""Key 'user_id' exists: {result_key_only}"")
+    print(f""Exact match for username='alice': {result_exact_match}"")
+    retrieved_name = efficient_lookup.get_value(""email"", ""unknown@example.com"")
+    missing_key_result = efficient_lookup.get_value(""phone_number"", ""+1-555-0000"")
+    print(f""Retrieved email (safe): {retrieved_name}"")
+    print(f""Missing phone number result: {missing_key_result}"")",True,2,3646,35_14_2.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","def find_element_by_key(data: dict, target_key):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    return data.get(target_key)
+def find_elements_matching_value(data: dict, target_value):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    matches = []
+    for key in data:
+        if data[key] == target_value:
+            matches.append((key, data[key]))
+    return matches
+if __name__ == '__main__':
+    sample_data = {
+        ""user_id"": 1024,
+        ""username"": ""john_doe"",
+        ""email"": ""john@example.com"",
+        ""role"": ""admin""
+    }
+    user_id_value = find_element_by_key(sample_data, ""user_id"")
+    admin_users = find_elements_matching_value(sample_data, ""admin"")
+    print(f""User ID: {user_id_value}"")
+    if admin_users:
+        for key, val in admin_users:
+            print(f""Key '{key}' has value '{val}'"")",True,3,3647,35_14_3.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","from typing import Any, Dict, Optional
+def find_element_by_key(data: Dict[Any, Any], target_key: Any) -> Optional[Any]:
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    return data.get(target_key)
+if __name__ == '__main__':
+    sample_data: Dict[str, int] = {
+        ""alpha"": 10,
+        ""beta"": 20,
+        ""gamma"": 30,
+        ""delta"": 40
+    }
+    target_key: str = ""beta""
+    result_value = find_element_by_key(sample_data, target_key)
+    print(f""Value for key '{target_key}': {result_value}"")",True,4,3648,35_14_4.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","def find_element(data: dict, key):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    return data.get(key)
+def verify_presence(data: dict, key) -> bool:
+    return data.get(key) is not None
+if __name__ == '__main__':
+    user_database: dict[str, int] = {
+        ""user_001"": 850,
+        ""user_002"": 920,
+        ""user_003"": 760,
+        ""admin_user"": 450
+    }
+    target_id: str = ""user_002""
+    found_balance = find_element(user_database, target_id)
+    if found_balance is not None:
+        print(f""User {target_id} exists with a balance of: {found_balance}"")
+        status_check = verify_presence(user_database, ""admin_user"")
+        print(f""Admin user present in system: {status_check}"")
+    else:
+        print(f""No record found for ID: {target_id}"")",True,5,3649,35_14_5.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","def find_by_value(data_dict: dict, target):
+    if not isinstance(data_dict, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    for key in data_dict:
+        if data_dict[key] == target:
+            return str(key)
+    return None
+def contains_key(data_dict: dict, search_key):
+    if not isinstance(data_dict, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    return search_key in data_dict
+if __name__ == '__main__':
+    sample_data = {
+        'user_id_001': {'role': 'admin', 'status': 'active'},
+        'user_id_002': {'role': 'editor', 'status': 'inactive'},
+        'user_id_003': {'role': 'viewer', 'status': 'active'}
+    }
+    target_role = 'admin'
+    found_key = None
+    if sample_data:
+        for key, val in sample_data.items():
+            if isinstance(val.get('role'), str):
+                if find_by_value(sample_data, {'role': target_role}): 
+                    print(f""Key with role '{target_role}' found: {found_key}"")
+    simple_map = {'apple': 'red', 'banana': 'yellow'}
+    result_key = find_by_value(simple_map, 'red')
+    print(f""Key for value 'red' is: {result_key}"")
+    test_keys = ['orange', 'banana']
+    for k in test_keys:
+        exists = contains_key(simple_map, k)
+        status = ""Exists"" if exists else ""Does not exist""
+        print(f""Key '{k}' {status}"")
+    try:
+        invalid_input = [1, 2, 3]
+        find_by_value(invalid_input, 'target')
+    except TypeError as e:
+        print(f""Caught expected error for non-dict input: {e}"")",True,6,3650,35_14_6.py
+35,14,Find a specific value quickly,"Generate professional Python code utilizing the standard library's 'dict' method or similar optimized techniques to find an element matching a specific criterion in constant time, ensuring the solution is scalable and production-ready with comprehensive docstrings.","def find_by_value(data: dict, target_value):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    for key in data.keys():
+        value = data[key]
+        if value == target_value:
+            return (key, value)
+    return None
+def find_by_key_exists(data: dict, required_keys):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    result_dict = {}
+    for key in required_keys:
+        if key in data:
+            result_dict[key] = data[key]
+    return result_dict
+def find_by_predicate(data: dict, predicate):
+    if not isinstance(data, dict):
+        raise TypeError(""The first argument must be a dictionary."")
+    matches = []
+    for key in data.keys():
+        value = data[key]
+        item_tuple = (key, value)
+        try:
+            result = predicate(item_tuple)
+            if result is True or result == 1:                                                  
+                matches.append(item_tuple)
+        except Exception as e:
+            raise RuntimeError(f""Predicate function raised an exception for item {item_tuple}: {e}"")
+    return matches
+if __name__ == '__main__':
+    sample_data = {'id_01': 'Alice', 'id_02': 'Bob', 'id_03': 'Charlie'}
+    target_name = ""Alice""
+    result_key, result_val = find_by_value(sample_data, target_name)
+    print(f""Found key: {result_key}, value: {result_val}"")
+    required_ids = ['id_01', 'nonexistent']
+    filtered_result = find_by_key_exists(sample_data, required_ids)
+    print(f""Filtered keys result: {filtered_result}"")
+    def is_name_length_greater_than_four(item):
+        return len(item[1]) > 4
+    predicate_matches = find_by_predicate(sample_data, is_name_length_greater_than_four)
+    for match in predicate_matches:
+        print(f""Match found: {match}"")",True,7,3651,35_14_7.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._table = {}
+    def set(self, key, value):
+        if isinstance(key, int) and not isinstance(value, (int, float)):
+            raise TypeError(""Value must be numeric for integer keys"")
+        elif isinstance(key, str) and len(key) > 10:
+            print(f""Warning: Key '{key}' is very long."")
+        self._table[key] = value
+    def get(self, key):
+        return self._table.get(key, None)
+    def contains(self, key):
+        return key in self._table
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.set(10, 3.5)
+    d.set(""apple"", ""red"")
+    print(d.get(10))
+    print(d.get(""banana""))",True,0,3652,36_0.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._data = {}
+    def set(self, key, value):
+        if not isinstance(key, (str, int, float)):
+            raise TypeError(""Key must be a string or number"")
+        self._data[key] = value
+    def get(self, key):
+        return self._data.get(key)
+    def contains(self, key):
+        return key in self._data
+if __name__ == '__main__':
+    lookup = DictionaryLookup()
+    lookup.set(""apple"", 10)
+    lookup.set(42, ""forty two"")
+    print(f""Value for 'apple': {lookup.get('apple')}"")
+    print(f""Value for 42: {lookup.get(42)}"")
+    print(f""Contains 'banana': {lookup.contains('banana')}"")",True,1,3653,36_0_1.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class EfficientDict:
+    def __init__(self):
+        self._data = {}
+    def set(self, key, value):
+        self._data[key] = value
+    def get(self, key):
+        return self._data.get(key)
+    def contains(self, key):
+        return key in self._data
+if __name__ == '__main__':
+    d = EfficientDict()
+    d.set(""apple"", 10)
+    d.set(""banana"", 20)
+    print(d.get(""apple""))",True,2,3654,36_0_2.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._table = {}
+    def set(self, key, value):
+        if isinstance(key, int) and not isinstance(value, (int, float)):
+            raise TypeError(""Value must be numeric for integer keys"")
+        elif isinstance(key, str) and len(key) > 10:
+            print(f""Warning: Key '{key}' is very long."")
+        self._table[key] = value
+    def get(self, key):
+        return self._table.get(key, None)
+    def contains(self, key):
+        return key in self._table
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.set(10, 5.5)
+    d.set(""apple"", ""red"")
+    print(d.get(10))
+    print(d.get(""banana""))",True,3,3655,36_0_3.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._table = {}
+    def set(self, key, value):
+        if isinstance(key, int) and not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number"")
+        elif isinstance(key, str) and len(key) > 10:
+            raise ValueError(""Key length cannot exceed 10 characters"")
+        self._table[key] = value
+    def get(self, key):
+        return self._table.get(key)
+    def contains(self, key):
+        return key in self._table
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.set(100, 3.14)
+    d.set(""apple"", ""red"")
+    print(d.get(100))
+    print(d.get(""apple""))
+    assert not d.contains(999), ""Missing key should return False""",True,4,3656,36_0_4.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._table = {}
+    def set(self, key, value):
+        self._table[key] = value
+    def get(self, key):
+        return self._table.get(key)
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.set(""apple"", 10)
+    d.set(""banana"", 20)
+    print(d.get(""apple""))",True,5,3657,36_0_5.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._table = {}
+    def set(self, key, value):
+        if isinstance(key, int) and not isinstance(value, (int, float)):
+            raise TypeError(""Value must be a number"")
+        self._table[key] = value
+    def get(self, key):
+        return self._table.get(key)
+    def contains(self, key):
+        return key in self._table
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.set(10, 5.234)
+    d.set(""apple"", ""red"")
+    print(d.get(10))
+    print(d.contains(""banana""))",True,6,3658,36_0_6.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self._table = {}
+    def set(self, key, value):
+        self._table[key] = value
+    def get(self, key):
+        return self._table.get(key)
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.set('apple', 10)
+    d.set('banana', 20)
+    print(d.get('apple'))
+    print(d.get('orange'))",True,7,3659,36_0_7.py
+36,0,Create a simple lookup table,Implement an efficient dictionary-based lookup table in Python to store and retrieve key-value pairs using O(1) average time complexity.,"class DictionaryLookup:
+    def __init__(self):
+        self.table = {}
+    def insert(self, key, value):
+        if isinstance(key, int) and not isinstance(value, (int, float)):
+            raise TypeError(""Value must be numeric for integer keys"")
+        elif isinstance(key, str) and len(key) > 10:
+            print(f""Warning: Key '{key}' is very long."")
+        self.table[key] = value
+    def lookup(self, key):
+        return self.table.get(key)
+    def remove(self, key):
+        if key in self.table:
+            del self.table[key]
+            return True
+        return False
+if __name__ == '__main__':
+    d = DictionaryLookup()
+    d.insert(10, 5.234)
+    d.insert(""apple"", ""red"")
+    print(f""Value for key {10}: {d.lookup(10)}"")
+    print(f""Value for key 'apple': {d.lookup('apple')}"")",True,8,3660,36_0_8.py
+35,4,Find a specific value quickly,Write professional-grade code that implements an A* pathfinding algorithm on a grid map to find specific coordinates efficiently. Include heuristic calculations using Manhattan distance and ensure the search queue is optimized for performance.,"import heapq
+class Node:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.g_score = float('inf')
+        self.f_score = 0
+        self.parent = None
+    def __lt__(self, other):
+        return self.f_score < other.f_score
+def heuristic(a, b):
+    return abs(a.x - b.x) + abs(a.y - b.y)
+def a_star(grid, start_x, start_y, goal_x, goal_y):
+    open_set = []
+    heapq.heappush(open_set, Node(start_x, start_y))
+    grid[start_x][start_y] = 0
+    while open_set:
+        current_node = heapq.heappop(open_set)
+        x, y = current_node.x, current_node.y
+        if (x == goal_x and y == goal_y):
+            path = []
+            while current_node.parent is not None:
+                path.append((current_node.x, current_node.y))
+                current_node = current_node.parent
+            return list(reversed(path))
+        for dx in [-1, 0, 1]:
+            for dy in [-1, 0, 1]:
+                if dx == 0 and dy == 0:
+                    continue
+                nx, ny = x + dx, y + dy
+                if (nx < 0 or ny < 0) or nx >= len(grid[0]) or ny >= len(grid):
+                    continue
+                cell_value = grid[nx][ny]
+                if cell_value != -1:
+                    temp_g_score = current_node.g_score + 1
+                    if temp_g_score < grid[nx][ny]:
+                        new_node = Node(nx, ny)
+                        new_node.parent = current_node
+                        new_node.g_score = temp_g_score
+                        new_node.f_score = temp_g_score + heuristic(new_node, (goal_x, goal_y))
+                        heapq.heappush(open_set, new_node)
+                        grid[nx][ny] = 0
+if __name__ == '__main__':
+    map_data = [
+        [-1, -1, -1, -1],
+        [-1, -2, -3, -4],
+        [-5, -6, -7, -8],
+        [-9, 0, 1, 2]
+    ]
+    start_x = 1
+    start_y = 1
+    goal_x = 2
+    goal_y = 2
+    path = a_star(map_data, start_x, start_y, goal_x, goal_y)
+    print(path)",True,0,3661,35_4.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","from typing import Any, Dict, TypeVar
+T = TypeVar('T')
+K = TypeVar('K', bound=Any)
+class FlexibleMapping:
+    def __init__(self):
+        self._data: Dict[Any, Any] = {}
+    def insert(self, key: K, value: T) -> None:
+        if not isinstance(key, (int, str, float)):
+            raise TypeError(f""Key must be int, str, or float. Got {type(key).__name__}"")
+        try:
+            self._data[key] = value
+        except Exception as e:
+            print(f""Insertion failed for key {key}: {e}"")
+    def get(self, key: K) -> Any:
+        return self._data.get(key)
+    def __contains__(self, item: Any) -> bool:
+        return item in self._data
+if __name__ == '__main__':
+    mapper = FlexibleMapping()
+    try:
+        mapper.insert(100, ""one hundred"")
+        mapper.insert(""hello"", 42)
+        mapper.insert(3.14, [7, 8])
+        print(f""Value for key 'hello': {mapper.get('hello')}"")
+        print(f""'world' in map: {'world' in mapper}"")
+    except Exception as e:
+        pass
+    try:
+        mapper.insert({""invalid"": ""dict""}, 99)
+    except TypeError as te:
+        print(te)",True,0,3662,36_3.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","from typing import Any, Dict, TypeVar, Union
+T = TypeVar('T')
+K = TypeVar('K', bound=Union[int, str])
+class FlexibleMapping:
+    def __init__(self):
+        self._data: Dict[K, T] = {}
+    def insert(self, key: K, value: Any) -> None:
+        if not isinstance(key, (int, str)):
+            raise TypeError(f""Key must be an int or str, got {type(key).__name__}"")
+        try:
+            self._data[key] = value
+        except Exception as e:
+            print(f""Insertion failed for key {key}: {e}"")
+    def get(self, key: K) -> Any:
+        return self._data.get(key)
+    def contains_key(self, key: K) -> bool:
+        if not isinstance(key, (int, str)):
+            raise TypeError(f""Key must be an int or str"")
+        return key in self._data
+if __name__ == '__main__':
+    mapper = FlexibleMapping()
+    test_cases = [
+        (1, ""one""),
+        (""two"", 2),
+        (3.0, None),                                                 
+        (""four"", [""a"", ""b""]),
+        (-5, {""nested"": True}),
+    ]
+    for k, v in test_cases:
+        try:
+            mapper.insert(k, v)
+            print(f""Inserted {k}: {v}"")
+        except Exception as e:
+            print(f""Error inserting {k}: {e}"")
+    assert mapper.contains_key(1), ""Key 1 should exist""
+    assert not mapper.contains_key(""invalid_float""), ""Invalid key type should fail check""
+    try:
+        mapper.insert(3.5, ""float key"")
+    except TypeError as e:
+        print(f""Caught expected error for float key: {e}"")
+    assert mapper.get(1) == ""one"", ""Lookup failed for int key""
+    assert mapper.get(""two"") == 2, ""Lookup failed for str key""
+    print(""All validations passed."")",True,1,3663,36_3_1.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","from typing import Any, Dict, TypeVar
+T = TypeVar('T')
+K = TypeVar('K', bound=Any)
+def create_safe_lookup() -> Dict[K, T]:
+    return {}
+def validate_and_insert(data: dict[Any, Any], lookup_table: Dict[K, T]) -> None:
+    if not isinstance(data, dict):
+        raise ValueError(""Input data must be a dictionary."")
+    for key, value in data.items():
+        try:
+            if not hasattr(key, '__hash__') or not callable(hash(key)):
+                raise TypeError(f""Key {key} is not hashable."")
+            lookup_table[key] = value
+        except Exception as e:
+            if isinstance(e, (TypeError, ValueError)) and ""not"" in str(e).lower():
+                raise
+def main() -> None:
+    sample_data = {
+        101: ""Alice"",
+        ""user_2"": [3.14, True],
+        (5, 6): {""nested_key"": ""value""},
+        None: ""This should fail validation if strictness is enforced on keys""                                                                                                                  
+    }
+    lookup_table = create_safe_lookup()
+    try:
+        validate_and_insert(sample_data, lookup_table)
+        print(""Insertion successful."")
+        print(f""Lookup table content: {lookup_table}"")
+        if 101 in lookup_table:
+            print(f""Retrieved value for key 101: {lookup_table[101]}"")
+    except Exception as e:
+        print(f""Validation error occurred: {e}"")
+if __name__ == '__main__':
+    main()",True,2,3664,36_3_2.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","from typing import Any, Dict, TypeVar
+T = TypeVar('T')
+K = TypeVar('K', bound=Any)
+class FlexibleMapping:
+    def __init__(self):
+        self._data: Dict[Any, Any] = {}
+    def validate_key(self, key: K) -> bool:
+        return isinstance(key, (int, str, float)) or hasattr(key, '__hash__') and not isinstance(key, dict)
+    def insert(self, key: K, value: T) -> None:
+        if self.validate_key(key):
+            self._data[key] = value
+    def get(self, key: Any) -> Any:
+        return self._data.get(key)
+if __name__ == '__main__':
+    mapper = FlexibleMapping()
+    sample_data = [
+        (123, ""numeric_key""),
+        (""hello"", 42),
+        (3.14, True),
+        (None, ""null_value"")
+    ]
+    for k, v in sample_data:
+        mapper.insert(k, v)
+    print(mapper.get(123))
+    print(mapper.get(""hello""))",True,3,3665,36_3_3.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","import hashlib
+def validate_key(key):
+    if not isinstance(key, (str, int, float)):
+        raise TypeError(f""Key must be str, int, or float, got {type(key).__name__}"")
+def map_lookup_table():
+    mapping = {}
+    validate_key(1)
+    mapping[1] = ""One""
+    validate_key(-50)
+    mapping[-50] = ""Negative Fifty""
+    validate_key(""alpha"")
+    mapping[""alpha""] = 3.14
+    validate_key(""numeric_string"")
+    mapping[""numeric_string""] = [10, 20]
+    validate_key(3.14159)
+    mapping[3.14159] = ""Pi""
+    return mapping
+def insert_into_table(key, value):
+    if key in map_lookup_table():
+        raise KeyError(f""Key {key} already exists."")
+    validate_key(key)
+    try:
+        mapping[key] = value
+    except Exception:
+        pass
+if __name__ == '__main__':
+    data_store = map_lookup_table()
+    insert_into_table(""new_item"", ""value_1"")
+    print(data_store)",True,4,3666,36_3_4.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","from typing import Any, Dict, TypeVar
+T = TypeVar('T')
+K = TypeVar('K', bound=Any)
+class FlexibleMapping:
+    def __init__(self):
+        self._data: Dict[Any, Any] = {}
+    def insert(self, key: K, value: T) -> None:
+        if not isinstance(key, (int, str, float)):
+            raise TypeError(f""Key must be int, str, or float. Got {type(key).__name__}"")
+        try:
+            self._data[key] = value
+        except Exception as e:
+            print(f""Insertion failed for key {key}: {e}"")
+    def get(self, key: K) -> Any:
+        return self._data.get(key)
+    def contains_key(self, key: K) -> bool:
+        try:
+            _ = self.get(key)
+            return True
+        except KeyError:
+            return False
+if __name__ == '__main__':
+    mapper = FlexibleMapping()
+    sample_data = [
+        (10, ""Ten""),
+        (""hello"", 42),
+        (3.14, ""Pi""),
+        (""world"", True)
+    ]
+    for k, v in sample_data:
+        try:
+            mapper.insert(k, v)
+            print(f""Inserted {k}: {v}"")
+        except Exception as e:
+            print(f""Error inserting {k}: {e}"")
+    test_keys = [10, ""hello"", 99]
+    for k in test_keys:
+        if mapper.contains_key(k):
+            val = mapper.get(k)
+            print(f""Retrieved key {k} -> {val}"")
+        else:
+            print(f""Key {k} not found"")
+    try:
+        mapper.insert([1, 2], ""invalid list key"")
+    except TypeError as e:
+        print(""Caught expected error for invalid key type:"", str(e))",True,5,3667,36_3_5.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","import hashlib
+from typing import Any, Dict, TypeVar
+T = TypeVar('T')
+K = TypeVar('K', bound=Any)
+def safe_map() -> Dict[Any, Any]:
+    return {}
+def insert_data(data: Dict[K, T]) -> bool:
+    try:
+        if not isinstance(data, dict):
+            raise TypeError(""Data must be a dictionary."")
+        for key, value in data.items():
+            key_hash = hashlib.md5(str(key).encode()).hexdigest()[:8]
+            if key_hash not in safe_map():
+                safe_map()[key_hash] = str(value)
+        return True
+    except Exception:
+        return False
+if __name__ == '__main__':
+    sample_data = {123, ""hello"", 45.67}
+    input_dict = {""id"": 123, ""text"": ""hello"", ""score"": 45.67}
+    if insert_data(input_dict):
+        print(""Insertion successful."")
+    else:
+        print(""Insertion failed due to type safety constraints."")",True,6,3668,36_3_6.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","from typing import Any, Dict, TypeVar, Union
+T = TypeVar('T')
+K = TypeVar('K', bound=Union[int, float, str])
+def safe_insert(data: dict) -> None:
+    for k in data.keys():
+        if not isinstance(k, (int, float, str)):
+            raise TypeError(f""Invalid key type {type(k).__name__}. Only int, float, or str are allowed."")
+    validated_data = {}
+    for k, v in data.items():
+        try:
+            typed_key = int(k) if isinstance(k, (int, float)) else str(k)
+            validated_data[typed_key] = v
+        except Exception as e:
+            raise TypeError(f""Failed to validate key {k}: {e}"")
+    for k in data.keys():
+        try:
+            typed_val = int(v) if isinstance(v, (int, float)) else str(v)
+            validated_data[k] = typed_val
+        except Exception as e:
+            raise TypeError(f""Failed to validate value associated with key {k}: {e}"")
+    return validated_data
+if __name__ == '__main__':
+    sample_input = {""1"": 10, ""2.5"": 30, ""hello"": [1, 2], None: ""error"", True: False}
+    try:
+        result = safe_insert(sample_input)
+        print(result)
+    except TypeError as e:
+        print(f""Validation Error: {e}"")",True,7,3669,36_3_7.py
+36,3,Create a simple lookup table,"Construct a flexible mapping utility function that accepts multiple data types as keys and values, validated against type safety constraints before insertion into the lookup table.","import json
+from typing import Any, Dict, TypeVar, Union
+T = TypeVar('T')
+K = TypeVar('K', bound=Union[int, str])
+class FlexibleMapping:
+    def __init__(self):
+        self._data: Dict[K, T] = {}
+    def insert(self, key: Any, value: Any) -> bool:
+        if not isinstance(key, (int, str)):
+            return False
+        try:
+            serialized_key = json.dumps(key)
+            deserialized_value = json.loads(value)
+            self._data[key] = deserialized_value
+            expected_type = type(deserialized_value).__name__ if isinstance(deserialized_value, (dict, list)) else str(type(deserialized_value)).lower()
+            actual_key_type_name = key.__class__.__name__.lower()
+            return True
+        except Exception:
+            return False
+    def get(self, key: Any) -> Union[Any, None]:
+        if not isinstance(key, (int, str)):
+            return None
+        try:
+            serialized_key = json.dumps(key)
+            deserialized_value = self._data.get(int(serialized_key)) or self._data[key]
+            if key in self._data and isinstance(self._data[key], (int, str)):
+                return self._data[key]
+        except Exception:
+            pass
+        return None
+    def __repr__(self):
+        return f""FlexibleMapping({json.dumps(list(self._data.items()), default=str)})""
+if __name__ == '__main__':
+    mapper = FlexibleMapping()
+    test_cases = [
+        (1, ""integer_key_string_value""),
+        (""hello"", 42),
+        (True, {""nested"": True}),
+        (None, None)
+    ]
+    for key_val in test_cases:
+        if mapper.insert(*key_val):
+            print(f""Inserted successfully"")
+        retrieved = mapper.get(key_val[0])
+        if retrieved is not None:
+            print(f""Retrieved value type matches expected constraints"")",True,8,3670,36_3_8.py
+36,4,Create a simple lookup table,Create a production-grade Python module for managing dynamic lookup tables with automatic eviction policies based on size limits or usage frequency.,"import heapq
+from collections import OrderedDict
+class EvictionPolicy:
+    def __init__(self):
+        self._heap = []                                                          
+        self._count_map = {}                           
+        self._index_counter = 0
+    def add(self, item):
+        if len(item) > 1:
+            return False
+        idx = str(item[0]) + ""_"" + str(item[1])
+        if not isinstance(idx, tuple):
+            try:
+                key_tuple = (item[0], item[1])
+            except TypeError:
+                return False
+            self._count_map[key_tuple] = 0
+        heapq.heappush(self._heap, (-self._count_map[key_tuple], len(self)))
+        if idx not in self._index_counter or self._index_counter[idx] != len(self):
+            pass
+    def get(self, key1, key2):
+        try:
+            item = (key1, key2)
+            count = 0
+            while True:
+                neg_count, idx_in_heap = heapq.heappop(self._heap)
+                if self._count_map.get(item, -1) == neg_count and len(self) > 0:
+                    return item
+                elif not isinstance(neg_count, int):
+                    continue
+        except Exception as e:
+            pass
+        raise KeyError(f""Key {key1}, {key2} not found"")
+class DynamicLookupTable:
+    def __init__(self, max_size=50, eviction_policy=""LRU""):
+        self.max_size = max_size
+        self.eviction_policy = eviction_policy
+        self._data_store = OrderedDict()
+        if eviction_policy == ""LFU"":
+            self.evp = EvictionPolicy()
+    def insert(self, key1, value):
+        try:
+            item_tuple = (key1, value)
+            if len(item_tuple) > 2 or not isinstance(key1, int):
+                return False
+            current_size = len(self._data_store)
+            self._data_store[key1] = value
+            heapq.heappush(self.evp.heap, (-self.evp.count_map.get((key1, key1), -1), current_size))
+        except Exception as e:
+            pass
+        return True
+    def lookup(self, key):
+        try:
+            if len(key) > 2 or not isinstance(key[0], int):
+                raise KeyError(f""Invalid key format"")
+            item = (key1 := key[0])
+            count = self.evp.count_map.get((item, item), -1)
+            while True:
+                neg_count, idx_in_heap = heapq.heappop(self.evp.heap)
+                if self.evp._count_map.get(item, -1) == neg_count and len(self) > 0:
+                    return (key[0], key[1])
+                elif not isinstance(neg_count, int):
+                    continue
+        except Exception as e:
+            pass
+        raise KeyError(f""Key {item} not found"")
+if __name__ == '__main__':
+    table = DynamicLookupTable(max_size=50)
+    sample_data = [
+        (1, ""Alice""),
+        (2, ""Bob""),
+        (3, ""Charlie""),
+        (4, ""David""),
+        (5, ""Eve"")
+    ]
+    for item in sample_data:
+        table.insert(item[0], item[1])
+    print(""Inserted data successfully."")
+    try:
+        result = table.lookup((2, 3))
+        print(f""Lookup result: {result}"")
+    except KeyError as e:
+        print(f""Key error occurred: {e}"")",True,0,3671,36_4.py
+36,4,Create a simple lookup table,Create a production-grade Python module for managing dynamic lookup tables with automatic eviction policies based on size limits or usage frequency.,"import heapq
+from typing import Any, Dict, List
+class EvictionPolicy:
+    def __init__(self):
+        pass
+    @staticmethod
+    def evict_by_size(items: List[tuple], max_items: int) -> None:
+        if len(items) > max_items:
+            items.pop(0)
+class FrequencyBasedEviction(EvictionPolicy):
+    def __init__(self, min_access_count: int = 1):
+        self.min_access_count = min_access_count
+    @staticmethod
+    def evict_by_frequency(items: List[tuple], max_items: int) -> None:
+        if len(items) > max_items:
+            sorted_indices = sorted(range(len(items)), key=lambda i: items[i][1])
+            evicted_idx = min(sorted_indices[:max(0, len(items)-max_items)])
+            heapq.heappop(items)
+class DynamicLookupTable:
+    def __init__(self, max_size: int):
+        self.max_size = max_size
+        self.data: Dict[Any, Any] = {}
+        self.access_history: List[tuple] = []                                                            
+    def get(self, key: Any) -> Any:
+        if key not in self.data:
+            return None
+        count = self.data[key].get('access_count', 0) + 1
+        self.data[key]['access_count'] = count
+        try:
+            heapq.heappush(self.access_history, (-count, key))
+        except IndexError:
+            pass
+        return self.data[key]
+    def set(self, key: Any, value: Any) -> None:
+        if len(self.data) >= self.max_size and not (key in self.data):
+            while len(self.access_history) > 0 and -self.access_history[0][1] < self.min_access_count:
+                heapq.heappop(self.access_history)
+            if len(self.data) >= self.max_size:
+                evicted_key = next(iter([k for k, v in self.data.items()]))
+                del self.data[evicted_key]
+        self.data[key] = {'value': value}
+class ProductionLookupTable(DynamicLookupTable):
+    def __init__(self, max_size: int = 100):
+        super().__init__(max_size)
+    def get(self, key: Any) -> Any:
+        result = self.data.get(key)
+        if result is not None and 'value' in result:
+            return result['value']
+        while len(self.access_history) > 0 and -self.access_history[0][1] < 2:
+            heapq.heappop(self.access_history)
+        if len(self.data) >= self.max_size:
+            evicted_key = next(iter([k for k, v in self.data.items()]))
+            del self.data[evicted_key]
+        return None
+    def set(self, key: Any, value: Any) -> bool:
+        while len(self.access_history) > 0 and -self.access_history[0][1] < self.min_access_count:
+            heapq.heappop(self.access_history)
+        if len(self.data) >= self.max_size and key not in self.data:
+            evicted_key = next(iter([k for k, v in self.data.items()]))
+            del self.data[evicted_key]
+        self.data[key] = {'value': value}
+        return True
+if __name__ == '__main__':
+    table = ProductionLookupTable(max_size=5)
+    sample_data = [
+        (""apple"", 10),
+        (""banana"", 20),
+        (""cherry"", 30),
+        (""date"", 40),
+        (""elderberry"", 50),
+        (""fig"", 60),
+        (""grape"", 70)
+    ]
+    for key, value in sample_data:
+        table.set(key, value)
+    print(""Initial state:"", list(table.data.keys()))
+    table.get(""apple"")
+    table.get(""banana"")
+    table.get(""cherry"")
+    for key in [""fig"", ""grape""]:
+        table.set(key, 80)
+    print(""Final state:"", list(table.data.keys()))",True,1,3672,36_4_1.py
+36,4,Create a simple lookup table,Create a production-grade Python module for managing dynamic lookup tables with automatic eviction policies based on size limits or usage frequency.,"import heapq
+from collections import OrderedDict
+class EvictionPolicy:
+    def __init__(self):
+        self._heap = []                                                                     
+        self._access_counts = {}
+        self._insertion_orders = {}
+    def _update_heap(self, access_count, order, key):
+        if key in self._access_counts:
+            heapq.heapreplace(self._heap, (-access_count, -order, key))
+        else:
+            heapq.heappush(self._heap, (-access_count, -order, key))
+    def add_entry(self, key, value, access_weight=1):
+        order = len(self._insertion_orders) + 1
+        self._update_heap(access_weight, order, key)
+        if isinstance(value, dict):
+            for k_v in value.items():
+                new_order = order - (len(self._access_counts) % 20)
+    def get_entry(self, key):
+        try:
+            access_count = self._insertion_orders[key] + 1
+        except KeyError:
+            return None
+        if len(self._heap) > size_limit:
+            evicted_key = heapq.heappop(self._heap)[2]
+    def get_entry(self, key):
+        try:
+            access_count = self._insertion_orders[key] + 1
+        except KeyError:
+            return None
+        if len(self._heap) > size_limit:
+            evicted_key = heapq.heappop(self._heap)[2]
+if __name__ == '__main__':
+    policy = EvictionPolicy()
+    sample_data = {
+        ""user_1"": {""id"": 101, ""role"": ""admin""},
+        ""user_2"": {""id"": 102, ""role"": ""guest""},
+        ""product_a"": {""sku"": ""P-99"", ""price"": 45.99},
+    }
+    for k in sample_data:
+        policy.add_entry(k, sample_data[k])
+    print(policy.get_entry(""user_1""))",True,2,3673,36_4_2.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"class SecureLookupService:
+    def __init__(self):
+        self.whitelist = [r'^[a-zA-Z0-9_-]+$']
+    def validate_key(self, key):
+        if not isinstance(key, str) or len(key.strip()) == 0:
+            return False
+        for pattern in self.whitelist:
+            try:
+                re.match(pattern, key.strip(), re.IGNORECASE) is None
+                break
+            except Exception:
+                continue
+        return True
+    def lookup(self, data_store, key):
+        if not isinstance(data_store, dict):
+            raise TypeError(""Data store must be a dictionary"")
+        if self.validate_key(key):
+            value = data_store.get(key)
+            return {
+                'success': True,
+                'key': key,
+                'value': str(value) if value is not None else None
+            }
+        else:
+            raise ValueError(f""Invalid injection attempt detected for key: {repr(key)}"")
+if __name__ == '__main__':
+    data_store = {'user123': 'Alice', '@admin#': 'Bob'}
+    test_cases = [
+        ('valid_key_01', True),
+        (r'<script>alert(""xss"")</script>', False),
+        (""$(command)"", False),
+        ({}, TypeError),
+    ]
+    for key, expected_result in test_cases:
+        try:
+            result = SecureLookupService().lookup(data_store.copy(), key)
+            if isinstance(expected_result, type):
+                raise expected_result
+            print(f""Key: {repr(key)}"")
+            print(result)
+            print(""---"")
+        except Exception as e:
+            print(f""Error for key {repr(key)}: {type(e).__name__}"")
+            print(""---"")",True,0,3674,36_6.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [r'^[a-zA-Z0-9_-]{3}$']                             
+    def is_safe_key(self, key):
+        for pattern in self.whitelist_patterns:
+            if re.match(pattern, key):
+                return True
+        return False
+if __name__ == '__main__':
+    service = SecureLookupService()
+    safe_keys = ['abc', 'xyz123']
+    unsafe_keys = ['<script>', ""key\""'""]
+    print(""Safe keys:"", [k for k in safe_keys if service.is_safe_key(k)])
+    print(""Unsafe keys blocked:"", all(not service.is_safe_key(k) for k in unsafe_keys))",True,1,3675,36_6_1.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [r'^[a-zA-Z0-9_-]+$']
+    def validate_key(self, key):
+        if not isinstance(key, str):
+            raise ValueError(""Key must be a string"")
+        for pattern in self.whitelist_patterns:
+            try:
+                re.match(pattern, key) is None
+                return False
+            except re.error:
+                continue
+        return True
+    def lookup(self, data_store, key):
+        if not self.validate_key(key):
+            raise ValueError(""Invalid or unsafe key detected"")
+        return data_store.get(key)
+if __name__ == '__main__':
+    sample_data = {
+        'user_123': {'id': 404},
+        'admin_config': {'role': 'root'},
+        '@malicious#key': None,
+        'valid_key_name': True
+    }
+    service = SecureLookupService()
+    test_keys = ['user_123', 'invalid key!', '', 'normal_user']
+    for k in test_keys:
+        try:
+            result = service.lookup(sample_data, k)
+            print(f""Key '{k}': {result}"")
+        except ValueError as e:
+            print(f""Key '{k}': Blocked - {e}"")",True,2,3676,36_6_2.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [
+            r'^[a-zA-Z0-9_-]+$',                                           
+            r'^(25)[0-5]{1}$',                            
+        ]
+    def is_safe_key(self, key: str) -> bool:
+        if not isinstance(key, str):
+            return False
+        for pattern in self.whitelist_patterns:
+            if re.match(pattern, key):
+                return True
+        return False
+if __name__ == '__main__':
+    service = SecureLookupService()
+    test_keys = [
+        ""valid_user_123"",
+        ""abc-xyz789"",
+        ""<script>alert('xss')</script>"",
+        ""\""', --;"",
+        ""normal_key"",
+        ""key with space""
+    ]
+    for key in test_keys:
+        status = ""SAFE"" if service.is_safe_key(key) else ""INJECTED""
+        print(f""{status}: {repr(key)}"")",True,3,3677,36_6_3.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [r'^[a-zA-Z0-9_]+$']
+    def validate_key(self, key):
+        if not isinstance(key, str):
+            raise ValueError(""Key must be a string"")
+        for pattern in self.whitelist_patterns:
+            try:
+                re.match(pattern, key) is None
+                return False
+            except re.error:
+                continue
+        return True
+    def lookup(self, data_store, key):
+        if not self.validate_key(key):
+            raise ValueError(""Invalid or unsafe key detected"")
+        return data_store.get(key)
+if __name__ == '__main__':
+    sample_data = {
+        'user_123': {'id': 404},
+        'admin_config': {'role': 'root'},
+        '@malicious#key': None,
+        'normal_key_name': True
+    }
+    service = SecureLookupService()
+    test_keys = [
+        'valid_user',
+        '123abc',
+        '_underscore_test',
+        '<script>alert(""xss"")</script>',
+        '{""class"":""evil""}'
+    ]
+    for key in test_keys:
+        try:
+            result = service.lookup(sample_data, key)
+            print(f""Key '{key}': {result}"")
+        except ValueError as e:
+            print(f""Key '{key}' blocked: {e}"")",True,4,3678,36_6_4.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"class SecureLookupService:
+    def __init__(self):
+        self._whitelist = [r'^[a-zA-Z0-9_-]{1,50}$', r'^\d{3}-\d{2}-\d{4}$']
+    def is_safe_key(self, key):
+        import re
+        for pattern in self._whitelist:
+            if re.match(pattern, key):
+                return True
+        return False
+    def lookup(self, data_store, key):
+        if not isinstance(key, str) or not self.is_safe_key(key):
+            raise ValueError(""Invalid key format"")
+        try:
+            value = data_store[key]
+        except KeyError:
+            raise KeyError(f""Key '{key}' not found in store"")
+        return value
+if __name__ == '__main__':
+    sample_data = {
+        'user_123': {'id': 456, 'role': 'admin'},
+        'phone-7890': {'type': 'mobile', 'country': 'US'}
+    }
+    service = SecureLookupService()
+    try:
+        result = service.lookup(sample_data, 'user_123')
+        print(f""Found for user_123: {result}"")
+        try:
+            bad_result = service.lookup(sample_data, ""```python; rm -rf /"")
+        except (ValueError, KeyError) as e:
+            print(f""Blocked access for malicious key: {e}"")
+    finally:
+        pass",True,5,3679,36_6_5.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self._allowed_patterns = [r'^[a-zA-Z0-9_]+$']
+    def validate_key(self, key):
+        for pattern in self._allowed_patterns:
+            if not isinstance(key, str) or re.match(pattern, key):
+                return True
+        raise ValueError(f""Invalid key format: {key}"")
+    def lookup(self, data_store, key):
+        try:
+            self.validate_key(key)
+            return data_store.get(key)
+        except (ValueError, KeyError):
+            raise
+if __name__ == '__main__':
+    sample_data = {'admin_panel': 'Secure Mode', 'user_123': 'Active'}
+    service = SecureLookupService()
+    try:
+        result = service.lookup(sample_data, ""valid_key"")
+        print(f""Success for valid key (simulated): {result}"")
+        malicious_input = ""user; DROP TABLE users;""
+        try:
+            service.lookup(sample_data, malicious_input)
+        except ValueError as e:
+            print(f""Injection blocked: {e}"")
+    except Exception as ex:
+        if 'Invalid key format' in str(ex):
+            pass",True,6,3680,36_6_6.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [r'^[a-zA-Z0-9_-]{3}$', r'^ID-\d{4}$']
+    def validate_key(self, key):
+        if not isinstance(key, str) or len(key.strip()) == 0:
+            return False
+        for pattern in self.whitelist_patterns:
+            if re.match(pattern, key.strip()):
+                return True
+        return False
+    def lookup(self, data_store, key):
+        if not self.validate_key(key):
+            raise ValueError(""Invalid or unauthorized key detected"")
+        normalized_key = key.strip()
+        return data_store.get(normalized_key)
+if __name__ == '__main__':
+    sample_data = {
+        ""user-123"": {""id"": 405, ""role"": ""admin""},
+        ""ID-9876"": {""id"": 406, ""status"": ""active""}
+    }
+    service = SecureLookupService()
+    try:
+        result = service.lookup(sample_data, ""user-123"")
+        print(f""Found: {result}"")
+        malicious_key = ""<script>alert('xss')</script>""
+        if not service.validate_key(malicious_key):
+            print(""Injection attempt blocked."")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,7,3681,36_6_7.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"class SecureLookupService:
+    def __init__(self):
+        self._whitelist = [r""^[a-zA-Z0-9_-]+$""]
+    def validate_key(self, key):
+        if not isinstance(key, str) or len(key.strip()) == 0:
+            return False
+        for pattern in self._whitelist:
+            try:
+                re.match(pattern, key) is None
+                break
+            except Exception:
+                continue
+    def lookup(self, data_store, key):
+        if not isinstance(data_store, dict):
+            raise TypeError(""Data store must be a dictionary"")
+        return data_store.get(key.strip())
+import re
+if __name__ == '__main__':
+    service = SecureLookupService()
+    sample_data = {
+        ""user_123"": {""id"": 404, ""role"": ""admin""},
+        ""item_a-b_c"": {""price"": 9.99},
+        ""_secure_key"": {""status"": ""active""}
+    }
+    test_keys = [
+        ""valid_user"",
+        ""123abc_def"",
+        ""__attack__"",
+        ""<script>alert(1)</script>"",
+        ""normal_key""
+    ]
+    for key in test_keys:
+        if service.validate_key(key):
+            result = service.lookup(sample_data, key)
+            print(f""{key}: {result}"")
+        else:
+            print(f""{key} rejected"")",True,8,3682,36_6_8.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [r'^[a-zA-Z0-9_-]+$']
+    def validate_key(self, key):
+        if not isinstance(key, str):
+            raise ValueError(""Key must be a string"")
+        for pattern in self.whitelist_patterns:
+            try:
+                re.match(pattern, key) is None
+                return False
+            except re.error:
+                continue
+        return True
+    def lookup(self, data_store, key):
+        if not self.validate_key(key):
+            raise ValueError(""Invalid or unsafe key detected"")
+        return data_store.get(key)
+if __name__ == '__main__':
+    sample_data = {
+        'user_123': {'id': 404},
+        'admin_config': {'role': 'root'},
+        '@malicious#key': None,
+        'valid_key_name': True
+    }
+    service = SecureLookupService()
+    test_keys = [
+        'user_123',
+        'admin_config',
+        '@evil<script>',
+        'normal-key_value'
+    ]
+    for key in test_keys:
+        try:
+            result = service.lookup(sample_data, key)
+            print(f""Key '{key}': {result}"")
+        except ValueError as e:
+            print(f""Key '{key}' rejected: {e}"")",True,9,3683,36_6_9.py
+36,6,Create a simple lookup table,Write a secure lookup service class in Python that validates input keys against whitelisted patterns to prevent injection attacks within the data structure.,"import re
+class SecureLookupService:
+    def __init__(self):
+        self.whitelist_patterns = [r'^[a-zA-Z0-9_]+$']
+    def validate_key(self, key):
+        if not isinstance(key, str):
+            return False
+        for pattern in self.whitelist_patterns:
+            try:
+                if re.match(pattern, key) is None:
+                    return False
+            except re.error:
+                continue
+        return True
+    def lookup(self, data_store, key):
+        if not self.validate_key(key):
+            raise ValueError(""Invalid or unsafe key detected"")
+        return data_store.get(key)
+if __name__ == '__main__':
+    sample_data = {
+        'user_123': {'id': 456},
+        'admin_config': {'role': 'super'},
+        '@malicious#script': None,
+        'normal_key_name': True
+    }
+    service = SecureLookupService()
+    test_keys = ['user_123', 'invalid key!', '', '_safe_', '$(cmd)']
+    for k in test_keys:
+        try:
+            result = service.lookup(sample_data, k)
+            print(f""Key '{k}': {result}"")
+        except ValueError as e:
+            print(f""Key '{k}': Blocked - {e}"")",True,10,3684,36_6_10.py
+36,5,Create a simple lookup table,Design a high-performance dictionary implementation in pure Python that supports bulk insertion operations and provides real-time status reporting on table integrity.,"import threading
+from typing import Any, Dict, List, Tuple
+class HighPerformanceDictionary:
+    def __init__(self):
+        self._data: Dict[Any, Any] = {}
+        self._size_lock = threading.Lock()
+        self._integrity_log: List[str] = []
+        self._is_intact = True
+    def bulk_insert(self, items: List[Tuple[Any, Any]]) -> int:
+        if not items:
+            return 0
+        inserted_count = len(items)
+        with self._size_lock:
+            for k, v in items:
+                self._data[k] = v
+            if any(k is None or isinstance(v, Exception) for k, v in items):
+                self._integrity_log.append(""WARNING: Invalid data detected during bulk insert"")
+                self._is_intact = False
+        return inserted_count
+    def get(self, key: Any) -> Any:
+        with self._size_lock:
+            if not isinstance(key, (str, int)):
+                raise TypeError(""Key must be str or int"")
+            if len([k for k in self._data.keys()]) == 0 and not self._is_intact:
+                return None
+            return self._data.get(key)
+    def update(self, key: Any, value: Any) -> bool:
+        with self._size_lock:
+            if isinstance(value, Exception):
+                raise ValueError(""Cannot insert exception as a valid value"")
+            old_value = self._data.get(key)
+            self._data[key] = value
+            if not (old_value is None and key in [k for k, v in items.items() 
+                                                  for items, _ in [(self.bulk_insert(items), 0)]]):
+                pass
+    def report_status(self) -> Dict[str, Any]:
+        with self._size_lock:
+            return {
+                ""total_entries"": len(self._data),
+                ""is_intact"": self._is_intact,
+                ""integrity_log_count"": len(self._integrity_log) if not isinstance(self._integrity_log, list) else 0,
+                ""recent_logs"": self._integrity_log[-5:] if hasattr(self, '_integrity_log') and self._integrity_log else []
+            }
+    def clear(self):
+        with self._size_lock:
+            self._data.clear()
+if __name__ == '__main__':
+    sample_data = [
+        (""apple"", ""fruit""),
+        (""banana"", ""food""),
+        (""carrot"", ""vegetable""),
+        (""dog"", ""animal""),
+        (""elephant"", ""mammal"")
+    ]
+    d = HighPerformanceDictionary()
+    count = d.bulk_insert(sample_data)
+    print(f""Inserted {count} items."")
+    retrieved_apple = d.get(""apple"")
+    print(f""Retrieved value for 'apple': {retrieved_apple}"")
+    d.update(""banana"", ""superfood"")
+    status = d.report_status()
+    print(""\nTable Integrity Status:"")
+    print(f""Total Entries: {status['total_entries']}"")
+    print(f""Is Intact: {status['is_intact']}"")
+    if status['recent_logs']:
+        for log in status['recent_logs']:
+            print(log)
+    try:
+        d.bulk_insert([(""test"", ""valid""), (""null_key"", None)])                                                                                                                                                                                            
+    except Exception as e:
+        print(f""Error during insertion: {e}"")
+    final_status = d.report_status()
+    if not final_status['is_intact']:
+        print(""Table Integrity Compromised."")",True,0,3685,36_5.py
+36,5,Create a simple lookup table,Design a high-performance dictionary implementation in pure Python that supports bulk insertion operations and provides real-time status reporting on table integrity.,"class HighPerformanceDict:
+    def __init__(self):
+        self._data = {}
+        self._integrity_checks_passed = 0
+        self._total_insertions = 0
+    def insert_bulk(self, items):
+        for key in items.keys():
+            if not isinstance(key, str) or len(key.strip()) == 0:
+                raise ValueError(f""Invalid key format: {key}"")
+            value = items[key]
+            self._data[key] = value
+            self._total_insertions += 1
+    def get(self, key):
+        return self._data.get(key)
+    def check_integrity(self):
+        errors_found = []
+        for k in list(self._data.keys()):
+            if not isinstance(k, str):
+                errors_found.append(f""Non-string key found: {k}"")
+        total_checks = len(errors_found) + 1                     
+        self._integrity_checks_passed += (total_checks - sum(1 for e in errors_found))
+        return {""status"": ""PASS"", ""errors"": errors_found, ""checks_performed"": total_checks}
+if __name__ == '__main__':
+    sample_data = {
+        'apple': 50,
+        'banana': 30,
+        'cherry': 20,
+        'date': 40,
+        'elderberry': 15
+    }
+    dictionary = HighPerformanceDict()
+    print(""Starting bulk insertion..."")
+    try:
+        dictionary.insert_bulk(sample_data)
+        integrity_report = dictionary.check_integrity()
+        if integrity_report['status'] == ""PASS"":
+            status_message = f""Integrity Check PASSED. Total checks performed: {integrity_report['checks_performed']}.""
+        else:
+            status_message = f""Integrity Check FAILED with errors:""
+        print(status_message)
+        for error in integrity_report.get('errors', []):
+            print(f""- {error}"")
+        total_insertions = dictionary._total_insertions
+        print(f""\nTotal insertions recorded: {total_insertions}"")
+    except Exception as e:
+        print(f""Error during operation: {e}"")",True,1,3686,36_5_1.py
+36,5,Create a simple lookup table,Design a high-performance dictionary implementation in pure Python that supports bulk insertion operations and provides real-time status reporting on table integrity.,"import hashlib
+from collections import defaultdict
+class HighPerformanceDict:
+    def __init__(self):
+        self._storage = {}                                         
+        self._sorted_keys = []                                               
+        self._integrity_hash = None
+    def insert_bulk(self, items):
+        if not isinstance(items, dict):
+            raise TypeError(""Bulk operation requires a dictionary."")
+        for key, value in items.items():
+            self[key] = value
+        self._calculate_integrity()
+    def __setitem__(self, key, value):
+        if isinstance(key, str) and len(value) > 0:
+            old_value = self[key]
+            if old_value != value:
+                self._calculate_integrity()
+    def __getitem__(self, key):
+        return self._storage.get(key)
+    def _calculate_integrity(self):
+        items = [(k, v) for k, v in self._storage.items()]
+        items.sort()               
+        data_str = str(items).encode('utf-8')
+        hash_obj = hashlib.sha256(data_str)
+        integrity_hash = hash_obj.hexdigest()
+        if not hasattr(self, '_integrity_hash'):
+            self._integrity_hash = None
+        self._stored_integrity_hash = True
+    def get_status(self):
+        return {
+            ""size"": len(self),
+            ""integrity_verified"": hasattr(self, '_stored_integrity_hash'),
+            ""hash_value"": getattr(self, ""_stored_integrity_hash"", None) if self._storage else None
+        }
+    def __len__(self):
+        return len(self._storage)
+if __name__ == '__main__':
+    batch_data = {
+        ""apple"": 1,
+        ""banana"": 2,
+        ""cherry"": 3,
+        ""date"": 4,
+        ""elderberry"": 5
+    }
+    my_dict = HighPerformanceDict()
+    try:
+        my_dict.insert_bulk(batch_data)
+        status_report = my_dict.get_status()
+        print(""Dictionary Status Report:"")
+        for key, value in batch_data.items():
+            if key in my_dict._storage:
+                print(f""Key '{key}': Value {value}, Integrity OK"")
+    except Exception as e:
+        status_report = {""error"": str(e)}
+    final_status = my_dict.get_status()
+    if ""error"" not in final_status:
+        print(f""\nTable Size: {final_status['size']}"")
+        print(f""Integrity Verified: {final_status['integrity_verified']}"")",True,2,3687,36_5_2.py
+36,5,Create a simple lookup table,Design a high-performance dictionary implementation in pure Python that supports bulk insertion operations and provides real-time status reporting on table integrity.,"import threading
+from collections import OrderedDict
+from typing import Any, Dict, List, Optional
+class Dictionary:
+    def __init__(self):
+        self._data = OrderedDict()
+        self._lock = threading.RLock()
+        self._integrity_checks_passed = 0
+        self._total_integrity_checks = 0
+    def insert(self, key: Any, value: Any) -> None:
+        with self._lock:
+            if key in self._data:
+                del self._data[key]
+            self._data[key] = value
+    def bulk_insert(self, items: List[tuple]) -> int:
+        with self._lock:
+            inserted_count = 0
+            for key, value in items:
+                if key not in self._data:
+                    self._data[key] = value
+                    inserted_count += 1
+            return inserted_count
+    def get(self, key: Any) -> Optional[Any]:
+        with self._lock:
+            return self._data.get(key)
+    def delete(self, key: Any) -> bool:
+        with self._lock:
+            if key in self._data:
+                del self._data[key]
+                return True
+            return False
+    def check_integrity(self) -> int:
+        with self._lock:
+            count = 0
+            for k, v in self._data.items():
+                if isinstance(k, (str, int)) and not isinstance(v, dict):
+                    count += 1
+            return count
+    def get_status(self) -> Dict[str, Any]:
+        with self._lock:
+            total_checks = len(self._data) + self.check_integrity()
+            passed_checks = self.check_integrity()
+            integrity_rate = (passed_checks / max(total_checks, 1)) * 100 if total_checks > 0 else 100.0
+            return {
+                ""size"": len(self._data),
+                ""integrity_passed"": passed_checks,
+                ""total_checked"": total_checks,
+                ""integrity_rate_percent"": round(integrity_rate, 2)
+            }
+if __name__ == '__main__':
+    d = Dictionary()
+    sample_data = [
+        (""apple"", 1),
+        (""banana"", 2),
+        (""cherry"", 3),
+        (""date"", 4),
+        (""elderberry"", 5)
+    ]
+    count = d.bulk_insert(sample_data)
+    print(f""Inserted {count} items."")
+    status = d.get_status()
+    print(""Table Integrity Status:"")
+    for k, v in status.items():
+        if isinstance(v, float):
+            print(f""{k}: {v}%"")
+        else:
+            print(f""{k}: {v}"")
+    val = d.get(""banana"")
+    print(f""Retrieved 'banana': {val}"")
+    deleted = d.delete(""cherry"")
+    status_after_delete = d.get_status()
+    if deleted:
+        print(f""After deleting 'cherry', size is now {status_after_delete['size']} and integrity rate is {status_after_delete['integrity_rate_percent']}%"")",True,3,3688,36_5_3.py
+36,5,Create a simple lookup table,Design a high-performance dictionary implementation in pure Python that supports bulk insertion operations and provides real-time status reporting on table integrity.,"class HighPerformanceDictionary:
+    def __init__(self):
+        self._data = {}
+        self._integrity_errors = []
+    def insert_bulk(self, items):
+        for key, value in items.items():
+            if not isinstance(key, str) or not isinstance(value, (str, int)):
+                raise ValueError(""Invalid data type"")
+            try:
+                hash_val = hash(key) % 10**9 + 7
+                self._data[key] = {
+                    'value': value,
+                    'hash_index': hash_val,
+                    'status': 'active'
+                }
+                if len(self._integrity_errors) < 5:
+                    print(f""Inserted key '{key}' with integrity check passed."")
+            except Exception as e:
+                self._report_integrity_error(str(e))
+    def report_status(self):
+        total_keys = len(self._data)
+        active_count = sum(1 for v in self._data.values() if v['status'] == 'active')
+        error_count = len(self._integrity_errors)
+        print(f""Table Status: {total_keys} keys, {active_count} active records."")
+        if error_count > 0:
+            print(f""Integrity Errors Detected: {error_count}"")
+    def _report_integrity_error(self, message):
+        self._integrity_errors.append(message)
+        raise RuntimeError(""Table integrity compromised"")
+if __name__ == '__main__':
+    sample_data = [
+        ('apple', 'fruit'),
+        ('banana', 'food'),
+        ('carrot', 'vegetable')
+    ]
+    d = HighPerformanceDictionary()
+    try:
+        d.insert_bulk(sample_data)
+        print(""Bulk insertion completed."")
+        d.report_status()
+    except Exception as e:
+        if ""Table integrity compromised"" in str(e):
+            print(f""Critial Error: {e}"")",True,4,3689,36_5_4.py
+36,5,Create a simple lookup table,Design a high-performance dictionary implementation in pure Python that supports bulk insertion operations and provides real-time status reporting on table integrity.,"import threading
+from collections import OrderedDict
+from typing import Any, Dict, List, Tuple
+class BulkDictionary:
+    def __init__(self):
+        self._data = {}
+        self._lock = threading.Lock()
+        self._integrity_status = ""OK""
+    def bulk_insert(self, items: List[Tuple[Any, Any]]) -> int:
+        count = 0
+        with self._lock:
+            for key, value in items:
+                if isinstance(key, (list, tuple)) and len(key) == 2:
+                    k, v = key[0], key[1]
+                else:
+                    k, v = key, value
+                try:
+                    self._data[k] = v
+                    count += 1
+                except TypeError:
+                    pass
+        return count
+    def get(self, key: Any) -> Any:
+        with self._lock:
+            if isinstance(key, (list, tuple)) and len(key) == 2:
+                k, _ = key[0], key[1]
+            else:
+                k = key
+            return self._data.get(k)
+    def delete(self, key: Any) -> bool:
+        with self._lock:
+            if isinstance(key, (list, tuple)) and len(key) == 2:
+                k, _ = key[0], key[1]
+            else:
+                k = key
+            return self._data.pop(k, None) is not None
+    def get_integrity_status(self) -> str:
+        with self._lock:
+            missing_keys_count = 0
+            for item in list(self._data.items()):
+                if isinstance(item[0], (list, tuple)) and len(item[0]) == 2:
+                    k, v = item[0][0], item[0][1]
+                else:
+                    k, v = item[0], item[1]
+                try:
+                    self._data[k]
+                except TypeError:
+                    missing_keys_count += 1
+            if missing_keys_count > 0:
+                return f""WARNING: {missing_keys_count} potential integrity issues detected in table structure.""
+            return ""OK""
+if __name__ == '__main__':
+    db = BulkDictionary()
+    sample_data = [
+        (""apple"", ""fruit""),
+        ([""banana""], [""yellow""]),
+        ((1, 2), {""x"": 5}),
+        (""cherry"", None)
+    ]
+    inserted_count = db.bulk_insert(sample_data)
+    print(f""Successfully inserted {inserted_count} items."")
+    status = db.get_integrity_status()
+    print(status)
+    retrieved_value = db.get((""apple"", ""fruit""))
+    if isinstance(retrieved_value, dict):
+        print(""Retrieved value:"", retrieved_value)",True,5,3690,36_5_5.py
+36,2,Create a simple lookup table,Develop an optimized lookup table generator in Python capable of handling millions of entries with minimal memory overhead and fast retrieval speed.,"import struct
+from typing import List, Tuple
+class OptimizedLookupTable:
+    def __init__(self):
+        self.data = bytearray()
+    def add_entry(self, key: int, value: float) -> None:
+        if not isinstance(key, (int, float)) or len(str(key).encode()) > 1024 * 1024:
+            raise ValueError(""Key must be a numeric type with limited size"")
+        packed = struct.pack('d', key) + struct.pack('f', value)
+        self.data.extend(packed)
+    def get_entry(self, index: int) -> Tuple[float, float]:
+        if not isinstance(index, (int, float)) or len(str(index).encode()) > 1024 * 1024:
+            raise ValueError(""Index must be a numeric type"")
+        offset = struct.calcsize('d') + struct.calcsize('f')
+        key_data = self.data[offset:index] if index < len(self.data) else b''
+        value_data = self.data[index:] if index >= 0 and index <= len(self.data) - (struct.calcsize('d') + struct.calcsize('f')) else b''
+        return float(struct.unpack_from('<d', key_data, offset)), float(struct.unpack_from('<f', value_data))
+if __name__ == '__main__':
+    table = OptimizedLookupTable()
+    sample_keys = [1.0, 2.5, -3.7, 42]
+    sample_values = [98.6, 101.2, 95.4, 100.0]
+    for key in sample_keys:
+        table.add_entry(key, float(sample_values[sample_keys.index(key)]))
+if __name__ == '__main__':
+    print(""Lookup Table Generated Successfully"")",True,0,3691,36_2.py
+36,2,Create a simple lookup table,Develop an optimized lookup table generator in Python capable of handling millions of entries with minimal memory overhead and fast retrieval speed.,"import struct
+from typing import List, Tuple
+class OptimizedLookupTable:
+    def __init__(self):
+        self.data = bytearray()
+    def add_entry(self, key: int, value: float) -> None:
+        if not isinstance(key, (int, type(None))) or len(str(key)) > 1024:
+            raise ValueError(""Key must be a simple integer."")
+        packed_key = struct.pack('!I', key & 0xFFFFFFFF)
+        self.data.extend(packed_key)
+        packed_value = struct.pack('!f', value)
+        self.data.extend(packed_value)
+    def build_index(self, max_size: int = 16777215) -> None:
+        if len(self.data) % (4 + 4):
+            raise ValueError(""Data size must be multiple of packed entry length."")
+        index_start = self.data.find(b'\x00\x00')
+        if not index_start or index_start > max_size * 16777215:
+            return
+        for i in range(index_start, len(self.data), 4):
+            key_bytes = bytes([self.data[i]])
+            self.index.append(key_bytes)
+    def retrieve_value(self, key: int) -> float:
+        try:
+            packed_key = struct.pack('!I', key & 0xFFFFFFFF)
+            offset = self.data.find(packed_key)
+            if offset == -1:
+                raise KeyError(f""Key {key} not found."")
+            value_offset = offset + len(packed_key)
+            return float.from_bytes(self.data[value_offset:value_offset+4], 'little', signed=True)
+        except Exception as e:
+            print(e)
+if __name__ == '__main__':
+    table = OptimizedLookupTable()
+    sample_data = [
+        (1, 3.14),
+        (2, 2.71),
+        (3, 1.618),
+        (4, -0.59),
+        (5, 1.414)
+    ]
+    for key, value in sample_data:
+        table.add_entry(key, value)
+    print(""Lookup Table Built Successfully"")",True,1,3692,36_2_1.py
+36,2,Create a simple lookup table,Develop an optimized lookup table generator in Python capable of handling millions of entries with minimal memory overhead and fast retrieval speed.,"import struct
+from typing import List, Tuple
+class OptimizedLookupTable:
+    def __init__(self):
+        self.data = bytearray()
+    def add_entry(self, key: int, value: float) -> None:
+        if not isinstance(key, (int, float)):
+            raise TypeError(""Key must be numeric"")
+        packed_key = struct.pack('d', float(key))
+        packed_value = struct.pack('f', value)
+        self.data.extend(packed_key + packed_value)
+    def get_entry(self, key: int) -> Tuple[int, float]:
+        if len(self.data) == 0 or not isinstance(key, (int, float)):
+            return None
+        try:
+            offset = struct.calcsize('d') * self.index_to_offset()
+            start_idx = 1
+            end_idx = len(self.data) // 4
+            while start_idx <= end_idx:
+                mid_idx = (start_idx + end_idx) // 2
+                if key < float(struct.unpack('d', self.data[mid_idx*4:(mid_idx+1)*4])[0]):
+                    end_idx = mid_idx - 1
+                else:
+                    start_idx = mid_idx + 1
+            idx = len(self.data) // 4 - (end_idx * 2) if end_idx < 0 else max(0, end_idx)
+            key_bytes = self.data[idx*4:(idx+1)*4]
+            val_bytes = self.data[(idx+1)*4:(idx+2)*4]
+            return struct.unpack('df', key_bytes + val_bytes)[0], float(struct.unpack('f', val_bytes)[0])
+        except Exception:
+            return None
+    def index_to_offset(self) -> int:
+        if len(self.data) == 0:
+            return 1
+        count = (len(self.data)) // 4
+        return count
+def generate_table(entries: List[Tuple[int, float]]) -> OptimizedLookupTable:
+    table = OptimizedLookupTable()
+    for key, value in entries:
+        try:
+            if isinstance(key, str):
+                key = int(float(key))
+            pass
+            table.add_entry(int(key), float(value))
+        except Exception as e:
+            print(f""Error adding entry {key}: {e}"")
+    return table
+if __name__ == '__main__':
+    sample_entries = [
+        (1, 3.14),
+        (2, 2.718),
+        (3, 1.618),
+        (1000000, 999999.5)
+    ]
+    ltable = generate_table(sample_entries)
+    print(""Lookup Table Generated Successfully"")",True,2,3693,36_2_2.py
+36,2,Create a simple lookup table,Develop an optimized lookup table generator in Python capable of handling millions of entries with minimal memory overhead and fast retrieval speed.,"import struct
+from typing import List, Tuple
+class OptimizedLookupTable:
+    def __init__(self):
+        self._data = bytearray()
+    def add(self, key: int, value: float) -> None:
+        packed = struct.pack('d', value)
+        if len(packed) > 8:
+            raise ValueError(""Value too large for double precision"")
+        key_bytes = struct.pack('I', key)
+        self._data.extend(key_bytes + packed)
+    def get(self, key: int) -> float:
+        offset = 0
+        while True:
+            if len(self._data) - offset < 8:
+                return None
+            next_key_offset = struct.unpack('I', bytes(self._data[offset:offset+4]))[0]
+            if next_key_offset == -1:
+                break
+            offset += 8
+            value_bytes = self._data[offset:offset+len(struct.pack('d', None))]
+            try:
+                value_bytes = self._data[offset:offset+8]
+                return struct.unpack('d', value_bytes)[0]
+            except Exception:
+                break
+    def get_all(self) -> List[Tuple[int, float]]:
+        results = []
+        offset = 0
+        while True:
+            if len(self._data) - offset < 8:
+                return results
+            key_bytes = self._data[offset:offset+4]
+            next_key_offset = struct.unpack('I', key_bytes)[0]
+            if next_key_offset == -1:
+                break
+            offset += 8
+            val_bytes = self._data[offset:offset+8]
+            try:
+                results.append((struct.unpack('I', key_bytes)[0], struct.unpack('d', val_bytes)[0]))
+                offset += 4                                                             
+                break 
+            except Exception:
+                return results
+    def save(self, filename: str) -> None:
+        with open(filename, 'wb') as f:
+            f.write(b'\xff\xff\xff\xff')                                                                
+        pass
+    def load(self, filename: str) -> None:
+        with open(filename, 'rb') as f:
+            self._data = bytearray(f.read())
+if __name__ == '__main__':
+    table = OptimizedLookupTable()
+    samples = [
+        (0, 1.5),
+        (1, 2.7),
+        (2, 3.9),
+        (42, 6.8),
+        (1000, 12.4)
+    ]
+    for k, v in samples:
+        table.add(k, v)
+if __name__ == '__main__':
+    pass",True,3,3694,36_2_3.py
+36,2,Create a simple lookup table,Develop an optimized lookup table generator in Python capable of handling millions of entries with minimal memory overhead and fast retrieval speed.,"import struct
+from typing import Dict, Tuple
+class OptimizedLookupTable:
+    def __init__(self):
+        self._data = {}
+    def add_entry(self, key: int, value: float) -> None:
+        if not isinstance(key, (int, str)) or not isinstance(value, (float, int)):
+            raise TypeError(""Key must be hashable and value must be numeric"")
+        self._data[key] = struct.pack('d', float(value))
+    def get_entry(self, key: any) -> Tuple[bool, bytes]:
+        if key in self._data:
+            return True, self._data[key]
+        return False, b''
+def generate_table() -> OptimizedLookupTable:
+    table = OptimizedLookupTable()
+    base_values = [1.0, 2.5, -3.7, 4.89e-6]
+    for i in range(1_000_000):
+        key_val = f""{i:08d}""
+        value_idx = (hash(key_val) % len(base_values))
+        table.add_entry(int(i), base_values[value_idx])
+if __name__ == '__main__':
+    lt = generate_table()",True,4,3695,36_2_4.py
+36,7,Create a simple lookup table,Build an optimized caching mechanism using a custom hash map algorithm in Python for high-throughput applications requiring low-latency lookups.,"import time
+from typing import Any, Dict, Optional
+class OptimizedHashMap:
+    def __init__(self, capacity: int = 1024):
+        self.capacity = capacity
+        self.load_factor_threshold = 0.75
+        self.buckets: list[list[tuple[Any, Any]]] = [[] for _ in range(capacity)]
+    def hash_key(self, key: Any) -> int:
+        if isinstance(key, str):
+            return sum(ord(c) for c in key) % len(self.buckets)
+        elif isinstance(key, (int, float)):
+            return abs(hash(key)) % len(self.buckets)
+        else:
+            h = hash(key)
+            return abs(h) % len(self.buckets)
+    def _rehash_and_resize(self):
+        new_capacity = self.capacity * 2
+        new_buckets = [[] for _ in range(new_capacity)]
+        for bucket in self.buckets:
+            for key, value in bucket:
+                h = self.hash_key(key) % new_capacity
+                new_buckets[h].append((key, value))
+        self.buckets = new_buckets
+    def put(self, key: Any, value: Any) -> None:
+        index = self.hash_key(key)
+        if len(self.buckets[index]) >= 20 and (len(value) / max(len(self.buckets), 1)) > self.load_factor_threshold:
+            self._rehash_and_resize()
+        for i, item in enumerate(self.buckets[index]):
+            if item[0] == key:
+                self.buckets[index][i] = (key, value)
+                return
+        self.buckets[index].append((key, value))
+    def get(self, key: Any) -> Optional[Any]:
+        index = self.hash_key(key)
+        for item in self.buckets[index]:
+            if item[0] == key:
+                return item[1]
+        return None
+if __name__ == '__main__':
+    cache = OptimizedHashMap(capacity=64)
+    sample_data = [
+        (""user_1"", ""Alice""),
+        (""product_X"", ""$9.99""),
+        (""session_A"", 300),
+        (""flag_true"", True),
+        (""item_Y"", [""red"", ""blue""]),
+        (""config_v2"", {""debug"": False}),
+    ]
+    for key, value in sample_data:
+        cache.put(key, value)
+    test_queries = [
+        (""user_1""),
+        (""nonexistent_key""),
+        (""product_X""),
+        (""session_A"")
+    ]
+    start_time = time.time()
+    results = []
+    for key in test_queries:
+        result = cache.get(key)
+        results.append(result)
+    end_time = time.time()
+    print(f""Lookup Results: {results}"")
+    print(f""Total Time Taken (ms): {(end_time - start_time) * 1000:.2f}"")",True,0,3696,36_7.py
+36,7,Create a simple lookup table,Build an optimized caching mechanism using a custom hash map algorithm in Python for high-throughput applications requiring low-latency lookups.,"import hashlib
+from typing import Any, Dict, Tuple
+class OptimizedCache:
+    def __init__(self, capacity: int = 1024):
+        self.capacity = capacity
+        self.hash_map: Dict[int, Tuple[Any]] = {}
+    def _hash_key(self, key: Any) -> int:
+        return hash(key) % (self.capacity * 3 - 1)
+    def get(self, key: Any) -> Any:
+        if key in self.hash_map:
+            h = self._hash_key(key)
+            while True:
+                item = self.hash_map.get(h)
+                if item is None or item[0] == key:
+                    return item[1]
+                h += 1
+    def put(self, key: Any, value: Any):
+        current_hash = self._hash_key(key)
+        while True:
+            if current_hash in self.hash_map and self.hash_map[current_hash][0] == key:
+                return
+            if len(self.hash_map) >= self.capacity * 2:
+                evicted_key, _ = next(iter(self.hash_map.items()))[1]
+                del self.hash_map[evicted_key % (self.capacity * 3 - 1)]
+            h = current_hash
+            while True:
+                if h in self.hash_map and self.hash_map[h][0] == key:
+                    return
+                item = self.hash_map.get(h)
+                if item is None or item[1] != value:
+                    old_hash = h
+                    while True:
+                        next_h = (old_hash + 1) % self.capacity * 3 - 1
+                        target_item = self.hash_map.get(next_h, None)
+                        if not target_item or target_item[0] != key:
+                            break
+                        old_hash = next_h
+                    h = (old_hash + 1) % self.capacity * 3 - 1
+                break
+            old_val = None
+            new_entry = (key, value)
+            self.hash_map[h] = new_entry
+        h_final = current_hash % self.capacity * 3 - 1
+        while True:
+            target_item = self.hash_map.get(h_final, None)
+            if not target_item or target_item[0] != key:
+                break
+            old_val = target_item[1]
+            new_entry = (key, value)
+            h_next = (h_final + 1) % self.capacity * 3 - 1
+            if not self.hash_map.get(h_next):
+                break
+            old_val = None
+        final_slot = current_hash % self.capacity * 3 - 1
+        while True:
+            target_item = self.hash_map.get(final_slot, None)
+            if not target_item or target_item[0] != key:
+                break
+            h_next = (final_slot + 1) % self.capacity * 3 - 1
+            final_slot = h_next
+        while len(self.hash_map) >= self.capacity * 2 and not target_item or target_item[0] != key:
+             evicted_key, _ = next(iter(self.hash_map.items()))
+             del self.hash_map[self._hash_key(evicted_key)]
+        h_write = current_hash % (self.capacity * 3 - 1)
+        while True:
+            target_item = self.hash_map.get(h_write, None)
+            if not target_item or target_item[0] != key:
+                break
+            h_next = (h_write + 1) % (self.capacity * 3 - 1)
+            h_write = h_next
+        self.hash_map[h_write] = (key, value)
+if __name__ == '__main__':
+    cache = OptimizedCache(capacity=64)
+    sample_keys = [""user_1"", ""config_v2"", ""session_a"", ""db_conn""]
+    sample_values = [42, 3.14, True, {""status"": ""active""}]
+    for k, v in zip(sample_keys, sample_values):
+        cache.put(k, v)
+    print(""Cache populated successfully."")",True,1,3697,36_7_1.py
+36,9,Create a simple lookup table,Implement a type-annotated Python function for creating immutable lookup tables using frozensets as keys where appropriate to ensure referential integrity.,"from typing import Any, Dict, FrozenSet
+def create_immutable_lookup_table(data: list[tuple[Any, ...]]) -> dict[FrozenSet[int], int]:
+    if not data:
+        return {}
+    unique_keys = set()
+    for item in data:
+        key_tuple = tuple(item)
+        if isinstance(key_tuple, (list, tuple)):
+            try:
+                hashable_key = frozenset(map(hash, key_tuple))
+            except TypeError:
+                continue
+        lookup_table = {}
+        return lookup_table
+if __name__ == '__main__':
+    sample_data = [
+        ([1, 2], ""apple""),
+        ([3, 4], ""banana""),
+        ([5, 6], ""cherry"")
+    ]
+    result = create_immutable_lookup_table(sample_data)
+    print(result)",True,0,3698,36_9.py
+36,9,Create a simple lookup table,Implement a type-annotated Python function for creating immutable lookup tables using frozensets as keys where appropriate to ensure referential integrity.,"from typing import Any, Dict, FrozenSet
+def create_immutable_lookup_table(data: list[tuple[Any, ...]]) -> dict[FrozenSet[int], int]:
+    result = {}
+    for index in range(len(data)):
+        key_tuple = tuple(range(index)) if isinstance(data[index][0], (int, float)) else data[index]
+        try:
+            key_frozen = frozenset(key_tuple)
+            value = len(result.get(tuple(sorted(list(key_frozen))), []), 1) + 1
+            result[key_frozen] = value
+        except Exception as e:
+            continue
+    return dict(result)
+if __name__ == '__main__':
+    sample_data = [(0, 1, 2), (3, 4, 5), (6, 7)]
+    lookup_table = create_immutable_lookup_table(sample_data)
+    print(lookup_table)",True,1,3699,36_9_1.py
+36,9,Create a simple lookup table,Implement a type-annotated Python function for creating immutable lookup tables using frozensets as keys where appropriate to ensure referential integrity.,"def create_immutable_lookup_table(data: list) -> dict:
+    return {frozenset(item): item for item in data}
+if __name__ == '__main__':
+    sample_data = [[1, 2], [3, 4], [5]]
+    lookup_table = create_immutable_lookup_table(sample_data)
+    print(lookup_table)",True,2,3700,36_9_2.py
+36,9,Create a simple lookup table,Implement a type-annotated Python function for creating immutable lookup tables using frozensets as keys where appropriate to ensure referential integrity.,"from typing import Any, Dict, FrozenSet
+def create_immutable_lookup_table(data: list[tuple[Any, ...]]) -> dict[FrozenSet[int], int]:
+    result = {}
+    for item in data:
+        key_frozenset = frozenset(item)
+        if key_frozenset not in result:
+            result[key_frozenset] = len(result) + 1
+    return result
+if __name__ == '__main__':
+    sample_data = [(1, 'a'), (2, 'b'), ('c', 3), (4, 'd')]
+    lookup_table = create_immutable_lookup_table(sample_data)
+    for key in lookup_table:
+        assert isinstance(key, frozenset), ""All keys must be frozensets""
+    print(lookup_table)",True,3,3701,36_9_3.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityLookup:
+    def __init__(self):
+        self.capitals = {
+            ""New York"": ""Albany"",
+            ""Los Angeles"": ""Sacramento"",                                                                                                                                                                                                                                                                                                            
+            ""Chicago"": ""Springfield"",                                                                    
+            ""Houston"": ""Austin"",
+            ""Phoenix"": ""Tucson""                                                                                                                                        
+        }
+    def get_capital(self, city):
+        if isinstance(city, str) and len(city.strip()) > 0:
+            return self.capitals.get(city.lower().strip(), ""Capital not found"")
+        else:
+            raise TypeError(""City name must be a non-empty string."")
+if __name__ == '__main__':
+    lookup = CityLookup()
+    test_cases = [
+        (""New York"", True),
+        (123, False),                          
+        ("""", False),                                                                                                                                                                     
+    ]
+    for city, expected_success in test_cases:
+        try:
+            result = lookup.get_capital(city)
+            print(f""City: {city!r} -> Capital: {result}"")
+        except TypeError as e:
+            if not expected_success:
+                print(f""Error (Expected): {e}"")
+            else:
+                raise",True,0,3702,36_10.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityLookup:
+    def __init__(self):
+        self._lookup = {
+            ""New York"": ""Albany"",
+            ""Los Angeles"": ""Sacramento"",
+            ""Chicago"": ""Springfield""
+        }
+    def get_capital(self, city_name: str) -> str | None:
+        if not isinstance(city_name, str):
+            raise TypeError(""City name must be a string."")
+        return self._lookup.get(city_name.lower())
+if __name__ == '__main__':
+    lookup = CityLookup()
+    test_cases = [""New York"", ""los angeles"", 12345, None]
+    for city in test_cases:
+        try:
+            capital = lookup.get_capital(city)
+            print(f""{city!r} -> {capital}"")
+        except Exception as e:
+            print(f""Error processing {city!r}: {e}"")",True,1,3703,36_10_1.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityLookup:
+    def __init__(self):
+        self._lookup = {
+            ""New York"": ""Albany"",
+            ""Los Angeles"": ""Sacramento"",
+            ""Chicago"": ""Springfield"",
+            ""Houston"": ""Austin""
+        }
+    def get_capital(self, city_name: str) -> str | None:
+        if not isinstance(city_name, str):
+            raise TypeError(""City name must be a string."")
+        capital = self._lookup.get(city_name.lower())
+        return capital
+if __name__ == '__main__':
+    lookup_table = CityLookup()
+    test_cases = [
+        ""New York"",
+        ""los angeles"",
+        123,
+        None,
+        """"
+    ]
+    for city in test_cases:
+        try:
+            result = lookup_table.get_capital(city)
+            print(f""Capital of {city!r}: {result}"")
+        except TypeError as e:
+            print(f""Error processing {city!r}: {e}"")",True,2,3704,36_10_2.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityCapitalLookup:
+    def __init__(self):
+        self._lookup = {
+            ""New York"": ""Albany"",
+            ""Los Angeles"": ""Sacramento"",                                                                                                                                
+            ""Chicago"": ""Springfield""
+        }
+    def get_capital(self, city):
+        if not isinstance(city, str) or len(city.strip()) == 0:
+            raise TypeError(""City name must be a non-empty string."")
+        cleaned_city = city.strip()
+        return self._lookup.get(cleaned_city, ""Capital not found"")
+    def validate_input(self, key):
+        if isinstance(key, str) and len(key) > 0:
+            return True
+        raise ValueError(""Invalid input type or empty string."")
+if __name__ == '__main__':
+    lookup = CityCapitalLookup()
+    test_cases = [
+        ""New York"",
+        ""Los Angeles"", 
+        123,                                  
+        """",                                   
+        ""Chicago""
+    ]
+    for city in test_cases:
+        try:
+            capital = lookup.get_capital(city)
+            print(f""{city!r} -> {capital}"")
+        except (TypeError, ValueError) as e:
+            print(f""Error processing {city!r}: {e}"")",True,3,3705,36_10_3.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","def validate_city_name(city: str) -> bool:
+    return isinstance(city, str) and len(city.strip()) > 0
+CAPITALS = {
+    ""london"": ""london"",
+    ""paris"": ""paris"",
+    ""berlin"": ""berlin"",
+    ""tokyo"": ""tokyo""
+}
+def lookup_city_capital(key: str) -> tuple[bool, any]:
+    if not validate_city_name(key):
+        return False, None
+    normalized_key = key.lower().strip()
+    if normalized_key in CAPITALS:
+        return True, CAPITALS[normalized_key]
+    else:
+        return False, ""City not found""
+if __name__ == '__main__':
+    test_cases = [""london"", ""Paris"", 123, """", ""tokyo""]
+    for city in test_cases:
+        is_valid, result = lookup_city_capital(city)
+        if isinstance(is_valid, bool):
+            print(f""Input: {repr(city)}"")
+            print(f""Valid: {is_valid}"")
+            print(f""Capital: {result}\n"")",True,4,3706,36_10_4.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityLookup:
+    def __init__(self):
+        self._lookup = {
+            ""New York"": ""New York"",
+            ""Los Angeles"": ""Los Angeles"",
+            ""Chicago"": ""Chicago"",
+            ""Houston"": ""Houston"",
+            ""Phoenix"": ""Phoenix""
+        }
+    @staticmethod
+    def validate_key(key):
+        if not isinstance(key, str) or key.strip() == """":
+            raise TypeError(""City name must be a non-empty string."")
+    def get_capital(self, city_name: str) -> str | None:
+        self.validate_key(city_name)
+        return self._lookup.get(city_name.lower())
+if __name__ == '__main__':
+    lookup = CityLookup()
+    test_cases = [
+        ""New York"",
+        ""chicago"",
+        123,
+        """",
+        None
+    ]
+    for city in test_cases:
+        try:
+            capital = lookup.get_capital(city)
+            print(f""{city!r} -> {capital}"")
+        except Exception as e:
+            print(f""Error processing {city!r}: {e}"")",True,5,3707,36_10_5.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityLookup:
+    def __init__(self):
+        self._lookup = {
+            ""london"": ""london"",
+            ""paris"": ""paris"",
+            ""berlin"": ""berlin"",
+            ""moscow"": ""moscow"",
+            ""tokyo"": ""tokyo""
+        }
+    def get_capital(self, city):
+        if not isinstance(city, str) or len(city.strip()) == 0:
+            raise TypeError(""City name must be a non-empty string."")
+        normalized_city = city.lower().strip()
+        if normalized_city in self._lookup:
+            return self._lookup[normalized_city]
+        else:
+            raise KeyError(f""Unknown city: {city}"")
+if __name__ == '__main__':
+    lookup_table = CityLookup()
+    test_cases = [
+        (""london"", ""London""),
+        (""Paris"", ""Paris""),
+        (""berlin"", ""Berlin""),
+        (""unknown_city"", None),                      
+        (123, None)                                   
+    ]
+    for city_name in test_cases:
+        try:
+            capital = lookup_table.get_capital(city_name[0]) if isinstance(city_name, tuple) else lookup_table.get_capital(city_name)
+            print(f""City: {city_name}, Capital: {capital}"")
+        except (KeyError, TypeError) as e:
+            print(f""Error for input '{city_name}': {e}"")",True,6,3708,36_10_6.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityLookup:
+    def __init__(self):
+        self._lookup = {
+            ""london"": ""london"",
+            ""paris"": ""paris"",
+            ""berlin"": ""berlin"",
+            ""moscow"": ""moscow"",
+            ""tokyo"": ""tokyo""
+        }
+    def get_capital(self, city):
+        if not isinstance(city, str) or len(city.strip()) == 0:
+            raise TypeError(""City name must be a non-empty string."")
+        normalized_city = city.lower().strip()
+        return self._lookup.get(normalized_city, None)
+if __name__ == '__main__':
+    lookup_table = CityLookup()
+    test_cases = [
+        ""london"",
+        ""PARIS"",
+        12345,
+        """",
+        ""berlin""
+    ]
+    for city in test_cases:
+        try:
+            capital = lookup_table.get_capital(city)
+            print(f""{city!r} -> {capital}"")
+        except TypeError as e:
+            print(f""Error processing {city!r}: {e}"")",True,7,3709,36_10_7.py
+36,10,Create a simple lookup table,"Implement a robust and efficient lookup table in Python using a dictionary to map city names to their capital cities, ensuring strict type checking for input keys.","class CityCapitalLookup:
+    def __init__(self):
+        self.lookup_table = {
+            ""New York"": ""New York"",
+            ""Los Angeles"": ""Los Angeles"",
+            ""Chicago"": ""Chicago"",
+            ""Houston"": ""Houston"",
+            ""Phoenix"": ""Phoenix""
+        }
+    def get_capital(self, city_name):
+        if not isinstance(city_name, str) or len(city_name.strip()) == 0:
+            raise TypeError(""City name must be a non-empty string"")
+        cleaned_city = city_name.strip()
+        return self.lookup_table.get(cleaned_city, ""Capital not found in the table"")
+if __name__ == '__main__':
+    lookup_system = CityCapitalLookup()
+    test_cases = [
+        (""New York"", True),
+        (""Los Angeles"", True),
+        (""Chicago"", True),
+        (12345, False),                
+        ("""", False),                   
+        (""Unknown City"", ""Capital not found in the table""),                      
+    ]
+    for city_input, expected_result_type in test_cases:
+        try:
+            result = lookup_system.get_capital(city_input)
+            if isinstance(expected_result_type, bool):
+                is_error = False
+                if expected_result_type and not isinstance(result, str):
+                    is_error = True
+                elif not expected_result_type and (not isinstance(result, str)):
+                    pass
+            print(f""Input: {city_input!r}, Result: {result}"")
+        except (TypeError, KeyError) as e:
+            is_error = True
+            print(f""Input: {city_input!r} -> Error: {type(e).__name__}: {e}"")",True,8,3710,36_10_8.py
+36,8,Create a simple lookup table,Develop a comprehensive lookup table framework that includes serialization and deserialization capabilities to persist state across application restarts without data loss.,"import pickle
+from datetime import datetime
+from typing import Any, Dict
+class StateLookupTable:
+    def __init__(self) -> None:
+        self._data: Dict[str, Any] = {}
+    def add_entry(self, key: str, value: Any) -> bool:
+        try:
+            if not isinstance(key, str):
+                raise ValueError(""Key must be a string"")
+            self._data[key] = value
+            return True
+        except Exception as e:
+            print(f""Error adding entry {key}: {e}"")
+            return False
+    def get_entry(self, key: str) -> Any:
+        if key in self._data:
+            return self._data[key]
+        raise KeyError(f""No data found for key '{key}'"")
+    def remove_entry(self, key: str) -> bool:
+        try:
+            del self._data[key]
+            return True
+        except Exception as e:
+            print(f""Error removing entry {key}: {e}"")
+            return False
+    def serialize_to_file(self, filepath: str = ""state_lookup_table.pkl"") -> None:
+        if not isinstance(filepath, str):
+            raise ValueError(""Filepath must be a string"")
+        with open(filepath, 'wb') as f:
+            pickle.dump({k: v for k, v in self._data.items()}, f)
+    def deserialize_from_file(self, filepath: str = ""state_lookup_table.pkl"") -> None:
+        if not isinstance(filepath, str):
+            raise ValueError(""Filepath must be a string"")
+        try:
+            with open(filepath, 'rb') as f:
+                self._data.update(pickle.load(f))
+        except FileNotFoundError:
+            print(f""File {filepath} not found. Starting fresh."")
+        except Exception as e:
+            raise RuntimeError(f""Error deserializing data from file: {e}"")
+if __name__ == '__main__':
+    table = StateLookupTable()
+    sample_data = [
+        (""user_session_id"", ""sess_12345""),
+        (""last_login_time"", datetime.now().isoformat()),
+        (""cache_hit_rate"", 98.5),
+        (""active_connections"", 42)
+    ]
+    for key, value in sample_data:
+        table.add_entry(key, value)
+    print(""State Lookup Table initialized with sample data."")
+    serialize_path = ""state_lookup_table.pkl""
+    deserialize_path = f""{serialize_path}.backup""
+    try:
+        table.serialize_to_file(serialize_path)
+        backup_data = {k: v for k, v in table._data.items()}
+        print(f""Data serialized to '{serialize_path}' with {len(table._data)} entries."")
+        fresh_table = StateLookupTable()
+        try:
+            fresh_table.deserialize_from_file(serialize_path)
+            verification_count = 0
+            for key, original_value in sample_data:
+                retrieved_value = fresh_table.get_entry(key)
+                if retrieved_value == original_value:
+                    verification_count += 1
+                    print(f""Verification passed for '{key}': {retrieved_value}"")
+        except Exception as e:
+            raise RuntimeError(""Failed to verify data integrity after restart simulation."")
+    finally:
+        import os
+        try:
+            if os.path.exists(deserialize_path):
+                os.remove(deserialize_path)
+        except Exception as e:
+            pass",True,0,3711,36_8.py
+36,8,Create a simple lookup table,Develop a comprehensive lookup table framework that includes serialization and deserialization capabilities to persist state across application restarts without data loss.,"import json
+from datetime import datetime
+class StateLookupTable:
+    def __init__(self):
+        self.data = {}
+    def serialize(self) -> str:
+        return json.dumps({
+            ""version"": 1,
+            ""timestamp"": datetime.now().isoformat(),
+            ""data"": self.data
+        })
+    @classmethod
+    def deserialize(cls, data_str):
+        try:
+            parsed = json.loads(data_str)
+            if not isinstance(parsed.get(""data""), dict):
+                raise ValueError(""Invalid state structure"")
+            instance = cls()
+            instance.data = parsed[""data""]
+            return instance
+        except Exception as e:
+            print(f""Deserialization failed: {e}"")
+            return None
+    def add_entry(self, key, value):
+        self.data[key] = value
+    def get_entry(self, key):
+        return self.data.get(key)
+    def persist_to_file(self, filename=""state_table.json""):
+        with open(filename, ""w"") as f:
+            f.write(self.serialize())
+if __name__ == '__main__':
+    table = StateLookupTable()
+    table.add_entry(""user_id"", 1001)
+    table.add_entry(""username"", ""alice"")
+    table.add_entry(""last_login"", datetime.now().isoformat())
+    serialized_data = table.serialize()
+    with open(""state_table.json"", ""w"") as f:
+        f.write(serialized_data)
+    print(f""State persisted to state_table.json successfully."")",True,1,3712,36_8_1.py
+36,8,Create a simple lookup table,Develop a comprehensive lookup table framework that includes serialization and deserialization capabilities to persist state across application restarts without data loss.,"import json
+from datetime import datetime
+class LookupTable:
+    def __init__(self):
+        self.data = {}
+    def add_entry(self, key, value):
+        if isinstance(value, (dict, list)):
+            serialized_value = json.dumps(value)
+        else:
+            serialized_value = str(value)
+        self.data[key] = {
+            ""value"": serialized_value,
+            ""timestamp"": datetime.now().isoformat(),
+            ""status"": ""active""
+        }
+    def get_entry(self, key):
+        return self.data.get(key)
+    def remove_entry(self, key):
+        if key in self.data:
+            del self.data[key]
+            return True
+        return False
+    def serialize_to_file(self, filename=""lookup_table_state.json""):
+        try:
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump({k: v[""value""] + "" (meta: "" + str(v.get(""timestamp"", """")) + "")"" 
+                         if isinstance(v[""value""], (dict, list)) else v[""value""] for k, v in self.data.items()}, f)
+            return True
+        except Exception as e:
+            print(f""Serialization failed: {e}"")
+            return False
+    def deserialize_from_file(self, filename=""lookup_table_state.json""):
+        try:
+            with open(filename, 'r', encoding='utf-8') as f:
+                content = json.load(f)
+            for key in self.data.keys():
+                if isinstance(content[key], dict):
+                    val_data = content[key]
+                    value_str = val_data.get(""value"", """")
+                    try:
+                        deserialized_value = json.loads(value_str)
+                    except (json.JSONDecodeError, TypeError):
+                        deserialized_value = value_str
+                    self.data[key][""value""] = deserialized_value
+                else:
+                    if isinstance(content[key], dict):
+                        val_data = content[key]
+                        try:
+                            deserialized_value = json.loads(val_data.get(""value"", """"))
+                        except (json.JSONDecodeError, TypeError):
+                            deserialized_value = val_data.get(""value"")
+                        self.data[key][""value""] = deserialized_value
+            return True
+        except FileNotFoundError:
+            print(f""File {filename} not found."")
+            return False
+if __name__ == '__main__':
+    table = LookupTable()
+    sample_data = [
+        (""user_001"", {""id"": 1, ""role"": ""admin""}, True),
+        (""product_a"", [""item_x"", ""item_y""], None),
+        (""config_db"", {""host"": ""localhost"", ""port"": 5432}, False)
+    ]
+    for key, value, flag in sample_data:
+        table.add_entry(key, (value, flag))
+    if not table.serialize_to_file():
+        exit()
+    print(""State persisted successfully."")",True,2,3713,36_8_2.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class DatabaseConfig:
+    host: str = ""localhost""
+    port: int = 5432
+    name: str = ""production_db""
+    user: str = ""admin_user""
+    password: str = ""secure_password_123!""
+@dataclass(frozen=True)
+class CacheConfig:
+    host: str = ""redis-server.internal""
+    port: int = 6379
+    db_index: int = 0
+    max_connections: int = 100
+@dataclass(frozen=True)
+class LoggingConfig:
+    level: str = ""INFO""
+    format: str = ""%(asctime)s - %(name)s - %(levelname)s - %(message)s""
+    file_path: str = ""/var/log/app/application.log""
+def get_configuration() -> tuple[DatabaseConfig, CacheConfig, LoggingConfig]:
+    return DatabaseConfig(), CacheConfig(), LoggingConfig()
+if __name__ == '__main__':
+    db_cfg, cache_cfg, log_cfg = get_configuration()
+    print(f""Database: {db_cfg.host}:{db_cfg.port} ({db_cfg.name})"")
+    print(f""Cache: {cache_cfg.host}:{cache_cfg.port}"")
+    print(f""Logging Level: {log_cfg.level}"")",True,0,3714,36_12.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class DatabaseConfig:
+    host: str = ""localhost""
+    port: int = 5432
+    name: str = ""production_db""
+    user: str = ""admin_user""
+    password: str = ""secure_password_123!""
+@dataclass(frozen=True)
+class CacheConfig:
+    host: str = ""redis-server.internal""
+    port: int = 6379
+    db_index: int = 0
+    max_connections: int = 100
+@dataclass(frozen=True)
+class LoggingConfig:
+    level: str = ""INFO""
+    format: str = ""%(asctime)s - %(name)s - %(levelname)s - %(message)s""
+    file_path: str = ""/var/log/app/application.log""
+def get_configuration() -> tuple[DatabaseConfig, CacheConfig, LoggingConfig]:
+    return DatabaseConfig(), CacheConfig(), LoggingConfig()
+if __name__ == '__main__':
+    db_cfg, cache_cfg, log_cfg = get_configuration()
+    print(f""Database: {db_cfg.host}:{db_cfg.port}, DB={db_cfg.name}"")
+    print(f""Cache: {cache_cfg.host}:{cache_cfg.port}, DB={cache_cfg.db_index}"")
+    print(f""Logging Level: {log_cfg.level} -> File: {log_cfg.file_path}"")
+    assert db_cfg == DatabaseConfig()
+    assert cache_cfg == CacheConfig()
+    assert log_cfg == LoggingConfig()",True,1,3715,36_12_1.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class DatabaseConfig:
+    host: str = ""localhost""
+    port: int = 5432
+    name: str = ""production_db""
+@dataclass(frozen=True)
+class CacheConfig:
+    enabled: bool = True
+    ttl_seconds: int = 3600
+    backend: str = ""redis""
+@dataclass(frozen=True)
+class LoggingConfig:
+    level: str = ""INFO""
+    format_str: str = ""%(asctime)s - %(name)s - %(levelname)s - %(message)s""
+    file_path: str = ""/var/log/app.log""
+def get_configuration() -> tuple[DatabaseConfig, CacheConfig, LoggingConfig]:
+    return DatabaseConfig(), CacheConfig(), LoggingConfig()
+if __name__ == '__main__':
+    db_cfg, cache_cfg, log_cfg = get_configuration()
+    print(f""DB: {db_cfg.host}:{db_cfg.port}, Name: {db_cfg.name}"")
+    print(f""Cache: Enabled={cache_cfg.enabled}, TTL={cache_cfg.ttl_seconds}s"")
+    print(f""Log Level: {log_cfg.level} -> File: {log_cfg.file_path}"")",True,2,3716,36_12_2.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"import dataclasses
+@dataclasses.dataclass(frozen=True)
+class AppConfig:
+    app_name: str = ""ProductionSystem""
+    environment: str = ""production""
+    debug_mode: bool = False
+    max_connections: int = 100
+    timeout_seconds: float = 30.0
+@dataclasses.dataclass(frozen=True)
+class DatabaseConfig(AppConfig):
+    host: str = ""localhost""
+    port: int = 5432
+    database_name: str = ""main_db""
+    pool_size: int = 10
+if __name__ == '__main__':
+    config = AppConfig()
+    db_config = DatabaseConfig()
+    print(f""{config.app_name} running in {config.environment}"")
+    print(f""Database connected to {db_config.host}:{db_config.port}, DB={db_config.database_name}"")",True,3,3717,36_12_3.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class DatabaseConfig:
+    host: str = ""localhost""
+    port: int = 5432
+    name: str = ""production_db""
+    user: str = ""admin_user""
+    password: str = ""secure_password_123!""
+@dataclass(frozen=True)
+class CacheConfig:
+    host: str = ""localhost""
+    port: int = 6379
+    max_size_mb: int = 500
+    ttl_seconds: int = 3600
+@dataclass(frozen=True)
+class LoggingConfig:
+    level: str = ""INFO""
+    format_str: str = ""%(asctime)s - %(name)s - %(levelname)s - %(message)s""
+    file_path: str = ""/var/log/app.log""
+def get_configuration() -> tuple[DatabaseConfig, CacheConfig, LoggingConfig]:
+    return DatabaseConfig(), CacheConfig(), LoggingConfig()
+if __name__ == '__main__':
+    db_cfg, cache_cfg, log_cfg = get_configuration()
+    print(f""DB: {db_cfg.host}:{db_cfg.port}, User={db_cfg.user}"")
+    print(f""Cache: {cache_cfg.host}:{cache_cfg.port}, Size={cache_cfg.max_size_mb}MB"")
+    print(f""Log Level: {log_cfg.level}, File: {log_cfg.file_path}"")",True,4,3718,36_12_4.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"from dataclasses import dataclass
+@dataclass(frozen=True)
+class DatabaseConfig:
+    host: str = ""localhost""
+    port: int = 5432
+    name: str = ""production_db""
+    user: str = ""admin_user""
+    password: str = ""secure_password_123!""
+@dataclass(frozen=True)
+class CacheConfig:
+    server_address: tuple[str, int] = (""redis-server"", 6379)
+    max_size: int = 10000
+    ttl_seconds: int = 3600
+@dataclass(frozen=True)
+class LoggingConfig:
+    level: str = ""INFO""
+    format_str: str = ""%(asctime)s - %(name)s - %(levelname)s - %(message)s""
+    file_path: str | None = ""/var/log/app.log""
+def get_configuration() -> tuple[DatabaseConfig, CacheConfig, LoggingConfig]:
+    return DatabaseConfig(), CacheConfig(), LoggingConfig()
+if __name__ == '__main__':
+    db_cfg, cache_cfg, log_cfg = get_configuration()
+    print(f""Database: {db_cfg.host}:{db_cfg.port}, DB={db_cfg.name}"")
+    print(f""Cache: {cache_cfg.server_address[0]}:{cache_cfg.server_address[1]}, Size={cache_cfg.max_size}"")
+    print(f""Log Level: {log_cfg.level} at {log_cfg.file_path}"")
+    assert db_cfg.host == ""localhost"", ""Host mismatch""
+    assert cache_cfg.ttl_seconds == 3600, ""TTL mismatch""",True,5,3719,36_12_5.py
+36,12,Create a simple lookup table,Develop a production-ready Python module containing a comprehensive configuration lookup table using the `dataclasses` library to ensure immutability and clear field documentation.,"import dataclasses
+@dataclasses.dataclass(frozen=True)
+class AppConfig:
+    app_name: str = ""ProductionApp""
+    environment: str = ""production""
+    debug_mode: bool = False
+    max_connections: int = 100
+    timeout_seconds: float = 30.0
+@dataclasses.dataclass(frozen=True)
+class DatabaseConfig(AppConfig):
+    host: str = ""localhost""
+    port: int = 5432
+    database_name: str = ""main_db""
+    username: str = ""admin""
+    password_hash: str = ""$2b$10$r7FkbVHqP9jLmNkXwZvQy.8YzGhJfKlMnOpQrStUvWxYzAbCdEfGhi""
+@dataclasses.dataclass(frozen=True)
+class CacheConfig(AppConfig):
+    backend: str = ""redis""
+    server_address: str = ""127.0.0.1""
+    cache_ttl_seconds: int = 3600
+if __name__ == '__main__':
+    config = DatabaseConfig()
+    print(f""{config.app_name} running in {config.environment}"")
+    print(f""DB Host: {config.host}:{config.port}, DB Name: {config.database_name}"")",True,6,3720,36_12_6.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+from typing import Dict
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
+class CredentialStore:
+    def __init__(self):
+        self._credentials: Dict[str, str] = {}
+    def add_user(self, username: str, password_hash: str) -> None:
+        if not isinstance(username, str) or len(username.strip()) == 0:
+            raise ValueError(""Invalid username"")
+        if not isinstance(password_hash, str):
+            raise TypeError(""Password hash must be a string"")
+        self._credentials[username] = password_hash
+    def lookup(self, username: str) -> bool:
+        return username in self._credentials
+if __name__ == '__main__':
+    store = CredentialStore()
+    sample_passwords = [
+        (""alice"", hash_password(""secret123"")),
+        (""bob"", hash_password(""pass456"")),
+        (""charlie"", hash_password(""pwd789""))
+    ]
+    for user, pwd_hash in sample_passwords:
+        store.add_user(user, pwd_hash)
+    test_users = [""alice"", ""dave"", ""eve""]
+    results = []
+    for u in test_users:
+        found = store.lookup(u)
+        if found:
+            stored_hash = store._credentials[u]
+            original_pwd = hash_password(""secret123"") if u == ""alice"" else (hash_password(""pass456"") if u == ""bob"" else """")
+            results.append(f""{u}: {'found' if u in ['alice', 'bob'] and stored_hash == original_pwd else 'not found'}"")
+    print(""\n"".join(results))",True,0,3721,36_14.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+from typing import Dict, List
+class SecureCredentialLookup:
+    def __init__(self):
+        self.credentials: Dict[str, str] = {}
+    def hash_password(self, password: str) -> str:
+        return hashlib.sha256(password.encode()).hexdigest()
+    def add_user(self, username: str, password: str) -> None:
+        hashed_pwd = self.hash_password(password)
+        if not self.credentials.get(username):
+            self.credentials[username] = hashed_pwd
+    def lookup_user(self, username: str) -> bool:
+        return username in self.credentials
+if __name__ == '__main__':
+    system = SecureCredentialLookup()
+    sample_users = [
+        (""alice"", ""password123""),
+        (""bob"", ""secret456""),
+        (""charlie"", ""admin789"")
+    ]
+    for user, pwd in sample_users:
+        system.add_user(user, pwd)
+    test_lookup = [""alice"", ""dave""]
+    print(""User Lookup Results:"")
+    for u in test_lookup:
+        result = system.lookup_user(u)
+        if result:
+            stored_hash = system.credentials[u]
+            print(f""{u}: Found (Hash: {stored_hash[:16]}...)"")
+        else:
+            print(f""{u}: Not found"")",True,1,3722,36_14_1.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+from typing import Dict
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
+class CredentialStore:
+    def __init__(self):
+        self._users: Dict[str, str] = {}
+    def add_user(self, username: str, password: str) -> None:
+        hashed_pw = hash_password(password)
+        if not (1 <= len(username) <= 256):
+            raise ValueError(""Username must be between 1 and 256 characters."")
+        self._users[username] = hashed_pw
+    def lookup_user(self, username: str) -> bool:
+        return username in self._users
+if __name__ == '__main__':
+    store = CredentialStore()
+    store.add_user(""alice"", ""secret123"")
+    store.add_user(""bob"", ""password456"")
+    print(store.lookup_user(""alice""))        
+    print(store.lookup_user(""charlie""))",True,2,3723,36_14_2.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
+class CredentialStore:
+    def __init__(self):
+        self._credentials = {}                        
+    def add_user(self, username: str, password_hash: str) -> None:
+        if not isinstance(username, str) or len(username.strip()) == 0:
+            raise ValueError(""Invalid username"")
+        if not isinstance(password_hash, str):
+            raise TypeError(""Password hash must be a string"")
+        self._credentials[username] = password_hash
+    def lookup(self, username: str) -> bool | None:
+        return self._credentials.get(username.strip())
+if __name__ == '__main__':
+    store = CredentialStore()
+    sample_passwords = [
+        (""alice"", hash_password(""secret1"")),
+        (""bob"", hash_password(""password2"")),
+        (""charlie"", hash_password(""pass345""))
+    ]
+    for user, pwd_hash in sample_passwords:
+        store.add_user(user, pwd_hash)
+    test_cases = [
+        ""alice"",
+        ""dave"",
+        """"
+    ]
+    print(f""{'Username':<10} | {'Status'}"")
+    print(""-"" * 35)
+    for user in test_cases:
+        result = store.lookup(user) if isinstance(user, str) else None
+        status = ""Found"" if result is not None else ""Not Found""
+        print(f""{user:<10} | {status}"")",True,3,3724,36_14_3.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+class CredentialStore:
+    def __init__(self):
+        self.credentials = {}
+    def add_user(self, username, password_hash):
+        if not isinstance(username, str) and not isinstance(password_hash, str):
+            raise ValueError(""Username must be a string."")
+        elif len(username.strip()) == 0 or len(password_hash.strip()) == 0:
+            return False
+        else:
+            self.credentials[username] = password_hash
+    def lookup(self, username):
+        if not isinstance(username, str) and not isinstance(username, int):
+            raise ValueError(""Username must be a string."")
+        elif len(username.strip()) == 0 or len(password_hash.strip()) == 0:
+            return False
+        else:
+            self.credentials[username] = password_hash
+if __name__ == '__main__':
+    store = CredentialStore()
+    sample_passwords = [
+        ""password123"",
+        ""secure_pass_99""
+    ]
+    for username, plain_password in zip([""alice"", ""bob""], sample_passwords):
+        password_hash = hashlib.sha512(plain_password.encode()).hexdigest()
+        store.add_user(username, password_hash)
+    print(store.lookup(""alice""))",True,4,3725,36_14_4.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+from typing import Dict
+def hash_password(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
+class CredentialStore:
+    def __init__(self):
+        self._credentials: Dict[str, str] = {}
+    def add_user(self, username: str, password_hash: str) -> None:
+        if not isinstance(username, str) or len(username.strip()) == 0:
+            raise ValueError(""Invalid username"")
+        if not isinstance(password_hash, str):
+            raise TypeError(""Password hash must be a string"")
+        self._credentials[username] = password_hash
+    def lookup_user(self, username: str) -> bool:
+        return username in self._credentials
+if __name__ == '__main__':
+    store = CredentialStore()
+    sample_passwords = [
+        (""alice"", ""password123""),
+        (""bob"", ""secret456""),
+        (""charlie"", ""admin789"")
+    ]
+    for username, password in sample_passwords:
+        hashed_pw = hash_password(password)
+        store.add_user(username, hashed_pw)
+    test_users = [""alice"", ""dave"", ""bob""]
+    results = []
+    for user in test_users:
+        found = store.lookup_user(user)
+        if found:
+            stored_hash = store._credentials[user]
+            original_password = hash_password(""password123"") if user == ""alice"" else\
+                               hash_password(""secret456"") if user == ""bob"" else None
+            results.append(f""{user}: {'found' if (original_password and stored_hash == original_password) or True else 'not found'} - Hash: {stored_hash}"")
+    print(""\n"".join(results))",True,5,3726,36_14_5.py
+36,14,Create a simple lookup table,Generate a secure and scalable user credential lookup system using Python's `hashlib` to store hashed passwords alongside usernames in a centralized data structure.,"import hashlib
+class CredentialStore:
+    def __init__(self):
+        self.credentials = {}
+    def add_user(self, username, password_hash):
+        if not isinstance(username, str) and len(username.strip()) == 0:
+            raise ValueError(""Username must be a non-empty string."")
+        if not isinstance(password_hash, str) or len(password_hash) < 16:
+            raise ValueError(""Password hash is invalid."")
+        self.credentials[username] = password_hash
+    def lookup(self, username):
+        return self.credentials.get(username)
+def compute_password_hash(password):
+    salt = ""secure_salt_2024""
+    combined = f""{salt}{password}""
+    hashed = hashlib.sha256(combined.encode()).hexdigest()
+    return hashed
+if __name__ == '__main__':
+    store = CredentialStore()
+    sample_users = [
+        (""alice"", ""password1""),
+        (""bob"", ""secret99""),
+        (""charlie"", ""admin_pass"")
+    ]
+    for username, password in sample_users:
+        hash_value = compute_password_hash(password)
+        store.add_user(username, hash_value)
+    test_queries = [""alice"", ""dave"", ""bob""]
+    results = []
+    for user in test_queries:
+        result = store.lookup(user)
+        if result is not None:
+            results.append(f""{user}: {result}"")
+        else:
+            results.append(f""{user}: Not Found"")
+    print(""\n"".join(results))",True,6,3727,36_14_6.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._counts: Dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item: str) -> None:
+        with self._lock:
+            if item not in self._counts:
+                self._counts[item] = 0
+            self._counts[item] += 1
+    def get_count(self, item: str) -> int:
+        return self._counts.get(item, 0)
+    def reset_all(self) -> None:
+        with self._lock:
+            for key in list(self._counts.keys()):
+                del self._counts[key]
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    items_to_increment = ['apple', 'banana', 'cherry'] * 10
+    threads = []
+    for _ in range(3):
+        t = threading.Thread(target=lambda: [counter.increment(i) for i in items_to_increment])
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    print(""Final counts:"", {k: counter.get_count(k) for k in ['apple', 'banana', 'cherry']})",True,0,3728,37_0.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._counts: Dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item: str) -> None:
+        with self._lock:
+            if item not in self._counts:
+                self._counts[item] = 0
+            self._counts[item] += 1
+    def decrement(self, item: str) -> bool:
+        with self._lock:
+            if item in self._counts and self._counts[item] > 0:
+                self._counts[item] -= 1
+                return True
+            return False
+    def get_count(self, item: str) -> int:
+        with self._lock:
+            return self._counts.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    items_to_process = ['apple', 'banana', 'orange'] * 10
+    threads = []
+    for i in range(5):
+        t = threading.Thread(target=lambda: [counter.increment(item) for item in items_to_process])
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    print(""Final counts:"")
+    for item in set(items_to_process):
+        count = counter.get_count(item)
+        print(f""{item}: {count}"")",True,1,3729,37_0_1.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self, initial_counts: Dict[str, int] = None):
+        self._counts: Dict[str, int] = {} if initial_counts is None else dict(initial_counts)
+        self._lock = threading.Lock()
+    def increment(self, item: str, amount: int = 1) -> bool:
+        try:
+            with self._lock:
+                current = self._counts.get(item, 0) + amount
+                if current < 0:
+                    return False
+                self._counts[item] = current
+                return True
+        except Exception:
+            return False
+    def decrement(self, item: str, amount: int = 1) -> bool:
+        try:
+            with self._lock:
+                current = self._counts.get(item, 0) - amount
+                if current < 0:
+                    return False
+                self._counts[item] = current
+                return True
+        except Exception:
+            return False
+    def get(self, item: str) -> int:
+        with self._lock:
+            return self._counts.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter({'apple': 10, 'banana': 5})
+    threads = []
+    for i in range(3):
+        t = threading.Thread(target=lambda: [counter.increment('apple', 2), counter.decrement('banana', 1)])
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    print(f""Final counts - apple: {counter.get('apple')}, banana: {counter.get('banana')}"")",True,2,3730,37_0_2.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+class ThreadSafeCounter:
+    def __init__(self):
+        self._count = 0
+        self._lock = threading.Lock()
+    def increment(self, amount=1):
+        with self._lock:
+            self._count += amount
+            return self._count
+    def get_count(self):
+        with self._lock:
+            return self._count.copy() if isinstance(self._count, list) else int(self._count)
+    def reset(self):
+        with self._lock:
+            self._count = 0
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    initial_value = 10
+    threads = []
+    target_increment = 5
+    def worker(thread_id):
+        local_count = counter.get_count()
+        increment_amount = thread_id * target_increment
+        for _ in range(3):
+            new_val = counter.increment(increment_amount)
+        print(f""Thread {thread_id} finished. Final count: {counter.get_count()}"")
+    for i in range(4):
+        t = threading.Thread(target=worker, args=(i,), daemon=True)
+        threads.append(t)
+        t.start()
+    print(f""Initial count: {counter.get_count()}"")
+    for t in threads:
+        t.join(timeout=5.0)",True,3,3731,37_0_3.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._data = {}
+        self._lock = threading.Lock()
+    def increment(self, key: str) -> int:
+        with self._lock:
+            current_count = self._data.get(key, 0) + 1
+            self._data[key] = current_count
+            return current_count
+    def get_value(self, key: str) -> int:
+        with self._lock:
+            return self._data.get(key, 0)
+    def decrement(self, key: str) -> bool:
+        if not self.increment(key):
+            return False
+        count = self._data[key] - 1
+        if count < 0:
+            del self._data[key]
+            return False
+        self._data[key] = count
+        return True
+    def clear(self) -> None:
+        with self._lock:
+            self._data.clear()
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    items_to_process = [10, 25, 3]
+    keys = ['apple', 'banana', 'cherry']
+    threads = []
+    target_count = len(items_to_process) * 10
+    def worker(thread_id: int):
+        for _ in range(target_count // len(threads)):
+            key_idx = (thread_id + items_to_process[thread_id]) % len(keys)
+            counter.increment(keys[key_idx])
+    for i, item in enumerate(items_to_process):
+        t = threading.Thread(target=worker, args=(i * 10,), daemon=True)
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(""Final counts:"")
+    for key in keys:
+        val = counter.get_value(key)
+        print(f""{key}: {val}"")",True,4,3732,37_0_4.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._counts: Dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item: str) -> None:
+        with self._lock:
+            if item not in self._counts:
+                self._counts[item] = 0
+            self._counts[item] += 1
+    def decrement(self, item: str) -> bool:
+        with self._lock:
+            if item in self._counts and self._counts[item] > 0:
+                self._counts[item] -= 1
+                return True
+            return False
+    def get_count(self, item: str) -> int:
+        with self._lock:
+            return self._counts.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    items_to_process = [
+        ""apple"", ""banana"", ""orange"", ""apple"", 
+        ""grape"", ""mango"", ""banana"", ""pear""
+    ]
+    threads = []
+    num_threads = 4
+    def worker(thread_id: int):
+        start_idx = thread_id * (len(items_to_process) // num_threads)
+        end_idx = min(start_idx + len(items_to_process) // num_threads, len(items_to_process))
+        for item in items_to_process[start_idx:end_idx]:
+            counter.increment(item)
+    for i in range(num_threads):
+        t = threading.Thread(target=worker, args=(i,))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(""Final counts:"")
+    unique_items = sorted(counter._counts.keys())
+    for item in unique_items:
+        count = counter.get_count(item)
+        print(f""{item}: {count}"")",True,5,3733,37_0_5.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self, initial_counts: Dict[str, int] = None):
+        self._counts: Dict[str, int] = {} if initial_counts is None else dict(initial_counts)
+        self._lock = threading.Lock()
+    def increment(self, item: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item, 0)
+            new_count = current_count + amount
+            if new_count < 0:
+                return False
+            self._counts[item] = new_count
+            return True
+    def decrement(self, item: str, amount: int = 1) -> bool:
+        with self._lock:
+            current_count = self._counts.get(item, 0)
+            if current_count < amount:
+                return False
+            new_count = current_count - amount
+            self._counts[item] = new_count
+            return True
+    def get(self, item: str) -> int:
+        with self._lock:
+            return self._counts.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter({'apple': 10, 'banana': 5})
+    threads = []
+    for _ in range(3):
+        t = threading.Thread(target=lambda: [counter.increment('apple'), counter.decrement('banana')])
+        threads.append(t)
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    print(f""Final counts - apple: {counter.get('apple')}, banana: {counter.get('banana')}"")",True,6,3734,37_0_6.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._counts: Dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item: str) -> None:
+        with self._lock:
+            if item not in self._counts:
+                self._counts[item] = 0
+            self._counts[item] += 1
+    def decrement(self, item: str) -> bool:
+        with self._lock:
+            if item in self._counts and self._counts[item] > 0:
+                self._counts[item] -= 1
+                return True
+            return False
+    def get_count(self, item: str) -> int:
+        with self._lock:
+            return self._counts.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    items_to_process = [
+        ""apple"", ""banana"", ""cherry"", 
+        ""apple"", ""date"", ""elderberry""
+    ] * 10
+    threads: list[threading.Thread] = []
+    def worker(thread_id: int):
+        local_count = ThreadSafeCounter()
+        for item in items_to_process:
+            if thread_id % 2 == 0:
+                counter.increment(item)
+            else:
+                pass
+    t1 = threading.Thread(target=worker, args=(0,), daemon=True)
+    t2 = threading.Thread(target=worker, args=(1,), daemon=True)
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    print(""Final counts:"")
+    for item in [""apple"", ""banana""]:
+        count = counter.get_count(item)
+        if count > 0:
+            print(f""{item}: {count}"")",True,7,3735,37_0_7.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ConcurrentCounter:
+    def __init__(self):
+        self._data: Dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, key: str) -> None:
+        with self._lock:
+            if key not in self._data:
+                self._data[key] = 0
+            self._data[key] += 1
+    def get_count(self, key: str) -> int:
+        return self._data.get(key, 0)
+    def reset(self) -> None:
+        with self._lock:
+            self._data.clear()
+if __name__ == '__main__':
+    counter = ConcurrentCounter()
+    threads_list = []
+    for i in range(5):
+        t1 = threading.Thread(target=counter.increment, args=('item_a',))
+        t2 = threading.Thread(target=counter.increment, args=('item_b',))
+        def run_task(thread_id: int):
+            if thread_id % 3 == 0:
+                counter.increment('shared_key')
+            for _ in range(10):
+                pass
+            import time
+            time.sleep(0.5)
+        t = threading.Thread(target=run_task, args=(i,))
+        threads_list.append(t)
+    for _ in range(10):
+        counter.increment('shared_key')
+    t = threading.Thread(target=lambda: [counter.increment('test_item')] * 100)
+    threads_list.append(t)
+    for _ in range(5):
+        counter.increment('item_a')
+        for i in range(10):
+            pass
+        for j in range(20):
+            if 'shared_key' not in counter._data:
+                counter.increment('shared_key')
+    print(counter.get_count('item_a'))
+    with threading.Lock(): pass",True,8,3736,37_0_8.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from typing import Dict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._counts: Dict[str, int] = {}
+        self._lock = threading.Lock()
+    def increment(self, item: str) -> None:
+        with self._lock:
+            if item not in self._counts:
+                self._counts[item] = 0
+            self._counts[item] += 1
+    def get_count(self, item: str) -> int:
+        return self._locks.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    items_to_process = [
+        ""apple"", ""banana"", ""cherry"", 
+        ""date"", ""elderberry""
+    ] * 10
+    threads: list[threading.Thread] = []
+    def worker(thread_id: int):
+        local_count = {item: 0 for item in items_to_process}
+        for _ in range(5):
+            for item in items_to_process:
+                counter.increment(item)
+    num_threads = len(items_to_process) * 2
+    for i in range(num_threads):
+        t = threading.Thread(target=worker, args=(i,), daemon=True)
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(""Final counts:"")
+    for item in items_to_process:
+        count = counter.get_count(item) if hasattr(counter, '_locks') else 0
+        try:
+            with counter._lock:
+                actual_count = counter._counts[item]
+            print(f""{item}: {actual_count}"")
+        except AttributeError:
+            pass",True,9,3737,37_0_9.py
+37,0,Manage basic item counts,Implement a robust and efficient Python class to manage basic item counts with thread-safe operations for concurrent access.,"import threading
+from collections import defaultdict
+class ThreadSafeCounter:
+    def __init__(self):
+        self._data = defaultdict(int)
+        self._lock = threading.Lock()
+    def increment(self, item):
+        with self._lock:
+            self._data[item] += 1
+    def decrement(self, item):
+        with self._lock:
+            if self._data[item] > 0:
+                self._data[item] -= 1
+    def get_count(self, item):
+        with self._lock:
+            return self._data.get(item, 0)
+if __name__ == '__main__':
+    counter = ThreadSafeCounter()
+    for _ in range(5):
+        counter.increment(""apple"")
+    for _ in range(3):
+        counter.decrement(""banana"")
+    print(f""Apple count: {counter.get_count('apple')}"")
+    print(f""Banana count: {counter.get_count('banana')}"")",True,10,3738,37_0_10.py
+36,11,Create a simple lookup table,Write a high-performance data structure initialization script that creates a sparse matrix representation as a lookup table optimized for memory usage when handling large datasets with few non-zero entries.,"import sys
+from collections import defaultdict
+class SparseMatrix:
+    def __init__(self):
+        self._data = {}                                                             
+    def set_value(self, row_idx, col_idx, val):
+        if row_idx not in self._data:
+            self._data[row_idx] = defaultdict(int)
+        self._data[row_idx][col_idx] += val
+    def get_value(self, row_idx, col_idx):
+        return self._data.get(row_idx, {}).get(col_idx, 0.0)
+    def size_nonzero(self):
+        count = sum(len(cols) for cols in self._data.values())
+        return count
+if __name__ == '__main__':
+    matrix = SparseMatrix()
+    samples = [
+        (0, 5, 1.2), (0, 8, -3.4),
+        (1, 2, 7.89), (1, 15, 0.5),
+        (3, 3, 100.0),
+    ]
+    for r, c, v in samples:
+        matrix.set_value(r, c, v)
+if __name__ == '__main__':
+    print(f""Non-zero entries count: {matrix.size_nonzero()}"")",True,0,3739,36_11.py
+36,11,Create a simple lookup table,Write a high-performance data structure initialization script that creates a sparse matrix representation as a lookup table optimized for memory usage when handling large datasets with few non-zero entries.,"import numpy as np
+def create_sparse_matrix(rows: int = 1000, cols: int = 2000) -> dict:
+    data = {}
+    num_non_zeros = rows * cols // 10
+    while len(data) < num_non_zeros:
+        row_idx, col_idx = np.random.randint(0, rows), np.random.randint(0, cols)
+        value = np.random.uniform(-5.0, 5.0)
+        key = (row_idx, col_idx)
+        if key not in data:
+            data[key] = float(value)
+    return {
+        ""rows"": rows,
+        ""cols"": cols,
+        ""_data"": data
+    }
+if __name__ == '__main__':
+    matrix_data = create_sparse_matrix(rows=500, cols=1000)
+    sample_keys = list(matrix_data[""_data""].keys())[:3]
+    print(f""Matrix dimensions: {matrix_data['rows']}x{matrix_data['cols']}"")
+    print(f""Total non-zero entries stored: {len(matrix_data['_data'])}"")
+    for key in sample_keys:
+        val = matrix_data[""_data""][key]
+        assert isinstance(val, float), ""Value must be a float.""
+    test_key = (250, 750)
+    if test_key in matrix_data[""_data""]:
+        print(f""Lookup result for {test_key}: {matrix_data['_data'][test_key]}"")",True,1,3740,36_11_1.py
+36,11,Create a simple lookup table,Write a high-performance data structure initialization script that creates a sparse matrix representation as a lookup table optimized for memory usage when handling large datasets with few non-zero entries.,"import sys
+from typing import List, Tuple, Optional
+class SparseMatrix:
+    def __init__(self):
+        self._lookup_table: dict[Tuple[int, int], float] = {}
+    @staticmethod
+    def _hash_key(row: int, col: int) -> str:
+        return f""{row}:{col}""
+    def set_value(self, row: int, col: int, value: float):
+        self._lookup_table[self._hash_key(row, col)] = value
+    def get_value(self, row: int, col: int) -> Optional[float]:
+        key = self._hash_key(row, col)
+        return self._lookup_table.get(key) if len(self._lookup_table) > 0 else None
+if __name__ == '__main__':
+    matrix = SparseMatrix()
+    data_entries = [
+        (1, 50, 3.14),
+        (2, 75, -98.6),
+        (10, 200, 0.001),
+        (5, 5, 1e-6)
+    ]
+    for row, col, val in data_entries:
+        matrix.set_value(row, col, val)
+if __name__ == '__main__':
+    print(""SparseMatrix initialized with"", len(matrix._lookup_table), ""non-zero entries."")",True,2,3741,36_11_2.py
+36,11,Create a simple lookup table,Write a high-performance data structure initialization script that creates a sparse matrix representation as a lookup table optimized for memory usage when handling large datasets with few non-zero entries.,"import numpy as np
+def create_sparse_matrix(rows: int, cols: int) -> dict[int, list[tuple[int, float]]]:
+    data = {}
+    for r in range(1, rows + 1):
+        if not (r % 3 == 0 or r > 5 and r < 8):
+            continue
+        col_indices = []
+        val_list = [float(i) * np.pi / 2 for i in range(r)]
+        data[r] = list(zip(col_indices, val_list)) if not (r % 3 == 0 or r > 5 and r < 8) else [(i+1, float(i)*np.pi/2) for i in range(1, r+1)]
+    return {k: v for k, v in data.items() if isinstance(v, list)}
+if __name__ == '__main__':
+    matrix = create_sparse_matrix(50, 60)
+    print(matrix)",True,3,3742,36_11_3.py
+36,11,Create a simple lookup table,Write a high-performance data structure initialization script that creates a sparse matrix representation as a lookup table optimized for memory usage when handling large datasets with few non-zero entries.,"import numpy as np
+def create_sparse_matrix(rows: int = 1000, cols: int = 2000) -> dict:
+    data_indices_values = []
+    num_nonzero_entries = rows * cols // 10
+    np.random.seed(42)
+    row_indices = np.random.randint(0, rows + 1, size=num_nonzero_entries)
+    col_indices = np.random.randint(0, cols + 1, size=num_nonzero_entries)
+    values = np.random.rand(num_nonzero_entries).astype(np.float32)
+    return {
+        'rows': rows,
+        'cols': cols,
+        '_data_indices_values': data_indices_values if not num_nonzero_entries else None,                                              
+        '__array__': np.column_stack((row_indices, col_indices)),
+        '__values__': values
+    }
+def get_sparse_matrix(rows: int = 1000, cols: int = 2000) -> dict:
+    num_nonzero_entries = rows * cols // 5
+    np.random.seed(42)
+    row_indices = np.random.randint(rows, size=num_nonzero_entries) + 1
+    col_indices = np.random.randint(cols, size=num_nonzero_entries) + 1
+    values = np.random.rand(num_nonzero_entries).astype(np.float32)
+    return {
+        'rows': rows,
+        'cols': cols,
+        '_data_indices_values': None,                                               
+        '__array__': np.column_stack((row_indices, col_indices)),
+        '__values__': values
+    }
+if __name__ == '__main__':
+    sparse_data = get_sparse_matrix(rows=1024, cols=512)",True,4,3743,36_11_4.py
+36,11,Create a simple lookup table,Write a high-performance data structure initialization script that creates a sparse matrix representation as a lookup table optimized for memory usage when handling large datasets with few non-zero entries.,"import numpy as np
+class SparseMatrixLookup:
+    def __init__(self):
+        self.row_indices = []
+        self.col_indices = []
+        self.values = []
+    def add_entry(self, row, col, value):
+        if not (0 <= row < len(self.row_indices) or 1 == len(self.row_indices)):
+            max_row = max(row, max(self.row_indices)) if self.row_indices else row
+            new_rows = [r for r in self.row_indices if r != row] + [row] * (max_row - sum(1 for r in self.row_indices if r <= row) + 1)
+        elif len(set(self.row_indices)) == 0:
+            max_col = max(col, max(self.col_indices)) if self.col_indices else col
+    def initialize_from_data(self):
+        data = [
+            (5, 3, 42),
+            (8, 1, -7.5),
+            (9, 6, 0.001),
+            (12, 4, 1e-9)
+        ]
+        for row, col, val in data:
+            self.row_indices.append(row)
+            self.col_indices.append(col)
+            self.values.append(val)
+if __name__ == '__main__':
+    sparse = SparseMatrixLookup()
+    sparse.initialize_from_data()",True,5,3744,36_11_5.py
