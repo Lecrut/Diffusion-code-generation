@@ -10,6 +10,7 @@ DATA_PATH = "data2"
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 MODEL = "gemma4:e4b"
 CACHE_FILE = "cache.json"
+REQUEST_TIMEOUT = 60
 
 os.makedirs(DATA_PATH, exist_ok=True)
 session = requests.Session()
@@ -73,3 +74,44 @@ def ensure_ollama():
         time.sleep(2)
 
     raise RuntimeError("Nie udało się połączyć z Ollamą. Upewnij się, że kontener 'ollama' działa poprawnie.")
+
+def ollama_generate(prompt, temperature=0.7, use_cache=False):
+    cache_key = f"{prompt}|||{temperature}"
+    
+    with ollama_lock:
+        if use_cache and cache_key in CACHE:
+            return CACHE[cache_key]
+
+        try:
+            r = session.post(
+                f"{OLLAMA_URL}/api/generate",
+                json={
+                    "model": MODEL,
+                    "prompt": prompt,
+                    "stream": False,
+                    "keep_alive": "1h",
+                    "think": False, 
+                    "options": {
+                            "temperature": temperature,
+                            "num_predict": 2048,
+                            "num_ctx": 2048,
+                    },
+                },
+                timeout=REQUEST_TIMEOUT,
+            )
+            r.raise_for_status()
+
+            result = r.json().get("response", "").strip()
+            if not result:
+                return None
+
+            # Zapisujemy do cache TYLKO jeśli use_cache to True
+            if use_cache:
+                CACHE[cache_key] = result
+                save_cache() 
+                
+            return result
+
+        except Exception as exc:
+            print(f"OLLAMA ERROR: {exc}", flush=True)
+            return None
