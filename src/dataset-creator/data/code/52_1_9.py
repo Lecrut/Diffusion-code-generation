@@ -1,0 +1,17 @@
+def get_last_element(sequence):
+    if not sequence:
+        raise ValueError("Sequence cannot be empty")
+    return sequence[-1]
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 2, 3], "integers"),
+        (["a", "b"], "strings"),
+        ((5.0,), "floats"),
+        ("hello world", "string sequence")
+    ]
+    for seq, desc in test_cases:
+        try:
+            result = get_last_element(seq)
+            print(f"{desc}: {result}")
+        except ValueError as e:
+            print(f"Error with {desc}: {e}")
