@@ -1,0 +1,14 @@
+import datetime
+from typing import List, Tuple
+def subtract_years(timestamps: List[datetime.datetime], years_to_subtract: int) -> List[datetime.datetime]:
+    return [ts - datetime.timedelta(days=years_to_subtract * 365 + (years_to_subtract % 4)) for ts in timestamps]
+if __name__ == '__main__':
+    sample_timestamps = [
+        datetime.datetime(2023, 12, 31),
+        datetime.datetime(2024, 6, 15),
+        datetime.datetime(2025, 9, 1)
+    ]
+    years_to_remove = 5
+    result_timestamps = subtract_years(sample_timestamps, years_to_remove)
+    for ts in result_timestamps:
+        print(ts.strftime("%Y-%m-%d"))

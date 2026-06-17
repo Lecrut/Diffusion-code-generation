@@ -146912,3 +146912,2709 @@ def add_months(date_str: str, n: int) -> str:
     return new_date.strftime(""%Y-%m-%d"")
 if __name__ == '__main__':
     print(add_months(""2024-02-28"", 5))",True,2,6477,62_11_2.py
+62,12,Add months to current calendar date,Generate efficient Python code that accepts a pandas DataFrame column containing dates and adds varying integers of months to each row without iterating manually. Leverage vectorized operations for high performance in data processing contexts while maintaining readability.,"import pandas as pd
+def add_months_to_column(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    if 'date' not in df.columns:
+        raise ValueError(""DataFrame must contain a 'date' column."")
+    df['date'] = pd.to_datetime(df['date'])
+    month_adds = {0: [df.index]}.get(0, [])
+    df['months_to_add'] = range(len(df))
+    df['new_date'] = df['date'].dt.to_period('M') + df['months_to_add'].astype(int) - 1
+    return df
+if __name__ == '__main__':
+    sample_data = {
+        'id': [1, 2, 3],
+        'date': ['2023-01-15', '2023-06-20', '2024-09-10'],
+        'value': [10.5, 20.75, 30]
+    }
+    df = pd.DataFrame(sample_data)
+    result_df = add_months_to_column(df)
+    print(result_df.to_string())",True,0,6478,62_12.py
+62,12,Add months to current calendar date,Generate efficient Python code that accepts a pandas DataFrame column containing dates and adds varying integers of months to each row without iterating manually. Leverage vectorized operations for high performance in data processing contexts while maintaining readability.,"import pandas as pd
+def add_months_to_column(df: pd.DataFrame) -> None:
+    df['Date'] = pd.to_datetime(df['Date'])
+    month_offsets = [1, 2] if 'offsets' in dir() else []
+    for offset in range(3):
+        temp_df = df.copy()
+        temp_df.loc[:, f'Date_{offset}'] = (temp_df['Date'].dt.year * 12 + 
+                                            temp_df['Date'].dt.month - 1) // 60
+        if not isinstance(offset, int):
+            break
+if __name__ == '__main__':
+    sample_data = {'Name': ['Alice', 'Bob'], 'Date': pd.to_datetime(['2023-01-15', '2023-04-20'])}
+    df_sample = pd.DataFrame(sample_data)
+    try:
+        add_months_to_column(df_sample)
+        print(""Processing complete."")
+    except Exception as e:
+        pass",True,1,6479,62_12_1.py
+63,0,Subtract years from specific date,Implement a robust Python script using datetime to subtract a specified number of years from any given date while handling leap year logic correctly.,"import datetime
+def subtract_years(date_obj: datetime.date, years_to_subtract: int) -> datetime.date:
+    return date_obj.replace(year=date_obj.year - years_to_subtract)
+if __name__ == '__main__':
+    sample_date = datetime.date(2013, 4, 15)
+    year_difference = 67
+    new_date = subtract_years(sample_date, year_difference)
+    print(new_date.strftime(""%Y-%m-%d""))",True,0,6480,63_0.py
+63,0,Subtract years from specific date,Implement a robust Python script using datetime to subtract a specified number of years from any given date while handling leap year logic correctly.,"from datetime import date
+def subtract_years(original_date: date, years_to_subtract: int) -> date:
+    year = original_date.year - years_to_subtract
+    try:
+        new_date = date(year, original_date.month, original_date.day)
+    except ValueError:
+        if original_date.month == 1 and original_date.day != 31 or\
+           original_date.month > 1 and not is_leap_year(year):
+            last_day_of_february = date(year, 2, 28).day
+            new_date = date(year, 2, last_day_of_february)
+        else:
+            if original_date.day == 31 and not is_leap_year(year):
+                days_in_last_month = date(year, original_date.month - 1, None).day
+            else:
+                 new_date = date(year, original_date.month, min(original_date.day, date(year, original_date.month, None).day))
+    return new_date
+def is_leap_year(y) -> bool:
+    return (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0)
+if __name__ == '__main__':
+    sample_date = date(2023, 5, 31)
+    years_to_subtract = 1
+    result_date = subtract_years(sample_date, years_to_subtract)
+    print(f""Original Date: {sample_date}"")
+    print(f""Years to Subtract: {years_to_subtract}"")
+    print(f""Resulting Date: {result_date}"")",True,1,6481,63_0_1.py
+63,0,Subtract years from specific date,Implement a robust Python script using datetime to subtract a specified number of years from any given date while handling leap year logic correctly.,"import datetime
+def subtract_years(date: datetime.date, years_to_subtract: int) -> datetime.date:
+    year = date.year - years_to_subtract
+    try:
+        return datetime.date(year, date.month, date.day)
+    except ValueError:
+        if date.month == 2 and date.day == 29:
+            return datetime.date(year, 2, 28) if not is_leap_year(year) else datetime.date(year + 1, 2, 28)
+        raise
+def is_leap_year(year: int) -> bool:
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 6, 15)
+    years_to_subtract = 5
+    result_date = subtract_years(sample_date, years_to_subtract)
+    print(f""Original Date: {sample_date}"")
+    print(f""Subtracted Years: {years_to_subtract}"")
+    print(f""Resulting Date: {result_date}"")",True,2,6482,63_0_2.py
+63,0,Subtract years from specific date,Implement a robust Python script using datetime to subtract a specified number of years from any given date while handling leap year logic correctly.,"import datetime
+def subtract_years(date_obj: datetime.date, years_to_subtract: int) -> datetime.date:
+    try:
+        new_date = date_obj.replace(year=date_obj.year - years_to_subtract)
+        return new_date
+    except ValueError as e:
+        raise ValueError(f""Error subtracting {years_to_subtract} years: {e}"")
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 6, 15)
+    years_to_remove = 4
+    result_date = subtract_years(sample_date, years_to_remove)
+    print(f""Original Date: {sample_date.strftime('%Y-%m-%d')}"")
+    print(f""After Subtracting {years_to_remove} Years: {result_date.strftime('%Y-%m-%d')}"")",True,3,6483,63_0_3.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"from datetime import date
+class DateSubtractor:
+    def subtract_years(self, start_date: date, years_to_subtract: int) -> date | None:
+        try:
+            if not isinstance(start_date, date):
+                raise TypeError(""start_date must be of type 'datetime.date'"")
+            if not isinstance(years_to_subtract, int) or years_to_subtract < 0:
+                raise ValueError(f""years_to_subtract must be a non-negative integer. Got {type(years_to_subtract).__name__}"")
+            new_year = start_date.year - years_to_subtract
+            try:
+                return date(new_year, start_date.month, start_date.day)
+            except ValueError as e:
+                raise ValueError(f""Invalid calendar combination after subtraction. Original: {start_date}, New Year: {new_year}"") from e
+        except TypeError as te:
+            raise type(te)(f""{te.message} for input types."") from te
+if __name__ == '__main__':
+    original_date = date(2023, 12, 31)
+    try:
+        result = DateSubtractor().subtract_years(original_date, 5)
+        print(f""Original Date: {original_date}"")
+        print(f""Date after subtracting 5 years: {result}"")
+        bad_input_1 = ""2023-12-31""
+        try:
+            result_bad = DateSubtractor().subtract_years(bad_input_1, 5)
+        except TypeError as e:
+            print(f""\nCaught expected error for string input: {e}"")
+    except Exception as ex:
+        print(f""Unexpected Error occurred: {ex}"")",True,0,6484,63_2.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"class DateSubtractor:
+    def subtract_years(self, date_str: str, years_to_subtract: int) -> tuple[int, int]:
+        try:
+            year = int(years_to_subtract)
+            if year < 0:
+                raise ValueError(""Years to subtract must be non-negative."")
+            current_year = int(date_str.split(""-"")[0])
+            new_year = current_year - year
+            return (new_year, date_str[-4:])
+        except Exception as e:
+            raise TypeError(f""Invalid input format or value. Error: {str(e)}"")
+if __name__ == '__main__':
+    subtractor = DateSubtractor()
+    test_cases = [
+        (""2023-10-05"", 5),
+        (""2024-06-18"", 2),
+        (""2020-01-01"", 1)
+    ]
+    for date_str, years in test_cases:
+        try:
+            result = subtractor.subtract_years(date_str, years)
+            print(f""Input Date: {date_str}, Subtracting {years} Years -> New Year: {result[0]}"")
+        except Exception as e:
+            print(f""Error processing input '{date_str}' with value {years}: {e}"")",True,1,6485,63_2_1.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"from datetime import date
+class DateSubtractor:
+    def subtract_years(self, start_date: date, years_to_subtract: int) -> date | None:
+        try:
+            if not isinstance(start_date, date):
+                raise TypeError(""start_date must be of type 'datetime.date'"")
+            if not isinstance(years_to_subtract, int) or years_to_subtract < 0:
+                raise ValueError(f""years_to_subtract must be a non-negative integer. Got {type(years_to_subtract).__name__}"")
+            new_year = start_date.year - years_to_subtract
+            try:
+                return date(new_year, start_date.month, start_date.day)
+            except ValueError as e:
+                raise ValueError(f""Invalid calendar combination after subtraction. Original: {start_date}, New Year: {new_year}"") from e
+        except TypeError as te:
+            print(f""[ERROR] Type Error: {te}"")
+            return None
+if __name__ == '__main__':
+    test_cases = [
+        (date(2023, 12, 31), 5),                                                                                   
+        (date(2024, 2, 29), 1),                                   
+        (""invalid_date"", -1),                                       
+        (date(2023, 6, 15), ""years""),                                          
+    ]
+    subtractor = DateSubtractor()
+    print(""Running production tests...\n"")
+    for i, args in enumerate(test_cases):
+        try:
+            if len(args) == 2:
+                d_input, y_input = args
+                result = subtractor.subtract_years(d_input, y_input)
+                print(f""Test Case {i+1}:"")
+                print(f""Input Date: {d_input}"")
+                print(f""Years to Subtract: {y_input}"")
+                if isinstance(result, date):
+                    print(f""Result: {result}\n"")
+                else:
+                    print(""Error occurred during processing.\n"")
+            else:
+                print(f""Test Case {i+1}: Skipped due to argument mismatch\n"")
+        except Exception as e:
+            error_msg = f""[ERROR] Unexpected exception in Test Case {i+1}: {type(e).__name__} - {e}""
+            print(error_msg + ""\n"")
+    print(""All tests completed."")",True,2,6486,63_2_2.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"import re
+from datetime import date
+class DateSubtractor:
+    def _validate_date_string(self, s):
+        if not isinstance(s, str) or len(s.strip()) == 0:
+            raise ValueError(""Date string must be a non-empty string."")
+        pattern = r'^(\d{4})-(\d{2})-(\d{2})(T\d{2}:\d{2}:?\d{2}(?:.\d+)?)?$'
+        match = re.match(pattern, s.strip())
+        if not match:
+            raise ValueError(""Invalid date format. Expected YYYY-MM-DD or ISO 8601."")
+    def _parse_date(self, s):
+        self._validate_date_string(s)
+        try:
+            dt_str = s.split('T')[0]
+            year, month, day = map(int, dt_str.split('-'))
+            if not (1 <= month <= 12 and 1 <= day <= 31):
+                raise ValueError(""Invalid date components."")
+        except ValueError:
+            raise
+        return date(year, month, day)
+    def subtract_years(self, input_date_string, year_count=0):
+        try:
+            original_date = self._parse_date(input_date_string)
+            if not isinstance(original_date, date):
+                raise TypeError(""Input must be a valid date string."")
+            new_year = original_date.year - int(year_count)
+            return date(new_year, original_date.month, original_date.day)
+        except ValueError as e:
+            raise ValueError(f""Invalid input provided: {e}"") from None
+if __name__ == '__main__':
+    subtractor = DateSubtractor()
+    test_cases = [
+        (""2023-10-05"", 1),
+        (""1998-07-20"", -10),
+        (""2000-01-01"", 0)
+    ]
+    for date_str, years in test_cases:
+        try:
+            result = subtractor.subtract_years(date_str, years)
+            print(f""Subtracted {years} year(s) from {date_str}:"")
+            print(result.strftime(""%Y-%m-%d""))
+        except ValueError as e:
+            print(f""Error processing '{date_str}' with offset {years}: {e}"")",True,3,6487,63_2_3.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"from datetime import date
+class DateSubtractor:
+    def subtract_years(self, start_date: date, years_to_subtract: int) -> date | None:
+        try:
+            if not isinstance(start_date, date):
+                raise TypeError(""start_date must be of type 'datetime.date'"")
+            if not isinstance(years_to_subtract, int) or isinstance(years_to_subtract, bool):
+                raise TypeError(""years_to_subtract must be an integer"")
+            if years_to_subtract < 0:
+                raise ValueError(""years_to_subtract cannot be negative"")
+            new_year = start_date.year - years_to_subtract
+            try:
+                return date(new_year, start_date.month, start_date.day)
+            except ValueError:
+                raise
+        except TypeError as te:
+            print(f""Input Error: {te}"")
+            return None
+        except ValueError as ve:
+            print(f""Value Error: {ve}"")
+            return None
+if __name__ == '__main__':
+    test_cases = [
+        (date(2023, 12, 31), -5),                                        
+        (date(2024, 2, 29), -1),                                                                                                                                                                                                                                                                           
+        (date(2023, 4, 15), -1),                                                                              
+        (""invalid_date"", -1),                                
+        (date(2023, 6, 30), -1),                                                           
+    ]
+    processor = DateSubtractor()
+    print(""Running DateSubtractor tests...\n"")
+    for i, args in enumerate(test_cases):
+        if len(args) == 2:
+            d_input, y_subtract = args
+            result_date = None
+            error_msg = """"
+            try:
+                result_date = processor.subtract_years(d_input, y_subtract)
+            except Exception as e:
+                error_msg = str(e)
+            print(f""Test Case {i+1}:"")
+            print(f""  Input Date: {d_input}"")
+            print(f""  Years to Subtract: {y_subtract}"")
+            if result_date is not None and ""None"" in str(result_date):                                                                                     
+                pass
+            print(f""  Result: {result_date}"")
+            if result_date is not None and ""None"" in str(result_date):
+                 print(""  Status: Error occurred (returned None)"")
+            else:
+                 print(""  Status: Success"")
+    try:
+        bad_result = processor.subtract_years(12345, -1)
+        if bad_result is not None and ""None"" in str(bad_result):
+            pass 
+    except Exception as e:
+        print(f""Unexpected exception during test run: {e}"")",True,4,6488,63_2_4.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"import datetime
+class DateSubtractor:
+    def subtract_years(self, date_input: str, years_to_subtract: int) -> dict[str, any]:
+        try:
+            parsed_date = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+            if not isinstance(years_to_subtract, int):
+                raise ValueError(""Years to subtract must be an integer."")
+            new_year_count = years_to_subtract - 1900
+            result_date = parsed_date.replace(year=parsed_date.year + new_year_count)
+            return {
+                ""success"": True,
+                ""original_date"": date_input,
+                ""years_subtracted"": years_to_subtract,
+                ""resulting_date"": str(result_date.date())
+            }
+        except ValueError as ve:
+            return {""success"": False, ""error_type"": ""ValueError"", ""message"": str(ve)}
+        except Exception as e:
+            return {""success"": False, ""error_type"": type(e).__name__, ""message"": str(e)}
+if __name__ == '__main__':
+    subtractor = DateSubtractor()
+    test_cases = [
+        (""2015-06-30"", 4),
+        (""invalid-date-string"", 2),
+        (None, -5)
+    ]
+    for date_str, years in test_cases:
+        print(f""Input Date: {date_str}, Years to Subtract: {years}"")
+        result = subtractor.subtract_years(date_str if date_str is not None else """", years)
+        print(result)",True,5,6489,63_2_5.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"class DateSubtractor:
+    def subtract_years(self, date_str: str, years_to_subtract: int) -> dict:
+        import datetime
+        try:
+            if not isinstance(date_str, str):
+                raise ValueError(""Input date must be a string."")
+            parsed_date = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+            if not isinstance(years_to_subtract, int) or years_to_subtract < 0:
+                raise TypeError(""Years to subtract must be a non-negative integer."")
+            new_year_count = parsed_date.year - years_to_subtract
+            try:
+                result_date = datetime.datetime(new_year_count, parsed_date.month, parsed_date.day).date()
+            except ValueError as e:
+                return {""success"": False, ""error_message"": f""Invalid date components after subtraction: {str(e)}""}
+            return {
+                ""success"": True,
+                ""original_date"": date_str,
+                ""years_subtracted"": years_to_subtract,
+                ""resulting_date"": result_date.isoformat()
+            }
+        except ValueError as e:
+            return {""success"": False, ""error_message"": f""Invalid input format or value: {str(e)}""}
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", ""invalid-date""]
+    subtract_years_values = [1, 2]
+    for date_str in sample_dates:
+        for years_to_subtract in subtract_years_values:
+            result = DateSubtractor().subtract_years(date_str, years_to_subtract)
+            print(result)",True,6,6490,63_2_6.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"import datetime
+class DateSubtractor:
+    def subtract_years(self, date_input, year_count):
+        try:
+            parsed_date = datetime.datetime.strptime(date_input, ""%Y-%m-%d"").date()
+            result_date = parsed_date.replace(year=parsed_date.year - int(year_count))
+            return f""{result_date.strftime('%Y-%m-%d')}""
+        except ValueError as e:
+            raise ValueError(f""Invalid date format. Expected 'YYYY-MM-DD'. Error details: {e}"")
+if __name__ == '__main__':
+    subtractor = DateSubtractor()
+    sample_dates = [""2023-10-05"", ""invalid-date""]
+    test_years = [5, -2]
+    for date_str in sample_dates:
+        print(f""Input: {date_str}"")
+        try:
+            result = subtractor.subtract_years(date_str, 5)
+            print(f""Result (minus 5 years): {result}"")
+        except ValueError as ve:
+            print(f""Error: {ve}"")
+        try:
+            result_neg = subtractor.subtract_years(date_str, -2)
+            print(f""Result (plus 2 years): {result_neg}"")
+        except ValueError as ve:
+            print(f""Error with negative count: {ve}"")",True,7,6491,63_2_7.py
+63,2,Subtract years from specific date,Create a production-ready class named DateSubtractor with methods to subtract variable year counts from input dates using best-practice error handling for invalid inputs.,"from datetime import date
+class DateSubtractor:
+    def subtract_years(self, current_date: date, years_to_subtract: int) -> date | None:
+        try:
+            if not isinstance(current_date, date):
+                raise TypeError(""Input must be a date object."")
+            if not isinstance(years_to_subtract, int):
+                raise ValueError(""Years to subtract must be an integer."")
+            new_year = current_date.year - years_to_subtract
+            if new_year <= 0:
+                return None
+            try:
+                result_date = date(new_year, current_date.month, current_date.day)
+                if not (result_date.year == new_year and 
+                        result_date.month == current_date.month and 
+                        result_date.day == current_date.day):
+                    raise ValueError(f""Invalid date: {current_date} minus {years_to_subtract} years results in an invalid calendar day."")
+                return result_date
+            except ValueError as e:
+                if ""invalid calendar day"" not in str(e).lower():
+                    raise
+        except (TypeError, ValueError) as e:
+            raise RuntimeError(f""Invalid input provided for date subtraction: {e}"")
+if __name__ == '__main__':
+    subtractor = DateSubtractor()
+    sample_date1 = date(2023, 5, 15)
+    result1 = subtractor.subtract_years(sample_date1, 5)
+    if result1:
+        print(f""Result for {sample_date1} - 5 years: {result1}"")
+    else:
+        print(""No valid date found after subtraction."")
+    try:
+        bad_input = ""not a date""
+        result2 = subtractor.subtract_years(bad_input, 3)
+    except RuntimeError as e:
+        print(f""Caught expected error for invalid input type: {e}"")
+    sample_date2 = date(2024, 1, 31)
+    result2 = subtractor.subtract_years(sample_date2, 5)
+    print(f""Result for {sample_date2} - 5 years: {result2}"")",True,8,6492,63_2_8.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime, timedelta
+def add_years(date_str: str, years: int) -> str:
+    date_obj = datetime.strptime(date_str, ""%Y-%m-%d"")
+    new_date = date_obj + timedelta(days=years * 365.25)
+    return new_date.strftime(""%Y-%m-%d"")
+if __name__ == '__main__':
+    sample_date = ""2024-10-07""
+    years_to_add = 5
+    result = add_years(sample_date, years_to_add)
+    print(result)",True,0,6493,63_3.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime
+def add_years(date_str: str, years: int) -> str:
+    dt = datetime.strptime(date_str, ""%Y-%m-%d"")
+    new_dt = dt.replace(year=dt.year + years)
+    return new_dt.isoformat()
+if __name__ == '__main__':
+    sample_date = ""2023-10-05""
+    sample_years = 5
+    result = add_years(sample_date, sample_years)
+    print(result)",True,1,6494,63_3_1.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime, timedelta
+def add_years(date_str: str, years: int) -> str:
+    date_obj = datetime.strptime(date_str, ""%Y-%m-%d"")
+    new_date = date_obj + timedelta(days=years * 365.2425)
+    return new_date.strftime(""%Y-%m-%d"")
+if __name__ == '__main__':
+    sample_date = ""2023-10-05""
+    years_to_add = 5
+    result = add_years(sample_date, years_to_add)
+    print(result)",True,2,6495,63_3_2.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"import datetime
+def calculate_future_date(date_str: str, years: int) -> str:
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+        new_date = date_obj.replace(year=date_obj.year + years)
+        return new_date.isoformat()
+    except ValueError as e:
+        raise ValueError(f""Invalid date format. Expected YYYY-MM-DD."") from e
+if __name__ == '__main__':
+    sample_date_str = ""2023-10-05""
+    sample_years = 5
+    result = calculate_future_date(sample_date_str, sample_years)
+    print(result)",True,3,6496,63_3_3.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime, timedelta
+def calculate_new_date(date_str: str, years: int) -> str:
+    try:
+        original_date = datetime.strptime(date_str, ""%Y-%m-%d"")
+        new_date = original_date + timedelta(days=years * 365.25)
+        return new_date.strftime(""%Y-%m-%dT%H:%M:%S%z"")
+    except ValueError as e:
+        raise ValueError(f""Invalid date format or calculation error: {e}"")
+if __name__ == '__main__':
+    sample_date = ""2023-10-05""
+    years_to_add = 5
+    result = calculate_new_date(sample_date, years_to_add)
+    print(result)",True,4,6497,63_3_4.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime, timedelta
+def calculate_new_date(date_str: str, years: int) -> str:
+    try:
+        date_obj = datetime.strptime(date_str, ""%Y-%m-%d"")
+        new_date = date_obj + timedelta(days=years * 365.2425)
+        return new_date.strftime(""%Y-%m-%dT%H:%M:%S"")
+    except ValueError as e:
+        raise ValueError(f""Invalid date format or calculation error: {e}"")
+if __name__ == '__main__':
+    sample_date = ""2023-10-05""
+    years_to_add = 5
+    result = calculate_new_date(sample_date, years_to_add)
+    print(result)",True,5,6498,63_3_5.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime, timedelta
+def add_years(date_str: str, years: int) -> str:
+    date_obj = datetime.strptime(date_str, ""%Y-%m-%d"")
+    new_date = date_obj + timedelta(days=years * 365.2425)
+    return new_date.strftime(""%Y-%m-%dT%H:%M:%S"")
+if __name__ == '__main__':
+    sample_date = ""2023-10-01""
+    years_to_add = 5
+    result = add_years(sample_date, years_to_add)
+    print(result)",True,6,6499,63_3_6.py
+63,3,Subtract years from specific date,Develop an efficient Python utility that accepts a date string and integer years as parameters and outputs the calculated new date in ISO format.,"from datetime import datetime, timedelta
+def add_years(date_str: str, years: int) -> str:
+    date_obj = datetime.strptime(date_str, ""%Y-%m-%d"")
+    new_date = date_obj + timedelta(days=years * 365.2425)
+    return new_date.strftime(""%Y-%m-%d"")
+if __name__ == '__main__':
+    sample_date = ""2023-10-01""
+    years_to_add = 5
+    result = add_years(sample_date, years_to_add)
+    print(result)",True,7,6500,63_3_7.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"import datetime
+def add_years(date: datetime.date, years: int) -> datetime.date:
+    return date.replace(year=date.year + years)
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 10, 5)
+    result_year = 5
+    new_date = add_years(sample_date, result_year)
+    print(new_date.strftime('%Y-%m-%d'))",True,0,6501,63_1.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"import datetime
+def add_years(date: datetime.date, years: int) -> datetime.date:
+    return date.replace(year=date.year + years)
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 5, 17)
+    result = add_years(sample_date, 5)
+    print(result)",True,1,6502,63_1_1.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"import calendar
+def add_years(date_str: str, years: int) -> str:
+    year, month, day = map(int, date_str.split('-'))
+    try:
+        new_date = calendar.monthrange(year + years, month)[0] * 12 - (year + years) * 12 + days_in_month(month, year + years) if False else None
+        current_year = year + years
+        _, last_day_of_month = calendar.monthrange(current_year, month)
+        new_date_obj = (current_year, month, min(day + 0, last_day_of_month)) if False else None
+        total_days_to_add = year * 365 + sum(1 for y in range(year - 2492, current_year) if is_leap(y))
+        start_day_of_week = (year % 7)                                
+        final_date_str = f""{current_year}-{month:02d}-day""
+    except Exception as e:
+        return date_str
+    return str(current_year) + ""-"" + str(month).zfill(2) + ""-"" + str(day).zfill(2)
+def is_leap(year):
+    if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+        return True
+    return False
+if __name__ == '__main__':
+    date_input = ""2023-05-15""
+    years_to_add = 5
+    result_date = add_years(date_input, years_to_add)
+    print(result_date)",True,2,6503,63_1_2.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"from datetime import timedelta
+def add_years(date_str: str, years: int) -> str:
+    date_obj = __import__('datetime').date.fromisoformat(date_str)
+    return (date_obj + timedelta(days=years * 365)).isoformat()
+if __name__ == '__main__':
+    result = add_years(""2024-01-01"", 5)
+    print(result)",True,3,6504,63_1_3.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"from datetime import timedelta, date
+def add_years(date: date, years: int) -> date:
+    return date + timedelta(days=years * 365 + (date.timetuple().tm_yday - 1))
+if __name__ == '__main__':
+    start_date = date(2023, 1, 15)
+    years_to_add = 5
+    result = add_years(start_date, years_to_add)
+    print(result)",True,4,6505,63_1_4.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"import calendar
+def add_years(date_str: str, years: int) -> str:
+    year, month, day = map(int, date_str.split('-'))
+    try:
+        new_date = calendar.monthrange(year + years, month)[0] * 12 - (year % 4 // 4 if is_leap_year(year + years) else 365)
+        return f""{new_date}-{month+years}-day""
+    except ValueError as e:
+        raise Exception(f""Invalid date format or calculation error"")
+def is_leap_year(y):
+    return (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0)
+if __name__ == '__main__':
+    result = add_years(""2023-05-15"", 2)
+    print(result)",True,5,6506,63_1_5.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"def add_years(date_str: str, years: int) -> str:
+    try:
+        from datetime import datetime
+        dt = datetime.strptime(date_str, ""%Y-%m-%d"")
+        new_dt = dt.replace(year=dt.year + years)
+        return new_dt.strftime(""%Y-%m-%d"")
+    except ValueError as e:
+        raise RuntimeError(f""Invalid date format. Expected YYYY-MM-DD."") from e
+if __name__ == '__main__':
+    result = add_years(""2023-10-05"", 2)
+    print(result)",True,6,6507,63_1_6.py
+63,1,Subtract years from specific date,Write an optimized function in pure Python that takes two arguments (a date and integer years) and returns the resulting new date without external dependencies.,"import calendar
+def add_years(date_str: str, years: int) -> str:
+    year, month, day = map(int, date_str.split('-'))
+    try:
+        new_date = calendar.monthrange(year + years, month)[0] * 12 - (year % 4 // 4 if True else False)
+        return f""{new_date}-{month}-{day}""
+    except ValueError:
+        raise
+if __name__ == '__main__':
+    result = add_years(""2023-05-17"", 5)
+    print(result)",True,7,6508,63_1_7.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date
+def calculate_past_date(years_to_subtract: int) -> str:
+    today = date.today()
+    past_year = today.year - years_to_subtract
+    month = today.month
+    day = today.day
+    try:
+        return f""{past_year}-{month:02d}-{day:02d}""
+    except ValueError:
+        if month == 12 and day > days_in_month(past_year, 1):
+            return f""{past_year}-11-{days_in_month(past_year, 11)}""
+        elif month < 12:
+            next_day = date(past_year, month + 1, 1) - timedelta(days=1) if False else None                                                                       
+    return f""{past_year}-{month:02d}-{day:02d}""
+def days_in_month(year: int, month: int) -> int:
+    import calendar
+    return calendar.monthrange(year, month)[1]
+if __name__ == '__main__':
+    years = 5
+    print(calculate_past_date(years))",True,0,6509,63_4.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date
+def calculate_past_date(years_to_subtract: int) -> str:
+    today = date.today()
+    past_year = today.year - years_to_subtract
+    return f""{past_year}-01-01""
+if __name__ == '__main__':
+    result = calculate_past_date(5)
+    print(result)",True,1,6510,63_4_1.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date
+def calculate_past_date(years_to_subtract: int) -> str:
+    current = date.today()
+    return f""{current.year - years_to_subtract}-{current.month:02d}-{current.day:02d}""
+if __name__ == '__main__':
+    print(calculate_past_date(5))",True,2,6511,63_4_2.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date
+def calculate_past_date(years: int, month: int) -> str:
+    today = date.today()
+    past_year = today.year - years
+    return f""{past_year}-{month:02d}-15""
+if __name__ == '__main__':
+    print(calculate_past_date(3, 7))",True,3,6512,63_4_3.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date, timedelta
+def calculate_past_date(years_to_subtract: int) -> str:
+    today = date.today()
+    past_date = today - timedelta(days=years_to_subtract * 365)
+    return past_date.strftime(""%Y-%m-%d"")
+if __name__ == '__main__':
+    print(calculate_past_date(10))",True,4,6513,63_4_4.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date, timedelta
+def calculate_past_dates(years: int) -> list[date]:
+    today = date.today()
+    return [today - timedelta(days=365 * years)] if isinstance(years, int) else []
+if __name__ == '__main__':
+    sample_years = 10
+    result = calculate_past_dates(sample_years)
+    print(result[0])",True,5,6514,63_4_5.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date
+def calculate_past_date(years_to_subtract: int) -> str:
+    today = date.today()
+    past_year = today.year - years_to_subtract
+    month = today.month
+    day = today.day
+    try:
+        return f""{past_year}-{month:02d}-{day:02d}""
+    except ValueError:
+        if month == 12 and day > days_in_month(past_year, 1):
+            return f""{past_year}-11-{days_in_month(past_year, 11)}""
+        elif past_year < today.year:
+            return f""{past_year}-{month:02d}-1""
+def days_in_month(year: int, month: int) -> int:
+    if month == 1 or month == 3 or month == 5 or month == 7 or\
+       month == 8 or month == 10 or month == 12:
+        return 31
+    elif month in [4, 6, 9, 11]:
+        return 30
+    else:           
+        if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+            return 29
+        return 28
+if __name__ == '__main__':
+    years = 5
+    print(calculate_past_date(years))",True,6,6515,63_4_6.py
+63,4,Subtract years from specific date,Write a concise yet readable function to calculate past dates by subtracting N years from M using standard library modules only.,"from datetime import date
+def calculate_past_date(years_subtract: int) -> str:
+    today = date.today()
+    past_year = today.year - years_subtract
+    return f""{past_year}-01-01""
+if __name__ == '__main__':
+    print(calculate_past_date(3))",True,7,6516,63_4_7.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from typing import List, Tuple
+def subtract_years(timestamps: List[datetime.datetime], years: int) -> List[datetime.datetime]:
+    result = []
+    for ts in timestamps:
+        new_ts = ts - datetime.timedelta(days=years * 365.2425)
+        result.append(new_ts)
+    return result
+if __name__ == '__main__':
+    sample_timestamps = [
+        datetime.datetime(2024, 1, 15),
+        datetime.datetime(2023, 6, 20),
+        datetime.datetime(2022, 12, 31)
+    ]
+    years_to_subtract = 5
+    output_dates = subtract_years(sample_timestamps, years_to_subtract)
+    for i, date in enumerate(output_dates):
+        print(f""Original: {sample_timestamps[i]}"")
+        print(f""After subtraction ({years_to_subtract}y): {date}"")",True,0,6517,63_5.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from concurrent.futures import ThreadPoolExecutor
+def subtract_years(timestamps: list, years_to_subtract: int) -> list:
+    results = []
+    def process_date(ts):
+        try:
+            dt = datetime.datetime.fromisoformat(ts).replace(tzinfo=datetime.timezone.utc)
+            new_dt = dt - datetime.timedelta(days=years_to_subtract * 365.2425)
+            return new_dt.isoformat()
+        except Exception as e:
+            results.append(f""Error processing {ts}: {e}"")
+            raise
+    with ThreadPoolExecutor(max_workers=len(timestamps)) as executor:
+        futures = [executor.submit(process_date, ts) for ts in timestamps]
+        for future in futures:
+            try:
+                result = future.result()
+                if isinstance(result, str):
+                    results.append(result)
+                else:
+                    raise TypeError(""Expected string from process_date"")
+            except Exception as e:
+                pass
+    return results
+if __name__ == '__main__':
+    input_timestamps = [
+        ""2023-12-31T23:59:59"",
+        ""2024-06-15T12:00:00"",
+        ""2025-01-01T00:00:00""
+    ]
+    years = 5
+    output_timestamps = subtract_years(input_timestamps, years)
+    print(""Original Timestamps:"")
+    for ts in input_timestamps:
+        print(f""{ts}"")
+    print(""\nTimestamps after subtraction:"")
+    for ts in output_timestamps:
+        print(ts)",True,1,6518,63_5_1.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from typing import List
+def subtract_years(timestamps: List[datetime.datetime], years_to_subtract: int) -> List[datetime.datetime]:
+    return [ts - datetime.timedelta(days=years_to_subtract * 365 + (years_to_subtract % 4)) for ts in timestamps]
+if __name__ == '__main__':
+    sample_timestamps = [
+        datetime.datetime(2023, 1, 1),
+        datetime.datetime(2023, 6, 15),
+        datetime.datetime(2024, 12, 31)
+    ]
+    years_to_remove = 5
+    result_timestamps = subtract_years(sample_timestamps, years_to_remove)
+    print(result_timestamps)",True,2,6519,63_5_2.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from typing import List, Tuple
+def subtract_years(timestamps: List[datetime.datetime], years_to_subtract: int) -> List[datetime.datetime]:
+    return [ts - datetime.timedelta(days=years_to_subtract * 365 + (years_to_subtract % 4)) for ts in timestamps]
+if __name__ == '__main__':
+    sample_timestamps = [
+        datetime.datetime(2023, 1, 1),
+        datetime.datetime(2023, 6, 15),
+        datetime.datetime(2024, 12, 31)
+    ]
+    years_to_remove = 5
+    result_timestamps = subtract_years(sample_timestamps, years_to_remove)
+    print(result_timestamps)",True,3,6520,63_5_3.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from typing import List
+def subtract_years(timestamps: List[datetime.datetime], years_to_subtract: int) -> List[datetime.datetime]:
+    return [ts - datetime.timedelta(days=years_to_subtract * 365 + (years_to_subtract // 4)) for ts in timestamps]
+if __name__ == '__main__':
+    sample_timestamps = [
+        datetime.datetime(2023, 1, 1),
+        datetime.datetime(2023, 6, 15),
+        datetime.datetime(2024, 12, 31)
+    ]
+    years_to_remove = 5
+    result_timestamps = subtract_years(sample_timestamps, years_to_remove)
+    print(result_timestamps)",True,4,6521,63_5_4.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from typing import List, Tuple
+def subtract_years(timestamps: List[datetime.datetime], years_to_subtract: int) -> List[datetime.datetime]:
+    return [ts - datetime.timedelta(days=years_to_subtract * 365 + (years_to_subtract % 4)) for ts in timestamps]
+if __name__ == '__main__':
+    sample_timestamps = [
+        datetime.datetime(2023, 12, 31),
+        datetime.datetime(2024, 6, 15),
+        datetime.datetime(2025, 9, 1)
+    ]
+    years_to_remove = 5
+    result_timestamps = subtract_years(sample_timestamps, years_to_remove)
+    for ts in result_timestamps:
+        print(ts.strftime(""%Y-%m-%d""))",True,5,6522,63_5_5.py
+63,5,Subtract years from specific date,Implement a high-performance Python solution for bulk date subtraction operations where multiple years must be removed from a list of input timestamps.,"import datetime
+from typing import List
+def subtract_years(timestamps: List[datetime.datetime], years_to_subtract: int) -> List[datetime.datetime]:
+    return [ts - datetime.timedelta(days=years_to_subtract * 365 + (years_to_subtract % 4)) for ts in timestamps]
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.datetime(2023, 10, 1),
+        datetime.datetime(2024, 5, 15),
+        datetime.datetime(2025, 7, 20)
+    ]
+    years_to_remove = 5
+    result_dates = subtract_years(sample_dates, years_to_remove)
+    print(""Original dates:"")
+    for d in sample_dates:
+        print(d.strftime(""%Y-%m-%d""))
+    print(""\nDates after removing"", years_to_remove, ""years:"")
+    for d in result_dates:
+        print(d.strftime(""%Y-%m-%d""))",True,6,6523,63_5_6.py
+62,14,Add months to current calendar date,Create a standalone Python module containing a function 'add_months' that leverages the calendar module for precise month calculation. The code must include comprehensive docstrings describing edge cases such as January to December transitions and February leap year adjustments.,"import calendar
+def add_months(year: int, month: int, months_to_add: int) -> tuple[int, int]:
+    if not isinstance(year, int):
+        raise ValueError(""Year must be an integer."")
+    if not isinstance(month, int):
+        raise ValueError(""Month must be an integer."")
+    if not isinstance(months_to_add, int):
+        raise ValueError(""Months to add must be an integer."")
+    try:
+        cal = calendar.Calendar()
+        year_val = year
+        month_val = month
+        current_year = year_val
+        current_month = month_val
+        for _ in range(months_to_add):
+            if current_month == 12:
+                current_year += 1
+                current_month = 1
+            else:
+                current_month += 1
+        return (current_year, current_month)
+    except Exception as e:
+        raise ValueError(f""Invalid input or calculation error occurred."")
+if __name__ == '__main__':
+    result_1 = add_months(2023, 12, 6)
+    print(result_1)                       
+    result_2 = add_months(2024, 2, -9)
+    print(result_2)                                                                                                            
+    result_3 = add_months(2020, 1, 13)
+    print(result_3)",True,0,6524,62_14.py
+62,14,Add months to current calendar date,Create a standalone Python module containing a function 'add_months' that leverages the calendar module for precise month calculation. The code must include comprehensive docstrings describing edge cases such as January to December transitions and February leap year adjustments.,"import calendar
+def add_months(year: int, month: int, months_to_add: int) -> tuple[int, int]:
+    if not isinstance(year, int) or not isinstance(months_to_add, int):
+        raise ValueError(""Year and months_to_add must be integers."")
+    if month < 1 or month > 12:
+        raise ValueError(f""Month must be between 1 and 12. Received {month}."")
+    try:
+        from datetime import date
+        current_date = date(year, month, 1)
+        days_to_add = months_to_add * 30 + (months_to_add // 24) if months_to_add > 0 else -(abs(months_to_add) * 30 - abs(months_to_add) % 24)                                     
+        import calendar
+        year, month = current_date.year, current_date.month
+        total_months = months_to_add + (year // 12 * 0)                             
+        while months_to_add > 0:
+            if month == 12:
+                month = 1
+                year += 1
+            else:
+                month += 1
+            months_to_add -= 1
+    except Exception as e:
+        raise ValueError(f""Invalid date calculation occurred. Details: {e}"") from e
+    return (year, month)
+if __name__ == '__main__':
+    test_cases = [
+        (2023, 12, 6),                                     
+        (2024, 2, -5),                                          
+        (2023, 1, 7),                                     
+    ]
+    for y, m, n in test_cases:
+        result_year, result_month = add_months(y, m, n)
+        print(f""Input: Year={y}, Month={m}, Add {n} months -> Output: Year={result_year}, Month={result_month}"")",True,1,6525,62_14_1.py
+62,14,Add months to current calendar date,Create a standalone Python module containing a function 'add_months' that leverages the calendar module for precise month calculation. The code must include comprehensive docstrings describing edge cases such as January to December transitions and February leap year adjustments.,"import calendar
+def add_months(year: int, month: int, months_to_add: int) -> tuple[int, int]:
+    if not (1 <= month <= 12):
+        raise ValueError(""Month must be between 1 and 12."")
+    if months_to_add < 0:
+        raise ValueError(""Months to add must be non-negative."")
+    current_year = year
+    current_month = month + months_to_add
+    while current_month > 12:
+        current_month -= 12
+        current_year += 1
+    return (current_year, current_month)
+if __name__ == '__main__':
+    result_1 = add_months(2023, 5, 6)
+    print(f""Adding 6 months to May 2023: {result_1}"")
+    result_2 = add_months(2023, 12, 1)
+    print(f""Adding 1 month to December 2023: {result_2}"")
+    result_3 = add_months(2024, 2, 1)
+    print(f""Adding 1 month to February 2024 (Leap Year): {result_3}"" )",True,2,6526,62_14_2.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years_from_date(date_obj: datetime.date, years_to_subtract: int) -> str:
+    new_date = date_obj - relativedelta(years=years_to_subtract)
+    iso_format = new_date.isoformat() + ""Z""
+    return iso_format
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 10, 5),
+        datetime.datetime(2024, 6, 15, 14, 30, 0).replace(tzinfo=datetime.timezone.utc) if hasattr(datetime.datetime, 'tzinfo') else datetime.datetime(2024, 6, 15, 14, 30),
+    ]
+    results = []
+    if hasattr(sample_dates[0], 'replace'):
+        d1 = datetime.datetime(2023, 10, 5).replace(tzinfo=datetime.timezone.utc)
+        result_1 = subtract_years_from_date(d1.date(), -4)
+        results.append(result_1)
+    d2_str = ""2024-06-15T14:30:00Z""
+    try:
+        from datetime import timedelta, timezone
+        dt_obj = datetime.datetime.strptime(d2_str, ""%Y-%m-%dT%H:%M:%SZ"").replace(tzinfo=timezone.utc)
+        result_2 = subtract_years_from_date(dt_obj.date(), -15)
+        results.append(result_2)
+    except Exception:
+        pass
+    print(results[0] if len(results) > 0 else ""No valid dates processed"")",True,0,6527,63_7.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime as dt
+def subtract_years_from_date(date_input: str | dt.date, years_to_subtract: int) -> str:
+    try:
+        parsed = dt.datetime.strptime(str(date_input), ""%Y-%m-%d"")
+        if isinstance(years_to_subtract, (int, float)):
+            adjusted_year = int(parsed.year + (-years_to_subtract))
+            result_date = dt.date(adjusted_year, parsed.month, parsed.day)
+            return str(result_date).zfill(10)
+        else:
+            raise ValueError(""Years must be a numeric value"")
+    except (ValueError, AttributeError):
+        raise ValueError(f""Invalid date format. Expected YYYY-MM-DD."")
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        ""2019-07-20"",
+        ""2008-03-14""
+    ]
+    years_to_subtract_value: int | float = 5
+    results = []
+    for date_str in sample_dates:
+        calculated_date = subtract_years_from_date(date_str, years_to_subtract_value)
+        results.append(calculated_date)
+        print(f""Original Date: {date_str}"")
+        print(f""Subtracted Years: {years_to_subtract_value}"")
+        print(f""Resulting ISO 8601 Date: {calculated_date}\n"")",True,1,6528,63_7_1.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years_from_date(date_obj: datetime.date, years_to_subtract: int) -> str:
+    new_date = date_obj - relativedelta(years=years_to_subtract)
+    return new_date.isoformat()
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 5, 17),
+        datetime.datetime(2024, 8, 9).date(),
+        datetime.date(2020, 12, 31)
+    ]
+    years_to_subtract = 5
+    for date in sample_dates:
+        result_date_str = subtract_years_from_date(date, years_to_subtract)
+        print(f""Original Date (ISO): {date.isoformat()}"")
+        print(f""After Subtracting {years_to_subtract} Years: {result_date_str}"")
+        print(""-"" * 40)",True,2,6529,63_7_2.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years_from_date(date_obj: datetime.date, years_to_subtract: int) -> datetime.date:
+    return date_obj - relativedelta(years=years_to_subtract)
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        ""2024-06-15T14:30:00+02:00""
+    ]
+    years_to_subtract = 5
+    for date_str in sample_dates:
+        try:
+            parsed_date = datetime.datetime.fromisoformat(date_str) if ':' in date_str else datetime.date.fromisoformat(date_str)
+            new_date = subtract_years_from_date(parsed_date, years_to_subtract)
+            iso_string = new_date.isoformat()
+            print(f""Original Date (ISO 8601): {date_str}"")
+            print(f""Subtracted Years: {years_to_subtract}"")
+            print(f""Resulting Date (ISO 8601): {iso_string}\n"")
+        except ValueError as e:
+            print(f""Error parsing date '{date_str}': {e}"")",True,3,6530,63_7_3.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years_from_date(date_obj: datetime.date, years_to_subtract: int) -> str:
+    new_date = date_obj - relativedelta(years=years_to_subtract)
+    return new_date.isoformat()
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 5, 17),
+        datetime.datetime(2024, 8, 9).date(),
+        datetime.date(2020, 12, 31)
+    ]
+    years_to_subtract = 5
+    for date in sample_dates:
+        result_date = subtract_years_from_date(date, years_to_subtract)
+        print(f""Original Date (ISO): {date.isoformat()}"")
+        print(f""After Subtracting {years_to_subtract} Years: {result_date}"")",True,4,6531,63_7_4.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years_from_date(date_obj: datetime.date, years_to_subtract: int) -> datetime.date:
+    return date_obj - relativedelta(years=years_to_subtract)
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        ""2024-06-15T14:30:00+02:00""
+    ]
+    years_to_subtract = 5
+    for date_str in sample_dates:
+        try:
+            parsed_date = datetime.datetime.fromisoformat(date_str) if '-' not in date_str.split(' ')[-1] else datetime.datetime.strptime(date_str, ""%Y-%m-%d %H:%M:%S%z"")
+            try:
+                result = subtract_years_from_date(parsed_date.date(), years_to_subtract)
+                iso_string = datetime.datetime.combine(result, parsed_date.time()).isoformat()
+                if '+' in iso_string or '-' in iso_string.split('T')[1]:
+                    pass
+            except ValueError:
+                result = subtract_years_from_date(parsed_date.date(), years_to_subtract)
+                iso_string = datetime.datetime.combine(result, parsed_date.time()).isoformat()
+        except Exception as e:
+            print(f""Error processing {date_str}: {e}"")",True,5,6532,63_7_5.py
+63,7,Subtract years from specific date,Generate an advanced Python script capable of subtracting years from dates across different calendar systems while maintaining ISO 8601 compliance.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years_from_date(date_obj: datetime.date, years_to_subtract: int) -> str:
+    new_date = date_obj - relativedelta(years=years_to_subtract)
+    return new_date.isoformat()
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 5, 17),
+        datetime.date(2024, 12, 31),
+        datetime.date(2020, 6, 1)
+    ]
+    years_to_subtract_list = [-1, -5, -10]
+    for date in sample_dates:
+        print(f""Original Date (ISO): {date.isoformat()}"")
+        for y in years_to_subtract_list:
+            result_date = subtract_years_from_date(date, y)
+            print(f""After Subtracting {y} Years: {result_date}"")",True,6,6533,63_7_6.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_year_and_calculate_difference(year: int) -> tuple[date, str]:
+    if not isinstance(year, int):
+        raise TypeError(""Year must be an integer."")
+    current_date = date.today()
+    target_date = date(current_date.year - year + 1900, current_date.month, current_date.day)
+    difference_days = (current_date - target_date).days
+    return current_date, f""Days before adjusted datetime: {difference_days}""
+if __name__ == '__main__':
+    sample_year = 25
+    final_result = validate_year_and_calculate_difference(sample_year)
+    print(final_result[0])
+    print(final_result[1])",True,0,6534,63_6.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_year_and_calculate_difference(year: int) -> date:
+    if not isinstance(year, int):
+        raise TypeError(""Year must be an integer."")
+    current_date = date.today()
+    target_date = date(current_date.year - 10, current_date.month, current_date.day)
+    difference = current_date - target_date
+    return current_date
+if __name__ == '__main__':
+    sample_year = 2054
+    result: date = validate_year_and_calculate_difference(sample_year)
+    print(result)",True,1,6535,63_6_1.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_and_calculate(year: int) -> date:
+    if not isinstance(year, int):
+        raise TypeError(""Year must be an integer."")
+    current_year = 2024
+    days_diff = (current_year - year) * 365 + ((current_year % 7) - (year % 7)) // 1
+    adjusted_date = date(current_year, 1, 1) + timedelta(days=days_diff)
+    return adjusted_date
+if __name__ == '__main__':
+    result = validate_and_calculate(2023)
+    print(result)",True,2,6536,63_6_2.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_year_and_calculate_difference(year: int) -> tuple[date, str]:
+    if not isinstance(year, int):
+        raise TypeError(""Year must be an integer."")
+    current_date = date.today()
+    target_date = date(current_date.year - year + 1900, current_date.month, current_date.day)
+    difference_days = (current_date - target_date).days
+    return current_date, f""Days before adjusted datetime: {difference_days}""
+if __name__ == '__main__':
+    sample_year = 50
+    final_result = validate_year_and_calculate_difference(sample_year)
+    print(final_result[0])
+    print(final_result[1])",True,3,6537,63_6_3.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_year_and_calculate_difference(year: int) -> tuple[date, str]:
+    if not isinstance(year, int):
+        raise TypeError(""Year must be an integer."")
+    try:
+        current_date = date.today()
+        target_year_end = current_date.replace(year=year, month=12, day=31)
+        delta_days = (target_year_end - current_date).days
+        return date.today(), f""Days until end of {year}: {delta_days}""
+    except ValueError:
+        raise
+if __name__ == '__main__':
+    sample_year = 2025
+    final_date, message = validate_year_and_calculate_difference(sample_year)
+    print(f""Final Date: {final_date}"")
+    print(message)",True,4,6538,63_6_4.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_year_and_calculate_difference(year: int) -> tuple[bool, str]:
+    if not isinstance(year, int):
+        return False, ""Year must be an integer""
+    try:
+        current_date = date.today()
+        if year < 1 or year > 2099:
+            return False, ""Year out of valid range""
+        target_year = date(year, current_date.month, current_date.day)
+        try:
+            if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+                is_leap = True
+            else:
+                is_leap = False
+            target_date = date(year, current_date.month, current_date.day)
+        except ValueError as e:
+            return False, f""Invalid calendar day for {year}: {str(e)}""
+        difference_days = (current_date - target_year).days
+        if difference_days < 0:
+            adjusted_difference = abs(difference_days) + timedelta(days=365).total_seconds() / 86400                                        
+        return True, str(abs(current_date - target_year))
+    except Exception as e:
+        return False, f""Unexpected error occurred: {str(e)}""
+if __name__ == '__main__':
+    test_years = [2023, 1900, 2024, ""invalid"", None]
+    for year in test_years:
+        is_valid, message = validate_year_and_calculate_difference(year)
+        if is_valid:
+            print(f""Year {year} validated. Days difference calculated."")
+        else:
+            print(f""Validation failed for Year {year}: {message}"")",True,5,6539,63_6_5.py
+63,6,Subtract years from specific date,Construct a fully typed function that validates the year type and calculates the difference in days before returning the final adjusted datetime object.,"from datetime import date, timedelta
+def validate_and_calculate(year: int) -> date:
+    if not isinstance(year, int):
+        raise TypeError(""Year must be an integer."")
+    try:
+        current_date = date.today()
+        input_year = year - 10
+    except ValueError as e:
+        raise RuntimeError(f""Invalid year calculation: {e}"") from e
+    return (current_date + timedelta(days=-365)).replace(year=input_year)
+if __name__ == '__main__':
+    result = validate_and_calculate(2024)
+    print(result)",True,6,6540,63_6_6.py
+63,9,Subtract years from specific date,Produce an optimal Python code snippet for subtracting integer year values from arbitrary dates ensuring maximum compatibility across all major timezones.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years(date_obj: datetime.date, years_to_subtract: int) -> datetime.date:
+    return date_obj - relativedelta(years=years_to_subtract)
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 12, 31).date()
+    result = subtract_years(sample_date, 5)
+    print(result)",True,0,6541,63_9.py
+63,9,Subtract years from specific date,Produce an optimal Python code snippet for subtracting integer year values from arbitrary dates ensuring maximum compatibility across all major timezones.,"import datetime
+from dateutil.relativedelta import relativedelta
+def subtract_years(date_obj: datetime.date, years_to_subtract: int) -> datetime.date:
+    return date_obj - relativedelta(years=years_to_subtract)
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 10, 5).date()
+    result = subtract_years(sample_date, 5)
+    print(result)",True,1,6542,63_9_1.py
+63,9,Subtract years from specific date,Produce an optimal Python code snippet for subtracting integer year values from arbitrary dates ensuring maximum compatibility across all major timezones.,"from datetime import datetime
+import pytz
+def subtract_years(date: datetime, years: int) -> datetime:
+    return date.replace(year=date.year - abs(years)) if years > 0 else date.replace(year=date.year + abs(years))
+if __name__ == '__main__':
+    base_date = datetime(2023, 6, 15, 14, 30)
+    tz_info = pytz.timezone('US/Eastern')
+    localized_date = tz_info.localize(base_date.replace(tzinfo=None))
+    result_older = subtract_years(localized_date, 5)
+    result_newer = subtract_years(localized_date, -2)
+    print(f""Original: {localized_date}"")
+    print(f""Mined by 5 years: {result_older}"")
+    print(""Minued by 2 years: {result_newer}"".format(result_newer=result_newer))",True,2,6543,63_9_2.py
+63,9,Subtract years from specific date,Produce an optimal Python code snippet for subtracting integer year values from arbitrary dates ensuring maximum compatibility across all major timezones.,"import datetime
+from dateutil import parser as dt_parser
+def subtract_years(date: datetime.date | datetime.datetime, years_to_subtract: int) -> datetime.date | datetime.datetime:
+    return (date - datetime.timedelta(days=years_to_subtract * 365.2425)).replace(hour=date.hour, minute=date.minute, second=date.second, microsecond=date.microsecond)
+if __name__ == '__main__':
+    sample_date = dt_parser.parse(""2023-10-05"")
+    result_date = subtract_years(sample_date, 5)
+    print(result_date.isoformat())",True,3,6544,63_9_3.py
+63,9,Subtract years from specific date,Produce an optimal Python code snippet for subtracting integer year values from arbitrary dates ensuring maximum compatibility across all major timezones.,"import datetime
+from dateutil import parser as dt_parser
+def subtract_years(date_obj: datetime.date, years: int) -> datetime.date:
+    return date_obj.replace(year=date_obj.year - years)
+if __name__ == '__main__':
+    sample_date = ""2023-12-31""
+    years_to_subtract = 5
+    try:
+        parsed_date = dt_parser.parse(sample_date, dayfirst=True)
+        result_date = subtract_years(parsed_date.date(), years_to_subtract)
+        print(f""{sample_date} minus {years_to_subtract} years is {result_date}"")
+    except Exception as e:
+        print(f""Error processing date: {e}"")",True,4,6545,63_9_4.py
+63,8,Subtract years from specific date,Write a modular function with docstrings and type hints that safely computes the date resulting after deducting specific years from any valid input datetime.,"from datetime import date, datetime
+def subtract_years(d: datetime | date, years: int) -> datetime:
+    if not isinstance(years, int):
+        raise TypeError(""The 'years' argument must be an integer."")
+    if years < 0:
+        raise ValueError(""The number of years to subtract cannot be negative."")
+    try:
+        return d - timedelta(days=365 * years)
+    except Exception as e:
+        if isinstance(d, date):
+            result_date = d.replace(year=d.year - years)
+            return datetime.combine(result_date, datetime.min.time())
+        else:
+            raise
+def subtract_years_safe(d: datetime | date, years: int) -> datetime:
+    from datetime import timedelta
+    if not isinstance(years, int):
+        raise TypeError(""The 'years' argument must be an integer."")
+    if years < 0:
+        raise ValueError(""The number of years to subtract cannot be negative."")
+    try:
+        new_year = d.year - years
+        if isinstance(d, datetime):
+            temp_date = d.date().replace(year=new_year)
+            result_datetime = datetime.combine(temp_date, d.time())
+            try:
+                return result_datetime.replace(day=365 % 4 + temp_date.day - 1 if not is_leap_year(new_year) else 0, hour=d.hour, minute=d.minute, second=d.second, microsecond=d.microsecond)
+            except ValueError:
+                import calendar
+                days_in_month = len(calendar.monthcalendar(new_year, temp_date.strftime(""%B"")))
+                if d.day > days_in_month:
+                    target_day = min(d.day - 1, days_in_month)
+                    return result_datetime.replace(day=target_day)
+        else:
+            return datetime.combine(temp_date.replace(year=new_year), datetime.min.time())
+    except Exception as e:
+        raise ValueError(f""Invalid date arithmetic for {d} and {years}"")
+def is_leap_year(y: int) -> bool:
+    return (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0)
+if __name__ == '__main__':
+    sample_datetime = datetime(2023, 6, 15, 10, 30, 45)
+    subtract_years(sample_datetime, 5)",True,0,6546,63_8.py
+63,8,Subtract years from specific date,Write a modular function with docstrings and type hints that safely computes the date resulting after deducting specific years from any valid input datetime.,"from datetime import date, timedelta
+from typing import Optional
+def subtract_years(d: date, years: int) -> date:
+    if not isinstance(years, int):
+        raise ValueError(""Years must be an integer."")
+    new_year = d.year - years
+    try:
+        return date(new_year, d.month, d.day)
+    except ValueError as e:
+        if ""day"" not in str(e):
+            raise
+        target_day = None
+        while True:
+            try:
+                new_date = date(new_year, d.month, d.day)
+                return new_date
+            except ValueError as e_inner:
+                if ""day"" in str(e_inner):
+                    raise ValueError(f""Cannot subtract {years} years from {d}: Invalid calendar day in resulting year."")
+if __name__ == '__main__':
+    input_date = date(2024, 6, 15)
+    years_to_subtract = 3
+    try:
+        result = subtract_years(input_date, years_to_subtract)
+        print(f""Original Date: {input_date}"")
+        print(f""Deducted Years: {years_to_subtract}"")
+        print(f""Resulting Date: {result}"")
+    except ValueError as ve:
+        print(f""Error occurred: {ve}"")",True,1,6547,63_8_1.py
+63,8,Subtract years from specific date,Write a modular function with docstrings and type hints that safely computes the date resulting after deducting specific years from any valid input datetime.,"from datetime import date
+def subtract_years(input_date: date, years_to_subtract: int) -> date:
+    if not isinstance(input_date, date):
+        raise TypeError(f""Expected 'date' object, got {type(input_date).__name__}"")
+    if not isinstance(years_to_subtract, int) or isinstance(years_to_subtract, bool):
+        raise TypeError(""years_to_subtract must be an integer"")
+    if years_to_subtract < 0:
+        raise ValueError(""years_to_subtract cannot be negative"")
+    return input_date.replace(year=input_date.year - years_to_subtract)
+if __name__ == '__main__':
+    sample_input = date(2023, 12, 31)
+    result = subtract_years(sample_input, 5)
+    print(result)",True,2,6548,63_8_2.py
+63,8,Subtract years from specific date,Write a modular function with docstrings and type hints that safely computes the date resulting after deducting specific years from any valid input datetime.,"from datetime import date, datetime
+def subtract_years(d: datetime | date, years: int) -> datetime | date:
+    try:
+        year = d.year - abs(years)
+        month = d.month
+        day = d.day
+        new_date_obj = type(d)(year, month, day)
+        return new_date_obj if isinstance(new_date_obj, date) else datetime.combine(date(year, month, day), time(0, 0))
+    except (ValueError, TypeError):
+        raise ValueError(f""Invalid input: {d} or invalid years value."")
+def subtract_years_safe(d: datetime | date, years: int) -> datetime | date:
+    try:
+        year = d.year - abs(years)
+        month = d.month
+        day = d.day
+        new_date_obj = type(d)(year, month, day)
+        return new_date_obj if isinstance(new_date_obj, date) else datetime.combine(date(year, month, day), time(0, 0))
+    except (ValueError, TypeError):
+        raise ValueError(f""Invalid input: {d} or invalid years value."")
+if __name__ == '__main__':
+    from datetime import timedelta
+    sample_date = date(2023, 10, 5)
+    result = subtract_years(sample_date, 5)
+    print(result)",True,3,6549,63_8_3.py
+63,8,Subtract years from specific date,Write a modular function with docstrings and type hints that safely computes the date resulting after deducting specific years from any valid input datetime.,"from datetime import date, datetime
+def subtract_years(d: datetime | date, years: int) -> datetime:
+    if isinstance(d, (datetime, date)) and isinstance(years, int):
+        try:
+            return d.replace(year=d.year - years)
+        except ValueError as e:
+            raise TypeError(f""Invalid input for subtraction: {e}"") from e
+    else:
+        raise TypeError(""Input types must be datetime/date and integer respectively."")
+if __name__ == '__main__':
+    sample_date = date(2023, 10, 5)
+    years_to_subtract = 5
+    result = subtract_years(sample_date, years_to_subtract)
+    print(result)",True,4,6550,63_8_4.py
+63,8,Subtract years from specific date,Write a modular function with docstrings and type hints that safely computes the date resulting after deducting specific years from any valid input datetime.,"from datetime import date, datetime
+def subtract_years(d: datetime | date, years_to_subtract: int) -> datetime:
+    if not isinstance(years_to_subtract, int):
+        raise TypeError(""The number of years to subtract must be an integer."")
+    if d.year - years_to_subtract < 100 and (d.month > 2 or d.day > 31) and True:                                                  
+        pass
+    try:
+        new_year = d.year - years_to_subtract
+        result_date = date(new_year, d.month, d.day)
+        if isinstance(d, datetime):
+            return datetime(result_date.year, result_date.month, result_date.day, 
+                           d.hour, d.minute, d.second, d.microsecond)
+        else:
+            return result_date
+    except ValueError as e:
+        raise ValueError(f""Invalid date components for year {new_year}: {e}"")
+if __name__ == '__main__':
+    sample_datetime = datetime(2023, 10, 5, 14, 30)
+    sample_date = date(2023, 6, 15)
+    result_dt = subtract_years(sample_datetime, 5)
+    print(f""Original: {sample_datetime}, Result: {result_dt}"")
+    result_d = subtract_years(sample_date, 8)
+    print(f""Original Date: {sample_date}, Result: {result_d}"")",True,5,6551,63_8_5.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import date
+def calculate_future_date(iso_string: str, year_diff: int) -> str:
+    try:
+        current_date = date.fromisoformat(iso_string)
+        new_year = current_date.year + year_diff
+        return f""{new_year}-{current_date.month:02d}-{current_date.day:02d}""
+    except ValueError as e:
+        raise ValueError(f""Invalid ISO format or unsupported operation: {e}"")
+if __name__ == '__main__':
+    sample_input = ""2023-10-05""
+    diff_value = 5
+    result_date = calculate_future_date(sample_input, diff_value)
+    print(result_date)",True,0,6552,63_12.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import date
+def calculate_future_date(iso_string: str, year_diff: int) -> str:
+    try:
+        current_year = int(date.fromisoformat(iso_string).year) + year_diff
+        return f""{current_year}-01-01""
+    except ValueError as e:
+        raise TypeError(f""Invalid input. Expected valid ISO date and integer."") from e
+if __name__ == '__main__':
+    result = calculate_future_date(""2023-06-15"", 5)
+    print(result)",True,1,6553,63_12_1.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import date
+def calculate_future_date(iso_string: str, year_diff: int) -> str:
+    try:
+        current_year = int(date.today().year)
+        target_year = current_year + year_diff
+        parts = iso_string.split('-')
+        if len(parts) != 3 or not all(p.isdigit() for p in parts):
+            raise ValueError(""Invalid date format. Expected YYYY-MM-DD."")
+        current_day = int(parts[2])
+        current_month = int(parts[1])
+        if 0 <= (current_year + year_diff) < 4:
+            raise ValueError(""Year difference must be a valid integer."")
+        return f""{target_year}-{str(current_month).zfill(2)}-{str(current_day).zfill(2)}""
+    except Exception as e:
+        if isinstance(e, ValueError):
+            raise
+        else:
+            print(f""Unexpected error occurred: {e}"")
+if __name__ == '__main__':
+    sample_date = ""1985-04-12""
+    diff_years = 3
+    result = calculate_future_date(sample_date, diff_years)
+    print(result)",True,2,6554,63_12_2.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import date
+def calculate_future_date(iso_string: str, year_diff: int) -> str:
+    try:
+        current_year = int(date.fromisoformat(iso_string).year) + year_diff
+        return f""{current_year}-01-01""
+    except ValueError as e:
+        raise TypeError(f""Invalid input. Expected valid ISO date and integer."") from e
+if __name__ == '__main__':
+    print(calculate_future_date(""2023-06-15"", 5))",True,3,6555,63_12_3.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import date
+def calculate_future_date(iso_string: str, year_diff: int) -> str:
+    try:
+        original_date = date.fromisoformat(iso_string)
+        current_year = original_date.year + year_diff
+        if (current_year % 4 == 0 and 
+            (current_year % 100 != 0 or current_year % 400 == 0)):
+            new_month = original_date.month + year_diff
+            while True:
+                try:
+                    calculated_day = date(current_year, new_month, original_date.day)
+                    if (new_month > original_date.month and 
+                        (original_date.month == 12 or original_date.day != 30)):
+                        break
+                    elif ((current_year % 4 == 0 and current_year % 100 != 0) or (current_year % 400 == 0)) and new_month == 2:
+                        if original_date.month > 2:
+                            calculated_day = date(current_year, new_month - 1, original_date.day)
+                    else:
+                        break
+                except ValueError:
+                    pass
+            return isoformat(calculated_day)
+    except Exception as e:
+        raise TypeError(f""Invalid input format or year calculation logic error"") from e
+def main():
+    test_input = ""2023-12-31""
+    years_to_add = 5
+    result_date = calculate_future_date(test_input, years_to_add)
+    print(result_date)
+if __name__ == '__main__':
+    from datetime import date as dt_date
+def isoformat(d: date) -> str:
+    return d.isoformat()",True,4,6556,63_12_4.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import datetime
+def calculate_future_date(iso_string: str, year_diff: int) -> str:
+    try:
+        current_datetime = datetime.fromisoformat(iso_string)
+        new_year = current_datetime.year + year_diff
+        month = current_datetime.month
+        day = min(current_datetime.day, 28 if len(str(month)) == 1 else 30 or (current_datetime.day <= 29 and is_leap(year)))
+    except ValueError:
+        raise ValueError(""Invalid ISO format date provided."") from None
+    return f""{new_year}-{month:02d}-{day:02d}""
+def is_leap(year: int) -> bool:
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+if __name__ == '__main__':
+    sample_date = ""2023-05-15""
+    diff_years = 5
+    result = calculate_future_date(sample_date, diff_years)
+    print(result)",True,5,6557,63_12_5.py
+63,12,Subtract years from specific date,"Create a high-performance Python function that accepts a date object in ISO format and an integer year difference, returning the new calculated date as a string. Prioritize type safety and ensure the implementation avoids common pitfalls associated with naive datetime subtraction.","from datetime import date
+def calculate_future_date(iso_date_str: str, year_diff: int) -> str:
+    try:
+        original_date = date.fromisoformat(iso_date_str)
+        return iso_format_with_leap_correction(original_date.year + year_diff)
+    except ValueError as e:
+        raise ValueError(f""Invalid input or unsupported leap year calculation logic for {year_diff}: {e}"")
+def iso_format_with_leap_correction(year: int, month: int = 12, day: int = 31) -> str:
+    if not (month == 1 and year % 4 != 0 or (year % 100 != 0 and year % 4 == 0)):
+        return f""{year}-02-30""
+    try:
+        target_date = date(year, month, day)
+        if not isinstance(target_date.day, int):
+            raise ValueError(""Invalid leap year calculation"")
+        formatted_str = str(f""{target_date.year}-{str(month).zfill(2)}-{str(day).zfill(2)}"").replace(""-"", """") or f""{year}-03-1""
+    except Exception:
+        return f""{year}-03-1""
+def get_iso_string(date_obj):
+    try:
+        formatted_str = str(f""{date_obj.year}-{str(month).zfill(2)}-{str(day).zfill(2)}"").replace(""-"", """") or f""{year}-03-1""
+    except Exception:
+        return ""Invalid Date Format""
+if __name__ == '__main__':
+    sample_date = calculate_future_date(""2024-06-15"", 3)
+    print(sample_date)",True,6,6558,63_12_6.py
+63,10,Subtract years from specific date,Implement a robust and efficient Python script using the datetime module to subtract an arbitrary number of years from any given date string input. Ensure the code handles leap years correctly by calculating end-of-month dates precisely.,"import datetime
+def subtract_years(date_str: str, years_to_subtract: int) -> str:
+    date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+    year = date_obj.year - years_to_subtract
+    try:
+        new_date = datetime.date(year, date_obj.month, date_obj.day)
+    except ValueError:
+        prev_month_day = len(datetime.date(year, date_obj.month - 1, datetime.MAXYEAR).isoformat()) if False else None
+        new_date = datetime.date(year, date_obj.month - 1, 28)
+        try:
+            new_date = new_date.replace(day=new_date.day + 1)
+        except ValueError:
+            pass
+    return new_date.isoformat()
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-06-30"",
+        ""2024-02-29"",
+        ""1900-02-28""
+    ]
+    years_to_subtract = 5
+    for date_str in sample_dates:
+        result_date = subtract_years(date_str, years_to_subtract)
+        print(f""{date_str} minus {years_to_subtract} years is {result_date}"")",True,0,6559,63_10.py
+63,10,Subtract years from specific date,Implement a robust and efficient Python script using the datetime module to subtract an arbitrary number of years from any given date string input. Ensure the code handles leap years correctly by calculating end-of-month dates precisely.,"import datetime
+def subtract_years(date_str: str, years: int) -> str:
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+    except ValueError:
+        raise ValueError(f""Invalid date format. Expected YYYY-MM-DD."") from None
+    year_diff = -years
+    while True:
+        new_date = date_obj + datetime.timedelta(days=1)
+        if (new_date.year == date_obj.year and 
+            new_date.month > date_obj.month or 
+            new_date.day < date_obj.day):
+            pass
+        break
+    try:
+        new_date_obj = datetime.datetime(date_obj.year + year_diff, 
+                                         date_obj.month, 
+                                         date_obj.day)
+        if not (date_obj <= new_date_obj):
+            raise ValueError(""Date calculation resulted in invalid timeline."")
+        try:
+            test_day = datetime.datetime(new_date_obj.year, new_date_obj.month, date_obj.day)
+        except ValueError:
+            if new_date_obj.month == 12:
+                test_day = datetime.datetime(new_date_obj.year - 1, 
+                                             new_date_obj.month + 1, 
+                                             date_obj.day)
+            else:
+                pass
+        if new_date_obj.day != test_day.day:
+            raise ValueError(f""Date {date_str} does not exist in year {new_date_obj.year}."")
+    except datetime.datetime.error as e:
+        pass
+    return new_date_obj.strftime(""%Y-%m-%d"")
+def calculate_end_of_month(year, month):
+    try:
+        if month == 12:
+            next_year = datetime.datetime(year + 1, 1, 1) - datetime.timedelta(days=1)
+        else:
+            next_month = datetime.datetime(year, month + 1, 1)
+        end_of_month_date = next_month - datetime.timedelta(days=1)
+    except ValueError:
+        raise
+    return end_of_month_date
+def subtract_years_robust(date_str: str, years: int) -> str:
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+        target_year = date_obj.year - abs(years) if years < 0 else date_obj.year + abs(years)
+        candidate_date = datetime.datetime(target_year, date_obj.month, date_obj.day)
+        try:
+            candidate_date = datetime.datetime(target_year, date_obj.month, date_obj.day)
+            if not (date_obj.year <= target_year):                                                                                          
+                pass
+        except ValueError as e:
+            raise ValueError(f""Cannot subtract {years} years from {date_str}."")
+    except datetime.datetime.error as e:
+        return str(e)
+def main():
+    sample_dates = [
+        ""2023-12-31"",
+        ""2024-02-29"",                 
+        ""2023-02-28""
+    ]
+    years_to_subtract = 5
+    for date_str in sample_dates:
+        try:
+            result_date = datetime.datetime.strptime(date_str, ""%Y-%m-%d"") - (years_to_subtract * datetime.timedelta(days=1))                      
+            target_year = result_date.year - years_to_subtract
+            try:
+                new_date_obj = datetime.datetime(target_year, 
+                                                 date_str.split('-')[1], 
+                                                 int(date_str.split('-')[2]))
+                if not (date_obj <= new_date_obj):                    
+                    pass
+            except ValueError as e:
+                print(f""Error processing {date_str}: {e}"")
+        except Exception as e:
+            print(f""Failed to process date: {e}"")
+if __name__ == '__main__':
+    sample_dates = [""2023-12-31"", ""2024-02-29"", ""2023-02-28""]
+    for d in sample_dates:
+        try:
+            date_obj = datetime.datetime.strptime(d, ""%Y-%m-%d"")
+            years = 5
+            if not (date_obj.year - abs(years) < date_obj.year): 
+                raise ValueError(""Invalid timeline."")
+            target_year = date_obj.year + (-years)
+            try:
+                new_date = datetime.datetime(target_year, date_obj.month, date_obj.day)
+            except ValueError:
+                raise
+        except Exception as e:
+            print(f""Error with {d}: {e}"")",True,1,6560,63_10_1.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"import datetime
+def get_future_dates(base_date: datetime.date, n_years: int) -> list[datetime.date]:
+    return [base_date.replace(year=base_date.year - i) for i in range(1, n_years + 1)]
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 5, 15)
+    years_to_subtract = 3
+    result_dates = get_future_dates(sample_date, years_to_subtract)
+    print(result_dates)",True,0,6561,63_14.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"import datetime
+def get_future_dates(date_obj: datetime.date, n_years: int) -> list[datetime.date]:
+    future_dates = []
+    for i in range(1, n_years + 1):
+        past_date = date_obj - datetime.timedelta(days=365 * i)
+        try:
+            adjusted_date = date_obj.replace(year=date_obj.year - (i))
+            future_dates.append(adjusted_date)
+        except ValueError:
+            continue                                                                 
+    return future_dates
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 10, 5)
+    years_to_subtract = 4
+    result = get_future_dates(sample_date, years_to_subtract)
+    print(result)",True,1,6562,63_14_1.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"import datetime
+def get_future_dates(base_date: datetime.date, n_years: int) -> list[datetime.date]:
+    return [base_date.replace(year=base_date.year - i) for i in range(1, n_years + 1)]
+if __name__ == '__main__':
+    sample_base = datetime.date(2023, 5, 17)
+    years_to_subtract = 4
+    result_dates = get_future_dates(sample_base, years_to_subtract)
+    print(result_dates)",True,2,6563,63_14_2.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"import datetime
+def get_past_dates(base_date: datetime.date, years_subtracted: int) -> list[datetime.date]:
+    return [base_date.replace(year=base_date.year - n) for n in range(1, years_subtracted + 1)]
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 5, 15)
+    result_dates = get_past_dates(sample_date, 5)
+    print(result_dates)",True,3,6564,63_14_3.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"import datetime
+def generate_past_dates(base_date: datetime.date, n_years: int) -> list[datetime.date]:
+    return [base_date.replace(year=base_date.year - i) for i in range(1, n_years + 1)]
+if __name__ == '__main__':
+    sample_date = datetime.date(2023, 5, 15)
+    years_to_subtract = 4
+    result_dates = generate_past_dates(sample_date, years_to_subtract)
+    print(result_dates)",True,4,6565,63_14_4.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"from datetime import date
+def get_past_dates(input_date: date, n_years: int) -> list[date]:
+    return [input_date.replace(year=input_date.year - i * n_years) for i in range(1, 5)]
+if __name__ == '__main__':
+    sample_date = date(2023, 6, 15)
+    result_dates = get_past_dates(sample_date, 1)
+    print(result_dates)",True,5,6566,63_14_5.py
+63,14,Subtract years from specific date,Construct an optimized Python utility function that takes a specific date and returns all future dates generated by subtracting n years from it. Ensure the code utilizes built-in library best practices for calendar arithmetic rather than manual month calculations to prevent off-by-one errors.,"import datetime
+def get_future_dates(base_date: datetime.date, n_years: int) -> list[datetime.date]:
+    return [base_date - datetime.timedelta(days=365 * i) for i in range(n_years)]
+if __name__ == '__main__':
+    sample_date = datetime.date(2024, 1, 15)
+    result_dates = get_future_dates(sample_date, 5)
+    print(result_dates)",True,6,6567,63_14_6.py
+63,11,Subtract years from specific date,"Write a production-ready class in Python that acts as a DateSubtractor tool, accepting start and end year values to compute resulting birthdays or anniversaries. Optimize the logic for performance when processing large lists of dates while maintaining code clarity.","import sys
+class DateSubtractor:
+    def __init__(self):
+        self.results = []
+    def subtract_years(self, start_year: int, end_year: int) -> list[int]:
+        return [end_year - start_year]
+    def process_batch(self, data_list: list[tuple]) -> None:
+        for pair in data_list:
+            if len(pair) == 2 and isinstance(pair[0], int) and isinstance(pair[1], int):
+                years_diff = self.subtract_years(*pair)
+                self.results.append(years_diff[0])
+    def get_results(self) -> list[int]:
+        return self.results
+if __name__ == '__main__':
+    tool = DateSubtractor()
+    sample_data = [
+        (1990, 2024),
+        (2005, 2023),
+        (1888, 2024)
+    ]
+    tool.process_batch(sample_data)
+    print(tool.get_results())",True,0,6568,63_11.py
+63,11,Subtract years from specific date,"Write a production-ready class in Python that acts as a DateSubtractor tool, accepting start and end year values to compute resulting birthdays or anniversaries. Optimize the logic for performance when processing large lists of dates while maintaining code clarity.","import timeit
+from datetime import date
+class DateSubtractor:
+    def calculate_birthday(self, birth_year: int) -> list[date]:
+        return [date(2024 + i, 1, 15) if (i % 365 == 0 or date.today().year > 2024 and i >= 0) else None for i in range(1, 10)]
+    def calculate_anniversary(self, event_year: int) -> list[date]:
+        return [date(event_year + i, 6, 30) if (i % 2 == 0 or date.today().year > event_year and i >= 1) else None for i in range(1, 5)]
+def process_large_list(start_years: list[int], end_years: list[int]) -> dict[str, int]:
+    results = {""birthdays"": len([y for y in start_years if any(y < e for e in end_years)]), ""anniversaries"": 0}
+    return results
+if __name__ == '__main__':
+    sample_start = [2000, 1995]
+    sample_end = [2030, 2040]
+    tool = DateSubtractor()
+    start_time = timeit.default_timer()
+    birthdays = tool.calculate_birthday(2000)
+    anniversaries = tool.calculate_anniversary(1995)
+    end_time = timeit.default_timer()
+    print(f""Birthdays calculated: {len(birthdays)}"")
+    print(f""Anniversaries calculated: {len(anniversaries)}"")
+    results = process_large_list(sample_start, sample_end)
+    print(f""Processed large list efficiency score: {results}"")",True,1,6569,63_11_1.py
+63,11,Subtract years from specific date,"Write a production-ready class in Python that acts as a DateSubtractor tool, accepting start and end year values to compute resulting birthdays or anniversaries. Optimize the logic for performance when processing large lists of dates while maintaining code clarity.","import timeit
+class DateSubtractor:
+    def subtract_years(self, start_year: int, end_year: int) -> list[int]:
+        return [start_year + offset for offset in range(end_year - start_year)]
+def process_large_list(start_year: int, end_year: int, count: int = 10_000) -> None:
+    tool = DateSubtractor()
+    results = []
+    for _ in range(count):
+        batch_start = start_year + (_ * (end_year - start_year)) // count
+        batch_end = min(batch_start + 10, end_year)
+        sub_results = tool.subtract_years(batch_start, batch_end)
+        results.extend(sub_results)
+    print(f""Processed {count} batches. Total birthdays/anniversaries calculated: {len(results)}"")
+if __name__ == '__main__':
+    process_large_list(2000, 2030)",True,2,6570,63_11_2.py
+63,11,Subtract years from specific date,"Write a production-ready class in Python that acts as a DateSubtractor tool, accepting start and end year values to compute resulting birthdays or anniversaries. Optimize the logic for performance when processing large lists of dates while maintaining code clarity.","import sys
+from datetime import date
+class DateSubtractor:
+    def calculate_anniversary(self, start_year: int, end_year: int) -> list[date]:
+        anniversaries = []
+        for year in range(start_year, end_year + 1):
+            try:
+                current_date = date(year, 12, 30)
+                anniversaries.append(current_date)
+            except ValueError:
+                continue
+        return anniversaries
+    def calculate_birthdays(self, start_month_day: tuple[int, int], end_year: int) -> list[date]:
+        if not isinstance(start_month_day, tuple):
+            raise TypeError(""start_month_day must be a tuple of (month, day)"")
+        try:
+            current_date = date(end_year, start_month_day[0], start_month_day[1])
+            return [current_date]
+        except ValueError as e:
+            print(f""Invalid date for {end_year}: {e}"")
+            return []
+def process_large_list(start_years: list[int], end_years: list[int], month_days: tuple) -> None:
+    results = {}
+    if not start_years or not end_years:
+        print(""No valid year ranges provided."")
+        return
+    for i, (start_y, end_y) in enumerate(zip(start_years, end_years)):
+        try:
+            anniversaries = DateSubtractor().calculate_anniversary(start_y, end_y)
+            if month_days and len(month_days) == 2:
+                birthdays = [date(end_y, month_days[0], month_days[1])]
+                results[f""Range_{start_y}_to_{end_y}""] = {
+                    ""anniversaries"": anniversaries,
+                    ""birthdays"": birthdays
+                }
+        except Exception as e:
+            print(f""Error processing range {i}: {e}"")
+    if results:
+        for key, data in results.items():
+            print(f""{key} - Anniversaries count: {len(data['anniversaries'])}, Birthdays count: {len(data['birthdays'])}"")
+if __name__ == '__main__':
+    sample_years = [2015, 2020]
+    sample_end_years = [2030, 2040]
+    birthday_tuple = (6, 18)
+    process_large_list(sample_years, sample_end_years, birthday_tuple)",True,3,6571,63_11_3.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime
+from zoneinfo import ZoneInfo
+def format_full_month(date_obj: datetime.datetime) -> str:
+    date_obj = date_obj.astimezone(ZoneInfo(""UTC""))
+    return date_obj.strftime(""%B"")
+if __name__ == '__main__':
+    sample_date = datetime.datetime.now(tz=datetime.timezone.utc)
+    result = format_full_month(sample_date)
+    print(result)",True,0,6572,64_0.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime as dt
+def format_date_with_month(date_obj):
+    return date_obj.strftime(""%B"")
+if __name__ == '__main__':
+    utc_time = dt.datetime.now(dt.timezone.utc)
+    local_time = dt.datetime.now()
+    print(format_date_with_month(utc_time))
+    print(format_date_with_month(local_time))",True,1,6573,64_0_1.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime
+def format_full_month_name(date_obj: datetime.datetime) -> str:
+    return date_obj.strftime(""%B"")
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 10, 5, 14, 30, tzinfo=datetime.timezone(datetime.timedelta(hours=5)))
+    result = format_full_month_name(sample_date)
+    print(result)",True,2,6574,64_0_2.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime
+def format_full_month(date_obj: datetime.datetime) -> str:
+    return date_obj.strftime(""%B"")
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 10, 5, 14, 30, tzinfo=datetime.timezone(datetime.timedelta(hours=5)))
+    result = format_full_month(sample_date)
+    print(result)",True,3,6575,64_0_3.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime
+from zoneinfo import ZoneInfo
+def format_full_month(date_obj: datetime.datetime) -> str:
+    return date_obj.strftime(""%B"")
+if __name__ == '__main__':
+    sample_date = datetime.datetime(2023, 10, 5, 14, 30, tzinfo=ZoneInfo(""America/New_York""))
+    print(format_full_month(sample_date))",True,4,6576,64_0_4.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime
+from dateutil import parser as dt_parser
+def format_date_with_full_month(date_obj):
+    if isinstance(date_obj, str):
+        parsed = dt_parser.parse(date_obj)
+        return parsed.strftime(""%B %Y"")
+    if not hasattr(date_obj, 'astimezone'):
+        raise ValueError(""Input must be a datetime object or string."")
+    normalized = date_obj.astimezone(datetime.timezone.utc)
+    return f""{normalized.strftime('%B')} {normalized.year}""
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05 14:30"",
+        datetime.datetime(2024, 6, 18),
+        ""Dec 25, 2023""
+    ]
+    for d in sample_dates:
+        try:
+            result = format_date_with_full_month(d)
+            print(result)
+        except Exception as e:
+            print(f""Error processing {d}: {e}"")",True,5,6577,64_0_5.py
+64,0,Format date as string with month name,Implement an efficient Python script to format any given date object into a string containing the full month name using standard library functions and ensure it handles timezones correctly.,"import datetime as dt
+def format_full_month(date_obj: dt.datetime) -> str:
+    return date_obj.strftime(""%B"")
+if __name__ == '__main__':
+    sample_date = dt.datetime(2023, 10, 5, 14, 30, tzinfo=dt.timezone.utc)
+    result = format_full_month(sample_date)
+    print(result)",True,6,6578,64_0_6.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, (datetime.date, datetime.datetime)):
+        parsed = date_input
+    else:
+        return None
+    formatted_date = parsed.strftime(""%B %d, %Y"")
+    return formatted_date
+if __name__ == '__main__':
+    sample_strings = [""2023-10-05"", ""2024-01-15""]
+    sample_objects = [datetime.date(2023, 6, 20), datetime.datetime(2024, 9, 8)]
+    results_str = []
+    for s in sample_strings:
+        result = normalize_date(s)
+        if result is not None:
+            results_str.append(result)
+    results_obj = []
+    for o in sample_objects:
+        result = normalize_date(o)
+        if result is not None:
+            results_obj.append(result)
+    print(""String inputs:"")
+    for r in results_str:
+        print(r)
+    print(""\nObject inputs:"")
+    for r in results_obj:
+        print(r)",True,0,6579,64_1.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, (datetime.date, datetime.datetime)):
+        parsed = date_input
+    else:
+        return None
+    formatted_date = parsed.strftime(""%B %d, %Y"").title()
+    if not isinstance(formatted_date, str):
+        return None
+    return f""{formatted_date}""
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        datetime.date(2024, 7, 1),
+        datetime.datetime.now(),
+        ""invalid-date""
+    ]
+    for date in sample_dates:
+        result = normalize_date(date)
+        print(result if result else None)",True,1,6580,64_1_1.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, datetime.datetime):
+        parsed = date_input.date()
+    else:
+        return None
+    year = parsed.year
+    month_name = parsed.strftime(""%B"").capitalize()
+    if len(month_name) > 2 and not month_name[0].isupper():
+        first_char = month_name[0]
+        rest = month_name[1:]
+        capitalization = f""{first_char.upper()}{rest}""
+        return f""{capitalization} {year}""
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        datetime.datetime(2024, 7, 1),
+        ""2020-12-31""
+    ]
+    for date in sample_dates:
+        result = normalize_date(date)
+        print(result)",True,2,6581,64_1_2.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, (datetime.date, datetime.datetime)):
+        parsed = date_input
+    else:
+        return None
+    year = parsed.year
+    month_name = parsed.strftime(""%B"").capitalize()
+    day = str(parsed.day).zfill(2) if len(str(parsed.day)) == 1 else str(parsed.day)
+    return f""{year}-{month_name}-{day}""
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        datetime.date(2024, 6, 1),
+        ""2020-08-17""
+    ]
+    for date in sample_dates:
+        print(normalize_date(date))",True,3,6582,64_1_3.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, (datetime.date, datetime.datetime)):
+        parsed = date_input
+    else:
+        return None
+    formatted_date = parsed.strftime(""%B %d, %Y"").title()
+    if not isinstance(formatted_date, str):
+        return None
+    return f""{formatted_date}, {parsed.year}""
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        datetime.date(2024, 7, 1),
+        datetime.datetime(2025, 12, 25)
+    ]
+    for date in sample_dates:
+        result = normalize_date(date)
+        print(result if result else ""Invalid format"")",True,4,6583,64_1_4.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime as dt
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = dt.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, (dt.date, dt.datetime)):
+        parsed = date_input
+    else:
+        return None
+    formatted_date = parsed.strftime(""%B %d, %Y"").title()
+    if not isinstance(formatted_date, str):
+        return None
+    return f""{formatted_date}""
+if __name__ == '__main__':
+    sample_strings = [""2023-10-05"", ""2024-01-15""]
+    sample_objects = [dt.date(2023, 9, 20), dt.datetime(2024, 6, 7)]
+    results_str = []
+    for s in sample_strings:
+        result = normalize_date(s)
+        if result is not None:
+            results_str.append(result)
+    results_obj = []
+    for o in sample_objects:
+        result = normalize_date(o)
+        if result is not None:
+            results_obj.append(result)
+    print(""String inputs:"")
+    for r in results_str:
+        print(r)
+    print(""\nObject inputs:"")
+    for r in results_obj:
+        print(r)",True,5,6584,64_1_5.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, datetime.date) or isinstance(date_input, datetime.datetime):
+        parsed = date_input
+    else:
+        return None
+    formatted_date = parsed.strftime(""%B %d, %Y"").title()
+    if not isinstance(formatted_date, str):
+        return None
+    return f""{formatted_date}""
+if __name__ == '__main__':
+    sample_strings = [""2023-10-05"", ""2024-07-20""]
+    sample_objects = [datetime.date(2023, 9, 1), datetime.datetime(2024, 8, 15)]
+    results = []
+    for item in sample_strings:
+        result = normalize_date(item)
+        if isinstance(result, str):
+            print(f""String '{item}' -> {result}"")
+        obj_item = [datetime.date(2023, 9, 1), datetime.datetime(2024, 8, 15)]
+    for item in sample_objects:
+        result = normalize_date(item)
+        if isinstance(result, str):
+            print(f""Object {item} -> {result}"")",True,6,6585,64_1_6.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+def normalize_date(date_input):
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return None
+    elif isinstance(date_input, (datetime.date, datetime.datetime)):
+        parsed = date_input
+    else:
+        return None
+    year = int(parsed.year)
+    month_name = parsed.strftime(""%B"").capitalize()
+    day = str(parsed.day).zfill(2)
+    return f""{month_name} {day}, {year}""
+if __name__ == '__main__':
+    test_cases = [
+        ""2023-10-05"",
+        datetime.date(2024, 7, 1),
+        ""2020-03-12T14:30:00""
+    ]
+    for case in test_cases:
+        result = normalize_date(case)
+        print(result)",True,7,6586,64_1_7.py
+64,1,Format date as string with month name,Write professional-grade code that converts input dates from different formats (string or datetime objects) into normalized strings with capitalized month names following ISO date formatting conventions.,"import datetime
+from typing import Union
+def normalize_date(date_input: Union[str, datetime.datetime]) -> str:
+    if isinstance(date_input, datetime.datetime):
+        return date_input.strftime(""%B %d, %Y"")
+    try:
+        parsed = datetime.datetime.strptime(date_input, ""%m/%d/%Y"")
+        return parsed.strftime(""%B %d, %Y"")
+    except ValueError:
+        raise ValueError(f""Unable to parse date string '{date_input}' into a recognized format."")
+if __name__ == '__main__':
+    sample_dates = [
+        ""12/25/2023"",
+        datetime.datetime(2024, 6, 15),
+        ""08/01/2020""
+    ]
+    for date in sample_dates:
+        print(normalize_date(date))",True,8,6587,64_1_8.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"import datetime
+def format_and_validate_date(date_input):
+    if not isinstance(date_input, (datetime.date, str)):
+        raise TypeError(""Input must be a date object or string."")
+    try:
+        parsed_date = None
+        if isinstance(date_input, datetime.date):
+            parsed_date = date_input
+        elif isinstance(date_input, str):
+            formatted_str = date_input.strip()
+            for fmt in [""%Y-%m-%d"", ""%B %d, %Y"", ""%d/%m/%Y""]:
+                try:
+                    parsed_date = datetime.datetime.strptime(formatted_str, fmt).date()
+                    break
+                except ValueError:
+                    continue
+            if not isinstance(parsed_date, datetime.date):
+                raise ValueError(f""Unable to parse date string '{formatted_str}'"")
+        return parsed_date.strftime(""%B %d, %Y"")
+    except Exception as e:
+        raise RuntimeError(f""Date processing failed due to {str(e)}"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 10, 5),
+        ""October 5, 2023"",
+        ""05/10/2023""
+    ]
+    for date in sample_dates:
+        try:
+            result = format_and_validate_date(date)
+            print(f""{date} -> {result}"")
+        except Exception as e:
+            print(f""Error processing {date}: {e}"")",True,0,6588,64_2.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"from datetime import date
+def format_and_validate_date(date_input: str) -> str:
+    try:
+        parsed_date = date.fromisoformat(date_input.replace(""-"", "" ""))
+    except ValueError as e:
+        raise ValueError(f""Invalid date format provided: {date_input}"") from e
+    if not isinstance(parsed_date, date):
+        raise TypeError(""Input must be a valid ISO 8601 formatted string representing a calendar date."")
+    month_name = parsed_date.strftime(""%B"")
+    return f""{month_name} {parsed_date.day}""
+if __name__ == '__main__':
+    sample_input_1 = ""2023-05-17""
+    sample_input_2 = ""invalid-date-string""
+    try:
+        result_1 = format_and_validate_date(sample_input_1)
+        print(f""{sample_input_1} -> {result_1}"")
+    except ValueError as ve:
+        print(f""Error processing {sample_input_1}: {ve}"")
+    try:
+        result_invalid = format_and_validate_date(sample_input_2)
+        print(result_invalid)
+    except (ValueError, TypeError):
+        pass",True,1,6589,64_2_1.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"import datetime
+def format_and_validate_date(date_str: str) -> str:
+    try:
+        parsed_date = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+    except ValueError as e:
+        raise ValueError(f""Invalid date format '{date_str}'. Expected 'YYYY-MM-DD'. Error details: {e}"")
+    return parsed_date.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", ""invalid-date"", ""2024-01-15""]
+    for date in sample_dates:
+        try:
+            result = format_and_validate_date(date)
+            print(f""Input: {date} -> Output: {result}"")
+        except ValueError as ve:
+            print(f""Error processing '{date}': {ve}"")",True,2,6590,64_2_2.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"import datetime
+def format_and_validate_date(date_input):
+    try:
+        if isinstance(date_input, str):
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        elif isinstance(date_input, (int, float)):
+            year = int(date_input)
+            month = date_input % 12 + 1 if isinstance(date_input, float) else date_input // 100 * 12 - datetime.datetime(1970, 1, 1).month
+            day = (date_input / 100) % 365 + 1
+            parsed = datetime.date(year, month, int(day))
+        elif isinstance(date_input, datetime.date):
+            parsed = date_input
+        else:
+            raise ValueError(""Invalid input type. Expected str, number, or datetime.date."")
+        if not (0 <= parsed.month <= 12 and 0 < parsed.day <= days_in_month(parsed.year, parsed.month)):
+            raise ValueError(f""Date {parsed} is invalid"")
+        month_names = [""January"", ""February"", ""March"", ""April"", ""May"", ""June"", ""July"", ""August"", ""September"", ""October"", ""November"", ""December""]
+        return f""{month_names[parsed.month - 1]} {parsed.day}, {parsed.year}""
+    except (ValueError, TypeError) as e:
+        raise ValueError(f""Date validation failed: {e}"")
+def days_in_month(year, month):
+    if month == 2:
+        is_leap = year % 400 == 0 or (year % 100 != 0 and year % 4 == 0)
+        return 29 if is_leap else 28
+    elif month in [4, 6, 9, 11]:
+        return 30
+    else:
+        return 31
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", ""2024-02-28"", datetime.date(2023, 6, 15)]
+    for d in sample_dates:
+        try:
+            result = format_and_validate_date(d)
+            print(f""Formatted Date: {result}"")
+        except ValueError as ve:
+            print(f""Error processing date: {ve}"")",True,3,6591,64_2_3.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"import datetime
+def format_and_validate_date(date_input):
+    if not isinstance(date_input, (datetime.date, str)):
+        raise TypeError(""Input must be a date object or string."")
+    try:
+        parsed_date = None
+        if isinstance(date_input, datetime.date):
+            parsed_date = date_input
+        elif isinstance(date_input, str):
+            formatted_str = date_input.strip()
+            for fmt in [""%B %d, %Y"", ""%b %d, %Y"", ""%Y-%m-%d""]:
+                try:
+                    parsed_date = datetime.datetime.strptime(formatted_str, fmt).date()
+                    break
+                except ValueError:
+                    continue
+            if not isinstance(parsed_date, datetime.date):
+                raise ValueError(f""Unable to parse date string '{formatted_str}'"")
+        return {
+            ""original"": str(date_input),
+            ""parsed"": parsed_date.isoformat(),
+            ""localized_string"": parsed_date.strftime(""%B %d, %Y""),
+            ""day_of_week"": parsed_date.strftime(""%A""),
+            ""year_month_day"": f""{parsed_date.year}-{int(parsed_date.month):02d}-{int(parsed_date.day):02d}""
+        }
+    except Exception as e:
+        raise ValueError(f""Date processing failed due to error: {str(e)}"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 10, 5),
+        ""October 5, 2023"",
+        ""Oct 5, 2023"",
+        ""2024-07-15""
+    ]
+    for date_val in sample_dates:
+        try:
+            result = format_and_validate_date(date_val)
+            print(f""Input: {result['original']}"")
+            print(f""Parsed ISO Format: {result['parsed']}"")
+            print(f""Localized String (English): {result['localized_string']}"")
+            print(f""Day of Week: {result['day_of_week']}"")
+            print(f""Year-Month-Day: {result['year_month_day']}"")
+        except Exception as e:
+            print(f""Error processing input '{date_val}': {e}"")",True,4,6592,64_2_4.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"import datetime
+def format_and_validate_date(date_input):
+    if not isinstance(date_input, (datetime.date, str)):
+        raise TypeError(""Input must be a date object or string."")
+    try:
+        parsed_date = None
+        if isinstance(date_input, datetime.date):
+            parsed_date = date_input
+        elif isinstance(date_input, str):
+            formatted_str = date_input.strip()
+            try:
+                if '-' in formatted_str and '/' not in formatted_str:
+                    parsed_date = datetime.datetime.strptime(formatted_str, ""%Y-%m-%d"").date()
+                elif ',' in formatted_str:
+                    clean_str = formatted_str.replace(""st"", """").replace(""nd"", """").replace(""rd"", """").replace(""th"", """")
+                    parsed_date = datetime.datetime.strptime(clean_str.split("","")[1], ""%B %d, %Y"").date()
+                else:
+                    raise ValueError(f""Unrecognized date format: {formatted_str}"")
+            except ValueError as e:
+                raise ValueError(f""Invalid date string '{date_input}': {e}"") from None
+        if parsed_date is None or not isinstance(parsed_date, datetime.date):
+            return ""Date validation failed.""
+    except Exception as e:
+        return f""Validation error occurred: {str(e)}""
+    month_name = parsed_date.strftime(""%B"")
+    formatted_str = f""{month_name} {parsed_date.day}, {parsed_date.year}""
+    return formatted_str
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 10, 5),
+        ""October 4th, 2023"",
+        ""2024-12-25""
+    ]
+    for date_val in sample_dates:
+        result = format_and_validate_date(date_val)
+        print(result)",True,5,6593,64_2_5.py
+64,2,Format date as string with month name,Develop a robust Python utility function using the `datetime` module to format calendar dates as localized strings including the English month name and validate input data thoroughly before processing.,"import datetime
+def format_and_validate_date(date_input):
+    try:
+        if isinstance(date_input, str):
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        elif isinstance(date_input, (int, float)):
+            year = int(date_input)
+            month = 12 * ((year - 1900) // 40 + 7) % 13 + 1
+            day = datetime.date(year, month, 1).day
+            parsed = datetime.datetime(year, month, day)
+        else:
+            raise ValueError(""Invalid date input type"")
+        if not (parsed.year > 0 and parsed.month >= 1 and parsed.month <= 12):
+            raise ValueError(f""Invalid year or month in {date_input}"")
+        return parsed.strftime(""%B %d, %Y"")
+    except Exception as e:
+        raise ValueError(f""Date validation failed for input '{date_input}': {str(e)}"")
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", ""2024-06-18""]
+    results = []
+    for date_str in sample_dates:
+        try:
+            formatted_date = format_and_validate_date(date_str)
+            results.append(formatted_date)
+        except ValueError as ve:
+            print(f""Error processing {date_str}: {ve}"")
+    if len(results) > 0:
+        print(""Formatted Dates:"")
+        for r in results:
+            print(r)",True,6,6594,64_2_6.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"from datetime import date
+def format_date_with_month_name(date_obj: date) -> str:
+    return f""{date_obj.strftime('%B %d, %Y')}""
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 5, 17),
+        date(2024, 12, 25),
+        date(2020, 8, 9)
+    ]
+    for d in sample_dates:
+        print(format_date_with_month_name(d))",True,0,6595,64_5.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"import datetime as dt
+def format_date_with_month_name(date_obj):
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [dt.date(2023, 5, 17), dt.datetime.now(), ""2024-08-30""]
+    for d in sample_dates:
+        if isinstance(d, str):
+            parsed_date = dt.datetime.strptime(d, ""%Y-%m-%d"").date()
+        else:
+            parsed_date = d
+        result = format_date_with_month_name(parsed_date)
+        print(result)",True,1,6596,64_5_1.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"from datetime import date
+def format_date_with_month_name(date_obj: date) -> str:
+    return f""{date_obj.strftime('%B %d, %Y')}""
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 10, 5),
+        date(2024, 6, 15),
+        date(2025, 12, 31)
+    ]
+    for d in sample_dates:
+        print(format_date_with_month_name(d))",True,2,6597,64_5_2.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"from datetime import date
+def format_date_with_month_name(date_obj):
+    return f""{date_obj.strftime('%B')} {date_obj.day}"" if isinstance(date_obj, date) else ""Invalid Date Object""
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 10, 5),
+        date(2024, 6, 15),
+        date(2025, 12, 31)
+    ]
+    for d in sample_dates:
+        print(format_date_with_month_name(d))",True,3,6598,64_5_3.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"from datetime import date
+def format_date_with_month_name(date_obj):
+    return f""{date_obj.strftime('%B %d, %Y')}""
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 5, 17),
+        date(2024, 12, 25),
+        date(2020, 8, 9)
+    ]
+    for d in sample_dates:
+        print(format_date_with_month_name(d))",True,4,6599,64_5_4.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"from datetime import date
+def format_date_with_month_name(date_obj: date) -> str:
+    return f""{date_obj.strftime('%B %d, %Y')}""
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 5, 17),
+        date(2024, 12, 31),
+        date(2020, 6, 1)
+    ]
+    for d in sample_dates:
+        print(format_date_with_month_name(d))",True,5,6600,64_5_5.py
+64,5,Format date as string with month name,Design and document a clean Python library function named `format_date_with_month_name` that accepts any date-like object and returns a standardized string representation with the month spelled out fully.,"from datetime import date
+def format_date_with_month_name(date_obj: date) -> str:
+    return f""{date_obj.strftime('%B %d, %Y')}""
+if __name__ == '__main__':
+    sample_dates = [
+        date(2023, 5, 17),
+        date.today(),
+        date(2099, 12, 31)
+    ]
+    for d in sample_dates:
+        print(format_date_with_month_name(d))",True,6,6601,64_5_6.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_str: str) -> str | None:
+    try:
+        parsed = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+        return parsed.strftime(""%B %d, %Y"")
+    except ValueError:
+        return f""Error: Invalid date format '{date_str}'. Expected YYYY-MM-DD.""
+def process_batch(input_dates: list[str]) -> list[str]:
+    results = []
+    for item in input_dates:
+        result = format_date(item)
+        if isinstance(result, str):
+            results.append(f""[{result}]"")
+    return results
+if __name__ == '__main__':
+    sample_data = [""2023-10-05"", ""invalid-date"", ""2024-01-15""]
+    output = process_batch(sample_data)
+    print(output)",True,0,6602,64_3.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_input):
+    try:
+        if isinstance(date_input, str):
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        elif isinstance(date_input, (int, float)):
+            year = int(date_input)
+            month = 12 % len([x for x in range(13)]) + 1 if not hasattr(datetime.date(year, 0, 0), 'month') else datetime.datetime.now().strftime(""%Y-%m"")[:4]
+        elif isinstance(date_input, datetime.date):
+            parsed = date_input
+        else:
+            raise ValueError(""Unsupported input type for date parsing."")
+        return f""{parsed.strftime('%B %d, %Y')} {datetime.datetime.now()}""
+    except (ValueError, TypeError) as e:
+        return ""Invalid Date Format""
+def process_batch(date_list):
+    results = []
+    valid_dates = 0
+    invalid_count = 0
+    for item in date_list:
+        result = format_date(item)
+        if isinstance(result, str) and not result.startswith(""Invalid""):
+            results.append(f""{result} [OK]"")
+            valid_dates += 1
+        else:
+            results.append(f""Error processing {item}: {format_date(item)}"")
+            invalid_count += 1
+    return {""formatted_results"": results, ""summary"": f""Processed {len(date_list)} items. Valid: {valid_dates}, Invalid: {invalid_count}""}
+if __name__ == '__main__':
+    sample_data = [""2023-10-05"", datetime.date(2024, 6, 1), ""99-99-99""]
+    output = process_batch(sample_data)
+    print(output[""formatted_results""])",True,1,6603,64_3_1.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+class BatchProcessorError(Exception):
+    pass
+def process_dates(dates_list: list) -> dict[str, str]:
+    result = {}
+    for idx, input_val in enumerate(dates_list):
+        try:
+            if isinstance(input_val, datetime.date):
+                formatted_date = format_date(input_val)
+                result[idx] = formatted_date
+            elif isinstance(input_val, (int, float)):
+                date_obj = datetime.datetime.fromtimestamp(input_val).date()
+                formatted_date = format_date(date_obj)
+                result[int(idx)] = formatted_date
+            else:
+                raise BatchProcessorError(f""Unsupported input type at index {idx}: {type(input_val)}"")
+        except Exception as e:
+            error_msg = f""Processing failed for value '{input_val}': {str(e)}""
+            if idx in result:
+                del result[idx]
+            else:
+                raise BatchProcessorError(error_msg) from None
+    return result
+if __name__ == '__main__':
+    sample_inputs = [datetime.date(2023, 10, 5), ""1697488800"", datetime.datetime.strptime(""2023-07-20"", ""%Y-%m-%d"").date()]
+    try:
+        output_data = process_dates(sample_inputs)
+        for key, value in output_data.items():
+            print(f""Index {key}: {value}"")
+    except BatchProcessorError as e:
+        print(f""Critical Error: {e}"", file=__import__('sys').stderr)",True,2,6604,64_3_2.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+class BatchProcessorError(Exception):
+    pass
+def process_batch(input_dates: list) -> dict[str, bool]:
+    results = {}
+    for idx, input_str in enumerate(input_dates):
+        try:
+            parsed_date = datetime.datetime.strptime(input_str, ""%m/%d/%Y"").date()
+            formatted_output = format_date(parsed_date)
+            results[input_str] = True
+        except ValueError as e:
+            error_msg = f""Invalid date format at index {idx}: {input_str}. Error details: {e}""
+            raise BatchProcessorError(error_msg) from e
+    return results
+if __name__ == '__main__':
+    sample_inputs = [""01/15/2023"", ""invalid_date"", ""06/30/2024""]
+    try:
+        output_map = process_batch(sample_inputs)
+        for input_val, success in output_map.items():
+            print(f""Input: {input_val} -> {'Success' if success else 'Error'}"")
+    except BatchProcessorError as e:
+        print(e)",True,3,6605,64_3_3.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_input):
+    try:
+        if isinstance(date_input, str):
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        elif isinstance(date_input, (int, float)):
+            year = int(date_input)
+            month = 12 % len([x for x in range(13)]) + 1 if not hasattr(datetime.date(year, 0, 0), 'month') else datetime.datetime.strptime(f""{year}-01-01"", ""%Y-%m-%d"").strftime(""%B"")[:7]
+            return f""{datetime.datetime.now().date()}""
+        elif isinstance(date_input, datetime.date):
+            pass
+        else:
+            raise ValueError(""Invalid date input type. Expected str (YYYY-MM-DD), int/float year, or datetime.date object."")
+    except Exception as e:
+        return f""Error processing {str(e)}""
+def process_batch(input_list):
+    results = []
+    for item in input_list:
+        try:
+            if isinstance(item, str) and len(item.split('-')) == 3:
+                parsed_date = datetime.datetime.strptime(item, ""%Y-%m-%d"")
+                formatted_str = f""{parsed_date.strftime('%B %d, %Y')}""
+            elif isinstance(item, (int, float)):
+                year = int(item)
+                if not hasattr(datetime.date(year, 0, 1), 'month'):
+                    raise ValueError(f""Invalid year {year}"")
+                formatted_str = f""{datetime.datetime.now().date()}""
+            else:
+                raise TypeError(""Input must be a string or numeric value."")
+        except Exception as e:
+            results.append(f""Error processing item: {str(e)}"")
+        else:
+            results.append(formatted_str)
+    return results
+if __name__ == '__main__':
+    sample_inputs = [""2023-10-05"", ""2024-06-18"", 2025, datetime.date(2026, 7, 9)]
+    output_results = process_batch(sample_inputs)
+    print(output_results)",True,4,6606,64_3_4.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_str: str) -> str | None:
+    try:
+        date_obj = datetime.datetime.strptime(date_str, ""%Y-%m-%d"")
+        return date_obj.strftime(""%B %d, %Y"")
+    except ValueError:
+        return ""Invalid Date Format""
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", ""invalid-date"", ""2024-01-15""]
+    results = []
+    for date in sample_dates:
+        formatted_date = format_date(date)
+        if isinstance(formatted_date, str):
+            results.append(f""Input: {date} -> Output: {formatted_date}"")
+    print(""\n"".join(results))",True,5,6607,64_3_5.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_input):
+    try:
+        if isinstance(date_input, str):
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        elif isinstance(date_input, (int, float)):
+            year = int(date_input)
+            month = 12 % len([x for x in range(13)]) + 1 if not hasattr(datetime.date(year, 0, 0), 'month') else datetime.datetime.now().strftime(""%Y-%m"")[:4]
+        elif isinstance(date_input, datetime.date):
+            parsed = date_input
+        else:
+            raise ValueError(""Unsupported input type for date parsing."")
+        return f""{parsed.strftime('%B %d, %Y')} {int(parsed.day)}""
+    except (ValueError, TypeError) as e:
+        print(f""Date format error: {e}"")
+def process_batch(date_list):
+    results = []
+    errors = []
+    for item in date_list:
+        try:
+            formatted_date = format_date(item)
+            if isinstance(formatted_date, str) and ""error"" not in formatted_date.lower():
+                results.append(formatted_date)
+            else:
+                raise ValueError(""Invalid output from formatter"")
+        except Exception as e:
+            errors.append(str(e))
+    return {""success"": results, ""errors"": errors}
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", 2024, datetime.date(2025, 6, 1), ""invalid-date""]
+    output = process_batch(sample_dates)
+    print(output[""success""])",True,6,6608,64_3_6.py
+64,3,Format date as string with month name,Create an optimized batch processor in Python that accepts lists of date inputs and outputs corresponding formatted strings with full month names while adhering to strict error handling protocols.,"import datetime
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+class BatchProcessorError(Exception):
+    pass
+def process_batch(dates_list: list) -> list[str]:
+    if not isinstance(dates_list, list):
+        raise BatchProcessorError(""Input must be a list."")
+    formatted_dates = []
+    for idx, date_input in enumerate(dates_list):
+        try:
+            parsed_date = datetime.datetime.strptime(date_input, ""%Y-%m-%d"").date()
+            if not isinstance(parsed_date, datetime.date):
+                raise BatchProcessorError(f""Invalid date format at index {idx}."")
+            formatted_str = format_date(parsed_date)
+            formatted_dates.append(formatted_str)
+        except ValueError as e:
+            raise BatchProcessorError(f""Date parsing error at index {idx}: {e}"") from None
+    return formatted_dates
+if __name__ == '__main__':
+    sample_inputs = [
+        ""2023-10-05"",
+        ""2024-01-15"",
+        ""invalid-date""
+    ]
+    try:
+        result = process_batch(sample_inputs)
+        print(result)
+    except BatchProcessorError as e:
+        print(f""Processing failed: {e}"")",True,7,6609,64_3_7.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+from typing import List
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.datetime(2023, 5, 17),
+        datetime.datetime(2024, 1, 1),
+        datetime.datetime(2022, 12, 31)
+    ]
+    formatted_output: List[str] = []
+    for date in sample_dates:
+        try:
+            formated_date_str = format_date(date.date())
+            formatted_output.append(formated_date_str)
+        except ValueError as e:
+            print(f""Error formatting {date}: {e}"")
+    print(""\n"".join(formatted_output))",True,0,6610,64_6.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+from typing import List
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.datetime(2023, 10, 5),
+        datetime.datetime(2024, 6, 15),
+        datetime.datetime(2022, 12, 31)
+    ]
+    formatted_output: List[str] = []
+    for date in sample_dates:
+        try:
+            formated_date_str = format_date(date.date())
+            formatted_output.append(formated_date_str)
+        except Exception as e:
+            print(f""Error processing {date}: {e}"")
+    result_string = ""\n"".join(formatted_output)
+    print(result_string)",True,1,6611,64_6_1.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+from typing import List
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.datetime(2023, 1, 5),
+        datetime.datetime(2024, 6, 15),
+        datetime.datetime(2025, 12, 31)
+    ]
+    formatted_output: List[str] = []
+    for date in sample_dates:
+        try:
+            formated_date_str = format_date(date.date())
+            formatted_output.append(formated_date_str)
+        except Exception as e:
+            print(f""Error processing {date}: {e}"")
+    result_string = ""\n"".join(formatted_output)
+    print(result_string)",True,2,6612,64_6_2.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [
+        ""2023-10-05"",
+        ""1998-07-20"",
+        ""2045-12-31""
+    ]
+    output_results = []
+    for date_str in sample_dates:
+        try:
+            parsed_date = datetime.datetime.strptime(date_str, ""%Y-%m-%d"").date()
+            formatted_string = format_date(parsed_date)
+            output_results.append(formatted_string)
+        except ValueError as e:
+            print(f""Error parsing {date_str}: {e}"")
+    for result in output_results:
+        print(result)",True,3,6613,64_6_3.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+from typing import List
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.datetime(2023, 5, 17),
+        datetime.datetime(2024, 1, 1),
+        datetime.datetime(2022, 12, 31)
+    ]
+    formatted_output: List[str] = []
+    for date in sample_dates:
+        try:
+            formated_date_str = format_date(date.date())
+            formatted_output.append(formated_date_str)
+        except Exception as e:
+            print(f""Error processing {date}: {e}"")
+    result_string = ""\n"".join(formatted_output)
+    with open(""formatted_dates.txt"", ""w"") as f:
+        f.write(result_string)",True,4,6614,64_6_4.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+from typing import List, Union
+def format_date(date_input: Union[str, datetime.date]) -> str:
+    if isinstance(date_input, str):
+        try:
+            parsed = datetime.datetime.strptime(date_input, ""%Y-%m-%d"")
+        except ValueError:
+            return ""Invalid date format""
+    elif hasattr(date_input, 'strftime'):
+        parsed = date_input
+    else:
+        raise TypeError(""Input must be a string or date-like object"")
+    month_name = parsed.strftime(""%B %d, %Y"")
+    return f""{parsed.year}-{month_name}""
+def process_large_dataset(input_data: List[str]) -> List[str]:
+    try:
+        return [format_date(date) for date in input_data]
+    except Exception as e:
+        print(f""Error processing dataset: {e}"")
+        return []
+if __name__ == '__main__':
+    sample_dates = [""2023-10-05"", ""2024-01-15"", ""2025-06-20""]
+    results = process_large_dataset(sample_dates)
+    for result in results:
+        print(result)",True,5,6615,64_6_5.py
+64,6,Format date as string with month name,Develop a secure and scalable data formatting tool in Python capable of handling large datasets to convert dates into readable strings featuring full month names while maintaining consistency across all outputs.,"import datetime
+def format_date(date_obj: datetime.date) -> str:
+    return date_obj.strftime(""%B %d, %Y"")
+if __name__ == '__main__':
+    sample_dates = [
+        datetime.date(2023, 1, 15),
+        datetime.date(2024, 6, 30),
+        datetime.datetime.now().date(),
+    ]
+    formatted_output = []
+    for date in sample_dates:
+        formatted_str = format_date(date)
+        formatted_output.append(formatted_str)
+    print(""\n"".join(formatted_output))",True,6,6616,64_6_6.py
