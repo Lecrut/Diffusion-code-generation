@@ -2,23 +2,18 @@ import requests
 import os
 import time
 import json
-import subprocess
+import subprocess # Możesz zostawić, jeśli używasz go gdzieś indziej, ale tu już nie będzie potrzebny
 import platform
 from threading import Lock
 
-DATA_DIR = "data2"
-
-OLLAMA_URL = "http://localhost:11434"
-# MODEL = "gemma4:e2b" - Default model 
-MODEL = "qwen3.5:4b"
-# MODEL = "mistral-medium-3.5:128b" - TO CHANGE FOR TESTING
-
+DATA_PATH = "data2"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
+MODEL = "gemma4:e4b"
 CACHE_FILE = "cache.json"
 
-os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(DATA_PATH, exist_ok=True)
 session = requests.Session()
 ollama_lock = Lock()
-
 
 if os.path.exists(CACHE_FILE):
     with open(CACHE_FILE, "r", encoding="utf-8") as f:
@@ -26,11 +21,9 @@ if os.path.exists(CACHE_FILE):
 else:
     CACHE = {}
 
-
 def save_cache():
     with open(CACHE_FILE, "w", encoding="utf-8") as f:
         json.dump(CACHE, f, ensure_ascii=False, indent=2)
-
 
 def is_ollama_running():
     try:
@@ -39,31 +32,13 @@ def is_ollama_running():
     except:
         return False
 
-
 def start_ollama():
-    system = platform.system()
-
-    if system == "Windows":
-        subprocess.Popen(["ollama", "serve"], shell=True)
-    else:
-        subprocess.Popen(["ollama", "serve"])
-
+    # Zmiana 2: Docker sam dba o start kontenera Ollama, my tylko grzecznie czekamy
+    print("Oczekuję na uruchomienie kontenera Ollama...", flush=True)
     time.sleep(5)
 
-
-def ensure_ollama():
-    if not is_ollama_running():
-        start_ollama()
-
-    for _ in range(10):
-        if is_ollama_running():
-            return
-        time.sleep(1)
-
-    raise RuntimeError("Ollama did not start")
-
-
 def ensure_model():
+    # Zmiana 3: Pobieranie modelu przez HTTP API zamiast subprocess
     try:
         r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
         r.raise_for_status()
@@ -74,50 +49,13 @@ def ensure_model():
         if any(m.startswith(MODEL) for m in models):
             return
 
-        subprocess.run(["ollama", "pull", MODEL])
+        print(f"Model {MODEL} nie został znaleziony. Zlecam pobieranie przez API (to może potrwać)...", flush=True)
+        pull_req = requests.post(f"{OLLAMA_URL}/api/pull", json={"name": MODEL}, stream=True)
+        for line in pull_req.iter_lines():
+            if line:
+                status = json.loads(line).get("status", "")
+                print(f"[Ollama Pull] {status}", flush=True)
 
-    except Exception:
+    except Exception as e:
+        print(f"Błąd podczas weryfikacji/pobierania modelu: {e}", flush=True)
         return
-
-
-REQUEST_TIMEOUT = 60
-
-
-def ollama_generate(prompt, temperature=0.7, use_cache=True):
-    cache_key = f"{prompt}|||{temperature}"
-    
-    with ollama_lock:
-        if use_cache and cache_key in CACHE:
-            return CACHE[cache_key]
-
-        try:
-            r = session.post(
-                f"{OLLAMA_URL}/api/generate",
-                json={
-                    "model": MODEL,
-                    "prompt": prompt,
-                    "stream": False,
-                    "keep_alive": "1h",
-                    "think": False,
-                    "options": {
-                            "temperature": temperature,
-                            "num_predict": 2048,
-                            "num_ctx": 2048,
-                    },
-                },
-                timeout=REQUEST_TIMEOUT,
-            )
-            r.raise_for_status()
-
-            result = r.json().get("response", "").strip()
-            if not result:
-                return None
-
-            if use_cache:
-                CACHE[cache_key] = result
-                save_cache()
-            return result
-
-        except Exception as exc:
-            print(f"OLLAMA ERROR: {exc}", flush=True)
-            return None
