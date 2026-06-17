@@ -59,3 +59,17 @@ def ensure_model():
     except Exception as e:
         print(f"Błąd podczas weryfikacji/pobierania modelu: {e}", flush=True)
         return
+
+def ensure_ollama():
+    print("Sprawdzam połączenie z Ollamą...", flush=True)
+    if not is_ollama_running():
+        start_ollama()
+
+    # Czekamy aż kontener z Ollamą będzie gotowy
+    for _ in range(15):
+        if is_ollama_running():
+            print("Połączono z Ollamą w Dockerze!", flush=True)
+            return
+        time.sleep(2)
+
+    raise RuntimeError("Nie udało się połączyć z Ollamą. Upewnij się, że kontener 'ollama' działa poprawnie.")
