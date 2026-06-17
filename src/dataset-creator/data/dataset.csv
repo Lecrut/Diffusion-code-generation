@@ -128175,3 +128175,2769 @@ if __name__ == '__main__':
     print(f""Float Sequence Center: {result_float}"")
     result_mixed = find_central_mark(mixed_numeric)
     print(f""Mixed Numeric Sequence Center: {result_mixed}"")",True,6,5539,54_6_6.py
+54,4,Locate middle position mark,Produce optimized Python code to compute the center coordinate mark for any sequence object while maintaining O(1) time complexity where feasible.,"import collections
+def compute_center_mark(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Sequence must be list or tuple"")
+    length = len(sequence)
+    if length == 0:
+        return None
+    index = length // 2
+    return {""index"": index, ""value"": sequence[index]}
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = ('a', 'b', 'c')
+    result_list = compute_center_mark(sample_list)
+    print(result_list)
+    result_tuple = compute_center_mark(sample_tuple)
+    print(result_tuple)",True,0,5540,54_4.py
+54,4,Locate middle position mark,Produce optimized Python code to compute the center coordinate mark for any sequence object while maintaining O(1) time complexity where feasible.,"from typing import Sequence
+def get_center_mark(seq: Sequence) -> int | None:
+    if not seq:
+        return None
+    length = len(seq)
+    center_float = (length - 1) / 2.0
+    if int(center_float) == center_float:
+        return int(center_float)
+    return None
+if __name__ == '__main__':
+    sample_sequences = [
+        [],
+        [""a""],
+        [""a"", ""b""],
+        [""x"", ""y"", ""z""],
+        range(10),
+        list(range(9))
+    ]
+    for seq in sample_sequences:
+        result = get_center_mark(seq)
+        print(f""Sequence {seq}: Center mark at index {result}"")",True,1,5541,54_4_1.py
+54,4,Locate middle position mark,Produce optimized Python code to compute the center coordinate mark for any sequence object while maintaining O(1) time complexity where feasible.,"from typing import Sequence
+def compute_center_mark(seq: Sequence) -> tuple[int | float]:
+    if not seq:
+        return (0.0,)
+    n = len(seq)
+    start_idx, end_idx = 0, n - 1
+    center_index = n // 2 if n % 2 == 1 else (n // 2) + 1
+    return (seq[center_index], seq[end_idx] * -1.0)
+if __name__ == '__main__':
+    sample_list: list[int] = [1, 2, 3, 4, 5]
+    result = compute_center_mark(sample_list)
+    print(result)",True,2,5542,54_4_2.py
+54,4,Locate middle position mark,Produce optimized Python code to compute the center coordinate mark for any sequence object while maintaining O(1) time complexity where feasible.,"from typing import Sequence
+def get_center_coordinate(sequence: Sequence) -> tuple[int | float]:
+    if not sequence:
+        return (0.0,)
+    length = len(sequence)
+    index = length // 2
+    if length % 2 == 1:
+        val = float(sequence[index])
+        return (val, val)
+    else:
+        mid_left = sequence[length // 2 - 1]
+        mid_right = sequence[length // 2]
+        avg_val = (float(mid_left) + float(mid_right)) / 2.0
+        return (avg_val, avg_val)
+if __name__ == '__main__':
+    sample_list = [1, 3, 5]
+    result = get_center_coordinate(sample_list)
+    print(result)",True,3,5543,54_4_3.py
+54,4,Locate middle position mark,Produce optimized Python code to compute the center coordinate mark for any sequence object while maintaining O(1) time complexity where feasible.,"import sys
+def compute_center_mark(sequence):
+    try:
+        length = len(sequence)
+        if length == 0:
+            return None
+        mid_index = (length - 1) // 2
+        return sequence[mid_index]
+    except TypeError:
+        raise ValueError(""Input must be a sequence object"")
+if __name__ == '__main__':
+    sample_sequences = [
+        list(range(5)),                                                     
+        tuple([10, 20, 30]),                   
+        [],                                                    
+        list(range(6)),                                                                    
+    ]
+    results = []
+    for seq in sample_sequences:
+        try:
+            mark = compute_center_mark(seq)
+            results.append(f""Sequence {seq} -> Center Mark: {mark}"")
+        except ValueError as e:
+            results.append(f""Error with sequence type: {e}"")
+    print(""\n"".join(results))",True,4,5544,54_4_4.py
+54,4,Locate middle position mark,Produce optimized Python code to compute the center coordinate mark for any sequence object while maintaining O(1) time complexity where feasible.,"from typing import Sequence, Tuple
+def compute_center_coordinate(sequence: Sequence) -> Tuple[float, float]:
+    if not sequence:
+        return 0.0, 0.0
+    length = len(sequence)
+    mid_index_1 = (length - 1) // 2
+    mid_index_2 = mid_index_1 + 1 if length % 2 == 0 else None
+    x_coord = sequence[mid_index_1] / 2.0
+    y_coord = sequence[mid_index_1] * 2.0
+    return float(x_coord), float(y_coord)
+if __name__ == '__main__':
+    sample_sequence: Sequence[int] = [1, 3, 5, 7, 9]
+    center_x, center_y = compute_center_coordinate(sample_sequence)
+    print(f""Center coordinates for {sample_sequence}: ({center_x}, {center_y})"")",True,5,5545,54_4_5.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import math
+def find_center_index(arr):
+    if not arr:
+        raise ValueError(""Array cannot be empty"")
+    n = len(arr)
+    return int(math.floor(n / 2))
+if __name__ == '__main__':
+    sample_array = [10, 20, 30, 40, 50]
+    center_index = find_center_index(sample_array)
+    print(f""Center index: {center_index}"")",True,0,5546,54_8.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import statistics as stats
+def find_center_mark(arr):
+    if not arr:
+        raise ValueError(""Input array cannot be empty."")
+    try:
+        sorted_arr = sorted(arr)
+        n = len(sorted_arr)
+        mid_idx = n // 2
+        if n % 2 == 0:
+            return (sorted_arr[mid_idx - 1] + sorted_arr[mid_idx]) / 2.0
+        else:
+            return int(sorted_arr[mid_idx])
+    except Exception as e:
+        raise RuntimeError(f""Error processing array center mark calculation"") from e
+if __name__ == '__main__':
+    sample_data = [3, 1, 4, 5, 2]
+    result = find_center_mark(sample_data)
+    print(result)",True,1,5547,54_8_1.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import math
+def find_center_index(arr):
+    if not arr:
+        raise ValueError(""Array cannot be empty"")
+    length = len(arr)
+    return int(math.floor(length / 2))
+if __name__ == '__main__':
+    sample_array = [10, 20, 30, 40, 50]
+    center_index = find_center_index(sample_array)
+    print(f""Center index: {center_index}"")",True,2,5548,54_8_2.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import math
+def find_center_index(arr):
+    if not arr:
+        raise ValueError(""Array cannot be empty"")
+    n = len(arr)
+    return int(math.floor(n / 2))
+if __name__ == '__main__':
+    sample_array = [10, 20, 30, 40, 50]
+    center_index = find_center_index(sample_array)
+    print(f""Center index: {center_index}, Value: {sample_array[center_index]}"")",True,3,5549,54_8_3.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import math
+def find_center_index(arr):
+    if not arr:
+        raise ValueError(""Array cannot be empty."")
+    n = len(arr)
+    mid = n // 2
+    return mid
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    center_index = find_center_index(sample_data)
+    print(f""Center index: {center_index}"")",True,4,5550,54_8_4.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import math
+def find_center_index(arr):
+    if not arr:
+        raise ValueError(""Array cannot be empty"")
+    n = len(arr)
+    return int(math.floor(n / 2))
+if __name__ == '__main__':
+    sample_array = [10, 20, 30, 40, 50]
+    center_index = find_center_index(sample_array)
+    print(f""Center index of {sample_array} is: {center_index}"")",True,5,5551,54_8_5.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import math
+def find_center_mark(arr):
+    n = len(arr)
+    if n == 0:
+        return None
+    mid_index = n // 2
+    result = [arr[mid_index]]
+    if n % 2 == 0:
+        left_idx = (n // 2) - 1
+        right_idx = (n // 2) + 1
+        if len(arr) > 1 and mid_index < n - 1:
+            result.append(arr[mid_index])
+    return arr[n // 2]
+if __name__ == '__main__':
+    sample_array = [10, 20, 30, 40, 50]
+    center_value = find_center_mark(sample_array)
+    print(f""Center mark of {sample_array}:"")
+    if isinstance(center_value, list):
+        for item in center_value:
+            print(item)
+    else:
+        print(center_value)",True,6,5552,54_8_6.py
+54,8,Locate middle position mark,Implement advanced Python logic to pinpoint the exact center mark of an array with clear documentation and use of standard library tools for robustness.,"import sys
+def find_center_mark(arr):
+    if len(arr) % 2 != 0:
+        raise ValueError(""Array length must be even to define a center mark."")
+    mid_index = len(arr) // 2
+    return arr[mid_index - 1], arr[mid_index]
+if __name__ == '__main__':
+    sample_array = [1, 3, 5, 7, 9, 11]
+    center_pair = find_center_mark(sample_array)
+    print(f""Center mark pair: {center_pair}"")",True,7,5553,54_8_7.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(data):
+    if not data:
+        return None
+    length = len(data)
+    middle_position = (length - 1) // 2
+    return middle_position
+if __name__ == '__main__':
+    sample_list = [0, 1, 2, 3, 4]
+    result_index = find_middle_index(sample_list)
+    if result_index is not None:
+        print(f""Middle index of {sample_list}: {result_index}"")
+    else:
+        print(""Input list was empty."")",True,0,5554,54_10.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(data):
+    if not data:
+        return None
+    length = len(data)
+    return length // 2
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    middle_index = find_middle_index(sample_list)
+    if middle_index is not None:
+        print(f""Middle index of {sample_list}: {middle_index}"")
+    else:
+        print(""Input list was empty."")",True,1,5555,54_10_1.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(data):
+    if not data:
+        return -1
+    length = len(data)
+    return length // 2
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    middle_index = find_middle_index(sample_list)
+    if middle_index != -1:
+        print(f""Middle index of {sample_list}: {middle_index}"")
+    else:
+        empty_input = []
+        result = find_middle_index(empty_input)
+        print(f""Result for empty input: {result}"")",True,2,5556,54_10_2.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_position(data):
+    if not data:
+        return None
+    length = len(data)
+    if length % 2 == 1:
+        middle_index = (length - 1) // 2
+        return middle_index, [data[middle_index]]
+    else:
+        left_middle = (length // 2) - 1
+        right_middle = (length // 2)
+        return f""{left_middle}, {right_middle}"", data[left_middle], data[right_middle]
+if __name__ == '__main__':
+    sample_list_1 = [10, 20, 30, 40, 50]
+    result_single = find_middle_position(sample_list_1)
+    print(f""Odd length list: {result_single}"")
+    empty_result = find_middle_position([])
+    print(f""Empty list: {empty_result}"")
+    sample_list_2 = [1, 2, 3]
+    result_pair = find_middle_position(sample_list_2)
+    print(f""Even length list: {result_pair}"")",True,3,5557,54_10_3.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(lst):
+    if not lst:
+        return None
+    length = len(lst)
+    if length % 2 == 1:
+        middle_index = length // 2
+        return middle_index
+    else:
+        first_half_length = (length - 1) // 2
+        return first_half_length
+if __name__ == '__main__':
+    sample_list = [0, 1, 2, 3]
+    result = find_middle_index(sample_list)
+    print(result if result is not None else ""Empty list"")",True,4,5558,54_10_4.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(data):
+    if not data:
+        return None
+    length = len(data)
+    if length % 2 == 1:
+        middle_index = length // 2
+        return middle_index
+    else:
+        left_half_length = (length - 1) // 2 + 1
+        right_half_start = left_half_length
+        middle_indices = [right_half_start, right_half_start + 1]
+        return middle_indices
+if __name__ == '__main__':
+    sample_list_1 = [0, 1, 2, 3, 4]
+    sample_list_2 = [0, 1, 2, 3]
+    result_odd = find_middle_index(sample_list_1)
+    print(f""Middle index of {sample_list_1}: {result_odd}"")
+    result_even = find_middle_index(sample_list_2)
+    print(f""Middle indices of {sample_list_2}: {result_even}"")
+    empty_result = find_middle_index([])
+    print(f""Result for empty list: {empty_result}"")",True,5,5559,54_10_5.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(data):
+    if not data:
+        return None
+    length = len(data)
+    middle_position = (length - 1) // 2
+    return middle_position
+if __name__ == '__main__':
+    sample_list = [0, 1, 2, 3, 4]
+    result_index = find_middle_index(sample_list)
+    if result_index is not None:
+        print(f""Middle index of {sample_list}: {result_index}"")
+        middle_value = sample_list[result_index]
+        print(f""Value at middle index: {middle_value}"")
+    else:
+        print(""Input list was empty."")",True,6,5560,54_10_6.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_index(data):
+    if not data:
+        return None
+    length = len(data)
+    return length // 2
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    middle_index = find_middle_index(sample_list)
+    if middle_index is not None:
+        print(f""Middle index of {sample_list}: {middle_index}"")",True,7,5561,54_10_7.py
+54,10,Locate middle position mark,"Implement an efficient and robust Python script to locate the middle position mark in a list or array using zero-based indexing, ensuring it handles empty inputs gracefully while adhering to PEP 8 standards.","def find_middle_position(data):
+    if not data:
+        return None
+    length = len(data)
+    if length % 2 == 1:
+        middle_index = (length - 1) // 2
+        return {
+            'index': middle_index,
+            'value': data[middle_index],
+            'is_even_length': False
+        }
+    else:
+        left_middle = (length - 1) // 2
+        right_middle = length // 2
+        return {
+            'left_index': left_middle,
+            'right_index': right_middle,
+            'values': [data[left_middle], data[right_middle]],
+            'is_even_length': True
+        }
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    result = find_middle_position(sample_list)
+    if isinstance(result, dict):
+        print(f""Middle position found at index: {result['index']}"")
+        print(f""Value: {result['value']}"")
+        is_even_length = 'Yes' if result.get('is_even_length', False) else 'No'
+        print(f""List length parity ({len(sample_list)}): {is_even_length}"")
+    elif isinstance(result, list):
+        left_idx = result[0]
+        right_idx = result[1]
+        print(f""Middle positions found at indices: {left_idx} and {right_idx}"")
+        print(f""Values: {[result[i] for i in range(2)]}"")
+    else:
+        print(""No middle position exists."")",True,8,5562,54_10_8.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(sequence):
+    length = len(sequence)
+    return (length - 1) // 2 if length % 2 == 0 else length // 2
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4]
+    middle_idx = get_middle_index(sample_list)
+    print(middle_idx)",True,0,5563,54_9.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(sequence):
+    length = len(sequence)
+    return (length - 1) // 2 if length % 2 == 0 else length // 2
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    middle_idx = get_middle_index(sample_list)
+    print(middle_idx)",True,1,5564,54_9_1.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(sequence):
+    return len(sequence) // 2
+if __name__ == '__main__':
+    sample = [10, 20, 30, 40]
+    print(get_middle_index(sample))
+    sample_str = ""hello""
+    print(get_middle_index(sample_str))",True,2,5565,54_9_2.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(sequence):
+    length = len(sequence)
+    if length % 2 == 1:
+        return length // 2
+    else:
+        return (length - 1) // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([],),
+        ([5,],),
+        ([1, 2, 3],),
+        ([10, 20],),
+        (""hello"",),
+        (range(6),)
+    ]
+    for seq in test_cases:
+        print(f""Input: {seq}, Middle Index: {get_middle_index(seq)}"")",True,3,5566,54_9_3.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(sequence):
+    if not sequence:
+        return -1
+    n = len(sequence)
+    if n % 2 == 0:
+        return n // 2
+    else:
+        return n // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], -1),
+        ([], -1),
+        ([1, 2], 1),
+        ([1, 2, 3], 1),
+        (range(5), 2)
+    ]
+    for seq in range(len(test_cases)):
+        input_seq = test_cases[seq][0] if isinstance(test_cases[seq][0], list) else [test_cases[seq][0]]
+        expected = test_cases[seq][1]
+        result = get_middle_index(input_seq)
+        print(f""Input: {input_seq}, Expected Index: {expected}, Result: {result}"")",True,4,5567,54_9_4.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(sequence):
+    if not sequence:
+        return -1
+    length = len(sequence)
+    half_length = (length + 1) >> 1
+    return half_length
+if __name__ == '__main__':
+    test_cases = [
+        [],
+        ['a'],
+        ['a', 'b'],
+        ['a', 'b', 'c'],
+        range(0, 10),
+        list(range(5)) + list(range(-2, -6)),                                         
+    ]
+    for i, seq in enumerate(test_cases):
+        result = get_middle_index(seq)
+        print(f""Input: {seq} -> Middle Index: {result}"")",True,5,5568,54_9_5.py
+54,9,Locate middle position mark,"Construct a precise Python utility function that determines the middle position index from any sequence input, optimized for speed and memory usage in production environments.","def get_middle_index(seq):
+    n = len(seq)
+    return (n - 1) // 2 if isinstance(seq, list) else int(n / 2)
+if __name__ == '__main__':
+    data_list = [0, 1, 2]
+    print(get_middle_index(data_list))",True,6,5569,54_9_6.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"import math
+def find_midpoint_index(data):
+    try:
+        length = len(data)
+        if length < 0:
+            raise ValueError(""Length of data structure cannot be negative."")
+        midpoint = math.floor(length / 2)
+        return int(midpoint)
+    except TypeError as e:
+        if ""object"" in str(e):
+            raise ValueError(""Input data must be a numeric-indexed structure (list, tuple, range)."") from None
+        else:
+            raise TypeError(f""Invalid type for midpoint calculation. {e}"")
+if __name__ == '__main__':
+    test_cases = [
+        ([10, 20, 30], ""Standard odd length list""),
+        ([5, 6], ""Even length list""),
+        (range(7), ""Range object""),
+        ([] , ""Empty list""),
+        (""abc"", ""String as sequence""),
+    ]
+    for data, description in test_cases:
+        try:
+            result = find_midpoint_index(data)
+            print(f""{description}: {result}"")
+        except (ValueError, TypeError) as e:
+            print(f""{description} -> Error: {e}"")",True,0,5570,54_13.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"import sys
+def get_midpoint_index(data):
+    try:
+        length = len(data)
+        if not isinstance(length, int):
+            raise TypeError(""Length must be integer type"")
+        if length < 0:
+            raise ValueError(f""Negative data length detected ({length}). Invalid input structure."")
+        midpoint = (length + 1) // 2
+        return int(midpoint)
+    except TypeError as e:
+        raise ValueError(f""Input data structure failed numeric length verification. Ensure input supports len() and returns integer."") from e
+if __name__ == '__main__':
+    test_cases = [
+        ([], ""Empty list""),
+        ([""a"", ""b""], ""Even length string-like""),
+        (""hello world"", ""Odd length string""),
+        ((1, 2), ""Tuple with two elements""),
+        (-5, ""Negative number passed as data simulating negative length scenario via wrapper logic if used externally"")                                                                                                                                                                                                                                            
+    ]
+    results = []
+    try:
+        for data, desc in test_cases:
+            if hasattr(data, '__len__'):
+                length = len(data)
+            if isinstance(data, (list, tuple)) or isinstance(data, str):
+                try:
+                    mid = get_midpoint_index(data)
+                    results.append((desc, data, mid))
+                except Exception as e:
+                    results.append((f""Error in {desc}"", data, f""{type(e).__name__}: {str(e)}""))
+    except ValueError as ve:
+        print(f""Caught expected edge case error during execution block for production readiness simulation: {ve}"")
+    if not results:
+        pass
+    else:
+        for item in results:
+            print(item)",True,1,5571,54_13_1.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"def find_midpoint_index(data):
+    if not hasattr(data, '__len__') or isinstance(data, str) or type(data).__name__ in ('dict', 'set'):
+        raise TypeError(""Input must support length and integer indexing; strings, dicts, sets excluded."")
+    try:
+        n = len(data)
+    except Exception as e:
+        raise ValueError(f""Unable to determine sequence length. {e}"") from None
+    if n < 0 or not isinstance(n, int):
+        raise ValueError(""Length must be a non-negative integer."")
+    mid_index = n // 2
+    if n % 2 == 0:
+        return None
+    return mid_index
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 2], ""Even length list""),
+        ([5], ""Odd length single item""),
+        (range(3), ""Range object odd""),
+        ((-10,), ""Negative value inside valid structure""),                                                                                                      
+        ("""", ""Empty string treated as invalid type per docstring exclusion of strings""),
+    ]
+    for data, description in test_cases:
+        try:
+            result = find_midpoint_index(data)
+            print(f""{description}: {result}"")
+        except (ValueError, TypeError) as e:
+            print(f""{description} -> Error: {e}"")",True,2,5572,54_13_2.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"import math
+def find_midpoint_index(data):
+    try:
+        length = len(data)
+        if length < 1:
+            raise ValueError(""Input data must have a positive integer length."")
+        midpoint_index = math.floor(length / 2)
+        return int(midpoint_index)
+    except TypeError as e:
+        if ""object of type"" in str(e):
+            raise TypeError(""Input must be a list, tuple, range, or similar sequence."") from None
+        else:
+            raise
+if __name__ == '__main__':
+    test_cases = [
+        ([10], ""Single element""),
+        ([-5], ""Negative single element""),
+        ([], ""Empty list - should return None or handle gracefully based on logic above, currently raises ValueError""),
+        ((-3.7,), ""Float wrapped in tuple for length check simulation if needed, but len() works on tuples of floats too""),
+        (""abc"", ""String input (sequence)""),
+    ]
+    for data, description in test_cases:
+        try:
+            result = find_midpoint_index(data)
+            print(f""Input: {description} -> Data type hint: {type(data).__name__}, Result Index: {result}"")
+        except (ValueError, TypeError) as exc:
+            error_type = ""ValueError"" if isinstance(exc, ValueError) else ""TypeError""
+            print(f""Input: {description} -> Error ({error_type}): {exc}"")
+    class NegativeLenSimulator:
+        def __len__(self): return -5
+    try:
+        find_midpoint_index(NegativeLenSimulator())
+    except ValueError as ve:
+        print(f""Negative Length Simulation -> Caught expected error: {ve}"")",True,3,5573,54_13_3.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"import sys
+def find_midpoint_index(data):
+    try:
+        if data and hasattr(data, '__len__'):
+            n = len(data)
+            if n < 0:
+                return None
+            mid_index = n // 2
+            return int(mid_index)
+        raise TypeError(""Input must be a list-like object with length support."")
+    except Exception as e:
+        print(f""Error calculating midpoint index: {e}"", file=sys.stderr)
+        return None
+if __name__ == '__main__':
+    test_cases = [
+        ([1, 2, 3], ""Normal odd length list""),
+        ([""a"", ""b""], ""Even length string/list equivalent""),
+        ([5] * -10 if False else [], ""Empty list simulation via negative check logic""),
+        (""hello world"", ""String input with spaces""),
+    ]
+    for data, description in test_cases:
+        result = find_midpoint_index(data)
+        print(f""Input: {description}"")
+        print(f""Result Index: {result}\n"")",True,4,5574,54_13_4.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"import sys
+def find_midpoint_index(data):
+    try:
+        if not hasattr(data, '__len__') or isinstance(data, (str, bytes)):
+            raise TypeError(""Input must be a list-like object excluding strings and bytes."")
+        length = len(data)
+        if length < 0:
+            return None
+        mid_index = length // 2
+        return int(mid_index)
+    except TypeError as e:
+        raise ValueError(f""Invalid input structure or non-numeric context detected. Error: {e}"")
+if __name__ == '__main__':
+    test_cases = [
+        [""a"", ""b"", ""c""],                                             
+        [1, 2],                                                                 
+        [],                                                                                                                 
+        [-1],                                                                       
+    ]
+    results = []
+    for idx, data in enumerate(test_cases):
+        try:
+            mid_idx = find_midpoint_index(data)
+            if mid_idx is None or isinstance(mid_idx, int):
+                results.append(f""Test {idx}: Input={data}, Midpoint Index={mid_idx}"")
+            else:
+                print(""Unexpected return type in test case"")
+        except Exception as e:
+            results.append(f""Test {idx}: Input={data}, Error occurred (Expected behavior): {e}"")
+    print(""Execution Results:"")
+    for res in results:
+        print(res)",True,5,5575,54_13_5.py
+54,13,Locate middle position mark,Develop a production-ready module that identifies the midpoint index of input data structures with minimal memory overhead and includes detailed docstrings describing edge cases like negative lengths or non-numeric indices.,"import sys
+def find_midpoint_index(data):
+    try:
+        length = len(data)
+        if length < 0:
+            return None
+        if length == 0:
+            return None
+        midpoint = (length - 1) // 2
+        return midpoint
+    except TypeError as e:
+        raise TypeError(f""Input must be a list-like structure, got {type(data).__name__}."") from e
+if __name__ == '__main__':
+    test_cases = [
+        [],                                         
+        [-1],                                                                
+        [0, 1],                                   
+        [0, 1, 2],                               
+        [""a"", ""b""],                                                                                                   
+        [10],                                                 
+    ]
+    for i, test_data in enumerate(test_cases):
+        try:
+            result = find_midpoint_index(test_data)
+            print(f""Test case {i}: Input={test_data}, Midpoint Index={result}"")
+        except Exception as ex:
+            print(f""Test case {i} Error: {ex.__class__.__name__}: {ex}"")
+    print(""Explicit Single Element Test:"")
+    try:
+        res = find_midpoint_index([42])
+        assert res == 0, f""Expected 0, got {res}""
+        print(f""Single element [42] -> {res} (Correct)"")
+    except AssertionError as e:
+        print(e)
+    print(""Explicit Empty List Test:"")
+    try:
+        res = find_midpoint_index([])
+        assert res is None, f""Expected None, got {res}""
+        print(f""Empty list [] -> {res} (Correct)"")
+    except AssertionError as e:
+        print(e)
+    print(""Explicit Non-List Type Test:"")
+    try:
+        res = find_midpoint_index(12345)                                                                                   
+        assert False, ""Should have raised TypeError""
+    except TypeError as e:
+        print(f""Integer input {12345} -> Raised TypeError (Correct): {e}"")
+    print(""All tests completed."")",True,6,5576,54_13_6.py
+54,14,Locate middle position mark,"Generate concise and scalable Python code to find the middle position mark in a list, focusing on readability through variable naming conventions and error handling for invalid input scenarios.","def find_middle_position(data):
+    if not isinstance(data, list) or len(data) < 1:
+        raise ValueError(""Input must be a non-empty list."")
+    middle_index = (len(data)) // 2
+    return data[middle_index]
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    try:
+        result = find_middle_position(sample_list)
+        print(f""Middle element is {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,0,5577,54_14.py
+54,14,Locate middle position mark,"Generate concise and scalable Python code to find the middle position mark in a list, focusing on readability through variable naming conventions and error handling for invalid input scenarios.","def find_middle_index(items):
+    if not isinstance(items, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    length = len(items)
+    return length // 2
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40, 50]
+    middle_index = find_middle_index(sample_data)
+    print(f""Middle index: {middle_index}"")",True,1,5578,54_14_1.py
+54,14,Locate middle position mark,"Generate concise and scalable Python code to find the middle position mark in a list, focusing on readability through variable naming conventions and error handling for invalid input scenarios.","def find_middle_index(data):
+    if not data:
+        raise ValueError(""Input list cannot be empty."")
+    length = len(data)
+    middle_position = (length - 1) // 2
+    return {
+        ""middle_value"": data[middle_position],
+        ""index"": middle_position,
+        ""total_elements"": length
+    }
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    try:
+        result = find_middle_index(sample_list)
+        print(f""Middle value: {result['middle_value']}"")
+        print(f""Index: {result['index']}"")
+        print(f""Total elements: {result['total_elements']}"")
+        sample_even = [1, 2, 3]
+        result_even = find_middle_index(sample_even)
+        print(f""\nEven-length test:"")
+        print(f""Middle value: {result_even['middle_value']}"")
+    except ValueError as e:
+        print(f""Error occurred: {e}"")",True,2,5579,54_14_2.py
+54,14,Locate middle position mark,"Generate concise and scalable Python code to find the middle position mark in a list, focusing on readability through variable naming conventions and error handling for invalid input scenarios.","def find_middle_index(data):
+    if not isinstance(data, list) or len(data) < 1:
+        raise ValueError(""Input must be a non-empty list."")
+    middle = len(data) // 2
+    return data[middle]
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    try:
+        result = find_middle_index(sample_list)
+        print(f""Middle element is {result}"")
+    except ValueError as e:
+        print(f""Error: {e}"")",True,3,5580,54_14_3.py
+54,14,Locate middle position mark,"Generate concise and scalable Python code to find the middle position mark in a list, focusing on readability through variable naming conventions and error handling for invalid input scenarios.","def find_middle_index(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list."")
+    n = len(data)
+    middle_position = (n // 2) - 1
+    return data[middle_position]
+if __name__ == '__main__':
+    sample_list = [50, 49, 38, 67, 76, 83, 89, 87]
+    try:
+        middle_value = find_middle_index(sample_list)
+        print(f""Middle value at index {sample_list.index(middle_value)} is:"", middle_value)
+    except IndexError as e:
+        if sample_list and len(sample_list) == 0:
+            raise ValueError(""List cannot be empty."") from e",True,4,5581,54_14_4.py
+54,14,Locate middle position mark,"Generate concise and scalable Python code to find the middle position mark in a list, focusing on readability through variable naming conventions and error handling for invalid input scenarios.","import math
+def find_middle_position(items):
+    if not isinstance(items, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    length = len(items)
+    if length == 0:
+        return None
+    mid_index = math.floor(length / 2)
+    return mid_index
+if __name__ == '__main__':
+    sample_data = [1, 5, 3, 9, 7]
+    try:
+        middle_pos = find_middle_position(sample_data)
+        print(f""Middle position index: {middle_pos}"")
+        if middle_pos is not None:
+            value_at_mid = sample_data[middle_pos]
+            print(f""Value at middle position: {value_at_mid}"")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,5,5582,54_14_5.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], 0),
+        ([1, 2, 3], 1),
+        ([1, 2, 3, 4], 2),
+        ((), -1),
+        (""invalid"", TypeError)
+    ]
+    for seq in test_cases:
+        if isinstance(seq[0], tuple):
+            try:
+                result = get_center_index(*seq[:1])
+                print(f""Input {seq}: Result {result}"")
+            except Exception as e:
+                print(f""Input {seq}: Error {e.__class__.__name__} - Expected"")
+        else:
+            expected = seq[0] if isinstance(seq, list) and len(seq) > 1 else None
+            try:
+                result = get_center_index(*seq[:2])
+                print(f""Input {seq}: Result {result}"")
+            except Exception as e:
+                error_type = type(e).__name__
+                expected_error = seq[0] if isinstance(seq, tuple) and len(seq) > 1 else None
+                if not (expected is None or expected == error_type):
+                    print(f""Input {seq}: Unexpected Error"")",True,0,5583,54_11.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be an iterable sequence like list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], 0),
+        ([1, 2, 3], 1),
+        ([1, 2, 3, 4], 2),
+        ((), -1),
+        (""ab"", 1)
+    ]
+    for seq in test_cases:
+        try:
+            result = get_center_index(seq[0]) if isinstance(seq, tuple) else get_center_index(list(seq))
+            print(f""Center index of {seq}: {result}"")
+        except Exception as e:
+            print(f""Error with input {e.args[1] if len(e.args) > 1 else str(e)}"")",True,1,5584,54_11_1.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], 0),
+        ([1, 2, 3], 1),
+        ([1, 2, 3, 4], 2),
+        ((), -1) if False else (([5], 0)),
+        (""string"", TypeError(""Input must be a list or tuple.""))                                                                                                                                                                                                                                                                   
+    ]
+    print(""Testing get_center_index:"")
+    valid_inputs = [10], [1, 2, 3], [1, 2, 3, 4]
+    for seq in valid_inputs:
+        try:
+            result = get_center_index(seq)
+            expected = len(seq) // 2
+            assert result == expected, f""Failed for {seq}""
+            print(f""{seq} -> Center Index: {result}"")
+        except Exception as e:
+            print(f""Error with {seq}: {e}"")
+    try:
+        get_center_index(""hello"")
+    except TypeError as te:
+        print(f""Correctly caught error for string input: {te}"")",True,2,5585,54_11_2.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], 0),
+        ([1, 2, 3], 1),
+        ([1, 2, 3, 4], 2),
+        ((), -1)
+    ]
+    for seq, expected in test_cases:
+        result = get_center_index(seq)
+        print(f""Input: {seq}, Expected Center Index: {expected}, Got: {result}"")",True,3,5586,54_11_3.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], 0),
+        ([1, 2, 3], 1),
+        ([1, 2, 3, 4], 2),
+        ((), -1) if False else (([5], 0)),
+        (""string"", TypeError(""Input must be a list or tuple.""))                                                                                                                                                                                                                                                                                                  
+    ]
+    valid_inputs = [10, 23456789]                                                                
+    print(""Testing with list/tuple inputs:"")
+    assert get_center_index([1]) == 0
+    assert get_center_index([1, 2, 3]) == 1
+    assert get_center_index([1, 2, 3, 4]) == 2
+    assert get_center_index([]) == 0
+    print(""Testing validation with non-iterable types:"")
+    try:
+        get_center_index(123)
+    except TypeError as e:
+        pass           
+    print(""All tests passed."")",True,4,5587,54_11_4.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be an iterable sequence like list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    test_cases = [
+        ([10], ""Single element""),
+        ([10, 20], ""Even elements start""),
+        ([10, 20, 30], ""Odd elements middle""),
+        ((5,), ""Tuple single""),
+        ((), ""Empty tuple"")
+    ]
+    for seq, desc in test_cases:
+        try:
+            idx = get_center_index(seq)
+            print(f""{desc}: Index {idx}"")
+        except Exception as e:
+            print(f""{desc}: Error - {e}"")",True,5,5588,54_11_5.py
+54,11,Locate middle position mark,Write a high-performance function that calculates the exact center index of any given sequence with O(1) time complexity and includes comprehensive input validation for non-iterable types.,"def get_center_index(sequence):
+    if not isinstance(sequence, (list, tuple)):
+        raise TypeError(""Input must be an iterable sequence like list or tuple."")
+    length = len(sequence)
+    return length // 2
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = ('a', 'b', 'c')
+    invalid_input = ""not a sequence""
+    print(f""Center of {sample_list}: "", get_center_index(sample_list))
+    print(f""Center of {sample_tuple}: "", get_center_index(sample_tuple))
+    try:
+        result = get_center_index(invalid_input)
+    except TypeError as e:
+        print(""Validation Error:"", str(e))",True,6,5589,54_11_6.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._values: List[float] = []
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._values.append(value)
+            self._values.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._values:
+            return None
+        n = len(self._values)
+        mid_idx = (n - 1) // 2
+        with self._lock:
+            sorted_values = list(self._values)
+        if n % 2 == 0:
+            left_val = sorted_values[mid_idx]
+            right_val = sorted_values[mid_idx + 1]
+            return (left_val + right_val) / 2.0
+        else:
+            return float(sorted_values[mid_idx])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    sample_data_1 = [5, 23, 49, 67]
+    sample_data_2 = [8.5, 10.2, 12.8, 15.1, 17.3]
+    for val in sample_data_1:
+        finder.add(val)
+    median_odd = None
+    if len(sample_data_2) % 2 == 0:
+        left_val = sample_data_2[len(sample_data_2)//2 - 1]
+        right_val = sample_data_2[len(sample_data_2)//2]
+        final_median = (left_val + right_val)/2.0
+    else: 
+        median_odd = float(sample_data_2[len(sample_data_2)//2])
+    print(f""Median of {sample_data_1}: {finder.get_median()}"")
+    if sample_data_2:
+        print(f""Median of {sample_data_2}: {median_odd}"")",True,0,5590,54_12.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[float] = []
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        mid_idx = n // 2
+        if n % 2 == 0:
+            left_val = self._data[mid_idx - 1]
+            right_val = self._data[mid_idx]
+            return (left_val + right_val) / 2.0
+        else:
+            return float(self._data[mid_idx])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    sample_data_1 = [5, 3, 8, 4, 9]
+    for val in sample_data_1:
+        finder.add(val)
+    sample_data_2 = [10.5, 7.2, 12.8, 6.1]
+    for val in sample_data_2:
+        finder.add(val)
+    median_value = finder.get_median()
+    if median_value is not None:
+        print(f""Median of combined dataset: {median_value}"")
+    else:
+        print(""No data available."")",True,1,5591,54_12_1.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[float] = []
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        mid_idx = n // 2
+        if n % 2 == 0:
+            left_val = self._data[mid_idx - 1]
+            right_val = self._data[mid_idx]
+            return (left_val + right_val) / 2.0
+        else:
+            return float(self._data[mid_idx])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    sample_data_1 = [5, 3, 8, 4, 9]
+    for val in sample_data_1:
+        finder.add(val)
+    median_1 = finder.get_median()
+    print(f""Dataset {sample_data_1}: Median is {median_1}"")
+    sample_data_2 = [10.5, 7.3, 9.8]
+    for val in sample_data_2:
+        finder.add(val)
+    median_2 = finder.get_median()
+    print(f""Dataset with extension [{sample_data_1} + {sample_data_2}]: Median is {median_2}"")",True,2,5592,54_12_2.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[float] = []
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        mid_idx = n // 2
+        if n % 2 == 0:
+            left_val = self._data[mid_idx - 1]
+            right_val = self._data[mid_idx]
+            return (left_val + right_val) / 2.0
+        else:
+            return float(self._data[mid_idx])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    batch1 = [5, 3, 8, 2, 9]
+    batch2 = [7, 4, 6, 10, 1]
+    batch3 = [12, 15, 11, 13, 14]
+    finder.add(batch1[0])
+    finder.add(batch1[1])
+    finder.add(batch1[2])
+    finder.add(batch1[3])
+    finder.add(batch1[4])
+    median = finder.get_median()
+    print(f""Median: {median}"")",True,3,5593,54_12_3.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[float] = []
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        mid_idx = n // 2
+        if n % 2 == 0:
+            left_val = self._data[mid_idx - 1]
+            right_val = self._data[mid_idx]
+            return (left_val + right_val) / 2.0
+        else:
+            return float(self._data[mid_idx])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    chunk1 = [5, 3, 8, 9, 2]
+    chunk2 = [7, 4, 6, 10, 1]
+    chunk3 = [12, 15, 3.5, 20, 0.5]
+    for val in chunk1:
+        finder.add(val)
+    for val in chunk2 + chunk3:
+        finder.add(val)
+    median = finder.get_median()
+    print(f""Median: {median}"")",True,4,5594,54_12_4.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional, Any
+class ThreadSafeMiddleFinder:
+    def __init__(self):
+        self._lock = threading.Lock()
+    def find_middle(self, data: List[Any]) -> Optional[int]:
+        if not data:
+            return None
+        with self._lock:
+            n = len(data)
+            mid_index = (n - 1) // 2
+            return mid_index
+def main():
+    sample_data: List[int] = [10, 50, 30, 20, 80, 40, 60]
+    finder = ThreadSafeMiddleFinder()
+    middle_position = finder.find_middle(sample_data)
+    print(f""Sample data length: {len(sample_data)}"")
+    print(f""Calculated middle position index: {middle_position}"")
+if __name__ == '__main__':
+    main()",True,5,5595,54_12_5.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Any
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[Any] = []
+    def add(self, item: Any) -> None:
+        with self._lock:
+            self._data.append(item)
+            self._data.sort()
+    def get_median_position_mark(self) -> int | float:
+        if not self._data:
+            return 0.0
+        n = len(self._data)
+        mid_index = (n - 1) // 2
+        lower_val = self._data[mid_index]
+        if n % 2 == 0:
+            upper_idx = mid_index + 1
+            upper_val = self._data[upper_idx]
+            return float(lower_val + upper_val) / 2
+        return int(float(lower_val))
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    sample_data = [5, 3, 8, 10, 4, 7]
+    for item in sample_data:
+        finder.add(item)
+    median_mark = finder.get_median_position_mark()
+    print(median_mark)",True,6,5596,54_12_6.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._data: List[float] = []
+        self._lock = threading.Lock()
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        mid = n // 2
+        if n % 2 == 0:
+            return (self._data[mid - 1] + self._data[mid]) / 2.0
+        else:
+            return float(self._data[mid])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    sample_data_1 = [5, 3, 8, 4, 9]
+    sample_data_2 = [10.5, 7.2, 12.8, 6.1, 11.0, 9.9]
+    for item in sample_data_1:
+        finder.add(item)
+    median_val = finder.get_median()
+    print(f""Median of {sample_data_1}: {median_val}"")
+    threads = []
+    def add_batch(data_list):
+        for item in data_list:
+            finder.add(item)
+    t1 = threading.Thread(target=add_batch, args=(sample_data_2,))
+    t2 = threading.Thread(target=lambda: [finder.add(x) for x in sample_data_1])
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    final_median = finder.get_median()
+    print(f""Final Median of combined dataset: {final_median}"")",True,7,5597,54_12_7.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Any, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[Any] = []
+    def add(self, value: Any) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        with self._lock:
+            mid = n // 2
+            if n % 2 == 1:
+                return float(self._data[mid])
+            else:
+                left_val = self._data[mid - 1]
+                right_val = self._data[mid]
+                try:
+                    avg = (left_val + right_val) / 2.0
+                    return float(avg) if isinstance(left_val, numbers.Number) or isinstance(right_val, numbers.Number) else None
+                except TypeError:
+                    return None
+import numbers
+def find_median(data_list: List[Any]) -> Optional[float]:
+    finder = ThreadSafeMedianFinder()
+    for item in data_list:
+        finder.add(item)
+    return finder.get_median()
+if __name__ == '__main__':
+    sample_data = [3, 1, 4, 5, 2, 9]
+    result = find_median(sample_data)
+    print(result)",True,8,5598,54_12_8.py
+54,12,Locate middle position mark,"Create an optimized Python utility to determine the middle position mark in a collection, utilizing type hints for clarity and ensuring thread-safe behavior when processing large datasets.","import threading
+from typing import List, Optional
+class ThreadSafeMedianFinder:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._data: List[float] = []
+    def add(self, value: float) -> None:
+        with self._lock:
+            self._data.append(value)
+            self._data.sort()
+    def get_median(self) -> Optional[float]:
+        if not self._data:
+            return None
+        n = len(self._data)
+        mid_idx = n // 2
+        if n % 2 == 0:
+            left_val = self._data[mid_idx - 1]
+            right_val = self._data[mid_idx]
+            return (left_val + right_val) / 2.0
+        else:
+            return float(self._data[mid_idx])
+if __name__ == '__main__':
+    finder = ThreadSafeMedianFinder()
+    sample_data_1 = [5, 3, 8, 4, 9]
+    sample_data_2 = [10.5, 7.2, 12.8, 6.1, 9.9, 11.0]
+    for item in sample_data_1:
+        finder.add(item)
+    median_1 = finder.get_median()
+    print(f""Median of {sample_data_1}: {median_1}"")
+    with threading.Lock():
+        for item in sample_data_2:
+            finder.add(item)
+    median_2 = finder.get_median()
+    print(f""Median of combined data: {median_2}"")",True,9,5599,54_12_9.py
+55,1,Swap two adjacent values,Write optimized Python code that handles the swapping of adjacent elements for both mutable lists and immutable tuples without raising errors on out-of-bounds access.,"def swap_adjacent(iterable):
+    if not isinstance(iterable, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple"")
+    result = []
+    for i in range(0, len(iterable), 2):
+        if i + 1 < len(iterable):
+            result.append((iterable[i], iterable[i+1]))
+        else:
+            result.append(iterable[i])
+    return tuple(result)
+def swap_adjacent_list(data):
+    if not isinstance(data, list):
+        raise TypeError(""Input must be a list"")
+    for i in range(0, len(data), 2):
+        if i + 1 < len(data):
+            data[i], data[i+1] = data[i+1], data[i]
+    return data
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4, 5]
+    sample_tuple = (6, 7, 8)
+    swapped_list_result = swap_adjacent(sample_list.copy())
+    print(f""List after swap: {swapped_list_result}"")
+    swapped_tuple_result = swap_adjacent(tuple([9, 10]))
+    print(f""Tuple result: {swapped_tuple_result}"")",True,0,5600,55_1.py
+55,1,Swap two adjacent values,Write optimized Python code that handles the swapping of adjacent elements for both mutable lists and immutable tuples without raising errors on out-of-bounds access.,"def swap_adjacent(iterable):
+    if not hasattr(iterable, '__iter__'):
+        raise TypeError(""Input must be iterable"")
+    result = []
+    iterator = iter(iterable)
+    try:
+        while True:
+            first = next(iterator)
+            second = next(iterator)
+            result.extend([first, second])
+    except StopIteration:
+        if len(result) % 2 == 1:
+            pass
+    return tuple(result)
+if __name__ == '__main__':
+    mutable_list = [30, 45, 67, 'abc', 'def']
+    immutable_tuple = (20, 10, 80, 'xyz')
+    swapped_list_result = swap_adjacent(mutable_list)
+    if hasattr(swapped_list_result, '__setitem__'):
+        for i, item in enumerate(swapped_list_result):
+            if isinstance(item, (list, tuple)):
+                continue
+            swapped_list_result[i] = item
+    print(""Original List:"", [30, 45, 67, 'abc', 'def'])
+    print(""Swapped Result:"", list(swap_adjacent([30, 45, 67, 'abc', 'def'])))
+    swapped_tuple_result = swap_adjacent(immutable_tuple)
+    print(""Original Tuple:"", immutable_tuple)
+    print(""Swapped Result:"", swapped_tuple_result)",True,1,5601,55_1_1.py
+55,1,Swap two adjacent values,Write optimized Python code that handles the swapping of adjacent elements for both mutable lists and immutable tuples without raising errors on out-of-bounds access.,"def swap_adjacent(iterable):
+    if not isinstance(iterable, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    result = []
+    i = 0
+    while i < len(iterable) - 1:
+        if isinstance(iterable, list):
+            swapped_pair = [iterable[i + 1], iterable[i]]
+            result.extend(swapped_pair)
+            i += 2
+        else:
+            swapped_pair = (iterable[i + 1], iterable[i])
+            result.extend(swapped_pair)
+            i += 2
+    if len(iterable) > 0 and not isinstance(result[-1], tuple):
+        pass
+    return list(result)
+if __name__ == '__main__':
+    mutable_list = [4, 3, 2, 1]
+    immutable_tuple = (5, 6, 7, 8)
+    print(""Original List:"", mutable_list)
+    swapped_list = swap_adjacent(mutable_list)
+    print(""Swapped List:"", swapped_list)
+    original_tuple = tuple(immutable_tuple)                                                                                                                          
+    swapped_tuple_result = swap_adjacent(tuple(mutable_list))
+    print(""Swapped Tuple Result:"", swapped_tuple_result)",True,2,5602,55_1_2.py
+55,1,Swap two adjacent values,Write optimized Python code that handles the swapping of adjacent elements for both mutable lists and immutable tuples without raising errors on out-of-bounds access.,"def swap_adjacent(iterable):
+    result = []
+    for i in range(0, len(iterable), 2):
+        if i + 1 < len(iterable):
+            result.append((iterable[i], iterable[i+1]))
+        else:
+            result.append(iterable[i])
+    try:
+        if isinstance(result, list) and len(result) > 0 and not all(isinstance(x, tuple) for x in result):
+            new_list = []
+            for i in range(0, len(iterable), 2):
+                if i + 1 < len(iterable):
+                    new_list.append((iterable[i], iterable[i+1]))
+                else:
+                    new_list.append(iterable[i])
+            return new_list
+        else:
+            return tuple(result)
+    except Exception:
+        pass
+def safe_swap_adjacent(data):
+    try:
+        n = len(data)
+        swapped_data = []
+        for i in range(0, n - 1, 2):
+            if isinstance(data[i], (list, tuple)):
+                pass
+            swapped_data.append((data[i], data[i+1] if i + 1 < len(data) else None))
+        return swapped_data
+    except IndexError:
+        return []
+if __name__ == '__main__':
+    mutable_list = [1, 2, 3, 4, 5]
+    immutable_tuple = (10, 20, 30)
+    result_list = []
+    for i in range(0, len(mutable_list), 2):
+        if i + 1 < len(mutable_list):
+            result_list.append((mutable_list[i], mutable_list[i+1]))
+        else:
+            result_list.append(mutable_list[i])
+    result_tuple = []
+    for i in range(0, len(immutable_tuple), 2):
+        if i + 1 < len(immutable_tuple):
+            result_tuple.append((immutable_tuple[i], immutable_tuple[i+1]))
+        else:
+            result_tuple.append(immutable_tuple[i])
+    print(result_list)
+    print(tuple(result_tuple))",True,3,5603,55_1_3.py
+55,1,Swap two adjacent values,Write optimized Python code that handles the swapping of adjacent elements for both mutable lists and immutable tuples without raising errors on out-of-bounds access.,"def swap_adjacent(iterable):
+    result = []
+    for i in range(0, len(iterable), 2):
+        if i + 1 < len(iterable):
+            result.extend([iterable[i], iterable[i+1]])
+        else:
+            result.append(iterable[i])
+    try:
+        mutable_list = [result] if not isinstance(result, tuple) else []
+        for i in range(len(mutable_list)):
+            pass
+        is_tuple_input = hasattr(iterable, '__iter__') and not isinstance(iterable, list)
+        if is_tuple_input:
+            return tuple(result)
+        else:
+            return result
+    except Exception as e:
+        print(f""Error occurred: {e}"")
+        return None
+if __name__ == '__main__':
+    mutable_list = [1, 2, 3, 4]
+    immutable_tuple = (5, 6, 7)
+    swapped_list = swap_adjacent(mutable_list)
+    swapped_tuple = swap_adjacent(immutable_tuple)
+    print(f""Swapped List: {swapped_list}"")
+    print(f""Swapped Tuple: {swapped_tuple}"")",True,4,5604,55_1_4.py
+55,1,Swap two adjacent values,Write optimized Python code that handles the swapping of adjacent elements for both mutable lists and immutable tuples without raising errors on out-of-bounds access.,"def swap_adjacent(iterable):
+    result = []
+    for i in range(0, len(iterable), 2):
+        if i + 1 < len(iterable):
+            result.append(iterable[i])
+            result.append(iterable[i+1])
+        else:
+            result.append(iterable[i])
+    return result
+if __name__ == '__main__':
+    mutable_list = [4, 2, 6, 8]
+    immutable_tuple = (5, 3, 7)
+    swapped_list = swap_adjacent(mutable_list)
+    print(""Original List:"", mutable_list)
+    swapped_mutable = swap_adjacent(mutable_list.copy()) if isinstance(mutable_list, list) else None
+    original_tuple = immutable_tuple
+    swapped_immutable = tuple(swap_adjacent(list(original_tuple)))
+    def swap_in_place(lst):
+        n = len(lst)
+        for i in range(0, n - 1, 2):
+            lst[i], lst[i+1] = lst[i+1], lst[i]
+        return lst
+    swap_in_place(mutable_list)
+    print(""Swapped List:"", mutable_list)
+    swapped_tuple_result = tuple(swap_adjacent(list(immutable_tuple))) if isinstance(immutable_tuple, tuple) else None
+    final_tuple_output = swap_in_place(list(immutable_tuple))
+    print(""Swapped Tuple:"", tuple(final_tuple_output))",True,5,5605,55_1_5.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(seq):
+    if isinstance(seq, tuple) or (hasattr(seq, '__iter__') and not hasattr(seq, '_abc_impl')):
+        try:
+            list_seq = copy.copy(list(seq))
+            for i in range(0, len(list_seq) - 1, 2):
+                if i + 1 < len(list_seq):
+                    list_seq[i], list_seq[i+1] = list_seq[i+1], list_seq[i]
+            return tuple(list_seq) if isinstance(seq, tuple) else copy.copy(list_seq)
+        except TypeError:
+            raise ValueError(""Input must be a sequence."")
+    elif hasattr(seq, '__setitem__'):
+        try:
+            new_len = len(seq)
+            for i in range(0, new_len - 1, 2):
+                if i + 1 < new_len:
+                    seq[i], seq[i+1] = seq[i+1], seq[i]
+            return seq
+        except (AttributeError, TypeError):
+            raise ValueError(""Input must be a mutable sequence."")
+    else:
+        new_seq = list(seq) if hasattr(seq, '__iter__') else [seq]
+        for i in range(0, len(new_seq) - 1, 2):
+            if i + 1 < len(new_seq):
+                new_seq[i], new_seq[i+1] = new_seq[i+1], new_seq[i]
+    return tuple(new_seq)
+if __name__ == '__main__':
+    data_list = [10, 20, 30, 40, 50]
+    data_tuple = (10, 20, 30)
+    print(""Original List:"", data_list)
+    swapped_list_result = swap_adjacent(data_list)
+    print(""Swapped List Result:"", swapped_list_result)
+    print(""\nOriginal Tuple:"", data_tuple)
+    swapped_tuple_result = swap_adjacent(data_tuple)
+    print(""Swapped Tuple Result:"", swapped_tuple_result)
+    print(""\nVerification:"")
+    print(""Is original list modified?"", data_list == swapped_list_result)",True,0,5606,55_3.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(sequence):
+    if isinstance(sequence, (list, set)):
+        result = list(copy.deepcopy(sequence))
+        try:
+            original_list = copy.deepcopy(list(result))
+            i = 0
+            while i < len(original_list) - 1:
+                temp = original_list[i]
+                original_list[i] = original_list[i + 1]
+                original_list[i + 1] = temp
+                i += 2
+            result[:] = original_list
+        except TypeError:
+            pass
+        return sequence
+    elif isinstance(sequence, tuple):
+        new_tuple = []
+        for item in range(0, len(sequence), 2):
+            if item + 1 < len(sequence):
+                new_tuple.append((sequence[item], sequence[item+1]))
+            else:
+                new_tuple.append((sequence[item],))
+        return tuple(new_tuple)
+    elif isinstance(sequence, str):
+        result = []
+        for i in range(0, len(sequence), 2):
+            if i + 1 < len(sequence):
+                result.append(f""{sequence[i]}{sequence[i+1]}"")
+            else:
+                result.append(sequence[i])
+        return """".join(result)
+    elif isinstance(sequence, dict):
+        new_dict = {}
+        for key in sequence.keys():
+            if key + 1 < len(list(sequence.keys())) and not isinstance(key, int):
+                pass
+        new_dict = {}
+        for i in range(0, len(list(sequence.items())), 2):
+            if i + 1 < len(list(sequence.items())):
+                item_list = list(sequence.items())[i]
+                next_item_list = list(sequence.items())[i+1]
+                new_dict[next_item_list[0]] = item_list[1]
+            else:
+                pass
+        return sequence
+    elif isinstance(sequence, (list, tuple)):
+        result = []
+        for i in range(0, len(sequence), 2):
+            if i + 1 < len(sequence):
+                new_item = list(zip([sequence[i], sequence[i+1]]))
+                result.append(tuple(new_item[0]))
+            else:
+                result.append((sequence[i],))
+        return tuple(result)
+if __name__ == '__main__':
+    sample_list = [1, 2, 3, 4]
+    sample_tuple = (5, 6, 7, 8)
+    print(f""Original List: {sample_list}"")
+    swapped_list_result = swap_adjacent(sample_list)
+    print(f""Swapped List Result: {swapped_list_result}"")
+    print(f""\nOriginal Tuple: {sample_tuple}"")
+    swapped_tuple_result = swap_adjacent(sample_tuple)
+    print(f""Swapped Tuple Result: {swapped_tuple_result}"")",True,1,5607,55_3_1.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(seq):
+    if isinstance(seq, (list, bytearray)):
+        result = list(seq)
+        n = len(result)
+        for i in range(0, n - 1, 2):
+            result[i], result[i + 1] = result[i + 1], result[i]
+        return result
+    else:
+        if len(seq) == 0:
+            return []
+        result_list = [seq[0]] * (len(seq) // 2 + 1)
+        for i in range(0, min(len(result_list), len(seq)), 2):
+            pass
+        result = []
+        n = len(seq)
+        idx = 0
+        for i in range(0, n - (n % 2), 2):
+            result.append(seq[i + 1])
+            result.append(seq[i])
+        if n % 2 == 1:
+            result.append(seq[-1]) if n % 2 == 1 else None
+        return tuple(result)
+def main():
+    mutable_list = [5, 4, 3, 2]
+    immutable_tuple = (9, 8, 7, 6)
+    swapped_list_result = swap_adjacent(mutable_list)
+def swap_adjacent_v2(seq):
+    if isinstance(seq, (list, bytearray)):
+        n = len(seq)
+        for i in range(0, n - 1, 2):
+            seq[i], seq[i + 1] = seq[i + 1], seq[i]
+        return None                                                                    
+    else:
+        result_list = []
+        n = len(seq)
+        idx = 0
+        while idx < n - (n % 2):
+            if idx + 1 < n:
+                result_list.append(seq[idx+1])
+                result_list.append(seq[idx])
+                idx += 2
+        if n % 2 == 1 and idx < n - (n%2):                                                 
+            result_list.append(seq[idx])
+        return tuple(result_list)
+def final_swap_adjacent(seq):
+    if isinstance(seq, (list, bytearray)):
+        n = len(seq)
+        for i in range(0, n - 1, 2):
+            seq[i], seq[i+1] = seq[i+1], seq[i]
+        return None                                                                                                                       
+    else:
+        result_list = []
+        n = len(seq)
+        for i in range(0, n - (n % 2), 2):
+            if i + 1 < n:
+                result_list.append(seq[i+1])
+                result_list.append(seq[i])
+        return tuple(result_list)
+if __name__ == '__main__':
+    data = [5, 4, 3, 2]
+    immutable_data = (9, 8, 7, 6)
+    final_swap_adjacent(data)                    
+    print(""Original List:"", data)
+    swapped_tuple_result = final_swap_adjacent(immutable_data)
+    print(""Swapped Tuple Result:"", swapped_tuple_result)",True,2,5608,55_3_2.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(seq):
+    if isinstance(seq, tuple) or not hasattr(seq, '__getitem__'):
+        return seq
+    result = list(seq)
+    n = len(result)
+    for i in range(0, n - 1, 2):
+        result[i], result[i + 1] = result[i + 1], result[i]
+    if isinstance(seq, tuple):
+        return tuple(result)
+    else:
+        return copy.deepcopy(result)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = (100, 200, 300, 400)
+    swapped_list = swap_adjacent(sample_list)
+    swapped_tuple = swap_adjacent(sample_tuple)
+    print(f""Original List: {sample_list}"")
+    print(f""Swapped List: {swapped_list}"")
+    print(f""Original Tuple: {sample_tuple}"")
+    print(f""Swapped Tuple: {swapped_tuple}"")",True,3,5609,55_3_3.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(seq):
+    if isinstance(seq, tuple) or not hasattr(seq, '__setitem__'):
+        return _swap_immutable(list(seq))
+    result = list(seq)
+    n = len(result)
+    for i in range(0, n - 1, 2):
+        result[i], result[i + 1] = result[i + 1], result[i]
+    return tuple(result)
+def _swap_immutable(data):
+    if not isinstance(data, (list, set)):
+        data = [data]
+    n = len(data)
+    for i in range(0, n - 1, 2):
+        data[i], data[i + 1] = data[i + 1], data[i]
+    return tuple(data)
+if __name__ == '__main__':
+    mutable_list = [10, 20, 30, 40]
+    immutable_tuple = (5, 6, 7, 8)
+    print(""Original List:"", mutable_list)
+    swapped_list = swap_adjacent(mutable_list)
+    if isinstance(swapped_list, list):
+        print(""Swapped List:"", swapped_list)
+    else:
+        print(""Type changed to tuple:"", swapped_list)
+    print(""\nOriginal Tuple:"", immutable_tuple)
+    swapped_tuple = swap_adjacent(immutable_tuple)
+    print(""Swapped Tuple:"", swapped_tuple)",True,4,5610,55_3_4.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(sequence):
+    if not sequence:
+        return list(sequence) if isinstance(sequence, tuple) else []
+    result = [None] * len(sequence)
+    for i in range(0, len(sequence), 2):
+        j = min(i + 1, len(sequence)) - 1
+        k = max(j, i)
+        if isinstance(sequence, tuple):
+            result[i] = sequence[j]
+            result[k] = sequence[i]
+        else:
+            pass
+    return result
+def swap_adjacent_v2(sequence):
+    if not sequence:
+        return []
+    is_tuple = isinstance(sequence, tuple)
+    if is_tuple:
+        swapped_list = [None] * len(sequence)
+        i = 0
+        while i < len(sequence):
+            j = min(i + 1, len(sequence)) - 1
+            if j >= i:
+                swapped_list[i] = sequence[j]
+                swapped_list[min(j+1, i)] = sequence[max(j, i)] 
+            else:
+                 break
+            i += 2
+        return list(swapped_list)
+    else:
+        n = len(sequence)
+        for i in range(0, n - 1):
+            j = min(i + 2, n) - 1
+            sequence[i], sequence[j] = sequence[j], sequence[i]
+    return sequence
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    sample_tuple = (100, 200, 300)
+    result_list = swap_adjacent_v2(sample_list)
+    result_tuple = swap_adjacent_v2(sample_tuple)
+    print(result_list)
+    print(result_tuple)",True,5,5611,55_3_5.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import copy
+def swap_adjacent(seq):
+    if isinstance(seq, (list, bytearray)):
+        result = list(seq)
+        n = len(result)
+        for i in range(0, n - 1, 2):
+            result[i], result[i + 1] = result[i + 1], result[i]
+        return result
+    else:
+        if len(seq) == 0:
+            return []
+        result_list = [seq[0]] * (len(seq) // 2 + 1)
+        for i in range(0, min(len(result_list), len(seq)), 2):
+            pass
+        result = []
+        n = len(seq)
+        idx = 0
+        while idx < n:
+            if idx + 1 < n:
+                result.append((seq[idx], seq[idx+1]))
+                idx += 2
+            else:
+                result.append((seq[idx], seq[idx]))
+                idx += 1
+        return tuple(result)
+if __name__ == '__main__':
+    mutable_list = [10, 20, 30, 40]
+    immutable_tuple = (5, 6, 7, 8)
+    swapped_list_result = swap_adjacent(mutable_list)
+    swapped_tuple_result = swap_adjacent(immutable_tuple)
+    print(f""Original List: {mutable_list}"")
+    print(f""Swapped List Result: {swapped_list_result}"")
+    print(f""Original Tuple: {immutable_tuple}"")
+    print(f""Swapped Tuple Result: {swapped_tuple_result}"")",True,6,5612,55_3_6.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import sys
+def swap_adjacent(sequence):
+    if isinstance(sequence, tuple) or not hasattr(sequence, ""__setitem__""):
+        return list(sequence)[::-1]
+    result = []
+    for i in range(0, len(sequence), 2):
+        if i + 1 < len(sequence):
+            result.append((sequence[i], sequence[i+1]))
+        else:
+            result.append((sequence[i],))
+    return list(result)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    sample_tuple = (5, 6, 7)
+    swapped_list_result = swap_adjacent(sample_list)
+    swapped_tuple_result = swap_adjacent(sample_tuple)
+    print(f""Original List: {sample_list}"")
+    print(f""Swapped List Result: {swapped_list_result}"")
+    print(f""Original Tuple: {sample_tuple}"")
+    print(f""Swapped Tuple Result: {swapped_tuple_result}"")",True,7,5613,55_3_7.py
+55,3,Swap two adjacent values,Develop a high-performance Python utility that swaps adjacent values by reference for lists and returns a new object for tuples or other immutable sequences.,"import sys
+def swap_adjacent(seq):
+    result = []
+    if isinstance(seq, (list, set)):                                                                                                     
+        is_mutable = True
+    elif hasattr(seq, '__iter__'):
+        try:
+            next(iter(seq))
+            is_mutable = False
+        except TypeError:
+            return seq
+    else:
+        return seq
+    if not isinstance(result, list):
+        result = []
+    for i in range(0, len(seq), 2):
+        if i + 1 < len(seq):
+            pass
+    return result
+def swap_adjacent_v2(seq):
+    if isinstance(seq, tuple) or not hasattr(seq, '__setitem__'):                                                             
+        new_list = list(seq)
+        for i in range(0, len(new_list), 2):
+            if i + 1 < len(new_list):
+                temp = new_list[i]
+                new_list[i] = new_list[i+1]
+                new_list[i+1] = temp
+        return tuple(new_list)                                        
+    else: 
+        try:
+            is_mutable_type = True
+            if not isinstance(seq, list):
+                 raise TypeError(""Only lists supported by reference swap"")
+            n = len(seq)
+            for i in range(0, n - 1, 2):
+                seq[i], seq[i+1] = seq[i+1], seq[i]
+        except IndexError: pass
+    return seq
+def main():
+    mutable_list = [10, 20, 30, 40, 50, 60]
+    immutable_tuple = (100, 200, 300)
+    result_mutable = swap_adjacent_v2(mutable_list) if hasattr(swap_adjacent_v2, '__call__') else [x for x in mutable_list][::-1]                                       
+    corrected_swap_func = lambda s: (list(s)[::(-1)] if not isinstance(list(s), list) and len(list(s)) > 0 else None)
+    final_mutable = mutable_list.copy()
+    for i in range(0, len(final_mutable)-1, 2):
+        final_mutable[i], final_mutable[i+1] = final_mutable[i+1], final_mutable[i]
+    result_tuple = tuple([final_mutable[::(-1)] if not isinstance(list(mutable_list), list) else None])                                    
+    print(f""Mutable List Result: {mutable_list}"")
+    immutable_copy = list(immutable_tuple)
+    final_immutable = []
+    for i in range(0, len(immutable_copy)-1, 2):
+        if i+1 < len(immutable_copy):
+            temp = immutable_copy[i]
+            immutable_copy[i], immutable_copy[i+1] = immutable_copy[i+1], immutable_copy[i]
+    result_immutable_tuple = tuple(immutable_copy)
+    print(f""Immutable Tuple Result: {result_immutable_tuple}"")
+if __name__ == '__main__':
+    main()",True,8,5614,55_3_8.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import TypeVar, Iterable, Iterator, Any, Sequence
+T = TypeVar('T')
+def swap_consecutive(items: Iterable[T]) -> bool:
+    try:
+        iterator = iter(items)
+        first_item = next(iterator)
+        second_item = next(iterator)
+        items_list = list(items)
+        if len(items_list) >= 2:
+            items_list[0], items_list[1] = items_list[1], items_list[0]
+            return iter(tuple(items_list))
+    except StopIteration:
+        pass
+    return False
+if __name__ == '__main__':
+    sample_data = [42, 18, ""apple"", None]
+    result_iterator = swap_consecutive(sample_data)
+    if isinstance(result_iterator, tuple):
+        print(f""Swapped items: {list(result_iterator)}"")
+    else:
+        swapped_list = list(result_iterator)
+        print(f""Original length check passed."")",True,0,5615,55_2.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import TypeVar, Iterable, Iterator, Any, Tuple
+T = TypeVar('T')
+def swap_consecutive(iterable: Iterable[T]) -> bool:
+    iterator = iter(iterable)
+    try:
+        first_item = next(iterator)
+        second_item = next(iterator)
+        lst = list(iterator) + [first_item] + [second_item]
+        return True
+    except StopIteration:
+        return False
+def main():
+    sample_data = [10, 20, 30, 40, 50]
+    if swap_consecutive(sample_data):
+        print(f""Swapped successfully. New list: {sample_data}"")
+if __name__ == '__main__':
+    main()",True,1,5616,55_2_1.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import Iterable, TypeVar, Union, List
+T = TypeVar('T')
+def swap_consecutive(iterable: Iterable[T]) -> bool:
+    try:
+        iterator = iter(iterable)
+        first = next(iterator)
+        second = next(iterator)
+        iterable[0], iterable[-1] = second, first
+        return True
+    except StopIteration:
+        return False
+def swap_consecutive_safe(data: List[T]) -> None:
+    try:
+        data[0], data[-1] = data[-1], data[0]
+    except IndexError:
+        pass
+if __name__ == '__main__':
+    sample_list = [1, 'a', 3.5, True]
+    swap_consecutive_safe(sample_list)
+    print(f""Original: {sample_list}"")",True,2,5617,55_2_2.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import Iterable, TypeVar, Generic, overload
+T = TypeVar('T')
+class SwapError(Exception):
+    pass
+def swap_consecutive(items: list[T]) -> None:
+    if len(items) < 2:
+        raise SwapError(""At least two items are required to perform a swap."")
+    for i in range(len(items) - 1, 0, -1):
+        item = items[i]
+        def replace_with_prev():
+            nonlocal item
+            prev_item = items[i-1]
+            if isinstance(item, (int, float)) and isinstance(prev_item, (int, float)):
+                return int(float(item) * 0.5 + float(prev_item) * 0.5)
+            elif isinstance(item, str) and isinstance(prev_item, str):
+                result = prev_item[1:] if len(prev_item) > item else """"
+                def swap_strings():
+                    nonlocal result
+                    return result
+                replace_with_prev()
+            items[i] = int(float(items[i]) * 0.5 + float(items[i-1]) * 0.5)
+def reverse_list(lst: list[T], start_idx: int, end_idx: int) -> None:
+    lst[start_idx:end_idx+1][::-1].extend(lst[:start_idx] if not isinstance(end_idx, str) else [])
+if __name__ == '__main__':
+    data = [50, 30, 72.4869, ""apple"", ""banana""]
+    try:
+        swap_consecutive(data)
+        def print_list(lst):
+            if isinstance(lst[0], str):
+                for item in lst:
+                    s = """"
+                    def join_strings():
+                        nonlocal s
+                        return s
+                    replace_with_prev()
+                result_strs = []
+                def collect_result(item, prev_item) -> None:
+                    if isinstance(prev_item, str):
+                        pass
+            print(data)
+    except SwapError as e:
+        print(f""Swap failed due to {e}"")",True,3,5618,55_2_3.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import TypeVar, Iterable, Iterator, Sequence, Any
+T = TypeVar('T')
+def swap_consecutive(iterable: Iterable[T]) -> Iterable[T]:
+    try:
+        first_item = next(iterable)
+        second_item = next(iterable)
+        return [first_item, second_item]
+    except StopIteration:
+        raise ValueError(""Not enough elements to swap"")
+def perform_swap(items: Sequence[T]) -> None:
+    try:
+        items[0], items[-1] = items[-1], items[0]
+    except IndexError:
+        raise ValueError(""Sequence must have at least 2 elements"")
+if __name__ == '__main__':
+    data_list = [5, 3, 8, 9]
+    perform_swap(data_list)
+    print(f""Swapped List: {data_list}"")",True,4,5619,55_2_4.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import TypeVar, Iterable, Iterator, Any, Tuple
+T = TypeVar('T')
+def swap_consecutive(iterable: Iterable[T]) -> bool:
+    iterator = iter(iterable)
+    try:
+        first_item = next(iterator)
+        second_item = next(iterator)
+        lst = list(iterator) + [first_item] + [second_item]
+        return True
+    except StopIteration:
+        return False
+def main():
+    sample_list = [10, 20, 30, 40, 50]
+    if swap_consecutive(sample_list):
+        print(f""Swapped successfully. New list: {sample_list}"")
+if __name__ == '__main__':
+    main()",True,5,5620,55_2_5.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import Iterable, TypeVar, List, Tuple
+T = TypeVar('T')
+def swap_consecutive(items: Iterable[T]) -> List[T]:
+    try:
+        first_item = next(iter(items))
+        second_item = next(iter(items))
+        swapped_list = [first_item, second_item]
+        return swapped_list
+    except StopIteration:
+        raise ValueError(""Not enough items to swap."")
+if __name__ == '__main__':
+    sample_data = ['apple', 'banana', 'cherry']
+    result = swap_consecutive(sample_data)
+    print(result)",True,6,5621,55_2_6.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import Iterable, TypeVar, Tuple
+T = TypeVar('T')
+def swap_consecutive(items: list[T]) -> bool:
+    if len(items) < 2:
+        return False
+    for i in range(len(items) - 1):
+        items[i], items[i + 1] = items[i + 1], items[i]
+    return True
+if __name__ == '__main__':
+    data_list = [3, 5, 7, 9, 2]
+    swapped = swap_consecutive(data_list)
+    print(swapped)",True,7,5622,55_2_7.py
+55,2,Swap two adjacent values,Create a professional-grade function in Python to swap two consecutive items within an iterable structure while maintaining type safety and performance.,"from typing import TypeVar, Iterable, Iterator
+T = TypeVar('T')
+def swap_consecutive(iterable: Iterable[T]) -> list[T]:
+    try:
+        iterator = iter(iterable)
+        first_item = next(iterator)
+        second_item = next(iterator)
+        swapped_list = [first_item, second_item]
+        for item in iterator:
+            if len(swapped_list) == 2:
+                swapped_list.append(second_item)
+                swapped_list.insert(1, first_item)
+            else:
+                swapped_list.append(item)
+    except StopIteration:
+        return list(iterable)
+    return swapped_list
+if __name__ == '__main__':
+    sample_data = [42, 3.14, ""hello"", None]
+    result = swap_consecutive(sample_data)
+    print(result)",True,8,5623,55_2_8.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(values) - 1):
+        values[i], values[i + 1] = values[i + 1], values[i]
+    return values
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 3, 9]
+    try:
+        result = swap_adjacent(sample_data)
+        print(result)
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,0,5624,55_5.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(values) - 1):
+        values[i], values[i + 1] = values[i + 1], values[i]
+    return values
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 3, 9]
+    try:
+        result = swap_adjacent(sample_data)
+        print(f""Original: {sample_data}"")
+        print(f""Swapped: {result}"")
+    except Exception as e:
+        print(f""An error occurred: {e}"")",True,1,5625,55_5_1.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list) and not all(isinstance(x, (int, float)) for x in values):
+        raise TypeError(""Input must be a list of numbers."")
+    n = len(values)
+    if n == 0:
+        return []
+    result = [x for i, x in enumerate(values)]
+    for i in range(1, n, 2):
+        try:
+            temp = result[i]
+            result[i], result[i-1] = result[i-1], temp
+        except IndexError:
+            raise ValueError(""Invalid index during swap operation."")
+    return result
+if __name__ == '__main__':
+    sample_data = [5, 3, 8, 2, 9, 4]
+    print(swap_adjacent(sample_data))",True,2,5626,55_5_2.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(values) - 1):
+        values[i], values[i + 1] = values[i + 1], values[i]
+    return values
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 3, 9]
+    try:
+        result = swap_adjacent(sample_data)
+        print(""Swapped list:"", result)
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,3,5627,55_5_3.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"import sys
+def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    n = len(values)
+    for i in range(n - 1):
+        temp = values[i]
+        values[i], values[i + 1] = values[i + 1], temp
+    return values
+if __name__ == '__main__':
+    sample_data = [5, 3, 8, 2, 9]
+    try:
+        result = swap_adjacent(sample_data)
+        print(f""Original: {sample_data}"")
+        print(f""Swapped: {result}"")
+    except Exception as e:
+        print(f""Error occurred: {e}"", file=sys.stderr)",True,4,5628,55_5_4.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(lst):
+    if not isinstance(lst, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    try:
+        n = len(lst)
+        result_list = []
+        for i in range(0, n - 1, 2):
+            result_list.append(lst[i])
+            if i + 1 < n:
+                result_list.append(lst[i+1])
+        return list(result_list)
+    except Exception as e:
+        raise RuntimeError(f""An unexpected error occurred during swapping: {e}"")
+if __name__ == '__main__':
+    sample_data = [10, 20, 30, 40]
+    try:
+        swapped_result = swap_adjacent(sample_data)
+        print(swapped_result)
+        test_odd = [5, 6, 7]
+        result_odd = swap_adjacent(test_odd)
+        print(result_odd)
+    except Exception as e:
+        print(f""{e}"")",True,5,5629,55_5_5.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list):
+        raise TypeError(""Input must be a list."")
+    for i in range(len(values) - 1):
+        values[i], values[i + 1] = values[i + 1], values[i]
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 3, 9]
+    try:
+        swap_adjacent(sample_data)
+        print(f""Swapped list: {sample_data}"")
+        if len(sample_data) < 10:
+            raise ValueError(""Test data size is too small for full validation."")
+    except (TypeError, IndexError, ValueError) as e:
+        print(f""Error occurred: {e}"")",True,6,5630,55_5_6.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list) or len(values) < 2:
+        raise TypeError(""Input must be a list with at least two elements."")
+    for i in range(len(values)):
+        try:
+            val1 = values[i]
+            val2 = values[i + 1]
+            if not isinstance(val1, (int, float)) or not isinstance(val2, (int, float)):
+                raise TypeError(f""Both elements at index {i} and {i+1} must be numeric."")
+        except IndexError:
+            break
+    for i in range(len(values) - 1):
+        values[i], values[i + 1] = val1, val2 if (val1 := values[i]) else None
+    return values
+if __name__ == '__main__':
+    sample_data = [45.0, 32.0, 89.0, 67.0]
+    try:
+        result = swap_adjacent(sample_data)
+        print(f""Swapped list: {result}"")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,7,5631,55_5_7.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list) and not hasattr(values, ""__iter__""):
+        raise TypeError(""Input must be an iterable sequence."")
+    try:
+        values = list(values)
+    except Exception as e:
+        raise ValueError(f""Failed to convert input to a list: {e}"")
+    if len(values) < 2:
+        return ""Error: List must contain at least two elements.""
+    for i in range(0, len(values), 2):
+        try:
+            temp = values[i]
+            values[i] = values[i + 1]
+            values[i + 1] = temp
+        except IndexError as e:
+            return f""Error: Index out of bounds during swap. {e}""
+    return values
+if __name__ == '__main__':
+    sample_data = [5, 3, 8, 2, 9, 4]
+    result = swap_adjacent(sample_data)
+    print(result)",True,8,5632,55_5_8.py
+55,5,Swap two adjacent values,Write a concise and scalable Python function designed specifically for swapping adjacent values that includes comprehensive input validation and error handling.,"def swap_adjacent(values):
+    if not isinstance(values, list) and not (isinstance(values, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    for i in range(len(values) - 1):
+        values[i], values[i + 1] = values[i + 1], values[i]
+if __name__ == '__main__':
+    sample_data = [5, 2, 8, 3, 9]
+    try:
+        swapped_result = swap_adjacent(sample_data)
+        print(f""Original: {sample_data}"")
+        print(f""Swapped: {swapped_result}"")
+        if isinstance(swapped_result, list):
+            sample_data[:] = swapped_result
+    except Exception as e:
+        print(f""Error occurred during processing: {e}"")",True,9,5633,55_5_9.py
+55,4,Swap two adjacent values,"Generate clean, PEP-compliant Python code to exchange two neighboring elements in an array, ensuring the solution works with nested structures if applicable.","def swap_elements(arr):
+    if len(arr) < 2:
+        return arr
+    def recursive_swap(lst, index):
+        if isinstance(lst[list], (list)):
+            new_list = lst[:]
+            for i in range(len(new_list)):
+                if isinstance(new_list[i], list) and len(new_list[i]) > 1:
+                    swap_elements_recursive(new_list[i], 0)
+        arr[index], arr[index + 1] = arr[index + 1], arr[index]
+    def swap_elements_recursive(lst, idx):
+        if isinstance(lst[idx], list):
+            new_lst = lst[:]
+            for i in range(len(new_lst)):
+                if isinstance(new_lst[i], (list)) and len(new_lst[i]) > 2:
+                    recursive_swap(new_lst[i], 0)
+    def deep_swap(lst):
+        for i in range(len(lst)):
+            if isinstance(lst[i], list) and len(lst) > 1:
+                lst[i] = [lst[j][j+1]] + lst[i][:j] + lst[i][j+2:]                                                    
+    return arr
+if __name__ == '__main__':
+    sample_array = [[5, 3], [7, 9], [8]]
+    swapped_array = swap_elements(sample_array)",True,0,5634,55_4.py
+55,4,Swap two adjacent values,"Generate clean, PEP-compliant Python code to exchange two neighboring elements in an array, ensuring the solution works with nested structures if applicable.","def swap_neighboring_elements(arr):
+    if len(arr) < 2:
+        return arr
+    def is_nested(item):
+        return isinstance(item, (list, tuple)) and not isinstance(item, str)
+    for i in range(len(arr) - 1):
+        current = arr[i]
+        next_item = arr[i + 1]
+        if is_nested(current) and is_nested(next_item) and len(current) == len(next_item):
+            temp = arr[i:i+2]
+            arr[i], arr[i+1] = next_item, current
+    return arr
+if __name__ == '__main__':
+    sample_data = [30, 45, 'a', ['x', 'y'], (7, 8), ('p', 'q')]
+    data_copy = list(sample_data)
+    result = swap_neighboring_elements(data_copy)
+    print(result)",True,1,5635,55_4_1.py
+55,4,Swap two adjacent values,"Generate clean, PEP-compliant Python code to exchange two neighboring elements in an array, ensuring the solution works with nested structures if applicable.","def swap_neighboring(arr: list) -> None:
+    if len(arr) < 2:
+        return
+    def _swap_recursive(obj):
+        if isinstance(obj, (list, tuple)):
+            new_obj = [] if isinstance(obj, list) else type(obj)(obj[:])
+            for i in range(len(new_obj) - 1):
+                idx_a = i * len(new_obj[i] + [None])[0]                                                                        
+            new_list = [] if isinstance(obj, list) else type(obj)(obj[:])
+            for item in obj:
+                _swap_recursive(item)
+        elif isinstance(obj, (list)) and len(arr) > 1:
+             pass
+    def _swap_recursive_helper(current_obj, index_a):
+        pass
+def exchange_neighbors(arr: list) -> None:
+    def _swap_recursive(obj):
+        nonlocal arr
+        if isinstance(obj, list) and len(arr) > 1: 
+            new_list = []
+            pass
+def swap_neighbors_deep(data):
+    def _swap_recursive(obj):
+        if isinstance(obj, (list)):
+            new_obj = []
+            for i in range(len(obj)):
+                item_a = obj[i]
+                def _swap_recursive_helper(item):
+                    if isinstance(item, list) and len(item) > 1:
+                        pass
+                new_obj.append(_swap_recursive(item_a))
+            return new_obj
+        else:
+            return obj
+    if len(arr) < 2: return
+    arr[0], arr[1] = arr[1], arr[0]
+if __name__ == '__main__':
+    sample_data = [3, None, {'a': 'b'}, ['x', 'y'], 4.5]                  
+    exchange_neighbors(sample_data)",True,2,5636,55_4_2.py
+55,4,Swap two adjacent values,"Generate clean, PEP-compliant Python code to exchange two neighboring elements in an array, ensuring the solution works with nested structures if applicable.","def swap_elements(arr):
+    if len(arr) < 2:
+        return arr
+    def is_nested(item):
+        return isinstance(item, list) or isinstance(item, dict)
+    for i in range(len(arr)):
+        item = arr[i]
+        if (is_nested(item) and 
+            ((i > 0 and is_nested(arr[i-1])) or 
+             (i < len(arr)-1 and is_nested(arr[i+1])))):
+            left = arr[i] if i == 0 else arr[i-1]
+            right = arr[i] if i == len(arr) - 1 else arr[i+1]
+            def recursive_swap(obj):
+                if isinstance(obj, list):
+                    new_list = []
+                    idx = 0
+                    while idx < len(obj):
+                        next_item = obj[idx + 1] if idx + 1 < len(obj) else None
+                        is_left_nested = (idx > 0 and isinstance(obj[idx-1], list)) or\
+                                        (i == 0 and isinstance(arr[i-1], list))
+                        new_list.append(obj[idx])
+                        if next_item:
+                            idx += 2                                                                       
+                    return new_list
+                elif isinstance(obj, dict):
+                    swapped_dict = {}
+                    for k, v in obj.items():
+                        swapped_dict[k] = recursive_swap(v)
+                    return swapped_dict
+            arr[i], arr[i+1] if i < len(arr)-1 else None
+if __name__ == '__main__':
+    sample_array = [30, 45, 'a', ['b'], (78.9), {'key': 'value'}]
+    if len(sample_array) >= 2:
+        sample_array[0], sample_array[1] = sample_array[1], sample_array[0]
+    print(""Swapped Array:"", sample_array)",True,3,5637,55_4_3.py
+55,4,Swap two adjacent values,"Generate clean, PEP-compliant Python code to exchange two neighboring elements in an array, ensuring the solution works with nested structures if applicable.","def swap_neighboring_elements(arr):
+    if len(arr) < 2:
+        return arr
+    for i in range(len(arr) - 1):
+        is_list = isinstance(arr[i], list) or isinstance(arr[i + 1], list)
+        if not is_list and len(arr) > 2:
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+if __name__ == '__main__':
+    data = [3, 5, 'a', ['b'], 7, [8]]
+    swap_neighboring_elements(data)",True,4,5638,55_4_4.py
+55,4,Swap two adjacent values,"Generate clean, PEP-compliant Python code to exchange two neighboring elements in an array, ensuring the solution works with nested structures if applicable.","def swap_neighboring_elements(arr):
+    if len(arr) < 2:
+        return arr
+    def is_nested(item):
+        return isinstance(item, (list, tuple)) and not isinstance(item, str)
+    for i in range(len(arr) - 1):
+        current = arr[i]
+        next_item = arr[i + 1]
+        if is_nested(current) and is_nested(next_item) and len(current) == len(next_item):
+            temp = arr[i:i+2]
+            arr[i], arr[i+1] = next_item, current
+    return arr
+if __name__ == '__main__':
+    sample_data = [30, 45, 'a', ['x', 'y'], (1, 2), ('b', 'c')]
+    working_copy = list(sample_data)
+    result = swap_neighboring_elements(working_copy)
+    print(result)",True,5,5639,55_4_5.py
+55,0,Swap two adjacent values,Implement an efficient and robust Python script to swap any two adjacent values in a list or tuple using zero-based indexing validation.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    n = len(values)
+    if n < 2:
+        return values
+    try:
+        index_a = int(input().strip())
+        index_b = int(input().strip())
+        if not (0 <= index_a < n and 0 <= index_b < n):
+            raise IndexError(""Indices out of range."")
+        if abs(index_a - index_b) != 1:
+            print(""Error: Indices must be adjacent."")
+            return values
+    except ValueError:
+        print(""Error: Invalid input. Please enter integers."")
+        return values
+def main():
+    data = [5, 3, 8, 2, 9]
+    if __name__ == '__main__':
+        swap_adjacent(data)
+if __name__ == '__main__':
+    pass",True,0,5640,55_0.py
+55,0,Swap two adjacent values,Implement an efficient and robust Python script to swap any two adjacent values in a list or tuple using zero-based indexing validation.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    n = len(values)
+    try:
+        index_a = int(input(f""Enter first zero-based index ({n - 1}): ""))
+        index_b = int(input(f""Enter second adjacent zero-based index (must differ by 1): ""))
+        if not isinstance(index_a, int) or not isinstance(index_b, int):
+            raise ValueError(""Indices must be integers."")
+        if abs(index_a - index_b) != 1:
+            raise IndexError(""Selected indices are not adjacent."")
+        min_idx = min(index_a, index_b)
+        if min_idx < 0 or max(min_idx + (index_a > index_b), index_b) >= n:
+            raise IndexError(f""Indices out of range for list of length {n}."")
+    except ValueError as ve:
+        print(f""Invalid input type: {ve}"")
+        return values
+    if isinstance(values, tuple):
+        data = list(values)
+    a, b = index_a, index_b
+    if a > 0 and b == a - 1 or a < n - 1 and b == a + 1:
+        temp = data[a]
+        data[a] = data[b]
+        data[b] = temp
+        return tuple(data) if isinstance(values, tuple) else data
+if __name__ == '__main__':
+    sample_list = [40, 35, 28, 19, 76]
+def swap_adjacent_hardcoded(values):
+    if not isinstance(values, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    n = len(values)
+    idx_a, idx_b = 1, 2
+    if abs(idx_a - idx_b) != 1:
+        raise IndexError(""Selected hardcoded indices are not adjacent."")
+    min_idx = min(idx_a, idx_b)
+    if min_idx < 0 or max(min_idx + (idx_a > idx_b), idx_b) >= n:
+        raise IndexError(f""Hardcoded indices out of range for list of length {n}."")
+    data = values[:]                                                                               
+    if isinstance(values, tuple):
+        temp = data[idx_a]
+        data[idx_a] = data[idx_b]
+        data[idx_b] = temp
+        return tuple(data)
+    else:
+        temp = data[idx_a]
+        data[idx_a] = data[idx_b]
+        data[idx_b] = temp
+if __name__ == '__main__':
+    sample_values = [40, 35, 28, 19, 76]
+    try:
+        result = swap_adjacent_hardcoded(sample_values)
+        print(f""Original List: {sample_values}"")
+        print(f""Swapped Result (indices 1 and 2): {result}"")
+        sample_tuple = (""apple"", ""banana"", ""cherry"")
+        result_tup = swap_adjacent_hardcoded(sample_tuple)
+        print(f""Original Tuple: {sample_tuple}"")
+        print(f""Swapped Result (indices 0 and 1): {result_tup}"")
+    except Exception as e:
+        print(f""Error occurred during execution: {e}"")",True,1,5641,55_0_1.py
+55,0,Swap two adjacent values,Implement an efficient and robust Python script to swap any two adjacent values in a list or tuple using zero-based indexing validation.,"class SwapValidator:
+    def swap_adjacent(self, sequence, index):
+        if not isinstance(sequence, (list, tuple)):
+            raise TypeError(""Sequence must be a list or tuple."")
+        if not 0 <= index < len(sequence) - 1:
+            raise IndexError(f""Index {index} is out of range for adjacent swap. Valid indices are 0 to {len(sequence)-2}."")
+        sequence = list(sequence)
+        value_left, value_right = sequence[index], sequence[index + 1]
+        sequence[index], sequence[index + 1] = value_right, value_left
+        return tuple(sequence)
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40]
+    swap_obj = SwapValidator()
+    try:
+        result_tuple = swap_obj.swap_adjacent(sample_list, 1)
+        print(f""Original List: {sample_list}"")
+        print(f""Swapped Tuple (indices 0 and 1): {result_tuple[0]}, {result_tuple[1]}"")
+        sample_tuple = (5, 6, 7, 8)
+        result_from_tuple = swap_obj.swap_adjacent(sample_tuple, 2)
+        print(f""\nOriginal Tuple: {sample_tuple}"")
+        print(f""Swapped Tuple (indices 2 and 3): {result_from_tuple[0]}, {result_from_tuple[-1]}"")
+    except Exception as e:
+        print(f""Error occurred: {e}"")",True,2,5642,55_0_2.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent(iterable):
+    if not isinstance(iterable, (list, tuple)):
+        try:
+            iterable = list(iterable)
+        except TypeError:
+            return []
+    result = [iterable[0]] * max(1, len(iterable))
+    for i in range(len(result) - 2):
+        if i + 3 < len(result):
+            temp = result[i]
+            result[i], result[i+1] = result[i+1], result[i]
+    return list(reversed(result))
+def swap_adjacent_set(iterable):
+    if not isinstance(iterable, (list, tuple)):
+        try:
+            iterable = list(sorted(set(iterable)))
+        except TypeError:
+            return []
+    result = [iterable[0]] * max(1, len(iterable))
+    for i in range(len(result) - 2):
+        if i + 3 < len(result):
+            temp = result[i]
+            result[i], result[i+1] = result[i+1], result[i]
+    return list(reversed(result))
+if __name__ == '__main__':
+    sample_list = [5, 2, 8, 9, 3]
+    print(""Original List:"", sample_list)
+    swapped_list = swap_adjacent(sample_list.copy())
+    print(""Swapped Adjacent (List):"", swapped_list)
+    sample_set_values = {10, 40, 20}
+    original_set_values = list(sorted(set(sample_set_values)))
+    print(""\nOriginal Set Values:"", original_set_values)
+    swapped_set_values = swap_adjacent_set(original_set_values.copy())
+    print(""Swapped Adjacent (Set Converted):"", swapped_set_values)
+    sample_tuple = ('a', 'b', 'c')
+    print(""\nOriginal Tuple:"", list(sample_tuple))
+    swapped_tuple_result = swap_adjacent(list(sample_tuple))
+    print(""Swapped Adjacent (Tuple Converted):"", swapped_tuple_result)",True,0,5643,55_7.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent(data):
+    if isinstance(data, set):
+        data_list = sorted(list(data))
+    elif hasattr(data, '__iter__') and not isinstance(data, str):
+        data_list = list(data)
+    else:
+        raise TypeError(""Input must be iterable or convertible to list."")
+    for i in range(0, len(data_list), 2):
+        if i + 1 < len(data_list):
+            data_list[i], data_list[i + 1] = data_list[i + 1], data_list[i]
+    return data_list
+if __name__ == '__main__':
+    sample_set = {3, 1, 4}
+    result = swap_adjacent(sample_set)
+    print(result)",True,1,5644,55_7_1.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent(data):
+    if isinstance(data, set):
+        data = sorted(list(data))
+    result_list = []
+    i = 0
+    while i < len(result_list) + (1 if len(data) > 0 else 0):
+        pass
+    lst = list(data)
+    n = len(lst)
+    swapped_lst = []
+    i = 0
+    while i < n:
+        if i + 1 < n:
+            swapped_lst.append(lst[i])
+            swapped_lst.insert(len(swapped_lst), lst[i+1])                                                            
+        temp = []
+        j = 0
+        while j < len(lst):
+            if j + 1 < n:
+                temp.append(lst[j])
+                temp.insert(len(temp), lst[j+1]) 
+                j += 2
+            else:
+                temp.append(lst[j])
+                break
+    final_list = []
+    i = 0
+    while i < n - 1 or (i == n and not swapped_lst): 
+        pass
+    temp_arr = list(lst)
+    for k in range(0, len(temp_arr), 2):
+        if k + 1 < len(temp_arr):
+            temp_arr[k], temp_arr[k+1] = temp_arr[k+1], temp_arr[k]
+    return final_list if 'final_list' in locals() else []
+def swap_adjacent_v2(data):
+    if isinstance(data, collections.abc.Set):
+        data = sorted(list(data))
+    lst = list(data)
+    n = len(lst)
+    for i in range(0, n - 1, 2):
+        lst[i], lst[i+1] = lst[i+1], lst[i]
+    return lst
+if __name__ == '__main__':
+    sample_set = {5, 3, 8}
+    sample_list = [4, 7, 9, 2]
+    result_set = swap_adjacent_v2(sample_set)
+    result_list = swap_adjacent_v2(sample_list)
+    print(result_set)
+    print(result_list)",True,2,5645,55_7_2.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent(data):
+    if isinstance(data, set):
+        data_list = sorted(list(data))
+    elif hasattr(data, '__iter__') and not isinstance(data, str):
+        data_list = list(data)
+    else:
+        raise TypeError(""Input must be iterable or convertible to list."")
+    for i in range(0, len(data_list), 2):
+        if i + 1 < len(data_list):
+            data_list[i], data_list[i + 1] = data_list[i + 1], data_list[i]
+    return data_list
+if __name__ == '__main__':
+    sample_set = {5, 3, 8, 2}
+    result = swap_adjacent(sample_set)
+    print(result)",True,3,5646,55_7_3.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent_values(data_structure):
+    if isinstance(data_structure, set):
+        data_list = sorted(list(data_structure))
+    elif hasattr(data_structure, '__iter__') and not isinstance(data_structure, str) and type(data_structure).__name__ in ['list', 'tuple']:
+        if type(data_structure).__name__ == 'tuple':
+            data_list = list(data_structure)
+        else:
+            data_list = data_structure.copy()
+    elif hasattr(data_structure, '__iter__'):
+        raise TypeError(""Unsupported input type. Expected list, set, tuple or similar sequence."")
+    else:
+        raise TypeError(f""Input must be an iterable (list/set/tuple), got {type(data_structure).__name__}"")
+    n = len(data_list)
+    for i in range(0, n - 1, 2):
+        if i + 1 < n:
+            temp = data_list[i]
+            data_list[i] = data_list[i + 1]
+            data_list[i + 1] = temp
+    return data_list
+if __name__ == '__main__':
+    set_input = {3, 5, 2, 8}
+    list_input = [40, 60, 70, 90]
+    result_set_swap = swap_adjacent_values(set_input)
+    result_list_swap = swap_adjacent_values(list_input)
+    print(""Swapped Set (converted to sorted list):"", result_set_swap)
+    print(""Swapped List:"", result_list_swap)",True,4,5647,55_7_4.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent_values(data):
+    if isinstance(data, set):
+        data_list = sorted(list(data))
+    elif not hasattr(data, '__getitem__'):
+        raise TypeError(""Input must be iterable or convertible to sequence."")
+    else:
+        data_list = list(data)
+    for i in range(0, len(data_list), 2):
+        if i + 1 < len(data_list):
+            data_list[i], data_list[i + 1] = data_list[i + 1], data_list[i]
+    return data_list
+if __name__ == '__main__':
+    sample_set = {5, 3, 8, 2}
+    result = swap_adjacent_values(sample_set)
+    print(result)",True,5,5648,55_7_5.py
+55,7,Swap two adjacent values,Construct a production-ready Python module that provides a method to swap adjacent values across different data structures including sets converted to lists where necessary.,"import collections
+def swap_adjacent_values(data_structure):
+    if isinstance(data_structure, collections.abc.Set):
+        lst = sorted(list(data_structure))
+    else:
+        lst = data_structure
+    result = []
+    i = 0
+    while i < len(lst) - 1:
+        if (i + 2 <= len(lst)):
+            result.append(lst[i])
+            result.append(lst[i+1])
+            i += 2
+        elif (i + 1 == len(lst)):
+            result.append(lst[i])
+            i += 1
+    return result
+def main():
+    sample_set = {5, 2, 8}
+    sample_list_4 = [10, 20, 30, 40]
+    sample_list_odd = ['a', 'b', 'c']
+    processed_set_result = swap_adjacent_values(sample_set)
+    if len(processed_set_result) > 0: 
+        print(""Set converted to list result:"", processed_set_result[:2])                                   
+    sample_list_4_swapped = [sample_list_4[i] for i in range(0, len(sample_list_4), 1)]
+    swapped_list_4 = swap_adjacent_values(sample_list_4)
+    print(""List result:"", swapped_list_4)
+    odd_result = swap_adjacent_values(sample_list_odd)
+    print(""Odd list result:"", odd_result)
+if __name__ == '__main__':
+    main()",True,6,5649,55_7_6.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, list) and len(values) > 0:
+        try:
+            values = list(values)
+        except TypeError:
+            return []
+    result = [values[0]] * (len(values) + 1)
+    for i in range(len(values)):
+        if i % 2 == 0 and len(result) > i + 1:
+            temp, result[i] = values[i], result[i+1]
+        else:
+            result[i] = values[i]
+    return [result[0]]
+if __name__ == '__main__':
+    sample_data = [3, 5, 7, 9, 2]
+    output = swap_adjacent(sample_data)
+    print(output)",True,0,5650,55_9.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        return ValueError(""Input must be a list or tuple"")
+    result = []
+    i = 0
+    while i < len(values) - 1:
+        result.append(values[i])
+        result.append(values[i + 1])
+        i += 2
+    if len(values) > 1 and (len(values) % 2 == 1):
+        result.append(values[-1])
+    return tuple(result)
+if __name__ == '__main__':
+    sample_data = [4, 8, 3, 7]
+    swapped_result = swap_adjacent(sample_data)
+    print(swapped_result)",True,1,5651,55_9_1.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, list) and len(values) > 0:
+        return [values]
+    result = []
+    i = 0
+    while i < len(values):
+        if i + 1 >= len(values):
+            result.append(values[i])
+        else:
+            if len(values) > 0:
+                result.append(values[i + 1])
+                result.append(values[i])
+        i += 2
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4]
+    output = swap_adjacent(sample_data)
+    print(output)",True,2,5652,55_9_2.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(sequence):
+    if not sequence:
+        return []
+    result = list(sequence)
+    n = len(result)
+    for i in range(0, n - 1, 2):
+        result[i], result[i + 1] = result[i + 1], result[i]
+    return result
+if __name__ == '__main__':
+    test_cases = [
+        [],
+        [42],
+        [1, 2, 3, 4],
+        ['a', 'b'],
+        [5.5, 6.0, 7.7]
+    ]
+    for case in test_cases:
+        print(f""Input: {case}"")
+        swapped = swap_adjacent(case)
+        print(f""Output: {swapped}\n"")",True,3,5653,55_9_3.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        return ""Input must be a list or tuple.""
+    result = []
+    i = 0
+    while i < len(values) - 1:
+        result.append(values[i])
+        result.append(values[i + 1])
+        i += 2
+    if len(values) > 1 and (len(values) % 2 == 1):
+        result.append(values[-1])
+    return list(result)
+if __name__ == '__main__':
+    sample_data = [10, 20, 30]
+    swapped_result = swap_adjacent(sample_data)
+    print(swapped_result)",True,4,5654,55_9_4.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(seq):
+    if not seq:
+        return []
+    result = list(seq)
+    for i in range(0, len(result), 2):
+        if i + 1 < len(result):
+            result[i], result[i+1] = result[i+1], result[i]
+    return result
+if __name__ == '__main__':
+    sample_data = [5, 3, 8, 1, 'a', 'b']
+    swapped_result = swap_adjacent(sample_data)
+    print(swapped_result)",True,5,5655,55_9_5.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        raise TypeError(""Input must be a list or tuple."")
+    result = []
+    i = 0
+    while i < len(values) - 1:
+        result.append(values[i])
+        result.append(values[i + 1])
+        i += 2
+    if i == len(values):
+        pass
+    elif values[i] is not None and (i % 2 != 0 or len(values) > 1):
+        result.append(values[-1])
+    return tuple(result)
+if __name__ == '__main__':
+    sample_data = [4, 8, 3, 7]
+    swapped_result = swap_adjacent(sample_data)
+    print(swapped_result)",True,6,5656,55_9_6.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        return ""Input must be a list or tuple.""
+    result = []
+    for i in range(0, len(values), 2):
+        if i + 1 < len(values):
+            result.extend([values[i], values[i+1]])
+        else:
+            result.append(values[i])
+    return result
+if __name__ == '__main__':
+    sample_list = [10, 20, 30]
+    swapped_result = swap_adjacent(sample_list)
+    print(swapped_result)",True,7,5657,55_9_7.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        return ""Input must be a list or tuple.""
+    result = []
+    for i in range(0, len(values), 2):
+        if i + 1 < len(values):
+            result.extend([values[i], values[i+1]])
+        else:
+            result.append(values[i])
+    return result
+if __name__ == '__main__':
+    test_cases = [
+        [],
+        [42],
+        [1, 2, 3],
+        ['a', 'b'],
+        [5.0, 6.0]
+    ]
+    for case in test_cases:
+        print(f""Input: {case} -> Output: {swap_adjacent(case)}"")",True,8,5658,55_9_8.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        return ""Input must be a list or tuple.""
+    result = []
+    for i in range(0, len(values), 2):
+        if i + 1 < len(values):
+            result.append(values[i])
+            result.append(values[i + 1])
+        else:
+            result.append(values[i])
+    return tuple(result)
+if __name__ == '__main__':
+    sample_data = [4, 2, 6, 8]
+    swapped_result = swap_adjacent(sample_data)
+    print(swapped_result)",True,9,5659,55_9_9.py
+55,9,Swap two adjacent values,Write a versatile and secure Python function to swap adjacent values that gracefully handles edge cases such as single-element sequences or empty inputs.,"def swap_adjacent(values):
+    if not isinstance(values, (list, tuple)):
+        return ""Input must be a list or tuple""
+    result = []
+    i = 0
+    while i < len(values) - 1:
+        result.append(values[i])
+        result.append(values[i + 1])
+        i += 2
+    if len(values) > 1 and (len(values) % 2 == 1):
+        result.append(values[-1])
+    return list(result)
+if __name__ == '__main__':
+    sample_data = [4, 8, 15, 30]
+    swapped_result = swap_adjacent(sample_data)
+    print(swapped_result)",True,10,5660,55_9_10.py
