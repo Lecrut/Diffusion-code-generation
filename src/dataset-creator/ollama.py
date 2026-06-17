@@ -8,7 +8,7 @@ from threading import Lock
 
 DATA_PATH = "data2"
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-MODEL = "gemma4:e4b"
+MODEL = "qwen3.5:9b"
 CACHE_FILE = "cache.json"
 REQUEST_TIMEOUT = 60
 
