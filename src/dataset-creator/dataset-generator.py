@@ -12,10 +12,10 @@ import codegen as code
 import importlib.util
 import os
 
-autoCommit_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'autoCommit.py')
-spec = importlib.util.spec_from_file_location("autoCommit", autoCommit_path)
-autoCommit = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(autoCommit)
+# autoCommit_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'autoCommit.py')
+# spec = importlib.util.spec_from_file_location("autoCommit", autoCommit_path)
+# autoCommit = importlib.util.module_from_spec(spec)
+# spec.loader.exec_module(autoCommit)
 
 NUM_TOPICS = 500
 INSTR_PER_TOPIC = 15
@@ -101,7 +101,7 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     ensure_ollama()
     ensure_model()
 
-    autoCommit.start_scheduler(20)
+    # autoCommit.start_scheduler(20)
 
     print(f"Ładuję lub generuję {num_topics} tematów...")
     topics_df = topics.load_or_generate_topics(num_topics=num_topics, force=False)
@@ -155,7 +155,7 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
 
     save_cache()
 
-    autoCommit.stop_scheduler()
+    # autoCommit.stop_scheduler()
 
     print("Gotowe!")
     print(df["valid"].value_counts())
