@@ -1,0 +1,13 @@
+from typing import List
+def remove_duplicates(items: List[int]) -> List[int]:
+    seen = set()
+    result = []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+if __name__ == '__main__':
+    sample_data = [1, 2, 3, 4, 5, 2, 6, 7, 8, 9]
+    cleaned_data = remove_duplicates(sample_data)
+    print(cleaned_data)

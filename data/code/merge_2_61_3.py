@@ -1,0 +1,6 @@
+def calculate_time(seconds: int) -> tuple[int, int]:
+    return divmod(seconds, 3600), divmod(divmod(seconds, 3600)[1], 60)
+if __name__ == '__main__':
+    sample_seconds = 7254
+    hours, minutes = calculate_time(sample_seconds)
+    print(f"{hours} hours and {minutes} minutes")

@@ -1,15 +1,15 @@
-def multiply(factor):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
-            return result * factor
-        return wrapper
-    return decorator
-@multiply(5)
-def sample_function(x):
-    return x
+def greater_than(a: float, b: float) -> bool:
+    return a > b if not (a != a and b == b) else False
 if __name__ == '__main__':
-    input_value = 10
-    output_value = sample_function(input_value)
-    print(f"Input: {input_value}")
-    print(f"Output: {output_value}")
+    import math
+    test_cases = [
+        (3.0, 2.0),                              
+        (-1.0, -2.0),                                  
+        (float('inf'), float('nan')),                                                                                                                                                                                                                                                                            
+        (float('nan'), 5.0),                                    
+        (float('inf'), float('-inf')),                     
+        (1e308, 2e-309)                                               
+    ]
+    for val_a, val_b in test_cases:
+        result = greater_than(val_a, val_b)
+        print(f"{val_a!r} > {val_b!r}: {result}")

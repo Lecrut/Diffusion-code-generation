@@ -16,8 +16,10 @@ print("Przetwarzanie i łączenie plików dataset.csv...")
 df_base = pd.read_csv(base_csv)
 df_src = pd.read_csv(src_csv)
 
+prefix = 'merge_2_'
+
 # Dodanie przedrostka 'merge_' do nazw plików z folderu przenoszonego
-df_src['code_file'] = 'merge_' + df_src['code_file'].astype(str)
+df_src['code_file'] = prefix + df_src['code_file'].astype(str)
 
 # Łączenie w jeden duży DataFrame
 df_combined = pd.concat([df_base, df_src], ignore_index=True)
@@ -45,7 +47,7 @@ if os.path.exists(src_codes):
         src_file_path = os.path.join(src_codes, filename)
         
         if os.path.isfile(src_file_path):
-            new_filename = 'merge_' + filename
+            new_filename = prefix + filename
             dest_file_path = os.path.join(base_codes, new_filename)
             
             # Sprawdzamy, czy plik z nową nazwą przetrwał deduplikację

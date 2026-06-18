@@ -1,0 +1,23 @@
+def merge_dicts(main_data: list[dict], new_entries: list[dict]) -> list[dict]:
+    seen_ids = set()
+    merged_list = []
+    for item in main_data + new_entries:
+        if 'id' not in item or isinstance(item['id'], str):
+            continue
+        entry_id = item.get('id')
+        if entry_id and entry_id not in seen_ids:
+            seen_ids.add(entry_id)
+            merged_list.append(item)
+    return merged_list
+if __name__ == '__main__':
+    main_dataset = [
+        {'id': 1, 'name': 'Alice', 'age': 30},
+        {'id': 2, 'name': 'Bob', 'age': 25}
+    ]
+    new_entries = [
+        {'id': 3, 'name': 'Charlie', 'age': 40},
+        {'id': 1, 'name': 'Alice Updated', 'age': 31},
+        {'id': 2, 'name': 'Bob Revised', 'age': 26}
+    ]
+    final_dataset = merge_dicts(main_dataset, new_entries)
+    print(final_dataset)

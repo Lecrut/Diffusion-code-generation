@@ -1,0 +1,5 @@
+def count_items(items):
+    return sum(1 for _ in items)
+if __name__ == '__main__':
+    large_list = list(range(10_000)) + ['x', 'y'] * 500
+    print(count_items(large_list))

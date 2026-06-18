@@ -1,9 +1,6 @@
-class MathOperations:
-    @staticmethod
-    def multiply(a, b):
-        return a * b
+def parse_boolean_literal(value: str) -> bool:
+    return bool(value.lower() in ('true', 'false'))
 if __name__ == '__main__':
-    result = MathOperations.multiply(5, 10)
-    print(result)
-    result2 = MathOperations.multiply(3.5, 2)
-    print(result2)
+    test_cases = ['True', 'FALSE', 'TRUE', 'False']
+    for case in test_cases:
+        print(f"{case!r} -> {parse_boolean_literal(case)}")

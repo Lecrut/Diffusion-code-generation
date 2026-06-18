@@ -1,24 +1,11 @@
-class Multiplier:
-    def __init__(self, a, b, operation):
-        self.a = a
-        self.b = b
-        self.operation = operation
-    def multiply(self):
-        if self.operation == 'add':
-            return self.a + self.b
-        elif self.operation == 'subtract':
-            return self.a - self.b
-        elif self.operation == 'multiply':
-            return self.a * self.b
-        else:
-            raise ValueError("Unsupported operation")
+import sys
+def is_positive(value):
+    if not isinstance(value, (int, float)):
+        return False
+    return value > 0 and not math.isnan(value) and not math.isinf(value)
 if __name__ == '__main__':
-    m1 = Multiplier(10, 5, 'multiply')
-    result1 = m1.multiply()
-    print(f"10 multiplied by 5 is: {result1}")
-    m2 = Multiplier(20, 3, 'add')
-    result2 = m2.multiply()
-    print(f"20 added to 3 is: {result2}")
-    m3 = Multiplier(15, 7, 'subtract')
-    result3 = m3.multiply()
-    print(f"15 subtracted by 7 is: {result3}")
+    import math
+    test_cases = [1.5, -3, 0, True, False, "hello", None]
+    for case in test_cases:
+        result = is_positive(case)
+        print(f"is_positive({case}) -> {result}")

@@ -1,7 +1,16 @@
-def multiply_two_amounts(a: float, b: float) -> float:
-    return a * b
+import json
+def filter_groups(data):
+    filtered = []
+    for group in data:
+        numeric_values = [float(x) for x in group if isinstance(x, (int, float))]
+        if len(numeric_values) > 0 and all(v == numeric_values[0] for v in numeric_values):
+            filtered.append(group)
+    return filtered
 if __name__ == '__main__':
-    num1 = 10.5
-    num2 = 3.14159
-    result = multiply_two_amounts(num1, num2)
-    print(result)
+    sample_data = [
+        ["A", "1.5"],
+        ["B", "2.0", "3.0"],
+        ["C", "4.0", "4.0"]
+    ]
+    result = filter_groups(sample_data)
+    print(json.dumps(result, indent=2))

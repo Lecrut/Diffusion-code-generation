@@ -1,24 +1,28 @@
-class Multiplier:
-    def __init__(self, a, b, operation):
-        self.a = a
-        self.b = b
-        self.operation = operation
-    def multiply(self):
-        if self.operation == 'add':
-            return self.a + self.b
-        elif self.operation == 'subtract':
-            return self.a - self.b
-        elif self.operation == 'multiply':
-            return self.a * self.b
-        else:
-            raise ValueError("Unsupported operation")
+import math
+def is_positive_int(value: int) -> bool:
+    return isinstance(value, int) and value > 0
+def is_positive_float(value: float) -> bool:
+    return isinstance(value, float) and math.isfinite(value) and value > 0
+def test_is_positive_int():
+    assert is_positive_int(1) == True
+    assert is_positive_int(-5) == False
+    assert is_positive_int(0) == False
+    assert is_positive_int(42) == True
+def test_is_positive_float():
+    assert is_positive_float(3.14) == True
+    assert is_positive_float(-9.8) == False
+    assert is_positive_float(0.0) == False
+    assert is_positive_float(math.inf) == False
+    assert is_positive_float(float('nan')) == False
+def run_tests():
+    test_is_positive_int()
+    test_is_positive_float()
+    print("All tests passed.")
 if __name__ == '__main__':
-    m1 = Multiplier(10, 5, 'multiply')
-    result1 = m1.multiply()
-    print(f"Result 1 (10 * 5): {result1}")
-    m2 = Multiplier(20, 4, 'add')
-    result2 = m2.multiply()
-    print(f"Result 2 (20 + 4): {result2}")
-    m3 = Multiplier(15, 3, 'subtract')
-    result3 = m3.multiply()
-    print(f"Result 3 (15 - 3): {result3}")
+    sample_values = [1, -5, 0.34, float('-inf'), math.inf]
+    results = {v: is_positive_int(v) if isinstance(v, int) else is_positive_float(v) for v in sample_values}
+    print("Sample Results:")
+    for val, res in results.items():
+        print(f"Value: {val}, Is Positive: {res}")
+    test_is_positive_int()
+    test_is_positive_float()
