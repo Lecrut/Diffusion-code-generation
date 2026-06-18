@@ -1,6 +1,0 @@
-def sort_strings(string_list):
-    return sorted(string_list)
-if __name__ == '__main__':
-    unsorted_list = ["banana", "apple", "cherry", "date"]
-    sorted_list = sort_strings(unsorted_list)
-    print(sorted_list)

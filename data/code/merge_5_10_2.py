@@ -1,0 +1,7 @@
+def calculate_difference(a, b):
+    return a - b
+if __name__ == '__main__':
+    num1 = 15.75
+    num2 = 8.25
+    result = calculate_difference(num1, num2)
+    print(f"The difference between {num1} and {num2} is: {result}")
