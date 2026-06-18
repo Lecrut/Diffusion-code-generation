@@ -1,0 +1,1 @@
+if __name__ == '__main__': total = 15 + 27

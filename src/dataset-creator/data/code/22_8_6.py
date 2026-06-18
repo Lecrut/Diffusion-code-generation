@@ -1,0 +1,50 @@
+import unittest
+def match_dictionaries(dict1, dict2):
+    result = {}
+    for key, value1 in dict1.items():
+        if key in dict2 and dict2[key] == value1:
+            result[key] = value1
+    return result
+class TestMatchDictionaries(unittest.TestCase):
+    def test_basic_match(self):
+        dict1 = {'a': 1, 'b': 2}
+        dict2 = {'a': 1, 'b': 99}
+        expected = {'a': 1}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_full_match(self):
+        dict1 = {'x': 10, 'y': 20}
+        dict2 = {'x': 10, 'y': 20}
+        expected = {'x': 10, 'y': 20}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_no_match(self):
+        dict1 = {'a': 1, 'b': 2}
+        dict2 = {'a': 99, 'b': 2}
+        expected = {}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_empty_dict1(self):
+        dict1 = {}
+        dict2 = {'a': 1, 'b': 2}
+        expected = {}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_empty_dict2(self):
+        dict1 = {'a': 1, 'b': 2}
+        dict2 = {}
+        expected = {}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_both_empty(self):
+        dict1 = {}
+        dict2 = {}
+        expected = {}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_subset_match(self):
+        dict1 = {'k1': 'v1', 'k2': 'v2'}
+        dict2 = {'k1': 'v1'}
+        expected = {'k1': 'v1'}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+    def test_all_match(self):
+        dict1 = {'a': 1}
+        dict2 = {'a': 1}
+        expected = {'a': 1}
+        self.assertEqual(match_dictionaries(dict1, dict2), expected)
+if __name__ == '__main__':
+    unittest.main(argv=['first-arg-is-ignored'], exit=False)

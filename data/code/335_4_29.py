@@ -1,0 +1,9 @@
+import re
+class StringSplitter:
+    def split(self, text):
+        return [word for word in re.split(r'\s+', text) if len(word)]
+if __name__ == '__main__':
+    splitter = StringSplitter()
+    sample_text = "  hello   world\n\tpython \tcode"
+    result = splitter.split(sample_text)
+    print(result)

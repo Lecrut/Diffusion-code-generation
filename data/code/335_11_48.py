@@ -1,0 +1,12 @@
+import re
+class SentenceProcessor:
+    def split_sentence(self, sentence):
+        return [word for word in re.split(r'\s+', sentence) if len(word) > 0]
+if __name__ == '__main__':
+    processor = SentenceProcessor()
+    sample_sentences = ["Hello   world", "Python is great.", ""]
+    results = []
+    for s in sample_sentences:
+        result = processor.split_sentence(s)
+        results.append(result)
+    print(results)

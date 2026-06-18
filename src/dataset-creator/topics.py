@@ -4,9 +4,9 @@ import re
 import pandas as pd
 
 from ollama import ollama_generate 
+from path_config import DATA_PATH
 
-DATA_DIR = "data"
-TOPICS_FILE = f"{DATA_DIR}/topics.csv"
+TOPICS_FILE = DATA_PATH / "topics.csv"
 
 TOPICS_TEMPERATURES = [i * 0.05 for i in range(21)]
 
@@ -41,7 +41,7 @@ TOPICS_PROMPT_TEMPLATE = (
     "Always return at least one valid title and never output an empty response."
 )
 
-os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(DATA_PATH, exist_ok=True)
 
 
 def _normalize_title(s: str) -> str:

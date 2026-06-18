@@ -5,6 +5,7 @@ import json
 import subprocess
 import platform
 from threading import Lock
+from path_config import DATA_PATH
 
 
 OLLAMA_URL = "http://localhost:11434"
@@ -12,10 +13,9 @@ OLLAMA_URL = "http://localhost:11434"
 MODEL = "qwen3.5:4b"
 # MODEL = "mistral-medium-3.5:128b" - TO CHANGE FOR TESTING
 
-DATA_DIR = "data"
 CACHE_FILE = "cache.json"
 
-os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(DATA_PATH, exist_ok=True)
 session = requests.Session()
 ollama_lock = Lock()
 
@@ -83,11 +83,11 @@ def ensure_model():
 REQUEST_TIMEOUT = 60
 
 
-def ollama_generate(prompt, temperature=0.7):
+def ollama_generate(prompt, temperature=0.7, use_cache=True):
     cache_key = f"{prompt}|||{temperature}"
     
     with ollama_lock:
-        if cache_key in CACHE:
+        if use_cache and cache_key in CACHE:
             return CACHE[cache_key]
 
         try:
@@ -113,8 +113,9 @@ def ollama_generate(prompt, temperature=0.7):
             if not result:
                 return None
 
-            CACHE[cache_key] = result
-            save_cache() 
+            if use_cache:
+                CACHE[cache_key] = result
+                save_cache()
             return result
 
         except Exception as exc:
