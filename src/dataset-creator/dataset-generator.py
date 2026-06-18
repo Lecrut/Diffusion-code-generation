@@ -1,6 +1,7 @@
 import argparse
 import importlib.util
 import os
+import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -31,6 +32,8 @@ AUTO_COMMIT_ENABLED = os.environ.get("DATASET_GENERATOR_AUTO_COMMIT", "0").lower
     "true",
     "yes",
 }
+SAVE_DATASET_EVERY = int(os.environ.get("DATASET_SAVE_EVERY", "20"))
+SAVE_DATASET_EVERY_SECONDS = float(os.environ.get("DATASET_SAVE_EVERY_SECONDS", "60"))
 
 DATA_DIR = Path(os.environ.get("DATASET_CREATOR_DATA_DIR", DEFAULT_DATA_DIR))
 DATASET_FILE = DATA_DIR / "dataset.csv"
@@ -38,6 +41,8 @@ CODE_DIR = DATA_DIR / "code"
 
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 CODE_DIR.mkdir(parents=True, exist_ok=True)
+_last_dataset_save_at = 0.0
+_unsaved_dataset_rows = 0
 
 
 def _clean_cell(value) -> str:
@@ -105,7 +110,17 @@ def _read_code_file(file_name: str) -> str:
         return ""
 
 
-def save_progress(chunk, partial_results, lock):
+def save_dataset_snapshot(partial_results):
+    global _last_dataset_save_at, _unsaved_dataset_rows
+
+    persistence.save_dataset(partial_results, DATASET_FILE)
+    _last_dataset_save_at = time.monotonic()
+    _unsaved_dataset_rows = 0
+
+
+def save_progress(chunk, partial_results, lock, force=False):
+    global _unsaved_dataset_rows
+
     with lock:
         for row in chunk:
             row = dict(row)
@@ -128,7 +143,16 @@ def save_progress(chunk, partial_results, lock):
             else:
                 print(f"No valid code for: {topic_id}_{instruction_id}", flush=True)
 
-        persistence.save_dataset(partial_results, DATASET_FILE)
+        _unsaved_dataset_rows += len(chunk)
+        now = time.monotonic()
+        should_save = (
+            force
+            or SAVE_DATASET_EVERY <= 1
+            or _unsaved_dataset_rows >= SAVE_DATASET_EVERY
+            or now - _last_dataset_save_at >= SAVE_DATASET_EVERY_SECONDS
+        )
+        if should_save:
+            save_dataset_snapshot(partial_results)
 
 
 def load_existing_dataset():
@@ -146,13 +170,18 @@ def load_existing_dataset():
 
     for row in records:
         code_text = _clean_cell(row.get("code"))
-        if not code_text:
-            code_text = _read_code_file(_clean_cell(row.get("code_file")))
-            if code_text:
-                row["code"] = code_text
+        file_code = _read_code_file(_clean_cell(row.get("code_file")))
+        if file_code:
+            if file_code != code_text:
                 recovered_from_file += 1
+            code_text = file_code
+            row["code"] = code_text
 
-        validation = code.validate_code(code_text, execute=False)
+        validation = code.validate_code(
+            code_text,
+            execute=False,
+            instruction=_clean_cell(row.get("instruction")),
+        )
         row["compile_valid"] = validation.compile_ok
         row["valid"] = validation.ok
         row["validation_error"] = "" if validation.ok else validation.error
@@ -161,7 +190,7 @@ def load_existing_dataset():
             invalid_count += 1
 
     if recovered_from_file:
-        print(f"Recovered code text for {recovered_from_file} rows from saved files.", flush=True)
+        print(f"Loaded code text for {recovered_from_file} rows from saved files.", flush=True)
     if invalid_count:
         print(f"Found {invalid_count} existing rows that do not pass validation; they will be regenerated.", flush=True)
 
@@ -278,6 +307,7 @@ def run(
         auto_commit = _load_auto_commit()
         auto_commit.start_scheduler(20)
 
+    partial_results = []
     try:
         print(f"Laduje lub generuje {num_topics} tematow...")
         topics_df = topics.load_or_generate_topics(num_topics=num_topics, force=False)
@@ -350,14 +380,16 @@ def run(
             print("Brak instrukcji do wygenerowania.", flush=True)
 
         print("Generowanie kodu zakonczone. Zapisuje wynik...")
+        save_dataset_snapshot(partial_results)
         df = pd.DataFrame(partial_results)
-        df.to_csv(DATASET_FILE, index=False)
 
         print("Gotowe!")
         if "valid" in df:
             print(df["valid"].value_counts())
         return df
     finally:
+        if partial_results:
+            save_dataset_snapshot(partial_results)
         save_cache()
         if auto_commit is not None:
             auto_commit.stop_scheduler()

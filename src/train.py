@@ -77,8 +77,12 @@ class CodeInstructionDataset(Dataset):
         max_code_len=1024,
         dataset_fraction=1.0,
         seed=42,
+        code_dir=None,
     ):
-        self.df = pd.read_csv(csv_file)
+        self.csv_file = Path(csv_file)
+        self.code_dir = Path(code_dir) if code_dir is not None else self.csv_file.parent / "code"
+        self.df = pd.read_csv(self.csv_file)
+        self._prefer_code_files()
         self.df = self.df[['instruction', 'code']].dropna()
         if not (0.0 < dataset_fraction <= 1.0):
             raise ValueError("dataset_fraction must be in (0.0, 1.0].")
@@ -101,6 +105,36 @@ class CodeInstructionDataset(Dataset):
             except Exception:
                 continue
         self.ast_dim = len(self.node_vocab)
+
+    def _read_code_file(self, file_name):
+        if file_name is None:
+            return None
+        try:
+            if pd.isna(file_name):
+                return None
+        except TypeError:
+            pass
+
+        file_path = self.code_dir / str(file_name)
+        if not file_path.is_file():
+            return None
+
+        try:
+            code = file_path.read_text(encoding="utf-8")
+        except OSError:
+            return None
+
+        return code if code.strip() else None
+
+    def _prefer_code_files(self):
+        if "code_file" not in self.df.columns:
+            return
+
+        def resolve_code(row):
+            file_code = self._read_code_file(row.get("code_file"))
+            return file_code if file_code is not None else row.get("code")
+
+        self.df["code"] = self.df.apply(resolve_code, axis=1)
 
     def __len__(self):
         return len(self.df)

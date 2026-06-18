@@ -1,4 +1,5 @@
 import ast
+import io
 import os
 import random
 import re
@@ -6,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import tokenize
 import warnings
 from dataclasses import dataclass
 
@@ -14,8 +16,43 @@ from ollama import ollama_generate
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 
-CODE_TEMPERATURES = [0.15 + i * 0.05 for i in range(18)]
+def _parse_temperature_list(value: str | None) -> list[float]:
+    if not value:
+        return []
+    temperatures = []
+    for item in value.split(","):
+        try:
+            temperatures.append(float(item.strip()))
+        except ValueError:
+            continue
+    return temperatures
+
+
+CODE_TEMPERATURES = _parse_temperature_list(os.environ.get("CODEGEN_TEMPERATURES")) or [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+]
+CODEGEN_DUPLICATE_TEMPERATURES = _parse_temperature_list(
+    os.environ.get("CODEGEN_DUPLICATE_TEMPERATURES")
+) or [
+    0.35,
+    0.45,
+    0.55,
+    0.65,
+    0.75,
+]
 VALIDATE_BY_EXECUTION = os.environ.get("CODEGEN_EXECUTE_VALIDATION", "0").lower() not in {
+    "0",
+    "false",
+    "no",
+}
+SEMANTIC_VALIDATION_ENABLED = os.environ.get("CODEGEN_SEMANTIC_VALIDATION", "0").lower() not in {
     "0",
     "false",
     "no",
@@ -23,18 +60,124 @@ VALIDATE_BY_EXECUTION = os.environ.get("CODEGEN_EXECUTE_VALIDATION", "0").lower(
 
 CODE_PROMPT_TEMPLATE = (
     "Task: {instruction}\n"
-    "Return only a single complete runnable Python module.\n"
-    "Include an `if __name__ == '__main__':` block with hard-coded sample values.\n"
-    "Never call input(), sys.stdin, argparse required arguments, or any interactive prompt.\n"
-    "The sample block must run without user input, command-line arguments, network access, or pre-existing files.\n"
-    "Do not include markdown fences or prose outside the code.\n"
-    "Documentation and comments are allowed only when the task explicitly asks for them."
+    "STRICT OUTPUT CONTRACT:\n"
+    "1. Output only raw Python source code. No markdown fences, no prose, no explanations.\n"
+    "2. Return exactly one complete runnable Python module.\n"
+    "3. Include an `if __name__ == '__main__':` block with hard-coded sample values.\n"
+    "4. Never call input(), sys.stdin, argparse required arguments, or any interactive prompt.\n"
+    "5. The sample block must run without user input, command-line arguments, network access, or pre-existing files.\n"
+    "6. The module must define the requested function or class when the task asks for one.\n"
+    "7. Unless the task asks only for tests, the main block must directly call a user-defined function or instantiate/use a user-defined class.\n"
+    "8. The main block must print actual returned or computed values, not a status message.\n"
+    "9. For class tasks, instantiate the class inside the main block and print at least one method call result.\n"
+    "10. For function tasks, call the requested function inside the main block and print its returned value.\n"
+    "11. Do not only print constants, precomputed values, dictionaries, or status strings in the main block.\n"
+    "12. Do not include comments beginning with # unless the task explicitly asks for comments.\n"
+    "13. Do not include docstrings unless the task explicitly asks for docstrings, documentation, or explanation.\n"
+    "14. Do not use placeholders, pass-only blocks, TODOs, NotImplementedError, ellipses, or demonstration-only code.\n"
+    "15. Use clear names and simple executable code instead of comments.\n"
+    "{retry_feedback}"
 )
 
 CODE_START_RE = re.compile(
     r"^\s*(from\s+\S+\s+import\s+|import\s+|def\s+|async\s+def\s+|class\s+|@|if\s+__name__\s*==|[A-Za-z_]\w*\s*=)"
 )
-MAIN_BLOCK_RE = re.compile(r"if\s+__name__\s*==\s*(['\"])__main__\1\s*:")
+DOCUMENTATION_REQUEST_RE = re.compile(
+    r"\b(comment(?:ed|s)?|docstring(?:s)?|document(?:ed|ation)?|well-documented|explain)\b",
+    re.IGNORECASE,
+)
+TEST_REQUEST_RE = re.compile(r"\b(test suite|unit tests?|unittest|pytest|tests?)\b", re.IGNORECASE)
+PLACEHOLDER_RE = re.compile(
+    r"\b("
+    r"todo|fixme|placeholder|stub|not implemented|to be implemented|"
+    r"demonstration purposes|sample hardcoded|hardcoded sample|sample hard-coded|"
+    r"logic moved|bypassing|simulate user input|simulating user input|"
+    r"if user wants|actually|maybe|perhaps|not needed here"
+    r")\b",
+    re.IGNORECASE,
+)
+GENERIC_INSTRUCTION_WORDS = {
+    "a",
+    "an",
+    "and",
+    "accept",
+    "accepted",
+    "accepts",
+    "arg",
+    "args",
+    "argument",
+    "arguments",
+    "best",
+    "block",
+    "called",
+    "class",
+    "clear",
+    "code",
+    "complete",
+    "conversion",
+    "converted",
+    "converting",
+    "development",
+    "efficient",
+    "ensure",
+    "example",
+    "follow",
+    "following",
+    "follows",
+    "for",
+    "from",
+    "function",
+    "given",
+    "handle",
+    "hard",
+    "high",
+    "if",
+    "implement",
+    "implementation",
+    "in",
+    "input",
+    "main",
+    "mathematical",
+    "mathematically",
+    "module",
+    "named",
+    "optimized",
+    "practice",
+    "practices",
+    "program",
+    "python",
+    "quality",
+    "return",
+    "returns",
+    "runnable",
+    "sample",
+    "script",
+    "self",
+    "the",
+    "to",
+    "use",
+    "user",
+    "using",
+    "value",
+    "values",
+    "with",
+    "write",
+}
+
+TERM_ALIASES = {
+    "centimeter": {"centimeter", "centimeters", "cm"},
+    "centimeters": {"centimeter", "centimeters", "cm"},
+    "foot": {"foot", "feet", "ft"},
+    "feet": {"foot", "feet", "ft"},
+    "inch": {"inch", "inches"},
+    "inches": {"inch", "inches"},
+    "kilogram": {"kilogram", "kilograms", "kg"},
+    "kilograms": {"kilogram", "kilograms", "kg"},
+    "meter": {"meter", "meters", "m"},
+    "meters": {"meter", "meters", "m"},
+    "pound": {"pound", "pounds", "lb", "lbs"},
+    "pounds": {"pound", "pounds", "lb", "lbs"},
+}
 
 
 @dataclass(frozen=True)
@@ -81,12 +224,6 @@ def _clean_code_output(text: str) -> str:
     text = _extract_fenced_code(text)
     text = _find_parseable_python(text)
     return re.sub(r"\n{3,}", "\n\n", text).strip()
-
-
-def _ensure_main_block(text: str) -> str:
-    if MAIN_BLOCK_RE.search(text):
-        return text
-    return f"{text}\n\nif __name__ == '__main__':\n    pass\n"
 
 
 def _validation_error(exc: Exception) -> str:
@@ -138,7 +275,373 @@ def _interactive_usage_error(tree: ast.AST) -> str:
     return ""
 
 
-def validate_code(code: str, timeout: float = 3.0, execute: bool = True) -> ValidationResult:
+def _instruction_requests_documentation(instruction: str | None) -> bool:
+    return bool(instruction and DOCUMENTATION_REQUEST_RE.search(instruction))
+
+
+def _instruction_requests_tests(instruction: str | None) -> bool:
+    return bool(instruction and TEST_REQUEST_RE.search(instruction))
+
+
+def _line_count(text: str) -> int:
+    return sum(1 for line in text.splitlines() if line.strip())
+
+
+def _count_comment_lines(code: str) -> int:
+    try:
+        tokens = tokenize.generate_tokens(io.StringIO(code).readline)
+        return sum(1 for token in tokens if token.type == tokenize.COMMENT)
+    except tokenize.TokenError:
+        return 0
+
+
+def _is_docstring_expr(node: ast.AST) -> bool:
+    return (
+        isinstance(node, ast.Expr)
+        and isinstance(node.value, ast.Constant)
+        and isinstance(node.value.value, str)
+    )
+
+
+def _docstring_line_count(tree: ast.AST) -> int:
+    total = 0
+    nodes = [tree]
+    nodes.extend(
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+    )
+
+    for node in nodes:
+        body = getattr(node, "body", [])
+        if not body or not _is_docstring_expr(body[0]):
+            continue
+        start = getattr(body[0], "lineno", 0) or 0
+        end = getattr(body[0], "end_lineno", start) or start
+        total += max(1, end - start + 1)
+
+    return total
+
+
+def _documentation_quality_error(code: str, tree: ast.AST, instruction: str | None) -> str:
+    comment_lines = _count_comment_lines(code)
+    docstring_lines = _docstring_line_count(tree)
+    documentation_lines = comment_lines + docstring_lines
+    if documentation_lines == 0:
+        return ""
+
+    total_lines = max(1, _line_count(code))
+    if not _instruction_requests_documentation(instruction):
+        return "comments/docstrings are not allowed unless the instruction explicitly asks for them"
+
+    max_documentation_lines = max(4, total_lines // 5)
+    if documentation_lines > max_documentation_lines:
+        return (
+            "too much documentation/commentary "
+            f"({documentation_lines}/{total_lines} nonblank lines)"
+        )
+
+    return ""
+
+
+class _DocstringStripper(ast.NodeTransformer):
+    def _strip_node_docstring(self, node):
+        self.generic_visit(node)
+        body = getattr(node, "body", None)
+        if isinstance(body, list):
+            node.body = _strip_leading_docstring(body)
+        return node
+
+    visit_Module = _strip_node_docstring
+    visit_FunctionDef = _strip_node_docstring
+    visit_AsyncFunctionDef = _strip_node_docstring
+    visit_ClassDef = _strip_node_docstring
+
+
+def _strip_disallowed_documentation(code: str, instruction: str | None) -> str | None:
+    if _instruction_requests_documentation(instruction):
+        return None
+
+    tree, _ = _parse_source(code)
+    if tree is None:
+        return None
+
+    documentation_lines = _count_comment_lines(code) + _docstring_line_count(tree)
+    if documentation_lines == 0:
+        return None
+
+    stripped_tree = _DocstringStripper().visit(tree)
+    ast.fix_missing_locations(stripped_tree)
+    stripped = ast.unparse(stripped_tree).strip()
+    if not stripped or stripped == code.strip():
+        return None
+    return stripped
+
+
+def _is_ellipsis_expr(node: ast.AST) -> bool:
+    return (
+        isinstance(node, ast.Expr)
+        and isinstance(node.value, ast.Constant)
+        and node.value.value is Ellipsis
+    )
+
+
+def _is_not_implemented_raise(node: ast.AST) -> bool:
+    if not isinstance(node, ast.Raise) or node.exc is None:
+        return False
+
+    exc = node.exc
+    if isinstance(exc, ast.Call):
+        exc = exc.func
+    return isinstance(exc, ast.Name) and exc.id == "NotImplementedError"
+
+
+def _strip_leading_docstring(body: list[ast.stmt]) -> list[ast.stmt]:
+    if body and _is_docstring_expr(body[0]):
+        return body[1:]
+    return body
+
+
+def _is_placeholder_body(body: list[ast.stmt]) -> bool:
+    body = _strip_leading_docstring(body)
+    return not body or all(
+        isinstance(statement, ast.Pass)
+        or _is_ellipsis_expr(statement)
+        or _is_not_implemented_raise(statement)
+        for statement in body
+    )
+
+
+def _main_test_side(node: ast.AST) -> str | None:
+    if isinstance(node, ast.Name) and node.id == "__name__":
+        return "__name__"
+    if isinstance(node, ast.Constant) and node.value == "__main__":
+        return "__main__"
+    return None
+
+
+def _is_main_test(node: ast.AST) -> bool:
+    if not isinstance(node, ast.Compare) or len(node.ops) != 1 or len(node.comparators) != 1:
+        return False
+    if not isinstance(node.ops[0], ast.Eq):
+        return False
+
+    left = _main_test_side(node.left)
+    right = _main_test_side(node.comparators[0])
+    return {left, right} == {"__name__", "__main__"}
+
+
+def _main_blocks(tree: ast.AST) -> list[ast.If]:
+    return [node for node in ast.walk(tree) if isinstance(node, ast.If) and _is_main_test(node.test)]
+
+
+def _call_name(call: ast.Call) -> str | None:
+    func = call.func
+    if isinstance(func, ast.Name):
+        return func.id
+    if isinstance(func, ast.Attribute):
+        return func.attr
+    return None
+
+
+def _top_level_definition_names(tree: ast.AST) -> set[str]:
+    return {
+        node.name
+        for node in getattr(tree, "body", [])
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+    }
+
+
+def _top_level_class_names(tree: ast.AST) -> set[str]:
+    return {node.name for node in getattr(tree, "body", []) if isinstance(node, ast.ClassDef)}
+
+
+def _top_level_instance_names(tree: ast.AST, class_names: set[str]) -> set[str]:
+    instances = set()
+    for node in getattr(tree, "body", []):
+        targets = []
+        value = None
+        if isinstance(node, ast.Assign):
+            targets = node.targets
+            value = node.value
+        elif isinstance(node, ast.AnnAssign):
+            targets = [node.target]
+            value = node.value
+
+        if not isinstance(value, ast.Call):
+            continue
+        if not isinstance(value.func, ast.Name) or value.func.id not in class_names:
+            continue
+
+        for target in targets:
+            if isinstance(target, ast.Name):
+                instances.add(target.id)
+
+    return instances
+
+
+def _call_exercises_definition(call: ast.Call, definitions: set[str], instances: set[str]) -> bool:
+    func = call.func
+    if isinstance(func, ast.Name):
+        return func.id in definitions
+    if isinstance(func, ast.Attribute):
+        value = func.value
+        if isinstance(value, ast.Name):
+            return value.id in definitions or value.id in instances
+    return False
+
+
+def _main_block_quality_error(tree: ast.AST, instruction: str | None) -> str:
+    blocks = _main_blocks(tree)
+    if not blocks:
+        return "missing runnable if __name__ == '__main__' sample block"
+
+    definitions = _top_level_definition_names(tree)
+    class_names = _top_level_class_names(tree)
+    instances = _top_level_instance_names(tree, class_names)
+    tests_requested = _instruction_requests_tests(instruction)
+
+    for block in blocks:
+        body = _strip_leading_docstring(block.body)
+        if _is_placeholder_body(body):
+            return "main block is empty or pass-only"
+
+        calls = [node for statement in body for node in ast.walk(statement) if isinstance(node, ast.Call)]
+        if not calls:
+            return "main block does not execute any sample call"
+
+        if definitions and not tests_requested:
+            if not any(_call_exercises_definition(call, definitions, instances) for call in calls):
+                return "main block does not exercise any user-defined function or class"
+
+    return ""
+
+
+def _placeholder_error(code: str, tree: ast.AST) -> str:
+    match = PLACEHOLDER_RE.search(code)
+    if match:
+        return f"placeholder/meta commentary is not allowed: {match.group(0)!r}"
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Pass):
+            return "pass statements are not allowed in generated solutions"
+        if _is_ellipsis_expr(node):
+            return "ellipsis placeholders are not allowed in generated solutions"
+        if _is_not_implemented_raise(node):
+            return "NotImplementedError placeholders are not allowed in generated solutions"
+
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            if _is_placeholder_body(node.body):
+                return f"{node.__class__.__name__} {node.name!r} has no implementation"
+
+    return ""
+
+
+def _defined_names(tree: ast.AST, node_types) -> set[str]:
+    return {node.name for node in ast.walk(tree) if isinstance(node, node_types)}
+
+
+def _required_api_error(tree: ast.AST, instruction: str | None) -> str:
+    if not instruction:
+        return ""
+
+    class_names = _defined_names(tree, ast.ClassDef)
+    function_names = _defined_names(tree, (ast.FunctionDef, ast.AsyncFunctionDef))
+
+    for match in re.finditer(r"\bclass\s+(?:named|called)\s+[`'\"]?([A-Za-z_]\w*)", instruction, re.I):
+        expected = match.group(1)
+        if expected not in class_names:
+            return f"missing requested class {expected!r}"
+
+    for match in re.finditer(r"\bfunction\s+(?:named|called)\s+[`'\"]?([A-Za-z_]\w*)", instruction, re.I):
+        expected = match.group(1)
+        if expected not in function_names:
+            return f"missing requested function {expected!r}"
+
+    lowered = instruction.lower()
+    if "function" in lowered and not function_names and "lambda" not in lowered:
+        return "instruction asks for a function but no function is defined"
+    if "class" in lowered and not class_names:
+        return "instruction asks for a class but no class is defined"
+
+    return ""
+
+
+def _normalize_term(term: str) -> str:
+    term = term.lower()
+    if len(term) > 4 and term.endswith("ies"):
+        term = f"{term[:-3]}y"
+    elif len(term) > 3 and term.endswith("s"):
+        term = term[:-1]
+    if len(term) > 5 and term.endswith("ed"):
+        term = term[:-2]
+    elif len(term) > 5 and term.endswith("ing"):
+        term = term[:-3]
+    return term
+
+
+def _text_terms(text: str) -> set[str]:
+    terms = set()
+    identifiers = re.findall(r"[A-Za-z][A-Za-z0-9_]*", text)
+    for identifier in identifiers:
+        expanded = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", identifier)
+        for token in re.split(r"[^A-Za-z0-9]+|_", expanded):
+            if len(token) < 2:
+                continue
+            normalized = _normalize_term(token)
+            terms.add(normalized)
+            for alias in TERM_ALIASES.get(normalized, set()):
+                terms.add(_normalize_term(alias))
+    return terms
+
+
+def _semantic_coverage_error(code: str, instruction: str | None) -> str:
+    if not SEMANTIC_VALIDATION_ENABLED:
+        return ""
+
+    if not instruction:
+        return ""
+
+    required_terms = {
+        _normalize_term(token)
+        for token in re.findall(r"[A-Za-z][A-Za-z0-9_]{3,}", instruction)
+        if _normalize_term(token) not in GENERIC_INSTRUCTION_WORDS
+    }
+    if not required_terms:
+        return ""
+
+    code_words = _text_terms(code)
+    covered = required_terms.intersection(code_words)
+    min_covered = 1 if len(required_terms) <= 3 else 2
+    if len(covered) < min_covered:
+        missing = ", ".join(sorted(required_terms - covered)[:4])
+        return f"code does not cover enough task-specific terms; missing examples: {missing}"
+
+    return ""
+
+
+def _quality_error(code: str, tree: ast.AST, instruction: str | None) -> str:
+    for check in (
+        lambda: _documentation_quality_error(code, tree, instruction),
+        lambda: _placeholder_error(code, tree),
+        lambda: _main_block_quality_error(tree, instruction),
+        lambda: _required_api_error(tree, instruction),
+        lambda: _semantic_coverage_error(code, instruction),
+    ):
+        error = check()
+        if error:
+            return error
+
+    return ""
+
+
+def validate_code(
+    code: str,
+    timeout: float = 3.0,
+    execute: bool = True,
+    instruction: str | None = None,
+) -> ValidationResult:
     if not code or not code.strip():
         return ValidationResult(False, False, False, "empty code")
 
@@ -154,6 +657,9 @@ def validate_code(code: str, timeout: float = 3.0, execute: bool = True) -> Vali
             interactive_error = _interactive_usage_error(tree)
             if interactive_error:
                 return ValidationResult(False, True, False, interactive_error)
+            quality_error = _quality_error(code, tree, instruction)
+            if quality_error:
+                return ValidationResult(False, True, False, quality_error)
         except Exception as exc:
             return ValidationResult(False, False, False, _validation_error(exc))
 
@@ -191,20 +697,50 @@ def is_compilable(code: str) -> bool:
     return validate_code(code, execute=False).ok
 
 
-def is_valid(code: str, timeout: float = 3.0) -> bool:
+def _validate_and_report(
+    code: str,
+    timeout: float = 3.0,
+    instruction: str | None = None,
+) -> ValidationResult:
     start = time.time()
-    result = validate_code(code, timeout=timeout, execute=VALIDATE_BY_EXECUTION)
+    result = validate_code(code, timeout=timeout, execute=VALIDATE_BY_EXECUTION, instruction=instruction)
     elapsed = time.time() - start
     if result.ok:
         print(f"[VALIDATE] OK ({elapsed:.2f}s)", flush=True)
-        return True
+    else:
+        print(f"[VALIDATE] FAILED ({elapsed:.2f}s): {result.error}", flush=True)
+    return result
 
-    print(f"[VALIDATE] FAILED ({elapsed:.2f}s): {result.error}", flush=True)
-    return False
+
+def is_valid(code: str, timeout: float = 3.0, instruction: str | None = None) -> bool:
+    return _validate_and_report(code, timeout=timeout, instruction=instruction).ok
 
 
-def generate_code(instruction: str, temperature: float) -> str | None:
-    prompt = CODE_PROMPT_TEMPLATE.format(instruction=instruction)
+def _retry_feedback_block(feedback: str | None) -> str:
+    if not feedback:
+        return ""
+    return (
+        "\nPREVIOUS ATTEMPT FAILED VALIDATION:\n"
+        f"{feedback}\n"
+        "Generate a fresh corrected module that satisfies every contract rule above.\n"
+    )
+
+
+def _select_code_temperature(retry_feedback: str | None) -> float:
+    if retry_feedback and retry_feedback.startswith("the previous response duplicated"):
+        return random.choice(CODEGEN_DUPLICATE_TEMPERATURES)
+    return random.choice(CODE_TEMPERATURES)
+
+
+def generate_code(
+    instruction: str,
+    temperature: float,
+    retry_feedback: str | None = None,
+) -> str | None:
+    prompt = CODE_PROMPT_TEMPLATE.format(
+        instruction=instruction,
+        retry_feedback=_retry_feedback_block(retry_feedback),
+    )
     seed = random.randint(1, 2_147_483_647)
     start = time.time()
     raw_output = ollama_generate(prompt, temperature, use_cache=False, seed=seed)
@@ -218,9 +754,8 @@ def generate_code(instruction: str, temperature: float) -> str | None:
         print(f"[OLLAMA] Empty code after cleaning (temp={temperature:.2f})", flush=True)
         return None
 
-    result = _ensure_main_block(cleaned)
     print(f"[OLLAMA] Generated in {elapsed:.2f}s (temp={temperature:.2f})", flush=True)
-    return result
+    return cleaned
 
 
 def normalize_variant(code_text: str) -> str | None:
@@ -241,6 +776,7 @@ def generate_variants(
     seen = set(existing_keys or set())
     variants = []
     attempt_limit = max_attempts * max(1, max_rounds)
+    retry_feedback = None
 
     print(f"[VARIANTS] start target={min_unique} max_attempts={attempt_limit}", flush=True)
 
@@ -248,23 +784,38 @@ def generate_variants(
         if len(variants) >= min_unique:
             break
 
-        temperature = random.choice(CODE_TEMPERATURES)
-        code_text = generate_code(instruction, temperature)
+        temperature = _select_code_temperature(retry_feedback)
+        code_text = generate_code(instruction, temperature, retry_feedback=retry_feedback)
         if not code_text:
+            retry_feedback = "the previous response was empty or could not be cleaned into Python code"
             continue
 
-        variant_key = normalize_variant(code_text)
-        if not variant_key:
-            print("[VARIANTS] rejected: syntax parse failed", flush=True)
+        stripped_code = _strip_disallowed_documentation(code_text, instruction)
+        if stripped_code:
+            code_text = stripped_code
+            print("[CLEAN] stripped disallowed comments/docstrings", flush=True)
+
+        tree, parse_error = _parse_source(code_text)
+        if tree is None:
+            retry_feedback = parse_error or "syntax parse failed"
+            print(f"[VARIANTS] rejected: {retry_feedback}", flush=True)
             continue
+        variant_key = ast.dump(tree, include_attributes=False)
 
         if variant_key in seen:
+            retry_feedback = (
+                "the previous response duplicated an existing solution; produce a structurally different "
+                "valid implementation while still satisfying the original task"
+            )
             print("[VARIANTS] rejected: duplicate", flush=True)
             continue
 
-        if not is_valid(code_text):
+        validation = _validate_and_report(code_text, instruction=instruction)
+        if not validation.ok:
+            retry_feedback = validation.error
             continue
 
+        retry_feedback = None
         seen.add(variant_key)
         variants.append(code_text)
         if on_variant is not None:

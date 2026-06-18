@@ -9,10 +9,17 @@ from threading import Lock, local
 
 import requests
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
 
 OLLAMA_URL = "http://localhost:11434"
 # Set OLLAMA_MODELS to a comma-separated list to spread requests across models.
-MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.5:4b")
+MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:14b")
 MODELS = [m.strip() for m in os.environ.get("OLLAMA_MODELS", MODEL).split(",") if m.strip()]
 if not MODELS:
     MODELS = [MODEL]
@@ -108,10 +115,12 @@ def ensure_model(model=None):
             if any(m == target or m.startswith(f"{target}:") for m in installed):
                 continue
 
-            subprocess.run(["ollama", "pull", target])
+            result = subprocess.run(["ollama", "pull", target], check=False)
+            if result.returncode != 0:
+                raise RuntimeError(f"ollama pull failed for {target!r}")
 
-    except Exception:
-        return
+    except Exception as exc:
+        print(f"OLLAMA MODEL CHECK ERROR: {exc}", flush=True)
 
 
 REQUEST_TIMEOUT = int(os.environ.get("OLLAMA_REQUEST_TIMEOUT", "120"))
@@ -177,6 +186,11 @@ def ollama_generate(
                 _write_cache_unlocked()
         return result
 
+    except requests.HTTPError as exc:
+        body = exc.response.text.strip() if exc.response is not None else ""
+        detail = f"{exc}; response={body}" if body else str(exc)
+        print(f"OLLAMA ERROR ({selected_model}): {detail}", flush=True)
+        return None
     except Exception as exc:
         print(f"OLLAMA ERROR ({selected_model}): {exc}", flush=True)
         return None

@@ -25,8 +25,11 @@ INSTRUCTIONS_PROMPT_TEMPLATE = (
     "1. Use COMMANDS (e.g., 'Write a robust script...', 'Implement an optimized function...').\n"
     "2. NEVER ask questions.\n"
     "3. Explicitly demand professional, efficient, and best-practice Python code.\n"
-    "4. Output ONLY a valid JSON array of OBJECTS. No markdown or extra text.\n"
-    "5. Each object MUST have exactly two keys: 'task_id' (integer) and 'instruction' (string).\n"
+    "4. Do NOT ask for comments, docstrings, tutorials, explanations, or well-documented code.\n"
+    "5. Do NOT request interactive input, user prompts, stdin reads, or required command-line arguments.\n"
+    "6. Prefer deterministic tasks that can be demonstrated with hard-coded sample values.\n"
+    "7. Output ONLY a valid JSON array of OBJECTS. No markdown or extra text.\n"
+    "8. Each object MUST have exactly two keys: 'task_id' (integer) and 'instruction' (string).\n"
     "Example of correct output:\n"
     "[\n"
     "  {{ \"task_id\": 1, \"instruction\": \"Write a highly optimized Python function that calculates the sum of two integers. Ensure the code follows PEP 8 standards.\" }}\n"
@@ -49,6 +52,26 @@ def _minimal_validator(instr: str) -> bool:
         return False
 
     if instr.strip().lower().startswith(("how", "what", "why", "can", "please", "would", "should")):
+        return False
+
+    lowered = instr.lower()
+    rejected_patterns = [
+        r"\bwell[- ]documented\b",
+        r"\bwell[- ]commented\b",
+        r"\bdocstrings?\b",
+        r"\bcomments?\b",
+        r"\bexplanations?\b",
+        r"\btutorial\b",
+        r"\bprompts?\s+(?:the\s+)?user\b",
+        r"\bcontinuously\s+prompts?\b",
+        r"\binteractive\b",
+        r"\binput\(\)",
+        r"\bsys\.stdin\b",
+        r"\bstdin\b",
+        r"\bstandard input\b",
+        r"\brequired command[- ]line arguments?\b",
+    ]
+    if any(re.search(pattern, lowered) for pattern in rejected_patterns):
         return False
 
     return True
@@ -114,7 +137,8 @@ def load_or_generate_instructions(topics_df, instr_per_topic=10, force=False, ma
                 prompt = (
                     f"Topic: '{topic}'.\n"
                     f"Generate {need} direct Python coding instructions for this topic, demanding high-quality and optimized code.\n"
-                    "Do not ask questions.\n"
+                    "Do not ask questions, comments, docstrings, explanations, interactive prompts, stdin reads, or required CLI arguments.\n"
+                    "Prefer deterministic tasks that can be demonstrated with hard-coded sample values.\n"
                     "Output ONLY a JSON array of objects with keys 'task_id' and 'instruction'."
                 )
 
