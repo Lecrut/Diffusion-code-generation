@@ -6,9 +6,9 @@ cd "$ROOT_DIR"
 
 OLLAMA_URL_DEFAULT="http://10.24.16.27:11434"
 MODELS=(
-  "quen3.6:27b"
-  "quen3.6:35b"
-  "quen3.5:122b-a10b"
+  "qwen3.6:27b"
+  "qwen3.6:35b"
+  "qwen3.5:122b-a10b"
 )
 
 for model in "${MODELS[@]}"; do
