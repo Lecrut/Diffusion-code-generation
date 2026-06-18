@@ -16,7 +16,7 @@ print("Przetwarzanie i łączenie plików dataset.csv...")
 df_base = pd.read_csv(base_csv)
 df_src = pd.read_csv(src_csv)
 
-prefix = 'merge_2_'
+prefix = 'merge_3_'
 
 # Dodanie przedrostka 'merge_' do nazw plików z folderu przenoszonego
 df_src['code_file'] = prefix + df_src['code_file'].astype(str)

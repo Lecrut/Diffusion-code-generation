@@ -1,9 +1,15 @@
-import math
-def large_integer_division(numerator: int, denominator: int) -> float:
-    result = numerator / denominator
-    return result
+def celsius_to_fahrenheit(celsius_readings):
+    fahrenheit_readings = {}
+    for location, celsius in celsius_readings.items():
+        fahrenheit = (celsius * 9/5) + 32
+        fahrenheit_readings[location] = fahrenheit
+    return fahrenheit_readings
 if __name__ == '__main__':
-    num1 = 1234567890123456789
-    num2 = 9876543210987654321
-    division_result = large_integer_division(num1, num2)
-    print(division_result)
+    sample_data = {
+        "London": 15.0,
+        "New York": 20.0,
+        "Tokyo": 25.0,
+        "Dubai": 35.0
+    }
+    result = celsius_to_fahrenheit(sample_data)
+    print(result)

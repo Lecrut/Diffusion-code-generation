@@ -1,21 +1,20 @@
-def divide_numbers(a, b):
-    try:
-        result = a / b
-        return result
-    except ZeroDivisionError:
-        return "Error: Cannot divide by zero."
-    except TypeError:
-        return "Error: Invalid input. Please enter numbers."
+import sys
+def convert_km_to_miles(kilometers):
+    miles = kilometers * 0.621371
+    return miles
 if __name__ == '__main__':
-    num1 = 10
-    num2 = 2
-    result = divide_numbers(num1, num2)
-    print(f"The result of dividing {num1} by {num2} is: {result}")
-    num3 = 20
-    num4 = 0
-    result2 = divide_numbers(num3, num4)
-    print(f"The result of dividing {num3} by {num4} is: {result2}")
-    num5 = 15.5
-    num6 = 3
-    result3 = divide_numbers(num5, num6)
-    print(f"The result of dividing {num5} by {num6} is: {result3}")
+    sample_length = 10
+    conversion_type = "km_to_miles"
+    if conversion_type == "km_to_miles":
+        try:
+            length_input = input("Enter the length in kilometers: ")
+            length = float(length_input)
+            if length < 0:
+                print("Error: Length cannot be negative.")
+            else:
+                result = convert_km_to_miles(length)
+                print(f"Conversion result: {length} km is equal to {result:.2f} miles.")
+        except ValueError:
+            print("Error: Invalid input. Please enter a valid number for the length.")
+    else:
+        print("Invalid conversion type specified.")

@@ -1,17 +1,21 @@
-from typing import Union
-def divide(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
-    if b == 0:
-        raise ZeroDivisionError("Cannot divide by zero")
-    return a / b
-if __name__ == '__main__':
-    result1 = divide(10, 2)
-    print(f"10 divided by 2 is: {result1}")
-    result2 = divide(15, 3)
-    print(f"15 divided by 3 is: {result2}")
-    result3 = divide(7, 2)
-    print(f"7 divided by 2 is: {result3}")
+import sys
+def convert_time_to_seconds(time_str):
     try:
-        result4 = divide(5, 0)
-        print(f"5 divided by 0 is: {result4}")
-    except ZeroDivisionError as e:
-        print(f"Error caught: {e}")
+        h, m, s = map(int, time_str.split(':'))
+        total_seconds = h * 3600 + m * 60 + s
+        return total_seconds
+    except ValueError:
+        return None
+if __name__ == '__main__':
+    sample_times = [
+        '1:30:45',
+        '0:05:00',
+        '23:59:59',
+        '10:1:20'
+    ]
+    for time_input in sample_times:
+        seconds = convert_time_to_seconds(time_input)
+        if seconds is not None:
+            print(f"Input: {time_input}, Total Seconds: {seconds}")
+        else:
+            print(f"Error processing: {time_input}")

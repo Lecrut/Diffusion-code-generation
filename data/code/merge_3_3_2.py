@@ -1,9 +1,8 @@
-import math
-def divide_large_integers(a, b):
-    result = float(a) / b
-    return result
+class TemperatureConverter:
+    def celsius_to_fahrenheit(self, celsius: float) -> float:
+        return (celsius * 9/5) + 32
 if __name__ == '__main__':
-    num1 = 1234567890123456789
-    num2 = 9876543210987654321
-    division_result = divide_large_integers(num1, num2)
-    print(division_result)
+    converter = TemperatureConverter()
+    celsius_temp = 25.0
+    fahrenheit_temp = converter.celsius_to_fahrenheit(celsius_temp)
+    print(f"{celsius_temp}°C is equal to {fahrenheit_temp}°F")

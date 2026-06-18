@@ -1,10 +1,21 @@
-def divide_two_numbers(a, b):
-    if b == 0:
-        raise ValueError("Division by zero is not allowed.")
-    return a / b
+import math
+class RatioCalculator:
+    def simplify_ratio(self, num1, num2):
+        common_divisor = math.gcd(num1, num2)
+        simplified_num1 = num1 // common_divisor
+        simplified_num2 = num2 // common_divisor
+        return simplified_num1, simplified_num2
 if __name__ == '__main__':
-    print(divide_two_numbers(10.0, 2.0))
-    try:
-        divide_two_numbers(10.0, 0.0)
-    except ValueError as e:
-        print(f"Error caught: {e}")
+    calculator = RatioCalculator()
+    num1 = 48
+    num2 = 18
+    result_num1, result_num2 = calculator.simplify_ratio(num1, num2)
+    print(f"The simplified ratio of {num1} to {num2} is {result_num1}:{result_num2}")
+    num1 = 100
+    num2 = 75
+    result_num1, result_num2 = calculator.simplify_ratio(num1, num2)
+    print(f"The simplified ratio of {num1} to {num2} is {result_num1}:{result_num2}")
+    num1 = 12
+    num2 = 12
+    result_num1, result_num2 = calculator.simplify_ratio(num1, num2)
+    print(f"The simplified ratio of {num1} to {num2} is {result_num1}:{result_num2}")

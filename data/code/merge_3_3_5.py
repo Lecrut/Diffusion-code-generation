@@ -1,9 +1,7 @@
-import math
-def divide_large_integers(a: int, b: int) -> float:
-    result = a / b
-    return result
+def filter_freezing_temperatures(readings):
+    filtered_temperatures = [temp for temp in readings if temp >= 0]
+    return filtered_temperatures
 if __name__ == '__main__':
-    num1 = 123456789012345
-    num2 = 543210987654321
-    division_result = divide_large_integers(num1, num2)
-    print(division_result)
+    sample_readings = [10, -5, 2, 0, -10, 15, -3, 0, 25, -1]
+    result = filter_freezing_temperatures(sample_readings)
+    print(result)

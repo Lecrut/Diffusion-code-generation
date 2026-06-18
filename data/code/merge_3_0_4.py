@@ -1,21 +1,10 @@
-def divide_numbers(a, b):
-    try:
-        result = a / b
-        return result
-    except ZeroDivisionError:
-        return "Error: Cannot divide by zero."
-    except TypeError:
-        return "Error: Invalid input types. Please enter numbers."
+def inches_to_cm(inches):
+    centimeters = inches * 2.54
+    return centimeters
 if __name__ == '__main__':
-    num1 = 20
-    num2 = 4
-    result = divide_numbers(num1, num2)
-    print(f"The result of dividing {num1} by {num2} is: {result}")
-    num3 = 10
-    num4 = 0
-    result2 = divide_numbers(num3, num4)
-    print(f"The result of dividing {num3} by {num4} is: {result2}")
-    num5 = 5.5
-    num6 = 2
-    result3 = divide_numbers(num5, num6)
-    print(f"The result of dividing {num5} by {num6} is: {result3}")
+    sample_inches = 10
+    result = inches_to_cm(sample_inches)
+    print(f"{sample_inches} inches is equal to {result} centimeters")
+    sample_inches = 39.3701
+    result = inches_to_cm(sample_inches)
+    print(f"{sample_inches} inches is equal to {result} centimeters")

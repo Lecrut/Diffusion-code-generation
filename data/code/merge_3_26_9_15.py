@@ -1,0 +1,1 @@
+result = lambda x: (lambda y: x > y)(10)  # Example usage with hardcoded values below in main block if __name__ == '__main__': print(result(5))  # True; result(3)  # False

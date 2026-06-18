@@ -1,9 +1,6 @@
-import math
-def large_integer_division(numerator, denominator):
-    result = numerator / denominator
-    return result
+def calculate_average_temperature(temperatures):
+    return sum(temperatures) / len(temperatures)
 if __name__ == '__main__':
-    num1 = 1234567890123456789
-    num2 = 3141592653589793238
-    division_result = large_integer_division(num1, num2)
-    print(division_result)
+    sample_temps = [22.5, 23.1, 21.9, 24.0, 22.8]
+    average = calculate_average_temperature(sample_temps)
+    print(average)

@@ -1,17 +1,14 @@
-class DivisionByZeroError(Exception):
-    pass
-class RatioCalculator:
-    def calculate_division(self, numerator, denominator):
-        if denominator == 0:
-            raise DivisionByZeroError("Denominator cannot be zero")
-        return numerator / denominator
+def calculate_total_volume(object_volumes):
+    total_volume = 0
+    for volume in object_volumes.values():
+        total_volume += volume
+    return total_volume
 if __name__ == '__main__':
-    calculator = RatioCalculator()
-    try:
-        result1 = calculator.calculate_division(10, 2)
-        print(f"10 / 2 = {result1}")
-        result2 = calculator.calculate_division(15, 3)
-        print(f"15 / 3 = {result2}")
-        result3 = calculator.calculate_division(7, 0)
-    except DivisionByZeroError as e:
-        print(f"Error caught: {e}")
+    object_data = {
+        "cube": 10.0,
+        "sphere": 5.5,
+        "cylinder": 12.3,
+        "pyramid": 8.8
+    }
+    total = calculate_total_volume(object_data)
+    print(total)

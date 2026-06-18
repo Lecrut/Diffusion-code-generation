@@ -1,0 +1,24 @@
+def calculate_volume_difference(vol1: float, vol2: float) -> str:
+    """
+    Calculates the absolute difference between two volume measurements
+    and returns it formatted to two decimal places as a string.
+    
+    Args:
+        vol1 (float): First volume measurement.
+        vol2 (float): Second volume measurement.
+        
+    Returns:
+        str: Absolute difference rounded to two decimal places, converted to string.
+    """
+    absolute_difference = abs(vol1 - vol2)
+    formatted_result = f"{absolute_difference:.2f}"
+    return formatted_result
+
+if __name__ == '__main__':
+    # Hard-coded sample values for testing without user input or external dependencies
+    measurement_a = 5.6789
+    measurement_b = 3.1415
+    
+    result = calculate_volume_difference(measurement_a, measurement_b)
+    
+    print(result)
