@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 from tqdm import tqdm
 
-from ollama import ensure_ollama, ensure_model, save_cache
+from ollama import ensure_ollama, ensure_model, save_cache, get_runtime_config
 import instructions
 import persistence
 import topics
@@ -21,8 +21,8 @@ NUM_TOPICS = 700
 INSTR_PER_TOPIC = 25
 VARIANTS_PER_INSTR = 20
 ATTEMPTS_PER_INSTR = 200
-MAX_WORKERS = 3
-DATA_DIR = "data2"
+MAX_WORKERS = int(os.environ.get("DATASET_CREATOR_MAX_WORKERS", "3"))
+DATA_DIR = os.environ.get("DATASET_CREATOR_DATA_DIR", "data2")
 DATASET_FILE = os.path.join(DATA_DIR, "dataset.csv")
 
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -98,6 +98,16 @@ def build_variants(row):
 def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     print("Rozpoczynam generowanie datasetu.")
     os.makedirs(os.path.dirname(DATASET_FILE), exist_ok=True)
+    runtime_config = get_runtime_config()
+    print(
+        "Konfiguracja runtime: "
+        f"url={runtime_config['ollama_url']}, "
+        f"model={runtime_config['model']}, "
+        f"data_path={runtime_config['data_path']}, "
+        f"cache_file={runtime_config['cache_file']}, "
+        f"workers={MAX_WORKERS}",
+        flush=True,
+    )
     ensure_ollama()
     ensure_model()
 

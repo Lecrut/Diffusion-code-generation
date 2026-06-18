@@ -4,7 +4,7 @@ import re
 import pandas as pd
 
 from ollama import ollama_generate 
-DATA_DIR = "data2"
+DATA_DIR = os.environ.get("DATASET_CREATOR_DATA_DIR", "data2")
 TOPICS_FILE = os.path.join(DATA_DIR, "topics.csv")
 
 TOPICS_TEMPERATURES = [i * 0.05 for i in range(21)]

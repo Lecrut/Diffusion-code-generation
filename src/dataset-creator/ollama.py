@@ -2,17 +2,25 @@ import requests
 import os
 import time
 import json
-import subprocess # Możesz zostawić, jeśli używasz go gdzieś indziej, ale tu już nie będzie potrzebny
-import platform
 from threading import Lock
 
-DATA_PATH = "data2"
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-MODEL = "qwen3.5:9b"
-CACHE_FILE = "cache.json"
-REQUEST_TIMEOUT = 300
+def _sanitize_for_filename(value: str) -> str:
+    return "".join(ch if ch.isalnum() or ch in ("-", "_") else "_" for ch in value)
+
+
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://10.24.16.27:11434")
+MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.6:27b")
+DATA_PATH = os.environ.get("DATASET_CREATOR_DATA_DIR", "data2")
+CACHE_FILE = os.environ.get(
+    "DATASET_CREATOR_CACHE_FILE",
+    os.path.join(DATA_PATH, f"cache_{_sanitize_for_filename(MODEL)}.json"),
+)
+REQUEST_TIMEOUT = int(os.environ.get("OLLAMA_REQUEST_TIMEOUT", "300"))
 
 os.makedirs(DATA_PATH, exist_ok=True)
+cache_dir = os.path.dirname(CACHE_FILE)
+if cache_dir:
+    os.makedirs(cache_dir, exist_ok=True)
 session = requests.Session()
 ollama_lock = Lock()
 
@@ -75,8 +83,18 @@ def ensure_ollama():
 
     raise RuntimeError("Nie udało się połączyć z Ollamą. Upewnij się, że kontener 'ollama' działa poprawnie.")
 
+
+def get_runtime_config() -> dict:
+    return {
+        "ollama_url": OLLAMA_URL,
+        "model": MODEL,
+        "data_path": DATA_PATH,
+        "cache_file": CACHE_FILE,
+        "request_timeout": REQUEST_TIMEOUT,
+    }
+
 def ollama_generate(prompt, temperature=0.7, use_cache=False):
-    cache_key = f"{prompt}|||{temperature}"
+    cache_key = f"{OLLAMA_URL}|||{MODEL}|||{temperature}|||{prompt}"
     
     with ollama_lock:
         if use_cache and cache_key in CACHE:
