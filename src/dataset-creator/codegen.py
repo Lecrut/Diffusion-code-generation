@@ -17,6 +17,7 @@ CODE_PROMPT_TEMPLATE = (
     "Task: {instruction}\n"
     "Return only runnable Python code.\n"
     "Include an `if __name__ == '__main__':` block.\n"
+    "The `__main__` block must not be empty and must never contain only `pass`; it must execute real code.\n"
     "Use hard-coded sample values instead of interactive input.\n"
     "The script must execute successfully with exit code 0.\n"
     "No comments, docstrings, markdown, or explanation."
