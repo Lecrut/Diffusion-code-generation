@@ -2,12 +2,19 @@ import os
 import json
 import random
 import re
+from pathlib import Path
+
 import pandas as pd
 from tqdm import tqdm
 from ollama import ollama_generate
 
-DATA_DIR = "data"
-INSTR_FILE = f"{DATA_DIR}/instructions.csv"
+try:
+    from path_config import DATA_DIR as DEFAULT_DATA_DIR
+except ImportError:
+    DEFAULT_DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+
+DATA_DIR = Path(os.environ.get("DATASET_CREATOR_DATA_DIR", DEFAULT_DATA_DIR))
+INSTR_FILE = DATA_DIR / "instructions.csv"
 
 INSTRUCTION_TEMPERATURES = [i * 0.05 for i in range(21)]
 

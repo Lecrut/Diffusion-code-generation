@@ -1,12 +1,19 @@
 import os
 import random
 import re
+from pathlib import Path
+
 import pandas as pd
 
 from ollama import ollama_generate 
 
-DATA_DIR = "data"
-TOPICS_FILE = f"{DATA_DIR}/topics.csv"
+try:
+    from path_config import DATA_DIR as DEFAULT_DATA_DIR
+except ImportError:
+    DEFAULT_DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+
+DATA_DIR = Path(os.environ.get("DATASET_CREATOR_DATA_DIR", DEFAULT_DATA_DIR))
+TOPICS_FILE = DATA_DIR / "topics.csv"
 
 TOPICS_TEMPERATURES = [i * 0.05 for i in range(21)]
 

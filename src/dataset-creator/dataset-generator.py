@@ -1,164 +1,384 @@
-﻿import os
-import pandas as pd
+import argparse
+import importlib.util
+import os
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 from threading import Lock
+
+import pandas as pd
 from tqdm import tqdm
 
-from ollama import ensure_ollama, ensure_model, save_cache
+import codegen as code
 import instructions
 import persistence
 import topics
-import codegen as code
-import importlib.util
-import os
-autoCommit_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'autoCommit.py')
-spec = importlib.util.spec_from_file_location("autoCommit", autoCommit_path)
-autoCommit = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(autoCommit)
+from ollama import ensure_model, ensure_ollama, save_cache
 
-NUM_TOPICS = 500
-INSTR_PER_TOPIC = 15
-VARIANTS_PER_INSTR = 20
-ATTEMPTS_PER_INSTR = 200
-MAX_WORKERS = 3
-DATA_DIR = "data"
-DATASET_FILE = os.path.join(DATA_DIR, "dataset.csv")
+try:
+    from path_config import DATA_DIR as DEFAULT_DATA_DIR
+except ImportError:
+    DEFAULT_DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
-os.makedirs(DATA_DIR, exist_ok=True)
-CODE_DIR = os.path.join(DATA_DIR, "code")
-os.makedirs(CODE_DIR, exist_ok=True)
+
+NUM_TOPICS = int(os.environ.get("DATASET_NUM_TOPICS", "50"))
+INSTR_PER_TOPIC = int(os.environ.get("DATASET_INSTR_PER_TOPIC", "5"))
+VARIANTS_PER_INSTR = int(os.environ.get("DATASET_VARIANTS_PER_INSTR", "3"))
+ATTEMPTS_PER_INSTR = int(os.environ.get("DATASET_ATTEMPTS_PER_INSTR", "60"))
+MAX_WORKERS = int(os.environ.get("DATASET_GENERATOR_WORKERS", "3"))
+AUTO_COMMIT_ENABLED = os.environ.get("DATASET_GENERATOR_AUTO_COMMIT", "0").lower() in {
+    "1",
+    "true",
+    "yes",
+}
+
+DATA_DIR = Path(os.environ.get("DATASET_CREATOR_DATA_DIR", DEFAULT_DATA_DIR))
+DATASET_FILE = DATA_DIR / "dataset.csv"
+CODE_DIR = DATA_DIR / "code"
+
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+CODE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def _clean_cell(value) -> str:
+    if value is None:
+        return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except TypeError:
+        pass
+    return str(value)
+
+
+def _safe_int(value, default=0) -> int:
+    if value is None:
+        return default
+    try:
+        if pd.isna(value):
+            return default
+    except TypeError:
+        pass
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return default
+
+
+def _truthy(value) -> bool:
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return False
+    try:
+        if pd.isna(value):
+            return False
+    except TypeError:
+        pass
+    return str(value).strip().lower() in {"1", "true", "yes"}
+
+
+def _code_file_name(topic_id: int, instruction_id: int, variant_idx: int) -> str:
+    base_name = f"{topic_id}_{instruction_id}"
+    if variant_idx > 0:
+        return f"{base_name}_{variant_idx}.py"
+    return f"{base_name}.py"
+
+
+def _load_auto_commit():
+    auto_commit_path = Path(__file__).resolve().parents[1] / "tools" / "autoCommit.py"
+    spec = importlib.util.spec_from_file_location("autoCommit", auto_commit_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _read_code_file(file_name: str) -> str:
+    if not file_name:
+        return ""
+    file_path = CODE_DIR / file_name
+    if not file_path.exists():
+        return ""
+    try:
+        return file_path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
 
 
 def save_progress(chunk, partial_results, lock):
     with lock:
         for row in chunk:
-            row["id"] = len(partial_results)
-            base_name = f"{row['topic_id']}_{row['instruction_id']}"
-            if row.get("variant_idx", 0) > 0:
-                file_name = f"{base_name}_{row['variant_idx']}.py"
-            else:
-                file_name = f"{base_name}.py"
+            row = dict(row)
+            code_text = _clean_cell(row.get("code"))
+            topic_id = _safe_int(row.get("topic_id"))
+            instruction_id = _safe_int(row.get("instruction_id"))
+            variant_idx = _safe_int(row.get("variant_idx"))
+            file_name = _code_file_name(topic_id, instruction_id, variant_idx) if code_text else ""
 
+            row["topic_id"] = topic_id
+            row["instruction_id"] = instruction_id
+            row["variant_idx"] = variant_idx
+            row["id"] = len(partial_results)
             row["code_file"] = file_name
             partial_results.append(row)
-            if row["code"].strip():
-                file_path = os.path.join(CODE_DIR, file_name)
-                persistence.save_code(file_path, row["code"])
+
+            if code_text and _truthy(row.get("valid")):
+                persistence.save_code(CODE_DIR / file_name, code_text)
                 print(f"Saved code file: {file_name}", flush=True)
             else:
-                print(f"No code for: {file_name}", flush=True)
+                print(f"No valid code for: {topic_id}_{instruction_id}", flush=True)
+
         persistence.save_dataset(partial_results, DATASET_FILE)
 
 
 def load_existing_dataset():
-    if not os.path.exists(DATASET_FILE):
-        return pd.DataFrame()
+    if not DATASET_FILE.exists():
+        return []
+
     try:
         existing = pd.read_csv(DATASET_FILE)
-        if "topic_id" in existing.columns and "instruction_id" in existing.columns:
-            existing["topic_id"] = existing["topic_id"].astype(int)
-            existing["instruction_id"] = existing["instruction_id"].astype(int)
-        return existing
     except Exception:
-        return pd.DataFrame()
+        return []
 
+    records = existing.to_dict("records")
+    invalid_count = 0
+    recovered_from_file = 0
 
-def build_variants(row):
-    task_label = f"{row['topic_id']}_{row['instruction_id']}"
-    print(f"Starting generation for {task_label}", flush=True)
-    variants = code.generate_variants(row["instruction"], min_unique=VARIANTS_PER_INSTR, max_attempts=ATTEMPTS_PER_INSTR)
-    records = []
-    if variants:
-        for variant_index, variant in enumerate(variants):
-            records.append({
-                "topic_id": row["topic_id"],
-                "instruction_id": row["instruction_id"],
-                "topic": row["topic"],
-                "instruction": row["instruction"],
-                "code": variant,
-                "valid": bool(variant),
-                "variant_idx": variant_index,
-            })
-    else:
-        records.append({
-            "topic_id": row["topic_id"],
-            "instruction_id": row["instruction_id"],
-            "topic": row["topic"],
-            "instruction": row["instruction"],
-            "code": "",
-            "valid": False,
-            "variant_idx": 0,
-        })
+    for row in records:
+        code_text = _clean_cell(row.get("code"))
+        if not code_text:
+            code_text = _read_code_file(_clean_cell(row.get("code_file")))
+            if code_text:
+                row["code"] = code_text
+                recovered_from_file += 1
 
-    print(f"Finished generation for {task_label}, variants={len(records)}", flush=True)
+        validation = code.validate_code(code_text, execute=False)
+        row["compile_valid"] = validation.compile_ok
+        row["valid"] = validation.ok
+        row["validation_error"] = "" if validation.ok else validation.error
+
+        if code_text and not validation.ok:
+            invalid_count += 1
+
+    if recovered_from_file:
+        print(f"Recovered code text for {recovered_from_file} rows from saved files.", flush=True)
+    if invalid_count:
+        print(f"Found {invalid_count} existing rows that do not pass validation; they will be regenerated.", flush=True)
+
     return records
 
 
-def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
+def build_existing_state(records):
+    existing_keys = defaultdict(set)
+    next_variant_idx = defaultdict(int)
+
+    for row in records:
+        topic_id = _safe_int(row.get("topic_id"), default=-1)
+        instruction_id = _safe_int(row.get("instruction_id"), default=-1)
+        if topic_id < 0 or instruction_id < 0:
+            continue
+
+        key = (topic_id, instruction_id)
+        variant_idx = _safe_int(row.get("variant_idx"))
+        next_variant_idx[key] = max(next_variant_idx[key], variant_idx + 1)
+
+        if not _truthy(row.get("valid")):
+            continue
+
+        variant_key = code.normalize_variant(_clean_cell(row.get("code")))
+        if variant_key:
+            existing_keys[key].add(variant_key)
+
+    return existing_keys, next_variant_idx
+
+
+def _variant_record(row, topic_id, instruction_id, variant_idx, variant):
+    return {
+        "topic_id": topic_id,
+        "instruction_id": instruction_id,
+        "topic": row["topic"],
+        "instruction": row["instruction"],
+        "code": variant,
+        "valid": True,
+        "compile_valid": True,
+        "runtime_valid": code.VALIDATE_BY_EXECUTION,
+        "validation_error": "",
+        "variant_idx": variant_idx,
+    }
+
+
+def build_variants(row, save_variant=None):
+    topic_id = _safe_int(row["topic_id"])
+    instruction_id = _safe_int(row["instruction_id"])
+    task_label = f"{topic_id}_{instruction_id}"
+    needed = _safe_int(row.get("_variants_needed"), VARIANTS_PER_INSTR)
+    variant_start = _safe_int(row.get("_variant_start"))
+    attempts_per_instr = _safe_int(row.get("_attempts_per_instr"), ATTEMPTS_PER_INSTR)
+    existing_keys = row.get("_existing_variant_keys") or set()
+    records = []
+
+    def on_variant(variant, offset):
+        record = _variant_record(row, topic_id, instruction_id, variant_start + offset, variant)
+        if save_variant is not None:
+            save_variant(record)
+        else:
+            records.append(record)
+
+    print(f"Starting generation for {task_label}; need {needed} variants", flush=True)
+    variants = code.generate_variants(
+        row["instruction"],
+        min_unique=needed,
+        max_attempts=attempts_per_instr,
+        existing_keys=existing_keys,
+        on_variant=on_variant,
+    )
+
+    if variants and save_variant is not None:
+        records = []
+
+    if not variants:
+        records.append(
+            {
+                "topic_id": topic_id,
+                "instruction_id": instruction_id,
+                "topic": row["topic"],
+                "instruction": row["instruction"],
+                "code": "",
+                "valid": False,
+                "compile_valid": False,
+                "runtime_valid": False,
+                "validation_error": f"no valid variants after {attempts_per_instr} attempts",
+                "variant_idx": variant_start,
+            }
+        )
+
+    print(f"Finished generation for {task_label}, variants={len(variants)}", flush=True)
+    return records
+
+
+def run(
+    num_topics=NUM_TOPICS,
+    instr_per_topic=INSTR_PER_TOPIC,
+    variants_per_instr=VARIANTS_PER_INSTR,
+    attempts_per_instr=ATTEMPTS_PER_INSTR,
+    max_workers=MAX_WORKERS,
+):
     print("Rozpoczynam generowanie datasetu.")
-    os.makedirs(os.path.dirname(DATASET_FILE), exist_ok=True)
+    print(f"Data directory: {DATA_DIR}")
+    print(
+        f"Run target: topics={num_topics}, instructions/topic={instr_per_topic}, "
+        f"variants/instruction={variants_per_instr}, attempts/instruction={attempts_per_instr}, "
+        f"workers={max_workers}"
+    )
     ensure_ollama()
     ensure_model()
 
-    autoCommit.start_scheduler(20)
+    auto_commit = None
+    if AUTO_COMMIT_ENABLED:
+        auto_commit = _load_auto_commit()
+        auto_commit.start_scheduler(20)
 
-    print(f"Ładuję lub generuję {num_topics} tematów...")
-    topics_df = topics.load_or_generate_topics(num_topics=num_topics, force=False)
-    print(f"Załadowano {len(topics_df)} tematów.")
+    try:
+        print(f"Laduje lub generuje {num_topics} tematow...")
+        topics_df = topics.load_or_generate_topics(num_topics=num_topics, force=False)
+        print(f"Zaladowano {len(topics_df)} tematow.")
 
-    print(f"Ładuję lub generuję {instr_per_topic} instrukcji dla każdego tematu...")
-    instr = instructions.load_or_generate_instructions(topics_df, instr_per_topic=instr_per_topic, force=False, max_attempts_per_topic=20)
-    print(f"Załadowano {len(instr)} instrukcji.")
+        print(f"Laduje lub generuje {instr_per_topic} instrukcji dla kazdego tematu...")
+        instr = instructions.load_or_generate_instructions(
+            topics_df,
+            instr_per_topic=instr_per_topic,
+            force=False,
+            max_attempts_per_topic=20,
+        )
+        print(f"Zaladowano {len(instr)} instrukcji.")
 
-    existing_df = load_existing_dataset()
-    completed_pairs = set()
-    if not existing_df.empty:
-        for _, old_row in existing_df.iterrows():
-            if str(old_row.get("code", "")).strip():
-                completed_pairs.add((int(old_row["topic_id"]), int(old_row["instruction_id"])))
-        partial_results = existing_df.to_dict("records")
-        print(f"Wznawiam generację: {len(completed_pairs)} instrukcji już ma zapisany kod.", flush=True)
-    else:
-        partial_results = []
+        partial_results = load_existing_dataset()
+        existing_keys, next_variant_idx = build_existing_state(partial_results)
+        completed_count = sum(1 for keys in existing_keys.values() if len(keys) >= variants_per_instr)
+        if partial_results:
+            print(
+                f"Wznawiam generacje: {completed_count} instrukcji ma juz "
+                f"{variants_per_instr} poprawnych wariantow.",
+                flush=True,
+            )
 
-    pending = []
-    for _, row in instr.iterrows():
-        key = (int(row["topic_id"]), int(row["instruction_id"]))
-        if key in completed_pairs:
-            continue
-        pending.append(row)
+        pending = []
+        for _, row in instr.iterrows():
+            topic_id = int(row["topic_id"])
+            instruction_id = int(row["instruction_id"])
+            key = (topic_id, instruction_id)
+            valid_count = len(existing_keys.get(key, set()))
+            needed = max(0, variants_per_instr - valid_count)
+            if needed == 0:
+                continue
 
-    print(f"Rozpoczynam generowanie kodu dla {len(pending)} instrukcji...")
-    save_lock = Lock()
+            item = row.to_dict()
+            item["_variants_needed"] = needed
+            item["_variant_start"] = next_variant_idx.get(key, 0)
+            item["_attempts_per_instr"] = attempts_per_instr
+            item["_existing_variant_keys"] = set(existing_keys.get(key, set()))
+            pending.append(item)
 
-    if pending:
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-            futures = {executor.submit(build_variants, row.to_dict()): (row["topic_id"], row["instruction_id"]) for row in pending}
-            with tqdm(total=len(futures), desc="Generowanie kodu", unit="instr") as progress:
-                for future in as_completed(futures):
-                    task_key = futures[future]
-                    try:
-                        chunk = future.result()
-                    except Exception as exc:
-                        print(f"Error generating {task_key[0]}_{task_key[1]}: {exc}", flush=True)
-                        chunk = []
-                    if chunk:
-                        save_progress(chunk, partial_results, save_lock)
-                    progress.update(1)
-    else:
-        print("Brak instrukcji do wygenerowania.", flush=True)
+        print(
+            f"Rozpoczynam generowanie kodu dla {len(pending)} instrukcji "
+            f"(workers={max_workers}, variants_per_instr={variants_per_instr})."
+        )
+        save_lock = Lock()
 
-    print("Generowanie kodu zakończone. Zapisuję wynik...")
-    df = pd.DataFrame(partial_results)
-    df.to_csv(DATASET_FILE, index=False)
+        if pending:
+            worker_count = max(1, min(max_workers, len(pending)))
+            def save_variant(record):
+                save_progress([record], partial_results, save_lock)
 
-    save_cache()
+            with ThreadPoolExecutor(max_workers=worker_count) as executor:
+                futures = {
+                    executor.submit(build_variants, row, save_variant): (row["topic_id"], row["instruction_id"])
+                    for row in pending
+                }
+                with tqdm(total=len(futures), desc="Generowanie kodu", unit="instr") as progress:
+                    for future in as_completed(futures):
+                        task_key = futures[future]
+                        try:
+                            chunk = future.result()
+                        except Exception as exc:
+                            print(f"Error generating {task_key[0]}_{task_key[1]}: {exc}", flush=True)
+                            chunk = []
+                        if chunk:
+                            save_progress(chunk, partial_results, save_lock)
+                        progress.update(1)
+        else:
+            print("Brak instrukcji do wygenerowania.", flush=True)
 
-    autoCommit.stop_scheduler()
+        print("Generowanie kodu zakonczone. Zapisuje wynik...")
+        df = pd.DataFrame(partial_results)
+        df.to_csv(DATASET_FILE, index=False)
 
-    print("Gotowe!")
-    print(df["valid"].value_counts())
+        print("Gotowe!")
+        if "valid" in df:
+            print(df["valid"].value_counts())
+        return df
+    finally:
+        save_cache()
+        if auto_commit is not None:
+            auto_commit.stop_scheduler()
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate compile-validated Python code dataset variants.")
+    parser.add_argument("--num-topics", type=int, default=NUM_TOPICS)
+    parser.add_argument("--instr-per-topic", type=int, default=INSTR_PER_TOPIC)
+    parser.add_argument("--variants-per-instr", type=int, default=VARIANTS_PER_INSTR)
+    parser.add_argument("--attempts-per-instr", type=int, default=ATTEMPTS_PER_INSTR)
+    parser.add_argument("--workers", type=int, default=MAX_WORKERS)
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    run()
+    args = parse_args()
+    run(
+        num_topics=args.num_topics,
+        instr_per_topic=args.instr_per_topic,
+        variants_per_instr=args.variants_per_instr,
+        attempts_per_instr=args.attempts_per_instr,
+        max_workers=args.workers,
+    )

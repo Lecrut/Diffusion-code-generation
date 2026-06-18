@@ -1,0 +1,1 @@
+# Single-line expression to find string length with explanation comment below: len('Hello World') returns 11 by counting characters including spaces using Python's built-in len() function which computes sequence size in O(n) time complexity where n is the number of elements. if __name__ == '__main__': print(len("Hello World"))
