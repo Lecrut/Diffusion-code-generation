@@ -248,8 +248,8 @@ def ensure_model(model=None):
         print(f"OLLAMA MODEL CHECK ERROR: {exc}", flush=True)
 
 
-REQUEST_TIMEOUT = int(os.environ.get("OLLAMA_REQUEST_TIMEOUT", "240"))
-CONNECT_TIMEOUT = float(os.environ.get("OLLAMA_CONNECT_TIMEOUT", "20"))
+REQUEST_TIMEOUT = int(os.environ.get("OLLAMA_REQUEST_TIMEOUT", "480"))
+CONNECT_TIMEOUT = float(os.environ.get("OLLAMA_CONNECT_TIMEOUT", "30"))
 READ_TIMEOUT = float(os.environ.get("OLLAMA_READ_TIMEOUT", str(REQUEST_TIMEOUT)))
 REQUEST_RETRIES = int(os.environ.get("OLLAMA_REQUEST_RETRIES", "2"))
 RETRY_BACKOFF_SECONDS = float(os.environ.get("OLLAMA_RETRY_BACKOFF_SECONDS", "3"))
