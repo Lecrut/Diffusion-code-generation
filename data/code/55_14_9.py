@@ -1,0 +1,17 @@
+def calculate_triangle_perimeter(a, b, c):
+    if not all(isinstance(x, (int, float)) for x in [a, b, c]):
+        raise ValueError("All sides must be numeric types.")
+    if any(x <= 0 for x in [a, b, c]):
+        raise ValueError("Side lengths must be positive numbers.")
+    perimeter = a + b + c
+    return perimeter
+
+if __name__ == '__main__':
+    try:
+        side1 = 6.0
+        side2 = 8.0
+        side3 = 10.0
+        result = calculate_triangle_perimeter(side1, side2, side3)
+        print(result)
+    except ValueError as e:
+        print(e)

@@ -1,0 +1,11 @@
+TRIANGLE_SIDES = 3
+
+def calculate_triangle_perimeter(a, b, c):
+    return sum([a, b, c])
+
+if __name__ == '__main__':
+    side1 = 7
+    side2 = 10
+    side3 = 5
+    perimeter = calculate_triangle_perimeter(side1, side2, side3)
+    print(perimeter)

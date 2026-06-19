@@ -1,0 +1,28 @@
+import math
+
+class GeometryCalculator:
+    @staticmethod
+    def calculate_rectangle_diagonal(length, width):
+        if length <= 0 or width <= 0:
+            raise ValueError("Length and width must be positive numbers.")
+        return math.sqrt(length**2 + width**2)
+
+    @staticmethod
+    def calculate_circle_radius(diameter):
+        if diameter <= 0:
+            raise ValueError("Diameter must be a positive number.")
+        return diameter / 2
+
+if __name__ == '__main__':
+    try:
+        rectangle_length = 6
+        rectangle_width = 8
+        circle_diameter = 15
+
+        diagonal = GeometryCalculator.calculate_rectangle_diagonal(rectangle_length, rectangle_width)
+        radius = GeometryCalculator.calculate_circle_radius(circle_diameter)
+
+        ratio = diagonal / radius
+        print(ratio)
+    except ValueError as e:
+        print(e)

@@ -1,0 +1,17 @@
+def reverse_string_recursive(s):
+    if len(s) == 0:
+        return s
+    else:
+        return reverse_string_recursive(s[1:]) + s[0]
+
+def reverse_string_slicing(s):
+    return s[::-1]
+
+if __name__ == '__main__':
+    sample_string = "hello"
+    
+    reversed_string_recursive = reverse_string_recursive(sample_string)
+    print("Reversed string using recursion:", reversed_string_recursive)
+    
+    reversed_string_slicing = reverse_string_slicing(sample_string)
+    print("Reversed string using slicing:", reversed_string_slicing)

@@ -1,0 +1,13 @@
+def calculate_ratio(length1, length2):
+    if length2 == 0:
+        raise ValueError("The second length cannot be zero.")
+    return length1 / length2
+
+if __name__ == '__main__':
+    length1 = 15.6789
+    length2 = 3.4567
+    try:
+        ratio = calculate_ratio(length1, length2)
+        print(f"The ratio of the lengths is: {ratio:.10f}")
+    except ValueError as e:
+        print(e)

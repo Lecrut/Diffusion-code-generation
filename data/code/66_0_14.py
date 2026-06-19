@@ -1,0 +1,25 @@
+class AdjacentComparer:
+    ASCENDING = True
+
+    @staticmethod
+    def compare_adjacent(numbers):
+        result = []
+        for i in range(len(numbers) - 1):
+            if numbers[i] <= numbers[i + 1]:
+                result.append(AdjacentComparer.ASCENDING)
+            else:
+                result.append(not AdjacentComparer.ASCENDING)
+        return result
+
+if __name__ == '__main__':
+    sample_list1 = [1, 2, 3, 4, 5]
+    sample_list2 = [5, 4, 3, 2, 1]
+    sample_list3 = [1, 3, 2, 4]
+    sample_list4 = [10, 20, 30]
+    sample_list5 = [7, 7, 8, 9]
+
+    print(f"List: {sample_list1}, Result: {AdjacentComparer.compare_adjacent(sample_list1)}")
+    print(f"List: {sample_list2}, Result: {AdjacentComparer.compare_adjacent(sample_list2)}")
+    print(f"List: {sample_list3}, Result: {AdjacentComparer.compare_adjacent(sample_list3)}")
+    print(f"List: {sample_list4}, Result: {AdjacentComparer.compare_adjacent(sample_list4)}")
+    print(f"List: {sample_list5}, Result: {AdjacentComparer.compare_adjacent(sample_list5)}")

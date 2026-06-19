@@ -1,0 +1,30 @@
+def analyze_string(s):
+    if not isinstance(s, str):
+        raise ValueError("Input must be a string")
+    
+    unique_chars = set()
+    repeated_chars = []
+    char_count = {}
+    
+    for char in s:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+    
+    for char, count in char_count.items():
+        if count == 1:
+            unique_chars.add(char)
+        else:
+            repeated_chars.append(char)
+    
+    return unique_chars, repeated_chars
+
+if __name__ == '__main__':
+    sample_string = "example string"
+    try:
+        unique, repeated = analyze_string(sample_string)
+        print("Unique characters:", unique)
+        print("Repeated characters:", repeated)
+    except ValueError as e:
+        print(e)

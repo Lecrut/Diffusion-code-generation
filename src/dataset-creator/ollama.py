@@ -18,6 +18,14 @@ except ImportError:
 
 
 OLLAMA_URL = "http://localhost:11434"
+OLLAMA_API_BASE = os.environ.get("OLLAMA_API_BASE", "").rstrip("/")
+OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY", "")
+USE_OPENAI_COMPAT_API = bool(OLLAMA_API_BASE and OLLAMA_API_KEY)
+APPEND_NO_THINK = os.environ.get("OLLAMA_APPEND_NO_THINK", "1").lower() not in {
+    "0",
+    "false",
+    "no",
+}
 # Set OLLAMA_MODELS to a comma-separated list to spread requests across models.
 MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:14b")
 MODELS = [m.strip() for m in os.environ.get("OLLAMA_MODELS", MODEL).split(",") if m.strip()]
@@ -91,6 +99,9 @@ def start_ollama():
 
 
 def ensure_ollama():
+    if USE_OPENAI_COMPAT_API:
+        return
+
     if not is_ollama_running():
         start_ollama()
 
@@ -103,6 +114,9 @@ def ensure_ollama():
 
 
 def ensure_model(model=None):
+    if USE_OPENAI_COMPAT_API:
+        return
+
     models_to_check = [model] if model else MODELS
     try:
         r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
@@ -134,16 +148,19 @@ def ollama_generate(
     seed=None,
     num_predict=2048,
     num_ctx=2048,
+    request_timeout=None,
 ):
     selected_model = model or _next_model()
     cache_key = json.dumps(
         {
+            "backend": OLLAMA_API_BASE if USE_OPENAI_COMPAT_API else OLLAMA_URL,
             "model": selected_model,
             "prompt": prompt,
             "temperature": temperature,
             "seed": seed,
             "num_predict": num_predict,
             "num_ctx": num_ctx,
+            "append_no_think": APPEND_NO_THINK if USE_OPENAI_COMPAT_API else False,
         },
         sort_keys=True,
     )
@@ -162,21 +179,45 @@ def ollama_generate(
         if seed is not None:
             options["seed"] = seed
 
-        r = _get_session().post(
-            f"{OLLAMA_URL}/api/generate",
-            json={
-                "model": selected_model,
-                "prompt": prompt,
-                "stream": False,
-                "keep_alive": "1h",
-                "think": False,
-                "options": options,
-            },
-            timeout=REQUEST_TIMEOUT,
-        )
+        if USE_OPENAI_COMPAT_API:
+            request_prompt = prompt
+            if APPEND_NO_THINK and "/no_think" not in request_prompt:
+                request_prompt = f"{request_prompt}\n\n/no_think"
+
+            r = _get_session().post(
+                f"{OLLAMA_API_BASE}/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {OLLAMA_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": selected_model,
+                    "messages": [{"role": "user", "content": request_prompt}],
+                    "temperature": temperature,
+                    "stream": False,
+                },
+                timeout=request_timeout or REQUEST_TIMEOUT,
+            )
+        else:
+            r = _get_session().post(
+                f"{OLLAMA_URL}/api/generate",
+                json={
+                    "model": selected_model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "keep_alive": "1h",
+                    "think": False,
+                    "options": options,
+                },
+                timeout=request_timeout or REQUEST_TIMEOUT,
+            )
         r.raise_for_status()
 
-        result = r.json().get("response", "").strip()
+        data = r.json()
+        if USE_OPENAI_COMPAT_API:
+            result = data.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+        else:
+            result = data.get("response", "").strip()
         if not result:
             return None
 

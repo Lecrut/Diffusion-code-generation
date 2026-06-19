@@ -1,0 +1,10 @@
+def calculate_area(base, height):
+    if base <= 0 or height <= 0:
+        return "Invalid dimensions: Base and height must be positive numbers."
+    return base * height
+
+if __name__ == '__main__':
+    sample_base = 8
+    sample_height = 6
+    area_result = calculate_area(sample_base, sample_height)
+    print(area_result)

@@ -1,0 +1,13 @@
+def get_element_safely(lst, index):
+    try:
+        return lst[index]
+    except IndexError:
+        return None
+if __name__ == '__main__':
+    sample_list = [10, 20, 30, 40, 50]
+    index_to_retrieve = 3
+    element = get_element_safely(sample_list, index_to_retrieve)
+    print(element)
+    invalid_index = 10
+    element = get_element_safely(sample_list, invalid_index)
+    print(element)

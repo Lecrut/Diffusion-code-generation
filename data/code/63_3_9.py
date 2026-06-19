@@ -1,0 +1,17 @@
+class ListFinder:
+    def __init__(self, data):
+        self._internal_list = data
+
+    def get_first_element(self):
+        return self._internal_list[0] if self._internal_list else None
+
+if __name__ == '__main__':
+    sample_data = [5, 15, 25, 35]
+    finder = ListFinder(sample_data)
+    first_element = finder.get_first_element()
+    print(first_element)
+
+    sample_data_empty = []
+    finder_empty = ListFinder(sample_data_empty)
+    first_element_empty = finder_empty.get_first_element()
+    print(first_element_empty)

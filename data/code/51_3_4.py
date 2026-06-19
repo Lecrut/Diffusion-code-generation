@@ -1,0 +1,30 @@
+import math
+
+class Circle:
+    def __init__(self, radius):
+        if radius < 0:
+            raise ValueError("Radius cannot be negative")
+        self.radius = radius
+
+    def calculate_perimeter(self):
+        return 2 * math.pi * self.radius
+
+    def get_radius(self):
+        return self.radius
+
+if __name__ == '__main__':
+    sample_radius_1 = 3
+    try:
+        circle1 = Circle(sample_radius_1)
+        print(circle1.calculate_perimeter())
+        print(circle1.get_radius())
+    except ValueError as e:
+        print(e)
+
+    sample_radius_2 = 8
+    try:
+        circle2 = Circle(sample_radius_2)
+        print(circle2.calculate_perimeter())
+        print(circle2.get_radius())
+    except ValueError as e:
+        print(e)

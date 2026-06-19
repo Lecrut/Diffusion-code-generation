@@ -1,0 +1,24 @@
+class StringAnalyzer:
+    def check_for_duplicates(self, input_string):
+        char_count = {}
+        duplicates = set()
+        for char in input_string:
+            if char in char_count:
+                char_count[char] += 1
+            else:
+                char_count[char] = 1
+        for char, count in char_count.items():
+            if count > 1:
+                duplicates.add(char)
+        return sorted(list(duplicates))
+
+if __name__ == '__main__':
+    analyzer = StringAnalyzer()
+    test_string_1 = "hello world"
+    test_string_2 = "programming"
+    test_string_3 = "abcdefg"
+    test_string_4 = "aabbccddeeff"
+    print(f"'{test_string_1}': {analyzer.check_for_duplicates(test_string_1)}")
+    print(f"'{test_string_2}': {analyzer.check_for_duplicates(test_string_2)}")
+    print(f"'{test_string_3}': {analyzer.check_for_duplicates(test_string_3)}")
+    print(f"'{test_string_4}': {analyzer.check_for_duplicates(test_string_4)}")

@@ -1,0 +1,32 @@
+import argparse
+
+class Triangle:
+    def __init__(self, side1, side2, side3):
+        self.side1 = side1
+        self.side2 = side2
+        self.side3 = side3
+
+    def is_valid(self):
+        if self.side1 <= 0 or self.side2 <= 0 or self.side3 <= 0:
+            return False
+        if not (self.side1 + self.side2 > self.side3 and self.side1 + self.side3 > self.side2 and self.side2 + self.side3 > self.side1):
+            return False
+        return True
+
+    def perimeter(self):
+        if not self.is_valid():
+            raise ValueError("The given side lengths do not form a valid triangle.")
+        return self.side1 + self.side2 + self.side3
+
+if __name__ == '__main__':
+    triangle1 = Triangle(3, 4, 5)
+    try:
+        print(f"Perimeter of (3, 4, 5): {triangle1.perimeter()}")
+    except ValueError as e:
+        print(f"Error: {e}")
+
+    triangle2 = Triangle(1, 2, 10)
+    try:
+        print(f"Perimeter of (1, 2, 10): {triangle2.perimeter()}")
+    except ValueError as e:
+        print(f"Error: {e}")

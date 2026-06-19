@@ -1,0 +1,10 @@
+import math
+
+def calculate_circle_area(radius):
+    return math.pi * radius ** 2
+
+if __name__ == '__main__':
+    sample_radii = [2, 4, 6]
+    for radius in sample_radii:
+        area = calculate_circle_area(radius)
+        print(area)
