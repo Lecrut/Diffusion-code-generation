@@ -199,6 +199,7 @@ def load_existing_dataset():
 
 def build_existing_state(records):
     existing_keys = defaultdict(set)
+    existing_examples = defaultdict(list)
     next_variant_idx = defaultdict(int)
 
     for row in records:
@@ -217,8 +218,10 @@ def build_existing_state(records):
         variant_key = code.normalize_variant(_clean_cell(row.get("code")))
         if variant_key:
             existing_keys[key].add(variant_key)
+            if len(existing_examples[key]) < 6:
+                existing_examples[key].append(_clean_cell(row.get("code")))
 
-    return existing_keys, next_variant_idx
+    return existing_keys, existing_examples, next_variant_idx
 
 
 def _variant_record(row, topic_id, instruction_id, variant_idx, variant):
@@ -244,6 +247,7 @@ def build_variants(row, save_variant=None):
     variant_start = _safe_int(row.get("_variant_start"))
     attempts_per_instr = _safe_int(row.get("_attempts_per_instr"), ATTEMPTS_PER_INSTR)
     existing_keys = row.get("_existing_variant_keys") or set()
+    existing_examples = row.get("_existing_variant_examples") or []
     records = []
 
     def on_variant(variant, offset):
@@ -259,6 +263,7 @@ def build_variants(row, save_variant=None):
         min_unique=needed,
         max_attempts=attempts_per_instr,
         existing_keys=existing_keys,
+        existing_examples=existing_examples,
         on_variant=on_variant,
     )
 
@@ -323,7 +328,7 @@ def run(
         print(f"Zaladowano {len(instr)} instrukcji.")
 
         partial_results = load_existing_dataset()
-        existing_keys, next_variant_idx = build_existing_state(partial_results)
+        existing_keys, existing_examples, next_variant_idx = build_existing_state(partial_results)
         completed_count = sum(1 for keys in existing_keys.values() if len(keys) >= variants_per_instr)
         if partial_results:
             print(
@@ -347,6 +352,7 @@ def run(
             item["_variant_start"] = next_variant_idx.get(key, 0)
             item["_attempts_per_instr"] = attempts_per_instr
             item["_existing_variant_keys"] = set(existing_keys.get(key, set()))
+            item["_existing_variant_examples"] = list(existing_examples.get(key, []))
             pending.append(item)
 
         print(

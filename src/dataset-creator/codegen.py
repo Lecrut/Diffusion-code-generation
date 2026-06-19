@@ -46,7 +46,20 @@ CODEGEN_DUPLICATE_TEMPERATURES = _parse_temperature_list(
     0.55,
     0.65,
     0.75,
+    0.85,
+    0.95,
 ]
+CODEGEN_REPAIR_TEMPERATURES = _parse_temperature_list(
+    os.environ.get("CODEGEN_REPAIR_TEMPERATURES")
+) or [
+    0.35,
+    0.45,
+    0.55,
+    0.65,
+    0.75,
+]
+MAX_DUPLICATE_STREAK = int(os.environ.get("CODEGEN_MAX_DUPLICATE_STREAK", "16"))
+MAX_VALIDATION_STREAK = int(os.environ.get("CODEGEN_MAX_VALIDATION_STREAK", "10"))
 VALIDATE_BY_EXECUTION = os.environ.get("CODEGEN_EXECUTE_VALIDATION", "0").lower() not in {
     "0",
     "false",
@@ -75,7 +88,10 @@ CODE_PROMPT_TEMPLATE = (
     "12. Do not include comments beginning with # unless the task explicitly asks for comments.\n"
     "13. Do not include docstrings unless the task explicitly asks for docstrings, documentation, or explanation.\n"
     "14. Do not use placeholders, pass-only blocks, TODOs, NotImplementedError, ellipses, or demonstration-only code.\n"
-    "15. Use clear names and simple executable code instead of comments.\n"
+    "15. The literal tokens `pass`, `NotImplementedError`, `TODO`, `...`, and `Ellipsis` must not appear anywhere in the output.\n"
+    "16. Every function, class, branch, loop, and exception handler must contain real executable logic.\n"
+    "17. Use clear names and simple executable code instead of comments.\n"
+    "{variant_directive}"
     "{retry_feedback}"
 )
 
@@ -178,6 +194,17 @@ TERM_ALIASES = {
     "pound": {"pound", "pounds", "lb", "lbs"},
     "pounds": {"pound", "pounds", "lb", "lbs"},
 }
+
+VARIANT_DIRECTIVES = [
+    "Use explicit helper validation before the core operation. Keep the requested public API intact.\n",
+    "Use named constants for fixed conversion factors, thresholds, or repeated values. Keep the requested public API intact.\n",
+    "Use a small dictionary or mapping table when the task involves lookup, categories, units, or named records. Keep the requested public API intact.\n",
+    "Use clear intermediate variables and a different hard-coded sample in the main block. Keep the requested public API intact.\n",
+    "Use exception-based validation for invalid inputs where appropriate. Keep the requested public API intact.\n",
+    "Use a concise implementation with early returns where appropriate. Keep the requested public API intact.\n",
+    "Use an object instance in the main block for class tasks, with multiple printed method-call results. Keep the requested public API intact.\n",
+    "Use class constants or static helper methods when the task asks for a class. Keep the requested public API intact.\n",
+]
 
 
 @dataclass(frozen=True)
@@ -726,9 +753,81 @@ def _retry_feedback_block(feedback: str | None) -> str:
     )
 
 
+def _compact_code_excerpt(code: str, max_lines: int = 18) -> str:
+    lines = [line.rstrip() for line in code.strip().splitlines()]
+    lines = [line for line in lines if line.strip()]
+    if len(lines) > max_lines:
+        return "\n".join(lines[:max_lines] + ["..."])
+    return "\n".join(lines)
+
+
+def _repair_feedback(error: str, code_text: str) -> str:
+    guidance = []
+    lowered = error.lower()
+    if "pass statements" in lowered:
+        guidance.append(
+            "Do not use the `pass` statement anywhere. Replace every empty branch, empty function, "
+            "empty class, empty except block, or stub with real executable code that returns, raises, "
+            "assigns, appends, or prints a computed value."
+        )
+    if "placeholder" in lowered or "notimplementederror" in lowered or "ellipsis" in lowered:
+        guidance.append(
+            "Do not use stubs, TODOs, ellipses, placeholders, or NotImplementedError. "
+            "Do not create abstract/interface-style code. Implement the requested algorithm directly "
+            "with concrete return values and executable branches."
+        )
+    if "comments/docstrings" in lowered:
+        guidance.append("Remove all comments and docstrings; use descriptive names instead.")
+    if "main block" in lowered:
+        guidance.append(
+            "In the `if __name__ == '__main__':` block, directly call the requested function or "
+            "instantiate/use the requested class and print the real result."
+        )
+
+    excerpt = _compact_code_excerpt(code_text)
+    parts = [error]
+    if guidance:
+        parts.append("Repair requirements: " + " ".join(guidance))
+    if excerpt:
+        parts.append("Rejected code excerpt to avoid repeating:\n" + excerpt)
+    return "\n".join(parts)
+
+
+def _variant_directive_block(directive: str | None) -> str:
+    if not directive:
+        return ""
+    return (
+        "\nVARIANT DIVERSITY REQUIREMENT:\n"
+        f"{directive}"
+    )
+
+
+def _existing_variant_block(examples: list[str] | None) -> str:
+    if not examples:
+        return ""
+
+    snippets = []
+    for index, example in enumerate(examples[:4], start=1):
+        lines = [line.rstrip() for line in example.strip().splitlines() if line.strip()]
+        snippet = "\n".join(lines[:18])
+        if snippet:
+            snippets.append(f"Existing variant {index}:\n{snippet}")
+
+    if not snippets:
+        return ""
+
+    return (
+        "\nAVOID COPYING THESE EXISTING VALID VARIANTS:\n"
+        + "\n\n".join(snippets)
+        + "\nProduce code with different structure, helper decomposition, constants, sample values, or class usage.\n"
+    )
+
+
 def _select_code_temperature(retry_feedback: str | None) -> float:
     if retry_feedback and retry_feedback.startswith("the previous response duplicated"):
         return random.choice(CODEGEN_DUPLICATE_TEMPERATURES)
+    if retry_feedback:
+        return random.choice(CODEGEN_REPAIR_TEMPERATURES)
     return random.choice(CODE_TEMPERATURES)
 
 
@@ -736,9 +835,15 @@ def generate_code(
     instruction: str,
     temperature: float,
     retry_feedback: str | None = None,
+    variant_directive: str | None = None,
+    existing_variant_examples: list[str] | None = None,
 ) -> str | None:
     prompt = CODE_PROMPT_TEMPLATE.format(
         instruction=instruction,
+        variant_directive=(
+            _variant_directive_block(variant_directive)
+            + _existing_variant_block(existing_variant_examples)
+        ),
         retry_feedback=_retry_feedback_block(retry_feedback),
     )
     seed = random.randint(1, 2_147_483_647)
@@ -771,12 +876,18 @@ def generate_variants(
     max_attempts: int = 100,
     max_rounds: int = 1,
     existing_keys: set[str] | None = None,
+    existing_examples: list[str] | None = None,
     on_variant=None,
 ) -> list[str]:
     seen = set(existing_keys or set())
     variants = []
+    accepted_examples = list(existing_examples or [])
     attempt_limit = max_attempts * max(1, max_rounds)
     retry_feedback = None
+    duplicate_streak = 0
+    duplicate_total = 0
+    validation_streak = 0
+    last_validation_error = None
 
     print(f"[VARIANTS] start target={min_unique} max_attempts={attempt_limit}", flush=True)
 
@@ -785,7 +896,18 @@ def generate_variants(
             break
 
         temperature = _select_code_temperature(retry_feedback)
-        code_text = generate_code(instruction, temperature, retry_feedback=retry_feedback)
+        variant_directive = None
+        if duplicate_streak:
+            variant_directive = VARIANT_DIRECTIVES[
+                (duplicate_total + len(variants)) % len(VARIANT_DIRECTIVES)
+            ]
+        code_text = generate_code(
+            instruction,
+            temperature,
+            retry_feedback=retry_feedback,
+            variant_directive=variant_directive,
+            existing_variant_examples=accepted_examples if retry_feedback else None,
+        )
         if not code_text:
             retry_feedback = "the previous response was empty or could not be cleaned into Python code"
             continue
@@ -803,21 +925,52 @@ def generate_variants(
         variant_key = ast.dump(tree, include_attributes=False)
 
         if variant_key in seen:
+            duplicate_streak += 1
+            duplicate_total += 1
+            validation_streak = 0
+            last_validation_error = None
+            next_directive = VARIANT_DIRECTIVES[
+                (duplicate_total + len(variants)) % len(VARIANT_DIRECTIVES)
+            ]
             retry_feedback = (
-                "the previous response duplicated an existing solution; produce a structurally different "
-                "valid implementation while still satisfying the original task"
+                "the previous response duplicated an existing solution. Produce a structurally different "
+                "valid implementation while still satisfying the original task. "
+                f"For the next attempt, {next_directive.strip()}"
             )
-            print("[VARIANTS] rejected: duplicate", flush=True)
+            print(f"[VARIANTS] rejected: duplicate streak={duplicate_streak}", flush=True)
+            if duplicate_streak >= MAX_DUPLICATE_STREAK:
+                print(
+                    f"[VARIANTS] stopping early after {duplicate_streak} consecutive duplicates",
+                    flush=True,
+                )
+                break
             continue
 
         validation = _validate_and_report(code_text, instruction=instruction)
         if not validation.ok:
-            retry_feedback = validation.error
+            duplicate_streak = 0
+            if validation.error == last_validation_error:
+                validation_streak += 1
+            else:
+                validation_streak = 1
+                last_validation_error = validation.error
+            retry_feedback = _repair_feedback(validation.error, code_text)
+            if validation_streak >= MAX_VALIDATION_STREAK:
+                print(
+                    f"[VARIANTS] stopping early after {validation_streak} consecutive validation failures: "
+                    f"{validation.error}",
+                    flush=True,
+                )
+                break
             continue
 
         retry_feedback = None
+        duplicate_streak = 0
+        validation_streak = 0
+        last_validation_error = None
         seen.add(variant_key)
         variants.append(code_text)
+        accepted_examples.append(code_text)
         if on_variant is not None:
             on_variant(code_text, len(variants) - 1)
         print(f"[VARIANTS] {len(variants)}/{min_unique} after attempt={attempt}", flush=True)
