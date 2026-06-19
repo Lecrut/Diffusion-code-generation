@@ -1,0 +1,7 @@
+def are_values_different(a, b):
+    return a != b
+
+if __name__ == '__main__':
+    value1 = 10
+    value2 = 10.00000000000001
+    print(are_values_different(value1, value2))

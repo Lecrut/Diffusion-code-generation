@@ -1,0 +1,11 @@
+class StringReverser:
+    def __init__(self, text):
+        self.text = text
+
+    def reverse(self):
+        return self.text[::-1]
+
+if __name__ == '__main__':
+    sample_string = "Hello, World!"
+    reverser = StringReverser(sample_string)
+    print(reverser.reverse())

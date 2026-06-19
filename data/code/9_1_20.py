@@ -1,0 +1,21 @@
+class VolumeConverter:
+
+    def liters_to_milliliters(self, liters):
+        return liters * 1000
+
+    def milliliters_to_liters(self, milliliters):
+        return milliliters / 1000
+
+    def cubic_meters_to_cubic_inches(self, cubic_meters):
+        return cubic_meters * 61023.7440947
+
+    def cubic_inches_to_cubic_meters(self, cubic_inches):
+        return cubic_inches / 61023.7440947
+if __name__ == '__main__':
+    converter = VolumeConverter()
+    liters = 5
+    milliliters = converter.liters_to_milliliters(liters)
+    print(f'{liters} liters is {milliliters} milliliters')
+    cubic_meters = 2
+    cubic_inches = converter.cubic_meters_to_cubic_inches(cubic_meters)
+    print(f'{cubic_meters} cubic meters is {cubic_inches} cubic inches')

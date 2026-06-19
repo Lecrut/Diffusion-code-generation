@@ -1,0 +1,11 @@
+def count_vowels(s):
+    vowels = 'aeiouAEIOU'
+    count = 0
+    for char in s:
+        if char in vowels:
+            count += 1
+    return count
+
+if __name__ == '__main__':
+    sample_string = "This is a simple example string to test the vowel counting algorithm."
+    print(count_vowels(sample_string))

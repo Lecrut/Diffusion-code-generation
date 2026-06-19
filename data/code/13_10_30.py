@@ -1,0 +1,37 @@
+from datetime import timedelta
+
+class TimeScaler:
+    def __init__(self):
+        self.time_units = {'days': 0, 'hours': 0, 'minutes': 0, 'seconds': 0}
+
+    def parse_time_differences(self, time_diffs):
+        for diff in time_diffs:
+            parts = diff.split()
+            for part in parts:
+                if 'd' in part:
+                    self.time_units['days'] += int(part.replace('d', ''))
+                elif 'h' in part:
+                    self.time_units['hours'] += int(part.replace('h', ''))
+                elif 'm' in part:
+                    self.time_units['minutes'] += int(part.replace('m', ''))
+                elif 's' in part:
+                    self.time_units['seconds'] += int(part.replace('s', ''))
+
+    def summarize(self):
+        total_seconds = (self.time_units['days'] * 86400 +
+                         self.time_units['hours'] * 3600 +
+                         self.time_units['minutes'] * 60 +
+                         self.time_units['seconds'])
+        return {
+            'total_days': self.time_units['days'],
+            'total_hours': self.time_units['hours'],
+            'total_minutes': self.time_units['minutes'],
+            'total_seconds': self.time_units['seconds'],
+            'total_duration': str(timedelta(seconds=total_seconds))
+        }
+
+if __name__ == '__main__':
+    time_scaler = TimeScaler()
+    sample_time_diffs = ['3d 4h', '2m 30s', '1d 5h 30m']
+    time_scaler.parse_time_differences(sample_time_diffs)
+    print(time_scaler.summarize())

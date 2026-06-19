@@ -1,0 +1,15 @@
+class CustomString:
+
+    def __init__(self, s):
+        self.s = s
+
+    def swap_adjacent_pairs(self):
+        char_list = list(self.s)
+        n = len(char_list)
+        for i in range(0, n - 1, 2):
+            char_list[i], char_list[i + 1] = (char_list[i + 1], char_list[i])
+        return ''.join(char_list)
+if __name__ == '__main__':
+    sample_string = CustomString('abcdefg')
+    result = sample_string.swap_adjacent_pairs()
+    print(result)

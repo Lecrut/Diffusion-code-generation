@@ -1,0 +1,15 @@
+import pandas as pd
+
+def scale_volumes(input_csv, output_csv, scale_factor):
+    df = pd.read_csv(input_csv)
+    df['Volume'] *= scale_factor
+    df.to_csv(output_csv, index=False)
+if __name__ == '__main__':
+    sample_data = 'Item,Volume\n    Item1,10\n    Item2,20\n    Item3,30'
+    with open('sample_input.csv', 'w') as f:
+        f.write(sample_data)
+    output_file = 'scaled_output.csv'
+    scale_factor = 2.5
+    scale_volumes('sample_input.csv', output_file, scale_factor)
+    result_df = pd.read_csv(output_file)
+    print(result_df)

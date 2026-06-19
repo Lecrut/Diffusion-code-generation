@@ -1,0 +1,5 @@
+def are_values_equal(x, y):
+    return x == y
+
+if __name__ == '__main__':
+    print(are_values_equal(5, 5))

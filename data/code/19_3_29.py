@@ -1,0 +1,12 @@
+import random
+
+def even_odd_generator(start, end):
+    for _ in range(start, end + 1):
+        yield random.randint(1, 100) % 2 == 0
+
+if __name__ == '__main__':
+    start = 1
+    end = 10
+    generator = even_odd_generator(start, end)
+    results = list(generator)
+    print(results)

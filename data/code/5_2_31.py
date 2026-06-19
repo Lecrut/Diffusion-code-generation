@@ -1,0 +1,14 @@
+class LengthComparator:
+    def compare(self, length_a, length_b):
+        if length_a > length_b:
+            return "Length A is greater than Length B"
+        elif length_a < length_b:
+            return "Length A is less than Length B"
+        else:
+            return "Length A is equal to Length B"
+
+if __name__ == '__main__':
+    comparator = LengthComparator()
+    print(comparator.compare(5, 3))
+    print(comparator.compare(2, 4))
+    print(comparator.compare(7, 7))

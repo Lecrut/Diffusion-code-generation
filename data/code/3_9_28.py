@@ -1,0 +1,7 @@
+def convert_temp(celsius_list):
+    return [c * 9/5 + 32 for c in celsius_list]
+
+if __name__ == '__main__':
+    sample_temperatures = [0, 100, -40, 37]
+    fahrenheit_temperatures = convert_temp(sample_temperatures)
+    print(fahrenheit_temperatures)

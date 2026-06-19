@@ -1,0 +1,7 @@
+def reverse_string(s: str) -> str:
+    return s[::-1]
+
+if __name__ == '__main__':
+    sample_string = "hello, world!"
+    reversed_string = reverse_string(sample_string)
+    print(reversed_string)
