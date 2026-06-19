@@ -113,7 +113,7 @@ class DiffCoderLightning(pl.LightningModule):
         super().__init__()
         self.model = model
         self.base_lr = base_lr
-        self.rollback_stage = rollback_stage
+        self.rollback_stage = None
         
         self.current_stage = 1
         self.current_lower_bound = 0.10
@@ -220,33 +220,15 @@ class DiffCoderLightning(pl.LightningModule):
         checkpoint["curriculum_ub"] = self.current_upper_bound
 
     def on_load_checkpoint(self, checkpoint):
-        # Wymuszenie nowego etapu przy wznawianiu treningu
-        if self.rollback_stage is not None:
-            stage_bounds = {
-                1: (0.10, 0.25), 2: (0.20, 0.35), 3: (0.30, 0.45),
-                4: (0.40, 0.55), 5: (0.50, 0.65), 6: (0.60, 0.75),
-                7: (0.70, 0.85), 8: (0.80, 0.95), 9: (0.90, 1.00)
-            }
-            self.current_stage = self.rollback_stage
-            bounds = stage_bounds.get(self.rollback_stage, (0.10, 0.25))
-            self.current_lower_bound = bounds[0]
-            self.current_upper_bound = bounds[1]
-            
-            print("\n" + "="*70)
-            print("[RESUME OVERRIDE] Załadowano wagi modelu, ale NADPISANO stan curriculum!")
-            print(f" ➔ Cofałem model do Stage: {self.current_stage}")
-            print(f" ➔ Nowy zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
-            print("="*70)
-        else:
-            self.current_stage = checkpoint.get("curriculum_stage", 1)
-            self.current_lower_bound = checkpoint.get("curriculum_lb", 0.10)
-            self.current_upper_bound = checkpoint.get("curriculum_ub", 0.25)
-            
-            print("\n" + "="*70)
-            print("[RESUME - MODEL STATE] Pomyślnie wczytano wagi i stan modelu!")
-            print(f" ➔ Aktualny etap nauczania (Stage): {self.current_stage}")
-            print(f" ➔ Zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
-            print("="*70)
+        self.current_stage = checkpoint.get("curriculum_stage", 1)
+        self.current_lower_bound = checkpoint.get("curriculum_lb", 0.10)
+        self.current_upper_bound = checkpoint.get("curriculum_ub", 0.25)
+
+        print("\n" + "="*70)
+        print("[RESUME - MODEL STATE] Pomyślnie wczytano wagi i stan modelu!")
+        print(f" ➔ Aktualny etap nauczania (Stage): {self.current_stage}")
+        print(f" ➔ Zakres maskowania tokenów: {self.current_lower_bound * 100:.1f}% - {self.current_upper_bound * 100:.1f}%")
+        print("="*70)
 
 
 # --- CALLBACK DO PROGRAMU NAUCZANIA ---
@@ -493,7 +475,6 @@ class DiffCoderTrainer:
         self.lightning_model = DiffCoderLightning(
             model=raw_model,
             base_lr=self.config.base_lr,
-            rollback_stage=self.config.rollback_stage # Przekazanie etapu do nadpisania
         )
 
     def train(self):
@@ -607,7 +588,6 @@ def main():
         # --- ZARZĄDZANIE WZNAWIANIEM TRENINGU ---
         resume_from_checkpoint = True
         resume_ckpt_name = "last-v1.ckpt" # Bezpośrednie celowanie w wirtualkę
-        rollback_stage = 2 # Sforsowany powrót do maskowania 20-35%
         reset_curriculum_state = True # Reset liczników val_loss dla nowej paczki 15k danych
 
     config = Config()
