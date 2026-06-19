@@ -21,7 +21,9 @@ NUM_TOPICS = 500
 INSTR_PER_TOPIC = 15
 VARIANTS_PER_INSTR = 20
 ATTEMPTS_PER_INSTR = 200
-MAX_WORKERS = 3
+MAX_WORKERS = int(os.environ.get("DATASET_GENERATOR_WORKERS", "3"))
+PROXY_MAX_WORKERS = int(os.environ.get("DATASET_PROXY_MAX_WORKERS", "1"))
+OLLAMA_BACKEND = os.environ.get("OLLAMA_BACKEND", "proxy").strip().lower()
 DATASET_FILE = os.path.join(DATA_PATH, "dataset.csv")
 
 os.makedirs(DATA_PATH, exist_ok=True)
@@ -132,7 +134,16 @@ def run(num_topics=NUM_TOPICS, instr_per_topic=INSTR_PER_TOPIC):
     save_lock = Lock()
 
     if pending:
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        worker_count = MAX_WORKERS
+        if OLLAMA_BACKEND in {"proxy", "remote"}:
+            capped = max(1, PROXY_MAX_WORKERS)
+            if worker_count > capped:
+                print(
+                    f"Proxy backend: reducing workers from {worker_count} to {capped}",
+                    flush=True,
+                )
+                worker_count = capped
+        with ThreadPoolExecutor(max_workers=worker_count) as executor:
             futures = {executor.submit(build_variants, row.to_dict()): (row["topic_id"], row["instruction_id"]) for row in pending}
             with tqdm(total=len(futures), desc="Generowanie kodu", unit="instr") as progress:
                 for future in as_completed(futures):
