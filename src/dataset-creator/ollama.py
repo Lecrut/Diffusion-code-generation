@@ -17,12 +17,50 @@ except ImportError:
     pass
 
 
-OLLAMA_URL = "http://localhost:11434"
+PROXY_API_BASE = "https://pkapust.iis.p.lodz.pl/ollama_piat/v1"
+PROXY_MODEL = "qwen3.5:122b-a10b"
+PROXY_API_KEY = "supersilnetymczasowehasloalamakota3"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_BACKEND = os.environ.get("OLLAMA_BACKEND", "proxy").strip().lower()
+OLLAMA_API_BASE = os.environ.get(
+    "OLLAMA_API_BASE",
+    PROXY_API_BASE if OLLAMA_BACKEND in {"proxy", "remote"} else OLLAMA_URL,
+)
+OLLAMA_API_KEY = os.environ.get(
+    "OLLAMA_API_KEY",
+    PROXY_API_KEY if OLLAMA_BACKEND in {"proxy", "remote"} else "",
+)
 # Set OLLAMA_MODELS to a comma-separated list to spread requests across models.
-MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:14b")
-MODELS = [m.strip() for m in os.environ.get("OLLAMA_MODELS", MODEL).split(",") if m.strip()]
-if not MODELS:
-    MODELS = [MODEL]
+MODEL = os.environ.get("OLLAMA_MODEL", PROXY_MODEL if OLLAMA_BACKEND == "proxy" else "qwen2.5-coder:14b")
+
+
+def _looks_like_path(value: str) -> bool:
+    normalized = value.strip()
+    if not normalized:
+        return False
+    if os.path.isabs(normalized):
+        return True
+    return "\\" in normalized or normalized.startswith("./") or normalized.startswith("../")
+
+
+def _resolve_models():
+    raw_models = os.environ.get("OLLAMA_MODELS", "")
+    if raw_models and _looks_like_path(raw_models):
+        print(
+            f"[OLLAMA CONFIG] ignoring OLLAMA_MODELS path value={raw_models}; using OLLAMA_MODEL={MODEL}",
+            flush=True,
+        )
+        return [MODEL]
+
+    if raw_models:
+        parsed_models = [m.strip() for m in raw_models.split(",") if m.strip()]
+        if parsed_models:
+            return parsed_models
+
+    return [MODEL]
+
+
+MODELS = _resolve_models()
 
 try:
     from path_config import DATA_DIR as DEFAULT_DATA_DIR
@@ -37,6 +75,8 @@ _thread_state = local()
 _cache_lock = Lock()
 _model_lock = Lock()
 _model_cycle = itertools.cycle(MODELS)
+_config_log_lock = Lock()
+_config_logged = False
 
 
 if CACHE_FILE.exists():
@@ -71,7 +111,53 @@ def _next_model():
         return next(_model_cycle)
 
 
+def _is_proxy_backend():
+    if OLLAMA_BACKEND in {"proxy", "remote"}:
+        return True
+    if OLLAMA_BACKEND == "local":
+        return False
+    return OLLAMA_API_BASE.rstrip("/") == PROXY_API_BASE.rstrip("/")
+
+
+def _effective_api_base():
+    if _is_proxy_backend():
+        return OLLAMA_API_BASE.rstrip("/")
+    return OLLAMA_URL.rstrip("/")
+
+
+def _effective_api_key():
+    if not _is_proxy_backend():
+        return ""
+    return OLLAMA_API_KEY or PROXY_API_KEY
+
+
+def _proxy_headers():
+    api_key = _effective_api_key()
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+    return headers
+
+
+def _backend_source_label():
+    return "proxy" if _is_proxy_backend() else "local"
+
+
+def _log_backend_config_once():
+    global _config_logged
+    with _config_log_lock:
+        if _config_logged:
+            return
+        print(
+            f"[OLLAMA CONFIG] source={_backend_source_label()} base={_effective_api_base()} models={MODELS}",
+            flush=True,
+        )
+        _config_logged = True
+
+
 def is_ollama_running():
+    if _is_proxy_backend():
+        return True
     try:
         requests.get(OLLAMA_URL, timeout=2)
         return True
@@ -80,6 +166,8 @@ def is_ollama_running():
 
 
 def start_ollama():
+    if _is_proxy_backend():
+        return
     system = platform.system()
 
     if system == "Windows":
@@ -91,11 +179,16 @@ def start_ollama():
 
 
 def ensure_ollama():
+    _log_backend_config_once()
+    if _is_proxy_backend():
+        print(f"[OLLAMA READY] source=proxy base={_effective_api_base()}", flush=True)
+        return
     if not is_ollama_running():
         start_ollama()
 
     for _ in range(10):
         if is_ollama_running():
+            print(f"[OLLAMA READY] source=local base={_effective_api_base()}", flush=True)
             return
         time.sleep(1)
 
@@ -103,6 +196,11 @@ def ensure_ollama():
 
 
 def ensure_model(model=None):
+    _log_backend_config_once()
+    if _is_proxy_backend():
+        target = model or MODEL
+        print(f"[OLLAMA MODEL] source=proxy model={target}", flush=True)
+        return
     models_to_check = [model] if model else MODELS
     try:
         r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
@@ -113,11 +211,13 @@ def ensure_model(model=None):
 
         for target in models_to_check:
             if any(m == target or m.startswith(f"{target}:") for m in installed):
+                print(f"[OLLAMA MODEL] source=local model={target} status=installed", flush=True)
                 continue
 
             result = subprocess.run(["ollama", "pull", target], check=False)
             if result.returncode != 0:
                 raise RuntimeError(f"ollama pull failed for {target!r}")
+            print(f"[OLLAMA MODEL] source=local model={target} status=pulled", flush=True)
 
     except Exception as exc:
         print(f"OLLAMA MODEL CHECK ERROR: {exc}", flush=True)
@@ -136,6 +236,7 @@ def ollama_generate(
     num_ctx=2048,
 ):
     selected_model = model or _next_model()
+    _log_backend_config_once()
     cache_key = json.dumps(
         {
             "model": selected_model,
@@ -151,32 +252,62 @@ def ollama_generate(
     if use_cache:
         with _cache_lock:
             if cache_key in CACHE:
+                print(
+                    f"[OLLAMA REQUEST] source={_backend_source_label()} model={selected_model} cache=hit",
+                    flush=True,
+                )
                 return CACHE[cache_key]
 
-    try:
-        options = {
-            "temperature": temperature,
-            "num_predict": num_predict,
-            "num_ctx": num_ctx,
-        }
-        if seed is not None:
-            options["seed"] = seed
+    print(
+        f"[OLLAMA REQUEST] source={_backend_source_label()} model={selected_model} cache=miss",
+        flush=True,
+    )
 
-        r = _get_session().post(
-            f"{OLLAMA_URL}/api/generate",
-            json={
-                "model": selected_model,
-                "prompt": prompt,
-                "stream": False,
-                "keep_alive": "1h",
-                "think": False,
-                "options": options,
-            },
-            timeout=REQUEST_TIMEOUT,
-        )
+    try:
+        if _is_proxy_backend():
+            r = _get_session().post(
+                f"{_effective_api_base()}/chat/completions",
+                headers=_proxy_headers(),
+                json={
+                    "model": selected_model,
+                    "temperature": temperature,
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": f"{prompt}\n\n/no_think",
+                        }
+                    ],
+                },
+                timeout=REQUEST_TIMEOUT,
+            )
+        else:
+            options = {
+                "temperature": temperature,
+                "num_predict": num_predict,
+                "num_ctx": num_ctx,
+            }
+            if seed is not None:
+                options["seed"] = seed
+
+            r = _get_session().post(
+                f"{OLLAMA_URL}/api/generate",
+                json={
+                    "model": selected_model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "keep_alive": "1h",
+                    "think": False,
+                    "options": options,
+                },
+                timeout=REQUEST_TIMEOUT,
+            )
         r.raise_for_status()
 
-        result = r.json().get("response", "").strip()
+        payload = r.json()
+        if _is_proxy_backend():
+            result = payload.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+        else:
+            result = payload.get("response", "").strip()
         if not result:
             return None
 

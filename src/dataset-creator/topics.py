@@ -178,9 +178,10 @@ def load_or_generate_topics(num_topics=100, force=False, max_attempts=200):
     if len(titles) < num_topics:
         print(f"Warning: only generated {len(titles)} topics out of requested {num_topics} after {attempts} attempts.")
 
+    selected_titles = titles[:num_topics]
     df_out = pd.DataFrame({
-        "topic_id": range(len(titles)),
-        "topic": titles[:num_topics]
+        "topic_id": range(len(selected_titles)),
+        "topic": selected_titles,
     })
     df_out.to_csv(TOPICS_FILE, index=False)
     return df_out
