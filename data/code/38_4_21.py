@@ -1,12 +1,22 @@
 def find_repeated_letters(sentence):
-    counts = {}
-    for char in sentence.lower():
+    letter_counts = {}
+    for char in sentence:
         if char.isalpha():
-            counts[char] = counts.get(char, 0) + 1
-    repeated = [char for char, count in counts.items() if count > 1]
-    return repeated
+            lower_char = char.lower()
+            if lower_char in letter_counts:
+                letter_counts[lower_char] += 1
+            else:
+                letter_counts[lower_char] = 1
+    repeated = [char for char, count in letter_counts.items() if count > 1]
+    return sorted(repeated)
 
 if __name__ == '__main__':
-    sample_sentence = "Hello World"
-    result = find_repeated_letters(sample_sentence)
-    print(result)
+    test_sentences = [
+        "Hello World",
+        "Python Programming",
+        "abcdef",
+        "aAbBcC"
+    ]
+    for sentence in test_sentences:
+        result = find_repeated_letters(sentence)
+        print(result)
