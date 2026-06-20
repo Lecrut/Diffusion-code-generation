@@ -1,0 +1,8 @@
+def check_negativity(value):
+    NEGATIVE_THRESHOLD = 0
+    return value < NEGATIVE_THRESHOLD
+
+if __name__ == '__main__':
+    sample_values = [10, -5, 20, -1, 33, -12, 0]
+    for number in sample_values:
+        print(check_negativity(number))

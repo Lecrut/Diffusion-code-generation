@@ -1,0 +1,6 @@
+def sum_three_integers(a, b, c):
+    return sum((a, b, c))
+
+if __name__ == '__main__':
+    result = sum_three_integers(3, 5, 7)
+    print(result)

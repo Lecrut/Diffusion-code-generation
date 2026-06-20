@@ -1,0 +1,12 @@
+from datetime import datetime
+
+def time_elapsed(start_time, end_time):
+    start = datetime.strptime(start_time, "%H:%M")
+    end = datetime.strptime(end_time, "%H:%M")
+    if end < start:
+        end += timedelta(days=1)
+    elapsed = (end - start).seconds // 3600
+    return elapsed
+
+if __name__ == '__main__':
+    print(time_elapsed("23:59", "00:01"))

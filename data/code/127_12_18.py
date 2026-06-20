@@ -1,0 +1,8 @@
+ODD_BIT = 1
+
+def is_odd(n: int) -> bool:
+    return n & ODD_BIT == ODD_BIT
+
+if __name__ == '__main__':
+    print(is_odd(3))  # True
+    print(is_odd(4))  # False

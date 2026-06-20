@@ -1,0 +1,6 @@
+def shortest_path_distance(month1, month2):
+    return min(abs(month1 - month2), 12 - abs(month1 - month2))
+if __name__ == '__main__':
+    print(shortest_path_distance(12, 2))
+    print(shortest_path_distance(3, 9))
+    print(shortest_path_distance(5, 10))

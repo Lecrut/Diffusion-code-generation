@@ -1,0 +1,15 @@
+class BooleanComparator:
+    @staticmethod
+    def check_equality(a: bool, b: bool) -> str:
+        return "Equal" if a == b else "Not Equal"
+
+if __name__ == '__main__':
+    comparator = BooleanComparator()
+    val1_a = True
+    val1_b = True
+    result1 = comparator.check_equality(val1_a, val1_b)
+    print(f"Comparing {val1_a} and {val1_b}: {result1}")
+    val2_a = True
+    val2_b = False
+    result2 = comparator.check_equality(val2_a, val2_b)
+    print(f"Comparing {val2_a} and {val2_b}: {result2}")

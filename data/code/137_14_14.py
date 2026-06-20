@@ -1,0 +1,7 @@
+def is_even(number):
+    return number & 1 == 0
+
+if __name__ == '__main__':
+    test_numbers = [2, 3, -4, 5, 6]
+    for num in test_numbers:
+        print(f"Number {num} is even: {is_even(num)}")

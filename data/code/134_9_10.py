@@ -1,0 +1,6 @@
+def assert_single_true(properties):
+    return sum(properties) == 1
+
+if __name__ == '__main__':
+    sample_properties = [False, True, False]
+    print(assert_single_true(sample_properties))

@@ -1,0 +1,11 @@
+def compare_sets(set1, set2):
+    intersection = set1 & set2
+    union = set1 | set2
+    difference = set1 - set2
+    return intersection, union, difference
+
+if __name__ == '__main__':
+    sample_set1 = {True, False, True}
+    sample_set2 = {False, True, False}
+    result = compare_sets(sample_set1, sample_set2)
+    print(result)

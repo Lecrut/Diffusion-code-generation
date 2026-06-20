@@ -1,0 +1,7 @@
+class TimestampComparator:
+    @staticmethod
+    def is_before(timestamp1: float, timestamp2: float) -> bool:
+        return timestamp1 < timestamp2
+
+if __name__ == '__main__':
+    print(TimestampComparator.is_before(1633075200.0, 1633082400.0))

@@ -1,0 +1,12 @@
+def is_valid_date(date):
+    return isinstance(date, tuple) and len(date) == 3 and all(isinstance(d, int) for d in date)
+
+def sort_date_tuples(date_list):
+    if not all(is_valid_date(d) for d in date_list):
+        raise ValueError("All elements must be tuples of three integers.")
+    return sorted(date_list, key=lambda x: (x[0], x[1], x[2]))
+
+if __name__ == '__main__':
+    sample_dates = [(2023, 4, 5), (2022, 1, 1), (2023, 1, 15)]
+    sorted_dates = sort_date_tuples(sample_dates)
+    print(sorted_dates)

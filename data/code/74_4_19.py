@@ -1,0 +1,10 @@
+from datetime import datetime
+
+def get_full_day_name(date_obj):
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    return days[date_obj.weekday()]
+
+if __name__ == '__main__':
+    sample_date = datetime(2023, 10, 5)
+    day_of_week = get_full_day_name(sample_date)
+    print(day_of_week)

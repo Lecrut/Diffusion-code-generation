@@ -1,0 +1,14 @@
+def logical_evaluator():
+    statements = [
+        True and False,
+        not (True or False),
+        5 > 3,
+        "hello" == "world",
+        len([1, 2, 3]) == 3
+    ]
+    for statement in statements:
+        yield statement
+
+if __name__ == '__main__':
+    for result in logical_evaluator():
+        print(result)

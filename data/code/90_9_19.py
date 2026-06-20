@@ -1,0 +1,7 @@
+def check_condition(*args):
+    return any(args)
+
+if __name__ == '__main__':
+    sample_values = (False, True, False)
+    result = check_condition(*sample_values)
+    print(result)

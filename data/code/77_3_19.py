@@ -1,0 +1,14 @@
+def time_to_minutes(time_str):
+    try:
+        hours, minutes, seconds = map(int, time_str.split(':'))
+        if hours < 0 or minutes < 0 or seconds < 0:
+            raise ValueError("Negative values are not allowed")
+        return hours * 60 + minutes + seconds / 60
+    except (ValueError, TypeError):
+        print("Invalid time format. Please use 'H:M:S'")
+        return None
+
+if __name__ == '__main__':
+    print(time_to_minutes('2:30:45'))
+    print(time_to_minutes('12:60:00'))
+    print(time_to_minutes('abc:def:ghi'))

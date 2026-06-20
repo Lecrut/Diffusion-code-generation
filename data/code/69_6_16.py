@@ -1,28 +1,29 @@
-class ListDictInterface:
+class ListDict:
 
-    def __init__(self, elements):
-        self.elements = elements
+    def __init__(self, data):
+        self.data = data
 
     def __getitem__(self, key):
-        if isinstance(key, int) and 0 <= key < len(self.elements):
-            return self.elements[key]
-        else:
-            raise KeyError('Key out of range or not an integer')
+        return self.data[key]
 
     def __setitem__(self, key, value):
-        if isinstance(key, int) and 0 <= key < len(self.elements):
-            self.elements[key] = value
-        else:
-            raise KeyError('Key out of range or not an integer')
+        self.data[key] = value
+
+    def __delitem__(self, key):
+        del self.data[key]
 
     def __len__(self):
-        return len(self.elements)
+        return len(self.data)
 
-    def __repr__(self):
-        return repr(self.elements)
+    def __iter__(self):
+        return iter(self.data)
 if __name__ == '__main__':
-    sample_list = [10, 20, 30, 40, 50]
-    list_dict_interface = ListDictInterface(sample_list)
-    print(list_dict_interface[2])
-    list_dict_interface[2] = 35
-    print(list_dict_interface)
+    sample_list = [10, 20, 30]
+    list_dict = ListDict(sample_list)
+    print(list_dict[1])
+    list_dict[1] = 25
+    print(list_dict.data)
+    del list_dict[2]
+    print(len(list_dict))
+    for item in list_dict:
+        print(item)

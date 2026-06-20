@@ -1,0 +1,11 @@
+def validate_input(a, b, c):
+    if not all(isinstance(i, (int, float)) for i in [a, b, c]):
+        raise ValueError("All inputs must be numbers")
+
+def sum_three(a, b, c):
+    validate_input(a, b, c)
+    return a + b + c
+
+if __name__ == '__main__':
+    result = sum_three(10, 20, 30)
+    print(result)

@@ -1,0 +1,13 @@
+SUCCESS_FLAG = True
+FAILURE_FLAG = False
+
+def validate_flags(flag1: bool, flag2: bool) -> bool:
+    if not (flag1 and flag2):
+        raise ValueError('At least one flag is false')
+    return SUCCESS_FLAG
+
+if __name__ == '__main__':
+    print(validate_flags(True, True))
+    print(validate_flags(True, False))
+    print(validate_flags(False, True))
+    print(validate_flags(False, False))

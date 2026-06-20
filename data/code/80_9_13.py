@@ -1,0 +1,20 @@
+from datetime import datetime
+
+def compare_dates(date_str1, date_str2):
+    try:
+        date1 = datetime.strptime(date_str1, '%Y-%m-%d')
+        date2 = datetime.strptime(date_str2, '%Y-%m-%d')
+        if date1 < date2:
+            return date_str1
+        elif date1 > date2:
+            return date_str2
+        else:
+            return "Both dates are the same"
+    except ValueError:
+        return "Invalid date format. Please use YYYY-MM-DD"
+
+if __name__ == '__main__':
+    print(compare_dates('2023-01-01', '2023-01-02'))
+    print(compare_dates('2023-01-02', '2023-01-01'))
+    print(compare_dates('2023-01-01', '2023-01-01'))
+    print(compare_dates('2023-01-01', '2023/01/01'))

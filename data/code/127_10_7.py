@@ -1,0 +1,10 @@
+class OddChecker:
+    @staticmethod
+    def is_odd(number):
+        return number & 1 == 1
+
+if __name__ == '__main__':
+    sample_numbers = [10, 7, 0, -4, 15]
+    for num in sample_numbers:
+        result = OddChecker.is_odd(num)
+        print(f"Number: {num}, Is Odd: {result}")

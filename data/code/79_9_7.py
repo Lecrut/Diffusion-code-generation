@@ -1,0 +1,23 @@
+from datetime import date, timedelta
+
+def next_month(start_date):
+    year = start_date.year
+    month = start_date.month
+    day = start_date.day
+    if month == 12:
+        year += 1
+        month = 1
+    else:
+        month += 1
+    try:
+        return date(year, month, day)
+    except ValueError:
+        if month == 2 and day > 28:
+            return date(year, month, 28)
+        elif month in [4, 6, 9, 11] and day > 30:
+            return date(year, month, 30)
+        else:
+            raise
+if __name__ == '__main__':
+    start_date = date(2023, 1, 31)
+    print(next_month(start_date))

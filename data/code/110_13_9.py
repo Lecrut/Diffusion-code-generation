@@ -1,0 +1,13 @@
+from datetime import datetime
+
+def sort_iso_dates(date_strings):
+    return sorted(date_strings, key=lambda x: datetime.fromisoformat(x))
+
+if __name__ == '__main__':
+    sample_dates = [
+        '2023-01-01T00:00:00Z',
+        '2022-12-31T23:59:59Z',
+        '2023-02-01T00:00:00Z'
+    ]
+    sorted_dates = sort_iso_dates(sample_dates)
+    print(sorted_dates)

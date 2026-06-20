@@ -1,0 +1,12 @@
+import datetime
+MONTHS_PER_YEAR = 12
+
+def get_next_month(date_obj):
+    next_year = date_obj.year + (date_obj.month == MONTHS_PER_YEAR)
+    next_month = date_obj.month % MONTHS_PER_YEAR + 1
+    return datetime.date(next_year, next_month, 1)
+if __name__ == '__main__':
+    sample_date_str = '2023-12-15'
+    sample_date = datetime.datetime.strptime(sample_date_str, '%Y-%m-%d').date()
+    next_date = get_next_month(sample_date)
+    print(next_date.strftime('%Y-%m-%d'))

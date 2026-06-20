@@ -1,0 +1,13 @@
+def set_operations(set1, set2):
+    intersection = set1 & set2
+    union = set1 | set2
+    difference = set1 - set2
+    return intersection, union, difference
+
+if __name__ == '__main__':
+    sample_set1 = {True, False, True}
+    sample_set2 = {False, False, True}
+    result = set_operations(sample_set1, sample_set2)
+    print("Intersection:", result[0])
+    print("Union:", result[1])
+    print("Difference:", result[2])

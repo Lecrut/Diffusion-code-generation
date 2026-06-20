@@ -1,0 +1,25 @@
+from datetime import datetime
+
+def normalize_and_sort_dates(date_strings):
+    date_formats = {
+        '%Y-%m-%d': 'ISO',
+        '%d/%m/%Y': 'DMY',
+        '%m-%d-%Y': 'MDY'
+    }
+    
+    normalized_dates = []
+    for date_str in date_strings:
+        for fmt, _ in date_formats.items():
+            try:
+                normalized_date = datetime.strptime(date_str, fmt)
+                normalized_dates.append((normalized_date, date_str))
+                break
+            except ValueError:
+                continue
+    
+    sorted_dates = [date[1] for date in sorted(normalized_dates)]
+    return sorted_dates
+
+if __name__ == '__main__':
+    sample_dates = ['2021-03-15', '15/03/2021', '03-15-2021']
+    print(normalize_and_sort_dates(sample_dates))

@@ -1,0 +1,10 @@
+if __name__ == '__main__':
+    print(5 > 3)
+    print(2 < 4)
+    print(10 == 10)
+    print(7 != 8)
+    print(True and False)
+    print(True or False)
+    print(not True)
+    print([1, 2, 3] == [1, 2, 3])
+    print('hello' in 'hello world')

@@ -1,0 +1,10 @@
+def compare_values(a, b):
+    return a == b
+
+if __name__ == '__main__':
+    print(compare_values(1, 2))
+    print(compare_values("hello", "hello"))
+    print(compare_values([1, 2], [1, 2]))
+    print(compare_values((1, 2), (1, 2)))
+    print(compare_values({'a': 1}, {'a': 1}))
+    print(compare_values(1.0, 1))

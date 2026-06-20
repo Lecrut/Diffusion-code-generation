@@ -1,0 +1,8 @@
+def multiply_numbers(num1, num2):
+    return num1 * num2
+
+if __name__ == '__main__':
+    x = 7
+    y = 3
+    result = multiply_numbers(x, y)
+    print(result)

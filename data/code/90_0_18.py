@@ -1,0 +1,15 @@
+def test_or_logical_condition():
+    assert True or False == True
+    assert False or True == True
+    assert False or False == False
+    assert 0 or 1 == 1
+    assert 1 or 0 == 1
+    assert "" or "hello" == "hello"
+    assert "hello" or "" == "hello"
+    assert [] or [1] == [1]
+    assert [1] or [] == [1]
+    assert {} or {"key": "value"} == {"key": "value"}
+    assert {"key": "value"} or {} == {"key": "value"}
+
+if __name__ == '__main__':
+    test_or_logical_condition()

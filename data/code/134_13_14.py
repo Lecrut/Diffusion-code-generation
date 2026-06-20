@@ -1,0 +1,11 @@
+def are_keys_disjoint(dict1, dict2):
+    set1 = set(dict1.keys())
+    set2 = set(dict2.keys())
+    return set1.isdisjoint(set2)
+if __name__ == '__main__':
+    dict1 = {'a': 1, 'b': 2, 'c': 3}
+    dict2 = {'d': 4, 'e': 5, 'f': 6}
+    print(are_keys_disjoint(dict1, dict2))
+    dict3 = {'g': 7, 'h': 8}
+    dict4 = {'i': 9, 'j': 10, 'a': 11}
+    print(are_keys_disjoint(dict3, dict4))

@@ -1,0 +1,12 @@
+TRUE_COUNT = 1
+
+def count_and_check_exclusive(a, b, c, d, e):
+    return (a + b + c + d + e) == TRUE_COUNT
+
+if __name__ == '__main__':
+    print(count_and_check_exclusive(True, False, False, False, False))
+    print(count_and_check_exclusive(False, True, False, False, False))
+    print(count_and_check_exclusive(False, False, True, False, False))
+    print(count_and_check_exclusive(False, False, False, True, False))
+    print(count_and_check_exclusive(False, False, False, False, True))
+    print(count_and_check_exclusive(True, True, False, False, False))

@@ -1,0 +1,23 @@
+from collections import defaultdict
+
+def group_and_sort(objects, group_key, sort_key):
+    grouped = defaultdict(list)
+    for obj in objects:
+        grouped[obj[group_key]].append(obj)
+    
+    for key, value_list in grouped.items():
+        grouped[key] = sorted(value_list, key=lambda x: x[sort_key], reverse=True)
+    
+    return dict(grouped)
+
+if __name__ == '__main__':
+    sample_objects = [
+        {'category': 'A', 'value': 3},
+        {'category': 'B', 'value': 1},
+        {'category': 'A', 'value': 2},
+        {'category': 'C', 'value': 4},
+        {'category': 'B', 'value': 5}
+    ]
+    
+    result = group_and_sort(sample_objects, 'category', 'value')
+    print(result)

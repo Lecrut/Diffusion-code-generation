@@ -1,0 +1,8 @@
+from datetime import datetime, timedelta
+
+def month_after(date):
+    return date + timedelta(days=30)
+
+if __name__ == '__main__':
+    sample_date = datetime(2023, 4, 15)
+    print(month_after(sample_date))

@@ -1,0 +1,10 @@
+import math
+
+class AverageCalculator:
+    @staticmethod
+    def calculate_average(numbers):
+        return math.fsum(numbers) / len(numbers)
+
+if __name__ == '__main__':
+    sample_numbers = [10, 20, 30, 40]
+    print(AverageCalculator.calculate_average(sample_numbers))

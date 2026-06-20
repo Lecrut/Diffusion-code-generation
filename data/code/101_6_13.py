@@ -1,0 +1,23 @@
+from dateutil import parser
+
+class DateHelper:
+    DAY_NAMES = {
+        0: 'Monday',
+        1: 'Tuesday',
+        2: 'Wednesday',
+        3: 'Thursday',
+        4: 'Friday',
+        5: 'Saturday',
+        6: 'Sunday'
+    }
+
+    @staticmethod
+    def get_day_of_week(date_str):
+        date_obj = parser.parse(date_str)
+        weekday_number = date_obj.weekday()
+        return DateHelper.DAY_NAMES[weekday_number]
+
+if __name__ == '__main__':
+    sample_date = 'January 15, 2023'
+    day_of_week = DateHelper.get_day_of_week(sample_date)
+    print(day_of_week)

@@ -1,0 +1,14 @@
+def combine_checks(a, b, c):
+    if not all(isinstance(x, int) for x in [a, b, c]):
+        raise ValueError("All inputs must be integers.")
+    return a > 0 and b % 2 == 0 and c % a == 0
+
+if __name__ == '__main__':
+    print(combine_checks(3, 4, 12))
+    print(combine_checks(5, 6, 10))
+    print(combine_checks(2, 8, 10))
+    try:
+        print(combine_checks(-1, 4, 2))
+    except ValueError as e:
+        print(e)
+    print(combine_checks(1, 5, 10))

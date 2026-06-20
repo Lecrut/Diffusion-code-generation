@@ -1,0 +1,13 @@
+class RangeSum:
+    def __init__(self, start=0, end=10):
+        self.start = start
+        self.end = end
+
+    def sum_even_numbers(self):
+        return sum(x for x in range(self.start, self.end + 1) if x % 2 == 0)
+
+if __name__ == '__main__':
+    calculator = RangeSum(1, 10)
+    print(calculator.sum_even_numbers())
+    calculator = RangeSum(5, 15)
+    print(calculator.sum_even_numbers())

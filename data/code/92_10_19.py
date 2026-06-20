@@ -1,0 +1,12 @@
+def find_opposite_truth(value):
+    if not isinstance(value, bool):
+        raise ValueError("Input must be a boolean")
+    return not value
+
+if __name__ == '__main__':
+    print(find_opposite_truth(True))
+    print(find_opposite_truth(False))
+    try:
+        print(find_opposite_truth(123))
+    except ValueError as e:
+        print(e)

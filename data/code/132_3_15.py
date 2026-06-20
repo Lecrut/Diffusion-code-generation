@@ -1,0 +1,13 @@
+class BoolEvaluator:
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def evaluate_or(self):
+        return bool(self.a or self.b)
+if __name__ == '__main__':
+    evaluator1 = BoolEvaluator(True, False)
+    print(evaluator1.evaluate_or())
+    evaluator2 = BoolEvaluator(False, False)
+    print(evaluator2.evaluate_or())

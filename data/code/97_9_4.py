@@ -1,0 +1,10 @@
+def generate_truth_table(a, b):
+    print(f"A | B | A AND B")
+    print(f"---|---|---------")
+    for a_val in [True, False]:
+        for b_val in [True, False]:
+            result = a_val and b_val
+            print(f"{a_val} | {b_val} | {result}")
+
+if __name__ == '__main__':
+    generate_truth_table(True, False)

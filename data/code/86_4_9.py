@@ -1,0 +1,10 @@
+def compare_pairs(iterable):
+    it = iter(iterable)
+    prev = next(it)
+    for curr in it:
+        yield (prev, curr) == (True, True)
+        prev = curr
+
+if __name__ == '__main__':
+    sample_values = [False, True, False, True, True]
+    print(list(compare_pairs(sample_values)))

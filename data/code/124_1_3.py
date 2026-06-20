@@ -1,0 +1,12 @@
+def basic_arithmetic(a, b):
+    operations = {
+        'addition': a + b,
+        'subtraction': a - b,
+        'multiplication': a * b,
+        'floor_division': a // b
+    }
+    return operations
+
+if __name__ == '__main__':
+    result = basic_arithmetic(10, 4)
+    print(result)

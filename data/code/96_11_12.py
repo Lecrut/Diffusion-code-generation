@@ -1,0 +1,18 @@
+def evaluate_nested_logic(logic_structure):
+    if isinstance(logic_structure, bool):
+        return logic_structure
+    elif isinstance(logic_structure, list) or isinstance(logic_structure, tuple):
+        for item in logic_structure:
+            result = evaluate_nested_logic(item)
+            if result:
+                return True
+        return False
+    else:
+        raise TypeError('Invalid input type. Expected boolean, list, or tuple.')
+if __name__ == '__main__':
+    sample1 = [True, False]
+    sample2 = [False, [True, False]]
+    sample3 = [[False], [False]]
+    print(evaluate_nested_logic(sample1))
+    print(evaluate_nested_logic(sample2))
+    print(evaluate_nested_logic(sample3))

@@ -1,0 +1,12 @@
+def logical_and(a: bool, b: bool) -> bool:
+    return a & b
+
+def logical_or(a: bool, b: bool) -> bool:
+    return a | b
+
+def logical_not(a: bool) -> bool:
+    return not a
+if __name__ == '__main__':
+    print(logical_and(True, True))
+    print(logical_or(False, True))
+    print(logical_not(True))

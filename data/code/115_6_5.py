@@ -1,0 +1,13 @@
+class Divider:
+    def __init__(self, pairs):
+        self.pairs = pairs
+
+    def divide(self):
+        for num1, num2 in self.pairs:
+            yield num1 / num2
+
+if __name__ == '__main__':
+    sample_pairs = [(4, 2), (9, 3), (10, 5)]
+    divider = Divider(sample_pairs)
+    results = [result for result in divider.divide()]
+    print(results)

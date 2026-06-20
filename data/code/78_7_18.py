@@ -1,0 +1,11 @@
+import calendar
+
+def month_difference(month1, month2):
+    months = list(calendar.month_name[1:])
+    index1 = months.index(month1)
+    index2 = months.index(month2)
+    return abs(index1 - index2)
+
+if __name__ == '__main__':
+    result = month_difference('January', 'March')
+    print(result)

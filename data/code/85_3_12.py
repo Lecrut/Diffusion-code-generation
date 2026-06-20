@@ -1,0 +1,30 @@
+def weeks_between_julian_dates(date1, date2):
+    days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    year1, month1, day1 = map(int, date1.split('-'))
+    year2, month2, day2 = map(int, date2.split('-'))
+
+    def is_leap_year(year):
+        return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
+    def days_in_year(year):
+        return 366 if is_leap_year(year) else 365
+
+    def days_since_julian_start(year, month, day):
+        days = sum(days_in_month[:month - 1])
+        days += day
+        for y in range(1, year):
+            days += days_in_year(y)
+        return days
+
+    days1 = days_since_julian_start(year1, month1, day1)
+    days2 = days_since_julian_start(year2, month2, day2)
+
+    if days1 > days2:
+        days1, days2 = days2, days1
+        year1, year2 = year2, year1
+
+    weeks = (days2 - days1) // 7
+    return weeks
+
+if __name__ == '__main__':
+    print(weeks_between_julian_dates('2023-01-01', '2024-01-01'))

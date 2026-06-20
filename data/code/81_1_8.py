@@ -1,0 +1,14 @@
+from datetime import datetime
+
+SECONDS_PER_HOUR = 3600.0
+
+def calculate_elapsed_hours(start_time: datetime, end_time: datetime) -> float:
+    time_difference = end_time - start_time
+    elapsed_hours = time_difference.total_seconds() / SECONDS_PER_HOUR
+    return elapsed_hours
+
+if __name__ == '__main__':
+    time1 = datetime(2023, 1, 1, 10, 0, 0)
+    time2 = datetime(2023, 1, 3, 14, 30, 0)
+    result = calculate_elapsed_hours(time1, time2)
+    print(result)

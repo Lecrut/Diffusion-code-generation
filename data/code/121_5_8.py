@@ -1,0 +1,7 @@
+def compare_complex_numbers(c1, c2):
+    return abs(c1) > abs(c2)
+
+if __name__ == '__main__':
+    sample_c1 = 3 + 4j
+    sample_c2 = 1 + 1j
+    print(compare_complex_numbers(sample_c1, sample_c2))
